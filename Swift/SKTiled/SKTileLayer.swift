@@ -6,66 +6,69 @@
 //  Copyright © 2016 Michael Fessenden. All rights reserved.
 //
 
+
 import SpriteKit
 
-// tile layer:     name, visible, opacity, offsetx, offsety
-// objects layer: +color, drawing order (manual, top down)
-// image layer:   + image, transparent color, x, y
-protocol TiledLayerObject: class, Hashable {
-    // tile layer: name, visible, opacity, offset
-    //var name: String { get set }
-    var visible: Bool { get set }
-    var opacity: CGFloat { get set }
-    var offset: CGPoint { get set }
+
+// base class for all layer types
+public class TiledLayerObject: SKNode {
     
-    var size: CGSize { get set }
+    unowned var tilemap: SKTilemap
     
-    var index: Int { get set }
-    weak var tilemap: SKTilemap! { get set }
-    var hashValue: Int { get }
+    // need to add UUID to hash each layer, as layer names can be the same
+    public var uuid: Int = 0
+    public var visible: Bool = true
+    public var opacity: CGFloat = 1.0
+    public var offset: CGPoint = CGPointZero
+    
+    // generic layer properties
+    public var properties: [String: String] = [:]
+    
+    public init(layerName: String, tileMap: SKTilemap){
+        self.tilemap = tileMap
+        super.init()
+        self.name = layerName
+    }
+    
+    required public  init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override public var hashValue: Int {
+        return self.name!.hashValue
+    }
 }
 
 
 // represents a tile map layer
-public class SKTileLayer: SKNode, TiledLayerObject {
+public class SKTileLayer: TiledLayerObject {
     
-    private typealias TilesArray = Array2D<Tile>
-    
-    weak public var tilemap: SKTilemap!
-    public var properties: [String: String] = [:]
+    private typealias TilesArray = Array2D<SKTile>
     
     // layer size
     public var size: CGSize
-    public var visible: Bool = true
-    public var opacity: CGFloat = 1.0
-    public var offset: CGPoint
     public var index: Int = 1
     
     // container for the tile sprites
     private var tiles: TilesArray
     
-    public init(name: String, tilemap: SKTilemap, offset: CGPoint=CGPointZero) {
-        self.tilemap = tilemap
-        self.offset = offset
-        self.size = CGSizeMake(tilemap.mapSize.width, tilemap.mapSize.height)
-        self.tiles = TilesArray(columns: Int(tilemap.mapSize.width), rows: Int(tilemap.mapSize.height))
-        super.init()
-        self.name = name
+    override public init(layerName: String, tileMap: SKTilemap) {
+        self.size = tileMap.mapSize.cgSize
+        self.tiles = TilesArray(columns: Int(tileMap.mapSize.width), rows: Int(tileMap.mapSize.height))
+        super.init(layerName: layerName, tileMap: tileMap)
     }
 
-    public init?(name: String, tilemap: SKTilemap, attributes: [String: String], offset: CGPoint=CGPointZero) {
+    public init?(tileMap: SKTilemap, attributes: [String: String], offset: CGPoint=CGPointZero) {
         // name, width and height are required
+        // TODO: according to tmx file format, width & height default to tilemap size
         guard let layerName = attributes["name"] as String! else { return nil }
         guard let width = attributes["width"] as String! else { return nil }
         guard let height = attributes["height"] as String! else { return nil }
-        // opacity,
         
-        self.tilemap = tilemap
-        self.offset = offset
         self.size = CGSizeMake(CGFloat(Int(width)!), CGFloat(Int(height)!))
-        self.tiles = TilesArray(columns: Int(tilemap.mapSize.width), rows: Int(tilemap.mapSize.height))
-        super.init()
-        self.name = layerName
+        self.tiles = TilesArray(columns: Int(tileMap.mapSize.width), rows: Int(tileMap.mapSize.height))
+        super.init(layerName: layerName, tileMap: tileMap)
+        self.offset = offset
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -77,4 +80,68 @@ public class SKTileLayer: SKNode, TiledLayerObject {
     }
 }
 
+public enum ObjectGroupDrawOrder: String {
+    case TopDown
+    case Manual
+}
 
+
+/// Objects group class
+public class SKObjectGroup: TiledLayerObject {
+    
+    public var color: SKColor = SKColor.clearColor()
+    public var drawOrder: ObjectGroupDrawOrder = ObjectGroupDrawOrder.TopDown
+    private var objects: Set<SKTileObject> = []
+    
+    public init?(tileMap: SKTilemap, attributes: [String: String], offset: CGPoint=CGPointZero) {
+        guard let layerName = attributes["name"] as String! else { return nil }
+        //guard let width = attributes["width"] as String! else { return nil }
+        //guard let height = attributes["height"] as String! else { return nil }
+
+        super.init(layerName: layerName, tileMap: tileMap)
+        self.offset = offset
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+
+/// Image layer class
+public class SKImageLayer: TiledLayerObject {
+    public var sprite: SKSpriteNode?
+    
+    public init?(tileMap: SKTilemap, attributes: [String: String], offset: CGPoint=CGPointZero) {
+        guard let layerName = attributes["name"] as String! else { return nil }
+        /*
+        guard let imageSource = attributes["source"] as String! else { return nil }
+        guard let imageWidth = attributes["width"] as String! else { return nil }
+        guard let imageHeight = attributes["height"] as String! else { return nil }
+        
+        let texture = SKTexture(imageNamed: imageSource)
+        texture.filteringMode = .Nearest
+        sprite = SKSpriteNode(texture: texture)
+        */
+        
+        super.init(layerName: layerName, tileMap: tileMap)
+        self.offset = offset
+        //addChild(sprite!)
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+
+
+extension TiledLayerObject {
+    override public var description: String {
+        return "Layer: \"\(name!)\""
+    }
+    
+    override public var debugDescription: String {
+        return description
+    }
+}

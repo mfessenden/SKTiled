@@ -7,7 +7,6 @@
 //
 
 import SpriteKit
-import GameplayKit
 
 
 public class SKTilemap: SKNode {
@@ -19,8 +18,12 @@ public class SKTilemap: SKNode {
     public var tileSets: Set<SKTileset> = []
     
     // current layers
-    public var tileLayers: Set<SKTileLayer> = []
+    public var tileLayers: Set<TiledLayerObject> = []
     public var properties: [String: String] = [:]
+    
+    public var size: CGSize {
+        return CGSizeMake((mapSize.width * tileSize.width), (mapSize.height * tileSize.height))
+    }
     
     // MARK: - Loading
     public class func loadTMX(fileNamed: String) -> SKTilemap? {
@@ -44,7 +47,7 @@ public class SKTilemap: SKNode {
         guard let tilewidth = attributes["tilewidth"] as String! else { return nil }
         guard let tileheight = attributes["tileheight"] as String! else { return nil }
         guard let orient = attributes["orientation"] as String! else { return nil }
-        
+
         mapSize = MapSize(width: CGFloat(Int(width)!), height: CGFloat(Int(height)!))
         tileSize = TileSize(width: CGFloat(Int(tilewidth)!), height: CGFloat(Int(tileheight)!))
         if let fileOrientation: TilemapOrientation = TilemapOrientation(rawValue: orient){
@@ -57,11 +60,32 @@ public class SKTilemap: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Tilesets
+    public func addTileset(tileset: SKTileset) {
+        tileSets.insert(tileset)
+    }
+    
     // MARK: - Layers
-    public func addLayer(layer: SKTileLayer) {
+    public func addTileLayer(layer: TiledLayerObject) {
+        print(" -> adding layer: \"\(layer.name!)\"")
         tileLayers.insert(layer)
         // TODO: zPosition
         // TODO: alignment/anchorpoint
+    }
+    
+    /**
+     Returns a named tile layer from the layers set.
+     
+     - parameter name: `String` tile layer to query.
+     
+     - returns: `SKTileLayer?` tile layer object.
+     */
+    public func getTileLayer(name: String) -> TiledLayerObject? {
+        if let index = tileLayers.indexOf( { $0.name == name } ) {
+            return tileLayers[index]
+        }
+        
+        return nil
     }
 }
 

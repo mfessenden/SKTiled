@@ -5,6 +5,7 @@
 //  Created by Michael Fessenden on 3/21/16.
 //  Copyright (c) 2016 Michael Fessenden. All rights reserved.
 //
+//  Reference:  http://doc.mapeditor.org/reference/tmx-map-format/
 
 import SpriteKit
 
@@ -14,8 +15,11 @@ public class SKTileset {
     
     public var name: String
     weak public var tilemap: SKTilemap!
-    public var firstGID: Int = 1                    // first GID
     public var tileSize: TileSize
+    
+    public var firstGID: Int = 1                    // first GID
+    public var columns: Int = 0                     // number of columns
+    
     
     // image spacing
     public var spacing: CGFloat = 0                 // spacing between tiles
@@ -31,15 +35,14 @@ public class SKTileset {
         self.offset = offset
     }
     
-    public init?(name: String, tilemap: SKTilemap, attributes: [String: String], offset: CGPoint=CGPointZero){
+    public init?(attributes: [String: String], offset: CGPoint=CGPointZero){
         // name, width and height are required
         guard let layerName = attributes["name"] as String! else { return nil }
-        guard let width = attributes["width"] as String! else { return nil }
-        guard let height = attributes["height"] as String! else { return nil }
+        guard let width = attributes["tilewidth"] as String! else { return nil }
+        guard let height = attributes["tileheight"] as String! else { return nil }
         
         self.name = layerName
-        self.tilemap = tilemap
-        self.tileSize = tilemap.tileSize
+        self.tileSize = TileSize(width: CGFloat(Int(width)!), height: CGFloat(Int(width)!))
         self.offset = offset
     }
     
@@ -61,7 +64,8 @@ public func ==(lhs: SKTileset, rhs: SKTileset) -> Bool{
 }
 
 
-extension SKTileset: Equatable, Hashable {
+// Hashable requires == func & hashValue: Int
+extension SKTileset: Hashable {
     
     public var hashValue: Int {
         return name.hashValue

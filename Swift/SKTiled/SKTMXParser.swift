@@ -7,6 +7,7 @@
 //  Derived from: https://medium.com/@lucascerro/understanding-nsxmlparser-in-swift-xcode-6-3-1-7c96ff6c65bc#.1m4mh6nhy
 
 import SpriteKit
+import GameplayKit
 
 
 protocol TilemapObject {
@@ -36,14 +37,24 @@ public enum TilemapEncoding: String {
     case CSV     = "csv"
     case XML     = "xml"
 }
-    
+
+
+public enum PropertyType: String {
+    case bool
+    case int
+    case float
+    case string
+}
+
 
 /* generic property */
 public struct Property {
     public var name: String
     public var value: AnyObject
-    
+    public var type: PropertyType = .string
 }
+
+
 
 // MARK: - Sizing
 public struct TileSize {
@@ -58,35 +69,11 @@ public struct MapSize {
 }
 
 
-// MARK: - Proxy Objects
-public struct Tileset {
-    public var source: String
-    public var firstgid: Int
-}
-
-
 public struct TileLayer {
     public var name: String
+    public var tileSize: TileSize
     public var mapSize: MapSize
     public var data: AnyObject!
-    public var index: Int
-    // TODO: add z-depth?
-}
-
-
-/// tile layer tile
-public struct TileCoord {
-    // row: y, col: x
-    public var x: Int32
-    public var y: Int32
-}
-
-
-/// tile layer tile
-public struct Tile {
-    public var id: Int
-    public var x: Int
-    public var y: Int
 }
 
 
@@ -94,18 +81,27 @@ public struct Tile {
 public class TMXParser: NSObject, NSXMLParserDelegate {
     
     public var filename: String!
-    public var data: [String: AnyObject]!
+    public var data: [Int] = []
+    public var characterData: String = ""
     public var tilemap: SKTilemap!
-    public var currentLayerName: String!
-    public var layers: [TileLayer] = []
     
-    /**
-     Load a tilemap from file.
-     
-     - parameter fileNamed: `String` tmx file name.
-     
-     - returns: `SKTilemap?` tilemap.
-     */
+    private var encoding: TilemapEncoding = .XML
+    
+    // stash current elements
+    private var activeElement: String?
+    private var lastElement: AnyObject?
+    private var lastID: Int?
+    private var properties: [String: String] = [:]
+    
+    
+    public func parserDidStartDocument(parser: NSXMLParser) {
+        print("TMXParser: starting parsing...")
+    }
+    
+    public func parserDidEndDocument(parser: NSXMLParser) {
+        print("TMXParser: ending parsing...")
+    }
+    
     public func loadFromFile(fileNamed: String) -> SKTilemap? {
         print("TMXParser: parsing tmx file: \"\(fileNamed).tmx\"")
         let path: String = NSBundle.mainBundle().pathForResource(fileNamed , ofType: "tmx")!
@@ -115,7 +111,6 @@ public class TMXParser: NSObject, NSXMLParserDelegate {
         self.filename = fileNamed
         parser.delegate = self
         
-        // if there are no errors, parser returns true
         let success: Bool = parser.parse()
         if (success==true) {
             return self.tilemap
@@ -124,23 +119,16 @@ public class TMXParser: NSObject, NSXMLParserDelegate {
         return nil
     }
     
-    public func parserDidStartDocument(parser: NSXMLParser) {
-        print("TMXParser: starting parse...")
-    }
-    
-    public func parserDidEndDocument(parser: NSXMLParser) {
-        print("TMXParser: ending parse...")
-    }
-    
-    
-    public func parser(parser: NSXMLParser, didStartElement elementName: String,
+    // didStartElement happens whenever parser starts a key: <key>
+    public func parser(parser: NSXMLParser,
+                       didStartElement elementName: String,
                        namespaceURI: String?,
                        qualifiedName qName: String?,
                        attributes attributeDict: [String: String])  {
         
-        // create a tilemap node
+        activeElement = elementName
+        
         if (elementName == "map") {
-            print("TMXParser: creating tilemap...")
             guard let tilemap = SKTilemap(attributes: attributeDict) else {
                 parser.abortParsing()
                 return
@@ -148,19 +136,243 @@ public class TMXParser: NSObject, NSXMLParserDelegate {
             
             self.tilemap = tilemap
             self.tilemap.name = self.filename!
+            lastElement = tilemap
+        }
+        
+        
+        if elementName == "property" {
+            guard let name = attributeDict["name"] else { parser.abortParsing(); return }
+            guard let value = attributeDict["value"] else { parser.abortParsing(); return }
+            //guard let value = attributeDict["type"] else { parser.abortParsing(); return }
+            
+            var propertyType = "string"
+            if let ptype = attributeDict["type"] {
+                propertyType = ptype
+            }
+            
+            
+            properties[name] = value
+        }
+        
+        
+        // 'layer' indicates a Tile layer
+        if (elementName == "layer") {
+            guard let _ = attributeDict["name"] else { parser.abortParsing(); return }
+            guard let layer = SKTileLayer(tileMap: self.tilemap!, attributes: attributeDict)
+                else {
+                parser.abortParsing()
+                return
+            }
+            
+            self.tilemap!.addTileLayer(layer)
+            lastElement = layer
+        }
+        
+        // 'objectgroup' indicates an Object layer
+        if (elementName == "objectgroup") {
+            guard let _ = attributeDict["name"] else { parser.abortParsing(); return }
+            guard let objectsGroup = SKObjectGroup(tileMap: self.tilemap!, attributes: attributeDict)
+                else {
+                    parser.abortParsing()
+                    return
+            }
+            
+            self.tilemap!.addTileLayer(objectsGroup)
+            lastElement = objectsGroup
+        }
+        
+        // 'imagelayer' indicates an Image layer
+        if (elementName == "imagelayer") {
+            guard let _ = attributeDict["name"] else { parser.abortParsing(); return }
+            guard let imageLayer = SKImageLayer(tileMap: self.tilemap!, attributes: attributeDict)
+                else {
+                    parser.abortParsing()
+                    return
+            }
+            
+            self.tilemap!.addTileLayer(imageLayer)
+            lastElement = imageLayer
+        }
+        
+        // look for last element to be a tileset or imagelayer
+        if (elementName == "image") {
+            guard let imageWidth = attributeDict["width"] else { parser.abortParsing(); return }
+            guard let imageHeight = attributeDict["height"] else { parser.abortParsing(); return }
+            guard let imageSource = attributeDict["source"] else { parser.abortParsing(); return }
+            if let imageLayer = lastElement as? SKImageLayer {
+                // TODO: add this as a function
+                let texture = SKTexture(imageNamed: imageSource)
+                texture.filteringMode = .Nearest
+                imageLayer.sprite = SKSpriteNode(texture: texture)
+                imageLayer.addChild(imageLayer.sprite!)
+            }
+        }
+        
+        // external will have a 'source' attribute, otherwise 'image'
+        if (elementName == "tileset") {
+            if let source = attributeDict["source"] {
+                print("external tileset: \"\(source)\"")
+            }
+            
+            guard let tileset = SKTileset(attributes: attributeDict) else {
+                parser.abortParsing()
+                return
+            }
+                
+            tilemap!.addTileset(tileset)
+            lastElement = tileset
+            
+        }
+        
+        
+        if elementName == "tile" {
+            
+            if let gid = attributeDict["gid"] where (Int(gid) != nil) && encoding == .XML {
+                data.append(Int(gid)!)
+            }
+            else if let id = attributeDict["id"] where (Int(id) != nil) {
+                lastID = Int(id)!
+            } else {
+                parser.abortParsing()
+                return
+            }
+        }
+
+        // look for last element to be an object group
+        if (elementName == "object") {
+ 
+        }
+        
+        // decode data here, and reset
+        if (elementName == "data") {
+            // get the encoding...
+            if let encoding = attributeDict["encoding"] {
+                self.encoding = TilemapEncoding(rawValue: encoding)!
+            }
+            
+            // check if there's compression, need to uncompress
+            // if this has  a value
+            if let compression = attributeDict["compression"] {
+                print(" -> found \(encoding) data (\(compression))")
+            } else {
+                print(" -> found \(encoding) data")
+            }
         }
     }
     
-    public func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-    }
     
+    // didEndElement happens whenever parser ends a key: </key>
+    public func parser(parser: NSXMLParser,
+                       didEndElement elementName: String,
+                       namespaceURI: String?,
+                       qualifiedName qName: String?) {
+        
+        // look for last element to be a tileset or imagelayer
+        if (elementName == "image") {
+            
+        }
+        
+        // look for last element to be a property
+        if (elementName == "properties") {
+            
+        }
+        
+        // look for last element to be a layer
+        if (elementName == "data") {
+            
+        }
+        
+        // look for last element to be a data
+        if (elementName == "tile") {
+        }
+        
+        // look for last element to be an object group
+        if (elementName == "object") {
+        }
+        
+        
+        // special case - look for last element to be a object
+        // this signifies that the object should be an ellipse
+        if (elementName == "ellipse") {
+            
+        }
+        
+        // look for last element to be a tileset
+        if (elementName == "tileoffset") {
+            
+        }
+        
+        // look for last element to be an object group
+        if (elementName == "data") {
+            
+            // reset data
+            data = []
+        }
+        
+        // reset character data
+        characterData = ""
+    }
+ 
+    
+    // foundCharacters happens whenever parser enters a key
     public func parser(parser: NSXMLParser, foundCharacters string: String) {
-        print("TMXParser: Parsing characters...")
+        characterData += string
     }
     
     public func parser(parser: NSXMLParser, parseErrorOccurred parseError: NSError) {
         print("TMXParser: parse error...")
     }
+    
 }
 
+
+
+
+
+
+
+extension MapSize: CustomStringConvertible, CustomDebugStringConvertible {
+    
+    public var cgSize: CGSize {
+        return CGSizeMake(width, height)
+    }
+    
+    public var description: String {
+        return "\(Int(width)) x \(Int(height))"
+    }
+    
+    public var debugDescription: String {
+        return description
+    }
+}
+
+
+extension TileSize: CustomStringConvertible, CustomDebugStringConvertible {
+    
+    public var cgSize: CGSize {
+        return CGSizeMake(width, height)
+    }
+    
+    public var description: String {
+        return "\(Int(width)) x \(Int(height))"
+    }
+    
+    public var debugDescription: String {
+        return description
+    }
+}
+
+
+extension Property: CustomStringConvertible {
+    public var description: String {
+        return "Property: \"\(name)\": \"\(value)\""
+    }
+}
+
+
+extension TileLayer: CustomStringConvertible {
+    public var description: String {
+        return "Layer: \"\(name)\": \"\(mapSize.description)\""
+    }
+}
 

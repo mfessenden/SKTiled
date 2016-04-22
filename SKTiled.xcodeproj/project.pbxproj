@@ -14,13 +14,19 @@
 		4CBA61901D8A0A5700B31FC1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CBA61891D8A0A5700B31FC1 /* Main.storyboard */; };
 		4CBA61911D8A0A5700B31FC1 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA618B1D8A0A5700B31FC1 /* GameViewController.swift */; };
 		4CBA61921D8A0A5700B31FC1 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CBA618C1D8A0A5700B31FC1 /* Info.plist */; };
-		4CBA61991D8A0A6C00B31FC1 /* Array2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61941D8A0A6C00B31FC1 /* Array2D.swift */; };
-		4CBA619A1D8A0A6C00B31FC1 /* SKTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61951D8A0A6C00B31FC1 /* SKTileLayer.swift */; };
-		4CBA619B1D8A0A6C00B31FC1 /* SKTilemap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61961D8A0A6C00B31FC1 /* SKTilemap.swift */; };
-		4CBA619C1D8A0A6C00B31FC1 /* SKTileset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61971D8A0A6C00B31FC1 /* SKTileset.swift */; };
-		4CBA619D1D8A0A6C00B31FC1 /* SKTMXParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61981D8A0A6C00B31FC1 /* SKTMXParser.swift */; };
 		4CBA61A11D8A0ACF00B31FC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CBA619F1D8A0ACF00B31FC1 /* Assets.xcassets */; };
 		4CBA61A21D8A0ACF00B31FC1 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61A01D8A0ACF00B31FC1 /* GameScene.swift */; };
+		4CBA61AE1D8A134200B31FC1 /* Array2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61A31D8A134200B31FC1 /* Array2D.swift */; };
+		4CBA61AF1D8A134200B31FC1 /* SKTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61A41D8A134200B31FC1 /* SKTile.swift */; };
+		4CBA61B01D8A134200B31FC1 /* SKTileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61A51D8A134200B31FC1 /* SKTileData.swift */; };
+		4CBA61B11D8A134200B31FC1 /* SKTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61A61D8A134200B31FC1 /* SKTileLayer.swift */; };
+		4CBA61B21D8A134200B31FC1 /* SKTilemap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61A71D8A134200B31FC1 /* SKTilemap.swift */; };
+		4CBA61B31D8A134200B31FC1 /* SKTilemap+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61A81D8A134200B31FC1 /* SKTilemap+Debug.swift */; };
+		4CBA61B41D8A134200B31FC1 /* SKTileObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61A91D8A134200B31FC1 /* SKTileObject.swift */; };
+		4CBA61B51D8A134200B31FC1 /* SKTileset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61AA1D8A134200B31FC1 /* SKTileset.swift */; };
+		4CBA61B61D8A134200B31FC1 /* SKTilesetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61AB1D8A134200B31FC1 /* SKTilesetData.swift */; };
+		4CBA61B71D8A134200B31FC1 /* SKTMXParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61AC1D8A134200B31FC1 /* SKTMXParser.swift */; };
+		4CBA61B81D8A134200B31FC1 /* SKTSXParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61AD1D8A134200B31FC1 /* SKTSXParser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,13 +39,19 @@
 		4CBA618A1D8A0A5700B31FC1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4CBA618B1D8A0A5700B31FC1 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		4CBA618C1D8A0A5700B31FC1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4CBA61941D8A0A6C00B31FC1 /* Array2D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array2D.swift; sourceTree = "<group>"; };
-		4CBA61951D8A0A6C00B31FC1 /* SKTileLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTileLayer.swift; sourceTree = "<group>"; };
-		4CBA61961D8A0A6C00B31FC1 /* SKTilemap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTilemap.swift; sourceTree = "<group>"; };
-		4CBA61971D8A0A6C00B31FC1 /* SKTileset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTileset.swift; sourceTree = "<group>"; };
-		4CBA61981D8A0A6C00B31FC1 /* SKTMXParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTMXParser.swift; sourceTree = "<group>"; };
 		4CBA619F1D8A0ACF00B31FC1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4CBA61A01D8A0ACF00B31FC1 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		4CBA61A31D8A134200B31FC1 /* Array2D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array2D.swift; sourceTree = "<group>"; };
+		4CBA61A41D8A134200B31FC1 /* SKTile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTile.swift; sourceTree = "<group>"; };
+		4CBA61A51D8A134200B31FC1 /* SKTileData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTileData.swift; sourceTree = "<group>"; };
+		4CBA61A61D8A134200B31FC1 /* SKTileLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTileLayer.swift; sourceTree = "<group>"; };
+		4CBA61A71D8A134200B31FC1 /* SKTilemap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTilemap.swift; sourceTree = "<group>"; };
+		4CBA61A81D8A134200B31FC1 /* SKTilemap+Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKTilemap+Debug.swift"; sourceTree = "<group>"; };
+		4CBA61A91D8A134200B31FC1 /* SKTileObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTileObject.swift; sourceTree = "<group>"; };
+		4CBA61AA1D8A134200B31FC1 /* SKTileset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTileset.swift; sourceTree = "<group>"; };
+		4CBA61AB1D8A134200B31FC1 /* SKTilesetData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTilesetData.swift; sourceTree = "<group>"; };
+		4CBA61AC1D8A134200B31FC1 /* SKTMXParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTMXParser.swift; sourceTree = "<group>"; };
+		4CBA61AD1D8A134200B31FC1 /* SKTSXParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTSXParser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,11 +120,17 @@
 		4CBA61931D8A0A6C00B31FC1 /* SKTiled */ = {
 			isa = PBXGroup;
 			children = (
-				4CBA61941D8A0A6C00B31FC1 /* Array2D.swift */,
-				4CBA61951D8A0A6C00B31FC1 /* SKTileLayer.swift */,
-				4CBA61961D8A0A6C00B31FC1 /* SKTilemap.swift */,
-				4CBA61971D8A0A6C00B31FC1 /* SKTileset.swift */,
-				4CBA61981D8A0A6C00B31FC1 /* SKTMXParser.swift */,
+				4CBA61A31D8A134200B31FC1 /* Array2D.swift */,
+				4CBA61A41D8A134200B31FC1 /* SKTile.swift */,
+				4CBA61A51D8A134200B31FC1 /* SKTileData.swift */,
+				4CBA61A61D8A134200B31FC1 /* SKTileLayer.swift */,
+				4CBA61A71D8A134200B31FC1 /* SKTilemap.swift */,
+				4CBA61A81D8A134200B31FC1 /* SKTilemap+Debug.swift */,
+				4CBA61A91D8A134200B31FC1 /* SKTileObject.swift */,
+				4CBA61AA1D8A134200B31FC1 /* SKTileset.swift */,
+				4CBA61AB1D8A134200B31FC1 /* SKTilesetData.swift */,
+				4CBA61AC1D8A134200B31FC1 /* SKTMXParser.swift */,
+				4CBA61AD1D8A134200B31FC1 /* SKTSXParser.swift */,
 			);
 			name = SKTiled;
 			path = Swift/SKTiled;
@@ -202,14 +220,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CBA619B1D8A0A6C00B31FC1 /* SKTilemap.swift in Sources */,
-				4CBA619D1D8A0A6C00B31FC1 /* SKTMXParser.swift in Sources */,
+				4CBA61B71D8A134200B31FC1 /* SKTMXParser.swift in Sources */,
+				4CBA61B61D8A134200B31FC1 /* SKTilesetData.swift in Sources */,
 				4CBA61A21D8A0ACF00B31FC1 /* GameScene.swift in Sources */,
+				4CBA61AE1D8A134200B31FC1 /* Array2D.swift in Sources */,
+				4CBA61B11D8A134200B31FC1 /* SKTileLayer.swift in Sources */,
 				4CBA61911D8A0A5700B31FC1 /* GameViewController.swift in Sources */,
-				4CBA619C1D8A0A6C00B31FC1 /* SKTileset.swift in Sources */,
-				4CBA619A1D8A0A6C00B31FC1 /* SKTileLayer.swift in Sources */,
-				4CBA61991D8A0A6C00B31FC1 /* Array2D.swift in Sources */,
+				4CBA61B41D8A134200B31FC1 /* SKTileObject.swift in Sources */,
+				4CBA61B21D8A134200B31FC1 /* SKTilemap.swift in Sources */,
+				4CBA61B81D8A134200B31FC1 /* SKTSXParser.swift in Sources */,
+				4CBA61B31D8A134200B31FC1 /* SKTilemap+Debug.swift in Sources */,
 				4CBA618E1D8A0A5700B31FC1 /* AppDelegate.swift in Sources */,
+				4CBA61AF1D8A134200B31FC1 /* SKTile.swift in Sources */,
+				4CBA61B01D8A134200B31FC1 /* SKTileData.swift in Sources */,
+				4CBA61B51D8A134200B31FC1 /* SKTileset.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,6 +385,7 @@
 				4CBA617D1D8A048300B31FC1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
