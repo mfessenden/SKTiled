@@ -6,7 +6,6 @@
 //  Copyright © 2016 Michael Fessenden. All rights reserved.
 //
 
-
 import SpriteKit
 
 
@@ -16,8 +15,9 @@ public class TiledLayerObject: SKNode {
     unowned var tilemap: SKTilemap
     
     // need to add UUID to hash each layer, as layer names can be the same
-    public var uuid: Int = 0
-    public var visible: Bool = true
+    public var uuid: String
+    public var index: Int = 0                       // index of the layer in the tmx file
+    public var visible: Bool = true                 // map this to hidden
     public var opacity: CGFloat = 1.0
     public var offset: CGPoint = CGPointZero
     
@@ -25,6 +25,8 @@ public class TiledLayerObject: SKNode {
     public var properties: [String: String] = [:]
     
     public init(layerName: String, tileMap: SKTilemap){
+        // create a unique id right away
+        self.uuid = NSUUID().UUIDString
         self.tilemap = tileMap
         super.init()
         self.name = layerName
@@ -35,7 +37,7 @@ public class TiledLayerObject: SKNode {
     }
     
     override public var hashValue: Int {
-        return self.name!.hashValue
+        return self.uuid.hashValue
     }
 }
 
@@ -47,7 +49,6 @@ public class SKTileLayer: TiledLayerObject {
     
     // layer size
     public var size: CGSize
-    public var index: Int = 1
     
     // container for the tile sprites
     private var tiles: TilesArray
@@ -74,12 +75,10 @@ public class SKTileLayer: TiledLayerObject {
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override public var hashValue: Int {
-        return self.name!.hashValue
-    }
 }
 
+
+// object group draw order
 public enum ObjectGroupDrawOrder: String {
     case TopDown
     case Manual

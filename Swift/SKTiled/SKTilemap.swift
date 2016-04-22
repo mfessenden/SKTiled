@@ -62,12 +62,13 @@ public class SKTilemap: SKNode {
     
     // MARK: - Tilesets
     public func addTileset(tileset: SKTileset) {
+        print("[SKTilemap]: adding tileset: \"\(tileset.name)\"")
         tileSets.insert(tileset)
     }
     
     // MARK: - Layers
     public func addTileLayer(layer: TiledLayerObject) {
-        print(" -> adding layer: \"\(layer.name!)\"")
+        print("[SKTilemap]: adding layer: \"\(layer.name!)\"")
         tileLayers.insert(layer)
         // TODO: zPosition
         // TODO: alignment/anchorpoint
@@ -82,9 +83,9 @@ public class SKTilemap: SKNode {
      */
     public func getTileLayer(name: String) -> TiledLayerObject? {
         if let index = tileLayers.indexOf( { $0.name == name } ) {
-            return tileLayers[index]
+            let layer = tileLayers[index]
+            return layer
         }
-        
         return nil
     }
 }

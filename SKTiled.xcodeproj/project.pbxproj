@@ -65,6 +65,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C88E1881D8A156800FCCFA3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4CBA61A81D8A134200B31FC1 /* SKTilemap+Debug.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		4CBA615C1D8A048200B31FC1 = {
 			isa = PBXGroup;
 			children = (
@@ -120,12 +128,12 @@
 		4CBA61931D8A0A6C00B31FC1 /* SKTiled */ = {
 			isa = PBXGroup;
 			children = (
+				4C88E1881D8A156800FCCFA3 /* Extensions */,
 				4CBA61A31D8A134200B31FC1 /* Array2D.swift */,
 				4CBA61A41D8A134200B31FC1 /* SKTile.swift */,
 				4CBA61A51D8A134200B31FC1 /* SKTileData.swift */,
 				4CBA61A61D8A134200B31FC1 /* SKTileLayer.swift */,
 				4CBA61A71D8A134200B31FC1 /* SKTilemap.swift */,
-				4CBA61A81D8A134200B31FC1 /* SKTilemap+Debug.swift */,
 				4CBA61A91D8A134200B31FC1 /* SKTileObject.swift */,
 				4CBA61AA1D8A134200B31FC1 /* SKTileset.swift */,
 				4CBA61AB1D8A134200B31FC1 /* SKTilesetData.swift */,

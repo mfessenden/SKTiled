@@ -7,7 +7,6 @@
 //  Derived from: https://medium.com/@lucascerro/understanding-nsxmlparser-in-swift-xcode-6-3-1-7c96ff6c65bc#.1m4mh6nhy
 
 import SpriteKit
-import GameplayKit
 
 
 protocol TilemapObject {
@@ -80,10 +79,11 @@ public struct TileLayer {
 // MARK: - TMX Parser
 public class TMXParser: NSObject, NSXMLParserDelegate {
     
-    public var filename: String!
+    public var fileNames: [String] = []
+    public var currentFileName: String!
     public var data: [Int] = []
     public var characterData: String = ""
-    public var tilemap: SKTilemap!
+    public var tileMap: SKTilemap!
     
     private var encoding: TilemapEncoding = .XML
     
@@ -102,20 +102,74 @@ public class TMXParser: NSObject, NSXMLParserDelegate {
         print("TMXParser: ending parsing...")
     }
     
+    /**
+     Load a tmx file and parse it.
+     
+     - parameter fileNamed: `String` file base name - tmx/tsx not required.
+     
+     - returns: `SKTilemap?` tiled map node.
+     */
     public func loadFromFile(fileNamed: String) -> SKTilemap? {
-        print("TMXParser: parsing tmx file: \"\(fileNamed).tmx\"")
-        let path: String = NSBundle.mainBundle().pathForResource(fileNamed , ofType: "tmx")!
-        let data: NSData = NSData(contentsOfFile: path)!
-        let parser: NSXMLParser = NSXMLParser(data: data)
-        
-        self.filename = fileNamed
-        parser.delegate = self
-        
-        let success: Bool = parser.parse()
-        if (success==true) {
-            return self.tilemap
+        guard let bundleFile = checkBundleForFile(fileNamed) else {
+            print("TMXParser: unable to locate file: \"\(fileNamed)\"")
+            return nil
         }
         
+        print("TMXParser: loading file: \"\(bundleFile)\"...")
+        fileNames.append(bundleFile)
+                
+        while !(fileNames.isEmpty) {
+            if let firstFileName = fileNames.first {
+                
+                currentFileName = firstFileName
+                fileNames.removeAtIndex(0)
+                
+                guard let path: String = NSBundle.mainBundle().pathForResource(currentFileName , ofType: nil) else {
+                    print("TMXParser: no path for: \"\(currentFileName)\"")
+                    return nil
+                }
+                
+                let data: NSData = NSData(contentsOfFile: path)!
+                let parser: NSXMLParser = NSXMLParser(data: data)
+                parser.delegate = self
+                
+                print("TMXParser: parsing filename: \"\(currentFileName)\"")
+                
+                var successs: Bool = parser.parse()
+                
+                if (successs == true) {
+                    print("TMXParser: parsing succeeded.")
+                } else {
+                    let errorDescription = parser.parserError?.description ?? "unknown"
+                    print("TMXParser: \(errorDescription)")
+                }
+            }
+        }
+        
+        if let tileMap = tileMap {
+            return tileMap            
+        }
+        return nil
+    }
+    
+    /**
+     Return the appropriate filename string for the given file (tmx or tsx) since Tiled stores
+     xml files with multiple extensions.
+     
+     - parameter fileName: `String` file name to search for.
+     
+     - returns: `String?` name of file in bundle.
+     */
+    public func checkBundleForFile(fileName: String) -> String? {
+        let fileBaseName = fileName.componentsSeparatedByString(".")[0]
+        for fileExtension in ["tmx", "tsx"] {
+            if let url = NSBundle.mainBundle().URLForResource(fileBaseName, withExtension: fileExtension) {
+                let filepath = url.absoluteString
+                if let filename = filepath.componentsSeparatedByString("/").last {
+                    return filename
+                }
+            }
+        }
         return nil
     }
     
@@ -128,15 +182,52 @@ public class TMXParser: NSObject, NSXMLParserDelegate {
         
         activeElement = elementName
         
+        //print("TMXParser: element name: \"\(elementName)\"")
+        
         if (elementName == "map") {
             guard let tilemap = SKTilemap(attributes: attributeDict) else {
                 parser.abortParsing()
                 return
             }
             
-            self.tilemap = tilemap
-            self.tilemap.name = self.filename!
+            self.tileMap = tilemap
+            self.tileMap.name = currentFileName
             lastElement = tilemap
+        }
+        
+        
+        // external will have a 'source' attribute, otherwise 'image'
+        if (elementName == "tileset") {
+            if let source = attributeDict["source"] {
+                if !(fileNames.contains(source)) {
+                    print("TMXParser: found external tileset: \"\(source)\"")
+                    fileNames.append(source)
+                    
+                    guard let firstGID = attributeDict["firstgid"] else { parser.abortParsing(); return }
+                    let firstGIDInt = Int(firstGID)!
+                    
+                    let tileset = SKTileset(source: source, firstgid: firstGIDInt, tilemap: self.tileMap)
+                    self.tileMap.addTileset(tileset)
+                    lastElement = tileset
+                }
+                
+                /*
+                 guard let tileset = TSXParser().loadFromFile(source) else {
+                 print("TMXParser: error reading tileset file: \"\(source)\"")
+                 parser.abortParsing()
+                 return
+                 }
+                 */
+            }
+            /*
+             guard let tileset = SKTileset(attributes: attributeDict) else {
+             parser.abortParsing()
+             return
+             }
+             
+             tileMap!.addTileset(tileset)
+             lastElement = tileset
+             */
         }
         
         
@@ -158,39 +249,39 @@ public class TMXParser: NSObject, NSXMLParserDelegate {
         // 'layer' indicates a Tile layer
         if (elementName == "layer") {
             guard let _ = attributeDict["name"] else { parser.abortParsing(); return }
-            guard let layer = SKTileLayer(tileMap: self.tilemap!, attributes: attributeDict)
+            guard let layer = SKTileLayer(tileMap: self.tileMap!, attributes: attributeDict)
                 else {
                 parser.abortParsing()
                 return
             }
             
-            self.tilemap!.addTileLayer(layer)
+            self.tileMap!.addTileLayer(layer)
             lastElement = layer
         }
         
         // 'objectgroup' indicates an Object layer
         if (elementName == "objectgroup") {
             guard let _ = attributeDict["name"] else { parser.abortParsing(); return }
-            guard let objectsGroup = SKObjectGroup(tileMap: self.tilemap!, attributes: attributeDict)
+            guard let objectsGroup = SKObjectGroup(tileMap: self.tileMap!, attributes: attributeDict)
                 else {
                     parser.abortParsing()
                     return
             }
             
-            self.tilemap!.addTileLayer(objectsGroup)
+            self.tileMap!.addTileLayer(objectsGroup)
             lastElement = objectsGroup
         }
         
         // 'imagelayer' indicates an Image layer
         if (elementName == "imagelayer") {
             guard let _ = attributeDict["name"] else { parser.abortParsing(); return }
-            guard let imageLayer = SKImageLayer(tileMap: self.tilemap!, attributes: attributeDict)
+            guard let imageLayer = SKImageLayer(tileMap: self.tileMap!, attributes: attributeDict)
                 else {
                     parser.abortParsing()
                     return
             }
             
-            self.tilemap!.addTileLayer(imageLayer)
+            self.tileMap!.addTileLayer(imageLayer)
             lastElement = imageLayer
         }
         
@@ -207,24 +298,7 @@ public class TMXParser: NSObject, NSXMLParserDelegate {
                 imageLayer.addChild(imageLayer.sprite!)
             }
         }
-        
-        // external will have a 'source' attribute, otherwise 'image'
-        if (elementName == "tileset") {
-            if let source = attributeDict["source"] {
-                print("external tileset: \"\(source)\"")
-            }
-            
-            guard let tileset = SKTileset(attributes: attributeDict) else {
-                parser.abortParsing()
-                return
-            }
-                
-            tilemap!.addTileset(tileset)
-            lastElement = tileset
-            
-        }
-        
-        
+
         if elementName == "tile" {
             
             if let gid = attributeDict["gid"] where (Int(gid) != nil) && encoding == .XML {
@@ -326,11 +400,6 @@ public class TMXParser: NSObject, NSXMLParserDelegate {
 }
 
 
-
-
-
-
-
 extension MapSize: CustomStringConvertible, CustomDebugStringConvertible {
     
     public var cgSize: CGSize {
@@ -375,4 +444,3 @@ extension TileLayer: CustomStringConvertible {
         return "Layer: \"\(name)\": \"\(mapSize.description)\""
     }
 }
-

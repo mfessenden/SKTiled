@@ -10,7 +10,7 @@ import SpriteKit
 
 
 /// represents a single tile object.
-class SKTile: SKSpriteNode {
+public class SKTile: SKSpriteNode {
     
     public var tileData: SKTileData
     weak public var tileLayer: SKTileLayer!         // layer parent, assigned on add
@@ -20,8 +20,7 @@ class SKTile: SKSpriteNode {
         super.init(texture: SKTexture(), color: SKColor.clearColor(), size: tileData.tileSet.tileSize.cgSize)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
