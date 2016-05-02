@@ -3,7 +3,7 @@
 //  SKTiled
 //
 //  Created by Michael Fessenden on 3/21/16.
-//  Copyright (c) 2016 Michael Fessenden. All rights reserved.
+//  Copyright © 2016 Michael Fessenden. All rights reserved.
 //
 
 import SpriteKit
@@ -21,13 +21,15 @@ public class SKTilemap: SKNode {
     public var tileLayers: Set<TiledLayerObject> = []
     public var properties: [String: String] = [:]
     
+    public var zDeltaForLayers: CGFloat = 50
+    
     public var size: CGSize {
         return CGSizeMake((mapSize.width * tileSize.width), (mapSize.height * tileSize.height))
     }
     
     // MARK: - Loading
     public class func loadTMX(fileNamed: String) -> SKTilemap? {
-        if let tilemap = TMXParser().loadFromFile(fileNamed) {
+        if let tilemap = SKTiledmapParser().loadFromFile(fileNamed) {
             return tilemap
         }
         return nil
@@ -39,15 +41,15 @@ public class SKTilemap: SKNode {
      
      - parameter attributes: `Dictionary` attributes dictionary.
      
-     - returns: `SKTilemap?`
+     - returns: `SKTileMapNode?`
      */
     public init?(attributes: [String: String]) {
-        guard let width = attributes["width"] as String! else { return nil }
-        guard let height = attributes["height"] as String! else { return nil }
-        guard let tilewidth = attributes["tilewidth"] as String! else { return nil }
-        guard let tileheight = attributes["tileheight"] as String! else { return nil }
-        guard let orient = attributes["orientation"] as String! else { return nil }
-
+        guard let width = attributes["width"] else { return nil }
+        guard let height = attributes["height"] else { return nil }
+        guard let tilewidth = attributes["tilewidth"] else { return nil }
+        guard let tileheight = attributes["tileheight"] else { return nil }
+        guard let orient = attributes["orientation"] else { return nil }
+        
         mapSize = MapSize(width: CGFloat(Int(width)!), height: CGFloat(Int(height)!))
         tileSize = TileSize(width: CGFloat(Int(tilewidth)!), height: CGFloat(Int(tileheight)!))
         if let fileOrientation: TilemapOrientation = TilemapOrientation(rawValue: orient){
@@ -66,9 +68,33 @@ public class SKTilemap: SKNode {
         tileSets.insert(tileset)
     }
     
+    /**
+     Returns a named tileset from the tilesets set.
+     
+     - parameter name: `String` tileset to return.
+     
+     - returns: `SKTileset?` tileset object.
+     */
+    public func getTileset(name: String) -> SKTileset? {
+        if let index = tileSets.indexOf( { $0.name == name } ) {
+            let tileset = tileSets[index]
+            return tileset
+        }
+        return nil
+    }
+    
     // MARK: - Layers
+    public func layerNames() -> [String] {
+        return tileLayers.flatMap { $0.name }
+    }
+    
     public func addTileLayer(layer: TiledLayerObject) {
-        print("[SKTilemap]: adding layer: \"\(layer.name!)\"")
+        // debugging
+        var layerType = "tile"
+        if let _ = layer as? SKObjectGroup { layerType = "object" }
+        if let _ = layer as? SKImageLayer { layerType = "image" }
+        
+        print("[SKTilemap]: adding \(layerType) layer: \"\(layer.name!)\" at index \(layer.index)")
         tileLayers.insert(layer)
         // TODO: zPosition
         // TODO: alignment/anchorpoint
@@ -77,7 +103,7 @@ public class SKTilemap: SKNode {
     /**
      Returns a named tile layer from the layers set.
      
-     - parameter name: `String` tile layer to query.
+     - parameter name: `String` tile layer to return.
      
      - returns: `SKTileLayer?` tile layer object.
      */
@@ -88,11 +114,22 @@ public class SKTilemap: SKNode {
         }
         return nil
     }
+    
+    // MARK: - Data
+    public func getTileData(gid: Int) -> SKTilesetData? {
+        for tileset in tileSets {
+            if let tileData = tileset.getTileData(gid) {
+                return tileData
+            }
+        }
+        return nil
+    }
 }
 
 
 
 extension SKTilemap {
+    
     override public var description: String {
         if let name = name {
             return "Tilemap: \"\(name)\", \(mapSize)"
