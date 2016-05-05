@@ -7,7 +7,6 @@
 //
 //  Reference:  http://doc.mapeditor.org/reference/tmx-map-format/
 
-
 import SpriteKit
 
 // Tileset tag in tmx (inline):
@@ -24,10 +23,10 @@ public class SKTileset {
     public var name: String
     weak public var tilemap: SKTilemap!
     public var tileSize: TileSize!
-    
+
     public var columns: Int = 0                     // number of columns
     public var firstGID: Int = 1                    // first GID
-    
+        
     // image spacing
     public var spacing: Int = 0                     // spacing between tiles
     public var margin: Int = 0                      // border margin
@@ -41,6 +40,17 @@ public class SKTileset {
     
     // tile data
     public var tileData: Set<SKTilesetData> = []    // tile data attributes
+    
+    // returns the last GID in the tileset
+    public var lastGID: Int {
+        var gid = firstGID
+        for data in tileData {
+            if data.id > gid {
+                gid = data.id
+            }
+        }
+        return gid
+    }
     
     public init(name: String, tilemap: SKTilemap, columns: Int=0, offset: CGPoint=CGPointZero) {
         self.name = name
@@ -90,7 +100,7 @@ public class SKTileset {
         if let margins = attributes["margin"] {
             self.margin = Int(margins)!
         }
-        
+
         self.name = layerName
         self.firstGID = Int(firstgid)!
         self.tileSize = TileSize(width: CGFloat(Int(width)!), height: CGFloat(Int(width)!))
@@ -106,7 +116,7 @@ public class SKTileset {
      - parameter source: `String` image named referenced in the tileset.
      */
     public func addTextures(fromSpriteSheet source: String) {
-        
+        let timer = NSDate()
         self.source = source
         print("[SKTileset]: adding sprite sheet source: \"\(self.source)\"")
         
@@ -123,9 +133,6 @@ public class SKTileset {
         
         let totalTileCount = colTileCount * rowTileCount
         
-        //print("  -> tiles: \(totalTileCount), columns: \(colTileCount), rows: \(rowTileCount), firstGID: \(firstGID)")
-        //print("  -> margin: \(margin), spacing: \(spacing)")
-        
         let rowHeight = Int(tileSize.height) * rowTileCount     // row height (minus spacing)
         let rowSpacing = spacing * (rowTileCount - 1)           // actual row spacing
         
@@ -141,7 +148,6 @@ public class SKTileset {
         for gid in firstGID..<(firstGID + totalTileCount) {
             
             let rectStartX = CGFloat(x) / CGFloat(textureWidth)
-            // 64.0 / 56.0
             let rectStartY = CGFloat(y) / CGFloat(textureHeight)
             
             let rectWidth = tileSize.width / CGFloat(textureWidth)
@@ -160,6 +166,11 @@ public class SKTileset {
                 y -= Int(tileSize.height) + spacing
             }
         }
+        
+        // time results
+        let timeInterval = NSDate().timeIntervalSinceDate(timer)
+        let timeStamp = String(format: "%.\(String(3))f", timeInterval)
+        print("[SKTileset]: tileset built in: \(timeStamp)s\n")
     }
     
     public func addTextures(fromAtlas: String) {
@@ -176,7 +187,6 @@ public class SKTileset {
      - parameter texture: `SKTexture` texture for tile at the given id.
      */
     public func addTilesetTile(tileID: Int, texture: SKTexture) -> SKTilesetData? {
-        // TODO: clean up
         guard !(self.tileData.contains( { $0.hashValue == tileID.hashValue } )) else {
             print("[SKTileset]: tile data exists at id: \(tileID)")
             return nil
@@ -228,4 +238,3 @@ extension SKTileset: CustomStringConvertible, CustomDebugStringConvertible {
         return description
     }
 }
-

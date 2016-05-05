@@ -8,6 +8,9 @@
 
 import SpriteKit
 
+import SpriteKit
+import GameplayKit
+
 
 public class SKTilemap: SKNode {
     
@@ -23,8 +26,32 @@ public class SKTilemap: SKNode {
     
     public var zDeltaForLayers: CGFloat = 50
     
+    // emulate size & anchor point
     public var size: CGSize {
         return CGSizeMake((mapSize.width * tileSize.width), (mapSize.height * tileSize.height))
+    }
+    
+    public var anchorPoint: CGPoint {
+        return CGPointMake(0.5, 0.5)
+    }
+    
+    public var centerPoint: CGPoint {
+        return CGPointMake((self.size.width * anchorPoint.x) * -1, (self.size.height * anchorPoint.y) * -1)
+    }
+    
+    public var renderSize: CGSize {
+        return CGSizeMake(mapSize.width * tileSize.width, mapSize.height * tileSize.height)
+    }
+    
+    // returns the last GID for all of the tilesets.
+    public var lastGID: Int {
+        var lastID = 0
+        for tileset in tileSets {
+            if tileset.lastGID > lastID {
+                lastID = tileset.lastGID
+            }
+        }
+        return lastID + 1
     }
     
     // MARK: - Loading
@@ -41,7 +68,7 @@ public class SKTilemap: SKNode {
      
      - parameter attributes: `Dictionary` attributes dictionary.
      
-     - returns: `SKTileMapNode?`
+     - returns: `SKTilemap?`
      */
     public init?(attributes: [String: String]) {
         guard let width = attributes["width"] else { return nil }
@@ -83,21 +110,44 @@ public class SKTilemap: SKNode {
         return nil
     }
     
+    // MARK: - Coordinates
+    public func pointForCoordinate(x: Int, y: Int) -> CGPoint {
+        // invert the y-coordinate value
+        let ry = (Int(mapSize.height) - y) - 1
+        let xPos: CGFloat = CGFloat(x * Int(tileSize.width) + Int(anchorPoint.x * tileSize.width))
+        let yPos: CGFloat = CGFloat(ry * Int(tileSize.height) + Int(anchorPoint.y * tileSize.height))
+        return CGPointMake(xPos, yPos)
+    }
+    
     // MARK: - Layers
     public func layerNames() -> [String] {
         return tileLayers.flatMap { $0.name }
     }
     
-    public func addTileLayer(layer: TiledLayerObject) {
+    public func addLayer(layer: TiledLayerObject) {
         // debugging
         var layerType = "tile"
         if let _ = layer as? SKObjectGroup { layerType = "object" }
         if let _ = layer as? SKImageLayer { layerType = "image" }
         
-        print("[SKTilemap]: adding \(layerType) layer: \"\(layer.name!)\" at index \(layer.index)")
+        print("[SKTilemap]: adding \(layerType) layer: \"\(layer.index):\(layer.name!)\"")
         tileLayers.insert(layer)
-        // TODO: zPosition
-        // TODO: alignment/anchorpoint
+        addChild(layer)
+        positionLayer(layer)
+        //layer.zPosition = zDeltaForLayers * CGFloat(layer.index)
+    }
+    
+    // position the layer so that it aligns with the anchorpoint.
+    private func positionLayer(layer: TiledLayerObject) {
+        var layerPosition = CGPointZero
+        if orientation == .Orthogonal {
+            // -608 * 0.5 = -304
+            layerPosition.x = -renderSize.width * anchorPoint.x
+            // 608 - (0.5 * 608) = 304
+            layerPosition.y = -renderSize.height * anchorPoint.y
+        }
+        
+        layer.position = layerPosition
     }
     
     /**
@@ -107,8 +157,8 @@ public class SKTilemap: SKNode {
      
      - returns: `SKTileLayer?` tile layer object.
      */
-    public func getTileLayer(name: String) -> TiledLayerObject? {
-        if let index = tileLayers.indexOf( { $0.name == name } ) {
+    public func getLayer(named: String) -> TiledLayerObject? {
+        if let index = tileLayers.indexOf( { $0.name == named } ) {
             let layer = tileLayers[index]
             return layer
         }
@@ -131,10 +181,11 @@ public class SKTilemap: SKNode {
 extension SKTilemap {
     
     override public var description: String {
+        var tilemapName = "(null)"
         if let name = name {
-            return "Tilemap: \"\(name)\", \(mapSize)"
+            tilemapName = "\"\(name)\""
         }
-        return "Tilemap: (null), \(mapSize)"
+        return "Tilemap: \(tilemapName), \(mapSize) @ \(tileSize)"
     }
     
     override public var debugDescription: String {

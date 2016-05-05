@@ -67,6 +67,12 @@ public struct TileSize {
 }
 
 
+public var TileSizeZero = TileSize(width: 0, height: 0)
+public var TileSize8x8  = TileSize(width: 8, height: 8)
+public var TileSize16x16 = TileSize(width: 16, height: 16)
+
+
+
 public struct MapSize {
     public var width: CGFloat
     public var height: CGFloat
@@ -187,6 +193,7 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
                                                      attributes attributeDict: [String: String])  {
         
         activeElement = elementName
+        
         if (elementName == "map") {
             guard let tilemap = SKTilemap(attributes: attributeDict) else {
                 parser.abortParsing()
@@ -206,7 +213,7 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
             if let source = attributeDict["source"] {
                 
                 if !(fileNames.contains(source)) {
-                    print("adding tileset source: \"\(source)\"")
+                    //print("adding tileset source: \"\(source)\"")
                     fileNames.append(source)
                     
                     guard let firstGID = attributeDict["firstgid"] else { parser.abortParsing(); return }
@@ -217,6 +224,7 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
                     lastElement = tileset
                 }
             }
+            
             
             // inline tileset
             if let name = attributeDict["name"] {
@@ -253,6 +261,14 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
             }
         }
         
+        if elementName == "tileoffset" {
+            guard let x = attributeDict["x"] else { parser.abortParsing(); return }
+            guard let y = attributeDict["y"] else { parser.abortParsing(); return }
+            
+            if let tileset = lastElement as? SKTileset {
+                tileset.offset = CGPoint(x: Int(x)!, y: Int(y)!)
+            }
+        }
         
         if elementName == "property" {
             guard let name = attributeDict["name"] else { parser.abortParsing(); return }
@@ -280,7 +296,7 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
             }
             
             layer.index = currentLayerIndex
-            self.tileMap!.addTileLayer(layer)
+            self.tileMap!.addLayer(layer)
             lastElement = layer
         }
         
@@ -294,7 +310,7 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
             }
             
             objectsGroup.index = currentLayerIndex
-            self.tileMap!.addTileLayer(objectsGroup)
+            self.tileMap!.addLayer(objectsGroup)
             lastElement = objectsGroup
         }
         
@@ -308,7 +324,7 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
             }
             
             imageLayer.index = currentLayerIndex
-            self.tileMap!.addTileLayer(imageLayer)
+            self.tileMap!.addLayer(imageLayer)
             lastElement = imageLayer
         }
         
@@ -320,11 +336,24 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
             
             // update an image layer
             if let imageLayer = lastElement as? SKImageLayer {
-                // TODO: add this as a function
-                let texture = SKTexture(imageNamed: imageSource)
-                texture.filteringMode = .Nearest
-                imageLayer.sprite = SKSpriteNode(texture: texture)
-                imageLayer.addChild(imageLayer.sprite!)
+                
+                // set the image property
+                imageLayer.setLayerImage(imageSource)
+                //offsetx="232" offsety="400">
+                
+                // position the layer
+                var offsetx: CGFloat = 0
+                var offsety: CGFloat = 0
+                
+                if let offsetX = attributeDict["offsetx"] {
+                    offsetx = CGFloat(Double(offsetX)!)
+                }
+                
+                if let offsetY = attributeDict["offsety"] {
+                    offsety = CGFloat(Double(offsetY)!)
+                }
+                
+                imageLayer.position = CGPointMake(offsetx, offsety)
             }
             
             // update a tileset
@@ -336,7 +365,6 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
         
         
         if elementName == "tile" {
-            
             // XML data is stored with `tile` tags
             if let gid = attributeDict["gid"] {
                 let gidInt = Int(gid)!
@@ -345,8 +373,8 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
                     tileData.append(Int(gid)!)
                 }
             }
-            else if let id = attributeDict["id"] {
                 
+            else if let id = attributeDict["id"] {
                 let idInt = Int(id)!
                 lastID = idInt
             } else {
@@ -358,7 +386,6 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
         // look for last element to be an object group
         // id, x, y required
         if (elementName == "object") {
-            
             guard let tileObject = SKTileObject(attributes: attributeDict) else {
                 print("[SKTilemapParser]: Error creating object.")
                 parser.abortParsing()
@@ -386,7 +413,6 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
         }
         
         if (elementName == "polygon") {
-            
             // polygon object
             if let pointsString = attributeDict["points"] {
                 var coordinates: [[CGFloat]] = []
@@ -486,7 +512,7 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
             }
             
             if (foundData==true) {
-                let success = tileLayer.addTileData(tileData)
+                let success = tileLayer.setLayerData(tileData)
                 if (success == false) {
                     // scream bloody murder here
                     print("[SkTiledmapParser]: Error adding layer data.")
@@ -537,7 +563,7 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
             currentLayerIndex += 1
         }
         
-        if (elementName == "imageLayer") {
+        if (elementName == "imagelayer") {
             currentLayerIndex += 1
         }
         
@@ -575,6 +601,8 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
         for id in dataArray {
             if let idValue = Int(id) {
                 result.append(idValue)
+            } else {
+                print("invalid: \(id)")
             }
         }
         
@@ -584,7 +612,7 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
     /**
      Clean up and convert string Base64-formatted data.
      
-     http://stackoverflow.com/questions/28902455/convert-base64-string-to-byte-array-like-c-sharp-method-convert-frombase64string
+     See: stackoverflow.com/questions/28902455/convert-base64-string-to-byte-array-like-c-sharp-method-convert-frombase64string
      
      - parameter data: `String` Base64 formatted data to decode
      
@@ -592,7 +620,7 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
      */
     private func decodeBase64Data(base64String: String) -> [Int]? {
         if let nsdata = NSData(base64EncodedString: base64String, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters) {
-            var count = nsdata.length / sizeof(Int32)
+            let count = nsdata.length / sizeof(Int32)
             //var bytes = [Int32](count: nsdata.length, repeatedValue: 0)
             var bytes = [Int32](count: count, repeatedValue: 0)
             nsdata.getBytes(&bytes)

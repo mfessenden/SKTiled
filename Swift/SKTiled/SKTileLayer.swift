@@ -18,9 +18,16 @@ public class TiledLayerObject: SKNode {
     // need to add UUID to hash each layer, as layer names can be the same
     public var uuid: String
     public var index: Int = 0                       // index of the layer in the tmx file
-    public var visible: Bool = true                 // map this to hidden
-    public var opacity: CGFloat = 1.0
     public var offset: CGPoint = CGPointZero
+    
+    // blending/visibility
+    public var opacity: CGFloat = 1.0
+    public var visible: Bool = true {
+        didSet {
+            guard oldValue != visible else { return }
+            self.hidden = !visible
+        }
+    }
     
     // generic layer properties
     public var properties: [String: String] = [:]
@@ -89,7 +96,12 @@ public class SKTileLayer: TiledLayerObject {
         self.mapSize = MapSize(width: CGFloat(Int(width)!), height: CGFloat(Int(height)!))
         self.tiles = TilesArray(columns: Int(tileMap.mapSize.width), rows: Int(tileMap.mapSize.height))
         super.init(layerName: layerName, tileMap: tileMap)
-        self.offset = offset
+        self.offset = offset        
+        
+        // set the visibility property
+        if let visibility = attributes["visible"] {
+            self.visible = Bool(Int(visibility)!)
+        }
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -104,25 +116,49 @@ public class SKTileLayer: TiledLayerObject {
      
      - returns: `Bool` data is valid.
      */
-    public func addTileData(data: [Int]) -> Bool {
+    public func setLayerData(data: [Int]) -> Bool {
         if !(data.count==mapSize.count) {
-            print("\n[SKTileLayer]: ERROR: invalid data size: \(data.count), expected: \(mapSize.count)")
+            print("[SKTileLayer]: ERROR: invalid data size: \(data.count), expected: \(mapSize.count)")
             return false
         }
-        
-        for id in 0..<data.count {
-            let gid = data[id]
-            print("id: \(gid)")
+
+        for index in data.indices {
+            let gid = data[index]
+            
+            // skip empty tiles
+            if (gid == 0) { continue }
+            
+            let xpos = index % Int(mapSize.width)
+            let ypos = index / Int(mapSize.width)
+            
+            let tile = addTileAtCoord(xpos, y: ypos, gid: gid)
         }
-        
         return true
-        
     }
     
-    public func setTileAtCoord(x: Int, y: Int, gid: Int) {
-        print("[SKTileLayer]: setting tile at: \(x), \(y), id: \(gid)")
-        //let tileData = SKTilesetData()
-        //return SKTile()
+    /**
+     Add a tile at the given coordinate.
+     
+     - parameter x:   `Int` x-coordinate
+     - parameter y:   `Int` y-coordinate
+     - parameter gid: `Int` tile id.
+     
+     - returns: `SKTile?` tile.
+     */
+    public func addTileAtCoord(x: Int, y: Int, gid: Int) -> SKTile? {
+        //let zDelta = tilemap.zDeltaForLayers
+        if let tileData = tilemap.getTileData(gid) {
+            let tile = SKTile(data: tileData)
+            self.tiles[Int(x), Int(y)] = tile
+            
+            // add the coordinate methods from TileSprite
+            //tile.position = CGPointMake(CGFloat(x) * tilemap.tileSize.width, CGFloat(y) * tilemap.tileSize.height)
+            tile.position = tilemap.pointForCoordinate(x, y: y)
+            //tile.zPosition = CGFloat(index) * zDelta
+            addChild(tile)
+            return tile
+        }
+        return nil
     }
 }
 
@@ -149,6 +185,12 @@ public class SKObjectGroup: TiledLayerObject {
         
         super.init(layerName: layerName, tileMap: tileMap)
         self.offset = offset
+        
+        // set the visibility property
+        if let visibility = attributes["visible"] {
+            self.visible = Bool(Int(visibility)!)
+        }
+        
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -172,19 +214,21 @@ public class SKImageLayer: TiledLayerObject {
     
     public init?(tileMap: SKTilemap, attributes: [String: String], offset: CGPoint=CGPointZero) {
         guard let layerName = attributes["name"] else { return nil }
-        /*
-         guard let imageSource = attributes["source"] else { return nil }
-         guard let imageWidth = attributes["width"] else { return nil }
-         guard let imageHeight = attributes["height"] else { return nil }
-         
-         let texture = SKTexture(imageNamed: imageSource)
-         texture.filteringMode = .Nearest
-         sprite = SKSpriteNode(texture: texture)
-         */
         
         super.init(layerName: layerName, tileMap: tileMap)
         self.offset = offset
-        //addChild(sprite!)
+        
+        // set the visibility property
+        if let visibility = attributes["visible"] {
+            self.visible = Bool(Int(visibility)!)
+        }
+    }
+    
+    public func setLayerImage(named: String) {
+        let texture = SKTexture(imageNamed: named)
+        texture.filteringMode = .Nearest
+        self.sprite = SKSpriteNode(texture: texture)
+        addChild(self.sprite!)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -203,4 +247,3 @@ extension TiledLayerObject {
         return description
     }
 }
-
