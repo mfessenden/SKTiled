@@ -6,41 +6,51 @@
 //  Copyright © 2016 Michael Fessenden. All rights reserved.
 //
 
-
 import SpriteKit
 
 
 // base class for all layer types
 public class TiledLayerObject: SKNode {
     
-    unowned var tilemap: SKTilemap
-    
-    // need to add UUID to hash each layer, as layer names can be the same
-    public var uuid: String
+    public var tilemap: SKTilemap
+    // layer size
+    public var mapSize: MapSize                     // map size, ie: 28 x 36
+    public var uuid: String = NSUUID().UUIDString   // unique layer id
     public var index: Int = 0                       // index of the layer in the tmx file
-    public var offset: CGPoint = CGPointZero
+    // properties
+    public var properties: [String: String] = [:]   // generic layer properties
+    
+    public var offset: CGPoint = CGPointZero {       // layer offset value
+        didSet {
+            guard oldValue != offset else { return }
+            position = offset
+        }
+    }
     
     // blending/visibility
-    public var opacity: CGFloat = 1.0
+    public var opacity: CGFloat = 1.0 {
+        didSet {
+            guard oldValue != opacity else { return }
+            self.alpha = opacity
+        }
+    }
+    
     public var visible: Bool = true {
         didSet {
             guard oldValue != visible else { return }
             self.hidden = !visible
         }
     }
-    
-    // generic layer properties
-    public var properties: [String: String] = [:]
-    
+
     public init(layerName: String, tileMap: SKTilemap){
         // create a unique id right away
-        self.uuid = NSUUID().UUIDString
         self.tilemap = tileMap
+        self.mapSize = tileMap.mapSize
         super.init()
         self.name = layerName
     }
     
-    required public  init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -71,9 +81,6 @@ public class SKTileLayer: TiledLayerObject {
     
     private typealias TilesArray = Array2D<SKTile>
     
-    // layer size
-    public var mapSize: MapSize                     // map size, ie: 28 x 36
-    
     // container for the tile sprites
     private var tiles: TilesArray
     public var render: Bool = false                 // render tile layer as a single image
@@ -81,19 +88,17 @@ public class SKTileLayer: TiledLayerObject {
     // MARK: - Init
     
     override public init(layerName: String, tileMap: SKTilemap) {
-        self.mapSize = MapSize(width: tileMap.mapSize.width, height: tileMap.mapSize.height)
         self.tiles = TilesArray(columns: Int(tileMap.mapSize.width), rows: Int(tileMap.mapSize.height))
         super.init(layerName: layerName, tileMap: tileMap)
     }
     
     public init?(tileMap: SKTilemap, attributes: [String: String], offset: CGPoint=CGPointZero) {
         // name, width and height are required
-        // TODO: according to tmx file format, width & height default to tilemap size
         guard let layerName = attributes["name"] else { return nil }
-        guard let width = attributes["width"] else { return nil }
-        guard let height = attributes["height"] else { return nil }
+        // according to tmx file format, width & height default to tilemap size
+        //guard let width = attributes["width"] else { return nil }
+        //guard let height = attributes["height"] else { return nil }
         
-        self.mapSize = MapSize(width: CGFloat(Int(width)!), height: CGFloat(Int(height)!))
         self.tiles = TilesArray(columns: Int(tileMap.mapSize.width), rows: Int(tileMap.mapSize.height))
         super.init(layerName: layerName, tileMap: tileMap)
         self.offset = offset        
@@ -101,6 +106,11 @@ public class SKTileLayer: TiledLayerObject {
         // set the visibility property
         if let visibility = attributes["visible"] {
             self.visible = Bool(Int(visibility)!)
+        }
+        
+        // set layer opacity
+        if let layerOpacity = attributes["opacity"] {
+            self.opacity = CGFloat(Double(layerOpacity)!)
         }
     }
     
@@ -191,6 +201,10 @@ public class SKObjectGroup: TiledLayerObject {
             self.visible = Bool(Int(visibility)!)
         }
         
+        // set layer opacity
+        if let layerOpacity = attributes["opacity"] {
+            self.opacity = CGFloat(Double(layerOpacity)!)
+        }
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -222,6 +236,11 @@ public class SKImageLayer: TiledLayerObject {
         if let visibility = attributes["visible"] {
             self.visible = Bool(Int(visibility)!)
         }
+        
+        // set layer opacity
+        if let layerOpacity = attributes["opacity"] {
+            self.opacity = CGFloat(Double(layerOpacity)!)
+        }
     }
     
     public func setLayerImage(named: String) {
@@ -247,3 +266,4 @@ extension TiledLayerObject {
         return description
     }
 }
+

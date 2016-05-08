@@ -15,13 +15,13 @@ public enum ShapeType {
     case Polygon
 }
 
+
 /// simple object class
 public class SKTileObject: SKShapeNode {
     
     public var id: Int = 0                         // unique id
     public var type: String!                       // object type
     public var shapeType: ShapeType = .Rectangle   // shape type
-    
     
     public var size: CGSize = CGSizeZero
     public var color: SKColor = SKColor.blackColor()

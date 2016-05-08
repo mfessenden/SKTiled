@@ -1,5 +1,5 @@
 //
-//  SKTMXParser.swift
+//  SKTilemapParser.swift
 //  SKTiled
 //
 //  Created by Michael Fessenden on 3/21/16.
@@ -7,7 +7,6 @@
 //  Derived from: https://medium.com/@lucascerro/understanding-nsxmlparser-in-swift-xcode-6-3-1-7c96ff6c65bc#.1m4mh6nhy
 
 import SpriteKit
-import GameplayKit
 
 
 // MARK: - Protocols
@@ -42,6 +41,7 @@ public enum TilemapEncoding: String {
     case XML     = "xml"
 }
 
+
 /* valid property types */
 public enum PropertyType: String {
     case bool
@@ -57,7 +57,6 @@ public struct Property {
     public var value: AnyObject
     public var type: PropertyType = .string
 }
-
 
 
 // MARK: - Sizing
@@ -76,37 +75,28 @@ public var TileSize16x16 = TileSize(width: 16, height: 16)
 public struct MapSize {
     public var width: CGFloat
     public var height: CGFloat
+    public var tileSize: TileSize = TileSize8x8
 }
 
 
 
 // MARK: - TMX Parser
-public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
+public class SKTilemapParser: NSObject, NSXMLParserDelegate {
     
     public var fileNames: [String] = []                         // list of filenames to read
     public var currentFileName: String!
     
     public var tileMap: SKTilemap!
-    
     private var encoding: TilemapEncoding = .XML
     
     // stash current elements
-    private var currentLayerIndex: Int = 0                      // index of last layer added
     private var activeElement: String?                          // current object
     private var lastElement: AnyObject?                         // last object created
     private var lastID: Int?                                    // last ID referenced
     private var properties: [String: String] = [:]              // last properties created
     private var tileData: [Int] = []                            // last tile data read
     private var characterData: String = ""                      // current tile data (string)
-    
-    
-    public func parserDidStartDocument(parser: NSXMLParser) {
-        print("[SKTiledmapParser]: starting parsing...")
-    }
-    
-    public func parserDidEndDocument(parser: NSXMLParser) {
-        print("[SKTiledmapParser]: ending parsing...")
-    }
+    private var data: [String: [Int]] = [:]                     // store data for tile layers to render in a second pass
     
     /**
      Load a tmx file and parse it.
@@ -117,16 +107,16 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
      */
     public func loadFromFile(fileNamed: String) -> SKTilemap? {
         
-        guard let targetFile = checkBundleForFile(fileNamed) else {
-            print("[SKTiledmapParser]: unable to locate file: \"\(fileNamed)\"")
+        guard let targetFile = getBundleFilename(fileNamed) else {
+            print("[SKTilemapParser]: unable to locate file: \"\(fileNamed)\"")
             return nil
         }
         
         let timer = NSDate()
         
-        print("[SKTiledmapParser]: loading file: \"\(targetFile)\"...")
+        print("[SKTilemapParser]: loading file: \"\(targetFile)\"...")
         fileNames.append(targetFile)
-        
+                
         while !(fileNames.isEmpty) {
             if let firstFileName = fileNames.first {
                 
@@ -134,7 +124,7 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
                 fileNames.removeAtIndex(0)
                 
                 guard let path: String = NSBundle.mainBundle().pathForResource(currentFileName , ofType: nil) else {
-                    print("[SKTiledmapParser]: no path for: \"\(currentFileName)\"")
+                    print("[SKTilemapParser]: no path for: \"\(currentFileName)\"")
                     return nil
                 }
                 
@@ -142,24 +132,27 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
                 let parser: NSXMLParser = NSXMLParser(data: data)
                 parser.delegate = self
                 
-                print("[SKTiledmapParser]: parsing filename: \"\(currentFileName)\"")
+                print("[SKTilemapParser]: parsing filename: \"\(currentFileName)\"")
                 
                 let successs: Bool = parser.parse()
                 
                 if (successs == true) {
-                    print("[SKTiledmapParser]: parsing succeeded.")
+                    print("[SKTilemapParser]: parsing succeeded.")
                 } else {
                     let errorDescription = parser.parserError?.description ?? "unknown"
-                    print("[SKTiledmapParser]: \(errorDescription)")
+                    print("[SKTilemapParser]: \(errorDescription)")
                 }
             }
         }
         
+        // render tile layers
+        renderTileLayers()
+        
         // time results
         let timeInterval = NSDate().timeIntervalSinceDate(timer)
         let timeStamp = String(format: "%.\(String(3))f", timeInterval)
-        print("[SKTiledmapParser]: tile map loaded in: \(timeStamp)s\n")
         
+        print("[SKTilemapParser]: tile map loaded in: \(timeStamp)s\n")
         return tileMap
     }
     
@@ -171,7 +164,7 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
      
      - returns: `String?` name of file in bundle.
      */
-    public func checkBundleForFile(fileName: String) -> String? {
+    public func getBundleFilename(fileName: String) -> String? {
         // strip off the file extension
         let fileBaseName = fileName.componentsSeparatedByString(".")[0]
         for fileExtension in ["tmx", "tsx"] {
@@ -185,14 +178,39 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
         return nil
     }
     
+    private func renderTileLayers() {
+        guard let tileMap = tileMap else { return }
+        
+        for (uuid, tileData) in data {
+            guard let tileLayer = tileMap.getLayer(withID: uuid) as? SKTileLayer else { continue }
+            
+            // add the layer data...
+            tileLayer.setLayerData(tileData)
+        }
+        // reset the data
+        data = [:]
+    }
+    
+    // MARK: - NSXMLParserDelegate
+    
+    public func parserDidStartDocument(parser: NSXMLParser) {
+        //print("[SKTilemapParser]: starting parsing...")
+    }
+    
+    public func parserDidEndDocument(parser: NSXMLParser) {
+        //print("[SKTilemapParser]: ending parsing...")
+    }
+    
+    
     // didStartElement happens whenever parser starts a key: <key>
     public func parser(parser: NSXMLParser,
                        didStartElement elementName: String,
-                                       namespaceURI: String?,
-                                       qualifiedName qName: String?,
-                                                     attributes attributeDict: [String: String])  {
+                       namespaceURI: String?,
+                       qualifiedName qName: String?,
+                       attributes attributeDict: [String: String])  {
         
         activeElement = elementName
+        //print("<\(elementName)>")
         
         if (elementName == "map") {
             guard let tilemap = SKTilemap(attributes: attributeDict) else {
@@ -236,7 +254,7 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
                     guard let height = attributeDict["tileheight"] else { parser.abortParsing(); return }
                     guard let columns = attributeDict["columns"] else { parser.abortParsing(); return }
                     
-                    
+
                     existingTileset.tileSize = TileSize(width: CGFloat(Int(width)!), height: CGFloat(Int(width)!))
                     existingTileset.columns = Int(columns)!
                     
@@ -268,7 +286,7 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
             if let tileset = lastElement as? SKTileset {
                 tileset.offset = CGPoint(x: Int(x)!, y: Int(y)!)
             }
-        }
+        }        
         
         if elementName == "property" {
             guard let name = attributeDict["name"] else { parser.abortParsing(); return }
@@ -291,11 +309,10 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
             guard let _ = attributeDict["name"] else { parser.abortParsing(); return }
             guard let layer = SKTileLayer(tileMap: self.tileMap!, attributes: attributeDict)
                 else {
-                    parser.abortParsing()
-                    return
+                parser.abortParsing()
+                return
             }
             
-            layer.index = currentLayerIndex
             self.tileMap!.addLayer(layer)
             lastElement = layer
         }
@@ -309,7 +326,6 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
                     return
             }
             
-            objectsGroup.index = currentLayerIndex
             self.tileMap!.addLayer(objectsGroup)
             lastElement = objectsGroup
         }
@@ -323,7 +339,6 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
                     return
             }
             
-            imageLayer.index = currentLayerIndex
             self.tileMap!.addLayer(imageLayer)
             lastElement = imageLayer
         }
@@ -357,7 +372,6 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
             }
             
             // update a tileset
-            // TODO: need to pass trans color?
             if let tileset = lastElement as? SKTileset {
                 tileset.addTextures(fromSpriteSheet: imageSource)
             }
@@ -382,14 +396,14 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
                 return
             }
         }
-        
+
         // look for last element to be an object group
         // id, x, y required
         if (elementName == "object") {
             guard let tileObject = SKTileObject(attributes: attributeDict) else {
-                print("[SKTilemapParser]: Error creating object.")
-                parser.abortParsing()
-                return
+                    print("[SKTilemapParser]: Error creating object.")
+                    parser.abortParsing()
+                    return
             }
             
             if let objectGroup = lastElement as? SKObjectGroup {
@@ -440,7 +454,8 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
             // check if there's compression, need to uncompress
             // if this has a value
             if let compression = attributeDict["compression"] {
-                print("[SKTiledmapParser]: compression type: \(compression)")
+                print("[SKTilemapParser]: compression type: \(compression)")
+                // TODO: fatal error here until compression sorted?
             }
         }
     }
@@ -449,8 +464,10 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
     // didEndElement happens whenever parser ends a key: </key>
     public func parser(parser: NSXMLParser,
                        didEndElement elementName: String,
-                                     namespaceURI: String?,
-                                     qualifiedName qName: String?) {
+                       namespaceURI: String?,
+                       qualifiedName qName: String?) {
+        
+        //print("</\(elementName)>")
         
         // look for last element to be a tileset or imagelayer
         if (elementName == "image") {
@@ -483,7 +500,7 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
         // look for last element to be a layer
         if (elementName == "data") {
             guard let tileLayer = lastElement as? SKTileLayer else {
-                print("[SKTiledmapParser]: cannot find layer to add data.")
+                print("[SKTilemapParser]: cannot find layer to add data.")
                 parser.abortParsing()
                 return
             }
@@ -492,7 +509,7 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
             
             if (encoding == .Base64) {
                 foundData = true
-                if let dataArray = decodeBase64Data(characterData) {
+                if let dataArray = decode(base64String: characterData) {
                     for id in dataArray {
                         tileData.append(id)
                     }
@@ -501,7 +518,7 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
             
             if (encoding == .CSV) {
                 foundData = true
-                let dataArray = decodeCSVData(characterData)
+                let dataArray = decode(csvString: characterData)
                 for id in dataArray {
                     tileData.append(id)
                 }
@@ -511,19 +528,18 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
                 foundData = true
             }
             
+            
+            // write data to buffer
             if (foundData==true) {
-                let success = tileLayer.setLayerData(tileData)
-                if (success == false) {
-                    // scream bloody murder here
-                    print("[SkTiledmapParser]: Error adding layer data.")
-                }
+                //let success = tileLayer.setLayerData(tileData)
+                data[tileLayer.uuid] = tileData
                 
             } else {
                 parser.abortParsing()
                 return
             }
             
-            // reset s=csv data
+            // reset csv data
             tileData = []
         }
         
@@ -554,24 +570,10 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
             
         }
         
-        // advance the current index
-        if (elementName == "layer") {
-            currentLayerIndex += 1
-        }
-        
-        if (elementName == "objectgroup") {
-            currentLayerIndex += 1
-        }
-        
-        if (elementName == "imagelayer") {
-            currentLayerIndex += 1
-        }
-        
-        
         // reset character data
         characterData = ""
     }
-    
+ 
     
     // foundCharacters happens whenever parser enters a key
     public func parser(parser: NSXMLParser, foundCharacters string: String) {
@@ -580,32 +582,28 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
     }
     
     public func parser(parser: NSXMLParser, parseErrorOccurred parseError: NSError) {
-        print("[SKTiledmapParser]: parse error...")
+        // print("[SKTilemapParser]: parse error...")
     }
     
     // MARK: - Decoding
     /**
-     Clean up and convert string CSV data.
+     Scrub CSV data.
      
      - parameter data: `String` data to decode
      
      - returns: `[Int]` parsed CSV data.
      */
-    private func decodeCSVData(data: String) -> [Int] {
+    private func decode(csvString data: String) -> [Int] {
         var result: [Int] = []
-        var tempData = ""
-        tempData = data.stringByReplacingOccurrencesOfString("\n", withString: "")
-        tempData = tempData.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        tempData = tempData.stringByReplacingOccurrencesOfString(" ", withString: "")
-        let dataArray = tempData.componentsSeparatedByString(",")
-        for id in dataArray {
+        var scrubbed = data.stringByReplacingOccurrencesOfString("\n", withString: "")
+        scrubbed = scrubbed.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        scrubbed = scrubbed.stringByReplacingOccurrencesOfString(" ", withString: "")
+        let scrubbedArray = scrubbed.componentsSeparatedByString(",")
+        for id in scrubbedArray {
             if let idValue = Int(id) {
                 result.append(idValue)
-            } else {
-                print("invalid: \(id)")
             }
         }
-        
         return result
     }
     
@@ -618,8 +616,8 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
      
      - returns: `[Int]?` parsed data.
      */
-    private func decodeBase64Data(base64String: String) -> [Int]? {
-        if let nsdata = NSData(base64EncodedString: base64String, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters) {
+    private func decode(base64String data: String) -> [Int]? {
+        if let nsdata = NSData(base64EncodedString: data, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters) {
             let count = nsdata.length / sizeof(Int32)
             //var bytes = [Int32](count: nsdata.length, repeatedValue: 0)
             var bytes = [Int32](count: count, repeatedValue: 0)
@@ -628,13 +626,21 @@ public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
         }
         return nil // Invalid input
     }
+    
+    // MARK: - Decompression
+    private func decompress(gzipData data: String) -> String? {
+        return nil
+    }
+    
+    private func decompress(zlibData data: String) -> String? {
+        return nil
+    }
+    
 }
 
 
 
-
 extension MapSize: CustomStringConvertible, CustomDebugStringConvertible {
-    
     public var cgSize: CGSize {
         return CGSizeMake(width, height)
     }
@@ -644,8 +650,12 @@ extension MapSize: CustomStringConvertible, CustomDebugStringConvertible {
         return Int(width) * Int(height)
     }
     
+    public var renderSize: CGSize {
+        return CGSizeMake(width * tileSize.width, height * tileSize.height)
+    }
+    
     public var description: String {
-        return "\(Int(width)) x \(Int(height))"
+        return "\(Int(width)) x \(Int(height)) @ \(tileSize)"
     }
     
     public var debugDescription: String {
@@ -655,7 +665,6 @@ extension MapSize: CustomStringConvertible, CustomDebugStringConvertible {
 
 
 extension TileSize: CustomStringConvertible, CustomDebugStringConvertible {
-    
     public var cgSize: CGSize {
         return CGSizeMake(width, height)
     }
@@ -675,3 +684,4 @@ extension Property: CustomStringConvertible {
         return "Property: \"\(name)\": \"\(value)\""
     }
 }
+

@@ -1,5 +1,5 @@
 //
-//  SKTilemapCamera.swift
+//  SKTiledCamera.swift
 //  SKTiled
 //
 //  Created by Michael Fessenden on 3/22/16.

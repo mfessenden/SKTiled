@@ -1,10 +1,9 @@
 //
-//  SKTileData.swift
+//  SKTilesetData.swift
 //  SKTiled
 //
-//  Created by Michael Fessenden on 5/17/16.
+//  Created by Michael Fessenden on 3/21/16.
 //  Copyright © 2016 Michael Fessenden. All rights reserved.
-//
 
 import SpriteKit
 

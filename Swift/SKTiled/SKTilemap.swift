@@ -8,14 +8,10 @@
 
 import SpriteKit
 
-import SpriteKit
-import GameplayKit
-
 
 public class SKTilemap: SKNode {
     
     public var mapSize: MapSize
-    public var tileSize: TileSize
     public var orientation: TilemapOrientation!
     // current tile sets
     public var tileSets: Set<SKTileset> = []
@@ -23,8 +19,16 @@ public class SKTilemap: SKNode {
     // current layers
     public var tileLayers: Set<TiledLayerObject> = []
     public var properties: [String: String] = [:]
-    
     public var zDeltaForLayers: CGFloat = 50
+    
+    // debugging
+    public var debugLabel: SKLabelNode!
+    public var debugColor: SKColor = SKColor(red: 0, green: 1, blue: 0, alpha: 1)
+    public var visualizeGrid: Bool = false {
+        didSet {
+            guard oldValue != visualizeGrid else { return }
+        }
+    }
     
     // emulate size & anchor point
     public var size: CGSize {
@@ -40,23 +44,26 @@ public class SKTilemap: SKNode {
     }
     
     public var renderSize: CGSize {
-        return CGSizeMake(mapSize.width * tileSize.width, mapSize.height * tileSize.height)
+        return mapSize.renderSize
+    }
+    
+    public var tileSize: TileSize {
+        return mapSize.tileSize
     }
     
     // returns the last GID for all of the tilesets.
     public var lastGID: Int {
-        var lastID = 0
-        for tileset in tileSets {
-            if tileset.lastGID > lastID {
-                lastID = tileset.lastGID
-            }
-        }
-        return lastID + 1
+        return tileSets.count > 0 ? tileSets.map {$0.lastGID}.maxElement()! : 0
+    }
+    
+    // returns the last GID for all of the tilesets.
+    public var lastIndex: Int {
+        return tileLayers.count > 0 ? tileLayers.map {$0.index}.maxElement()! : 0
     }
     
     // MARK: - Loading
     public class func loadTMX(fileNamed: String) -> SKTilemap? {
-        if let tilemap = SKTiledmapParser().loadFromFile(fileNamed) {
+        if let tilemap = SKTilemapParser().loadFromFile(fileNamed) {
             return tilemap
         }
         return nil
@@ -68,7 +75,7 @@ public class SKTilemap: SKNode {
      
      - parameter attributes: `Dictionary` attributes dictionary.
      
-     - returns: `SKTilemap?`
+     - returns: `SKTileMapNode?`
      */
     public init?(attributes: [String: String]) {
         guard let width = attributes["width"] else { return nil }
@@ -77,8 +84,10 @@ public class SKTilemap: SKNode {
         guard let tileheight = attributes["tileheight"] else { return nil }
         guard let orient = attributes["orientation"] else { return nil }
         
-        mapSize = MapSize(width: CGFloat(Int(width)!), height: CGFloat(Int(height)!))
-        tileSize = TileSize(width: CGFloat(Int(tilewidth)!), height: CGFloat(Int(tileheight)!))
+        // initialize tile size
+        let tileSize = TileSize(width: CGFloat(Int(tilewidth)!), height: CGFloat(Int(tileheight)!))
+        mapSize = MapSize(width: CGFloat(Int(width)!), height: CGFloat(Int(height)!), tileSize: tileSize)
+        
         if let fileOrientation: TilemapOrientation = TilemapOrientation(rawValue: orient){
             self.orientation = fileOrientation
         }
@@ -125,44 +134,73 @@ public class SKTilemap: SKNode {
     }
     
     public func addLayer(layer: TiledLayerObject) {
+        layer.index = tileLayers.count > 0 ? lastIndex + 1 : 0
         // debugging
         var layerType = "tile"
         if let _ = layer as? SKObjectGroup { layerType = "object" }
         if let _ = layer as? SKImageLayer { layerType = "image" }
         
-        print("[SKTilemap]: adding \(layerType) layer: \"\(layer.index):\(layer.name!)\"")
+        print("[SKTilemap]: adding \(layerType) layer: \"\(layer.name!)\"...")
         tileLayers.insert(layer)
         addChild(layer)
         positionLayer(layer)
-        //layer.zPosition = zDeltaForLayers * CGFloat(layer.index)
-    }
-    
-    // position the layer so that it aligns with the anchorpoint.
-    private func positionLayer(layer: TiledLayerObject) {
-        var layerPosition = CGPointZero
-        if orientation == .Orthogonal {
-            // -608 * 0.5 = -304
-            layerPosition.x = -renderSize.width * anchorPoint.x
-            // 608 - (0.5 * 608) = 304
-            layerPosition.y = -renderSize.height * anchorPoint.y
-        }
-        
-        layer.position = layerPosition
+        layer.zPosition = zDeltaForLayers * CGFloat(layer.index)
     }
     
     /**
      Returns a named tile layer from the layers set.
      
-     - parameter name: `String` tile layer to return.
+     - parameter name: `String` tile layer name.
      
-     - returns: `SKTileLayer?` tile layer object.
+     - returns: `TiledLayerObject?` layer object.
      */
-    public func getLayer(named: String) -> TiledLayerObject? {
-        if let index = tileLayers.indexOf( { $0.name == named } ) {
+    public func getLayer(named layerName: String) -> TiledLayerObject? {
+        if let index = tileLayers.indexOf( { $0.name == layerName } ) {
             let layer = tileLayers[index]
             return layer
         }
         return nil
+    }
+    
+    /**
+     Returns a layer matching the given UUID.
+     
+     - parameter uuid: `String` tile layer UUID.
+     
+     - returns: `TiledLayerObject?` layer object.
+     */
+    public func getLayer(withID uuid: String) -> TiledLayerObject? {
+        if let index = tileLayers.indexOf( { $0.uuid == uuid } ) {
+            let layer = tileLayers[index]
+            return layer
+        }
+        return nil
+    }
+    
+    /**
+     Returns a layer given the index (0 being the lowest).
+     
+     - parameter index: `Int` layer index.
+     
+     - returns: `TiledLayerObject?` layer object.
+     */
+    public func getLayer(atIndex index: Int) -> TiledLayerObject? {
+        if let index = tileLayers.indexOf( { $0.index == index } ) {
+            let layer = tileLayers[index]
+            return layer
+        }
+        return nil
+    }
+    
+    // position the layer so that it aligns with the anchorpoint.
+    private func positionLayer(layer: TiledLayerObject) {
+        var layerPosition = CGPointZero
+        
+        if orientation == .Orthogonal {
+            layerPosition.x = -renderSize.width * anchorPoint.x
+            layerPosition.y = -renderSize.height * anchorPoint.y
+        }
+        layer.position = layerPosition
     }
     
     // MARK: - Data
@@ -185,7 +223,7 @@ extension SKTilemap {
         if let name = name {
             tilemapName = "\"\(name)\""
         }
-        return "Tilemap: \(tilemapName), \(mapSize) @ \(tileSize)"
+        return "Tilemap: \(tilemapName), \(mapSize)"
     }
     
     override public var debugDescription: String {

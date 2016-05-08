@@ -1,5 +1,5 @@
 //
-//  SKTilemap+Debug.swift
+//  SKTilemap.swift
 //  SKTiled
 //
 //  Created by Michael Fessenden on 3/21/16.
@@ -7,28 +7,39 @@
 //
 
 import SpriteKit
-import GameplayKit
-
 
 
 public extension SKTilemap {
     
+    /**
+     Prints out all the data it has on the tilemap's layers.
+     */
+    public func debugLayers() {
+        guard (tileLayers.count > 0) else { return }
+        
+        for layer in tileLayers.sort({ $0.index < $1.index }) {
+            var propertiesString = ""
+            for (pname, pvalue) in layer.properties {
+                propertiesString += "\"\(pname)\": \(pvalue)"
+            }
+            print("\(layer.index): \"\(layer.name!), z: \(layer.zPosition)\" \(propertiesString)")
+        }
+    }
+    
+    /// Visualize the tilemap's anchorpoint.
     public var debugDraw: Bool {
         get {
-            return childNodeWithName("CENTER") != nil
+            return childNodeWithName("ANCHOR") != nil
         } set {
-            
             // remove any existing node
-            childNodeWithName("CENTER")?.removeFromParent()
+            childNodeWithName("ANCHOR")?.removeFromParent()
             
             if (newValue==true) {
-                let fillcolor = SKColor(red: 1.0, green: 0, blue: 0, alpha: 0.5)
-                let strokecolor = SKColor(red: 1.0, green: 0, blue: 0, alpha: 1.0)
-                // anchor point
-                let anchorShape = SKShapeNode(circleOfRadius: tileSize.width * 0.5)
-                anchorShape.zPosition = zPosition + 10000
-                anchorShape.strokeColor = strokecolor
-                anchorShape.fillColor = fillcolor
+                // draw anchor point
+                let anchorShape = SKShapeNode(circleOfRadius: tileSize.width * 0.25)
+                anchorShape.zPosition = CGFloat(lastIndex + 1) * zDeltaForLayers
+                anchorShape.strokeColor = debugColor
+                anchorShape.fillColor = debugColor.colorWithAlphaComponent(0.3)
                 //anchorShape.lineWidth = debugLineWidth
                 addChild(anchorShape)
                 
@@ -38,14 +49,6 @@ public extension SKTilemap {
                 // reposition the anchor shape based on the node's anchor point.
                 anchorShape.position.x = anchorPoint.x
                 anchorShape.position.y = anchorPoint.y
-            }
-        }
-    }
-    
-    public func debugLayers() {        
-        for layer in tileLayers {
-            if let name = layer.name {
-                print("Layer: \"\(name)\"")
             }
         }
     }

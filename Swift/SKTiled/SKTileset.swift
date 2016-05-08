@@ -3,7 +3,7 @@
 //  SKTiled
 //
 //  Created by Michael Fessenden on 3/21/16.
-//  Copyright (c) 2016 Michael Fessenden. All rights reserved.
+//  Copyright © 2016 Michael Fessenden. All rights reserved.
 //
 //  Reference:  http://doc.mapeditor.org/reference/tmx-map-format/
 
@@ -220,9 +220,8 @@ public func ==(lhs: SKTileset, rhs: SKTileset) -> Bool{
 }
 
 
-// Hashable requires == func & hashValue: Int
+// Hashable requires == & hashValue: Int
 extension SKTileset: Hashable {
-    
     public var hashValue: Int {
         return name.hashValue
     }
@@ -238,3 +237,5 @@ extension SKTileset: CustomStringConvertible, CustomDebugStringConvertible {
         return description
     }
 }
+
+
