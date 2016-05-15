@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4C88E18A1D8A1BBE00FCCFA3 /* players.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E1891D8A1BBE00FCCFA3 /* players.png */; };
-		4C88E18C1D8A1BC400FCCFA3 /* sample-map.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E18B1D8A1BC400FCCFA3 /* sample-map.tmx */; };
+		4C88E18C1D8A1BC400FCCFA3 /* roguelike-16x16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E18B1D8A1BC400FCCFA3 /* roguelike-16x16.tmx */; };
 		4C88E1AB1D8A241F00FCCFA3 /* ortho4-16x16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E1AA1D8A241F00FCCFA3 /* ortho4-16x16.tmx */; };
 		4C88E1AD1D8A242F00FCCFA3 /* ortho4-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */; };
 		4C88E1BF1D8A402000FCCFA3 /* Array2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1AE1D8A402000FCCFA3 /* Array2D.swift */; };
@@ -39,7 +39,7 @@
 
 /* Begin PBXFileReference section */
 		4C88E1891D8A1BBE00FCCFA3 /* players.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = players.png; sourceTree = "<group>"; };
-		4C88E18B1D8A1BC400FCCFA3 /* sample-map.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "sample-map.tmx"; sourceTree = "<group>"; };
+		4C88E18B1D8A1BC400FCCFA3 /* roguelike-16x16.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "roguelike-16x16.tmx"; sourceTree = "<group>"; };
 		4C88E1AA1D8A241F00FCCFA3 /* ortho4-16x16.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "ortho4-16x16.tmx"; sourceTree = "<group>"; };
 		4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ortho4-16x16.png"; sourceTree = "<group>"; };
 		4C88E1AE1D8A402000FCCFA3 /* Array2D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array2D.swift; sourceTree = "<group>"; };
@@ -122,7 +122,7 @@
 				4C88E1891D8A1BBE00FCCFA3 /* players.png */,
 				4CBA61801D8A0A4600B31FC1 /* roguelike-16x16.png */,
 				4C88E1AA1D8A241F00FCCFA3 /* ortho4-16x16.tmx */,
-				4C88E18B1D8A1BC400FCCFA3 /* sample-map.tmx */,
+				4C88E18B1D8A1BC400FCCFA3 /* roguelike-16x16.tmx */,
 			);
 			name = Resources;
 			path = Swift/Resources;
@@ -239,7 +239,7 @@
 				4CBA61921D8A0A5700B31FC1 /* Info.plist in Resources */,
 				4CBA61831D8A0A4600B31FC1 /* roguelike-16x16.png in Resources */,
 				4C88E1AB1D8A241F00FCCFA3 /* ortho4-16x16.tmx in Resources */,
-				4C88E18C1D8A1BC400FCCFA3 /* sample-map.tmx in Resources */,
+				4C88E18C1D8A1BC400FCCFA3 /* roguelike-16x16.tmx in Resources */,
 				4CBA61901D8A0A5700B31FC1 /* Main.storyboard in Resources */,
 				4CBA618F1D8A0A5700B31FC1 /* LaunchScreen.storyboard in Resources */,
 				4C88E1AD1D8A242F00FCCFA3 /* ortho4-16x16.png in Resources */,

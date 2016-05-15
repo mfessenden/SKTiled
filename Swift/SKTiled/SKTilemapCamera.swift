@@ -1,5 +1,5 @@
 //
-//  SKTiledCamera.swift
+//  SKTilemapCamera.swift
 //  SKTiled
 //
 //  Created by Michael Fessenden on 3/22/16.
@@ -11,13 +11,12 @@ import SpriteKit
 
 public class SKTilemapCamera: SKCameraNode {
     
-    public let tilemap: SKTilemap
+    public let world: SKNode
     private var bounds: CGRect
     private var zoom: CGFloat = 0.0
     
-    
-    public init(view: SKView, tilemap: SKTilemap) {
-        self.tilemap = tilemap
+    public init(scene: SKScene, view: SKView, worldNode node: SKNode) {
+        world = node
         bounds = view.bounds
         super.init()
     }
@@ -26,6 +25,3 @@ public class SKTilemapCamera: SKCameraNode {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-
-

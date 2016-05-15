@@ -9,7 +9,7 @@
 import SpriteKit
 
 
-public enum ShapeType {
+public enum ObjectType {
     case Rectangle
     case Ellipse
     case Polygon
@@ -18,13 +18,14 @@ public enum ShapeType {
 
 /// simple object class
 public class SKTileObject: SKShapeNode {
-    
-    public var id: Int = 0                         // unique id
-    public var type: String!                       // object type
-    public var shapeType: ShapeType = .Rectangle   // shape type
+
+    weak public var layer: SKObjectGroup!            // layer parent, assigned on add
+    public var id: Int = 0                           // unique id
+    public var type: String!                         // object type
+    public var objectType: ObjectType = .Rectangle   // shape type
     
     public var size: CGSize = CGSizeZero
-    public var color: SKColor = SKColor.blackColor()
+    public var properties: [String: String] = [:]    // custom properties
     
     override public init(){
         super.init()
@@ -39,9 +40,9 @@ public class SKTileObject: SKShapeNode {
         guard let ycoord = attributes["y"] else { return nil }        
         
         id = Int(objectID)!
-        
         super.init()
-
+        
+        //let ry = ycoord
         position = CGPointMake(CGFloat(Double(xcoord)!), CGFloat(Double(ycoord)!))
         
         if let objectName = attributes["name"] {
@@ -61,29 +62,42 @@ public class SKTileObject: SKShapeNode {
         }
         
         self.size = CGSizeMake(width, height)
-        drawPath()
+        draw()
     }
     
-    public func update() {
-        drawPath()
+    /**
+     Set the fill & stroke colors (with optional alpha component for the fill)
+     
+     - parameter color: `SKColor` fill & stroke color.
+     - parameter alpha: `CGFloat` alpha component for fill.
+     */
+    public func setColor(color: SKColor, withAlpha alpha: CGFloat=0.2) {
+        self.strokeColor = color
+        self.fillColor = color.colorWithAlphaComponent(alpha)
     }
     
     /**
      Draw the path.
      */
-    private func drawPath() {
+    public func draw() {
         // draw the path
         var objectPath: UIBezierPath?
         
-        if shapeType == .Rectangle {
+        switch objectType {
+        case .Ellipse:
             objectPath = UIBezierPath(ovalInRect: CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
-        } else if shapeType == .Ellipse {
-            objectPath = UIBezierPath(rect: CGRect(x: 50, y: 47, width: 149, height: 157))
+        
+        case .Polygon:
+            objectPath = nil
+        
+        default:
+            objectPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
         }
         
         if let objectPath = objectPath {
+            //objectPath.lineWidth = 1.5
             self.path = objectPath.CGPath
-            //self.color.setStroke()
+            self.lineWidth = 2.0
         }
     }
     
@@ -93,26 +107,23 @@ public class SKTileObject: SKShapeNode {
      - parameter points: `[[CGFloat]]` array of coordinates.
      */
     public func addPoints(points: [[CGFloat]]) {
-        self.shapeType = ShapeType.Polygon
+        self.objectType = ObjectType.Polygon
+
+        var cgpoints: [CGPoint] = points.map { CGPointMake($0[0], $0[1]) }
+        let firstPoint = cgpoints.removeFirst()
+        
         let polygonPath = UIBezierPath()
-        for point in points {
-            polygonPath.moveToPoint(CGPoint(x: point[0], y: point[1]))
+        polygonPath.moveToPoint(firstPoint)
+        
+        for point in cgpoints {
+            polygonPath.addLineToPoint(point)
         }
+        
         polygonPath.closePath()
         self.path = polygonPath.CGPath
-        //self.color.setStroke()
+        self.lineWidth = 2.0
     }
-    
-    override public var hidden: Bool {
-        didSet {
-            guard oldValue != hidden else { return }
-            
-            var currentColor: SKColor = (hidden == true) ? self.color : SKColor.clearColor()
-            //currentColor.setStroke()
-            //currentColor.setFill()
-        }
-    }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

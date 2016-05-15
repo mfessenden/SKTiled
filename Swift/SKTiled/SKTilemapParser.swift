@@ -5,83 +5,23 @@
 //  Created by Michael Fessenden on 3/21/16.
 //  Copyright © 2016 Michael Fessenden. All rights reserved.
 //  Derived from: https://medium.com/@lucascerro/understanding-nsxmlparser-in-swift-xcode-6-3-1-7c96ff6c65bc#.1m4mh6nhy
+//  iOS 10 Reference: http://stackoverflow.com/questions/19088231/base64-decoding-in-ios-7/19088341#19088341
 
 import SpriteKit
 
 
-// MARK: - Protocols
-
-/* generic SKTilemap object */
-protocol TiledObject {
-    var uuid: String { get set }
-    var properties: [String: String] { get set }
+public enum ParsingError: ErrorType {
+    case Attribute(attr: String)
+    case AttributeValue(attr: String, value: String)
+    case Key(key: String)
+    case Index(idx: Int)
+    case Compression(value: String)
+    case Error
 }
-
-
-// MARK: - Tiled File Properties
-public enum TilemapOrientation: String {
-    case Orthogonal   = "orthogonal"
-    case Isometric    = "isometric"
-    case Hexagonal    = "hexagonal"
-    case Staggered    = "staggered"
-}
-
-
-public enum RenderOrder: String {
-    case RightDown  = "right-down"
-    case RightUp    = "right-up"
-    case LeftDown   = "left-down"
-    case LeftUp     = "left-up"
-}
-
-
-public enum TilemapEncoding: String {
-    case Base64  = "base64"
-    case CSV     = "csv"
-    case XML     = "xml"
-}
-
-
-/* valid property types */
-public enum PropertyType: String {
-    case bool
-    case int
-    case float
-    case string
-}
-
-
-/* generic property */
-public struct Property {
-    public var name: String
-    public var value: AnyObject
-    public var type: PropertyType = .string
-}
-
-
-// MARK: - Sizing
-public struct TileSize {
-    public var width: CGFloat
-    public var height: CGFloat
-}
-
-
-public var TileSizeZero = TileSize(width: 0, height: 0)
-public var TileSize8x8  = TileSize(width: 8, height: 8)
-public var TileSize16x16 = TileSize(width: 16, height: 16)
-
-
-
-public struct MapSize {
-    public var width: CGFloat
-    public var height: CGFloat
-    public var tileSize: TileSize = TileSize8x8
-}
-
 
 
 // MARK: - TMX Parser
-public class SKTilemapParser: NSObject, NSXMLParserDelegate {
+public class SKTiledmapParser: NSObject, NSXMLParserDelegate {
     
     public var fileNames: [String] = []                         // list of filenames to read
     public var currentFileName: String!
@@ -108,13 +48,13 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
     public func loadFromFile(fileNamed: String) -> SKTilemap? {
         
         guard let targetFile = getBundleFilename(fileNamed) else {
-            print("[SKTilemapParser]: unable to locate file: \"\(fileNamed)\"")
+            print("[SKTiledmapParser]: unable to locate file: \"\(fileNamed)\"")
             return nil
         }
         
         let timer = NSDate()
         
-        print("[SKTilemapParser]: loading file: \"\(targetFile)\"...")
+        print("[SKTiledmapParser]: loading file: \"\(targetFile)\"...")
         fileNames.append(targetFile)
                 
         while !(fileNames.isEmpty) {
@@ -124,7 +64,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
                 fileNames.removeAtIndex(0)
                 
                 guard let path: String = NSBundle.mainBundle().pathForResource(currentFileName , ofType: nil) else {
-                    print("[SKTilemapParser]: no path for: \"\(currentFileName)\"")
+                    print("[SKTiledmapParser]: no path for: \"\(currentFileName)\"")
                     return nil
                 }
                 
@@ -132,15 +72,18 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
                 let parser: NSXMLParser = NSXMLParser(data: data)
                 parser.delegate = self
                 
-                print("[SKTilemapParser]: parsing filename: \"\(currentFileName)\"")
+                print("[SKTiledmapParser]: parsing filename: \"\(currentFileName)\"")
                 
                 let successs: Bool = parser.parse()
-                
-                if (successs == true) {
-                    print("[SKTilemapParser]: parsing succeeded.")
-                } else {
-                    let errorDescription = parser.parserError?.description ?? "unknown"
-                    print("[SKTilemapParser]: \(errorDescription)")
+                // report errors
+                if (successs == false) {
+                    print("error")
+                    let parseError = parser.parserError
+                    let errorLine = parser.lineNumber
+                    let errorCol = parser.columnNumber
+                    
+                    let errorDescription = parseError?.description ?? "unknown"
+                    print("[SKTiledmapParser]: \(errorDescription) at line \(errorLine):\(errorCol)")
                 }
             }
         }
@@ -152,7 +95,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
         let timeInterval = NSDate().timeIntervalSinceDate(timer)
         let timeStamp = String(format: "%.\(String(3))f", timeInterval)
         
-        print("[SKTilemapParser]: tile map loaded in: \(timeStamp)s\n")
+        print("\n[SKTiledmapParser]: tile map loaded in: \(timeStamp)s\n")
         return tileMap
     }
     
@@ -178,6 +121,9 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
         return nil
     }
     
+    /**
+     Post-process to render each layer.
+     */
     private func renderTileLayers() {
         guard let tileMap = tileMap else { return }
         
@@ -186,6 +132,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
             
             // add the layer data...
             tileLayer.setLayerData(tileData)
+            print("[SKTilemapParser]: rendering layer \"\(tileLayer.name!)\"...")
         }
         // reset the data
         data = [:]
@@ -194,11 +141,11 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
     // MARK: - NSXMLParserDelegate
     
     public func parserDidStartDocument(parser: NSXMLParser) {
-        //print("[SKTilemapParser]: starting parsing...")
+        //print("[SKTiledmapParser]: starting parsing...")
     }
     
     public func parserDidEndDocument(parser: NSXMLParser) {
-        //print("[SKTilemapParser]: ending parsing...")
+        //print("[SKTiledmapParser]: ending parsing...")
     }
     
     
@@ -299,16 +246,16 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
             }
             
             // stash properties
-            properties[name] = value
-            
+            properties[name] = value            
         }
         
         
         // 'layer' indicates a Tile layer
         if (elementName == "layer") {
-            guard let _ = attributeDict["name"] else { parser.abortParsing(); return }
+            guard let layerName = attributeDict["name"] else { parser.abortParsing(); return }
             guard let layer = SKTileLayer(tileMap: self.tileMap!, attributes: attributeDict)
                 else {
+                print("Error creating tile layer: \"\(layerName)\"")
                 parser.abortParsing()
                 return
             }
@@ -327,6 +274,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
             }
             
             self.tileMap!.addLayer(objectsGroup)
+            objectsGroup.yScale = -1
             lastElement = objectsGroup
         }
         
@@ -354,21 +302,6 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
                 
                 // set the image property
                 imageLayer.setLayerImage(imageSource)
-                //offsetx="232" offsety="400">
-                
-                // position the layer
-                var offsetx: CGFloat = 0
-                var offsety: CGFloat = 0
-                
-                if let offsetX = attributeDict["offsetx"] {
-                    offsetx = CGFloat(Double(offsetX)!)
-                }
-                
-                if let offsetY = attributeDict["offsety"] {
-                    offsety = CGFloat(Double(offsetY)!)
-                }
-                
-                imageLayer.position = CGPointMake(offsetx, offsety)
             }
             
             // update a tileset
@@ -401,28 +334,32 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
         // id, x, y required
         if (elementName == "object") {
             guard let tileObject = SKTileObject(attributes: attributeDict) else {
-                    print("[SKTilemapParser]: Error creating object.")
-                    parser.abortParsing()
-                    return
+                print("[SKTilemapParser]: Error creating object.")
+                parser.abortParsing()
+                return
             }
             
-            if let objectGroup = lastElement as? SKObjectGroup {
-                guard let newObject = objectGroup.addObject(tileObject) else {
-                    print("[SKTilemapParer]: Error adding object to group.")
-                    parser.abortParsing()
-                    return
-                }
+            guard let objectGroup = lastElement as? SKObjectGroup else {
+                parser.abortParsing()
+                return
             }
-            
-            lastElement = tileObject
+                
+            objectGroup.addObject(tileObject)
+            lastID = tileObject.id
         }
         
         // special case - look for last element to be a object
         // this signifies that the object should be an ellipse
         if (elementName == "ellipse") {
-            if let tileObject = lastElement as? SKTileObject {
-                tileObject.shapeType = .Ellipse
-                tileObject.update()
+            if let objectsgroup = lastElement as? SKObjectGroup {
+                if (lastID != nil) {
+                    if let lastObject = objectsgroup.getObject(id: lastID!) {
+                        lastObject.objectType = .Ellipse
+                        lastObject.draw()
+                        lastID = nil
+                    }
+                //lastID = nil
+                }
             }
         }
         
@@ -436,9 +373,15 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
                     coordinates.append(coords.flatMap { CGFloat($0) })
                 }
                 
-                if let tileObject = lastElement as? SKTileObject {
-                    tileObject.addPoints(coordinates)
-                    //tileObject.update()
+                if let objectsgroup = lastElement as? SKObjectGroup {
+                    if (lastID != nil) {
+                        if let lastObject = objectsgroup.getObject(id: lastID!) {
+                            lastObject.addPoints(coordinates)
+                            lastObject.draw()
+                            lastID = nil
+                        }
+                     //lastID = nil
+                    }
                 }
             }
         }
@@ -451,11 +394,10 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
                 self.encoding = TilemapEncoding(rawValue: encoding)!
             }
             
-            // check if there's compression, need to uncompress
-            // if this has a value
+            // compression is not yet supported...
             if let compression = attributeDict["compression"] {
-                print("[SKTilemapParser]: compression type: \(compression)")
-                // TODO: fatal error here until compression sorted?
+                //throw ParsingError.Compression(value: compression)
+                fatalError("compression type: \(compression) not supported.")
             }
         }
     }
@@ -467,7 +409,6 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
                        namespaceURI: String?,
                        qualifiedName qName: String?) {
         
-        //print("</\(elementName)>")
         
         // look for last element to be a tileset or imagelayer
         if (elementName == "image") {
@@ -484,6 +425,13 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
             if let tileset = lastElement as? SKTileset {
                 if (lastID == nil){
                     tileset.properties = properties
+                    
+                } else {
+                    
+                    let tileID = tileset.firstGID + lastID!
+                    if let tileData = tileset.getTileData(tileID) {
+                        tileData.properties = properties
+                    }
                 }
             }
             
@@ -500,7 +448,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
         // look for last element to be a layer
         if (elementName == "data") {
             guard let tileLayer = lastElement as? SKTileLayer else {
-                print("[SKTilemapParser]: cannot find layer to add data.")
+                print("[SKTiledmapParser]: cannot find layer to add data.")
                 parser.abortParsing()
                 return
             }
@@ -543,12 +491,10 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
             tileData = []
         }
         
-        // look for last element to be a data
         if (elementName == "tile") {
-            
             // parse properties
             if let tileset = lastElement as? SKTileset {
-                if lastID == nil {
+                if (lastID == nil){
                     
                     let tileID = tileset.firstGID + lastID!
                     if let tileData = tileset.getTileData(tileID) {
@@ -563,6 +509,17 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
         
         // look for last element to be an object group
         if (elementName == "object") {
+            if let objectsgroup = lastElement as? SKObjectGroup {                
+                if (lastID != nil) {
+                    if let lastObject = objectsgroup.getObject(id: lastID!) {
+                        lastObject.properties = properties
+                        properties = [:]
+                        lastID = nil
+                    }
+                }
+            }
+            
+            //lastID = nil
         }
         
         // look for last element to be a tileset
@@ -582,7 +539,19 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
     }
     
     public func parser(parser: NSXMLParser, parseErrorOccurred parseError: NSError) {
-        // print("[SKTilemapParser]: parse error...")
+        //if parseError.code == NSXMLParserError.InternalError {}
+    }
+    
+    // MARK: Unused
+    public func parser(parser: NSXMLParser, foundAttributeDeclarationWithName attributeName: String, forElement elementName: String, type: String?, defaultValue: String?) {
+    }
+    
+    public func parser(parser: NSXMLParser, foundElementDeclarationWithName elementName: String, model: String) {
+
+    }
+    
+    public func parser(parser: NSXMLParser, foundExternalEntityDeclarationWithName name: String, publicID: String?, systemID: String?) {
+        print("external entity: \(name)")
     }
     
     // MARK: - Decoding
@@ -594,17 +563,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
      - returns: `[Int]` parsed CSV data.
      */
     private func decode(csvString data: String) -> [Int] {
-        var result: [Int] = []
-        var scrubbed = data.stringByReplacingOccurrencesOfString("\n", withString: "")
-        scrubbed = scrubbed.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        scrubbed = scrubbed.stringByReplacingOccurrencesOfString(" ", withString: "")
-        let scrubbedArray = scrubbed.componentsSeparatedByString(",")
-        for id in scrubbedArray {
-            if let idValue = Int(id) {
-                result.append(idValue)
-            }
-        }
-        return result
+        return data.scrub().componentsSeparatedByString(",").map {Int($0)!}
     }
     
     /**
@@ -635,53 +594,92 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
     private func decompress(zlibData data: String) -> String? {
         return nil
     }
-    
 }
 
-
+// MARK: - Extensions
 
 extension MapSize: CustomStringConvertible, CustomDebugStringConvertible {
-    public var cgSize: CGSize {
-        return CGSizeMake(width, height)
-    }
+    /// Returns the map size as `CGSize`
+    public var size: CGSize { return CGSizeMake(width, height) }
     
-    /// returns total tile count
-    public var count: Int {
-        return Int(width) * Int(height)
-    }
+    /// Returns total tile `Int` count
+    public var count: Int { return Int(width) * Int(height) }
     
-    public var renderSize: CGSize {
-        return CGSizeMake(width * tileSize.width, height * tileSize.height)
-    }
+    /// Returns the rendered `CGSize` of the map
+    public var renderSize: CGSize { return CGSizeMake(width * tileSize.width, height * tileSize.height) }
+    // Debugging
+    public var description: String { return "\(Int(width)) x \(Int(height)) @ \(tileSize)" }
+    public var debugDescription: String { return description }
     
-    public var description: String {
-        return "\(Int(width)) x \(Int(height)) @ \(tileSize)"
-    }
     
-    public var debugDescription: String {
-        return description
+    /**
+     Returns a representative grid texture to be used as an overlay.
+     
+     - parameter scale: image scale (2 seems to work best for fine detail).
+     
+     - returns: `SKTexture` grid texture.
+     */
+    public func generateGridTexture(scale: CGFloat=2.0, gridColor: UIColor=UIColor.greenColor()) -> SKTexture {
+        let image: UIImage = imageOfSize(self.renderSize, scale: scale) {
+            
+            for col in 0 ..< Int(self.width) {
+                for row in (0 ..< Int(self.height)) {
+                    
+                    let tileWidth = self.tileSize.width
+                    let tileHeight = self.tileSize.height
+                    
+                    let boxRect = CGRect(x: tileWidth * CGFloat(col), y: tileHeight * CGFloat(row), width: tileWidth, height: tileHeight)
+                    let boxPath = UIBezierPath(rect: boxRect)
+                    
+                    // stroke the grid path
+                    gridColor.setStroke()
+                    boxPath.stroke()
+                }
+            }
+        }
+        
+        let result = SKTexture(CGImage: image.CGImage!)
+        //result.filteringMode = .Nearest
+        return result
     }
 }
 
 
 extension TileSize: CustomStringConvertible, CustomDebugStringConvertible {
-    public var cgSize: CGSize {
-        return CGSizeMake(width, height)
-    }
-    
-    public var description: String {
-        return "\(Int(width)) x \(Int(height))"
-    }
-    
-    public var debugDescription: String {
-        return description
-    }
+    /// Returns the tile size as `CGSize`
+    public var size: CGSize { return CGSizeMake(width, height) }
+    // Debugging
+    public var description: String { return "\(Int(width)) x \(Int(height))" }
+    public var debugDescription: String { return description }
 }
 
 
 extension Property: CustomStringConvertible {
-    public var description: String {
-        return "Property: \"\(name)\": \"\(value)\""
-    }
+    public var description: String { return "Property: \"\(name)\": \"\(value)\"" }
 }
 
+
+public extension String {
+    /**
+     Initialize with array of bytes.
+     
+     - parameter bytes: `[UInt8]` byte array.
+     */
+    public init(_ bytes: [UInt8]) {
+        self.init()
+        for b in bytes {
+            self.append(UnicodeScalar(b))
+        }
+    }
+    
+    /**
+     Clean up whitespace & carriage returns.
+     
+     - returns: `String` scrubbed string.
+     */
+    public func scrub() -> String {
+        var scrubbed = self.stringByReplacingOccurrencesOfString("\n", withString: "")
+        scrubbed = scrubbed.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        return scrubbed.stringByReplacingOccurrencesOfString(" ", withString: "")
+    }
+}

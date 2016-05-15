@@ -13,7 +13,21 @@ import SpriteKit
 public class SKTile: SKSpriteNode {
     
     public var tileData: SKTilesetData
-    weak public var tileLayer: SKTileLayer!         // layer parent, assigned on add
+    weak public var layer: SKTileLayer!         // layer parent, assigned on add
+    
+    public var highlight: Bool = false {
+        didSet {
+            guard oldValue != highlight else { return }
+            
+            color = (highlight == true) ? SKColor.whiteColor() : SKColor.clearColor()
+            colorBlendFactor = (highlight == true) ? 0.8 : 0
+            if (highlight == true) {
+                let fadeAction = SKAction.colorizeWithColor(SKColor.clearColor(), colorBlendFactor: 0, duration: 4)
+                runAction(fadeAction)
+            }
+        }
+    }
+    
     
     public init(data: SKTilesetData){
         self.tileData = data
@@ -29,7 +43,11 @@ public class SKTile: SKSpriteNode {
 extension SKTile {
     
     override public var description: String {
-        return "Sprite ID: \(tileData.id) @ \(tileData.tileset.tileSize)"
+        var descString = "\(tileData.description)"
+        if let layer = layer {
+            descString += ", Layer: \"\(layer.name!)\""
+        }
+        return descString
     }
     
     override public var debugDescription: String {

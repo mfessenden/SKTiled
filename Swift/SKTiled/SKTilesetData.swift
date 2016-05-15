@@ -43,7 +43,11 @@ extension SKTilesetData: Hashable {
 
 extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
     public var description: String {
-        return "Tile ID: \(id) @ \(tileset.tileSize)"
+        var dataString = "Tile ID: \(id) @ \(tileset.tileSize)"
+        for (pname, pvalue) in properties {
+            dataString += ", \"\(pname)\": \(pvalue)"
+        }        
+        return dataString
     }
     
     public var debugDescription: String {

@@ -46,7 +46,7 @@ public class GameScene: SKScene {
         cameraNode.addChild(debugLabel)
         debugLabel.position.y -= (view.bounds.size.height / 2.25)
         
-        if let tilemapNode = SKTilemap.loadTMX("sample-map") {
+        if let tilemapNode = SKTilemap.loadTMX("roguelike-16x16") {
             tilemap = tilemapNode
             worldNode.addChild(tilemap)
             

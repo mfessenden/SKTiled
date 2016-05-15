@@ -18,7 +18,7 @@ extension SKTile {
      */
     func debugQuickLookObject() -> AnyObject {
         let size = self.tileData.tileset.tileSize
-        let shape = SKShapeNode(rectOfSize: size.cgSize)
+        let shape = SKShapeNode(rectOfSize: size.size)
         return shape
     }
 }
