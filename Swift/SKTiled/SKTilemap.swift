@@ -125,15 +125,14 @@ public class SKTilemap: SKNode {
     
     // debugging
     public var debugLabel: SKLabelNode!
-    public var debugColor: SKColor = SKColor(red: 0, green: 1, blue: 0, alpha: 1)
+    public var debugColor: SKColor = SKColor(red: 0.5, green: 0, blue: 0.5, alpha: 1)
     
     // emulate size & anchor point
     public var size: CGSize { return mapSize.renderSize }
-    
     public var anchorPoint: CGPoint { return CGPointMake(0.5, 0.5) }
+    // return the center position for layer nodes
     public var center: CGPoint {
-        return CGPointMake((size.width / 2) - (size.width * anchorPoint.x), (size.height / 2) - (size.height * anchorPoint.y))
-        //return CGPointMake((size.width * anchorPoint.x) * -1, (size.height * anchorPoint.y) * -1)
+        return CGPointMake(-size.width * anchorPoint.x, size.height - anchorPoint.y * size.height * anchorPoint.y)
     }
     
     public var renderSize: CGSize {
@@ -149,14 +148,53 @@ public class SKTilemap: SKNode {
         return tileSets.count > 0 ? tileSets.map {$0.lastGID}.maxElement()! : 0
     }    
     
-    // returns the last GID for all of the tilesets.
+    /// Returns the last GID for all of the tilesets.
     public var lastIndex: Int {
         return layers.count > 0 ? layers.map {$0.index}.maxElement()! : 0
     }
     
+    public var lastZPosition: CGFloat {
+        return layers.count > 0 ? layers.map {$0.zPosition}.maxElement()! : 0
+    }
+    
+    /// Convenience property to return all tile layers.
+    public var tileLayers: [SKTileLayer] {
+        var layers: [SKTileLayer] = []
+        // use `SKTilemap.getLayers` to return sorted layers.
+        for layer in getLayers() {
+            if let layer = layer as? SKTileLayer {
+                layers.append(layer)
+            }
+        }
+        return layers
+    }
+    
+    /// Convenience property to return all object groups.
+    public var objectGroups: [SKObjectGroup] {
+        var layers: [SKObjectGroup] = []
+        for layer in getLayers() {
+            if let layer = layer as? SKObjectGroup {
+                layers.append(layer)
+            }
+        }
+        return layers
+    }
+    
+    /// Convenience property to return all image layers.
+    public var imageLayers: [SKImageLayer] {
+        var layers: [SKImageLayer] = []
+        for layer in getLayers() {
+            if let layer = layer as? SKImageLayer {
+                layers.append(layer)
+            }
+        }
+        return layers
+    }
+    
+    
     // MARK: - Loading
-    public class func loadTMX(fileNamed: String) -> SKTilemap? {
-        if let tilemap = SKTiledmapParser().loadFromFile(fileNamed) {
+    public class func loadFromFile(fileNamed: String) -> SKTilemap? {
+        if let tilemap = SKTilemapParser().loadFromFile(fileNamed) {
             return tilemap
         }
         return nil
@@ -187,6 +225,12 @@ public class SKTilemap: SKNode {
         super.init()
     }
     
+    public init(_ sizeX: Int, _ sizeY: Int, _ tileSizeX: Int, _ tileSizeY: Int) {
+        mapSize = MapSize(width: CGFloat(sizeX), height: CGFloat(sizeY),
+                          tileSize: TileSize(width: CGFloat(tileSizeX), height: CGFloat(tileSizeY)))
+        super.init()
+    }
+    
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -214,6 +258,20 @@ public class SKTilemap: SKNode {
 
     
     // MARK: - Layers
+    /**
+     Returns all layers, sorted by index.
+     
+     - returns: `[TiledLayerObject]` array of layers.
+     */
+    public func getLayers() -> [TiledLayerObject] {
+        return layers.sort({$0.index < $1.index})
+    }
+    
+    /**
+     Returns an array of layer names.
+     
+     - returns: `[String]` layer names.
+     */
     public func layerNames() -> [String] {
         return layers.flatMap { $0.name }
     }
@@ -278,21 +336,61 @@ public class SKTilemap: SKNode {
         return nil
     }
     
-    // position the layer so that it aligns with the anchorpoint.
+    /**
+     Isolate a named layer (hides other layers). Pass `nil`
+     to show all layers.
+     
+     - parameter named: `String` layer name.
+     */
+    public func isolateLayer(named: String?=nil) {
+        guard (named == nil) else {
+            for layer in layers {
+                layer.hidden = false
+            }
+            return
+        }
+        
+        if let isolated = getLayer(named: named!) {
+            print("[SKTilemap]: isolating layer: \"\(isolated.name!)\"")
+            for layer in layers.filter({ $0 != isolated }) {
+                layer.hidden = true
+                if let layerName = layer.name {
+                    print("  -> hiding layer: \"\(layerName)\"")
+                }
+            }
+        }
+    }
+    
+    /**
+     Position child layers so in relation to the anchorpoint.
+     
+     - parameter layer: `TiledLayerObject` layer.
+     */
     private func positionLayer(layer: TiledLayerObject) {
         var layerPosition = CGPointZero
         
         if orientation == .Orthogonal {
             layerPosition.x = -(renderSize.width * anchorPoint.x)
-            layerPosition.y = (renderSize.height * anchorPoint.y) // was not negative in other
+            layerPosition.y = (renderSize.height * anchorPoint.y)
         }
         
         layer.position = layerPosition
-        
-        //layer.position.x += (layer.offset.x + layer.offset.x * anchorPoint.x)
-        //layer.position.y -= (layer.offset.y - layer.offset.y * anchorPoint.y)
-        
-        print("\(name): position: \(layer.position)")
+        layer.position.x += layer.offset.x
+        layer.position.y -= layer.offset.y
+    }
+    
+    // MARK: - Tiles
+    public func tileAt(x: Int, _ y: Int, inLayer: String?) -> SKTile? {
+        return nil
+    }
+    
+    public func tileAt(coord: TileCoord, inLayer: String?) -> SKTile? {
+        return nil
+    }
+    
+    public func getTiles(ofType type: String) -> [SKTile] {
+        var result: [SKTile] = []
+        return result
     }
     
     // MARK: - Objects
@@ -314,6 +412,56 @@ public class SKTilemap: SKNode {
         return result
     }
     
+    /**
+     Return objects matching a given type.
+     
+     - parameter named: `String` object name to query.
+     
+     - returns: `[SKTileObject]` array of objects.
+     */
+    public func getObjects(ofType type: String) -> [SKTileObject] {
+        var result: [SKTileObject] = []
+        enumerateChildNodesWithName("//*") {
+            node, stop in
+            // do something with node or stop
+            if let node = node as? SKTileObject {
+                if let objectType = node.type {
+                    if objectType == type {
+                        result.append(node)
+                    }
+                }
+            }
+        }
+        return result
+    }
+    
+    
+    
+    /**
+     Return objects matching a given name.
+     
+     - parameter named: `String` object name to query.
+     
+     - returns: `[SKTileObject]` array of objects.
+     */
+    public func getObjects(named: String) -> [SKTileObject] {
+        var result: [SKTileObject] = []
+        enumerateChildNodesWithName("//*") {
+            node, stop in
+            // do something with node or stop
+            if let node = node as? SKTileObject {
+                if let objectName = node.name {
+                    if objectName == named {
+                
+                        result.append(node)
+                    }
+                }
+            }
+        }
+        return result
+    }
+    
+    
     // MARK: - Data
     public func getTileData(gid: Int) -> SKTilesetData? {
         for tileset in tileSets {
@@ -326,8 +474,121 @@ public class SKTilemap: SKNode {
 }
 
 
+// MARK: - Extensions
+
+
+extension MapSize: CustomStringConvertible, CustomDebugStringConvertible {
+    
+    public init(_ w: Int, _ h: Int, _ tw: Int, _ th: Int) {
+        let tileSize = TileSize(width: CGFloat(tw), height: CGFloat(th))
+        self.init(width: CGFloat(w), height: CGFloat(h), tileSize: tileSize)
+    }
+    
+    /// Returns the map size as `CGSize`
+    public var size: CGSize { return CGSizeMake(width, height) }
+    
+    /// Returns total tile `Int` count
+    public var count: Int { return Int(width) * Int(height) }
+    
+    /// Returns the rendered `CGSize` of the map
+    public var renderSize: CGSize { return CGSizeMake(width * tileSize.width, height * tileSize.height) }
+    // Debugging
+    public var description: String { return "\(Int(width)) x \(Int(height)) @ \(tileSize)" }
+    public var debugDescription: String { return description }
+    
+    
+    /**
+     Returns a representative grid texture to be used as an overlay.
+     
+     - parameter scale: image scale (2 seems to work best for fine detail).
+     
+     - returns: `SKTexture` grid texture.
+     */
+    public func generateGridTexture(scale: CGFloat=2.0, gridColor: UIColor=UIColor.greenColor()) -> SKTexture {
+        let image: UIImage = imageOfSize(self.renderSize, scale: scale) {
+            
+            for col in 0 ..< Int(self.width) {
+                for row in (0 ..< Int(self.height)) {
+                    
+                    let tileWidth = self.tileSize.width
+                    let tileHeight = self.tileSize.height
+                    
+                    let boxRect = CGRect(x: tileWidth * CGFloat(col), y: tileHeight * CGFloat(row), width: tileWidth, height: tileHeight)
+                    
+                    let context = UIGraphicsGetCurrentContext()
+                    let boxPath = UIBezierPath(rect: boxRect)
+                    
+                    gridColor.setStroke()
+                    boxPath.lineWidth = 1
+                    CGContextSaveGState(context)
+                    CGContextSetLineDash(context, 4, [4, 4], 2)
+                    boxPath.stroke()
+                    CGContextRestoreGState(context)
+                }
+            }
+        }
+        
+        let result = SKTexture(CGImage: image.CGImage!)
+        //result.filteringMode = .Nearest
+        return result
+    }
+}
+
+
+extension TileSize: CustomStringConvertible, CustomDebugStringConvertible {
+    
+    /**
+     Initialize `TileSize` with two integers.
+     
+     - parameter x: `Int` tile width.
+     - parameter y: `Int` tile height.
+     
+     - returns: `TileSize` tile size.
+     */
+    public init(_ x: Int, _ y: Int){
+        self.init(width: CGFloat(x), height: CGFloat(y))
+    }
+    
+    /**
+     Initialize `TileSize` a single integer representing w/h values.
+     
+     - parameter tile: `Int` tile height & width.
+     
+     - returns: `TileSize` tile size.
+     */
+    public init(_ tile: Int){
+        self.init(width: CGFloat(tile), height: CGFloat(tile))
+    }
+    
+    /**
+     Initialize `TileSize` a single CGFloat representing w/h values.
+     
+     - parameter tile: `CGFloat` tile height & width.
+    
+     - returns: `TileSize` tile size.
+     */
+    public init(_ tile: CGFloat){
+        self.init(width: tile, height: tile)
+    }
+    
+    /// Returns the tile size as `CGSize`
+    public var size: CGSize { return CGSizeMake(width, height) }
+    // Debugging
+    public var description: String { return "\(Int(width)) x \(Int(height))" }
+    public var debugDescription: String { return description }
+}
+
+
 public extension TileCoord {
     
+    /**
+     Initialize `TileCoord` with two integers.
+     
+     - parameter x: `Int` x-coordinate.
+     - parameter y: `Int` y-coordinate.
+     
+     - returns: `TileCoord` coordinate.
+     */
     public init(_ x: Int, _ y: Int){
         self.init(Int32(x), Int32(y))
     }
@@ -355,7 +616,7 @@ public extension SKTilemap {
         if let name = name {
             tilemapName = "\"\(name)\""
         }
-        return "Tilemap: \(tilemapName), \(mapSize)"
+        return "Tilemap: \(tilemapName), \(mapSize) \(renderSize)"
     }
     
     override public var debugDescription: String { return description }

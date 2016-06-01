@@ -11,6 +11,7 @@ import SpriteKit
 
 // MARK: - Base Layer Class
 
+/// The `TiledLayerObject` is the base class for all Tiled layer types.
 public class TiledLayerObject: SKNode {
     
     public var tilemap: SKTilemap
@@ -20,14 +21,15 @@ public class TiledLayerObject: SKNode {
     // properties
     public var properties: [String: String] = [:]   // generic layer properties
     
+    // colors
+    public var gridColor = SKColor.blackColor()     // grid visualization color
+    public var offset: CGPoint = CGPointZero        // layer offset value
+    
     // size & anchor point
     public var orientation: TilemapOrientation { return tilemap.orientation }
     public var size: CGSize { return mapSize.renderSize }
     public var mapAnchorPoint: CGPoint { return tilemap.anchorPoint }
     
-    // colors
-    public var gridColor = SKColor.blackColor()    
-    public var offset: CGPoint = CGPointZero       // layer offset value
     
     // blending/visibility
     public var opacity: CGFloat {
@@ -37,7 +39,7 @@ public class TiledLayerObject: SKNode {
     
     public var visible: Bool {
         get { return !self.hidden }
-        set { self.hidden = !visible }
+        set { print("visible: \(visible)") ; self.hidden = !visible }
     }
     
     public init?(layerName: String, tileMap: SKTilemap, attributes: [String: String]) {
@@ -220,6 +222,21 @@ public class SKTileLayer: TiledLayerObject {
     }
     
     // MARK: - Tiles
+    public func tileAt(x: Int, _ y: Int) -> SKTile? {
+        return tiles[x,y]
+    }
+    
+    public func tileAt(coord: TileCoord) -> SKTile? {
+        return tiles[Int(coord.x), Int(coord.y)]
+    }
+    
+    public func getTiles(ofType type: String) -> [SKTile] {
+        var result: [SKTile] = []
+        return result
+    }
+    
+    // MARK: - Layer Data
+    
     /**
      Add tile data to the layer.
      
@@ -240,8 +257,10 @@ public class SKTileLayer: TiledLayerObject {
             // skip empty tiles
             if (gid == 0) { continue }
             
-            var coord = TileCoord(index % Int(mapSize.width), index / Int(mapSize.width))
-            let tile = addTileAtCoord(coord, gid: gid)
+            let coord = TileCoord(index % Int(mapSize.width), index / Int(mapSize.width))
+            let tile = buildTileAt(coord, gid: gid)
+            
+            tile?.runAnimation()
             if (tile == nil) {
                 errorCount += 1
             }
@@ -256,7 +275,7 @@ public class SKTileLayer: TiledLayerObject {
     }
     
     /**
-     Add a tile at the given coordinate.
+     Build a tile at the given coordinate.
      
      - parameter x:   `Int` x-coordinate
      - parameter y:   `Int` y-coordinate
@@ -264,10 +283,18 @@ public class SKTileLayer: TiledLayerObject {
      
      - returns: `SKTile?` tile.
      */
-    public func addTileAtCoord(coord: TileCoord, gid: Int) -> SKTile? {
-        //let zDelta = tilemap.zDeltaForLayers
-        if let tileData = tilemap.getTileData(gid) {
+    private func buildTileAt(coord: TileCoord, gid: Int) -> SKTile? {
+        if var tileData = tilemap.getTileData(gid) {
             let tile = SKTile(data: tileData)
+            
+            if (tileData.isAnimated == true){
+                for var frame in tileData.frames {
+                    if let frameTexture = tilemap.getTileData(frame.gid)?.texture {
+                        print("  -> adding frame texture: \(frameTexture)")
+                        frame.texture = frameTexture
+                    }
+                }
+            }
             
             // set the layer property
             tile.layer = self
@@ -280,6 +307,7 @@ public class SKTileLayer: TiledLayerObject {
         }
         return nil
     }
+
 }
 
 
@@ -426,6 +454,37 @@ public class SKImageLayer: TiledLayerObject {
 }
 
 
+public struct Array2D<T> {
+    public let columns: Int
+    public let rows: Int
+    public var array: [T?]
+    
+    init(columns: Int, rows: Int) {
+        self.columns = columns
+        self.rows = rows
+        array = Array(count: rows*columns, repeatedValue: nil)
+    }
+    
+    public subscript(column: Int, row: Int) -> T? {
+        get {
+            return array[row*columns + column]
+        }
+        set {
+            array[row*columns + column] = newValue
+        }
+    }
+    
+    public var count: Int { return self.array.count }
+    public var isEmpty: Bool { return array.isEmpty }
+    
+    public func contains<T : Equatable>(obj: T) -> Bool {
+        let filtered = self.array.filter {$0 as? T == obj}
+        return filtered.count > 0
+    }
+}
+
+
+
 // MARK - Extensions
 
 extension TiledLayerObject {
@@ -554,4 +613,35 @@ public extension SKColor {
         }
         return SKColor(red: rgbValues[0], green: rgbValues[1], blue: rgbValues[2], alpha: 1.0)
     }
+}
+
+
+extension Array2D: SequenceType {
+    public typealias Generator = AnyGenerator<T?>
+    
+    public func generate() -> Array2D.Generator {
+        var index: Int = 0
+        return AnyGenerator {
+            if index < self.array.count {
+                return self.array[index + 1]
+            }
+            return nil
+        }
+    }
+}
+
+
+extension Array2D: GeneratorType {
+    public typealias Element = T
+    mutating public func next() -> Element? { return array.removeLast() }
+}
+
+
+// from SKTUtils
+public func SKColorWithRGB(r: Int, g: Int, b: Int) -> SKColor {
+    return SKColor(red: CGFloat(r)/255.0, green: CGFloat(g)/255.0, blue: CGFloat(b)/255.0, alpha: 1.0)
+}
+
+public func SKColorWithRGBA(r: Int, g: Int, b: Int, a: Int) -> SKColor {
+    return SKColor(red: CGFloat(r)/255.0, green: CGFloat(g)/255.0, blue: CGFloat(b)/255.0, alpha: CGFloat(a)/255.0)
 }

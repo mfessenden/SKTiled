@@ -1,51 +1,148 @@
 # SKTiled
 
-A simple framework for Apple's SpriteKit allowing the creation of game assets from Tiled files.
+**SKTiled** is a simple library for using [Tiled](http://www.mapeditor.org) files with Apple's SpriteKit, allowing the creation of game assets from .tmx files. Written in purely in Swift 2.0, this was initially created because there were not any options written in Swift. I've open-sourced it with the hope that others might find it useful.
+
+##Installation
+
+Simply drag the *SKTiled* directory into your Xcode project, and add the files to your game target:
+
+![Xcode installation](https://github.com/mfessenden/SKTiled/blob/master/doc/installation.png)
 
 
-**Loading a tile map**
+## Usage
+
+Loading a tilemap is simple:
 
 ```swift
-if let tilemap = SKTilemap.loadTMX("sample-map") {
+if let tilemap = SKTilemap.loadFromFile("sample-map") {
     scene.addChild(tilemap)
 }
 ```
 
-**Accessing tile layers**
+The included `GameScene` object conforms to the `SKTiledSceneDelegate` protocol should be used as a template. The tilemap is accessed via the `GameScene.tilemap` property, and should be added as a child of the `GameScene.worldNode` object.
+
+
+## Working with Tilemaps
+
+
+**Acessing Layers**
+
+
+Layers can be accessed by type:
 
 ```swift
-let tileLayer = tilemap.getLayer(named: "Ground")
+let tileLayers = tilemap.tileLayers
+let objectGroups = tilemap.objectGroups
 ```
 
-**Working with tilesets**
+or by name:
+
+```swift
+let groundLayer = tilemap.getLayer(named: "Ground") as! SKTileLayer
+let objectsGroup = tilemap.getLayer(named: "Objects") as! SKObjectGroup
+let hudLayer = tilemap.getLayer(named: "HUD") as! SKImageLayer
+```
+
+Properties like map size & tile size can be accessed via the `SKTilemap.mapSize` and `SKTilemap.tileSize` properties.
+
+
+**Accessing Tiles**
+
+```swift
+let tileCoord = TileCoord(7, 12)
+let tile = groundLayer.tileAt(coord: tileCoord)
+let tile = groundLayer.tileAt(7, 12)
+```
+
+**Accessing Objects**
+
+`SKTileObject` objects can be returned in a number of ways:
+
+```swift
+let allObjects = tilemap.getObjects()
+let allTreeObjects = tilemap.getObjects(named: "Tree")
+let allCollisionObjects = tilemap.getObjects(ofType: "Collision")
+```
+
+**Acessing Tile Data**
+
+Tile data is accessible from either the `SKTileSet` object:
 
 ```swift
 let tileSet = tilemap.getTileset("spritesheet-16x16")
-// get SKTilesetData for a given id
+// get data for a specific id
 let tileData = tileSet.getTileData(gid: 177)
 ```
 
-**Tile data accessible from the parent tilemap**
+
+as well as the parent `SKTilemap`:
 
 ```swift
 let tileData = tilemap.getTileData(gid: 177)
 ```
 
-**Adding new nodes**
+
+### Adding Nodes
+
+Tile data includes texture data, and `SKTile` objects are `SKSpriteNode` subclasses that can be initialized with tileset data:
 
 ```swift
-// tile data contains all tile properties, including texture
 let newTile = SKTile(data: tileData)
+scene.addChild(newTile)
 ```
 
-**Features**
+Coordinate information is accessible within each layer via the `TiledLayerObject.pointForCoordinate` method:
 
-- renders all layer types
-- supports arbitrary properties for maps, layers & tiles
-- supports inline & external tilesets
+```swift
+let tilePoint = groundLayer.pointForCoordinate(4, 5)
+tile.position = tilePoint
+```
 
-**Limitations**
+New nodes (any `SKNode` type) can be added directly to any layer:
 
+
+```swift
+let newNode = SKNode()
+groundLayer.addNode(newNode, 4, 5, zPosition: 100.0)
+```
+
+### Custom Properties
+
+Custom properties are supported on all object types, and can be accessed easily:
+
+```swift
+let value = groundLayer.getValue(forProperty: "type")
+groundLayer.setValue("water", forProperty: "type")
+```
+
+To query tiles of a given type:
+
+```swift
+let waterTiles = groundLayer.getTiles(ofType: "water")
+let allWaterTiles = tilemap.getTiles(ofType: "water")
+```
+
+####Features
+
+- renders all Tiled layer types (tile, object, image)
+- custom properties for maps, layers, objects & tiles
+- parses inline & external tilesets
+
+
+####Limitations
+
+- cannot render flipped tiles.
 - cannot parse data compressed with gzip/zlib compression.
-- does not support rotated tiles
-- does not support animated tiles
+- external tilesets can increase the overall load time
+- animated tiles are restricted to a per-tile frame duration (Tiled application supports per-frame durations)
+
+
+####Upcoming Features
+
+- generate GKGridGraph graphs based on custom tile attributes
+- user-definable cost properties for GKGridGraph nodes
+
+
+####Class Reference
+
+(coming soon)

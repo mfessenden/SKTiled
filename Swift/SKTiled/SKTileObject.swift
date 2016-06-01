@@ -9,7 +9,7 @@
 import SpriteKit
 
 
-public enum ObjectType {
+public enum ObjectType: String {
     case Rectangle
     case Ellipse
     case Polygon
@@ -59,6 +59,10 @@ public class SKTileObject: SKShapeNode {
         
         if let objectHeight = attributes["height"] {
             height = CGFloat(Double(objectHeight)!)
+        }
+        
+        if let objType = attributes["type"] {
+            type = objType
         }
         
         self.size = CGSizeMake(width, height)
@@ -137,13 +141,12 @@ extension SKTileObject {
         return id.hashValue
     }
     
-    /**
-     Playground debugging visualization.
-     
-     - returns: `AnyObject` visualization
- 
-    func debugQuickLookObject() -> AnyObject {
-        return path!
+    override public var description: String {
+        let objectName: String = name != nil ? "\"\(name!)\"" : "(null)"
+        return "\(String(objectType)) Object: \(objectName), id: \(self.id)"
     }
-  */
+    
+    override public var debugDescription: String {
+        return description
+    }
 }

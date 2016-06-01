@@ -9,11 +9,11 @@
 import UIKit
 import SpriteKit
 
+
 class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
         // Configure the view.
         let skView = self.view as! SKView

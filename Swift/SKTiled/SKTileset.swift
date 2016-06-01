@@ -21,10 +21,11 @@ import SpriteKit
 public class SKTileset {
     
     public var name: String
-    weak public var tilemap: SKTilemap!
+    public var tilemap: SKTilemap!
     public var tileSize: TileSize!
 
     public var columns: Int = 0                     // number of columns
+    public var tilecount: Int = 0                   // tile count
     public var firstGID: Int = 1                    // first GID
         
     // image spacing
@@ -39,7 +40,7 @@ public class SKTileset {
     public var atlas: SKTextureAtlas!               // texture atlas
     
     // tile data
-    public var tileData: Set<SKTilesetData> = []    // tile data attributes
+    public var tileData: Set<SKTilesetData> = []    // tile data attributes (private)
     
     // returns the last GID in the tileset
     public var lastGID: Int {
@@ -91,6 +92,10 @@ public class SKTileset {
         guard let width = attributes["tilewidth"] else { return nil }
         guard let height = attributes["tileheight"] else { return nil }
         guard let columns = attributes["columns"] else { return nil }
+        
+        if let tileCount = attributes["tilecount"] {
+            self.tilecount = Int(tileCount)!
+        }
         
         // optionals
         if let spacing = attributes["spacing"] {
@@ -176,6 +181,9 @@ public class SKTileset {
     public func addTextures(fromAtlas: String) {
         print("[SKTileset]: adding texture atlas: \"\(fromAtlas)\"")
         atlas = SKTextureAtlas(named: fromAtlas)
+        guard atlas.textureNames.count == tilemap.mapSize.count else {
+            fatalError("")
+        }
     }
     
     // MARK: - Tile Data
@@ -237,5 +245,3 @@ extension SKTileset: CustomStringConvertible, CustomDebugStringConvertible {
         return description
     }
 }
-
-

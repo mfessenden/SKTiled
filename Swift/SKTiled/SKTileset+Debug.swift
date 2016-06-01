@@ -9,14 +9,20 @@
 import SpriteKit
 
 
-extension SKTileset {
+public extension SKTileset {
+    
+    public func debugTileset(){
+        for data in tileData.sort({$0.id < $1.id}) {
+            print(data.description)
+        }
+    }
     
     /**
      Playground debugging visualization.
      
      - returns: `AnyObject` visualization
      */
-    func debugQuickLookObject() -> AnyObject {
+    public func debugQuickLookObject() -> AnyObject {
         return SKTexture(imageNamed: source)
     }
 }

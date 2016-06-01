@@ -11,7 +11,6 @@ import SpriteKit
 
 protocol SKTiledSceneDelegate {
     var worldNode: SKNode! { get set }
-    // TODO: replace this with a custom camera
-    var cameraNode: SKCameraNode! { get set }
+    var cameraNode: SKTiledSceneCamera! { get set }
     var tilemap: SKTilemap! { get set }    
 }
