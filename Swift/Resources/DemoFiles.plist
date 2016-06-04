@@ -4,5 +4,6 @@
 <array>
 	<string>ortho4-16x16.tmx</string>
 	<string>roguelike-16x16.tmx</string>
+	<string>isometric-130x66</string>
 </array>
 </plist>

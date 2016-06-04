@@ -8,13 +8,6 @@
 import SpriteKit
 
 
-public struct AnimationFrame {
-    public var gid: Int
-    public var duration: NSTimeInterval
-    public var texture: SKTexture?
-}
-
-
 /// Represents a single tileset tile data, with texture, id and properties
 public class SKTilesetData {
     
@@ -24,7 +17,9 @@ public class SKTilesetData {
     public var probability: CGFloat = 1.0           // used in Tiled application, might not be useful here.
     public var properties: [String: String] = [:]
     
-    public var frames: [AnimationFrame] = []
+    // animation frames
+    public var frames: [Int] = []
+    public var duration: NSTimeInterval = 0.1
     public var isAnimated: Bool { return frames.count > 0 }
     
     public init(tileId: Int, texture: SKTexture, tileSet: SKTileset) {
@@ -42,28 +37,7 @@ public class SKTilesetData {
      - parameter tileTexture: `SKTexture?` frame texture.
      */
     public func addFrame(gid: Int, duration: NSTimeInterval, tileTexture: SKTexture?=nil) {
-        //print("[SKTilesetData]: tile id: \(id), adding frame: \(gid)")
-        frames.append(AnimationFrame(gid: gid, duration: duration, texture: tileTexture))
-    }
-    
-    public func animationAction() -> SKAction? {
-        if (isAnimated == false) {
-            return nil
-        }
-        
-        var textures: [SKTexture] = []
-        var duration: NSTimeInterval = 0.1
-        for frame in frames {
-            duration = frame.duration
-            if let frameTexture = tileset.tilemap.getTileData(frame.gid)?.texture {
-                textures.append(frameTexture)
-            }
-        }
-        
-        if (textures.count > 0) {
-            return SKAction.animateWithTextures(textures, timePerFrame: duration, resize: true, restore: false)
-        }
-        return nil
+        frames.append(gid)
     }
 }
 

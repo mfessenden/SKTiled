@@ -46,11 +46,15 @@ public class GameScene: SKScene, SKTiledSceneDelegate {
         cameraNode.addChild(debugLabel)
         debugLabel.position.y -= (view.bounds.size.height / 2.25)
         
-        
-        if let tilemapNode = SKTilemap.loadFromFile("roguelike-16x16") {
+        if let tilemapNode = SKTilemap.loadFromFile("isometric-16x8") {
             tilemap = tilemapNode
             worldNode.addChild(tilemap)
             debugLabel.zPosition = tilemap.lastZPosition + 1.0
+            
+            
+            if (tilemap.backgroundColor != nil) {
+                self.backgroundColor = tilemap.backgroundColor!
+            }
         }
     }
     
@@ -111,3 +115,4 @@ public class GameScene: SKScene, SKTiledSceneDelegate {
         updateLabels()
     }
 }
+

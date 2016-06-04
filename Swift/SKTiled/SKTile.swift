@@ -46,15 +46,33 @@ public class SKTile: SKSpriteNode {
     }
     
     // MARK: - Animation
-    public func runAnimation(repeatForever: Bool=true){
-        if tileData.isAnimated {
-            if let action = tileData.animationAction() {
-                if (repeatForever == true) {
-                    runAction(SKAction.repeatActionForever(action), withKey: "TILE_ANIMATION")
-                } else {
-                    runAction(action, withKey: "TILE_ANIMATION")
-                }
+    
+    /**
+     Check if the tile is animated and run an action to animated it.
+     */
+    public func runAnimation(){
+        guard tileData.isAnimated == true else { return }
+        
+        var tileTextures: [SKTexture] = []
+        for frameID in tileData.frames {
+            guard let frameTexture = tileData.tileset.getTileData(frameID)?.texture else {
+                print("Error: Cannot access texture for id: \(frameID)")
+                return
             }
+            tileTextures.append(frameTexture)
+                }
+        
+        var animAction = SKAction.animateWithTextures(tileTextures, timePerFrame: tileData.duration)
+        var repeatAction = SKAction.repeatActionForever(animAction)
+        runAction(repeatAction, withKey: "TILE_ANIMATION")
+            }
+    
+    /// Pauses tile animation
+    public var pauseAnimation: Bool = false {
+        didSet {
+            guard oldValue != pauseAnimation else { return }
+            guard let action = actionForKey("TILE_ANIMATION") else { return }
+            action.speed = (pauseAnimation == true) ? 0 : 1.0
         }
     }
 }

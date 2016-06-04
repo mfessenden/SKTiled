@@ -25,7 +25,7 @@ protocol TiledObject {
 }
 
 
-// screen format
+/// iOS screen format
 public enum ScreenFormat: Int {
     case Universal
     case Portrait
@@ -36,8 +36,8 @@ public enum ScreenFormat: Int {
 public enum TilemapOrientation: String {
     case Orthogonal   = "orthogonal"
     case Isometric    = "isometric"
-    case Hexagonal    = "hexagonal"
-    case Staggered    = "staggered"
+    //case Hexagonal    = "hexagonal"
+    //case Staggered    = "staggered"     // isometric staggered
 }
 
 
@@ -86,7 +86,7 @@ public struct TileSize {
     public var height: CGFloat
 }
 
-
+/// Represents a tile x/y coordinate.
 public struct TileCoord {
     public var x: Int32
     public var y: Int32
@@ -101,9 +101,10 @@ public struct TileCoord {
 public var TileSizeZero = TileSize(width: 0, height: 0)
 public var TileSize8x8  = TileSize(width: 8, height: 8)
 public var TileSize16x16 = TileSize(width: 16, height: 16)
+public var TileSize32x32 = TileSize(width: 32, height: 32)
 
 
-
+/// Represents tiled map size in tiles.
 public struct MapSize {
     public var width: CGFloat
     public var height: CGFloat
@@ -111,6 +112,7 @@ public struct MapSize {
 }
 
 
+/// Represents a tile map.
 public class SKTilemap: SKNode {
     
     public var mapSize: MapSize
@@ -123,24 +125,34 @@ public class SKTilemap: SKNode {
     public var properties: [String: String] = [:]
     public var zDeltaForLayers: CGFloat = 50
     
+    public var backgroundColor: SKColor? = nil
+    
     // debugging
     public var debugLabel: SKLabelNode!
-    public var debugColor: SKColor = SKColor(red: 0.5, green: 0, blue: 0.5, alpha: 1)
+    public var debugColor: SKColor = SKColor(red: 0.35, green: 1, blue: 0.29, alpha: 1)
+    
+    /// Returns the tile size in pixels.
+    public var tileSize: TileSize { return mapSize.tileSize }
+    
+    /// Returns the rendered size of the map in pixels.
+    public var renderSize: CGSize {
+        var rsize = CGSizeZero
+        if (orientation == .Orthogonal) {
+            rsize = CGSizeMake(mapSize.width * tileSize.width, mapSize.height * tileSize.height)
+    }
+    
+        if (orientation == .Isometric) {            
+            let size = Int(mapSize.width + mapSize.height)
+            rsize = CGSizeMake( CGFloat(size) * (tileSize.width / 2.0), CGFloat(size) * (tileSize.height / 2.0))
+    }
+        return rsize
+    }
     
     // emulate size & anchor point
-    public var size: CGSize { return mapSize.renderSize }
     public var anchorPoint: CGPoint { return CGPointMake(0.5, 0.5) }
     // return the center position for layer nodes
     public var center: CGPoint {
-        return CGPointMake(-size.width * anchorPoint.x, size.height - anchorPoint.y * size.height * anchorPoint.y)
-    }
-    
-    public var renderSize: CGSize {
-        return mapSize.renderSize
-    }
-    
-    public var tileSize: TileSize {
-        return mapSize.tileSize
+        return CGPointMake(-renderSize.width * anchorPoint.x, renderSize.height - anchorPoint.y * renderSize.height * anchorPoint.y)
     }
     
     // returns the last GID for all of the tilesets.
@@ -155,6 +167,15 @@ public class SKTilemap: SKNode {
     
     public var lastZPosition: CGFloat {
         return layers.count > 0 ? layers.map {$0.zPosition}.maxElement()! : 0
+    }
+    
+    public var hideObjects: Bool = true {
+        didSet {
+            guard oldValue != hideObjects else { return }
+            for objectLayer in objectGroups {
+                objectLayer.hidden = hideObjects
+            }
+    }
     }
     
     /// Convenience property to return all tile layers.
@@ -222,6 +243,12 @@ public class SKTilemap: SKNode {
         if let fileOrientation: TilemapOrientation = TilemapOrientation(rawValue: orient){
             self.orientation = fileOrientation
         }
+        
+        // background color
+        if let backgroundHexColor = attributes["backgroundcolor"] {
+            self.backgroundColor = SKColor.fromHexCode(backgroundHexColor)
+        }
+        
         super.init()
     }
     
@@ -248,8 +275,17 @@ public class SKTilemap: SKNode {
      
      - returns: `SKTileset?` tileset object.
      */
-    public func getTileset(name: String) -> SKTileset? {
+    public func getTileset(named name: String) -> SKTileset? {
         if let index = tileSets.indexOf( { $0.name == name } ) {
+            let tileset = tileSets[index]
+            return tileset
+        }
+        return nil
+    }
+
+
+    public func getTileset(fileNamed filename: String) -> SKTileset? {
+        if let index = tileSets.indexOf( { $0.filename == filename } ) {
             let tileset = tileSets[index]
             return tileset
         }
@@ -284,11 +320,12 @@ public class SKTilemap: SKNode {
         if let _ = layer as? SKObjectGroup { layerType = "object" }
         if let _ = layer as? SKImageLayer { layerType = "image" }
         
-        print("[SKTilemap]: adding \(layerType) layer: \"\(layer.name!)\"...")
         layers.insert(layer)
         addChild(layer)
         positionLayer(layer)
         layer.zPosition = zDeltaForLayers * CGFloat(layer.index)
+        
+        layer.setDebugColor(self.debugColor)
     }
     
     /**
@@ -362,7 +399,7 @@ public class SKTilemap: SKNode {
     }
     
     /**
-     Position child layers so in relation to the anchorpoint.
+     Position child layers in relation to the anchorpoint.
      
      - parameter layer: `TiledLayerObject` layer.
      */
@@ -374,12 +411,30 @@ public class SKTilemap: SKNode {
             layerPosition.y = (renderSize.height * anchorPoint.y)
         }
         
+        if orientation == .Isometric {
+            let xpos = (Int(mapSize.width + mapSize.height) - 1) * (Int(tileSize.width / 2.0))
+            
+            //layerPosition.x = CGFloat(xpos)
+        }
+        
         layer.position = layerPosition
+        
+        // layer offset
         layer.position.x += layer.offset.x
         layer.position.y -= layer.offset.y
     }
     
     // MARK: - Tiles
+    public func tilesAt(x: Int, _ y: Int) -> [SKTile] {
+        var result: [SKTile] = []
+        for layer in tileLayers {
+            if let tile = layer.tileAt(x, y){
+                result.append(tile)
+            }
+        }
+        return result
+    }
+    
     public func tileAt(x: Int, _ y: Int, inLayer: String?) -> SKTile? {
         return nil
     }
@@ -390,6 +445,19 @@ public class SKTilemap: SKNode {
     
     public func getTiles(ofType type: String) -> [SKTile] {
         var result: [SKTile] = []
+        return result
+    }
+    
+    public func getAnimatedTiles() -> [SKTile] {
+        var result: [SKTile] = []
+        enumerateChildNodesWithName("//*") {
+            node, stop in
+            if let tile = node as? SKTile {
+                if (tile.tileData.isAnimated == true) {
+                    result.append(tile)
+                }
+            }
+        }
         return result
     }
     
@@ -404,7 +472,6 @@ public class SKTilemap: SKNode {
         var result: [SKTileObject] = []
         enumerateChildNodesWithName("//*") {
             node, stop in
-            // do something with node or stop
             if let node = node as? SKTileObject {
                 result.append(node)
             }
@@ -434,8 +501,6 @@ public class SKTilemap: SKNode {
         }
         return result
     }
-    
-    
     
     /**
      Return objects matching a given name.
@@ -490,48 +555,10 @@ extension MapSize: CustomStringConvertible, CustomDebugStringConvertible {
     /// Returns total tile `Int` count
     public var count: Int { return Int(width) * Int(height) }
     
-    /// Returns the rendered `CGSize` of the map
-    public var renderSize: CGSize { return CGSizeMake(width * tileSize.width, height * tileSize.height) }
+
     // Debugging
     public var description: String { return "\(Int(width)) x \(Int(height)) @ \(tileSize)" }
     public var debugDescription: String { return description }
-    
-    
-    /**
-     Returns a representative grid texture to be used as an overlay.
-     
-     - parameter scale: image scale (2 seems to work best for fine detail).
-     
-     - returns: `SKTexture` grid texture.
-     */
-    public func generateGridTexture(scale: CGFloat=2.0, gridColor: UIColor=UIColor.greenColor()) -> SKTexture {
-        let image: UIImage = imageOfSize(self.renderSize, scale: scale) {
-            
-            for col in 0 ..< Int(self.width) {
-                for row in (0 ..< Int(self.height)) {
-                    
-                    let tileWidth = self.tileSize.width
-                    let tileHeight = self.tileSize.height
-                    
-                    let boxRect = CGRect(x: tileWidth * CGFloat(col), y: tileHeight * CGFloat(row), width: tileWidth, height: tileHeight)
-                    
-                    let context = UIGraphicsGetCurrentContext()
-                    let boxPath = UIBezierPath(rect: boxRect)
-                    
-                    gridColor.setStroke()
-                    boxPath.lineWidth = 1
-                    CGContextSaveGState(context)
-                    CGContextSetLineDash(context, 4, [4, 4], 2)
-                    boxPath.stroke()
-                    CGContextRestoreGState(context)
-                }
-            }
-        }
-        
-        let result = SKTexture(CGImage: image.CGImage!)
-        //result.filteringMode = .Nearest
-        return result
-    }
 }
 
 
@@ -621,3 +648,4 @@ public extension SKTilemap {
     
     override public var debugDescription: String { return description }
 }
+

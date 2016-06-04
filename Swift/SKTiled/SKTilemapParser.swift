@@ -28,6 +28,8 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
     
     public var tileMap: SKTilemap!
     private var encoding: TilemapEncoding = .XML                // encoding
+    private var externalTilesets: [String: SKTileset] = [:]     // hold external tilesets 
+    
     
     // stash current elements
     private var activeElement: String?                          // current object
@@ -80,17 +82,17 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
                 let successs: Bool = parser.parse()
                 // report errors
                 if (successs == false) {
-                    print("error")
                     let parseError = parser.parserError
                     let errorLine = parser.lineNumber
                     let errorCol = parser.columnNumber
                     
                     let errorDescription = parseError?.description ?? "unknown"
-                    print("[SKTilemapParser]: \(errorDescription) at line \(errorLine):\(errorCol)")
+                    print("[SKTilemapParser]: \(errorDescription) at line:\(errorLine), column: \(errorCol)")
                 }
             }
         }
-        
+        // kill tileset data
+        externalTilesets = [:]
         // render tile layers
         renderTileLayers()
         
@@ -135,7 +137,6 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
             
             // add the layer data...
             tileLayer.setLayerData(tileData)
-            //print("[SKTilemapParser]: rendering layer \"\(tileLayer.name!)\"...")
         }
         // reset the data
         data = [:]
@@ -169,7 +170,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
                 elementStartString += " \(attr)=\"\(val)\""
             }
         }
-        //print("\(elementStartString)>")
+        
 
         if (elementName == "map") {
             guard let tilemap = SKTilemap(attributes: attributeDict) else {
@@ -182,40 +183,45 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
             lastElement = tilemap
         }
         
-        
         // external will have a 'source' attribute, otherwise 'image'
         if (elementName == "tileset") {
+            
             
             // external tileset
             if let source = attributeDict["source"] {
                 
+                // source is a file reference
                 if !(fileNames.contains(source)) {
-                    //print("adding tileset source: \"\(source)\"")
+                    print("[SKTilemapParser]: adding external tileset: \"\(source)\"")
                     fileNames.append(source)
                     
                     guard let firstGID = attributeDict["firstgid"] else { parser.abortParsing(); return }
                     let firstGIDInt = Int(firstGID)!
                     
                     let tileset = SKTileset(source: source, firstgid: firstGIDInt, tilemap: self.tileMap)
+                    
+                    // add tileset to external file list
+                    externalTilesets[source] = tileset
                     self.tileMap.addTileset(tileset)
                     lastElement = tileset
                 }
             }
             
             
-            // inline tileset
             if let name = attributeDict["name"] {
                 
                 // update an existing tileset
-                if let existingTileset = self.tileMap.getTileset(name) {
-                    //<tileset name="msp-spritesheet1-8x8" tilewidth="8" tileheight="8" spacing="1" tilecount="176" columns="22">
+                if let existingTileset = externalTilesets[currentFileName] {
+                    
                     guard let width = attributeDict["tilewidth"] else { parser.abortParsing(); return }
                     guard let height = attributeDict["tileheight"] else { parser.abortParsing(); return }
                     guard let columns = attributeDict["columns"] else { parser.abortParsing(); return }
-                    
 
+                    existingTileset.name = name
                     existingTileset.tileSize = TileSize(width: CGFloat(Int(width)!), height: CGFloat(Int(width)!))
                     existingTileset.columns = Int(columns)!
+                    
+                    //print("[SKTilemapParser]: updating existing tileset: \"\(existingTileset.name)\" @ \"\(existingTileset.filename)\"")
                     
                     // optionals
                     if let spacing = attributeDict["spacing"] {
@@ -231,6 +237,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
                     
                 } else {
                     // create new tileset
+                    //print("[SKTilemapParser]: creating new tileset: \"\(name)\"...")
                     guard let tileset = SKTileset(attributes: attributeDict) else { parser.abortParsing(); return }
                     self.tileMap.addTileset(tileset)
                     lastElement = tileset
@@ -405,7 +412,8 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
             guard let duration = attributeDict["duration"] else { parser.abortParsing(); return }
             guard let tileset = lastElement as? SKTileset else { parser.abortParsing(); return }
             guard let tileData = tileset.getTileData(currentID + tileset.firstGID) else { parser.abortParsing(); return }
-
+            
+            // add the frame id to the frames property
             tileData.addFrame(Int(id)! + tileset.firstGID, duration: Double(duration)!)
         }
 
@@ -645,3 +653,4 @@ public extension String {
         return scrubbed.stringByReplacingOccurrencesOfString(" ", withString: "")
     }
 }
+

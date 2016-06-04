@@ -21,6 +21,7 @@ import SpriteKit
 public class SKTileset {
     
     public var name: String
+    public var filename: String!                    // source filename (external tileset)
     public var tilemap: SKTilemap!
     public var tileSize: TileSize!
 
@@ -33,7 +34,7 @@ public class SKTileset {
     public var margin: Int = 0                      // border margin
     
     public var properties: [String: String] = [:]
-    public var offset: CGPoint                      // check this...forget if TileSet has offset
+    public var offset = CGPointZero                 // offset for drawing tiles
     
     // texture
     public var source: String!                      // texture (if created from source)
@@ -71,12 +72,14 @@ public class SKTileset {
      
      - returns: `SKTileset` tile set.
      */
-    public init(source: String, firstgid: Int, tilemap: SKTilemap) {
+    public init(source: String, firstgid: Int, tilemap: SKTilemap, offset: CGPoint=CGPointZero) {
         let basename = source.componentsSeparatedByString("/").last!
+        self.filename = basename
+        // temporary
         self.name = basename.componentsSeparatedByString(".")[0]
         self.firstGID = firstgid
         self.tilemap = tilemap
-        self.offset = CGPointZero
+        self.offset = offset
     }
     
     /**
