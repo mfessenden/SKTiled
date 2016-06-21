@@ -22,6 +22,11 @@ public class SKTilesetData {
     public var duration: NSTimeInterval = 0.1
     public var isAnimated: Bool { return frames.count > 0 }
     
+    // flipped flags
+    public var flipHoriz: Bool = false
+    public var flipVert:  Bool = false
+    public var flipDiag:  Bool = false
+    
     public init(tileId: Int, texture: SKTexture, tileSet: SKTileset) {
         self.id = tileId
         self.texture = texture
@@ -36,8 +41,9 @@ public class SKTilesetData {
      - parameter duration:    `NSTimeInterval` frame interval.
      - parameter tileTexture: `SKTexture?` frame texture.
      */
-    public func addFrame(gid: Int, duration: NSTimeInterval, tileTexture: SKTexture?=nil) {
+    public func addFrame(gid: Int, interval: NSTimeInterval, tileTexture: SKTexture?=nil) {
         frames.append(gid)
+        duration = interval
     }
 }
 
@@ -69,3 +75,4 @@ extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
         return description
     }
 }
+

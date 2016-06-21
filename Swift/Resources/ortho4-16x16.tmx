@@ -1,34 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" backgroundcolor="#1e1b23" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" backgroundcolor="#1e1b23" nextobjectid="22">
  <properties>
-  <property name="scale" value="2"/>
+  <property name="frameColor" type="color" value="#ff63a4b2"/>
+  <property name="gridColor" type="color" value="#ff80d1e2"/>
+  <property name="maxZoom" type="float" value="3.25"/>
+  <property name="minZoom" type="float" value="0.3"/>
+  <property name="tileOverlap" type="float" value="3"/>
+  <property name="worldScale" type="float" value="1.75"/>
  </properties>
  <tileset firstgid="1" name="ortho4-16x16" tilewidth="16" tileheight="16" tilecount="552" columns="23">
   <image source="ortho4-16x16.png" trans="5e81a2" width="368" height="384"/>
   <terraintypes>
-   <terrain name="stone1" tile="43"/>
-   <terrain name="stone2" tile="39"/>
+   <terrain name="Stone" tile="39"/>
   </terraintypes>
-  <tile id="15" terrain="1,1,1,"/>
-  <tile id="16" terrain="1,1,,"/>
-  <tile id="17" terrain="1,1,,1"/>
-  <tile id="19" terrain=",,,0"/>
-  <tile id="20" terrain=",,0,0"/>
-  <tile id="21" terrain=",,0,"/>
-  <tile id="38" terrain="1,,1,"/>
-  <tile id="40" terrain=",1,,1"/>
-  <tile id="42" terrain=",0,,0"/>
-  <tile id="43" terrain="0,0,0,0"/>
-  <tile id="44" terrain="0,,0,"/>
-  <tile id="61" terrain="1,,1,1"/>
-  <tile id="62" terrain=",,1,1"/>
-  <tile id="63" terrain=",1,1,1"/>
-  <tile id="65" terrain=",0,,"/>
-  <tile id="66" terrain="0,0,,"/>
-  <tile id="67" terrain="0,,,"/>
+  <tile id="11">
+   <properties>
+    <property name="type" value="stairs"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="type" value="stairs"/>
+   </properties>
+  </tile>
+  <tile id="15" terrain=",,,0"/>
+  <tile id="16" terrain=",,0,0"/>
+  <tile id="17" terrain=",,0,"/>
+  <tile id="34" terrain="0,0,0,"/>
+  <tile id="35" terrain="0,0,,0"/>
+  <tile id="36">
+   <properties>
+    <property name="type" value="stairs"/>
+   </properties>
+  </tile>
+  <tile id="38" terrain=",0,,0"/>
+  <tile id="39" terrain="0,0,0,0"/>
+  <tile id="40" terrain="0,,0,"/>
+  <tile id="57" terrain="0,,0,0"/>
+  <tile id="58" terrain=",0,0,0"/>
+  <tile id="59">
+   <properties>
+    <property name="type" value="stairs"/>
+   </properties>
+  </tile>
+  <tile id="61" terrain=",0,,"/>
+  <tile id="62" terrain="0,0,,"/>
+  <tile id="63" terrain="0,,,"/>
   <tile id="102">
    <properties>
     <property name="type" value="chest"/>
+   </properties>
+  </tile>
+  <tile id="104">
+   <properties>
+    <property name="breakable" type="bool" value="true"/>
+    <property name="type" value="chest"/>
+   </properties>
+  </tile>
+  <tile id="148">
+   <properties>
+    <property name="type" value="bridge"/>
    </properties>
   </tile>
   <tile id="173">
@@ -41,14 +72,19 @@
     <property name="type" value="fire"/>
    </properties>
    <animation>
-    <frame tileid="173" duration="150"/>
-    <frame tileid="174" duration="150"/>
-    <frame tileid="175" duration="150"/>
+    <frame tileid="173" duration="80"/>
+    <frame tileid="174" duration="80"/>
+    <frame tileid="175" duration="80"/>
    </animation>
   </tile>
   <tile id="175">
    <properties>
     <property name="type" value="fire"/>
+   </properties>
+  </tile>
+  <tile id="194">
+   <properties>
+    <property name="type" value="bridge"/>
    </properties>
   </tile>
   <tile id="196">
@@ -61,9 +97,9 @@
     <property name="type" value="fire"/>
    </properties>
    <animation>
-    <frame tileid="196" duration="150"/>
-    <frame tileid="197" duration="150"/>
-    <frame tileid="198" duration="150"/>
+    <frame tileid="196" duration="45"/>
+    <frame tileid="197" duration="60"/>
+    <frame tileid="198" duration="45"/>
    </animation>
   </tile>
   <tile id="198">
@@ -103,24 +139,27 @@
   </tile>
   <tile id="340">
    <properties>
-    <property name="walkable" type="int" value="1"/>
+    <property name="walkable" type="bool" value="true"/>
     <property name="weight" type="float" value="1"/>
    </properties>
   </tile>
   <tile id="341">
    <properties>
-    <property name="walkable" type="int" value="1"/>
+    <property name="walkable" type="bool" value="true"/>
     <property name="weight" type="float" value="20"/>
    </properties>
   </tile>
   <tile id="342">
    <properties>
-    <property name="walkable" type="int" value="1"/>
+    <property name="walkable" type="bool" value="true"/>
     <property name="weight" type="float" value="-20"/>
    </properties>
   </tile>
  </tileset>
  <layer name="Background" width="20" height="15">
+  <properties>
+   <property name="gridColor" value="#e42020"/>
+  </properties>
   <data encoding="base64">
    7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA7wAAAO8AAADvAAAA
   </data>
@@ -142,7 +181,7 @@
  </layer>
  <layer name="Objects" width="20" height="15">
   <data encoding="base64">
-   AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACvAAAAHgEAAN0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdAQAAAAAAAAAAAAAAAAAAAAAAAMYAAAAAAAAA9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADdAAAArwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArwAAAPQAAADGAAAA3QAAAAAAAAAAAAAAAAAAAK8AAAAAAAAAAAAAAAAAAACvAAAAAAAAAN0AAAAAAAAArwAAAAAAAAAAAAAAAAAAAAAAAADGAAAAAAAAAAAAAAD0AAAAAAAAAAAAAAAAAAAAxgAAAAAAAAAAAAAAAAAAAMYAAAAAAAAA9AAAAAAAAADGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAAAAAAAAAAAAAAAAAA3AAAAAAAAADcAAAAAAAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3QAAAAAAAAAAAAAAAAAAAK8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD0AAAAAAAAAAAAAAAAAAAAxgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+   AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACvAAAAHgEAAN0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdAQAAAAAAAAAAAAAAAAAAAAAAAMYAAAAAAAAA9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACvAACArwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArwAAAMYAAIDGAAAA3QAAAAAAAAAAAAAAAAAAAK8AAAAAAAAAAAAAAAAAAACvAAAAAAAAAN0AAAAAAAAArwAAAAAAAAAAAAAAAAAAAAAAAADGAAAAAAAAAAAAAAD0AAAAAAAAAAAAAAAAAAAAxgAAAAAAAAAAAAAAAAAAAMYAAAAAAAAA9AAAAAAAAADGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAAAAAAAAAAAAAAAAAA3AAAAAAAAADcAAAAAAAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArwAAgAAAAAAAAAAAAAAAAK8AAAAAAAAAAAAAAJcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADGAACAAAAAAAAAAAAAAAAAxgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACYAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
   </data>
  </layer>
  <layer name="Enemies" width="20" height="15">
@@ -151,8 +190,105 @@
   </data>
  </layer>
  <layer name="Graph" width="20" height="15" visible="0">
+  <properties>
+   <property name="buildGraph" type="bool" value="true"/>
+   <property name="walkableIDs" value="9,10,11,24,25"/>
+  </properties>
   <data encoding="base64">
-   AAAAAAAAAAAAAAAAVQEAAAAAAAAAAAAAAAAAAAAAAABVAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABVAQAAAAAAAAAAAAAAAAAAAAAAAFUBAABVAQAAVQEAAFUBAABVAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABVAQAAAAAAAFUBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFUBAAAAAAAAAAAAAFUBAAAAAAAAAAAAAAAAAAAAAAAAVQEAAFUBAABVAQAAVQEAAAAAAAAAAAAAVQEAAFUBAABVAQAAVQEAAFUBAABVAQAAVQEAAAAAAAAAAAAAVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFUBAAAAAAAAAAAAAAAAAABVAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABVAQAAVQEAAFUBAAAAAAAAAAAAAAAAAAAAAAAAVQEAAAAAAAAAAAAAAAAAAFUBAAAAAAAAVQEAAAAAAAAAAAAAVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVQEAAAAAAAAAAAAAAAAAAAAAAABVAQAAAAAAAAAAAAAAAAAAVQEAAAAAAAAAAAAAVQEAAFUBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFUBAABVAQAAVQEAAAAAAAAAAAAAAAAAAFUBAAAAAAAAAAAAAAAAAABVAQAAAAAAAFUBAABVAQAAVQEAAFUBAAAAAAAAAAAAAAAAAABVAQAAVQEAAFUBAABVAQAAVQEAAAAAAABVAQAAVQEAAFUBAAAAAAAAAAAAAFUBAABVAQAAVQEAAFUBAABVAQAAVQEAAAAAAAAAAAAAAAAAAFUBAABVAQAAVwEAAFUBAABVAQAAAAAAAFUBAABVAQAAVQEAAAAAAAAAAAAAVQEAAFYBAABWAQAAVQEAAFUBAABVAQAAAAAAAAAAAAAAAAAAVQEAAFUBAABVAQAAVQEAAFUBAAAAAAAAVQEAAFUBAABVAQAAAAAAAAAAAABVAQAAVgEAAFYBAABVAQAAVQEAAFUBAAAAAAAAAAAAAAAAAAAAAAAAVQEAAFUBAABVAQAAAAAAAAAAAABVAQAAVQEAAFUBAAAAAAAAAAAAAFUBAABWAQAAVgEAAFUBAABVAQAAVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVQEAAFUBAABVAQAAVQEAAFUBAABVAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+   AAAAAAAAAAAAAAAAVQEAAAAAAAAAAAAAAAAAAAAAAABVAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABVAQAAAAAAAAAAAAAAAAAAAAAAAFUBAABVAQAAVQEAAFUBAABVAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABVAQAAAAAAAFUBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFUBAAAAAAAAAAAAAFUBAAAAAAAAAAAAAAAAAAAAAAAAVQEAAFUBAABVAQAAVQEAAAAAAAAAAAAAVQEAAFUBAABVAQAAVQEAAFUBAABVAQAAVQEAAAAAAAAAAAAAVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFUBAAAAAAAAAAAAAAAAAABVAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABVAQAAVQEAAFUBAAAAAAAAAAAAAAAAAAAAAAAAVQEAAAAAAAAAAAAAAAAAAFUBAAAAAAAAVQEAAAAAAAAAAAAAVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVQEAAAAAAAAAAAAAAAAAAAAAAABVAQAAAAAAAAAAAAAAAAAAVQEAAAAAAAAAAAAAVQEAAFUBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFUBAABVAQAAVQEAAAAAAAAAAAAAAAAAAFUBAAAAAAAAAAAAAAAAAABVAQAAAAAAAFUBAABVAQAAVQEAAFUBAAAAAAAAAAAAAAAAAABVAQAAVQEAAFUBAABVAQAAVQEAAAAAAABVAQAAVQEAAFUBAAAAAAAAAAAAAFUBAABVAQAAVQEAAFUBAABVAQAAVQEAAAAAAAAAAAAAAAAAAFUBAABVAQAAVwEAAFUBAABVAQAAAAAAAFUBAABVAQAAVQEAAAAAAAAAAAAAVQEAAFYBAABWAQAAVQEAAFUBAABVAQAAVQEAAFUBAABVAQAAVQEAAFUBAABVAQAAVQEAAFUBAAAAAAAAVQEAAFUBAABVAQAAAAAAAAAAAABVAQAAVgEAAFYBAABVAQAAVQEAAFUBAAAAAAAAAAAAAAAAAAAAAAAAVQEAAFUBAABVAQAAAAAAAAAAAABVAQAAVQEAAFUBAABVAQAAVQEAAFUBAABWAQAAVgEAAFUBAABVAQAAVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVQEAAFUBAABVAQAAVQEAAFUBAABVAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
   </data>
  </layer>
+ <objectgroup name="Locations">
+  <properties>
+   <property name="lineWidth" type="float" value="1.5"/>
+  </properties>
+  <object id="1" name="bridge4" x="192" y="144" width="48" height="16"/>
+  <object id="2" name="bridge3" x="96" y="112" width="16" height="16"/>
+  <object id="3" name="bridge2" x="64" y="176" width="32" height="16"/>
+  <object id="4" name="bridge1" x="32" y="64" width="16" height="48"/>
+  <object id="6" name="fire1" type="Emitter" x="4" y="31" width="6" height="6">
+   <properties>
+    <property name="color" type="color" value="#ffdb4d08"/>
+    <property name="type" value="fire"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="8" name="fire2" type="Emitter" x="37" y="32" width="6" height="6">
+   <properties>
+    <property name="color" type="color" value="#ffdb4d08"/>
+    <property name="type" value="fire"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="9" name="fire3" type="Emitter" x="21" y="112" width="6" height="6">
+   <properties>
+    <property name="color" type="color" value="#ffdb4d08"/>
+    <property name="type" value="fire"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="10" name="fire4" type="Emitter" x="53" y="112" width="6" height="6">
+   <properties>
+    <property name="color" type="color" value="#ffdb4d08"/>
+    <property name="type" value="fire"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="11" name="fire5" type="Emitter" x="132" y="96" width="6" height="6">
+   <properties>
+    <property name="color" type="color" value="#ffdb4d08"/>
+    <property name="type" value="fire"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="12" name="fire6" type="Emitter" x="149" y="80" width="6" height="6">
+   <properties>
+    <property name="color" type="color" value="#ffdb4d08"/>
+    <property name="type" value="fire"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="13" name="fire7" type="Emitter" x="164" y="80" width="6" height="6">
+   <properties>
+    <property name="color" type="color" value="#ffdb4d08"/>
+    <property name="type" value="fire"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="14" name="fire8" type="Emitter" x="181" y="95" width="6" height="6">
+   <properties>
+    <property name="color" type="color" value="#ffdb4d08"/>
+    <property name="type" value="fire"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="15" name="fire9" type="Emitter" x="244" y="96" width="6" height="6">
+   <properties>
+    <property name="color" type="color" value="#ffdb4d08"/>
+    <property name="type" value="fire"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="16" name="fire10" type="Emitter" x="309" y="96" width="6" height="6">
+   <properties>
+    <property name="color" type="color" value="#ffdb4d08"/>
+    <property name="type" value="fire"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="17" name="fire11" type="Emitter" x="309" y="160" width="6" height="6">
+   <properties>
+    <property name="color" type="color" value="#ffdb4d08"/>
+    <property name="type" value="fire"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="18" name="fire12" type="Emitter" x="245" y="159" width="6" height="6">
+   <properties>
+    <property name="color" type="color" value="#ffdb4d08"/>
+    <property name="type" value="fire"/>
+   </properties>
+   <ellipse/>
+  </object>
+ </objectgroup>
 </map>

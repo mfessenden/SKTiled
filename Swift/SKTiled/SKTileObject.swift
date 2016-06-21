@@ -134,7 +134,6 @@ public class SKTileObject: SKShapeNode {
 }
 
 
-
 extension SKTileObject {
     
     override public var hashValue: Int {
@@ -149,4 +148,14 @@ extension SKTileObject {
     override public var debugDescription: String {
         return description
     }
+    
+    /**
+     Playground debugging visualization.
+     
+     - returns: `AnyObject` visualization
+ 
+    func debugQuickLookObject() -> AnyObject {
+        return path!
+    }
+  */
 }

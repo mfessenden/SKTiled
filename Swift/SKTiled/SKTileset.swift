@@ -9,15 +9,7 @@
 
 import SpriteKit
 
-// Tileset tag in tmx (inline):
-// <tileset firstgid="1" name="Roguelike" tilewidth="16" tileheight="16" spacing="1" tilecount="1767" columns="57">
 
-// Tileset tag in tmx (external):
-// <tileset firstgid="1" source="msp1-spritesheet-8x8.tsx"/>
-
-
-// tileset tag in tsx
-// <tileset name="msp-spritesheet1-8x8" tilewidth="8" tileheight="8" spacing="1" tilecount="176" columns="22">
 public class SKTileset {
     
     public var name: String
@@ -34,7 +26,7 @@ public class SKTileset {
     public var margin: Int = 0                      // border margin
     
     public var properties: [String: String] = [:]
-    public var offset = CGPointZero                 // offset for drawing tiles
+    public var tileOffset = CGPointZero             // draw offset for drawing tiles
     
     // texture
     public var source: String!                      // texture (if created from source)
@@ -59,7 +51,7 @@ public class SKTileset {
         self.tilemap = tilemap
         self.tileSize = tilemap.tileSize
         self.columns = columns
-        self.offset = offset
+        self.tileOffset = offset
     }
     
     
@@ -79,7 +71,7 @@ public class SKTileset {
         self.name = basename.componentsSeparatedByString(".")[0]
         self.firstGID = firstgid
         self.tilemap = tilemap
-        self.offset = offset
+        self.tileOffset = offset
     }
     
     /**
@@ -108,12 +100,12 @@ public class SKTileset {
         if let margins = attributes["margin"] {
             self.margin = Int(margins)!
         }
-
+        
         self.name = layerName
         self.firstGID = Int(firstgid)!
-        self.tileSize = TileSize(width: CGFloat(Int(width)!), height: CGFloat(Int(width)!))
+        self.tileSize = TileSize(width: CGFloat(Int(width)!), height: CGFloat(Int(height)!))
         self.columns = Int(columns)!
-        self.offset = offset
+        self.tileOffset = offset
     }
     
     // MARK: - Textures

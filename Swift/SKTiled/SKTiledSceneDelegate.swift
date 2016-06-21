@@ -10,7 +10,9 @@ import SpriteKit
 
 
 protocol SKTiledSceneDelegate {
+    // world node container
     var worldNode: SKNode! { get set }
+    // scene camera
     var cameraNode: SKTiledSceneCamera! { get set }
     var tilemap: SKTilemap! { get set }    
 }

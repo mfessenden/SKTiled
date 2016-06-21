@@ -2,8 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <array>
-	<string>ortho4-16x16.tmx</string>
-	<string>roguelike-16x16.tmx</string>
+	<string>ortho4-16x16</string>
+	<string>roguelike-16x16</string>
 	<string>isometric-130x66</string>
 </array>
 </plist>

@@ -15,6 +15,12 @@ public class SKTile: SKSpriteNode {
     public var tileData: SKTilesetData          // tile data
     weak public var layer: SKTileLayer!         // layer parent, assigned on add
     
+    /// Boolean flag to enable/disable texture filtering.
+    public var smoothing: Bool {
+        get { return texture?.filteringMode != .Nearest }
+        set { texture?.filteringMode = newValue ? SKTextureFilteringMode.Linear : SKTextureFilteringMode.Nearest }
+    }
+    
     /// Highlight the tile. Currently used in debugging.
     public var highlight: Bool = false {
         didSet {
@@ -39,8 +45,41 @@ public class SKTile: SKSpriteNode {
     public init(data: SKTilesetData){
         self.tileData = data
         super.init(texture: data.texture, color: SKColor.clearColor(), size: data.texture.size())
-    }
         
+        // tile flipping
+        let fh = tileData.flipHoriz
+        let fv = tileData.flipVert
+        let fd = tileData.flipDiag
+        
+        if (fd == true) {
+            if (fh == true) && (fv == false) {
+                zRotation = CGFloat(-M_PI_2)   // rotate 90deg
+            }
+            
+            if (fh == true) && (fv == true) {
+                zRotation = CGFloat(-M_PI_2)   // rotate 90deg
+                xScale *= -1                   // flip horizontally
+            }
+            
+            if (fh == false) && (fv == true) {
+                zRotation = CGFloat(M_PI_2)    // rotate -90deg
+            }
+        
+            if (fh == false) && (fv == false) {
+                zRotation = CGFloat(M_PI_2)   // rotate -90deg
+                xScale *= -1                   // flip horizontally
+            }
+        } else {
+            if (fh == true) {
+                xScale *= -1
+            }
+            
+            if (fv == true) {
+                yScale *= -1
+            }
+        }
+    }
+    
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -61,11 +100,11 @@ public class SKTile: SKSpriteNode {
             }
             tileTextures.append(frameTexture)
                 }
-        
+
         var animAction = SKAction.animateWithTextures(tileTextures, timePerFrame: tileData.duration)
         var repeatAction = SKAction.repeatActionForever(animAction)
         runAction(repeatAction, withKey: "TILE_ANIMATION")
-            }
+    }
     
     /// Pauses tile animation
     public var pauseAnimation: Bool = false {

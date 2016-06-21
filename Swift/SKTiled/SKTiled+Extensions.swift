@@ -44,6 +44,14 @@ public extension CGFloat {
 }
 
 
+public extension CGPoint {
+    
+    public func displayRounded() -> String {
+        return "x: \(self.x.displayRounded()), y: \(self.y.displayRounded())"
+    }
+}
+
+
 public extension SKScene {
     /**
      Returns the center point of a scene.
@@ -65,6 +73,37 @@ public extension SKScene {
 
 
 public extension SKNode {
+    
+    
+    public var drawAnchor: Bool {
+        get {
+            return childNodeWithName("Anchor") != nil
+        } set {
+            childNodeWithName("Anchor")?.removeFromParent()
+            
+            if (newValue == true) {
+                let anchorNode = SKNode()
+                anchorNode.name = "Anchor"
+                addChild(anchorNode)
+                let anchorShape = SKShapeNode(circleOfRadius: 4.0)
+                anchorShape.fillColor = SKColor.whiteColor()
+                anchorShape.zPosition = zPosition + 10
+                anchorNode.addChild(anchorShape)
+                
+                if let name = name {
+                    let label = SKLabelNode(fontNamed: "Courier")
+                    label.fontSize = 8
+                    label.position.y -= 10
+                    anchorNode.addChild(label)
+                    var labelText = name
+                    if let scene = scene {
+                        labelText += ": \(scene.convertPointFromView(position))"
+                    }
+                    label.text = labelText
+                }
+            }
+        }
+    }
     
     /**
      Run an action with key & optional completion function.
