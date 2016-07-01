@@ -13,6 +13,7 @@ public enum ObjectType: String {
     case Rectangle
     case Ellipse
     case Polygon
+    case Polyline
 }
 
 
@@ -26,6 +27,17 @@ public class SKTileObject: SKShapeNode {
     
     public var size: CGSize = CGSizeZero
     public var properties: [String: String] = [:]    // custom properties
+    
+    // blending/visibility
+    public var opacity: CGFloat {
+        get { return self.alpha }
+        set { self.alpha = newValue }
+    }
+    
+    public var visible: Bool {
+        get { return !self.hidden }
+        set { self.hidden = !newValue }
+    }
     
     override public init(){
         super.init()
@@ -87,21 +99,25 @@ public class SKTileObject: SKShapeNode {
         // draw the path
         var objectPath: UIBezierPath?
         
-        switch objectType {
+        switch objectType {            
+        case .Rectangle:
+            objectPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
+            
         case .Ellipse:
             objectPath = UIBezierPath(ovalInRect: CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
         
         case .Polygon:
             objectPath = nil
         
-        default:
-            objectPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
+        case .Polyline:
+            objectPath = nil
         }
         
         if let objectPath = objectPath {
             //objectPath.lineWidth = 1.5
             self.path = objectPath.CGPath
-            self.lineWidth = 2.0
+            self.antialiased = false
+            self.lineWidth = 1.0
         }
     }
     
@@ -109,29 +125,52 @@ public class SKTileObject: SKShapeNode {
      Add polygons points.
      
      - parameter points: `[[CGFloat]]` array of coordinates.
+     - parameter closed: `Bool` close the object path.
      */
-    public func addPoints(points: [[CGFloat]]) {
-        self.objectType = ObjectType.Polygon
+    public func addPoints(points: [[CGFloat]], closed: Bool=true) {
+        self.objectType = (closed == true) ? ObjectType.Polygon : ObjectType.Polyline
+        self.fillColor = (closed == true) ? self.fillColor : SKColor.clearColor()
 
         var cgpoints: [CGPoint] = points.map { CGPointMake($0[0], $0[1]) }
         let firstPoint = cgpoints.removeFirst()
         
+        // draw the starting point
+        let firstRadius: CGFloat = 2.0
+        let firstPath = UIBezierPath(ovalInRect: CGRect(x: firstPoint.x - (firstRadius / 2), y: firstPoint.y - (firstRadius / 2), width: firstRadius, height: firstRadius))
+        let firstStrokeColor = SKColor.clearColor()
+        firstPath.stroke()
+        firstStrokeColor.setStroke()
+        self.strokeColor.setFill()
+        firstPath.fill()
+        
+        // draw the points
         let polygonPath = UIBezierPath()
+        polygonPath.lineCapStyle = .Square
+        self.strokeColor.setStroke()
         polygonPath.moveToPoint(firstPoint)
         
         for point in cgpoints {
             polygonPath.addLineToPoint(point)
         }
         
-        polygonPath.closePath()
+        if (closed == true) { polygonPath.closePath() }
+        
+        // append the first point to the path
+        polygonPath.appendPath(firstPath)
         self.path = polygonPath.CGPath
-        self.lineWidth = 2.0
+        self.lineWidth = 1.0
+        self.antialiased = false
+    }
+    
+    public func addPointsWithString(points: String) {
+        // <polygon points="-1,0 -1,-18 14,-32 30,-18 30,0"/>
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
 
 
 extension SKTileObject {
@@ -148,14 +187,4 @@ extension SKTileObject {
     override public var debugDescription: String {
         return description
     }
-    
-    /**
-     Playground debugging visualization.
-     
-     - returns: `AnyObject` visualization
- 
-    func debugQuickLookObject() -> AnyObject {
-        return path!
-    }
-  */
 }

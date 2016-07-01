@@ -10,22 +10,21 @@ import SpriteKit
 
 
 public extension SKTilemap {
-        
+    
     /**
      Prints out all the data it has on the tilemap's layers.
      */
     public func debugLayers() {
-        guard (layers.count > 0) else { return }
-        
-        for layer in layers.sort({ $0.index < $1.index }) {
+        guard (layerCount > 0) else { return }
+        for layer in getLayers() {
             var propertiesString = ""
             for (pname, pvalue) in layer.properties {
-                propertiesString += "\"\(pname)\": \(pvalue)"
+                propertiesString += "\"\(pname)\": \(pvalue) "
             }
-            print("\(layer.index): \"\(layer.name!), z: \(layer.zPosition)\" \(propertiesString)")
+            print("\(layer.index): \"\(layer.name!)\", z: \(layer.zPosition) \(propertiesString)")
         }
     }
-    
+
     /**
      Returns a representative grid texture to be used as an overlay.
      
@@ -33,7 +32,8 @@ public extension SKTilemap {
      
      - returns: `SKTexture` grid texture.
      */
-    public func generateGridTexture(scale: CGFloat=2.0, gridColor: UIColor=UIColor.greenColor()) -> SKTexture {
+    public func generateGridTexture(scale: CGFloat=2.0, color: UIColor=UIColor.greenColor()) -> SKTexture? {
+        guard let firstLayer = tileLayers.first else { return nil }
         let image: UIImage = imageOfSize(self.renderSize, scale: scale) {
             
             for col in 0 ..< Int(self.mapSize.width) {
@@ -48,7 +48,9 @@ public extension SKTilemap {
                     var ypos: CGFloat = th * CGFloat(row)
                     
                     if (self.orientation == .Isometric) {
-                        
+                        let tilePosition = firstLayer.pointForCoordinate(col, row)
+                        xpos = tilePosition.x
+                        ypos = tilePosition.y
                     }
 
                     
@@ -59,7 +61,7 @@ public extension SKTilemap {
                     if (self.orientation == .Orthogonal) {
                         // rectangle shape
                         shapePath = UIBezierPath(rect: CGRect(x: xpos, y: ypos, width: tw, height: th))
-                        gridColor.setStroke()
+                        color.setStroke()
                         shapePath.lineWidth = 1
                         shapePath.stroke()
                     }
@@ -75,11 +77,12 @@ public extension SKTilemap {
                         shapePath.addLineToPoint(CGPoint(x: xpos, y: ypos + (th / 2)))
                         shapePath.addLineToPoint(CGPoint(x: xpos + (tw / 2), y: ypos))
                         shapePath.closePath()
-                        gridColor.setStroke()
+                        color.setStroke()
                         shapePath.lineWidth = 1
                         shapePath.stroke()
                     }
                     
+                    // TODO: check warnings in Xcode
                     CGContextSaveGState(context)
                     CGContextRestoreGState(context)
                 }
@@ -87,35 +90,34 @@ public extension SKTilemap {
         }
         
         let result = SKTexture(CGImage: image.CGImage!)
-        //result.filteringMode = .Nearest
+        result.filteringMode = .Nearest
         return result
     }
     
     /// Visualize the tilemap's anchorpoint and frame.
     public var debugDraw: Bool {
         get {
-            return childNodeWithName("DEBUG_Anchor") != nil
+            return childNodeWithName("DEBUG_DRAW") != nil
         } set {
             
             // remove existing node
-            childNodeWithName("DEBUG_Anchor")?.removeFromParent()
+            childNodeWithName("DEBUG_DRAW")?.removeFromParent()
             
             if (newValue==true) {
                 
                 let debugNode = SKNode()
-                debugNode.name = "DEBUG_Anchor"
+                debugNode.name = "DEBUG_DRAW"
                 addChild(debugNode)
                 debugNode.zPosition = lastZPosition + 10
-                
                 
                 debugNode.position.x = -(renderSize.width * anchorPoint.x)
                 debugNode.position.y = -(renderSize.height * anchorPoint.y)
         
                 /// draw properties
-                let debugCopy = debugColor.colorWithAlphaComponent(0.3)
+                let debugCopy = debugColor.colorWithAlphaComponent(0.5)
                 let lineWidth: CGFloat = 1
-                let anchorRadius: CGFloat = 2.0
-                let useAA: Bool = false
+                let anchorRadius: CGFloat = 3.0
+                let drawAntiAliasing: Bool = false
                 
                 
                 // outer frame path
@@ -154,37 +156,42 @@ public extension SKTilemap {
                 // shapes
                 let anchorShape = SKShapeNode(path: anchorPath.CGPath)
                 anchorShape.zPosition = debugNode.zPosition + zDeltaForLayers
-                anchorShape.antialiased = useAA
+                anchorShape.antialiased = drawAntiAliasing
                 anchorShape.fillColor = debugColor
                 anchorShape.strokeColor = UIColor.clearColor()
                 debugNode.addChild(anchorShape)
                 
                 let frameShape = SKShapeNode(path: framePath.CGPath)
-                frameShape.antialiased = useAA
+                frameShape.antialiased = drawAntiAliasing
                 frameShape.lineJoin = .Miter
                 frameShape.fillColor = UIColor.clearColor()
                 frameShape.strokeColor = debugColor
                 frameShape.lineWidth = lineWidth
                 debugNode.addChild(frameShape)
                 
-                let vertShape = SKShapeNode(path: verticalCenterPath.CGPath)
-                vertShape.antialiased = useAA
-                vertShape.lineCap = .Square
-                vertShape.fillColor = UIColor.clearColor()
-                vertShape.strokeColor = debugCopy
-                vertShape.lineWidth = lineWidth
-                debugNode.addChild(vertShape)
+                let widthIsEven: Bool = mapSize.width % 2 == 0
+                let heightIsEven: Bool = mapSize.height % 2 == 0
                 
+                if (heightIsEven == true) {
+                    let vertShape = SKShapeNode(path: verticalCenterPath.CGPath)
+                    vertShape.antialiased = drawAntiAliasing
+                    vertShape.lineCap = .Square
+                    vertShape.fillColor = UIColor.clearColor()
+                    vertShape.strokeColor = debugCopy
+                    vertShape.lineWidth = lineWidth
+                    debugNode.addChild(vertShape)
+                }
                 
-                let horizShape = SKShapeNode(path: horizontalCenterPath.CGPath)
-                horizShape.antialiased = useAA
-                vertShape.lineCap = .Square
-                horizShape.fillColor = UIColor.clearColor()
-                horizShape.strokeColor = debugCopy
-                horizShape.lineWidth = lineWidth
-                debugNode.addChild(horizShape)
+                if (widthIsEven == true) {
+                    let horizShape = SKShapeNode(path: horizontalCenterPath.CGPath)
+                    horizShape.antialiased = drawAntiAliasing
+                    horizShape.lineCap = .Square
+                    horizShape.fillColor = UIColor.clearColor()
+                    horizShape.strokeColor = debugCopy
+                    horizShape.lineWidth = lineWidth
+                    debugNode.addChild(horizShape)
+                }
             }
         }
     }
 }
-

@@ -20,7 +20,7 @@ public class GameScene: SKScene, SKTiledSceneDelegate {
     public var debugMode: Bool = false
     
     // ui controls    
-    public var gridButton: ButtonNode!
+    public var drawButton: ButtonNode!
     public var nextButton: ButtonNode!
     
     // debugging labels
@@ -93,22 +93,25 @@ public class GameScene: SKScene, SKTiledSceneDelegate {
         }
         
         
-        if (gridButton == nil){
-            gridButton = ButtonNode(defaultImage: "grid-button-norm", highlightImage: "grid-button-pressed", action: {
-                if let firstLayer = self.tilemap.layers.first {
-                    firstLayer.visualizeGrid = !firstLayer.visualizeGrid
+        if (drawButton == nil){
+            drawButton = ButtonNode(defaultImage: "draw-button-norm", highlightImage: "draw-button-pressed", action: {
+                if let firstLayer = self.tilemap.tileLayers.first {
+                    let debugState = !firstLayer.visualizeGrid
+                    firstLayer.visualizeGrid = debugState
+                    self.tilemap.debugDraw = debugState
+                    self.tilemap.showObjects = debugState
                 }
             })
-            cameraNode.addChild(gridButton)
+            cameraNode.addChild(drawButton)
             // position towards the bottom of the scene
-            gridButton.position.x -= (view.bounds.size.width / 12)
-            gridButton.position.y -= (view.bounds.size.height / 2.25)
-            gridButton.zPosition = lastZPosition * 3.0
+            drawButton.position.x -= (view.bounds.size.width / 12)
+            drawButton.position.y -= (view.bounds.size.height / 2.25)
+            drawButton.zPosition = lastZPosition * 3.0
             
             
             if let tilemap = tilemap {
                 if tilemap.orientation == .Isometric {
-                    gridButton.disabled = true
+                    drawButton.disabled = true
                 }
             }
         }
@@ -137,8 +140,8 @@ public class GameScene: SKScene, SKTiledSceneDelegate {
      
      - returns: `SKTilemap?` tile map node.
      */
-    public func loadTMX(fileNamed: String) -> SKTilemap? {
-        if let tilemapNode = SKTilemap.loadFromFile(fileNamed) {
+    public func loadTMX(filename: String) -> SKTilemap? {
+        if let tilemapNode = SKTilemap.load(fromFile: filename) {
             worldNode.addChild(tilemapNode)
             
             if (tilemapNode.backgroundColor != nil) {
@@ -164,7 +167,7 @@ public class GameScene: SKScene, SKTiledSceneDelegate {
         cameraInformation.text = "Camera: "
         cameraNode.addChild(cameraInformation)
         // position towards the bottom of the scene
-        cameraInformation.position.y -= (view.bounds.size.height / 2.8)
+        cameraInformation.position.y -= (view.bounds.size.height / 2.85)
     }
     
     /**
@@ -183,7 +186,7 @@ public class GameScene: SKScene, SKTiledSceneDelegate {
         }
         
         // position towards the bottom of the scene
-        tilemapInformation.position.y -= (view.bounds.size.height / 3)
+        tilemapInformation.position.y -= (view.bounds.size.height / 3.2)
         
         
         if (tileInformation == nil){
@@ -195,7 +198,7 @@ public class GameScene: SKScene, SKTiledSceneDelegate {
         }
         
         // position towards the bottom of the scene
-        tileInformation.position.y -= (view.bounds.size.height / 2.6)
+        tileInformation.position.y -= (view.bounds.size.height / 2.6)  // lowest
         tileInformation.hidden = true
     }
     
@@ -214,13 +217,25 @@ public class GameScene: SKScene, SKTiledSceneDelegate {
         
         tileInformation.hidden = false
         tileInformation.text = "Tile: (\(coordStr)) ~ \(layerpos.displayRounded())"
+    }
         
+    /**
+     Print tile information when the scene is double-tapped.
+     
+     - parameter point: `CGPoint` point in scene.
+     */
+    public func printTileInformation(atPoint point: CGPoint) {
+        guard let tilemap = tilemap else { return }
+        let firstLayer = tilemap.tileLayers[1]        
+        let tilemapPosition = convertPoint(point, toNode: tilemap)
+        
+        let coord = firstLayer.coordinateForPoint(tilemapPosition)
         // display some information about tiles at the touched location
         let tiles = tilemap.tilesAt(coord)
         if tiles.count > 0 {
             print("\n# Tiles: \(tiles.count) @ \(coord):")
             for tile in tiles {
-                tile.highlight = true
+                tile.highlightWithColor(SKColor.whiteColor())
                 print("  -\(tile)")
             }
         }

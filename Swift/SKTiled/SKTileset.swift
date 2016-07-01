@@ -9,13 +9,21 @@
 
 import SpriteKit
 
+// Tileset tag in tmx (inline):
+// <tileset firstgid="1" name="Roguelike" tilewidth="16" tileheight="16" spacing="1" tilecount="1767" columns="57">
 
+// Tileset tag in tmx (external):
+// <tileset firstgid="1" source="msp1-spritesheet-8x8.tsx"/>
+
+
+// tileset tag in tsx
+// <tileset name="msp-spritesheet1-8x8" tilewidth="8" tileheight="8" spacing="1" tilecount="176" columns="22">
 public class SKTileset {
     
     public var name: String
-    public var filename: String!                    // source filename (external tileset)
+    public var filename: String! = nil              // source filename (external tileset)
     public var tilemap: SKTilemap!
-    public var tileSize: TileSize!
+    public var tileSize: TileSize                   // tile size
 
     public var columns: Int = 0                     // number of columns
     public var tilecount: Int = 0                   // tile count
@@ -35,6 +43,10 @@ public class SKTileset {
     // tile data
     public var tileData: Set<SKTilesetData> = []    // tile data attributes (private)
     
+    // tileset properties
+    public var isImageCollection: Bool = false      // image collection tileset
+    public var isExternalTileset: Bool { return filename != nil }
+    
     // returns the last GID in the tileset
     public var lastGID: Int {
         var gid = firstGID
@@ -46,32 +58,45 @@ public class SKTileset {
         return gid
     }
     
-    public init(name: String, tilemap: SKTilemap, columns: Int=0, offset: CGPoint=CGPointZero) {
+    /**
+     Initialize with basic properties.
+     
+     - parameter name:     `String` tileset name.
+     - parameter size:     `TileSize` tile size.
+     - parameter firstgid: `Int` first gid value.
+     - parameter columns:  `Int` number of columns.
+     - parameter offset:   `CGPoint` tileset offset value.
+     
+     - returns: `SKTileset` tileset object.
+     */
+    public init(name: String, tileSize size: TileSize, firstgid: Int=1, columns: Int=0, offset: CGPoint=CGPointZero) {
         self.name = name
-        self.tilemap = tilemap
-        self.tileSize = tilemap.tileSize
+        self.tileSize = size
+        self.firstGID = firstgid
         self.columns = columns
         self.tileOffset = offset
     }
     
-    
     /**
-     Initialize from an external tileset
+     Initialize from an external tileset. (only source and first gid are given).
      
      - parameter source:   `String` source file name.
-     - parameter firstgid: `Int` first GID value.
+     - parameter firstgid: `Int` first gid value.
      - parameter tilemap:  `SKTilemap` parent tile map node.
      
      - returns: `SKTileset` tile set.
      */
     public init(source: String, firstgid: Int, tilemap: SKTilemap, offset: CGPoint=CGPointZero) {
-        let basename = source.componentsSeparatedByString("/").last!
-        self.filename = basename
-        // temporary
-        self.name = basename.componentsSeparatedByString(".")[0]
+        let filepath = source.componentsSeparatedByString("/").last!
+        self.filename = filepath
+        
         self.firstGID = firstgid
         self.tilemap = tilemap
         self.tileOffset = offset
+        
+        // setting these here, even though it may different later
+        self.name = filepath.componentsSeparatedByString(".")[0]
+        self.tileSize = tilemap.tileSize
     }
     
     /**
@@ -173,6 +198,7 @@ public class SKTileset {
         print("[SKTileset]: tileset built in: \(timeStamp)s\n")
     }
     
+    // TODO: - Need this?
     public func addTextures(fromAtlas: String) {
         print("[SKTileset]: adding texture atlas: \"\(fromAtlas)\"")
         atlas = SKTextureAtlas(named: fromAtlas)
@@ -186,8 +212,10 @@ public class SKTileset {
     /**
      Add tileset data attributes.
      
-     - parameter tileID:  `Int` tile ID
+     - parameter tileID:  `Int` tile ID.
      - parameter texture: `SKTexture` texture for tile at the given id.
+     
+     - returns: `SKTilesetData?` tileset data (or nil if the data exists).
      */
     public func addTilesetTile(tileID: Int, texture: SKTexture) -> SKTilesetData? {
         guard !(self.tileData.contains( { $0.hashValue == tileID.hashValue } )) else {
@@ -196,6 +224,34 @@ public class SKTileset {
         }
         
         let data = SKTilesetData(tileId: tileID, texture: texture, tileSet: self)
+        self.tileData.insert(data)
+        return data
+    }
+    
+    /**
+     Add tileset data from an image source (tileset is a collections tileset).
+     
+     - parameter tileID: `Int` tile ID.
+     - parameter source: `String` source image name.
+     
+     - returns: `SKTilesetData?` tileset data (or nil if the data exists).
+     */
+    public func addTilesetTile(tileID: Int, source: String) -> SKTilesetData? {
+        guard !(self.tileData.contains( { $0.hashValue == tileID.hashValue } )) else {
+            print("[SKTileset]: tile data exists at id: \(tileID)")
+            return nil
+        }
+        // bundled images shouldn't have file paths
+        //let imageName = source.componentsSeparatedByString("/").last!
+        
+        isImageCollection = true
+        let texture = SKTexture(imageNamed: source)
+        
+        texture.filteringMode = .Nearest
+        let data = SKTilesetData(tileId: tileID, texture: texture, tileSet: self)
+        
+        // add the image name to the source attribute
+        data.source = source
         self.tileData.insert(data)
         return data
     }
@@ -240,3 +296,5 @@ extension SKTileset: CustomStringConvertible, CustomDebugStringConvertible {
         return description
     }
 }
+
+

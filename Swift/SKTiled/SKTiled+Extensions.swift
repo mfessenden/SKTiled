@@ -6,6 +6,7 @@
 //  Copyright © 2016 Michael Fessenden. All rights reserved.
 //
 
+
 import Foundation
 import SpriteKit
 import UIKit
@@ -31,11 +32,49 @@ public func imageOfSize(size: CGSize, scale: CGFloat=1, _ whatToDraw: ()->()) ->
 
 public extension CGFloat {
     
+    /**
+     Clamp the CGFloat between two values. Returns a new value.
+     
+     - parameter v1: `CGFloat` min value
+     - parameter v2: `CGFloat` min value
+     
+     - returns: `CGFloat` clamped result.
+     */
+    public func clamped(minv: CGFloat, _ maxv: CGFloat) -> CGFloat {
+        let min = minv < maxv ? minv : maxv
+        let max = minv > maxv ? minv : maxv
+        return self < min ? min : (self > max ? max : self)
+    }
+    
+    /**
+     Clamp the current value between min & max values.
+     
+     - parameter v1: `CGFloat` min value
+     - parameter v2: `CGFloat` min value
+     
+     - returns: `CGFloat` clamped result.
+     */
+    public mutating func clamp(minv: CGFloat, _ maxv: CGFloat) -> CGFloat {
+        self = clamped(minv, maxv)
+        return self
+    }
+    
+    /**
+     Returns a string representation of the value rounded to the current decimals.
+     
+     - parameter decimals: `Int` number of decimals to round to.
+     
+     - returns: `String` rounded display string.
+     */
     public func displayRounded(decimals: Int=2) -> String {
         return String(format: "%.\(String(decimals))f", self)
     }
     
-    // round to nearest .5
+    /**
+     Returns the value rounded to the nearest .5 increment.
+     
+     - returns: `CGFloat` rounded value.
+     */
     public func roundToHalf() -> CGFloat {
         let scaled = self * 10.0
         let result = scaled - (scaled % 5)
@@ -77,13 +116,13 @@ public extension SKNode {
     
     public var drawAnchor: Bool {
         get {
-            return childNodeWithName("Anchor") != nil
+            return childNodeWithName("ANCHOR") != nil
         } set {
-            childNodeWithName("Anchor")?.removeFromParent()
+            childNodeWithName("ANCHOR")?.removeFromParent()
             
             if (newValue == true) {
                 let anchorNode = SKNode()
-                anchorNode.name = "Anchor"
+                anchorNode.name = "ANCHOR"
                 addChild(anchorNode)
                 let anchorShape = SKShapeNode(circleOfRadius: 4.0)
                 anchorShape.fillColor = SKColor.whiteColor()
@@ -119,6 +158,45 @@ public extension SKNode {
             runAction(compositeAction, withKey: withKey)
         } else {
             runAction(action, withKey: withKey)
+        }
+    }
+}
+
+
+public extension SKColor {
+
+    /**
+     Lightens the color by the given percentage.
+     
+     - parameter percent: `CGFloat`
+     
+     - returns: `SKColor` lightened color.
+     */
+    public func lighten(by percent: CGFloat) -> SKColor {
+        return colorWithBrightness(1.0 + percent)
+    }
+    
+    /**
+     Darkens the color by the given percentage.
+     
+     - parameter percent: `CGFloat`
+     
+     - returns: `SKColor` darkened color.
+     */
+    public func darken(by percent: CGFloat) -> SKColor {
+        return colorWithBrightness(1.0 - percent)
+    }
+    
+    public func colorWithBrightness(factor: CGFloat) -> SKColor {
+        var hue: CGFloat = 0
+        var saturation: CGFloat = 0
+        var brightness: CGFloat = 0
+        var alpha: CGFloat = 0
+        
+        if getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha) {
+            return SKColor(hue: hue, saturation: saturation, brightness: brightness * factor, alpha: alpha)
+        } else {
+            return self;
         }
     }
 }

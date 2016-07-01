@@ -12,7 +12,6 @@
 		4C88E1AB1D8A241F00FCCFA3 /* ortho4-16x16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E1AA1D8A241F00FCCFA3 /* ortho4-16x16.tmx */; };
 		4C88E1AD1D8A242F00FCCFA3 /* ortho4-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */; };
 		4C88E1DE1D8A4EBE00FCCFA3 /* SKTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D01D8A4EBE00FCCFA3 /* SKTile.swift */; };
-		4C88E1DF1D8A4EBE00FCCFA3 /* SKTile+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D11D8A4EBE00FCCFA3 /* SKTile+Debug.swift */; };
 		4C88E1E01D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D21D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift */; };
 		4C88E1E11D8A4EBE00FCCFA3 /* SKTiledSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D31D8A4EBE00FCCFA3 /* SKTiledSceneDelegate.swift */; };
 		4C88E1E21D8A4EBE00FCCFA3 /* SKTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D41D8A4EBE00FCCFA3 /* SKTileLayer.swift */; };
@@ -22,16 +21,13 @@
 		4C88E1E61D8A4EBE00FCCFA3 /* SKTilemapParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D81D8A4EBE00FCCFA3 /* SKTilemapParser.swift */; };
 		4C88E1E71D8A4EBE00FCCFA3 /* SKTileObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D91D8A4EBE00FCCFA3 /* SKTileObject.swift */; };
 		4C88E1E81D8A4EBE00FCCFA3 /* SKTileset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DA1D8A4EBE00FCCFA3 /* SKTileset.swift */; };
-		4C88E1E91D8A4EBE00FCCFA3 /* SKTileset+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DB1D8A4EBE00FCCFA3 /* SKTileset+Debug.swift */; };
 		4C88E1EA1D8A4EBE00FCCFA3 /* SKTilesetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */; };
-		4C88E1EB1D8A4EBE00FCCFA3 /* SKTilesetData+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DD1D8A4EBE00FCCFA3 /* SKTilesetData+Debug.swift */; };
 		4CA3DA0E1D8AF07C001E165A /* DemoFiles.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CA3DA0D1D8AF07C001E165A /* DemoFiles.plist */; };
 		4CBA61831D8A0A4600B31FC1 /* roguelike-16x16-anim.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */; };
 		4CBA618E1D8A0A5700B31FC1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61861D8A0A5700B31FC1 /* AppDelegate.swift */; };
 		4CBA618F1D8A0A5700B31FC1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CBA61871D8A0A5700B31FC1 /* LaunchScreen.storyboard */; };
 		4CBA61901D8A0A5700B31FC1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CBA61891D8A0A5700B31FC1 /* Main.storyboard */; };
 		4CBA61911D8A0A5700B31FC1 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA618B1D8A0A5700B31FC1 /* GameViewController.swift */; };
-		4CBA61921D8A0A5700B31FC1 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CBA618C1D8A0A5700B31FC1 /* Info.plist */; };
 		4CBA61A11D8A0ACF00B31FC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CBA619F1D8A0ACF00B31FC1 /* Assets.xcassets */; };
 		4CBA61A21D8A0ACF00B31FC1 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61A01D8A0ACF00B31FC1 /* GameScene.swift */; };
 		4CD6D2D51D8B9DE20083DA7B /* roguelike-16x16-anim.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16-anim.tsx */; };
@@ -48,7 +44,6 @@
 		4C88E1AA1D8A241F00FCCFA3 /* ortho4-16x16.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "ortho4-16x16.tmx"; sourceTree = "<group>"; };
 		4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ortho4-16x16.png"; sourceTree = "<group>"; };
 		4C88E1D01D8A4EBE00FCCFA3 /* SKTile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTile.swift; sourceTree = "<group>"; };
-		4C88E1D11D8A4EBE00FCCFA3 /* SKTile+Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKTile+Debug.swift"; sourceTree = "<group>"; };
 		4C88E1D21D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTiledSceneCamera.swift; sourceTree = "<group>"; };
 		4C88E1D31D8A4EBE00FCCFA3 /* SKTiledSceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTiledSceneDelegate.swift; sourceTree = "<group>"; };
 		4C88E1D41D8A4EBE00FCCFA3 /* SKTileLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTileLayer.swift; sourceTree = "<group>"; };
@@ -58,9 +53,7 @@
 		4C88E1D81D8A4EBE00FCCFA3 /* SKTilemapParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTilemapParser.swift; sourceTree = "<group>"; };
 		4C88E1D91D8A4EBE00FCCFA3 /* SKTileObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTileObject.swift; sourceTree = "<group>"; };
 		4C88E1DA1D8A4EBE00FCCFA3 /* SKTileset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTileset.swift; sourceTree = "<group>"; };
-		4C88E1DB1D8A4EBE00FCCFA3 /* SKTileset+Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKTileset+Debug.swift"; sourceTree = "<group>"; };
 		4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTilesetData.swift; sourceTree = "<group>"; };
-		4C88E1DD1D8A4EBE00FCCFA3 /* SKTilesetData+Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKTilesetData+Debug.swift"; sourceTree = "<group>"; };
 		4CA3DA0D1D8AF07C001E165A /* DemoFiles.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DemoFiles.plist; sourceTree = "<group>"; };
 		4CBA61651D8A048200B31FC1 /* SKTiled.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKTiled.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CBA617E1D8A0A3900B31FC1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -94,11 +87,8 @@
 		4C88E1A71D8A1E8F00FCCFA3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				4C88E1D11D8A4EBE00FCCFA3 /* SKTile+Debug.swift */,
 				4C88E1D71D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift */,
 				4C88E1D61D8A4EBE00FCCFA3 /* SKTilemap+Debug.swift */,
-				4C88E1DB1D8A4EBE00FCCFA3 /* SKTileset+Debug.swift */,
-				4C88E1DD1D8A4EBE00FCCFA3 /* SKTilesetData+Debug.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -268,7 +258,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CD6D2DB1D8B9EA10083DA7B /* isometric-16x8.png in Resources */,
-				4CBA61921D8A0A5700B31FC1 /* Info.plist in Resources */,
 				4CBA61831D8A0A4600B31FC1 /* roguelike-16x16-anim.png in Resources */,
 				4CD6D2DC1D8B9EA10083DA7B /* isometric-16x8.tmx in Resources */,
 				4C88E1AB1D8A241F00FCCFA3 /* ortho4-16x16.tmx in Resources */,
@@ -301,13 +290,10 @@
 				4C88E1E61D8A4EBE00FCCFA3 /* SKTilemapParser.swift in Sources */,
 				4C88E1E11D8A4EBE00FCCFA3 /* SKTiledSceneDelegate.swift in Sources */,
 				4CBA61A21D8A0ACF00B31FC1 /* GameScene.swift in Sources */,
-				4C88E1E91D8A4EBE00FCCFA3 /* SKTileset+Debug.swift in Sources */,
 				4CBA61911D8A0A5700B31FC1 /* GameViewController.swift in Sources */,
 				4CBA618E1D8A0A5700B31FC1 /* AppDelegate.swift in Sources */,
 				4C88E1E51D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift in Sources */,
 				4C88E1E21D8A4EBE00FCCFA3 /* SKTileLayer.swift in Sources */,
-				4C88E1EB1D8A4EBE00FCCFA3 /* SKTilesetData+Debug.swift in Sources */,
-				4C88E1DF1D8A4EBE00FCCFA3 /* SKTile+Debug.swift in Sources */,
 				4C88E1DE1D8A4EBE00FCCFA3 /* SKTile.swift in Sources */,
 				4CD6D2E01D8C82850083DA7B /* ButtonNode.swift in Sources */,
 			);

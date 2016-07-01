@@ -5,7 +5,6 @@
 //  Created by Michael Fessenden on 3/21/16.
 //  Copyright © 2016 Michael Fessenden. All rights reserved.
 //  Derived from: https://medium.com/@lucascerro/understanding-nsxmlparser-in-swift-xcode-6-3-1-7c96ff6c65bc#.1m4mh6nhy
-//  iOS 10 Reference: http://stackoverflow.com/questions/19088231/base64-decoding-in-ios-7/19088341#19088341
 
 import SpriteKit
 
@@ -20,7 +19,7 @@ public enum ParsingError: ErrorType {
 }
 
 
-// MARK: - Tiled Scene Parser
+// MARK: - TMX Parser
 
 /// Class for reading Tiled tmx files.
 public class SKTilemapParser: NSObject, NSXMLParserDelegate {
@@ -36,7 +35,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
     private var activeElement: String?                          // current object
     private var lastElement: AnyObject?                         // last object created
     
-    private var currentID: Int?                                 // last tile ID parsed
+    private var currentID: Int?                                 // current tile/object ID
     
     private var properties: [String: String] = [:]              // last properties created
     private var data: [String: [UInt32]] = [:]                  // store data for tile layers to render in a second pass
@@ -50,15 +49,15 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
      
      - returns: `SKTilemap?` tiled map node.
      */
-    public func loadFromFile(fileNamed: String) -> SKTilemap? {
-        guard let targetFile = getBundleFilename(fileNamed) else {
-            print("[SKTilemapParser]: unable to locate file: \"\(fileNamed)\"")
+    public func load(fromFile filename: String) -> SKTilemap? {
+        guard let targetFile = getBundledFile(named: filename) else {
+            print("[SKTilemapParser]: unable to locate file: \"\(filename)\"")
             return nil
         }
         
-        let timer = NSDate()        
+        let timer = NSDate()
         fileNames.append(targetFile)
-                
+        
         while !(fileNames.isEmpty) {
             if let firstFileName = fileNames.first {
                 
@@ -92,6 +91,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
         }
         // kill tileset data
         externalTilesets = [:]
+        
         // render tile layers
         renderTileLayers()
         
@@ -99,7 +99,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
         let timeInterval = NSDate().timeIntervalSinceDate(timer)
         let timeStamp = String(format: "%.\(String(3))f", timeInterval)
         
-        print("\n[SKTilemapParser]: tile map loaded in: \(timeStamp)s\n")
+        print("[SKTilemapParser]: tile map loaded in: \(timeStamp)s\n")
         return tileMap
     }
     
@@ -111,9 +111,9 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
      
      - returns: `String?` name of file in bundle.
      */
-    public func getBundleFilename(fileName: String) -> String? {
+    public func getBundledFile(named filename: String) -> String? {
         // strip off the file extension
-        let fileBaseName = fileName.componentsSeparatedByString(".")[0]
+        let fileBaseName = filename.componentsSeparatedByString(".")[0]
         for fileExtension in ["tmx", "tsx"] {
             if let url = NSBundle.mainBundle().URLForResource(fileBaseName, withExtension: fileExtension) {
                 let filepath = url.absoluteString
@@ -130,11 +130,13 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
      */
     private func renderTileLayers() {
         guard let tileMap = tileMap else { return }
+        
         for (uuid, tileData) in data {
             guard let tileLayer = tileMap.getLayer(withID: uuid) as? SKTileLayer else { continue }
             
             // add the layer data...
             tileLayer.setLayerData(tileData)
+            
         }
         // reset the data
         data = [:]
@@ -154,12 +156,12 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
     // didStartElement happens whenever parser starts a key: <key>
     public func parser(parser: NSXMLParser,
                        didStartElement elementName: String,
-                       namespaceURI: String?,
-                       qualifiedName qName: String?,
-                       attributes attributeDict: [String: String])  {
+                                       namespaceURI: String?,
+                                       qualifiedName qName: String?,
+                                                     attributes attributeDict: [String: String])  {
         
         activeElement = elementName
-
+        
         let isCompoundElement = (attributeDict.count > 0)
         var elementStartString = "<\(elementName)"
         if (isCompoundElement == true) {
@@ -168,7 +170,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
             }
         }
         
-
+        
         if (elementName == "map") {
             guard let tilemap = SKTilemap(attributes: attributeDict) else {
                 parser.abortParsing()
@@ -184,7 +186,6 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
         
         // external will have a 'source' attribute, otherwise 'image'
         if (elementName == "tileset") {
-            
             
             // external tileset
             if let source = attributeDict["source"] {
@@ -203,10 +204,14 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
                     externalTilesets[source] = tileset
                     self.tileMap.addTileset(tileset)
                     lastElement = tileset
+                    
+                    // set this to nil, just in case we're looking for a collections tileset.
+                    // TODO: check that this isn't causing issues
+                    currentID = nil
                 }
             }
             
-            
+            // inline tileset
             if let name = attributeDict["name"] {
                 
                 // update an existing tileset
@@ -215,7 +220,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
                     guard let width = attributeDict["tilewidth"] else { parser.abortParsing(); return }
                     guard let height = attributeDict["tileheight"] else { parser.abortParsing(); return }
                     guard let columns = attributeDict["columns"] else { parser.abortParsing(); return }
-
+                    
                     existingTileset.name = name
                     existingTileset.tileSize = TileSize(width: CGFloat(Int(width)!), height: CGFloat(Int(width)!))
                     existingTileset.columns = Int(columns)!
@@ -232,14 +237,18 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
                     }
                     
                     lastElement = existingTileset
+                    //TODO: remove tileset from external tilesets?
                     
                     
                 } else {
-                    // create new tileset
-                    print("[SKTilemapParser]: creating new tileset: \"\(name)\"...")
+                    // create inline tileset
                     guard let tileset = SKTileset(attributes: attributeDict) else { parser.abortParsing(); return }
                     self.tileMap.addTileset(tileset)
                     lastElement = tileset
+                    
+                    // set this to nil, just in case we're looking for a collections tileset.
+                    // TODO: check that this isn't causing issues
+                    currentID = nil
                 }
             }
         }
@@ -252,7 +261,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
             if let tileset = lastElement as? SKTileset {
                 tileset.tileOffset = CGPoint(x: Int(offsetx)!, y: Int(offsety)!)
             }
-        }        
+        }
         
         if elementName == "property" {
             guard let name = attributeDict["name"] else { parser.abortParsing(); return }
@@ -265,7 +274,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
             }
             
             // stash properties
-            properties[name] = value            
+            properties[name] = value
         }
         
         
@@ -274,9 +283,9 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
             guard let layerName = attributeDict["name"] else { parser.abortParsing(); return }
             guard let layer = SKTileLayer(tileMap: self.tileMap!, attributes: attributeDict)
                 else {
-                print("Error creating tile layer: \"\(layerName)\"")
-                parser.abortParsing()
-                return
+                    print("Error creating tile layer: \"\(layerName)\"")
+                    parser.abortParsing()
+                    return
             }
             
             self.tileMap!.addLayer(layer)
@@ -318,20 +327,28 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
             
             // update an image layer
             if let imageLayer = lastElement as? SKImageLayer {
-                
                 // set the image property
                 imageLayer.setLayerImage(imageSource)
             }
             
             // update a tileset
             if let tileset = lastElement as? SKTileset {
-                tileset.addTextures(fromSpriteSheet: imageSource)
+                // If `currentID` == nil, look for lastElement to be a tileset, otherwise, the image is part of a collections tileset.
+                if let currentID = currentID {
+                    // add an image property to the tileset collection
+                    tileset.addTilesetTile(currentID + tileset.firstGID, source: imageSource)
+                } else {
+                    // add the tileset spritesheet image
+                    tileset.addTextures(fromSpriteSheet: imageSource)
+                }
             }
+            
         }
         
-        
+        // `tile` is used to flag properties in a tileset, as well as store tile layer data in an XML-formatted map.
         if elementName == "tile" {
-            // XML data is stored with a `tile` tag
+            
+            // XML data is stored with a `tile` tag and `gid` atribute.
             if let gid = attributeDict["gid"] {
                 let gidInt = Int(gid)!
                 // just append this to the tileData property
@@ -340,6 +357,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
                 }
             }
                 
+                // we're adding data to a tileset
             else if let id = attributeDict["id"] {
                 let idInt = Int(id)!
                 currentID = idInt
@@ -348,7 +366,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
                 return
             }
         }
-
+        
         // look for last element to be an object group
         // id, x, y required
         if (elementName == "object") {
@@ -362,7 +380,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
                 parser.abortParsing()
                 return
             }
-                
+            
             objectGroup.addObject(tileObject)
             currentID = tileObject.id
         }
@@ -401,23 +419,54 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
             }
         }
         
+        if (elementName == "polyline") {
+            // polygon object
+            if let pointsString = attributeDict["points"] {
+                var coordinates: [[CGFloat]] = []
+                let points = pointsString.componentsSeparatedByString(" ")
+                for point in points {
+                    let coords = point.componentsSeparatedByString(",").flatMap { x in Double(x) }
+                    coordinates.append(coords.flatMap { CGFloat($0) })
+                }
+                
+                if let objectsgroup = lastElement as? SKObjectGroup {
+                    if (currentID != nil) {
+                        if let currentObject = objectsgroup.getObject(id: currentID!) {
+                            currentObject.addPoints(coordinates, closed: false)
+                            currentObject.draw()
+                        }
+                    }
+                }
+            }
+        }
+        
         // animated tiles
         if (elementName == "frame") {
             guard let currentID = currentID else {
-                print("  -> cannot assign frame information without tile id")
+                print("[SKTilemapParser]: cannot assign frame animation information without tile id")
                 parser.abortParsing()
                 return}
             
             guard let id = attributeDict["tileid"] else { parser.abortParsing(); return }
             guard let duration = attributeDict["duration"] else { parser.abortParsing(); return }
             guard let tileset = lastElement as? SKTileset else { parser.abortParsing(); return }
-            guard let tileData = tileset.getTileData(currentID + tileset.firstGID) else { parser.abortParsing(); return }
             
-            // add the frame id to the frames property
-            let frameInterval: NSTimeInterval = Double(duration)! / 1000.0
-            tileData.addFrame(Int(id)! + tileset.firstGID, interval: frameInterval)
+            // get duration in seconds
+            let durationInSeconds: NSTimeInterval = Double(duration)! / 1000.0
+            
+            // this was a guard statement
+            if (tileset.isImageCollection==false){
+                if let tileData = tileset.getTileData(currentID + tileset.firstGID) {
+                    // add the frame id to the frames property
+                    tileData.addFrame(Int(id)! + tileset.firstGID, interval: durationInSeconds)
+                }
+            } else {
+                if let tileData = tileset.getTileData(currentID + tileset.firstGID) {
+                    tileData.addFrame(Int(id)! + tileset.firstGID, interval: durationInSeconds)
+                }
+            }
         }
-
+        
         // decode data here, and reset
         if (elementName == "data") {
             // get the encoding...
@@ -437,13 +486,12 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
     // didEndElement happens whenever parser ends a key: </key>
     public func parser(parser: NSXMLParser,
                        didEndElement elementName: String,
-                       namespaceURI: String?,
-                       qualifiedName qName: String?) {
+                                     namespaceURI: String?,
+                                     qualifiedName qName: String?) {
         
         
         // look for last element to add properties to
         if elementName == "properties" {
-            
             if let tilemap = lastElement as? SKTilemap { tilemap.properties = properties }
             if let tileLayer = lastElement as? TiledLayerObject { tileLayer.properties = properties }
             if let tileset = lastElement as? SKTileset {
@@ -456,6 +504,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
                     if let tileData = tileset.getTileData(tileID) {
                         //print("  -> adding properties to id: \(tileID)")
                         tileData.properties = properties
+                        properties = [:]
                     }
                 }
             }
@@ -515,8 +564,8 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
         if (elementName == "tile") {
             // parse properties
             if let tileset = lastElement as? SKTileset {
-                if (currentID == nil){
-                    
+                if (currentID != nil){
+                    // TODO: big error here?
                     let tileID = tileset.firstGID + currentID!
                     if let tileData = tileset.getTileData(tileID) {
                         tileData.properties = properties
@@ -525,12 +574,13 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
                 }
             }
             
+            // we're no longer adding attributes to a tile, so unset the currentID
             currentID = nil
         }
         
         // look for last element to be an object group
         if (elementName == "object") {
-            if let objectsgroup = lastElement as? SKObjectGroup {                
+            if let objectsgroup = lastElement as? SKObjectGroup {
                 if (currentID != nil) {
                     if let lastObject = objectsgroup.getObject(id: currentID!) {
                         lastObject.properties = properties
@@ -541,13 +591,13 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
             
             currentID = nil
         }
-
+        
         // reset character data
         characterData = ""
     }
- 
     
-    // foundCharacters happens whenever parser enters a key
+    
+    // foundCharacters happens whenever parser enters a key and find characters
     public func parser(parser: NSXMLParser, foundCharacters string: String) {
         // append data attribute
         characterData += string
@@ -562,7 +612,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
     }
     
     public func parser(parser: NSXMLParser, foundElementDeclarationWithName elementName: String, model: String) {
-
+        
     }
     
     public func parser(parser: NSXMLParser, foundExternalEntityDeclarationWithName name: String, publicID: String?, systemID: String?) {
@@ -592,7 +642,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
      */
     private func decode(base64String data: String) -> [UInt32]? {
         if let nsdata = NSData(base64EncodedString: data, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters) {
-            let count = nsdata.length / sizeof(Int32)
+            let count = nsdata.length / sizeof(UInt32)
             //var bytes = [Int32](count: nsdata.length, repeatedValue: 0)
             var bytes = [UInt32](count: count, repeatedValue: 0)
             nsdata.getBytes(&bytes)
