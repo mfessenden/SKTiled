@@ -15,8 +15,11 @@ public class SKTiledSceneCamera: SKCameraNode {
     public let world: SKNode
     private var bounds: CGRect
     public var zoom: CGFloat = 1.0
+    public var initialZoom: CGFloat = 1.0
     
     public var allowRotation: Bool = false
+    public var allowMovement: Bool = true
+    public var allowZoom: Bool = true
     public var scenePanned: UIPanGestureRecognizer!            // gesture recognizer to recognize scene panning
     
     // locations
@@ -58,6 +61,26 @@ public class SKTiledSceneCamera: SKCameraNode {
             lastLocation = location
         }
     }
+
+    /**
+     Apply zooming to the world node (as scale).
+     
+     - parameter scale: `CGFloat` zoom amount.
+     */
+    public func setWorldScale(scale: CGFloat) {
+        self.zoom = scale
+        world.setScale(scale)
+    }
+    
+    /**
+     Move camera around manually.
+     
+     - parameter point:    `CGPoint` point to move to.
+     - parameter duration: `NSTimeInterval` duration of move.
+     */
+    public func panToPoint(point: CGPoint, duration: NSTimeInterval=0.3) {
+        runAction(SKAction.moveTo(point, duration: duration))
+    }
     
     /**
      Center the camera on a location in the scene.
@@ -73,5 +96,13 @@ public class SKTiledSceneCamera: SKCameraNode {
             moveAction.timingMode = .EaseOut
             runAction(moveAction)
         }
+    }
+    
+    /**
+     Reset the camera position & zoom level.
+     */
+    public func resetCamera() {
+        centerOn(CGPointMake(0, 0))
+        setWorldScale(initialZoom)
     }
 }

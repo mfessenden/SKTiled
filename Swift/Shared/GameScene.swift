@@ -6,30 +6,29 @@
 //  Copyright (c) 2016 Michael Fessenden. All rights reserved.
 //
 
+
 import SpriteKit
 
 
-public class GameScene: SKScene, SKTiledSceneDelegate {
-    
-    // SKTiledSceneDelegate
-    public var worldNode: SKNode!
-    public var cameraNode: SKTiledSceneCamera!
-    public var tilemap: SKTilemap!
-    public var tmxFilename: String!
+public class GameScene: SKTiledScene {
     
     public var debugMode: Bool = false
     
-    // ui controls    
-    public var drawButton: ButtonNode!
-    public var nextButton: ButtonNode!
+    // ui controls
+    public var resetButton: ButtonNode!
+    public var drawButton:  ButtonNode!
+    public var nextButton:  ButtonNode!
     
     // debugging labels
     public var cameraInformation: SKLabelNode!
     public var tilemapInformation: SKLabelNode!
     public var tileInformation: SKLabelNode!
     
+    public var selectedTiles: [SKTile] = []
+    
+    
     /// global information label font size.
-    public var labelFontSize: CGFloat = 10 {
+    public var labelFontSize: CGFloat = 12 {
         didSet {
             guard oldValue != labelFontSize else { return }
             
@@ -45,75 +44,55 @@ public class GameScene: SKScene, SKTiledSceneDelegate {
         }
     }
     
-    // MARK: - Init
-    override public init(size: CGSize) {
-        super.init(size: size)
-        
-        // set up world node
-        worldNode = SKNode()
-        worldNode.name = "World"
-        addChild(worldNode)
-    }
-    
-    /**
-     Initialize with a tiled file name.
-     
-     - parameter size:    `CGSize` scene size.
-     - parameter tmxFile: `String` tiled file name.
-     */
-    public init(size: CGSize, tmxFile: String) {
-        super.init(size: size)
-        
-        // set up world node
-        worldNode = SKNode()
-        worldNode.name = "World"
-        addChild(worldNode)
-        tmxFilename = tmxFile
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override public func didMoveToView(view: SKView) {
-        setupCamera()
-        // ortho:  ortho4-16x16
-        guard let tmxFilename = tmxFilename else { return }
+        super.didMoveToView(view)
         
-        if let tilemapNode = loadTMX(tmxFilename) {
-            self.tilemap = tilemapNode
-            cameraInformation?.zPosition = self.tilemap.lastZPosition + self.tilemap.zDeltaForLayers
-            self.tilemap.debugDraw = self.debugMode
-        }
+        // setup demo UI
+        setupDemoUI()
+        setupDebuggingLabels()
+    }
+    
+    // MARK: - Setup
+    /**
+     Set up interface elements for this demo.
+     */
+    public func setupDemoUI() {
+        guard let view = self.view else { return }
         
-        // get the zposition for the UI
+        // set up camera overlay UI
         var lastZPosition: CGFloat = 100
         if let tilemap = tilemap {
             lastZPosition = tilemap.lastZPosition
         }
         
+        if (resetButton == nil){
+            resetButton = ButtonNode(defaultImage: "reset-button-norm", highlightImage: "reset-button-pressed", action: {
+                if let cameraNode = self.cameraNode {
+                    cameraNode.resetCamera()
+                }
+            })
+            cameraNode.addChild(resetButton)
+            // position towards the bottom of the scene
+            resetButton.position.x -= (view.bounds.size.width / 7)
+            resetButton.position.y -= (view.bounds.size.height / 2.25)
+            resetButton.zPosition = lastZPosition * 3.0
+        }
         
         if (drawButton == nil){
             drawButton = ButtonNode(defaultImage: "draw-button-norm", highlightImage: "draw-button-pressed", action: {
-                if let firstLayer = self.tilemap.tileLayers.first {
-                    let debugState = !firstLayer.visualizeGrid
-                    firstLayer.visualizeGrid = debugState
-                    self.tilemap.debugDraw = debugState
-                    self.tilemap.showObjects = debugState
+                guard let tilemap = self.tilemap else { return }
+                let debugState = !tilemap.debugDraw
+                tilemap.debugDraw = debugState
+                
+                if (debugState == true){
+                    tilemap.debugLayers()
                 }
             })
+            
             cameraNode.addChild(drawButton)
             // position towards the bottom of the scene
-            drawButton.position.x -= (view.bounds.size.width / 12)
             drawButton.position.y -= (view.bounds.size.height / 2.25)
             drawButton.zPosition = lastZPosition * 3.0
-            
-            
-            if let tilemap = tilemap {
-                if tilemap.orientation == .Isometric {
-                    drawButton.disabled = true
-                }
-            }
         }
         
         if (nextButton == nil){
@@ -122,52 +101,10 @@ public class GameScene: SKScene, SKTiledSceneDelegate {
             })
             cameraNode.addChild(nextButton)
             // position towards the bottom of the scene
-            nextButton.position.x += (view.bounds.size.width / 12)
+            nextButton.position.x += (view.bounds.size.width / 7)
             nextButton.position.y -= (view.bounds.size.height / 2.25)
             nextButton.zPosition = lastZPosition * 3.0
         }
-        
-        
-        setupDebuggingLabels()
-    }
-    
-    // MARK: - Setup
-    
-    /**
-     Load a named tmx file.
-     
-     - parameter fileNamed: `String` tmx file name.
-     
-     - returns: `SKTilemap?` tile map node.
-     */
-    public func loadTMX(filename: String) -> SKTilemap? {
-        if let tilemapNode = SKTilemap.load(fromFile: filename) {
-            worldNode.addChild(tilemapNode)
-            
-            if (tilemapNode.backgroundColor != nil) {
-                self.backgroundColor = tilemapNode.backgroundColor!
-            }
-            return tilemapNode
-        }
-        return nil
-    }
-
-    /**
-     Setup scene camera.
-     */
-    public func setupCamera(){
-        guard let view = self.view else { return }
-        cameraNode = SKTiledSceneCamera(view: view, world: worldNode)
-        addChild(cameraNode)
-        camera = cameraNode
-        
-        // setup camera label
-        cameraInformation = SKLabelNode(fontNamed: "Courier")
-        cameraInformation.fontSize = labelFontSize
-        cameraInformation.text = "Camera: "
-        cameraNode.addChild(cameraInformation)
-        // position towards the bottom of the scene
-        cameraInformation.position.y -= (view.bounds.size.height / 2.85)
     }
     
     /**
@@ -177,68 +114,89 @@ public class GameScene: SKScene, SKTiledSceneDelegate {
         guard let view = self.view else { return }
         guard let cameraNode = cameraNode else { return }
         
+        let labelYPos = view.bounds.size.height / 3.2
+        
         if (tilemapInformation == nil){
             // setup tilemap label
             tilemapInformation = SKLabelNode(fontNamed: "Courier")
             tilemapInformation.fontSize = labelFontSize
-            tilemapInformation.text = "Tilemap: "
+            tilemapInformation.text = "Tilemap:"
             cameraNode.addChild(tilemapInformation)
         }
         
-        // position towards the bottom of the scene
-        tilemapInformation.position.y -= (view.bounds.size.height / 3.2)
+        tilemapInformation.position.y -= labelYPos
         
+        
+        if (cameraInformation == nil) {
+            cameraInformation = SKLabelNode(fontNamed: "Courier")
+            cameraInformation.fontSize = labelFontSize
+            cameraInformation.text = "Camera:"
+            cameraNode.addChild(cameraInformation)
+            cameraInformation.position.y -= labelYPos + 16
+        }
         
         if (tileInformation == nil){
             // setup tile information label
             tileInformation = SKLabelNode(fontNamed: "Courier")
             tileInformation.fontSize = labelFontSize
-            tileInformation.text = "Tile: "
+            tileInformation.text = "Tile:"
             cameraNode.addChild(tileInformation)
         }
         
         // position towards the bottom of the scene
-        tileInformation.position.y -= (view.bounds.size.height / 2.6)  // lowest
+        tileInformation.position.y -= labelYPos + 32
         tileInformation.hidden = true
+        cameraInformation.hidden = true
     }
     
     override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let touch = touches.first!
-        
         guard let tilemap = tilemap else { return }
-        let firstLayer = tilemap.tileLayers[1]
-        let layerpos = touch.locationInNode(tilemap)
-        let coord = firstLayer.coordinateForPoint(layerpos)
+        guard let baseLayer = tilemap.baseLayer else { return }
         
-        var coordStr = " ~ "
-        if (firstLayer.isValid(coord) == true) {
-            coordStr = coord.description
-        }
+        cameraInformation.hidden = false
         
-        tileInformation.hidden = false
-        tileInformation.text = "Tile: (\(coordStr)) ~ \(layerpos.displayRounded())"
-    }
-        
-    /**
-     Print tile information when the scene is double-tapped.
-     
-     - parameter point: `CGPoint` point in scene.
-     */
-    public func printTileInformation(atPoint point: CGPoint) {
-        guard let tilemap = tilemap else { return }
-        let firstLayer = tilemap.tileLayers[1]        
-        let tilemapPosition = convertPoint(point, toNode: tilemap)
-        
-        let coord = firstLayer.coordinateForPoint(tilemapPosition)
-        // display some information about tiles at the touched location
-        let tiles = tilemap.tilesAt(coord)
-        if tiles.count > 0 {
-            print("\n# Tiles: \(tiles.count) @ \(coord):")
-            for tile in tiles {
-                tile.highlightWithColor(SKColor.whiteColor())
-                print("  -\(tile)")
+        for touch in touches {
+            
+            let positionInLayer = baseLayer.convertPoint(touch.locationInNode(baseLayer))
+            let positionInMap = baseLayer.screenToPixelCoords(positionInLayer)
+            let coord = baseLayer.screenToTileCoords(positionInLayer)
+            
+            // add a tile shape to the base layer where the user has clicked
+            let validCoord = baseLayer.isValid(coord)
+            let tileColor: SKColor = (validCoord == true) ? TiledColors.Green.color : TiledColors.Red.color
+            addTileAt(baseLayer, Int(coord.x), Int(coord.y), duration: 5, tileColor: tileColor)
+            
+            // display tile information on the screen
+            var coordStr = "Tile: \(coord.description), \(positionInMap.roundoff())"
+            if (validCoord == false) {
+                coordStr += " (invalid)"
             }
+            
+            tileInformation.hidden = false
+            tileInformation.text = coordStr
         }
+    }
+    
+    /**
+     Add a tile shape to a layer at the given coordinate.
+     
+     - parameter layer:     `TiledLayerObject` layer object.
+     - parameter x:         `Int` x-coordinate.
+     - parameter y:         `Int` y-coordinate.
+     - parameter duration:  `TimeInterval` tile life.
+     */
+    public func addTileAt(layer: TiledLayerObject, _ x: Int, _ y: Int, duration: NSTimeInterval=0, tileColor: SKColor) -> DebugTileShape {
+        let tile = DebugTileShape(layer.tileWidth, layer.tileHeight, tileOrientation: layer.orientation, tileColor: tileColor)
+        tile.zPosition = zPosition
+        tile.position = layer.pointForCoordinate(TileCoord(x, y))
+        layer.addChild(tile)
+        if (duration > 0) {
+            let fadeAction = SKAction.fadeAlphaTo(0, duration: duration)
+            tile.runAction(fadeAction, completion: {
+                tile.removeFromParent()
+            })
+        }
+        return tile
     }
     
     /**
@@ -248,7 +206,6 @@ public class GameScene: SKScene, SKTiledSceneDelegate {
         NSNotificationCenter.defaultCenter().postNotificationName("loadNextScene", object: nil)
     }
     
-   
     override public func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         updateLabels()
@@ -267,7 +224,7 @@ public class GameScene: SKScene, SKTiledSceneDelegate {
         var cameraInfo = "Camera: x: 0, y: 0, zoom: 1.0"
         let xpos = String(format: "%.\(String(2))f", cameraNode.position.x)
         let ypos = String(format: "%.\(String(2))f", cameraNode.position.y)
-        cameraInfo = "Camera: x: \(xpos), y: \(ypos), zoom:  \(cameraNode.zoom.displayRounded())"
+        cameraInfo = "Camera: x: \(xpos), y: \(ypos) \(cameraNode.allowMovement == true ? "" : "🔒"), zoom: \(cameraNode.zoom.roundoff()) \(cameraNode.allowZoom == true ? "" : "🔒")"
         
         
         if let cameraInformation = cameraInformation {
@@ -287,3 +244,5 @@ public class GameScene: SKScene, SKTiledSceneDelegate {
         }
     }
 }
+
+

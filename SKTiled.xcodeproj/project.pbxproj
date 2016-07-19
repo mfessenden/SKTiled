@@ -13,7 +13,6 @@
 		4C88E1AD1D8A242F00FCCFA3 /* ortho4-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */; };
 		4C88E1DE1D8A4EBE00FCCFA3 /* SKTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D01D8A4EBE00FCCFA3 /* SKTile.swift */; };
 		4C88E1E01D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D21D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift */; };
-		4C88E1E11D8A4EBE00FCCFA3 /* SKTiledSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D31D8A4EBE00FCCFA3 /* SKTiledSceneDelegate.swift */; };
 		4C88E1E21D8A4EBE00FCCFA3 /* SKTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D41D8A4EBE00FCCFA3 /* SKTileLayer.swift */; };
 		4C88E1E31D8A4EBE00FCCFA3 /* SKTilemap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D51D8A4EBE00FCCFA3 /* SKTilemap.swift */; };
 		4C88E1E41D8A4EBE00FCCFA3 /* SKTilemap+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D61D8A4EBE00FCCFA3 /* SKTilemap+Debug.swift */; };
@@ -30,6 +29,9 @@
 		4CBA61911D8A0A5700B31FC1 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA618B1D8A0A5700B31FC1 /* GameViewController.swift */; };
 		4CBA61A11D8A0ACF00B31FC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CBA619F1D8A0ACF00B31FC1 /* Assets.xcassets */; };
 		4CBA61A21D8A0ACF00B31FC1 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61A01D8A0ACF00B31FC1 /* GameScene.swift */; };
+		4CBB6A9F1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */; };
+		4CBB6AA11D8CBB5B00DB56F1 /* SKTiledScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA01D8CBB5B00DB56F1 /* SKTiledScene.swift */; };
+		4CBB6AA31D8CC2C100DB56F1 /* TiledObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA21D8CC2C100DB56F1 /* TiledObject.swift */; };
 		4CD6D2D51D8B9DE20083DA7B /* roguelike-16x16-anim.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16-anim.tsx */; };
 		4CD6D2DB1D8B9EA10083DA7B /* isometric-16x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2D71D8B9EA10083DA7B /* isometric-16x8.png */; };
 		4CD6D2DC1D8B9EA10083DA7B /* isometric-16x8.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2D81D8B9EA10083DA7B /* isometric-16x8.tmx */; };
@@ -45,7 +47,6 @@
 		4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ortho4-16x16.png"; sourceTree = "<group>"; };
 		4C88E1D01D8A4EBE00FCCFA3 /* SKTile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTile.swift; sourceTree = "<group>"; };
 		4C88E1D21D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTiledSceneCamera.swift; sourceTree = "<group>"; };
-		4C88E1D31D8A4EBE00FCCFA3 /* SKTiledSceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTiledSceneDelegate.swift; sourceTree = "<group>"; };
 		4C88E1D41D8A4EBE00FCCFA3 /* SKTileLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTileLayer.swift; sourceTree = "<group>"; };
 		4C88E1D51D8A4EBE00FCCFA3 /* SKTilemap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTilemap.swift; sourceTree = "<group>"; };
 		4C88E1D61D8A4EBE00FCCFA3 /* SKTilemap+Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKTilemap+Debug.swift"; sourceTree = "<group>"; };
@@ -65,6 +66,9 @@
 		4CBA618C1D8A0A5700B31FC1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4CBA619F1D8A0ACF00B31FC1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4CBA61A01D8A0ACF00B31FC1 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKTilemap+Properties.swift"; sourceTree = "<group>"; };
+		4CBB6AA01D8CBB5B00DB56F1 /* SKTiledScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTiledScene.swift; sourceTree = "<group>"; };
+		4CBB6AA21D8CC2C100DB56F1 /* TiledObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TiledObject.swift; sourceTree = "<group>"; };
 		4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16-anim.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "roguelike-16x16-anim.tsx"; sourceTree = "<group>"; };
 		4CD6D2D71D8B9EA10083DA7B /* isometric-16x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "isometric-16x8.png"; sourceTree = "<group>"; };
 		4CD6D2D81D8B9EA10083DA7B /* isometric-16x8.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "isometric-16x8.tmx"; sourceTree = "<group>"; };
@@ -89,6 +93,7 @@
 			children = (
 				4C88E1D71D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift */,
 				4C88E1D61D8A4EBE00FCCFA3 /* SKTilemap+Debug.swift */,
+				4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -156,13 +161,14 @@
 				4C88E1A71D8A1E8F00FCCFA3 /* Extensions */,
 				4C88E1D01D8A4EBE00FCCFA3 /* SKTile.swift */,
 				4C88E1D21D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift */,
-				4C88E1D31D8A4EBE00FCCFA3 /* SKTiledSceneDelegate.swift */,
+				4CBB6AA01D8CBB5B00DB56F1 /* SKTiledScene.swift */,
 				4C88E1D41D8A4EBE00FCCFA3 /* SKTileLayer.swift */,
 				4C88E1D51D8A4EBE00FCCFA3 /* SKTilemap.swift */,
 				4C88E1D81D8A4EBE00FCCFA3 /* SKTilemapParser.swift */,
 				4C88E1D91D8A4EBE00FCCFA3 /* SKTileObject.swift */,
 				4C88E1DA1D8A4EBE00FCCFA3 /* SKTileset.swift */,
 				4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */,
+				4CBB6AA21D8CC2C100DB56F1 /* TiledObject.swift */,
 			);
 			name = SKTiled;
 			path = Swift/SKTiled;
@@ -281,14 +287,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CBB6AA11D8CBB5B00DB56F1 /* SKTiledScene.swift in Sources */,
 				4C88E1EA1D8A4EBE00FCCFA3 /* SKTilesetData.swift in Sources */,
 				4C88E1E71D8A4EBE00FCCFA3 /* SKTileObject.swift in Sources */,
 				4C88E1E41D8A4EBE00FCCFA3 /* SKTilemap+Debug.swift in Sources */,
 				4C88E1E81D8A4EBE00FCCFA3 /* SKTileset.swift in Sources */,
 				4C88E1E31D8A4EBE00FCCFA3 /* SKTilemap.swift in Sources */,
+				4CBB6AA31D8CC2C100DB56F1 /* TiledObject.swift in Sources */,
 				4C88E1E01D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift in Sources */,
 				4C88E1E61D8A4EBE00FCCFA3 /* SKTilemapParser.swift in Sources */,
-				4C88E1E11D8A4EBE00FCCFA3 /* SKTiledSceneDelegate.swift in Sources */,
+				4CBB6A9F1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift in Sources */,
 				4CBA61A21D8A0ACF00B31FC1 /* GameScene.swift in Sources */,
 				4CBA61911D8A0A5700B31FC1 /* GameViewController.swift in Sources */,
 				4CBA618E1D8A0A5700B31FC1 /* AppDelegate.swift in Sources */,

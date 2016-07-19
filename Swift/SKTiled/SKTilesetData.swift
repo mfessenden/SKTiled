@@ -9,10 +9,11 @@ import SpriteKit
 
 
 /// Represents a single tileset tile data, with texture, id and properties
-public class SKTilesetData {
+public class SKTilesetData: TiledObject  {
     
     weak public var tileset: SKTileset!             // is assigned on add
-    public var id: Int = 0                          // unique tile id
+    public var uuid: String = NSUUID().UUIDString   // unique id
+    public var id: Int = 0                          // tile id
     public var texture: SKTexture!                  // initial tile texture
     public var source: String! = nil                // source image name (part of a collections tileset)
     public var probability: CGFloat = 1.0           // used in Tiled application, might not be useful here.
@@ -27,6 +28,11 @@ public class SKTilesetData {
     public var flipHoriz: Bool = false              // tile is flipped horizontally
     public var flipVert:  Bool = false              // tile is flipped vertically
     public var flipDiag:  Bool = false              // tile is flipped diagonally
+    
+    public var localID: Int {                       // return the local id for this tile
+        guard let tileset = tileset else { return id }
+        return tileset.getLocalID(forGlobalID: id)
+    }
     
     // MARK: - Init
     public init(){}

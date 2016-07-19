@@ -9,21 +9,14 @@
 
 import SpriteKit
 
-// Tileset tag in tmx (inline):
-// <tileset firstgid="1" name="Roguelike" tilewidth="16" tileheight="16" spacing="1" tilecount="1767" columns="57">
 
-// Tileset tag in tmx (external):
-// <tileset firstgid="1" source="msp1-spritesheet-8x8.tsx"/>
-
-
-// tileset tag in tsx
-// <tileset name="msp-spritesheet1-8x8" tilewidth="8" tileheight="8" spacing="1" tilecount="176" columns="22">
-public class SKTileset {
+public class SKTileset: TiledObject {
     
-    public var name: String
+    public var name: String                         // tileset name
+    public var uuid: String = NSUUID().UUIDString   // unique id
     public var filename: String! = nil              // source filename (external tileset)
     public var tilemap: SKTilemap!
-    public var tileSize: TileSize                   // tile size
+    public var tileSize: CGSize                     // tile size
 
     public var columns: Int = 0                     // number of columns
     public var tilecount: Int = 0                   // tile count
@@ -57,19 +50,19 @@ public class SKTileset {
         }
         return gid
     }
-    
+
     /**
      Initialize with basic properties.
      
      - parameter name:     `String` tileset name.
-     - parameter size:     `TileSize` tile size.
+     - parameter size:     `CGSize` tile size.
      - parameter firstgid: `Int` first gid value.
      - parameter columns:  `Int` number of columns.
      - parameter offset:   `CGPoint` tileset offset value.
      
      - returns: `SKTileset` tileset object.
      */
-    public init(name: String, tileSize size: TileSize, firstgid: Int=1, columns: Int=0, offset: CGPoint=CGPointZero) {
+    public init(name: String, tileSize size: CGSize, firstgid: Int=1, columns: Int=0, offset: CGPoint=CGPointZero) {
         self.name = name
         self.tileSize = size
         self.firstGID = firstgid
@@ -128,7 +121,7 @@ public class SKTileset {
         
         self.name = layerName
         self.firstGID = Int(firstgid)!
-        self.tileSize = TileSize(width: CGFloat(Int(width)!), height: CGFloat(Int(height)!))
+        self.tileSize = CGSize(width: Int(width)!, height: Int(height)!)
         self.columns = Int(columns)!
         self.tileOffset = offset
     }
@@ -202,7 +195,7 @@ public class SKTileset {
     public func addTextures(fromAtlas: String) {
         print("[SKTileset]: adding texture atlas: \"\(fromAtlas)\"")
         atlas = SKTextureAtlas(named: fromAtlas)
-        guard atlas.textureNames.count == tilemap.mapSize.count else {
+        guard atlas.textureNames.count == tilemap.size.count else {
             fatalError("")
         }
     }
@@ -225,6 +218,7 @@ public class SKTileset {
         
         let data = SKTilesetData(tileId: tileID, texture: texture, tileSet: self)
         self.tileData.insert(data)
+        data.parseProperties()
         return data
     }
     
@@ -253,6 +247,7 @@ public class SKTileset {
         // add the image name to the source attribute
         data.source = source
         self.tileData.insert(data)
+        data.parseProperties()
         return data
     }
     
@@ -270,6 +265,17 @@ public class SKTileset {
             return tileData[index]
         }
         return nil
+    }
+    
+    /**
+     Convert a global ID to the tileset's local ID (or -1 if invalid).
+     
+     - parameter id: `Int` global id.
+     
+     - returns: `Int` local tile ID.
+     */
+    public func getLocalID(forGlobalID id: Int) -> Int {
+        return (id - firstGID) > 0 ? (id - firstGID) : -1
     }
 }
 

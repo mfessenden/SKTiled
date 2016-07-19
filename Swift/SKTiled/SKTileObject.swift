@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import GameplayKit
 
 
 public enum ObjectType: String {
@@ -18,14 +19,18 @@ public enum ObjectType: String {
 
 
 /// simple object class
-public class SKTileObject: SKShapeNode {
+public class SKTileObject: SKShapeNode, TiledObject {
 
     weak public var layer: SKObjectGroup!            // layer parent, assigned on add
-    public var id: Int = 0                           // unique id
+    public var uuid: String = NSUUID().UUIDString    // unique id
+    public var id: Int = 0                           // object id
     public var type: String!                         // object type
     public var objectType: ObjectType = .Rectangle   // shape type
     
+    public var points: [CGPoint] = []                // points that describe object shape
+    
     public var size: CGSize = CGSizeZero
+    public var obstacle: GKObstacle!                 // obstacle type
     public var properties: [String: String] = [:]    // custom properties
     
     // blending/visibility
@@ -39,12 +44,12 @@ public class SKTileObject: SKShapeNode {
         set { self.hidden = !newValue }
     }
     
+    // MARK: - Init
     override public init(){
         super.init()
+        drawObject()
     }
     
-    // id, name, type, x, y, width, height, rotation, gid, visible
-    // ["type": "Tent", "x": "368.124", "id": "7", "y": "79.7574", "name": "tent1"]
     public init?(attributes: [String: String]) {
         // required attributes
         guard let objectID = attributes["id"] else { return nil }        
@@ -54,8 +59,8 @@ public class SKTileObject: SKShapeNode {
         id = Int(objectID)!
         super.init()
         
-        //let ry = ycoord
-        position = CGPointMake(CGFloat(Double(xcoord)!), CGFloat(Double(ycoord)!))
+        let startPosition = CGPointMake(CGFloat(Double(xcoord)!), CGFloat(Double(ycoord)!))
+        position = startPosition
         
         if let objectName = attributes["name"] {
             self.name = objectName
@@ -77,10 +82,23 @@ public class SKTileObject: SKShapeNode {
             type = objType
         }
         
+        // Rectangular and ellipse objects need initial points.
+        if (width > 0) && (height > 0) {
+            points = [CGPoint(x: 0, y: 0),
+                      CGPoint(x: width, y: 0),
+                      CGPoint(x: width, y: height),
+                      CGPoint(x: 0, y: height)
+            ]
+        }
+        
         self.size = CGSizeMake(width, height)
-        draw()
     }
     
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Drawing
     /**
      Set the fill & stroke colors (with optional alpha component for the fill)
      
@@ -89,85 +107,88 @@ public class SKTileObject: SKShapeNode {
      */
     public func setColor(color: SKColor, withAlpha alpha: CGFloat=0.2) {
         self.strokeColor = color
-        self.fillColor = color.colorWithAlphaComponent(alpha)
+        
+        if !(self.objectType == .Polyline)  {
+            self.fillColor = color.colorWithAlphaComponent(alpha)
+        }
     }
     
     /**
      Draw the path.
      */
-    public func draw() {
-        // draw the path
-        var objectPath: UIBezierPath?
+    public func drawObject() {
+        guard let layer = layer else { return }
+        guard points.count > 1 else { return }
         
-        switch objectType {            
-        case .Rectangle:
-            objectPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
-            
-        case .Ellipse:
-            objectPath = UIBezierPath(ovalInRect: CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
+        // draw the anchor/first point
+        childNodeWithName("Anchor")?.removeFromParent()
         
-        case .Polygon:
-            objectPath = nil
+        let anchorRadius: CGFloat = layer.tileHeight > 16 ? 2.5 : 1.5
+        let anchor = SKShapeNode(circleOfRadius: anchorRadius)
+        anchor.name = "Anchor"
+        addChild(anchor)
+        anchor.strokeColor = SKColor.clearColor()
+        anchor.fillColor = self.strokeColor
+        anchor.antialiased = true
         
-        case .Polyline:
-            objectPath = nil
-        }
         
-        if let objectPath = objectPath {
-            //objectPath.lineWidth = 1.5
-            self.path = objectPath.CGPath
-            self.antialiased = false
-            self.lineWidth = 1.0
+        if let vertices = getVertices() {
+            switch objectType {
+            case .Ellipse:
+                self.path = bezierPath(vertices.map{$0.invertedY}, radius: layer.tileHeightHalf)
+            default:
+                self.path = polygonPath(vertices.map{$0.invertedY})
+            }
+            // polyline objects should have no fill
+            self.fillColor = (self.objectType == .Polyline) ? SKColor.clearColor() : self.fillColor
         }
     }
     
+    // MARK: - Polygon Points
     /**
      Add polygons points.
      
      - parameter points: `[[CGFloat]]` array of coordinates.
      - parameter closed: `Bool` close the object path.
      */
-    public func addPoints(points: [[CGFloat]], closed: Bool=true) {
+    public func addPoints(coordinates: [[CGFloat]], closed: Bool=true) {
         self.objectType = (closed == true) ? ObjectType.Polygon : ObjectType.Polyline
-        self.fillColor = (closed == true) ? self.fillColor : SKColor.clearColor()
-
-        var cgpoints: [CGPoint] = points.map { CGPointMake($0[0], $0[1]) }
-        let firstPoint = cgpoints.removeFirst()
         
-        // draw the starting point
-        let firstRadius: CGFloat = 2.0
-        let firstPath = UIBezierPath(ovalInRect: CGRect(x: firstPoint.x - (firstRadius / 2), y: firstPoint.y - (firstRadius / 2), width: firstRadius, height: firstRadius))
-        let firstStrokeColor = SKColor.clearColor()
-        firstPath.stroke()
-        firstStrokeColor.setStroke()
-        self.strokeColor.setFill()
-        firstPath.fill()
-        
-        // draw the points
-        let polygonPath = UIBezierPath()
-        polygonPath.lineCapStyle = .Square
-        self.strokeColor.setStroke()
-        polygonPath.moveToPoint(firstPoint)
-        
-        for point in cgpoints {
-            polygonPath.addLineToPoint(point)
-        }
-        
-        if (closed == true) { polygonPath.closePath() }
-        
-        // append the first point to the path
-        polygonPath.appendPath(firstPath)
-        self.path = polygonPath.CGPath
-        self.lineWidth = 1.0
-        self.antialiased = false
+        // create an array of points from the given coordinates
+        points = coordinates.map { CGPointMake($0[0], $0[1]) }
     }
     
+    /**
+     Add points from a string.
+     
+     - parameter points: `String` string of coordinates.
+     */
     public func addPointsWithString(points: String) {
-        // <polygon points="-1,0 -1,-18 14,-32 30,-18 30,0"/>
+        var coordinates: [[CGFloat]] = []
+        let pointsArray = points.componentsSeparatedByString(" ")
+        for point in pointsArray {
+            let coords = point.componentsSeparatedByString(",").flatMap { x in Double(x) }
+            coordinates.append(coords.flatMap { CGFloat($0) })
+        }
+        addPoints(coordinates)
     }
-
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    
+    /**
+     Return the current points.
+     
+     - returns: `[CGPoint]?` array of points.
+     */
+    private func getVertices() -> [CGPoint]? {
+        guard let layer = layer else { return nil}
+        guard points.count > 1 else { return nil}
+        
+        var vertices: [CGPoint] = []
+        for point in points {
+            var offset = layer.pixelToScreenCoords(point)
+            offset.x -= layer.origin.x
+            vertices.append(offset)
+        }
+        return vertices
     }
 }
 

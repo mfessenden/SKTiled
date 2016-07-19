@@ -5,17 +5,18 @@
 //  Created by Michael Fessenden on 3/21/16.
 //  Copyright © 2016 Michael Fessenden. All rights reserved.
 //
+
 import SpriteKit
 
 
 /// represents a single tile object.
 public class SKTile: SKSpriteNode {
     
-    weak public var layer: SKTileLayer!         // layer parent, assigned on add
-    private var tileOverlap: CGFloat = 1.5      // tile overlap amount
-    public var tileData: SKTilesetData          // tile data
-    public var tileSize: TileSize               // tile size 
-    private var debugColor: SKColor = SKColor.whiteColor()
+    weak public var layer: SKTileLayer!                         // layer parent, assigned on add
+    private var tileOverlap: CGFloat = 1.5                      // tile overlap amount
+    public var tileData: SKTilesetData                          // tile data
+    public var tileSize: CGSize                                 // tile size
+    public var highlightColor: SKColor = SKColor.whiteColor()   // tile highlight color
     
     // blending/visibility
     public var opacity: CGFloat {
@@ -37,15 +38,15 @@ public class SKTile: SKSpriteNode {
     /**
      Initialize the tile with a tile size.
      
-     - parameter tileSize: `TileSize` tile size in pixels.
+     - parameter tileSize: `CGSize` tile size in pixels.
      
      - returns: `SKTile` tile sprite.
      */
-    public init(tileSize size: TileSize){
+    public init(tileSize size: CGSize){
         // create empty tileset data
         tileData = SKTilesetData()
         tileSize = size
-        super.init(texture: SKTexture(), color: SKColor.clearColor(), size: tileSize.size)
+        super.init(texture: SKTexture(), color: SKColor.clearColor(), size: tileSize)
     }
     
     /**
@@ -89,11 +90,23 @@ public class SKTile: SKSpriteNode {
             if (fh == true) {
                 xScale *= -1
             }
-            
+
             if (fv == true) {
                 yScale *= -1
             }
         }
+    }
+    
+    public func setupDynamics(){
+        physicsBody = SKPhysicsBody(rectangleOfSize: size)
+        physicsBody?.dynamic = false
+    }
+    
+    /**
+     Orient the tile based on the current flip flags.
+     */
+    private func orientTile() {
+        
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -153,37 +166,157 @@ public class SKTile: SKSpriteNode {
         
         tileOverlap = overlap
     }
+}
+
+
+extension SKTile {
+    
+    /// Tile description.
+    override public var description: String {
+        var descString = "\(tileData.description)"
+        let descGroup = descString.componentsSeparatedByString(",")
+        var resultString = descGroup.first!
+        if let layer = layer {resultString += ", Layer: \"\(layer.name!)\"" }
+
+        // add the properties
+        if descGroup.count > 1 {
+            for i in 1..<descGroup.count {
+                resultString += ", \(descGroup[i])"
+            }
+        }
+        return resultString
+    }
+    
+    override public var debugDescription: String {
+        return description
+    }
     
     /**
      Highlight the tile with a given color.
      
      - parameter color: `SKColor` highlight color.
      */
-    public func highlightWithColor(color: SKColor) {
-        guard let orientation = tileData.tileset.tilemap.orientation else { return }
+    public func highlightWithColor(color: SKColor?=nil, duration: NSTimeInterval=1.0, antialiasing: Bool=true) {
+        
+        let highlight: SKColor = (color == nil) ? highlightColor : color!
+        
+        let orientation = tileData.tileset.tilemap.orientation
         
         if orientation == .Orthogonal {
             childNodeWithName("HIGHLIGHT")?.removeFromParent()
-            let highlightNode = SKShapeNode(rectOfSize: tileSize.size, cornerRadius: 0)
-            highlightNode.strokeColor = color
-            highlightNode.fillColor = color.colorWithAlphaComponent(0.25)
+            let highlightNode = SKShapeNode(rectOfSize: tileSize, cornerRadius: 0)
+            highlightNode.strokeColor = highlight.colorWithAlphaComponent(0.1)
+            highlightNode.fillColor = highlight.colorWithAlphaComponent(0.35)
             highlightNode.name = "HIGHLIGHT"
-            highlightNode.alpha = 0.5
-            //highlightNode.antialiased = false
+            
+            highlightNode.antialiased = antialiasing
             addChild(highlightNode)
             highlightNode.zPosition = zPosition + 10
-            let fadeAction = SKAction.fadeOutWithDuration(1.5)
-            highlightNode.runAction(fadeAction, completion: {
+            
+            // fade out highlight
+            removeActionForKey("HIGHLIGHT_FADE")
+            let fadeAction = SKAction.sequence([
+                SKAction.waitForDuration(duration * 1.5),
+                SKAction.fadeAlphaTo(0, duration: duration/4.0)
+                ])
+            
+            highlightNode.runAction(fadeAction, withKey: "HIGHLIGHT_FADE", optionalCompletion: {
                 highlightNode.removeFromParent()
             })
         }
         
         if orientation == .Isometric {
-            removeActionForKey("HIGHLIGHT")
-            let fadeAction = SKAction.colorizeWithColor(SKColor.clearColor(), colorBlendFactor: 1, duration: 1.0)
-            let waitAction = SKAction.waitForDuration(1.5)
-            runAction(SKAction.sequence([fadeAction, waitAction, fadeAction.reversedAction()]), withKey: "HIGHLIGHT")
+            removeActionForKey("HIGHLIGHT_FADE")
+            let fadeOutAction = SKAction.colorizeWithColor(SKColor.clearColor(), colorBlendFactor: 1, duration: duration)
+            runAction(fadeOutAction, withKey: "HIGHLIGHT_FADE", optionalCompletion: {
+                let fadeInAction = SKAction.sequence([
+                    SKAction.waitForDuration(duration * 1.5),
+                    //fadeOutAction.reversedAction()
+                    SKAction.colorizeWithColor(SKColor.clearColor(), colorBlendFactor: 0, duration: duration/4.0)
+                    ])
+                self.runAction(fadeInAction, withKey: "HIGHLIGHT_FADE")
+            })
         }
     }
     
+    /**
+     Clear highlighting.
+     */
+    public func clearHighlight() {
+        let orientation = tileData.tileset.tilemap.orientation
+        
+        if orientation == .Orthogonal {
+            childNodeWithName("HIGHLIGHT")?.removeFromParent()
+        }
+        if orientation == .Isometric {
+            removeActionForKey("HIGHLIGHT")
+        }
+    }
+}
+
+
+/// Shape node used for highlighting and placing tiles.
+public class DebugTileShape: SKShapeNode {
+    
+    public var tileSize: CGSize
+    public var orientation: TilemapOrientation = .Orthogonal
+    public var color: SKColor
+    public var layer: TiledLayerObject!
+    
+    
+    public init(tileSize: CGSize, tileOrientation: TilemapOrientation = .Orthogonal, tileColor: SKColor){
+        self.tileSize = tileSize
+        self.color = tileColor
+        super.init()
+        self.orientation = tileOrientation
+        drawObject()
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public func drawObject() {
+        // draw the path
+        var points: [CGPoint] = []
+        
+        switch orientation {
+        case .Orthogonal:
+            let origin = CGPointMake(-tileSize.halfWidth, tileSize.halfHeight)  // invert y here
+            points = rectPointArray(tileSize, origin: origin)
+            
+        case .Isometric:
+            let tileSizeHalved = CGSizeMake(tileSize.halfWidth, tileSize.halfHeight)
+            points = polygonPointArray(4, radius: tileSizeHalved)
+        }
+
+        self.path = polygonPath(points)
+        self.antialiased = false
+        self.lineWidth = 1.0
+        
+        self.strokeColor = self.color.colorWithAlphaComponent(0.4)
+        self.fillColor = self.color.colorWithAlphaComponent(0.35)
+        
+        // anchor
+        childNodeWithName("Anchor")?.removeFromParent()
+        let anchorRadius: CGFloat = tileSize.height / 12 > 1.0 ? tileSize.height / 12 : 1.0
+        let anchor = SKShapeNode(circleOfRadius: anchorRadius)
+        anchor.name = "Anchor"
+        addChild(anchor)
+        anchor.fillColor = self.color.colorWithAlphaComponent(0.2)
+        anchor.strokeColor = SKColor.clearColor()
+        anchor.zPosition = zPosition + 10
+    }
+}
+
+
+public extension DebugTileShape {
+    
+    public convenience init(_ width: CGFloat, _ height: CGFloat, tileOrientation: TilemapOrientation = .Orthogonal, tileColor: SKColor = SKColor.blueColor()){
+        self.init(tileSize: CGSizeMake(width, height), tileOrientation: tileOrientation, tileColor: tileColor)
+    }
+    
+    public convenience init(_ width: Int, _ height: Int, tileOrientation: TilemapOrientation = .Orthogonal, tileColor: SKColor = SKColor.blueColor()){
+        self.init(tileSize: CGSizeMake(CGFloat(width), CGFloat(height)), tileOrientation: tileOrientation, tileColor: tileColor)
+    }
 }
