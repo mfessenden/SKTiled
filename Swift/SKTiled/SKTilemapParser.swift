@@ -9,38 +9,38 @@
 import SpriteKit
 
 
-public enum ParsingError: ErrorType {
-    case Attribute(attr: String)
-    case AttributeValue(attr: String, value: String)
-    case Key(key: String)
-    case Index(idx: Int)
-    case Compression(value: String)
-    case Error
+public enum ParsingError: Error {
+    case attribute(attr: String)
+    case attributeValue(attr: String, value: String)
+    case key(key: String)
+    case index(idx: Int)
+    case compression(value: String)
+    case error
 }
 
 
 // MARK: - TMX Parser
 
 /// Class for reading Tiled tmx files.
-public class SKTilemapParser: NSObject, NSXMLParserDelegate {
+public class SKTilemapParser: NSObject, XMLParserDelegate {
     
     public var fileNames: [String] = []                         // list of filenames to read
     public var currentFileName: String!
     
     public var tileMap: SKTilemap!
-    private var encoding: TilemapEncoding = .XML                // encoding
-    private var externalTilesets: [String: SKTileset] = [:]     // hold external tilesets
+    fileprivate var encoding: TilemapEncoding = .XML                // encoding
+    fileprivate var externalTilesets: [String: SKTileset] = [:]     // hold external tilesets
     
     // stash current elements
-    private var activeElement: String?                          // current object
-    private var lastElement: AnyObject?                         // last object created
+    fileprivate var activeElement: String?                          // current object
+    fileprivate var lastElement: AnyObject?                         // last object created
     
-    private var currentID: Int?                                 // current tile/object ID 
+    fileprivate var currentID: Int?                                 // current tile/object ID 
     
-    private var properties: [String: String] = [:]              // last properties created
-    private var data: [String: [UInt32]] = [:]                  // store data for tile layers to render in a second pass
-    private var tileData: [UInt32] = []                         // last tile data read
-    private var characterData: String = ""                      // current tile data (string)
+    fileprivate var properties: [String: String] = [:]              // last properties created
+    fileprivate var data: [String: [UInt32]] = [:]                  // store data for tile layers to render in a second pass
+    fileprivate var tileData: [UInt32] = []                         // last tile data read
+    fileprivate var characterData: String = ""                      // current tile data (string)
     
     /**
      Load a tmx file and parse it.
@@ -50,27 +50,27 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
      - returns: `SKTilemap?` tiled map node.
      */
     public func load(fromFile filename: String) -> SKTilemap? {
-        guard let targetFile = getBundledFile(named: filename) else {
+        guard let targetFile = getBundleFilename(named: filename) else {
             print("[SKTilemapParser]: Error: unable to locate file: \"\(filename)\"")
             return nil
         }
         
-        let timer = NSDate()        
+        let timer = Date()        
         fileNames.append(targetFile)
                 
         while !(fileNames.isEmpty) {
             if let firstFileName = fileNames.first {
                 
                 currentFileName = firstFileName
-                fileNames.removeAtIndex(0)
+                fileNames.remove(at: 0)
                 
-                guard let path: String = NSBundle.mainBundle().pathForResource(currentFileName , ofType: nil) else {
+                guard let path: String = Bundle.main.path(forResource: currentFileName , ofType: nil) else {
                     print("[SKTilemapParser]: Error: no path for: \"\(currentFileName)\"")
                     return nil
                 }
                 
-                let data: NSData = NSData(contentsOfFile: path)!
-                let parser: NSXMLParser = NSXMLParser(data: data)
+                let data: Data = try! Data(contentsOf: URL(fileURLWithPath: path))
+                let parser: XMLParser = XMLParser(data: data)
                 // this should speed up parsing (hopefully)
                 parser.shouldResolveExternalEntities = false
                 parser.delegate = self
@@ -84,7 +84,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
                     let errorLine = parser.lineNumber
                     let errorCol = parser.columnNumber
                     
-                    let errorDescription = parseError?.description ?? "unknown"
+                    let errorDescription = parseError.debugDescription ?? "unknown"
                     print("[SKTilemapParser]: \(errorDescription) at line:\(errorLine), column: \(errorCol)")
                 }
             }
@@ -99,7 +99,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
         tileMap.baseLayer!.zPosition = tileMap.lastZPosition + tileMap.zDeltaForLayers
         
         // time results
-        let timeInterval = NSDate().timeIntervalSinceDate(timer)
+        let timeInterval = Date().timeIntervalSince(timer)
         let timeStamp = String(format: "%.\(String(3))f", timeInterval)
         
         print("[SKTilemapParser]: tile map loaded in: \(timeStamp)s\n")
@@ -114,13 +114,13 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
      
      - returns: `String?` name of file in bundle.
      */
-    public func getBundledFile(named filename: String) -> String? {
+    public func getBundleFilename(named filename: String) -> String? {
         // strip off the file extension
-        let fileBaseName = filename.componentsSeparatedByString(".")[0]
+        let fileBaseName = filename.components(separatedBy: ".")[0]
         for fileExtension in ["tmx", "tsx"] {
-            if let url = NSBundle.mainBundle().URLForResource(fileBaseName, withExtension: fileExtension) {
+            if let url = Bundle.main.url(forResource: fileBaseName, withExtension: fileExtension) {
                 let filepath = url.absoluteString
-                if let filename = filepath.componentsSeparatedByString("/").last {
+                if let filename = filepath.components(separatedBy: "/").last {
                     return filename
                 }
             }
@@ -131,14 +131,14 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
     /**
      Post-process to render each layer.
      */
-    private func renderTileLayers() {
+    fileprivate func renderTileLayers() {
         guard let tileMap = tileMap else { return }
         
-        let renderQueue = dispatch_queue_create("renderLayer", DISPATCH_QUEUE_SERIAL)
+        let renderQueue = DispatchQueue(label: "renderLayer", attributes: [])
         var errorCount: Int = 0
         
         // render the layer in the background
-        dispatch_async(renderQueue){
+        renderQueue.async{
         
             for (uuid, tileData) in self.data {
                 guard let tileLayer = tileMap.getLayer(withID: uuid) as? SKTileLayer else { continue }
@@ -152,7 +152,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
         }
     }
     
-    private func renderObjects() {
+    fileprivate func renderObjects() {
         guard let tileMap = tileMap else { return }
         for objectGroup in tileMap.objectGroups {
             objectGroup.drawObjects()
@@ -161,17 +161,17 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
     
     // MARK: - NSXMLParserDelegate
     
-    public func parserDidStartDocument(parser: NSXMLParser) {
+    public func parserDidStartDocument(_ parser: XMLParser) {
         //print("[SKTilemapParser]: starting parsing...")
     }
     
-    public func parserDidEndDocument(parser: NSXMLParser) {
+    public func parserDidEndDocument(_ parser: XMLParser) {
         //print("[SKTilemapParser]: ending parsing...")
     }
     
     
     // didStartElement happens whenever parser starts a key: <key>
-    public func parser(parser: NSXMLParser,
+    public func parser(_ parser: XMLParser,
                        didStartElement elementName: String,
                        namespaceURI: String?,
                        qualifiedName qName: String?,
@@ -196,7 +196,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
             
             self.tileMap = tilemap
             
-            let currentBasename = currentFileName.componentsSeparatedByString(".").first!
+            let currentBasename = currentFileName.components(separatedBy: ".").first!
             self.tileMap.filename = currentBasename
             self.tileMap.name = currentBasename
             lastElement = tilemap
@@ -416,9 +416,9 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
             // polygon object
             if let pointsString = attributeDict["points"] {
                 var coordinates: [[CGFloat]] = []
-                let points = pointsString.componentsSeparatedByString(" ")
+                let points = pointsString.components(separatedBy: " ")
                 for point in points {
-                    let coords = point.componentsSeparatedByString(",").flatMap { x in Double(x) }
+                    let coords = point.components(separatedBy: ",").flatMap { x in Double(x) }
                     coordinates.append(coords.flatMap { CGFloat($0) })
                 }
                 
@@ -436,9 +436,9 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
             // polygon object
             if let pointsString = attributeDict["points"] {
                 var coordinates: [[CGFloat]] = []
-                let points = pointsString.componentsSeparatedByString(" ")
+                let points = pointsString.components(separatedBy: " ")
                 for point in points {
-                    let coords = point.componentsSeparatedByString(",").flatMap { x in Double(x) }
+                    let coords = point.components(separatedBy: ",").flatMap { x in Double(x) }
                     coordinates.append(coords.flatMap { CGFloat($0) })
                 }
                 
@@ -464,7 +464,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
             guard let tileset = lastElement as? SKTileset else { parser.abortParsing(); return }
             
             // get duration in seconds
-            let durationInSeconds: NSTimeInterval = Double(duration)! / 1000.0
+            let durationInSeconds: TimeInterval = Double(duration)! / 1000.0
             if let currentTileData = tileset.getTileData(currentID + tileset.firstGID) {
                 // add the frame id to the frames property
                 currentTileData.addFrame(Int(id)! + tileset.firstGID, interval: durationInSeconds)
@@ -488,7 +488,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
     
     
     // didEndElement happens whenever parser ends a key: </key>
-    public func parser(parser: NSXMLParser,
+    public func parser(_ parser: XMLParser,
                        didEndElement elementName: String,
                        namespaceURI: String?,
                        qualifiedName qName: String?) {
@@ -609,24 +609,24 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
  
     
     // foundCharacters happens whenever parser enters a key and find characters
-    public func parser(parser: NSXMLParser, foundCharacters string: String) {
+    public func parser(_ parser: XMLParser, foundCharacters string: String) {
         // append data attribute
         characterData += string
     }
     
-    public func parser(parser: NSXMLParser, parseErrorOccurred parseError: NSError) {
+    public func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
         //if parseError.code == NSXMLParserError.InternalError {}
     }
     
     // MARK: Unused
-    public func parser(parser: NSXMLParser, foundAttributeDeclarationWithName attributeName: String, forElement elementName: String, type: String?, defaultValue: String?) {
+    public func parser(_ parser: XMLParser, foundAttributeDeclarationWithName attributeName: String, forElement elementName: String, type: String?, defaultValue: String?) {
     }
     
-    public func parser(parser: NSXMLParser, foundElementDeclarationWithName elementName: String, model: String) {
+    public func parser(_ parser: XMLParser, foundElementDeclarationWithName elementName: String, model: String) {
 
     }
     
-    public func parser(parser: NSXMLParser, foundExternalEntityDeclarationWithName name: String, publicID: String?, systemID: String?) {
+    public func parser(_ parser: XMLParser, foundExternalEntityDeclarationWithName name: String, publicID: String?, systemID: String?) {
         print("external entity: \(name)")
     }
     
@@ -638,8 +638,8 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
      
      - returns: `[Int]` parsed CSV data.
      */
-    private func decode(csvString data: String) -> [UInt32] {
-        return data.scrub().componentsSeparatedByString(",").map {UInt32($0)!}
+    fileprivate func decode(csvString data: String) -> [UInt32] {
+        return data.scrub().components(separatedBy: ",").map {UInt32($0)!}
     }
     
     /**
@@ -651,23 +651,23 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
      
      - returns: `[Int]?` parsed data.
      */
-    private func decode(base64String data: String) -> [UInt32]? {
-        if let nsdata = NSData(base64EncodedString: data, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters) {
-            let count = nsdata.length / sizeof(UInt32)
+    fileprivate func decode(base64String data: String) -> [UInt32]? {
+        if let nsdata = Data(base64Encoded: data, options: NSData.Base64DecodingOptions.ignoreUnknownCharacters) {
+            let count = nsdata.count / MemoryLayout<UInt32>.size
             //var bytes = [Int32](count: nsdata.length, repeatedValue: 0)
-            var bytes = [UInt32](count: count, repeatedValue: 0)
-            nsdata.getBytes(&bytes)
+            var bytes = [UInt32](repeating: 0, count: count)
+            (nsdata as NSData).getBytes(&bytes)
             return bytes.flatMap { UInt32($0) }
         }
         return nil // Invalid input
     }
     
     // MARK: - Decompression
-    private func decompress(gzipData data: String) -> String? {
+    fileprivate func decompress(gzipData data: String) -> String? {
         return nil
     }
     
-    private func decompress(zlibData data: String) -> String? {
+    fileprivate func decompress(zlibData data: String) -> String? {
         return nil
     }
 }
@@ -683,7 +683,7 @@ public extension String {
     public init(_ bytes: [UInt8]) {
         self.init()
         for b in bytes {
-            self.append(UnicodeScalar(b))
+            self.append(String(UnicodeScalar(b)))
         }
     }
     
@@ -693,9 +693,9 @@ public extension String {
      - returns: `String` scrubbed string.
      */
     public func scrub() -> String {
-        var scrubbed = self.stringByReplacingOccurrencesOfString("\n", withString: "")
-        scrubbed = scrubbed.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        return scrubbed.stringByReplacingOccurrencesOfString(" ", withString: "")
+        var scrubbed = self.replacingOccurrences(of: "\n", with: "")
+        scrubbed = scrubbed.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        return scrubbed.replacingOccurrences(of: " ", with: "")
     }
 }
 

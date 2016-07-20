@@ -54,11 +54,11 @@ public enum RenderOrder: String {
  - Center:      tile aligns at the center.
  */
 public enum TileOffset: Int {
-    case BottomLeft = 0     // tile's upper left edge.
-    case TopLeft
-    case TopRight
-    case BottomRight
-    case Center
+    case bottomLeft = 0     // tile's upper left edge.
+    case topLeft
+    case topRight
+    case bottomRight
+    case center
 }
 
 
@@ -86,21 +86,21 @@ public struct TileCoord {
 
 /// Cardinal direction
 public enum CardinalDirection: Int {
-    case North
-    case NorthEast
-    case East
-    case SouthEast
-    case South
-    case SouthWest
-    case West
-    case NorthWest
+    case north
+    case northEast
+    case east
+    case southEast
+    case south
+    case southWest
+    case west
+    case northWest
 }
 
 
 public enum LayerPosition {
-    case BottomLeft  // 0   - node bottom left rests at parent zeropoint
-    case Center      // 0.5 - node center rests at parent zeropoint
-    case TopRight    // 1   - node top right rests at parent zeropoint
+    case bottomLeft  // 0   - node bottom left rests at parent zeropoint
+    case center      // 0.5 - node center rests at parent zeropoint
+    case topRight    // 1   - node top right rests at parent zeropoint
 }
 
 
@@ -116,7 +116,7 @@ public let TileSize32x32 = CGSize(width: 32, height: 32)
 public class SKTilemap: SKNode, TiledObject{
     
     public var filename: String!                                    // tilemap filename
-    public var uuid: String = NSUUID().UUIDString                   // unique id
+    public var uuid: String = UUID().uuidString                   // unique id
     public var size: CGSize                                         // map size (in tiles)
     public var tileSize: CGSize                                     // tile size (in pixels)
     public var orientation: TilemapOrientation                      // map orientation
@@ -129,7 +129,7 @@ public class SKTilemap: SKNode, TiledObject{
     
     // current tile sets
     public var tileSets: Set<SKTileset> = []                        // tilesets
-    public var graphs: [String: GKGridGraph] = [:]                  // pathfinding graphs
+    public var graphs: [String: GKGridGraph<GKGridGraphNode>] = [:]                  // pathfinding graphs
     
     // current layers
     public var layers: Set<TiledLayerObject> = []                   // layers (private)
@@ -140,9 +140,9 @@ public class SKTilemap: SKNode, TiledObject{
     public var baseLayer: SKTileLayer!                              // generic layer
     
     // debugging
-    public var gridColor: SKColor = SKColor.blackColor()            // color used to visualize the tile grid
-    public var frameColor: SKColor = SKColor.blackColor()           // bounding box color
-    public var highlightColor: SKColor = SKColor.whiteColor()       // color used to highlight tiles
+    public var gridColor: SKColor = SKColor.black            // color used to visualize the tile grid
+    public var frameColor: SKColor = SKColor.black           // bounding box color
+    public var highlightColor: SKColor = SKColor.white       // color used to highlight tiles
     
     // convenience properties
     public var width: CGFloat { return size.width }
@@ -150,7 +150,7 @@ public class SKTilemap: SKNode, TiledObject{
     public var tileWidth: CGFloat { return tileSize.width }
     public var tileHeight: CGFloat { return tileSize.height }
     
-    public var sizeHalved: CGSize { return CGSizeMake(size.width / 2, size.height / 2)}
+    public var sizeHalved: CGSize { return CGSize(width: size.width / 2, height: size.height / 2)}
     public var tileWidthHalf: CGFloat { return tileWidth / 2 }
     public var tileHeightHalf: CGFloat { return tileHeight / 2 }    
     
@@ -159,15 +159,15 @@ public class SKTilemap: SKNode, TiledObject{
     public var sizeInPoints: CGSize {
         switch orientation {
         case .Orthogonal:
-            return CGSizeMake(size.width * tileSize.width, size.height * tileSize.height)
+            return CGSize(width: size.width * tileSize.width, height: size.height * tileSize.height)
         case .Isometric:
             let side = width + height
-            return CGSizeMake(side * tileWidthHalf,  side * tileHeightHalf)
+            return CGSize(width: side * tileWidthHalf,  height: side * tileHeightHalf)
         }
     }
 
     // used to align the layers within the tile map
-    public var layerAlignment: LayerPosition = .Center {
+    public var layerAlignment: LayerPosition = .center {
         didSet {
             layers.forEach({self.positionLayer($0)})
         }
@@ -175,17 +175,17 @@ public class SKTilemap: SKNode, TiledObject{
     
     // returns the last GID for all of the tilesets.
     public var lastGID: Int {
-        return tileSets.count > 0 ? tileSets.map {$0.lastGID}.maxElement()! : 0
+        return tileSets.count > 0 ? tileSets.map {$0.lastGID}.max()! : 0
     }    
     
     /// Returns the last GID for all tilesets.
     public var lastIndex: Int {
-        return layers.count > 0 ? layers.map {$0.index}.maxElement()! : 0
+        return layers.count > 0 ? layers.map {$0.index}.max()! : 0
     }
     
     /// Returns the last (highest) z-position in the map.
     public var lastZPosition: CGFloat {
-        return layers.count > 0 ? layers.map {$0.zPosition}.maxElement()! : 0
+        return layers.count > 0 ? layers.map {$0.zPosition}.max()! : 0
     }
     
     /// Tile overlap amount. 1 is typically a good value.
@@ -210,17 +210,17 @@ public class SKTilemap: SKNode, TiledObject{
     
     /// Convenience property to return all tile layers.
     public var tileLayers: [SKTileLayer] {
-        return layers.sort({$0.index < $1.index}).filter({$0 as? SKTileLayer != nil}) as! [SKTileLayer]
+        return layers.sorted(by: {$0.index < $1.index}).filter({$0 as? SKTileLayer != nil}) as! [SKTileLayer]
     }
     
     /// Convenience property to return all object groups.
     public var objectGroups: [SKObjectGroup] {
-        return layers.sort({$0.index < $1.index}).filter({$0 as? SKObjectGroup != nil}) as! [SKObjectGroup]
+        return layers.sorted(by: {$0.index < $1.index}).filter({$0 as? SKObjectGroup != nil}) as! [SKObjectGroup]
     }
     
     /// Convenience property to return all image layers.
     public var imageLayers: [SKImageLayer] {
-        return layers.sort({$0.index < $1.index}).filter({$0 as? SKImageLayer != nil}) as! [SKImageLayer]
+        return layers.sorted(by: {$0.index < $1.index}).filter({$0 as? SKImageLayer != nil}) as! [SKImageLayer]
     }
     
     // MARK: - Loading
@@ -317,7 +317,7 @@ public class SKTilemap: SKNode, TiledObject{
      
      - parameter tileset: `SKTileset` tileset object.
      */
-    public func addTileset(tileset: SKTileset) {
+    public func addTileset(_ tileset: SKTileset) {
         tileSets.insert(tileset)
         tileset.tilemap = self
         tileset.parseProperties()
@@ -331,7 +331,7 @@ public class SKTilemap: SKNode, TiledObject{
      - returns: `SKTileset?` tileset object.
      */
     public func getTileset(named name: String) -> SKTileset? {
-        if let index = tileSets.indexOf( { $0.name == name } ) {
+        if let index = tileSets.index( where: { $0.name == name } ) {
             let tileset = tileSets[index]
             return tileset
         }
@@ -346,7 +346,7 @@ public class SKTilemap: SKNode, TiledObject{
      - returns: `SKTileset?` tileset object, if it exists.
      */
     public func getTileset(fileNamed filename: String) -> SKTileset? {
-        if let index = tileSets.indexOf( { $0.filename == filename } ) {
+        if let index = tileSets.index( where: { $0.filename == filename } ) {
             let tileset = tileSets[index]
             return tileset
         }
@@ -361,7 +361,7 @@ public class SKTilemap: SKNode, TiledObject{
      - returns: `[TiledLayerObject]` array of layers.
      */
     public func allLayers() -> [TiledLayerObject] {
-        return layers.sort({$0.index < $1.index})
+        return layers.sorted(by: {$0.index < $1.index})
     }
     
     /**
@@ -378,7 +378,7 @@ public class SKTilemap: SKNode, TiledObject{
      
      - parameter layer: `TiledLayerObject` layer object.
      */
-    public func addLayer(layer: TiledLayerObject) {
+    public func addLayer(_ layer: TiledLayerObject) {
         
         // set the layer index
         layer.index = layers.count > 0 ? lastIndex + 1 : 0
@@ -398,7 +398,7 @@ public class SKTilemap: SKNode, TiledObject{
         layer.parseProperties()
     }
     
-    public func addNewTileLayer(named: String) -> SKTileLayer {
+    public func addNewTileLayer(_ named: String) -> SKTileLayer {
         let layer = SKTileLayer(layerName: named, tileMap: self)
         addLayer(layer)
         return layer
@@ -412,7 +412,7 @@ public class SKTilemap: SKNode, TiledObject{
      - returns: `TiledLayerObject?` layer object.
      */
     public func getLayer(named layerName: String) -> TiledLayerObject? {
-        if let index = layers.indexOf( { $0.name == layerName } ) {
+        if let index = layers.index( where: { $0.name == layerName } ) {
             let layer = layers[index]
             return layer
         }
@@ -427,7 +427,7 @@ public class SKTilemap: SKNode, TiledObject{
      - returns: `TiledLayerObject?` layer object.
      */
     public func getLayer(withID uuid: String) -> TiledLayerObject? {
-        if let index = layers.indexOf( { $0.uuid == uuid } ) {
+        if let index = layers.index( where: { $0.uuid == uuid } ) {
             let layer = layers[index]
             return layer
         }
@@ -442,7 +442,7 @@ public class SKTilemap: SKNode, TiledObject{
      - returns: `TiledLayerObject?` layer object.
      */
     public func getLayer(atIndex index: Int) -> TiledLayerObject? {
-        if let index = layers.indexOf( { $0.index == index } ) {
+        if let index = layers.index( where: { $0.index == index } ) {
             let layer = layers[index]
             return layer
         }
@@ -455,13 +455,13 @@ public class SKTilemap: SKNode, TiledObject{
      
      - parameter named: `String` layer name.
      */
-    public func isolateLayer(named: String?) {
+    public func isolateLayer(_ named: String?) {
         guard let name = named else {
             layers.map({$0.visible = true})
             return
         }
         layers.map({
-            var isHidden: Bool = $0.name == named ? true : false
+            let isHidden: Bool = $0.name == named ? true : false
             $0.visible = isHidden
         })
     }
@@ -474,7 +474,7 @@ public class SKTilemap: SKNode, TiledObject{
      - returns: `SKTileLayer?`
      */
     public func tileLayer(named name: String) -> SKTileLayer? {
-        if let layerIndex = tileLayers.indexOf( { $0.name == name } ) {
+        if let layerIndex = tileLayers.index( where: { $0.name == name } ) {
             let layer = tileLayers[layerIndex]
             return layer
         }
@@ -489,7 +489,7 @@ public class SKTilemap: SKNode, TiledObject{
      - returns: `SKTileLayer?`
      */
     public func tileLayer(atIndex index: Int) -> SKTileLayer? {
-        if let layerIndex = tileLayers.indexOf( { $0.index == index } ) {
+        if let layerIndex = tileLayers.index( where: { $0.index == index } ) {
             let layer = tileLayers[layerIndex]
             return layer
         }
@@ -504,7 +504,7 @@ public class SKTilemap: SKNode, TiledObject{
      - returns: `SKObjectGroup?`
      */
     public func objectGroup(named name: String) -> SKObjectGroup? {
-        if let layerIndex = objectGroups.indexOf( { $0.name == name } ) {
+        if let layerIndex = objectGroups.index( where: { $0.name == name } ) {
             let layer = objectGroups[layerIndex]
             return layer
         }
@@ -519,14 +519,14 @@ public class SKTilemap: SKNode, TiledObject{
      - returns: `SKObjectGroup?`
      */
     public func objectGroup(atIndex index: Int) -> SKObjectGroup? {
-        if let layerIndex = objectGroups.indexOf( { $0.index == index } ) {
+        if let layerIndex = objectGroups.index( where: { $0.index == index } ) {
             let layer = objectGroups[layerIndex]
             return layer
         }
         return nil
     }
     
-    public func indexOf(layer layer: TiledLayerObject) -> Int {
+    public func indexOf(layer: TiledLayerObject) -> Int {
         return 0
     }
     
@@ -539,8 +539,8 @@ public class SKTilemap: SKNode, TiledObject{
      
      - parameter layer: `TiledLayerObject` layer.
      */
-    private func positionLayer(layer: TiledLayerObject) {
-        var layerPos = CGPointZero
+    fileprivate func positionLayer(_ layer: TiledLayerObject) {
+        var layerPos = CGPoint.zero
         switch orientation {
         case .Orthogonal:
             
@@ -570,7 +570,7 @@ public class SKTilemap: SKNode, TiledObject{
      
      - parameter fromZ: `CGFloat?` optional starting z-positon.
      */
-    public func sortLayers(fromZ: CGFloat?=nil) {
+    public func sortLayers(_ fromZ: CGFloat?=nil) {
         let startingZ: CGFloat = (fromZ != nil) ? fromZ! : zPosition
         allLayers().map {$0.zPosition = startingZ + (zDeltaForLayers * CGFloat($0.index))}
     }
@@ -584,7 +584,7 @@ public class SKTilemap: SKNode, TiledObject{
      
      - returns: `[SKTile]` array of tiles.
      */
-    public func tilesAt(coord: TileCoord) -> [SKTile] {
+    public func tilesAt(_ coord: TileCoord) -> [SKTile] {
         var result: [SKTile] = []
         for layer in tileLayers {
             if let tile = layer.tileAt(coord){
@@ -602,7 +602,7 @@ public class SKTilemap: SKNode, TiledObject{
      
      - returns: `[SKTile]` array of tiles.
      */
-    public func tilesAt(x: Int, _ y: Int) -> [SKTile] {
+    public func tilesAt(_ x: Int, _ y: Int) -> [SKTile] {
         return tilesAt(TileCoord(x,y))
     }
     
@@ -614,7 +614,7 @@ public class SKTilemap: SKNode, TiledObject{
      
      - returns: `SKTile?` tile, or nil.
      */
-    public func tileAt(coord: TileCoord, inLayer name: String?) -> SKTile? {
+    public func tileAt(_ coord: TileCoord, inLayer name: String?) -> SKTile? {
         if let name = name {
             if let layer = getLayer(named: name) as? SKTileLayer {
                 return layer.tileAt(coord)
@@ -623,7 +623,7 @@ public class SKTilemap: SKNode, TiledObject{
         return nil
     }
     
-    public func tileAt(x: Int, _ y: Int, inLayer name: String?) -> SKTile? {
+    public func tileAt(_ x: Int, _ y: Int, inLayer name: String?) -> SKTile? {
         return tileAt(TileCoord(x,y), inLayer: name)
     }
     
@@ -664,7 +664,7 @@ public class SKTilemap: SKNode, TiledObject{
      - parameter value: `AnyObject` property value.
      - returns: `[SKTile]` array of tiles.
      */
-    public func getTilesWithProperty(named: String, _ value: AnyObject) -> [SKTile] {
+    public func getTilesWithProperty(_ named: String, _ value: AnyObject) -> [SKTile] {
         var result: [SKTile] = []
         for layer in tileLayers {
             result += layer.getTilesWithProperty(named, value)
@@ -679,7 +679,7 @@ public class SKTilemap: SKNode, TiledObject{
      */
     public func getAnimatedTiles() -> [SKTile] {
         var result: [SKTile] = []
-        enumerateChildNodesWithName("//*") {
+        enumerateChildNodes(withName: "//*") {
             node, stop in
             if let tile = node as? SKTile {
                 if (tile.tileData.isAnimated == true) {
@@ -699,7 +699,7 @@ public class SKTilemap: SKNode, TiledObject{
      */
     public func getObjects() -> [SKTileObject] {
         var result: [SKTileObject] = []
-        enumerateChildNodesWithName("//*") {
+        enumerateChildNodes(withName: "//*") {
             node, stop in
             if let node = node as? SKTileObject {
                 result.append(node)
@@ -717,7 +717,7 @@ public class SKTilemap: SKNode, TiledObject{
      */
     public func getObjects(ofType type: String) -> [SKTileObject] {
         var result: [SKTileObject] = []
-        enumerateChildNodesWithName("//*") {
+        enumerateChildNodes(withName: "//*") {
             node, stop in
             // do something with node or stop
             if let node = node as? SKTileObject {
@@ -738,9 +738,9 @@ public class SKTilemap: SKNode, TiledObject{
      
      - returns: `[SKTileObject]` array of objects.
      */
-    public func getObjects(named: String) -> [SKTileObject] {
+    public func getObjects(_ named: String) -> [SKTileObject] {
         var result: [SKTileObject] = []
-        enumerateChildNodesWithName("//*") {
+        enumerateChildNodes(withName: "//*") {
             node, stop in
             // do something with node or stop
             if let node = node as? SKTileObject {
@@ -763,7 +763,7 @@ public class SKTilemap: SKNode, TiledObject{
      
      - returns: `SKTilesetData` tile data, if it exists.
      */
-    public func getTileData(gid: Int) -> SKTilesetData? {
+    public func getTileData(_ gid: Int) -> SKTilesetData? {
         for tileset in tileSets {
             if let tileData = tileset.getTileData(gid) {
                 return tileData
@@ -822,9 +822,9 @@ public extension TilemapOrientation {
     public var alignmentHint: CGPoint {
         switch self {
         case .Orthogonal:
-            return CGPointMake(0.5, 0.5)
+            return CGPoint(x: 0.5, y: 0.5)
         case .Isometric:
-            return CGPointMake(0.5, 0.5)
+            return CGPoint(x: 0.5, y: 0.5)
         }
     }
 }
@@ -838,17 +838,17 @@ extension LayerPosition: CustomStringConvertible {
     
     public var name: String {
         switch self {
-        case .BottomLeft: return "Bottom Left"
-        case .Center: return "Center"
-        case .TopRight: return "Top Right"
+        case .bottomLeft: return "Bottom Left"
+        case .center: return "Center"
+        case .topRight: return "Top Right"
         }
     }
     
     public var anchorPoint: CGPoint {
         switch self {
-        case .BottomLeft: return CGPointMake(0, 0)
-        case .Center: return CGPointMake(0.5, 0.5)
-        case .TopRight: return CGPointMake(1, 1)
+        case .bottomLeft: return CGPoint(x: 0, y: 0)
+        case .center: return CGPoint(x: 0.5, y: 0.5)
+        case .topRight: return CGPoint(x: 1, y: 1)
         }
     }
 }

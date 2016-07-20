@@ -13,7 +13,7 @@ import UIKit
 public class SKTiledSceneCamera: SKCameraNode {
     
     public let world: SKNode
-    private var bounds: CGRect
+    fileprivate var bounds: CGRect
     public var zoom: CGFloat = 1.0
     public var initialZoom: CGFloat = 1.0
     
@@ -23,8 +23,8 @@ public class SKTiledSceneCamera: SKCameraNode {
     public var scenePanned: UIPanGestureRecognizer!            // gesture recognizer to recognize scene panning
     
     // locations
-    private var touchLocation = CGPointZero
-    private var lastLocation: CGPoint!
+    fileprivate var touchLocation = CGPoint.zero
+    fileprivate var lastLocation: CGPoint!
     
     // MARK: - Init
     public init(view: SKView, world node: SKNode) {
@@ -48,14 +48,14 @@ public class SKTiledSceneCamera: SKCameraNode {
      
      - parameter recognizer: `UIPanGestureRecognizer` pan gesture recognizer.
      */
-    public func scenePannedHandler(recognizer: UIPanGestureRecognizer) {
-        if recognizer.state == .Began {
-            lastLocation = recognizer.locationInView(recognizer.view)
+    public func scenePannedHandler(_ recognizer: UIPanGestureRecognizer) {
+        if recognizer.state == .began {
+            lastLocation = recognizer.location(in: recognizer.view)
         }
         
-        if recognizer.state == .Changed {
+        if recognizer.state == .changed {
             if lastLocation == nil { return }
-            let location = recognizer.locationInView(recognizer.view)
+            let location = recognizer.location(in: recognizer.view)
             let difference = CGPoint(x: location.x - lastLocation.x, y: location.y - lastLocation.y)
             centerOn(CGPoint(x: Int(position.x - difference.x), y: Int(position.y - -difference.y)))
             lastLocation = location
@@ -67,7 +67,7 @@ public class SKTiledSceneCamera: SKCameraNode {
      
      - parameter scale: `CGFloat` zoom amount.
      */
-    public func setWorldScale(scale: CGFloat) {
+    public func setWorldScale(_ scale: CGFloat) {
         self.zoom = scale
         world.setScale(scale)
     }
@@ -78,8 +78,8 @@ public class SKTiledSceneCamera: SKCameraNode {
      - parameter point:    `CGPoint` point to move to.
      - parameter duration: `NSTimeInterval` duration of move.
      */
-    public func panToPoint(point: CGPoint, duration: NSTimeInterval=0.3) {
-        runAction(SKAction.moveTo(point, duration: duration))
+    public func panToPoint(_ point: CGPoint, duration: TimeInterval=0.3) {
+        run(SKAction.move(to: point, duration: duration))
     }
     
     /**
@@ -88,13 +88,13 @@ public class SKTiledSceneCamera: SKCameraNode {
      - parameter scenePoint: `CGPoint` point in scene.
      - parameter easeInOut:  `NSTimeInterval` ease in/out speed.
      */
-    public func centerOn(scenePoint: CGPoint, easeInOut: NSTimeInterval = 0) {
+    public func centerOn(_ scenePoint: CGPoint, easeInOut: TimeInterval = 0) {
         if easeInOut == 0 {
             position = scenePoint
         } else {
-            let moveAction = SKAction.moveTo(scenePoint, duration: easeInOut)
-            moveAction.timingMode = .EaseOut
-            runAction(moveAction)
+            let moveAction = SKAction.move(to: scenePoint, duration: easeInOut)
+            moveAction.timingMode = .easeOut
+            run(moveAction)
         }
     }
     
@@ -102,7 +102,7 @@ public class SKTiledSceneCamera: SKCameraNode {
      Reset the camera position & zoom level.
      */
     public func resetCamera() {
-        centerOn(CGPointMake(0, 0))
+        centerOn(CGPoint(x: 0, y: 0))
         setWorldScale(initialZoom)
     }
 }

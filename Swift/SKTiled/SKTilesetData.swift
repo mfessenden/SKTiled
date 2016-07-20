@@ -12,7 +12,7 @@ import SpriteKit
 public class SKTilesetData: TiledObject  {
     
     weak public var tileset: SKTileset!             // is assigned on add
-    public var uuid: String = NSUUID().UUIDString   // unique id
+    public var uuid: String = UUID().uuidString   // unique id
     public var id: Int = 0                          // tile id
     public var texture: SKTexture!                  // initial tile texture
     public var source: String! = nil                // source image name (part of a collections tileset)
@@ -21,7 +21,7 @@ public class SKTilesetData: TiledObject  {
     
     // animation frames
     public var frames: [Int] = []                   // animation frames
-    public var duration: NSTimeInterval = 0.1       // animation frame duration
+    public var duration: TimeInterval = 0.1       // animation frame duration
     public var isAnimated: Bool { return frames.count > 0 }
     
     // flipped flags
@@ -62,7 +62,7 @@ public class SKTilesetData: TiledObject  {
     public init(tileId: Int, texture: SKTexture, tileSet: SKTileset) {
         self.id = tileId
         self.texture = texture
-        self.texture.filteringMode = .Nearest
+        self.texture.filteringMode = .nearest
         self.tileset = tileSet
     }
     
@@ -73,7 +73,7 @@ public class SKTilesetData: TiledObject  {
      - parameter duration:    `NSTimeInterval` frame interval.
      - parameter tileTexture: `SKTexture?` frame texture.
      */
-    public func addFrame(gid: Int, interval: NSTimeInterval, tileTexture: SKTexture?=nil) {
+    public func addFrame(_ gid: Int, interval: TimeInterval, tileTexture: SKTexture?=nil) {
         frames.append(gid)
         duration = interval
     }
@@ -99,8 +99,8 @@ extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
     public var description: String {
         guard let tileset = tileset else { return "Tile ID: \(id) (no tileset)" }
         var dataString = properties.count > 0 ? "Tile ID: \(id) @ \(tileset.tileSize), " : "Tile ID: \(id) @ \(tileset.tileSize)"
-        for (index, pair) in properties.enumerate() {
-            var pstring = (index < properties.count - 1) ? "\"\(pair.0)\": \(pair.1)," : "\"\(pair.0)\": \(pair.1)"
+        for (index, pair) in properties.enumerated() {
+            let pstring = (index < properties.count - 1) ? "\"\(pair.0)\": \(pair.1)," : "\"\(pair.0)\": \(pair.1)"
             dataString += pstring
         }
         return dataString

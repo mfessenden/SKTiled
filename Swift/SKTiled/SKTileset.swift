@@ -13,7 +13,7 @@ import SpriteKit
 public class SKTileset: TiledObject {
     
     public var name: String                         // tileset name
-    public var uuid: String = NSUUID().UUIDString   // unique id
+    public var uuid: String = UUID().uuidString   // unique id
     public var filename: String! = nil              // source filename (external tileset)
     public var tilemap: SKTilemap!
     public var tileSize: CGSize                     // tile size
@@ -27,7 +27,7 @@ public class SKTileset: TiledObject {
     public var margin: Int = 0                      // border margin
     
     public var properties: [String: String] = [:]
-    public var tileOffset = CGPointZero             // draw offset for drawing tiles
+    public var tileOffset = CGPoint.zero             // draw offset for drawing tiles
     
     // texture
     public var source: String!                      // texture (if created from source)
@@ -62,7 +62,7 @@ public class SKTileset: TiledObject {
      
      - returns: `SKTileset` tileset object.
      */
-    public init(name: String, tileSize size: CGSize, firstgid: Int=1, columns: Int=0, offset: CGPoint=CGPointZero) {
+    public init(name: String, tileSize size: CGSize, firstgid: Int=1, columns: Int=0, offset: CGPoint=CGPoint.zero) {
         self.name = name
         self.tileSize = size
         self.firstGID = firstgid
@@ -79,8 +79,8 @@ public class SKTileset: TiledObject {
      
      - returns: `SKTileset` tile set.
      */
-    public init(source: String, firstgid: Int, tilemap: SKTilemap, offset: CGPoint=CGPointZero) {
-        let filepath = source.componentsSeparatedByString("/").last!
+    public init(source: String, firstgid: Int, tilemap: SKTilemap, offset: CGPoint=CGPoint.zero) {
+        let filepath = source.components(separatedBy: "/").last!
         self.filename = filepath
         
         self.firstGID = firstgid
@@ -88,7 +88,7 @@ public class SKTileset: TiledObject {
         self.tileOffset = offset
         
         // setting these here, even though it may different later
-        self.name = filepath.componentsSeparatedByString(".")[0]
+        self.name = filepath.components(separatedBy: ".")[0]
         self.tileSize = tilemap.tileSize
     }
     
@@ -98,7 +98,7 @@ public class SKTileset: TiledObject {
      - parameter attributes: `[String: String]` attributes dictionary.
      - parameter offset:     `CGPoint` offset in x/y.
      */
-    public init?(attributes: [String: String], offset: CGPoint=CGPointZero){
+    public init?(attributes: [String: String], offset: CGPoint=CGPoint.zero){
         // name, width and height are required
         guard let layerName = attributes["name"] else { return nil }
         guard let firstgid = attributes["firstgid"] else { return nil }
@@ -134,12 +134,12 @@ public class SKTileset: TiledObject {
      - parameter source: `String` image named referenced in the tileset.
      */
     public func addTextures(fromSpriteSheet source: String) {
-        let timer = NSDate()
+        let timer = Date()
         self.source = source
         print("[SKTileset]: adding sprite sheet source: \"\(self.source)\"")
         
         let sourceTexture = SKTexture(imageNamed: self.source)
-        sourceTexture.filteringMode = .Nearest
+        sourceTexture.filteringMode = .nearest
         //print("  -> texture size: \(sourceTexture.size())")
         let textureWidth = Int(sourceTexture.size().width)
         let textureHeight = Int(sourceTexture.size().height)
@@ -173,7 +173,7 @@ public class SKTileset: TiledObject {
             
             // create texture rectangle
             let tileRect = CGRect(x: rectStartX, y: rectStartY, width: rectWidth, height: rectHeight)
-            let tileTexture = SKTexture(rect: tileRect, inTexture: sourceTexture)
+            let tileTexture = SKTexture(rect: tileRect, in: sourceTexture)
             
             // add the tile data properties
             addTilesetTile(gid, texture: tileTexture)
@@ -186,13 +186,13 @@ public class SKTileset: TiledObject {
         }
         
         // time results
-        let timeInterval = NSDate().timeIntervalSinceDate(timer)
+        let timeInterval = Date().timeIntervalSince(timer)
         let timeStamp = String(format: "%.\(String(3))f", timeInterval)
         print("[SKTileset]: tileset built in: \(timeStamp)s\n")
     }
     
     // TODO: - Need this?
-    public func addTextures(fromAtlas: String) {
+    public func addTextures(_ fromAtlas: String) {
         print("[SKTileset]: adding texture atlas: \"\(fromAtlas)\"")
         atlas = SKTextureAtlas(named: fromAtlas)
         guard atlas.textureNames.count == tilemap.size.count else {
@@ -210,8 +210,8 @@ public class SKTileset: TiledObject {
      
      - returns: `SKTilesetData?` tileset data (or nil if the data exists).
      */
-    public func addTilesetTile(tileID: Int, texture: SKTexture) -> SKTilesetData? {
-        guard !(self.tileData.contains( { $0.hashValue == tileID.hashValue } )) else {
+    public func addTilesetTile(_ tileID: Int, texture: SKTexture) -> SKTilesetData? {
+        guard !(self.tileData.contains( where: { $0.hashValue == tileID.hashValue } )) else {
             print("[SKTileset]: tile data exists at id: \(tileID)")
             return nil
         }
@@ -230,8 +230,8 @@ public class SKTileset: TiledObject {
      
      - returns: `SKTilesetData?` tileset data (or nil if the data exists).
      */
-    public func addTilesetTile(tileID: Int, source: String) -> SKTilesetData? {
-        guard !(self.tileData.contains( { $0.hashValue == tileID.hashValue } )) else {
+    public func addTilesetTile(_ tileID: Int, source: String) -> SKTilesetData? {
+        guard !(self.tileData.contains( where: { $0.hashValue == tileID.hashValue } )) else {
             print("[SKTileset]: tile data exists at id: \(tileID)")
             return nil
         }
@@ -241,7 +241,7 @@ public class SKTileset: TiledObject {
         isImageCollection = true
         let texture = SKTexture(imageNamed: source)
         
-        texture.filteringMode = .Nearest
+        texture.filteringMode = .nearest
         let data = SKTilesetData(tileId: tileID, texture: texture, tileSet: self)
         
         // add the image name to the source attribute
@@ -260,8 +260,8 @@ public class SKTileset: TiledObject {
      
      - returns: `SKTilesetData?` tile data object.
      */
-    public func getTileData(gid: Int) -> SKTilesetData? {
-        if let index = tileData.indexOf( { $0.id == gid } ) {
+    public func getTileData(_ gid: Int) -> SKTilesetData? {
+        if let index = tileData.index( where: { $0.id == gid } ) {
             return tileData[index]
         }
         return nil

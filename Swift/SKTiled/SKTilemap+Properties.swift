@@ -91,7 +91,7 @@ public extension TiledLayerObject {
             }
             
             if (attr == "hidden") {
-                hidden = boolForKey(attr)
+                isHidden = boolForKey(attr)
             }
             
             if (attr == "visible") {

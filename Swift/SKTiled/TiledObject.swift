@@ -30,7 +30,7 @@ public extension TiledObject {
      
      - returns: `Bool` properties has a value for the key.
      */
-    public func hasKey(key: String) -> Bool {
+    public func hasKey(_ key: String) -> Bool {
         if let _ = properties[key] { return true }
         return false
     }
@@ -42,7 +42,7 @@ public extension TiledObject {
      
      - returns: `String` value for properties key.
      */
-    public func stringForKey(key: String) -> String? {
+    public func stringForKey(_ key: String) -> String? {
         return properties[key]
     }
     
@@ -54,9 +54,9 @@ public extension TiledObject {
      
      - returns: `[String]` value for properties key.
      */
-    public func stringArrayForKey(key: String, separatedBy: String=",") -> [String] {
+    public func stringArrayForKey(_ key: String, separatedBy: String=",") -> [String] {
         if let value = properties[key] {
-            return value.componentsSeparatedByString(separatedBy)
+            return value.components(separatedBy: separatedBy)
         }
         return [String]()
     }
@@ -68,7 +68,7 @@ public extension TiledObject {
      
      - returns: `Int?` value for properties key.
      */
-    public func intForKey(key: String) -> Int? {
+    public func intForKey(_ key: String) -> Int? {
         guard (hasKey(key) == true) else { return nil }
         return Int(properties[key]!)
     }
@@ -80,7 +80,7 @@ public extension TiledObject {
      
      - returns: `Double?` value for properties key.
      */
-    public func doubleForKey(key: String) -> Double? {
+    public func doubleForKey(_ key: String) -> Double? {
         guard (hasKey(key) == true) else { return nil }
         return Double(properties[key]!)
     }
@@ -92,15 +92,15 @@ public extension TiledObject {
      
      - returns: `Bool` value for properties key.
      */
-    public func boolForKey(key: String) -> Bool {
-        guard let value = properties[key]?.lowercaseString else { return false }
+    public func boolForKey(_ key: String) -> Bool {
+        guard let value = properties[key]?.lowercased() else { return false }
         return ["true", "false", "yes", "no"].contains(value) ? (["true", "yes"].contains(value)) ? true : false : false
     }
     
     /// Returns a string representation of the node's properties.
     public var propertiesString: String {
         var pstring = ""
-        for value in properties.enumerate() {
+        for value in properties.enumerated() {
             let indexIsLast = value.0 < (properties.count - 1)
             pstring += (indexIsLast==true) ? "\"\(value.1.0)\": \(value.1.1), " : "\"\(value.1.0)\": \(value.1.1)"
         }

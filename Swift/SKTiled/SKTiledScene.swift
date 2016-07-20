@@ -55,7 +55,7 @@ public class SKTiledScene: SKScene, SKTiledSceneDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public func didMoveToView(view: SKView) {
+    override public func didMove(to view: SKView) {
         guard let worldNode = worldNode else { return }
         
         // setup the camera
@@ -118,7 +118,7 @@ public class SKTiledScene: SKScene, SKTiledSceneDelegate {
         return nil
     }
     
-    override public func update(currentTime: CFTimeInterval) {
+    override public func update(_ currentTime: TimeInterval) {
         /* Called before each frame is rendered */
     }
 }

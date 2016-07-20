@@ -44,8 +44,8 @@ public class GameScene: SKTiledScene {
         }
     }
     
-    override public func didMoveToView(view: SKView) {
-        super.didMoveToView(view)
+    override public func didMove(to view: SKView) {
+        super.didMove(to: view)
         
         // setup demo UI
         setupDemoUI()
@@ -145,19 +145,19 @@ public class GameScene: SKTiledScene {
         
         // position towards the bottom of the scene
         tileInformation.position.y -= labelYPos + 32
-        tileInformation.hidden = true
-        cameraInformation.hidden = true
+        tileInformation.isHidden = true
+        cameraInformation.isHidden = true
     }
     
-    override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let tilemap = tilemap else { return }
         guard let baseLayer = tilemap.baseLayer else { return }
         
-        cameraInformation.hidden = false
+        cameraInformation.isHidden = false
         
         for touch in touches {
             
-            let positionInLayer = baseLayer.convertPoint(touch.locationInNode(baseLayer))
+            let positionInLayer = baseLayer.convertPoint(touch.location(in: baseLayer))
             let positionInMap = baseLayer.screenToPixelCoords(positionInLayer)
             let coord = baseLayer.screenToTileCoords(positionInLayer)
             
@@ -172,7 +172,7 @@ public class GameScene: SKTiledScene {
                 coordStr += " (invalid)"
             }
             
-            tileInformation.hidden = false
+            tileInformation.isHidden = false
             tileInformation.text = coordStr
         }
     }
@@ -185,14 +185,14 @@ public class GameScene: SKTiledScene {
      - parameter y:         `Int` y-coordinate.
      - parameter duration:  `TimeInterval` tile life.
      */
-    public func addTileAt(layer: TiledLayerObject, _ x: Int, _ y: Int, duration: NSTimeInterval=0, tileColor: SKColor) -> DebugTileShape {
+    public func addTileAt(_ layer: TiledLayerObject, _ x: Int, _ y: Int, duration: TimeInterval=0, tileColor: SKColor) -> DebugTileShape {
         let tile = DebugTileShape(layer.tileWidth, layer.tileHeight, tileOrientation: layer.orientation, tileColor: tileColor)
         tile.zPosition = zPosition
         tile.position = layer.pointForCoordinate(TileCoord(x, y))
         layer.addChild(tile)
         if (duration > 0) {
-            let fadeAction = SKAction.fadeAlphaTo(0, duration: duration)
-            tile.runAction(fadeAction, completion: {
+            let fadeAction = SKAction.fadeAlpha(to: 0, duration: duration)
+            tile.run(fadeAction, completion: {
                 tile.removeFromParent()
             })
         }
@@ -203,10 +203,10 @@ public class GameScene: SKTiledScene {
      Call back to the GameViewController to load the next scene.
      */
     public func loadNextScene() {
-        NSNotificationCenter.defaultCenter().postNotificationName("loadNextScene", object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "loadNextScene"), object: nil)
     }
     
-    override public func update(currentTime: CFTimeInterval) {
+    override public func update(_ currentTime: TimeInterval) {
         /* Called before each frame is rendered */
         updateLabels()
     }
