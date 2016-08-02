@@ -167,7 +167,7 @@ public class GameScene: SKTiledScene {
             addTileAt(baseLayer, Int(coord.x), Int(coord.y), duration: 5, tileColor: tileColor)
             
             // display tile information on the screen
-            var coordStr = "Tile: \(coord.description), \(positionInMap.roundoff())"
+            var coordStr = "Tile: \(coord.description), \(positionInMap.roundTo())"
             if (validCoord == false) {
                 coordStr += " (invalid)"
             }
@@ -224,7 +224,7 @@ public class GameScene: SKTiledScene {
         var cameraInfo = "Camera: x: 0, y: 0, zoom: 1.0"
         let xpos = String(format: "%.\(String(2))f", cameraNode.position.x)
         let ypos = String(format: "%.\(String(2))f", cameraNode.position.y)
-        cameraInfo = "Camera: x: \(xpos), y: \(ypos) \(cameraNode.allowMovement == true ? "" : "🔒"), zoom: \(cameraNode.zoom.roundoff()) \(cameraNode.allowZoom == true ? "" : "🔒")"
+        cameraInfo = "Camera: x: \(xpos), y: \(ypos) \(cameraNode.allowMovement == true ? "" : "🔒"), zoom: \(cameraNode.zoom.roundTo()) \(cameraNode.allowZoom == true ? "" : "🔒")"
         
         
         if let cameraInformation = cameraInformation {

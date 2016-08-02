@@ -37,7 +37,7 @@ public extension SKTilemap {
             if (layer != baseLayer) {
                 var layerName = layer.name!
                 let nameString = "\"\(layerName)\""
-                print("\(layer.index): \(layer.layerType.stringValue.capitalizedString.zfill(6, pattern: " ", padLeft: false)) \(nameString.zfill(largestName!.characters.count + 2, pattern: " ", padLeft: false))   pos: \(layer.position.roundoff(1)), size: \(layer.sizeInPoints.roundoff(1)),  offset: \(layer.offset.roundoff(1)), anc: \(layer.anchorPoint.roundoff())")
+                print("\(layer.index): \(layer.layerType.stringValue.capitalizedString.zfill(6, pattern: " ", padLeft: false)) \(nameString.zfill(largestName!.characters.count + 2, pattern: " ", padLeft: false))   pos: \(layer.position.roundTo(1)), size: \(layer.sizeInPoints.roundTo(1)),  offset: \(layer.offset.roundTo(1)), anc: \(layer.anchorPoint.roundTo())")
             
             }
         }

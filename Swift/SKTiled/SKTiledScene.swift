@@ -79,7 +79,6 @@ public class SKTiledScene: SKScene, SKTiledSceneDelegate {
     // MARK: - Setup
     /**
      Setup the world container node.
-     
      */
     public func setupWorld(){
         if (worldNode != nil){
@@ -122,4 +121,3 @@ public class SKTiledScene: SKScene, SKTiledSceneDelegate {
         /* Called before each frame is rendered */
     }
 }
-

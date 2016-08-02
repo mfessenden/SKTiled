@@ -3,7 +3,9 @@
 <plist version="1.0">
 <array>
 	<string>ortho4-16x16</string>
-	<string>roguelike-16x16</string>
+	<string>staggered-64x33</string>
 	<string>isometric-130x66</string>
+	<string>hex1-65x65</string>
+	<string>roguelike-16x16</string>
 </array>
 </plist>

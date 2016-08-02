@@ -191,7 +191,7 @@ extension SKTile {
         return description
     }
     
-    /**
+  /**
      Highlight the tile with a given color.
      
      - parameter color: `SKColor` highlight color.
@@ -280,13 +280,20 @@ public class DebugTileShape: SKShapeNode {
         // draw the path
         var points: [CGPoint] = []
         
+        let tileSizeHalved = CGSizeMake(tileSize.halfWidth, tileSize.halfHeight)
+        
         switch orientation {
         case .Orthogonal:
-            let origin = CGPointMake(-tileSize.halfWidth, tileSize.halfHeight)  // invert y here
+            let origin = CGPoint(x: -tileSize.halfWidth, y: tileSize.halfHeight)  // invert y here
             points = rectPointArray(tileSize, origin: origin)
             
         case .Isometric:
-            let tileSizeHalved = CGSizeMake(tileSize.halfWidth, tileSize.halfHeight)
+            points = polygonPointArray(4, radius: tileSizeHalved)
+            
+        case .Hexagonal:
+            points = polygonPointArray(6, radius: tileSizeHalved)
+            
+        case .Staggered:
             points = polygonPointArray(4, radius: tileSizeHalved)
         }
 

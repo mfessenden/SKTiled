@@ -7,7 +7,6 @@
 //
 
 import SpriteKit
-import GameplayKit
 
 
 public enum ObjectType: String {
@@ -30,7 +29,6 @@ public class SKTileObject: SKShapeNode, TiledObject {
     public var points: [CGPoint] = []                // points that describe object shape
     
     public var size: CGSize = CGSizeZero
-    public var obstacle: GKObstacle!                 // obstacle type
     public var properties: [String: String] = [:]    // custom properties
     
     // blending/visibility
@@ -59,7 +57,7 @@ public class SKTileObject: SKShapeNode, TiledObject {
         id = Int(objectID)!
         super.init()
         
-        let startPosition = CGPointMake(CGFloat(Double(xcoord)!), CGFloat(Double(ycoord)!))
+        let startPosition = CGPoint(x: CGFloat(Double(xcoord)!), y: CGFloat(Double(ycoord)!))
         position = startPosition
         
         if let objectName = attributes["name"] {
@@ -105,12 +103,12 @@ public class SKTileObject: SKShapeNode, TiledObject {
      - parameter color: `SKColor` fill & stroke color.
      - parameter alpha: `CGFloat` alpha component for fill.
      */
-    public func setColor(color: SKColor, withAlpha alpha: CGFloat=0.2) {
+    public func setColor(color: SKColor, withAlpha alpha: CGFloat=0.35) {
         self.strokeColor = color
-        
         if !(self.objectType == .Polyline)  {
             self.fillColor = color.colorWithAlphaComponent(alpha)
         }
+        drawObject()
     }
     
     /**
@@ -120,27 +118,62 @@ public class SKTileObject: SKShapeNode, TiledObject {
         guard let layer = layer else { return }
         guard points.count > 1 else { return }
         
-        // draw the anchor/first point
-        childNodeWithName("Anchor")?.removeFromParent()
         
-        let anchorRadius: CGFloat = layer.tileHeight > 16 ? 2.5 : 1.5
-        let anchor = SKShapeNode(circleOfRadius: anchorRadius)
-        anchor.name = "Anchor"
-        addChild(anchor)
-        anchor.strokeColor = SKColor.clearColor()
-        anchor.fillColor = self.strokeColor
-        anchor.antialiased = true
+        // polyline objects should have no fill
+        self.zPosition = layer.tilemap.lastZPosition + layer.tilemap.zDeltaForLayers
+        self.fillColor = (self.objectType == .Polyline) ? SKColor.clearColor() : self.fillColor
+        self.antialiased = layer.antialiased
         
+        // scale linewidth for smaller objects
+        let lwidth = (doubleForKey("lineWidth") != nil) ? CGFloat(doubleForKey("lineWidth")!) : layer.lineWidth
+        self.lineWidth = (lwidth / layer.tileHeight < 0.075) ? lwidth : 2
         
         if let vertices = getVertices() {
             switch objectType {
             case .Ellipse:
-                self.path = bezierPath(vertices.map{$0.invertedY}, radius: layer.tileHeightHalf)
+                
+                let vertsInverted = vertices.map{$0.invertedY}
+                var bezPoints: [CGPoint] = []
+                for (index, point) in vertsInverted.enumerate() {
+                    let nextIndex = (index < vertsInverted.count - 1) ? index + 1 : 0
+                    bezPoints.append(lerp(start: point, end: vertsInverted[nextIndex], t: 0.5))
+                }
+                
+                self.path = bezierPath(bezPoints, closed: true, alpha: 0.75)
+                
+                // draw a cage around the curve
+                if layer.orientation == .Isometric {
+                    let controlPath = polygonPath(vertsInverted)
+                    let controlShape = SKShapeNode(path: controlPath, centered: false)
+                    addChild(controlShape)
+                    controlShape.fillColor = SKColor.clearColor()
+                    controlShape.strokeColor = self.strokeColor
+                    controlShape.antialiased = true
+                    controlShape.lineWidth = self.lineWidth / 2
+                }
+                
             default:
-                self.path = polygonPath(vertices.map{$0.invertedY})
+                let closedPath: Bool =  (self.objectType == .Polyline) ? false : true
+                self.path = polygonPath(vertices.map{$0.invertedY}, closed: closedPath)
             }
-            // polyline objects should have no fill
-            self.fillColor = (self.objectType == .Polyline) ? SKColor.clearColor() : self.fillColor
+            
+            // draw the first point of poly objects
+            if (self.objectType == .Polyline) || (self.objectType == .Polygon) {
+            
+                childNodeWithName("FirstPoint")?.removeFromParent()
+                
+                var anchorRadius = self.lineWidth * 2.5
+                if anchorRadius > layer.tileHeight / 8 {
+                    anchorRadius = layer.tileHeight / 9
+                }
+                let anchor = SKShapeNode(circleOfRadius: anchorRadius)
+                anchor.name = "FirstPoint"
+                addChild(anchor)
+                anchor.position = vertices[0].invertedY
+                anchor.strokeColor = SKColor.clearColor()
+                anchor.fillColor = self.strokeColor
+                anchor.antialiased = false
+            }
         }
     }
     
@@ -155,7 +188,7 @@ public class SKTileObject: SKShapeNode, TiledObject {
         self.objectType = (closed == true) ? ObjectType.Polygon : ObjectType.Polyline
         
         // create an array of points from the given coordinates
-        points = coordinates.map { CGPointMake($0[0], $0[1]) }
+        points = coordinates.map { CGPoint(x: $0[0], y: $0[1]) }
     }
     
     /**

@@ -19,19 +19,24 @@ public extension SKTilemap {
             if (attr == "name") {
                 name = value
             }
+            /*
+            if (attr == "color") {
+                color = SKColor(hexString: value)
+                allLayers().map({$0.color = gridColor})
+            }*/
             
             if (attr == "gridColor") {
-                gridColor = SKColor.fromHexCode(value)
+                gridColor = SKColor(hexString: value)
                 allLayers().map({$0.gridColor = gridColor})
             }
             
             if (attr == "frameColor") {
-                frameColor = SKColor.fromHexCode(value)
+                frameColor = SKColor(hexString: value)
                 allLayers().map({$0.frameColor = frameColor})
             }
             
             if (attr == "highlightColor") {
-                highlightColor = SKColor.fromHexCode(value)
+                highlightColor = SKColor(hexString: value)
                 allLayers().map({$0.highlightColor = highlightColor})
             }
             
@@ -87,7 +92,7 @@ public extension TiledLayerObject {
             }
             
             if (attr == "color") {
-                color = SKColor.fromHexCode(value)
+                color = SKColor(hexString: value)
             }
             
             if (attr == "hidden") {
@@ -159,7 +164,7 @@ public extension SKTileObject {
     public func parseProperties() {
         for (attr, value) in properties {
             if (attr == "color") {
-                setColor(SKColor.fromHexCode(value))
+                setColor(SKColor(hexString: value))
             }
             
             if (attr == "lineWidth") {

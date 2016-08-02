@@ -19,7 +19,7 @@ class GameViewController: UIViewController {
         
         // load demo files from a propertly list
         demoFiles = loadDemoFiles("DemoFiles")
-        print(demoFiles)
+
         let currentFilename = demoFiles.first!
         
         // Configure the view.
@@ -60,13 +60,10 @@ class GameViewController: UIViewController {
         view.presentScene(nil)
         
         var nextFilename = demoFiles.first!
-        print("next: \(nextFilename), \(currentFilename))")
         if let index = demoFiles.indexOf(currentFilename) where index + 1 < demoFiles.count {
             nextFilename = demoFiles[index + 1]
-            print("next: \(nextFilename)")
         }
         
-        print("[GameViewController]: loading next scene: \"\(nextFilename)\"")
         let nextScene = GameScene(size: view.bounds.size, tmxFile: nextFilename)
         nextScene.scaleMode = .AspectFill
         let transition = SKTransition.fadeWithDuration(interval)

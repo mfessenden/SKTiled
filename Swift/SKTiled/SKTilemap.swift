@@ -7,7 +7,6 @@
 //
 
 import SpriteKit
-import GameplayKit
 
 
 public enum TiledColors: String {
@@ -20,7 +19,7 @@ public enum TiledColors: String {
     case Debug  =  "#999999"
     
     public var color: SKColor {
-        return SKColor.fromHexCode(self.rawValue)
+        return SKColor(hexString: self.rawValue)
     }
 }
 
@@ -31,8 +30,8 @@ public enum TiledColors: String {
 public enum TilemapOrientation: String {
     case Orthogonal   = "orthogonal"
     case Isometric    = "isometric"
-    //case Hexagonal    = "hexagonal"
-    //case Staggered    = "staggered"     // isometric staggered
+    case Hexagonal    = "hexagonal"
+    case Staggered    = "staggered"     // isometric staggered
 }
 
 
@@ -45,7 +44,7 @@ public enum RenderOrder: String {
 
 
 /**
- Tile offset used as a hint for coordinate conversion.
+ Tile offset hint for coordinate conversion.
  
  - BottomLeft:  tile aligns at the bottom left corner.
  - TopLeft:     tile aligns at the top left corner.
@@ -96,11 +95,40 @@ public enum CardinalDirection: Int {
     case NorthWest
 }
 
-
+/**
+ Alignment hint used to position the layers within the `SKTilemap` node.
+ 
+ - BottomLeft:   node bottom left rests at parent zeropoint (0)
+ - Center:       node center rests at parent zeropoint (0.5)
+ - TopRight:     node top right rests at parent zeropoint. (1)
+ */
 public enum LayerPosition {
-    case BottomLeft  // 0   - node bottom left rests at parent zeropoint
-    case Center      // 0.5 - node center rests at parent zeropoint
-    case TopRight    // 1   - node top right rests at parent zeropoint
+    case BottomLeft
+    case Center
+    case TopRight
+}
+
+/**
+ Hexagonal stagger axis.
+ 
+ - X: axis is along the x-coordinate.
+ - Y: axis is along the y-coordinate.
+ */
+public enum HexagonalStaggerAxis: String {
+    case X  = "x"
+    case Y  = "y"
+}
+
+
+/**
+ Hexagonal stagger index.
+ 
+ - Even: stagger evens.
+ - Odd:  stagger odds.
+ */
+public enum HexagonalStaggerIndex: String {
+    case Even  = "even"
+    case Odd   = "odd"
 }
 
 
@@ -122,6 +150,21 @@ public class SKTilemap: SKNode, TiledObject{
     public var orientation: TilemapOrientation                      // map orientation
     public var renderOrder: RenderOrder = .RightDown                // render order
     
+    // hexagonal
+    public var hexsidelength: CGFloat = 0                           // hexagonal side length
+    public var staggeraxis: HexagonalStaggerAxis = .Y               // hexagonal stagger axis
+    public var staggerindex: HexagonalStaggerIndex = .Odd           // hexagonal stagger index.
+    
+    public var staggerX: Bool { return (staggeraxis == .X) }
+    public var staggerY: Bool { return (staggeraxis == .Y) }
+    public var sideLengthX: CGFloat { return (staggeraxis == .X) ? hexsidelength : 0 }
+    public var sideLengthY: CGFloat { return (staggeraxis == .Y) ? hexsidelength : 0 }
+    public var sideOffsetX: CGFloat { return (tileWidth - sideLengthX) / 2 }
+    public var sideOffsetY: CGFloat { return (tileHeight - sideLengthY) / 2 }
+    public var staggerEven: Bool { return staggerindex == .Even }    
+    public var columnWidth: CGFloat {return sideOffsetX + sideLengthX }
+    public var rowHeight: CGFloat {return sideOffsetY + sideLengthY }
+    
     // camera overrides
     public var worldScale: CGFloat = 1.0                            // initial world scale
     public var allowZoom: Bool = true                               // allow camera zoom
@@ -129,7 +172,6 @@ public class SKTilemap: SKNode, TiledObject{
     
     // current tile sets
     public var tileSets: Set<SKTileset> = []                        // tilesets
-    public var graphs: [String: GKGridGraph] = [:]                  // pathfinding graphs
     
     // current layers
     public var layers: Set<TiledLayerObject> = []                   // layers (private)
@@ -142,7 +184,7 @@ public class SKTilemap: SKNode, TiledObject{
     // debugging
     public var gridColor: SKColor = SKColor.blackColor()            // color used to visualize the tile grid
     public var frameColor: SKColor = SKColor.blackColor()           // bounding box color
-    public var highlightColor: SKColor = SKColor.whiteColor()       // color used to highlight tiles
+    public var highlightColor: SKColor = SKColor.greenColor()       // color used to highlight tiles
     
     // convenience properties
     public var width: CGFloat { return size.width }
@@ -154,7 +196,6 @@ public class SKTilemap: SKNode, TiledObject{
     public var tileWidthHalf: CGFloat { return tileWidth / 2 }
     public var tileHeightHalf: CGFloat { return tileHeight / 2 }    
     
-    
     /// Rendered size of the map in pixels.
     public var sizeInPoints: CGSize {
         switch orientation {
@@ -163,6 +204,27 @@ public class SKTilemap: SKNode, TiledObject{
         case .Isometric:
             let side = width + height
             return CGSizeMake(side * tileWidthHalf,  side * tileHeightHalf)
+        case .Hexagonal:
+            var boundsSize = CGSizeZero
+            if staggerX {
+                let halfWidthCount: CGFloat = Int(size.width) / 2
+                let fullWidthCount: CGFloat = halfWidthCount + (Int(size.width) & 1)
+                // x & 1 == 1 - number is odd
+                let offset = (Int(size.width) & 1 == 1) ? 0 : (tileWidth - hexsidelength) / 2
+                
+                boundsSize.width = fullWidthCount * tileWidth + halfWidthCount * hexsidelength + offset
+                boundsSize.height = (size.height * 2) * (tileHeight / 2) + (tileHeight / 2)
+            } else {
+                let halfHeightCount: CGFloat = Int(size.height) / 2
+                let fullHeightCount: CGFloat = halfHeightCount + (Int(size.height) & 1)
+                let offset = (Int(size.height) & 1 == 1) ? 0 : (tileHeight - hexsidelength) / 2
+                boundsSize.width = (size.width * 2) * (tileWidth / 2) + (tileWidth / 2)
+                boundsSize.height = fullHeightCount * tileHeight + halfHeightCount + hexsidelength + offset
+            }
+            return boundsSize
+            
+        case .Staggered:
+            return CGSizeMake(size.width * tileSize.width, size.height * tileSize.height)
         }
     }
 
@@ -263,19 +325,40 @@ public class SKTilemap: SKNode, TiledObject{
             fatalError("orientation \"\(orient)\" not supported.")
         }
         
+        self.orientation = tileOrientation
+        
         // render order
         if let rendorder = attributes["renderorder"] {
             guard let renderorder: RenderOrder = RenderOrder(rawValue: rendorder) else {
-                fatalError("orientation \"\(orient)\" not supported.")
+                fatalError("orientation \"\(rendorder)\" not supported.")
             }
             self.renderOrder = renderorder
         }
         
-        self.orientation = tileOrientation
+        // hex side
+        if let hexside = attributes["hexsidelength"] {
+            self.hexsidelength = CGFloat(Int(hexside)!)
+        }
+        
+        // hex stagger axis
+        if let hexStagger = attributes["staggeraxis"] {
+            guard let staggerAxis: HexagonalStaggerAxis = HexagonalStaggerAxis(rawValue: hexStagger) else {
+                fatalError("stagger axis \"\(hexStagger)\" not supported.")
+            }
+            self.staggeraxis = staggerAxis
+        }
+        
+        // hex stagger index
+        if let hexIndex = attributes["staggerindex"] {
+            guard let hexindex: HexagonalStaggerIndex = HexagonalStaggerIndex(rawValue: hexIndex) else {
+                fatalError("stagger index \"\(hexIndex)\" not supported.")
+            }
+            self.staggerindex = hexindex
+        }
 
         // background color
         if let backgroundHexColor = attributes["backgroundcolor"] {
-            self.backgroundColor = SKColor.fromHexCode(backgroundHexColor)
+            self.backgroundColor = SKColor(hexString: backgroundHexColor)
         }
         
         super.init()
@@ -388,7 +471,6 @@ public class SKTilemap: SKNode, TiledObject{
         
         // align the layer to the anchorpoint
         positionLayer(layer)
-        print("[SKTilemap]: positioning: \"\(layer.name!)\"...")
         layer.zPosition = zDeltaForLayers * CGFloat(layer.index)
         
         // override debugging colors
@@ -542,26 +624,38 @@ public class SKTilemap: SKNode, TiledObject{
     private func positionLayer(layer: TiledLayerObject) {
         var layerPos = CGPointZero
         switch orientation {
-        case .Orthogonal:
             
-            let renderSize = CGSize(width: size.width * tileSize.width, height: size.height * tileSize.height)
-            layerPos.x = -renderSize.width * layerAlignment.anchorPoint.x
-            layerPos.y = renderSize.height * layerAlignment.anchorPoint.y
+        case .Orthogonal:
+            layerPos.x = -sizeInPoints.width * layerAlignment.anchorPoint.x
+            layerPos.y = sizeInPoints.height * layerAlignment.anchorPoint.y
             
             // layer offset
             layerPos.x += layer.offset.x
             layerPos.y -= layer.offset.y
             
         case .Isometric:
-            let renderSize = CGSize(width: (size.width + size.height) * tileSize.halfWidth, height: (size.width + size.height) * tileSize.halfHeight)
+            // layer offset
+            layerPos.x = -sizeInPoints.width * layerAlignment.anchorPoint.x
+            layerPos.y = sizeInPoints.height * layerAlignment.anchorPoint.y
+            layerPos.x += layer.offset.x
+            layerPos.y -= layer.offset.y
+        
+        case .Hexagonal:
+            layerPos.x = -sizeInPoints.width * layerAlignment.anchorPoint.x
+            layerPos.y = sizeInPoints.height * layerAlignment.anchorPoint.y
             
             // layer offset
-            layerPos.x = -renderSize.width * layerAlignment.anchorPoint.x
-            layerPos.y = renderSize.height * layerAlignment.anchorPoint.y
+            layerPos.x += layer.offset.x
+            layerPos.y -= layer.offset.y
+            
+        case .Staggered:
+            // layer offset
+            layerPos.x = -sizeInPoints.width * layerAlignment.anchorPoint.x
+            layerPos.y = sizeInPoints.height * layerAlignment.anchorPoint.y
             layerPos.x += layer.offset.x
             layerPos.y -= layer.offset.y
         }
-        
+    
         layer.position = layerPos
     }
     
@@ -753,7 +847,7 @@ public class SKTilemap: SKNode, TiledObject{
             }
         }
         return result
-        }
+    }
     
     // MARK: - Data
     /**
@@ -771,7 +865,7 @@ public class SKTilemap: SKNode, TiledObject{
         }
         return nil
     }
-    }
+}
 
 
 // MARK: - Extensions
@@ -822,9 +916,13 @@ public extension TilemapOrientation {
     public var alignmentHint: CGPoint {
         switch self {
         case .Orthogonal:
-            return CGPointMake(0.5, 0.5)
+            return CGPoint(x: 0.5, y: 0.5)
         case .Isometric:
-            return CGPointMake(0.5, 0.5)
+            return CGPoint(x: 0.5, y: 0.5)
+        case .Hexagonal:
+            return CGPoint(x: 0.5, y: 0.5)
+        case .Staggered:
+            return CGPoint(x: 0.5, y: 0.5)
         }
     }
 }
@@ -846,9 +944,9 @@ extension LayerPosition: CustomStringConvertible {
     
     public var anchorPoint: CGPoint {
         switch self {
-        case .BottomLeft: return CGPointMake(0, 0)
-        case .Center: return CGPointMake(0.5, 0.5)
-        case .TopRight: return CGPointMake(1, 1)
+        case .BottomLeft: return CGPoint(x: 0, y: 0)
+        case .Center: return CGPoint(x: 0.5, y: 0.5)
+        case .TopRight: return CGPoint(x: 1, y: 1)
         }
     }
 }
@@ -862,7 +960,7 @@ public extension SKTilemap {
         if let name = name {
             tilemapName = "\"\(name)\""
         }
-        let renderSizeDesc = "\(sizeInPoints.width.roundoff(1)) x \(sizeInPoints.height.roundoff(1))"
+        let renderSizeDesc = "\(sizeInPoints.width.roundTo(1)) x \(sizeInPoints.height.roundTo(1))"
         let sizeDesc = "\(Int(size.width)) x \(Int(size.height))"
         let tileSizeDesc = "\(Int(tileSize.width)) x \(Int(tileSize.height))"
         

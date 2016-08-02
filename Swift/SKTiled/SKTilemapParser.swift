@@ -152,6 +152,9 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
         }
     }
     
+    /**
+     Post-process to draw all objects.
+     */
     private func renderObjects() {
         guard let tileMap = tileMap else { return }
         for objectGroup in tileMap.objectGroups {
