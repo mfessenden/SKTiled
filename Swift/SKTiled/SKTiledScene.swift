@@ -9,12 +9,13 @@
 import SpriteKit
 
 
+/**
+ *  Delegate for managing `SKTilemap` nodes.
+ */
 protocol SKTiledSceneDelegate {
-    // world node container
-    var worldNode: SKNode! { get set }
-    // scene camera
-    var cameraNode: SKTiledSceneCamera! { get set }
-    var tilemap: SKTilemap! { get set }
+    var worldNode: SKNode! { get set }                  // world node container
+    var cameraNode: SKTiledSceneCamera! { get set }     // scene camera
+    var tilemap: SKTilemap! { get set }                 // tile map
 }
 
 
@@ -77,6 +78,7 @@ public class SKTiledScene: SKScene, SKTiledSceneDelegate {
     }
     
     // MARK: - Setup
+    
     /**
      Setup the world container node.
      */
@@ -104,7 +106,6 @@ public class SKTiledScene: SKScene, SKTiledSceneDelegate {
      Load a named tmx file.
      
      - parameter fileNamed: `String` tmx file name.
-     
      - returns: `SKTilemap?` tile map node.
      */
     public func load(fromFile filename: String) -> SKTilemap? {

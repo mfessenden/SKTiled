@@ -31,7 +31,7 @@ class GameViewController: UIViewController {
         skView.ignoresSiblingOrder = true
         
         /* create the game scene */
-        let scene = GameScene(size: self.view.bounds.size, tmxFile: currentFilename)
+        let scene = SKTiledDemoScene(size: self.view.bounds.size, tmxFile: currentFilename)
         
         /* Set the scale mode to scale to fit the window */
         scene.scaleMode = .AspectFill        
@@ -50,7 +50,7 @@ class GameViewController: UIViewController {
         guard let view = self.view as? SKView else { return }
         
         var currentFilename = demoFiles.first!
-        if let currentScene = view.scene as? GameScene {            
+        if let currentScene = view.scene as? SKTiledDemoScene {            
             if let tilemap = currentScene.tilemap {
                 currentFilename = tilemap.name!
             }
@@ -64,7 +64,7 @@ class GameViewController: UIViewController {
             nextFilename = demoFiles[index + 1]
         }
         
-        let nextScene = GameScene(size: view.bounds.size, tmxFile: nextFilename)
+        let nextScene = SKTiledDemoScene(size: view.bounds.size, tmxFile: nextFilename)
         nextScene.scaleMode = .AspectFill
         let transition = SKTransition.fadeWithDuration(interval)
         view.presentScene(nextScene, transition: transition)

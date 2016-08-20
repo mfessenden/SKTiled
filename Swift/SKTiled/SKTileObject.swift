@@ -112,6 +112,20 @@ public class SKTileObject: SKShapeNode, SKTiledObject {
     }
     
     /**
+     Set the fill & stroke colors with a hexadecimal string.
+     
+     - parameter color: `hexString` hex color string.
+     - parameter alpha: `CGFloat` alpha component for fill.
+     */
+    public func setColor(hexString hex: String, withAlpha alpha: CGFloat=0.35) {
+        self.strokeColor = SKColor(hexString: hex)
+        if !(self.objectType == .Polyline)  {
+            self.fillColor = self.strokeColor.colorWithAlphaComponent(alpha)
+        }
+        drawObject()
+    }
+    
+    /**
      Draw the path.
      */
     public func drawObject() {

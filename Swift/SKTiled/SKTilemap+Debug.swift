@@ -14,15 +14,12 @@ public extension SKTilemap {
     /// Visualize the current grid & bounds.
     public var debugDraw: Bool {
         get {
-            return (baseLayer != nil) ? baseLayer!.debugDraw : false
+            return baseLayer.debugDraw
         } set {
-            if (orientation == .Orthogonal) || (orientation == .Isometric){
-                guard let baseLayer = baseLayer else { return }
-                guard newValue != baseLayer.debugDraw else { return }
-                baseLayer.debugDraw = newValue
-                baseLayer.showGrid = newValue
-                showObjects = newValue
-            }
+            guard newValue != baseLayer.debugDraw else { return }
+            baseLayer.debugDraw = newValue
+            baseLayer.showGrid = newValue
+            showObjects = newValue
         }
     }
     

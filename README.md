@@ -3,7 +3,6 @@
 **SKTiled** is a simple library for using [Tiled](http://www.mapeditor.org) files with Apple's SpriteKit, allowing the creation of game assets from .tmx files. Inspired by [TilemapKit](http://tilemapkit.com) and written purely in Swift 2.0, I began working on this for a project after the development of TilemapKit was halted. While initially created as an exercise in learning Apple's new programming language, I've decided to open-source it in case others find it helpful.  
 
 
-
 ##Installation
 
 Simply drag the *SKTiled* directory into your Xcode project, and add the files to your game target:
@@ -19,7 +18,7 @@ Loading a tilemap is simple:
 
 ```swift
 if let tilemap = SKTilemap.load(fromFile: "sample-map") {
-scene.addChild(tilemap)
+    scene.addChild(tilemap)
 }
 ```
 
@@ -47,7 +46,7 @@ let objectsGroup = tilemap.getLayer(named: "Objects") as! SKObjectGroup
 let hudLayer = tilemap.getLayer(named: "HUD") as! SKImageLayer
 
 if let groundLayer = tilemap.tileLayer(named: "Ground") {
-groundLayer.showGrid = true
+    groundLayer.showGrid = true
 }
 ```
 
@@ -67,7 +66,7 @@ There are many ways to work with tile objects; globally from the `SKTilemap` nod
 ```swift
 // query tiles of a certain type
 if let fireTiles = tilemap.getTiles(ofType: "fire") {
-// do something fiery here...
+    // do something fiery here...
 }
 
 // query tiles from all layers
@@ -78,7 +77,7 @@ let tiles = tilemap.tilesAt(2, 4)
 
 ```swift
 if let waterTiles = waterLayer.getTiles(withID: 17) {
-// do something watery here
+    // do something watery here
 }
 ```
 
@@ -129,7 +128,7 @@ let tilePoint = groundLayer.pointForCoordinate(4, 5)
 tile.position = tilePoint
 ```
 
-New nodes (any `SKNode` type) can be added directly to any laye:
+New nodes (any `SKNode` type) can be added directly to any layer:
 
 
 ```swift
@@ -145,8 +144,8 @@ Animated tiles will animate automatically; animated tiles can be accesssed from 
 let animatedTiles = tilemap.getAnimatedTiles()
 
 for tile in animatedTiles {
-// pause the current animation
-tile.pauseAnimation = true
+    // pause the current animation
+    tile.pauseAnimation = true
 }
 ```
 

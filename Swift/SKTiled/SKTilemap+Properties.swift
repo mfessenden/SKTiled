@@ -1,6 +1,6 @@
 //
 //  SKTilemap+Properties.swift
-//  SKTiled
+//  SKTilemap
 //
 //  Created by Michael Fessenden on 6/22/16.
 //  Copyright © 2016 Michael Fessenden. All rights reserved.
@@ -20,9 +20,18 @@ public extension SKTilemap {
                 name = value
             }
             
+            if (attr == "debug") {
+                debugDraw = boolForKey(value)
+            }
+            
             if (attr == "gridColor") {
                 gridColor = SKColor(hexString: value)
                 allLayers().forEach {$0.gridColor = gridColor}
+            }
+            
+            if (attr == "gridOpacity") {
+                baseLayer.gridOpacity = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : 0.10
+                allLayers().map({$0.gridOpacity = self.baseLayer.gridOpacity})
             }
             
             if (attr == "frameColor") {

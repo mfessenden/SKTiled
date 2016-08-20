@@ -159,12 +159,17 @@ public class SKTilemap: SKNode, SKTiledObject{
     public var tileSets: Set<SKTileset> = []                        // tilesets
     
     // current layers
-    public var layers: Set<TiledLayerObject> = []                   // layers (private)
+    private var layers: Set<TiledLayerObject> = []                  // layers
     public var layerCount: Int { return self.layers.count }         // layer count attribute
     public var properties: [String: String] = [:]                   // custom properties
     public var zDeltaForLayers: CGFloat = 50                        // z-position range for layers
     public var backgroundColor: SKColor? = nil                      // optional background color (read from the Tiled file)
-    public var baseLayer: SKTileLayer!                              // generic layer
+    // default layer
+    lazy public var baseLayer: SKTileLayer = {
+        let layer = SKTileLayer(layerName: "Base", tileMap: self)
+        self.addLayer(layer)
+        return layer
+    }()
     
     // debugging
     public var gridColor: SKColor = SKColor.blackColor()            // color used to visualize the tile grid
@@ -330,9 +335,6 @@ public class SKTilemap: SKNode, SKTiledObject{
         }
         
         super.init()
-        
-        // setup the debug layer
-        baseLayer = addNewTileLayer("Base")
     }
     
     /**
@@ -352,9 +354,6 @@ public class SKTilemap: SKNode, SKTiledObject{
         self.tileSize = CGSize(width: CGFloat(tileSizeX), height: CGFloat(tileSizeY))
         self.orientation = orientation
         super.init()
-        
-        // setup the debug layer
-        baseLayer = addNewTileLayer("Base")
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -430,7 +429,6 @@ public class SKTilemap: SKNode, SKTiledObject{
      - parameter layer: `TiledLayerObject` layer object.
      */
     public func addLayer(layer: TiledLayerObject) {
-        
         // set the layer index
         layer.index = layers.count > 0 ? lastIndex + 1 : 0
         
@@ -608,18 +606,11 @@ public class SKTilemap: SKNode, SKTiledObject{
             layerPos.x += layer.offset.x
             layerPos.y -= layer.offset.y
         
-        case .Hexagonal:
+        case .Hexagonal, .Staggered:
             layerPos.x = -sizeInPoints.width * layerAlignment.anchorPoint.x
             layerPos.y = sizeInPoints.height * layerAlignment.anchorPoint.y
             
             // layer offset
-            layerPos.x += layer.offset.x
-            layerPos.y -= layer.offset.y
-            
-        case .Staggered:
-            // layer offset
-            layerPos.x = -sizeInPoints.width * layerAlignment.anchorPoint.x
-            layerPos.y = sizeInPoints.height * layerAlignment.anchorPoint.y
             layerPos.x += layer.offset.x
             layerPos.y -= layer.offset.y
         }
@@ -865,6 +856,11 @@ extension TileCoord: CustomStringConvertible, CustomDebugStringConvertible {
         self.init(Int32(x), Int32(y))
     }
     
+    public init(_ x: CGFloat, _ y: CGFloat) {
+        self.x = Int32(floor(x))
+        self.y = Int32(floor(y))
+    }
+    
     /**
      Initialize coordinate with a CGPoint.
      
@@ -873,12 +869,16 @@ extension TileCoord: CustomStringConvertible, CustomDebugStringConvertible {
      - returns: `TileCoord` coordinate.
      */
     public init(point: CGPoint){
-        self.init(Int32(point.x), Int32(point.y))
+        self.init(point.x, point.y)
     }
     
-    public init(_ x: CGFloat, _ y: CGFloat) {
-        self.x = Int32(floor(x))
-        self.y = Int32(floor(y))
+    /**
+     Convert the coordinate values to CGPoint.
+     
+     - returns: `CGPoint` point.
+     */
+    public func toPoint() -> CGPoint {
+        return CGPoint(x: Int(x), y: Int(y))
     }
     
     /// Convert the coordinate to vector2 (for GKGridGraph).
@@ -942,40 +942,58 @@ public extension SKTilemap {
     public var tileWidth: CGFloat { return tileSize.width }
     public var tileHeight: CGFloat { return tileSize.height }
     
-    public var sizeHalved: CGSize { return CGSizeMake(size.width / 2, size.height / 2)}
+    public var sizeHalved: CGSize { return CGSize(width: size.width / 2, height: size.height / 2)}
     public var tileWidthHalf: CGFloat { return tileWidth / 2 }
     public var tileHeightHalf: CGFloat { return tileHeight / 2 }
     
     // hexagonal/staggered
     public var staggerX: Bool { return (staggeraxis == .X) }
+    public var staggerEven: Bool { return staggerindex == .Even }
+    
     public var sideLengthX: CGFloat { return (staggeraxis == .X) ? CGFloat(hexsidelength) : 0 }
     public var sideLengthY: CGFloat { return (staggeraxis == .Y) ? CGFloat(hexsidelength) : 0 }
+    
     public var sideOffsetX: CGFloat { return (tileWidth - sideLengthX) / 2 }
     public var sideOffsetY: CGFloat { return (tileHeight - sideLengthY) / 2 }
-    public var staggerEven: Bool { return staggerindex == .Even }
-    public var columnWidth: CGFloat {return sideOffsetX + sideLengthX }
-    public var rowHeight: CGFloat {return sideOffsetY + sideLengthY }
+    
+    // coordinate grid values
+    public var columnWidth: CGFloat { return sideOffsetX + sideLengthX }
+    public var rowHeight: CGFloat { return sideOffsetY + sideLengthY }
     
     // MARK: - Hexagonal / Staggered methods
+    /**
+     Returns true if the given x-coordinate represents a staggered column.
+     
+     - parameter x:  `Int` map x-coordinate.
+     - returns: `Bool` column should be staggered.
+     */
     public func doStaggerX(x: Int) -> Bool {
-        // x & 1 = number is even
-        return staggerX && Bool((x & 1) ^ Int(staggerEven))
+        return staggerX && Bool((x & 1) ^ staggerEven.hashValue)
     }
     
+    /**
+     Returns true if the given y-coordinate represents a staggered row.
+     
+     - parameter x:  `Int` map y-coordinate.
+     - returns: `Bool` row should be staggered.
+     */
     public func doStaggerY(y: Int) -> Bool {
-        // x & 1 = number is even
-        return !staggerX && Bool((y & 1) ^ Int(staggerEven))
+        return !staggerX && Bool((y & 1) ^ staggerEven.hashValue)
     }
     
-    public func topLeft(x: Int, _ y: Int) -> CGPoint {
+    public func topLeft(x: CGFloat, _ y: CGFloat) -> CGPoint {
+        // pointy-topped
         if (staggerX == false) {
-            if Bool((y & 1) ^ staggerindex.hashValue) {
+            // y is odd = 1, y is even = 0
+            // stagger index hash: Int = 0 (even), 1 (odd)
+            if Bool((Int(y) & 1) ^ staggerindex.hashValue) {
                 return CGPoint(x: x, y: y - 1)
             } else {
                 return CGPoint(x: x - 1, y: y - 1)
             }
+            // flat-topped
         } else {
-            if Bool((x & 1) ^ staggerindex.hashValue) {
+            if Bool((Int(x) & 1) ^ staggerindex.hashValue) {
                 return CGPoint(x: x - 1, y: y)
             } else {
                 return CGPoint(x: x - 1, y: y - 1)

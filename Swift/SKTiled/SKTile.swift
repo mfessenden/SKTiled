@@ -311,10 +311,10 @@ public class DebugTileShape: SKShapeNode {
         self.fillColor = self.color.colorWithAlphaComponent(0.35)
         
         // anchor
-        childNodeWithName("ANCHOR")?.removeFromParent()
+        childNodeWithName("Anchor")?.removeFromParent()
         let anchorRadius: CGFloat = tileSize.height / 12 > 1.0 ? tileSize.height / 12 : 1.0
         let anchor = SKShapeNode(circleOfRadius: anchorRadius)
-        anchor.name = "ANCHOR"
+        anchor.name = "Anchor"
         addChild(anchor)
         anchor.fillColor = self.color.colorWithAlphaComponent(0.2)
         anchor.strokeColor = SKColor.clearColor()

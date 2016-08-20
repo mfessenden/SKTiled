@@ -27,7 +27,7 @@
 		4CBA61901D8A0A5700B31FC1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CBA61891D8A0A5700B31FC1 /* Main.storyboard */; };
 		4CBA61911D8A0A5700B31FC1 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA618B1D8A0A5700B31FC1 /* GameViewController.swift */; };
 		4CBA61A11D8A0ACF00B31FC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CBA619F1D8A0ACF00B31FC1 /* Assets.xcassets */; };
-		4CBA61A21D8A0ACF00B31FC1 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61A01D8A0ACF00B31FC1 /* GameScene.swift */; };
+		4CBA61A21D8A0ACF00B31FC1 /* SKTiledDemoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA61A01D8A0ACF00B31FC1 /* SKTiledDemoScene.swift */; };
 		4CBB6A9F1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */; };
 		4CBB6AA11D8CBB5B00DB56F1 /* SKTiledScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA01D8CBB5B00DB56F1 /* SKTiledScene.swift */; };
 		4CBB6AA31D8CC2C100DB56F1 /* SKTiledObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA21D8CC2C100DB56F1 /* SKTiledObject.swift */; };
@@ -67,7 +67,7 @@
 		4CBA618B1D8A0A5700B31FC1 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		4CBA618C1D8A0A5700B31FC1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4CBA619F1D8A0ACF00B31FC1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		4CBA61A01D8A0ACF00B31FC1 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		4CBA61A01D8A0ACF00B31FC1 /* SKTiledDemoScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTiledDemoScene.swift; sourceTree = "<group>"; };
 		4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKTilemap+Properties.swift"; sourceTree = "<group>"; };
 		4CBB6AA01D8CBB5B00DB56F1 /* SKTiledScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTiledScene.swift; sourceTree = "<group>"; };
 		4CBB6AA21D8CC2C100DB56F1 /* SKTiledObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTiledObject.swift; sourceTree = "<group>"; };
@@ -186,7 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				4CBA619F1D8A0ACF00B31FC1 /* Assets.xcassets */,
-				4CBA61A01D8A0ACF00B31FC1 /* GameScene.swift */,
+				4CBA61A01D8A0ACF00B31FC1 /* SKTiledDemoScene.swift */,
 				4CD6D2DF1D8C82850083DA7B /* ButtonNode.swift */,
 			);
 			name = Shared;
@@ -309,7 +309,7 @@
 				4C88E1E01D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift in Sources */,
 				4C88E1E61D8A4EBE00FCCFA3 /* SKTilemapParser.swift in Sources */,
 				4CBB6A9F1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift in Sources */,
-				4CBA61A21D8A0ACF00B31FC1 /* GameScene.swift in Sources */,
+				4CBA61A21D8A0ACF00B31FC1 /* SKTiledDemoScene.swift in Sources */,
 				4CBA61911D8A0A5700B31FC1 /* GameViewController.swift in Sources */,
 				4CBA618E1D8A0A5700B31FC1 /* AppDelegate.swift in Sources */,
 				4C88E1E51D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift in Sources */,

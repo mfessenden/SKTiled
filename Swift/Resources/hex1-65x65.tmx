@@ -23,13 +23,13 @@
   </data>
  </layer>
  <objectgroup color="#67afa4" name="Locations">
+  <properties>
+   <property name="lineWidth" type="float" value="5"/>
+  </properties>
   <object id="14" name="hex1" x="128" y="110">
    <polygon points="0,0 0,31 32,47 64,31 64,0 32,-16"/>
   </object>
   <object id="17" name="hex2" x="288" y="157">
-   <properties>
-    <property name="color" type="color" value="#ff54539b"/>
-   </properties>
    <polygon points="0,0 0,31 32,47 64,31 64,0 32,-16"/>
   </object>
  </objectgroup>

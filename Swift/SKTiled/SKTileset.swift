@@ -35,7 +35,8 @@ public class SKTileset: SKTiledObject {
     public var atlas: SKTextureAtlas!               // texture atlas
     
     // tile data
-    public var tileData: Set<SKTilesetData> = []    // tile data attributes (private)
+    private var tileData: Set<SKTilesetData> = []   // tile data attributes
+    public var dataCount: Int { return tileData.count }
     
     // tileset properties
     public var isImageCollection: Bool = false      // image collection tileset
@@ -272,6 +273,15 @@ public class SKTileset: SKTiledObject {
      */
     public func getLocalID(forGlobalID id: Int) -> Int {
         return (id - firstGID) > 0 ? (id - firstGID) : -1
+    }
+    
+    /**
+     Print out tileset data values.
+     */
+    public func debugTileset(){
+        for data in tileData.sort({$0.id < $1.id}) {
+            print(data.description)
+        }
     }
 }
 

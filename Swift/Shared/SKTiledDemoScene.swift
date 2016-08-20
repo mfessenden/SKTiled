@@ -1,5 +1,5 @@
 //
-//  GameScene.swift
+//  SKTiledDemoScene.swift
 //  SKTiled
 //
 //  Created by Michael Fessenden on 3/21/16.
@@ -10,7 +10,7 @@
 import SpriteKit
 
 
-public class GameScene: SKTiledScene {
+public class SKTiledDemoScene: SKTiledScene {
     
     public var debugMode: Bool = false
     
@@ -151,20 +151,19 @@ public class GameScene: SKTiledScene {
     
     override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         guard let tilemap = tilemap else { return }
-        guard let baseLayer = tilemap.baseLayer else { return }
         
         cameraInformation.hidden = false
         
         for touch in touches {
             
-            let positionInLayer = baseLayer.convertPoint(touch.locationInNode(baseLayer))
-            let positionInMap = baseLayer.screenToPixelCoords(positionInLayer)
-            let coord = baseLayer.screenToTileCoords(positionInLayer)
+            let positionInLayer = tilemap.baseLayer.convertPoint(touch.locationInNode(tilemap.baseLayer))
+            let positionInMap = tilemap.baseLayer.screenToPixelCoords(positionInLayer)
+            let coord = tilemap.baseLayer.screenToTileCoords(positionInLayer)
             
             // add a tile shape to the base layer where the user has clicked
-            let validCoord = baseLayer.isValid(coord)
+            let validCoord = tilemap.baseLayer.isValid(coord)
             let tileColor: SKColor = (validCoord == true) ? TiledColors.Green.color : TiledColors.Red.color
-            addTileAt(baseLayer, Int(coord.x), Int(coord.y), duration: 5, tileColor: tileColor)
+            addTileAt(tilemap.baseLayer, Int(coord.x), Int(coord.y), duration: 5, tileColor: tileColor)
             
             // display tile information on the screen
             var coordStr = "Tile: \(coord.description), \(positionInMap.roundTo())"

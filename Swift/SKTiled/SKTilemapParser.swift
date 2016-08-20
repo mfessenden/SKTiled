@@ -96,7 +96,7 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
         renderTileLayers()
         renderObjects()
         
-        tileMap.baseLayer!.zPosition = tileMap.lastZPosition + tileMap.zDeltaForLayers
+        tileMap.baseLayer.zPosition = tileMap.lastZPosition + tileMap.zDeltaForLayers
         
         // time results
         let timeInterval = NSDate().timeIntervalSinceDate(timer)
