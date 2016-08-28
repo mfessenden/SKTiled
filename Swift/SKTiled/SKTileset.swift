@@ -10,7 +10,8 @@
 import SpriteKit
 
 
-public class SKTileset: TiledObject {
+/// Represents tileset data
+public class SKTileset: SKTiledObject {
     
     public var name: String                         // tileset name
     public var uuid: String = NSUUID().UUIDString   // unique id
@@ -159,12 +160,7 @@ public class SKTileset: TiledObject {
         // invert the y-coord
         var y = margin + rowHeight + rowSpacing - Int(tileSize.height)
         
-        // column = x, row = y
-        var row: Int = 0
-        var column: Int = 0
-        
         for gid in firstGID..<(firstGID + totalTileCount) {
-            
             let rectStartX = CGFloat(x) / CGFloat(textureWidth)
             let rectStartY = CGFloat(y) / CGFloat(textureHeight)
             

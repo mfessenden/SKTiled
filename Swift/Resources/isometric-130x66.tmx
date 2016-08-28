@@ -388,8 +388,8 @@
    <property name="lineWidth" type="float" value="4"/>
   </properties>
   <object id="8" name="center" x="66" y="66" width="132" height="132"/>
-  <object id="9" name="path1" x="354.75" y="-33">
-   <polygon points="8.25,33 8.25,231 107.25,231 107.25,511.5 272.25,511.5 272.25,478.5 140.25,478.5 140.25,198 41.25,198 41.25,33"/>
+  <object id="9" name="road01" type="Road" x="354.75" y="-33">
+   <polygon points="57.75,82.5 24.75,82.5 24.75,511.5 272.25,511.5 272.25,478.5 156.75,478.5 57.75,478.5 57.75,231"/>
   </object>
   <object id="12" name="circle1" x="198" y="528" width="132" height="132">
    <ellipse/>

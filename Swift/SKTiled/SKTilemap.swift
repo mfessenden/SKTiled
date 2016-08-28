@@ -1,6 +1,6 @@
 //
 //  SKTilemap.swift
-//  SKTiled
+//  SKTilemap
 //
 //  Created by Michael Fessenden on 3/21/16.
 //  Copyright © 2016 Michael Fessenden. All rights reserved.
@@ -75,11 +75,6 @@ public enum TilemapEncoding: String {
 public struct TileCoord {
     public var x: Int32
     public var y: Int32
-    
-    public init(_ x: Int32, _ y: Int32){
-        self.x = x
-        self.y = y
-    }
 }
 
 
@@ -114,7 +109,7 @@ public enum LayerPosition {
  - X: axis is along the x-coordinate.
  - Y: axis is along the y-coordinate.
  */
-public enum HexagonalStaggerAxis: String {
+public enum StaggerAxis: String {
     case X  = "x"
     case Y  = "y"
 }
@@ -126,7 +121,7 @@ public enum HexagonalStaggerAxis: String {
  - Even: stagger evens.
  - Odd:  stagger odds.
  */
-public enum HexagonalStaggerIndex: String {
+public enum StaggerIndex: String {
     case Even  = "even"
     case Odd   = "odd"
 }
@@ -141,7 +136,7 @@ public let TileSize32x32 = CGSize(width: 32, height: 32)
 
 
 /// Represents a tiled map node.
-public class SKTilemap: SKNode, TiledObject{
+public class SKTilemap: SKNode, SKTiledObject{
     
     public var filename: String!                                    // tilemap filename
     public var uuid: String = NSUUID().UUIDString                   // unique id
@@ -151,19 +146,9 @@ public class SKTilemap: SKNode, TiledObject{
     public var renderOrder: RenderOrder = .RightDown                // render order
     
     // hexagonal
-    public var hexsidelength: CGFloat = 0                           // hexagonal side length
-    public var staggeraxis: HexagonalStaggerAxis = .Y               // hexagonal stagger axis
-    public var staggerindex: HexagonalStaggerIndex = .Odd           // hexagonal stagger index.
-    
-    public var staggerX: Bool { return (staggeraxis == .X) }
-    public var staggerY: Bool { return (staggeraxis == .Y) }
-    public var sideLengthX: CGFloat { return (staggeraxis == .X) ? hexsidelength : 0 }
-    public var sideLengthY: CGFloat { return (staggeraxis == .Y) ? hexsidelength : 0 }
-    public var sideOffsetX: CGFloat { return (tileWidth - sideLengthX) / 2 }
-    public var sideOffsetY: CGFloat { return (tileHeight - sideLengthY) / 2 }
-    public var staggerEven: Bool { return staggerindex == .Even }    
-    public var columnWidth: CGFloat {return sideOffsetX + sideLengthX }
-    public var rowHeight: CGFloat {return sideOffsetY + sideLengthY }
+    public var hexsidelength: Int = 0                               // hexagonal side length
+    public var staggeraxis: StaggerAxis = .Y                        // stagger axis
+    public var staggerindex: StaggerIndex = .Odd                    // stagger index.
     
     // camera overrides
     public var worldScale: CGFloat = 1.0                            // initial world scale
@@ -186,16 +171,6 @@ public class SKTilemap: SKNode, TiledObject{
     public var frameColor: SKColor = SKColor.blackColor()           // bounding box color
     public var highlightColor: SKColor = SKColor.greenColor()       // color used to highlight tiles
     
-    // convenience properties
-    public var width: CGFloat { return size.width }
-    public var height: CGFloat { return size.height }
-    public var tileWidth: CGFloat { return tileSize.width }
-    public var tileHeight: CGFloat { return tileSize.height }
-    
-    public var sizeHalved: CGSize { return CGSizeMake(size.width / 2, size.height / 2)}
-    public var tileWidthHalf: CGFloat { return tileWidth / 2 }
-    public var tileHeightHalf: CGFloat { return tileHeight / 2 }    
-    
     /// Rendered size of the map in pixels.
     public var sizeInPoints: CGSize {
         switch orientation {
@@ -204,27 +179,20 @@ public class SKTilemap: SKNode, TiledObject{
         case .Isometric:
             let side = width + height
             return CGSizeMake(side * tileWidthHalf,  side * tileHeightHalf)
-        case .Hexagonal:
-            var boundsSize = CGSizeZero
-            if staggerX {
-                let halfWidthCount: CGFloat = Int(size.width) / 2
-                let fullWidthCount: CGFloat = halfWidthCount + (Int(size.width) & 1)
-                // x & 1 == 1 - number is odd
-                let offset = (Int(size.width) & 1 == 1) ? 0 : (tileWidth - hexsidelength) / 2
+        case .Hexagonal, .Staggered:
+            var result = CGSizeZero
+            if staggerX == true {
+                result = CGSize(width: width * columnWidth + sideOffsetX,
+                                height: height * (tileHeight + sideLengthY))
                 
-                boundsSize.width = fullWidthCount * tileWidth + halfWidthCount * hexsidelength + offset
-                boundsSize.height = (size.height * 2) * (tileHeight / 2) + (tileHeight / 2)
+                if width > 1 { result.height += rowHeight }
             } else {
-                let halfHeightCount: CGFloat = Int(size.height) / 2
-                let fullHeightCount: CGFloat = halfHeightCount + (Int(size.height) & 1)
-                let offset = (Int(size.height) & 1 == 1) ? 0 : (tileHeight - hexsidelength) / 2
-                boundsSize.width = (size.width * 2) * (tileWidth / 2) + (tileWidth / 2)
-                boundsSize.height = fullHeightCount * tileHeight + halfHeightCount + hexsidelength + offset
-            }
-            return boundsSize
+                result = CGSize(width: width * (tileWidth + sideLengthX),
+                                height: height * rowHeight + sideOffsetY)
             
-        case .Staggered:
-            return CGSizeMake(size.width * tileSize.width, size.height * tileSize.height)
+                if height > 1 { result.width += columnWidth }
+            }
+            return result
         }
     }
 
@@ -337,12 +305,12 @@ public class SKTilemap: SKNode, TiledObject{
         
         // hex side
         if let hexside = attributes["hexsidelength"] {
-            self.hexsidelength = CGFloat(Int(hexside)!)
+            self.hexsidelength = Int(hexside)!
         }
         
         // hex stagger axis
         if let hexStagger = attributes["staggeraxis"] {
-            guard let staggerAxis: HexagonalStaggerAxis = HexagonalStaggerAxis(rawValue: hexStagger) else {
+            guard let staggerAxis: StaggerAxis = StaggerAxis(rawValue: hexStagger) else {
                 fatalError("stagger axis \"\(hexStagger)\" not supported.")
             }
             self.staggeraxis = staggerAxis
@@ -350,7 +318,7 @@ public class SKTilemap: SKNode, TiledObject{
         
         // hex stagger index
         if let hexIndex = attributes["staggerindex"] {
-            guard let hexindex: HexagonalStaggerIndex = HexagonalStaggerIndex(rawValue: hexIndex) else {
+            guard let hexindex: StaggerIndex = StaggerIndex(rawValue: hexIndex) else {
                 fatalError("stagger index \"\(hexIndex)\" not supported.")
             }
             self.staggerindex = hexindex
@@ -875,6 +843,19 @@ extension TileCoord: CustomStringConvertible, CustomDebugStringConvertible {
     /**
      Initialize coordinate with two integers.
      
+     - parameter x: `Int32` x-coordinate.
+     - parameter y: `Int32` y-coordinate.
+     
+     - returns: `TileCoord` coordinate.
+     */
+    public init(_ x: Int32, _ y: Int32){
+        self.x = x
+        self.y = y
+    }
+    
+    /**
+     Initialize coordinate with two integers.
+     
      - parameter x: `Int` x-coordinate.
      - parameter y: `Int` y-coordinate.
      
@@ -954,6 +935,101 @@ extension LayerPosition: CustomStringConvertible {
 
 
 public extension SKTilemap {
+    
+    // convenience properties
+    public var width: CGFloat { return size.width }
+    public var height: CGFloat { return size.height }
+    public var tileWidth: CGFloat { return tileSize.width }
+    public var tileHeight: CGFloat { return tileSize.height }
+    
+    public var sizeHalved: CGSize { return CGSizeMake(size.width / 2, size.height / 2)}
+    public var tileWidthHalf: CGFloat { return tileWidth / 2 }
+    public var tileHeightHalf: CGFloat { return tileHeight / 2 }
+    
+    // hexagonal/staggered
+    public var staggerX: Bool { return (staggeraxis == .X) }
+    public var sideLengthX: CGFloat { return (staggeraxis == .X) ? CGFloat(hexsidelength) : 0 }
+    public var sideLengthY: CGFloat { return (staggeraxis == .Y) ? CGFloat(hexsidelength) : 0 }
+    public var sideOffsetX: CGFloat { return (tileWidth - sideLengthX) / 2 }
+    public var sideOffsetY: CGFloat { return (tileHeight - sideLengthY) / 2 }
+    public var staggerEven: Bool { return staggerindex == .Even }
+    public var columnWidth: CGFloat {return sideOffsetX + sideLengthX }
+    public var rowHeight: CGFloat {return sideOffsetY + sideLengthY }
+    
+    // MARK: - Hexagonal / Staggered methods
+    public func doStaggerX(x: Int) -> Bool {
+        // x & 1 = number is even
+        return staggerX && Bool((x & 1) ^ Int(staggerEven))
+    }
+    
+    public func doStaggerY(y: Int) -> Bool {
+        // x & 1 = number is even
+        return !staggerX && Bool((y & 1) ^ Int(staggerEven))
+    }
+    
+    public func topLeft(x: Int, _ y: Int) -> CGPoint {
+        if (staggerX == false) {
+            if Bool((y & 1) ^ staggerindex.hashValue) {
+                return CGPoint(x: x, y: y - 1)
+            } else {
+                return CGPoint(x: x - 1, y: y - 1)
+            }
+        } else {
+            if Bool((x & 1) ^ staggerindex.hashValue) {
+                return CGPoint(x: x - 1, y: y)
+            } else {
+                return CGPoint(x: x - 1, y: y - 1)
+            }
+        }
+    }
+    
+    public func topRight(x: Int, _ y: Int) -> CGPoint {
+        if (staggerX == false) {
+            if Bool((y & 1) ^ staggerindex.hashValue) {
+                return CGPoint(x: x + 1, y: y - 1)
+            } else {
+                return CGPoint(x: x, y: y - 1)
+            }
+        } else {
+            if Bool((x & 1) ^ staggerindex.hashValue) {
+                return CGPoint(x: x + 1, y: y)
+            } else {
+                return CGPoint(x: x + 1, y: y - 1)
+            }
+        }
+    }
+    
+    public func bottomLeft(x: Int, _ y: Int) -> CGPoint {
+        if (staggerX == false) {
+            if Bool((y & 1) ^ staggerindex.hashValue) {
+                return CGPoint(x: x, y: y + 1)
+            } else {
+                return CGPoint(x: x - 1, y: y + 1)
+            }
+        } else {
+            if Bool((x & 1) ^ staggerindex.hashValue) {
+                return CGPoint(x: x - 1, y: y + 1)
+            } else {
+                return CGPoint(x: x - 1, y: y)
+            }
+        }
+    }
+    
+    public func bottomRight(x: Int, _ y: Int) -> CGPoint {
+        if (staggerX == false) {
+            if Bool((y & 1) ^ staggerindex.hashValue) {
+                return CGPoint(x: x + 1, y: y + 1)
+            } else {
+                return CGPoint(x: x, y: y + 1)
+            }
+        } else {
+            if Bool((x & 1) ^ staggerindex.hashValue) {
+                return CGPoint(x: x + 1, y: y + 1)
+            } else {
+                return CGPoint(x: x + 1, y: y)
+            }
+        }
+    }
     
     override public var description: String {
         var tilemapName = "(None)"

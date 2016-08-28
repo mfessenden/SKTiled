@@ -7,9 +7,14 @@
 
 import SpriteKit
 
+public struct AnimationFrame {
+    public var gid: Int = 0
+    public var duration: NSTimeInterval = 0
+}
+
 
 /// Represents a single tileset tile data, with texture, id and properties
-public class SKTilesetData: TiledObject  {
+public class SKTilesetData: SKTiledObject  {
     
     weak public var tileset: SKTileset!             // is assigned on add
     public var uuid: String = NSUUID().UUIDString   // unique id
@@ -20,8 +25,7 @@ public class SKTilesetData: TiledObject  {
     public var properties: [String: String] = [:]
     
     // animation frames
-    public var frames: [Int] = []                   // animation frames
-    public var duration: NSTimeInterval = 0.1       // animation frame duration
+    public var frames: [AnimationFrame] = []        // animation frames
     public var isAnimated: Bool { return frames.count > 0 }
     
     // flipped flags
@@ -74,8 +78,7 @@ public class SKTilesetData: TiledObject  {
      - parameter tileTexture: `SKTexture?` frame texture.
      */
     public func addFrame(gid: Int, interval: NSTimeInterval, tileTexture: SKTexture?=nil) {
-        frames.append(gid)
-        duration = interval
+        frames.append(AnimationFrame(gid: gid, duration: interval))
     }
 }
 
@@ -90,6 +93,13 @@ extension SKTilesetData: Hashable {
     public var hashValue: Int {
         return id.hashValue
     }
+}
+
+
+
+extension AnimationFrame: CustomStringConvertible, CustomDebugStringConvertible {
+    public var description: String { return "\(gid): \(duration)" }
+    public var debugDescription: String { return description }
 }
 
 

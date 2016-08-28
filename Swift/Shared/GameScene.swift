@@ -186,7 +186,7 @@ public class GameScene: SKTiledScene {
      - parameter duration:  `TimeInterval` tile life.
      */
     public func addTileAt(layer: TiledLayerObject, _ x: Int, _ y: Int, duration: NSTimeInterval=0, tileColor: SKColor) -> DebugTileShape {
-        let tile = DebugTileShape(layer.tileWidth, layer.tileHeight, tileOrientation: layer.orientation, tileColor: tileColor)
+        let tile = DebugTileShape(layer: layer, tileColor: tileColor)
         tile.zPosition = zPosition
         tile.position = layer.pointForCoordinate(TileCoord(x, y))
         layer.addChild(tile)

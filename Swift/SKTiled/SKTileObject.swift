@@ -18,7 +18,7 @@ public enum ObjectType: String {
 
 
 /// simple object class
-public class SKTileObject: SKShapeNode, TiledObject {
+public class SKTileObject: SKShapeNode, SKTiledObject {
 
     weak public var layer: SKObjectGroup!            // layer parent, assigned on add
     public var uuid: String = NSUUID().UUIDString    // unique id
@@ -126,7 +126,7 @@ public class SKTileObject: SKShapeNode, TiledObject {
         
         // scale linewidth for smaller objects
         let lwidth = (doubleForKey("lineWidth") != nil) ? CGFloat(doubleForKey("lineWidth")!) : layer.lineWidth
-        self.lineWidth = (lwidth / layer.tileHeight < 0.075) ? lwidth : 2
+        self.lineWidth = (lwidth / layer.tileHeight < 0.075) ? lwidth : 2  // 0.75
         
         if let vertices = getVertices() {
             switch objectType {
@@ -166,6 +166,7 @@ public class SKTileObject: SKShapeNode, TiledObject {
                 if anchorRadius > layer.tileHeight / 8 {
                     anchorRadius = layer.tileHeight / 9
                 }
+
                 let anchor = SKShapeNode(circleOfRadius: anchorRadius)
                 anchor.name = "FirstPoint"
                 addChild(anchor)

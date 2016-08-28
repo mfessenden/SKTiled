@@ -128,6 +128,15 @@ public extension CGPoint {
     public func roundTo(decimals: Int=1) -> String {
         return "x: \(self.x.roundTo(decimals)), y: \(self.y.roundTo(decimals))"
     }
+    
+    /**
+     Converts the point to a tile coordinate.
+     
+     - returns: `TileCoord` converted point.
+     */
+    public func toCoord() -> TileCoord {
+        return TileCoord(point: self)
+    }
 }
 
 
@@ -203,7 +212,6 @@ public extension CGVector {
 }
 
 
-
 public extension SKScene {
     /**
      Returns the center point of a scene.
@@ -223,19 +231,18 @@ public extension SKScene {
 }
 
 
-
 public extension SKNode {
     
     /// visualize a node's anchor point.
     public var drawAnchor: Bool {
         get {
-            return childNodeWithName("Anchor") != nil
+            return childNodeWithName("ANCHOR") != nil
         } set {
-            childNodeWithName("Anchor")?.removeFromParent()
+            childNodeWithName("ANCHOR")?.removeFromParent()
             
             if (newValue == true) {
                 let anchorNode = SKNode()
-                anchorNode.name = "Anchor"
+                anchorNode.name = "ANCHOR"
                 addChild(anchorNode)
                 
                 let radius: CGFloat = self.frame.size.width / 24 < 2 ? 1.0 : self.frame.size.width / 36
@@ -409,6 +416,32 @@ public extension String {
      */
     public func substitute(pattern: String, replaceWith: String) -> String {
         return self.stringByReplacingOccurrencesOfString(pattern, withString: replaceWith)
+    }
+}
+
+
+public extension SKAction {
+    
+    /**
+     Custom action to animate sprite textures with varying frame durations.
+     
+     - parameter frames: `[(texture: SKTexture, duration: NSTimeInterval)]` array of tuples containing texture & duration.
+     
+     - returns: `SKAction` custom animation action.
+     */
+    public class func tileAnimation(frames: [(texture: SKTexture, duration: NSTimeInterval)], repeatForever: Bool = true) -> SKAction {
+        var actions: [SKAction] = []
+        for frame in frames {
+            actions.append(SKAction.group([
+                SKAction.setTexture(frame.texture),
+                SKAction.waitForDuration(frame.duration)
+                ])
+            )
+        }
+        if (repeatForever == true) {
+            return SKAction.repeatActionForever(SKAction.sequence(actions))
+        }
+        return SKAction.sequence(actions)
     }
 }
 
@@ -602,6 +635,7 @@ public func lerp(start start: CGVector, end: CGVector, t: CGFloat) -> CGVector {
 }
 
 
+// MARK: - Helper Functions
 
 /**
  Generate a visual grid texture.
@@ -684,26 +718,73 @@ public func drawGrid(layer: TiledLayerObject,  scale: CGFloat = 1) -> CGImageRef
                     let shapePath = polygonPath(points)
                     CGContextAddPath(context, shapePath)
                     
-                case .Hexagonal:
-                    let shapePath = polygonPath(6, radius: layer.tileSize, offset: 0, origin: screenPosition)
-                    CGContextAddPath(context, shapePath)
+                case .Hexagonal, .Staggered:
+                    xpos = tileWidth * CGFloat(col)
+                    ypos = tileHeight * CGFloat(row)
                     
-                case .Staggered:
+                    let rowIsEven: Bool = row & 1 == 0
+                    let colIsEven: Bool = col & 1 == 0
+                    let staggerEven = layer.tilemap.staggerEven
                     
-                    xpos = (col - row) * halfTileWidth
-                    ypos = (col + row) * halfTileHeight
+                    var offsetX: CGFloat = 0
+                    var offsetY: CGFloat = row * (layer.tilemap.sideLengthY / 2)
                     
-                    // xpos, ypos is the top point of the diamond
-                    let points: [CGPoint] = [
-                        CGPoint(x: xpos, y: ypos),
-                        CGPoint(x: xpos - halfTileWidth, y: ypos + halfTileHeight),
-                        CGPoint(x: xpos, y: ypos + tileHeight),
-                        CGPoint(x: xpos + halfTileWidth, y: ypos + halfTileHeight),
-                        CGPoint(x: xpos, y: ypos)
-                    ]
+                    if (layer.tilemap.staggerX == true) {
+                        if (staggerEven == false) && (rowIsEven == false) {
+                            offsetX = halfTileWidth
+                        }
+                        
+                        if (staggerEven == true) && (rowIsEven == true) {
+                            offsetX = halfTileWidth
+                        }
+                    } else {
+                        if (staggerEven == false) && (colIsEven == false) {
+                            offsetY = halfTileHeight
+                        }
+                        
+                        if (staggerEven == true) && (colIsEven == true) {
+                            offsetY = halfTileHeight
+                        }
+                    }
                     
-                    let shapePath = polygonPath(points)
-                    CGContextAddPath(context, shapePath)
+                    xpos += offsetX
+                    ypos -= offsetY
+                    
+                    if layer.orientation == .Hexagonal {
+                        var hexPoints = Array(count: 8, repeatedValue: CGPointZero)
+                        let sideOffsetX = layer.tilemap.sideOffsetX
+                        let sideOffsetY = layer.tilemap.sideOffsetY
+                        
+                        hexPoints[0] = CGPoint(x: xpos, y: (tileHeight - sideOffsetY) + ypos)
+                        hexPoints[1] = CGPoint(x: xpos, y: sideOffsetY + ypos)
+                        hexPoints[2] = CGPoint(x: sideOffsetX + xpos, y: ypos)
+                        hexPoints[3] = CGPoint(x: (tileWidth - sideOffsetX) + xpos, y: ypos)
+                        hexPoints[4] = CGPoint(x: tileWidth + xpos, y: sideOffsetY + ypos)
+                        hexPoints[5] = CGPoint(x: tileWidth + xpos, y: (tileHeight - sideOffsetY) + ypos)
+                        hexPoints[6] = CGPoint(x: (tileWidth - sideOffsetX) + xpos, y: tileHeight + ypos)
+                        hexPoints[7] = CGPoint(x: sideOffsetX + xpos, y: tileHeight + ypos)
+                        
+                        //var points = hexPoints.map{$0.invertedY}
+                        let shapePath = polygonPath(hexPoints)
+                        CGContextAddPath(context, shapePath)
+                    }
+                    
+                    if layer.orientation == .Staggered {
+                        xpos = (col - row) * halfTileWidth
+                        ypos = (col + row) * halfTileHeight
+                        
+                        // xpos, ypos is the top point of the diamond
+                        let points: [CGPoint] = [
+                            CGPoint(x: xpos, y: ypos),
+                            CGPoint(x: xpos - halfTileWidth, y: ypos + halfTileHeight),
+                            CGPoint(x: xpos, y: ypos + tileHeight),
+                            CGPoint(x: xpos + halfTileWidth, y: ypos + halfTileHeight),
+                            CGPoint(x: xpos, y: ypos)
+                        ]
+                        
+                        let shapePath = polygonPath(points)
+                        CGContextAddPath(context, shapePath)
+                    }
                 }
                 
                 
@@ -909,4 +990,3 @@ public func drawPolygonLayer(sides: Int, radius: CGSize, color: SKColor, offset:
     shape.fillColor = color.CGColor
     return shape
 }
-

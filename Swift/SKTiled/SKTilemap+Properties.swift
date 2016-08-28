@@ -19,25 +19,20 @@ public extension SKTilemap {
             if (attr == "name") {
                 name = value
             }
-            /*
-            if (attr == "color") {
-                color = SKColor(hexString: value)
-                allLayers().map({$0.color = gridColor})
-            }*/
             
             if (attr == "gridColor") {
                 gridColor = SKColor(hexString: value)
-                allLayers().map({$0.gridColor = gridColor})
+                allLayers().forEach {$0.gridColor = gridColor}
             }
             
             if (attr == "frameColor") {
                 frameColor = SKColor(hexString: value)
-                allLayers().map({$0.frameColor = frameColor})
+                allLayers().forEach {$0.frameColor = frameColor}
             }
             
             if (attr == "highlightColor") {
                 highlightColor = SKColor(hexString: value)
-                allLayers().map({$0.highlightColor = highlightColor})
+                allLayers().forEach {$0.highlightColor = highlightColor}
             }
             
             // set the initial world scale.
@@ -122,7 +117,7 @@ public extension TiledLayerObject {
      - parameter name:  `String` property name.
      - parameter value: `String` property value.
      */
-    public func setValue(_ value: String, forProperty name: String) {
+    public func setValue(value: String, forProperty name: String) {
         properties[name] = value
     }
 }

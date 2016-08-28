@@ -133,23 +133,15 @@ public class SKTilemapParser: NSObject, NSXMLParserDelegate {
      */
     private func renderTileLayers() {
         guard let tileMap = tileMap else { return }
-        
-        let renderQueue = dispatch_queue_create("renderLayer", DISPATCH_QUEUE_SERIAL)
-        var errorCount: Int = 0
-        
-        // render the layer in the background
-        dispatch_async(renderQueue){
-        
-            for (uuid, tileData) in self.data {
-                guard let tileLayer = tileMap.getLayer(withID: uuid) as? SKTileLayer else { continue }
-                
-                // add the layer data...
-                tileLayer.setLayerData(tileData)
-                
-            }
-            // reset the data
-            self.data = [:]
+        for (uuid, tileData) in self.data {
+            guard let tileLayer = tileMap.getLayer(withID: uuid) as? SKTileLayer else { continue }
+            
+            // add the layer data...
+            tileLayer.setLayerData(tileData)
+            
         }
+        // reset the data
+        self.data = [:]
     }
     
     /**

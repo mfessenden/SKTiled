@@ -35,6 +35,7 @@ public class SKTile: SKSpriteNode {
         set { texture?.filteringMode = newValue ? SKTextureFilteringMode.Linear : SKTextureFilteringMode.Nearest }
     }
     
+    // MARK: - Init
     /**
      Initialize the tile with a tile size.
      
@@ -62,51 +63,12 @@ public class SKTile: SKSpriteNode {
 
         self.tileSize = tileset.tileSize
         super.init(texture: data.texture, color: SKColor.clearColor(), size: data.texture.size())
-        
-        // tile flipping
-        let fh = tileData.flipHoriz
-        let fv = tileData.flipVert
-        let fd = tileData.flipDiag
-        
-        if (fd == true) {
-            if (fh == true) && (fv == false) {
-                zRotation = CGFloat(-M_PI_2)   // rotate 90deg
-            }
-            
-            if (fh == true) && (fv == true) {
-                zRotation = CGFloat(-M_PI_2)   // rotate 90deg
-                xScale *= -1                   // flip horizontally
-            }
-            
-            if (fh == false) && (fv == true) {
-                zRotation = CGFloat(M_PI_2)    // rotate -90deg
-            }
-        
-            if (fh == false) && (fv == false) {
-                zRotation = CGFloat(M_PI_2)    // rotate -90deg
-                xScale *= -1                   // flip horizontally
-            }
-        } else {
-            if (fh == true) {
-                xScale *= -1
-            }
-
-            if (fv == true) {
-                yScale *= -1
-            }
-        }
+        orientTile()
     }
     
     public func setupDynamics(){
         physicsBody = SKPhysicsBody(rectangleOfSize: size)
         physicsBody?.dynamic = false
-    }
-    
-    /**
-     Orient the tile based on the current flip flags.
-     */
-    private func orientTile() {
-        
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -120,26 +82,24 @@ public class SKTile: SKSpriteNode {
      */
     public func runAnimation(){
         guard tileData.isAnimated == true else { return }
-        
-        var tileTextures: [SKTexture] = []
-        for frameID in tileData.frames {
-            guard let frameTexture = tileData.tileset.getTileData(frameID)?.texture else {
-                print("Error: Cannot access texture for id: \(frameID)")
+        var framesData: [(texture: SKTexture, duration: NSTimeInterval)] = []
+        for frame in tileData.frames {
+            guard let frameTexture = tileData.tileset.getTileData(frame.gid)?.texture else {
+                print("Error: Cannot access texture for id: \(frame.gid)")
                 return
             }
-            tileTextures.append(frameTexture)
-                }
-
-        var animAction = SKAction.animateWithTextures(tileTextures, timePerFrame: tileData.duration, resize: false, restore: true)
-        var repeatAction = SKAction.repeatActionForever(animAction)
-        runAction(repeatAction, withKey: "TILE_ANIMATION")
+            framesData.append((texture: frameTexture, duration: frame.duration))
+        }
+        
+        let animationAction = SKAction.tileAnimation(framesData)
+        runAction(animationAction, withKey: "Animation")
     }
     
     /// Pauses tile animation
     public var pauseAnimation: Bool = false {
         didSet {
             guard oldValue != pauseAnimation else { return }
-            guard let action = actionForKey("TILE_ANIMATION") else { return }
+            guard let action = actionForKey("Animation") else { return }
             action.speed = (pauseAnimation == true) ? 0 : 1.0
         }
     }
@@ -166,32 +126,49 @@ public class SKTile: SKSpriteNode {
         
         tileOverlap = overlap
     }
+
+        /**
+     Orient the tile based on the current flip flags.
+     */
+    private func orientTile() {
+        // reset orientation
+        zRotation = 0
+        setScale(1)
+        
+        if (tileData.flipDiag) {
+            if (tileData.flipHoriz && !tileData.flipVert) {
+                zRotation = CGFloat(-M_PI_2)   // rotate 90deg
+            }
+            
+            if (tileData.flipHoriz && tileData.flipVert) {
+                zRotation = CGFloat(-M_PI_2)   // rotate 90deg
+                xScale *= -1                   // flip horizontally
+            }
+            
+            if (!tileData.flipHoriz && tileData.flipVert) {
+                zRotation = CGFloat(M_PI_2)    // rotate -90deg
+            }
+            
+            if (!tileData.flipHoriz && !tileData.flipVert) {
+                zRotation = CGFloat(M_PI_2)    // rotate -90deg
+                xScale *= -1                   // flip horizontally
+            }
+        } else {
+            if (tileData.flipHoriz) {
+                xScale *= -1
+            }
+            
+            if (tileData.flipVert) {
+                yScale *= -1
+            }
+        }
+    }
 }
 
 
 extension SKTile {
     
-    /// Tile description.
-    override public var description: String {
-        var descString = "\(tileData.description)"
-        let descGroup = descString.componentsSeparatedByString(",")
-        var resultString = descGroup.first!
-        if let layer = layer {resultString += ", Layer: \"\(layer.name!)\"" }
-
-        // add the properties
-        if descGroup.count > 1 {
-            for i in 1..<descGroup.count {
-                resultString += ", \(descGroup[i])"
-            }
-        }
-        return resultString
-    }
-    
-    override public var debugDescription: String {
-        return description
-    }
-    
-  /**
+    /**
      Highlight the tile with a given color.
      
      - parameter color: `SKColor` highlight color.
@@ -252,6 +229,16 @@ extension SKTile {
             removeActionForKey("HIGHLIGHT")
         }
     }
+    
+    /**
+     Playground debugging visualization.
+     
+     - returns: `AnyObject` visualization
+     */
+    func debugQuickLookObject() -> AnyObject {
+        let shape = SKShapeNode(rectOfSize: self.tileData.tileset.tileSize)
+        return shape
+    }
 }
 
 
@@ -261,14 +248,15 @@ public class DebugTileShape: SKShapeNode {
     public var tileSize: CGSize
     public var orientation: TilemapOrientation = .Orthogonal
     public var color: SKColor
-    public var layer: TiledLayerObject!
+    public var layer: TiledLayerObject
     
     
-    public init(tileSize: CGSize, tileOrientation: TilemapOrientation = .Orthogonal, tileColor: SKColor){
-        self.tileSize = tileSize
+    public init(layer: TiledLayerObject, tileColor: SKColor){
+        self.layer = layer
+        self.tileSize = layer.tileSize
         self.color = tileColor
         super.init()
-        self.orientation = tileOrientation
+        self.orientation = layer.orientation
         drawObject()
     }
     
@@ -276,7 +264,7 @@ public class DebugTileShape: SKShapeNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func drawObject() {
+    private func drawObject() {
         // draw the path
         var points: [CGPoint] = []
         
@@ -284,46 +272,53 @@ public class DebugTileShape: SKShapeNode {
         
         switch orientation {
         case .Orthogonal:
-            let origin = CGPoint(x: -tileSize.halfWidth, y: tileSize.halfHeight)  // invert y here
+            let origin = CGPoint(x: -tileSize.halfWidth, y: tileSize.halfHeight)
             points = rectPointArray(tileSize, origin: origin)
             
         case .Isometric:
             points = polygonPointArray(4, radius: tileSizeHalved)
             
         case .Hexagonal:
-            points = polygonPointArray(6, radius: tileSizeHalved)
+            var hexPoints = Array(count: 8, repeatedValue: CGPointZero)
+            let tileWidth = layer.tilemap.tileWidth
+            let sideOffsetX = layer.tilemap.sideOffsetX
+            let tileHeight = layer.tilemap.tileHeight
+            let sideOffsetY = layer.tilemap.sideOffsetY
+            
+            hexPoints[0] = CGPoint(x: 0, y: tileHeight - sideOffsetY)
+            hexPoints[1] = CGPoint(x: 0, y: sideOffsetY)
+            hexPoints[2] = CGPoint(x: sideOffsetX, y: 0)
+            hexPoints[3] = CGPoint(x: tileWidth - sideOffsetX, y: 0)
+            hexPoints[4] = CGPoint(x: tileWidth, y: sideOffsetY)
+            hexPoints[5] = CGPoint(x: tileWidth, y: tileHeight - sideOffsetY)
+            hexPoints[6] = CGPoint(x: tileWidth - sideOffsetX, y: tileHeight)
+            hexPoints[7] = CGPoint(x: sideOffsetX, y: tileHeight)
+            
+            points = hexPoints.map{$0.invertedY}
             
         case .Staggered:
             points = polygonPointArray(4, radius: tileSizeHalved)
         }
-
+        
+        // draw the path
         self.path = polygonPath(points)
         self.antialiased = false
-        self.lineWidth = 1.0
+        self.lineCap = .Butt
+        self.miterLimit = 0
+        self.lineWidth = 0.5
         
         self.strokeColor = self.color.colorWithAlphaComponent(0.4)
         self.fillColor = self.color.colorWithAlphaComponent(0.35)
         
         // anchor
-        childNodeWithName("Anchor")?.removeFromParent()
+        childNodeWithName("ANCHOR")?.removeFromParent()
         let anchorRadius: CGFloat = tileSize.height / 12 > 1.0 ? tileSize.height / 12 : 1.0
         let anchor = SKShapeNode(circleOfRadius: anchorRadius)
-        anchor.name = "Anchor"
+        anchor.name = "ANCHOR"
         addChild(anchor)
         anchor.fillColor = self.color.colorWithAlphaComponent(0.2)
         anchor.strokeColor = SKColor.clearColor()
         anchor.zPosition = zPosition + 10
-    }
-}
-
-
-public extension DebugTileShape {
-    
-    public convenience init(_ width: CGFloat, _ height: CGFloat, tileOrientation: TilemapOrientation = .Orthogonal, tileColor: SKColor = SKColor.blueColor()){
-        self.init(tileSize: CGSizeMake(width, height), tileOrientation: tileOrientation, tileColor: tileColor)
-    }
-    
-    public convenience init(_ width: Int, _ height: Int, tileOrientation: TilemapOrientation = .Orthogonal, tileColor: SKColor = SKColor.blueColor()){
-        self.init(tileSize: CGSizeMake(CGFloat(width), CGFloat(height)), tileOrientation: tileOrientation, tileColor: tileColor)
+        anchor.antialiased = true
     }
 }

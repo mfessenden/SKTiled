@@ -16,11 +16,13 @@ public extension SKTilemap {
         get {
             return (baseLayer != nil) ? baseLayer!.debugDraw : false
         } set {
-            guard let baseLayer = baseLayer else { return }
-            guard newValue != baseLayer.debugDraw else { return }
-            baseLayer.debugDraw = newValue
-            baseLayer.showGrid = newValue
-            showObjects = newValue
+            if (orientation == .Orthogonal) || (orientation == .Isometric){
+                guard let baseLayer = baseLayer else { return }
+                guard newValue != baseLayer.debugDraw else { return }
+                baseLayer.debugDraw = newValue
+                baseLayer.showGrid = newValue
+                showObjects = newValue
+            }
         }
     }
     
@@ -35,7 +37,7 @@ public extension SKTilemap {
         print("\n\(nameStr)\n\(filled!)")
         for layer in allLayers() {
             if (layer != baseLayer) {
-                var layerName = layer.name!
+                let layerName = layer.name != nil ? layer.name! : "(None)"
                 let nameString = "\"\(layerName)\""
                 print("\(layer.index): \(layer.layerType.stringValue.capitalizedString.zfill(6, pattern: " ", padLeft: false)) \(nameString.zfill(largestName!.characters.count + 2, pattern: " ", padLeft: false))   pos: \(layer.position.roundTo(1)), size: \(layer.sizeInPoints.roundTo(1)),  offset: \(layer.offset.roundTo(1)), anc: \(layer.anchorPoint.roundTo())")
             
