@@ -8,28 +8,33 @@
 import SpriteKit
 
 
+public struct AnimationFrame {
+    public var gid: Int = 0
+    public var duration: TimeInterval = 0
+}
+
+
 /// Represents a single tileset tile data, with texture, id and properties
-public class SKTilesetData: TiledObject  {
+open class SKTilesetData: SKTiledObject  {
     
-    weak public var tileset: SKTileset!             // is assigned on add
-    public var uuid: String = UUID().uuidString   // unique id
-    public var id: Int = 0                          // tile id
-    public var texture: SKTexture!                  // initial tile texture
-    public var source: String! = nil                // source image name (part of a collections tileset)
-    public var probability: CGFloat = 1.0           // used in Tiled application, might not be useful here.
-    public var properties: [String: String] = [:]
+    weak open var tileset: SKTileset!             // is assigned on add
+    open var uuid: String = UUID().uuidString     // unique id
+    open var id: Int = 0                          // tile id
+    open var texture: SKTexture!                  // initial tile texture
+    open var source: String! = nil                // source image name (part of a collections tileset)
+    open var probability: CGFloat = 1.0           // used in Tiled application, might not be useful here.
+    open var properties: [String: String] = [:]
     
     // animation frames
-    public var frames: [Int] = []                   // animation frames
-    public var duration: TimeInterval = 0.1       // animation frame duration
-    public var isAnimated: Bool { return frames.count > 0 }
+    open var frames: [AnimationFrame] = []        // animation frames
+    open var isAnimated: Bool { return frames.count > 0 }
     
     // flipped flags
-    public var flipHoriz: Bool = false              // tile is flipped horizontally
-    public var flipVert:  Bool = false              // tile is flipped vertically
-    public var flipDiag:  Bool = false              // tile is flipped diagonally
+    open var flipHoriz: Bool = false              // tile is flipped horizontally
+    open var flipVert:  Bool = false              // tile is flipped vertically
+    open var flipDiag:  Bool = false              // tile is flipped diagonally
     
-    public var localID: Int {                       // return the local id for this tile
+    open var localID: Int {                       // return the local id for this tile
         guard let tileset = tileset else { return id }
         return tileset.getLocalID(forGlobalID: id)
     }
@@ -39,7 +44,7 @@ public class SKTilesetData: TiledObject  {
     
     /**
      Initialize the data with a tileset, id.
-     
+    
      - parameter tileId:  `Int` unique tile id.
      - parameter tileSet: `SKTileset` tileset reference.
      
@@ -73,9 +78,8 @@ public class SKTilesetData: TiledObject  {
      - parameter duration:    `NSTimeInterval` frame interval.
      - parameter tileTexture: `SKTexture?` frame texture.
      */
-    public func addFrame(_ gid: Int, interval: TimeInterval, tileTexture: SKTexture?=nil) {
-        frames.append(gid)
-        duration = interval
+    open func addFrame(_ gid: Int, interval: TimeInterval, tileTexture: SKTexture?=nil) {
+        frames.append(AnimationFrame(gid: gid, duration: interval))
     }
 }
 
@@ -90,6 +94,13 @@ extension SKTilesetData: Hashable {
     public var hashValue: Int {
         return id.hashValue
     }
+}
+
+
+
+extension AnimationFrame: CustomStringConvertible, CustomDebugStringConvertible {
+    public var description: String { return "\(gid): \(duration)" }
+    public var debugDescription: String { return description }
 }
 
 

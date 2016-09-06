@@ -1,0 +1,4 @@
+language: swift
+osx_image: xcode8.0
+xcode_project: SKTiled.xcodeproj
+xcode_scheme: SKTiled

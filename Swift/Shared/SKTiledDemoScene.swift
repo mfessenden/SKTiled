@@ -1,5 +1,5 @@
 //
-//  GameScene.swift
+//  SKTiledDemoScene.swift
 //  SKTiled
 //
 //  Created by Michael Fessenden on 3/21/16.
@@ -10,7 +10,7 @@
 import SpriteKit
 
 
-public class GameScene: SKTiledScene {
+public class SKTiledDemoScene: SKTiledScene {
     
     public var debugMode: Bool = false
     
@@ -151,23 +151,22 @@ public class GameScene: SKTiledScene {
     
     override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let tilemap = tilemap else { return }
-        guard let baseLayer = tilemap.baseLayer else { return }
         
         cameraInformation.isHidden = false
         
         for touch in touches {
             
-            let positionInLayer = baseLayer.convertPoint(touch.location(in: baseLayer))
-            let positionInMap = baseLayer.screenToPixelCoords(positionInLayer)
-            let coord = baseLayer.screenToTileCoords(positionInLayer)
+            let positionInLayer = tilemap.baseLayer.convertPoint(touch.location(in: tilemap.baseLayer))
+            let positionInMap = tilemap.baseLayer.screenToPixelCoords(positionInLayer)
+            let coord = tilemap.baseLayer.screenToTileCoords(positionInLayer)
             
             // add a tile shape to the base layer where the user has clicked
-            let validCoord = baseLayer.isValid(coord)
-            let tileColor: SKColor = (validCoord == true) ? TiledColors.Green.color : TiledColors.Red.color
-            addTileAt(baseLayer, Int(coord.x), Int(coord.y), duration: 5, tileColor: tileColor)
+            let validCoord = tilemap.baseLayer.isValid(coord)
+            let tileColor: SKColor = (validCoord == true) ? TiledColors.green.color : TiledColors.red.color
+            addTileAt(layer: tilemap.baseLayer, Int(coord.x), Int(coord.y), duration: 5, tileColor: tileColor)
             
             // display tile information on the screen
-            var coordStr = "Tile: \(coord.description), \(positionInMap.roundoff())"
+            var coordStr = "Tile: \(coord.description), \(positionInMap.roundTo())"
             if (validCoord == false) {
                 coordStr += " (invalid)"
             }
@@ -185,8 +184,8 @@ public class GameScene: SKTiledScene {
      - parameter y:         `Int` y-coordinate.
      - parameter duration:  `TimeInterval` tile life.
      */
-    public func addTileAt(_ layer: TiledLayerObject, _ x: Int, _ y: Int, duration: TimeInterval=0, tileColor: SKColor) -> DebugTileShape {
-        let tile = DebugTileShape(layer.tileWidth, layer.tileHeight, tileOrientation: layer.orientation, tileColor: tileColor)
+    public func addTileAt(layer: TiledLayerObject, _ x: Int, _ y: Int, duration: TimeInterval=0, tileColor: SKColor) -> DebugTileShape {
+        let tile = DebugTileShape(layer: layer, tileColor: tileColor)
         tile.zPosition = zPosition
         tile.position = layer.pointForCoordinate(TileCoord(x, y))
         layer.addChild(tile)
@@ -224,7 +223,7 @@ public class GameScene: SKTiledScene {
         var cameraInfo = "Camera: x: 0, y: 0, zoom: 1.0"
         let xpos = String(format: "%.\(String(2))f", cameraNode.position.x)
         let ypos = String(format: "%.\(String(2))f", cameraNode.position.y)
-        cameraInfo = "Camera: x: \(xpos), y: \(ypos) \(cameraNode.allowMovement == true ? "" : "🔒"), zoom: \(cameraNode.zoom.roundoff()) \(cameraNode.allowZoom == true ? "" : "🔒")"
+        cameraInfo = "Camera: x: \(xpos), y: \(ypos) \(cameraNode.allowMovement == true ? "" : "🔒"), zoom: \(cameraNode.zoom.roundTo()) \(cameraNode.allowZoom == true ? "" : "🔒")"
         
         
         if let cameraInformation = cameraInformation {

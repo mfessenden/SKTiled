@@ -7,39 +7,37 @@
 //
 
 import SpriteKit
-import GameplayKit
 
 
 public enum ObjectType: String {
-    case Rectangle
-    case Ellipse
-    case Polygon
-    case Polyline
+    case rectangle
+    case ellipse
+    case polygon
+    case polyline
 }
 
 
 /// simple object class
-public class SKTileObject: SKShapeNode, TiledObject {
+open class SKTileObject: SKShapeNode, SKTiledObject {
 
-    weak public var layer: SKObjectGroup!            // layer parent, assigned on add
-    public var uuid: String = UUID().uuidString    // unique id
-    public var id: Int = 0                           // object id
-    public var type: String!                         // object type
-    public var objectType: ObjectType = .Rectangle   // shape type
+    weak open var layer: SKObjectGroup!            // layer parent, assigned on add
+    open var uuid: String = UUID().uuidString      // unique id
+    open var id: Int = 0                           // object id
+    open var type: String!                         // object type
+    open var objectType: ObjectType = .rectangle   // shape type
     
-    public var points: [CGPoint] = []                // points that describe object shape
+    open var points: [CGPoint] = []                // points that describe object shape
     
-    public var size: CGSize = CGSize.zero
-    public var obstacle: GKObstacle!                 // obstacle type
-    public var properties: [String: String] = [:]    // custom properties
+    open var size: CGSize = CGSize.zero
+    open var properties: [String: String] = [:]    // custom properties
     
     // blending/visibility
-    public var opacity: CGFloat {
+    open var opacity: CGFloat {
         get { return self.alpha }
         set { self.alpha = newValue }
     }
     
-    public var visible: Bool {
+    open var visible: Bool {
         get { return !self.isHidden }
         set { self.isHidden = !newValue }
     }
@@ -105,12 +103,26 @@ public class SKTileObject: SKShapeNode, TiledObject {
      - parameter color: `SKColor` fill & stroke color.
      - parameter alpha: `CGFloat` alpha component for fill.
      */
-    public func setColor(_ color: SKColor, withAlpha alpha: CGFloat=0.2) {
+    open func setColor(color: SKColor, withAlpha alpha: CGFloat=0.35) {
         self.strokeColor = color
-        
-        if !(self.objectType == .Polyline)  {
+        if !(self.objectType == .polyline)  {
             self.fillColor = color.withAlphaComponent(alpha)
         }
+        drawObject()
+    }
+    
+    /**
+     Set the fill & stroke colors with a hexadecimal string.
+     
+     - parameter color: `hexString` hex color string.
+     - parameter alpha: `CGFloat` alpha component for fill.
+     */
+    open func setColor(hexString: String, withAlpha alpha: CGFloat=0.35) {
+        self.strokeColor = SKColor(hexString: hexString)
+        if !(self.objectType == .polyline)  {
+            self.fillColor = self.strokeColor.withAlphaComponent(alpha)
+        }
+        drawObject()
     }
     
     /**
@@ -120,27 +132,63 @@ public class SKTileObject: SKShapeNode, TiledObject {
         guard let layer = layer else { return }
         guard points.count > 1 else { return }
         
-        // draw the anchor/first point
-        childNode(withName: "Anchor")?.removeFromParent()
         
-        let anchorRadius: CGFloat = layer.tileHeight > 16 ? 2.5 : 1.5
-        let anchor = SKShapeNode(circleOfRadius: anchorRadius)
-        anchor.name = "Anchor"
-        addChild(anchor)
-        anchor.strokeColor = SKColor.clear
-        anchor.fillColor = self.strokeColor
-        anchor.isAntialiased = true
+        // polyline objects should have no fill
+        self.zPosition = layer.tilemap.lastZPosition + layer.tilemap.zDeltaForLayers
+        self.fillColor = (self.objectType == .polyline) ? SKColor.clear : self.fillColor
+        self.isAntialiased = layer.antialiased
         
+        // scale linewidth for smaller objects
+        let lwidth = (doubleForKey("lineWidth") != nil) ? CGFloat(doubleForKey("lineWidth")!) : layer.lineWidth
+        self.lineWidth = (lwidth / layer.tileHeight < 0.075) ? lwidth : 0.75
         
         if let vertices = getVertices() {
             switch objectType {
-            case .Ellipse:
-                self.path = bezierPath(vertices.map{$0.invertedY}, radius: layer.tileHeightHalf)
+            case .ellipse:
+                
+                let vertsInverted = vertices.map{$0.invertedY}
+                var bezPoints: [CGPoint] = []
+                for (index, point) in vertsInverted.enumerated() {
+                    let nextIndex = (index < vertsInverted.count - 1) ? index + 1 : 0
+                    bezPoints.append(lerp(start: point, end: vertsInverted[nextIndex], t: 0.5))
+                }
+                
+                self.path = bezierPath(bezPoints, closed: true, alpha: 0.75)
+                
+                // draw a cage around the curve
+                if layer.orientation == .isometric {
+                    let controlPath = polygonPath(vertsInverted)
+                    let controlShape = SKShapeNode(path: controlPath, centered: false)
+                    addChild(controlShape)
+                    controlShape.fillColor = SKColor.clear
+                    controlShape.strokeColor = self.strokeColor
+                    controlShape.isAntialiased = true
+                    controlShape.lineWidth = self.lineWidth / 2
+                }
+                
             default:
-                self.path = polygonPath(vertices.map{$0.invertedY})
+                let closedPath: Bool =  (self.objectType == .polyline) ? false : true
+                self.path = polygonPath(vertices.map{$0.invertedY}, closed: closedPath)
             }
-            // polyline objects should have no fill
-            self.fillColor = (self.objectType == .Polyline) ? SKColor.clear : self.fillColor
+            
+            // draw the first point of poly objects
+            if (self.objectType == .polyline) || (self.objectType == .polygon) {
+                
+                childNode(withName: "ANCHOR")?.removeFromParent()
+                
+                var anchorRadius = self.lineWidth * 1.75
+                if anchorRadius > layer.tileHeight / 8 {
+                    anchorRadius = layer.tileHeight / 9
+                }
+                
+                let anchor = SKShapeNode(circleOfRadius: anchorRadius)
+                anchor.name = "ANCHOR"
+                addChild(anchor)
+                anchor.position = vertices[0].invertedY
+                anchor.strokeColor = SKColor.clear
+                anchor.fillColor = self.strokeColor
+                anchor.isAntialiased = false
+            }
         }
     }
     
@@ -151,19 +199,19 @@ public class SKTileObject: SKShapeNode, TiledObject {
      - parameter points: `[[CGFloat]]` array of coordinates.
      - parameter closed: `Bool` close the object path.
      */
-    public func addPoints(_ coordinates: [[CGFloat]], closed: Bool=true) {
-        self.objectType = (closed == true) ? ObjectType.Polygon : ObjectType.Polyline
-        
+    open func addPoints(_ coordinates: [[CGFloat]], closed: Bool=true) {
+        self.objectType = (closed == true) ? ObjectType.polygon : ObjectType.polyline
+
         // create an array of points from the given coordinates
         points = coordinates.map { CGPoint(x: $0[0], y: $0[1]) }
     }
-    
+        
     /**
      Add points from a string.
-     
+        
      - parameter points: `String` string of coordinates.
      */
-    public func addPointsWithString(_ points: String) {
+    open func addPointsWithString(_ points: String) {
         var coordinates: [[CGFloat]] = []
         let pointsArray = points.components(separatedBy: " ")
         for point in pointsArray {
@@ -196,16 +244,16 @@ public class SKTileObject: SKShapeNode, TiledObject {
 
 extension SKTileObject {
     
-    override public var hashValue: Int {
+    override open var hashValue: Int {
         return id.hashValue
     }
     
-    override public var description: String {
+    override open var description: String {
         let objectName: String = name != nil ? "\"\(name!)\"" : "(null)"
-        return "\(String(describing: objectType)) Object: \(objectName), id: \(self.id)"
+        return "\(String(describing: objectType).capitalized) Object: \(objectName), id: \(self.id)"
     }
     
-    override public var debugDescription: String {
+    override open var debugDescription: String {
         return description
     }
 }

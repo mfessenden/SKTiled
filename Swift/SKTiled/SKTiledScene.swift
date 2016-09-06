@@ -9,22 +9,23 @@
 import SpriteKit
 
 
+/**
+ *  Delegate for managing `SKTilemap` nodes.
+ */
 protocol SKTiledSceneDelegate {
-    // world node container
-    var worldNode: SKNode! { get set }
-    // scene camera
-    var cameraNode: SKTiledSceneCamera! { get set }
-    var tilemap: SKTilemap! { get set }
+    var worldNode: SKNode! { get set }                  // world node container
+    var cameraNode: SKTiledSceneCamera! { get set }     // scene camera
+    var tilemap: SKTilemap! { get set }                 // tile map
 }
 
 
-public class SKTiledScene: SKScene, SKTiledSceneDelegate {
+open class SKTiledScene: SKScene, SKTiledSceneDelegate {
     
     // SKTiledSceneDelegate
-    public var worldNode: SKNode!                   // world container node
-    public var cameraNode: SKTiledSceneCamera!      // tiled scene camera
-    public var tilemap: SKTilemap!                  // tile map node
-    public var tmxFilename: String!                 // current tmx file name
+    open var worldNode: SKNode!                   // world container node
+    open var cameraNode: SKTiledSceneCamera!      // tiled scene camera
+    open var tilemap: SKTilemap!                  // tile map node
+    open var tmxFilename: String!                 // current tmx file name
     
     // MARK: - Init
     /**
@@ -55,7 +56,12 @@ public class SKTiledScene: SKScene, SKTiledSceneDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public func didMove(to view: SKView) {
+    /* called before the scene initializes? */
+    override open func sceneDidLoad() {
+        setupWorld()
+    }    
+
+    override open func didMove(to view: SKView) {
         guard let worldNode = worldNode else { return }
         
         // setup the camera
@@ -77,14 +83,15 @@ public class SKTiledScene: SKScene, SKTiledSceneDelegate {
     }
     
     // MARK: - Setup
+    
     /**
      Setup the world container node.
-     
      */
-    public func setupWorld(){
+    open func setupWorld(){
         if (worldNode != nil){
             worldNode.removeFromParent()
         }
+        print("[SKTiledScene]: setting up world...")
         // set up world node
         worldNode = SKNode()
         worldNode.name = "World"
@@ -94,7 +101,7 @@ public class SKTiledScene: SKScene, SKTiledSceneDelegate {
     /**
      Setup scene camera.
      */
-    public func setupCamera(){
+    open func setupCamera(){
         guard let view = self.view else { return }
         cameraNode = SKTiledSceneCamera(view: view, world: worldNode)
         addChild(cameraNode)
@@ -105,10 +112,9 @@ public class SKTiledScene: SKScene, SKTiledSceneDelegate {
      Load a named tmx file.
      
      - parameter fileNamed: `String` tmx file name.
-     
      - returns: `SKTilemap?` tile map node.
      */
-    public func load(fromFile filename: String) -> SKTilemap? {
+    open func load(fromFile filename: String) -> SKTilemap? {
         if let tilemapNode = SKTilemap.load(fromFile: filename) {
             if (tilemapNode.backgroundColor != nil) {
                 self.backgroundColor = tilemapNode.backgroundColor!
@@ -117,9 +123,4 @@ public class SKTiledScene: SKScene, SKTiledSceneDelegate {
         }
         return nil
     }
-    
-    override public func update(_ currentTime: TimeInterval) {
-        /* Called before each frame is rendered */
-    }
 }
-

@@ -1,9 +1,9 @@
 //
 //  SKTilemap+Properties.swift
-//  SKTiled
+//  SKTilemap
 //
-//  Created by Michael Fessenden on 6/22/16.
-//  Copyright © 2016 Michael Fessenden. All rights reserved.
+//  Created by Michael Fessenden on 8/12/16.
+//  Copyright © 2016 Super Meerkat. All rights reserved.
 //
 
 import SpriteKit
@@ -20,22 +20,31 @@ public extension SKTilemap {
                 name = value
             }
             
+            if (attr == "debug") {
+                debugDraw = boolForKey(value)
+            }
+            
             if (attr == "gridColor") {
-                gridColor = SKColor.fromHexCode(value)
-                allLayers().map({$0.gridColor = gridColor})
+                gridColor = SKColor(hexString: value)
+                allLayers().forEach {$0.gridColor = gridColor}
+            }
+            
+            if (attr == "gridOpacity") {
+                baseLayer.gridOpacity = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : 0.10
+                allLayers().forEach {$0.gridOpacity = self.baseLayer.gridOpacity}
             }
             
             if (attr == "frameColor") {
-                frameColor = SKColor.fromHexCode(value)
-                allLayers().map({$0.frameColor = frameColor})
+                frameColor = SKColor(hexString: value)
+                allLayers().forEach {$0.frameColor = frameColor}
             }
             
             if (attr == "highlightColor") {
-                highlightColor = SKColor.fromHexCode(value)
-                allLayers().map({$0.highlightColor = highlightColor})
+                highlightColor = SKColor(hexString: value)
+                allLayers().forEach {$0.highlightColor = highlightColor}
             }
             
-            // set the initial world scale.
+            // initial world scale.
             if (attr == "worldScale") {
                 worldScale = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : worldScale
             }
@@ -59,6 +68,10 @@ public extension SKTilemap {
             
             if (attr == "lineWidth") {
                 //lineWidth = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : lineWidth
+            }
+            
+            if (attr == "tileOverlap") {
+                tileOverlap = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : tileOverlap
             }
         }
     }
@@ -87,7 +100,7 @@ public extension TiledLayerObject {
             }
             
             if (attr == "color") {
-                color = SKColor.fromHexCode(value)
+                setColor(color: SKColor(hexString: value))
             }
             
             if (attr == "hidden") {
@@ -159,7 +172,7 @@ public extension SKTileObject {
     public func parseProperties() {
         for (attr, value) in properties {
             if (attr == "color") {
-                setColor(SKColor.fromHexCode(value))
+                setColor(hexString: value)
             }
             
             if (attr == "lineWidth") {

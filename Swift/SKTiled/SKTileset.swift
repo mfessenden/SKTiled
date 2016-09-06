@@ -10,38 +10,40 @@
 import SpriteKit
 
 
-public class SKTileset: TiledObject {
+/// Represents tileset data
+open class SKTileset: SKTiledObject {
     
-    public var name: String                         // tileset name
-    public var uuid: String = UUID().uuidString   // unique id
-    public var filename: String! = nil              // source filename (external tileset)
-    public var tilemap: SKTilemap!
-    public var tileSize: CGSize                     // tile size
+    open var name: String                                        // tileset name
+    open var uuid: String = UUID().uuidString                    // unique id
+    open var filename: String! = nil                             // source filename (external tileset)
+    open var tilemap: SKTilemap!
+    open var tileSize: CGSize                                    // tile size
 
-    public var columns: Int = 0                     // number of columns
-    public var tilecount: Int = 0                   // tile count
-    public var firstGID: Int = 1                    // first GID
+    open var columns: Int = 0                                    // number of columns
+    open var tilecount: Int = 0                                  // tile count
+    open var firstGID: Int = 1                                   // first GID
         
     // image spacing
-    public var spacing: Int = 0                     // spacing between tiles
-    public var margin: Int = 0                      // border margin
+    open var spacing: Int = 0                                    // spacing between tiles
+    open var margin: Int = 0                                     // border margin
     
-    public var properties: [String: String] = [:]
-    public var tileOffset = CGPoint.zero             // draw offset for drawing tiles
+    open var properties: [String: String] = [:]
+    open var tileOffset = CGPoint.zero                           // draw offset for drawing tiles
     
     // texture
-    public var source: String!                      // texture (if created from source)
-    public var atlas: SKTextureAtlas!               // texture atlas
+    open var source: String!                                     // texture (if created from source)
+    open var atlas: SKTextureAtlas!                              // texture atlas
     
     // tile data
-    public var tileData: Set<SKTilesetData> = []    // tile data attributes (private)
+    private var tileData: Set<SKTilesetData> = []                // tile data attributes
+    open var dataCount: Int { return tileData.count }
     
     // tileset properties
-    public var isImageCollection: Bool = false      // image collection tileset
-    public var isExternalTileset: Bool { return filename != nil }
+    open var isImageCollection: Bool = false                     // image collection tileset
+    open var isExternalTileset: Bool { return filename != nil }
     
     // returns the last GID in the tileset
-    public var lastGID: Int {
+    open var lastGID: Int {
         var gid = firstGID
         for data in tileData {
             if data.id > gid {
@@ -50,7 +52,7 @@ public class SKTileset: TiledObject {
         }
         return gid
     }
-
+    
     /**
      Initialize with basic properties.
      
@@ -133,12 +135,14 @@ public class SKTileset: TiledObject {
      
      - parameter source: `String` image named referenced in the tileset.
      */
-    public func addTextures(fromSpriteSheet source: String) {
+    open func addTextures(fromSpriteSheet source: String) {
+        // images are stored in separate directories in the project will render incorrectly unless we use just the filename
+        let sourceFilename = source.components(separatedBy: "/").last!
         let timer = Date()
-        self.source = source
-        print("[SKTileset]: adding sprite sheet source: \"\(self.source)\"")
+        self.source = sourceFilename
+        print("[SKTileset]: adding sprite sheet source: \"\(self.source!)\"")
         
-        let sourceTexture = SKTexture(imageNamed: self.source)
+        let sourceTexture = SKTexture(imageNamed: self.source!)
         sourceTexture.filteringMode = .nearest
         //print("  -> texture size: \(sourceTexture.size())")
         let textureWidth = Int(sourceTexture.size().width)
@@ -159,12 +163,7 @@ public class SKTileset: TiledObject {
         // invert the y-coord
         var y = margin + rowHeight + rowSpacing - Int(tileSize.height)
         
-        // column = x, row = y
-        var row: Int = 0
-        var column: Int = 0
-        
-        for gid in firstGID..<(firstGID + totalTileCount) {
-            
+        for gid in firstGID..<(firstGID + totalTileCount) {            
             let rectStartX = CGFloat(x) / CGFloat(textureWidth)
             let rectStartY = CGFloat(y) / CGFloat(textureHeight)
             
@@ -192,7 +191,7 @@ public class SKTileset: TiledObject {
     }
     
     // TODO: - Need this?
-    public func addTextures(_ fromAtlas: String) {
+    open func addTextures(_ fromAtlas: String) {
         print("[SKTileset]: adding texture atlas: \"\(fromAtlas)\"")
         atlas = SKTextureAtlas(named: fromAtlas)
         guard atlas.textureNames.count == tilemap.size.count else {
@@ -210,7 +209,7 @@ public class SKTileset: TiledObject {
      
      - returns: `SKTilesetData?` tileset data (or nil if the data exists).
      */
-    public func addTilesetTile(_ tileID: Int, texture: SKTexture) -> SKTilesetData? {
+    open func addTilesetTile(_ tileID: Int, texture: SKTexture) -> SKTilesetData? {
         guard !(self.tileData.contains( where: { $0.hashValue == tileID.hashValue } )) else {
             print("[SKTileset]: tile data exists at id: \(tileID)")
             return nil
@@ -230,7 +229,7 @@ public class SKTileset: TiledObject {
      
      - returns: `SKTilesetData?` tileset data (or nil if the data exists).
      */
-    public func addTilesetTile(_ tileID: Int, source: String) -> SKTilesetData? {
+    open func addTilesetTile(_ tileID: Int, source: String) -> SKTilesetData? {
         guard !(self.tileData.contains( where: { $0.hashValue == tileID.hashValue } )) else {
             print("[SKTileset]: tile data exists at id: \(tileID)")
             return nil
@@ -260,7 +259,7 @@ public class SKTileset: TiledObject {
      
      - returns: `SKTilesetData?` tile data object.
      */
-    public func getTileData(_ gid: Int) -> SKTilesetData? {
+    open func getTileData(_ gid: Int) -> SKTilesetData? {
         if let index = tileData.index( where: { $0.id == gid } ) {
             return tileData[index]
         }
@@ -274,8 +273,17 @@ public class SKTileset: TiledObject {
      
      - returns: `Int` local tile ID.
      */
-    public func getLocalID(forGlobalID id: Int) -> Int {
+    open func getLocalID(forGlobalID id: Int) -> Int {
         return (id - firstGID) > 0 ? (id - firstGID) : -1
+    }
+    
+    /**
+     Print out tileset data values.
+     */
+    public func debugTileset(){
+        for data in tileData.sorted(by: {$0.id < $1.id}) {
+            print(data.description)
+        }
     }
 }
 
@@ -295,12 +303,10 @@ extension SKTileset: Hashable {
 
 extension SKTileset: CustomStringConvertible, CustomDebugStringConvertible {
     public var description: String {
-        return "Tile Set: \"\(name)\" @ \(tileSize), firstgid: \(firstGID), \(tileData.count) tiles"
+        return "Tile Set: \"\(name)\" @ \(tileSize), firstgid: \(firstGID), \(dataCount) tiles"
     }
     
     public var debugDescription: String {
         return description
     }
 }
-
-

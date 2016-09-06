@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="isometric" renderorder="right-down" width="10" height="10" tilewidth="130" tileheight="66" backgroundcolor="#634930" nextobjectid="18">
+<map version="1.0" orientation="isometric" renderorder="right-down" width="10" height="10" tilewidth="130" tileheight="66" backgroundcolor="#634930" nextobjectid="13">
  <properties>
   <property name="allowMovement" type="bool" value="true"/>
   <property name="allowZoom" type="bool" value="true"/>
-  <property name="maxZoom" type="float" value="2.5"/>
   <property name="worldScale" type="float" value="0.4"/>
  </properties>
- <tileset firstgid="1" name="isometric-130x230" tilewidth="130" tileheight="230" tilecount="144" columns="12">
-  <image source="isometric-130x230.png" width="1560" height="2760"/>
+ <tileset firstgid="1" name="isometric-130x230" tilewidth="130" tileheight="230" tilecount="72" columns="12">
+  <image source="isometric-130x230.png" width="1560" height="1380"/>
   <tile id="0">
    <properties>
     <property name="altImage" type="int" value="72"/>
@@ -389,14 +388,11 @@
    <property name="lineWidth" type="float" value="4"/>
   </properties>
   <object id="8" name="center" x="66" y="66" width="132" height="132"/>
-  <object id="9" name="path1" type="Road" x="354.75" y="-33">
-   <polygon points="8.25,33 8.25,231 107.25,231 107.25,511.5 272.25,511.5 272.25,478.5 140.25,478.5 140.25,198 41.25,198 41.25,33"/>
+  <object id="9" name="road01" type="Road" x="354.75" y="-33">
+   <polygon points="57.75,82.5 24.75,82.5 24.75,511.5 272.25,511.5 272.25,478.5 156.75,478.5 57.75,478.5 57.75,231"/>
   </object>
   <object id="12" name="circle1" x="198" y="528" width="132" height="132">
    <ellipse/>
-  </object>
-  <object id="13" name="building1" type="Collision" x="-148" y="-100">
-   <polygon points="-4,-4 124,124 172,124 172,72 44.783,-54.6198 -4,-52"/>
   </object>
  </objectgroup>
 </map>

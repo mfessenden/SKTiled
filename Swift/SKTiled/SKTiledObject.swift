@@ -1,5 +1,5 @@
 //
-//  TiledObject.swift
+//  SKTiledObject.swift
 //  SKTiled
 //
 //  Created by Michael Fessenden on 5/16/16.
@@ -10,7 +10,7 @@ import SpriteKit
 
 
 /* generic Tiled object */
-public protocol TiledObject: Hashable {
+public protocol SKTiledObject: Hashable {
     var uuid: String { get set }                    // unique id (layer & object names may not be unique).
     var properties: [String: String] { get set }    // properties shared by most objects.
     func parseProperties()                          // parse the properties
@@ -19,7 +19,7 @@ public protocol TiledObject: Hashable {
 
 
 
-public extension TiledObject {
+public extension SKTiledObject {
     
     public var hashValue: Int { return uuid.hashValue }
     
