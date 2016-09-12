@@ -7,7 +7,7 @@
 For Swift 3/iOS10/OSX 10.11. See [this branch](https://github.com/mfessenden/SKTiled/tree/master) for Swift 2.2+ version.
 
 ![](https://img.shields.io/badge/Swift-3.0-brightgreen.svg)
-+[![Build Status](https://travis-ci.org/mfessenden/SKTiled.svg?branch=iOS10)](https://travis-ci.org/mfessenden/SKTiled)
+[![Build Status](https://travis-ci.org/mfessenden/SKTiled.svg?branch=iOS10)](https://travis-ci.org/mfessenden/SKTiled)
 [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/mfessenden/SKTiled/blob/iOS10/LICENSE)
 
 ##Installation
