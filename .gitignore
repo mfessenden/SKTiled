@@ -1,2 +1,6 @@
+docs/swift
 Swift/Resources/test
 *.psd
+*.html
+*.js
+*.css

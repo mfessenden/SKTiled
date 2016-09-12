@@ -1,4 +1,4 @@
-# SKTiled
+![SKTiled](https://github.com/mfessenden/SKTiled/blob/iOS10/docs/img/header.png)
 
 **SKTiled** is a simple library for using [Tiled](http://www.mapeditor.org) files with Apple's SpriteKit, allowing the creation of game assets from .tmx files. Inspired by [TilemapKit](http://tilemapkit.com) and written purely in Swift 2.0, I began working on this for a project after the development of TilemapKit was halted. While initially created as an exercise in learning Apple's new programming language, I've decided to open-source it in case others find it helpful.  
 
@@ -7,13 +7,14 @@
 For Swift 3/iOS10/OSX 10.11. See [this branch](https://github.com/mfessenden/SKTiled/tree/master) for Swift 2.2+ version.
 
 ![](https://img.shields.io/badge/Swift-3.0-brightgreen.svg)
-[![Build Status](https://travis-ci.org/mfessenden/SKTiled.svg?branch=iOS10)](https://travis-ci.org/mfessenden/SKTiled)
++[![Build Status](https://travis-ci.org/mfessenden/SKTiled.svg?branch=iOS10)](https://travis-ci.org/mfessenden/SKTiled)
+[![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/mfessenden/SKTiled/blob/iOS10/LICENSE)
 
 ##Installation
 
 Simply drag the *SKTiled* directory into your Xcode project, and add the files to your game target:
 
-![Xcode installation](https://github.com/mfessenden/SKTiled/blob/master/doc/installation.png)
+![Xcode installation](https://github.com/mfessenden/SKTiled/blob/iOS10/docs/img/installation.png)
 
 
 Alternately, you can include this directory in your project's workspace.
@@ -118,7 +119,7 @@ let tileData = tilemap.getTileData(gid: 177)
 ```
 
 
-### Adding Nodes
+## Adding Nodes
 
 Tile data includes texture data, and `SKTile` objects are `SKSpriteNode` subclasses that can be initialized with tileset data:
 
@@ -142,7 +143,7 @@ let newNode = SKNode()
 groundLayer.addNode(newNode, 4, 5, zPosition: 100.0)
 ```
 
-### Animated Tiles
+## Animated Tiles
 
 Animated tiles will animate automatically; animated tiles can be accesssed from the tilemap. The `SKTile.pauseAnimation` property can stop/start animations:
 
@@ -155,7 +156,7 @@ for tile in animatedTiles {
 }
 ```
 
-### Custom Properties
+## Custom Properties
 
 Custom properties are supported on all object types, and can be accessed easily:
 
@@ -183,8 +184,9 @@ or the tilemap:
 let walkableTiles = tilemap.getTilesWithProperty("walkable", "1")
 ```
 
-####Features
+##Features
 
+- iOS & macOS versions
 - renders all Tiled layer types (tile, object, image)
 - custom properties for maps, layers, objects & tiles
 - parses inline & external tilesets
@@ -193,30 +195,19 @@ let walkableTiles = tilemap.getTilesWithProperty("walkable", "1")
 - render flipped tiles
 
 
-####Limitations
+##Limitations
 
-- only orthogonal & isometric tilemaps supported.
 - cannot parse data compressed with gzip/zlib compression.
-- external tilesets can increase the overall load time.
-- animated tiles are restricted to a per-tile frame duration (Tiled application supports per-frame durations).
 
 
-####Upcoming Features
+##Upcoming Features
 
-- OSX version
-- Wiki page with tutorials
-- positioning hints for tile placement
 - multi-threaded rendering
-- generate GKGridGraph graphs based on custom tile attributes
+- generate GKGridGraph graphs based on custom tile attributes (iOS10)
 - user-definable cost properties for GKGridGraph nodes (iOS10)
 
 
-####SKTiled Wiki
-
-- [class reference](https://github.com/mfessenden/SKTiled/wiki/Class-Reference)
-
-
-####Acknowledgements
+##Acknowledgements
 
 - [Steffen Itterheim](http://www.learn-cocos2d.com) creator of TilemapKit, the inspiration for this project
 - [Kenney Vleugels](http://www.kenney.nl) for use of his spritesheet assets.

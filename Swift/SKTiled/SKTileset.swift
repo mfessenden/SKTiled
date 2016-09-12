@@ -267,6 +267,17 @@ open class SKTileset: SKTiledObject {
     }
     
     /**
+     Returns tile data with the given property.
+     
+     - parameter withProperty: `String` property name.
+     
+     - returns: `[SKTilesetData]` array of tile data.
+     */
+    open func getTileData(withProperty property: String) -> [SKTilesetData] {
+        return tileData.filter { $0.properties[property] != nil }
+    }
+    
+    /**
      Convert a global ID to the tileset's local ID (or -1 if invalid).
      
      - parameter id: `Int` global id.

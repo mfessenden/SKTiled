@@ -8,7 +8,6 @@
 
 
 import SpriteKit
-import GameplayKit
 
 
 public enum ParsingError: Error {
@@ -98,7 +97,8 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         renderTileLayers()
         renderObjects()
         
-        tileMap.baseLayer.zPosition = tileMap.lastZPosition + tileMap.zDeltaForLayers
+        // set baseLayer zPosition here
+        tileMap.baseLayer.zPosition = tileMap.lastZPosition + (tileMap.zDeltaForLayers * 0.5)
         
         // time results
         let timeInterval = Date().timeIntervalSince(timer)
@@ -144,10 +144,16 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         
         for (uuid, tileData) in self.data {
             guard let tileLayer = tileMap.getLayer(withID: uuid) as? SKTileLayer else { continue }
-            
+            // render the layer in the background
+            DispatchQueue.main.async( execute: {
             // add the layer data...
             tileLayer.setLayerData(tileData)            
+                tileLayer.parseProperties()
+            })
         }
+        
+        //tileMap.tileLayers.forEach {$0.run(fadeInAction)}
+        
         // reset the data
         self.data = [:]
     }
@@ -244,8 +250,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     existingTileset.tileSize = CGSize(width: CGFloat(Int(width)!), height: CGFloat(Int(width)!))
                     existingTileset.columns = Int(columns)!
                     
-                    //print("[SKTilemapParser]: updating existing tileset: \"\(existingTileset.name)\" @ \"\(existingTileset.filename)\"")
-                    
                     // optionals
                     if let spacing = attributeDict["spacing"] {
                         existingTileset.spacing = Int(spacing)!
@@ -256,8 +260,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     }
                     
                     lastElement = existingTileset
-                    //TODO: remove tileset from external tilesets?
-                    
                     
                 } else {
                     // create inline tileset
@@ -266,7 +268,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     lastElement = tileset
 
                     // set this to nil, just in case we're looking for a collections tileset.
-                    // TODO: check that this isn't causing issues
                     currentID = nil
                 }
             }
@@ -490,7 +491,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     }
     
     
-    // didEndElement happens whenever parser ends a key: </key>
+    // didEndElement happens when parser ends a key: </key>
     open func parser(_ parser: XMLParser,
                        didEndElement elementName: String,
                        namespaceURI: String?,
@@ -506,6 +507,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             
             if let tileLayer = lastElement as? TiledLayerObject {
                 tileLayer.properties = properties
+                //tileLayer.parseProperties()   // moved this to render
             }
             
             if let tileset = lastElement as? SKTileset {
@@ -517,8 +519,9 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     
                     let tileID = tileset.firstGID + currentID!
                     if let tileData = tileset.getTileData(tileID) {
-                        //print("  -> adding properties to id: \(tileID)")
-                        tileData.properties = properties
+                        for (key, value) in properties {
+                            tileData.properties[key] = value
+                        }
                         tileData.parseProperties()
                         properties = [:]
                     }
@@ -581,7 +584,9 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 if (currentID != nil){
                     let tileID = tileset.firstGID + currentID!
                     if let currentTileData = tileset.getTileData(tileID) {
-                        currentTileData.properties = properties
+                        for (key, value) in properties {
+                            currentTileData.properties[key] = value
+                        }
                         properties = [:]
                     }
                 }

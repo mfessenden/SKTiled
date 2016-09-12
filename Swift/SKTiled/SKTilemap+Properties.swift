@@ -73,8 +73,20 @@ public extension SKTilemap {
             if (attr == "tileOverlap") {
                 tileOverlap = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : tileOverlap
             }
+            
+            if (attr == "minZoom") {
+                minZoom = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : minZoom
+            }
+            
+            if (attr == "maxZoom") {
+                maxZoom = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : maxZoom
+            }
+            
+            if (attr == "ignoreBackground") {
+                ignoreBackground = boolForKey(attr)
         }
     }
+}
 }
 
 
@@ -92,6 +104,7 @@ public extension TiledLayerObject {
      Parse the nodes properties value.
      */
     public func parseProperties() {
+        
         for (attr, value) in properties {
             
             if (attr == "zPosition") {
@@ -187,5 +200,9 @@ public extension SKTilesetData {
     /**
      Parse the data's properties value.
      */
-    public func parseProperties() {}
+    public func parseProperties() {
+        for (attr, value) in properties {
+            //print("\(id): \(attr) = \(value)")
+        }
+    }
 }

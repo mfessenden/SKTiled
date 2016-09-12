@@ -154,6 +154,8 @@ open class SKTilemap: SKNode, SKTiledObject{
     open var worldScale: CGFloat = 1.0                            // initial world scale
     open var allowZoom: Bool = true                               // allow camera zoom
     open var allowMovement: Bool = true                           // allow camera movement
+    open var minZoom: CGFloat = 0.2
+    open var maxZoom: CGFloat = 5.0
     
     // current tile sets
     open var tileSets: Set<SKTileset> = []                        // tilesets
@@ -164,6 +166,8 @@ open class SKTilemap: SKNode, SKTiledObject{
     open var properties: [String: String] = [:]                   // custom properties
     open var zDeltaForLayers: CGFloat = 50                        // z-position range for layers
     open var backgroundColor: SKColor? = nil                      // optional background color (read from the Tiled file)
+    open var ignoreBackground: Bool = false                            // ignore Tiled scene background color
+    
     
     // default layer
     lazy open var baseLayer: SKTileLayer = {
@@ -173,9 +177,9 @@ open class SKTilemap: SKNode, SKTiledObject{
     }()
     
     // debugging
-    open var gridColor: SKColor = SKColor.black            // color used to visualize the tile grid
-    open var frameColor: SKColor = SKColor.black           // bounding box color
-    open var highlightColor: SKColor = SKColor.green       // color used to highlight tiles
+    open var gridColor: SKColor = SKColor.black                        // color used to visualize the tile grid
+    open var frameColor: SKColor = SKColor.black                       // bounding box color
+    open var highlightColor: SKColor = SKColor.green                   // color used to highlight tiles
     
     /// Rendered size of the map in pixels.
     open var sizeInPoints: CGSize {
@@ -332,7 +336,9 @@ open class SKTilemap: SKNode, SKTiledObject{
         
         // background color
         if let backgroundHexColor = attributes["backgroundcolor"] {
+            if !(ignoreBackground == true){
             self.backgroundColor = SKColor(hexString: backgroundHexColor)
+        }
         }
         
         super.init()
@@ -429,7 +435,7 @@ open class SKTilemap: SKNode, SKTiledObject{
      
      - parameter layer: `TiledLayerObject` layer object.
      */
-    open func addLayer(_ layer: TiledLayerObject) {
+    open func addLayer(_ layer: TiledLayerObject, parse: Bool = false) {
         // set the layer index
         layer.index = layers.count > 0 ? lastIndex + 1 : 0
         
@@ -444,7 +450,10 @@ open class SKTilemap: SKNode, SKTiledObject{
         layer.gridColor = self.gridColor
         layer.frameColor = self.frameColor
         layer.highlightColor = self.highlightColor
-        layer.parseProperties()
+        
+        if (parse == true) {
+            layer.parseProperties()  // moved this to parser
+        }
     }
     
     open func addNewTileLayer(_ named: String) -> SKTileLayer {
@@ -504,15 +513,16 @@ open class SKTilemap: SKNode, SKTiledObject{
      
      - parameter named: `String` layer name.
      */
-    open func isolateLayer(_ named: String?) {
-        guard let name = named else {
-            layers.map({$0.visible = true})
+    open func isolateLayer(_ named: String?=nil) {
+        guard named != nil else {
+            layers.forEach {$0.visible = true}
             return
         }
-        layers.map({
+        
+        layers.forEach {
             let isHidden: Bool = $0.name == named ? true : false
             $0.visible = isHidden
-        })
+        }
     }
     
     /**
@@ -626,7 +636,7 @@ open class SKTilemap: SKNode, SKTiledObject{
      */
     open func sortLayers(_ fromZ: CGFloat?=nil) {
         let startingZ: CGFloat = (fromZ != nil) ? fromZ! : zPosition
-        allLayers().map {$0.zPosition = startingZ + (zDeltaForLayers * CGFloat($0.index))}
+        allLayers().forEach {$0.zPosition = startingZ + (zDeltaForLayers * CGFloat($0.index))}
     }
     
     // MARK: - Tiles
@@ -727,6 +737,16 @@ open class SKTilemap: SKNode, SKTiledObject{
     }
     
     /**
+     Return tile data with a property of the given type (all tile layers).
+     
+     - parameter named: `String` property name.
+     - returns: `[SKTile]` array of tiles.
+     */
+    open func getTileDataWithProperty(_ named: String) -> [SKTilesetData] {
+        return tileSets.flatMap { $0.getTileData(withProperty: named)}
+    }
+    
+    /**
      Returns an array of all animated tile objects.
      
      - returns: `[SKTile]` array of tiles.
@@ -742,6 +762,24 @@ open class SKTilemap: SKNode, SKTiledObject{
             }
         }
         return result
+    }
+    
+    /**
+     Return the top-most tile at the given coordinate.
+     
+     - parameter coord: `TileCoord` coordinate.
+     
+     - returns: `SKTile?` first tile in layers.
+     */
+    open func firstTileAt(_ coord: TileCoord) -> SKTile? {
+        for layer in tileLayers.reversed() {
+            if layer.visible == true{
+                if let tile = layer.tileAt(coord) {
+                    return tile
+                }
+            }
+        }
+        return nil
     }
     
     // MARK: - Objects
@@ -824,6 +862,33 @@ open class SKTilemap: SKNode, SKTiledObject{
             }
         }
         return nil
+    }
+    
+    // MARK: - Coordinates
+    
+    
+    /**
+     Returns a converted touch location.
+     
+     - parameter point: `CGPoint` scene point.
+     
+     - returns: `CGPoint` converted point in layer coordinate system.
+     */
+    #if os(iOS)
+    open func touchLocation(_ touch: UITouch) -> CGPoint {
+        return baseLayer.touchLocation(touch)
+    }
+    #endif
+    
+    #if os(OSX)
+    public func mouseLocation(event: NSEvent) -> CGPoint {
+        return baseLayer.mouseLocation(event: event)
+    }
+    #endif
+    
+    
+    open func positionInMap(point: CGPoint) -> CGPoint {
+        return convert(point, to: baseLayer).invertedY
     }
 }
 
@@ -1063,5 +1128,36 @@ public extension SKTilemap {
     }
     
     override open var debugDescription: String { return description }
+    
+    /// Visualize the current grid & bounds.
+    open var debugDraw: Bool {
+        get {
+            return baseLayer.debugDraw
+        } set {
+            guard newValue != baseLayer.debugDraw else { return }
+            baseLayer.debugDraw = newValue
+            baseLayer.showGrid = newValue
+            showObjects = newValue
+        }
+    }
+    
+    /**
+     Prints out all the data it has on the tilemap's layers.
+     */
+    public func debugLayers() {
+        guard (layerCount > 0) else { return }
+        let largestName = layerNames().max() { (a, b) -> Bool in a.characters.count < b.characters.count }
+        let nameStr = "# Tilemap \"\(name!)\": \(layerCount) Layers:"
+        let filled = String(repeating: "-", count: nameStr.characters.count)
+        print("\n\(nameStr)\n\(filled)")
+        for layer in allLayers() {
+            if (layer != baseLayer) {
+                let layerName = layer.name!
+                let nameString = "\"\(layerName)\""
+                print("\(layer.index): \(layer.layerType.stringValue.capitalized.zfill(6, pattern: " ", padLeft: false)) \(nameString.zfill(largestName!.characters.count + 2, pattern: " ", padLeft: false))   pos: \(layer.position.roundTo(1)), size: \(layer.sizeInPoints.roundTo(1)),  offset: \(layer.offset.roundTo(1)), anc: \(layer.anchorPoint.roundTo())")
+                
+            }
+        }
+        print("\n")
+    }
 }
-

@@ -14,6 +14,7 @@ open class SKTile: SKSpriteNode {
     
     weak open var layer: SKTileLayer!                   // layer parent, assigned on add
     fileprivate var tileOverlap: CGFloat = 1.5          // tile overlap amount
+    private var maxOverlap: CGFloat = 3.0               // maximum tile overlap
     open var tileData: SKTilesetData                    // tile data
     open var tileSize: CGSize                           // tile size
     open var highlightColor: SKColor = SKColor.white    // tile highlight color
@@ -73,7 +74,7 @@ open class SKTile: SKSpriteNode {
     // MARK: - Animation
     
     /**
-     Check if the tile is animated and run an action to animated it.
+     Checks if the tile is animated and run an action to animated it.
      */
     public func runAnimation(){
         guard tileData.isAnimated == true else { return }
@@ -106,19 +107,19 @@ open class SKTile: SKSpriteNode {
      */
     public func setTileOverlap(_ overlap: CGFloat) {
         // clamp the overlap value.
-        var overlapValue = overlap <= 1.5 ? overlap : 1.5
+        var overlapValue = overlap <= maxOverlap ? overlap : maxOverlap
         overlapValue = overlapValue > 0 ? overlapValue : 0
         guard overlapValue != tileOverlap else { return }
+        guard let tileTexture = tileData.texture else { return }
         
-        let width: CGFloat = tileData.texture.size().width
+        let width: CGFloat = tileTexture.size().width
         let overlapWidth = width + (overlap / width)
 
-        let height: CGFloat = tileData.texture.size().height
+        let height: CGFloat = tileTexture.size().height
         let overlapHeight = height + (overlap / height)
         
         xScale *= overlapWidth / width
         yScale *= overlapHeight / height
-        
         tileOverlap = overlap
     }
     
@@ -158,10 +159,142 @@ open class SKTile: SKSpriteNode {
             }
         }
     }
+
+    /**
+     Returns the points of the tile's shape.
+     
+     - returns: `[CGPoint]?` array of points.
+     */
+    private func getVertices() -> [CGPoint] {
+        var vertices: [CGPoint] = []
+        guard let layer = layer else { return vertices }
+        
+        let tileSizeHalved = CGSize(width: layer.tileSize.halfWidth, height: layer.tileSize.halfHeight)
+        
+        switch layer.orientation {
+        case .orthogonal:
+            let origin = CGPoint(x: -tileSizeHalved.width, y: tileSizeHalved.height)
+            vertices = rectPointArray(tileSize, origin: origin)
+            
+        case .isometric, .staggered:
+            vertices = [
+                CGPoint(x: -tileSizeHalved.width, y: 0),    // left-side
+                CGPoint(x: 0, y: tileSizeHalved.height),
+                CGPoint(x: tileSizeHalved.width, y: 0),
+                CGPoint(x: 0, y: -tileSizeHalved.height),   // bottom
+            ]
+            
+        case .hexagonal:
+            var hexPoints = Array(repeating: CGPoint.zero, count: 6)
+            let staggerX = layer.tilemap.staggerX
+            let tileWidth = layer.tilemap.tileWidth
+            let tileHeight = layer.tilemap.tileHeight
+            
+            let sideLengthX = layer.tilemap.sideLengthX
+            let sideLengthY = layer.tilemap.sideLengthY
+            var variableSize: CGFloat = 0
+            
+            // flat
+            if (staggerX == true) {
+                let r = (tileWidth - sideLengthX) / 2
+                let h = tileHeight / 2
+                variableSize = tileWidth - (r * 2)
+                hexPoints[0] = CGPoint(x: -(variableSize / 2), y: h)
+                hexPoints[1] = CGPoint(x: (variableSize / 2), y: h)
+                hexPoints[2] = CGPoint(x: (tileWidth / 2), y: 0)
+                hexPoints[3] = CGPoint(x: (variableSize / 2), y: -h)
+                hexPoints[4] = CGPoint(x: -(variableSize / 2), y: -h)
+                hexPoints[5] = CGPoint(x: -(tileWidth / 2), y: 0)
+                
+            // pointy
+            } else {
+                let r = tileWidth / 2
+                let h = (tileHeight - sideLengthY) / 2
+                variableSize = tileHeight - (h * 2)
+                hexPoints[0] = CGPoint(x: 0, y: (tileHeight / 2))
+                hexPoints[1] = CGPoint(x: r, y: (variableSize / 2))
+                hexPoints[2] = CGPoint(x: r, y: -(variableSize / 2))
+                hexPoints[3] = CGPoint(x: 0, y: -(tileHeight / 2))
+                hexPoints[4] = CGPoint(x: -r, y: -(variableSize / 2))
+                hexPoints[5] = CGPoint(x: -r, y: (variableSize / 2))
+            }
+            
+            vertices = hexPoints.map{$0.invertedY}
+        }
+        
+        return vertices
+    }
+    
+    /**
+     Draw the tile's boundary shape.
+     
+     - parameter color: `SKColor` highlight color.
+     */
+    public func drawBounds(antialiasing: Bool=true, duration: TimeInterval=0) {
+        guard let layer = layer else { return }
+        childNode(withName: "Anchor")?.removeFromParent()
+        childNode(withName: "Bounds")?.removeFromParent()
+        
+        let vertices = getVertices()
+        let path = polygonPath(vertices)
+        let shape = SKShapeNode(path: path)
+        shape.name = "Bounds"
+        let shapeZPos = zPosition + 10
+        
+        // draw the path
+        shape.isAntialiased = false
+        shape.lineCap = .butt
+        shape.miterLimit = 0
+        shape.lineWidth = 0.5
+        
+        shape.strokeColor = highlightColor.withAlphaComponent(0.4)
+        shape.fillColor = highlightColor.withAlphaComponent(0.35)
+        shape.zPosition = shapeZPos
+        addChild(shape)
+        
+        // anchor
+        let anchorRadius: CGFloat = tileSize.height / 12 > 1.0 ? tileSize.height / 30 : 1.0
+        let anchor = SKShapeNode(circleOfRadius: anchorRadius)
+        anchor.name = "Anchor"
+        shape.addChild(anchor)
+        anchor.fillColor = highlightColor.withAlphaComponent(0.2)
+        anchor.strokeColor = SKColor.clear
+        anchor.zPosition = shapeZPos + 10
+        anchor.isAntialiased = true
+        
+        if (duration > 0) {
+            let fadeAction = SKAction.fadeOut(withDuration: duration)
+            shape.run(fadeAction, completion: {
+                shape.removeFromParent()
+                
+            })
+        }
+    }
 }
+    
 
 
 public extension SKTile {
+    
+    /// Tile description.
+    override open var description: String {
+        let descString = "\(tileData.description)"
+        let descGroup = descString.components(separatedBy: ",")
+        var resultString = descGroup.first!
+        if let layer = layer {resultString += ", Layer: \"\(layer.name!)\"" }
+        
+        // add the properties
+        if descGroup.count > 1 {
+            for i in 1..<descGroup.count {
+                resultString += ", \(descGroup[i])"
+            }
+        }
+        return resultString
+    }
+    
+    override open var debugDescription: String {
+        return description
+    }
     
     /**
      Highlight the tile with a given color.
@@ -175,38 +308,38 @@ public extension SKTile {
         let orientation = tileData.tileset.tilemap.orientation
         
         if orientation == .orthogonal {
-            childNode(withName: "HIGHLIGHT")?.removeFromParent()
+            childNode(withName: "Highlight")?.removeFromParent()
             let highlightNode = SKShapeNode(rectOf: tileSize, cornerRadius: 0)
             highlightNode.strokeColor = highlight.withAlphaComponent(0.1)
             highlightNode.fillColor = highlight.withAlphaComponent(0.35)
-            highlightNode.name = "HIGHLIGHT"
+            highlightNode.name = "Highlight"
             
             highlightNode.isAntialiased = antialiasing
             addChild(highlightNode)
             highlightNode.zPosition = zPosition + 10
             
             // fade out highlight
-            removeAction(forKey: "HIGHLIGHT_FADE")
+            removeAction(forKey: "Highlight_Fade")
             let fadeAction = SKAction.sequence([
                 SKAction.wait(forDuration: duration * 1.5),
                 SKAction.fadeAlpha(to: 0, duration: duration/4.0)
                 ])
             
-            highlightNode.runAction(fadeAction, withKey: "HIGHLIGHT_FADE", optionalCompletion: {
+            highlightNode.runAction(fadeAction, withKey: "Highlight_Fade", optionalCompletion: {
                 highlightNode.removeFromParent()
             })
         }
         
         if orientation == .isometric {
-            removeAction(forKey: "HIGHLIGHT_FADE")
+            removeAction(forKey: "Highlight_Fade")
             let fadeOutAction = SKAction.colorize(with: SKColor.clear, colorBlendFactor: 1, duration: duration)
-            runAction(fadeOutAction, withKey: "HIGHLIGHT_FADE", optionalCompletion: {
+            runAction(fadeOutAction, withKey: "Highlight_Fade", optionalCompletion: {
                 let fadeInAction = SKAction.sequence([
                     SKAction.wait(forDuration: duration * 1.5),
                     //fadeOutAction.reversedAction()
                     SKAction.colorize(with: SKColor.clear, colorBlendFactor: 0, duration: duration/4.0)
                     ])
-                self.run(fadeInAction, withKey: "HIGHLIGHT_FADE")
+                self.run(fadeInAction, withKey: "Highlight_Fade")
             })
         }
     }
@@ -218,12 +351,13 @@ public extension SKTile {
         let orientation = tileData.tileset.tilemap.orientation
         
         if orientation == .orthogonal {
-            childNode(withName: "HIGHLIGHT")?.removeFromParent()
+            childNode(withName: "Highlight")?.removeFromParent()
         }
         if orientation == .isometric {
-            removeAction(forKey: "HIGHLIGHT")
+            removeAction(forKey: "Highlight")
         }
     }
+
     
     /**
      Playground debugging visualization.

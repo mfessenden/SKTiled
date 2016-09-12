@@ -31,7 +31,7 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
     let context = UIGraphicsGetCurrentContext()
     let bounds = CGRect(origin: CGPoint.zero, size: size)
     whatToDraw(context!, bounds, scale)
-    let result = UIGraphicsGetImageFromCurrentImageContext()
+let result = UIGraphicsGetImageFromCurrentImageContext()
     return result!.cgImage!
 }
 #else
@@ -248,13 +248,13 @@ public extension SKNode {
     /// visualize a node's anchor point.
     public var drawAnchor: Bool {
         get {
-            return childNode(withName: "ANCHOR") != nil
+            return childNode(withName: "Anchor") != nil
         } set {
-            childNode(withName: "ANCHOR")?.removeFromParent()
+            childNode(withName: "Anchor")?.removeFromParent()
             
             if (newValue == true) {
                 let anchorNode = SKNode()
-                anchorNode.name = "ANCHOR"
+                anchorNode.name = "Anchor"
                 addChild(anchorNode)
                 
                 let radius: CGFloat = self.frame.size.width / 24 < 2 ? 1.0 : self.frame.size.width / 36
@@ -302,62 +302,9 @@ public extension SKNode {
     }
 }
 
-#if os(iOS)
-public extension SKColor {
-
-    /**
-     Lightens the color by the given percentage.
-     
-     - parameter percent: `CGFloat`
-     
-     - returns: `SKColor` lightened color.
-     */
-    public func lighten(by percent: CGFloat) -> SKColor {
-        return colorWithBrightness(1.0 + percent)
-    }
-    
-    /**
-     Darkens the color by the given percentage.
-     
-     - parameter percent: `CGFloat`
-     
-     - returns: `SKColor` darkened color.
-     */
-    public func darken(by percent: CGFloat) -> SKColor {
-        return colorWithBrightness(1.0 - percent)
-    }
-    
-    public func colorWithBrightness(_ factor: CGFloat) -> SKColor {
-        var hue: CGFloat = 0
-        var saturation: CGFloat = 0
-        var brightness: CGFloat = 0
-        var alpha: CGFloat = 0
-        
-        if getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha) {
-            return SKColor(hue: hue, saturation: saturation, brightness: brightness * factor, alpha: alpha)
-        } else {
-            return self;
-        }
-    }
-}
-#endif
 
 public extension String {
-    
-    /**
-     Initialize a string by repeating a character (or string)
-     
-     - parameter repeating: `String` pattern to repeat.
-     - parameter count:     `Int` number of repetitions.
-     */
-    public init?(repeating str: String, count: Int) {
-        var newString = ""
-        for _ in 0 ..< count {
-            newString += str
-        }
-        self.init(newString)
-    }
-    
+        
     /// Returns `Int` length of the string.
     public var length: Int {
         return self.characters.count
@@ -653,6 +600,12 @@ public func floor(point: CGPoint) -> CGPoint {
     return CGPoint(x: floor(Double(point.x)), y: floor(Double(point.y)))
 }
 
+
+public func normalize(_ value: CGFloat, _ minimum: CGFloat, _ maximum: CGFloat) -> CGFloat {
+    return (value - minimum) / (maximum - minimum)
+}
+
+
 /**
  Generate a visual grid texture.
  
@@ -671,8 +624,8 @@ public func drawGrid(_ layer: TiledLayerObject,  scale: CGFloat = 1) -> CGImage 
     let tileHeightHalf = tileHeight / 2
                 
     var sizeInPoints = layer.sizeInPoints
-    //sizeInPoints = (sizeInPoints + 1) * scale   // this is giving us 4x scale @ 2x
     sizeInPoints = sizeInPoints + 1
+    
     return imageOfSize(sizeInPoints, scale: scale) { context, bounds, scale in
                 
         let innerColor = layer.gridColor
@@ -776,10 +729,9 @@ public func drawGrid(_ layer: TiledLayerObject,  scale: CGFloat = 1) -> CGImage 
                 
                 context.strokePath()
             }
-            }
         }
     }
-    
+}
 
 
 // MARK: - Polygon Drawing
@@ -982,4 +934,3 @@ public func drawPolygonLayer(_ sides: Int, radius: CGSize, color: SKColor, offse
     shape.fillColor = color.cgColor
     return shape
 }
-

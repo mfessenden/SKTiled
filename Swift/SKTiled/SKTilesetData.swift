@@ -109,7 +109,8 @@ extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
     /// Tile data description.
     public var description: String {
         guard let tileset = tileset else { return "Tile ID: \(id) (no tileset)" }
-        var dataString = properties.count > 0 ? "Tile ID: \(id) @ \(tileset.tileSize), " : "Tile ID: \(id) @ \(tileset.tileSize)"
+        let tileSizeString = "\(Int(tileset.tileSize.width))x\(Int(tileset.tileSize.height))"
+        var dataString = properties.count > 0 ? "Tile ID: \(id) @ \(tileSizeString), " : "Tile ID: \(id) @ \(tileSizeString)"
         for (index, pair) in properties.enumerated() {
             let pstring = (index < properties.count - 1) ? "\"\(pair.0)\": \(pair.1)," : "\"\(pair.0)\": \(pair.1)"
             dataString += pstring
