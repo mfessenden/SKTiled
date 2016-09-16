@@ -15,7 +15,9 @@ import Cocoa
 #endif
 
 
-/// Custom scene camera that responds to various gestures.
+/**
+  Custom scene camera that responds to finger/mouse gestures.
+ */
 open class SKTiledSceneCamera: SKCameraNode {
     
     open let world: SKNode
@@ -149,21 +151,7 @@ open class SKTiledSceneCamera: SKCameraNode {
 
 #if os(iOS)
 public extension SKTiledSceneCamera {
-    // MARK: - Gesture Handlers
-    /**
-     Handler for double taps.
-     
-     - parameter recognizer: `UITapGestureRecognizer` tap gesture recognizer.
-     */
-    open func sceneDoubleTapped(_ recognizer: UITapGestureRecognizer) {
-        if (recognizer.state == UIGestureRecognizerState.ended) {
-            //focusLocation = recognizer.location(in: recognizer.view)
-            guard let scene = self.scene as? SKTiledScene else { return }
-            // get the current point
-            let sceneLocation = scene.convertPoint(fromView: recognizer.location(in: recognizer.view))
-            // notify delegates
-        }
-    }
+    // MARK: - Gesture Handlers    
     
     /**
      Update the scene camera when a pan gesture is recogized.

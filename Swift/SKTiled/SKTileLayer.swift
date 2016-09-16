@@ -14,6 +14,14 @@ import Cocoa
 #endif
 
 
+/**
+ Describes the layer type.
+ 
+ - invalid: Layer is invalid.
+ - tile:    Tile-based layers.
+ - object:  Object group.
+ - image:   Image layer.
+ */
 public enum SKTiledLayerType: Int {
     case invalid    = -1
     case tile
@@ -30,9 +38,16 @@ public enum ObjectGroupColors: String {
 }
 
 
-// MARK: - Base Layer Class
+/**
+ The `TiledLayerObject` is the base class for all `SKTiled` layer types.
 
-/// `TiledLayerObject` is the base class for all Tiled layer types.
+ This class doesn't define any object or child types, but manages several important aspects:
+    
+ - validating coordinates
+ - positioning and alignment
+ - coordinate transformations
+ 
+ */
 open class TiledLayerObject: SKNode, SKTiledObject {
     
     open var layerType: SKTiledLayerType = .invalid
@@ -121,10 +136,12 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     // MARK: - Init
     
     /**
-     Initialize from the parser.
-    
+     Initialize via the parser.
+     
+     *This intializer is meant to be called by the `SKTilemapParser`, you should not use it directly.*
+     
      - parameter layerName:  `String` layer name.
-     - parameter tileMap:    `SKTilemap` parent tilemap node.
+     - parameter tilemap:    `SKTilemap` parent tilemap node.
      - parameter attributes: `[String: String]` dictionary of layer attributes.
      
      - returns: `TiledLayerObject?` tiled layer, if initialization succeeds.
@@ -189,7 +206,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
     
     /**
-     Set the layer color.
+     Set the layer color with an `SKColor`.
      
      - parameter color: `SKColor` object color.
      */
@@ -497,7 +514,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
                                y: (tileX + tileY) * tileHeightHalf)
         default:
             return point
-    }
+        }
     }
     
     /**
@@ -599,7 +616,26 @@ open class TiledLayerObject: SKNode, SKTiledObject {
 }
 
 
-// MARK: - Tiled Layer
+
+// MARK: - Tile Layer
+
+/**
+ The `SKTileLayer` class  manages an array of tiles (sprites) that it renders as a single image.
+ 
+ This class manages setting and querying tile data.
+ 
+ Accessing a tile:
+ 
+ ```swift
+ let tile = tileLayer.tileAt(2, 6)!
+ ```
+ 
+ Getting tiles of a certain type:
+ 
+ ```swift
+ let floorTiles = tileLayer.getTiles(ofType: "Floor")
+ ```
+ */
 
 open class SKTileLayer: TiledLayerObject {
     
@@ -610,12 +646,26 @@ open class SKTileLayer: TiledLayerObject {
     open var render: Bool = false                 // render tile layer as a single image
     
     // MARK: - Init
+    /**
+     Initialize with layer name and parent `SKTilemap`.
+     
+     - parameter layerName:    `String` layer name.
+     - parameter tilemap:      `SKTilemap` parent map.
+     */
     override public init(layerName: String, tileMap: SKTilemap) {
         self.tiles = TilesArray(columns: Int(tileMap.size.width), rows: Int(tileMap.size.height))
         super.init(layerName: layerName, tileMap: tileMap)
         self.layerType = .tile
     }
     
+    /**
+     Initialize with parent `SKTilemap` and layer attributes.
+     
+     **Do not use this intializer directly**
+    
+     - parameter tilemap:      `SKTilemap` parent map.
+     - parameter attributes:   `[String: String]` layer attributes.
+     */
     public init?(tileMap: SKTilemap, attributes: [String: String]) {
         // name, width and height are required
         guard let layerName = attributes["name"] else { return nil }
@@ -707,6 +757,7 @@ open class SKTileLayer: TiledLayerObject {
                 if let pvalue = tile.tileData.properties[named] , pvalue == value as! String {
                     result.append(tile)
                 }
+                
             }
         }
         return result
@@ -1331,115 +1382,6 @@ public extension SKTileLayer {
         return tiles.flatMap({$0})
     }
 }
-
-
-public extension String {
-    /**
-     Returns an array of hexadecimal components.
-     
-     - returns: `[String]?` hexadecimal components.
-     */
-    public func hexComponents() -> [String?] {
-        let code = self
-        let offset = code.hasPrefix("#") ? 1 : 0
-        
-        let startIndex = code.index(code.startIndex, offsetBy: offset)
-        let firstIndex = code.index(startIndex, offsetBy: 2)
-        let secondIndex = code.index(firstIndex, offsetBy: 2)
-        let thirdIndex = code.index(secondIndex, offsetBy: 2)
-        return [code[startIndex..<firstIndex], code[firstIndex..<secondIndex], code[secondIndex..<thirdIndex]]
-    }
-}
-
-
-public extension SKColor {
-    
-    /**
-     Initialize an SKColor with a hexidecimal string.
-     
-     - parameter hexString:  `String` hexidecimal code.
-     
-     - returns: `SKColor`
-     */
-    convenience init(hexString: String) {
-        let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
-        var int = UInt32()
-        Scanner(string: hex).scanHexInt32(&int)
-        let a, r, g, b: UInt32
-        switch hex.characters.count {
-        case 3: // RGB (12-bit)
-            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
-        case 6: // RGB (24-bit)
-            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
-        case 8: // ARGB (32-bit)
-            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
-        default:
-            (a, r, g, b) = (1, 1, 1, 0)
-                }
-        self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
-    }
-    
-    /**
-     Lightens the color by the given percentage.
-     
-     - parameter percent: `CGFloat`
-     
-     - returns: `SKColor` lightened color.
-     */
-    public func lighten(by percent: CGFloat) -> SKColor {
-        return colorWithBrightness(1.0 + percent)
-    }
-    
-    /**
-     Darkens the color by the given percentage.
-     
-     - parameter percent: `CGFloat`
-     
-     - returns: `SKColor` darkened color.
-     */
-    public func darken(by percent: CGFloat) -> SKColor {
-        return colorWithBrightness(1.0 - percent)
-    }
-    
-    public func colorWithBrightness(_ factor: CGFloat) -> SKColor {
-        var hue: CGFloat = 0
-        var saturation: CGFloat = 0
-        var brightness: CGFloat = 0
-        var alpha: CGFloat = 0
-        
-        getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-        return SKColor(hue: hue, saturation: saturation, brightness: brightness * factor, alpha: alpha)
-    }
-    
-    
-    /// Returns the individual color components.
-    public var components: [CGFloat] {
-        return cgColor.components!
-    }
-    
-    /*
-     Blend the color with another, scaled.
-     */
-    public func blend(with color: SKColor, factor s: CGFloat = 0.5) -> SKColor {
-        
-        let r1 = components[0]
-        let g1 = components[1]
-        let b1 = components[2]
-        let a1 = components[3]
-        
-        let r2 = color.components[0]
-        let g2 = color.components[1]
-        let b2 = color.components[2]
-        let a2 = color.components[3]
-        
-        let r = (r1 * s) + (1 - s) * r2
-        let g = (g1 * s) + (1 - s) * g2
-        let b = (b1 * s) + (1 - s) * b2
-        
-        return SKColor(red: r, green: g, blue: b, alpha: 1.0)
-}
-}
-
 
 
 extension Array2D: Sequence {

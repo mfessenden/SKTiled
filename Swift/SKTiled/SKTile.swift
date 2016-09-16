@@ -9,7 +9,9 @@
 import SpriteKit
 
 
-/// represents a single tile object.
+/**
+ Custom sprite type for rendering tile objects. Tile data (including texture) stored in `SKTilesetData` property.
+ */
 open class SKTile: SKSpriteNode {
     
     weak open var layer: SKTileLayer!                   // layer parent, assigned on add
@@ -65,6 +67,14 @@ open class SKTile: SKSpriteNode {
         self.tileSize = tileset.tileSize
         super.init(texture: data.texture, color: SKColor.clear, size: data.texture.size())
         orientTile()
+    }
+    
+    /**
+     Set up the tile's dynamics body.
+     */
+    public func setupDynamics(){
+        physicsBody = SKPhysicsBody(rectangleOf: size)
+        physicsBody?.isDynamic = false
     }
 
     required public init?(coder aDecoder: NSCoder) {

@@ -302,6 +302,103 @@ public extension SKNode {
     }
 }
 
+public extension SKColor {
+    
+    /// Returns the hue, saturation, brightess & alpha components of the color
+    public var hsba: (h: CGFloat, s: CGFloat, b: CGFloat, a: CGFloat) {
+        var hsba: (h: CGFloat, s: CGFloat, b: CGFloat, a: CGFloat) = (0, 0, 0, 0)
+        self.getHue(&(hsba.h), saturation: &(hsba.s), brightness: &(hsba.b), alpha: &(hsba.a))
+        return hsba
+    }
+    
+    /**
+     Lightens the color by the given percentage.
+     
+     - parameter percent: `CGFloat`
+     - returns: `SKColor` lightened color.
+     */
+    public func lighten(by percent: CGFloat) -> SKColor {
+        return colorWithBrightness(factor: 1.0 + percent)
+    }
+    
+    /**
+     Darkens the color by the given percentage.
+     
+     - parameter percent: `CGFloat`
+     - returns: `SKColor` darkened color.
+     */
+    public func darken(by percent: CGFloat) -> SKColor {
+        return colorWithBrightness(factor: 1.0 - percent)
+    }
+    
+    /**
+     Return a modified color using the brightness factor provided
+     
+     - parameter factor: brightness factor
+     - returns: `SKColor` modified color
+     */
+    public func colorWithBrightness(factor: CGFloat) -> SKColor {
+        let components = self.hsba
+        return SKColor(hue: components.h, saturation: components.s, brightness: components.b * factor, alpha: components.a)
+    }
+    
+    /**
+     Initialize an SKColor with a hexidecimal string.
+     
+     - parameter hexString:  `String` hexidecimal code.
+     - returns: `SKColor`
+     */
+    convenience init(hexString: String) {
+        let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int = UInt32()
+        Scanner(string: hex).scanHexInt32(&int)
+        let a, r, g, b: UInt32
+        switch hex.characters.count {
+        case 3: // RGB (12-bit)
+            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6: // RGB (24-bit)
+            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8: // ARGB (32-bit)
+            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+        default:
+            (a, r, g, b) = (1, 1, 1, 0)
+        }
+        self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
+    }
+    
+    
+    /// Returns the individual color components.
+    public var components: [CGFloat] {
+        return cgColor.components!
+    }
+    
+    /*
+     Blend current color with another `SKColor`.
+     
+     - parameter color:   `SKColor` color to blend.
+     - parameter factor:  `CGFloat` blend factor.
+     - returns: `SKColor` blended color.
+     */
+    public func blend(with color: SKColor, factor s: CGFloat = 0.5) -> SKColor {
+        
+        let r1 = components[0]
+        let g1 = components[1]
+        let b1 = components[2]
+        let a1 = components[3]
+        
+        let r2 = color.components[0]
+        let g2 = color.components[1]
+        let b2 = color.components[2]
+        let a2 = color.components[3]
+        
+        let r = (r1 * s) + (1 - s) * r2
+        let g = (g1 * s) + (1 - s) * g2
+        let b = (b1 * s) + (1 - s) * b2
+        
+        return SKColor(red: r, green: g, blue: b, alpha: 1.0)
+    }
+}
+
 
 public extension String {
         
@@ -326,7 +423,7 @@ public extension String {
      
      - returns: `[String]`
      */
-    public func toStringArray() -> [String]{
+    public func toStringArray() -> [String] {
         return self.unicodeScalars.map { String($0) }
     }
     
@@ -376,6 +473,45 @@ public extension String {
     public func substitute(_ pattern: String, replaceWith: String) -> String {
         return self.replacingOccurrences(of: pattern, with: replaceWith)
     }
+    
+    /**
+     Returns an array of hexadecimal components.
+     
+     - returns: `[String]?` hexadecimal components.
+     */
+    public func hexComponents() -> [String?] {
+        let code = self
+        let offset = code.hasPrefix("#") ? 1 : 0
+        
+        let startIndex = code.index(code.startIndex, offsetBy: offset)
+        let firstIndex = code.index(startIndex, offsetBy: 2)
+        let secondIndex = code.index(firstIndex, offsetBy: 2)
+        let thirdIndex = code.index(secondIndex, offsetBy: 2)
+        return [code[startIndex..<firstIndex], code[firstIndex..<secondIndex], code[secondIndex..<thirdIndex]]
+    }
+    
+    /**
+     Initialize with array of bytes.
+     
+     - parameter bytes: `[UInt8]` byte array.
+     */
+    public init(_ bytes: [UInt8]) {
+        self.init()
+        for b in bytes {
+            self.append(String(UnicodeScalar(b)))
+        }
+    }
+    
+    /**
+     Clean up whitespace & carriage returns.
+     
+     - returns: `String` scrubbed string.
+     */
+    public func scrub() -> String {
+        var scrubbed = self.replacingOccurrences(of: "\n", with: "")
+        scrubbed = scrubbed.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        return scrubbed.replacingOccurrences(of: " ", with: "")
+    }
 }
 
 
@@ -397,6 +533,8 @@ public extension SKAction {
                 ])
             )
         }
+        
+        // add the repeating action
         if (repeatForever == true) {
             return SKAction.repeatForever(SKAction.sequence(actions))
         }

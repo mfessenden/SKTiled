@@ -69,11 +69,12 @@ public enum TilemapEncoding: String {
 }
 
 
-// MARK: - Sizing
 
 /// Represents a tile x/y coordinate.
 public struct TileCoord {
+    /// Tile x-coordinate
     public var x: Int32
+    /// Tile y-coordinate
     public var y: Int32
 }
 
@@ -133,9 +134,18 @@ public let TileSize8x8   = CGSize(width: 8, height: 8)
 public let TileSize16x16 = CGSize(width: 16, height: 16)
 public let TileSize32x32 = CGSize(width: 32, height: 32)
 
-
     
-/// Represents a tiled map node.
+// MARK: - Tilemap
+
+/**
+ The `SKTilemap` class represents a container node which holds layers, tiles (sprites), objects & images.
+ 
+ - size:         tile map size in tiles.
+ - tileSize:     tile map tile size in pixels.
+ - sizeInPoints: tile map size in points.
+ 
+ Tile data is added via `SKTileset` tile sets.
+ */
 open class SKTilemap: SKNode, SKTiledObject{
     
     open var filename: String!                                    // tilemap filename
@@ -169,7 +179,9 @@ open class SKTilemap: SKNode, SKTiledObject{
     open var ignoreBackground: Bool = false                            // ignore Tiled scene background color
     
     
-    // default layer
+    /** 
+    The tile map default base layer, used for displaying the current grid, getting coordinates, etc.
+    */
     lazy open var baseLayer: SKTileLayer = {
         let layer = SKTileLayer(layerName: "Base", tileMap: self)
         self.addLayer(layer)
@@ -880,6 +892,15 @@ open class SKTilemap: SKNode, SKTiledObject{
     }
     #endif
     
+    /**
+     Returns a mouse event location in negative-y space.
+     
+     *Position is in converted space*
+    
+     - parameter point: `CGPoint` scene point.
+     
+     - returns: `CGPoint` converted point in layer coordinate system.
+     */
     #if os(OSX)
     public func mouseLocation(event: NSEvent) -> CGPoint {
         return baseLayer.mouseLocation(event: event)
@@ -922,6 +943,14 @@ extension TileCoord: CustomStringConvertible, CustomDebugStringConvertible {
         self.init(Int32(x), Int32(y))
     }
     
+    /**
+     Initialize coordinate with two floats.
+    
+     - parameter x: `CGFloat` x-coordinate.
+     - parameter y: `CGFloat` y-coordinate.
+    
+     - returns: `TileCoord` coordinate.
+     */
     public init(_ x: CGFloat, _ y: CGFloat) {
         self.x = Int32(floor(x))
         self.y = Int32(floor(y))
@@ -947,7 +976,11 @@ extension TileCoord: CustomStringConvertible, CustomDebugStringConvertible {
         return CGPoint(x: Int(x), y: Int(y))
     }
     
-    /// Convert the coordinate to vector2 (for GKGridGraph).
+    /**
+     Return the coordinate as a `int2` vector (for GameplayKit).
+     
+     - returns: `int2` vector.
+     */
     public var vec2: int2 {
         return int2(x, y)
     }

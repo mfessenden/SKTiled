@@ -1,0 +1,57 @@
+module: SKTiled
+author: Michael Fessenden 
+author_url: https://github.com/mfessenden
+github_url: https://github.com/mfessenden/SKTiled
+#source_directory: Swift/SKTiled
+clean: true
+skip_undocumented: true
+output: docs/swift
+readme: README.md
+#min_acl: private
+#docset_icon: Swift/Shared/Assets.xcassets/AppIcon.appiconset/Icon.png
+
+exclude:
+  - "**/*-ObjC.swift"
+  - "Swift/macOS/*"
+  - "Swift/Shared/*"
+
+xcodebuild_arguments:
+    - "-target"
+    - "macOS"
+
+copyright: '© 2016 Michael Fessenden](https://github.com/mfessenden) under [open source license](https://github.com/mfessenden/SKTiled/blob/iOS10/LICENSE).'
+
+#swift_version: 3.0
+
+theme: apple
+
+documentation: docs/Tutorial/*.md
+
+custom_categories:
+  - name: Tutorial
+    children:
+      - Getting Started
+      - Coordinates
+      - Objects
+      - Properties
+      - GameplayKit
+      - Debugging
+
+  - name: Protocols
+    children:
+    - SKTiledObject
+    - SKTiledSceneDelegate
+
+  - name: Class Reference
+    children:
+    - SKTilemap
+    - SKTilemapParser
+    - SKTileset
+    - TiledLayerObject
+    - SKTileLayer
+    - SKObjectGroup
+    - SKImageLayer
+    - SKTile
+    - SKTileObject
+    - SKTilesetData
+    - TileCoord

@@ -9,7 +9,11 @@
 import SpriteKit
 
 
-/* generic Tiled object */
+/**
+ Protocol describing a generic Tiled object with a properties dictionary.
+ 
+ Objects conforming to this protocol support custom properties that can be parsed via the `SKTilemapParser` parser.
+ */
 public protocol SKTiledObject: Hashable {
     var uuid: String { get set }                    // unique id (layer & object names may not be unique).
     var properties: [String: String] { get set }    // properties shared by most objects.

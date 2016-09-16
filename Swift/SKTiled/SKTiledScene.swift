@@ -10,21 +10,40 @@ import SpriteKit
 
 
 /**
- *  Delegate for managing `SKTilemap` nodes.
+ Delegate for managing `SKTilemap` nodes in an `SKScene`. This protocol and the `SKTiledScene` objects are included as a suggested way to use the `SKTilemap` class, but are not required.
+ 
+ In this configuration, the tile map is a child of the world node and reference the custom `SKTiledSceneCamera` camera.
+ 
+ - parameter worldNode:  `SKNode!` world container node.
+ - parameter cameraNode: `SKTiledSceneCamera!` scene camera node.
+ - parameter tilemap:    `SKTilemap!` tile map node.
  */
 protocol SKTiledSceneDelegate {
-    var worldNode: SKNode! { get set }                  // world node container
-    var cameraNode: SKTiledSceneCamera! { get set }     // scene camera
-    var tilemap: SKTilemap! { get set }                 // tile map
+    /// World container node
+    var worldNode: SKNode! { get set }
+    /// Custom scene camera.
+    var cameraNode: SKTiledSceneCamera! { get set }
+    /// Tile map node.
+    var tilemap: SKTilemap! { get set }
 }
 
 
+/**
+ Custom scene type for managing `SKTilemap` nodes.
+ 
+ - parameter worldNode:  `SKNode!` world container node.
+ - parameter cameraNode: `SKTiledSceneCamera!` scene camera node.
+ - parameter tilemap:    `SKTilemap!` tile map node.
+ */
 open class SKTiledScene: SKScene, SKTiledSceneDelegate {
     
-    // SKTiledSceneDelegate
+    /// World container node.
     open var worldNode: SKNode!                   // world container node
+    /// Custom scene camera.
     open var cameraNode: SKTiledSceneCamera!      // tiled scene camera
+    /// Tile map node.
     open var tilemap: SKTilemap!                  // tile map node
+    /// Current tmx file name.
     open var tmxFilename: String!                 // current tmx file name
     
     // MARK: - Init

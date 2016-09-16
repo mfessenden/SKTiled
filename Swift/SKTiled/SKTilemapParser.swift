@@ -10,6 +10,7 @@
 import SpriteKit
 
 
+/// XML Parser error types.
 public enum ParsingError: Error {
     case attribute(attr: String)
     case attributeValue(attr: String, value: String)
@@ -22,7 +23,17 @@ public enum ParsingError: Error {
 
 // MARK: - TMX Parser
 
-/// Class for reading Tiled tmx files.
+/**
+ The `SKTilemapParser` is a custom `XMLParserDelegate` parser for reading Tiled .tmx and .tsx files.
+ 
+ To read a tile map, used the `SKTilemapParser.load` method:
+ 
+ ```swift
+ if let tilemap = SKTilemapParser().load(fromFile: "sample-file") {
+    scene.worldNode.addChild(tilemap)
+ }
+ ```
+ */
 open class SKTilemapParser: NSObject, XMLParserDelegate {
     
     open var fileNames: [String] = []                         // list of filenames to read
@@ -682,31 +693,5 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     
     private func decompress(zlibData data: String) -> String? {
         return nil
-    }
-}
-
-
-public extension String {
-    /**
-     Initialize with array of bytes.
-     
-     - parameter bytes: `[UInt8]` byte array.
-     */
-    public init(_ bytes: [UInt8]) {
-        self.init()
-        for b in bytes {
-            self.append(String(UnicodeScalar(b)))
-        }
-    }
-    
-    /**
-     Clean up whitespace & carriage returns.
-     
-     - returns: `String` scrubbed string.
-     */
-    public func scrub() -> String {
-        var scrubbed = self.replacingOccurrences(of: "\n", with: "")
-        scrubbed = scrubbed.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-        return scrubbed.replacingOccurrences(of: " ", with: "")
     }
 }

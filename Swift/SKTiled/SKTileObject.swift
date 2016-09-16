@@ -8,8 +8,15 @@
 
 import SpriteKit
 
-
-public enum ObjectType: String {
+/** 
+ Describes the SKTileObject shape type.
+ 
+ - rectangle:  shape is rectangular.
+ - ellipse:    circular shape.
+ - polygon:    polygon type (closed).
+ - polyline:   polygon type (open).
+ */
+public enum SKObjectType: String {
     case rectangle
     case ellipse
     case polygon
@@ -17,26 +24,31 @@ public enum ObjectType: String {
 }
 
 
-/// simple object class
+/**
+ The `SKTileObject` object represents a Tiled object type (rectangle, ellipse, polygon & polyline).
+ 
+ When the object is created, points can be added either with an array of `CGPoint` objects, or a string. In order to render the object, the `SKTileObject.getVertices()` method is called, which returns the points that make up the shape.
+ */
 open class SKTileObject: SKShapeNode, SKTiledObject {
 
     weak open var layer: SKObjectGroup!            // layer parent, assigned on add
     open var uuid: String = UUID().uuidString      // unique id
     open var id: Int = 0                           // object id
     open var type: String!                         // object type
-    open var objectType: ObjectType = .rectangle   // shape type
+    open var objectType: SKObjectType = .rectangle // shape type
     
     open var points: [CGPoint] = []                // points that describe object shape
     
     open var size: CGSize = CGSize.zero
     open var properties: [String: String] = [:]    // custom properties
     
-    // blending/visibility
+    /// Object opacity.
     open var opacity: CGFloat {
         get { return self.alpha }
         set { self.alpha = newValue }
     }
     
+    /// Object visibility.
     open var visible: Bool {
         get { return !self.isHidden }
         set { self.isHidden = !newValue }
@@ -200,7 +212,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
      - parameter closed: `Bool` close the object path.
      */
     open func addPoints(_ coordinates: [[CGFloat]], closed: Bool=true) {
-        self.objectType = (closed == true) ? ObjectType.polygon : ObjectType.polyline
+        self.objectType = (closed == true) ? SKObjectType.polygon : SKObjectType.polyline
 
         // create an array of points from the given coordinates
         points = coordinates.map { CGPoint(x: $0[0], y: $0[1]) }

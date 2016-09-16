@@ -10,7 +10,16 @@
 import SpriteKit
 
 
-/// Represents tileset data
+/**
+ The `SKTileset` class manages an array of `SKTilesetData` objects, which hold tile data including global id and texture.
+ 
+ Tile data is accessed via the global id ('gid'):
+ 
+ ```swift
+ let data = tileset.getTileData(56)
+ 
+ ```
+ */
 open class SKTileset: SKTiledObject {
     
     open var name: String                                        // tileset name
@@ -188,15 +197,6 @@ open class SKTileset: SKTiledObject {
         let timeInterval = Date().timeIntervalSince(timer)
         let timeStamp = String(format: "%.\(String(3))f", timeInterval)
         print("[SKTileset]: tileset built in: \(timeStamp)s\n")
-    }
-    
-    // TODO: - Need this?
-    open func addTextures(_ fromAtlas: String) {
-        print("[SKTileset]: adding texture atlas: \"\(fromAtlas)\"")
-        atlas = SKTextureAtlas(named: fromAtlas)
-        guard atlas.textureNames.count == tilemap.size.count else {
-            fatalError("")
-        }
     }
     
     // MARK: - Tile Data

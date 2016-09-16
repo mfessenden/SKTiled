@@ -14,7 +14,11 @@ public struct AnimationFrame {
 }
 
 
-/// Represents a single tileset tile data, with texture, id and properties
+
+/**
+ Represents a single tileset tile data, with texture, id and properties
+ 
+*/
 open class SKTilesetData: SKTiledObject  {
     
     weak open var tileset: SKTileset!             // is assigned on add
