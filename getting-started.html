@@ -103,9 +103,6 @@
             <a href="Other Guides.html">Other Guides</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="setup.html">Setup</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="tutorial.html">Tutorial</a>
               </li>
             </ul>
@@ -136,7 +133,32 @@
           <section class="section">
             
             <a href='#getting-started' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='getting-started'>Getting Started</h1>
-<a href='#scene-setup' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='scene-setup'>Scene Setup</h3>
+<a href='#requirements' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='requirements'>Requirements</h2>
+
+<ul>
+<li>iOS9+ / macOS 10.11+</li>
+<li>Xcode 8</li>
+<li>Swift 2.3+</li>
+</ul>
+
+<p>Check out the <a href="https://github.com/mfessenden/SKTiled/blob/master">master</a> branch for Swift 2.3, or the <a href="https://github.com/mfessenden/SKTiled/blob/iOS10">iOS10</a> branch for Swift 3. Going forward, the minimum requirements will be pushed up to Swift 3/iOS10/macOS 10.11 as some features will require newer versions of Apple&rsquo;s tools.</p>
+<a href='#swift-2-3-installation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='swift-2-3-installation'>Swift 2.3 Installation</h3>
+
+<p>If you&rsquo;re using one of the older toolchains, you&rsquo;ll need to enable the <strong>Use Legacy Swift Language Version</strong> option in the project <strong>Build Settings.</strong></p>
+
+<p><img src="img/swift_legacy.png" alt="SKTiled"></p>
+<a href='#installation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='installation'>Installation</h2>
+
+<ul>
+<li>Copy the <em>Swift/SKTiled</em> directory to your directory and add the files to your project.</li>
+<li>Set the appropriate Swift language target.</li>
+</ul>
+
+<p>That&rsquo;s it!</p>
+<a href='#adding-tiled-assets' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='adding-tiled-assets'>Adding Tiled Assets</h2>
+
+<p>When adding maps (TMX files), images and tilesets (TSX files) to your Xcode project, you&rsquo;ll need to make sure to add the files as groups and not folder references as the assets are stored in the root of the app bundle when compiled.</p>
+<a href='#scene-setup' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='scene-setup'>Scene Setup</h2>
 
 <p>Using tiled maps in your own projects is very easy. The included <code>SKTiledScene</code> class conforms to the <code>SKTiledSceneDelegate</code> protocol and could serve as a template for your scenes though you are free to implement your own setups.</p>
 
@@ -155,12 +177,39 @@
 <span class="p">}</span>
 </code></pre>
 
-<p>Use the class method <code>SKTilemap.load(fromFile:)</code> will create a parser to read the file name you give it. <em>SKTiled</em> can load internal &amp; external tilesets, though there is a slight speed penalty for loading an external tileset with larger scenes.</p>
+<p>Use the class method <code>SKTilemap.load(fromFile:)</code> will create a parser to read the file name you give it. <strong>SKTiled</strong> can load internal &amp; external tilesets, though there is a slight speed penalty for loading an external tileset with larger scenes.</p>
 
 <p>The world container node is set to 0,0 in the scene. When a tile map is loaded, it is parented to the world node. The scene camera contains weak references to the tilemap and world nodes and is used to navigate the scene.</p>
+<a href='#tile-coordinates' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='tile-coordinates'>Tile Coordinates</h2>
+
+<p>Tile coordinates in <strong>SKTiled</strong> are represented by the <a href="#TileCoord"><code>TileCoord</code></a> data type, though most classes have convenience methods to query coordinates with integer values:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">coord</span> <span class="o">=</span> <span class="kt">TileCoord</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+</code></pre>
+<a href='#working-with-maps' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='working-with-maps'>Working with Maps</h2>
+
+<p>Once the map is loaded, you can begin working with the layers. There are several ways to access layers from the <a href="#SKTilemap"><code>SKTilemap</code></a> object:</p>
+<pre class="highlight swift"><code><span class="c1">// returns a tile layer with a given name</span>
+<span class="k">let</span> <span class="nv">backgoundLayer</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getLayer</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"Background"</span><span class="p">)</span> <span class="k">as!</span> <span class="kt">SKTileLayer</span>
+</code></pre>
+
+<p>Once you have a layer, you can add child nodes to it (any <code>SKNode</code> type is allowed):</p>
+<pre class="highlight swift"><code><span class="c1">// add a child node</span>
+<span class="n">playerLayer</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
+
+<span class="c1">// set the player position based on coordinate x &amp; y values</span>
+<span class="n">player</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">playerLayer</span><span class="o">.</span><span class="nf">pointForCoordinate</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+</code></pre>
+
+<p>It is also possible to provide an offset value in x/y for more precise positioning:</p>
+<pre class="highlight swift"><code><span class="n">player</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">playerLayer</span><span class="o">.</span><span class="nf">pointForCoordinate</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="nv">offsetX</span><span class="p">:</span> <span class="mf">8.0</span><span class="p">,</span> <span class="nv">offsetY</span><span class="p">:</span> <span class="mf">4.0</span><span class="p">)</span>
+</code></pre>
+
+<p>All <a href="#TiledLayerObject"><code>TiledLayerObject</code></a> objects have convenience methods for adding children with coordinate values &amp; optional offset and even zPosition values:</p>
+<pre class="highlight swift"><code><span class="n">playerLayer</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="nv">zPosition</span><span class="p">:</span> <span class="mf">25.0</span><span class="p">)</span>
+</code></pre>
 <a href='#default-layer' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='default-layer'>Default Layer</h3>
 
-<p>By default, the <a href="#SKTilemap"><code>SKTilemap</code></a> class uses a default tile layer accessible via <code>SKTilemap.baseLayer</code>. The base layer is automatically created is used for coordinate transforms and for visualizing the grid (the base layer&rsquo;s z-position is always higher than the other layers).</p>
+<p>By default, the <a href="SKTilemap.html"><code>SKTilemap</code></a> class uses a default tile layer accessible via <code>SKTilemap.baseLayer</code>. The base layer is automatically created is used for coordinate transforms and for visualizing the grid (the base layer&rsquo;s z-position is always higher than the other layers).</p>
 
 <p>By default, when you query a point in the <code>SKTilemap</code> node, you are getting a location in the default base layer (see the <a href="coordinates">Coordinates</a> section).</p>
 

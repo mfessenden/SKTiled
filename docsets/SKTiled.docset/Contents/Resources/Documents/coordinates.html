@@ -103,9 +103,6 @@
             <a href="Other Guides.html">Other Guides</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="setup.html">Setup</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="tutorial.html">Tutorial</a>
               </li>
             </ul>
@@ -143,14 +140,15 @@
 <pre class="highlight swift"><code><span class="c1">// iOS with UITouch</span>
 <span class="k">let</span> <span class="nv">touchPosition</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">touchLocation</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
 
-
 <span class="c1">// OSX with NSEvent mouse event</span>
 <span class="k">let</span> <span class="nv">eventPosition</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">mouseLocation</span><span class="p">(</span><span class="nv">event</span><span class="p">:</span> <span class="n">mouseEvent</span><span class="p">)</span>
 </code></pre>
 
 <p>Each layer type also have convenience methods for querying screen points or tile coordinates:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">point</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">pointForCoordinate</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="c1">// covert coordinate position to CGPoint</span>
+<span class="k">let</span> <span class="nv">point</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">pointForCoordinate</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 
+<span class="c1">// covert CGPoint to coordinate position</span>
 <span class="k">let</span> <span class="nv">coord</span> <span class="o">=</span> <span class="n">objectGroup</span><span class="o">.</span><span class="nf">coordinateForPoint</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
 </code></pre>
 

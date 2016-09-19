@@ -103,9 +103,6 @@
             <a href="Other Guides.html">Other Guides</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="setup.html">Setup</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="tutorial.html">Tutorial</a>
               </li>
             </ul>
@@ -135,7 +132,7 @@
         <section>
           <section class="section">
             
-            <a href='#properties' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='properties'>Properties</h1>
+            <a href='#custom-properties' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='custom-properties'>Custom Properties</h1>
 
 <p>One of the most powerful features of <em>SKTiled</em> is the ability to exploit Tiled&rsquo;s custom properties for most objects. 
 All objects that conform to the <code>TiledObject</code> protocol have methods for parsing Tiled object properties.</p>
@@ -167,6 +164,7 @@ SKObjectGroup:
   lineWidth           (Float)     - object line width.
   showNames           (Bool)      - display object names.
   showObjects         (Bool)      - globally show/hide objects.
+  isDynamic           (Bool)      - automatically create objects as dynamic bodies
 
 SKImageLayer:
   frame               (File)      - image layer animation frame.
@@ -181,6 +179,13 @@ SKTileObject:
   color               (String)    - hex string to override object color.
   lineWidth           (Float)     - object line width.   
 </code></pre>
+<a href='#property-types' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='property-types'>Property Types</h2>
+
+<p>Tiled property values are all encoded as strings. <strong>SKTiled</strong> will attempt to parse the intended type, but here are some guidelines:</p>
+
+<ul>
+<li>Bool values can be stored as <strong>true/false</strong> or <strong>0/1</strong></li>
+</ul>
 <a href='#tiled-v0-17-properties' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='tiled-v0-17-properties'>Tiled v0.17 Properties</h2>
 
 <p>If you are using the v0.17 of Tiled or newer, <em>SKTiled</em> supports the new <strong>color</strong> and <strong>file</strong> property types (values are stored as strings internally anyway, which <em>SKTiled</em> already supports). The custom color/file types listed above will also be parsed if they are created as string types in Tiled.</p>

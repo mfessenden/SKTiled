@@ -104,9 +104,6 @@
             <a href="../Other Guides.html">Other Guides</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../setup.html">Setup</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../tutorial.html">Tutorial</a>
               </li>
             </ul>
@@ -142,7 +139,7 @@
 
                 </div>
               </div>
-            <p>The <code>SKTilemapParser</code> is a custom <code>XMLParserDelegate</code> parser for reading Tiled .tmx and .tsx files.</p>
+            <p>The <code>SKTilemapParser</code> is a custom <code>XMLParserDelegate</code> parser for reading Tiled TMX and tileset TSX files.</p>
 
 <p>To read a tile map, used the <code>SKTilemapParser.load</code> method:</p>
 
@@ -168,7 +165,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Load a tmx file and parse it.</p>
+                        <p>Load a TMX file and parse it.</p>
 
                       </div>
                       <div class="declaration">
@@ -191,7 +188,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p><code>String</code> file base name - tmx/tsx not required.</p>
+                                  <p><code>String</code> file base name - TMX/TSX not required.</p>
 
                                 </div>
                               </td>
@@ -203,6 +200,9 @@
                         <h4>Return Value</h4>
                         <p><code>SKTilemap?</code> tiled map node.</p>
 
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemapParser.swift#L65-L121">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -220,7 +220,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Return the appropriate filename string for the given file (tmx or tsx) since Tiled stores
+                        <p>Return the appropriate filename string for the given file (TMX or TSX) since Tiled stores
 xml files with multiple extensions.</p>
 
                       </div>
@@ -256,6 +256,9 @@ xml files with multiple extensions.</p>
                         <h4>Return Value</h4>
                         <p><code>String?</code> name of file in bundle.</p>
 
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemapParser.swift#L130-L142">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

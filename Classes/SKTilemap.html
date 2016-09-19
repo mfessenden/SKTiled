@@ -104,9 +104,6 @@
             <a href="../Other Guides.html">Other Guides</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../setup.html">Setup</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../tutorial.html">Tutorial</a>
               </li>
             </ul>
@@ -150,7 +147,7 @@
 <li>sizeInPoints: tile map size in points.</li>
 </ul>
 
-<p>Tile data is added via <code><a href="../Classes/SKTileset.html">SKTileset</a></code> tile sets.</p>
+<p>Tile data is managed via <code><a href="../Classes/SKTileset.html">SKTileset</a></code> tile sets.</p>
 
           </section>
           <section class="section task-group-section">
@@ -180,15 +177,18 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L156">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vP7SKTiled13SKTiledObject4uuidSS"></a>
+                    <a name="/s:vC7SKTiled9SKTilemap4uuidSS"></a>
                     <a name="//apple_ref/swift/Property/uuid" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vP7SKTiled13SKTiledObject4uuidSS">uuid</a>
+                    <a class="token" href="#/s:vC7SKTiled9SKTilemap4uuidSS">uuid</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -196,16 +196,19 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Tile map file name.</p>
+                        <p>Unique ID (internal use only)</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">uuid</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kt">UUID</span><span class="p">()</span><span class="o">.</span><span class="n">uuidString</span>                          <span class="c1">// unique id</span></code></pre>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">uuid</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kt">UUID</span><span class="p">()</span><span class="o">.</span><span class="n">uuidString</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L158">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -234,6 +237,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L161">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -261,6 +267,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L164">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -286,6 +295,9 @@
                           <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">properties</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">String</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:]</span>                        <span class="c1">// custom properties</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L21">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -314,6 +326,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L197">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -340,6 +355,9 @@
                           <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">sizeInPoints</span><span class="p">:</span> <span class="kt">CGSize</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L209-L231">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -368,6 +386,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L241-L243">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -394,6 +415,9 @@
                           <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">lastIndex</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L246-L248">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -422,6 +446,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L251-L253">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -448,6 +475,9 @@
                           <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">tileOverlap</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mf">0.5</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L256-L263">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -476,6 +506,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L266-L273">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -502,6 +535,9 @@
                           <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">tileLayers</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/SKTileLayer.html">SKTileLayer</a></span><span class="p">]</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L276-L278">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -530,6 +566,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L281-L283">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -556,6 +595,9 @@
                           <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">imageLayers</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/SKImageLayer.html">SKImageLayer</a></span><span class="p">]</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L286-L288">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -584,7 +626,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Load a Tiled tmx file and return a new <code>SKTilemap</code> object.</p>
+                        <p>Load a Tiled TMX file and return a new <code>SKTilemap</code> object.</p>
 
                       </div>
                       <div class="declaration">
@@ -619,6 +661,9 @@
                         <h4>Return Value</h4>
                         <p><code>SKTilemap?</code> tilemap object (if file read succeeds).</p>
 
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L299-L304">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -683,6 +728,9 @@
                         <p><code>SKTileMapNode?</code></p>
 
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L314-L369">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -741,6 +789,9 @@
                           </tbody>
                         </table>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L401-L405">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -792,6 +843,9 @@
                         <h4>Return Value</h4>
                         <p><code>SKTileset?</code> tileset object.</p>
 
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L414-L420">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -845,6 +899,9 @@
                         <p><code>SKTileset?</code></p>
 
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L429-L435">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -888,6 +945,9 @@
                         <p><code>[TiledLayerObject]</code> array of layers.</p>
 
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L444-L446">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -919,6 +979,9 @@
                         <h4>Return Value</h4>
                         <p><code>[String]</code> layer names.</p>
 
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L453-L455">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -966,6 +1029,9 @@
                             </tr>
                           </tbody>
                         </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L462-L481">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1019,6 +1085,9 @@
                         <p><code>TiledLayerObject?</code> layer object.</p>
 
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L496-L502">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1070,6 +1139,9 @@
                         <h4>Return Value</h4>
                         <p><code>TiledLayerObject?</code> layer object.</p>
 
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L511-L517">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1123,6 +1195,9 @@
                         <p><code>TiledLayerObject?</code> layer object.</p>
 
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L526-L532">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1170,6 +1245,9 @@ to show all layers.</p>
                             </tr>
                           </tbody>
                         </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L540-L550">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1223,6 +1301,9 @@ to show all layers.</p>
                         <p><code>SKTileLayer?</code></p>
 
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L559-L565">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1274,6 +1355,9 @@ to show all layers.</p>
                         <h4>Return Value</h4>
                         <p><code>SKTileLayer?</code></p>
 
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L574-L580">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1327,6 +1411,9 @@ to show all layers.</p>
                         <p><code>SKObjectGroup?</code></p>
 
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L589-L595">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1379,6 +1466,9 @@ to show all layers.</p>
                         <p><code>SKObjectGroup?</code></p>
 
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L604-L610">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1425,6 +1515,9 @@ to show all layers.</p>
                             </tr>
                           </tbody>
                         </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L661-L664">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1488,6 +1581,9 @@ to show all layers.</p>
                         <h4>Return Value</h4>
                         <p><code>[SKTile]</code> array of tiles.</p>
 
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L675-L683">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1554,6 +1650,9 @@ to show all layers.</p>
                         <p><code>[SKTile]</code> array of tiles.</p>
 
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L693-L695">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1619,6 +1718,9 @@ to show all layers.</p>
                         <p><code>SKTile?</code> tile, or nil.</p>
 
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L705-L712">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1671,6 +1773,9 @@ to show all layers.</p>
                         <p><code>[SKTile]</code> array of tiles.</p>
 
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L725-L731">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1722,6 +1827,9 @@ to show all layers.</p>
                         <h4>Return Value</h4>
                         <p><code>[SKTile]</code> array of tiles.</p>
 
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L740-L746">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1788,6 +1896,9 @@ to show all layers.</p>
                         <p><code>[SKTile]</code> array of tiles.</p>
 
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L755-L761">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1840,6 +1951,9 @@ to show all layers.</p>
                         <p><code>[SKTile]</code> array of tiles.</p>
 
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L769-L771">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1871,6 +1985,9 @@ to show all layers.</p>
                         <h4>Return Value</h4>
                         <p><code>[SKTile]</code> array of tiles.</p>
 
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L778-L789">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1924,6 +2041,9 @@ to show all layers.</p>
                         <p><code>SKTile?</code> first tile in layers.</p>
 
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L798-L807">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1966,6 +2086,9 @@ to show all layers.</p>
                         <h4>Return Value</h4>
                         <p><code>[SKTileObject]</code> array of objects.</p>
 
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L816-L825">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2019,6 +2142,9 @@ to show all layers.</p>
                         <p><code>[SKTileObject]</code> array of objects.</p>
 
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L834-L848">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -2070,6 +2196,9 @@ to show all layers.</p>
                         <h4>Return Value</h4>
                         <p><code>[SKTileObject]</code> array of objects.</p>
 
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L857-L872">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2134,6 +2263,9 @@ to show all layers.</p>
                         <p><code><a href="../Classes/SKTilesetData.html">SKTilesetData</a></code> tile data, if it exists.</p>
 
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L882-L889">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -2161,7 +2293,7 @@ to show all layers.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Parse properties from the Tiled tmx file.</p>
+                        <p>Parse properties from the Tiled TMX file.</p>
 
                       </div>
                       <div class="declaration">
@@ -2171,6 +2303,9 @@ to show all layers.</p>
                           <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">parseProperties</span><span class="p">()</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap+Properties.swift#L17-L91">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2235,6 +2370,9 @@ to show all layers.</p>
                         <p><code>Bool</code> column should be staggered.</p>
 
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L1081-L1083">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -2287,6 +2425,9 @@ to show all layers.</p>
                         <p><code>Bool</code> row should be staggered.</p>
 
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L1091-L1093">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -2313,6 +2454,9 @@ to show all layers.</p>
                           <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">debugDraw</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L1178-L1187">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2351,6 +2495,9 @@ to show all layers.</p>
                           <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">debugLayers</span><span class="p">()</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L1193-L1208">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
