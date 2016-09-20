@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>SKTileObject Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/SKTileObject" class="dashAnchor"></a>
+    <a title="SKTileObject Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">SKTiled Docs</a> (62% documented)</p>
+        <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">SKTiled Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        SKTileObject Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Tutorial.html">Tutorial</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../getting-started.html">Getting Started</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../coordinates.html">Coordinates</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../objects.html">Objects</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../properties.html">Properties</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../gameplaykit.html">GameplayKit</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../debugging.html">Debugging</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/SKTiledObject.html">SKTiledObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Class Reference.html">Class Reference</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/SKTilemap.html">SKTilemap</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTilemapParser.html">SKTilemapParser</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTileset.html">SKTileset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TiledLayerObject.html">TiledLayerObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTileLayer.html">SKTileLayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKObjectGroup.html">SKObjectGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKImageLayer.html">SKImageLayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTile.html">SKTile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTileObject.html">SKTileObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTilesetData.html">SKTilesetData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TileCoord.html">TileCoord</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Guides.html">Other Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../setup.html">Setup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../tutorial.html">Tutorial</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/SKTiledScene.html">SKTiledScene</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Extensions.html">Other Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/SKTiledLayerType.html">SKTiledLayerType</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>SKTileObject</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">SKTileObject</span><span class="p">:</span> <span class="kt">SKShapeNode</span><span class="p">,</span> <span class="kt"><a href="../Protocols/SKTiledObject.html">SKTiledObject</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>The <code>SKTileObject</code> object represents a Tiled object type (rectangle, ellipse, polygon &amp; polyline). </p>
+
+<p>When the object is created, points can be added either with an array of <code>CGPoint</code> objects, or a string. In order to render the object, the <code>SKTileObject.getVertices()</code> method is called, which returns the points that make up the shape.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vP7SKTiled13SKTiledObject4uuidSS"></a>
+                    <a name="//apple_ref/swift/Property/uuid" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vP7SKTiled13SKTiledObject4uuidSS">uuid</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">uuid</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kt">UUID</span><span class="p">()</span><span class="o">.</span><span class="n">uuidString</span>               <span class="c1">// unique id</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vP7SKTiled13SKTiledObject10propertiesGVs10DictionarySSSS_"></a>
+                    <a name="//apple_ref/swift/Property/properties" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vP7SKTiled13SKTiledObject10propertiesGVs10DictionarySSSS_">properties</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">properties</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">String</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:]</span>    <span class="c1">// custom properties</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Drawing"></a>
+                <a name="//apple_ref/swift/Section/Drawing" class="dashAnchor"></a>
+                <a href="#/Drawing">
+                  <h3 class="section-name">Drawing</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC7SKTiled12SKTileObject8setColorFT5colorCSo7NSColor9withAlphaV12CoreGraphics7CGFloat_T_"></a>
+                    <a name="//apple_ref/swift/Method/setColor(color:withAlpha:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC7SKTiled12SKTileObject8setColorFT5colorCSo7NSColor9withAlphaV12CoreGraphics7CGFloat_T_">setColor(color:withAlpha:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set the fill &amp; stroke colors (with optional alpha component for the fill)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">setColor</span><span class="p">(</span><span class="nv">color</span><span class="p">:</span> <span class="kt">SKColor</span><span class="p">,</span> <span class="n">withAlpha</span> <span class="nv">alpha</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="o">=</span><span class="mf">0.35</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>color</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>SKColor</code> fill &amp; stroke color.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>alpha</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>CGFloat</code> alpha component for fill.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC7SKTiled12SKTileObject8setColorFT9hexStringSS9withAlphaV12CoreGraphics7CGFloat_T_"></a>
+                    <a name="//apple_ref/swift/Method/setColor(hexString:withAlpha:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC7SKTiled12SKTileObject8setColorFT9hexStringSS9withAlphaV12CoreGraphics7CGFloat_T_">setColor(hexString:withAlpha:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set the fill &amp; stroke colors with a hexadecimal string.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">setColor</span><span class="p">(</span><span class="nv">hexString</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">withAlpha</span> <span class="nv">alpha</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="o">=</span><span class="mf">0.35</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>color</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>hexString</code> hex color string.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>alpha</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>CGFloat</code> alpha component for fill.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC7SKTiled12SKTileObject10drawObjectFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/drawObject()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC7SKTiled12SKTileObject10drawObjectFT_T_">drawObject()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Draw the object path.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">drawObject</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Polygon%20Points"></a>
+                <a name="//apple_ref/swift/Section/Polygon Points" class="dashAnchor"></a>
+                <a href="#/Polygon%20Points">
+                  <h3 class="section-name">Polygon Points</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC7SKTiled12SKTileObject9addPointsFTGSaGSaV12CoreGraphics7CGFloat__6closedSb_T_"></a>
+                    <a name="//apple_ref/swift/Method/addPoints(_:closed:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC7SKTiled12SKTileObject9addPointsFTGSaGSaV12CoreGraphics7CGFloat__6closedSb_T_">addPoints(_:closed:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add polygons points.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">addPoints</span><span class="p">(</span><span class="n">_</span> <span class="nv">coordinates</span><span class="p">:</span> <span class="p">[[</span><span class="kt">CGFloat</span><span class="p">]],</span> <span class="nv">closed</span><span class="p">:</span> <span class="kt">Bool</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>points</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>[[CGFloat]]</code> array of coordinates.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>closed</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>Bool</code> close the object path.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC7SKTiled12SKTileObject19addPointsWithStringFSST_"></a>
+                    <a name="//apple_ref/swift/Method/addPointsWithString(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC7SKTiled12SKTileObject19addPointsWithStringFSST_">addPointsWithString(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add points from a string.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">addPointsWithString</span><span class="p">(</span><span class="n">_</span> <span class="nv">points</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>points</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>String</code> string of coordinates.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC7SKTiled12SKTileObject15parsePropertiesFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/parseProperties()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC7SKTiled12SKTileObject15parsePropertiesFT_T_">parseProperties()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parse the object&rsquo;s properties value.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">parseProperties</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC7SKTiled12SKTileObject9hashValueSi"></a>
+                    <a name="//apple_ref/swift/Property/hashValue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC7SKTiled12SKTileObject9hashValueSi">hashValue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Return the current points.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">override</span> <span class="n">open</span> <span class="k">var</span> <span class="nv">hashValue</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>© 2016 Michael Fessenden](<a href="https://github.com/mfessenden">https://github.com/mfessenden</a>) under <a class="link" href="https://github.com/mfessenden/SKTiled/blob/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

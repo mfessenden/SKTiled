@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>GameplayKit  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="GameplayKit  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">SKTiled Docs</a> (62% documented)</p>
+        <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">SKTiled Reference</a>
+        <img id="carat" src="img/carat.png" />
+        GameplayKit  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Tutorial.html">Tutorial</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="getting-started.html">Getting Started</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="coordinates.html">Coordinates</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="objects.html">Objects</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="properties.html">Properties</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="gameplaykit.html">GameplayKit</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="debugging.html">Debugging</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/SKTiledObject.html">SKTiledObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Class Reference.html">Class Reference</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/SKTilemap.html">SKTilemap</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTilemapParser.html">SKTilemapParser</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTileset.html">SKTileset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/TiledLayerObject.html">TiledLayerObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTileLayer.html">SKTileLayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKObjectGroup.html">SKObjectGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKImageLayer.html">SKImageLayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTile.html">SKTile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTileObject.html">SKTileObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTilesetData.html">SKTilesetData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/TileCoord.html">TileCoord</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Guides.html">Other Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="setup.html">Setup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="tutorial.html">Tutorial</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledScene.html">SKTiledScene</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Extensions.html">Other Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions/SKTiledLayerType.html">SKTiledLayerType</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <a href='#gameplaykit-integration' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='gameplaykit-integration'>GameplayKit Integration</h1>
+
+<p><em>SKTiled</em> supports Apple&rsquo;s GameplayKit by allowing users to build pathfinding graphs in tile layers (currently only orthogonal tile layers are supported). Every <code>SKTileLayer</code> instance has an optional <code>GKGridGraph</code> attribute accesible via the <code>SKTileLayer.graph</code> attribute:</p>
+<pre class="highlight swift"><code>  <span class="n">tileLayer</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="kt">GKGridGraph</span>
+</code></pre>
+
+<p>Passing custom properties in the Tiled scene can be used to create pathfinding graphs automatically:</p>
+<pre class="highlight plaintext"><code>SKTilemap:
+  buildGraph          (String)    - layer name(s) on which to build graphs.
+  walkableIDs         (String)    - list of comma-separated tile gids.
+
+SKTileset:
+  walkable            (Bool)      - flags tiles with gid as walkable. 
+  weight              (Float)     - custom node weight.
+
+SKTileLayer:
+  buildGraph          (Bool)      - flags the layer as having a grid graph.
+  walkableIDs         (String)    - list of comma-separated tile gids.
+</code></pre>
+
+<p>You can also initialize a layer&rsquo;s graph manually in your code:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">graphLayer</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">tileLayer</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"Graph"</span><span class="p">)</span><span class="o">!</span>
+<span class="k">let</span> <span class="nv">walkable</span><span class="p">:</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">]</span>
+<span class="n">graphLayer</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="nf">initializeGraph</span><span class="p">(</span><span class="nv">walkableIDs</span><span class="p">:</span> <span class="n">walkable</span><span class="p">,</span> <span class="nv">diagonalsAllowed</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>
+</code></pre>
+<a href='#custom-node-weights-ios10-only' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='custom-node-weights-ios10-only'>Custom Node Weights (iOS10 only)</h2>
+
+<p>The included <code>SKTiledGraphNode</code> class adds a <code>weight</code> attribute that can be used to affect the outcome of heuristic pathfinding.</p>
+<pre class="highlight swift"><code><span class="n">tileLayer</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="kt">GKGridGraph</span><span class="p">(</span><span class="nv">fromGridStartingAt</span><span class="p">:</span> <span class="nf">int2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="nv">width</span><span class="p">:</span> <span class="n">tileLayer</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="n">tileLayer</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="nv">diagonalsAllowed</span><span class="p">:</span> <span class="n">diagonalsAllowed</span><span class="p">,</span> <span class="nv">nodeClass</span><span class="p">:</span> <span class="kt">SKTiledGraphNode</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+</code></pre>
+<a href='#querying-neighbor-nodes' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='querying-neighbor-nodes'>Querying Neighbor Nodes*</h2>
+
+<p>*future update</p>
+
+<p>Next: <a href="debugging.html">Debugging</a></p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>© 2016 Michael Fessenden](<a href="https://github.com/mfessenden">https://github.com/mfessenden</a>) under <a class="link" href="https://github.com/mfessenden/SKTiled/blob/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

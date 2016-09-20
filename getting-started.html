@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Getting Started  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="Getting Started  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">SKTiled Docs</a> (62% documented)</p>
+        <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">SKTiled Reference</a>
+        <img id="carat" src="img/carat.png" />
+        Getting Started  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Tutorial.html">Tutorial</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="getting-started.html">Getting Started</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="coordinates.html">Coordinates</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="objects.html">Objects</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="properties.html">Properties</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="gameplaykit.html">GameplayKit</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="debugging.html">Debugging</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/SKTiledObject.html">SKTiledObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Class Reference.html">Class Reference</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/SKTilemap.html">SKTilemap</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTilemapParser.html">SKTilemapParser</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTileset.html">SKTileset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/TiledLayerObject.html">TiledLayerObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTileLayer.html">SKTileLayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKObjectGroup.html">SKObjectGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKImageLayer.html">SKImageLayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTile.html">SKTile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTileObject.html">SKTileObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTilesetData.html">SKTilesetData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/TileCoord.html">TileCoord</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Guides.html">Other Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="setup.html">Setup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="tutorial.html">Tutorial</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledScene.html">SKTiledScene</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Extensions.html">Other Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions/SKTiledLayerType.html">SKTiledLayerType</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <a href='#getting-started' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='getting-started'>Getting Started</h1>
+<a href='#scene-setup' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='scene-setup'>Scene Setup</h3>
+
+<p>Using tiled maps in your own projects is very easy. The included <code>SKTiledScene</code> class conforms to the <code>SKTiledSceneDelegate</code> protocol and could serve as a template for your scenes though you are free to implement your own setups.</p>
+
+<p>If you choose to create your own scene type, a simple setup could be as simple as:</p>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SpriteKit</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="kt">GameScene</span><span class="p">:</span> <span class="kt">SKScene</span> <span class="p">{</span>
+    <span class="k">override</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">didMoveToView</span><span class="p">(</span><span class="nv">view</span><span class="p">:</span> <span class="kt">SKView</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">fromFile</span><span class="p">:</span> <span class="s">"myTiledFile"</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
+            <span class="c1">// center the tilemap in the scene</span>
+            <span class="n">tilemap</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">view</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
+            <span class="n">tilemap</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">view</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Use the class method <code>SKTilemap.load(fromFile:)</code> will create a parser to read the file name you give it. <em>SKTiled</em> can load internal &amp; external tilesets, though there is a slight speed penalty for loading an external tileset with larger scenes.</p>
+
+<p>The world container node is set to 0,0 in the scene. When a tile map is loaded, it is parented to the world node. The scene camera contains weak references to the tilemap and world nodes and is used to navigate the scene.</p>
+<a href='#default-layer' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='default-layer'>Default Layer</h3>
+
+<p>By default, the <a href="#SKTilemap"><code>SKTilemap</code></a> class uses a default tile layer accessible via <code>SKTilemap.baseLayer</code>. The base layer is automatically created is used for coordinate transforms and for visualizing the grid (the base layer&rsquo;s z-position is always higher than the other layers).</p>
+
+<p>By default, when you query a point in the <code>SKTilemap</code> node, you are getting a location in the default base layer (see the <a href="coordinates">Coordinates</a> section).</p>
+
+<p>Next: <a href="coordinates.html">Coordinates</a></p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>© 2016 Michael Fessenden](<a href="https://github.com/mfessenden">https://github.com/mfessenden</a>) under <a class="link" href="https://github.com/mfessenden/SKTiled/blob/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

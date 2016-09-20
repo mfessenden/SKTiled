@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Properties  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="Properties  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">SKTiled Docs</a> (62% documented)</p>
+        <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">SKTiled Reference</a>
+        <img id="carat" src="img/carat.png" />
+        Properties  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Tutorial.html">Tutorial</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="getting-started.html">Getting Started</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="coordinates.html">Coordinates</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="objects.html">Objects</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="properties.html">Properties</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="gameplaykit.html">GameplayKit</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="debugging.html">Debugging</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/SKTiledObject.html">SKTiledObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Class Reference.html">Class Reference</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/SKTilemap.html">SKTilemap</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTilemapParser.html">SKTilemapParser</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTileset.html">SKTileset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/TiledLayerObject.html">TiledLayerObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTileLayer.html">SKTileLayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKObjectGroup.html">SKObjectGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKImageLayer.html">SKImageLayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTile.html">SKTile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTileObject.html">SKTileObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTilesetData.html">SKTilesetData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/TileCoord.html">TileCoord</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Guides.html">Other Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="setup.html">Setup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="tutorial.html">Tutorial</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledScene.html">SKTiledScene</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Extensions.html">Other Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions/SKTiledLayerType.html">SKTiledLayerType</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <a href='#properties' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='properties'>Properties</h1>
+
+<p>One of the most powerful features of <em>SKTiled</em> is the ability to exploit Tiled&rsquo;s custom properties for most objects. 
+All objects that conform to the <code>TiledObject</code> protocol have methods for parsing Tiled object properties.</p>
+<pre class="highlight plaintext"><code>SKTilemap:
+  name                (String)    - map name.
+  hidden              (Bool)      - hide the map.
+  worldScale          (Float)     - world starting scale.
+  debug               (Bool)      - debug mode.                                       (debug)      
+  gridColor           (Color)     - hex string used for visualizing the tile grid.    (debug)
+  gridOpacity         (Float)     - grid overlay opactity.                            (debug)    
+  frameColor          (Color)     - hex string used for visualizing the bounding box. (debug)
+  highlightColor      (Color)     - hex string used for highlighting tiles.           (debug)
+  zPosition           (Float)     - initial zPosition.
+  allowMovement       (Bool)      - scene camera movement enabled.
+  allowZoom           (Bool)      - scene camera zoom enabled.
+  showObjects         (Bool)      - globally show/hide objects in all object groups.
+  tileOverlap         (Float)     - tile overlap amount.
+  maxZoom             (Float)     - maximum camera zoom.
+  minZoom             (Float)     - minimum camera zoom.
+  ignoreBackground    (Bool)      - ignore Tiled scene background color.
+
+TiledLayerObject:
+  hidden              (Bool)      - hide the layer.
+  color               (String)    - hex string to override color.
+  zPosition           (Float)     - used to manually override layer zPosition.
+  gridColor           (Color)     - hex string used for visualizing the tile grid.
+
+SKObjectGroup:
+  lineWidth           (Float)     - object line width.
+  showNames           (Bool)      - display object names.
+  showObjects         (Bool)      - globally show/hide objects.
+
+SKImageLayer:
+  frame               (File)      - image layer animation frame.
+  duration            (Float)     - frame duration.
+
+SKTilesetData:
+  collisionSize       (Float)     - used to add collision to the tile.
+  collisionShape      (Int)       - 0 = rectangle, 1 = circle.
+
+SKTileObject:
+  hidden              (Bool)      - hide the object.
+  color               (String)    - hex string to override object color.
+  lineWidth           (Float)     - object line width.   
+</code></pre>
+<a href='#tiled-v0-17-properties' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='tiled-v0-17-properties'>Tiled v0.17 Properties</h2>
+
+<p>If you are using the v0.17 of Tiled or newer, <em>SKTiled</em> supports the new <strong>color</strong> and <strong>file</strong> property types (values are stored as strings internally anyway, which <em>SKTiled</em> already supports). The custom color/file types listed above will also be parsed if they are created as string types in Tiled.</p>
+<a href='#sktilemap-colors' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='sktilemap-colors'>SKTilemap Colors</h2>
+<pre class="highlight plaintext"><code>// setting one of these in the tiled file will apply it to ALL layers
+gridColor: grid visualization color
+frameColor: bounding box color
+highlightColor: layer highlight color
+</code></pre>
+<a href='#tiledlayerobject-colors' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='tiledlayerobject-colors'>TiledLayerObject Colors</h2>
+<pre class="highlight plaintext"><code>color:  object group color
+gridColor: grid visualization color
+frameColor: bounding box color
+highlightColor: layer highlight color
+</code></pre>
+
+<p>Next: <a href="gameplaykit.html">GameplayKit</a></p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>© 2016 Michael Fessenden](<a href="https://github.com/mfessenden">https://github.com/mfessenden</a>) under <a class="link" href="https://github.com/mfessenden/SKTiled/blob/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
