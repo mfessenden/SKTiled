@@ -129,7 +129,7 @@
 
 <p>SpriteKit uses a coordinate system that is different from Tiled&rsquo;s; in SpriteKit, a SpriteKit node&rsquo;s origin is on the bottom-left, while Tiled&rsquo;s origin is top-left. </p>
 
-<p>To emulate this, the <code>SKTilemap</code> node draws its layers starting at the origin and moving <em>downwards</em> into the negative y-space. To accomodate this, each layer type has methods for converting points into negative-y space:</p>
+<p>To emulate this, the <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> node draws its layers starting at the origin and moving <em>downwards</em> into the negative y-space. To accomodate this, each layer type has methods for converting points into negative-y space:</p>
 <pre class="highlight swift"><code><span class="c1">// iOS with UITouch</span>
 <span class="k">let</span> <span class="nv">touchPosition</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">touchLocation</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
 
@@ -145,21 +145,15 @@
 <span class="k">let</span> <span class="nv">coord</span> <span class="o">=</span> <span class="n">objectGroup</span><span class="o">.</span><span class="nf">coordinateForPoint</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
 </code></pre>
 
-<p>Each layer has the ability to independently query a coordinate (which can be different depending on each layer&rsquo;s offset). Querying a point in the parent <code>SKTilemap</code> node returns values in the default base layer.</p>
-<a href='#layer-offsets-amp-hints' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='layer-offsets-amp-hints'>Layer Offsets &amp; Hints</h3>
+<p>Each layer has the ability to independently query a coordinate (which can be different depending on each layer&rsquo;s offset). Querying a point in the parent <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> node returns values in the default base layer.</p>
+<a href='#layer-offsets-amp-hints' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='layer-offsets-amp-hints'>Layer Offsets &amp; Hints</h2>
 
-<p><code>TileOffset</code> - Offset hint for placement within each layer type.</p>
-
-<p><code>LayerPosition</code> -  Alignment hint used to position the layers within the <code>SKTilemap</code> node.</p>
-<pre class="highlight plaintext"><code>TileOffset.BottomLeft  tile aligns at the bottom left corner.
-TileOffset.TopLeft     tile aligns at the top left corner.
-TileOffset.TopRight    tile aligns at the top right corner.
-TileOffset.BottomRight tile aligns at the bottom right corner.
-TileOffset.Center      tile aligns at the center.
-
-LayerPosition.BottomLeft  // 0   - node bottom left rests at parent zeropoint
-LayerPosition.Center      // 0.5 - node center rests at parent zeropoint
-LayerPosition.TopRight    // 1   - node top right rests at parent zeropoint
+<p><code>TileOffset</code>: Offset hint for placement within each layer type.</p>
+<pre class="highlight plaintext"><code>TileOffset.BottomLeft  returns a point at the bottom left corner.
+TileOffset.TopLeft     returns a point at the top left corner.
+TileOffset.TopRight    returns a point at the top right corner.
+TileOffset.BottomRight returns a point at the bottom right corner.
+TileOffset.Center      returns a point at the center.
 </code></pre>
 
 <p>Next: <a href="objects.html">Working with Objects</a> - <a href="Tutorial.html">Index</a></p>
