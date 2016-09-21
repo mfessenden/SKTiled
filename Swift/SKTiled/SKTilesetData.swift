@@ -11,6 +11,7 @@ import SpriteKit
 public struct AnimationFrame {
     public var gid: Int = 0
     public var duration: TimeInterval = 0
+    public var texture: SKTexture? = nil
 }
 
 
@@ -82,8 +83,8 @@ open class SKTilesetData: SKTiledObject  {
      - parameter duration:    `NSTimeInterval` frame interval.
      - parameter tileTexture: `SKTexture?` frame texture.
      */
-    open func addFrame(_ gid: Int, interval: TimeInterval, tileTexture: SKTexture?=nil) {
-        frames.append(AnimationFrame(gid: gid, duration: interval))
+    open func addFrame(_ gid: Int, interval: TimeInterval, tileTexture: SKTexture? = nil) {
+        frames.append(AnimationFrame(gid: gid, duration: interval, texture: tileTexture))
     }
 }
 

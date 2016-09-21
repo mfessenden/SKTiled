@@ -17,7 +17,6 @@ import SpriteKit
  
  ```swift
  let data = tileset.getTileData(56)
- 
  ```
  */
 open class SKTileset: SKTiledObject {

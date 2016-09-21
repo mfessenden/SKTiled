@@ -140,7 +140,7 @@ New nodes (any `SKNode` type) can be added directly to any layer:
 
 ```swift
 let newNode = SKNode()
-groundLayer.addNode(newNode, 4, 5, zPosition: 100.0)
+groundLayer.addChild(newNode, 4, 5, zPosition: 100.0)
 ```
 
 ## Animated Tiles

@@ -11,12 +11,14 @@ import SpriteKit
 /** 
  Describes the SKTileObject shape type.
  
+ - invalid:    shape is undefined.
  - rectangle:  shape is rectangular.
  - ellipse:    circular shape.
  - polygon:    polygon type (closed).
  - polyline:   polygon type (open).
  */
 public enum SKObjectType: String {
+    case invalid
     case rectangle
     case ellipse
     case polygon
@@ -35,7 +37,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     open var uuid: String = UUID().uuidString      // unique id
     open var id: Int = 0                           // object id
     open var type: String!                         // object type
-    open var objectType: SKObjectType = .rectangle // shape type
+    open var objectType: SKObjectType = .invalid   // shape type
     
     open var points: [CGPoint] = []                // points that describe object shape
     
@@ -99,6 +101,9 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                       CGPoint(x: width, y: height),
                       CGPoint(x: 0, y: height)
             ]
+            if (objectType == .invalid) {
+                objectType = .rectangle
+            }
         }
         
         self.size = CGSize(width: width, height: height)

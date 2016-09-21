@@ -1,6 +1,12 @@
 # GameplayKit Integration
 
-*SKTiled* supports Apple's GameplayKit by allowing users to build pathfinding graphs in tile layers (currently only orthogonal tile layers are supported). Passing custom properties in the Tiled scene can be used to create pathfinding graphs automatically:
+*SKTiled* supports Apple's GameplayKit by allowing users to build pathfinding graphs in tile layers (currently only orthogonal tile layers are supported). Every `SKTileLayer` instance has an optional `GKGridGraph` attribute accesible via the `SKTileLayer.graph` attribute:
+  
+  ```swift
+  tileLayer.graph = GKGridGraph
+  ```
+
+Passing custom properties in the Tiled scene can be used to create pathfinding graphs automatically:
 
     SKTilemap:
       buildGraph          (String)    - layer name(s) on which to build graphs.
@@ -22,6 +28,22 @@ let walkable: [Int] = [12, 13, 14]
 graphLayer.graph.initializeGraph(walkableIDs: walkable, diagonalsAllowed: false)
 ```
 
-##Querying Neighbor Nodes
+##Custom Node Weights (iOS10 only)
 
-WIP
+The included `SKTiledGraphNode` class adds a `weight` attribute that can be used to affect the outcome of heuristic pathfinding.
+
+```swift
+tileLayer.graph = GKGridGraph(fromGridStartingAt: int2(0, 0), width: tileLayer.size.width, height: tileLayer.size.height, diagonalsAllowed: diagonalsAllowed, nodeClass: SKTiledGraphNode.self)
+```
+
+
+
+##Querying Neighbor Nodes*
+
+
+
+ *future update
+ 
+ 
+ 
+  Next: [Debugging](debugging.html)

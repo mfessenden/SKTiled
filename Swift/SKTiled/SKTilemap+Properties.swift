@@ -1,6 +1,6 @@
 //
 //  SKTilemap+Properties.swift
-//  SKTilemap
+//  SKTiled
 //
 //  Created by Michael Fessenden on 8/12/16.
 //  Copyright © 2016 Michael Fessenden. All rights reserved.

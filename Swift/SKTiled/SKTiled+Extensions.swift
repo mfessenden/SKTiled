@@ -1,5 +1,5 @@
 //
-//  SKTilemap+Extensions.swift
+//  SKTiled+Extensions.swift
 //  SKTiled
 //
 //  Created by Michael Fessenden on 4/5/16.

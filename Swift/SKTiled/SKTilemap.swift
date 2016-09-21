@@ -1,6 +1,6 @@
 //
 //  SKTilemap.swift
-//  SKTilemap
+//  SKTiled
 //
 //  Created by Michael Fessenden on 3/21/16.
 //  Copyright © 2016 Michael Fessenden. All rights reserved.
@@ -393,6 +393,15 @@ open class SKTilemap: SKNode, SKTiledObject{
     }
     
     /**
+     Remove a tileset from the tilesets.
+     
+     - parameter tileset: `SKTileset` removed tileset.
+     */
+    open func removeTileset(_ tileset: SKTileset) -> SKTileset? {
+        return tileSets.remove(tileset)
+    }
+    
+    /**
      Returns a named tileset from the tilesets set.
      
      - parameter name: `String` tileset to return.
@@ -468,6 +477,22 @@ open class SKTilemap: SKNode, SKTiledObject{
         }
     }
     
+    /**
+     Remove a layer from the current layers set.
+     
+     - parameter layer: `TiledLayerObject` layer object.
+     - returns: `TiledLayerObject?` removed layer.
+     */
+    open func removeLayer(_ layer: TiledLayerObject) -> TiledLayerObject? {
+        return layers.remove(layer)
+    }
+    
+    /**
+     Create and add a new tile layer.
+     
+     - parameter named: `String` layer name.
+     - returns: `SKTileLayer` new layer.
+     */
     open func addNewTileLayer(_ named: String) -> SKTileLayer {
         let layer = SKTileLayer(layerName: named, tileMap: self)
         addLayer(layer)
@@ -754,7 +779,7 @@ open class SKTilemap: SKNode, SKTiledObject{
      - parameter named: `String` property name.
      - returns: `[SKTile]` array of tiles.
      */
-    open func getTileDataWithProperty(_ named: String) -> [SKTilesetData] {
+    open func getTileData(withProperty named: String) -> [SKTilesetData] {
         return tileSets.flatMap { $0.getTileData(withProperty: named)}
     }
     
@@ -764,16 +789,7 @@ open class SKTilemap: SKNode, SKTiledObject{
      - returns: `[SKTile]` array of tiles.
      */
     open func getAnimatedTiles() -> [SKTile] {
-        var result: [SKTile] = []
-        enumerateChildNodes(withName: "//*") {
-            node, stop in
-            if let tile = node as? SKTile {
-                if (tile.tileData.isAnimated == true) {
-                    result.append(tile)
-                }
-            }
-        }
-        return result
+        return tileLayers.flatMap {$0.getAnimatedTiles()}
     }
     
     /**

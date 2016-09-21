@@ -155,15 +155,10 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         
         for (uuid, tileData) in self.data {
             guard let tileLayer = tileMap.getLayer(withID: uuid) as? SKTileLayer else { continue }
-            // render the layer in the background
-            DispatchQueue.main.async( execute: {
             // add the layer data...
-            tileLayer.setLayerData(tileData)            
-                tileLayer.parseProperties()
-            })
+            tileLayer.setLayerData(tileData)
+            tileLayer.parseProperties()
         }
-        
-        //tileMap.tileLayers.forEach {$0.run(fadeInAction)}
         
         // reset the data
         self.data = [:]

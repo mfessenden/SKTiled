@@ -540,7 +540,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
      - parameter y:         `Int` y-coordinate.
      - parameter zPosition: `CGFloat` z-position.
      */
-    public func addNode(_ node: SKNode, _ x: Int=0, _ y: Int=0, zPosition: CGFloat? = nil) {
+    public func addChild(_ node: SKNode, _ x: Int=0, _ y: Int=0, zPosition: CGFloat? = nil) {
         addChild(node)
         node.position = pointForCoordinate(TileCoord(x, y))
         node.zPosition = zPosition != nil ? zPosition! : self.zPosition + tilemap.zDeltaForLayers
@@ -615,7 +615,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
 }
 
-
+ 
 
 // MARK: - Tile Layer
 
@@ -635,14 +635,13 @@ open class TiledLayerObject: SKNode, SKTiledObject {
  ```swift
  let floorTiles = tileLayer.getTiles(ofType: "Floor")
  ```
- */
-
+*/
 open class SKTileLayer: TiledLayerObject {
-    
-    fileprivate typealias TilesArray = Array2D<SKTile>
-    
+
+    typealias TilesArray = Array2D<SKTile>
+
     // container for the tile sprites
-    fileprivate var tiles: TilesArray                   // array of tiles
+    fileprivate var tiles: TilesArray                    // array of tiles
     open var render: Bool = false                 // render tile layer as a single image
     
     // MARK: - Init
@@ -706,6 +705,15 @@ open class SKTileLayer: TiledLayerObject {
     }
     
     /**
+     Returns all current tiles.
+     
+     - returns: `[SKTile]` array of tiles.
+     */
+    open func getTiles() -> [SKTile] {
+        return tiles.flatMap { $0 }
+    }
+
+    /**
      Returns tiles with a property of the given type.
      
      - parameter type: `String` type.
@@ -761,7 +769,27 @@ open class SKTileLayer: TiledLayerObject {
             }
         }
         return result
-                }
+    }
+
+    /**
+     Returns all tiles with animation.
+     
+     - returns: `[SKTile]` array of animated tiles.
+     */
+    open func getAnimatedTiles() -> [SKTile] {
+        return validTiles().filter({ $0.tileData.isAnimated == true })
+    }
+    
+    /**
+     Return tile data from a global id.
+     
+     - parameter withID: `Int` global tile id.
+     
+     - returns: `SKTilesetData?` tile data (for valid id).
+     */
+    open func getTileData(withID gid: Int) -> SKTilesetData? {
+        return tilemap.getTileData(gid)
+    }
     
     /**
      Returns tiles with a property of the given type.
@@ -770,7 +798,7 @@ open class SKTileLayer: TiledLayerObject {
      
      - returns: `[SKTile]` array of tiles.
      */
-    open func getTileDataWithProperty(_ named: String) -> [SKTilesetData] {
+    open func getTileData(withProperty named: String) -> [SKTilesetData] {
         var result: [SKTilesetData] = []
         for tile in tiles {
             if let tile = tile {
@@ -831,9 +859,9 @@ open class SKTileLayer: TiledLayerObject {
      - parameter y:   `Int` y-coordinate
      - returns: `SKTile` tile.
      */
-    open func addTileAt(_ x: Int, _ y: Int) -> SKTile? {
+    open func addTileAt(_ x: Int, _ y: Int, gid: Int? = nil) -> SKTile? {
         let coord = TileCoord(x, y)
-        return addTileAt(coord)
+        return addTileAt(coord, gid: gid)
     }
     
     /*
@@ -843,15 +871,19 @@ open class SKTileLayer: TiledLayerObject {
      - parameter coord:   `TileCoord` tile coordinate
      - returns: `SKTile` tile.
      */
-    open func addTileAt(_ coord: TileCoord) -> SKTile? {
+    open func addTileAt(_ coord: TileCoord, gid: Int? = nil) -> SKTile? {
         guard isValid(coord) else { return nil }
         
-        let current = tileAt(coord)
-        if let current = current {
-            current.removeFromParent()
-            self.tiles[Int(coord.x), Int(coord.y)] = nil
+        // remove the current tile
+        let current = removeTileAt(coord)
+        
+        var tileData: SKTilesetData? = nil
+        if (gid != nil) {
+            tileData = getTileData(withID: gid!)
     }
 
+        
+        
         let tile = SKTile(tileSize: tileSize)
     
         // set the tile overlap amount
@@ -867,6 +899,33 @@ open class SKTileLayer: TiledLayerObject {
         tile.position = tilePosition
         addChild(tile)
         return tile
+    }
+    
+    /*
+     Remove the tile at a given x/y coordinates.
+     
+     - parameter x:   `Int` x-coordinate
+     - parameter y:   `Int` y-coordinate
+     - returns: `SKTile?` removed tile.
+     */
+    open func removeTileAt(_ x: Int, _ y: Int) -> SKTile? {
+        let coord = TileCoord(x, y)
+        return removeTileAt(coord)
+    }
+    
+    /*
+     Remove the tile at a given coordinate.
+     
+     - parameter coord:   `TileCoord` tile coordinate.
+     - returns: `SKTile?` removed tile.
+     */
+    open func removeTileAt(_ coord: TileCoord) -> SKTile? {
+        let current = tileAt(coord)
+        if let current = current {
+            current.removeFromParent()
+            self.tiles[Int(coord.x), Int(coord.y)] = nil
+        }
+        return current
     }
     
     /**
@@ -909,9 +968,8 @@ open class SKTileLayer: TiledLayerObject {
                 
                 // set the layer property
                 tile.layer = self
-                // TODO: threaded renderer not liking mutation here
-                self.tiles[Int(coord.x), Int(coord.y)] = tile
-                    
+                tiles[Int(coord.x), Int(coord.y)] = tile
+                
                 // get the position in the layer (plus tileset offset)
                 let tilePosition = pointForCoordinate(coord, offsetX: tileData.tileset.tileOffset.x, offsetY: tileData.tileset.tileOffset.y)
                     
@@ -973,9 +1031,9 @@ open class SKTileLayer: TiledLayerObject {
 
 
 // object group draw order
-public enum ObjectGroupDrawOrder: String {
-    case TopDown   // default
-    case Manual
+public enum SKObjectGroupDrawOrder: String {
+    case topDown   // default
+    case manual
 }
 
 
@@ -983,7 +1041,7 @@ public enum ObjectGroupDrawOrder: String {
 
 open class SKObjectGroup: TiledLayerObject {
     
-    open var drawOrder: ObjectGroupDrawOrder = ObjectGroupDrawOrder.TopDown
+    open var drawOrder: SKObjectGroupDrawOrder = SKObjectGroupDrawOrder.topDown
     fileprivate var objects: Set<SKTileObject> = []
     
     open var showObjects: Bool = false {
@@ -1075,6 +1133,16 @@ open class SKObjectGroup: TiledLayerObject {
         // hide the object if the tilemap is set to
         object.visible = tilemap.showObjects
         return object
+    }
+    
+    /**
+     Remove an `SKTileObject` object from the objects set.
+     
+     - parameter object:    `SKTileObject` object.
+     - returns: `SKTileObject?` removed object.
+     */
+    open func removeObject(_ object: SKTileObject) -> SKTileObject? {
+        return objects.remove(object)
     }
     
     /**
@@ -1302,7 +1370,7 @@ public struct Array2D<T> {
     public let rows: Int
     public var array: [T?]
     
-    init(columns: Int, rows: Int) {
+    public init(columns: Int, rows: Int) {
         self.columns = columns
         self.rows = rows
         array = Array(repeating: nil, count: rows*columns)

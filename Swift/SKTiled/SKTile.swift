@@ -39,11 +39,18 @@ open class SKTile: SKSpriteNode {
     }
     
     // MARK: - Init
+    public init(){
+        // create empty tileset data
+        tileData = SKTilesetData()
+        tileSize = CGSize.zero
+        super.init(texture: SKTexture(), color: SKColor.clear, size: tileSize)
+        colorBlendFactor = 0
+    }
+    
     /**
      Initialize the tile with a tile size.
      
      - parameter tileSize: `CGSize` tile size in pixels.
-     
      - returns: `SKTile` tile sprite.
      */
     public init(tileSize size: CGSize){
@@ -51,13 +58,13 @@ open class SKTile: SKSpriteNode {
         tileData = SKTilesetData()
         tileSize = size
         super.init(texture: SKTexture(), color: SKColor.clear, size: tileSize)
+        colorBlendFactor = 0
     }
     
     /**
      Initialize the tile object with `SKTilesetData`.
      
      - parameter data: `SKTilesetData` tile data.
-     
      - returns: `SKTile` tile sprite.
      */
     public init?(data: SKTilesetData){
@@ -98,18 +105,31 @@ open class SKTile: SKSpriteNode {
         }
         
         let animationAction = SKAction.tileAnimation(framesData)
-        run(animationAction, withKey: "ANIMATION")
+        run(animationAction, withKey: "Animation")
     }
     
     /// Pauses tile animation
     public var pauseAnimation: Bool = false {
         didSet {
             guard oldValue != pauseAnimation else { return }
-            guard let action = action(forKey: "ANIMATION") else { return }
+            guard let action = action(forKey: "Animation") else { return }
             action.speed = (pauseAnimation == true) ? 0 : 1.0
         }
     }
     
+    /**
+     Remove the animation for the current tile.
+     
+     - parameter restore: `Bool` restore the tile's first texture.
+     */
+    public func removeAnimation(restore: Bool = false){
+        guard tileData.isAnimated == true else { return }
+        removeAction(forKey: "Animation")
+        if (restore == true){
+            texture = tileData.texture
+        }
+    }
+
     /**
      Set the tile overlap amount.
      
@@ -236,9 +256,11 @@ open class SKTile: SKSpriteNode {
     }
     
     /**
-     Draw the tile's boundary shape.
+     Draw the tile's boundary shape. Optional anti-aliasing & time duration
+     (duration of 0 never fades).
      
-     - parameter color: `SKColor` highlight color.
+     - parameter antialiasing: `Bool` antialias the effect.
+     - parameter duration:     `TimeInterval` effect duration.
      */
     public func drawBounds(antialiasing: Bool=true, duration: TimeInterval=0) {
         guard let layer = layer else { return }

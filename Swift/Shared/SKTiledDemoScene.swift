@@ -45,6 +45,16 @@ public class SKTiledDemoScene: SKTiledScene {
         setupDemoUI()
         setupDebuggingLabels()
         updateHud()
+        
+        
+        
+        if let tilemap = tilemap {
+            for tile in tilemap.getAnimatedTiles() {
+                print(tile)
+                
+            }
+            
+        }
     }
     
     // MARK: - Setup
