@@ -128,7 +128,9 @@
             <a href='#custom-properties' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='custom-properties'>Custom Properties</h1>
 
 <p>One of the most powerful features of <em>SKTiled</em> is the ability to exploit Tiled&rsquo;s custom properties for most objects. 
-All objects that conform to the <code>TiledObject</code> protocol have methods for parsing Tiled object properties.</p>
+All objects that conform to the <code>TiledObject</code> protocol have methods for parsing Tiled object properties. Tiled property values are all encoded as strings. <strong>SKTiled</strong> will attempt to parse the intended type, but be sure to check the type of property you are querying.</p>
+
+<p>If you are using the v0.17 of Tiled or newer, <em>SKTiled</em> supports the new <strong>color</strong> and <strong>file</strong> property types (values are stored as strings internally anyway, which <em>SKTiled</em> already supports). The custom color/file types listed above will also be parsed if they are created as string types in Tiled.</p>
 <pre class="highlight plaintext"><code>SKTilemap:
   name                (String)    - map name.
   hidden              (Bool)      - hide the map.
@@ -171,28 +173,6 @@ SKTileObject:
   hidden              (Bool)      - hide the object.
   color               (String)    - hex string to override object color.
   lineWidth           (Float)     - object line width.   
-</code></pre>
-<a href='#property-types' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='property-types'>Property Types</h2>
-
-<p>Tiled property values are all encoded as strings. <strong>SKTiled</strong> will attempt to parse the intended type, but here are some guidelines:</p>
-
-<ul>
-<li>Bool values can be stored as <strong>true/false</strong> or <strong>0/1</strong></li>
-</ul>
-<a href='#tiled-v0-17-properties' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='tiled-v0-17-properties'>Tiled v0.17 Properties</h2>
-
-<p>If you are using the v0.17 of Tiled or newer, <em>SKTiled</em> supports the new <strong>color</strong> and <strong>file</strong> property types (values are stored as strings internally anyway, which <em>SKTiled</em> already supports). The custom color/file types listed above will also be parsed if they are created as string types in Tiled.</p>
-<a href='#sktilemap-colors' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='sktilemap-colors'>SKTilemap Colors</h2>
-<pre class="highlight plaintext"><code>// setting one of these in the tiled file will apply it to ALL layers
-gridColor: grid visualization color
-frameColor: bounding box color
-highlightColor: layer highlight color
-</code></pre>
-<a href='#tiledlayerobject-colors' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='tiledlayerobject-colors'>TiledLayerObject Colors</h2>
-<pre class="highlight plaintext"><code>color:  object group color
-gridColor: grid visualization color
-frameColor: bounding box color
-highlightColor: layer highlight color
 </code></pre>
 
 <p>Next: <a href="gameplaykit.html">GameplayKit</a> - <a href="Tutorial.html">Index</a></p>
