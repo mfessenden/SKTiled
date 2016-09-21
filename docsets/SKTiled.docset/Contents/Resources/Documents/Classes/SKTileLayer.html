@@ -14,7 +14,7 @@
     <a title="SKTileLayer Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">SKTiled Docs</a> (62% documented)</p>
+        <p><a href="../index.html">SKTiled Docs</a></p>
         <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -33,6 +33,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../getting-started.html">Getting Started</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../tiles.html">Tiles</a>
               </li>
               <li class="nav-group-task">
                 <a href="../coordinates.html">Coordinates</a>
@@ -63,6 +66,20 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="../Data Types.html">Data Types</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/TileCoord.html">TileCoord</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TilemapOrientation.html">TilemapOrientation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Data Types.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="../Class Reference.html">Class Reference</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -73,6 +90,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/SKTileset.html">SKTileset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTilesetData.html">SKTilesetData</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/TiledLayerObject.html">TiledLayerObject</a>
@@ -93,37 +113,10 @@
                 <a href="../Classes/SKTileObject.html">SKTileObject</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/SKTilesetData.html">SKTilesetData</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Structs/TileCoord.html">TileCoord</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="../Other Guides.html">Other Guides</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../tutorial.html">Tutorial</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="../Other Classes.html">Other Classes</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
                 <a href="../Classes/SKTiledScene.html">SKTiledScene</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="../Other Extensions.html">Other Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Extensions/SKTiledLayerType.html">SKTiledLayerType</a>
               </li>
             </ul>
           </li>
@@ -139,7 +132,7 @@
 
                 </div>
               </div>
-            <p>The <code>SKTileLayer</code> class  manages an array of tiles (sprites) that it renders as a single image. </p>
+            <p>The <code>SKTileLayer</code> class  manages an array of tiles (sprites) that it renders as a single image.</p>
 
 <p>This class manages setting and querying tile data.</p>
 
@@ -222,7 +215,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L665-L669">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L662-L666">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -287,7 +280,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L679-L685">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L676-L682">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -366,7 +359,7 @@
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L701-L704">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L698-L701">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -421,7 +414,42 @@
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L713-L716">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L710-L713">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC7SKTiled11SKTileLayer8getTilesFT_GSaCS_6SKTile_"></a>
+                    <a name="//apple_ref/swift/Method/getTiles()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC7SKTiled11SKTileLayer8getTilesFT_GSaCS_6SKTile_">getTiles()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns all current tiles.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">getTiles</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/SKTile.html">SKTile</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>[SKTile]</code> array of tiles.</p>
+
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L720-L722">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -476,7 +504,7 @@
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L725-L735">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L731-L741">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -531,7 +559,7 @@
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L744-L754">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L750-L760">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -586,7 +614,7 @@
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L763-L773">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L769-L780">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -594,9 +622,99 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC7SKTiled11SKTileLayer23getTileDataWithPropertyFSSGSaCS_13SKTilesetData_"></a>
-                    <a name="//apple_ref/swift/Method/getTileDataWithProperty(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC7SKTiled11SKTileLayer23getTileDataWithPropertyFSSGSaCS_13SKTilesetData_">getTileDataWithProperty(_:)</a>
+                    <a name="/s:FC7SKTiled11SKTileLayer16getAnimatedTilesFT_GSaCS_6SKTile_"></a>
+                    <a name="//apple_ref/swift/Method/getAnimatedTiles()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC7SKTiled11SKTileLayer16getAnimatedTilesFT_GSaCS_6SKTile_">getAnimatedTiles()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns all tiles with animation.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">getAnimatedTiles</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/SKTile.html">SKTile</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>[SKTile]</code> array of animated tiles.</p>
+
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L787-L789">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC7SKTiled11SKTileLayer11getTileDataFT6withIDSi_GSqCS_13SKTilesetData_"></a>
+                    <a name="//apple_ref/swift/Method/getTileData(withID:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC7SKTiled11SKTileLayer11getTileDataFT6withIDSi_GSqCS_13SKTilesetData_">getTileData(withID:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Return tile data from a global id.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">getTileData</span><span class="p">(</span><span class="n">withID</span> <span class="nv">gid</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/SKTilesetData.html">SKTilesetData</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>withID</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>Int</code> global tile id.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>SKTilesetData?</code> tile data (for valid id).</p>
+
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L798-L800">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC7SKTiled11SKTileLayer11getTileDataFT12withPropertySS_GSaCS_13SKTilesetData_"></a>
+                    <a name="//apple_ref/swift/Method/getTileData(withProperty:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC7SKTiled11SKTileLayer11getTileDataFT12withPropertySS_GSaCS_13SKTilesetData_">getTileData(withProperty:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -611,7 +729,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">getTileDataWithProperty</span><span class="p">(</span><span class="n">_</span> <span class="nv">named</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/SKTilesetData.html">SKTilesetData</a></span><span class="p">]</span></code></pre>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">getTileData</span><span class="p">(</span><span class="n">withProperty</span> <span class="nv">named</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/SKTilesetData.html">SKTilesetData</a></span><span class="p">]</span></code></pre>
 
                         </div>
                       </div>
@@ -641,7 +759,7 @@
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L782-L792">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L809-L819">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -707,7 +825,7 @@
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L803-L829">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L830-L856">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -775,7 +893,7 @@
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L947-L950">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L1002-L1005">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -830,7 +948,7 @@
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L958-L961">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L1013-L1016">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -891,7 +1009,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L970-L976">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L1025-L1031">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -925,7 +1043,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L1461-L1463">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L1526-L1528">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -960,7 +1078,7 @@
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L1470-L1472">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L1535-L1537">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1004,7 +1122,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>© 2016 Michael Fessenden](<a href="https://github.com/mfessenden">https://github.com/mfessenden</a>) under <a class="link" href="https://github.com/mfessenden/SKTiled/blob/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
+          <p>© 2016 Michael Fessenden](<a href="https://github.com/mfessenden">https://github.com/mfessenden</a>) under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

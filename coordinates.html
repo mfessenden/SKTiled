@@ -13,7 +13,7 @@
     <a title="Coordinates  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">SKTiled Docs</a> (62% documented)</p>
+        <p><a href="index.html">SKTiled Docs</a></p>
         <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -32,6 +32,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="getting-started.html">Getting Started</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="tiles.html">Tiles</a>
               </li>
               <li class="nav-group-task">
                 <a href="coordinates.html">Coordinates</a>
@@ -62,6 +65,20 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="Data Types.html">Data Types</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/TileCoord.html">TileCoord</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Data Types.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="Class Reference.html">Class Reference</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -72,6 +89,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SKTileset.html">SKTileset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTilesetData.html">SKTilesetData</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/TiledLayerObject.html">TiledLayerObject</a>
@@ -92,37 +112,10 @@
                 <a href="Classes/SKTileObject.html">SKTileObject</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/SKTilesetData.html">SKTilesetData</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/TileCoord.html">TileCoord</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Guides.html">Other Guides</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="tutorial.html">Tutorial</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Classes.html">Other Classes</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
                 <a href="Classes/SKTiledScene.html">SKTiledScene</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Extensions.html">Other Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Extensions/SKTiledLayerType.html">SKTiledLayerType</a>
               </li>
             </ul>
           </li>
@@ -153,7 +146,7 @@
 </code></pre>
 
 <p>Each layer has the ability to independently query a coordinate (which can be different depending on each layer&rsquo;s offset). Querying a point in the parent <code>SKTilemap</code> node returns values in the default base layer.</p>
-<a href='#layer-offsets-amp-hints' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='layer-offsets-amp-hints'>Layer Offsets &amp; Hints</h2>
+<a href='#layer-offsets-amp-hints' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='layer-offsets-amp-hints'>Layer Offsets &amp; Hints</h3>
 
 <p><code>TileOffset</code> - Offset hint for placement within each layer type.</p>
 
@@ -169,12 +162,12 @@ LayerPosition.Center      // 0.5 - node center rests at parent zeropoint
 LayerPosition.TopRight    // 1   - node top right rests at parent zeropoint
 </code></pre>
 
-<p>Next: <a href="objects.html">Objects</a></p>
+<p>Next: <a href="objects.html">Working with Objects</a> - <a href="Tutorial.html">Index</a></p>
 
           </section>
         </section>
         <section id="footer">
-          <p>© 2016 Michael Fessenden](<a href="https://github.com/mfessenden">https://github.com/mfessenden</a>) under <a class="link" href="https://github.com/mfessenden/SKTiled/blob/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
+          <p>© 2016 Michael Fessenden](<a href="https://github.com/mfessenden">https://github.com/mfessenden</a>) under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

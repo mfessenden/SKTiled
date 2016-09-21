@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>SKTiledLayerType Extension Reference</title>
+    <title>TilemapOrientation Enum Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,11 +10,11 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Extension/SKTiledLayerType" class="dashAnchor"></a>
-    <a title="SKTiledLayerType Extension Reference"></a>
+    <a name="//apple_ref/swift/Enum/TilemapOrientation" class="dashAnchor"></a>
+    <a title="TilemapOrientation Enum Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">SKTiled Docs</a> (62% documented)</p>
+        <p><a href="../index.html">SKTiled Docs</a></p>
         <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">SKTiled Reference</a>
         <img id="carat" src="../img/carat.png" />
-        SKTiledLayerType Extension Reference
+        TilemapOrientation Enum Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -33,6 +33,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../getting-started.html">Getting Started</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../tiles.html">Tiles</a>
               </li>
               <li class="nav-group-task">
                 <a href="../coordinates.html">Coordinates</a>
@@ -63,6 +66,20 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="../Data Types.html">Data Types</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/TileCoord.html">TileCoord</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TilemapOrientation.html">TilemapOrientation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Data Types.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="../Class Reference.html">Class Reference</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -73,6 +90,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/SKTileset.html">SKTileset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTilesetData.html">SKTilesetData</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/TiledLayerObject.html">TiledLayerObject</a>
@@ -93,37 +113,10 @@
                 <a href="../Classes/SKTileObject.html">SKTileObject</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/SKTilesetData.html">SKTilesetData</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Structs/TileCoord.html">TileCoord</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="../Other Guides.html">Other Guides</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../tutorial.html">Tutorial</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="../Other Classes.html">Other Classes</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
                 <a href="../Classes/SKTiledScene.html">SKTiledScene</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="../Other Extensions.html">Other Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Extensions/SKTiledLayerType.html">SKTiledLayerType</a>
               </li>
             </ul>
           </li>
@@ -132,14 +125,22 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>SKTiledLayerType</h1>
+            <h1>TilemapOrientation</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">internal</span> <span class="kd">enum</span> <span class="kt">SKTiledLayerType</span> <span class="p">:</span> <span class="kt">Int</span></code></pre>
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">TilemapOrientation</span><span class="p">:</span> <span class="kt">String</span></code></pre>
 
                 </div>
               </div>
-            
+            <p>Describes the map tile type.</p>
+
+<ul>
+<li>orthogonal:   map is orthogonal type.</li>
+<li>isometric:    map is isometric type.</li>
+<li>hexagonal:    map is hexagonal type.</li>
+<li>staggered:    map is isometric staggered type.</li>
+</ul>
+
           </section>
           <section class="section task-group-section">
             <div class="task-group">
@@ -147,9 +148,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vO7SKTiled16SKTiledLayerType11stringValueSS"></a>
-                    <a name="//apple_ref/swift/Property/stringValue" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vO7SKTiled16SKTiledLayerType11stringValueSS">stringValue</a>
+                    <a name="/s:vO7SKTiled18TilemapOrientation13alignmentHintVSC7CGPoint"></a>
+                    <a name="//apple_ref/swift/Property/alignmentHint" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vO7SKTiled18TilemapOrientation13alignmentHintVSC7CGPoint">alignmentHint</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -157,19 +158,19 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Returns a string representation of the layer type.</p>
+                        <p>Hint for aligning tiles within each layer.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">stringValue</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">alignmentHint</span><span class="p">:</span> <span class="kt">CGPoint</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L1452-L1454">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L1016-L1027">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -179,7 +180,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>© 2016 Michael Fessenden](<a href="https://github.com/mfessenden">https://github.com/mfessenden</a>) under <a class="link" href="https://github.com/mfessenden/SKTiled/blob/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
+          <p>© 2016 Michael Fessenden](<a href="https://github.com/mfessenden">https://github.com/mfessenden</a>) under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

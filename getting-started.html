@@ -13,7 +13,7 @@
     <a title="Getting Started  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">SKTiled Docs</a> (62% documented)</p>
+        <p><a href="index.html">SKTiled Docs</a></p>
         <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -32,6 +32,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="getting-started.html">Getting Started</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="tiles.html">Tiles</a>
               </li>
               <li class="nav-group-task">
                 <a href="coordinates.html">Coordinates</a>
@@ -62,6 +65,20 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="Data Types.html">Data Types</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/TileCoord.html">TileCoord</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Data Types.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="Class Reference.html">Class Reference</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -72,6 +89,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SKTileset.html">SKTileset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTilesetData.html">SKTilesetData</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/TiledLayerObject.html">TiledLayerObject</a>
@@ -92,37 +112,10 @@
                 <a href="Classes/SKTileObject.html">SKTileObject</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/SKTilesetData.html">SKTilesetData</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/TileCoord.html">TileCoord</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Guides.html">Other Guides</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="tutorial.html">Tutorial</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Classes.html">Other Classes</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
                 <a href="Classes/SKTiledScene.html">SKTiledScene</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Extensions.html">Other Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Extensions/SKTiledLayerType.html">SKTiledLayerType</a>
               </li>
             </ul>
           </li>
@@ -133,6 +126,8 @@
           <section class="section">
             
             <a href='#getting-started' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='getting-started'>Getting Started</h1>
+
+<p><strong>SKTiled</strong> was designed to be flexible and easy to use. Installation is very straightforward. If you have any problems or requests, please open an issue at the <a href="https://github.com/mfessenden/SKTiled/issues">Github page</a>.</p>
 <a href='#requirements' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='requirements'>Requirements</h2>
 
 <ul>
@@ -141,8 +136,10 @@
 <li>Swift 2.3+</li>
 </ul>
 
-<p>Check out the <a href="https://github.com/mfessenden/SKTiled/blob/master">master</a> branch for Swift 2.3, or the <a href="https://github.com/mfessenden/SKTiled/blob/iOS10">iOS10</a> branch for Swift 3. Going forward, the minimum requirements will be pushed up to Swift 3/iOS10/macOS 10.11 as some features will require newer versions of Apple&rsquo;s tools.</p>
-<a href='#swift-2-3-installation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='swift-2-3-installation'>Swift 2.3 Installation</h3>
+<p>Check out the <a href="https://github.com/mfessenden/SKTiled/tree/master">master</a> branch for Swift 2.3, or the <a href="https://github.com/mfessenden/SKTiled/tree/iOS10">iOS10</a> branch for Swift 3. Going forward, the minimum requirements will be pushed up to Swift 3/iOS10/macOS 10.11 as some features will require newer versions of Apple&rsquo;s tools.</p>
+
+<p><strong>SKTiled</strong> should work with tvOS, though it has not yet been extensively tested.</p>
+<a href='#swift-2-3-note' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='swift-2-3-note'>Swift 2.3 Note</h2>
 
 <p>If you&rsquo;re using one of the older toolchains, you&rsquo;ll need to enable the <strong>Use Legacy Swift Language Version</strong> option in the project <strong>Build Settings.</strong></p>
 
@@ -154,13 +151,15 @@
 <li>Set the appropriate Swift language target.</li>
 </ul>
 
+<p><img src="img/installation.png" alt="Xcode installation"></p>
+
 <p>That&rsquo;s it!</p>
 <a href='#adding-tiled-assets' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='adding-tiled-assets'>Adding Tiled Assets</h2>
 
-<p>When adding maps (TMX files), images and tilesets (TSX files) to your Xcode project, you&rsquo;ll need to make sure to add the files as groups and not folder references as the assets are stored in the root of the app bundle when compiled.</p>
-<a href='#scene-setup' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='scene-setup'>Scene Setup</h2>
+<p>When adding maps (TMX files), images and tilesets (TSX files) to your Xcode project, you&rsquo;ll need to make sure to add the files as <em>groups</em> and not folder references as the assets are stored in the root of the app bundle when compiled.</p>
+<a href='#setting-up-your-scene' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='setting-up-your-scene'>Setting up your Scene</h2>
 
-<p>Using tiled maps in your own projects is very easy. The included <code>SKTiledScene</code> class conforms to the <code>SKTiledSceneDelegate</code> protocol and could serve as a template for your scenes though you are free to implement your own setups.</p>
+<p>Using tiled maps in your own projects is very easy. The included <a href="Classes/SKTiledScene.html"><code>SKTiledScene</code></a> class conforms to the <a href="Protocols/SKTiledSceneDelegate.html"><code>SKTiledSceneDelegate</code></a> protocol and could serve as a template for your scenes though you are free to implement your own setups.</p>
 
 <p>If you choose to create your own scene type, a simple setup could be as simple as:</p>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SpriteKit</span>
@@ -177,17 +176,17 @@
 <span class="p">}</span>
 </code></pre>
 
-<p>Use the class method <code>SKTilemap.load(fromFile:)</code> will create a parser to read the file name you give it. <strong>SKTiled</strong> can load internal &amp; external tilesets, though there is a slight speed penalty for loading an external tileset with larger scenes.</p>
+<p>Use the class method <code>[SKTilemap.load(fromFile:)](Classes/SKTilemap.html#/s:ZFC7SKTiled9SKTilemap4loadFT8fromFileSS_GSqS0__)</code> will create a parser to read the file name you give it. <strong>SKTiled</strong> can load internal &amp; external tilesets, though there is a slight speed penalty for loading an external tileset with larger scenes.</p>
 
-<p>The world container node is set to 0,0 in the scene. When a tile map is loaded, it is parented to the world node. The scene camera contains weak references to the tilemap and world nodes and is used to navigate the scene.</p>
+<p>If you do use the included <a href="Classes/SKTiledScene.html"><code>SKTiledScene</code></a>, you&rsquo;ll notice that Tiled assets are parented to the <code>SKTiledScene.worldNode</code>. This world container node interacts with the included <a href="Classes/SKTiledSceneCamera.html"><code>SKTiledSceneCamera</code></a> class and allows you to easily move the scene around with mouse &amp; touch events. The world node is set to 0,0 in the scene by default. </p>
 <a href='#tile-coordinates' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='tile-coordinates'>Tile Coordinates</h2>
 
-<p>Tile coordinates in <strong>SKTiled</strong> are represented by the <a href="#TileCoord"><code>TileCoord</code></a> data type, though most classes have convenience methods to query coordinates with integer values:</p>
+<p>Tile coordinates in <strong>SKTiled</strong> are represented by the <a href="Structs/TileCoord.html"><code>TileCoord</code></a> data type, though most classes have convenience methods to query coordinates with integer values:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">coord</span> <span class="o">=</span> <span class="kt">TileCoord</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
 </code></pre>
-<a href='#working-with-maps' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='working-with-maps'>Working with Maps</h2>
+<a href='#working-with-layers' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='working-with-layers'>Working with Layers</h2>
 
-<p>Once the map is loaded, you can begin working with the layers. There are several ways to access layers from the <a href="#SKTilemap"><code>SKTilemap</code></a> object:</p>
+<p>Once the map is loaded, you can begin working with the layers. There are several ways to access layers from the <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> object:</p>
 <pre class="highlight swift"><code><span class="c1">// returns a tile layer with a given name</span>
 <span class="k">let</span> <span class="nv">backgoundLayer</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getLayer</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"Background"</span><span class="p">)</span> <span class="k">as!</span> <span class="kt">SKTileLayer</span>
 </code></pre>
@@ -204,21 +203,31 @@
 <pre class="highlight swift"><code><span class="n">player</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">playerLayer</span><span class="o">.</span><span class="nf">pointForCoordinate</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="nv">offsetX</span><span class="p">:</span> <span class="mf">8.0</span><span class="p">,</span> <span class="nv">offsetY</span><span class="p">:</span> <span class="mf">4.0</span><span class="p">)</span>
 </code></pre>
 
-<p>All <a href="#TiledLayerObject"><code>TiledLayerObject</code></a> objects have convenience methods for adding children with coordinate values &amp; optional offset and even zPosition values:</p>
+<p>All <a href="Classes/TiledLayerObject.html"><code>TiledLayerObject</code></a> objects have convenience methods for adding children with coordinate values &amp; optional offset and even zPosition values:</p>
 <pre class="highlight swift"><code><span class="n">playerLayer</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="nv">zPosition</span><span class="p">:</span> <span class="mf">25.0</span><span class="p">)</span>
 </code></pre>
 <a href='#default-layer' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='default-layer'>Default Layer</h3>
 
-<p>By default, the <a href="SKTilemap.html"><code>SKTilemap</code></a> class uses a default tile layer accessible via <code>SKTilemap.baseLayer</code>. The base layer is automatically created is used for coordinate transforms and for visualizing the grid (the base layer&rsquo;s z-position is always higher than the other layers).</p>
+<p>By default, the <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> class uses a default tile layer accessible via <code>SKTilemap.baseLayer</code>. The base layer is automatically created is used for coordinate transforms and for visualizing the grid (the base layer&rsquo;s z-position is always higher than the other layers).</p>
 
-<p>By default, when you query a point in the <code>SKTilemap</code> node, you are getting a location in the default base layer (see the <a href="coordinates">Coordinates</a> section).</p>
+<p>By default, when you query a point in the <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> node, you are getting a location in the default base layer (see the <a href="coordinates.html">Coordinates</a> section).</p>
+<a href='#other-functions' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='other-functions'>Other Functions</h3>
+<a href='#isolating-layers' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='isolating-layers'>Isolating Layers</h4>
 
-<p>Next: <a href="coordinates.html">Coordinates</a></p>
+<p>You can isolate layers easily (just as you can in Tiled):</p>
+<pre class="highlight swift"><code><span class="c1">// isolate the layer named 'Background'</span>
+<span class="n">tilemap</span><span class="o">.</span><span class="nf">isolateLayer</span><span class="p">(</span><span class="s">"Background"</span><span class="p">)</span>
+
+<span class="c1">// show all layers</span>
+<span class="n">tilemap</span><span class="o">.</span><span class="nf">isolateLayer</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+</code></pre>
+
+<p>Next: <a href="tiles.html">Working with Tiles</a> - <a href="Tutorial.html">Index</a></p>
 
           </section>
         </section>
         <section id="footer">
-          <p>© 2016 Michael Fessenden](<a href="https://github.com/mfessenden">https://github.com/mfessenden</a>) under <a class="link" href="https://github.com/mfessenden/SKTiled/blob/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
+          <p>© 2016 Michael Fessenden](<a href="https://github.com/mfessenden">https://github.com/mfessenden</a>) under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

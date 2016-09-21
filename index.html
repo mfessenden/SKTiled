@@ -13,7 +13,7 @@
     <a title="SKTiled  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">SKTiled Docs</a> (62% documented)</p>
+        <p><a href="index.html">SKTiled Docs</a></p>
         <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -32,6 +32,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="getting-started.html">Getting Started</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="tiles.html">Tiles</a>
               </li>
               <li class="nav-group-task">
                 <a href="coordinates.html">Coordinates</a>
@@ -62,6 +65,20 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="Data Types.html">Data Types</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/TileCoord.html">TileCoord</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Data Types.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="Class Reference.html">Class Reference</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -72,6 +89,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SKTileset.html">SKTileset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTilesetData.html">SKTilesetData</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/TiledLayerObject.html">TiledLayerObject</a>
@@ -92,37 +112,10 @@
                 <a href="Classes/SKTileObject.html">SKTileObject</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/SKTilesetData.html">SKTilesetData</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/TileCoord.html">TileCoord</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Guides.html">Other Guides</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="tutorial.html">Tutorial</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Classes.html">Other Classes</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
                 <a href="Classes/SKTiledScene.html">SKTiledScene</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Extensions.html">Other Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Extensions/SKTiledLayerType.html">SKTiledLayerType</a>
               </li>
             </ul>
           </li>
@@ -133,171 +126,13 @@
           <section class="section">
             
             <p><img src="img/header.png" alt="SKTiled"></p>
+<a href='#sktiled-v0-97-documentation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='sktiled-v0-97-documentation'>SKTiled v0.97 Documentation</h2>
 
-<p><strong>SKTiled</strong> is a simple library for using <a href="http://www.mapeditor.org">Tiled</a> files with Apple&rsquo;s SpriteKit, allowing the creation of game assets from .tmx files. Inspired by <a href="http://tilemapkit.com">TilemapKit</a> and written purely in Swift 2.0, I began working on this for a project after the development of TilemapKit was halted. While initially created as an exercise in learning Apple&rsquo;s new programming language, I&rsquo;ve decided to open-source it in case others find it helpful.  </p>
-
-<p>For Swift 3/iOS10/OSX 10.11. See <a href="https://github.com/mfessenden/SKTiled/tree/master">this branch</a> for Swift 2.2+ version.</p>
-
-<p><img src="https://img.shields.io/badge/Swift-3.0-brightgreen.svg" alt="">
-<a href="https://travis-ci.org/mfessenden/SKTiled"><img src="https://travis-ci.org/mfessenden/SKTiled.svg?branch=iOS10" alt="Build Status"></a>
-<a href="https://github.com/mfessenden/SKTiled/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="GitHub license"></a></p>
-<a href='#installation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='installation'>Installation</h2>
-
-<p>Simply drag the <em>SKTiled</em> directory into your Xcode project, and add the files to your game target:</p>
-
-<p><img src="img/installation.png" alt="Xcode installation"></p>
-
-<p>Alternately, you can include this directory in your project&rsquo;s workspace.</p>
-<a href='#usage' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='usage'>Usage</h2>
-
-<p>Loading a tilemap is simple:</p>
-<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">fromFile</span><span class="p">:</span> <span class="s">"sample-map"</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">scene</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre>
-
-<p>The included <code>SKTiledScene</code> object conforms to the <code>SKTiledSceneDelegate</code> protocol and can be used as a template. The tilemap is accessed via the <code>SKTiledScene.tilemap</code> property, and should be added as a child of the <code>SKTiledScene.worldNode</code> object.</p>
-<a href='#working-with-tilemaps' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='working-with-tilemaps'>Working with Tilemaps</h2>
-
-<p><strong>Acessing Layers</strong></p>
-
-<p>Layers can be accessed by type:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">tileLayers</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="n">tileLayers</span>
-<span class="k">let</span> <span class="nv">objectGroups</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="n">objectGroups</span>
-<span class="k">let</span> <span class="nv">imageLayers</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="n">imageLayers</span>
-</code></pre>
-
-<p>or by name:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">groundLayer</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getLayer</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"Ground"</span><span class="p">)</span> <span class="k">as!</span> <span class="kt">SKTileLayer</span>
-<span class="k">let</span> <span class="nv">objectsGroup</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getLayer</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"Objects"</span><span class="p">)</span> <span class="k">as!</span> <span class="kt">SKObjectGroup</span>
-<span class="k">let</span> <span class="nv">hudLayer</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getLayer</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"HUD"</span><span class="p">)</span> <span class="k">as!</span> <span class="kt">SKImageLayer</span>
-
-<span class="k">if</span> <span class="k">let</span> <span class="nv">groundLayer</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">tileLayer</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"Ground"</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">groundLayer</span><span class="o">.</span><span class="n">showGrid</span> <span class="o">=</span> <span class="kc">true</span>
-<span class="p">}</span>
-</code></pre>
-
-<p>Properties like map size &amp; tile size can be accessed via the <code>SKTilemap.size</code> and <code>SKTilemap.tileSize</code> properties.</p>
-
-<p><strong>Accessing Tiles</strong></p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">tileCoord</span> <span class="o">=</span> <span class="kt">TileCoord</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
-<span class="k">let</span> <span class="nv">tile</span> <span class="o">=</span> <span class="n">groundLayer</span><span class="o">.</span><span class="nf">tileAt</span><span class="p">(</span><span class="nv">coord</span><span class="p">:</span> <span class="n">tileCoord</span><span class="p">)</span>
-<span class="k">let</span> <span class="nv">tile</span> <span class="o">=</span> <span class="n">groundLayer</span><span class="o">.</span><span class="nf">tileAt</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
-</code></pre>
-
-<p>There are many ways to work with tile objects; globally from the <code>SKTilemap</code> node:</p>
-<pre class="highlight swift"><code><span class="c1">// query tiles of a certain type</span>
-<span class="k">if</span> <span class="k">let</span> <span class="nv">fireTiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="s">"fire"</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// do something fiery here...</span>
-<span class="p">}</span>
-
-<span class="c1">// query tiles from all layers</span>
-<span class="k">let</span> <span class="nv">tiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">tilesAt</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-</code></pre>
-
-<p>&hellip; or from individual layers:</p>
-<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">waterTiles</span> <span class="o">=</span> <span class="n">waterLayer</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">17</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// do something watery here</span>
-<span class="p">}</span>
-</code></pre>
-
-<p><strong>Accessing Objects</strong></p>
-
-<p><code>SKTileObject</code> objects can be returned from both the <code>SKTilemap</code> and <code>SKObjectGroup</code> nodes:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">allObjects</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getObjects</span><span class="p">()</span>
-<span class="k">let</span> <span class="nv">allTreeObjects</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getObjects</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"Tree"</span><span class="p">)</span>
-<span class="k">let</span> <span class="nv">allCollisionObjects</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getObjects</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="s">"Collision"</span><span class="p">)</span>
-
-<span class="c1">// get objects from the objects group layer</span>
-<span class="k">let</span> <span class="nv">entrances</span> <span class="o">=</span> <span class="n">objectsLayer</span><span class="o">.</span><span class="nf">getObjects</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="s">"Entrance"</span><span class="p">)</span>
-</code></pre>
-
-<p><strong>Acessing Tile Data</strong></p>
-
-<p>Tile data is accessible from either the <code>SKTileSet</code> object:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">tileSet</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTileset</span><span class="p">(</span><span class="s">"spritesheet-16x16"</span><span class="p">)</span>
-<span class="c1">// get data for a specific id</span>
-<span class="k">let</span> <span class="nv">tileData</span> <span class="o">=</span> <span class="n">tileSet</span><span class="o">.</span><span class="nf">getTileData</span><span class="p">(</span><span class="nv">gid</span><span class="p">:</span> <span class="mi">177</span><span class="p">)</span>
-</code></pre>
-
-<p>as well as the parent <code>SKTilemap</code>:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">tileData</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTileData</span><span class="p">(</span><span class="nv">gid</span><span class="p">:</span> <span class="mi">177</span><span class="p">)</span>
-</code></pre>
-<a href='#adding-nodes' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='adding-nodes'>Adding Nodes</h2>
-
-<p>Tile data includes texture data, and <code>SKTile</code> objects are <code>SKSpriteNode</code> subclasses that can be initialized with tileset data:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">newTile</span> <span class="o">=</span> <span class="kt">SKTile</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="n">tileData</span><span class="p">)</span>
-<span class="n">scene</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">newTile</span><span class="p">)</span>
-</code></pre>
-
-<p>Coordinate information is accessible within each layer via the <code>TiledLayerObject.pointForCoordinate</code> method:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">tilePoint</span> <span class="o">=</span> <span class="n">groundLayer</span><span class="o">.</span><span class="nf">pointForCoordinate</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-<span class="n">tile</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">tilePoint</span>
-</code></pre>
-
-<p>New nodes (any <code>SKNode</code> type) can be added directly to any layer:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">newNode</span> <span class="o">=</span> <span class="kt">SKNode</span><span class="p">()</span>
-<span class="n">groundLayer</span><span class="o">.</span><span class="nf">addNode</span><span class="p">(</span><span class="n">newNode</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="nv">zPosition</span><span class="p">:</span> <span class="mf">100.0</span><span class="p">)</span>
-</code></pre>
-<a href='#animated-tiles' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='animated-tiles'>Animated Tiles</h2>
-
-<p>Animated tiles will animate automatically; animated tiles can be accesssed from the tilemap. The <code>SKTile.pauseAnimation</code> property can stop/start animations:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">animatedTiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getAnimatedTiles</span><span class="p">()</span>
-
-<span class="k">for</span> <span class="n">tile</span> <span class="k">in</span> <span class="n">animatedTiles</span> <span class="p">{</span>
-    <span class="c1">// pause the current animation</span>
-    <span class="n">tile</span><span class="o">.</span><span class="n">pauseAnimation</span> <span class="o">=</span> <span class="kc">true</span>
-<span class="p">}</span>
-</code></pre>
-<a href='#custom-properties' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='custom-properties'>Custom Properties</h2>
-
-<p>Custom properties are supported on all object types, and can be accessed easily:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">groundLayer</span><span class="o">.</span><span class="nf">getValue</span><span class="p">(</span><span class="nv">forProperty</span><span class="p">:</span> <span class="s">"type"</span><span class="p">)</span>
-<span class="n">groundLayer</span><span class="o">.</span><span class="nf">setValue</span><span class="p">(</span><span class="s">"water"</span><span class="p">,</span> <span class="nv">forProperty</span><span class="p">:</span> <span class="s">"type"</span><span class="p">)</span>
-</code></pre>
-
-<p>To query tiles of a given type:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">waterTiles</span> <span class="o">=</span> <span class="n">groundLayer</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="s">"water"</span><span class="p">)</span>
-<span class="k">let</span> <span class="nv">allWaterTiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="s">"water"</span><span class="p">)</span>
-</code></pre>
-
-<p>For specific property/value types, query the parent layer:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">walkableTiles</span> <span class="o">=</span> <span class="n">groundLayer</span><span class="o">.</span><span class="nf">getTilesWithProperty</span><span class="p">(</span><span class="s">"walkable"</span><span class="p">,</span> <span class="s">"1"</span><span class="p">)</span>
-</code></pre>
-
-<p>or the tilemap:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">walkableTiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTilesWithProperty</span><span class="p">(</span><span class="s">"walkable"</span><span class="p">,</span> <span class="s">"1"</span><span class="p">)</span>
-</code></pre>
-<a href='#features' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='features'>Features</h2>
+<p><strong>SKTiled</strong> is a lightweight framework for using <a href="http://www.mapeditor.org">Tiled</a> assets with Apple&rsquo;s SpriteKit.</p>
 
 <ul>
-<li>iOS &amp; macOS versions</li>
-<li>renders all Tiled layer types (tile, object, image)</li>
-<li>custom properties for maps, layers, objects &amp; tiles</li>
-<li>parses inline &amp; external tilesets</li>
-<li>render tile layers as a single sprite</li>
-<li>render animated tiles</li>
-<li>render flipped tiles</li>
-</ul>
-<a href='#limitations' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='limitations'>Limitations</h2>
-
-<ul>
-<li>cannot parse data compressed with gzip/zlib compression.</li>
-</ul>
-<a href='#upcoming-features' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='upcoming-features'>Upcoming Features</h2>
-
-<ul>
-<li>multi-threaded rendering</li>
-<li>generate GKGridGraph graphs based on custom tile attributes (iOS10)</li>
-<li>user-definable cost properties for GKGridGraph nodes (iOS10)</li>
-</ul>
-<a href='#acknowledgements' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='acknowledgements'>Acknowledgements</h2>
-
-<ul>
-<li><a href="http://www.learn-cocos2d.com">Steffen Itterheim</a> creator of TilemapKit, the inspiration for this project</li>
-<li><a href="http://www.kenney.nl">Kenney Vleugels</a> for use of his spritesheet assets.</li>
-<li><a href="http://www-cs-students.stanford.edu/%7Eamitp/gameprog.html">Amit Patel</a> for his excellent tutorials on tile-based game logic</li>
-<li><a href="http://clintbellanger.net/articles/isometric_math/">Clint Bellanger: Isometric Tiles Math</a></li>
+<li><p><a href="Tutorial.html">Tutorial</a></p></li>
+<li><p><a href="Class%20Reference.html">Class Reference</a></p></li>
 </ul>
 
           </section>

@@ -13,7 +13,7 @@
     <a title="Debugging  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">SKTiled Docs</a> (62% documented)</p>
+        <p><a href="index.html">SKTiled Docs</a></p>
         <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -32,6 +32,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="getting-started.html">Getting Started</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="tiles.html">Tiles</a>
               </li>
               <li class="nav-group-task">
                 <a href="coordinates.html">Coordinates</a>
@@ -62,6 +65,20 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="Data Types.html">Data Types</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/TileCoord.html">TileCoord</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Data Types.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="Class Reference.html">Class Reference</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -72,6 +89,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SKTileset.html">SKTileset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTilesetData.html">SKTilesetData</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/TiledLayerObject.html">TiledLayerObject</a>
@@ -92,37 +112,10 @@
                 <a href="Classes/SKTileObject.html">SKTileObject</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/SKTilesetData.html">SKTilesetData</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/TileCoord.html">TileCoord</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Guides.html">Other Guides</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="tutorial.html">Tutorial</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Classes.html">Other Classes</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
                 <a href="Classes/SKTiledScene.html">SKTiledScene</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Extensions.html">Other Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Extensions/SKTiledLayerType.html">SKTiledLayerType</a>
               </li>
             </ul>
           </li>
@@ -138,18 +131,35 @@
 
 <p>Debugging properties for SKTiled classes:</p>
 <pre class="highlight plaintext"><code>SKTilemap:
+  highlightColor  (SKColor)   - global highlight color.
 
 TiledLayerObject:
+  highlightColor  (SKColor)   - layer highlight color. 
   debugDraw       (Bool)      - show the layer boundary shape.
   showGrid        (Bool)      - show the layer grid.  
   showGraph       (Bool)      - show the pathfinding graph (if one exists).
+
+SKTile:
+  highlightColor  (SKColor)   - tile highlight color (used in the `SKTile.drawBounds` method).
 </code></pre>
-<a href='#visualizing-the-tile-grid' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='visualizing-the-tile-grid'>Visualizing the Tile Grid</h2>
+<a href='#visualizing-the-tile-grid' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='visualizing-the-tile-grid'>Visualizing the Tile Grid</h3>
+<a href='#highlighting-tiles' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='highlighting-tiles'>Highlighting Tiles</h3>
+
+<p>You can highlight a tile using the <code>SKTile.drawBounds</code> method. </p>
+<pre class="highlight swift"><code><span class="n">tile</span><span class="o">.</span><span class="nf">drawBounds</span><span class="p">(</span><span class="nv">antialias</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">duration</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">)</span>
+</code></pre>
+<a href='#colors' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='colors'>Colors</h3>
+<pre class="highlight plaintext"><code>SKTilemap:
+
+  highlightColor   -&gt; overrides all layers highlighColor -&gt; overrides SKTile highlight color
+</code></pre>
+
+<p>Next: <a href="getting-started.html">Getting Started</a> - <a href="Tutorial.html">Index</a></p>
 
           </section>
         </section>
         <section id="footer">
-          <p>© 2016 Michael Fessenden](<a href="https://github.com/mfessenden">https://github.com/mfessenden</a>) under <a class="link" href="https://github.com/mfessenden/SKTiled/blob/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
+          <p>© 2016 Michael Fessenden](<a href="https://github.com/mfessenden">https://github.com/mfessenden</a>) under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
