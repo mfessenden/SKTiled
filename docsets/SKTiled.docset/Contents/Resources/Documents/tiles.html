@@ -68,9 +68,6 @@
             <a href="Data Types.html">Data Types</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Structs/TileCoord.html">TileCoord</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
               </li>
               <li class="nav-group-task">
@@ -119,6 +116,14 @@
               </li>
             </ul>
           </li>
+          <li class="nav-group-name">
+            <a href="Other Enums.html">Other Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled10TileOffset">TileOffset</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class="main-content">
@@ -143,10 +148,18 @@
 </code></pre>
 <a href='#adding-tiles' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='adding-tiles'>Adding Tiles</h2>
 
-<p>To add a new tile, use the <a href="Classes/SKTileLayer.html#addTileAt"><code>SKTileLayer.addTileAt</code></a> it to the current layer</p>
+<p>To add a new tile using a GID, use the <a href="Classes/SKTileLayer.html#addTileAt"><code>SKTileLayer.addTileAt</code></a> method to add it to the current layer:</p>
 <pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tile</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">addTile</span><span class="p">(</span><span class="nv">at</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="nv">gid</span><span class="p">:</span> <span class="mi">32</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// do something with tile</span>
+    <span class="c1">// success!</span>
 <span class="p">}</span>
+</code></pre>
+
+<p>You are not limited to tiles however, in reality you can add any <code>SKNode</code> type as a child and position it. All <a href="Classes/TiledLayerObject.html"><code>TiledLayerObject</code></a> objects have expanded <code>addChild</code> methods for positioning nodes:</p>
+<pre class="highlight swift"><code><span class="c1">// add a child with a coordinate and offset and zPosition values</span>
+<span class="n">tileLayer</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tile</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="nv">offset</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mf">4.0</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mf">8.0</span><span class="p">),</span> <span class="nv">zpos</span><span class="p">:</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="c1">// add a child with a coordinate and offset-x value</span>
+<span class="n">tileLayer</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tile</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="nv">dx</span><span class="p">:</span> <span class="mi">4</span><span class="p">)</span>
 </code></pre>
 <a href='#removing-tiles' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='removing-tiles'>Removing Tiles</h2>
 

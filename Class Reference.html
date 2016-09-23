@@ -68,9 +68,6 @@
             <a href="Data Types.html">Data Types</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Structs/TileCoord.html">TileCoord</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
               </li>
               <li class="nav-group-task">
@@ -119,6 +116,14 @@
               </li>
             </ul>
           </li>
+          <li class="nav-group-name">
+            <a href="Other Enums.html">Other Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled10TileOffset">TileOffset</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class="main-content">
@@ -164,7 +169,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L154-L934">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L150-L940">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -190,9 +195,9 @@
 
 <p>To read a tile map, used the <code>SKTilemapParser.load</code> method:</p>
 
-<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemapParser</span><span class="p">()</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">fromFile</span><span class="p">:</span> <span class="s">"sample-file"</span><span class="p">)</span> <span class="p">{</span>
+<pre class="highlight swift"><code> <span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemapParser</span><span class="p">()</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">fromFile</span><span class="p">:</span> <span class="s">"sample-file"</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">scene</span><span class="o">.</span><span class="n">worldNode</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
-<span class="p">}</span>
+ <span class="p">}</span>
 </code></pre>
 
                         <a href="Classes/SKTilemapParser.html" class="slightly-smaller">See more</a>
@@ -206,7 +211,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemapParser.swift#L37-L685">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemapParser.swift#L36-L683">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -232,7 +237,7 @@
 
 <p>Tile data is accessed via the global id (&lsquo;gid&rsquo;):</p>
 
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">data</span> <span class="o">=</span> <span class="n">tileset</span><span class="o">.</span><span class="nf">getTileData</span><span class="p">(</span><span class="mi">56</span><span class="p">)</span>
+<pre class="highlight swift"><code> <span class="k">let</span> <span class="nv">data</span> <span class="o">=</span> <span class="n">tileset</span><span class="o">.</span><span class="nf">getTileData</span><span class="p">(</span><span class="mi">56</span><span class="p">)</span>
 <span class="k">let</span> <span class="nv">tile</span> <span class="o">=</span> <span class="kt">SKTile</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
 </code></pre>
 
@@ -290,7 +295,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilesetData.swift#L28-L94">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilesetData.swift#L29-L107">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -332,7 +337,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L50-L626">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L50-L651">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -375,7 +380,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L647-L1032">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L672-L1057">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -423,7 +428,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L1070-L1284">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L1095-L1309">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -459,7 +464,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L1298-L1355">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L1323-L1380">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -494,7 +499,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTile.swift#L15-L307">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTile.swift#L15-L306">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -516,7 +521,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The <code>SKTileObject</code> object represents a Tiled object type (rectangle, ellipse, polygon &amp; polyline). </p>
+                        <p>The <code>SKTileObject</code> object represents a Tiled object type (rectangle, ellipse, polygon &amp; polyline).</p>
 
 <p>When the object is created, points can be added either with an array of <code>CGPoint</code> objects, or a string. In order to render the object, the <code>SKTileObject.getVertices()</code> method is called, which returns the points that make up the shape.</p>
 
@@ -531,7 +536,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L38-L283">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L39-L284">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -634,7 +639,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Custom scene camera that responds to various gestures.</p>
+                        <p>Custom scene camera that responds to finger/mouse gestures.</p>
 
                         <a href="Classes/SKTiledSceneCamera.html" class="slightly-smaller">See more</a>
                       </div>
@@ -647,7 +652,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTiledSceneCamera.swift#L19-L147">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTiledSceneCamera.swift#L21-L150">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

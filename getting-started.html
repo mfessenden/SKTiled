@@ -68,9 +68,6 @@
             <a href="Data Types.html">Data Types</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Structs/TileCoord.html">TileCoord</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
               </li>
               <li class="nav-group-task">
@@ -116,6 +113,14 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Enums.html">Other Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled10TileOffset">TileOffset</a>
               </li>
             </ul>
           </li>
@@ -179,11 +184,6 @@
 <p>Use the class method <code>[SKTilemap.load(fromFile:)](Classes/SKTilemap.html#/s:ZFC7SKTiled9SKTilemap4loadFT8fromFileSS_GSqS0__)</code> will create a parser to read the file name you give it. <strong>SKTiled</strong> can load internal &amp; external tilesets, though there is a slight speed penalty for loading an external tileset with larger scenes.</p>
 
 <p>If you do use the included <a href="Classes/SKTiledScene.html"><code>SKTiledScene</code></a>, you&rsquo;ll notice that Tiled assets are parented to the <code>SKTiledScene.worldNode</code>. This world container node interacts with the included <a href="Classes/SKTiledSceneCamera.html"><code>SKTiledSceneCamera</code></a> class and allows you to easily move the scene around with mouse &amp; touch events. The world node is set to 0,0 in the scene by default. </p>
-<a href='#tile-coordinates' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='tile-coordinates'>Tile Coordinates</h2>
-
-<p>Tile coordinates in <strong>SKTiled</strong> are represented by the <a href="Structs/TileCoord.html"><code>TileCoord</code></a> data type, though most classes have convenience methods to query coordinates with integer values:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">coord</span> <span class="o">=</span> <span class="kt">TileCoord</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
-</code></pre>
 <a href='#working-with-layers' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='working-with-layers'>Working with Layers</h2>
 
 <p>Once the map is loaded, you can begin working with the layers. There are several ways to access layers from the <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> object:</p>
@@ -204,7 +204,7 @@
 </code></pre>
 
 <p>All <a href="Classes/TiledLayerObject.html"><code>TiledLayerObject</code></a> objects have convenience methods for adding children with coordinate values &amp; optional offset and even zPosition values:</p>
-<pre class="highlight swift"><code><span class="n">playerLayer</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="nv">zPosition</span><span class="p">:</span> <span class="mf">25.0</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="n">playerLayer</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="nv">zpos</span><span class="p">:</span> <span class="mf">25.0</span><span class="p">)</span>
 </code></pre>
 <a href='#default-layer' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='default-layer'>Default Layer</h3>
 

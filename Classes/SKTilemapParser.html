@@ -69,9 +69,6 @@
             <a href="../Data Types.html">Data Types</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Structs/TileCoord.html">TileCoord</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Enums/TilemapOrientation.html">TilemapOrientation</a>
               </li>
               <li class="nav-group-task">
@@ -120,6 +117,14 @@
               </li>
             </ul>
           </li>
+          <li class="nav-group-name">
+            <a href="../Other Enums.html">Other Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Other Enums.html#/s:O7SKTiled10TileOffset">TileOffset</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class="main-content">
@@ -136,9 +141,9 @@
 
 <p>To read a tile map, used the <code>SKTilemapParser.load</code> method:</p>
 
-<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemapParser</span><span class="p">()</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">fromFile</span><span class="p">:</span> <span class="s">"sample-file"</span><span class="p">)</span> <span class="p">{</span>
+<pre class="highlight swift"><code> <span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemapParser</span><span class="p">()</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">fromFile</span><span class="p">:</span> <span class="s">"sample-file"</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">scene</span><span class="o">.</span><span class="n">worldNode</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
-<span class="p">}</span>
+ <span class="p">}</span>
 </code></pre>
 
           </section>
@@ -195,7 +200,7 @@
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemapParser.swift#L64-L120">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemapParser.swift#L62-L118">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -251,7 +256,7 @@ xml files with multiple extensions.</p>
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemapParser.swift#L129-L141">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemapParser.swift#L127-L139">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

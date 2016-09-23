@@ -68,9 +68,6 @@
             <a href="Data Types.html">Data Types</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Structs/TileCoord.html">TileCoord</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
               </li>
               <li class="nav-group-task">
@@ -119,6 +116,14 @@
               </li>
             </ul>
           </li>
+          <li class="nav-group-name">
+            <a href="Other Enums.html">Other Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled10TileOffset">TileOffset</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class="main-content">
@@ -129,7 +134,7 @@
 
 <p>SpriteKit uses a coordinate system that is different from Tiled&rsquo;s; in SpriteKit, a SpriteKit node&rsquo;s origin is on the bottom-left, while Tiled&rsquo;s origin is top-left. </p>
 
-<p>To emulate this, the <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> node draws its layers starting at the origin and moving <em>downwards</em> into the negative y-space. To accomodate this, each layer type has methods for converting points into negative-y space:</p>
+<p>To emulate this, the <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> node draws it&rsquo;s layers starting at the origin and moving <em>downwards</em> into the negative y-space. To accommodate this, each layer type has methods for converting points into negative-y space:</p>
 <pre class="highlight swift"><code><span class="c1">// iOS with UITouch</span>
 <span class="k">let</span> <span class="nv">touchPosition</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">touchLocation</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
 
@@ -145,15 +150,27 @@
 <span class="k">let</span> <span class="nv">coord</span> <span class="o">=</span> <span class="n">objectGroup</span><span class="o">.</span><span class="nf">coordinateForPoint</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
 </code></pre>
 
-<p>Each layer has the ability to independently query a coordinate (which can be different depending on each layer&rsquo;s offset). Querying a point in the parent <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> node returns values in the default base layer.</p>
-<a href='#layer-offsets-amp-hints' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='layer-offsets-amp-hints'>Layer Offsets &amp; Hints</h2>
+<p>When converting a tile coordinate to screen points, you can also add optional offset values:</p>
+<pre class="highlight swift"><code><span class="c1">// use CGFloats as offsets</span>
+<span class="k">let</span> <span class="nv">point</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">pointForCoordinate</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="nv">offsetX</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="nv">offsetY</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
 
-<p><code>TileOffset</code>: Offset hint for placement within each layer type.</p>
-<pre class="highlight plaintext"><code>TileOffset.BottomLeft  returns a point at the bottom left corner.
-TileOffset.TopLeft     returns a point at the top left corner.
-TileOffset.TopRight    returns a point at the top right corner.
-TileOffset.BottomRight returns a point at the bottom right corner.
-TileOffset.Center      returns a point at the center.
+<span class="c1">// use TileOffset </span>
+<span class="k">let</span> <span class="nv">point</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">pointForCoordinate</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="nv">offset</span><span class="p">:</span> <span class="kt">TileOffset</span><span class="o">.</span><span class="n">center</span><span class="p">)</span>
+</code></pre>
+
+<p>Each layer has the ability to independently query a coordinate (which can be different depending on each layer&rsquo;s offset). Querying a point in the parent <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> node returns values in the default base layer.</p>
+<a href='#coordinate-offsets-amp-hints' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='coordinate-offsets-amp-hints'>Coordinate Offsets &amp; Hints</h2>
+
+<p>The <a href="Classes/TileOffset.html"><code>TileOffset</code></a> enum represents a hint for placement within each layer type:</p>
+<pre class="highlight plaintext"><code> TileOffset.center        // returns the center of the tile.    
+ TileOffset.top           // returns the top of the tile.
+ TileOffset.topLeft       // returns the top left of the tile.
+ TileOffset.topRight      // returns the top left of the tile.
+ TileOffset.bottom        // returns the bottom of the tile.      
+ TileOffset.bottomLeft    // returns the bottom left of the tile.
+ TileOffset.bottomRight   // returns the bottom right of the tile.
+ TileOffset.left          // returns the left side of the tile.
+ TileOffset.right         // returns the right side of the tile.
 </code></pre>
 
 <p>Next: <a href="objects.html">Working with Objects</a> - <a href="Tutorial.html">Index</a></p>
