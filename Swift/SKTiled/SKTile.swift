@@ -78,9 +78,11 @@ open class SKTile: SKSpriteNode {
     
     /**
      Set up the tile's dynamics body.
+     
+     - parameter withSize: `CGFloat` dynamics body size.
      */
-    public func setupDynamics(){
-        physicsBody = SKPhysicsBody(rectangleOf: size)
+    public func setupDynamics(withSize: CGFloat){
+        physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: withSize, height: withSize))
         physicsBody?.isDynamic = false
     }
 
@@ -263,7 +265,6 @@ open class SKTile: SKSpriteNode {
      - parameter duration:     `TimeInterval` effect duration.
      */
     public func drawBounds(antialiasing: Bool=true, duration: TimeInterval=0) {
-        guard let layer = layer else { return }
         childNode(withName: "Anchor")?.removeFromParent()
         childNode(withName: "Bounds")?.removeFromParent()
         
@@ -404,16 +405,27 @@ public extension SKTile {
 
 
 /// Shape node used for highlighting and placing tiles.
-open class DebugTileShape: SKShapeNode {
+internal class DebugTileShape: SKShapeNode {
     
     open var tileSize: CGSize
     open var orientation: TilemapOrientation = .orthogonal
     open var color: SKColor
     open var layer: TiledLayerObject
+    open var coord: CGPoint
     
+    public init(layer: TiledLayerObject, coord: CGPoint, tileColor: SKColor){
+        self.layer = layer
+        self.coord = coord
+        self.tileSize = layer.tileSize
+        self.color = tileColor
+        super.init()
+        self.orientation = layer.orientation
+        drawObject()
+    }
     
     public init(layer: TiledLayerObject, tileColor: SKColor){
         self.layer = layer
+        self.coord = CGPoint.zero
         self.tileSize = layer.tileSize
         self.color = tileColor
         super.init()
@@ -486,14 +498,19 @@ open class DebugTileShape: SKShapeNode {
         self.fillColor = self.color.withAlphaComponent(0.35)
         
         // anchor
-        childNode(withName: "ANCHOR")?.removeFromParent()
+        childNode(withName: "Anchor")?.removeFromParent()
         let anchorRadius: CGFloat = tileSize.height / 12 > 1.0 ? tileSize.height / 24 : 1.0
         let anchor = SKShapeNode(circleOfRadius: anchorRadius)
-        anchor.name = "ANCHOR"
+        anchor.name = "Anchor"
         addChild(anchor)
         anchor.fillColor = self.color.withAlphaComponent(0.2)
         anchor.strokeColor = SKColor.clear
         anchor.zPosition = zPosition + 10
         anchor.isAntialiased = true
     }
+}
+
+
+internal func == (lhs: DebugTileShape, rhs: DebugTileShape) -> Bool {
+    return lhs.coord == rhs.coord
 }

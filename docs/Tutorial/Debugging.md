@@ -32,3 +32,5 @@ tile.drawBounds(antialias: false, duration: 0.25)
     SKTilemap:
 
       highlightColor   -> overrides all layers highlighColor -> overrides SKTile highlight color
+      
+Next: [Getting Started](getting-started.html) - [Index](Tutorial.html)

@@ -15,10 +15,16 @@ public struct AnimationFrame {
 }
 
 
-
+/// Represents a single tileset tile data, with texture, id and properties
 /**
- Represents a single tileset tile data, with texture, id and properties
+The `SKTilesetData` is the base class for all `SKTiled` layer types. 
+
+This class doesn't define any object or child types, but manages several important aspects:
  
+- validating coordinates
+- positioning and alignment
+- coordinate transformations
+
 */
 open class SKTilesetData: SKTiledObject  {
     
@@ -66,7 +72,6 @@ open class SKTilesetData: SKTiledObject  {
      - parameter tileId:  `Int` unique tile id.
      - parameter texture: `SKTexture` tile texture.
      - parameter tileSet: `SKTileset` tileset reference.
-     
      - returns: `SKTilesetData` tile data.
      */
     public init(tileId: Int, texture: SKTexture, tileSet: SKTileset) {
@@ -85,6 +90,19 @@ open class SKTilesetData: SKTiledObject  {
      */
     open func addFrame(_ gid: Int, interval: TimeInterval, tileTexture: SKTexture? = nil) {
         frames.append(AnimationFrame(gid: gid, duration: interval, texture: tileTexture))
+    }
+    
+    /**
+     Remove a tile animation frame.
+     
+     - parameter gid: `Int` id for frame.
+     - returns: `AnimationFrame?` animation frame (if it exists).
+     */
+    open func removeFrame(_ gid: Int) -> AnimationFrame? {
+        if let index = frames.index( where: { $0.gid == gid } ) {
+            return frames.remove(at: index)
+        }
+        return nil
     }
 }
 

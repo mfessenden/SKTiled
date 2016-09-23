@@ -18,8 +18,10 @@ import SpriteKit
  - parameter cameraNode: `SKTiledSceneCamera!` scene camera node.
  - parameter tilemap:    `SKTilemap!` tile map node.
  */
-protocol SKTiledSceneDelegate {
-    /// World container node
+public protocol SKTiledSceneDelegate {
+    /** 
+     World container node. All Tiled assets are parented to this node.
+    */
     var worldNode: SKNode! { get set }
     /// Custom scene camera.
     var cameraNode: SKTiledSceneCamera! { get set }
@@ -38,21 +40,20 @@ protocol SKTiledSceneDelegate {
 open class SKTiledScene: SKScene, SKTiledSceneDelegate {
     
     /// World container node.
-    open var worldNode: SKNode!                   // world container node
+    open var worldNode: SKNode!
     /// Custom scene camera.
-    open var cameraNode: SKTiledSceneCamera!      // tiled scene camera
+    open var cameraNode: SKTiledSceneCamera!
     /// Tile map node.
-    open var tilemap: SKTilemap!                  // tile map node
-    /// Current tmx file name.
-    open var tmxFilename: String!                 // current tmx file name
+    open var tilemap: SKTilemap!
+    /// Current TMX file name.
+    open var tmxFilename: String!
     
     // MARK: - Init
     /**
      Initialize without a tiled map.
      
-     - parameter size: `CGSize` scene size.
-     
-     - returns: `SKTiledScene` scene.
+     - parameter size:  `CGSize` scene size.
+     - returns:         `SKTiledScene` scene.
      */
     override public init(size: CGSize) {
         super.init(size: size)
@@ -118,7 +119,7 @@ open class SKTiledScene: SKScene, SKTiledSceneDelegate {
     }
     
     /**
-     Setup scene camera.
+     Setup the scene camera, referencing the world container node.
      */
     open func setupCamera(){
         guard let view = self.view else { return }
@@ -128,9 +129,9 @@ open class SKTiledScene: SKScene, SKTiledSceneDelegate {
     }
     
     /**
-     Load a named tmx file.
+     Load a named TMX file.
      
-     - parameter fileNamed: `String` tmx file name.
+     - parameter fileNamed: `String` TMX file name.
      - returns: `SKTilemap?` tile map node.
      */
     open func load(fromFile filename: String) -> SKTilemap? {

@@ -11,7 +11,7 @@ import SpriteKit
 
 
 /// XML Parser error types.
-public enum ParsingError: Error {
+internal enum ParsingError: Error {
     case attribute(attr: String)
     case attributeValue(attr: String, value: String)
     case key(key: String)
@@ -21,10 +21,9 @@ public enum ParsingError: Error {
 }
 
 
-// MARK: - TMX Parser
 
 /**
- The `SKTilemapParser` is a custom `XMLParserDelegate` parser for reading Tiled .tmx and .tsx files.
+The `SKTilemapParser` is a custom `XMLParserDelegate` parser for reading Tiled TMX and tileset TSX files.
  
  To read a tile map, used the `SKTilemapParser.load` method:
  
@@ -36,10 +35,10 @@ public enum ParsingError: Error {
  */
 open class SKTilemapParser: NSObject, XMLParserDelegate {
     
-    open var fileNames: [String] = []                         // list of filenames to read
+    open var fileNames: [String] = []                               // list of files to read
     open var currentFileName: String!
     
-    open var tileMap: SKTilemap!
+    open var tilemap: SKTilemap!
     fileprivate var encoding: TilemapEncoding = .xml                // encoding
     fileprivate var externalTilesets: [String: SKTileset] = [:]     // hold external tilesets 
     
@@ -55,14 +54,13 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     fileprivate var characterData: String = ""                      // current tile data (string)
     
     /**
-     Load a tmx file and parse it.
+     Load a TMX file and parse it.
      
-     - parameter fileNamed: `String` file base name - tmx/tsx not required.
-     
+     - parameter fileNamed: `String` file base name - TMX/TSX not required.     
      - returns: `SKTilemap?` tiled map node.
      */
     open func load(fromFile filename: String) -> SKTilemap? {
-        guard let targetFile = getBundleFilename(named: filename) else {
+        guard let targetFile = getBundledFile(named: filename) else {
             print("[SKTilemapParser]: unable to locate file: \"\(filename)\"")
             return nil
         }
@@ -96,7 +94,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     let errorLine = parser.lineNumber
                     let errorCol = parser.columnNumber
                     
-                    let errorDescription = parseError.debugDescription ?? "unknown"
+                    let errorDescription = parseError.debugDescription
                     print("[SKTilemapParser]: \(errorDescription) at line:\(errorLine), column: \(errorCol)")
                 }
             }
@@ -109,25 +107,24 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         renderObjects()
         
         // set baseLayer zPosition here
-        tileMap.baseLayer.zPosition = tileMap.lastZPosition + (tileMap.zDeltaForLayers * 0.5)
+        tilemap.baseLayer.zPosition = tilemap.lastZPosition + (tilemap.zDeltaForLayers * 0.5)
         
         // time results
         let timeInterval = Date().timeIntervalSince(timer)
         let timeStamp = String(format: "%.\(String(3))f", timeInterval)
         
         print("\n[SKTilemapParser]: tile map loaded in: \(timeStamp)s\n")
-        return tileMap
+        return tilemap
     }
     
     /**
-     Return the appropriate filename string for the given file (tmx or tsx) since Tiled stores
+     Return the appropriate filename string for the given file (TMX or TSX) since Tiled stores
      xml files with multiple extensions.
      
      - parameter fileName: `String` file name to search for.
-     
      - returns: `String?` name of file in bundle.
      */
-    open func getBundleFilename(named filename: String) -> String? {
+    open func getBundledFile(named filename: String) -> String? {
         // strip off the file extension
         let fileBaseName = filename.components(separatedBy: ".")[0]
         for fileExtension in ["tmx", "tsx"] {
@@ -145,16 +142,10 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
      Post-process to render each layer.
      */
     fileprivate func renderTileLayers() {
-        guard let tileMap = tileMap else { return }
-        
-        let renderQueue = DispatchQueue(label: "renderLayer")
-        var errorCount: Int = 0
-        
-        // render the layer in the background
-        //dispatch_async(renderQueue){
+        guard let tilemap = tilemap else { return }
         
         for (uuid, tileData) in self.data {
-            guard let tileLayer = tileMap.getLayer(withID: uuid) as? SKTileLayer else { continue }
+            guard let tileLayer = tilemap.getLayer(withID: uuid) as? SKTileLayer else { continue }
             // add the layer data...
             tileLayer.setLayerData(tileData)
             tileLayer.parseProperties()
@@ -168,8 +159,8 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
      Post-process to draw all objects.
      */
     fileprivate func renderObjects() {
-        guard let tileMap = tileMap else { return }
-        for objectGroup in tileMap.objectGroups {
+        guard let tilemap = tilemap else { return }
+        for objectGroup in tilemap.objectGroups {
             objectGroup.drawObjects()
         }
     }
@@ -209,11 +200,11 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 return
             }
             
-            self.tileMap = tilemap
+            self.tilemap = tilemap
             
             let currentBasename = currentFileName.components(separatedBy: ".").first!
-            self.tileMap.filename = currentBasename
-            self.tileMap.name = currentBasename
+            self.tilemap.filename = currentBasename
+            self.tilemap.name = currentBasename
             lastElement = tilemap
         }
         
@@ -230,11 +221,11 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     guard let firstGID = attributeDict["firstgid"] else { parser.abortParsing(); return }
                     let firstGIDInt = Int(firstGID)!
                     
-                    let tileset = SKTileset(source: source, firstgid: firstGIDInt, tilemap: self.tileMap)
+                    let tileset = SKTileset(source: source, firstgid: firstGIDInt, tilemap: self.tilemap)
                     
                     // add tileset to external file list
                     externalTilesets[source] = tileset
-                    self.tileMap.addTileset(tileset)
+                    self.tilemap.addTileset(tileset)
                     lastElement = tileset
 
                     // set this to nil, just in case we're looking for a collections tileset.
@@ -253,7 +244,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     guard let columns = attributeDict["columns"] else { parser.abortParsing(); return }
 
                     existingTileset.name = name
-                    existingTileset.tileSize = CGSize(width: CGFloat(Int(width)!), height: CGFloat(Int(width)!))
+                    existingTileset.tileSize = CGSize(width: CGFloat(Int(width)!), height: CGFloat(Int(height)!))
                     existingTileset.columns = Int(columns)!
                     
                     // optionals
@@ -270,7 +261,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 } else {
                     // create inline tileset
                     guard let tileset = SKTileset(attributes: attributeDict) else { parser.abortParsing(); return }
-                    self.tileMap.addTileset(tileset)
+                    self.tilemap.addTileset(tileset)
                     lastElement = tileset
 
                     // set this to nil, just in case we're looking for a collections tileset.
@@ -307,40 +298,40 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         // 'layer' indicates a Tile layer
         if (elementName == "layer") {
             guard let layerName = attributeDict["name"] else { parser.abortParsing(); return }
-            guard let layer = SKTileLayer(tileMap: self.tileMap!, attributes: attributeDict)
+            guard let layer = SKTileLayer(tilemap: self.tilemap!, attributes: attributeDict)
                 else {
                 print("Error creating tile layer: \"\(layerName)\"")
                 parser.abortParsing()
                 return
             }
             
-            self.tileMap!.addLayer(layer)
+            self.tilemap!.addLayer(layer)
             lastElement = layer
         }
         
         // 'objectgroup' indicates an Object layer
         if (elementName == "objectgroup") {
             guard let _ = attributeDict["name"] else { parser.abortParsing(); return }
-            guard let objectsGroup = SKObjectGroup(tileMap: self.tileMap!, attributes: attributeDict)
+            guard let objectsGroup = SKObjectGroup(tilemap: self.tilemap!, attributes: attributeDict)
                 else {
                     parser.abortParsing()
                     return
             }
             
-            self.tileMap!.addLayer(objectsGroup)
+            self.tilemap!.addLayer(objectsGroup)
             lastElement = objectsGroup
         }
         
         // 'imagelayer' indicates an Image layer
         if (elementName == "imagelayer") {
             guard let _ = attributeDict["name"] else { parser.abortParsing(); return }
-            guard let imageLayer = SKImageLayer(tileMap: self.tileMap!, attributes: attributeDict)
+            guard let imageLayer = SKImageLayer(tilemap: self.tilemap!, attributes: attributeDict)
                 else {
                     parser.abortParsing()
                     return
             }
             
-            self.tileMap!.addLayer(imageLayer)
+            self.tilemap!.addLayer(imageLayer)
             lastElement = imageLayer
         }
         
@@ -364,9 +355,9 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     tileset.addTilesetTile(currentID + tileset.firstGID, source: imageSource)
                 } else {
                     // add the tileset spritesheet image
-                tileset.addTextures(fromSpriteSheet: imageSource)
+                    tileset.addTextures(fromSpriteSheet: imageSource)
+                }
             }
-        }
         
         }
         

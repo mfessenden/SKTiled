@@ -10,15 +10,21 @@ import SpriteKit
 
 
 /**
- Protocol describing a generic Tiled object with a properties dictionary.
+The `SKTiledObject` protocol describes a generic Tiled object containing a dictionary of properties parsed from the TMX file.
  
  Objects conforming to this protocol support custom properties that can be parsed via the `SKTilemapParser` parser.
+
+- parameter uuid:       `String` unique object id.
+
+- parameter properties: `[String: String]` dictionary of object properties.
+
  */
 public protocol SKTiledObject: Hashable {
-    var uuid: String { get set }                    // unique id (layer & object names may not be unique).
-    var properties: [String: String] { get set }    // properties shared by most objects.
-    func parseProperties()                          // parse the properties
-    //func parseProperties(withBlock: ()->())         // parse properties with closure.
+    /// Unique id (layer & object names may not be unique).
+    var uuid: String { get set }
+    /// Properties shared by most objects.
+    var properties: [String: String] { get set }
+    func parseProperties()
 }
 
 
@@ -31,12 +37,34 @@ public extension SKTiledObject {
      Returns true if the node has the given property.
      
      - parameter key: `String` key to query.
-     
      - returns: `Bool` properties has a value for the key.
      */
     public func hasKey(_ key: String) -> Bool {
-        if let _ = properties[key] { return true }
-        return false
+        return properties[key] != nil
+    }
+    
+    /**
+     Sets a named property. Returns the value, or nil if it does not exist.
+     
+     - parameter key:   `String` property key.
+     - parameter value: `AnyObject` property value.
+     */
+    public mutating func setValue(forKey key: String, _ value: String) {
+        properties[key] = value
+    }
+
+    /**
+     Remove a named property.
+     
+     - parameter key: `String` property key.
+     - returns:       `AnyObject?` property value (if it exists).
+     */
+    public mutating func removeProperty(forKey key: String) -> String? {
+        if let value = properties[key] {
+            properties.removeValue(forKey: key)
+            return value
+        }
+        return nil
     }
     
     /**
@@ -69,7 +97,6 @@ public extension SKTiledObject {
      Returns a integer value for the given key.
      
      - parameter key: `String` properties key.
-     
      - returns: `Int?` value for properties key.
      */
     public func intForKey(_ key: String) -> Int? {
@@ -82,7 +109,6 @@ public extension SKTiledObject {
      
      - parameter key:         `String` properties key.
      - parameter separatedBy: `String` separator.
-     
      - returns: `[Int]` array of integers for properties key.
      */
     public func integerArrayForKey(_ key: String, separatedBy: String=",") -> [Int] {
@@ -96,7 +122,6 @@ public extension SKTiledObject {
      Returns a float value for the given key.
      
      - parameter key: `String` properties key.
-     
      - returns: `Double?` value for properties key.
      */
     public func doubleForKey(_ key: String) -> Double? {
@@ -109,7 +134,6 @@ public extension SKTiledObject {
      
      - parameter key:         `String` properties key.
      - parameter separatedBy: `String` separator.
-     
      - returns: `[Double]` array of doubles for properties key.
      */
     public func doubleArrayForKey(_ key: String, separatedBy: String=",") -> [Double] {
@@ -123,7 +147,6 @@ public extension SKTiledObject {
      Returns a boolean value for the given key.
      
      - parameter key: `String` properties key.
-     
      - returns: `Bool` value for properties key.
      */
     public func boolForKey(_ key: String) -> Bool {
@@ -146,7 +169,6 @@ public extension SKTiledObject {
      Parses a key/value string (separated byt '=') and returns a tuple.
      
      - parameter string: `String` key/value string.
-     
      - returns: `(String:Any)?` value for properties key.
      */
     public func keyValuePair(_ string: String) -> (key: String, value: Any)? {
@@ -154,8 +176,8 @@ public extension SKTiledObject {
         let values = string.components(separatedBy: "=")
         if values.count == 2 {
             result = (key: values[0], value: values[1])
-    }
+        }
         return result
-}
+    }
 }
 

@@ -1,4 +1,6 @@
-#Objects
+#Working with Objects
+
+By default, objects are not shown when rendered in **SKTiled**. To enable 
 
 The [`SKTileObject`](#SKTileObject) class represents a vector object in a object group layer. **SKTiled** objects just as they are in Tiled:
 
@@ -14,7 +16,7 @@ The [`SKTileObject`](#SKTileObject) class represents a vector object in a object
 
 Objects assigned a type in Tiled will retain that property in **SKTiled**, accessed with the optional `SKTileObject.type` property:
 
-![Tiled obeject types](../img/object_types.png)
+![Tiled obeject types](img/object_types.png)
 
 Objects assigned a type property can be queried from the parent [`SKObjectGroup`](#SKObjectGroup):
 
@@ -40,4 +42,4 @@ Dynamics can be turned on for objects with the `SKTileObject.setupDynamics()` me
 The `SKTileObject.obstacleType` property will flag the object as an `GKObstacle`.
 
 
- Next: [Properties](properties.html)
+ Next: [Properties](properties.html) - [Index](Tutorial.html)

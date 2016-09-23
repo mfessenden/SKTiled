@@ -9,21 +9,26 @@
 import SpriteKit
 
 /** 
- Describes the SKTileObject shape type.
+ Describes the `SKTileObject` shape type.
  
- - invalid:    shape is undefined.
- - rectangle:  shape is rectangular.
- - ellipse:    circular shape.
- - polygon:    polygon type (closed).
- - polyline:   polygon type (open).
+ -rectangle:  rectangular shape
+ -ellipse:    circular shape
+ -polygon:    closed polygon
+ -polyline:   open polygon
  */
 public enum SKObjectType: String {
-    case invalid
     case rectangle
     case ellipse
     case polygon
     case polyline
 }
+
+
+public enum LabelPosition {
+    case above
+    case below
+}
+
 
 
 /**
@@ -33,24 +38,24 @@ public enum SKObjectType: String {
  */
 open class SKTileObject: SKShapeNode, SKTiledObject {
 
-    weak open var layer: SKObjectGroup!            // layer parent, assigned on add
-    open var uuid: String = UUID().uuidString      // unique id
-    open var id: Int = 0                           // object id
-    open var type: String!                         // object type
-    open var objectType: SKObjectType = .invalid   // shape type
+    weak open var layer: SKObjectGroup!                     // layer parent, assigned on add
+    open var uuid: String = UUID().uuidString               // unique id
+    open var id: Int = 0                                    // object id
+    open var type: String!                                  // object type
+    internal var objectType: SKObjectType = .rectangle      // shape type
     
-    open var points: [CGPoint] = []                // points that describe object shape
+    open var points: [CGPoint] = []                         // points that describe object shape
     
     open var size: CGSize = CGSize.zero
     open var properties: [String: String] = [:]    // custom properties
     
-    /// Object opacity.
+    /// Object opacity
     open var opacity: CGFloat {
         get { return self.alpha }
         set { self.alpha = newValue }
     }
     
-    /// Object visibility.
+    /// Object visibility
     open var visible: Bool {
         get { return !self.isHidden }
         set { self.isHidden = !newValue }
@@ -59,6 +64,30 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     // MARK: - Init
     override public init(){
         super.init()
+        drawObject()
+    }
+    
+    /**
+     Initialize the object with width & height attributes.
+     
+     - parameter width:  `CGFloat` object size width.
+     - parameter height: `CGFloat` object size height.
+     - parameter type:   `SKObjectType` object shape type.
+     */
+    public init(width: CGFloat, height: CGFloat, type: SKObjectType = .rectangle){
+        super.init()
+    
+        // Rectangular and ellipse objects need initial points.
+        if (width > 0) && (height > 0) {
+            points = [CGPoint(x: 0, y: 0),
+                      CGPoint(x: width, y: 0),
+                      CGPoint(x: width, y: height),
+                      CGPoint(x: 0, y: height)
+            ]
+        }
+        
+        self.objectType = type
+        self.size = CGSize(width: width, height: height)
         drawObject()
     }
     
@@ -100,10 +129,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                       CGPoint(x: width, y: 0),
                       CGPoint(x: width, y: height),
                       CGPoint(x: 0, y: height)
-            ]
-            if (objectType == .invalid) {
-                objectType = .rectangle
-            }
+                    ]
         }
         
         self.size = CGSize(width: width, height: height)
@@ -143,7 +169,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     }
     
     /**
-     Draw the path.
+     Draw the object path.
      */
     public func drawObject() {
         guard let layer = layer else { return }
@@ -178,7 +204,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                     let controlShape = SKShapeNode(path: controlPath, centered: false)
                     addChild(controlShape)
                     controlShape.fillColor = SKColor.clear
-                    controlShape.strokeColor = self.strokeColor
+                    controlShape.strokeColor = self.strokeColor.withAlphaComponent(0.2)
                     controlShape.isAntialiased = true
                     controlShape.lineWidth = self.lineWidth / 2
                 }
@@ -191,7 +217,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             // draw the first point of poly objects
             if (self.objectType == .polyline) || (self.objectType == .polygon) {
                 
-                childNode(withName: "ANCHOR")?.removeFromParent()
+                childNode(withName: "Anchor")?.removeFromParent()
                 
                 var anchorRadius = self.lineWidth * 1.75
                 if anchorRadius > layer.tileHeight / 8 {
@@ -199,7 +225,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                 }
                 
                 let anchor = SKShapeNode(circleOfRadius: anchorRadius)
-                anchor.name = "ANCHOR"
+                anchor.name = "Anchor"
                 addChild(anchor)
                 anchor.position = vertices[0].invertedY
                 anchor.strokeColor = SKColor.clear
@@ -246,7 +272,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     fileprivate func getVertices() -> [CGPoint]? {
         guard let layer = layer else { return nil}
         guard points.count > 1 else { return nil}
-        
+                
         var vertices: [CGPoint] = []
         for point in points {
             var offset = layer.pixelToScreenCoords(point)

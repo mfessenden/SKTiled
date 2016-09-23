@@ -1,36 +1,39 @@
 module: SKTiled
+module_version: 0.97
 author: Michael Fessenden 
 author_url: https://github.com/mfessenden
 github_url: https://github.com/mfessenden/SKTiled
-#source_directory: Swift/SKTiled
+github_file_prefix: https://mfessenden.github.io/SKTiled
 clean: true
 skip_undocumented: true
 output: docs/swift
-readme: README.md
-#min_acl: private
+readme: docs/Start.md
+#docset_path:
 #docset_icon: Swift/Shared/Assets.xcassets/AppIcon.appiconset/Icon.png
+#sdk: iphonesimulator
+#min_acl: private
+skip_undocumented: true
+hide_documentation_coverage: true
+#head: '<h4><center> SKTiled - SpriteKit</center> </h4>'
 
 exclude:
   - "**/*-ObjC.swift"
-  - "Swift/macOS/*"
-  - "Swift/Shared/*"
+  - "Sources/SKTiled+Extensions.swift"
 
-xcodebuild_arguments:
-    - "-target"
-    - "macOS"
-
-copyright: '© 2016 Michael Fessenden](https://github.com/mfessenden) under [open source license](https://github.com/mfessenden/SKTiled/blob/iOS10/LICENSE).'
+copyright: '© 2016 Michael Fessenden](https://github.com/mfessenden) under [open source license](https://github.com/mfessenden/SKTiled/tree/master/LICENSE).'
 
 #swift_version: 3.0
 
 theme: apple
 
 documentation: docs/Tutorial/*.md
+abstract: docs/Sections/*.md
 
 custom_categories:
-  - name: Tutorial
+  - name: Tutorial    # references the section page
     children:
       - Getting Started
+      - Tiles
       - Coordinates
       - Objects
       - Properties
@@ -42,16 +45,22 @@ custom_categories:
     - SKTiledObject
     - SKTiledSceneDelegate
 
-  - name: Class Reference
+  - name: Data Types
+    children:
+    - TilemapOrientation
+    - SKObjectType
+
+  - name: Class Reference  # references the section page
     children:
     - SKTilemap
     - SKTilemapParser
     - SKTileset
+    - SKTilesetData
     - TiledLayerObject
     - SKTileLayer
     - SKObjectGroup
     - SKImageLayer
     - SKTile
     - SKTileObject
-    - SKTilesetData
-    - TileCoord
+    - SKTiledScene
+    - SKTiledSceneCamera

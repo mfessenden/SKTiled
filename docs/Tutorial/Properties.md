@@ -1,7 +1,9 @@
 #Custom Properties
 
 One of the most powerful features of *SKTiled* is the ability to exploit Tiled's custom properties for most objects. 
-All objects that conform to the `TiledObject` protocol have methods for parsing Tiled object properties.
+All objects that conform to the `TiledObject` protocol have methods for parsing Tiled object properties. Tiled property values are all encoded as strings. **SKTiled** will attempt to parse the intended type, but be sure to check the type of property you are querying.
+
+If you are using the v0.17 of Tiled or newer, *SKTiled* supports the new **color** and **file** property types (values are stored as strings internally anyway, which *SKTiled* already supports). The custom color/file types listed above will also be parsed if they are created as string types in Tiled.
 
 
     SKTilemap:
@@ -21,6 +23,7 @@ All objects that conform to the `TiledObject` protocol have methods for parsing 
       maxZoom             (Float)     - maximum camera zoom.
       minZoom             (Float)     - minimum camera zoom.
       ignoreBackground    (Bool)      - ignore Tiled scene background color.
+      antialiasLines      (Bool)      - antialias lines.
 
     TiledLayerObject:
       hidden              (Bool)      - hide the layer.
@@ -47,31 +50,5 @@ All objects that conform to the `TiledObject` protocol have methods for parsing 
       color               (String)    - hex string to override object color.
       lineWidth           (Float)     - object line width.   
 
+ Next: [GameplayKit](gameplaykit.html) - [Index](Tutorial.html)
 
-##Property Types
-
-Tiled property values are all encoded as strings. **SKTiled** will attempt to parse the intended type, but here are some guidelines:
-
-- Bool values can be stored as **true/false** or **0/1**
-
-
-##Tiled v0.17 Properties
-
-If you are using the v0.17 of Tiled or newer, *SKTiled* supports the new **color** and **file** property types (values are stored as strings internally anyway, which *SKTiled* already supports). The custom color/file types listed above will also be parsed if they are created as string types in Tiled.
-
-##SKTilemap Colors
-    
-    // setting one of these in the tiled file will apply it to ALL layers
-    gridColor: grid visualization color
-    frameColor: bounding box color
-    highlightColor: layer highlight color
-    
-    
-##TiledLayerObject Colors
-
-    color:  object group color
-    gridColor: grid visualization color
-    frameColor: bounding box color
-    highlightColor: layer highlight color
-
- Next: [GameplayKit](gameplaykit.html)

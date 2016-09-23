@@ -1,7 +1,8 @@
-![SKTiled](https://github.com/mfessenden/SKTiled/blob/iOS10/docs/img/header.png)
+![SKTiled](https://github.com/mfessenden/SKTiled/blob/iOS10/docs/swift/img/header.png)
 
 **SKTiled** is a simple library for using [Tiled](http://www.mapeditor.org) files with Apple's SpriteKit, allowing the creation of game assets from .tmx files. Inspired by [TilemapKit](http://tilemapkit.com) and written purely in Swift 2.0, I began working on this for a project after the development of TilemapKit was halted. While initially created as an exercise in learning Apple's new programming language, I've decided to open-source it in case others find it helpful.  
 
+Check out the [official documentation](https://mfessenden.github.io/SKTiled).
 
 
 For Swift 3/iOS10/OSX 10.11. See [this branch](https://github.com/mfessenden/SKTiled/tree/master) for Swift 2.2+ version.
@@ -10,11 +11,12 @@ For Swift 3/iOS10/OSX 10.11. See [this branch](https://github.com/mfessenden/SKT
 [![Build Status](https://travis-ci.org/mfessenden/SKTiled.svg?branch=iOS10)](https://travis-ci.org/mfessenden/SKTiled)
 [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/mfessenden/SKTiled/blob/iOS10/LICENSE)
 
+
 ##Installation
 
 Simply drag the *SKTiled* directory into your Xcode project, and add the files to your game target:
 
-![Xcode installation](https://github.com/mfessenden/SKTiled/blob/iOS10/docs/img/installation.png)
+![Xcode installation](https://github.com/mfessenden/SKTiled/blob/iOS10/docs/swift/img/installation.png)
 
 
 Alternately, you can include this directory in your project's workspace.
@@ -63,7 +65,7 @@ Properties like map size & tile size can be accessed via the `SKTilemap.size` an
 **Accessing Tiles**
 
 ```swift
-let tileCoord = TileCoord(7, 12)
+let tileCoord = CGPoint(7, 12)
 let tile = groundLayer.tileAt(coord: tileCoord)
 let tile = groundLayer.tileAt(7, 12)
 ```
@@ -140,7 +142,7 @@ New nodes (any `SKNode` type) can be added directly to any layer:
 
 ```swift
 let newNode = SKNode()
-groundLayer.addChild(newNode, 4, 5, zPosition: 100.0)
+groundLayer.addChild(newNode, 4, 5, zpos: 100.0)
 ```
 
 ## Animated Tiles

@@ -31,9 +31,10 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
     let context = UIGraphicsGetCurrentContext()
     let bounds = CGRect(origin: CGPoint.zero, size: size)
     whatToDraw(context!, bounds, scale)
-let result = UIGraphicsGetImageFromCurrentImageContext()
+    let result = UIGraphicsGetImageFromCurrentImageContext()
     return result!.cgImage!
 }
+    
 #else
 public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ context: CGContext, _ bounds: CGRect, _ scale: CGFloat) -> ()) -> CGImage {
     let scaledSize = size * scale
@@ -121,8 +122,16 @@ public extension CGFloat {
 }
 
 
+public func floor(_ flt: CGFloat) -> CGFloat {
+    return CGFloat(floor(Double(flt)))
+}
+
 
 public extension CGPoint {
+    
+    public init(_ x: Int, _ y: Int) {
+        self.init(x: CGFloat(x), y: CGFloat(y))
+    }
     
     /// Returns an point inverted in the Y-coordinate.
     public var invertedY: CGPoint {
@@ -140,14 +149,11 @@ public extension CGPoint {
         return "x: \(self.x.roundTo(decimals)), y: \(self.y.roundTo(decimals))"
     }
     
-    /**
-     Converts the point to a tile coordinate.
-     
-     - returns: `TileCoord` converted point.
-     */
-    public func toCoord() -> TileCoord {
-        return TileCoord(point: self)
-    }
+    public var xCoord: Int { return Int(x) }
+    public var yCoord: Int { return Int(y) }
+    
+    public var description: String { return "x: \(x.roundTo()), y: \(y.roundTo())" }
+    public var coordDescription: String { return "x: \(Int(x)), y: \(Int(y))" }
 }
 
 
@@ -162,15 +168,10 @@ public extension CGSize {
         self.init(width: CGFloat(width), height: CGFloat(height))
     }
     
-    public var count: Int { return Int(width) * Int(height) }
-    
-    public var halfWidth: CGFloat {
-        return width / 2.0
-    }
-    
-    public var halfHeight: CGFloat {
-        return height / 2.0
-    }
+    public var count: Int { return Int(width) * Int(height) }    
+    public var halfSize: CGSize { return CGSize(width: width / 2, height: height / 2) }
+    public var halfWidth: CGFloat { return width / 2.0 }
+    public var halfHeight: CGFloat { return height / 2.0 }
     
     public func roundTo(_ decimals: Int=1) -> String {
         return "w: \(self.width.roundTo(decimals)), h: \(self.height.roundTo(decimals))"
@@ -243,10 +244,10 @@ public extension SKScene {
 
 
 
-public extension SKNode {
+internal extension SKNode {
     
     /// visualize a node's anchor point.
-    public var drawAnchor: Bool {
+    internal var drawAnchor: Bool {
         get {
             return childNode(withName: "Anchor") != nil
         } set {
@@ -291,7 +292,7 @@ public extension SKNode {
      - parameter withKey:            `String` action key.
      - parameter optionalCompletion: `() -> ()` optional completion function.
      */
-    public func runAction(_ action: SKAction!, withKey: String!, optionalCompletion block: (()->())?) {
+    internal func runAction(_ action: SKAction!, withKey: String!, optionalCompletion block: (()->())?) {
         if let block = block {
             let completionAction = SKAction.run( block )
             let compositeAction = SKAction.sequence([ action, completionAction ])
@@ -305,7 +306,7 @@ public extension SKNode {
 public extension SKColor {
     
     /// Returns the hue, saturation, brightess & alpha components of the color
-    public var hsba: (h: CGFloat, s: CGFloat, b: CGFloat, a: CGFloat) {
+    internal var hsba: (h: CGFloat, s: CGFloat, b: CGFloat, a: CGFloat) {
         var hsba: (h: CGFloat, s: CGFloat, b: CGFloat, a: CGFloat) = (0, 0, 0, 0)
         self.getHue(&(hsba.h), saturation: &(hsba.s), brightness: &(hsba.b), alpha: &(hsba.a))
         return hsba
@@ -317,7 +318,7 @@ public extension SKColor {
      - parameter percent: `CGFloat`
      - returns: `SKColor` lightened color.
      */
-    public func lighten(by percent: CGFloat) -> SKColor {
+    internal func lighten(by percent: CGFloat) -> SKColor {
         return colorWithBrightness(factor: 1.0 + percent)
     }
     
@@ -327,7 +328,7 @@ public extension SKColor {
      - parameter percent: `CGFloat`
      - returns: `SKColor` darkened color.
      */
-    public func darken(by percent: CGFloat) -> SKColor {
+    internal func darken(by percent: CGFloat) -> SKColor {
         return colorWithBrightness(factor: 1.0 - percent)
     }
     
@@ -337,7 +338,7 @@ public extension SKColor {
      - parameter factor: brightness factor
      - returns: `SKColor` modified color
      */
-    public func colorWithBrightness(factor: CGFloat) -> SKColor {
+    internal func colorWithBrightness(factor: CGFloat) -> SKColor {
         let components = self.hsba
         return SKColor(hue: components.h, saturation: components.s, brightness: components.b * factor, alpha: components.a)
     }
@@ -348,7 +349,7 @@ public extension SKColor {
      - parameter hexString:  `String` hexidecimal code.
      - returns: `SKColor`
      */
-    convenience init(hexString: String) {
+    convenience public init(hexString: String) {
         let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int = UInt32()
         Scanner(string: hex).scanHexInt32(&int)
@@ -368,7 +369,7 @@ public extension SKColor {
     
     
     /// Returns the individual color components.
-    public var components: [CGFloat] {
+    internal var components: [CGFloat] {
         return cgColor.components!
     }
     
@@ -379,7 +380,7 @@ public extension SKColor {
      - parameter factor:  `CGFloat` blend factor.
      - returns: `SKColor` blended color.
      */
-    public func blend(with color: SKColor, factor s: CGFloat = 0.5) -> SKColor {
+    internal func blend(with color: SKColor, factor s: CGFloat = 0.5) -> SKColor {
         
         let r1 = components[0]
         let g1 = components[1]
@@ -755,8 +756,8 @@ public func normalize(_ value: CGFloat, _ minimum: CGFloat, _ maximum: CGFloat) 
 public func drawGrid(_ layer: TiledLayerObject,  scale: CGFloat = 1) -> CGImage {
         
     let size = layer.size
-    let tileWidth = layer.tileWidth //* scale
-    let tileHeight = layer.tileHeight //* scale
+    let tileWidth = layer.tileWidth    //* scale
+    let tileHeight = layer.tileHeight  //* scale
                 
     let tileWidthHalf = tileWidth / 2
     let tileHeightHalf = tileHeight / 2
@@ -767,11 +768,11 @@ public func drawGrid(_ layer: TiledLayerObject,  scale: CGFloat = 1) -> CGImage 
     return imageOfSize(sizeInPoints, scale: scale) { context, bounds, scale in
                 
         let innerColor = layer.gridColor
-        let lineWidth = (tileHeight <= 16) ? 1.0 / scale : 1.0
+        let lineWidth: CGFloat = (tileHeight <= 16) ? 1.0 / scale : 1.0
                 
         context.setLineWidth(lineWidth)
         //context.setLineDash(phase: 0.5, lengths: [0.5, 1.0])
-        context.setShouldAntialias(false)
+        context.setShouldAntialias(layer.antialiased)
                 
         for col in 0 ..< Int(size.width) {
             for row in (0 ..< Int(size.height)) {
@@ -779,7 +780,7 @@ public func drawGrid(_ layer: TiledLayerObject,  scale: CGFloat = 1) -> CGImage 
                 context.setStrokeColor(innerColor.cgColor)
                 context.setFillColor(SKColor.clear.cgColor)
                 
-                let screenPosition = layer.tileToScreenCoords(TileCoord(col, row))
+                let screenPosition = layer.tileToScreenCoords(CGPoint(x: col, y: row))
                 
                 var xpos: CGFloat = screenPosition.x
                 var ypos: CGFloat = screenPosition.y
@@ -808,10 +809,11 @@ public func drawGrid(_ layer: TiledLayerObject,  scale: CGFloat = 1) -> CGImage 
                 case .hexagonal, .staggered:
                     let staggerX = layer.tilemap.staggerX
                     
-                    if layer.orientation == .hexagonal {
+                    // this is mirrored in pointForCoordinate
+                    xpos += tileWidthHalf
+                    ypos += tileHeightHalf
                     
-                        xpos += tileWidthHalf
-                        ypos += tileHeightHalf
+                    if layer.orientation == .hexagonal {
                     
                         var hexPoints = Array(repeating: CGPoint.zero, count: 6)
                         var variableSize: CGFloat = 0
@@ -845,12 +847,12 @@ public func drawGrid(_ layer: TiledLayerObject,  scale: CGFloat = 1) -> CGImage 
                     
                         let shapePath = polygonPath(hexPoints)
                         context.addPath(shapePath)
-                }
+                        
+                        
+                        
+                    }
                 
                     if layer.orientation == .staggered {
-                
-                        xpos += tileWidthHalf
-                        ypos += tileHeightHalf
                         
                         let points: [CGPoint] = [
                             CGPoint(x: xpos, y: ypos),
@@ -932,6 +934,8 @@ public func polygonPointArray(_ sides: Int, radius: CGSize, offset: CGFloat=0, o
     }
     return points
 }
+
+
 /**
 
  Takes an array of points and returns a path.
@@ -954,6 +958,7 @@ public func polygonPath(_ points: [CGPoint], closed: Bool=true) -> CGPath {
     if (closed == true) {path.closeSubpath()}
     return path
 }
+
 
 /**
  Draw a polygon shape based on an aribitrary number of sides.

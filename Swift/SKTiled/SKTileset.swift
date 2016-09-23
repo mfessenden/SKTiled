@@ -17,6 +17,7 @@ import SpriteKit
  
  ```swift
  let data = tileset.getTileData(56)
+let tile = SKTile(data: data)
  ```
  */
 open class SKTileset: SKTiledObject {
@@ -103,7 +104,7 @@ open class SKTileset: SKTiledObject {
     }
     
     /**
-     Initialize with attributes directly from tmx file.
+     Initialize with attributes directly from TMX file.
      
      - parameter attributes: `[String: String]` attributes dictionary.
      - parameter offset:     `CGPoint` offset in x/y.

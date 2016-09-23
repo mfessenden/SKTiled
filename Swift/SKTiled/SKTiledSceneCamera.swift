@@ -38,7 +38,8 @@ open class SKTiledSceneCamera: SKCameraNode {
     
     // gestures
     #if os(iOS)
-    open var scenePanned: UIPanGestureRecognizer!              // gesture recognizer to recognize scene panning
+    /// Gesture recognizer to recognize camera panning
+    open var cameraPanned: UIPanGestureRecognizer!
     #endif
     
     // locations
@@ -53,10 +54,10 @@ open class SKTiledSceneCamera: SKCameraNode {
         
         #if os(iOS)
         // setup pan recognizer
-        scenePanned = UIPanGestureRecognizer(target: self, action: #selector(scenePanned(_:)))
-        scenePanned.minimumNumberOfTouches = 1
-        scenePanned.maximumNumberOfTouches = 1
-        view.addGestureRecognizer(scenePanned)
+        cameraPanned = UIPanGestureRecognizer(target: self, action: #selector(cameraPanned(_:)))
+        cameraPanned.minimumNumberOfTouches = 1
+        cameraPanned.maximumNumberOfTouches = 1
+        view.addGestureRecognizer(cameraPanned)
         #endif
     }
     
@@ -150,22 +151,22 @@ open class SKTiledSceneCamera: SKCameraNode {
 
 
 #if os(iOS)
-public extension SKTiledSceneCamera {
+extension SKTiledSceneCamera {
     // MARK: - Gesture Handlers    
     
     /**
      Update the scene camera when a pan gesture is recogized.
      
      - parameter recognizer: `UIPanGestureRecognizer` pan gesture recognizer.
-     */
-    open func scenePanned(_ recognizer: UIPanGestureRecognizer) {
+    */
+    open func cameraPanned(_ recognizer: UIPanGestureRecognizer) {
         guard let scene = self.scene else { return }
-        if recognizer.state == .began {
+        if (recognizer.state == .began) {
             let location = recognizer.location(in: recognizer.view)
             lastLocation = location
         }
         
-        if recognizer.state == .changed && allowMovement == true {
+        if (recognizer.state == .changed) && (allowMovement == true) {
             if lastLocation == nil { return }
             let location = recognizer.location(in: recognizer.view)
             let difference = CGPoint(x: location.x - lastLocation.x, y: location.y - lastLocation.y)
@@ -176,8 +177,9 @@ public extension SKTiledSceneCamera {
 }
 #endif
 
+
 #if os(OSX)
-public extension SKTiledSceneCamera {
+extension SKTiledSceneCamera {
     // MARK: - Mouse Events
     
     /**
@@ -187,7 +189,7 @@ public extension SKTiledSceneCamera {
      */
     open func sceneDoubleClicked(_ event: NSEvent) {
         guard let scene = self.scene as? SKTiledScene else { return }
-        let sceneLocation = event.location(in: scene)
+        //let sceneLocation = event.location(in: scene)
     }
     
     override open func mouseDown(with event: NSEvent) {
@@ -204,10 +206,11 @@ public extension SKTiledSceneCamera {
     override open func scrollWheel(with event: NSEvent) {
         let location = event.location(in: self)
         focusLocation = location
+        centerOn(scenePoint: focusLocation)
+        
         zoom += (event.deltaY * 0.25)
         // set the world scaling here
         setWorldScale(zoom)
-        centerOn(scenePoint: CGPoint(x: focusLocation.x, y: focusLocation.y))
     }
     
     open func scenePositionChanged(_ event: NSEvent) {

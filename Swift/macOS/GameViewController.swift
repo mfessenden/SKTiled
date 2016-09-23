@@ -40,9 +40,19 @@ class GameViewController: NSViewController {
         //set up notification for scene to load the next file
         NotificationCenter.default.addObserver(self, selector: #selector(loadNextScene), name: NSNotification.Name(rawValue: "loadNextScene"), object: nil)
         skView.presentScene(scene)
-    
     }
-
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        updateWindowTitle()
+    }
+    
+    override func scrollWheel(with event: NSEvent) {
+        guard let view = self.view as? SKView else { return }
+        if let currentScene = view.scene as? SKTiledDemoScene {
+            currentScene.scrollWheel(with: event)
+        }
+    }
     
     /**
      Load the next tilemap scene.
@@ -52,8 +62,11 @@ class GameViewController: NSViewController {
     func loadNextScene(_ interval: TimeInterval=0.4) {
         guard let view = self.view as? SKView else { return }
         
+        var debugMode = false
+        
         var currentFilename = demoFiles.first!
         if let currentScene = view.scene as? SKTiledDemoScene {
+            debugMode = currentScene.debugMode
             if let tilemap = currentScene.tilemap {
                 currentFilename = tilemap.name!
             }
@@ -70,10 +83,32 @@ class GameViewController: NSViewController {
         let nextScene = SKTiledDemoScene(size: view.bounds.size, tmxFile: nextFilename)
         nextScene.scaleMode = .aspectFill
         let transition = SKTransition.fade(withDuration: interval)
+        nextScene.debugMode = debugMode
         view.presentScene(nextScene, transition: transition)
-        
+        updateWindowTitle()
     }
     
+    /**
+     Update the application window title with the current scene
+     */
+    func updateWindowTitle(){
+        guard let view = self.view as? SKView else { return }
+        
+        var windowTitle = "SKTiled"
+        if let currentScene = view.scene as? SKTiledDemoScene {
+            if let tilemap = currentScene.tilemap {
+                windowTitle += ": \(tilemap.name!)"
+            }
+        }
+        
+        self.view.window!.title = windowTitle
+    }
+    
+    /**
+     Load TMX files from the property list.
+     
+     - returns: `[String]` array of tiled file names.
+    */
     fileprivate func loadDemoFiles(_ filename: String) -> [String] {
         var result: [String] = []
         if let fileList = Bundle.main.path(forResource: filename, ofType: "plist"){

@@ -10,8 +10,9 @@ import SpriteKit
 
 
 public extension SKTilemap {
+    // MARK: - Properties
     /**
-     Parse properties from the Tiled tmx file.
+     Parse properties from the Tiled TMX file.
      */
     public func parseProperties() {
         for (attr, value) in properties {
@@ -84,9 +85,13 @@ public extension SKTilemap {
             
             if (attr == "ignoreBackground") {
                 ignoreBackground = boolForKey(attr)
+            }
+            
+            if (attr == "antialiasLines") {
+                antialiasLines = boolForKey(attr)
+            }
         }
     }
-}
 }
 
 
@@ -101,7 +106,7 @@ public extension SKTileset {
 public extension TiledLayerObject {
     
     /**
-     Parse the nodes properties value.
+     Parse the layer's properties value.
      */
     public func parseProperties() {
         
@@ -138,7 +143,7 @@ public extension TiledLayerObject {
     }
     
     /**
-     Add a property.
+     Set a property/value pair.
      
      - parameter name:  `String` property name.
      - parameter value: `String` property value.
@@ -205,7 +210,7 @@ public extension SKTileObject {
 
 public extension SKTilesetData {
     /**
-     Parse the data's properties value.
+     Parse the tile data's properties value.
      */
     public func parseProperties() {
         for (attr, value) in properties {
