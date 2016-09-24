@@ -49,6 +49,9 @@
                 <a href="gameplaykit.html">GameplayKit</a>
               </li>
               <li class="nav-group-task">
+                <a href="extending.html">Extending</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="debugging.html">Debugging</a>
               </li>
             </ul>
@@ -117,6 +120,14 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="Other Guides.html">Other Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="tutorial.html">Tutorial</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="Other Enums.html">Other Enums</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -130,7 +141,30 @@
         <section>
           <section class="section">
             <h1>Class Reference</h1>
-            
+            <p><a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> - tile map node.</p>
+
+<p><a href="Classes/SKTilemapParser.html"><code>SKTilemapParser</code></a> - Tiled XML parser.</p>
+
+<p><a href="Classes/SKTileset.html"><code>SKTileset</code></a> - tile set data structure.</p>
+
+<p><a href="Classes/SKTilesetData.html"><code>SKTilesetData</code></a> - tile data structure.</p>
+
+<p><a href="Classes/TiledLayerObject.html"><code>TiledLayerObject</code></a> - Tiled layer base class. </p>
+
+<p><a href="Classes/SKTileLayer.html"><code>SKTileLayer</code></a> - Tile layer type.</p>
+
+<p><a href="Classes/SKObjectGroup.html"><code>SKObjectGroup</code></a> - Object group type.</p>
+
+<p><a href="Classes/SKImageLayer.html"><code>SKImageLayer</code></a> - Image layer type.</p>
+
+<p><a href="Classes/SKTile.html"><code>SKTile</code></a> - Tile object type.</p>
+
+<p><a href="Classes/SKTileObject.html"><code>SKTileObject</code></a> - Object type.</p>
+
+<p><a href="Classes/SKTiledScene.html"><code>SKTiledScene</code></a> - custom SKScene for displaying tile maps.</p>
+
+<p><a href="Classes/SKTiledSceneCamera.html"><code>SKTiledSceneCamera</code></a> - custom scene camera.</p>
+
           </section>
           <section class="section task-group-section">
             <div class="task-group">
@@ -169,7 +203,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L150-L940">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L150-L922">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -211,7 +245,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemapParser.swift#L36-L683">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemapParser.swift#L35-L682">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -237,7 +271,7 @@
 
 <p>Tile data is accessed via the global id (&lsquo;gid&rsquo;):</p>
 
-<pre class="highlight swift"><code> <span class="k">let</span> <span class="nv">data</span> <span class="o">=</span> <span class="n">tileset</span><span class="o">.</span><span class="nf">getTileData</span><span class="p">(</span><span class="mi">56</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">data</span> <span class="o">=</span> <span class="n">tileset</span><span class="o">.</span><span class="nf">getTileData</span><span class="p">(</span><span class="mi">56</span><span class="p">)</span>
 <span class="k">let</span> <span class="nv">tile</span> <span class="o">=</span> <span class="kt">SKTile</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
 </code></pre>
 
@@ -252,7 +286,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileset.swift#L23-L299">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileset.swift#L23-L300">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -337,7 +371,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L50-L651">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L50-L695">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -380,7 +414,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L672-L1057">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L716-L1100">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -428,7 +462,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L1095-L1309">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L1138-L1355">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -464,7 +498,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L1323-L1380">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L1369-L1426">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -494,12 +528,12 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">SKTile</span><span class="p">:</span> <span class="kt">SKSpriteNode</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTile</span><span class="p">:</span> <span class="kt">SKSpriteNode</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTile.swift#L15-L306">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTile.swift#L15-L323">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -662,7 +696,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
           </section>
         </section>
         <section id="footer">
-          <p>© 2016 Michael Fessenden](<a href="https://github.com/mfessenden">https://github.com/mfessenden</a>) under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
+          <p>© 2016 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external">Michael Fessenden</a> under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

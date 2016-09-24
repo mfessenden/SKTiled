@@ -49,6 +49,9 @@
                 <a href="gameplaykit.html">GameplayKit</a>
               </li>
               <li class="nav-group-task">
+                <a href="extending.html">Extending</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="debugging.html">Debugging</a>
               </li>
             </ul>
@@ -117,6 +120,14 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="Other Guides.html">Other Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="tutorial.html">Tutorial</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="Other Enums.html">Other Enums</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -132,31 +143,77 @@
             
             <a href='#debugging' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='debugging'>Debugging</h1>
 
-<p>There are several functions for troubleshooting your tile map nodes.</p>
+<p>There are several functions for troubleshooting your tiled scenes. The <code>SKTilemap</code> node has a <code>debugDraw</code> property that will quickly show the grid and any object layers:</p>
+<pre class="highlight swift"><code><span class="n">tilemap</span><span class="o">.</span><span class="n">debugDraw</span> <span class="o">=</span> <span class="kc">true</span>
+</code></pre>
+<a href='#visualizing-objects' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='visualizing-objects'>Visualizing Objects</h3>
 
-<p>Debugging properties for SKTiled classes:</p>
+<p>By default, object layers are hidden so that you may easily work with them in Tiled, but not see them in your game. To see them, you can either show <em>all</em> object layers, or on a layer by layer basis:</p>
+<pre class="highlight swift"><code><span class="c1">// show all objects in the scene</span>
+<span class="n">tilemap</span><span class="o">.</span><span class="n">showObjects</span> <span class="o">=</span> <span class="kc">true</span>
+
+
+<span class="c1">// show objects in each layer</span>
+<span class="k">for</span> <span class="n">layer</span> <span class="k">in</span> <span class="n">tilemap</span><span class="o">.</span><span class="n">objectLayers</span> <span class="p">{</span>
+    <span class="n">layer</span><span class="o">.</span><span class="n">showObjects</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="p">}</span>
+</code></pre>
+<a href='#visualizing-the-tile-grid' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='visualizing-the-tile-grid'>Visualizing the Tile Grid</h3>
+
+<p>To visualize the current grid on any layer type, use the layer&rsquo;s <code>showGrid</code> property:</p>
+
+<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/swift/img/showGrid.gif" alt="Show Grid"></p>
+<pre class="highlight swift"><code><span class="n">tileLayer</span><span class="o">.</span><span class="n">showGrid</span> <span class="o">=</span> <span class="kc">true</span>
+</code></pre>
+
+<p>To change the grid color, set layer&rsquo;s <code>gridColor</code> property.</p>
+<a href='#highlighting-tiles' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='highlighting-tiles'>Highlighting Tiles</h3>
+
+<p>You can highlight a tile using the <code>SKTile.drawBounds</code> method. </p>
+<pre class="highlight swift"><code>
+<span class="c1">// highlight the tile for .25 seconds</span>
+<span class="n">tile</span><span class="o">.</span><span class="nf">drawBounds</span><span class="p">(</span><span class="nv">antialiasing</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">duration</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">)</span>
+</code></pre>
+
+<p>The tile highlight color is stored in the <code>SKTile.highlightColor</code> property:</p>
+<pre class="highlight swift"><code><span class="c1">// set the tile highlight color for individual tiles</span>
+<span class="n">tile</span><span class="o">.</span><span class="n">highlightColor</span> <span class="o">=</span> <span class="kt">SKColor</span><span class="o">.</span><span class="n">red</span>
+
+
+<span class="c1">// set the highlight color for *all* tiles in the layer </span>
+<span class="n">tileLayer</span><span class="o">.</span><span class="n">highlightColor</span> <span class="o">=</span> <span class="kt">SKColor</span><span class="o">.</span><span class="n">blue</span>
+</code></pre>
+<a href='#layer-boundary' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='layer-boundary'>Layer Boundary</h3>
+
+<p>All <code>TiledLayerObject</code> objects allow you to visualize the layer&rsquo;s boundary: </p>
+<pre class="highlight swift"><code><span class="n">tileLayer</span><span class="o">.</span><span class="nf">drawBounds</span><span class="p">()</span>
+</code></pre>
+<a href='#debugging-colors' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='debugging-colors'>Debugging Colors</h3>
 <pre class="highlight plaintext"><code>SKTilemap:
-  highlightColor  (SKColor)   - global highlight color.
+
+  highlightColor   -&gt; overrides all layers highlighColor -&gt; overrides SKTile highlight color
+</code></pre>
+<a href='#properties' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='properties'>Properties</h3>
+
+<p>Debugging properties for <strong>SKTiled</strong> classes:</p>
+<pre class="highlight plaintext"><code>SKTilemap:
+  highlightColor  (SKColor)   - global tile/object highlight color.
+  showObjects     (Bool)      - visibility flag for all object layers.  
 
 TiledLayerObject:
-  highlightColor  (SKColor)   - layer highlight color. 
+  color           (SKColor)   - *not currently used
+  highlightColor  (SKColor)   - layer highlight color (tile highlight color). 
+  gridColor       (SKColor)   - grid color.
+  frameColor      (SKColor)   - bounding box color.
   debugDraw       (Bool)      - show the layer boundary shape.
   showGrid        (Bool)      - show the layer grid.  
   showGraph       (Bool)      - show the pathfinding graph (if one exists).
 
+SKObjectGroup:
+  showObjects     (Bool)      - visibility flag for all objects in the layer.
+
 SKTile:
   highlightColor  (SKColor)   - tile highlight color (used in the `SKTile.drawBounds` method).
-</code></pre>
-<a href='#visualizing-the-tile-grid' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='visualizing-the-tile-grid'>Visualizing the Tile Grid</h3>
-<a href='#highlighting-tiles' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='highlighting-tiles'>Highlighting Tiles</h3>
-
-<p>You can highlight a tile using the <code>SKTile.drawBounds</code> method. </p>
-<pre class="highlight swift"><code><span class="n">tile</span><span class="o">.</span><span class="nf">drawBounds</span><span class="p">(</span><span class="nv">antialias</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">duration</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">)</span>
-</code></pre>
-<a href='#colors' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='colors'>Colors</h3>
-<pre class="highlight plaintext"><code>SKTilemap:
-
-  highlightColor   -&gt; overrides all layers highlighColor -&gt; overrides SKTile highlight color
 </code></pre>
 
 <p>Next: <a href="getting-started.html">Getting Started</a> - <a href="Tutorial.html">Index</a></p>
@@ -164,7 +221,7 @@ SKTile:
           </section>
         </section>
         <section id="footer">
-          <p>© 2016 Michael Fessenden](<a href="https://github.com/mfessenden">https://github.com/mfessenden</a>) under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
+          <p>© 2016 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external">Michael Fessenden</a> under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
