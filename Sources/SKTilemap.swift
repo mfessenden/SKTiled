@@ -971,8 +971,27 @@ extension SKTilemap {
     // convenience properties
     public var width: CGFloat { return size.width }
     public var height: CGFloat { return size.height }
-    public var tileWidth: CGFloat { return tileSize.width }
-    public var tileHeight: CGFloat { return tileSize.height }
+   
+    /// Returns the current tile width
+    public var tileWidth: CGFloat {
+        switch orientation {
+        case .staggered:
+            return CGFloat(Int(tileSize.width) & ~1)
+        default:
+            return tileSize.width
+        }
+    }
+    
+    
+    /// Returns the current tile height
+    public var tileHeight: CGFloat {
+        switch orientation {
+        case .staggered:
+            return CGFloat(Int(tileSize.height) & ~1)
+        default:
+            return tileSize.height
+        }
+    }
     
     public var sizeHalved: CGSize { return CGSize(width: size.width / 2, height: size.height / 2)}
     public var tileWidthHalf: CGFloat { return tileWidth / 2 }
@@ -1014,6 +1033,7 @@ extension SKTilemap {
     }
     
     public func topLeft(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
+        print("# topLeft:      \(x), \(y)")
         // pointy-topped
         if (staggerX == false) {
             // y is odd = 1, y is even = 0
@@ -1034,6 +1054,7 @@ extension SKTilemap {
     }
             
     public func topRight(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
+        print("# topRight:     \(x), \(y)")
         if (staggerX == false) {
             if Bool((Int(y) & 1) ^ staggerindex.hashValue) {
                 return CGPoint(x: x + 1, y: y - 1)
@@ -1050,6 +1071,7 @@ extension SKTilemap {
     }
     
     public func bottomLeft(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
+        print("# bottomLeft:   \(x), \(y)")
         if (staggerX == false) {
             if Bool((Int(y) & 1) ^ staggerindex.hashValue) {
                 return CGPoint(x: x, y: y + 1)
@@ -1066,6 +1088,7 @@ extension SKTilemap {
     }
     
     public func bottomRight(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
+        print("# bottomRight:  \(x), \(y)")
         if (staggerX == false) {
             if Bool((Int(y) & 1) ^ staggerindex.hashValue) {
                 return CGPoint(x: x + 1, y: y + 1)

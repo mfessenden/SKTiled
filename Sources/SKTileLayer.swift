@@ -436,26 +436,56 @@ open class TiledLayerObject: SKNode, SKTiledObject {
             
         case .staggered:
             
-            // variables for grid divisions
-            var sectionX: CGFloat = 0
-            var sectionY: CGFloat = 0
-            
-            pixelX -= tileWidthHalf
-            pixelY -= tileHeightHalf
-            
-            if (tilemap.staggerX == true) {
-                sectionX = pixelX / tileWidthHalf
-                sectionY = pixelY / tileHeight
-                
+            if tilemap.staggerX {
+                pixelX -= tilemap.staggerEven ? tilemap.sideOffsetX : 0
             } else {
-                sectionX = pixelX / tileWidth
-                sectionY = pixelY / tileHeightHalf
+                pixelY -= tilemap.staggerEven ? tilemap.sideOffsetY : 0
             }
+            
+            // get a point in the reference grid
+            var referencePoint = CGPoint(x: floor(pixelX / tileWidth), y: floor(pixelY / tileHeight))
+            
+            // relative x & y position to grid aligned tile
+            var relativePoint = CGPoint(x: pixelX - referencePoint.x * tileWidth, y: pixelY - referencePoint.y * tileHeight)
+            
+            // make adjustments to reference point
+            if tilemap.staggerX {
+                relativePoint.x *= 2
+                if tilemap.staggerEven {
+                    referencePoint.x += 1
+                }
+            } else {
+                referencePoint.y *= 2
+                if tilemap.staggerEven {
+                    referencePoint.y += 1
+                }
+            }
+            
+            let yPosition: CGFloat = relativePoint.x * (tileHeight / tileWidth)
+            //print("# y-pos: \(yPosition)")
+            /*
+            // check if the screen position is in the corners
+            if (tilemap.sideOffsetY - yPosition > relativePoint.y) {
+                return tilemap.topLeft(referencePoint.x, referencePoint.y)
+            }
+            
+            if (tilemap.sideOffsetY + yPosition > relativePoint.y) {
+                return tilemap.topRight(referencePoint.x, referencePoint.y)
+            }
+            
+            if (tilemap.sideOffsetY + yPosition < relativePoint.y) {
+                return tilemap.bottomLeft(referencePoint.x, referencePoint.y)
+            }
+            
+            if (tilemap.sideOffsetY * 3 - yPosition < relativePoint.y) {
+                return tilemap.bottomRight(referencePoint.x, referencePoint.y)
+            }*/
 
-            return floor(point: CGPoint(x: sectionX, y: sectionY))
+            return referencePoint
         }
     }
-    
+
+
     /**
      Converts a tile coordinate into a screen point.
      

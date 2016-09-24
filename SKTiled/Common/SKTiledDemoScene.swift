@@ -391,7 +391,7 @@ extension SKTiledDemoScene {
         let coord = baseLayer.screenToTileCoords(positionInLayer)
         
         tileInformation?.isHidden = false
-        tileInformation?.text = "Tile: \(coord.coordDescription), \(positionInMap.roundTo())"
+        tileInformation?.text = "Tile: \(coord.coordDescription), \(positionInLayer.roundTo())"
         
         // highlight the current coordinate
         let _ = addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y), duration: 0.05)

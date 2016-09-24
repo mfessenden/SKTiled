@@ -801,10 +801,11 @@ public func drawGrid(_ layer: TiledLayerObject,  scale: CGFloat = 1) -> CGImage 
                     
                     // this is mirrored in pointForCoordinate
                     xpos += tileWidthHalf
-                    ypos += tileHeightHalf
                     
                     if layer.orientation == .hexagonal {
-                    
+                        
+                        ypos += tileHeightHalf
+                        
                         var hexPoints = Array(repeating: CGPoint.zero, count: 6)
                         var variableSize: CGFloat = 0
                         var r: CGFloat = 0
