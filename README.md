@@ -1,4 +1,4 @@
-![SKTiled](https://github.com/mfessenden/SKTiled/blob/iOS10/docs/swift/img/header.png)
+[![SKTiled](docs/swift/img/header.png)](https://mfessenden.github.io/SKTiled)
 
 **SKTiled** is a simple library for using [Tiled](http://www.mapeditor.org) files with Apple's SpriteKit, allowing the creation of game assets from .tmx files. Inspired by [TilemapKit](http://tilemapkit.com) and written purely in Swift 2.0, I began working on this for a project after the development of TilemapKit was halted. While initially created as an exercise in learning Apple's new programming language, I've decided to open-source it in case others find it helpful.  
 
@@ -16,7 +16,7 @@ For Swift 3/iOS10/OSX 10.11. See [this branch](https://github.com/mfessenden/SKT
 
 Simply drag the *SKTiled* directory into your Xcode project, and add the files to your game target:
 
-![Xcode installation](https://github.com/mfessenden/SKTiled/blob/iOS10/docs/swift/img/installation.png)
+![Xcode installation](docs/swift/img/installation.png)
 
 
 Alternately, you can include this directory in your project's workspace.

@@ -40,10 +40,8 @@ tileLayer.graph = GKGridGraph(fromGridStartingAt: int2(0, 0), width: tileLayer.s
 
 ##Querying Neighbor Nodes*
 
-
-
  *future update
  
  
  
-  Next: [Debugging](debugging.html) - [Index](Tutorial.html)
+  Next: [Extending SKTiled](extending.html) - [Index](Tutorial.html)

@@ -17,7 +17,7 @@ Check out the [master](https://github.com/mfessenden/SKTiled/tree/master) branch
 
 If you're using one of the older toolchains, you'll need to enable the **Use Legacy Swift Language Version** option in the project **Build Settings.**
 
-![SKTiled](img/swift_legacy.png)
+![Legacy Swift Version](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/swift/img/swift_legacy.png)
 
 
 ##Installation
@@ -25,7 +25,7 @@ If you're using one of the older toolchains, you'll need to enable the **Use Leg
 - Copy the *Swift/SKTiled* directory to your directory and add the files to your project.
 - Set the appropriate Swift language target.
 
-![Xcode installation](img/installation.png)
+![Xcode installation](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/swift/img/installation.png)
 
 That's it!
  

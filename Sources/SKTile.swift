@@ -12,9 +12,12 @@ import SpriteKit
 /**
  Custom sprite type for rendering tile objects. Tile data (including texture) stored in `SKTilesetData` property.
  */
-open class SKTile: SKSpriteNode {
+public class SKTile: SKSpriteNode {
+    /// Reference to the parent layer.
     
-    weak open var layer: SKTileLayer!                   // layer parent, assigned on add
+    weak public var layer: SKTileLayer!
+    
+    //weak open var layer: SKTileLayer!                   // layer parent, assigned on add
     fileprivate var tileOverlap: CGFloat = 1.5          // tile overlap amount
     private var maxOverlap: CGFloat = 3.0               // maximum tile overlap
     open var tileData: SKTilesetData                    // tile data
@@ -197,7 +200,7 @@ open class SKTile: SKSpriteNode {
      
      - returns: `[CGPoint]?` array of points.
      */
-    private func getVertices() -> [CGPoint] {
+    public func getVertices() -> [CGPoint] {
         var vertices: [CGPoint] = []
         guard let layer = layer else { return vertices }
         
@@ -251,12 +254,12 @@ open class SKTile: SKSpriteNode {
                 hexPoints[5] = CGPoint(x: -r, y: (variableSize / 2))
             }
             
-            vertices = hexPoints.map{$0.invertedY}
+            vertices = hexPoints.map{ $0.invertedY }
         }
         
         return vertices
     }
-    
+
     /**
      Draw the tile's boundary shape. Optional anti-aliasing & time duration
      (duration of 0 never fades).
@@ -264,7 +267,7 @@ open class SKTile: SKSpriteNode {
      - parameter antialiasing: `Bool` antialias the effect.
      - parameter duration:     `TimeInterval` effect duration.
      */
-    public func drawBounds(antialiasing: Bool=true, duration: TimeInterval=0) {
+    public func drawBounds() {
         childNode(withName: "Anchor")?.removeFromParent()
         childNode(withName: "Bounds")?.removeFromParent()
         
@@ -294,14 +297,28 @@ open class SKTile: SKSpriteNode {
         anchor.strokeColor = SKColor.clear
         anchor.zPosition = shapeZPos + 10
         anchor.isAntialiased = true
-        
+        /*
         if (duration > 0) {
             let fadeAction = SKAction.fadeOut(withDuration: duration)
             shape.run(fadeAction, completion: {
                 shape.removeFromParent()
                 
             })
+        }*/
+    }
+    
+    /**
+     Set the tile's shader.
+     
+     - parameter fileNamed: `String?` shader file name.
+     */
+    public func setTileShader(shaderFile named: String?=nil) {      
+        guard let filename = named else {
+            shader = nil
+            return
         }
+        print("# setting tile shader: \"\(filename)\"")
+        shader = SKShader(fileNamed: filename)
     }
 }
     
@@ -387,7 +404,7 @@ public extension SKTile {
             childNode(withName: "Highlight")?.removeFromParent()
         }
         if orientation == .isometric {
-            removeAction(forKey: "Highlight")
+            removeAction(forKey: "Highlight_Fade")
         }
     }
 

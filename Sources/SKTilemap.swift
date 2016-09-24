@@ -97,9 +97,9 @@ public enum CardinalDirection: Int {
 /**
  Alignment hint used to position the layers within the `SKTilemap` node.
 
- - BottomLeft:   node bottom left rests at parent zeropoint (0)
- - Center:       node center rests at parent zeropoint (0.5)
- - TopRight:     node top right rests at parent zeropoint. (1)
+ - bottomLeft:   node bottom left rests at parent zeropoint (0)
+ - center:       node center rests at parent zeropoint (0.5)
+ - topRight:     node top right rests at parent zeropoint. (1)
  */
 internal enum LayerPosition {
     case bottomLeft
@@ -110,8 +110,8 @@ internal enum LayerPosition {
 /**
  Hexagonal stagger axis.
  
- - X: axis is along the x-coordinate.
- - Y: axis is along the y-coordinate.
+ - x: axis is along the x-coordinate.
+ - y: axis is along the y-coordinate.
  */
 internal enum StaggerAxis: String {
     case x  = "x"
@@ -122,8 +122,8 @@ internal enum StaggerAxis: String {
 /**
  Hexagonal stagger index.
  
- - Even: stagger evens.
- - Odd:  stagger odds.
+ - even: stagger evens.
+ - odd:  stagger odds.
  */
 internal enum StaggerIndex: String {
     case even  = "even"
@@ -301,8 +301,7 @@ open class SKTilemap: SKNode, SKTiledObject{
     /**
      Initialize with dictionary attributes from xml parser.
      
-     - parameter attributes: `Dictionary` attributes dictionary.
-     
+     - parameter attributes: `Dictionary` attributes dictionary.     
      - returns: `SKTileMapNode?`
      */
     public init?(attributes: [String: String]) {
@@ -372,7 +371,6 @@ open class SKTilemap: SKNode, SKTiledObject{
      - parameter sizeY:     `Int` map height in tiles.
      - parameter tileSizeX: `Int` tile width in pixels.
      - parameter tileSizeY: `Int` tile height in pixels.
-     
      - returns: `SKTilemap`
      */
     public init(_ sizeX: Int, _ sizeY: Int,
@@ -415,7 +413,6 @@ open class SKTilemap: SKNode, SKTiledObject{
      Returns a named tileset from the tilesets set.
      
      - parameter name: `String` tileset to return.
-     
      - returns: `SKTileset?` tileset object.
      */
     open func getTileset(named name: String) -> SKTileset? {
@@ -430,7 +427,6 @@ open class SKTilemap: SKNode, SKTiledObject{
      Returns an external tileset with a given filename.
 
      - parameter filename: `String` tileset source file.
-
      - returns: `SKTileset?`
      */
     open func getTileset(fileNamed filename: String) -> SKTileset? {
@@ -513,7 +509,6 @@ open class SKTilemap: SKNode, SKTiledObject{
      Returns a named tile layer from the layers set.
      
      - parameter name: `String` tile layer name.
-     
      - returns: `TiledLayerObject?` layer object.
      */
     open func getLayer(named layerName: String) -> TiledLayerObject? {
@@ -528,7 +523,6 @@ open class SKTilemap: SKNode, SKTiledObject{
      Returns a layer matching the given UUID.
      
      - parameter uuid: `String` tile layer UUID.
-     
      - returns: `TiledLayerObject?` layer object.
      */
     open func getLayer(withID uuid: String) -> TiledLayerObject? {
@@ -543,7 +537,6 @@ open class SKTilemap: SKNode, SKTiledObject{
      Returns a layer given the index (0 being the lowest).
      
      - parameter index: `Int` layer index.
-     
      - returns: `TiledLayerObject?` layer object.
      */
     open func getLayer(atIndex index: Int) -> TiledLayerObject? {
@@ -576,7 +569,6 @@ open class SKTilemap: SKNode, SKTiledObject{
      Returns a named tile layer if it exists, otherwise, nil.
      
      - parameter named: `String` tile layer name.
-     
      - returns: `SKTileLayer?`
      */
     open func tileLayer(named name: String) -> SKTileLayer? {
@@ -591,7 +583,6 @@ open class SKTilemap: SKNode, SKTiledObject{
      Returns a tile layer at the given index, otherwise, nil.
      
      - parameter atIndex: `Int` layer index.
-     
      - returns: `SKTileLayer?`
      */
     open func tileLayer(atIndex index: Int) -> SKTileLayer? {
@@ -606,7 +597,6 @@ open class SKTilemap: SKNode, SKTiledObject{
      Returns a named object group if it exists, otherwise, nil.
      
      - parameter named: `String` tile layer name.
-     
      - returns: `SKObjectGroup?`
      */
     open func objectGroup(named name: String) -> SKObjectGroup? {
@@ -621,7 +611,6 @@ open class SKTilemap: SKNode, SKTiledObject{
      Returns an object group at the given index, otherwise, nil.
      
      - parameter atIndex: `Int` layer index.
-     
      - returns: `SKObjectGroup?`
      */
     open func objectGroup(atIndex index: Int) -> SKObjectGroup? {
@@ -692,7 +681,6 @@ open class SKTilemap: SKNode, SKTiledObject{
      Return tiles at the given coordinate (all tile layers).
      
      - parameter coord: `CGPoint` coordinate.
-     
      - returns: `[SKTile]` array of tiles.
      */
     open func tilesAt(_ coord: CGPoint) -> [SKTile] {
@@ -710,7 +698,6 @@ open class SKTilemap: SKNode, SKTiledObject{
      
      - parameter x: `Int` x-coordinate.
      - parameter y: `Int` - y-coordinate.
-     
      - returns: `[SKTile]` array of tiles.
      */
     open func tilesAt(_ x: Int, _ y: Int) -> [SKTile] {
@@ -722,7 +709,6 @@ open class SKTilemap: SKNode, SKTiledObject{
      
      - parameter coord: `CGPoint` tile coordinate.
      - parameter name:  `String?` layer name.
-     
      - returns: `SKTile?` tile, or nil.
      */
     open func tileAt(_ coord: CGPoint, inLayer: String?) -> SKTile? {
@@ -742,7 +728,6 @@ open class SKTilemap: SKNode, SKTiledObject{
      Returns tiles with a property of the given type (all tile layers).
      
      - parameter type: `String` type.
-     
      - returns: `[SKTile]` array of tiles.
      */
     open func getTiles(ofType type: String) -> [SKTile] {
@@ -757,7 +742,6 @@ open class SKTilemap: SKNode, SKTiledObject{
      Returns tiles matching the given gid (all tile layers).
      
      - parameter type: `Int` tile gid.
-     
      - returns: `[SKTile]` array of tiles.
      */
     open func getTiles(withID id: Int) -> [SKTile] {
@@ -806,7 +790,6 @@ open class SKTilemap: SKNode, SKTiledObject{
      Return the top-most tile at the given coordinate.
      
      - parameter coord: `CGPoint` coordinate.
-     
      - returns: `SKTile?` first tile in layers.
      */
     open func firstTileAt(_ coord: CGPoint) -> SKTile? {
@@ -842,7 +825,6 @@ open class SKTilemap: SKNode, SKTiledObject{
      Return objects matching a given type.
      
      - parameter type: `String` object name to query.
-     
      - returns: `[SKTileObject]` array of objects.
      */
     open func getObjects(ofType type: String) -> [SKTileObject] {
@@ -865,7 +847,6 @@ open class SKTilemap: SKNode, SKTiledObject{
      Return objects matching a given name.
      
      - parameter named: `String` object name to query.
-     
      - returns: `[SKTileObject]` array of objects.
      */
     open func getObjects(_ named: String) -> [SKTileObject] {
@@ -890,7 +871,6 @@ open class SKTilemap: SKNode, SKTiledObject{
      Returns data for a global tile id.
      
      - parameter gid: `Int` global tile id.
-     
      - returns: `SKTilesetData` tile data, if it exists.
      */
     open func getTileData(_ gid: Int) -> SKTilesetData? {
@@ -906,10 +886,11 @@ open class SKTilemap: SKNode, SKTiledObject{
     
     
     /**
-     Returns a converted touch location.
+     Returns a touch location in negative-y space.
+     
+     *Position is in converted space*
      
      - parameter point: `CGPoint` scene point.
-     
      - returns: `CGPoint` converted point in layer coordinate system.
      */
     #if os(iOS)
@@ -924,7 +905,6 @@ open class SKTilemap: SKNode, SKTiledObject{
      *Position is in converted space*
     
      - parameter point: `CGPoint` scene point.
-     
      - returns: `CGPoint` converted point in layer coordinate system.
      */
     #if os(OSX)
@@ -965,7 +945,7 @@ extension LayerPosition: CustomStringConvertible {
     
     internal var description: String {
         return "\(name): (\(self.anchorPoint.x), \(self.anchorPoint.y))"
-}
+    }
 
     internal var name: String {
         switch self {
@@ -1157,7 +1137,7 @@ extension SKTilemap {
     }
     
     /**
-     Prints out all the data it has on the tilemap's layers.
+     Print a summary of layer data.
      */
     public func debugLayers(reverse: Bool = false) {
         guard (layerCount > 0) else { return }

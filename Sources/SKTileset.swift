@@ -17,7 +17,7 @@ import SpriteKit
  
  ```swift
  let data = tileset.getTileData(56)
-let tile = SKTile(data: data)
+ let tile = SKTile(data: data)
  ```
  */
 open class SKTileset: SKTiledObject {
@@ -49,7 +49,8 @@ open class SKTileset: SKTiledObject {
     
     // tileset properties
     open var isImageCollection: Bool = false                     // image collection tileset
-    open var isExternalTileset: Bool { return filename != nil }
+    open var isExternalTileset: Bool { return filename != nil }  // tileset is an external file
+    open var transparentColor: SKColor = SKColor.clear           // sprite transparency color
     
     // returns the last GID in the tileset
     open var lastGID: Int {
@@ -184,7 +185,7 @@ open class SKTileset: SKTiledObject {
             let tileTexture = SKTexture(rect: tileRect, in: sourceTexture)
             
             // add the tile data properties
-            addTilesetTile(gid, texture: tileTexture)
+            let tiledata = addTilesetTile(gid, texture: tileTexture)
             
             x += Int(tileSize.width) + spacing
             if x >= textureWidth {
@@ -196,7 +197,7 @@ open class SKTileset: SKTiledObject {
         // time results
         let timeInterval = Date().timeIntervalSince(timer)
         let timeStamp = String(format: "%.\(String(3))f", timeInterval)
-        print("[SKTileset]: tileset built in: \(timeStamp)s\n")
+        print("[SKTileset]: tileset \"\(name)\" built in: \(timeStamp)s")
     }
     
     // MARK: - Tile Data

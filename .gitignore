@@ -1,5 +1,6 @@
-docs/swift
-Swift/Resources/test
+Custom/
+Resources/shaders
+Resources/test
 *.psd
 *.html
 *.js

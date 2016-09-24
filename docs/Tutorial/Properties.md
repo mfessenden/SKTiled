@@ -44,11 +44,16 @@ If you are using the v0.17 of Tiled or newer, *SKTiled* supports the new **color
     SKTilesetData:
       collisionSize       (Float)     - used to add collision to the tile.
       collisionShape      (Int)       - 0 = rectangle, 1 = circle.
+      nodeClass           (String)    - tile node class**
 
     SKTileObject:
       hidden              (Bool)      - hide the object.
       color               (String)    - hex string to override object color.
-      lineWidth           (Float)     - object line width.   
+      lineWidth           (Float)     - object line width.
+      nodeClass           (String)    - object node class**
+
+    ** not yet implemented
+
 
  Next: [GameplayKit](gameplaykit.html) - [Index](Tutorial.html)
 

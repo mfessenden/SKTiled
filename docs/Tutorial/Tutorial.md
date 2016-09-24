@@ -10,4 +10,6 @@
 
 - [GameplayKit](gameplaykit.html)
 
+- [Extending SKTiled](extending.html)
+
 - [Debugging](debugging.html)

@@ -21,8 +21,7 @@ import Cocoa
  
  - parameter size:       `CGSize` size of resulting image.
  - parameter scale:      `CGFloat` scale of result (0 seems to scale 2x, using 1 seems best)
- - parameter whatToDraw: function detailing what to draw the image.
- 
+ - parameter whatToDraw: function detailing what to draw the image. 
  - returns: `CGImage` result.
  */
 public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ context: CGContext, _ bounds: CGRect, _ scale: CGFloat) -> ()) -> CGImage {
@@ -74,9 +73,8 @@ public extension CGFloat {
     /**
      Clamp the CGFloat between two values. Returns a new value.
      
-     - parameter v1: `CGFloat` min value
-     - parameter v2: `CGFloat` min value
-     
+     - parameter v1: `CGFloat` min value.
+     - parameter v2: `CGFloat` min value.
      - returns: `CGFloat` clamped result.
      */
     public func clamped(_ minv: CGFloat, _ maxv: CGFloat) -> CGFloat {
@@ -88,9 +86,8 @@ public extension CGFloat {
     /**
      Clamp the current value between min & max values.
      
-     - parameter v1: `CGFloat` min value
-     - parameter v2: `CGFloat` min value
-     
+     - parameter v1: `CGFloat` min value.
+     - parameter v2: `CGFloat` min value.
      - returns: `CGFloat` clamped result.
      */
     public mutating func clamp(_ minv: CGFloat, _ maxv: CGFloat) -> CGFloat {
@@ -102,7 +99,6 @@ public extension CGFloat {
      Returns a string representation of the value rounded to the current decimals.
      
      - parameter decimals: `Int` number of decimals to round to.
-     
      - returns: `String` rounded display string.
      */
     public func roundTo(_ decimals: Int=2) -> String {
@@ -142,7 +138,6 @@ public extension CGPoint {
      Returns a display string rounded.
     
      - parameter decimals: `Int` decimals to round to.
-     
      - returns: `String` display string.
      */
     public func roundTo(_ decimals: Int=1) -> String {
@@ -412,7 +407,6 @@ public extension String {
      Simple function to split the
      
      - parameter pattern: `String` pattern to split string with.
-     
      - returns: `[String]` groups of split strings.
      */
     public func split(_ pattern: String) -> [String] {
@@ -434,7 +428,6 @@ public extension String {
      - parameter length:  `Int` length to fill.
      - parameter value:   `String` pattern.
      - parameter padLeft: `Bool` toggle this to pad the right.
-     
      - returns: `String` padded string.
      */
     public func zfill(_ length: Int, pattern: String="0", padLeft: Bool=true) -> String {
@@ -451,7 +444,6 @@ public extension String {
      Pad a string with zero's (for binary conversion).
      
      - parameter toSize: `Int` size of resulting string.
-     
      - returns: `String` padded string.
      */
     public func pad(_ toSize: Int) -> String {
@@ -467,8 +459,7 @@ public extension String {
      Substitute a pattern in the string
      
      - parameter pattern:     `String` pattern to replace.
-     - parameter replaceWith: replacement `String`
-     
+     - parameter replaceWith: replacement `String`.
      - returns: `String` result.
      */
     public func substitute(_ pattern: String, replaceWith: String) -> String {
@@ -522,7 +513,6 @@ public extension SKAction {
      Custom action to animate sprite textures with varying frame durations.
      
      - parameter frames: `[(texture: SKTexture, duration: NSTimeInterval)]` array of tuples containing texture & duration.
-     
      - returns: `SKAction` custom animation action.
      */
     public class func tileAnimation(_ frames: [(texture: SKTexture, duration: TimeInterval)], repeatForever: Bool = true) -> SKAction {

@@ -286,17 +286,11 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
 
 
 extension SKTileObject {
-    
-    override open var hashValue: Int {
-        return id.hashValue
-    }
-    
+    override open var hashValue: Int { return id.hashValue }
     override open var description: String {
         let objectName: String = name != nil ? "\"\(name!)\"" : "(null)"
         return "\(String(describing: objectType).capitalized) Object: \(objectName), id: \(self.id)"
     }
     
-    override open var debugDescription: String {
-        return description
-    }
+    override open var debugDescription: String { return description }
 }
