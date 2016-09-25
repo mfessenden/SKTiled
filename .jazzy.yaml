@@ -1,5 +1,5 @@
 module: SKTiled
-module_version: 0.98
+module_version: 1.0
 author: Michael Fessenden 
 author_url: https://github.com/mfessenden
 github_url: https://github.com/mfessenden/SKTiled
@@ -20,7 +20,7 @@ exclude:
   - "**/*-ObjC.swift"
   - "Sources/SKTiled+Extensions.swift"
 
-copyright: '© 2016 Michael Fessenden](https://github.com/mfessenden) under [open source license](https://github.com/mfessenden/SKTiled/tree/master/LICENSE).'
+copyright: '© 2016 [Michael Fessenden](https://github.com/mfessenden) under [open source license](https://github.com/mfessenden/SKTiled/tree/master/LICENSE).'
 
 #swift_version: 3.0
 
@@ -38,6 +38,7 @@ custom_categories:
       - Objects
       - Properties
       - GameplayKit
+      - Extending
       - Debugging
 
   - name: Protocols

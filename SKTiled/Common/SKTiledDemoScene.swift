@@ -23,6 +23,7 @@ public class SKTiledDemoScene: SKTiledScene {
     // debugging labels
     public var tilemapInformation: SKLabelNode!
     public var tileInformation: SKLabelNode!
+    public var debugInformation: SKLabelNode!
     
     /// global information label font size.
     private let labelFontSize: CGFloat = 11
@@ -44,7 +45,19 @@ public class SKTiledDemoScene: SKTiledScene {
         
         
         if let tilemap = tilemap {
+            tilemap.parseProperties()
+            debugMode = tilemap.debugMode
             tilemap.debugDraw = debugMode
+            
+            if (tilemap.orientation == .staggered) ||  (tilemap.orientation == .hexagonal){
+                
+                print("# stagger axis:  \(tilemap.staggeraxis)")
+                print("# stagger index: \(tilemap.staggerindex)")
+                print("# side length x: \(tilemap.sideLengthX)")
+                print("# side length y: \(tilemap.sideLengthY)")
+                print("# side offset x: \(tilemap.sideOffsetX)")
+                print("# side offset y: \(tilemap.sideOffsetY)")
+            }
         }
     }
     
@@ -110,7 +123,7 @@ public class SKTiledDemoScene: SKTiledScene {
         guard let view = self.view else { return }
         guard let cameraNode = cameraNode else { return }
         
-        //let labelYPos = view.bounds.size.height / 3.2
+        var labelYPos = view.bounds.size.height / 3.2
         
         if (tilemapInformation == nil){
             // setup tilemap label
@@ -128,8 +141,19 @@ public class SKTiledDemoScene: SKTiledScene {
             cameraNode.addChild(tileInformation)
         }
         
+        if (debugInformation == nil){
+            // setup tile information label
+            debugInformation = SKLabelNode(fontNamed: "Courier")
+            debugInformation.fontSize = labelFontSize
+            debugInformation.text = "Debug:"
+            cameraNode.addChild(debugInformation)
+        }
+        
         tileInformation.isHidden = true
-        tileInformation.position.y = view.bounds.size.height / 3.2
+        tileInformation.position.y = labelYPos
+        
+        debugInformation.isHidden = true
+        debugInformation.position.y = labelYPos + labelYPos
     }
     
     /**
@@ -220,7 +244,7 @@ public class SKTiledDemoScene: SKTiledScene {
     }
 
     /**
-     Update the debug label to reflect the current camera position.
+     Update the debug label to reflect the current camera tilemap data.
      */
     open func updateLabels() {
         guard let tilemap = tilemap else { return }
@@ -236,11 +260,15 @@ public class SKTiledDemoScene: SKTiledScene {
             tileInformation.zPosition = highestZPos
         }
         
+        if let debugInformation = debugInformation {
+            debugInformation.zPosition = highestZPos
+        }
+        
         buttonNodes().forEach {$0.zPosition = highestZPos * 2}
     }
 
     /**
-     Update HUD elements.
+     Update HUD elements when the view size changes.
      */
     private func updateHud(){
         guard let view = self.view else { return }
@@ -267,7 +295,7 @@ public class SKTiledDemoScene: SKTiledScene {
         }
         
         let dynamicFontSize = labelFontSize * (size.width / 600)
-        
+
         // Update information labels
         if let tilemapInformation = tilemapInformation {
             let ypos = -(size.height * (uiScale / 8.5))    // approx 0.25
@@ -276,9 +304,15 @@ public class SKTiledDemoScene: SKTiledScene {
         }
         
         if let tileInformation = tileInformation {
-            let ypos = -(size.height * (uiScale / 6.5))    // approx 0.35
+            let ypos = -(size.height * (uiScale / 7.5))    // approx 0.35
             tileInformation.position.y = abs(ypos) < 100 ? -90 : ypos
             tileInformation.fontSize = dynamicFontSize
+        }
+        
+        if let debugInformation = debugInformation {
+            let ypos = -(size.height * (uiScale / 6.5))    // approx 0.35
+            debugInformation.position.y = abs(ypos) < 100 ? -100 : ypos
+            debugInformation.fontSize = dynamicFontSize
         }
     }
 }

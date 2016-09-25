@@ -444,9 +444,12 @@ open class TiledLayerObject: SKNode, SKTiledObject {
             
             // get a point in the reference grid
             var referencePoint = CGPoint(x: floor(pixelX / tileWidth), y: floor(pixelY / tileHeight))
-            
+
             // relative x & y position to grid aligned tile
-            var relativePoint = CGPoint(x: pixelX - referencePoint.x * tileWidth, y: pixelY - referencePoint.y * tileHeight)
+            var relativePoint = CGPoint(x: pixelX - referencePoint.x * tileWidth,
+                                        y: pixelY - referencePoint.y * tileHeight)
+            
+
             
             // make adjustments to reference point
             if tilemap.staggerX {
@@ -461,30 +464,28 @@ open class TiledLayerObject: SKNode, SKTiledObject {
                 }
             }
             
-            let yPosition: CGFloat = relativePoint.x * (tileHeight / tileWidth)
-            //print("# y-pos: \(yPosition)")
-            /*
+            let delta: CGFloat = relativePoint.x * (tileHeight / tileWidth)
+
             // check if the screen position is in the corners
-            if (tilemap.sideOffsetY - yPosition > relativePoint.y) {
+            if (tilemap.sideOffsetY - delta > relativePoint.y) {
                 return tilemap.topLeft(referencePoint.x, referencePoint.y)
             }
             
-            if (tilemap.sideOffsetY + yPosition > relativePoint.y) {
+            if (-tilemap.sideOffsetY + delta > relativePoint.y) {
                 return tilemap.topRight(referencePoint.x, referencePoint.y)
             }
             
-            if (tilemap.sideOffsetY + yPosition < relativePoint.y) {
+            if (tilemap.sideOffsetY + delta < relativePoint.y) {
                 return tilemap.bottomLeft(referencePoint.x, referencePoint.y)
             }
             
-            if (tilemap.sideOffsetY * 3 - yPosition < relativePoint.y) {
+            if (tilemap.sideOffsetY * 3 - delta < relativePoint.y) {
                 return tilemap.bottomRight(referencePoint.x, referencePoint.y)
-            }*/
-
+            }
+            
             return referencePoint
         }
     }
-
 
     /**
      Converts a tile coordinate into a screen point.
@@ -1430,7 +1431,7 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
     private var layer: TiledLayerObject
     private var gridTexture: SKTexture! = nil
     private var graphTexture: SKTexture! = nil
-    private var imageScale: CGFloat = 3.0
+    private var imageScale: CGFloat = 1.0
 
     private var gridOpacity: CGFloat { return layer.gridOpacity }
 
@@ -1479,8 +1480,9 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
                 
                 gridSize = gridTexture.size() / imageScale
                 #if os(OSX)
-                gridSize = gridTexture.size()
+                gridSize = layer.sizeInPoints
                 #endif
+                
                 texture = gridTexture
                 alpha = gridOpacity
                 size = gridSize

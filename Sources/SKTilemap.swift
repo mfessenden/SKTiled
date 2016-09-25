@@ -126,8 +126,8 @@ internal enum StaggerAxis: String {
  - odd:  stagger odds.
  */
 internal enum StaggerIndex: String {
-    case even  = "even"
-    case odd   = "odd"
+    case odd   
+    case even
 }
 
 
@@ -173,7 +173,7 @@ open class SKTilemap: SKNode, SKTiledObject{
     
     // current layers
     private var layers: Set<TiledLayerObject> = []                // layers
-    open var layerCount: Int { return self.layers.count }         // layer count attribute
+    open var layerCount: Int { return self.layers.count - 1 }     // layer count attribute
     open var properties: [String: String] = [:]                   // custom properties
     open var zDeltaForLayers: CGFloat = 50                        // z-position range for layers
     open var backgroundColor: SKColor? = nil                      // optional background color (read from the Tiled file)
@@ -189,10 +189,11 @@ open class SKTilemap: SKNode, SKTiledObject{
     }()
     
     // debugging
+    open var debugMode: Bool = false
     open var gridColor: SKColor = SKColor.black                        // color used to visualize the tile grid
     open var frameColor: SKColor = SKColor.black                       // bounding box color
     open var highlightColor: SKColor = SKColor.green                   // color used to highlight tiles
-    
+
     /// Rendered size of the map in pixels.
     open var sizeInPoints: CGSize {
         switch orientation {
@@ -1033,11 +1034,9 @@ extension SKTilemap {
     }
     
     public func topLeft(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
-        print("# topLeft:      \(x), \(y)")
-        // pointy-topped
+        // if the value of y is odd & stagger index is odd
         if (staggerX == false) {
-            // y is odd = 1, y is even = 0
-            // stagger index hash: Int = 0 (even), 1 (odd)
+            // if y is odd
             if Bool((Int(y) & 1) ^ staggerindex.hashValue) {
                 return CGPoint(x: x, y: y - 1)
             } else {
@@ -1045,6 +1044,7 @@ extension SKTilemap {
             }
         // flat-topped
         } else {
+            // if the value of x is odd & stagger index is odd
             if Bool((Int(x) & 1) ^ staggerindex.hashValue) {
                 return CGPoint(x: x - 1, y: y)
             } else {
@@ -1054,8 +1054,7 @@ extension SKTilemap {
     }
             
     public func topRight(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
-        print("# topRight:     \(x), \(y)")
-        if (staggerX == false) {
+        if (staggerX == false) {           
             if Bool((Int(y) & 1) ^ staggerindex.hashValue) {
                 return CGPoint(x: x + 1, y: y - 1)
             } else {
@@ -1071,7 +1070,6 @@ extension SKTilemap {
     }
     
     public func bottomLeft(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
-        print("# bottomLeft:   \(x), \(y)")
         if (staggerX == false) {
             if Bool((Int(y) & 1) ^ staggerindex.hashValue) {
                 return CGPoint(x: x, y: y + 1)
@@ -1088,7 +1086,6 @@ extension SKTilemap {
     }
     
     public func bottomRight(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
-        print("# bottomRight:  \(x), \(y)")
         if (staggerX == false) {
             if Bool((Int(y) & 1) ^ staggerindex.hashValue) {
                 return CGPoint(x: x + 1, y: y + 1)
@@ -1117,35 +1114,6 @@ extension SKTilemap {
     }
     
     override open var debugDescription: String { return description }
-    
-    open var orientationDescription: String {
-        var desc = ""
-        if (orientation == .orthogonal) {
-            desc = "Ortho: "
-        }
-        
-        if (orientation == .isometric) {
-            desc = "Iso: "
-        }
-        
-        if (orientation == .hexagonal) {
-            
-            let axisString = (staggerEven == true) ? "even" : "odd"
-            
-            if staggerX == true {
-                desc += "Hex (flat \(axisString)) side X: \(sideLengthX), "
-            } else {
-                desc += "Hex (pointy \(axisString)) side Y: \(sideLengthY), "
-            }
-            desc += "r: \(sideOffsetX) (offX), h: \(sideOffsetY) (offY), cw: \(columnWidth), rh: \(rowHeight)"
-            
-        }
-        if (orientation == .staggered) {
-            desc = "Stagger: "
-        }
-        
-        return desc
-    }
     
     /// Visualize the current grid & bounds.
     open var debugDraw: Bool {

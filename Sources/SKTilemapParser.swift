@@ -21,7 +21,6 @@ internal enum ParsingError: Error {
 }
 
 
-
 /**
 The `SKTilemapParser` is a custom `XMLParserDelegate` parser for reading Tiled TMX and tileset TSX files.
  
@@ -613,7 +612,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     }
  
     
-    // foundCharacters happens whenever parser enters a key
+    // foundCharacters happens whenever parser enters a key poop
     open func parser(_ parser: XMLParser, foundCharacters string: String) {
         // append data attribute
         characterData += string

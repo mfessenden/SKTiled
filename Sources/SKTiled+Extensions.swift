@@ -799,7 +799,7 @@ public func drawGrid(_ layer: TiledLayerObject,  scale: CGFloat = 1) -> CGImage 
                 case .hexagonal, .staggered:
                     let staggerX = layer.tilemap.staggerX
                     
-                    // this is mirrored in pointForCoordinate
+                    // mirrored in pointForCoordinate
                     xpos += tileWidthHalf
                     
                     if layer.orientation == .hexagonal {
@@ -838,9 +838,6 @@ public func drawGrid(_ layer: TiledLayerObject,  scale: CGFloat = 1) -> CGImage 
                     
                         let shapePath = polygonPath(hexPoints)
                         context.addPath(shapePath)
-                        
-                        
-                        
                     }
                 
                     if layer.orientation == .staggered {

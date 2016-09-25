@@ -21,8 +21,9 @@ public extension SKTilemap {
                 name = value
             }
             
-            if (attr == "debug") {
+            if ["debug", "debugMode"].contains(attr){
                 debugDraw = boolForKey(value)
+                debugMode = boolForKey(value)
             }
             
             if (attr == "gridColor") {

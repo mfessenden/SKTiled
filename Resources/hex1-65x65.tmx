@@ -21,36 +21,4 @@
    AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEwAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   </data>
  </layer>
- <objectgroup color="#67afa4" name="Locations">
-  <properties>
-   <property name="lineWidth" type="float" value="5"/>
-  </properties>
-  <object id="14" name="hex1" x="0" y="16">
-   <polygon points="0,0 0,16 0,31 32,47 64,31 64,16 64,0 32,-16"/>
-  </object>
-  <object id="20" name="hex2" x="96" y="62.5">
-   <polygon points="0,0 0,16 0,31 32,47 64,31 64,16 64,0 32,-16"/>
-  </object>
-  <object id="21" name="hex3" x="192" y="16">
-   <polygon points="0,0 0,16 0,31 32,47 64,31 64,16 64,0 32,-16"/>
-  </object>
-  <object id="22" name="hex4" x="288" y="62.5">
-   <polygon points="0,0 0,16 0,31 32,47 64,31 64,16 64,0 32,-16"/>
-  </object>
-  <object id="23" name="hex5" x="384" y="16">
-   <polygon points="0,0 0,16 0,31 32,47 64,31 64,16 64,0 32,-16"/>
-  </object>
-  <object id="24" name="hex6" x="480" y="63">
-   <polygon points="0,0 0,16 0,31 32,47 64,31 64,16 64,0 32,-16"/>
-  </object>
-  <object id="25" name="hex7" x="576" y="16">
-   <polygon points="0,0 0,16 0,31 32,47 64,31 64,16 64,0 32,-16"/>
-  </object>
-  <object id="18" name="hex10" x="416" y="251">
-   <polygon points="0,0 0,31 32,47 32,-16"/>
-  </object>
-  <object id="19" name="hex12" x="512" y="298">
-   <polygon points="0,0 0,16 64,16 64,0 32,-16"/>
-  </object>
- </objectgroup>
 </map>
