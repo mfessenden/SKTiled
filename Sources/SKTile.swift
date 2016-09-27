@@ -13,11 +13,9 @@ import SpriteKit
  Custom sprite type for rendering tile objects. Tile data (including texture) stored in `SKTilesetData` property.
  */
 public class SKTile: SKSpriteNode {
+    
     /// Reference to the parent layer.
-    
     weak public var layer: SKTileLayer!
-    
-    //weak open var layer: SKTileLayer!                   // layer parent, assigned on add
     fileprivate var tileOverlap: CGFloat = 1.5          // tile overlap amount
     private var maxOverlap: CGFloat = 3.0               // maximum tile overlap
     open var tileData: SKTilesetData                    // tile data
@@ -86,6 +84,16 @@ public class SKTile: SKSpriteNode {
      */
     public func setupDynamics(withSize: CGFloat){
         physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: withSize, height: withSize))
+        physicsBody?.isDynamic = false
+    }
+    
+    /**
+     Remove tile dynamics body.
+     
+     - parameter withSize: `CGFloat` dynamics body size.
+     */
+    public func removeDynamics(){
+        physicsBody = nil
         physicsBody?.isDynamic = false
     }
 
@@ -200,7 +208,7 @@ public class SKTile: SKSpriteNode {
      
      - returns: `[CGPoint]?` array of points.
      */
-    public func getVertices() -> [CGPoint] {
+    private func getVertices() -> [CGPoint] {
         var vertices: [CGPoint] = []
         guard let layer = layer else { return vertices }
         
@@ -324,10 +332,10 @@ public class SKTile: SKSpriteNode {
     
 
 
-public extension SKTile {
+extension SKTile {
     
     /// Tile description.
-    override open var description: String {
+    override public var description: String {
         let descString = "\(tileData.description)"
         let descGroup = descString.components(separatedBy: ",")
         var resultString = descGroup.first!
@@ -342,9 +350,7 @@ public extension SKTile {
         return resultString
     }
     
-    override open var debugDescription: String {
-        return description
-    }
+    override public var debugDescription: String { return description }
     
     /**
      Highlight the tile with a given color.
@@ -406,17 +412,6 @@ public extension SKTile {
         if orientation == .isometric {
             removeAction(forKey: "Highlight_Fade")
         }
-    }
-
-    
-    /**
-     Playground debugging visualization.
-     
-     - returns: `AnyObject` visualization
-     */
-    func debugQuickLookObject() -> AnyObject {
-        let shape = SKShapeNode(rectOf: self.tileData.tileset.tileSize)
-        return shape
     }
 }
 

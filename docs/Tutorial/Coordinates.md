@@ -1,18 +1,11 @@
 #Coordinates
 
+
+##Coordinate Conversion
+
 SpriteKit uses a coordinate system that is different from Tiled's; in SpriteKit, a SpriteKit node's origin is on the bottom-left, while Tiled's origin is top-left. 
 
-To emulate this, the [`SKTilemap`](Classes/SKTilemap.html) node draws it's layers starting at the origin and moving *downwards* into the negative y-space. To accommodate this, each layer type has methods for converting points into negative-y space:
-
-```swift
-// iOS with UITouch
-let touchPosition = tileLayer.touchLocation(touch)
-
-// OSX with NSEvent mouse event
-let eventPosition = tileLayer.mouseLocation(event: mouseEvent)
-```
-
-Each layer type also have convenience methods for querying screen points or tile coordinates:
+To emulate this, the [`SKTilemap`](Classes/SKTilemap.html) node draws its layers starting at the origin and moving *downwards* into the negative y-space. To accommodate this, each layer type has conversion methods for converting points to coordinates and vice-versa:
 
 ```swift
 // covert coordinate position to CGPoint
@@ -21,6 +14,7 @@ let point = tileLayer.pointForCoordinate(3, 4)
 // covert CGPoint to coordinate position
 let coord = objectGroup.coordinateForPoint(point)
 ```
+
 
 When converting a tile coordinate to screen points, you can also add optional offset values:
 
@@ -32,7 +26,33 @@ let point = tileLayer.pointForCoordinate(3, 4, offsetX: 4, offsetY: 0)
 let point = tileLayer.pointForCoordinate(3, 4, offset: TileOffset.center)
 ```
 
-Each layer has the ability to independently query a coordinate (which can be different depending on each layer's offset). Querying a point in the parent [`SKTilemap`](Classes/SKTilemap.html) node returns values in the default base layer.
+##User Interaction
+
+**SKTiled** also has methods for handling touch events (iOS) and mouse events (OSX):
+
+
+```swift
+// iOS with UITouch
+let touchPosition = tileLayer.touchLocation(touch)
+
+// OSX with NSEvent mouse event
+let eventPosition = tileLayer.mouseLocation(event: mouseEvent)
+```
+
+You can also query coordinates at an event directly:
+
+```swift
+// get the coordinate of a touch event
+let coord = tileLayer.coordinateAtTouchLocation(touch)
+
+
+// get the coordinate of a mouse event
+let coord = tileLayer.coordinateAtMouseEvent(event: event)
+```
+
+
+It's important to remember that each layer has the ability to independently query a coordinate (which can be different depending on each layer's offset). Querying a point in the parent [`SKTilemap`](Classes/SKTilemap.html) node returns values in the **default base layer**.
+
 
 
 ##Coordinate Offsets & Hints

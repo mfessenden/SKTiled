@@ -160,7 +160,7 @@ extension SKTiledSceneCamera {
      - parameter recognizer: `UIPanGestureRecognizer` pan gesture recognizer.
     */
     open func cameraPanned(_ recognizer: UIPanGestureRecognizer) {
-        guard let scene = self.scene else { return }
+        guard (self.scene != nil) else { return }
         if (recognizer.state == .began) {
             let location = recognizer.location(in: recognizer.view)
             lastLocation = location

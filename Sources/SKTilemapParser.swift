@@ -21,6 +21,13 @@ internal enum ParsingError: Error {
 }
 
 
+internal enum FileType: String {
+    case tmx
+    case tsx
+    case png
+}
+
+
 /**
 The `SKTilemapParser` is a custom `XMLParserDelegate` parser for reading Tiled TMX and tileset TSX files.
  
@@ -45,7 +52,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     fileprivate var activeElement: String?                          // current object
     fileprivate var lastElement: AnyObject?                         // last object created
     
-    fileprivate var currentID: Int?                                 // current tile/object ID 
+    fileprivate var currentID: Int?                                 // current tile/object ID
     
     fileprivate var properties: [String: String] = [:]              // last properties created
     fileprivate var data: [String: [UInt32]] = [:]                  // store data for tile layers to render in a second pass
@@ -84,7 +91,14 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 parser.shouldResolveExternalEntities = false
                 parser.delegate = self
                 
-                print("[SKTilemapParser]: reading filename: \"\(currentFileName!)\"")
+                // check file type
+                let fileExt = currentFileName.components(separatedBy: ".").last!
+                var filetype = "filename"
+                if let ftype = FileType(rawValue: fileExt) {
+                    filetype = ftype.description
+                }
+                
+                print("\n[SKTilemapParser]: reading \(filetype): \"\(currentFileName!)\"")
                 
                 let successs: Bool = parser.parse()
                 // report errors
@@ -93,7 +107,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     let errorLine = parser.lineNumber
                     let errorCol = parser.columnNumber
                     
-                    let errorDescription = parseError.debugDescription
+                    let errorDescription = parseError!.localizedDescription
                     print("[SKTilemapParser]: \(errorDescription) at line:\(errorLine), column: \(errorCol)")
                 }
             }
@@ -148,6 +162,12 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             // add the layer data...
             tileLayer.setLayerData(tileData)
             tileLayer.parseProperties()
+            
+            // report errors
+            if tileLayer.gidErrors.count > 0 {
+                let gidErrorString : String = tileLayer.gidErrors.reduce("", { "\($0)" == "" ? "\($1)" : "\($0)" + ", " + "\($1)" })
+                print("[SKTilemapParser]: WARNING: layer \"\(tileLayer.name!)\": the following gids could not be found: \(gidErrorString)")
+            }
         }
         
         // reset the data
@@ -618,20 +638,8 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         characterData += string
     }
     
-    open func parser(_ parser: XMLParser, parseErrorOccurred parseError: NSError) {
+    open func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
         //if parseError.code == NSXMLParserError.InternalError {}
-    }
-    
-    // MARK: Unused
-    open func parser(_ parser: XMLParser, foundAttributeDeclarationWithName attributeName: String, forElement elementName: String, type: String?, defaultValue: String?) {
-    }
-    
-    open func parser(_ parser: XMLParser, foundElementDeclarationWithName elementName: String, model: String) {
-
-    }
-    
-    open func parser(_ parser: XMLParser, foundExternalEntityDeclarationWithName name: String, publicID: String?, systemID: String?) {
-
     }
     
     // MARK: - Decoding
@@ -639,7 +647,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
      Scrub CSV data.
      
      - parameter data: `String` data to decode
-     
      - returns: `[UInt32]` parsed CSV data.
      */
     private func decode(csvString data: String) -> [UInt32] {
@@ -652,7 +659,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
      See: stackoverflow.com/questions/28902455/convert-base64-string-to-byte-array-like-c-sharp-method-convert-frombase64string
      
      - parameter data: `String` Base64 formatted data to decode
-     
      - returns: `[UInt32]?` parsed data.
      */
     private func decode(base64String data: String) -> [UInt32]? {
@@ -678,5 +684,21 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     
     private func decompress(zlibData data: String) -> String? {
         return nil
+    }
+}
+
+
+
+
+extension FileType {
+    var description: String {
+        switch self {
+        case .tmx:
+            return "tile map"
+        case .tsx:
+            return "tileset"
+        case .png:
+            return "image"
+        }
     }
 }

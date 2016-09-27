@@ -111,7 +111,6 @@ open class SKTiledScene: SKScene, SKTiledSceneDelegate {
         if (worldNode != nil){
             worldNode.removeFromParent()
         }
-        print("[SKTiledScene]: setting up world...")
         // set up world node
         worldNode = SKNode()
         worldNode.name = "World"

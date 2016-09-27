@@ -8,23 +8,26 @@
 import SpriteKit
 
 
-public struct AnimationFrame {
+/**
+ A simple data structure representing an animated tile frame.
+ 
+ - parameter gid:       `Int` unique tile id.
+ - parameter duration:  `TimeInterval` frame duration.
+  - parameter texture:  `SKTexture?` optional tile texture.
+ */
+internal struct AnimationFrame {
     public var gid: Int = 0
     public var duration: TimeInterval = 0
     public var texture: SKTexture? = nil
 }
 
 
-/// Represents a single tileset tile data, with texture, id and properties
 /**
-The `SKTilesetData` is the base class for all `SKTiled` layer types. 
-
-This class doesn't define any object or child types, but manages several important aspects:
+The `SKTilesetData` represents a single tileset tile data, with texture, id and properties:
  
-- validating coordinates
-- positioning and alignment
-- coordinate transformations
-
+- tile texture
+- tile animation
+- tile orientation
 */
 open class SKTilesetData: SKTiledObject  {
     
@@ -58,7 +61,6 @@ open class SKTilesetData: SKTiledObject  {
     
      - parameter tileId:  `Int` unique tile id.
      - parameter tileSet: `SKTileset` tileset reference.
-     
      - returns: `SKTilesetData` tile data.
      */
     public init(tileId: Int, withTileset tileSet: SKTileset) {
@@ -112,18 +114,14 @@ public func ==(lhs: SKTilesetData, rhs: SKTilesetData) -> Bool{
 }
 
 
-// Hashable requires == func & hashValue: Int
 extension SKTilesetData: Hashable {
-    public var hashValue: Int {
-        return id.hashValue
-    }
+    public var hashValue: Int { return id.hashValue }
 }
 
 
-
 extension AnimationFrame: CustomStringConvertible, CustomDebugStringConvertible {
-    public var description: String { return "\(gid): \(duration)" }
-    public var debugDescription: String { return description }
+    var description: String { return "\(gid): \(duration)" }
+    var debugDescription: String { return description }
 }
 
 
@@ -141,7 +139,5 @@ extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
         return dataString
     }
     
-    public var debugDescription: String {
-        return description
-    }
+    public var debugDescription: String { return description }
 }

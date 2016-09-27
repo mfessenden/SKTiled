@@ -42,23 +42,6 @@ public class SKTiledDemoScene: SKTiledScene {
         setupDemoUI()
         setupDebuggingLabels()
         updateHud()
-        
-        
-        if let tilemap = tilemap {
-            tilemap.parseProperties()
-            debugMode = tilemap.debugMode
-            tilemap.debugDraw = debugMode
-            
-            if (tilemap.orientation == .staggered) ||  (tilemap.orientation == .hexagonal){
-                
-                print("# stagger axis:  \(tilemap.staggeraxis)")
-                print("# stagger index: \(tilemap.staggerindex)")
-                print("# side length x: \(tilemap.sideLengthX)")
-                print("# side length y: \(tilemap.sideLengthY)")
-                print("# side offset x: \(tilemap.sideOffsetX)")
-                print("# side offset y: \(tilemap.sideOffsetY)")
-            }
-        }
     }
     
     // MARK: - Setup
@@ -343,15 +326,14 @@ extension SKTiledDemoScene {
             
             // get the position in the baseLayer
             let positionInLayer = baseLayer.touchLocation(touch)
-            let positionInMap = baseLayer.screenToPixelCoords(positionInLayer)            // this needs to take into consideration the adjustments for hex -> square grid
-            let coord = baseLayer.screenToTileCoords(positionInLayer)
+            let coord = baseLayer.coordinateAtTouchLocation(touch)
             // add a tile shape to the base layer where the user has clicked
             
             // highlight the current coordinate
             let _ = addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y), duration: 5)
             
             // update the tile information label
-            var coordStr = "Tile: \(coord.coordDescription), \(positionInMap.roundTo())"
+            var coordStr = "Tile: \(coord.coordDescription), \(positionInLayer.roundTo())"
             tileInformation.isHidden = false
             tileInformation.text = coordStr
         }
@@ -395,14 +377,13 @@ extension SKTiledDemoScene {
         
         // get the position in the baseLayer
         let positionInLayer = baseLayer.mouseLocation(event: event)
-        let positionInMap = baseLayer.screenToPixelCoords(positionInLayer)
-        let coord = baseLayer.screenToTileCoords(positionInLayer)
+        let coord = baseLayer.coordinateAtMouseEvent(event: event)
         
         // highlight the current coordinate
         let _ = addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y), duration: 5)
 
         // update the tile information label
-        let coordStr = "Tile: \(coord.coordDescription), \(positionInMap.roundTo())"
+        let coordStr = "Tile: \(coord.coordDescription), \(positionInLayer.roundTo())"
         tileInformation.isHidden = false
         tileInformation.text = coordStr
     }

@@ -2,10 +2,10 @@
 
 ##Custom Nodes
 
-It is also possible to use a custom node class in place of the `SKTile` object. Any object that conforms to the `SKTiledGeometry` can be used as a custom tile type:
+It is also possible to use a custom node class in place of the `SKTile` object. Any object that conforms to the `SKTiledGeometry` protocol can be used as a custom tile type:
 
 ```swift
-// pseudo-code for now, will finish later
+// pseudo-code for now
 public class Player: SKTiledGeometry {
     public var layer: TiledLayerObject!
 }
@@ -13,12 +13,12 @@ public class Player: SKTiledGeometry {
 
 To use your custom tile type, you'll need to create a custom string property in Tiled called **nodeClass** for the tile:
 
-![NodeClass](../swift/img/nodeClass.png)
+![NodeClass](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/nodeClass.png)
 
 
 ##Custom Layer Types
 
-It's also possible to create custom layer types by subclassing the `TiledLayerObject` base class. For instance, if you wanted to have an empty layer with extra logic for dealing with `GKEntity` character entities:
+It's also possible to create custom layer types by subclassing the `TiledLayerObject` base class. For instance, if you wanted to have an empty layer with extra logic for dealing with character entities:
 
 
 ```swift

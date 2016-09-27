@@ -21,7 +21,7 @@
 		4C1774AB1D90999C000C0AFD /* ortho4-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */; };
 		4C1774AC1D90999C000C0AFD /* roguelike-16x16-anim.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */; };
 		4C1774AD1D90999C000C0AFD /* staggered-64x192.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEA3571D8D02D20055C150 /* staggered-64x192.png */; };
-		4C1774AE1D90999C000C0AFD /* roguelike-16x16-anim.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16-anim.tsx */; };
+		4C1774AE1D90999C000C0AFD /* roguelike-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16.tsx */; };
 		4C1774AF1D9099A3000C0AFD /* SKTiled+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D71D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift */; };
 		4C1774B01D9099A3000C0AFD /* SKTilemap+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */; };
 		4C1774B11D9099A3000C0AFD /* SKTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D01D8A4EBE00FCCFA3 /* SKTile.swift */; };
@@ -60,7 +60,7 @@
 		4CBB6A9F1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */; };
 		4CBB6AA11D8CBB5B00DB56F1 /* SKTiledScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA01D8CBB5B00DB56F1 /* SKTiledScene.swift */; };
 		4CBB6AA31D8CC2C100DB56F1 /* SKTiledObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA21D8CC2C100DB56F1 /* SKTiledObject.swift */; };
-		4CD6D2D51D8B9DE20083DA7B /* roguelike-16x16-anim.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16-anim.tsx */; };
+		4CD6D2D51D8B9DE20083DA7B /* roguelike-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16.tsx */; };
 		4CD6D2DD1D8B9EA10083DA7B /* isometric-130x66.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2D91D8B9EA10083DA7B /* isometric-130x66.tmx */; };
 		4CD6D2DE1D8B9EA10083DA7B /* isometric-130x230.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2DA1D8B9EA10083DA7B /* isometric-130x230.png */; };
 		4CD6D2E01D8C82850083DA7B /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD6D2DF1D8C82850083DA7B /* ButtonNode.swift */; };
@@ -102,7 +102,8 @@
 		4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKTilemap+Properties.swift"; sourceTree = "<group>"; };
 		4CBB6AA01D8CBB5B00DB56F1 /* SKTiledScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTiledScene.swift; sourceTree = "<group>"; };
 		4CBB6AA21D8CC2C100DB56F1 /* SKTiledObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTiledObject.swift; sourceTree = "<group>"; };
-		4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16-anim.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "roguelike-16x16-anim.tsx"; sourceTree = "<group>"; };
+		4CD5229E1DA624C400D78D81 /* CREDITS */ = {isa = PBXFileReference; lastKnownFileType = text; path = CREDITS; sourceTree = "<group>"; };
+		4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "roguelike-16x16.tsx"; sourceTree = "<group>"; };
 		4CD6D2D91D8B9EA10083DA7B /* isometric-130x66.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "isometric-130x66.tmx"; sourceTree = "<group>"; };
 		4CD6D2DA1D8B9EA10083DA7B /* isometric-130x230.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "isometric-130x230.png"; sourceTree = "<group>"; };
 		4CD6D2DF1D8C82850083DA7B /* ButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
@@ -142,6 +143,13 @@
 			path = SKTiled/macOS;
 			sourceTree = "<group>";
 		};
+		4C7A77AA1DA6A21A0018A55D /* External */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = External;
+			sourceTree = "<group>";
+		};
 		4C88E1A71D8A1E8F00FCCFA3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -177,6 +185,8 @@
 		4CBA617F1D8A0A4600B31FC1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4C7A77AA1DA6A21A0018A55D /* External */,
+				4CD5229E1DA624C400D78D81 /* CREDITS */,
 				4CA3DA0D1D8AF07C001E165A /* DemoFiles.plist */,
 				4CFEA35B1D8D04320055C150 /* hex1-65x65.tmx */,
 				4CD6D2D91D8B9EA10083DA7B /* isometric-130x66.tmx */,
@@ -233,7 +243,7 @@
 		4CD6D2D61D8B9DE50083DA7B /* tsx */ = {
 			isa = PBXGroup;
 			children = (
-				4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16-anim.tsx */,
+				4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16.tsx */,
 			);
 			name = tsx;
 			sourceTree = "<group>";
@@ -344,7 +354,7 @@
 				4C1774A11D90999C000C0AFD /* DemoFiles.plist in Resources */,
 				4C17749E1D9097FE000C0AFD /* Assets.xcassets in Resources */,
 				4C1774AB1D90999C000C0AFD /* ortho4-16x16.png in Resources */,
-				4C1774AE1D90999C000C0AFD /* roguelike-16x16-anim.tsx in Resources */,
+				4C1774AE1D90999C000C0AFD /* roguelike-16x16.tsx in Resources */,
 				4C1774A41D90999C000C0AFD /* isometric-130x66.tmx in Resources */,
 				4C439BBC1DA5234E00954AF7 /* Main.storyboard in Resources */,
 			);
@@ -367,7 +377,7 @@
 				4CD6D2DE1D8B9EA10083DA7B /* isometric-130x230.png in Resources */,
 				4CFEA35C1D8D04320055C150 /* hex-65x65-65x230.png in Resources */,
 				4CFEA3581D8D02D20055C150 /* staggered-64x33.tmx in Resources */,
-				4CD6D2D51D8B9DE20083DA7B /* roguelike-16x16-anim.tsx in Resources */,
+				4CD6D2D51D8B9DE20083DA7B /* roguelike-16x16.tsx in Resources */,
 				4CD6D2DD1D8B9EA10083DA7B /* isometric-130x66.tmx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

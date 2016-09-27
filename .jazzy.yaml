@@ -26,7 +26,17 @@ copyright: '© 2016 [Michael Fessenden](https://github.com/mfessenden) under [op
 
 theme: apple
 
-documentation: docs/Tutorial/*.md
+documentation: 
+  - docs/Tutorial/Coordinates.md
+  - docs/Tutorial/Debugging.md
+#  - docs/Tutorial/Extending.md
+#  - docs/Tutorial/GameplayKit.md
+  - docs/Tutorial/Getting Started.md
+  - docs/Tutorial/Objects.md
+  - docs/Tutorial/Properties.md
+  - docs/Tutorial/Tiles.md
+  - docs/Tutorial/Troubleshooting.md
+
 abstract: docs/Sections/*.md
 
 custom_categories:
@@ -37,19 +47,15 @@ custom_categories:
       - Coordinates
       - Objects
       - Properties
-      - GameplayKit
-      - Extending
+#      - GameplayKit
+#      - Extending
       - Debugging
+      - Troubleshooting
 
   - name: Protocols
     children:
     - SKTiledObject
     - SKTiledSceneDelegate
-
-  - name: Data Types
-    children:
-    - TilemapOrientation
-    - SKObjectType
 
   - name: Class Reference  # references the section page
     children:
@@ -65,3 +71,9 @@ custom_categories:
     - SKTileObject
     - SKTiledScene
     - SKTiledSceneCamera
+
+  - name: Data Types
+    children:
+    - TilemapOrientation
+    - SKObjectType
+    - TileOffset

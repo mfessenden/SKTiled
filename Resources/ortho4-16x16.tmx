@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" backgroundcolor="#1e1b23" nextobjectid="22">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" backgroundcolor="#1e1b23" nextobjectid="25">
  <properties>
   <property name="frameColor" type="color" value="#ff63a4b2"/>
   <property name="gridColor" type="color" value="#ff80d1e2"/>
@@ -289,6 +289,10 @@
     <property name="type" value="fire"/>
    </properties>
    <ellipse/>
+  </object>
+  <object id="22" name="chest1" type="Bonus" gid="2147483751" x="144" y="192" width="16" height="16"/>
+  <object id="24" x="177" y="16.6667">
+   <polygon points="-1,-0.666667 -1,15.3333 15,15.3333 15,31.3333 -1,31.3333 -1,47.3333 31,47.3333 31,-0.666667"/>
   </object>
  </objectgroup>
 </map>

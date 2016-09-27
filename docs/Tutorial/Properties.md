@@ -26,6 +26,7 @@ If you are using the v0.17 of Tiled or newer, *SKTiled* supports the new **color
       antialiasLines      (Bool)      - antialias lines.
 
     TiledLayerObject:
+      antialiasing        (Bool)      - antialias lines.
       hidden              (Bool)      - hide the layer.
       color               (String)    - hex string to override color.
       zPosition           (Float)     - used to manually override layer zPosition.
@@ -55,5 +56,5 @@ If you are using the v0.17 of Tiled or newer, *SKTiled* supports the new **color
     ** not yet implemented
 
 
- Next: [GameplayKit](gameplaykit.html) - [Index](Tutorial.html)
+ Next: [Debugging](debugging.html) - [Index](Tutorial.html)
 

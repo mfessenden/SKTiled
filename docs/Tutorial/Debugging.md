@@ -29,7 +29,7 @@ for layer in tilemap.objectLayers {
 To visualize the current grid on any layer type, use the layer's `showGrid` property:
 
 
-![Show Grid](../swift/img/showGrid.gif)
+![Show Grid](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/showGrid.gif)
 
 
 ```swift
@@ -101,4 +101,4 @@ Debugging properties for **SKTiled** classes:
       highlightColor  (SKColor)   - tile highlight color (used in the `SKTile.drawBounds` method).
 
 
-Next: [Getting Started](getting-started.html) - [Index](Tutorial.html)
+Next: [Troubleshooting](troubleshooting.html) - [Index](Tutorial.html)

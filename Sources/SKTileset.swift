@@ -71,7 +71,6 @@ open class SKTileset: SKTiledObject {
      - parameter firstgid: `Int` first gid value.
      - parameter columns:  `Int` number of columns.
      - parameter offset:   `CGPoint` tileset offset value.
-     
      - returns: `SKTileset` tileset object.
      */
     public init(name: String, tileSize size: CGSize, firstgid: Int=1, columns: Int=0, offset: CGPoint=CGPoint.zero) {
@@ -88,7 +87,6 @@ open class SKTileset: SKTiledObject {
      - parameter source:   `String` source file name.
      - parameter firstgid: `Int` first gid value.
      - parameter tilemap:  `SKTilemap` parent tile map node.
-     
      - returns: `SKTileset` tile set.
      */
     public init(source: String, firstgid: Int, tilemap: SKTilemap, offset: CGPoint=CGPoint.zero) {
@@ -150,11 +148,11 @@ open class SKTileset: SKTiledObject {
         let sourceFilename = source.components(separatedBy: "/").last!
         let timer = Date()
         self.source = sourceFilename
-        print("[SKTileset]: adding sprite sheet source: \"\(self.source!)\"")
         
         let sourceTexture = SKTexture(imageNamed: self.source!)
         sourceTexture.filteringMode = .nearest
-        //print("  -> texture size: \(sourceTexture.size())")
+        print("[SKTileset]: adding sprite sheet source: \"\(self.source!)\", \(sourceTexture.size().roundTo())")
+        
         let textureWidth = Int(sourceTexture.size().width)
         let textureHeight = Int(sourceTexture.size().height)
         
@@ -173,6 +171,7 @@ open class SKTileset: SKTiledObject {
         // invert the y-coord
         var y = margin + rowHeight + rowSpacing - Int(tileSize.height)
         
+        //print("  -> building tileset \"\(name)\", first: \(firstGID)")
         for gid in firstGID..<(firstGID + totalTileCount) {            
             let rectStartX = CGFloat(x) / CGFloat(textureWidth)
             let rectStartY = CGFloat(y) / CGFloat(textureHeight)
@@ -185,7 +184,7 @@ open class SKTileset: SKTiledObject {
             let tileTexture = SKTexture(rect: tileRect, in: sourceTexture)
             
             // add the tile data properties
-            let tiledata = addTilesetTile(gid, texture: tileTexture)
+            let _ = addTilesetTile(gid, texture: tileTexture)
             
             x += Int(tileSize.width) + spacing
             if x >= textureWidth {
@@ -207,7 +206,6 @@ open class SKTileset: SKTiledObject {
      
      - parameter tileID:  `Int` tile ID.
      - parameter texture: `SKTexture` texture for tile at the given id.
-     
      - returns: `SKTilesetData?` tileset data (or nil if the data exists).
      */
     open func addTilesetTile(_ tileID: Int, texture: SKTexture) -> SKTilesetData? {
@@ -227,7 +225,6 @@ open class SKTileset: SKTiledObject {
      
      - parameter tileID: `Int` tile ID.
      - parameter source: `String` source image name.
-     
      - returns: `SKTilesetData?` tileset data (or nil if the data exists).
      */
     open func addTilesetTile(_ tileID: Int, source: String) -> SKTilesetData? {
@@ -257,7 +254,6 @@ open class SKTileset: SKTiledObject {
      ** Tiled ID == GID + 1
      
      - parameter byID: `Int` tile GID
-     
      - returns: `SKTilesetData?` tile data object.
      */
     open func getTileData(_ gid: Int) -> SKTilesetData? {
@@ -271,7 +267,6 @@ open class SKTileset: SKTiledObject {
      Returns tile data with the given property.
      
      - parameter withProperty: `String` property name.
-     
      - returns: `[SKTilesetData]` array of tile data.
      */
     open func getTileData(withProperty property: String) -> [SKTilesetData] {
@@ -282,7 +277,6 @@ open class SKTileset: SKTiledObject {
      Convert a global ID to the tileset's local ID (or -1 if invalid).
      
      - parameter id: `Int` global id.
-     
      - returns: `Int` local tile ID.
      */
     open func getLocalID(forGlobalID id: Int) -> Int {
@@ -305,11 +299,8 @@ public func ==(lhs: SKTileset, rhs: SKTileset) -> Bool{
 }
 
 
-// Hashable requires == & hashValue: Int
 extension SKTileset: Hashable {
-    public var hashValue: Int {
-        return name.hashValue
-    }
+    public var hashValue: Int { return name.hashValue }
 }
 
 
@@ -318,7 +309,5 @@ extension SKTileset: CustomStringConvertible, CustomDebugStringConvertible {
         return "Tile Set: \"\(name)\" @ \(tileSize), firstgid: \(firstGID), \(dataCount) tiles"
     }
     
-    public var debugDescription: String {
-        return description
-    }
+    public var debugDescription: String { return description }
 }

@@ -1,6 +1,7 @@
 Custom/
-Resources/shaders
-Resources/test
+Resources/shaders/
+Resources/test/
+docs/swift/
 *.psd
 *.html
 *.js

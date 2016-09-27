@@ -51,15 +51,17 @@ internal enum RenderOrder: String {
 /**
  Tile offset hint for coordinate conversion.
  
- - center:        returns the center of the tile.
- - top:           returns the top of the tile.
- - topLeft:       returns the top left of the tile.
- - topRight:      returns the top left of the tile.
- - bottom:        returns the bottom of the tile.
- - bottomLeft:    returns the bottom left of the tile.
- - bottomRight:   returns the bottom right of the tile.
- - left:          returns the left side of the tile.
- - right:         returns the right side of the tile.
+ ```
+    center:        returns the center of the tile.
+    top:           returns the top of the tile.
+    topLeft:       returns the top left of the tile.
+    topRight:      returns the top left of the tile.
+    bottom:        returns the bottom of the tile.
+    bottomLeft:    returns the bottom left of the tile.
+    bottomRight:   returns the bottom right of the tile.
+    left:          returns the left side of the tile.
+    right:         returns the right side of the tile.
+ ```
  */
 public enum TileOffset: Int {
     case center
@@ -74,25 +76,15 @@ public enum TileOffset: Int {
 }
 
 
-/* Tilemap data encoding */
+/**
+ Tilemap data encoding.
+ */
 internal enum TilemapEncoding: String {
     case base64  = "base64"
     case csv     = "csv"
     case xml     = "xml"
 }
 
-
-// Cardinal direction
-public enum CardinalDirection: Int {
-    case north
-    case northEast
-    case east
-    case southEast
-    case south
-    case southWest
-    case west
-    case northWest
-}
 
 /**
  Alignment hint used to position the layers within the `SKTilemap` node.
@@ -222,7 +214,7 @@ open class SKTilemap: SKNode, SKTiledObject{
     // used to align the layers within the tile map
     internal var layerAlignment: LayerPosition = .center {
         didSet {
-            layers.forEach({self.positionLayer($0)})
+            layers.forEach { self.positionLayer($0) }
         }
     }
     
@@ -279,7 +271,7 @@ open class SKTilemap: SKNode, SKTiledObject{
     /// Global antialiasing of lines
     open var antialiasLines: Bool = false {
         didSet {
-            layers.forEach({$0.antialiased = antialiasLines})
+            layers.forEach { $0.antialiased = antialiasLines }
         }
     }
 
@@ -621,12 +613,17 @@ open class SKTilemap: SKNode, SKTiledObject{
         }
         return nil
     }
-    
-    open func indexOf(_ layer: TiledLayerObject) -> Int {
-        return 0
-    }
-    
-    open func indexOf(layedNamed name: String) -> Int {
+
+    /**
+     Returns the index of a named layer.
+     
+     - parameter named: `String` layer name.
+     - returns: `Int` layer index.
+     */
+    open func indexOf(layedNamed named: String) -> Int {
+        if let layer = getLayer(named: named) {
+            return layer.index
+        }
         return 0
     }
     
@@ -924,7 +921,7 @@ open class SKTilemap: SKNode, SKTiledObject{
 // MARK: - Extensions
 
 
-public extension TilemapOrientation {
+extension TilemapOrientation {
     
     /// Hint for aligning tiles within each layer.
     public var alignmentHint: CGPoint {
@@ -966,7 +963,6 @@ extension LayerPosition: CustomStringConvertible {
 }
 
 
-
 extension SKTilemap {
     
     // convenience properties
@@ -982,7 +978,6 @@ extension SKTilemap {
             return tileSize.width
         }
     }
-    
     
     /// Returns the current tile height
     public var tileHeight: CGFloat {
@@ -1036,13 +1031,11 @@ extension SKTilemap {
     public func topLeft(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
         // if the value of y is odd & stagger index is odd
         if (staggerX == false) {
-            // if y is odd
             if Bool((Int(y) & 1) ^ staggerindex.hashValue) {
                 return CGPoint(x: x, y: y - 1)
             } else {
                 return CGPoint(x: x - 1, y: y - 1)
             }
-        // flat-topped
         } else {
             // if the value of x is odd & stagger index is odd
             if Bool((Int(x) & 1) ^ staggerindex.hashValue) {

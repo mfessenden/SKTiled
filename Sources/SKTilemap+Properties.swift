@@ -129,14 +129,17 @@ public extension TiledLayerObject {
             if (attr == "visible") {
                 visible = boolForKey(attr)
             }
+            
+            if (attr == "antialiasing") {
+                antialiased = boolForKey(attr)
+            }
         }
     }
     
     /**
      Returns a named property for the layer.
      
-     - parameter name: `String` property name.
-     
+     - parameter name: `String` property name.     
      - returns: `String?` the property value, or nil if it does not exist.
      */
     public func getValue(forProperty name: String) -> String? {

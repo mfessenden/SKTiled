@@ -11,10 +11,10 @@ import SpriteKit
 /** 
  Describes the `SKTileObject` shape type.
  
- -rectangle:  rectangular shape
- -ellipse:    circular shape
- -polygon:    closed polygon
- -polyline:   open polygon
+ - rectangle:  rectangular shape
+ - ellipse:    circular shape
+ - polygon:    closed polygon
+ - polyline:   open polygon
  */
 public enum SKObjectType: String {
     case rectangle
@@ -30,7 +30,6 @@ public enum LabelPosition {
 }
 
 
-
 /**
  The `SKTileObject` object represents a Tiled object type (rectangle, ellipse, polygon & polyline).
  
@@ -41,11 +40,10 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     weak open var layer: SKObjectGroup!                     // layer parent, assigned on add
     open var uuid: String = UUID().uuidString               // unique id
     open var id: Int = 0                                    // object id
+    open var gid: Int!                                      // tile gid
     open var type: String!                                  // object type
     internal var objectType: SKObjectType = .rectangle      // shape type
-    
-    open var points: [CGPoint] = []                         // points that describe object shape
-    
+    open var points: [CGPoint] = []                         // points that describe the object's shape.    
     open var size: CGSize = CGSize.zero
     open var properties: [String: String] = [:]    // custom properties
     
@@ -121,6 +119,10 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         
         if let objType = attributes["type"] {
             type = objType
+        }
+        
+        if let objGID = attributes["gid"] {
+            gid = Int(objGID)!
         }
         
         // Rectangular and ellipse objects need initial points.
@@ -218,19 +220,14 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             if (self.objectType == .polyline) || (self.objectType == .polygon) {
                 
                 childNode(withName: "Anchor")?.removeFromParent()
-                
-                var anchorRadius = self.lineWidth * 1.75
-                if anchorRadius > layer.tileHeight / 8 {
-                    anchorRadius = layer.tileHeight / 9
-                }
-                
-                let anchor = SKShapeNode(circleOfRadius: anchorRadius)
+
+                let anchor = SKShapeNode(circleOfRadius: self.lineWidth * 2.5)
                 anchor.name = "Anchor"
                 addChild(anchor)
                 anchor.position = vertices[0].invertedY
                 anchor.strokeColor = SKColor.clear
                 anchor.fillColor = self.strokeColor
-                anchor.isAntialiased = false
+                anchor.isAntialiased = layer.antialiased
             }
         }
     }

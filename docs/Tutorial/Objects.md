@@ -16,7 +16,7 @@ The [`SKTileObject`](#SKTileObject) class represents a vector object in a object
 
 Objects assigned a type in Tiled will retain that property in **SKTiled**, accessed with the optional `SKTileObject.type` property:
 
-![Tiled obeject types](img/object_types.png)
+![Tiled obeject types](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/object_types.png)
 
 Objects assigned a type property can be queried from the parent [`SKObjectGroup`](#SKObjectGroup):
 
@@ -31,15 +31,6 @@ let allEmitterObjects = tilemap.getObjects(ofType: "Emitter")
 ```
 
 Note that this will return objects from multiple object layers.
-
-
-### Dynamics
-
-Dynamics can be turned on for objects with the `SKTileObject.setupDynamics()` method.
-
-### GameplayKit
-
-The `SKTileObject.obstacleType` property will flag the object as an `GKObstacle`.
 
 
  Next: [Properties](properties.html) - [Index](Tutorial.html)

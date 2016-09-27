@@ -15,7 +15,6 @@ The `SKTiledObject` protocol describes a generic Tiled object containing a dicti
  Objects conforming to this protocol support custom properties that can be parsed via the `SKTilemapParser` parser.
 
 - parameter uuid:       `String` unique object id.
-
 - parameter properties: `[String: String]` dictionary of object properties.
 
  */
@@ -71,7 +70,6 @@ public extension SKTiledObject {
      Returns a string for the given key.
      
      - parameter key: `String` properties key.
-     
      - returns: `String` value for properties key.
      */
     public func stringForKey(_ key: String) -> String? {
@@ -83,7 +81,6 @@ public extension SKTiledObject {
      
      - parameter key:         `String` properties key.
      - parameter separatedBy: `String` separator.
-     
      - returns: `[String]` value for properties key.
      */
     public func stringArrayForKey(_ key: String, separatedBy: String=",") -> [String] {

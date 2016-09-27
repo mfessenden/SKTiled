@@ -98,11 +98,14 @@ tile.tileData.addFrame(35, interval: 0.15)
 tile.runAnimation()
 ```
 
-## Tile Dynamics
+## Dynamics
 
-Tiles can also have dynamics properties:
+Dynamics can be turned on for tile objects with the `SKTileObject.setupDynamics` method:
 
 ```swift
+// create a physics body with a rectangle of size 8
+myObject.setupDynamics(withSize: 8.0)
+
 // setup dynamics on an array of tiles with a radius of 4
 let dots = dotsLayer.getTilesWithProperty("type", "dot" as AnyObject)
 dots.forEach {$0.setupDynamics(withSize: 4)}

@@ -100,15 +100,6 @@ open class ButtonNode: SKSpriteNode {
             run(action)
         }
     }
-    
-    /**
-     Returns a representation for use in playgrounds.
-     
-     - returns: `AnyObject?` visual representation.
-     */
-    open func debugQuickLookObject() -> AnyObject? {
-        return defaultTexture
-    }
 }
 
 #if os(iOS)
@@ -139,7 +130,6 @@ public extension ButtonNode {
      Returns true if any of the touches are within the `ButtonNode` body.
      
      - parameter touches: `Set<UITouch>`
-     
      - returns: `Bool` button was touched.
      */
     fileprivate func containsTouches(_ touches: Set<UITouch>) -> Bool {
@@ -174,7 +164,6 @@ public extension ButtonNode {
      Returns true if any of the touches are within the `ButtonNode` body.
      
      - parameter touches: `Set<UITouch>`
-     
      - returns: `Bool` button was touched.
      */
     fileprivate func containsEvent(_ event: NSEvent) -> Bool {

@@ -380,12 +380,10 @@ public extension SKColor {
         let r1 = components[0]
         let g1 = components[1]
         let b1 = components[2]
-        let a1 = components[3]
         
         let r2 = color.components[0]
         let g2 = color.components[1]
         let b2 = color.components[2]
-        let a2 = color.components[3]
         
         let r = (r1 * s) + (1 - s) * r2
         let g = (g1 * s) + (1 - s) * g2
@@ -740,7 +738,6 @@ public func normalize(_ value: CGFloat, _ minimum: CGFloat, _ maximum: CGFloat) 
  
  - parameter layer: `TiledLayerObject` layer instance.
  - parameter scale: `CGFloat` image scale.
- 
  - returns: `SKTexture?` visual grid texture.
  */
 public func drawGrid(_ layer: TiledLayerObject,  scale: CGFloat = 1) -> CGImage {
@@ -870,7 +867,6 @@ public func drawGrid(_ layer: TiledLayerObject,  scale: CGFloat = 1) -> CGImage 
  - parameter width:   `CGFloat` rect width.
  - parameter height:  `CGFloat` rect height.
  - parameter origin: `CGPoint` rectangle origin.
-
  - returns: `[CGPoint]` array of points.
  */
 public func rectPointArray(_ width: CGFloat, height: CGFloat, origin: CGPoint=CGPoint.zero) -> [CGPoint] {
@@ -888,7 +884,6 @@ public func rectPointArray(_ width: CGFloat, height: CGFloat, origin: CGPoint=CG
 
  - parameter size:   `CGSize` rect size.
  - parameter origin: `CGPoint` rectangle origin.
- 
  - returns: `[CGPoint]` array of points.
  */
 public func rectPointArray(_ size: CGSize, origin: CGPoint=CGPoint.zero) -> [CGPoint] {
@@ -903,8 +898,7 @@ public func rectPointArray(_ size: CGSize, origin: CGPoint=CGPoint.zero) -> [CGP
  - parameter radius: `CGSize` radius of circle.
  - parameter offset: `CGFloat` rotation offset (45 to return a rectangle).
  - parameter origin: `CGPoint` origin point.
- 
- - returns: `[CGPoint]` array of points.
+  - returns: `[CGPoint]` array of points.
  */
 public func polygonPointArray(_ sides: Int, radius: CGSize, offset: CGFloat=0, origin: CGPoint=CGPoint.zero) -> [CGPoint] {
     let angle = (360 / CGFloat(sides)).radians()
@@ -931,8 +925,7 @@ public func polygonPointArray(_ sides: Int, radius: CGSize, offset: CGFloat=0, o
  - parameter points:  `[CGPoint]` polygon points.
  - parameter closed:  `Bool` path should be closed.
  - parameter origin: `CGPoint` origin point.
- 
- - returns: `CGPath` path from the given points.
+  - returns: `CGPath` path from the given points.
  */
 public func polygonPath(_ points: [CGPoint], closed: Bool=true) -> CGPath {
     let path = CGMutablePath()
@@ -1028,40 +1021,4 @@ public func bezierPath(_ points: [CGPoint], closed: Bool=true, alpha: CGFloat=0.
     }
     if (closed == true) {path.closeSubpath()}
     return path
-}
-
-
-public func drawPolygonShape(_ sides: Int, radius: CGSize, color: SKColor, offset: CGFloat=0, origin: CGPoint=CGPoint.zero) -> SKShapeNode {
-    let shape = SKShapeNode()
-    shape.path = polygonPath(sides, radius: radius, offset: offset, origin: origin)
-    shape.strokeColor = color
-    shape.fillColor = color.withAlphaComponent(0.25)
-    return shape
-}
-
-
-public func drawPolygonUsingPath(_ ctx: CGContext, sides: Int, radius: CGSize, color: SKColor, offset: CGFloat=0, origin: CGPoint=CGPoint.zero) {
-    let path = polygonPath(sides, radius: radius, offset: offset, origin: origin)
-    ctx.addPath(path)
-    let cgcolor = color.cgColor
-    ctx.setFillColor(cgcolor)
-    ctx.fillPath()
-}
-
-
-public func drawPolygon(_ ctx: CGContext, sides: Int, radius: CGSize, color: SKColor, offset: CGFloat=0) {
-    let points = polygonPointArray(sides, radius: radius, offset: offset)
-    ctx.addLines(between: points)
-    
-    let cgcolor = color.cgColor
-    ctx.setFillColor(cgcolor)
-    ctx.fillPath()
-}
-
-
-public func drawPolygonLayer(_ sides: Int, radius: CGSize, color: SKColor, offset: CGFloat=0, origin: CGPoint=CGPoint.zero) -> CAShapeLayer {
-    let shape = CAShapeLayer()
-    shape.path = polygonPath(sides, radius: radius, offset: offset, origin: origin)
-    shape.fillColor = color.cgColor
-    return shape
 }

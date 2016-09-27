@@ -45,14 +45,13 @@ internal enum SKObjectGroupColors: String {
  - validating coordinates
  - positioning and alignment
  - coordinate transformations
- 
  */
 open class TiledLayerObject: SKNode, SKTiledObject {
     
     internal var layerType: SKTiledLayerType = .invalid
     open var tilemap: SKTilemap
-    /// Unique object id (internal use only).
-    open var uuid: String = UUID().uuidString
+    /// Unique object id.
+    public var uuid: String = UUID().uuidString
     
     /// Layer index. Matches the index of the layer in the source TMX file.
     open var index: Int = 0
@@ -79,6 +78,8 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     internal var orientation: TilemapOrientation { return tilemap.orientation }
     /// Layer anchor point, used to position layers.
     open var anchorPoint: CGPoint { return tilemap.layerAlignment.anchorPoint }
+    
+    internal var gidErrors: [UInt32] = []
     
     // convenience properties
     open var width: CGFloat { return tilemap.width }
@@ -187,6 +188,9 @@ open class TiledLayerObject: SKNode, SKTiledObject {
             self.opacity = CGFloat(Double(layerOpacity)!)
         }
         
+        // set the layer's antialiasing based on tile size
+        self.antialiased = self.tilemap.tileSize.width > 20 ? true : false
+        
         self.frameShape.isHidden = true
         addChild(grid)
         addChild(frameShape)
@@ -204,6 +208,9 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         super.init()
         self.grid = TiledLayerGrid(tileLayer: self)
         self.name = layerName
+        
+        // set the layer's antialiasing based on tile size
+        self.antialiased = self.tilemap.tileSize.width > 20 ? true : false
         
         self.frameShape.isHidden = true
         addChild(grid)
@@ -232,6 +239,51 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     open func setColor(hexString: String) {
         self.color = SKColor(hexString: hexString)
     }
+    
+    // MARK: - Event Handling
+    #if os(iOS)
+    /**
+     Returns a converted touch location.
+     
+     - parameter touch: `UITouch` touch location.
+     - returns: `CGPoint` converted point in layer coordinate system.
+     */
+    open func touchLocation(_ touch: UITouch) -> CGPoint {
+    return convertPoint(touch.location(in: self))
+    }
+    
+    /**
+     Returns the tile coordinate for a touch location.
+     
+     - parameter touch: `UITouch` touch location.
+     - returns: `CGPoint` converted point in layer coordinate system.
+     */
+    open func coordinateAtTouchLocation(_ touch: UITouch) -> CGPoint {
+    return screenToTileCoords(touchLocation(touch))
+    }
+    #endif
+    
+    #if os(OSX)
+    /**
+     Returns a mouse event location.
+     
+     - parameter event: `NSEvent` mouse event location.
+     - returns: `CGPoint` converted point in layer coordinate system.
+     */
+    public func mouseLocation(event: NSEvent) -> CGPoint {
+        return convertPoint(event.location(in: self))
+    }
+    
+    /**
+     Returns the tile coordinate for a touch location.
+     
+     - parameter event: `NSEvent` mouse event location.
+     - returns: `CGPoint` converted point in layer coordinate system.
+     */
+    open func coordinateAtMouseEvent(event: NSEvent) -> CGPoint {
+        return screenToTileCoords(mouseLocation(event: event))
+    }
+    #endif
     
     // MARK: - Coordinates
     /**
@@ -264,24 +316,6 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     open func convertPoint(_ point: CGPoint) -> CGPoint {
         return point.invertedY
     }
-    
-    /**
-     Returns a converted touch location.
-     
-     - parameter point: `CGPoint` scene point.
-     - returns: `CGPoint` converted point in layer coordinate system.
-     */
-    #if os(iOS)
-    open func touchLocation(_ touch: UITouch) -> CGPoint {
-        return convertPoint(touch.location(in: self))
-    }
-    #endif
-    
-    #if os(OSX)
-    public func mouseLocation(event: NSEvent) -> CGPoint {
-        return convertPoint(event.location(in: self))
-    }
-    #endif
     
     /**
      Returns a point for a given coordinate in the layer.
@@ -450,7 +484,6 @@ open class TiledLayerObject: SKNode, SKTiledObject {
                                         y: pixelY - referencePoint.y * tileHeight)
             
 
-            
             // make adjustments to reference point
             if tilemap.staggerX {
                 relativePoint.x *= 2
@@ -580,18 +613,6 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         default:
             return point
         }
-    }
-    
-    /**
-     Returns a coordinate in the given direction.
-    
-     - parameter coord:     `CGPoint` tile coordinate.
-     - parameter direction: `CardinalDirection` direction from input coordinate.
-     - returns: `CGPoint?`
-     */
-    public func coordinateInDirection(from coord: CGPoint, inDirection direction: CardinalDirection) -> CGPoint? {
-        // TODO: need to add this
-        return nil
     }
     
     // MARK: - Adding & Removing Nodes
@@ -890,7 +911,7 @@ open class SKTileLayer: TiledLayerObject {
      */
     open func setLayerData(_ data: [UInt32]) -> Bool {
         if !(data.count==size.count) {
-            print("[SKTileLayer]: Error: invalid data size: \(data.count), expected: \(size.count)")
+            print("[SKTileLayer]: ERROR: invalid data size: \(data.count), expected: \(size.count)")
             return false
         }
         
@@ -911,7 +932,7 @@ open class SKTileLayer: TiledLayerObject {
         
         
         if (errorCount != 0){
-            print("[SKTileLayer]: \(errorCount) \(errorCount > 1 ? "errors" : "error") loading data.")
+            print("[SKTileLayer]: WARNING: layer \"\(name!)\": \(errorCount) \(errorCount > 1 ? "errors" : "error") loading data.")
         }
         return errorCount == 0
     }
@@ -1021,10 +1042,8 @@ open class SKTileLayer: TiledLayerObject {
             tileData.flipHoriz = flipHoriz
             tileData.flipVert = flipVert
             tileData.flipDiag = flipDiag
-            
-            
 
-            if let tile = SKTile(data: tileData) {
+            if let tile = SKTile(data: tileData) {                
                 
                 // set the tile overlap amount
                 tile.setTileOverlap(tilemap.tileOverlap)
@@ -1049,10 +1068,21 @@ open class SKTileLayer: TiledLayerObject {
                 // run animation for tiles with multiple frames
                 tile.runAnimation()
 
+                if tile.texture == nil {
+                    print("[SKTileLayer]: WARNING: cannot find a texture for gid \(gid)")
+                }
+                
+                
                 return tile
                 
             } else {
                 print("[SKTileLayer]: Error: invalid tileset data (id: \(id))")
+            }
+        } else {
+            
+            // check for bad gid calls
+            if !gidErrors.contains(gid) {
+                gidErrors.append(gid)
             }
         }
         return nil
@@ -1155,7 +1185,7 @@ open class SKObjectGroup: TiledLayerObject {
     /// Controls antialiasing for each object
     override open var antialiased: Bool {
         didSet {
-            objects.forEach({$0.isAntialiased = antialiased})
+            objects.forEach { $0.isAntialiased = antialiased }
         }
     }
     
@@ -1263,7 +1293,7 @@ open class SKObjectGroup: TiledLayerObject {
      Render all of the objects in the group.
      */
     open func drawObjects() {
-        objects.forEach({$0.drawObject()})
+        objects.forEach { $0.drawObject() }
     }
     
     /**
@@ -1292,7 +1322,7 @@ open class SKObjectGroup: TiledLayerObject {
         for object in objects {
             if !object.hasKey("color") {
                 object.setColor(hexString: hexString)
-    }
+            }
         }
     }
     
@@ -1362,7 +1392,6 @@ open class SKObjectGroup: TiledLayerObject {
  ```swift
  imageLayer.setLayerImage("clouds-background")
  ```
- 
  */
 open class SKImageLayer: TiledLayerObject {
     
@@ -1431,7 +1460,7 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
     private var layer: TiledLayerObject
     private var gridTexture: SKTexture! = nil
     private var graphTexture: SKTexture! = nil
-    private var imageScale: CGFloat = 1.0
+    private var imageScale: CGFloat = 3.0
 
     private var gridOpacity: CGFloat { return layer.gridOpacity }
 
@@ -1458,6 +1487,7 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
         #endif
     }
     
+    /// Display the current tile grid.
     var showGrid: Bool = false {
         didSet {
             guard oldValue != showGrid else { return }
@@ -1473,20 +1503,23 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
                 if (gridTexture == nil) {
                     let gridImage = drawGrid(self.layer, scale: imageScale)
                     gridTexture = SKTexture(cgImage: gridImage)
-                    //let textureFilter: SKTextureFilteringMode = (layer.antialiased == true) ? .linear : .nearest
-                    gridTexture.filteringMode = .linear
+                    let textureFilter: SKTextureFilteringMode = (layer.antialiased == true) ? .linear : .nearest
+                    gridTexture.filteringMode = textureFilter
+                    //print("[TiledLayerGrid]: texture filtering: \(textureFilter.rawValue == 0 ? "nearest": "linear")")
                 }
                 
                 
                 gridSize = gridTexture.size() / imageScale
                 #if os(OSX)
-                gridSize = layer.sizeInPoints
+                gridSize = gridTexture.size()
                 #endif
                 
                 texture = gridTexture
                 alpha = gridOpacity
                 size = gridSize
+                
                 #if os(iOS)
+                gridTexture.filteringMode = .linear
                 position.y = -gridSize.height
                 #else
                 yScale = -1
@@ -1662,11 +1695,6 @@ extension SKTiledLayerType {
 
 public extension SKTileLayer {
     
-    /// Returns a count of valid tiles.
-    public var tileCount: Int {
-        return self.validTiles().count
-    }
-    
     /**
      Returns only tiles that are valid (not empty).
      
@@ -1674,6 +1702,11 @@ public extension SKTileLayer {
      */
     public func validTiles() -> [SKTile] {
         return tiles.flatMap({$0})
+    }
+    
+    /// Returns a count of valid tiles.
+    public var tileCount: Int {
+        return self.validTiles().count
     }
 }
 
@@ -1702,7 +1735,6 @@ extension Array2D: Sequence {
  - parameter r: `Int` red component.
  - parameter g: `Int` green component.
  - parameter b: `Int` blue component.
- 
  - returns: `SKColor` color with given values.
  */
 internal func SKColorWithRGB(_ r: Int, g: Int, b: Int) -> SKColor {
@@ -1717,7 +1749,6 @@ internal func SKColorWithRGB(_ r: Int, g: Int, b: Int) -> SKColor {
  - parameter g: `Int` green component.
  - parameter b: `Int` blue component.
  - parameter a: `Int` alpha component.
- 
  - returns: `SKColor` color with given values.
  */
 internal func SKColorWithRGBA(_ r: Int, g: Int, b: Int, a: Int) -> SKColor {
