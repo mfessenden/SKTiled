@@ -46,13 +46,10 @@
                 <a href="properties.html">Properties</a>
               </li>
               <li class="nav-group-task">
-                <a href="gameplaykit.html">GameplayKit</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="extending.html">Extending</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="debugging.html">Debugging</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="troubleshooting.html">Troubleshooting</a>
               </li>
             </ul>
           </li>
@@ -64,17 +61,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Data Types.html">Data Types</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Data Types.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
               </li>
             </ul>
           </li>
@@ -120,18 +106,16 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Other Guides.html">Other Guides</a>
+            <a href="Data Types.html">Data Types</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="tutorial.html">Tutorial</a>
+                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
               </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Enums.html">Other Enums</a>
-            <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled10TileOffset">TileOffset</a>
+                <a href="Data Types.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Data Types.html#/s:O7SKTiled10TileOffset">TileOffset</a>
               </li>
             </ul>
           </li>
@@ -144,10 +128,9 @@
             <a href='#custom-properties' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='custom-properties'>Custom Properties</h1>
 
 <p>One of the most powerful features of <em>SKTiled</em> is the ability to exploit Tiled&rsquo;s custom properties for most objects. 
-All objects that conform to the <code>SKTiledObject</code> protocol have methods for parsing Tiled object properties. Tiled property values are all encoded as strings. <strong>SKTiled</strong> will attempt to parse the intended type, but be sure to check the type of property you are querying.</p>
+All objects that conform to the <code>TiledObject</code> protocol have methods for parsing Tiled object properties. Tiled property values are all encoded as strings. <strong>SKTiled</strong> will attempt to parse the intended type, but be sure to check the type of property you are querying.</p>
 
 <p>If you are using the v0.17 of Tiled or newer, <em>SKTiled</em> supports the new <strong>color</strong> and <strong>file</strong> property types (values are stored as strings internally anyway, which <em>SKTiled</em> already supports). The custom color/file types listed above will also be parsed if they are created as string types in Tiled.</p>
-<a href='#properties-list' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='properties-list'>Properties List</h2>
 <pre class="highlight plaintext"><code>SKTilemap:
   name                (String)    - map name.
   hidden              (Bool)      - hide the map.
@@ -168,6 +151,7 @@ All objects that conform to the <code>SKTiledObject</code> protocol have methods
   antialiasLines      (Bool)      - antialias lines.
 
 TiledLayerObject:
+  antialiasing        (Bool)      - antialias lines.
   hidden              (Bool)      - hide the layer.
   color               (String)    - hex string to override color.
   zPosition           (Float)     - used to manually override layer zPosition.
@@ -188,7 +172,6 @@ SKTilesetData:
   collisionShape      (Int)       - 0 = rectangle, 1 = circle.
   nodeClass           (String)    - tile node class**
 
-
 SKTileObject:
   hidden              (Bool)      - hide the object.
   color               (String)    - hex string to override object color.
@@ -198,7 +181,7 @@ SKTileObject:
 ** not yet implemented
 </code></pre>
 
-<p>Next: <a href="gameplaykit.html">GameplayKit</a> - <a href="Tutorial.html">Index</a></p>
+<p>Next: <a href="debugging.html">Debugging</a> - <a href="Tutorial.html">Index</a></p>
 
           </section>
         </section>

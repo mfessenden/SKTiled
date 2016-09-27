@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Extending  Reference</title>
+    <title>Troubleshooting  Reference</title>
     <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,7 +10,7 @@
     
   </head>
   <body>
-    <a title="Extending  Reference"></a>
+    <a title="Troubleshooting  Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="index.html">SKTiled Docs</a></p>
@@ -21,7 +21,7 @@
       <p id="breadcrumbs">
         <a href="index.html">SKTiled Reference</a>
         <img id="carat" src="img/carat.png" />
-        Extending  Reference
+        Troubleshooting  Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -46,13 +46,10 @@
                 <a href="properties.html">Properties</a>
               </li>
               <li class="nav-group-task">
-                <a href="gameplaykit.html">GameplayKit</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="extending.html">Extending</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="debugging.html">Debugging</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="troubleshooting.html">Troubleshooting</a>
               </li>
             </ul>
           </li>
@@ -64,17 +61,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Data Types.html">Data Types</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Data Types.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
               </li>
             </ul>
           </li>
@@ -120,18 +106,16 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Other Guides.html">Other Guides</a>
+            <a href="Data Types.html">Data Types</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="tutorial.html">Tutorial</a>
+                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
               </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Enums.html">Other Enums</a>
-            <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled10TileOffset">TileOffset</a>
+                <a href="Data Types.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Data Types.html#/s:O7SKTiled10TileOffset">TileOffset</a>
               </li>
             </ul>
           </li>
@@ -141,28 +125,29 @@
         <section>
           <section class="section">
             
-            <a href='#extending-sktiled' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='extending-sktiled'>Extending SKTiled</h1>
-<a href='#custom-nodes' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='custom-nodes'>Custom Nodes</h2>
+            <a href='#troubleshooting' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='troubleshooting'>Troubleshooting</h1>
+<a href='#xml-parsing-errors' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='xml-parsing-errors'>XML Parsing Errors</h3>
 
-<p>It is also possible to use a custom node class in place of the <code>SKTile</code> object. Any object that conforms to the <code>SKTiledGeometry</code> can be used as a custom tile type:</p>
-<pre class="highlight swift"><code><span class="c1">// pseudo-code for now</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="kt">Player</span><span class="p">:</span> <span class="kt">SKTiledGeometry</span> <span class="p">{</span>
-    <span class="kd">public</span> <span class="k">var</span> <span class="nv">layer</span><span class="p">:</span> <span class="kt">TiledLayerObject</span><span class="o">!</span>
-<span class="p">}</span>
+<p>Sometimes the XML parser will throw errors with external tilesets that have been downloaded from the internet. Importing &amp; re-exporting the tileset should make the error go away.</p>
+<a href='#code-signing-errors' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='code-signing-errors'>Code Signing Errors</h3>
+
+<p>Occasionally you&rsquo;ll get a code signing error when compiling on OSX:</p>
+<pre class="highlight plaintext"><code>Command /usr/bin/codesign failed with exit code 1
 </code></pre>
 
-<p>To use your custom tile type, you&rsquo;ll need to create a custom string property in Tiled called <strong>nodeClass</strong> for the tile:</p>
-
-<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/swift/img/nodeClass.png" alt="NodeClass"></p>
-<a href='#custom-layer-types' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='custom-layer-types'>Custom Layer Types</h2>
-
-<p>It&rsquo;s also possible to create custom layer types by subclassing the <code>TiledLayerObject</code> base class. For instance, if you wanted to have an empty layer with extra logic for dealing with <code>GKEntity</code> character entities:</p>
-<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ActorsLayer</span><span class="p">:</span> <span class="kt">TiledLayerObject</span> <span class="p">{</span>
-    <span class="kd">public</span> <span class="k">var</span> <span class="nv">entities</span><span class="p">:</span> <span class="p">[</span><span class="kt">GKEntity</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="p">}</span>
+<p>If you&rsquo;re using Photoshop to save images, you might need to cleanup Finder metadata. To check, browse to your images directory in shell and run the following command:</p>
+<pre class="highlight plaintext"><code>ls -al@
 </code></pre>
 
-<p>Next: <a href="debugging.html">Debugging</a> - <a href="Tutorial.html">Index</a></p>
+<p>If any of your files have extra metadata that Xcode doesn&rsquo;t like, you&rsquo;ll see it listed below the file name:</p>
+
+<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/xattr-cleanup.png" alt="Image Metadata"></p>
+
+<p>Running the following command will clean up the extra data:</p>
+<pre class="highlight plaintext"><code>xattr -c *.png
+</code></pre>
+
+<p>Next: <a href="getting-started.html">Getting Started</a> - <a href="Tutorial.html">Index</a></p>
 
           </section>
         </section>

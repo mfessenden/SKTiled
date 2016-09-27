@@ -47,13 +47,10 @@
                 <a href="../properties.html">Properties</a>
               </li>
               <li class="nav-group-task">
-                <a href="../gameplaykit.html">GameplayKit</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../extending.html">Extending</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../debugging.html">Debugging</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../troubleshooting.html">Troubleshooting</a>
               </li>
             </ul>
           </li>
@@ -65,17 +62,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="../Data Types.html">Data Types</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Enums/TilemapOrientation.html">TilemapOrientation</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Data Types.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
               </li>
             </ul>
           </li>
@@ -121,18 +107,16 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Other Guides.html">Other Guides</a>
+            <a href="../Data Types.html">Data Types</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../tutorial.html">Tutorial</a>
+                <a href="../Enums/TilemapOrientation.html">TilemapOrientation</a>
               </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="../Other Enums.html">Other Enums</a>
-            <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Other Enums.html#/s:O7SKTiled10TileOffset">TileOffset</a>
+                <a href="../Data Types.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Data Types.html#/s:O7SKTiled10TileOffset">TileOffset</a>
               </li>
             </ul>
           </li>
@@ -148,14 +132,12 @@
 
                 </div>
               </div>
-            <p>The <code>SKTilesetData</code> is the base class for all <code>SKTiled</code> layer types. </p>
-
-<p>This class doesn&rsquo;t define any object or child types, but manages several important aspects:</p>
+            <p>The <code>SKTilesetData</code> represents a single tileset tile data, with texture, id and properties:</p>
 
 <ul>
-<li>validating coordinates</li>
-<li>positioning and alignment</li>
-<li>coordinate transformations</li>
+<li>tile texture</li>
+<li>tile animation</li>
+<li>tile orientation</li>
 </ul>
 
           </section>
@@ -294,7 +276,7 @@
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilesetData.swift#L64-L67">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilesetData.swift#L66-L69">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -375,7 +357,7 @@
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilesetData.swift#L77-L82">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilesetData.swift#L79-L84">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -451,7 +433,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilesetData.swift#L91-L93">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilesetData.swift#L93-L95">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -506,7 +488,7 @@
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilesetData.swift#L101-L106">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilesetData.swift#L103-L108">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -528,7 +510,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>Remove a tile animation frame.</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -539,7 +522,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilesetData.swift#L117-L119">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilesetData.swift#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -573,7 +556,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilesetData.swift#L133-L142">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilesetData.swift#L131-L140">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -603,7 +586,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilesetData.swift#L144-L146">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilesetData.swift#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -637,7 +620,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap+Properties.swift#L216-L220">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap+Properties.swift#L219-L223">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

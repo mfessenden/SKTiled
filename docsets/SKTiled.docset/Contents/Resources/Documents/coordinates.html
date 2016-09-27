@@ -46,13 +46,10 @@
                 <a href="properties.html">Properties</a>
               </li>
               <li class="nav-group-task">
-                <a href="gameplaykit.html">GameplayKit</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="extending.html">Extending</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="debugging.html">Debugging</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="troubleshooting.html">Troubleshooting</a>
               </li>
             </ul>
           </li>
@@ -64,17 +61,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Data Types.html">Data Types</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Data Types.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
               </li>
             </ul>
           </li>
@@ -120,18 +106,16 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Other Guides.html">Other Guides</a>
+            <a href="Data Types.html">Data Types</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="tutorial.html">Tutorial</a>
+                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
               </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Enums.html">Other Enums</a>
-            <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled10TileOffset">TileOffset</a>
+                <a href="Data Types.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Data Types.html#/s:O7SKTiled10TileOffset">TileOffset</a>
               </li>
             </ul>
           </li>
@@ -142,18 +126,11 @@
           <section class="section">
             
             <a href='#coordinates' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='coordinates'>Coordinates</h1>
+<a href='#coordinate-conversion' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='coordinate-conversion'>Coordinate Conversion</h2>
 
 <p>SpriteKit uses a coordinate system that is different from Tiled&rsquo;s; in SpriteKit, a SpriteKit node&rsquo;s origin is on the bottom-left, while Tiled&rsquo;s origin is top-left. </p>
 
-<p>To emulate this, the <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> node draws it&rsquo;s layers starting at the origin and moving <em>downwards</em> into the negative y-space. To accommodate this, each layer type has methods for converting points into negative-y space:</p>
-<pre class="highlight swift"><code><span class="c1">// iOS with UITouch</span>
-<span class="k">let</span> <span class="nv">touchPosition</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">touchLocation</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
-
-<span class="c1">// OSX with NSEvent mouse event</span>
-<span class="k">let</span> <span class="nv">eventPosition</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">mouseLocation</span><span class="p">(</span><span class="nv">event</span><span class="p">:</span> <span class="n">mouseEvent</span><span class="p">)</span>
-</code></pre>
-
-<p>Each layer type also have convenience methods for querying screen points or tile coordinates:</p>
+<p>To emulate this, the <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> node draws its layers starting at the origin and moving <em>downwards</em> into the negative y-space. To accommodate this, each layer type has conversion methods for converting points to coordinates and vice-versa:</p>
 <pre class="highlight swift"><code><span class="c1">// covert coordinate position to CGPoint</span>
 <span class="k">let</span> <span class="nv">point</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">pointForCoordinate</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 
@@ -168,8 +145,26 @@
 <span class="c1">// use TileOffset </span>
 <span class="k">let</span> <span class="nv">point</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">pointForCoordinate</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="nv">offset</span><span class="p">:</span> <span class="kt">TileOffset</span><span class="o">.</span><span class="n">center</span><span class="p">)</span>
 </code></pre>
+<a href='#user-interaction' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='user-interaction'>User Interaction</h2>
 
-<p>Each layer has the ability to independently query a coordinate (which can be different depending on each layer&rsquo;s offset). Querying a point in the parent <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> node returns values in the default base layer.</p>
+<p><strong>SKTiled</strong> also has methods for handling touch events (iOS) and mouse events (OSX):</p>
+<pre class="highlight swift"><code><span class="c1">// iOS with UITouch</span>
+<span class="k">let</span> <span class="nv">touchPosition</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">touchLocation</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
+
+<span class="c1">// OSX with NSEvent mouse event</span>
+<span class="k">let</span> <span class="nv">eventPosition</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">mouseLocation</span><span class="p">(</span><span class="nv">event</span><span class="p">:</span> <span class="n">mouseEvent</span><span class="p">)</span>
+</code></pre>
+
+<p>You can also query coordinates at an event directly:</p>
+<pre class="highlight swift"><code><span class="c1">// get the coordinate of a touch event</span>
+<span class="k">let</span> <span class="nv">coord</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">coordinateAtTouchLocation</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
+
+
+<span class="c1">// get the coordinate of a mouse event</span>
+<span class="k">let</span> <span class="nv">coord</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">coordinateAtMouseEvent</span><span class="p">(</span><span class="nv">event</span><span class="p">:</span> <span class="n">event</span><span class="p">)</span>
+</code></pre>
+
+<p>It&rsquo;s important to remember that each layer has the ability to independently query a coordinate (which can be different depending on each layer&rsquo;s offset). Querying a point in the parent <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> node returns values in the <strong>default base layer</strong>.</p>
 <a href='#coordinate-offsets-amp-hints' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='coordinate-offsets-amp-hints'>Coordinate Offsets &amp; Hints</h2>
 
 <p>The <a href="Classes/TileOffset.html"><code>TileOffset</code></a> enum represents a hint for placement within each layer type:</p>

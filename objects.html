@@ -46,13 +46,10 @@
                 <a href="properties.html">Properties</a>
               </li>
               <li class="nav-group-task">
-                <a href="gameplaykit.html">GameplayKit</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="extending.html">Extending</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="debugging.html">Debugging</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="troubleshooting.html">Troubleshooting</a>
               </li>
             </ul>
           </li>
@@ -64,17 +61,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Data Types.html">Data Types</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Data Types.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
               </li>
             </ul>
           </li>
@@ -120,18 +106,16 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Other Guides.html">Other Guides</a>
+            <a href="Data Types.html">Data Types</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="tutorial.html">Tutorial</a>
+                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
               </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Enums.html">Other Enums</a>
-            <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled10TileOffset">TileOffset</a>
+                <a href="Data Types.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Data Types.html#/s:O7SKTiled10TileOffset">TileOffset</a>
               </li>
             </ul>
           </li>
@@ -155,11 +139,11 @@
 </ul>
 
 <p><a href="#SKTileObject"><code>SKTileObject</code></a> objects are subclasses of <code>SKShapeNode</code>. Each object is drawn from the <code>SKTileObject.points</code> property.</p>
-<a href='#object-types' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='object-types'>Object Types</h2>
+<a href='#object-types' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='object-types'>Object Types</h3>
 
 <p>Objects assigned a type in Tiled will retain that property in <strong>SKTiled</strong>, accessed with the optional <code>SKTileObject.type</code> property:</p>
 
-<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/swift/img/object_types.png" alt="Tiled obeject types"></p>
+<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/object_types.png" alt="Tiled obeject types"></p>
 
 <p>Objects assigned a type property can be queried from the parent <a href="#SKObjectGroup"><code>SKObjectGroup</code></a>:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">emitterObjects</span> <span class="o">=</span> <span class="n">objectsGroup</span><span class="o">.</span><span class="nf">getObjects</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="s">"Emitter"</span><span class="p">)</span>
@@ -170,12 +154,6 @@
 </code></pre>
 
 <p>Note that this will return objects from multiple object layers.</p>
-<a href='#dynamics' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='dynamics'>Dynamics</h2>
-
-<p>Dynamics can be turned on for objects with the <code>SKTileObject.setupDynamics()</code> method.</p>
-<a href='#gameplaykit' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='gameplaykit'>GameplayKit</h2>
-
-<p>The <code>SKTileObject.obstacleType</code> property will flag the object as an <code>GKObstacle</code>.</p>
 
 <p>Next: <a href="properties.html">Properties</a> - <a href="Tutorial.html">Index</a></p>
 

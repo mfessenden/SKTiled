@@ -46,13 +46,10 @@
                 <a href="properties.html">Properties</a>
               </li>
               <li class="nav-group-task">
-                <a href="gameplaykit.html">GameplayKit</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="extending.html">Extending</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="debugging.html">Debugging</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="troubleshooting.html">Troubleshooting</a>
               </li>
             </ul>
           </li>
@@ -64,17 +61,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Data Types.html">Data Types</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Data Types.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
               </li>
             </ul>
           </li>
@@ -120,18 +106,16 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Other Guides.html">Other Guides</a>
+            <a href="Data Types.html">Data Types</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="tutorial.html">Tutorial</a>
+                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
               </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Enums.html">Other Enums</a>
-            <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled10TileOffset">TileOffset</a>
+                <a href="Data Types.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Data Types.html#/s:O7SKTiled10TileOffset">TileOffset</a>
               </li>
             </ul>
           </li>
@@ -184,6 +168,47 @@
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:O7SKTiled10TileOffset"></a>
+                    <a name="//apple_ref/swift/Enum/TileOffset" class="dashAnchor"></a>
+                    <a class="token" href="#/s:O7SKTiled10TileOffset">TileOffset</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tile offset hint for coordinate conversion.</p>
+
+<pre class="highlight plaintext"><code>   center:        returns the center of the tile.
+   top:           returns the top of the tile.
+   topLeft:       returns the top left of the tile.
+   topRight:      returns the top left of the tile.
+   bottom:        returns the bottom of the tile.
+   bottomLeft:    returns the bottom left of the tile.
+   bottomRight:   returns the bottom right of the tile.
+   left:          returns the left side of the tile.
+   right:         returns the right side of the tile.
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">TileOffset</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L66-L76">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
             <div class="task-group">
@@ -203,10 +228,12 @@
                       <div class="abstract">
                         <p>Describes the <code><a href="Classes/SKTileObject.html">SKTileObject</a></code> shape type.</p>
 
-<p>-rectangle:  rectangular shape
--ellipse:    circular shape
--polygon:    closed polygon
--polyline:   open polygon</p>
+<ul>
+<li>rectangle:  rectangular shape</li>
+<li>ellipse:    circular shape</li>
+<li>polygon:    closed polygon</li>
+<li>polyline:   open polygon</li>
+</ul>
 
                       </div>
                       <div class="declaration">
