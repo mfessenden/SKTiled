@@ -1094,13 +1094,6 @@
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTilesetData.swift",
-      "line": 43,
-      "symbol": "SKTilesetData.frames",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/Sources/SKTilesetData.swift",
       "line": 44,
       "symbol": "SKTilesetData.isAnimated",
       "symbol_kind": "source.lang.swift.decl.var.instance",
