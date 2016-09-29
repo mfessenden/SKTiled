@@ -128,7 +128,7 @@
             <a href='#custom-properties' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='custom-properties'>Custom Properties</h1>
 
 <p>One of the most powerful features of <em>SKTiled</em> is the ability to exploit Tiled&rsquo;s custom properties for most objects. 
-All objects that conform to the <code>TiledObject</code> protocol have methods for parsing Tiled object properties. Tiled property values are all encoded as strings. <strong>SKTiled</strong> will attempt to parse the intended type, but be sure to check the type of property you are querying.</p>
+All objects that conform to the <a href="Protocols/SKTiledObject.html"><code>SKTiledObject</code></a> protocol have methods for parsing Tiled object properties. Tiled property values are all encoded as strings. <strong>SKTiled</strong> will attempt to parse the intended type, but be sure to check the type of property you are querying.</p>
 
 <p>If you are using the v0.17 of Tiled or newer, <em>SKTiled</em> supports the new <strong>color</strong> and <strong>file</strong> property types (values are stored as strings internally anyway, which <em>SKTiled</em> already supports). The custom color/file types listed above will also be parsed if they are created as string types in Tiled.</p>
 <pre class="highlight plaintext"><code>SKTilemap:

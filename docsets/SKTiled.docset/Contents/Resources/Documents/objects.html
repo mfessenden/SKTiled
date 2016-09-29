@@ -129,7 +129,7 @@
 
 <p>By default, objects are not shown when rendered in <strong>SKTiled</strong>. To enable </p>
 
-<p>The <a href="#SKTileObject"><code>SKTileObject</code></a> class represents a vector object in a object group layer. <strong>SKTiled</strong> objects just as they are in Tiled:</p>
+<p>The <a href="Classes/SKTileObject.html"><code>SKTileObject</code></a> class represents a vector object in a object group layer. <strong>SKTiled</strong> objects just as they are in Tiled:</p>
 
 <ul>
 <li>Rectangle</li>
@@ -138,18 +138,18 @@
 <li>Polyline</li>
 </ul>
 
-<p><a href="#SKTileObject"><code>SKTileObject</code></a> objects are subclasses of <code>SKShapeNode</code>. Each object is drawn from the <code>SKTileObject.points</code> property.</p>
+<p><a href="Classes/SKTileObject.html"><code>SKTileObject</code></a> objects are subclasses of <code>SKShapeNode</code>. Each object is drawn from the <code>SKTileObject.points</code> property.</p>
 <a href='#object-types' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='object-types'>Object Types</h3>
 
 <p>Objects assigned a type in Tiled will retain that property in <strong>SKTiled</strong>, accessed with the optional <code>SKTileObject.type</code> property:</p>
 
 <p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/object_types.png" alt="Tiled obeject types"></p>
 
-<p>Objects assigned a type property can be queried from the parent <a href="#SKObjectGroup"><code>SKObjectGroup</code></a>:</p>
+<p>Objects assigned a type property can be queried from the parent <a href="Classes/SKObjectGroup.html"><code>SKObjectGroup</code></a>:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">emitterObjects</span> <span class="o">=</span> <span class="n">objectsGroup</span><span class="o">.</span><span class="nf">getObjects</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="s">"Emitter"</span><span class="p">)</span>
 </code></pre>
 
-<p>They can also be accessed from the <a href="#SKTilemap"><code>SKTilemap</code></a> node:</p>
+<p>They can also be accessed from the <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> node:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">allEmitterObjects</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getObjects</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="s">"Emitter"</span><span class="p">)</span>
 </code></pre>
 
