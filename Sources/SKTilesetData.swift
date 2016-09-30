@@ -23,7 +23,7 @@ internal struct AnimationFrame {
 
 
 /**
-The `SKTilesetData` represents a single tileset tile data, with texture, id and properties:
+The `SKTilesetData` class stores data for a single tileset tile, with texture, id and properties:
  
 - tile texture
 - tile animation
@@ -40,7 +40,7 @@ open class SKTilesetData: SKTiledObject  {
     open var properties: [String: String] = [:]
     
     // animation frames
-    open var frames: [AnimationFrame] = []        // animation frames
+    internal var frames: [AnimationFrame] = []    // animation frames
     open var isAnimated: Bool { return frames.count > 0 }
     
     // flipped flags
@@ -100,7 +100,7 @@ open class SKTilesetData: SKTiledObject  {
      - parameter gid: `Int` id for frame.
      - returns: `AnimationFrame?` animation frame (if it exists).
      */
-    open func removeFrame(_ gid: Int) -> AnimationFrame? {
+    func removeFrame(_ gid: Int) -> AnimationFrame? {
         if let index = frames.index( where: { $0.gid == gid } ) {
             return frames.remove(at: index)
         }

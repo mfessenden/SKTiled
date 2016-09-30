@@ -156,7 +156,7 @@ public extension SKTiledObject {
         var pstring = ""
         for value in properties.enumerated() {
             let indexIsLast = value.0 < (properties.count - 1)
-            pstring += (indexIsLast==true) ? "\"\(value.1.0)\": \(value.1.1), " : "\"\(value.1.0)\": \(value.1.1)"
+            pstring += (indexIsLast==true) ? "\(value.1.0): \(value.1.1), " : "\(value.1.0): \(value.1.1)"
         }
         return pstring
     }

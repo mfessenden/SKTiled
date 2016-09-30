@@ -158,7 +158,6 @@ public extension TiledLayerObject {
 }
 
 
-
 public extension SKTileLayer {
     /**
      Parse the tile layer's properties.

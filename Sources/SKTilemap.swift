@@ -137,7 +137,7 @@ internal let TileSize32x32 = CGSize(width: 32, height: 32)
  - tileSize:     tile map tile size in pixels.
  - sizeInPoints: tile map size in points.
  
- Tile data is added via `SKTileset` tile sets.
+ Tile data is stored in `SKTileset` tile sets.
  */
 open class SKTilemap: SKNode, SKTiledObject{
     
@@ -1109,7 +1109,7 @@ extension SKTilemap {
     override open var debugDescription: String { return description }
     
     /// Visualize the current grid & bounds.
-    open var debugDraw: Bool {
+    internal var debugDraw: Bool {
         get {
             return baseLayer.debugDraw
         } set {
@@ -1123,7 +1123,7 @@ extension SKTilemap {
     /**
      Print a summary of layer data.
      */
-    public func debugLayers(reverse: Bool = false) {
+    internal func debugLayers(reverse: Bool = false) {
         guard (layerCount > 0) else { return }
         let largestName = layerNames().max() { (a, b) -> Bool in a.characters.count < b.characters.count }
         let nameStr = "# Tilemap \"\(name!)\": \(layerCount) Layers:"
@@ -1139,7 +1139,8 @@ extension SKTilemap {
             if (layer != baseLayer) {
                 let layerName = layer.name!
                 let nameString = "\"\(layerName)\""
-                print("\(layer.index): \(layer.layerType.stringValue.capitalized.zfill(6, pattern: " ", padLeft: false)) \(nameString.zfill(largestName!.characters.count + 2, pattern: " ", padLeft: false))   pos: \(layer.position.roundTo(1)), size: \(layer.sizeInPoints.roundTo(1)),  offset: \(layer.offset.roundTo(1)), anc: \(layer.anchorPoint.roundTo()), z: \(layer.zPosition.roundTo())")
+                let indexString = "\(layer.index): ".zfill(4, pattern: " ", padLeft: false)
+                print("\(indexString) \(layer.layerType.stringValue.capitalized.zfill(6, pattern: " ", padLeft: false)) \(nameString.zfill(largestName!.characters.count + 2, pattern: " ", padLeft: false))   pos: \(layer.position.roundTo(1)), size: \(layer.sizeInPoints.roundTo(1)),  offset: \(layer.offset.roundTo(1)), anc: \(layer.anchorPoint.roundTo()), z: \(layer.zPosition.roundTo())")
                 
             }
         }

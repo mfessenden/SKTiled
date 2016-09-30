@@ -76,7 +76,6 @@ open class SKTiledScene: SKScene, SKTiledSceneDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    /* called before the scene initializes? */
     override open func sceneDidLoad() {
         setupWorld()
     }    

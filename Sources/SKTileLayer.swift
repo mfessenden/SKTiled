@@ -39,12 +39,19 @@ internal enum SKObjectGroupColors: String {
 
 
 /**
- The `TiledLayerObject` is the base class for all `SKTiled` layer types.  This class 
+ The `TiledLayerObject` is the base class for all **SKTiled** layer types.  This class
  doesn't define any object or child types, but manages several important aspects of your scene:
     
  - validating coordinates
  - positioning and alignment
  - coordinate transformations
+ 
+ Layer properties are accessed via properties shared with the parent tilemap:
+ 
+ ```
+  layer.size            // size (in tiles)
+  layer.tileSize        // tile size (in pixels)
+ ```
  */
 open class TiledLayerObject: SKNode, SKTiledObject {
     
@@ -361,12 +368,13 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
         
     /**
-     Converts a tile coordinate from a point in map space.
+     Converts a tile coordinate from a point in map space. Note that this function
+     expects scene points to be inverted in y before being passed as input.
             
      - parameter point: `CGPoint` point in map space.
      - returns: `CGPoint` tile coordinate.
      */
-    open func pixelToTileCoords(_ point: CGPoint) -> CGPoint {
+    internal func pixelToTileCoords(_ point: CGPoint) -> CGPoint {
         switch orientation {
         case .orthogonal:
             return CGPoint(x: point.x / tileWidth, y: point.y / tileHeight)
@@ -380,12 +388,13 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
         
     /**
-     Converts a tile coordinate to a coordinate in map space.
+     Converts a tile coordinate to a coordinate in map space. Note that this function
+     returns a point that needs to be converted to negative-y space.
      
      - parameter coord: `CGPoint` tile coordinate.
      - returns: `CGPoint` point in map space.
      */
-    open func tileToPixelCoords(_ coord: CGPoint) -> CGPoint {
+    internal func tileToPixelCoords(_ coord: CGPoint) -> CGPoint {
         switch orientation {
         case .orthogonal:
             return CGPoint(x: coord.x * tileWidth, y: coord.y * tileHeight)
@@ -405,7 +414,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
      - parameter point: `CGPoint` point in screen space.
      - returns: `CGPoint` tile coordinate.
      */
-    open func screenToTileCoords(_ point: CGPoint) -> CGPoint {
+    internal func screenToTileCoords(_ point: CGPoint) -> CGPoint {
         
         //var pixelX = floor(point.x)
         //var pixelY = floor(point.y)
@@ -521,12 +530,13 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
 
     /**
-     Converts a tile coordinate into a screen point.
+     Converts a tile coordinate into a screen point. Note that this function
+     returns a point that needs to be converted to negative-y space.
      
      - parameter coord: `CGPoint` tile coordinate.     
      - returns: `CGPoint` point in screen space.
      */
-    public func tileToScreenCoords(_ coord: CGPoint) -> CGPoint {
+    internal func tileToScreenCoords(_ coord: CGPoint) -> CGPoint {
         switch orientation {
         case .orthogonal:
             return CGPoint(x: coord.x * tileWidth, y: coord.y * tileHeight)
@@ -572,12 +582,13 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
     
     /**
-     Converts a screen (isometric) coordinate to a coordinate in map space.
+     Converts a screen (isometric) coordinate to a coordinate in map space. Note that this function
+     returns a point that needs to be converted to negative-y space.
      
      - parameter point: `CGPoint` point in screen space.
      - returns: `CGPoint` point in map space.
      */
-    public func screenToPixelCoords(_ point: CGPoint) -> CGPoint {
+    internal func screenToPixelCoords(_ point: CGPoint) -> CGPoint {
         switch orientation {
         case .isometric:
             var x = point.x
@@ -600,7 +611,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
      - parameter point: `CGPoint` point in map space.
      - returns: `CGPoint` point in screen space.
      */
-    public func pixelToScreenCoords(_ point: CGPoint) -> CGPoint {
+    internal func pixelToScreenCoords(_ point: CGPoint) -> CGPoint {
         switch orientation {
             
         case .isometric:
@@ -937,7 +948,7 @@ open class SKTileLayer: TiledLayerObject {
         return errorCount == 0
     }
     
-    /*
+    /**
      Build an empty tile at the given coordinates. Returns an existing tile if one already exists,
      or nil if the coordinate is invalid.
      
@@ -950,7 +961,7 @@ open class SKTileLayer: TiledLayerObject {
         return addTileAt(coord, gid: gid)
     }
     
-    /*
+    /**
      Build an empty tile at the given coordinates. Returns an existing tile if one already exists, 
      or nil if the coordinate is invalid.
      
@@ -985,7 +996,7 @@ open class SKTileLayer: TiledLayerObject {
         return tile
     }
     
-    /*
+    /**
      Remove the tile at a given x/y coordinates.
      
      - parameter x:   `Int` x-coordinate
@@ -997,7 +1008,7 @@ open class SKTileLayer: TiledLayerObject {
         return removeTileAt(coord)
     }
     
-    /*
+    /**
      Remove the tile at a given coordinate.
      
      - parameter coord:   `CGPoint` tile coordinate.
@@ -1460,7 +1471,7 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
     private var layer: TiledLayerObject
     private var gridTexture: SKTexture! = nil
     private var graphTexture: SKTexture! = nil
-    private var imageScale: CGFloat = 3.0
+    private var imageScale: CGFloat = 1
 
     private var gridOpacity: CGFloat { return layer.gridOpacity }
 
@@ -1494,18 +1505,18 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
             texture = nil
             isHidden = true
             if (showGrid == true){
+                
                 // get the last z-position
                 zPosition = layer.tilemap.lastZPosition + layer.tilemap.zDeltaForLayers
                 isHidden = false
                 var gridSize = CGSize.zero
-                
+
                 // generate the texture
                 if (gridTexture == nil) {
                     let gridImage = drawGrid(self.layer, scale: imageScale)
                     gridTexture = SKTexture(cgImage: gridImage)
                     let textureFilter: SKTextureFilteringMode = (layer.antialiased == true) ? .linear : .nearest
                     gridTexture.filteringMode = textureFilter
-                    //print("[TiledLayerGrid]: texture filtering: \(textureFilter.rawValue == 0 ? "nearest": "linear")")
                 }
                 
                 
@@ -1564,9 +1575,11 @@ internal struct Array2D<T> {
 
 
 
-// MARK: - Extensions
+
 
 extension TiledLayerObject {
+    
+    // MARK: - Extensions
     
     /**
      Add a node at the given coordinates. By default, the zPositon

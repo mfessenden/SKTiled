@@ -4,8 +4,7 @@
 //
 //  Created by Michael Fessenden on 3/22/16.
 //  Copyright © 2016 Michael Fessenden. All rights reserved.
-//  Adapted from http://www.avocarrot.com/blog/implement-gesture-recognizers-swift/
-
+//
 
 import SpriteKit
 #if os(iOS)

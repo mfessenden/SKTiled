@@ -143,7 +143,7 @@ open class SKTileset: SKTiledObject {
      
      - parameter source: `String` image named referenced in the tileset.
      */
-    open func addTextures(fromSpriteSheet source: String) {
+    internal func addTextures(fromSpriteSheet source: String) {
         // images are stored in separate directories in the project will render incorrectly unless we use just the filename
         let sourceFilename = source.components(separatedBy: "/").last!
         let timer = Date()
@@ -171,7 +171,6 @@ open class SKTileset: SKTiledObject {
         // invert the y-coord
         var y = margin + rowHeight + rowSpacing - Int(tileSize.height)
         
-        //print("  -> building tileset \"\(name)\", first: \(firstGID)")
         for gid in firstGID..<(firstGID + totalTileCount) {            
             let rectStartX = CGFloat(x) / CGFloat(textureWidth)
             let rectStartY = CGFloat(y) / CGFloat(textureHeight)
@@ -286,7 +285,7 @@ open class SKTileset: SKTiledObject {
     /**
      Print out tileset data values.
      */
-    public func debugTileset(){
+    internal func debugTileset(){
         for data in tileData.sorted(by: {$0.id < $1.id}) {
             print(data.description)
         }

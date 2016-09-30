@@ -275,7 +275,7 @@ public class SKTile: SKSpriteNode {
      - parameter antialiasing: `Bool` antialias the effect.
      - parameter duration:     `TimeInterval` effect duration.
      */
-    public func drawBounds() {
+    public func drawBounds(antialiasing: Bool=true, duration: TimeInterval=0) {
         childNode(withName: "Anchor")?.removeFromParent()
         childNode(withName: "Bounds")?.removeFromParent()
         
@@ -286,7 +286,7 @@ public class SKTile: SKSpriteNode {
         let shapeZPos = zPosition + 10
         
         // draw the path
-        shape.isAntialiased = false
+        shape.isAntialiased = antialiasing
         shape.lineCap = .butt
         shape.miterLimit = 0
         shape.lineWidth = 0.5
@@ -297,22 +297,22 @@ public class SKTile: SKSpriteNode {
         addChild(shape)
         
         // anchor
-        let anchorRadius: CGFloat = tileSize.height / 12 > 1.0 ? tileSize.height / 30 : 1.0
+        let anchorRadius: CGFloat = tileSize.width / 24 > 1.0 ? tileSize.width / 18 > 4.0 ? 4 : tileSize.width / 18 : 1.0
         let anchor = SKShapeNode(circleOfRadius: anchorRadius)
         anchor.name = "Anchor"
         shape.addChild(anchor)
         anchor.fillColor = highlightColor.withAlphaComponent(0.2)
         anchor.strokeColor = SKColor.clear
         anchor.zPosition = shapeZPos + 10
-        anchor.isAntialiased = true
-        /*
+        anchor.isAntialiased = antialiasing
+        
         if (duration > 0) {
             let fadeAction = SKAction.fadeOut(withDuration: duration)
             shape.run(fadeAction, completion: {
                 shape.removeFromParent()
                 
             })
-        }*/
+        }
     }
     
     /**
@@ -506,12 +506,12 @@ internal class DebugTileShape: SKShapeNode {
         self.miterLimit = 0
         self.lineWidth = 0.5
         
-        self.strokeColor = self.color.withAlphaComponent(0.4)
+        self.strokeColor = self.color.withAlphaComponent(0.8)
         self.fillColor = self.color.withAlphaComponent(0.35)
         
         // anchor
         childNode(withName: "Anchor")?.removeFromParent()
-        let anchorRadius: CGFloat = tileSize.height / 12 > 1.0 ? tileSize.height / 24 : 1.0
+        let anchorRadius: CGFloat = tileSize.width / 24 > 1.0 ? tileSize.width / 18 > 4.0 ? 4 : tileSize.width / 18 : 1.0
         let anchor = SKShapeNode(circleOfRadius: anchorRadius)
         anchor.name = "Anchor"
         addChild(anchor)

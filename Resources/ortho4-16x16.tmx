@@ -62,6 +62,11 @@
     <property name="type" value="bridge"/>
    </properties>
   </tile>
+  <tile id="151">
+   <properties>
+    <property name="type" value="barrel"/>
+   </properties>
+  </tile>
   <tile id="173">
    <properties>
     <property name="type" value="fire"/>
@@ -135,6 +140,21 @@
   <tile id="244">
    <properties>
     <property name="type" value="fire"/>
+   </properties>
+  </tile>
+  <tile id="283">
+   <properties>
+    <property name="type" value="door"/>
+   </properties>
+  </tile>
+  <tile id="284">
+   <properties>
+    <property name="type" value="door"/>
+   </properties>
+  </tile>
+  <tile id="285">
+   <properties>
+    <property name="type" value="door"/>
    </properties>
   </tile>
   <tile id="340">

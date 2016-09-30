@@ -145,7 +145,7 @@ public extension ButtonNode {
 
 
 #if os(OSX)
-public extension ButtonNode {
+extension ButtonNode {
     
     override open func mouseDown(with event: NSEvent) {
         if isUserInteractionEnabled {
