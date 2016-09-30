@@ -859,6 +859,79 @@ public func drawGrid(_ layer: TiledLayerObject,  scale: CGFloat = 1) -> CGImage 
 }
 
 
+/**
+ Generate a visual pathfinding graph texture.
+ 
+ - parameter layer: `TiledLayerObject` layer instance.
+ - parameter scale: `CGFloat` image scale.
+ 
+ - returns: `SKTexture?` visual graph texture.
+ */
+public func drawGraph(_ layer: TiledLayerObject,  scale: CGFloat = 1) -> CGImage {
+    
+    let size = layer.size
+    let tileWidth = layer.tileWidth //* scale
+    let tileHeight = layer.tileHeight //* scale
+    
+    var sizeInPoints = layer.sizeInPoints
+    sizeInPoints = sizeInPoints + 1
+    
+    return imageOfSize(sizeInPoints, scale: scale) { context, bounds, scale in
+        
+        let lineWidth = (tileHeight <= 16) ? 1.0 / scale : 1.0
+        context.setLineWidth(lineWidth)
+        context.setShouldAntialias(false)
+        
+        for col in 0 ..< Int(size.width) {
+            for row in (0 ..< Int(size.height)) {
+                
+                let strokeColor = SKColor.black
+                var fillColor = SKColor.clear
+                
+                let screenPosition = layer.tileToScreenCoords(CGPoint(x: col, y: row))
+                
+                let xpos: CGFloat = screenPosition.x
+                let ypos: CGFloat = screenPosition.y
+                
+                switch layer.orientation {
+                case .orthogonal:
+                    
+                    // rectangle shape
+                    let points = rectPointArray(tileWidth, height: tileHeight, origin: CGPoint(x: xpos, y: ypos + tileHeight))
+                    
+                    if let node = layer.graph?.node(atGridPosition: int2(Int32(col), Int32(row))) {
+                        fillColor = SKColor.gray
+                        
+                        if node.weight > 1 {
+                            fillColor = SKColor.red
+                        }
+                        
+                        if node.weight < 1 {
+                            fillColor = SKColor.yellow
+                        }
+                        
+                        let fillPath = polygonPath(points)
+                        context.addPath(fillPath)
+                        context.setFillColor(fillColor.cgColor)
+                        context.fillPath()
+                        
+                        context.setStrokeColor(strokeColor.cgColor)
+                        
+                        let shapePath = polygonPath(points)
+                        context.addPath(shapePath)
+                        context.strokePath()
+                        
+                    }
+                    
+                default:
+                    continue
+                }
+            }
+        }
+    }
+}
+
+
 // MARK: - Polygon Drawing
 
 /**

@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import GameplayKit
 
 
 /**
@@ -47,6 +48,9 @@ open class SKTiledScene: SKScene, SKTiledSceneDelegate {
     open var tilemap: SKTilemap!
     /// Current TMX file name.
     open var tmxFilename: String!
+    
+    /// Pathfinding graphs
+    open var graphs: [String : GKGridGraph<SKTiledGraphNode>] = [:]
     
     // MARK: - Init
     /**

@@ -275,7 +275,7 @@ public class SKTile: SKSpriteNode {
      - parameter antialiasing: `Bool` antialias the effect.
      - parameter duration:     `TimeInterval` effect duration.
      */
-    public func drawBounds() {
+    public func drawBounds(antialiasing: Bool=true, duration: TimeInterval=0) {
         childNode(withName: "Anchor")?.removeFromParent()
         childNode(withName: "Bounds")?.removeFromParent()
         
@@ -286,7 +286,7 @@ public class SKTile: SKSpriteNode {
         let shapeZPos = zPosition + 10
         
         // draw the path
-        shape.isAntialiased = false
+        shape.isAntialiased = antialiasing
         shape.lineCap = .butt
         shape.miterLimit = 0
         shape.lineWidth = 0.5
@@ -304,15 +304,15 @@ public class SKTile: SKSpriteNode {
         anchor.fillColor = highlightColor.withAlphaComponent(0.2)
         anchor.strokeColor = SKColor.clear
         anchor.zPosition = shapeZPos + 10
-        anchor.isAntialiased = true
-        /*
+        anchor.isAntialiased = antialiasing
+        
         if (duration > 0) {
             let fadeAction = SKAction.fadeOut(withDuration: duration)
             shape.run(fadeAction, completion: {
                 shape.removeFromParent()
                 
             })
-        }*/
+        }
     }
     
     /**

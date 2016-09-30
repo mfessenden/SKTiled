@@ -40,7 +40,7 @@ open class SKTilesetData: SKTiledObject  {
     open var properties: [String: String] = [:]
     
     // animation frames
-    open var frames: [AnimationFrame] = []        // animation frames
+    var frames: [AnimationFrame] = []             // animation frames
     open var isAnimated: Bool { return frames.count > 0 }
     
     // flipped flags
@@ -100,7 +100,7 @@ open class SKTilesetData: SKTiledObject  {
      - parameter gid: `Int` id for frame.
      - returns: `AnimationFrame?` animation frame (if it exists).
      */
-    open func removeFrame(_ gid: Int) -> AnimationFrame? {
+    func removeFrame(_ gid: Int) -> AnimationFrame? {
         if let index = frames.index( where: { $0.gid == gid } ) {
             return frames.remove(at: index)
         }

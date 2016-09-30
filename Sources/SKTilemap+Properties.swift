@@ -158,16 +158,38 @@ public extension TiledLayerObject {
 }
 
 
-
 public extension SKTileLayer {
     /**
      Parse the tile layer's properties.
-    */
+     */
     override public func parseProperties() {
         super.parseProperties()
+        
+        // pathfinding
+        for (attr, value) in properties {
+            if (attr == "buildGraph") {
+                if (boolForKey(attr) == true) || (intForKey(attr) == 1) {
+                    
+                    // get walkable IDs
+                    var walkableIDs: [Int] = []
+
+                    
+                    // switch here
+                    let walkableTiles = tilemap.getTileData(withProperty: "walkable")
+                    for walkableTile in walkableTiles {
+                        if walkableTile.boolForKey("walkable") == true || walkableTile.intForKey("walkable") == 1 {
+                            walkableIDs.append(walkableTile.id)
+                        }
+                    }
+                    
+                    initializeGraph(walkableIDs: walkableIDs, diagonalsAllowed: false)
+                    // auto-hide graph layers
+                    //isHidden = true
+                }
+            }
+        }
     }
 }
-
 
 public extension SKObjectGroup {
     /**

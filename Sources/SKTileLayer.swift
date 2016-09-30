@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import GameplayKit
 #if os(iOS)
 import UIKit
 #else
@@ -100,6 +101,10 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     internal var rendered: Bool = false
     open var antialiased: Bool = false
     
+    
+    /// Pathfinding graph
+    open var graph: GKGridGraph<SKTiledGraphNode>!
+    
     /// Returns the position of layer origin point (used to place tiles).
     open var origin: CGPoint {
         switch orientation {
@@ -133,6 +138,12 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     open var showGrid: Bool {
         get { return grid.showGrid }
         set { grid.showGrid = newValue }
+    }
+    
+    /// Show the layer's grid.
+    open var showGraph: Bool {
+        get { return grid.showGraph }
+        set { grid.showGraph = newValue }
     }
     
     /// Visualize the layer's bounds & tile grid.
@@ -361,12 +372,13 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
         
     /**
-     Converts a tile coordinate from a point in map space.
+     Converts a tile coordinate from a point in map space. Note that this function
+     expects scene points to be inverted in y before being passed as input.
             
      - parameter point: `CGPoint` point in map space.
      - returns: `CGPoint` tile coordinate.
      */
-    open func pixelToTileCoords(_ point: CGPoint) -> CGPoint {
+    internal func pixelToTileCoords(_ point: CGPoint) -> CGPoint {
         switch orientation {
         case .orthogonal:
             return CGPoint(x: point.x / tileWidth, y: point.y / tileHeight)
@@ -380,12 +392,13 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
         
     /**
-     Converts a tile coordinate to a coordinate in map space.
+     Converts a tile coordinate to a coordinate in map space. Note that this function
+     returns a point that needs to be converted to negative-y space.
      
      - parameter coord: `CGPoint` tile coordinate.
      - returns: `CGPoint` point in map space.
      */
-    open func tileToPixelCoords(_ coord: CGPoint) -> CGPoint {
+    internal func tileToPixelCoords(_ coord: CGPoint) -> CGPoint {
         switch orientation {
         case .orthogonal:
             return CGPoint(x: coord.x * tileWidth, y: coord.y * tileHeight)
@@ -405,7 +418,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
      - parameter point: `CGPoint` point in screen space.
      - returns: `CGPoint` tile coordinate.
      */
-    open func screenToTileCoords(_ point: CGPoint) -> CGPoint {
+    internal func screenToTileCoords(_ point: CGPoint) -> CGPoint {
         
         //var pixelX = floor(point.x)
         //var pixelY = floor(point.y)
@@ -521,12 +534,13 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
 
     /**
-     Converts a tile coordinate into a screen point.
+     Converts a tile coordinate into a screen point. Note that this function
+     returns a point that needs to be converted to negative-y space.
      
      - parameter coord: `CGPoint` tile coordinate.     
      - returns: `CGPoint` point in screen space.
      */
-    public func tileToScreenCoords(_ coord: CGPoint) -> CGPoint {
+    internal func tileToScreenCoords(_ coord: CGPoint) -> CGPoint {
         switch orientation {
         case .orthogonal:
             return CGPoint(x: coord.x * tileWidth, y: coord.y * tileHeight)
@@ -572,12 +586,13 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
     
     /**
-     Converts a screen (isometric) coordinate to a coordinate in map space.
+     Converts a screen (isometric) coordinate to a coordinate in map space. Note that this function
+     returns a point that needs to be converted to negative-y space.
      
      - parameter point: `CGPoint` point in screen space.
      - returns: `CGPoint` point in map space.
      */
-    public func screenToPixelCoords(_ point: CGPoint) -> CGPoint {
+    internal func screenToPixelCoords(_ point: CGPoint) -> CGPoint {
         switch orientation {
         case .isometric:
             var x = point.x
@@ -600,7 +615,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
      - parameter point: `CGPoint` point in map space.
      - returns: `CGPoint` point in screen space.
      */
-    public func pixelToScreenCoords(_ point: CGPoint) -> CGPoint {
+    internal func pixelToScreenCoords(_ point: CGPoint) -> CGPoint {
         switch orientation {
             
         case .isometric:
@@ -1460,7 +1475,7 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
     private var layer: TiledLayerObject
     private var gridTexture: SKTexture! = nil
     private var graphTexture: SKTexture! = nil
-    private var imageScale: CGFloat = 3.0
+    private var imageScale: CGFloat = 1
 
     private var gridOpacity: CGFloat { return layer.gridOpacity }
 
@@ -1494,6 +1509,7 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
             texture = nil
             isHidden = true
             if (showGrid == true){
+                
                 // get the last z-position
                 zPosition = layer.tilemap.lastZPosition + layer.tilemap.zDeltaForLayers
                 isHidden = false
@@ -1505,7 +1521,6 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
                     gridTexture = SKTexture(cgImage: gridImage)
                     let textureFilter: SKTextureFilteringMode = (layer.antialiased == true) ? .linear : .nearest
                     gridTexture.filteringMode = textureFilter
-                    //print("[TiledLayerGrid]: texture filtering: \(textureFilter.rawValue == 0 ? "nearest": "linear")")
                 }
                 
                 
@@ -1527,6 +1542,44 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
             }
         }
     }
+    
+    /// Display the current tile graph nodes.
+    var showGraph: Bool = false {
+        didSet {
+            guard oldValue != showGraph else { return }
+            print("drawing graph: \(showGraph)")
+            texture = nil
+            isHidden = true
+            if (showGraph == true){
+                isHidden = false
+                var graphSize = CGSize.zero
+                
+                // generate the texture
+                if (graphTexture == nil) {
+                    let graphImage = drawGraph(self.layer, scale: imageScale)
+                    graphTexture = SKTexture(cgImage: graphImage)
+                    let textureFilter: SKTextureFilteringMode = (layer.antialiased == true) ? .linear : .nearest
+                    graphTexture.filteringMode = textureFilter
+                }
+                
+                #if os(iOS)
+                graphSize = graphTexture.size() / imageScale
+                #else
+                graphSize = graphTexture.size()
+                #endif
+                
+                texture = graphTexture
+                alpha = gridOpacity * 1.5
+                size = graphSize
+                #if os(iOS)
+                position.y = -graphSize.height
+                #else
+                yScale = -1
+                #endif
+            }
+        }
+    }
+    
 }
 
 
