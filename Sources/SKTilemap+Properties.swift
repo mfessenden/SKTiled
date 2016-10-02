@@ -166,26 +166,20 @@ public extension SKTileLayer {
         super.parseProperties()
         
         // pathfinding
-        for (attr, value) in properties {
+        for (attr, _) in properties {
             if (attr == "buildGraph") {
                 if (boolForKey(attr) == true) || (intForKey(attr) == 1) {
-                    
-                    // get walkable IDs
-                    var walkableIDs: [Int] = []
-
-                    
-                    // switch here
-                    let walkableTiles = tilemap.getTileData(withProperty: "walkable")
-                    for walkableTile in walkableTiles {
-                        if walkableTile.boolForKey("walkable") == true || walkableTile.intForKey("walkable") == 1 {
-                            walkableIDs.append(walkableTile.id)
-                        }
-                    }
-                    
-                    initializeGraph(walkableIDs: walkableIDs, diagonalsAllowed: false)
-                    // auto-hide graph layers
-                    //isHidden = true
+                    buildGraph = true
                 }
+            }
+            // walkable ids
+            if (attr == "walkableIDs") {
+                walkableIDs = integerArrayForKey("walkableIDs", separatedBy: ",")
+            }
+            
+            // walkable types
+            if (attr == "walkableTypes") {
+                walkableTypes = stringArrayForKey("walkableTypes", separatedBy: ",")
             }
         }
     }
@@ -197,7 +191,7 @@ public extension SKObjectGroup {
     */
     override public func parseProperties() {
         super.parseProperties()
-        for (attr, value) in properties {
+        for (attr, _ ) in properties {
             if (attr == "lineWidth") {
                 lineWidth = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : lineWidth
             }

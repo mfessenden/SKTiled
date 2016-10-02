@@ -144,6 +144,11 @@ public extension CGPoint {
         return "x: \(self.x.roundTo(decimals)), y: \(self.y.roundTo(decimals))"
     }
     
+    /// Return a vector int (for GameplayKit)
+    public var toVec2: int2 {
+        return int2(Int32(x), Int32(y))
+    }
+    
     public var xCoord: Int { return Int(x) }
     public var yCoord: Int { return Int(y) }
     

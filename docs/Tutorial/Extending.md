@@ -27,5 +27,5 @@ public class ActorsLayer: TiledLayerObject {
 }
 ```
 
+Next: [Troubleshooting](troubleshooting.html) - [Index](Tutorial.html)
 
-  Next: [Debugging](debugging.html) - [Index](Tutorial.html)

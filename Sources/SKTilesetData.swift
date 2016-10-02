@@ -23,7 +23,7 @@ internal struct AnimationFrame {
 
 
 /**
-The `SKTilesetData` represents a single tileset tile data, with texture, id and properties:
+The `SKTilesetData` class stores data for a single tileset tile, with texture, id and properties:
  
 - tile texture
 - tile animation
@@ -40,13 +40,17 @@ open class SKTilesetData: SKTiledObject  {
     open var properties: [String: String] = [:]
     
     // animation frames
-    var frames: [AnimationFrame] = []             // animation frames
+    internal var frames: [AnimationFrame] = []    // animation frames
     open var isAnimated: Bool { return frames.count > 0 }
     
     // flipped flags
     open var flipHoriz: Bool = false              // tile is flipped horizontally
     open var flipVert:  Bool = false              // tile is flipped vertically
     open var flipDiag:  Bool = false              // tile is flipped diagonally
+    
+    // pathfinding
+    open var walkable: Bool = false               // tile is walkable.
+    open var weight: CGFloat = 1                  // tile weight.
     
     open var localID: Int {                       // return the local id for this tile
         guard let tileset = tileset else { return id }

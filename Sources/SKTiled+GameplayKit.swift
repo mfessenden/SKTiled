@@ -13,6 +13,18 @@ import GameplayKit
 extension SKTilemap {
     
     /**
+     Initialize the grid graph with an array layer names.
+     
+     - parameter layers:           `[String]` array of layer names.
+     - parameter diagonalsAllowed: `Bool` allow diagonal movement in the grid.
+     */
+    public func gridGraphForLayers(_ layers: [String],
+                                   diagonalsAllowed: Bool=false) {
+        
+        gridGraphForLayers(layers, walkableIDs: [Int](), diagonalsAllowed: diagonalsAllowed)
+    }
+    
+    /**
      Initialize the grid graph with an array of walkable tiles.
      
      - parameter layers:           `[String]` array of layer names.
@@ -22,15 +34,12 @@ extension SKTilemap {
     public func gridGraphForLayers(_ layers: [String],
                                    walkable: [SKTile],
                                    diagonalsAllowed: Bool=false) {
-        for layerName in layers {
-            if let layer = tileLayer(named: layerName) {
-                if let layerGraph = layer.initializeGraph(walkable: walkable, diagonalsAllowed: diagonalsAllowed) {
-                    print("[SKTilemap]: created graph for layer \"\(layerName)\"")
-                }
-            }
-        }
+        
+        
+        var walkableIDs = walkable.map {$0.tileData.id }
+        walkableIDs = Array(Set(walkableIDs))
+        gridGraphForLayers(layers, walkableIDs: walkableIDs, diagonalsAllowed: diagonalsAllowed)
     }
-
     
     /**
      Initialize the grid graph with an array of walkable tile types.
@@ -43,6 +52,16 @@ extension SKTilemap {
                                    walkableTypes: [String],
                                    diagonalsAllowed: Bool=false) {
         
+        var walkableIDs: [Int] = []
+        for walkableType in walkableTypes {
+            for walkableData in getTileData("type", walkableType as AnyObject) {
+                if !walkableIDs.contains(walkableData.id) {
+                    walkableIDs.append(walkableData.id)
+                }
+            }
+        }
+        
+        gridGraphForLayers(layers, walkableIDs: walkableIDs, diagonalsAllowed: diagonalsAllowed)
     }
     
     /**
@@ -64,18 +83,6 @@ extension SKTilemap {
             }
         }
     }
-    
-    public func gridGraphForLayers(_ layers: [String],
-                                   diagonalsAllowed: Bool=false) {
-        
-        for layerName in layers {
-            if let layer = tileLayer(named: layerName) {
-                if let layerGraph = layer.initializeGraph(diagonalsAllowed: diagonalsAllowed) {
-                    print("[SKTilemap]: created graph for layer \"\(layerName)\"")
-                }
-            }
-        }
-    }
 }
 
 
@@ -84,7 +91,7 @@ public extension SKTileLayer {
     /**
      Initialize this layer's grid graph with an array of walkable tiles.
      
-     - parameter walkable:         `[Int]` array of walkable gids.
+     - parameter walkableIDs:      `[Int]` array of walkable gids.
      - parameter diagonalsAllowed: `Bool` allow diagonal movement in the grid.
      */
     public func initializeGraph(walkableIDs: [Int],
@@ -129,7 +136,12 @@ public extension SKTileLayer {
         
         graph.remove(nodesToRemove)
         let nodeCount = (graph.nodes != nil) ? graph.nodes!.count : 0
-        print("[SKTileLayer]: pathfinding graph for layer \"\(name!)\" created with \(nodeCount) nodes.")
+        
+        if nodeCount > 0 {
+            print("[SKTileLayer]: pathfinding graph for layer \"\(name!)\" created with \(nodeCount) nodes.")
+        } else {
+            print("[SKTileLayer]: WARNING: layer \"\(name!)\" wasn't able to build pathfinding graph.")
+        }
         
         // add the graph to the scene graphs
         if let scene = self.tilemap.scene as? SKTiledScene {
@@ -137,6 +149,79 @@ public extension SKTileLayer {
                 print("[SKTileLayer]: WARNING: cannot add graph \"\(name!)\" to scene.")
             }
         }
+        
+        // unhide the layer
+        isHidden = false
+        getTiles().map {$0.texture = nil}
+        return graph
+    }
+    
+    /**
+     Initialize this layer's grid graph with an array of walkable types.
+     
+     - parameter walkableTypes:    `[String]` array of walkable gids.
+     - parameter diagonalsAllowed: `Bool` allow diagonal movement in the grid.
+     */
+    public func initializeGraph(walkableTypes: [String],
+                                diagonalsAllowed: Bool=false) -> GKGridGraph<SKTiledGraphNode>? {
+        
+        if (orientation != .orthogonal) {
+            print("[SKTileLayer]: pathfinding graphs can only be created with orthogonal tilemaps.")
+            return nil
+        }
+        
+        self.graph = GKGridGraph<SKTiledGraphNode>(fromGridStartingAt: int2(0, 0), width: Int32(size.width), height: Int32(size.height), diagonalsAllowed: diagonalsAllowed, nodeClass: SKTiledGraphNode.self)
+        guard let graph = graph else { return nil }
+        
+        var nodesToRemove: [SKTiledGraphNode] = []
+        
+        for col in 0 ..< Int(size.width) {
+            for row in (0 ..< Int(size.height)) {
+                let coord = int2(Int32(col), Int32(row))
+                
+                if let node = graph.node(atGridPosition: coord) {
+                    if let tile = tileAt(col, row) {
+
+                        
+                        // set custom weight parameter
+                        if tile.tileData.hasKey("weight"){
+                            if let weight = tile.tileData.doubleForKey("weight"){
+                                node.weight = Float(weight)
+                            }
+                        }
+                        
+                        if tile.tileData.hasKey("type") {
+                            let tileType = tile.tileData.stringForKey("type")
+                            if walkableTypes.contains(tileType!) {
+                                continue
+                            }
+                        }
+                        
+                    }
+                    
+                    nodesToRemove.append(node)
+                }
+            }
+        }
+        
+        graph.remove(nodesToRemove)
+        let nodeCount = (graph.nodes != nil) ? graph.nodes!.count : 0
+        if nodeCount > 0 {
+            print("[SKTileLayer]: pathfinding graph for layer \"\(name!)\" created with \(nodeCount) nodes.")
+        } else {
+            print("[SKTileLayer]: WARNING: layer \"\(name!)\" wasn't able to build pathfinding graph.")
+        }
+        
+        // add the graph to the scene graphs
+        if let scene = self.tilemap.scene as? SKTiledScene {
+            if !scene.addGraph(named: name!, graph: graph) {
+                print("[SKTileLayer]: WARNING: cannot add graph \"\(name!)\" to scene.")
+            }
+        }
+        
+        // unhide the layer
+        isHidden = false
+        getTiles().map {$0.texture = nil}
         return graph
     }
     
@@ -179,9 +264,15 @@ public extension SKTileLayer {
             }
         }
         
+        
         graph.remove(nodesToRemove)
+        
         let nodeCount = (graph.nodes != nil) ? graph.nodes!.count : 0
-        print("[SKTileLayer]: pathfinding graph for layer \"\(name!)\" created with \(nodeCount) nodes.")
+        if nodeCount > 0 {
+            print("[SKTileLayer]: pathfinding graph for layer \"\(name!)\" created with \(nodeCount) nodes.")
+        } else {
+            print("[SKTileLayer]: WARNING: layer \"\(name!)\" wasn't able to build pathfinding graph.")
+        }
         
         // add the graph to the scene graphs
         if let scene = self.tilemap.scene as? SKTiledScene {
@@ -189,6 +280,10 @@ public extension SKTileLayer {
                 print("[SKTileLayer]: WARNING: cannot add graph \"\(name!)\" to scene.")
             }
         }
+        
+        // unhide the layer
+        isHidden = false
+        getTiles().map {$0.texture = nil}
         return graph
     }
     
@@ -204,10 +299,19 @@ public extension SKTileLayer {
 
 
 /**
- 
- Custom `GKGridGraphNode` object that adds a weight parameter for used with Tiled scene properties. Can be used with 
+ Custom `GKGridGraphNode` object that adds a weight parameter for used with Tiled scene properties. Can be used with
  normal `GKGridGraphNode` instances.
-*/
+ 
+ The `SKTiledGraphNode.weight` property is used to affect the estimated cost to a connected node. (Increasing the weight makes
+ it less likely to be travelled to, decreasing more likely).
+ 
+ ```
+ // query a node in the graph and increase the weight property
+ if let node = graph.node(atGridPosition: coord) {
+ node.weight = 25.0
+ }
+ ```
+ */
 public class SKTiledGraphNode: GKGridGraphNode {
     
     // less weight == more likely travel through
@@ -219,7 +323,7 @@ public class SKTiledGraphNode: GKGridGraphNode {
      - parameter gridPosition: `int2` vector int2 coordinates.
      - parameter weight: `Float` node weight.
      - returns: `SKTiledGraphNode` node instance.
-    */
+     */
     public init(gridPosition: int2, weight: Float=1.0) {
         self.weight = weight
         super.init(gridPosition: gridPosition)
@@ -246,7 +350,6 @@ public class SKTiledGraphNode: GKGridGraphNode {
         guard let gridNode = node as? SKTiledGraphNode else {
             return super.cost(to: node)
         }
-        //return abs(weight - abs(1.0 - gridNode.weight))
         return weight - abs(1.0 - gridNode.weight)
     }
     
@@ -269,7 +372,7 @@ public class SKTiledGraphNode: GKGridGraphNode {
 
 extension SKTiledScene {
     
-    /** 
+    /**
      Add a `GKGridGraph` instance to the `SKTIledScene.graphs` property. Returns false if that
      name exists already.
      
@@ -286,7 +389,7 @@ extension SKTiledScene {
     }
     
     /**
-     Remove a named `GKGridGraph` from the `SKTIledScene.graphs` property. 
+     Remove a named `GKGridGraph` from the `SKTIledScene.graphs` property.
      
      - parameter named: `String` name of graph.
      - returns: `GKGridGraph?` removed graph instance.
@@ -295,3 +398,4 @@ extension SKTiledScene {
         return graphs.removeValue(forKey: named)
     }
 }
+

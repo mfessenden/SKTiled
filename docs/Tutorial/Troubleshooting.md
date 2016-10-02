@@ -10,7 +10,7 @@ Sometimes the XML parser will throw errors with external tilesets that have been
 
 Occasionally you'll get a code signing error when compiling on OSX:
 
-    Command /usr/bin/codesign failed with exit code 1
+![Codesign Error](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/codesign-error.png)
 
 If you're using Photoshop to save images, you might need to cleanup Finder metadata. To check, browse to your images directory in shell and run the following command:
  

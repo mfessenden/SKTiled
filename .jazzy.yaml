@@ -30,7 +30,7 @@ documentation:
   - docs/Tutorial/Coordinates.md
   - docs/Tutorial/Debugging.md
 #  - docs/Tutorial/Extending.md
-#  - docs/Tutorial/GameplayKit.md
+  - docs/Tutorial/GameplayKit.md
   - docs/Tutorial/Getting Started.md
   - docs/Tutorial/Objects.md
   - docs/Tutorial/Properties.md
@@ -47,7 +47,7 @@ custom_categories:
       - Coordinates
       - Objects
       - Properties
-#      - GameplayKit
+      - GameplayKit
 #      - Extending
       - Debugging
       - Troubleshooting

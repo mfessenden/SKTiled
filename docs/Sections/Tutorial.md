@@ -10,6 +10,8 @@
 
 - [Properties](properties.html)
 
+- [GameplayKit Integration](gameplaykit.html)
+
 - [Debugging](debugging.html)
 
 - [Troubleshooting](troubleshooting.html)

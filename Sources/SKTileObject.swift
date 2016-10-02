@@ -239,7 +239,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
      - parameter points: `[[CGFloat]]` array of coordinates.
      - parameter closed: `Bool` close the object path.
      */
-    open func addPoints(_ coordinates: [[CGFloat]], closed: Bool=true) {
+    internal func addPoints(_ coordinates: [[CGFloat]], closed: Bool=true) {
         self.objectType = (closed == true) ? SKObjectType.polygon : SKObjectType.polyline
 
         // create an array of points from the given coordinates
@@ -251,7 +251,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         
      - parameter points: `String` string of coordinates.
      */
-    open func addPointsWithString(_ points: String) {
+    internal func addPointsWithString(_ points: String) {
         var coordinates: [[CGFloat]] = []
         let pointsArray = points.components(separatedBy: " ")
         for point in pointsArray {

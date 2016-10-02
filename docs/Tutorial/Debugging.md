@@ -69,6 +69,14 @@ All `TiledLayerObject` objects allow you to visualize the layer's boundary:
 tileLayer.drawBounds()
 ```
 
+###Debugging Layers
+
+To see a quick overview of the current tilemap's layers, use the `SKTilemap.debugLayers` method: 
+
+![Debug Layers](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/debugLayers.png)
+
+Data shown includes layer index, size, positioning, offset, z-position and anchor point.
+
 
 ###Debugging Colors
 
@@ -102,3 +110,4 @@ Debugging properties for **SKTiled** classes:
 
 
 Next: [Troubleshooting](troubleshooting.html) - [Index](Tutorial.html)
+

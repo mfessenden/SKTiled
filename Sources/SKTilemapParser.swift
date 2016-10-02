@@ -4,8 +4,7 @@
 //
 //  Created by Michael Fessenden on 3/21/16.
 //  Copyright © 2016 Michael Fessenden. All rights reserved.
-//  Derived from: https://medium.com/@lucascerro/understanding-nsxmlparser-in-swift-xcode-6-3-1-7c96ff6c65bc#.1m4mh6nhy
-
+//
 
 import SpriteKit
 
@@ -118,6 +117,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         // render tile layers
         renderTileLayers()
         renderObjects()
+        buildGraphs()
         
         // set baseLayer zPosition here
         tilemap.baseLayer.zPosition = tilemap.lastZPosition + (tilemap.zDeltaForLayers * 0.5)
@@ -137,7 +137,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
      - parameter fileName: `String` file name to search for.
      - returns: `String?` name of file in bundle.
      */
-    open func getBundledFile(named filename: String) -> String? {
+    fileprivate func getBundledFile(named filename: String) -> String? {
         // strip off the file extension
         let fileBaseName = filename.components(separatedBy: ".")[0]
         for fileExtension in ["tmx", "tsx"] {
@@ -184,7 +184,29 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         }
     }
     
-    // MARK: - NSXMLParserDelegate
+    /**
+     Post-process to build all pathfinding graphs.
+     */
+    fileprivate func buildGraphs(){
+        guard let tilemap = tilemap else { return }
+        
+        for tileLayer in tilemap.tileLayers {
+            if (tileLayer.buildGraph == true) {
+                
+                // check for walkable IDs
+                if tileLayer.walkableIDs.count > 0 {
+                    tileLayer.initializeGraph(walkableIDs: tileLayer.walkableIDs, diagonalsAllowed: false)
+                }
+                
+                // check for walkable types
+                if tileLayer.walkableTypes.count > 0 {
+                    tileLayer.initializeGraph(walkableTypes: tileLayer.walkableTypes, diagonalsAllowed: false)
+                }
+            }
+        }
+    }
+    
+    // MARK: - XMLParserDelegate
     
     open func parserDidStartDocument(_ parser: XMLParser) {
         //print("[SKTilemapParser]: starting parsing...")
@@ -377,7 +399,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     tileset.addTextures(fromSpriteSheet: imageSource)
                 }
             }
-        
         }
         
         // `tile` is used to flag properties in a tileset, as well as store tile layer data in an XML-formatted map.

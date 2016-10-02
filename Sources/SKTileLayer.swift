@@ -46,6 +46,13 @@ internal enum SKObjectGroupColors: String {
  - validating coordinates
  - positioning and alignment
  - coordinate transformations
+ 
+ Layer properties are accessed via properties shared with the parent tilemap:
+ 
+ ```
+  layer.size            // size (in tiles)
+  layer.tileSize        // tile size (in pixels)
+ ```
  */
 open class TiledLayerObject: SKNode, SKTiledObject {
     
@@ -94,7 +101,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     open var sizeInPoints: CGSize { return tilemap.sizeInPoints }
     
     // debug visualizations
-    open var gridOpacity: CGFloat = 0.25
+    open var gridOpacity: CGFloat = 0.20
     fileprivate var frameShape: SKShapeNode = SKShapeNode()
     fileprivate var grid: TiledLayerGrid!
     
@@ -103,7 +110,10 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     
     
     /// Pathfinding graph
+    open var buildGraph: Bool = false
     open var graph: GKGridGraph<SKTiledGraphNode>!
+    open var walkableIDs: [Int] = []
+    open var walkableTypes: [String] = []
     
     /// Returns the position of layer origin point (used to place tiles).
     open var origin: CGPoint {
@@ -757,6 +767,9 @@ open class SKTileLayer: TiledLayerObject {
     fileprivate var tiles: TilesArray                   // array of tiles
     open var render: Bool = false                 // render tile layer as a single image
     
+    // pathfinding graph
+    
+    
     // MARK: - Init
     /**
      Initialize with layer name and parent `SKTilemap`.
@@ -952,7 +965,7 @@ open class SKTileLayer: TiledLayerObject {
         return errorCount == 0
     }
     
-    /*
+    /**
      Build an empty tile at the given coordinates. Returns an existing tile if one already exists,
      or nil if the coordinate is invalid.
      
@@ -965,7 +978,7 @@ open class SKTileLayer: TiledLayerObject {
         return addTileAt(coord, gid: gid)
     }
     
-    /*
+    /**
      Build an empty tile at the given coordinates. Returns an existing tile if one already exists, 
      or nil if the coordinate is invalid.
      
@@ -1000,7 +1013,7 @@ open class SKTileLayer: TiledLayerObject {
         return tile
     }
     
-    /*
+    /**
      Remove the tile at a given x/y coordinates.
      
      - parameter x:   `Int` x-coordinate
@@ -1012,7 +1025,7 @@ open class SKTileLayer: TiledLayerObject {
         return removeTileAt(coord)
     }
     
-    /*
+    /**
      Remove the tile at a given coordinate.
      
      - parameter coord:   `CGPoint` tile coordinate.
@@ -1547,7 +1560,6 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
     var showGraph: Bool = false {
         didSet {
             guard oldValue != showGraph else { return }
-            print("drawing graph: \(showGraph)")
             texture = nil
             isHidden = true
             if (showGraph == true){
@@ -1617,9 +1629,10 @@ internal struct Array2D<T> {
 
 
 
-// MARK: - Extensions
 
 extension TiledLayerObject {
+    
+    // MARK: - Extensions
     
     /**
      Add a node at the given coordinates. By default, the zPositon

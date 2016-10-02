@@ -297,7 +297,7 @@ public class SKTile: SKSpriteNode {
         addChild(shape)
         
         // anchor
-        let anchorRadius: CGFloat = tileSize.height / 12 > 1.0 ? tileSize.height / 30 : 1.0
+        let anchorRadius: CGFloat = tileSize.width / 24 > 1.0 ? tileSize.width / 18 > 4.0 ? 4 : tileSize.width / 18 : 1.0
         let anchor = SKShapeNode(circleOfRadius: anchorRadius)
         anchor.name = "Anchor"
         shape.addChild(anchor)
@@ -506,12 +506,12 @@ internal class DebugTileShape: SKShapeNode {
         self.miterLimit = 0
         self.lineWidth = 0.5
         
-        self.strokeColor = self.color.withAlphaComponent(0.4)
+        self.strokeColor = self.color.withAlphaComponent(0.8)
         self.fillColor = self.color.withAlphaComponent(0.35)
         
         // anchor
         childNode(withName: "Anchor")?.removeFromParent()
-        let anchorRadius: CGFloat = tileSize.height / 12 > 1.0 ? tileSize.height / 24 : 1.0
+        let anchorRadius: CGFloat = tileSize.width / 24 > 1.0 ? tileSize.width / 18 > 4.0 ? 4 : tileSize.width / 18 : 1.0
         let anchor = SKShapeNode(circleOfRadius: anchorRadius)
         anchor.name = "Anchor"
         addChild(anchor)

@@ -137,7 +137,7 @@ internal let TileSize32x32 = CGSize(width: 32, height: 32)
  - tileSize:     tile map tile size in pixels.
  - sizeInPoints: tile map size in points.
  
- Tile data is added via `SKTileset` tile sets.
+ Tile data is stored in `SKTileset` tile sets.
  */
 open class SKTilemap: SKNode, SKTiledObject{
     
@@ -776,6 +776,17 @@ open class SKTilemap: SKNode, SKTiledObject{
     }
     
     /**
+     Return tile data with a property of the given type (all tile layers).
+     
+     - parameter named: `String` property name.
+     - parameter value: `AnyObject` property value.
+     - returns: `[SKTile]` array of tiles.
+     */
+    open func getTileData(_ named: String, _ value: AnyObject) -> [SKTilesetData] {
+        return tileSets.flatMap { $0.getTileData(named, value)}
+    }
+    
+    /**
      Returns an array of all animated tile objects.
      
      - returns: `[SKTile]` array of tiles.
@@ -1014,7 +1025,7 @@ extension SKTilemap {
      - parameter x:  `Int` map x-coordinate.
      - returns: `Bool` column should be staggered.
      */
-    public func doStaggerX(_ x: Int) -> Bool {
+    internal func doStaggerX(_ x: Int) -> Bool {
         return staggerX && Bool((x & 1) ^ staggerEven.hashValue)
     }
     
@@ -1024,11 +1035,11 @@ extension SKTilemap {
      - parameter x:  `Int` map y-coordinate.
      - returns: `Bool` row should be staggered.
      */
-    public func doStaggerY(_ y: Int) -> Bool {
+    internal func doStaggerY(_ y: Int) -> Bool {
         return !staggerX && Bool((y & 1) ^ staggerEven.hashValue)
     }
     
-    public func topLeft(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
+    internal func topLeft(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
         // if the value of y is odd & stagger index is odd
         if (staggerX == false) {
             if Bool((Int(y) & 1) ^ staggerindex.hashValue) {
@@ -1046,7 +1057,7 @@ extension SKTilemap {
         }
     }
             
-    public func topRight(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
+    internal func topRight(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
         if (staggerX == false) {           
             if Bool((Int(y) & 1) ^ staggerindex.hashValue) {
                 return CGPoint(x: x + 1, y: y - 1)
@@ -1062,7 +1073,7 @@ extension SKTilemap {
         }
     }
     
-    public func bottomLeft(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
+    internal func bottomLeft(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
         if (staggerX == false) {
             if Bool((Int(y) & 1) ^ staggerindex.hashValue) {
                 return CGPoint(x: x, y: y + 1)
@@ -1078,7 +1089,7 @@ extension SKTilemap {
         }
     }
     
-    public func bottomRight(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
+    internal func bottomRight(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
         if (staggerX == false) {
             if Bool((Int(y) & 1) ^ staggerindex.hashValue) {
                 return CGPoint(x: x + 1, y: y + 1)
@@ -1109,7 +1120,7 @@ extension SKTilemap {
     override open var debugDescription: String { return description }
     
     /// Visualize the current grid & bounds.
-    open var debugDraw: Bool {
+    internal var debugDraw: Bool {
         get {
             return baseLayer.debugDraw
         } set {
@@ -1123,7 +1134,7 @@ extension SKTilemap {
     /**
      Print a summary of layer data.
      */
-    public func debugLayers(reverse: Bool = false) {
+    internal func debugLayers(reverse: Bool = false) {
         guard (layerCount > 0) else { return }
         let largestName = layerNames().max() { (a, b) -> Bool in a.characters.count < b.characters.count }
         let nameStr = "# Tilemap \"\(name!)\": \(layerCount) Layers:"
@@ -1139,7 +1150,8 @@ extension SKTilemap {
             if (layer != baseLayer) {
                 let layerName = layer.name!
                 let nameString = "\"\(layerName)\""
-                print("\(layer.index): \(layer.layerType.stringValue.capitalized.zfill(6, pattern: " ", padLeft: false)) \(nameString.zfill(largestName!.characters.count + 2, pattern: " ", padLeft: false))   pos: \(layer.position.roundTo(1)), size: \(layer.sizeInPoints.roundTo(1)),  offset: \(layer.offset.roundTo(1)), anc: \(layer.anchorPoint.roundTo()), z: \(layer.zPosition.roundTo())")
+                let indexString = "\(layer.index): ".zfill(4, pattern: " ", padLeft: false)
+                print("\(indexString) \(layer.layerType.stringValue.capitalized.zfill(6, pattern: " ", padLeft: false)) \(nameString.zfill(largestName!.characters.count + 2, pattern: " ", padLeft: false))   pos: \(layer.position.roundTo(1)), size: \(layer.sizeInPoints.roundTo(1)),  offset: \(layer.offset.roundTo(1)), anc: \(layer.anchorPoint.roundTo()), z: \(layer.zPosition.roundTo())")
                 
             }
         }
