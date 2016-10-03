@@ -64,9 +64,16 @@ Properties like map size & tile size can be accessed via the `SKTilemap.size` an
 
 **Accessing Tiles**
 
+There are a number of ways to access and work with tile objects. Tiles 
+
+You can query them from the parent `SKTileLayer` layer or the parent `SKTilemap` node. 
+
 ```swift
-let tileCoord = CGPoint(7, 12)
+// access a tile via CGPoint
+let tileCoord = CGPoint(x: 7, y: 12)
 let tile = groundLayer.tileAt(coord: tileCoord)
+
+// access tile integer coordinates
 let tile = groundLayer.tileAt(7, 12)
 ```
 
@@ -137,13 +144,14 @@ let tilePoint = groundLayer.pointForCoordinate(4, 5)
 tile.position = tilePoint
 ```
 
-New nodes (any `SKNode` type) can be added directly to any layer:
+New nodes (any `SKNode` type) can be added directly to any layer. All `TiledLayerObject` layer types have convenience methods for adding child nodes with coordinates and z-position.
 
 
 ```swift
 let newNode = SKNode()
 groundLayer.addChild(newNode, 4, 5, zpos: 100.0)
 ```
+
 
 ## Animated Tiles
 
@@ -205,8 +213,6 @@ let walkableTiles = tilemap.getTilesWithProperty("walkable", "1")
 ##Upcoming Features
 
 - multi-threaded rendering
-- generate GKGridGraph graphs based on custom tile attributes (iOS10)
-- user-definable cost properties for GKGridGraph nodes (iOS10)
 - custom tile classes
 - objects containing images
 

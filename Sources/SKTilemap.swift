@@ -776,6 +776,17 @@ open class SKTilemap: SKNode, SKTiledObject{
     }
     
     /**
+     Return tile data with a property of the given type (all tile layers).
+     
+     - parameter named: `String` property name.
+     - parameter value: `AnyObject` property value.
+     - returns: `[SKTile]` array of tiles.
+     */
+    open func getTileData(_ named: String, _ value: AnyObject) -> [SKTilesetData] {
+        return tileSets.flatMap { $0.getTileData(named, value)}
+    }
+    
+    /**
      Returns an array of all animated tile objects.
      
      - returns: `[SKTile]` array of tiles.
@@ -1014,7 +1025,7 @@ extension SKTilemap {
      - parameter x:  `Int` map x-coordinate.
      - returns: `Bool` column should be staggered.
      */
-    public func doStaggerX(_ x: Int) -> Bool {
+    internal func doStaggerX(_ x: Int) -> Bool {
         return staggerX && Bool((x & 1) ^ staggerEven.hashValue)
     }
     
@@ -1024,11 +1035,11 @@ extension SKTilemap {
      - parameter x:  `Int` map y-coordinate.
      - returns: `Bool` row should be staggered.
      */
-    public func doStaggerY(_ y: Int) -> Bool {
+    internal func doStaggerY(_ y: Int) -> Bool {
         return !staggerX && Bool((y & 1) ^ staggerEven.hashValue)
     }
     
-    public func topLeft(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
+    internal func topLeft(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
         // if the value of y is odd & stagger index is odd
         if (staggerX == false) {
             if Bool((Int(y) & 1) ^ staggerindex.hashValue) {
@@ -1046,7 +1057,7 @@ extension SKTilemap {
         }
     }
             
-    public func topRight(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
+    internal func topRight(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
         if (staggerX == false) {           
             if Bool((Int(y) & 1) ^ staggerindex.hashValue) {
                 return CGPoint(x: x + 1, y: y - 1)
@@ -1062,7 +1073,7 @@ extension SKTilemap {
         }
     }
     
-    public func bottomLeft(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
+    internal func bottomLeft(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
         if (staggerX == false) {
             if Bool((Int(y) & 1) ^ staggerindex.hashValue) {
                 return CGPoint(x: x, y: y + 1)
@@ -1078,7 +1089,7 @@ extension SKTilemap {
         }
     }
     
-    public func bottomRight(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
+    internal func bottomRight(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
         if (staggerX == false) {
             if Bool((Int(y) & 1) ^ staggerindex.hashValue) {
                 return CGPoint(x: x + 1, y: y + 1)

@@ -219,15 +219,15 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             // draw the first point of poly objects
             if (self.objectType == .polyline) || (self.objectType == .polygon) {
                 
-                childNode(withName: "Anchor")?.removeFromParent()
+                childNode(withName: "FirstPoint")?.removeFromParent()
 
                 let anchor = SKShapeNode(circleOfRadius: self.lineWidth * 2.5)
-                anchor.name = "Anchor"
+                anchor.name = "FirstPoint"
                 addChild(anchor)
                 anchor.position = vertices[0].invertedY
                 anchor.strokeColor = SKColor.clear
                 anchor.fillColor = self.strokeColor
-                anchor.isAntialiased = layer.antialiased
+                anchor.isAntialiased = isAntialiased
             }
         }
     }

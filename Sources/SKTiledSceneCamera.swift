@@ -93,7 +93,7 @@ open class SKTiledSceneCamera: SKCameraNode {
      Move camera around manually.
      
      - parameter point:    `CGPoint` point to move to.
-     - parameter duration: `NSTimeInterval` duration of move.
+     - parameter duration: `TimeInterval` duration of move.
      */
     open func panToPoint(_ point: CGPoint, duration: TimeInterval=0.3) {
         run(SKAction.move(to: point, duration: duration))
@@ -103,7 +103,7 @@ open class SKTiledSceneCamera: SKCameraNode {
      Center the camera on a location in the scene.
      
      - parameter scenePoint: `CGPoint` point in scene.
-     - parameter easeInOut:  `NSTimeInterval` ease in/out speed.
+     - parameter easeInOut:  `TimeInterval` ease in/out speed.
      */
     open func centerOn(scenePoint point: CGPoint, duration: TimeInterval=0) {
         if duration == 0 {
@@ -119,7 +119,7 @@ open class SKTiledSceneCamera: SKCameraNode {
      Center the camera on a node in the scene.
      
      - parameter scenePoint: `SKNode` node in scene.
-     - parameter easeInOut:  `NSTimeInterval` ease in/out speed.
+     - parameter easeInOut:  `TimeInterval` ease in/out speed.
      */
     open func centerOn(_ node: SKNode, duration: TimeInterval = 0) {
         guard let scene = self.scene else { return }

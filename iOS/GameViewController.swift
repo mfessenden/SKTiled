@@ -2,15 +2,15 @@
 //  GameViewController.swift
 //  SKTiled
 //
-//  Created by Michael Fessenden on 9/19/16.
-//  Copyright © 2016 Michael Fessenden. All rights reserved.
+//  Created by Michael Fessenden on 3/21/16.
+//  Copyright (c) 2016 Michael Fessenden. All rights reserved.
 //
 
-import Cocoa
+import UIKit
 import SpriteKit
 
 
-class GameViewController: NSViewController {
+class GameViewController: UIViewController {
     
     var demoFiles: [String] = []
     
@@ -19,9 +19,8 @@ class GameViewController: NSViewController {
         
         // load demo files from a propertly list
         demoFiles = loadDemoFiles("DemoFiles")
-        
-        let currentFilename = demoFiles.first!
 
+        let currentFilename = demoFiles.first!
         
         // Configure the view.
         let skView = self.view as! SKView
@@ -35,38 +34,23 @@ class GameViewController: NSViewController {
         let scene = SKTiledDemoScene(size: self.view.bounds.size, tmxFile: currentFilename)
         
         /* Set the scale mode to scale to fit the window */
-        scene.scaleMode = .aspectFill
+        scene.scaleMode = .aspectFill        
         
         //set up notification for scene to load the next file
         NotificationCenter.default.addObserver(self, selector: #selector(loadNextScene), name: NSNotification.Name(rawValue: "loadNextScene"), object: nil)
         skView.presentScene(scene)
     }
     
-    override func viewDidAppear() {
-        super.viewDidAppear()
-        updateWindowTitle()
-    }
-    
-    override func scrollWheel(with event: NSEvent) {
-        guard let view = self.view as? SKView else { return }
-        if let currentScene = view.scene as? SKTiledDemoScene {
-            currentScene.scrollWheel(with: event)
-        }
-    }
-    
     /**
      Load the next tilemap scene.
      
-     - parameter interval: `NSTimeInterval` transition duration.
+     - parameter interval: `TimeInterval` transition duration.
      */
     func loadNextScene(_ interval: TimeInterval=0.4) {
         guard let view = self.view as? SKView else { return }
         
-        var debugMode = false
-        
         var currentFilename = demoFiles.first!
-        if let currentScene = view.scene as? SKTiledDemoScene {
-            debugMode = currentScene.debugMode
+        if let currentScene = view.scene as? SKTiledDemoScene {            
             if let tilemap = currentScene.tilemap {
                 currentFilename = tilemap.name!
             }
@@ -83,32 +67,37 @@ class GameViewController: NSViewController {
         let nextScene = SKTiledDemoScene(size: view.bounds.size, tmxFile: nextFilename)
         nextScene.scaleMode = .aspectFill
         let transition = SKTransition.fade(withDuration: interval)
-        nextScene.debugMode = debugMode
         view.presentScene(nextScene, transition: transition)
-        updateWindowTitle()
+
     }
     
-    /**
-     Update the application window title with the current scene
-     */
-    func updateWindowTitle(){
-        guard let view = self.view as? SKView else { return }
-        
-        var windowTitle = "SKTiled"
-        if let currentScene = view.scene as? SKTiledDemoScene {
-            if let tilemap = currentScene.tilemap {
-                windowTitle += ": \(tilemap.name!)"
-            }
+
+    override var shouldAutorotate : Bool {
+        return true
+    }
+
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return .allButUpsideDown
+        } else {
+            return .all
         }
-        
-        self.view.window!.title = windowTitle
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Release any cached data, images, etc that aren't in use.
+    }
+
+    override var prefersStatusBarHidden : Bool {
+        return true
     }
     
     /**
      Load TMX files from the property list.
      
      - returns: `[String]` array of tiled file names.
-    */
+     */
     fileprivate func loadDemoFiles(_ filename: String) -> [String] {
         var result: [String] = []
         if let fileList = Bundle.main.path(forResource: filename, ofType: "plist"){
@@ -118,5 +107,6 @@ class GameViewController: NSViewController {
         }
         return result
     }
-    
 }
+
+

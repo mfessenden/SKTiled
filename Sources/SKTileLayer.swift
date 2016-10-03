@@ -100,7 +100,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     open var sizeInPoints: CGSize { return tilemap.sizeInPoints }
     
     // debug visualizations
-    open var gridOpacity: CGFloat = 0.25
+    open var gridOpacity: CGFloat = 0.20
     fileprivate var frameShape: SKShapeNode = SKShapeNode()
     fileprivate var grid: TiledLayerGrid!
     
@@ -114,7 +114,13 @@ open class TiledLayerObject: SKNode, SKTiledObject {
             return CGPoint.zero
         case .isometric:
             return CGPoint(x: height * tileWidthHalf, y: tileHeightHalf)
-        case .hexagonal, .staggered:
+        // TODO: need to check for error here with objects
+        case .hexagonal:
+            var startPoint = CGPoint.zero
+            //startPoint.x -= tileWidthHalf
+            //startPoint.y -= tileHeightHalf
+            return startPoint
+        case .staggered:
             return CGPoint.zero
         }
     }
@@ -1315,7 +1321,7 @@ open class SKObjectGroup: TiledLayerObject {
      */
     override open func setColor(color: SKColor) {
         super.setColor(color: color)
-        for object in objects {
+        objects.forEach { object in
             if !object.hasKey("color") {
                 object.setColor(color: color)
             }
@@ -1330,7 +1336,7 @@ open class SKObjectGroup: TiledLayerObject {
      */
     override open func setColor(hexString: String) {
         super.setColor(hexString: hexString)
-        for object in objects {
+        objects.forEach { object in
             if !object.hasKey("color") {
                 object.setColor(hexString: hexString)
             }

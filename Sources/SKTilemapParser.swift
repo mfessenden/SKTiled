@@ -27,6 +27,13 @@ internal enum FileType: String {
 }
 
 
+internal enum CompressionType {
+    case uncompressed
+    case zlib
+    case gzip
+}
+
+
 /**
 The `SKTilemapParser` is a custom `XMLParserDelegate` parser for reading Tiled TMX and tileset TSX files.
  
@@ -329,6 +336,8 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         
         // 'objectgroup' indicates an Object layer
         if (elementName == "objectgroup") {
+            
+            // TODO: need exception for tile collision objects
             guard let _ = attributeDict["name"] else { parser.abortParsing(); return }
             guard let objectsGroup = SKObjectGroup(tilemap: self.tilemap!, attributes: attributeDict)
                 else {
@@ -659,7 +668,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
      - parameter data: `String` Base64 formatted data to decode
      - returns: `[UInt32]?` parsed data.
      */
-    private func decode(base64String data: String) -> [UInt32]? {
+    private func decode(base64String data: String, compression: CompressionType = .uncompressed) -> [UInt32]? {
         // Data(base64Encoded: data, options: .ignoreUnknownCharacters)
         if let decodedData = NSData(base64Encoded: data, options: .ignoreUnknownCharacters) {
             let count = decodedData.length / MemoryLayout<UInt32>.size
@@ -675,12 +684,11 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         return nil
     }
     
-    // MARK: - Not Yet Implemented
-    private func decompress(gzipData data: String) -> String? {
+    private func decompress(zlibData data: String) -> String? {
         return nil
     }
     
-    private func decompress(zlibData data: String) -> String? {
+    private func decompress(gzipData data: String) -> String? {
         return nil
     }
 }

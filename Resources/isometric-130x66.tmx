@@ -7,6 +7,156 @@
  </properties>
  <tileset firstgid="1" name="isometric-130x230" tilewidth="130" tileheight="230" tilecount="72" columns="12">
   <image source="isometric-130x230.png" width="1560" height="1380"/>
+  <tile id="2">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="15">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="19">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="20">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="58">
+   <properties>
+    <property name="type" value="building"/>
+   </properties>
+  </tile>
+  <tile id="59">
+   <properties>
+    <property name="type" value="building"/>
+   </properties>
+  </tile>
+  <tile id="60">
+   <properties>
+    <property name="type" value="building"/>
+   </properties>
+  </tile>
+  <tile id="61">
+   <properties>
+    <property name="type" value="building"/>
+   </properties>
+  </tile>
+  <tile id="62">
+   <properties>
+    <property name="type" value="building"/>
+   </properties>
+  </tile>
+  <tile id="63">
+   <properties>
+    <property name="type" value="building"/>
+   </properties>
+  </tile>
+  <tile id="64">
+   <properties>
+    <property name="type" value="building"/>
+   </properties>
+  </tile>
+  <tile id="65">
+   <properties>
+    <property name="type" value="building"/>
+   </properties>
+  </tile>
   <tile id="66">
    <properties>
     <property name="type" value="car"/>

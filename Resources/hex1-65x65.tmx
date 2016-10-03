@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="hexagonal" renderorder="right-down" width="10" height="10" tilewidth="65" tileheight="65" hexsidelength="31" staggeraxis="y" staggerindex="odd" backgroundcolor="#90a1a2" nextobjectid="25">
+<map version="1.0" orientation="hexagonal" renderorder="right-down" width="10" height="10" tilewidth="65" tileheight="65" hexsidelength="31" staggeraxis="y" staggerindex="odd" backgroundcolor="#90a1a2" nextobjectid="37">
  <properties>
   <property name="worldScale" type="float" value="0.4"/>
  </properties>
  <tileset firstgid="1" name="hex1-65x65-65x230" tilewidth="65" tileheight="230" tilecount="60" columns="20">
   <image source="hex-65x65-65x230.png" width="1300" height="690"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="grass"/>
+    <property name="walkable" type="bool" value="true"/>
+   </properties>
+  </tile>
   <tile id="1">
    <properties>
     <property name="type" value="rock"/>
+    <property name="walkable" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="2">
@@ -40,19 +47,32 @@
     <property name="type" value="alien"/>
    </properties>
   </tile>
-  <tile id="25">
+  <tile id="20">
    <properties>
-    <property name="type" value="tree"/>
+    <property name="type" value="dirt"/>
+    <property name="walkable" type="bool" value="true"/>
    </properties>
   </tile>
-  <tile id="26">
+  <tile id="21">
    <properties>
-    <property name="type" value="tree"/>
+    <property name="walkable" type="bool" value="true"/>
    </properties>
   </tile>
-  <tile id="27">
+  <tile id="22">
    <properties>
-    <property name="type" value="tree"/>
+    <property name="walkable" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="type" value="rock"/>
+    <property name="walkable" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="type" value="rock"/>
+    <property name="walkable" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="31">
@@ -73,6 +93,18 @@
   <tile id="34">
    <properties>
     <property name="type" value="water"/>
+   </properties>
+  </tile>
+  <tile id="37">
+   <properties>
+    <property name="type" value="sand"/>
+    <property name="walkable" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="40">
+   <properties>
+    <property name="type" value="snow"/>
+    <property name="walkable" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="43">

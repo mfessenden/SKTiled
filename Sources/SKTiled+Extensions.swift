@@ -144,6 +144,11 @@ public extension CGPoint {
         return "x: \(self.x.roundTo(decimals)), y: \(self.y.roundTo(decimals))"
     }
     
+    /// Return a vector int (for GameplayKit)
+    public var toVec2: int2 {
+        return int2(Int32(x), Int32(y))
+    }
+    
     public var xCoord: Int { return Int(x) }
     public var yCoord: Int { return Int(y) }
     
@@ -510,7 +515,7 @@ public extension SKAction {
     /**
      Custom action to animate sprite textures with varying frame durations.
      
-     - parameter frames: `[(texture: SKTexture, duration: NSTimeInterval)]` array of tuples containing texture & duration.
+     - parameter frames: `[(texture: SKTexture, duration: TimeInterval)]` array of tuples containing texture & duration.
      - returns: `SKAction` custom animation action.
      */
     public class func tileAnimation(_ frames: [(texture: SKTexture, duration: TimeInterval)], repeatForever: Bool = true) -> SKAction {
@@ -851,7 +856,7 @@ public func drawGrid(_ layer: TiledLayerObject,  scale: CGFloat = 1) -> CGImage 
                         context.addPath(shapePath)
                     }
                 }
-                
+                        
                 context.strokePath()
             }
         }

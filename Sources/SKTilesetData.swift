@@ -87,7 +87,7 @@ open class SKTilesetData: SKTiledObject  {
      Add tile animation to the data.
      
      - parameter gid:         `Int` id for frame.
-     - parameter duration:    `NSTimeInterval` frame interval.
+     - parameter duration:    `TimeInterval` frame interval.
      - parameter tileTexture: `SKTexture?` frame texture.
      */
     open func addFrame(_ gid: Int, interval: TimeInterval, tileTexture: SKTexture? = nil) {
