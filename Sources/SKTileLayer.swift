@@ -6,6 +6,7 @@
 //  Copyright © 2016 Michael Fessenden. All rights reserved.
 //
 
+import Foundation
 import SpriteKit
 #if os(iOS)
 import UIKit
@@ -813,8 +814,7 @@ open class SKTileLayer: TiledLayerObject {
      - returns: `SKTile?` tile object, if it exists.
      */
     open func tileAt(_ coord: CGPoint) -> SKTile? {
-        if isValid(coord) == false { return nil }
-        return tiles[Int(coord.x), Int(coord.y)]
+        return tileAt(Int(coord.x), Int(coord.y))
     }
     
     /**
@@ -926,13 +926,14 @@ open class SKTileLayer: TiledLayerObject {
      - parameter data: `[Int]` tile data.
      - returns: `Bool` data was successfully added.
      */
-    open func setLayerData(_ data: [UInt32]) -> Bool {
+    open func setLayerData(_ data: [UInt32], completion: (() -> ())) -> Bool {
         if !(data.count==size.count) {
             print("[SKTileLayer]: ERROR: invalid data size: \(data.count), expected: \(size.count)")
             return false
         }
         
         var errorCount: Int = 0
+
         for index in data.indices {
             let gid = data[index]
             
@@ -946,11 +947,15 @@ open class SKTileLayer: TiledLayerObject {
                 errorCount += 1
             }
         }
-        
-        
+
+    
+        //print("[SKTileLayer]: layer \"\(name!)\" rendered, \(self.tiles.flatMap({$0}).count) tiles added.")
         if (errorCount != 0){
             print("[SKTileLayer]: WARNING: layer \"\(name!)\": \(errorCount) \(errorCount > 1 ? "errors" : "error") loading data.")
         }
+    
+        
+        completion()
         return errorCount == 0
     }
     
@@ -1089,7 +1094,6 @@ open class SKTileLayer: TiledLayerObject {
                     print("[SKTileLayer]: WARNING: cannot find a texture for gid \(gid)")
                 }
                 
-                
                 return tile
                 
             } else {
@@ -1142,7 +1146,23 @@ open class SKTileLayer: TiledLayerObject {
             }
         }
     }
+    
+    // MARK: - Shaders
+    
+    /**
+     Set a shader for the tile layer.
+     
+     - parameter fileNamed: `String` shader file name.
+     */
+    open func setShader(fileNamed: String) {
+        for tile in tiles {
+            if let tile = tile {
+                tile.setTileShader(shaderFile: fileNamed)
+            }
+        }
+    }
 }
+
 
 /**
  Represents object group draw order:

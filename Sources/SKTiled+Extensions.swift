@@ -433,11 +433,11 @@ public extension String {
      - parameter padLeft: `Bool` toggle this to pad the right.
      - returns: `String` padded string.
      */
-    public func zfill(_ length: Int, pattern: String="0", padLeft: Bool=true) -> String {
-        if length < 0 { return "" }
-        guard length > self.characters.count else { return self }
+    public func zfill(length: Int, pattern: String="0", padLeft: Bool=true) -> String {
         var filler = ""
-        for _ in 0..<(length - self.characters.count) {
+        let padamt: Int = length - characters.count > 0 ? length - characters.count : 0
+        if padamt <= 0 { return self }
+        for _ in 0..<padamt {
             filler += pattern
         }
         return (padLeft == true) ? filler + self : self + filler
@@ -533,6 +533,15 @@ public extension SKAction {
             return SKAction.repeatForever(SKAction.sequence(actions))
         }
         return SKAction.sequence(actions)
+    }
+}
+
+
+public extension Data {
+    public func toArray<T>(type: T.Type) -> [T] {
+        return self.withUnsafeBytes {
+            [T](UnsafeBufferPointer(start: $0, count: self.count/MemoryLayout<T>.stride))
+        }
     }
 }
 

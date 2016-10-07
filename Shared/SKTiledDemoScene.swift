@@ -42,7 +42,7 @@ public class SKTiledDemoScene: SKTiledScene {
         // setup demo UI
         setupDemoUI()
         setupDebuggingLabels()
-        updateHud()
+        updateHud()        
     }
     
     // MARK: - Setup

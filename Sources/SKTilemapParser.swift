@@ -163,21 +163,31 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     fileprivate func renderTileLayers() {
         guard let tilemap = tilemap else { return }
         
-        for (uuid, tileData) in self.data {
-            guard let tileLayer = tilemap.getLayer(withID: uuid) as? SKTileLayer else { continue }
-            // add the layer data...
-            tileLayer.setLayerData(tileData)
-            tileLayer.parseProperties()
-            
-            // report errors
-            if tileLayer.gidErrors.count > 0 {
-                let gidErrorString : String = tileLayer.gidErrors.reduce("", { "\($0)" == "" ? "\($1)" : "\($0)" + ", " + "\($1)" })
-                print("[SKTilemapParser]: WARNING: layer \"\(tileLayer.name!)\": the following gids could not be found: \(gidErrorString)")
+        let queue = DispatchQueue(label: "com.sktiled.gcd.serial", attributes: .concurrent, target: .main)
+        let group = DispatchGroup()
+        
+        queue.async (group: group){
+            for (uuid, tileData) in self.data {
+                guard let tileLayer = tilemap.getLayer(withID: uuid) as? SKTileLayer else { continue }
+                // add the layer data...
+                let layerResult = tileLayer.setLayerData(tileData, completion: { print("layer \(tileLayer.name!) completed, \(tileLayer.tileCount) tiles rendered.")} )
+                tileLayer.parseProperties()
+                
+                // report errors
+                if tileLayer.gidErrors.count > 0 {
+                    let gidErrorString : String = tileLayer.gidErrors.reduce("", { "\($0)" == "" ? "\($1)" : "\($0)" + ", " + "\($1)" })
+                    print("[SKTilemapParser]: WARNING: layer \"\(tileLayer.name!)\": the following gids could not be found: \(gidErrorString)")
+                }
+                
+                //print("[SKTilemapParser]: layer \"\(tileLayer.name!)\" rendered, \(tileLayer.tileCount) tiles added.")
             }
         }
         
-        // reset the data
-        self.data = [:]
+        
+        group.notify(queue: DispatchQueue.main) {
+            // reset the data
+            self.data = [:]
+        }
     }
     
     /**
@@ -661,34 +671,23 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     }
     
     /**
-     Clean up and convert string Base64-formatted data.
-     
-     See: stackoverflow.com/questions/28902455/convert-base64-string-to-byte-array-like-c-sharp-method-convert-frombase64string
-     
+     Decode Base64-formatted data.
+
      - parameter data: `String` Base64 formatted data to decode
      - returns: `[UInt32]?` parsed data.
      */
     private func decode(base64String data: String, compression: CompressionType = .uncompressed) -> [UInt32]? {
-        // Data(base64Encoded: data, options: .ignoreUnknownCharacters)
-        if let decodedData = NSData(base64Encoded: data, options: .ignoreUnknownCharacters) {
-            let count = decodedData.length / MemoryLayout<UInt32>.size
-            
-            // ugh, Swift 3 expects UnsafePointer<UInt8>
-            //var bytes = [UInt8](repeating: 0, count: count / sizeof(UInt32.self))
-            //decodedData.copyBytes(to: &bytes, count: count)
-            
-            var bytes = [UInt32](repeating: 0, count: count)
-            decodedData.getBytes(&bytes)
-            return bytes.flatMap { UInt32($0) }
+        if let decodedData = Data(base64Encoded: data, options: .ignoreUnknownCharacters) {
+            return decodedData.toArray(type: UInt32.self)
         }
         return nil
     }
     
-    private func decompress(zlibData data: String) -> String? {
+    private func decode(zlibData data: String) -> String? {
         return nil
     }
     
-    private func decompress(gzipData data: String) -> String? {
+    private func decode(gzipData data: String) -> String? {
         return nil
     }
 }

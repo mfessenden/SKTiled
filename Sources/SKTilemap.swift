@@ -686,6 +686,7 @@ open class SKTilemap: SKNode, SKTiledObject{
         for layer in tileLayers {
             if let tile = layer.tileAt(coord){
                 result.append(tile)
+                print("    ")
             }
         }
         return result
@@ -1137,23 +1138,47 @@ extension SKTilemap {
     internal func debugLayers(reverse: Bool = false) {
         guard (layerCount > 0) else { return }
         let largestName = layerNames().max() { (a, b) -> Bool in a.characters.count < b.characters.count }
-        let nameStr = "# Tilemap \"\(name!)\": \(layerCount) Layers:"
-        let filled = String(repeating: "-", count: nameStr.characters.count)
-        print("\n\(nameStr)\n\(filled)")
         
-        var layersToPrint = allLayers()
-        if reverse == true {
-            layersToPrint = allLayers().reversed()
-        }
+        // format the header
+        let tilemapHeaderString = "# Tilemap \"\(name!)\": \(layerCount) Layers:"
+        let filled = String(repeating: "-", count: tilemapHeaderString.characters.count)
+        print("\n\(tilemapHeaderString)\n\(filled)")
+        
+        // create an array of layers to output
+        let layersToPrint = (reverse == true) ? allLayers().reversed() : allLayers()
         
         for layer in layersToPrint {
             if (layer != baseLayer) {
                 let layerName = layer.name!
                 let nameString = "\"\(layerName)\""
-                let indexString = "\(layer.index): ".zfill(4, pattern: " ", padLeft: false)
-                print("\(indexString) \(layer.layerType.stringValue.capitalized.zfill(6, pattern: " ", padLeft: false)) \(nameString.zfill(largestName!.characters.count + 2, pattern: " ", padLeft: false))   pos: \(layer.position.roundTo(1)), size: \(layer.sizeInPoints.roundTo(1)),  offset: \(layer.offset.roundTo(1)), anc: \(layer.anchorPoint.roundTo()), z: \(layer.zPosition.roundTo())")
+                
+                // format the layer index
+                let indexString = "\(layer.index): ".zfill(length: 3, pattern: " ", padLeft: false)
+                
+                // format the layer name
+                let layerNameString = "\(layer.layerType.stringValue.capitalized.zfill(length: 7, pattern: " ", padLeft: false)) \(nameString.zfill(length: largestName!.characters.count + 3, pattern: " ", padLeft: false))"
+                let positionString = "pos: \(layer.position.roundTo(1)), size: \(layer.sizeInPoints.roundTo(1))"
+                let offsetString = "offset: \(layer.offset.roundTo(1)), anc: \(layer.anchorPoint.roundTo()), z: \(layer.zPosition.roundTo())"
+                
+                
+                //print(offsetString.characters.count)
+                
+                var layerOutput = "\(indexString) \(layerNameString) \(positionString),  \(offsetString)"
+                
+                // tile count for tile layers
+                if let tileLayer = layer as? SKTileLayer {
+                    
+                    let pad: Int = 145 - layerOutput.characters.count
+                    layerOutput += ",  \("".zfill(length: pad, pattern: " ", padLeft: false)) \(tileLayer.tileCount) tiles."
+                }
+                
+                
+                print(layerOutput)
                 
             }
+            
+
+            
         }
         print("\n")
     }
