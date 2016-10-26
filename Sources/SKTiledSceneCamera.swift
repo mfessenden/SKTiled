@@ -39,6 +39,8 @@ open class SKTiledSceneCamera: SKCameraNode {
     #if os(iOS)
     /// Gesture recognizer to recognize camera panning
     open var cameraPanned: UIPanGestureRecognizer!
+    open var sceneDoubleTapped: UITapGestureRecognizer!         // gesture recognizer to recognize double taps
+    open var cameraPinched: UIPinchGestureRecognizer!           // gesture recognizer to recognize pinch actions
     #endif
     
     // locations
@@ -57,6 +59,15 @@ open class SKTiledSceneCamera: SKCameraNode {
         cameraPanned.minimumNumberOfTouches = 1
         cameraPanned.maximumNumberOfTouches = 1
         view.addGestureRecognizer(cameraPanned)
+            
+            
+        sceneDoubleTapped = UITapGestureRecognizer(target: self, action: #selector(sceneDoubleTapped(_:)))
+        sceneDoubleTapped.numberOfTapsRequired = 2
+        view.addGestureRecognizer(sceneDoubleTapped)
+            
+        // setup pinch recognizer
+        cameraPinched = UIPinchGestureRecognizer(target: self, action: #selector(scenePinched(_:)))
+        view.addGestureRecognizer(cameraPinched)
         #endif
     }
     
@@ -75,6 +86,10 @@ open class SKTiledSceneCamera: SKCameraNode {
         realScale = realScale >= maxZoom ? maxZoom : realScale
         self.zoom = realScale
         world.setScale(realScale)
+        
+        if let tilemap = (scene as? SKTiledScene)?.tilemap {
+            tilemap.autoResize = false
+        }
     }
     
     /**
@@ -142,9 +157,38 @@ open class SKTiledSceneCamera: SKCameraNode {
         setWorldScale(initialZoom)
     }
     
+    /**
+     Reset the camera position & zoom level.
+     
+     - parameter toScale: `CGFloat` camera scale.
+     */
     open func resetCamera(toScale scale: CGFloat) {
         centerOn(scenePoint: CGPoint(x: 0, y: 0))
         setWorldScale(scale)
+    }
+    
+    /**
+     Center & fit the current tilemap in the frame. 
+     Also sets the `SKTilemap.autoResize` parameter.
+     */
+    open func fitToView() {
+        guard let scene = self.scene as? SKTiledScene else { return }
+        guard let view = scene.view else { return }
+        guard let tilemap = scene.tilemap else { return }
+        
+        let screenScaleWidth: CGFloat = 0.75
+        let viewSize = view.bounds.size
+        
+        // get the usable height/width
+        let useableWidth: CGFloat = viewSize.width * screenScaleWidth
+        let currentWidth = tilemap.sizeInPoints.width
+        
+        let scaleFactor = (useableWidth / currentWidth)
+        centerOn(scenePoint: CGPoint(x: 0, y: 0))
+        setWorldScale(scaleFactor)
+        
+        // flag the map as auto-resized
+        tilemap.autoResize = true
     }
 }
 
@@ -171,6 +215,43 @@ extension SKTiledSceneCamera {
             let difference = CGPoint(x: location.x - lastLocation.x, y: location.y - lastLocation.y)
             centerOn(scenePoint: CGPoint(x: Int(position.x - difference.x), y: Int(position.y - -difference.y)))
             lastLocation = location
+        }
+    }
+    
+    /**
+     Handler for double taps.
+     
+     - parameter recognizer: `UITapGestureRecognizer` tap gesture recognizer.
+     */
+    open func sceneDoubleTapped(_ recognizer: UITapGestureRecognizer) {
+        if (recognizer.state == UIGestureRecognizerState.ended) {
+            //focusLocation = recognizer.location(in: recognizer.view)
+            guard let scene = self.scene as? SKTiledScene else { return }
+            // get the current point
+            let sceneLocation = scene.convertPoint(fromView: recognizer.location(in: recognizer.view))
+            scene.tilemap.isPaused = !scene.tilemap.isPaused
+        }
+    }
+    
+    /**
+     Update the camera scale in the scene.
+     
+     - parameter recognizer: `UIPinchGestureRecognizer`
+     */
+    open func scenePinched(_ recognizer: UIPinchGestureRecognizer) {
+        guard let scene = self.scene else { return }
+        
+        if recognizer.state == .began {
+            let location = recognizer.location(in: recognizer.view)
+            focusLocation = scene.convertPoint(fromView: location)  // correct
+        }
+        
+        if recognizer.state == .changed {
+            zoom *= recognizer.scale
+            // set the world scaling here
+            setWorldScale(zoom)
+            recognizer.scale = 1
+            centerOn(scenePoint: CGPoint(x: focusLocation.x, y: focusLocation.y))
         }
     }
 }
@@ -207,7 +288,7 @@ extension SKTiledSceneCamera {
         focusLocation = location
         centerOn(scenePoint: focusLocation)
         
-        zoom += (event.deltaY * 0.25)
+        zoom += (event.deltaY * 0.10)  // was 0.25
         // set the world scaling here
         setWorldScale(zoom)
     }

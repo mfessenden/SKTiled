@@ -16,6 +16,7 @@ public class SKTiledDemoScene: SKTiledScene {
     public var debugMode: Bool = false
     
     // hud buttons
+    public var buttons: [ButtonNode] = []
     public var resetButton: ButtonNode!
     public var showGridButton: ButtonNode!
     public var showObjectsButton: ButtonNode!
@@ -42,7 +43,7 @@ public class SKTiledDemoScene: SKTiledScene {
         // setup demo UI
         setupDemoUI()
         setupDebuggingLabels()
-        updateHud()        
+        updateHud()
     }
     
     // MARK: - Setup
@@ -56,12 +57,14 @@ public class SKTiledDemoScene: SKTiledScene {
         let lastZPosition: CGFloat = (tilemap != nil) ? tilemap.lastZPosition * 10 : 5000
 
         if (resetButton == nil){
-            resetButton = ButtonNode(defaultImage: "reset-button-norm", highlightImage: "reset-button-pressed", action: {
+            resetButton = ButtonNode(defaultImage: "scale-button-norm", highlightImage: "scale-button-pressed", action: {
                 if let cameraNode = self.cameraNode {
-                    cameraNode.resetCamera()
+                    cameraNode.fitToView()
                 }
             })
             cameraNode.addChild(resetButton)
+            buttons.append(resetButton)
+            
             // position towards the bottom of the scene
             resetButton.position.x -= (view.bounds.size.width / 7)
             resetButton.position.y -= (view.bounds.size.height / 2.25)
@@ -73,13 +76,10 @@ public class SKTiledDemoScene: SKTiledScene {
                 guard let tilemap = self.tilemap else { return }
                 let debugState = !tilemap.baseLayer.showGrid
                 tilemap.baseLayer.showGrid = debugState
-                
-                if (debugState == true){
-                    tilemap.debugLayers()
-                }
             })
             
             cameraNode.addChild(showGridButton)
+            buttons.append(showGridButton)
             // position towards the bottom of the scene
             showGridButton.position.y -= (view.bounds.size.height / 2.25)
             showGridButton.zPosition = lastZPosition
@@ -93,6 +93,7 @@ public class SKTiledDemoScene: SKTiledScene {
             })
             
             cameraNode.addChild(showObjectsButton)
+            buttons.append(showObjectsButton)
             // position towards the bottom of the scene
             showObjectsButton.position.y -= (view.bounds.size.height / 2.25)
             showObjectsButton.zPosition = lastZPosition
@@ -105,6 +106,7 @@ public class SKTiledDemoScene: SKTiledScene {
                 self.loadNextScene()
             })
             cameraNode.addChild(loadNextButton)
+            buttons.append(loadNextButton)
             // position towards the bottom of the scene
             loadNextButton.position.x += (view.bounds.size.width / 7)
             loadNextButton.position.y -= (view.bounds.size.height / 2.25)
@@ -154,10 +156,9 @@ public class SKTiledDemoScene: SKTiledScene {
         }
         
         mapInformationLabel.posByCanvas(x: 0.5, y: tilemapInfoY)
-        
         tileInformationLabel.isHidden = true
+        propertiesInformationLabel.isHidden = true
         tileInformationLabel.posByCanvas(x: 0.5, y: tileInfoY)
-
         propertiesInformationLabel.posByCanvas(x: 0.5, y: propertiesInfoY)
     }
     
@@ -197,15 +198,10 @@ public class SKTiledDemoScene: SKTiledScene {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "loadNextScene"), object: nil)
     }
     
-
     override public func didChangeSize(_ oldSize: CGSize) {
         super.didChangeSize(oldSize)
-        
-        var dynamicScale = size.width / 400
-        let remainder = dynamicScale.truncatingRemainder(dividingBy: 2)
-        dynamicScale = dynamicScale - remainder
-        uiScale = dynamicScale >= 1 ? dynamicScale : 1
-    
+
+        uiScale = size.width / 400
         updateHud()
         
         #if os(OSX)
@@ -220,24 +216,6 @@ public class SKTiledDemoScene: SKTiledScene {
             view.addTrackingArea(trackingArea)
         }
         #endif
-    }
-    
-    /**
-     Returns an array of button nodes in the scene.
-     
-     - parameter hidden: `Bool` filter hidden buttons.
-     - returns:  `[ButtonNode]` array of HUD buttons.
-     */
-    private func buttonNodes(hidden: Bool = false) -> [ButtonNode] {
-        var buttons: [ButtonNode] = []
-        enumerateChildNodes(withName: "//*", using: {node, _ in
-            if let button = node as? ButtonNode {
-                if button.isHidden == false || hidden == true {
-                    buttons.append(button)
-                }
-            }
-        })
-        return buttons
     }
     
     /**
@@ -263,14 +241,17 @@ public class SKTiledDemoScene: SKTiledScene {
     private func updateHud(){
         guard let view = self.view else { return }
         
+        let activeButtons = buttons.filter( {$0.isHidden == false})
+        guard activeButtons.count > 0 else { return }
+        
         let lastZPosition: CGFloat = (tilemap != nil) ? tilemap.lastZPosition * 10 : 5000
         
         let viewSize = view.bounds.size
         let buttonYPos: CGFloat = -(size.height * 0.4)
-
-        let buttons = buttonNodes()
-        buttons.forEach {$0.setScale(uiScale)}
-        buttons.forEach {$0.zPosition = lastZPosition * 2}
+        
+        activeButtons.forEach {$0.setScale(uiScale)}
+        activeButtons.forEach {$0.zPosition = lastZPosition * 2}
+        
         
         var tilemapInfoY: CGFloat = 0.77
         var tileInfoY: CGFloat = 0.81
@@ -282,12 +263,12 @@ public class SKTiledDemoScene: SKTiledScene {
         propertiesInfoY = 1.0 - propertiesInfoY
         #endif
         
-        let buttonWidths = buttons.map { $0.size.width }
+        let buttonWidths = activeButtons.map { $0.size.width }
         let maxWidth = buttonWidths.reduce(0, {$0 + $1})
-        let spacing = (viewSize.width - maxWidth) / CGFloat(buttons.count + 1)
+        let spacing = (viewSize.width - maxWidth) / CGFloat(activeButtons.count + 1)
         
         var current = spacing + (buttonWidths[0] / 2)
-        for button in buttons {
+        for button in activeButtons {
             let buttonScenePos = CGPoint(x: current - (viewSize.width / 2), y: buttonYPos)
             button.position = buttonScenePos
             button.zPosition = lastZPosition
@@ -367,7 +348,7 @@ extension SKTiledDemoScene {
                     propertiesInfoString += "; \(tile.tileData.propertiesString)"
                 }
             }
-            
+            propertiesInformationLabel.isHidden = false
             propertiesInformationLabel.text = propertiesInfoString
         }
     }
@@ -412,8 +393,10 @@ extension SKTiledDemoScene {
         let positionInLayer = baseLayer.mouseLocation(event: event)
         let coord = baseLayer.coordinateAtMouseEvent(event: event)
         
-        // highlight the current coordinate
-        let _ = addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y), duration: 5)
+        if (tilemap.isPaused == false){
+            // highlight the current coordinate
+            let _ = addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y), duration: 5)
+        }
 
         // update the tile information label
         let coordStr = "Tile: \(coord.coordDescription), \(positionInLayer.roundTo())"
@@ -428,7 +411,7 @@ extension SKTiledDemoScene {
                 propertiesInfoString += "; \(tile.tileData.propertiesString)"
             }
         }
-        
+        propertiesInformationLabel.isHidden = false
         propertiesInformationLabel.text = propertiesInfoString
     }
     
@@ -451,8 +434,10 @@ extension SKTiledDemoScene {
         tileInformationLabel?.isHidden = false
         tileInformationLabel?.text = "Tile: \(coord.coordDescription), \(positionInLayer.roundTo())"
         
-        // highlight the current coordinate
-        let _ = addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y), duration: 0.05)
+        if (tilemap.isPaused == false){
+            // highlight the current coordinate
+            let _ = addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y), duration: 0.05)
+        }
         
         // tile properties output
         var propertiesInfoString = "ID: ~"
@@ -462,7 +447,7 @@ extension SKTiledDemoScene {
                 propertiesInfoString += "; \(tile.tileData.propertiesString)"
             }
         }
-        
+        propertiesInformationLabel.isHidden = false
         propertiesInformationLabel.text = propertiesInfoString
     }
     
@@ -483,6 +468,44 @@ extension SKTiledDemoScene {
     
     override open func keyDown(with event: NSEvent) {
         guard let cameraNode = cameraNode else { return }
+        
+        // 'F' key fits the map to the view
+        if event.keyCode == 0x03 {
+            if let tilemap = tilemap {
+                cameraNode.fitToView()
+            }
+        }
+        
+        // 'D' shows debug view
+        if event.keyCode == 0x02 {
+            if let tilemap = tilemap {
+                tilemap.debugDraw = !tilemap.debugDraw
+            }
+        }
+        
+        // 'O' shows objects
+        if event.keyCode == 0x1F {
+            if let tilemap = tilemap {
+                tilemap.showObjects = !tilemap.showObjects
+            }
+        }
+        
+        // 'P' pauses the map
+        if event.keyCode == 0x23 {
+            if let tilemap = tilemap {
+                tilemap.isPaused = !tilemap.isPaused
+            }
+        }
+        
+        
+        // 'G' shows the grid
+        if event.keyCode == 0x05 {
+            if let tilemap = tilemap {
+                tilemap.baseLayer.showGrid = !tilemap.baseLayer.showGrid
+            }
+        }
+        
+        // 'A', '0' reset the camera
         if event.keyCode == 0x00 || event.keyCode == 0x52 || event.keyCode == 0x1D {
             if let tilemap = tilemap {
                 cameraNode.resetCamera(toScale: tilemap.worldScale)
@@ -509,5 +532,4 @@ extension SKTiledDemoScene {
     }
 }
 #endif
-
 

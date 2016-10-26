@@ -14,7 +14,7 @@ public extension SKTilemap {
     /**
      Parse properties from the Tiled TMX file.
      */
-    public func parseProperties() {
+    public func parseProperties(completion: (() -> ())?) {
         for (attr, value) in properties {
             
             if (attr == "name") {
@@ -91,7 +91,13 @@ public extension SKTilemap {
             if (attr == "antialiasLines") {
                 antialiasLines = boolForKey(attr)
             }
+            
+            if (attr == "autoResize") {
+                autoResize = boolForKey(attr)
+            }
         }
+        
+        if completion != nil { completion!() }
     }
 }
 
@@ -100,7 +106,9 @@ public extension SKTileset {
     /**
      Parse the tileset's properties value.
      */
-    public func parseProperties() {}
+    public func parseProperties(completion: (() -> ())?) {
+        if completion != nil { completion!() }
+    }
 }
 
 
@@ -109,7 +117,7 @@ public extension TiledLayerObject {
     /**
      Parse the layer's properties value.
      */
-    public func parseProperties() {
+    public func parseProperties(completion: (() -> ())?) {
         
         for (attr, value) in properties {
             
@@ -133,6 +141,8 @@ public extension TiledLayerObject {
             if (attr == "antialiasing") {
                 antialiased = boolForKey(attr)
             }
+            
+            if completion != nil { completion!() }
         }
     }
     
@@ -162,8 +172,8 @@ public extension SKTileLayer {
     /**
      Parse the tile layer's properties.
     */
-    override public func parseProperties() {
-        super.parseProperties()
+    override public func parseProperties(completion: (() -> ())?) {
+        super.parseProperties(completion: completion)
     }
 }
 
@@ -172,13 +182,14 @@ public extension SKObjectGroup {
     /**
      Parse the object groups properties.
     */
-    override public func parseProperties() {
-        super.parseProperties()
+    override public func parseProperties(completion: (() -> ())?) {
         for (attr, _ ) in properties {
             if (attr == "lineWidth") {
                 lineWidth = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : lineWidth
             }
         }
+        
+        super.parseProperties(completion: completion)
     }
 }
 
@@ -187,8 +198,8 @@ public extension SKImageLayer {
     /**
      Parse the image layer's properties.
     */
-    override public func parseProperties() {
-        super.parseProperties()
+    override public func parseProperties(completion: (() -> ())?) {
+        super.parseProperties(completion: completion)
     }
 }
 
@@ -197,7 +208,7 @@ public extension SKTileObject {
     /**
      Parse the object's properties value.
      */
-    public func parseProperties() {
+    public func parseProperties(completion: (() -> ())?) {
         for (attr, value) in properties {
             if (attr == "color") {
                 setColor(hexString: value)
@@ -207,6 +218,7 @@ public extension SKTileObject {
                 lineWidth = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : lineWidth
             }
         }
+        if completion != nil { completion!() }
     }
 }
 
@@ -215,9 +227,11 @@ public extension SKTilesetData {
     /**
      Parse the tile data's properties value.
      */
-    public func parseProperties() {
+    public func parseProperties(completion: (() -> ())?) {
         for (attr, value) in properties {
             //print("\(id): \(attr) = \(value)")
         }
+        
+        if completion != nil { completion!() }
     }
 }

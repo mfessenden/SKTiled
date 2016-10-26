@@ -177,15 +177,18 @@ open class SKTilemap: SKNode, SKTiledObject{
     lazy open var baseLayer: SKTileLayer = {
         let layer = SKTileLayer(layerName: "Base", tilemap: self)
         self.addLayer(layer)
+        layer.didFinishRendering()
         return layer
     }()
     
     // debugging
     open var debugMode: Bool = false
+    open var color: SKColor = SKColor.clear                            // used for pausing
     open var gridColor: SKColor = SKColor.black                        // color used to visualize the tile grid
     open var frameColor: SKColor = SKColor.black                       // bounding box color
     open var highlightColor: SKColor = SKColor.green                   // color used to highlight tiles
-
+    open var autoResize: Bool = false                                  // auto-size the map when resized
+    
     /// Rendered size of the map in pixels.
     open var sizeInPoints: CGSize {
         switch orientation {
@@ -247,8 +250,8 @@ open class SKTilemap: SKNode, SKTiledObject{
     open var showObjects: Bool = false {
         didSet {
             guard oldValue != showObjects else { return }
-            for objectLayer in objectGroups {
-                objectLayer.showObjects = showObjects
+            for objectGroup in objectGroups {
+                objectGroup.showObjects = showObjects
             }
         }
     }
@@ -274,6 +277,32 @@ open class SKTilemap: SKNode, SKTiledObject{
             layers.forEach { $0.antialiased = antialiasLines }
         }
     }
+    
+    /// Global tile count
+    open var tileCount: Int {
+        return tileLayers.reduce(0) { (result: Int, layer: SKTileLayer) in
+            return result + layer.tileCount
+        }
+    }
+    
+    /// pauses the node, and colors all of its children darker.
+    override open var isPaused: Bool {
+        didSet {
+            guard oldValue != isPaused else { return }
+            let newColor: SKColor = isPaused ? SKColor(white: 0, alpha: 0.25) : SKColor.clear
+            let newColorBlendFactor: CGFloat = isPaused ? 0.3 : 0.0
+            
+            speed = isPaused ? 0 : 1.0
+            color = newColor
+            
+            layers.forEach { layer in
+                layer.color = newColor
+                layer.colorBlendFactor = newColorBlendFactor
+                layer.isPaused = isPaused
+            }
+        }
+    }
+    
 
     // MARK: - Loading
     
@@ -390,7 +419,7 @@ open class SKTilemap: SKNode, SKTiledObject{
     open func addTileset(_ tileset: SKTileset) {
         tileSets.insert(tileset)
         tileset.tilemap = self
-        tileset.parseProperties()
+        tileset.parseProperties(completion: nil)
     }
     
     /**
@@ -471,8 +500,11 @@ open class SKTilemap: SKNode, SKTiledObject{
         layer.frameColor = self.frameColor
         layer.highlightColor = self.highlightColor
         
+        // setup the layer
+        tileLayerDidBeginRendering(layer: layer)
+        
         if (parse == true) {
-            layer.parseProperties()  // moved this to parser
+            layer.parseProperties(completion: nil)  // moved this to parser
         }
     }
     
@@ -821,36 +853,17 @@ open class SKTilemap: SKNode, SKTiledObject{
      - returns: `[SKTileObject]` array of objects.
      */
     open func getObjects() -> [SKTileObject] {
-        var result: [SKTileObject] = []
-        enumerateChildNodes(withName: "//*") {
-            node, stop in
-            if let node = node as? SKTileObject {
-                result.append(node)
-            }
-        }
-        return result
+        return objectGroups.flatMap { $0.getObjects() }
     }
     
     /**
      Return objects matching a given type.
      
-     - parameter type: `String` object name to query.
+     - parameter type: `String` object type to query.
      - returns: `[SKTileObject]` array of objects.
      */
     open func getObjects(ofType type: String) -> [SKTileObject] {
-        var result: [SKTileObject] = []
-        enumerateChildNodes(withName: "//*") {
-            node, stop in
-            // do something with node or stop
-            if let node = node as? SKTileObject {
-                if let objectType = node.type {
-                    if objectType == type {
-                        result.append(node)
-                    }
-                }
-            }
-        }
-        return result
+        return objectGroups.flatMap { $0.getObjects(ofType: type) }
     }
     
     /**
@@ -860,20 +873,7 @@ open class SKTilemap: SKNode, SKTiledObject{
      - returns: `[SKTileObject]` array of objects.
      */
     open func getObjects(_ named: String) -> [SKTileObject] {
-        var result: [SKTileObject] = []
-        enumerateChildNodes(withName: "//*") {
-            node, stop in
-            // do something with node or stop
-            if let node = node as? SKTileObject {
-                if let objectName = node.name {
-                    if objectName == named {
-                
-                        result.append(node)
-                    }
-                }
-            }
-        }
-        return result
+        return objectGroups.flatMap { $0.getObjects(named: named) }
     }
     
     // MARK: - Data
@@ -926,6 +926,57 @@ open class SKTilemap: SKNode, SKTiledObject{
     
     open func positionInMap(point: CGPoint) -> CGPoint {
         return convert(point, to: baseLayer).invertedY
+    }
+    
+    // MARK: - Callbacks
+    /**
+     Called when parser begins rendering a map.
+     
+     - parameter verbose: `Bool` verbose output.
+     */
+    open func didBeginParsing(verbose: Bool=false) {
+        
+    }
+    
+    /**
+     Called when parser has finished loading the map.
+     
+     - parameter timeStarted: `Date` render start time.
+     - parameter verbose:     `Bool` verbose output.
+     */
+    open func didFinishParsing(timeStarted: Date, verbose: Bool=false) {
+        // set the z-depth of the baseLayer
+        baseLayer.zPosition = lastZPosition + (zDeltaForLayers * 0.5)
+        
+        // time results
+        let timeInterval = Date().timeIntervalSince(timeStarted)
+        let timeStamp = String(format: "%.\(String(3))f", timeInterval)        
+        print("\n[SKTilemap]: tilemap rendered in: \(timeStamp)s\n")
+        
+        // dump the output of the current map to stdout
+        if (verbose == true) {
+            debugLayers()
+        }
+    }
+    
+    /**
+     Called when parser begins rendering a layer.
+     
+     - parameter layer: `TiledLayerObject` layer instance.
+     */
+    open func tileLayerDidBeginRendering(layer: TiledLayerObject) {
+        layer.opacity = 0
+        layer.isRendered = false
+    }
+    
+    /**
+     Called when parser finishes rendering a layer.
+     
+     - parameter layer:    `TiledLayerObject` layer instance.
+     - parameter duration: `TimeInterval` fade-in duration.
+     */
+    open func tileLayerDidFinishRendering(layer: TiledLayerObject, duration: TimeInterval=0) {
+        layer.parseProperties(completion: nil)
     }
 }
 
@@ -1140,7 +1191,7 @@ extension SKTilemap {
         let largestName = layerNames().max() { (a, b) -> Bool in a.characters.count < b.characters.count }
         
         // format the header
-        let tilemapHeaderString = "# Tilemap \"\(name!)\": \(layerCount) Layers:"
+        let tilemapHeaderString = "# Tilemap \"\(name!)\": \(tileCount) Tiles: \(layerCount) Layers"
         let filled = String(repeating: "-", count: tilemapHeaderString.characters.count)
         print("\n\(tilemapHeaderString)\n\(filled)")
         

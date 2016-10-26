@@ -17,6 +17,8 @@ class GameViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let appDelegate = NSApplication.shared().delegate as! AppDelegate
+        
         // load demo files from a propertly list
         demoFiles = loadDemoFiles("DemoFiles")
         
@@ -24,9 +26,12 @@ class GameViewController: NSViewController {
 
         
         // Configure the view.
+        
         let skView = self.view as! SKView
+        #if DEBUG
         skView.showsFPS = true
         skView.showsNodeCount = true
+        #endif
         
         /* Sprite Kit applies additional optimizations to improve rendering performance */
         skView.ignoresSiblingOrder = true
@@ -70,7 +75,16 @@ class GameViewController: NSViewController {
             if let tilemap = currentScene.tilemap {
                 currentFilename = tilemap.name!
             }
+            // cleanup scene
+            currentScene.enumerateChildNodes(withName: "//") {
+                node, stop in
+                node.removeAllActions()
+                node.removeAllChildren()
+                node.removeFromParent()
+            }
+            
             currentScene.removeFromParent()
+            currentScene.removeAllActions()
         }
         
         view.presentScene(nil)
@@ -118,5 +132,4 @@ class GameViewController: NSViewController {
         }
         return result
     }
-    
 }

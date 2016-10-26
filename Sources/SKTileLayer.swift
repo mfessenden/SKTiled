@@ -105,8 +105,9 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     fileprivate var frameShape: SKShapeNode = SKShapeNode()
     fileprivate var grid: TiledLayerGrid!
     
-    internal var rendered: Bool = false
+    internal var isRendered: Bool = false
     open var antialiased: Bool = false
+    open var colorBlendFactor: CGFloat = 1.0
     
     /// Returns the position of layer origin point (used to place tiles).
     open var origin: CGPoint {
@@ -203,7 +204,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         }
         
         // set the layer's antialiasing based on tile size
-        self.antialiased = self.tilemap.tileSize.width > 20 ? true : false
+        self.antialiased = self.tilemap.tileSize.width > 16 ? true : false
         
         self.frameShape.isHidden = true
         addChild(grid)
@@ -224,7 +225,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         self.name = layerName
         
         // set the layer's antialiasing based on tile size
-        self.antialiased = self.tilemap.tileSize.width > 20 ? true : false
+        self.antialiased = self.tilemap.tileSize.width > 16 ? true : false
         
         self.frameShape.isHidden = true
         addChild(grid)
@@ -722,10 +723,29 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
     
     /**
-     Flatten (render) the tile layer.
+     Flatten (render) the layer.
      */
     fileprivate func flattenLayer() {
         /* override in subclass */
+    }
+    
+    // MARK: - Callbacks
+    /**
+     Called before the layer is rendered.
+     */
+    open func didBeginRendering() {
+        isRendered = false
+        opacity = 0
+    }
+    
+    /**
+     Called when the layer is finished rendering.
+     
+     - parameter duration: `TimeInterval` fade-in duration.
+     */
+    open func didFinishRendering(duration: TimeInterval=0) {
+        let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: duration)
+        run(fadeIn, completion: { self.isRendered = true })
     }
     
     override open var hashValue: Int {
@@ -759,6 +779,15 @@ open class SKTileLayer: TiledLayerObject {
     // container for the tile sprites
     fileprivate var tiles: TilesArray                   // array of tiles
     open var render: Bool = false                 // render tile layer as a single image
+    
+    override open var isPaused: Bool {
+        didSet {
+            tiles.forEach { tile in
+                tile?.color = self.color
+                tile?.colorBlendFactor = self.colorBlendFactor
+            }
+        }
+    }
     
     // MARK: - Init
     /**
@@ -834,11 +863,9 @@ open class SKTileLayer: TiledLayerObject {
      */
     open func getTiles(ofType type: String) -> [SKTile] {
         var result: [SKTile] = []
-        for tile in tiles {
-            if let tile = tile {
-                if let ttype = tile.tileData.properties["type"] , ttype == type {
-                    result.append(tile)
-                }
+        for tile in tiles where tile != nil {
+            if let ttype = tile!.tileData.properties["type"] , ttype == type {
+                result.append(tile!)
             }
         }
         return result
@@ -852,11 +879,9 @@ open class SKTileLayer: TiledLayerObject {
     */
     open func getTiles(withID id: Int) -> [SKTile] {
         var result: [SKTile] = []
-        for tile in tiles {
-            if let tile = tile {
-                if tile.tileData.id == id {
-                    result.append(tile)
-                }
+        for tile in tiles where tile != nil {
+            if tile!.tileData.id == id {
+                result.append(tile!)
             }
         }
         return result
@@ -870,12 +895,9 @@ open class SKTileLayer: TiledLayerObject {
      */
     open func getTilesWithProperty(_ named: String, _ value: AnyObject) -> [SKTile] {
         var result: [SKTile] = []
-        for tile in tiles {
-            if let tile = tile {
-                if let pvalue = tile.tileData.properties[named] , pvalue == value as! String {
-                    result.append(tile)
-                }
-                
+        for tile in tiles where tile != nil {
+            if let pvalue = tile!.tileData.properties[named] , pvalue == value as! String {
+                result.append(tile!)
             }
         }
         return result
@@ -908,11 +930,9 @@ open class SKTileLayer: TiledLayerObject {
      */
     open func getTileData(withProperty named: String) -> [SKTilesetData] {
         var result: [SKTilesetData] = []
-        for tile in tiles {
-            if let tile = tile {
-                if tile.tileData.hasKey(named) && !result.contains(tile.tileData) {
-                    result.append(tile.tileData)
-                }
+        for tile in tiles where tile != nil {
+            if tile!.tileData.hasKey(named) && !result.contains(tile!.tileData) {
+                result.append(tile!.tileData)
             }
         }
         return result
@@ -926,8 +946,8 @@ open class SKTileLayer: TiledLayerObject {
      - parameter data: `[Int]` tile data.
      - returns: `Bool` data was successfully added.
      */
-    open func setLayerData(_ data: [UInt32], completion: (() -> ())) -> Bool {
-        if !(data.count==size.count) {
+    open func setLayerData(_ data: [UInt32], completion: (_ layer: SKTileLayer) -> ()) -> Bool {
+        if !(data.count == size.count) {
             print("[SKTileLayer]: ERROR: invalid data size: \(data.count), expected: \(size.count)")
             return false
         }
@@ -948,14 +968,12 @@ open class SKTileLayer: TiledLayerObject {
             }
         }
 
-    
-        //print("[SKTileLayer]: layer \"\(name!)\" rendered, \(self.tiles.flatMap({$0}).count) tiles added.")
         if (errorCount != 0){
             print("[SKTileLayer]: WARNING: layer \"\(name!)\": \(errorCount) \(errorCount > 1 ? "errors" : "error") loading data.")
         }
     
-        
-        completion()
+        // run the completion handler
+        completion(self)
         return errorCount == 0
     }
     
@@ -1140,10 +1158,8 @@ open class SKTileLayer: TiledLayerObject {
      - parameter overlap: `CGFloat` tile overlap value.
      */
     open func setTileOverlap(_ overlap: CGFloat) {
-        for tile in tiles {
-            if let tile = tile {
-                tile.setTileOverlap(overlap)
-            }
+        for tile in tiles where tile != nil {
+            tile!.setTileOverlap(overlap)
         }
     }
     
@@ -1155,10 +1171,8 @@ open class SKTileLayer: TiledLayerObject {
      - parameter fileNamed: `String` shader file name.
      */
     open func setShader(fileNamed: String) {
-        for tile in tiles {
-            if let tile = tile {
-                tile.setTileShader(shaderFile: fileNamed)
-            }
+        for tile in tiles where tile != nil {
+            tile!.setTileShader(shaderFile: fileNamed)
         }
     }
 }
@@ -1281,7 +1295,7 @@ open class SKObjectGroup: TiledLayerObject {
      - returns: `SKTileObject?` added object.
      */
     open func addObject(_ object: SKTileObject, withColor: SKColor? = nil) -> SKTileObject? {
-        if objects.contains(where: { $0.hashValue == object.hashValue }) {
+        if objects.contains( where: { $0.hashValue == object.hashValue } ) {
             return nil
         }
         
@@ -1417,6 +1431,16 @@ open class SKObjectGroup: TiledLayerObject {
     open func getObjects(ofType type: String) -> [SKTileObject] {
         return objects.filter( {$0.type == type})
     }
+    
+    /**
+     Return objects matching a given name.
+     
+     - parameter named: `String` object name.
+     - returns: `[SKTileObject]` array of matching objects.
+     */
+    open func getObjects(named: String) -> [SKTileObject] {
+        return objects.filter( {$0.name == named})
+    }
 }
 
 
@@ -1541,8 +1565,7 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
                 if (gridTexture == nil) {
                     let gridImage = drawGrid(self.layer, scale: imageScale)
                     gridTexture = SKTexture(cgImage: gridImage)
-                    let textureFilter: SKTextureFilteringMode = (layer.antialiased == true) ? .linear : .nearest
-                    gridTexture.filteringMode = textureFilter
+                    gridTexture.filteringMode = .linear
                 }
                 
                 

@@ -23,7 +23,7 @@ public protocol SKTiledObject: Hashable {
     var uuid: String { get set }
     /// Properties shared by most objects.
     var properties: [String: String] { get set }
-    func parseProperties()
+    func parseProperties(completion: (() -> ())?)
 }
 
 

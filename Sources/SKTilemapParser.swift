@@ -20,6 +20,7 @@ internal enum ParsingError: Error {
 }
 
 
+/// File types recognized by the parser
 internal enum FileType: String {
     case tmx
     case tsx
@@ -27,7 +28,7 @@ internal enum FileType: String {
 }
 
 
-internal enum CompressionType {
+internal enum CompressionType: String {
     case uncompressed
     case zlib
     case gzip
@@ -65,6 +66,11 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     fileprivate var tileData: [UInt32] = []                         // last tile data read
     fileprivate var characterData: String = ""                      // current tile data (string)
     
+    fileprivate var compression: CompressionType = .uncompressed    // compression type
+    fileprivate var timer: Date = Date()                            // timer
+    
+    // MARK: - Loading
+    
     /**
      Load a TMX file and parse it.
      
@@ -77,14 +83,14 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             return nil
         }
         
-        let timer = Date()        
+        timer = Date()
         fileNames.append(targetFile)
                 
         while !(fileNames.isEmpty) {
             if let firstFileName = fileNames.first {
                 
                 currentFileName = firstFileName
-                fileNames.remove(at: 0)
+                defer { fileNames.remove(at: 0) }
                 
                 guard let path: String = Bundle.main.path(forResource: currentFileName! , ofType: nil) else {
                     print("[SKTilemapParser]: no path for: \"\(currentFileName!)\"")
@@ -93,7 +99,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 
                 let data: Data = try! Data(contentsOf: URL(fileURLWithPath: path))
                 let parser: XMLParser = XMLParser(data: data)
-                // this should speed up parsing (hopefully)
+
                 parser.shouldResolveExternalEntities = false
                 parser.delegate = self
                 
@@ -104,7 +110,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     filetype = ftype.description
                 }
                 
-                print("\n[SKTilemapParser]: reading \(filetype): \"\(currentFileName!)\"")
+                print("[SKTilemapParser]: reading \(filetype): \"\(currentFileName!)\"")
                 
                 let successs: Bool = parser.parse()
                 // report errors
@@ -118,21 +124,12 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 }
             }
         }
-        // kill tileset data
+        
+        // reset tileset data
         externalTilesets = [:]
         
-        // render tile layers
-        renderTileLayers()
-        renderObjects()
-        
-        // set baseLayer zPosition here
-        tilemap.baseLayer.zPosition = tilemap.lastZPosition + (tilemap.zDeltaForLayers * 0.5)
-        
-        // time results
-        let timeInterval = Date().timeIntervalSince(timer)
-        let timeStamp = String(format: "%.\(String(3))f", timeInterval)
-        
-        print("\n[SKTilemapParser]: tile map loaded in: \(timeStamp)s\n")
+        // render and complete
+        didFinishParsing()
         return tilemap
     }
     
@@ -156,47 +153,68 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         }
         return nil
     }
+
+    // MARK: - Callbacks
     
     /**
      Post-process to render each layer.
      */
-    fileprivate func renderTileLayers() {
+    fileprivate func didFinishParsing(duration: TimeInterval=0.05) {
         guard let tilemap = tilemap else { return }
         
-        let queue = DispatchQueue(label: "com.sktiled.gcd.serial", attributes: .concurrent, target: .main)
-        let group = DispatchGroup()
+        // worker queue
+        let queue = DispatchQueue.global(qos: .userInitiated )
         
-        queue.async (group: group){
-            for (uuid, tileData) in self.data {
-                guard let tileLayer = tilemap.getLayer(withID: uuid) as? SKTileLayer else { continue }
-                // add the layer data...
-                let layerResult = tileLayer.setLayerData(tileData, completion: { print("layer \(tileLayer.name!) completed, \(tileLayer.tileCount) tiles rendered.")} )
-                tileLayer.parseProperties()
+        // create a group for each tile layer
+        let tileGroup = DispatchGroup()
+        
+        queue.async(group: tileGroup){
+            
+            for layer in tilemap.allLayers() {
                 
-                // report errors
-                if tileLayer.gidErrors.count > 0 {
-                    let gidErrorString : String = tileLayer.gidErrors.reduce("", { "\($0)" == "" ? "\($1)" : "\($0)" + ", " + "\($1)" })
-                    print("[SKTilemapParser]: WARNING: layer \"\(tileLayer.name!)\": the following gids could not be found: \(gidErrorString)")
+                // render object groups
+                if let objectGroup = layer as? SKObjectGroup {
+                    objectGroup.drawObjects()
+                    objectGroup.didFinishRendering()
+                    continue
                 }
                 
-                //print("[SKTilemapParser]: layer \"\(tileLayer.name!)\" rendered, \(tileLayer.tileCount) tiles added.")
+                // render image layers
+                if let imageLayer = layer as? SKImageLayer {
+                    imageLayer.didFinishRendering()
+                    continue
+                }
+                
+                // render tile layers
+                if let tileLayer = layer as? SKTileLayer {
+                    
+                    guard let tileData = self.data[tileLayer.uuid] else { continue }
+
+                    // add the layer data and completion handler
+                    let _ = tileLayer.setLayerData(tileData, completion: { (_ layer: SKTileLayer) -> Void in
+                        // run the tilemap completion handler
+                        tileLayer.didFinishRendering(duration: duration)
+                    })
+                    
+                    // callback to signal that a layer is rendered
+                    queue.async(group: tileGroup){
+                        tilemap.tileLayerDidFinishRendering(layer: tileLayer)
+                    }
+                
+                    // report errors
+                    if tileLayer.gidErrors.count > 0 {
+                        let gidErrorString : String = tileLayer.gidErrors.reduce("", { "\($0)" == "" ? "\($1)" : "\($0)" + ", " + "\($1)" })
+                        print("[SKTilemapParser]: WARNING: layer \"\(tileLayer.name!)\": the following gids could not be found: \(gidErrorString)")
+                    }
+                    continue
+                }
             }
         }
         
-        
-        group.notify(queue: DispatchQueue.main) {
-            // reset the data
+        // reset the data property when all layers are rendered & run a callback on the tilemap node
+        tileGroup.notify(queue: DispatchQueue.main) {
             self.data = [:]
-        }
-    }
-    
-    /**
-     Post-process to draw all objects.
-     */
-    fileprivate func renderObjects() {
-        guard let tilemap = tilemap else { return }
-        for objectGroup in tilemap.objectGroups {
-            objectGroup.drawObjects()
+            self.tilemap.didFinishParsing(timeStarted: self.timer)
         }
     }
     
@@ -240,6 +258,8 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             let currentBasename = currentFileName.components(separatedBy: ".").first!
             self.tilemap.filename = currentBasename
             self.tilemap.name = currentBasename
+            // run setup functions on tilemap
+            self.tilemap.didBeginParsing()
             lastElement = tilemap
         }
         
@@ -463,6 +483,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     if (currentID != nil) {
                         if let currentObject = objectsgroup.getObject(withID: currentID!) {
                             currentObject.addPoints(coordinates)
+                            //currentObject.drawObject()
                         }
                     }
                 }
@@ -483,6 +504,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     if (currentID != nil) {
                         if let currentObject = objectsgroup.getObject(withID: currentID!) {
                             currentObject.addPoints(coordinates, closed: false)
+                            //currentObject.drawObject()
                         }
                     }
                 }
@@ -515,10 +537,13 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 self.encoding = TilemapEncoding(rawValue: encoding)!
             }
             
-            // compression is not yet supported...
-            if let compression = attributeDict["compression"] {
+            // compression algorithms
+            if let ctype = attributeDict["compression"] {
                 //throw ParsingError.Compression(value: compression)
-                fatalError("compression type: \(compression) not supported.")
+                guard let compression = CompressionType(rawValue: ctype) else {
+                    fatalError("compression type: \(ctype) not supported.")
+                }
+                self.compression = compression
             }
         }
     }
@@ -535,18 +560,18 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         if elementName == "properties" {
             if let tilemap = lastElement as? SKTilemap {
                 tilemap.properties = properties
-                tilemap.parseProperties()
+                tilemap.parseProperties(completion: nil)
             }
             
             if let tileLayer = lastElement as? TiledLayerObject {
                 tileLayer.properties = properties
-                //tileLayer.parseProperties()   // moved this to render
+                //tileLayer.parseProperties(completion: nil)   // moved this to render
             }
             
             if let tileset = lastElement as? SKTileset {
                 if (currentID == nil){
                     tileset.properties = properties
-                    tileset.parseProperties()
+                    tileset.parseProperties(completion: nil)
                     
                 } else {
                     
@@ -555,7 +580,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                         for (key, value) in properties {
                             tileData.properties[key] = value
                         }
-                        tileData.parseProperties()
+                        tileData.parseProperties(completion: nil)
                         properties = [:]
                     }
                 }
@@ -579,7 +604,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             
             if (encoding == .base64) {
                 foundData = true
-                if let dataArray = decode(base64String: characterData) {                    
+                if let dataArray = decode(base64String: characterData, compression: self.compression) {
                     for id in dataArray {
                         tileData.append(id)
                     }
@@ -635,7 +660,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 if (currentID != nil) {
                     if let lastObject = objectsgroup.getObject(withID: currentID!) {
                         lastObject.properties = properties
-                        lastObject.parseProperties()
+                        lastObject.parseProperties(completion: nil)
                         properties = [:]
                     }
                 }
@@ -672,26 +697,35 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     
     /**
      Decode Base64-formatted data.
+     
+     Data is saved in tiled:
+        - data array is compressed (zlib, gzip)
+        - compressed data is encoded in base64
+        - data is saved
 
-     - parameter data: `String` Base64 formatted data to decode
+     - parameter data:        `String` Base64 formatted data to decode
+     - parameter compression: `CompressionType` compression type.
      - returns: `[UInt32]?` parsed data.
      */
     private func decode(base64String data: String, compression: CompressionType = .uncompressed) -> [UInt32]? {
-        if let decodedData = Data(base64Encoded: data, options: .ignoreUnknownCharacters) {
+        guard let decodedData = Data(base64Encoded: data, options: .ignoreUnknownCharacters) else {
+            print("Error: data is not base64 encoded.")
+            return nil
+        }
+        
+        switch compression {
+        case .zlib, .gzip:
+            if let decompressed = try? decodedData.gunzipped() {
+                return decompressed.toArray(type: UInt32.self)
+            }
+
+        default:
             return decodedData.toArray(type: UInt32.self)
         }
-        return nil
-    }
-    
-    private func decode(zlibData data: String) -> String? {
-        return nil
-    }
-    
-    private func decode(gzipData data: String) -> String? {
+        
         return nil
     }
 }
-
 
 
 

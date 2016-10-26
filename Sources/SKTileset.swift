@@ -150,8 +150,10 @@ open class SKTileset: SKTiledObject {
         self.source = sourceFilename
         
         let sourceTexture = SKTexture(imageNamed: self.source!)
+        let textureSize = sourceTexture.size()
+        
         sourceTexture.filteringMode = .nearest
-        print("[SKTileset]: adding sprite sheet source: \"\(self.source!)\", \(sourceTexture.size().roundTo())")
+        print("[SKTileset]: adding sprite sheet source: \"\(self.source!)\": (\(Int(textureSize.width)) x \(Int(textureSize.height)))")
         
         let textureWidth = Int(sourceTexture.size().width)
         let textureHeight = Int(sourceTexture.size().height)
@@ -215,7 +217,7 @@ open class SKTileset: SKTiledObject {
         
         let data = SKTilesetData(tileId: tileID, texture: texture, tileSet: self)
         self.tileData.insert(data)
-        data.parseProperties()
+        data.parseProperties(completion: nil)
         return data
     }
     
@@ -243,7 +245,7 @@ open class SKTileset: SKTiledObject {
         // add the image name to the source attribute
         data.source = source
         self.tileData.insert(data)
-        data.parseProperties()
+        data.parseProperties(completion: nil)
         return data
     }
     

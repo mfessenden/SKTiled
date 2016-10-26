@@ -24,6 +24,7 @@ If you are using the v0.17 of Tiled or newer, *SKTiled* supports the new **color
       minZoom             (Float)     - minimum camera zoom.
       ignoreBackground    (Bool)      - ignore Tiled scene background color.
       antialiasLines      (Bool)      - antialias lines.
+      autoResize          (Bool)      - automatically resize the map to best fit the view.
 
     TiledLayerObject:
       antialiasing        (Bool)      - antialias lines.

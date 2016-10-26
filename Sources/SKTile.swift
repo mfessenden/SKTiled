@@ -22,12 +22,13 @@ public class SKTile: SKSpriteNode {
     open var tileSize: CGSize                           // tile size
     open var highlightColor: SKColor = SKColor.white    // tile highlight color
     
-    // blending/visibility
+    /// Opacity value of the tile
     open var opacity: CGFloat {
         get { return self.alpha }
         set { self.alpha = newValue }
     }
     
+    /// Visibility value of the tile
     open var visible: Bool {
         get { return !self.isHidden }
         set { self.isHidden = !newValue }

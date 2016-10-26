@@ -21,6 +21,19 @@ Simply drag the *Sources* directory into your Xcode project, and add the files t
 
 Alternately, you can include this directory in your project's workspace.
 
+### Linking zlib
+
+You'll need to add a path to the zlib module in your project under **Import Paths:**
+
+*Project > Build Settings > Swift Compiler - Search Paths > Import Paths*
+
+Add the following to the project:
+
+`$(SRCROOT)/Sources`
+
+
+![zlib compression](docs/Images/zlib_linking.png)
+
 ## Usage
 
 Loading a tilemap is simple:
@@ -197,17 +210,13 @@ let walkableTiles = tilemap.getTilesWithProperty("walkable", "1")
 ##Features
 
 - iOS & macOS versions
+- parses compressed data (base64, zlib, gzip)
 - renders all Tiled layer types (tile, object, image)
 - custom properties for maps, layers, objects & tiles
 - parses inline & external tilesets
 - render tile layers as a single sprite
 - render animated tiles
 - render flipped tiles
-
-
-##Limitations
-
-- cannot parse data compressed with gzip/zlib compression.
 
 
 ##Upcoming Features
@@ -217,7 +226,7 @@ let walkableTiles = tilemap.getTilesWithProperty("walkable", "1")
 - objects containing images
 
 ##Acknowledgements
-
+- Decompression functions based on: [GZipSwift](https://github.com/1024jp/GzipSwift)
 - [Steffen Itterheim](http://www.learn-cocos2d.com) creator of TilemapKit, the inspiration for this project
 - [Kenney Vleugels](http://www.kenney.nl) for use of his spritesheet assets.
 - [Amit Patel](http://www-cs-students.stanford.edu/~amitp/gameprog.html) for his excellent tutorials on tile-based game logic

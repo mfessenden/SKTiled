@@ -54,7 +54,17 @@ class GameViewController: UIViewController {
             if let tilemap = currentScene.tilemap {
                 currentFilename = tilemap.name!
             }
+            
+            // cleanup scene
+            currentScene.enumerateChildNodes(withName: "//") {
+                node, stop in
+                node.removeAllActions()
+                node.removeAllChildren()
+                node.removeFromParent()
+            }
+            
             currentScene.removeFromParent()
+            currentScene.removeAllActions()
         }
         
         view.presentScene(nil)
@@ -72,11 +82,11 @@ class GameViewController: UIViewController {
     }
     
 
-    override var shouldAutorotate : Bool {
+    override var shouldAutorotate: Bool {
         return true
     }
 
-    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
             return .allButUpsideDown
         } else {
@@ -89,7 +99,7 @@ class GameViewController: UIViewController {
         // Release any cached data, images, etc that aren't in use.
     }
 
-    override var prefersStatusBarHidden : Bool {
+    override var prefersStatusBarHidden: Bool {
         return true
     }
     

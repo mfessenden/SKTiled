@@ -27,7 +27,19 @@ If you're using one of the older toolchains, you'll need to enable the **Use Leg
 
 ![Xcode installation](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/installation.png)
 
-That's it!
+
+### Compression
+
+You'll need to add a path to the zlib module in your project under **Import Paths:**
+
+*Project > Build Settings > Swift Compiler - Search Paths > Import Paths*
+
+Add the following to the project:
+
+`$(SRCROOT)/Sources`
+
+
+![zlib compression](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/zlib_linking.png)
  
 
 ##Adding Tiled Assets

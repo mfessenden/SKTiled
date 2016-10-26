@@ -12,8 +12,6 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
-    
-    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
     }
@@ -26,5 +24,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return true
     }
     
-    
+    var viewController: GameViewController? {
+        if let window = NSApplication.shared().mainWindow {
+            if  let controller = window.contentViewController as? GameViewController {
+                return controller
+            }
+        }
+        return nil
+    }
 }

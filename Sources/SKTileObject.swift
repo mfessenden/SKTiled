@@ -171,7 +171,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     }
     
     /**
-     Draw the object path.
+     Render the object.
      */
     public func drawObject() {
         guard let layer = layer else { return }
