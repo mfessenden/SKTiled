@@ -29,7 +29,7 @@ for layer in tilemap.objectLayers {
 To visualize the current grid on any layer type, use the layer's `showGrid` property:
 
 
-![Show Grid](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/showGrid.gif)
+![Show Grid](https://raw.githubusercontent.com/mfessenden/SKTiled/iOS10/docs/Images/showGrid.gif)
 
 
 ```swift
@@ -68,6 +68,14 @@ All `TiledLayerObject` objects allow you to visualize the layer's boundary:
 ```swift
 tileLayer.drawBounds()
 ```
+
+###Debugging Layers
+
+To see a quick overview of the current tilemap's layers, use the `SKTilemap.debugLayers` method: 
+
+![Debug Layers](https://raw.githubusercontent.com/mfessenden/SKTiled/iOS10/docs/Images/debugLayers.png)
+
+Data shown includes layer index, size, positioning, offset, z-position and anchor point.
 
 
 ###Debugging Colors

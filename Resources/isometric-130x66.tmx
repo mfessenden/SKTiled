@@ -203,7 +203,7 @@
    eJxjYBgFgwkAAAGQAAE=
   </data>
  </layer>
- <objectgroup color="#e10000" name="Locations" visible="0">
+ <objectgroup color="#e10000" name="Locations">
   <properties>
    <property name="lineWidth" type="float" value="4"/>
   </properties>

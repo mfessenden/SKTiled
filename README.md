@@ -2,10 +2,16 @@
 
 **SKTiled** is a simple library for using [Tiled](http://www.mapeditor.org) files with Apple's SpriteKit, allowing the creation of game assets from .tmx files. Inspired by [TilemapKit](http://tilemapkit.com) and written purely in Swift 2.0, I began working on this for a project after the development of TilemapKit was halted. While initially created as an exercise in learning Apple's new programming language, I've decided to open-source it in case others find it helpful.  
 
+
+**SKTiled** supports most Tiled features, with custom features that take advantage of Apple's SpriteKit API. 
+
+
+![SKTiled Intro](docs/Images/intro.gif)
+
 Check out the [official documentation](https://mfessenden.github.io/SKTiled).
 
 
-For Swift 3/iOS10/OSX 10.11. See [this branch](https://github.com/mfessenden/SKTiled/tree/master) for Swift 2.2+ version.
+For Swift 3/iOS10/OSX 10.11+. See [this branch](https://github.com/mfessenden/SKTiled/tree/master) for Swift 2.3+ version.
 
 ![](https://img.shields.io/badge/Swift-3.0-brightgreen.svg)
 [![Build Status](https://travis-ci.org/mfessenden/SKTiled.svg?branch=iOS10)](https://travis-ci.org/mfessenden/SKTiled)
@@ -222,6 +228,8 @@ let walkableTiles = tilemap.getTilesWithProperty("walkable", "1")
 ##Upcoming Features
 
 - multi-threaded rendering
+- generate GKGridGraph graphs based on custom tile attributes (iOS10)
+- user-definable cost properties for GKGridGraph nodes (iOS10)
 - custom tile classes
 - objects containing images
 

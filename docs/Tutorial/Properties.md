@@ -1,7 +1,7 @@
 #Custom Properties
 
 One of the most powerful features of *SKTiled* is the ability to exploit Tiled's custom properties for most objects. 
-All objects that conform to the `TiledObject` protocol have methods for parsing Tiled object properties. Tiled property values are all encoded as strings. **SKTiled** will attempt to parse the intended type, but be sure to check the type of property you are querying.
+All objects that conform to the [`SKTiledObject`](Protocols/SKTiledObject.html) protocol have methods for parsing Tiled object properties. Tiled property values are all encoded as strings. **SKTiled** will attempt to parse the intended type, but be sure to check the type of property you are querying.
 
 If you are using the v0.17 of Tiled or newer, *SKTiled* supports the new **color** and **file** property types (values are stored as strings internally anyway, which *SKTiled* already supports). The custom color/file types listed above will also be parsed if they are created as string types in Tiled.
 
@@ -57,5 +57,6 @@ If you are using the v0.17 of Tiled or newer, *SKTiled* supports the new **color
     ** not yet implemented
 
 
- Next: [Debugging](debugging.html) - [Index](Tutorial.html)
+<!--- Next: [GameplayKit](gameplaykit.html) - [Index](Tutorial.html) --->
 
+ Next: [Debugging](debugging.html) - [Index](Tutorial.html)

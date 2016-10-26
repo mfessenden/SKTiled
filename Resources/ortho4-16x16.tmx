@@ -218,7 +218,7 @@
    eJzVkcEJACEMBGORp/134kdQdBNmn7eQj8bJECN2vhZP1BlNxruLcpxeOr/yUj1kruOa7SDjER+Hd3o4jpVf9UbdO/+heAPy+qrqrx0/xSP7y2YRHg3Z3x8zAd69Jak=
   </data>
  </layer>
- <objectgroup name="Locations">
+ <objectgroup name="Locations" visible="0">
   <properties>
    <property name="lineWidth" type="float" value="1.5"/>
   </properties>

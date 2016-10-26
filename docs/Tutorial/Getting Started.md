@@ -17,7 +17,7 @@ Check out the [master](https://github.com/mfessenden/SKTiled/tree/master) branch
 
 If you're using one of the older toolchains, you'll need to enable the **Use Legacy Swift Language Version** option in the project **Build Settings.**
 
-![Legacy Swift Version](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/swift_legacy.png)
+![Legacy Swift Version](https://raw.githubusercontent.com/mfessenden/SKTiled/iOS10/docs/Images/swift_legacy.png)
 
 
 ##Installation
@@ -25,10 +25,10 @@ If you're using one of the older toolchains, you'll need to enable the **Use Leg
 - Copy the *Sources* directory to your project (or drag the individual files).
 - Set the appropriate Swift language target.
 
-![Xcode installation](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/installation.png)
+![Xcode installation](https://raw.githubusercontent.com/mfessenden/SKTiled/iOS10/docs/Images/installation.png)
 
 
-### Compression
+### Linking zlib
 
 You'll need to add a path to the zlib module in your project under **Import Paths:**
 
@@ -39,7 +39,7 @@ Add the following to the project:
 `$(SRCROOT)/Sources`
 
 
-![zlib compression](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/zlib_linking.png)
+![zlib compression](https://raw.githubusercontent.com/mfessenden/SKTiled/iOS10/docs/Images/zlib_linking.png)
  
 
 ##Adding Tiled Assets

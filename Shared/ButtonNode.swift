@@ -28,7 +28,7 @@ open class ButtonNode: SKSpriteNode {
     open var selectedTexture: SKTexture!
     open var defaultTexture: SKTexture! {
         didSet {
-            defaultTexture.filteringMode = .nearest
+            defaultTexture.filteringMode = .linear
             self.texture = defaultTexture
         }
     }
@@ -49,8 +49,8 @@ open class ButtonNode: SKSpriteNode {
         defaultTexture = SKTexture(imageNamed: defaultImage)
         selectedTexture = SKTexture(imageNamed: highlightImage)
         
-        defaultTexture.filteringMode = .nearest
-        selectedTexture.filteringMode = .nearest
+        defaultTexture.filteringMode = .linear
+        selectedTexture.filteringMode = .linear
         
         super.init(texture: defaultTexture, color: SKColor.clear, size: defaultTexture.size())
         isUserInteractionEnabled = true
@@ -61,8 +61,8 @@ open class ButtonNode: SKSpriteNode {
         selectedTexture = highlightTexture
         buttonAction = action
         
-        defaultTexture.filteringMode = .nearest
-        selectedTexture.filteringMode = .nearest
+        defaultTexture.filteringMode = .linear
+        selectedTexture.filteringMode = .linear
         
         super.init(texture: defaultTexture, color: SKColor.clear, size: texture.size())
         isUserInteractionEnabled = true

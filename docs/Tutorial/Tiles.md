@@ -28,7 +28,7 @@ let fireTiles = tilemap.getTilesWithProperty("type", "Fire" as AnyObject)
 
 ##Adding Tiles
 
-To add a new tile using a GID, use the [`SKTileLayer.addTileAt`](Classes/SKTileLayer.html#addTileAt) method to add it to the current layer:
+To add a new tile using a GID, use the [`SKTileLayer.addTileAt`](Classes/SKTileLayer.html#/s:FC7SKTiled11SKTileLayer9addTileAtFTSiSi3gidGSqSi__GSqCS_6SKTile_) method to add it to the current layer:
 
 ```swift
 if let tile = tileLayer.addTile(at: 5, 8, gid: 32) {

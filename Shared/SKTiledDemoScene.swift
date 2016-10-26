@@ -505,6 +505,15 @@ extension SKTiledDemoScene {
             }
         }
         
+        // 'H' hides the HUD
+        if event.keyCode == 0x04 {
+            for button in buttons{
+                if (button.isHidden == false) {
+                    button.alpha = button.alpha != 0 ? 0 : 1.0
+                }
+            }
+        }
+        
         // 'A', '0' reset the camera
         if event.keyCode == 0x00 || event.keyCode == 0x52 || event.keyCode == 0x1D {
             if let tilemap = tilemap {
