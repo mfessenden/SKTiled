@@ -127,7 +127,7 @@
             
             <a href='#working-with-objects' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='working-with-objects'>Working with Objects</h1>
 
-<p>By default, objects are not shown when rendered in <strong>SKTiled</strong>. To enable </p>
+<p>By default, objects are not shown when rendered in <strong>SKTiled</strong>. To enable them, set the <code>SKTilemap.showObjects</code> global attribute. This override has the advantage of allowing you to work in your Tiled scene with objects visible, but not see them in your game view.</p>
 
 <p>The <a href="Classes/SKTileObject.html"><code>SKTileObject</code></a> class represents a vector object in a object group layer. <strong>SKTiled</strong> objects just as they are in Tiled:</p>
 
@@ -143,7 +143,7 @@
 
 <p>Objects assigned a type in Tiled will retain that property in <strong>SKTiled</strong>, accessed with the optional <code>SKTileObject.type</code> property:</p>
 
-<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/object_types.png" alt="Tiled obeject types"></p>
+<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/iOS10/docs/Images/object_types.png" alt="Tiled obeject types"></p>
 
 <p>Objects assigned a type property can be queried from the parent <a href="Classes/SKObjectGroup.html"><code>SKObjectGroup</code></a>:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">emitterObjects</span> <span class="o">=</span> <span class="n">objectsGroup</span><span class="o">.</span><span class="nf">getObjects</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="s">"Emitter"</span><span class="p">)</span>
@@ -154,6 +154,11 @@
 </code></pre>
 
 <p>Note that this will return objects from multiple object layers.</p>
+<a href='#dynamics' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='dynamics'>Dynamics</h3>
+
+<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/iOS10/docs/Images/dynamics-start.png" alt="Object Dynamics"></p>
+
+<p>You also have the option of enabling physics for each object, allowing them to react as dynamics bodies in your scene. Enabling the <code>SKTileObject.isDynamic</code> property allows you to easily create dynamic objects in your scenes.</p>
 
 <p>Next: <a href="properties.html">Properties</a> - <a href="Tutorial.html">Index</a></p>
 

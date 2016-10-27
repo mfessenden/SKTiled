@@ -143,7 +143,7 @@
 
 <p>If you&rsquo;re using one of the older toolchains, you&rsquo;ll need to enable the <strong>Use Legacy Swift Language Version</strong> option in the project <strong>Build Settings.</strong></p>
 
-<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/swift_legacy.png" alt="Legacy Swift Version"></p>
+<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/iOS10/docs/Images/swift_legacy.png" alt="Legacy Swift Version"></p>
 <a href='#installation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='installation'>Installation</h2>
 
 <ul>
@@ -151,9 +151,18 @@
 <li>Set the appropriate Swift language target.</li>
 </ul>
 
-<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/installation.png" alt="Xcode installation"></p>
+<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/iOS10/docs/Images/installation.png" alt="Xcode installation"></p>
+<a href='#linking-zlib' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='linking-zlib'>Linking zlib</h3>
 
-<p>That&rsquo;s it!</p>
+<p>You&rsquo;ll need to add a path to the zlib module in your project under <strong>Import Paths:</strong></p>
+
+<p><em>Project &gt; Build Settings &gt; Swift Compiler - Search Paths &gt; Import Paths</em></p>
+
+<p>Add the following to the project:</p>
+
+<p><code>$(SRCROOT)/Sources</code></p>
+
+<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/iOS10/docs/Images/zlib_linking.png" alt="zlib compression"></p>
 <a href='#adding-tiled-assets' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='adding-tiled-assets'>Adding Tiled Assets</h2>
 
 <p>When adding maps (TMX files), images and tilesets (TSX files) to your Xcode project, you&rsquo;ll need to make sure to add the files as <em>groups</em> and not folder references as the assets are stored in the root of the app bundle when compiled.</p>

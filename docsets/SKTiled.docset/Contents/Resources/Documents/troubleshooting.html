@@ -126,6 +126,17 @@
           <section class="section">
             
             <a href='#troubleshooting' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='troubleshooting'>Troubleshooting</h1>
+<a href='#zlib-errors' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='zlib-errors'>zlib Errors</h3>
+
+<p>If you get a zlib import error, make sure you have linked zlib in your Xcode project:</p>
+
+<p><em>Project &gt; Build Settings &gt; Swift Compiler - Search Paths &gt; Import Paths</em></p>
+
+<p>Add a path that represents the SKTiled zlib module:</p>
+
+<p><code>$(SRCROOT)/Sources</code></p>
+
+<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/iOS10/docs/Images/zlib_linking.png" alt="zlib compression"></p>
 <a href='#xml-parsing-errors' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='xml-parsing-errors'>XML Parsing Errors</h3>
 
 <p>Sometimes the XML parser will throw errors with external tilesets that have been downloaded from the internet. Importing &amp; re-exporting the tileset should make the error go away.</p>
@@ -133,7 +144,7 @@
 
 <p>Occasionally you&rsquo;ll get a code signing error when compiling on OSX:</p>
 
-<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/codesign-error.png" alt="Codesign Error"></p>
+<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/iOS10/docs/Images/codesign-error.png" alt="Codesign Error"></p>
 
 <p>If you&rsquo;re using Photoshop to save images, you might need to cleanup Finder metadata. To check, browse to your images directory in shell and run the following command:</p>
 <pre class="highlight plaintext"><code>ls -al@
@@ -141,7 +152,7 @@
 
 <p>If any of your files have extra metadata that Xcode doesn&rsquo;t like, you&rsquo;ll see it listed below the file name:</p>
 
-<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/xattr-cleanup.png" alt="Image Metadata"></p>
+<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/iOS10/docs/Images/xattr-cleanup.png" alt="Image Metadata"></p>
 
 <p>Running the following command will clean up the extra data:</p>
 <pre class="highlight plaintext"><code>xattr -c *.png
