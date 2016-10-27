@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Troubleshooting  Reference</title>
+    <title>Other Enums  Reference</title>
     <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,7 +10,7 @@
     
   </head>
   <body>
-    <a title="Troubleshooting  Reference"></a>
+    <a title="Other Enums  Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="index.html">SKTiled Docs</a></p>
@@ -21,7 +21,7 @@
       <p id="breadcrumbs">
         <a href="index.html">SKTiled Reference</a>
         <img id="carat" src="img/carat.png" />
-        Troubleshooting  Reference
+        Other Enums  Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -132,46 +132,50 @@
       <article class="main-content">
         <section>
           <section class="section">
-            
-            <a href='#troubleshooting' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='troubleshooting'>Troubleshooting</h1>
-<a href='#linking-errors' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='linking-errors'>Linking Errors</h3>
+            <h1>Other Enums</h1>
+            <p>The following enums are available globally.</p>
 
-<p>If you get a zlib import error, make sure you have linked zlib in your Xcode project:</p>
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:O7SKTiled13LabelPosition"></a>
+                    <a name="//apple_ref/swift/Enum/LabelPosition" class="dashAnchor"></a>
+                    <a class="token" href="#/s:O7SKTiled13LabelPosition">LabelPosition</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Label description orientation.</p>
 
-<p><em>Project &gt; Build Settings &gt; Swift Compiler - Search Paths &gt; Import Paths</em></p>
+<ul>
+<li>above: labels are rendered above the object.</li>
+<li>below: labels are rendered below the object.</li>
+</ul>
 
-<p>Add a path that represents the SKTiled zlib module:</p>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">LabelPosition</span></code></pre>
 
-<p><code>$(SRCROOT)/Sources</code></p>
-
-<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/zlib_linking.png" alt="zlib compression"></p>
-
-<p>In your Xcode project file, the path entry will look like this:</p>
-
-<p><code>SWIFT_INCLUDE_PATHS = &quot;zlib&quot;;</code></p>
-<a href='#xml-parsing-errors' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='xml-parsing-errors'>XML Parsing Errors</h3>
-
-<p>Sometimes the XML parser will throw errors with external tilesets that have been downloaded from the internet. Importing &amp; re-exporting the tileset should make the error go away.</p>
-<a href='#code-signing-errors' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='code-signing-errors'>Code Signing Errors</h3>
-
-<p>Occasionally you&rsquo;ll get a code signing error when compiling on OSX:</p>
-
-<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/codesign-error.png" alt="Codesign Error"></p>
-
-<p>If you&rsquo;re using Photoshop to save images, you might need to cleanup Finder metadata. To check, browse to your images directory in shell and run the following command:</p>
-<pre class="highlight plaintext"><code>ls -al@
-</code></pre>
-
-<p>If any of your files have extra metadata that Xcode doesn&rsquo;t like, you&rsquo;ll see it listed below the file name:</p>
-
-<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/xattr-cleanup.png" alt="Image Metadata"></p>
-
-<p>Running the following command will clean up the extra data:</p>
-<pre class="highlight plaintext"><code>xattr -c *.png
-</code></pre>
-
-<p>Next: <a href="getting-started.html">Getting Started</a> - <a href="Tutorial.html">Index</a></p>
-
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L32-L35">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </section>
         </section>
         <section id="footer">
