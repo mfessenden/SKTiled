@@ -28,6 +28,7 @@ internal enum FileType: String {
 }
 
 
+/// Document compression type.
 internal enum CompressionType: String {
     case uncompressed
     case zlib

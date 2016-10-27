@@ -28,7 +28,7 @@ Passing custom properties in the Tiled scene can be used to create pathfinding g
 To automatically create a graph in one of your tile layers, you can simply add the *buildGraph* and *walkableIDs* properties on a tile layer in Tiled.
       
 
-![Walkable IDs](https://raw.githubusercontent.com/mfessenden/SKTiled/iOS10/docs/Images/walkable-ids.png)
+![Walkable IDs](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/walkable-ids.png)
       
 
 You can also initialize a layer's graph manually in your code:
@@ -52,14 +52,14 @@ node.weight = 10.0
 You can also pass the value through a property in Tiled with a float attribute *weight*:
 
 
-![Walkable IDs](https://raw.githubusercontent.com/mfessenden/SKTiled/iOS10/docs/Images/node-weight-property.png)
+![Walkable IDs](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/node-weight-property.png)
 
 
 ##Debugging the Graph
 
 To see a visual representation of any layer's pathfinding graph, use the `SKTileLayer.showGraph` property. Node weights will be represented by a heat map from gray to red:
 
-![Show Graph](https://raw.githubusercontent.com/mfessenden/SKTiled/iOS10/docs/Images/showGraph.gif)
+![Show Graph](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/showGraph.gif)
 
 
 ##Querying Neighbor Nodes*

@@ -95,6 +95,10 @@ public extension SKTilemap {
             if (attr == "autoResize") {
                 autoResize = boolForKey(attr)
             }
+            
+            if (attr == "showObjects") {
+                showObjects = boolForKey(attr)
+            }
         }
         
         if completion != nil { completion!() }

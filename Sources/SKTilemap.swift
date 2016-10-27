@@ -251,6 +251,8 @@ open class SKTilemap: SKNode, SKTiledObject{
         didSet {
             guard oldValue != showObjects else { return }
             for objectGroup in objectGroups {
+                // show any hidden object layers
+                objectGroup.visible = (showObjects == true) ? true : objectGroup.visible
                 objectGroup.showObjects = showObjects
             }
         }

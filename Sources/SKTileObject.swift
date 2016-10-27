@@ -23,7 +23,12 @@ public enum SKObjectType: String {
     case polyline
 }
 
+/**
+ Label description orientation.
 
+ - above: labels are rendered above the object.
+ - below: labels are rendered below the object.
+ */
 public enum LabelPosition {
     case above
     case below

@@ -53,6 +53,8 @@ If you are using the v0.17 of Tiled or newer, *SKTiled* supports the new **color
       color               (String)    - hex string to override object color.
       lineWidth           (Float)     - object line width.
       nodeClass           (String)    - object node class**
+      isDynamic           (Bool)      - object is dynamic.
+      mass                (Float)     - physics mass.
 
     ** not yet implemented
 

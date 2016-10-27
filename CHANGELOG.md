@@ -1,10 +1,17 @@
 Change Log
 ==========================
 
+1.0.4
+--------------------------
+
+#### Changes
+- add `SKTileObject.isDynamic` property
+
+
 1.0.3
 --------------------------
 
-### Changes
+#### Changes
 - add gzip & zlib decompression
 - add callbacks to SKTilemap, SKTiledParser
 - add completion handler to tile layer render

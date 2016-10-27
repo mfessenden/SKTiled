@@ -13,7 +13,7 @@ public class Player: SKTiledGeometry {
 
 To use your custom tile type, you'll need to create a custom string property in Tiled called **nodeClass** for the tile:
 
-![NodeClass](https://raw.githubusercontent.com/mfessenden/SKTiled/iOS10/docs/Images/nodeClass.png)
+![NodeClass](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/nodeClass.png)
 
 
 ##Custom Layer Types

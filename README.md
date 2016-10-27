@@ -1,6 +1,6 @@
 [![SKTiled](docs/Images/header.png)](https://mfessenden.github.io/SKTiled)
 
-**SKTiled** is a simple library for using [Tiled](http://www.mapeditor.org) files with Apple's SpriteKit, allowing the creation of game assets from .tmx files. Inspired by [TilemapKit](http://tilemapkit.com) and written purely in Swift 2.0, I began working on this for a project after the development of TilemapKit was halted. While initially created as an exercise in learning Apple's new programming language, I've decided to open-source it in case others find it helpful.  
+**SKTiled** is a simple library for using [Tiled](http://www.mapeditor.org) files with Apple's SpriteKit, allowing the creation of game assets from .tmx files. Inspired by [TilemapKit](http://tilemapkit.com) and written purely in Swift, I began working on this for a project after the development of TilemapKit was halted. While initially created as an exercise in learning Apple's new programming language, I've decided to open-source it in case others find it helpful.
 
 
 **SKTiled** supports most Tiled features, with custom features that take advantage of Apple's SpriteKit API. 
@@ -10,12 +10,16 @@
 
 Check out the [official documentation](https://mfessenden.github.io/SKTiled).
 
+## Requirements
 
-For Swift 3/iOS10/OSX 10.11+. See [this branch](https://github.com/mfessenden/SKTiled/tree/master) for Swift 2.3+ version.
+Xcode 8 and Swift 3. 
+
+See [this branch](https://github.com/mfessenden/SKTiled/tree/swift2) for Swift 2.3+ version.
+
 
 ![](https://img.shields.io/badge/Swift-3.0-brightgreen.svg)
-[![Build Status](https://travis-ci.org/mfessenden/SKTiled.svg?branch=iOS10)](https://travis-ci.org/mfessenden/SKTiled)
-[![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/mfessenden/SKTiled/blob/iOS10/LICENSE)
+[![Build Status](https://travis-ci.org/mfessenden/SKTiled.svg?branch=master)](https://travis-ci.org/mfessenden/SKTiled)
+[![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/mfessenden/SKTiled/blob/master/LICENSE)
 
 
 ##Installation

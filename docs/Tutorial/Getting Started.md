@@ -9,7 +9,7 @@
 - Xcode 8
 - Swift 2.3+
 
-Check out the [master](https://github.com/mfessenden/SKTiled/tree/master) branch for Swift 2.3, or the [iOS10](https://github.com/mfessenden/SKTiled/tree/iOS10) branch for Swift 3. Going forward, the minimum requirements will be pushed up to Swift 3/iOS10/macOS 10.11 as some features will require newer versions of Apple's tools.
+Check out the [master](https://github.com/mfessenden/SKTiled/tree/master) branch for Swift 2.3, or the [master](https://github.com/mfessenden/SKTiled/tree/master) branch for Swift 3. Going forward, the minimum requirements will be pushed up to Swift 3/master/macOS 10.11 as some features will require newer versions of Apple's tools.
 
 **SKTiled** should work with tvOS, though it has not yet been extensively tested.
 
@@ -17,7 +17,7 @@ Check out the [master](https://github.com/mfessenden/SKTiled/tree/master) branch
 
 If you're using one of the older toolchains, you'll need to enable the **Use Legacy Swift Language Version** option in the project **Build Settings.**
 
-![Legacy Swift Version](https://raw.githubusercontent.com/mfessenden/SKTiled/iOS10/docs/Images/swift_legacy.png)
+![Legacy Swift Version](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/swift_legacy.png)
 
 
 ##Installation
@@ -25,7 +25,7 @@ If you're using one of the older toolchains, you'll need to enable the **Use Leg
 - Copy the *Sources* directory to your project (or drag the individual files).
 - Set the appropriate Swift language target.
 
-![Xcode installation](https://raw.githubusercontent.com/mfessenden/SKTiled/iOS10/docs/Images/installation.png)
+![Xcode installation](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/installation.png)
 
 
 ### Linking zlib
@@ -39,7 +39,7 @@ Add the following to the project:
 `$(SRCROOT)/Sources`
 
 
-![zlib compression](https://raw.githubusercontent.com/mfessenden/SKTiled/iOS10/docs/Images/zlib_linking.png)
+![zlib compression](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/zlib_linking.png)
  
 
 ##Adding Tiled Assets

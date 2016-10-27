@@ -76,6 +76,8 @@ public class SKTiledDemoScene: SKTiledScene {
                 guard let tilemap = self.tilemap else { return }
                 let debugState = !tilemap.baseLayer.showGrid
                 tilemap.baseLayer.showGrid = debugState
+                
+                tilemap.baseLayer.drawBounds()
             })
             
             cameraNode.addChild(showGridButton)

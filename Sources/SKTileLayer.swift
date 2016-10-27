@@ -670,7 +670,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     /**
      Visualize the layer's bounds.
      */
-    fileprivate func drawBounds() {
+    public func drawBounds() {
         let objectPath: CGPath!
         
         switch orientation {
