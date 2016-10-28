@@ -166,10 +166,6 @@ public func lerp(start: CGPoint, end: CGPoint, t: CGFloat) -> CGPoint {
 
 public extension CGSize {
     
-    public init(width: Int, height: Int) {
-        self.init(width: CGFloat(width), height: CGFloat(height))
-    }
-    
     public var count: Int { return Int(width) * Int(height) }    
     public var halfSize: CGSize { return CGSize(width: width / 2, height: height / 2) }
     public var halfWidth: CGFloat { return width / 2.0 }
@@ -248,6 +244,15 @@ public extension SKScene {
 
 internal extension SKNode {
     
+    /**
+     Position the node by a percentage of the view size.
+     */
+    internal func posByCanvas(x: CGFloat, y: CGFloat) {
+        guard let scene = scene else { return }
+        guard let view = scene.view else { return }
+        self.position = scene.convertPoint(fromView: (CGPoint(x: CGFloat(view.bounds.size.width * x), y: CGFloat(view.bounds.size.height * (1.0 - y)))))
+    }
+    
     /// visualize a node's anchor point.
     internal var drawAnchor: Bool {
         get {
@@ -304,6 +309,7 @@ internal extension SKNode {
         }
     }
 }
+
 
 public extension SKColor {
     

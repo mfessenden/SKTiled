@@ -37,7 +37,7 @@ public protocol SKTiledSceneDelegate {
  - parameter cameraNode: `SKTiledSceneCamera!` scene camera node.
  - parameter tilemap:    `SKTilemap!` tile map node.
  */
-open class SKTiledScene: SKScene, SKTiledSceneDelegate {
+open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate {
     
     /// World container node.
     open var worldNode: SKNode!
@@ -68,12 +68,15 @@ open class SKTiledScene: SKScene, SKTiledSceneDelegate {
      */
     public init(size: CGSize, tmxFile: String) {
         super.init(size: size)
-        setupWorld()
         tmxFilename = tmxFile
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("[SKTiledScene]: Deinitializing...")
     }
     
     override open func sceneDidLoad() {
@@ -82,6 +85,9 @@ open class SKTiledScene: SKScene, SKTiledSceneDelegate {
 
     override open func didMove(to view: SKView) {
         guard let worldNode = worldNode else { return }
+        
+        physicsWorld.gravity = CGVector.zero
+        physicsWorld.contactDelegate = self
         
         // setup the camera
         setupCamera()

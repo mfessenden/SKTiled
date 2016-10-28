@@ -99,6 +99,14 @@ public extension SKTilemap {
             if (attr == "showObjects") {
                 showObjects = boolForKey(attr)
             }
+            
+            if (attr == "xGravity") {
+                gravity.dx = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : 0
+            }
+            
+            if (attr == "yGravity") {
+                gravity.dy = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : 0
+            }
         }
         
         if completion != nil { completion!() }

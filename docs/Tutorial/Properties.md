@@ -25,6 +25,8 @@ If you are using the v0.17 of Tiled or newer, *SKTiled* supports the new **color
       ignoreBackground    (Bool)      - ignore Tiled scene background color.
       antialiasLines      (Bool)      - antialias lines.
       autoResize          (Bool)      - automatically resize the map to best fit the view.
+      xGravity            (Float)     - gravity in x.
+      yGravity            (Float)     - gravity in y.
 
     TiledLayerObject:
       antialiasing        (Bool)      - antialias lines.
@@ -54,6 +56,7 @@ If you are using the v0.17 of Tiled or newer, *SKTiled* supports the new **color
       lineWidth           (Float)     - object line width.
       nodeClass           (String)    - object node class**
       isDynamic           (Bool)      - object is dynamic.
+      isCollider          (Bool)      - object is passive collision object.
       mass                (Float)     - physics mass.
 
     ** not yet implemented

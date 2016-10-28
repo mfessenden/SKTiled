@@ -69,6 +69,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     
     fileprivate var compression: CompressionType = .uncompressed    // compression type
     fileprivate var timer: Date = Date()                            // timer
+    fileprivate var finishedParsing: Bool = false
     
     // MARK: - Loading
     
@@ -131,6 +132,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         
         // render and complete
         didFinishParsing()
+        
         return tilemap
     }
     
@@ -160,7 +162,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     /**
      Post-process to render each layer.
      */
-    fileprivate func didFinishParsing(duration: TimeInterval=0.05) {
+    fileprivate func didFinishParsing(duration: TimeInterval=0.05)  {
         guard let tilemap = tilemap else { return }
         
         // worker queue
@@ -196,11 +198,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                         // run the tilemap completion handler
                         tileLayer.didFinishRendering(duration: duration)
                     })
-                    
-                    // callback to signal that a layer is rendered
-                    queue.async(group: tileGroup){
-                        tilemap.tileLayerDidFinishRendering(layer: tileLayer)
-                    }
                 
                     // report errors
                     if tileLayer.gidErrors.count > 0 {

@@ -1441,6 +1441,20 @@ open class SKObjectGroup: TiledLayerObject {
     open func getObjects(named: String) -> [SKTileObject] {
         return objects.filter( {$0.name == named})
     }
+    
+    /**
+     Called when the layer is finished rendering.
+     
+     - parameter duration: `TimeInterval` fade-in duration.
+     */
+    override open func didFinishRendering(duration: TimeInterval=0) {
+        super.didFinishRendering(duration: duration)
+        for object in objects {
+            if object.hasKey("isDynamic") {
+                
+            }
+        }
+    }
 }
 
 

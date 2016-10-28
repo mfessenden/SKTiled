@@ -21,12 +21,10 @@ class GameViewController: NSViewController {
         
         // load demo files from a propertly list
         demoFiles = loadDemoFiles("DemoFiles")
-        
         let currentFilename = demoFiles.first!
 
         
         // Configure the view.
-        
         let skView = self.view as! SKView
         #if DEBUG
         skView.showsFPS = true
@@ -49,9 +47,20 @@ class GameViewController: NSViewController {
     
     override func viewDidAppear() {
         super.viewDidAppear()
-        updateWindowTitle()
+        guard let view = self.view as? SKView else { return }
+        
+        if let currentScene = view.scene as? SKTiledScene {
+            if let tmxName = currentScene.tmxFilename {
+                updateWindowTitle(withFile: tmxName)
+            }
+        }
     }
     
+    /**
+     Mouse scroll wheel event handler.
+     
+     - parameter event: `NSEvent` mouse event.
+     */
     override func scrollWheel(with event: NSEvent) {
         guard let view = self.view as? SKView else { return }
         if let currentScene = view.scene as? SKTiledDemoScene {
@@ -66,21 +75,12 @@ class GameViewController: NSViewController {
      */
     func loadNextScene(_ interval: TimeInterval=0.4) {
         guard let view = self.view as? SKView else { return }
-        
         var debugMode = false
-        
         var currentFilename = demoFiles.first!
         if let currentScene = view.scene as? SKTiledDemoScene {
             debugMode = currentScene.debugMode
             if let tilemap = currentScene.tilemap {
                 currentFilename = tilemap.name!
-            }
-            // cleanup scene
-            currentScene.enumerateChildNodes(withName: "//") {
-                node, stop in
-                node.removeAllActions()
-                node.removeAllChildren()
-                node.removeFromParent()
             }
             
             currentScene.removeFromParent()
@@ -93,29 +93,27 @@ class GameViewController: NSViewController {
         if let index = demoFiles.index(of: currentFilename) , index + 1 < demoFiles.count {
             nextFilename = demoFiles[index + 1]
         }
-        
         let nextScene = SKTiledDemoScene(size: view.bounds.size, tmxFile: nextFilename)
         nextScene.scaleMode = .aspectFill
         let transition = SKTransition.fade(withDuration: interval)
         nextScene.debugMode = debugMode
         view.presentScene(nextScene, transition: transition)
-        updateWindowTitle()
+        
+        updateWindowTitle(withFile: nextFilename)
     }
     
     /**
-     Update the application window title with the current scene
+     Update the window's title bar with the current scene name.
+     
+     - parameter withFile: `String` currently loaded scene name.
      */
-    func updateWindowTitle(){
-        guard let view = self.view as? SKView else { return }
-
-        var bundleName = Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String
-        if let currentScene = view.scene as? SKTiledDemoScene {
-            if let tilemap = currentScene.tilemap {
-                bundleName += ": \(tilemap.name!)"
+    fileprivate func updateWindowTitle(withFile named: String) {
+        // Update the application window title with the current scene
+        if let infoDictionary = Bundle.main.infoDictionary {
+            if let bundleName = infoDictionary[kCFBundleNameKey as String] as? String {
+                self.view.window?.title = "\(bundleName): \(named) "
             }
         }
-        
-        self.view.window!.title = bundleName
     }
     
     /**

@@ -17,6 +17,7 @@ import Cocoa
 /**
   Custom scene camera that responds to finger/mouse gestures.
  */
+@available(OSX 10.11, *)
 open class SKTiledSceneCamera: SKCameraNode {
     
     open let world: SKNode
@@ -32,7 +33,6 @@ open class SKTiledSceneCamera: SKCameraNode {
     // zoom constraints
     private var minZoom: CGFloat = 0.2
     private var maxZoom: CGFloat = 5.0
-    
     public var isAtMaxZoom: Bool { return zoom == maxZoom }
     
     // gestures
@@ -46,12 +46,17 @@ open class SKTiledSceneCamera: SKCameraNode {
     // locations
     fileprivate var focusLocation = CGPoint.zero
     fileprivate var lastLocation: CGPoint!
+    // quick & dirty overlay node
+    internal let overlay: SKNode = SKNode()
     
     // MARK: - Init
     public init(view: SKView, world node: SKNode) {
         world = node
         bounds = view.bounds
         super.init()
+        
+        // add the overlay
+        addChild(overlay)
         
         #if os(iOS)
         // setup pan recognizer

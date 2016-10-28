@@ -45,10 +45,6 @@
 		4C440BB51DAE913A00DEC9A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C440BAF1DAE913A00DEC9A4 /* Main.storyboard */; };
 		4C440BB61DAE913A00DEC9A4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440BB11DAE913A00DEC9A4 /* GameViewController.swift */; };
 		4C5479FE1DC15AF6008B3473 /* GameWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5479FD1DC15AF6008B3473 /* GameWindowController.swift */; };
-		4C5589281DC1B57400EB89DC /* objects-dynamic.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C5589271DC1B57400EB89DC /* objects-dynamic.tmx */; };
-		4C5589291DC1B57400EB89DC /* objects-dynamic.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C5589271DC1B57400EB89DC /* objects-dynamic.tmx */; };
-		4C55892B1DC1B80000EB89DC /* sky-256x192.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C55892A1DC1B80000EB89DC /* sky-256x192.png */; };
-		4C55892C1DC1B80000EB89DC /* sky-256x192.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C55892A1DC1B80000EB89DC /* sky-256x192.png */; };
 		4C88E18C1D8A1BC400FCCFA3 /* roguelike-16x16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E18B1D8A1BC400FCCFA3 /* roguelike-16x16.tmx */; };
 		4C88E1AB1D8A241F00FCCFA3 /* ortho4-16x16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E1AA1D8A241F00FCCFA3 /* ortho4-16x16.tmx */; };
 		4C88E1AD1D8A242F00FCCFA3 /* ortho4-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */; };
@@ -95,8 +91,6 @@
 		4C440BB11DAE913A00DEC9A4 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		4C440BB21DAE913A00DEC9A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C5479FD1DC15AF6008B3473 /* GameWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameWindowController.swift; sourceTree = "<group>"; };
-		4C5589271DC1B57400EB89DC /* objects-dynamic.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "objects-dynamic.tmx"; path = "Custom/objects-dynamic.tmx"; sourceTree = SOURCE_ROOT; };
-		4C55892A1DC1B80000EB89DC /* sky-256x192.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sky-256x192.png"; path = "Custom/sky-256x192.png"; sourceTree = SOURCE_ROOT; };
 		4C88E18B1D8A1BC400FCCFA3 /* roguelike-16x16.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "roguelike-16x16.tmx"; sourceTree = "<group>"; };
 		4C88E1AA1D8A241F00FCCFA3 /* ortho4-16x16.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "ortho4-16x16.tmx"; sourceTree = "<group>"; };
 		4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ortho4-16x16.png"; sourceTree = "<group>"; };
@@ -200,8 +194,6 @@
 		4C7A77AA1DA6A21A0018A55D /* External */ = {
 			isa = PBXGroup;
 			children = (
-				4C55892A1DC1B80000EB89DC /* sky-256x192.png */,
-				4C5589271DC1B57400EB89DC /* objects-dynamic.tmx */,
 			);
 			name = External;
 			sourceTree = "<group>";
@@ -386,8 +378,6 @@
 				4C1774A81D90999C000C0AFD /* hex-65x65-65x230.png in Resources */,
 				4C440B9C1DAE911000DEC9A4 /* Assets.xcassets in Resources */,
 				4C1774A61D90999C000C0AFD /* roguelike-16x16.tmx in Resources */,
-				4C5589291DC1B57400EB89DC /* objects-dynamic.tmx in Resources */,
-				4C55892C1DC1B80000EB89DC /* sky-256x192.png in Resources */,
 				4C1774A51D90999C000C0AFD /* ortho4-16x16.tmx in Resources */,
 				4C440BA81DAE913000DEC9A4 /* Main.storyboard in Resources */,
 				4C1774AD1D90999C000C0AFD /* staggered-64x192.png in Resources */,
@@ -411,14 +401,12 @@
 				4C440B9B1DAE911000DEC9A4 /* Assets.xcassets in Resources */,
 				4C88E1AD1D8A242F00FCCFA3 /* ortho4-16x16.png in Resources */,
 				4C440BB51DAE913A00DEC9A4 /* Main.storyboard in Resources */,
-				4C5589281DC1B57400EB89DC /* objects-dynamic.tmx in Resources */,
 				4CFEA3591D8D02D20055C150 /* staggered-64x192.png in Resources */,
 				4CA3DA0E1D8AF07C001E165A /* DemoFiles.plist in Resources */,
 				4CD6D2DE1D8B9EA10083DA7B /* isometric-130x230.png in Resources */,
 				4CFEA35C1D8D04320055C150 /* hex-65x65-65x230.png in Resources */,
 				4CFEA3581D8D02D20055C150 /* staggered-64x33.tmx in Resources */,
 				4C440BB41DAE913A00DEC9A4 /* LaunchScreen.storyboard in Resources */,
-				4C55892B1DC1B80000EB89DC /* sky-256x192.png in Resources */,
 				4CD6D2D51D8B9DE20083DA7B /* roguelike-16x16.tsx in Resources */,
 				4CD6D2DD1D8B9EA10083DA7B /* isometric-130x66.tmx in Resources */,
 			);

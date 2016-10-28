@@ -189,6 +189,9 @@ open class SKTilemap: SKNode, SKTiledObject{
     open var highlightColor: SKColor = SKColor.green                   // color used to highlight tiles
     open var autoResize: Bool = false                                  // auto-size the map when resized
     
+    // dynamics
+    open var gravity: CGVector = CGVector.zero
+    
     /// Rendered size of the map in pixels.
     open var sizeInPoints: CGSize {
         switch orientation {
@@ -720,7 +723,6 @@ open class SKTilemap: SKNode, SKTiledObject{
         for layer in tileLayers {
             if let tile = layer.tileAt(coord){
                 result.append(tile)
-                print("    ")
             }
         }
         return result
@@ -932,21 +934,22 @@ open class SKTilemap: SKNode, SKTiledObject{
     
     // MARK: - Callbacks
     /**
-     Called when parser begins rendering a map.
+     Called when parser begins reading the map.
      
      - parameter verbose: `Bool` verbose output.
      */
-    open func didBeginParsing(verbose: Bool=false) {
-        
+    open func didBeginParsing(verbose: Bool=false, completion: (() -> ())? = nil) {
+        if completion != nil { completion!() }
     }
     
     /**
-     Called when parser has finished loading the map.
+     Called when parser has finished reading the map.
      
      - parameter timeStarted: `Date` render start time.
      - parameter verbose:     `Bool` verbose output.
+     - parameter completion:  `()->()?` optional completion handler.
      */
-    open func didFinishParsing(timeStarted: Date, verbose: Bool=false) {
+    open func didFinishParsing(timeStarted: Date, verbose: Bool=false, completion: (() -> ())? = nil) {
         // set the z-depth of the baseLayer
         baseLayer.zPosition = lastZPosition + (zDeltaForLayers * 0.5)
         
@@ -959,6 +962,14 @@ open class SKTilemap: SKNode, SKTiledObject{
         if (verbose == true) {
             debugLayers()
         }
+        
+        // transfer attributes
+        if let scene = scene as? SKTiledScene {
+            scene.physicsWorld.gravity = gravity
+        }
+        
+        // run completion handler
+        if completion != nil { completion!() }
     }
     
     /**
@@ -1174,7 +1185,7 @@ extension SKTilemap {
     override open var debugDescription: String { return description }
     
     /// Visualize the current grid & bounds.
-    internal var debugDraw: Bool {
+    public var debugDraw: Bool {
         get {
             return baseLayer.debugDraw
         } set {
@@ -1186,9 +1197,9 @@ extension SKTilemap {
     }
     
     /**
-     Print a summary of layer data.
+     Output a summary of the current scenes layer data.
      */
-    internal func debugLayers(reverse: Bool = false) {
+    public func debugLayers(reverse: Bool = false) {
         guard (layerCount > 0) else { return }
         let largestName = layerNames().max() { (a, b) -> Bool in a.characters.count < b.characters.count }
         
@@ -1220,18 +1231,13 @@ extension SKTilemap {
                 
                 // tile count for tile layers
                 if let tileLayer = layer as? SKTileLayer {
-                    
                     let pad: Int = 145 - layerOutput.characters.count
                     layerOutput += ",  \("".zfill(length: pad, pattern: " ", padLeft: false)) \(tileLayer.tileCount) tiles."
                 }
                 
-                
                 print(layerOutput)
                 
             }
-            
-
-            
         }
         print("\n")
     }

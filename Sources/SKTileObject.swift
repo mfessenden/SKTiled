@@ -23,6 +23,21 @@ public enum SKObjectType: String {
     case polyline
 }
 
+
+/**
+ Represents the object's physics body type
+ 
+ - none:      object has no physics properties.
+ - dynamic:   object is an active physics body.
+ - collision: object is a passive physics body.
+ */
+public enum ObjectPhysics {
+    case none
+    case dynamic
+    case collision
+}
+
+
 /**
  Label description orientation.
 
@@ -50,7 +65,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     internal var objectType: SKObjectType = .rectangle      // shape type
     open var points: [CGPoint] = []                         // points that describe the object's shape.    
     open var size: CGSize = CGSize.zero
-    open var properties: [String: String] = [:]    // custom properties
+    open var properties: [String: String] = [:]             // custom properties
     
     /// Object opacity
     open var opacity: CGFloat {
@@ -63,6 +78,9 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         get { return !self.isHidden }
         set { self.isHidden = !newValue }
     }
+    
+    // dynamics
+    open var isDynamic: Bool = false
     
     // MARK: - Init
     override public init(){
@@ -282,6 +300,15 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             vertices.append(offset)
         }
         return vertices
+    }
+    
+    open func setupPhysics() {
+        guard let objectPath = path else {
+            print("[SKTileObject]: WARNING: object path not set: \"\(self.name != nil ? self.name! : "null")\"")
+            return
+        }
+        physicsBody = SKPhysicsBody(edgeLoopFrom: objectPath)
+        physicsBody?.isDynamic = isDynamic
     }
 }
 

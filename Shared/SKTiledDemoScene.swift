@@ -33,13 +33,6 @@ public class SKTiledDemoScene: SKTiledScene {
     override public func didMove(to view: SKView) {
         super.didMove(to: view)
         
-        #if os(OSX)
-        // add mouse tracking for OSX
-        let options = [NSTrackingAreaOptions.mouseMoved, NSTrackingAreaOptions.activeAlways] as NSTrackingAreaOptions
-        let trackingArea = NSTrackingArea(rect: view.frame, options: options, owner: self, userInfo: nil)
-        view.addTrackingArea(trackingArea)
-        #endif
-        
         // setup demo UI
         setupDemoUI()
         setupDebuggingLabels()
@@ -52,7 +45,6 @@ public class SKTiledDemoScene: SKTiledScene {
      */
     public func setupDemoUI() {
         guard let view = self.view else { return }
-
         // set up camera overlay UI
         let lastZPosition: CGFloat = (tilemap != nil) ? tilemap.lastZPosition * 10 : 5000
 
@@ -99,7 +91,9 @@ public class SKTiledDemoScene: SKTiledScene {
             // position towards the bottom of the scene
             showObjectsButton.position.y -= (view.bounds.size.height / 2.25)
             showObjectsButton.zPosition = lastZPosition
-            showObjectsButton.isUserInteractionEnabled = tilemap.objectGroups.count > 0 ? true : false
+            
+            let hasObjects = (tilemap != nil) ? tilemap.objectGroups.count > 0 : false
+            showObjectsButton.isUserInteractionEnabled = hasObjects
         }
         
         
@@ -122,7 +116,6 @@ public class SKTiledDemoScene: SKTiledScene {
     public func setupDebuggingLabels() {
         guard let view = self.view else { return }
         guard let cameraNode = cameraNode else { return }
-        
         var tilemapInfoY: CGFloat = 0.77
         var tileInfoY: CGFloat = 0.81
         var propertiesInfoY: CGFloat = 0.85
@@ -193,6 +186,13 @@ public class SKTiledDemoScene: SKTiledScene {
         return tile
     }
     
+    // MARK: - Deinitialization
+    deinit {
+        print("[SKTiledDemoScene]: Deinitializing...")
+        // Deregister for scene updates
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "loadNextScene"), object: nil)
+    }
+    
     /**
      Call back to the GameViewController to load the next scene.
      */
@@ -202,21 +202,12 @@ public class SKTiledDemoScene: SKTiledScene {
     
     override public func didChangeSize(_ oldSize: CGSize) {
         super.didChangeSize(oldSize)
-
+        
         uiScale = size.width / 400
         updateHud()
         
         #if os(OSX)
-        if let view = self.view {
-            let options = [NSTrackingAreaOptions.mouseMoved, NSTrackingAreaOptions.activeAlways] as NSTrackingAreaOptions
-            // clear out old tracking areas
-            for oldTrackingArea in view.trackingAreas {
-                view.removeTrackingArea(oldTrackingArea)
-            }
-            
-            let trackingArea = NSTrackingArea(rect: view.frame, options: options, owner: self, userInfo: nil)
-            view.addTrackingArea(trackingArea)
-        }
+        updateTrackingViews()
         #endif
     }
     
@@ -242,7 +233,6 @@ public class SKTiledDemoScene: SKTiledScene {
      */
     private func updateHud(){
         guard let view = self.view else { return }
-        
         let activeButtons = buttons.filter( {$0.isHidden == false})
         guard activeButtons.count > 0 else { return }
         
@@ -301,18 +291,6 @@ public class SKTiledDemoScene: SKTiledScene {
     }
 }
 
-
-public extension SKNode {
-    
-    /**
-     Position the node by a percentage of the view size.
-    */
-    public func posByCanvas(x: CGFloat, y: CGFloat) {
-        guard let scene = scene else { return }
-        guard let view = scene.view else { return }
-        self.position = scene.convertPoint(fromView: (CGPoint(x: CGFloat(view.bounds.size.width * x), y: CGFloat(view.bounds.size.height * (1.0 - y)))))
-    }
-}
 
 
 #if os(iOS) || os(tvOS)
@@ -417,42 +395,6 @@ extension SKTiledDemoScene {
         propertiesInformationLabel.text = propertiesInfoString
     }
     
-    override open func mouseMoved(with event: NSEvent) {
-        super.mouseMoved(with: event)
-        
-        updateTrackingViews()
-        
-        guard let tilemap = tilemap else { return }
-        let baseLayer = tilemap.baseLayer
-        
-        // make sure there are no UI objects under the mouse
-        let scenePosition = event.location(in: self)
-        if !isValidPosition(point: scenePosition) { return }
-        
-        // get the position in the baseLayer (inverted)
-        let positionInLayer = baseLayer.mouseLocation(event: event)
-        let coord = baseLayer.screenToTileCoords(positionInLayer)
-        
-        tileInformationLabel?.isHidden = false
-        tileInformationLabel?.text = "Tile: \(coord.coordDescription), \(positionInLayer.roundTo())"
-        
-        if (tilemap.isPaused == false){
-            // highlight the current coordinate
-            let _ = addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y), duration: 0.05)
-        }
-        
-        // tile properties output
-        var propertiesInfoString = "ID: ~"
-        if let tile = tilemap.firstTileAt(coord) {
-            propertiesInfoString = "ID: \(tile.tileData.id)"
-            if tile.tileData.propertiesString != "" {
-                propertiesInfoString += "; \(tile.tileData.propertiesString)"
-            }
-        }
-        propertiesInformationLabel.isHidden = false
-        propertiesInformationLabel.text = propertiesInfoString
-    }
-    
     override open func mouseDragged(with event: NSEvent) {
         guard let cameraNode = cameraNode else { return }
         cameraNode.scenePositionChanged(event)
@@ -531,6 +473,7 @@ extension SKTiledDemoScene {
     */
     open func updateTrackingViews(){
         if let view = self.view {
+            print("[SKTiledDemoScene]: updating tracking views...")
             let options = [NSTrackingAreaOptions.mouseMoved, NSTrackingAreaOptions.activeAlways] as NSTrackingAreaOptions
             // clear out old tracking areas
             for oldTrackingArea in view.trackingAreas {

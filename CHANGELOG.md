@@ -6,7 +6,7 @@ Change Log
 
 #### Changes
 - add `SKTileObject.isDynamic` property
-
+- add `SKTiledSceneCamera.overlay` property
 
 1.0.3
 --------------------------

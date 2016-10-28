@@ -65,11 +65,7 @@
                                                 <action selector="newDocument:" target="Ady-hI-5gd" id="4Si-XN-c54"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Open…" keyEquivalent="o" id="IAo-SY-fd9">
-                                            <connections>
-                                                <action selector="openDocumentWithSender:" target="Voe-Tx-rLC" id="jMu-2F-zqf"/>
-                                            </connections>
-                                        </menuItem>
+                                        <menuItem title="Open…" keyEquivalent="o" id="IAo-SY-fd9"/>
                                         <menuItem title="Open Recent" id="tXI-mr-wws">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Open Recent" systemMenu="recentDocuments" id="oas-Oc-fiZ">

@@ -55,14 +55,6 @@ class GameViewController: UIViewController {
                 currentFilename = tilemap.name!
             }
             
-            // cleanup scene
-            currentScene.enumerateChildNodes(withName: "//") {
-                node, stop in
-                node.removeAllActions()
-                node.removeAllChildren()
-                node.removeFromParent()
-            }
-            
             currentScene.removeFromParent()
             currentScene.removeAllActions()
         }
