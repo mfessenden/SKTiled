@@ -126,6 +126,12 @@
               <li class="nav-group-task">
                 <a href="../Other Enums.html#/s:O7SKTiled13LabelPosition">LabelPosition</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Other Enums.html#/s:O7SKTiled13ObjectPhysics">ObjectPhysics</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Enums.html#/s:O7SKTiled11TilePhysics">TilePhysics</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -196,7 +202,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">properties</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">String</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:]</span>    <span class="c1">// custom properties</span></code></pre>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">properties</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">String</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:]</span>             <span class="c1">// custom properties</span></code></pre>
 
                         </div>
                       </div>
@@ -231,7 +237,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L56-L59">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L73-L76">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -261,7 +267,37 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L62-L65">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L79-L82">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC7SKTiled12SKTileObject5frameVSC6CGRect"></a>
+                    <a name="//apple_ref/swift/Property/frame" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC7SKTiled12SKTileObject5frameVSC6CGRect">frame</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the bounding box of the shape.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">override</span> <span class="n">open</span> <span class="k">var</span> <span class="nv">frame</span><span class="p">:</span> <span class="kt">CGRect</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L86-L88">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -348,7 +384,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L80-L95">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L103-L118">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -422,7 +458,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L156-L162">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L179-L185">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -485,11 +521,22 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L170-L176">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L193-L199">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Rendering"></a>
+                <a name="//apple_ref/swift/Section/Rendering" class="dashAnchor"></a>
+                <a href="#/Rendering">
+                  <h3 class="section-name">Rendering</h3>
+                </a>
+              </div>
+              <ul>
                 <li class="item">
                   <div>
                     <code>
@@ -515,7 +562,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L181-L238">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L206-L271">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -523,13 +570,20 @@
               </ul>
             </div>
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Dynamics"></a>
+                <a name="//apple_ref/swift/Section/Dynamics" class="dashAnchor"></a>
+                <a href="#/Dynamics">
+                  <h3 class="section-name">Dynamics</h3>
+                </a>
+              </div>
               <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vC7SKTiled12SKTileObject9hashValueSi"></a>
-                    <a name="//apple_ref/swift/Property/hashValue" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC7SKTiled12SKTileObject9hashValueSi">hashValue</a>
+                    <a name="/s:FC7SKTiled12SKTileObject12setupPhysicsFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/setupPhysics()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC7SKTiled12SKTileObject12setupPhysicsFT_T_">setupPhysics()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -537,19 +591,19 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Return the current points.</p>
+                        <p>Setup physics for the object based on properties set up in Tiled.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="k">override</span> <span class="n">open</span> <span class="k">var</span> <span class="nv">hashValue</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">setupPhysics</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L291">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L356-L368">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -583,7 +637,70 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap+Properties.swift#L234-L245">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap+Properties.swift#L250-L268">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC7SKTiled12SKTileObject9hashValueSi"></a>
+                    <a name="//apple_ref/swift/Property/hashValue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC7SKTiled12SKTileObject9hashValueSi">hashValue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">override</span> <span class="n">open</span> <span class="k">var</span> <span class="nv">hashValue</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L374">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC7SKTiled12SKTileObject11descriptionSS"></a>
+                    <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC7SKTiled12SKTileObject11descriptionSS">description</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tile data description.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">override</span> <span class="n">open</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L377-L379">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

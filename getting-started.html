@@ -125,6 +125,12 @@
               <li class="nav-group-task">
                 <a href="Other Enums.html#/s:O7SKTiled13LabelPosition">LabelPosition</a>
               </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled13ObjectPhysics">ObjectPhysics</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled11TilePhysics">TilePhysics</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -139,46 +145,39 @@
 <a href='#requirements' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='requirements'>Requirements</h2>
 
 <ul>
-<li>iOS9+ / macOS 10.11+</li>
-<li>Xcode 8</li>
-<li>Swift 2.3+</li>
+<li>[x] iOS10+ / macOS 10.11+</li>
+<li>[x] Xcode 8</li>
+<li>[x] Swift 3</li>
 </ul>
+<a href='#swift-2-note' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='swift-2-note'>Swift 2 Note</h3>
 
-<p>Check out the <a href="https://github.com/mfessenden/SKTiled/tree/master">master</a> branch for Swift 2.3, or the <a href="https://github.com/mfessenden/SKTiled/tree/master">master</a> branch for Swift 3. Going forward, the minimum requirements will be pushed up to Swift 3/master/macOS 10.11 as some features will require newer versions of Apple&rsquo;s tools.</p>
-
-<p><strong>SKTiled</strong> should work with tvOS, though it has not yet been extensively tested.</p>
-<a href='#swift-2-3-note' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='swift-2-3-note'>Swift 2.3 Note</h2>
+<p>Check out the <a href="https://github.com/mfessenden/SKTiled/tree/swift2">Swift 2</a> branch for Swift 2.3. Going forward, the minimum requirements will be pushed up to Swift 3 as some features will require newer versions of Apple&rsquo;s APIs.</p>
 
 <p>If you&rsquo;re using one of the older toolchains, you&rsquo;ll need to enable the <strong>Use Legacy Swift Language Version</strong> option in the project <strong>Build Settings.</strong></p>
 
 <p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/swift_legacy.png" alt="Legacy Swift Version"></p>
 <a href='#installation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='installation'>Installation</h2>
 
-<ul>
-<li>Copy the <em>Sources</em> directory to your project (or drag the individual files).</li>
-<li>Set the appropriate Swift language target.</li>
-</ul>
-
 <p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/installation.png" alt="Xcode installation"></p>
-<a href='#linking-zlib' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='linking-zlib'>Linking zlib</h3>
 
-<p>You&rsquo;ll need to add a path to the zlib module in your project under <strong>Import Paths:</strong></p>
+<ol>
+<li>Copy the <code>Sources</code> and <code>zlib</code> directories to your project. Make sure the swift files are added to your target(s).</li>
+<li>Add the <code>zlib</code> directory to your project&rsquo;s include paths:
 
-<p><em>Project &gt; Build Settings &gt; Swift Compiler - Search Paths &gt; Import Paths</em></p>
-
-<p>Add the following to the project:</p>
-
-<p><code>$(SRCROOT)/Sources</code></p>
+<ul>
+<li><em>Project &gt; Build Settings &gt; Swift Compiler - Search Paths &gt; Import Paths</em></li>
+</ul></li>
+</ol>
 
 <p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/zlib_linking.png" alt="zlib compression"></p>
 <a href='#adding-tiled-assets' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='adding-tiled-assets'>Adding Tiled Assets</h2>
 
-<p>When adding maps (TMX files), images and tilesets (TSX files) to your Xcode project, you&rsquo;ll need to make sure to add the files as <em>groups</em> and not folder references as the assets are stored in the root of the app bundle when compiled.</p>
+<p>When adding maps (TMX files), images and tilesets (TSX files) to your Xcode project, you&rsquo;ll need to make sure to add the files as <strong>groups</strong> and not folder references as the assets are stored in the root of the app bundle when compiled. Relative file references in your Tiled files will break when the are added to your app&rsquo;s bundle.</p>
 <a href='#setting-up-your-scenes' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='setting-up-your-scenes'>Setting up your Scenes</h2>
 
-<p>Using tiled maps in your own projects is very easy. The included <a href="Classes/SKTiledScene.html"><code>SKTiledScene</code></a> class conforms to the <a href="Protocols/SKTiledSceneDelegate.html"><code>SKTiledSceneDelegate</code></a> protocol and could serve as a template for your scenes, though you are free to implement your own setups.</p>
+<p>Using tiled maps in your own projects is very straightforward. The included <a href="Classes/SKTiledScene.html"><code>SKTiledScene</code></a> class conforms to the <a href="Protocols/SKTiledSceneDelegate.html"><code>SKTiledSceneDelegate</code></a> protocol and could serve as a template for your scenes, though you are free to implement your own setups.</p>
 
-<p>If you choose to create your own scene type, a simple setup could be as simple as:</p>
+<p>If you choose to use your own scene type, a simple setup could be as simple as:</p>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SpriteKit</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="kt">GameScene</span><span class="p">:</span> <span class="kt">SKScene</span> <span class="p">{</span>
@@ -222,14 +221,14 @@
 <p>See the <a href="coordinates.html">Coordinates</a> page for more information.</p>
 <a href='#default-layer' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='default-layer'>Default Layer</h3>
 
-<p>By default, the <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> class uses a default tile layer accessible via <code>SKTilemap.baseLayer</code>. The base layer is automatically created is used for coordinate transforms and for visualizing the grid (the base layer&rsquo;s z-position is always higher than the other layers).</p>
+<p>By default, the <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> class uses a default tile layer accessible via the <code>SKTilemap.baseLayer</code> property. The base layer is automatically created is used for coordinate transforms and for visualizing the grid (the base layer&rsquo;s z-position is always higher than the other layers).</p>
 <a href='#isolating-layers' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='isolating-layers'>Isolating Layers</h3>
 
-<p>You can isolate layers easily (just as you can in Tiled):</p>
+<p>You can isolate a layer (as you can in Tiled):</p>
 <pre class="highlight swift"><code><span class="c1">// isolate the layer named 'Background'</span>
 <span class="n">tilemap</span><span class="o">.</span><span class="nf">isolateLayer</span><span class="p">(</span><span class="s">"Background"</span><span class="p">)</span>
 
-<span class="c1">// show all layers</span>
+<span class="c1">// pass nil to the method to show all layers</span>
 <span class="n">tilemap</span><span class="o">.</span><span class="nf">isolateLayer</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
 </code></pre>
 

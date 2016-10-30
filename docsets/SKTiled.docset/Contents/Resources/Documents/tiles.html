@@ -125,6 +125,12 @@
               <li class="nav-group-task">
                 <a href="Other Enums.html#/s:O7SKTiled13LabelPosition">LabelPosition</a>
               </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled13ObjectPhysics">ObjectPhysics</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled11TilePhysics">TilePhysics</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -135,18 +141,36 @@
             
             <a href='#working-with-tiles' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='working-with-tiles'>Working with Tiles</h1>
 
-<p><strong>SKTiled</strong> provides several ways to access tiles in a tile map. Accessing tiles is simple, simply query a tile layer or the tile map node for tiles at a given coordinate:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">tiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">tilesAt</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<p><strong>SKTiled</strong> provides several ways to work with tiles in your tilemap. Most of the methods for querying tiles from tile layer instances have corresponding methods in the parent <code>SKTilemap</code> node which will aggregate the results from <em>all</em> tile layers.</p>
+
+<p>Accessing tiles is simple: simply query a tile layer or the tile map node for tiles at a given coordinate:</p>
+<pre class="highlight swift"><code><span class="c1">// return tile(s) at a given location</span>
+<span class="k">let</span> <span class="nv">coord</span> <span class="o">=</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">8</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">tilesForCoord</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">tileAt</span><span class="p">(</span><span class="nv">coord</span><span class="p">:</span> <span class="n">coord</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">allTilesForCoord</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">tilesAt</span><span class="p">(</span><span class="nv">coord</span><span class="p">:</span> <span class="n">coord</span><span class="p">)</span>
 </code></pre>
 <a href='#getting-tiles-with-tile-id' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='getting-tiles-with-tile-id'>Getting Tiles with Tile ID</h3>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">tiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
+
+<p>To query tiles with a global ID, pass the value to either the <code>SKTilemap</code> node, or an individual <code>SKTileLayer</code> node:</p>
+<pre class="highlight swift"><code><span class="c1">// query tiles from the tile map node</span>
+<span class="k">let</span> <span class="nv">tiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="c1">// query tiles from the parent layer</span>
+<span class="k">let</span> <span class="nv">tiles</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
 </code></pre>
 <a href='#getting-tiles-of-type' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='getting-tiles-of-type'>Getting Tiles of Type</h3>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">fireTiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="s">"Fire"</span><span class="p">)</span>
+
+<p>The property <q>type</q> can be used to label or group tiles in <strong>SKTiled</strong>. Simply adding a string property to a tile ID will allow it to be accessed from SpriteKit:</p>
+
+<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/tile-types.png" alt="Tile Types"></p>
+
+<p>Querying any tile with that property is simple:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">allFireTiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="s">"Fire"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">waterTiles</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="s">"Water"</span><span class="p">)</span>
 </code></pre>
 <a href='#getting-tiles-with-property' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='getting-tiles-with-property'>Getting Tiles with Property</h3>
 
-<p>Returning tiles with a particular property:</p>
+<p>You are not restricted to using <strong>type</strong> as a property name, any property name can be queried:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">fireTiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTilesWithProperty</span><span class="p">(</span><span class="s">"type"</span><span class="p">,</span> <span class="s">"Fire"</span> <span class="k">as</span> <span class="kt">AnyObject</span><span class="p">)</span>
 </code></pre>
 <a href='#adding-tiles' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='adding-tiles'>Adding Tiles</h2>
@@ -157,7 +181,7 @@
 <span class="p">}</span>
 </code></pre>
 
-<p>You are not limited to tiles however, in reality you can add any <code>SKNode</code> type as a child and position it. All <a href="Classes/TiledLayerObject.html"><code>TiledLayerObject</code></a> objects have expanded <code>addChild</code> methods for positioning nodes:</p>
+<p>You are not limited to using tile objects; any <code>SKNode</code> type can be added to a layer and positioned. All <a href="Classes/TiledLayerObject.html"><code>TiledLayerObject</code></a> objects have expanded <code>addChild</code> convenience methods for positioning nodes:</p>
 <pre class="highlight swift"><code><span class="c1">// add a child with a coordinate and offset and zPosition values</span>
 <span class="n">tileLayer</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tile</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="nv">offset</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mf">4.0</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mf">8.0</span><span class="p">),</span> <span class="nv">zpos</span><span class="p">:</span> <span class="mi">50</span><span class="p">)</span>
 
@@ -171,9 +195,11 @@
     <span class="c1">// do something with tile</span>
 <span class="p">}</span>
 </code></pre>
-<a href='#tile-animations' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='tile-animations'>Tile Animations</h2>
+<a href='#animated-tiles' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='animated-tiles'>Animated Tiles</h2>
 
-<p>Tiles animated in Tiled are have custom SpriteKit actions applied to animate the tile texture. Animated tiles are accessed with the <code>SKTileLayer.getAnimatedTiles</code> method, or globally via the <code>SKTilemap.getAnimatedTiles</code> method:</p>
+<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/animated-tiles.gif" alt="Animated Tiles"></p>
+
+<p>Tiles animated in Tiled are have custom SpriteKit actions automatically created to animate the tile texture. Animated tiles are accessed with the <code>SKTileLayer.getAnimatedTiles</code> method, or globally via the <code>SKTilemap.getAnimatedTiles</code> method:</p>
 <pre class="highlight swift"><code><span class="c1">// return animated tiles in a single layer</span>
 <span class="k">let</span> <span class="nv">animatedTiles</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">getAnimatedTiles</span><span class="p">()</span>
 
@@ -181,7 +207,7 @@
 <span class="k">let</span> <span class="nv">allAnimatedTiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getAnimatedTiles</span><span class="p">()</span>
 </code></pre>
 
-<p>Tile objects allow you to pause &amp; remove animations:</p>
+<p>All <a href="Classes/SKTile.html"><code>SKTile</code></a> objects allow you to pause &amp; remove animations:</p>
 <pre class="highlight swift"><code>
 <span class="c1">// pause or unpause tile animation </span>
 <span class="k">for</span> <span class="n">animatedTile</span> <span class="k">in</span> <span class="n">animatedTiles</span> <span class="p">{</span>
@@ -196,18 +222,18 @@
 
 <p>To add animation to a tile, add GID values to the <code>SKTilesetData</code> instance associated with each tile:</p>
 <pre class="highlight swift"><code><span class="c1">// add frame GIDs</span>
-<span class="n">tile</span><span class="o">.</span><span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="mi">33</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">)</span>
-<span class="n">tile</span><span class="o">.</span><span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="mi">34</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mf">0.35</span><span class="p">)</span>
-<span class="n">tile</span><span class="o">.</span><span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mf">0.15</span><span class="p">)</span>
+<span class="n">tile</span><span class="o">.</span><span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">33</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">)</span>
+<span class="n">tile</span><span class="o">.</span><span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mf">0.35</span><span class="p">)</span>
+<span class="n">tile</span><span class="o">.</span><span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mf">0.15</span><span class="p">)</span>
 
 <span class="c1">// run the animation</span>
 <span class="n">tile</span><span class="o">.</span><span class="nf">runAnimation</span><span class="p">()</span>
 </code></pre>
 <a href='#dynamics' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='dynamics'>Dynamics</h2>
 
-<p>Dynamics can be turned on for tile objects with the <code>SKTileObject.setupDynamics</code> method:</p>
+<p>Dynamics can be turned on for tile objects with the <code>SKTileObject.setupPhysics</code> methods:</p>
 <pre class="highlight swift"><code><span class="c1">// create a physics body with a rectangle of size 8</span>
-<span class="n">myObject</span><span class="o">.</span><span class="nf">setupDynamics</span><span class="p">(</span><span class="nv">withSize</span><span class="p">:</span> <span class="mf">8.0</span><span class="p">)</span>
+<span class="n">tile</span><span class="o">.</span><span class="nf">setupPhysics</span><span class="p">(</span><span class="nv">rectSize</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="mi">8</span><span class="p">),</span> <span class="nv">isDynamic</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
 
 <span class="c1">// setup dynamics on an array of tiles with a radius of 4</span>
 <span class="k">let</span> <span class="nv">dots</span> <span class="o">=</span> <span class="n">dotsLayer</span><span class="o">.</span><span class="nf">getTilesWithProperty</span><span class="p">(</span><span class="s">"type"</span><span class="p">,</span> <span class="s">"dot"</span> <span class="k">as</span> <span class="kt">AnyObject</span><span class="p">)</span>

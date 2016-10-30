@@ -125,6 +125,12 @@
               <li class="nav-group-task">
                 <a href="Other Enums.html#/s:O7SKTiled13LabelPosition">LabelPosition</a>
               </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled13ObjectPhysics">ObjectPhysics</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled11TilePhysics">TilePhysics</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -164,9 +170,15 @@
 <p>Note that this will return objects from multiple object layers.</p>
 <a href='#dynamics' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='dynamics'>Dynamics</h3>
 
-<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/dynamics-start.png" alt="Object Dynamics"></p>
+<p>You also have the option of enabling physics for each object, allowing them to react as dynamics bodies in your scene. Passing properties from <strong>Tiled</strong> allows you to easily create dynamic objects in your scenes.</p>
 
-<p>You also have the option of enabling physics for each object, allowing them to react as dynamics bodies in your scene. Enabling the <code>SKTileObject.isDynamic</code> property allows you to easily create dynamic objects in your scenes.</p>
+<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/dynamics-start.png" alt="Dynamics Setup"></p>
+
+<p>In this scene, the shape objects are assigned a boolean property <code>isDynamic</code>, while the floor objects are assigned the boolean property <code>isCollider</code>. In the map properties, a float property <code>yGravity</code> property is created and given a value of <code>-9.8</code>.</p>
+
+<p>Loaded in <strong>SKTiled</strong>, the scene renders as this:</p>
+
+<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/dynamic-objects.gif" alt="Object Dynamics"></p>
 
 <p>Next: <a href="properties.html">Properties</a> - <a href="Tutorial.html">Index</a></p>
 

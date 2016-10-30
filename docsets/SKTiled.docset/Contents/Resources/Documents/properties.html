@@ -125,6 +125,12 @@
               <li class="nav-group-task">
                 <a href="Other Enums.html#/s:O7SKTiled13LabelPosition">LabelPosition</a>
               </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled13ObjectPhysics">ObjectPhysics</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled11TilePhysics">TilePhysics</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -135,10 +141,10 @@
             
             <a href='#custom-properties' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='custom-properties'>Custom Properties</h1>
 
-<p>One of the most powerful features of <em>SKTiled</em> is the ability to exploit Tiled&rsquo;s custom properties for most objects. 
+<p>One of the most powerful features of <strong>SKTiled</strong> is the ability to exploit Tiled&rsquo;s custom properties for most objects. 
 All objects that conform to the <a href="Protocols/SKTiledObject.html"><code>SKTiledObject</code></a> protocol have methods for parsing Tiled object properties. Tiled property values are all encoded as strings. <strong>SKTiled</strong> will attempt to parse the intended type, but be sure to check the type of property you are querying.</p>
 
-<p>If you are using the v0.17 of Tiled or newer, <em>SKTiled</em> supports the new <strong>color</strong> and <strong>file</strong> property types (values are stored as strings internally anyway, which <em>SKTiled</em> already supports). The custom color/file types listed above will also be parsed if they are created as string types in Tiled.</p>
+<p>If you are using the v0.17 of Tiled or newer, <strong>SKTiled</strong> supports the new <strong>color</strong> and <strong>file</strong> property types (values are stored as strings internally anyway, which <em>SKTiled</em> already supports). The custom color/file types listed above will also be parsed if they are created as string types in Tiled.</p>
 <pre class="highlight plaintext"><code>SKTilemap:
   name                (String)    - map name.
   hidden              (Bool)      - hide the map.
@@ -158,6 +164,8 @@ All objects that conform to the <a href="Protocols/SKTiledObject.html"><code>SKT
   ignoreBackground    (Bool)      - ignore Tiled scene background color.
   antialiasLines      (Bool)      - antialias lines.
   autoResize          (Bool)      - automatically resize the map to best fit the view.
+  xGravity            (Float)     - gravity in x.
+  yGravity            (Float)     - gravity in y.
 
 TiledLayerObject:
   antialiasing        (Bool)      - antialias lines.
@@ -165,6 +173,7 @@ TiledLayerObject:
   color               (String)    - hex string to override color.
   zPosition           (Float)     - used to manually override layer zPosition.
   gridColor           (Color)     - hex string used for visualizing the tile grid.
+  isDynamic           (Bool)      - creates a collision object from the layer's border. 
 
 SKObjectGroup:
   lineWidth           (Float)     - object line width.
@@ -187,7 +196,12 @@ SKTileObject:
   lineWidth           (Float)     - object line width.
   nodeClass           (String)    - object node class**
   isDynamic           (Bool)      - object is dynamic.
+  isCollider          (Bool)      - object is passive collision object.
   mass                (Float)     - physics mass.
+  friction            (Float)     - physics friction.
+  restitution         (Float)     - physics 'bounciness'.
+  linearDamping       (Float)     - physics linear damping.
+  angularDamping      (Float)     - physics angular damping.
 
 ** not yet implemented
 </code></pre>

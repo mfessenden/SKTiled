@@ -125,6 +125,12 @@
               <li class="nav-group-task">
                 <a href="Other Enums.html#/s:O7SKTiled13LabelPosition">LabelPosition</a>
               </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled13ObjectPhysics">ObjectPhysics</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled11TilePhysics">TilePhysics</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -136,7 +142,7 @@
             <a href='#coordinates' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='coordinates'>Coordinates</h1>
 <a href='#coordinate-conversion' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='coordinate-conversion'>Coordinate Conversion</h2>
 
-<p>SpriteKit uses a coordinate system that is different from Tiled&rsquo;s; in SpriteKit, a SpriteKit node&rsquo;s origin is on the bottom-left, while Tiled&rsquo;s origin is top-left. </p>
+<p>SpriteKit uses a coordinate system that is different from Tiled&rsquo;s. In SpriteKit, scenes have an origin at the bottom-left, while Tiled sets the origin at top-left. </p>
 
 <p>To emulate this, the <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> node draws its layers starting at the origin and moving <em>downwards</em> into the negative y-space. To accommodate this, each layer type has conversion methods for converting points to coordinates and vice-versa:</p>
 <pre class="highlight swift"><code><span class="c1">// covert coordinate position to CGPoint</span>

@@ -125,6 +125,12 @@
               <li class="nav-group-task">
                 <a href="Other Enums.html#/s:O7SKTiled13LabelPosition">LabelPosition</a>
               </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled13ObjectPhysics">ObjectPhysics</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled11TilePhysics">TilePhysics</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -195,7 +201,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L142-L982">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L142-L1019">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -237,7 +243,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemapParser.swift#L50-L729">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemapParser.swift#L50-L738">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -278,7 +284,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileset.swift#L23-L313">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileset.swift#L23-L339">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -319,7 +325,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilesetData.swift#L32-L113">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilesetData.swift#L32-L141">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -367,7 +373,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L58-L767">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L58-L788">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -410,7 +416,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L788-L1191">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L809-L1256">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -458,7 +464,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L1230-L1457">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L1295-L1538">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -494,7 +500,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L1470-L1527">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileLayer.swift#L1551-L1608">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -529,7 +535,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTile.swift#L15-L332">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTile.swift#L27-L398">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -566,7 +572,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L43-L286">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L58-L369">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -596,7 +602,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">SKTiledScene</span><span class="p">:</span> <span class="kt">SKScene</span><span class="p">,</span> <span class="kt"><a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a></span></code></pre>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">SKTiledScene</span><span class="p">:</span> <span class="kt">SKScene</span><span class="p">,</span> <span class="kt">SKPhysicsContactDelegate</span><span class="p">,</span> <span class="kt"><a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a></span></code></pre>
 
                         </div>
                       </div>
@@ -647,7 +653,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTiledScene.swift#L41-L148">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTiledScene.swift#L41-L164">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -682,7 +688,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTiledSceneCamera.swift#L20-L193">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTiledSceneCamera.swift#L21-L199">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
