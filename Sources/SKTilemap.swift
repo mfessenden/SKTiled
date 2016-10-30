@@ -146,7 +146,7 @@ open class SKTilemap: SKNode, SKTiledObject{
     open var size: CGSize                                         // map size (in tiles)
     open var tileSize: CGSize                                     // tile size (in pixels)
     open var orientation: TilemapOrientation                      // map orientation
-    internal var renderOrder: RenderOrder = .rightDown                // render order
+    internal var renderOrder: RenderOrder = .rightDown            // render order
     
     // hexagonal
     open var hexsidelength: Int = 0                               // hexagonal side length
@@ -161,7 +161,7 @@ open class SKTilemap: SKNode, SKTiledObject{
     open var maxZoom: CGFloat = 5.0
     
     // current tile sets
-    open var tileSets: Set<SKTileset> = []                        // tilesets
+    open var tilesets: Set<SKTileset> = []                        // tilesets
     
     // current layers
     private var layers: Set<TiledLayerObject> = []                // layers
@@ -176,7 +176,7 @@ open class SKTilemap: SKNode, SKTiledObject{
     */
     lazy open var baseLayer: SKTileLayer = {
         let layer = SKTileLayer(layerName: "Base", tilemap: self)
-        self.addLayer(layer)
+        self.addLayer(layer, base: true)
         layer.didFinishRendering()
         return layer
     }()
@@ -226,7 +226,7 @@ open class SKTilemap: SKNode, SKTiledObject{
     
     // returns the last GID for all of the tilesets.
     open var lastGID: Int {
-        return tileSets.count > 0 ? tileSets.map {$0.lastGID}.max()! : 0
+        return tilesets.count > 0 ? tilesets.map {$0.lastGID}.max()! : 0
     }    
     
     /// Returns the last GID for all tilesets.
@@ -304,6 +304,7 @@ open class SKTilemap: SKNode, SKTiledObject{
                 layer.color = newColor
                 layer.colorBlendFactor = newColorBlendFactor
                 layer.isPaused = isPaused
+                //layer.speed = speed
             }
         }
     }
@@ -385,7 +386,6 @@ open class SKTilemap: SKNode, SKTiledObject{
             }
         }
         
-        
         // global antialiasing
         antialiasLines = tileSize.width > 16 ? true : false
         super.init()
@@ -422,7 +422,7 @@ open class SKTilemap: SKNode, SKTiledObject{
      - parameter tileset: `SKTileset` tileset object.
      */
     open func addTileset(_ tileset: SKTileset) {
-        tileSets.insert(tileset)
+        tilesets.insert(tileset)
         tileset.tilemap = self
         tileset.parseProperties(completion: nil)
     }
@@ -433,7 +433,7 @@ open class SKTilemap: SKNode, SKTiledObject{
      - parameter tileset: `SKTileset` removed tileset.
      */
     open func removeTileset(_ tileset: SKTileset) -> SKTileset? {
-        return tileSets.remove(tileset)
+        return tilesets.remove(tileset)
     }
     
     /**
@@ -443,8 +443,8 @@ open class SKTilemap: SKNode, SKTiledObject{
      - returns: `SKTileset?` tileset object.
      */
     open func getTileset(named name: String) -> SKTileset? {
-        if let index = tileSets.index( where: { $0.name == name } ) {
-            let tileset = tileSets[index]
+        if let index = tilesets.index( where: { $0.name == name } ) {
+            let tileset = tilesets[index]
             return tileset
         }
         return nil
@@ -457,13 +457,33 @@ open class SKTilemap: SKNode, SKTiledObject{
      - returns: `SKTileset?`
      */
     open func getTileset(fileNamed filename: String) -> SKTileset? {
-        if let index = tileSets.index( where: { $0.filename == filename } ) {
-            let tileset = tileSets[index]
+        if let index = tilesets.index( where: { $0.filename == filename } ) {
+            let tileset = tilesets[index]
             return tileset
         }
         return nil
     }
-
+    
+    // MARK: Coordinates
+    /**
+     Returns a point for a given coordinate in the layer.
+     
+     - parameter coord: `CGPoint` tile coordinate.
+     - returns: `CGPoint` point in layer.
+     */
+    open func pointForCoordinate(coord: CGPoint, offsetX: CGFloat=0, offsetY: CGFloat=0) -> CGPoint {
+        return baseLayer.pointForCoordinate(coord: coord, offsetX: offsetX, offsetY: offsetY)
+    }
+    
+    /**
+     Returns a tile coordinate for a given point in the layer.
+     
+     - parameter point: `CGPoint` point in layer.
+     - returns: `CGPoint` tile coordinate.
+     */
+    open func coordinateForPoint(_ point: CGPoint) -> CGPoint {
+        return baseLayer.coordinateForPoint(point)
+    }
     
     // MARK: - Layers
     /**
@@ -489,11 +509,17 @@ open class SKTilemap: SKNode, SKTiledObject{
      
      - parameter layer: `TiledLayerObject` layer object.
      */
-    open func addLayer(_ layer: TiledLayerObject, parse: Bool = false) {
+    open func addLayer(_ layer: TiledLayerObject, base: Bool=false) {
         // set the layer index
         layer.index = layers.count > 0 ? lastIndex + 1 : 0
         
-        layers.insert(layer)
+        // setup the layer
+        tileLayerDidBeginRendering(layer: layer)
+        
+        // don't add the base layer
+        if base == false {
+            layers.insert(layer)
+        }
         addChild(layer)
         
         // align the layer to the anchorpoint
@@ -504,13 +530,6 @@ open class SKTilemap: SKNode, SKTiledObject{
         layer.gridColor = self.gridColor
         layer.frameColor = self.frameColor
         layer.highlightColor = self.highlightColor
-        
-        // setup the layer
-        tileLayerDidBeginRendering(layer: layer)
-        
-        if (parse == true) {
-            layer.parseProperties(completion: nil)  // moved this to parser
-        }
     }
     
     /**
@@ -718,10 +737,10 @@ open class SKTilemap: SKNode, SKTiledObject{
      - parameter coord: `CGPoint` coordinate.
      - returns: `[SKTile]` array of tiles.
      */
-    open func tilesAt(_ coord: CGPoint) -> [SKTile] {
+    open func tilesAt(coord: CGPoint) -> [SKTile] {
         var result: [SKTile] = []
         for layer in tileLayers {
-            if let tile = layer.tileAt(coord){
+            if let tile = layer.tileAt(coord: coord){
                 result.append(tile)
             }
         }
@@ -736,7 +755,7 @@ open class SKTilemap: SKNode, SKTiledObject{
      - returns: `[SKTile]` array of tiles.
      */
     open func tilesAt(_ x: Int, _ y: Int) -> [SKTile] {
-        return tilesAt(CGPoint(x,y))
+        return tilesAt(coord: CGPoint(x,y))
     }
     
     /**
@@ -746,17 +765,17 @@ open class SKTilemap: SKNode, SKTiledObject{
      - parameter name:  `String?` layer name.
      - returns: `SKTile?` tile, or nil.
      */
-    open func tileAt(_ coord: CGPoint, inLayer: String?) -> SKTile? {
+    open func tileAt(coord: CGPoint, inLayer: String?) -> SKTile? {
         if let name = name {
             if let layer = getLayer(named: name) as? SKTileLayer {
-                return layer.tileAt(coord)
+                return layer.tileAt(coord: coord)
             }
         }
         return nil
     }
     
     open func tileAt(_ x: Int, _ y: Int, inLayer name: String?) -> SKTile? {
-        return tileAt(CGPoint(x, y), inLayer: name)
+        return tileAt(coord: CGPoint(x, y), inLayer: name)
     }
     
     /**
@@ -809,7 +828,7 @@ open class SKTilemap: SKNode, SKTiledObject{
      - returns: `[SKTile]` array of tiles.
      */
     open func getTileData(withProperty named: String) -> [SKTilesetData] {
-        return tileSets.flatMap { $0.getTileData(withProperty: named)}
+        return tilesets.flatMap { $0.getTileData(withProperty: named) }
     }
     
     /**
@@ -820,7 +839,7 @@ open class SKTilemap: SKNode, SKTiledObject{
      - returns: `[SKTile]` array of tiles.
      */
     open func getTileData(_ named: String, _ value: AnyObject) -> [SKTilesetData] {
-        return tileSets.flatMap { $0.getTileData(named, value)}
+        return tilesets.flatMap { $0.getTileData(named, value) }
     }
     
     /**
@@ -829,7 +848,7 @@ open class SKTilemap: SKNode, SKTiledObject{
      - returns: `[SKTile]` array of tiles.
      */
     open func getAnimatedTiles() -> [SKTile] {
-        return tileLayers.flatMap {$0.getAnimatedTiles()}
+        return tileLayers.flatMap { $0.getAnimatedTiles() }
     }
     
     /**
@@ -838,10 +857,10 @@ open class SKTilemap: SKNode, SKTiledObject{
      - parameter coord: `CGPoint` coordinate.
      - returns: `SKTile?` first tile in layers.
      */
-    open func firstTileAt(_ coord: CGPoint) -> SKTile? {
+    open func firstTileAt(coord: CGPoint) -> SKTile? {
         for layer in tileLayers.reversed() {
-            if layer.visible == true{
-                if let tile = layer.tileAt(coord) {
+            if layer.visible == true {
+                if let tile = layer.tileAt(coord: coord) {
                     return tile
                 }
             }
@@ -888,7 +907,7 @@ open class SKTilemap: SKNode, SKTiledObject{
      - returns: `SKTilesetData` tile data, if it exists.
      */
     open func getTileData(_ gid: Int) -> SKTilesetData? {
-        for tileset in tileSets {
+        for tileset in tilesets {
             if let tileData = tileset.getTileData(gid) {
                 return tileData
             }
@@ -928,6 +947,12 @@ open class SKTilemap: SKNode, SKTiledObject{
     #endif
     
     
+    /**
+     Returns a positing in negative-y space.
+     
+     - parameter point: `CGPoint` scene point.
+     - returns: `CGPoint` converted point in layer coordinate system.
+     */
     open func positionInMap(point: CGPoint) -> CGPoint {
         return convert(point, to: baseLayer).invertedY
     }
@@ -949,14 +974,14 @@ open class SKTilemap: SKNode, SKTiledObject{
      - parameter verbose:     `Bool` verbose output.
      - parameter completion:  `()->()?` optional completion handler.
      */
-    open func didFinishParsing(timeStarted: Date, verbose: Bool=false, completion: (() -> ())? = nil) {
+    open func didFinishParsing(timeStarted: Date, verbose: Bool=true, completion: (() -> ())? = nil) {
         // set the z-depth of the baseLayer
         baseLayer.zPosition = lastZPosition + (zDeltaForLayers * 0.5)
         
         // time results
         let timeInterval = Date().timeIntervalSince(timeStarted)
         let timeStamp = String(format: "%.\(String(3))f", timeInterval)        
-        print("\n[SKTilemap]: tilemap rendered in: \(timeStamp)s\n")
+        print("\n# Success! tile map \"\(name!)\" rendered in: \(timeStamp)s\n")
         
         // dump the output of the current map to stdout
         if (verbose == true) {
@@ -1212,33 +1237,21 @@ extension SKTilemap {
         let layersToPrint = (reverse == true) ? allLayers().reversed() : allLayers()
         
         for layer in layersToPrint {
-            if (layer != baseLayer) {
-                let layerName = layer.name!
-                let nameString = "\"\(layerName)\""
-                
-                // format the layer index
-                let indexString = "\(layer.index): ".zfill(length: 3, pattern: " ", padLeft: false)
-                
-                // format the layer name
-                let layerNameString = "\(layer.layerType.stringValue.capitalized.zfill(length: 7, pattern: " ", padLeft: false)) \(nameString.zfill(length: largestName!.characters.count + 3, pattern: " ", padLeft: false))"
-                let positionString = "pos: \(layer.position.roundTo(1)), size: \(layer.sizeInPoints.roundTo(1))"
-                let offsetString = "offset: \(layer.offset.roundTo(1)), anc: \(layer.anchorPoint.roundTo()), z: \(layer.zPosition.roundTo())"
-                
-                
-                //print(offsetString.characters.count)
-                
-                var layerOutput = "\(indexString) \(layerNameString) \(positionString),  \(offsetString)"
-                
-                // tile count for tile layers
-                if let tileLayer = layer as? SKTileLayer {
-                    let pad: Int = 145 - layerOutput.characters.count
-                    layerOutput += ",  \("".zfill(length: pad, pattern: " ", padLeft: false)) \(tileLayer.tileCount) tiles."
-                }
-                
-                print(layerOutput)
-                
-            }
+            let layerName = layer.name!
+            let nameString = "\"\(layerName)\""
+            
+            // format the layer index
+            let indexString = "\(layer.index): ".zfill(length: 3, pattern: " ", padLeft: false)
+            
+            // format the layer name
+            let layerNameString = "\(layer.layerType.stringValue.capitalized.zfill(length: 7, pattern: " ", padLeft: false)) \(nameString.zfill(length: largestName!.characters.count + 3, pattern: " ", padLeft: false))"
+            let positionString = "pos: \(layer.position.roundTo(1)), size: \(layer.sizeInPoints.roundTo(1))"
+            let offsetString = "offset: \(layer.offset.roundTo(1)), anc: \(layer.anchorPoint.roundTo()), z: \(Int(layer.zPosition))"
+
+            let layerOutput = "\(indexString) \(layerNameString) \(positionString),  \(offsetString)"
+            print(layerOutput)
         }
+        
         print("\n")
     }
 }

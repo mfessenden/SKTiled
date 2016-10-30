@@ -118,7 +118,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
             return CGPoint(x: height * tileWidthHalf, y: tileHeightHalf)
         // TODO: need to check for error here with objects
         case .hexagonal:
-            var startPoint = CGPoint.zero
+            let startPoint = CGPoint.zero
             //startPoint.x -= tileWidthHalf
             //startPoint.y -= tileHeightHalf
             return startPoint
@@ -256,6 +256,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
     
     // MARK: - Event Handling
+    
     #if os(iOS)
     /**
      Returns a converted touch location.
@@ -264,7 +265,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
      - returns: `CGPoint` converted point in layer coordinate system.
      */
     open func touchLocation(_ touch: UITouch) -> CGPoint {
-    return convertPoint(touch.location(in: self))
+        return convertPoint(touch.location(in: self))
     }
     
     /**
@@ -274,7 +275,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
      - returns: `CGPoint` converted point in layer coordinate system.
      */
     open func coordinateAtTouchLocation(_ touch: UITouch) -> CGPoint {
-    return screenToTileCoords(touchLocation(touch))
+        return screenToTileCoords(touchLocation(touch))
     }
     #endif
     
@@ -318,7 +319,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
      - parameter coord: `CGPoint` tile coordinate.
      - returns: `Bool` coodinate is valid.
      */
-    open func isValid(_ coord: CGPoint) -> Bool {
+    open func isValid(coord: CGPoint) -> Bool {
         return isValid(Int(coord.x), Int(coord.y))
     }
         
@@ -746,10 +747,30 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     open func didFinishRendering(duration: TimeInterval=0) {
         let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: duration)
         run(fadeIn, completion: { self.isRendered = true })
+        // setup physics for the layer's edge
+        if hasKey("isDynamic") || hasKey("isCollider"){
+            setupPhysics()
+        }
+    }
+    
+    // MARK: - Dynamics
+    
+    /**
+     Set up physics for the entire layer.
+     */
+    open func setupPhysics(){
+        physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
+        physicsBody?.isDynamic = false
     }
     
     override open var hashValue: Int {
         return self.uuid.hashValue
+    }
+    
+    // MARK: - Debugging
+    open func debugLayer() {
+        /* override in subclass */
+        print("Layer: \(name != nil ? "\"\(name!)\"" : "null"), \(propertiesString ?? "")")
     }
 }
 
@@ -778,7 +799,7 @@ open class SKTileLayer: TiledLayerObject {
 
     // container for the tile sprites
     fileprivate var tiles: TilesArray                   // array of tiles
-    open var render: Bool = false                 // render tile layer as a single image
+    open var render: Bool = false                       // render tile layer as a single image
     
     override open var isPaused: Bool {
         didSet {
@@ -842,7 +863,7 @@ open class SKTileLayer: TiledLayerObject {
      - parameter coord:   `CGPoint` tile coordinate.
      - returns: `SKTile?` tile object, if it exists.
      */
-    open func tileAt(_ coord: CGPoint) -> SKTile? {
+    open func tileAt(coord: CGPoint) -> SKTile? {
         return tileAt(Int(coord.x), Int(coord.y))
     }
     
@@ -961,7 +982,7 @@ open class SKTileLayer: TiledLayerObject {
             if (gid == 0) { continue }
             
             let coord = CGPoint(index % Int(self.size.width), index / Int(self.size.width))
-            let tile = self.buildTileAt(coord, id: gid)
+            let tile = self.buildTileAt(coord: coord, id: gid)
             
             if (tile == nil) {
                 errorCount += 1
@@ -978,38 +999,28 @@ open class SKTileLayer: TiledLayerObject {
     }
     
     /**
-     Build an empty tile at the given coordinates. Returns an existing tile if one already exists,
-     or nil if the coordinate is invalid.
-     
-     - parameter x:   `Int` x-coordinate
-     - parameter y:   `Int` y-coordinate
-     - returns: `SKTile` tile.
-     */
-    open func addTileAt(_ x: Int, _ y: Int, gid: Int? = nil) -> SKTile? {
-        let coord = CGPoint(x, y)
-        return addTileAt(coord, gid: gid)
-    }
-    
-    /**
      Build an empty tile at the given coordinates. Returns an existing tile if one already exists, 
      or nil if the coordinate is invalid.
      
-     - parameter coord:   `CGPoint` tile coordinate
-     - returns: `SKTile` tile.
+     - parameter coord: `CGPoint` tile coordinate
+     - parameter gid: `Int?` tile id.
+     - returns: `SKTile?` tile.
      */
-    open func addTileAt(_ coord: CGPoint, gid: Int? = nil) -> SKTile? {
-        guard isValid(coord) else { return nil }
+    open func addTileAt(coord: CGPoint, gid: Int? = nil) -> SKTile? {
+        guard isValid(coord: coord) else { return nil }
         
         // remove the current tile
-        let current = removeTileAt(coord)
+        let _ = removeTileAt(coord: coord)
         
-        var tileData: SKTilesetData? = nil
-        if (gid != nil) {
-            tileData = getTileData(withID: gid!)
+        let tileData: SKTilesetData? = (gid != nil) ? getTileData(withID: gid!) : nil
+        let tile = SKTile(tileSize: tileSize)
+        
+        if let tileData = tileData {
+            tile.tileData = tileData
+            tile.texture = tileData.texture
+            tile.tileSize = (tileData.tileset != nil) ? tileData.tileset!.tileSize : self.tileSize
         }
         
-        let tile = SKTile(tileSize: tileSize)
-    
         // set the tile overlap amount
         tile.setTileOverlap(tilemap.tileOverlap)
         tile.highlightColor = highlightColor
@@ -1026,6 +1037,63 @@ open class SKTileLayer: TiledLayerObject {
     }
     
     /**
+     Build an empty tile at the given coordinates with a custom texture. Returns nil is the coordinate
+     is invalid.
+     
+     - parameter coord:   `CGPoint` tile coordinate.
+     - parameter texture: `SKTexture?` optional tile texture.
+     - returns: `SKTile?` tile.
+     */
+    open func addTileAt(coord: CGPoint, texture: SKTexture? = nil) -> SKTile? {
+        guard isValid(coord: coord) else { return nil }
+        
+        let tile = SKTile(tileSize: tileSize)
+        tile.texture = texture
+        
+        // set the tile overlap amount
+        tile.setTileOverlap(tilemap.tileOverlap)
+        tile.highlightColor = highlightColor
+        
+        // set the layer property
+        tile.layer = self
+        self.tiles[Int(coord.x), Int(coord.y)] = tile
+        
+        // get the position in the layer (plus tileset offset)
+        let tilePosition = pointForCoordinate(coord: coord, offsetX: offset.x, offsetY: offset.y)
+        tile.position = tilePosition
+        addChild(tile)
+        return tile
+    }
+    
+    /**
+     Build an empty tile at the given coordinates. Returns an existing tile if one already exists,
+     or nil if the coordinate is invalid.
+     
+     - parameter x:   `Int` x-coordinate
+     - parameter y:   `Int` y-coordinate
+     - parameter gid: `Int?` tile id.
+     - returns: `SKTile?` tile.
+     */
+    open func addTileAt(_ x: Int, _ y: Int, gid: Int? = nil) -> SKTile? {
+        let coord = CGPoint(x, y)
+        return addTileAt(coord: coord, gid: gid)
+    }
+    
+    /**
+     Build an empty tile at the given coordinates with a custom texture. Returns nil is the coordinate
+     is invalid.
+     
+     - parameter x:       `Int` x-coordinate
+     - parameter y:       `Int` y-coordinate
+     - parameter texture: `SKTexture?` optional tile texture.
+     - returns: `SKTile?` tile.
+     */
+    open func addTileAt(_ x: Int, _ y: Int, texture: SKTexture? = nil) -> SKTile? {
+        let coord = CGPoint(x, y)
+        return addTileAt(coord: coord, texture: texture)
+    }
+    
+    /**
      Remove the tile at a given x/y coordinates.
      
      - parameter x:   `Int` x-coordinate
@@ -1034,7 +1102,7 @@ open class SKTileLayer: TiledLayerObject {
      */
     open func removeTileAt(_ x: Int, _ y: Int) -> SKTile? {
         let coord = CGPoint(x, y)
-        return removeTileAt(coord)
+        return removeTileAt(coord: coord)
     }
     
     /**
@@ -1043,8 +1111,8 @@ open class SKTileLayer: TiledLayerObject {
      - parameter coord:   `CGPoint` tile coordinate.
      - returns: `SKTile?` removed tile.
      */
-    open func removeTileAt(_ coord: CGPoint) -> SKTile? {
-        let current = tileAt(coord)
+    open func removeTileAt(coord: CGPoint) -> SKTile? {
+        let current = tileAt(coord: coord)
         if let current = current {
             current.removeFromParent()
             self.tiles[Int(coord.x), Int(coord.y)] = nil
@@ -1060,28 +1128,17 @@ open class SKTileLayer: TiledLayerObject {
      - parameter gid: `Int` tile id.
      - returns: `SKTile?` tile.
      */
-    fileprivate func buildTileAt(_ coord: CGPoint, id: UInt32) -> SKTile? {
+    fileprivate func buildTileAt(coord: CGPoint, id: UInt32) -> SKTile? {
         
-        // masks for tile flipping
-        let flippedDiagonalFlag: UInt32   = 0x20000000
-        let flippedVerticalFlag: UInt32   = 0x40000000
-        let flippedHorizontalFlag: UInt32 = 0x80000000
+        // get tile attributes from the current id
+        let tileAttrs = flippedTileFlags(id: id)
         
-        let flippedAll = (flippedHorizontalFlag | flippedVerticalFlag | flippedDiagonalFlag)
-        let flippedMask = ~(flippedAll)
-        
-        let flipHoriz: Bool = (id & flippedHorizontalFlag) != 0
-        let flipVert: Bool = (id & flippedVerticalFlag) != 0
-        let flipDiag: Bool = (id & flippedDiagonalFlag) != 0
-        
-        // get the actual gid from the mask
-        let gid = id & flippedMask
-        
-        if let tileData = tilemap.getTileData(Int(gid)) {
+        if let tileData = tilemap.getTileData(Int(tileAttrs.gid)) {
             
-            tileData.flipHoriz = flipHoriz
-            tileData.flipVert = flipVert
-            tileData.flipDiag = flipDiag
+            // set the tile data flip flags
+            tileData.flipHoriz = tileAttrs.hflip
+            tileData.flipVert  = tileAttrs.vflip
+            tileData.flipDiag  = tileAttrs.dflip
 
             if let tile = SKTile(data: tileData) {                
                 
@@ -1109,7 +1166,7 @@ open class SKTileLayer: TiledLayerObject {
                 tile.runAnimation()
 
                 if tile.texture == nil {
-                    print("[SKTileLayer]: WARNING: cannot find a texture for gid \(gid)")
+                    print("[SKTileLayer]: WARNING: cannot find a texture for id: \(tileAttrs.gid)")
                 }
                 
                 return tile
@@ -1120,8 +1177,8 @@ open class SKTileLayer: TiledLayerObject {
         } else {
             
             // check for bad gid calls
-            if !gidErrors.contains(gid) {
-                gidErrors.append(gid)
+            if !gidErrors.contains(tileAttrs.gid) {
+                gidErrors.append(tileAttrs.gid)
             }
         }
         return nil
@@ -1173,6 +1230,14 @@ open class SKTileLayer: TiledLayerObject {
     open func setShader(fileNamed: String) {
         for tile in tiles where tile != nil {
             tile!.setTileShader(shaderFile: fileNamed)
+        }
+    }
+    
+    // MARK: - Debugging
+    override open func debugLayer() {
+        super.debugLayer()
+        for tile in validTiles() {
+            print(tile.debugDescription)
         }
     }
 }
@@ -1450,8 +1515,10 @@ open class SKObjectGroup: TiledLayerObject {
     override open func didFinishRendering(duration: TimeInterval=0) {
         super.didFinishRendering(duration: duration)
         for object in objects {
-            if object.hasKey("isDynamic") {
-                
+            if object.hasKey("isDynamic") || object.hasKey("isCollider"){
+                object.setupPhysics()
+                // override object visibility
+                object.visible = true
             }
         }
     }

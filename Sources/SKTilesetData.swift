@@ -63,9 +63,10 @@ open class SKTilesetData: SKTiledObject  {
      - parameter tileSet: `SKTileset` tileset reference.
      - returns: `SKTilesetData` tile data.
      */
-    public init(tileId: Int, withTileset tileSet: SKTileset) {
-        self.id = tileId
+    public init(id: Int, withTileset tileSet: SKTileset) {
+        self.id = id
         self.tileset = tileSet
+        self.parseTileID(id: id)
     }
     
     /**
@@ -76,12 +77,15 @@ open class SKTilesetData: SKTiledObject  {
      - parameter tileSet: `SKTileset` tileset reference.
      - returns: `SKTilesetData` tile data.
      */
-    public init(tileId: Int, texture: SKTexture, tileSet: SKTileset) {
-        self.id = tileId
+    public init(id: Int, texture: SKTexture, tileSet: SKTileset) {
+        self.id = id
         self.texture = texture
         self.texture.filteringMode = .nearest
         self.tileset = tileSet
+        self.parseTileID(id: id)
     }
+    
+    // MARK: - Animation
     
     /**
      Add tile animation to the data.
@@ -90,8 +94,8 @@ open class SKTilesetData: SKTiledObject  {
      - parameter duration:    `TimeInterval` frame interval.
      - parameter tileTexture: `SKTexture?` frame texture.
      */
-    open func addFrame(_ gid: Int, interval: TimeInterval, tileTexture: SKTexture? = nil) {
-        frames.append(AnimationFrame(gid: gid, duration: interval, texture: tileTexture))
+    open func addFrame(withID: Int, interval: TimeInterval, tileTexture: SKTexture? = nil) {
+        frames.append(AnimationFrame(gid: withID, duration: interval, texture: tileTexture))
     }
     
     /**
@@ -105,6 +109,30 @@ open class SKTilesetData: SKTiledObject  {
             return frames.remove(at: index)
         }
         return nil
+    }
+    
+    /**
+     Translate the global id. Returns the translated tile ID
+     and the corresponding flip flags.
+     
+     - Parameter id: `Int` tile ID
+     */
+    private func parseTileID(id: Int) {
+        // masks for tile flipping
+        let flippedDiagonalFlag: UInt32   = 0x20000000
+        let flippedVerticalFlag: UInt32   = 0x40000000
+        let flippedHorizontalFlag: UInt32 = 0x80000000
+        
+        let flippedAll = (flippedHorizontalFlag | flippedVerticalFlag | flippedDiagonalFlag)
+        let flippedMask = ~(flippedAll)
+        
+        // set the current flip flags
+        self.flipHoriz = (UInt32(id) & flippedHorizontalFlag) != 0
+        self.flipVert  = (UInt32(id) & flippedVerticalFlag) != 0
+        self.flipDiag  = (UInt32(id) & flippedDiagonalFlag) != 0
+        
+        // get the actual gid from the mask
+        self.id = Int(UInt32(id) & flippedMask)
     }
 }
 
@@ -131,13 +159,10 @@ extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
     public var description: String {
         guard let tileset = tileset else { return "Tile ID: \(id) (no tileset)" }
         let tileSizeString = "\(Int(tileset.tileSize.width))x\(Int(tileset.tileSize.height))"
-        var dataString = properties.count > 0 ? "Tile ID: \(id) @ \(tileSizeString), " : "Tile ID: \(id) @ \(tileSizeString)"
-        for (index, pair) in properties.enumerated() {
-            let pstring = (index < properties.count - 1) ? "\"\(pair.0)\": \(pair.1)," : "\"\(pair.0)\": \(pair.1)"
-            dataString += pstring
-        }
-        return dataString
+        let dataString = properties.count > 0 ? "Tile ID: \(id) @ \(tileSizeString), " : "Tile ID: \(id) @ \(tileSizeString)"
+        return "\(dataString)\(propertiesString ?? "")"
     }
     
     public var debugDescription: String { return description }
 }
+

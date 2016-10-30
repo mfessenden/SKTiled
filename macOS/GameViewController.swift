@@ -13,11 +13,10 @@ import SpriteKit
 class GameViewController: NSViewController {
     
     var demoFiles: [String] = []
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let appDelegate = NSApplication.shared().delegate as! AppDelegate
+
         
         // load demo files from a propertly list
         demoFiles = loadDemoFiles("DemoFiles")

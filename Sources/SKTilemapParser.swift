@@ -114,6 +114,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 
                 print("[SKTilemapParser]: reading \(filetype): \"\(currentFileName!)\"")
                 
+                // parse the file
                 let successs: Bool = parser.parse()
                 // report errors
                 if (successs == false) {
@@ -235,7 +236,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                        attributes attributeDict: [String: String])  {
         
         activeElement = elementName
-
+        
         let isCompoundElement = (attributeDict.count > 0)
         var elementStartString = "<\(elementName)"
         if (isCompoundElement == true) {
@@ -338,11 +339,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             guard let value = attributeDict["value"] else { parser.abortParsing(); return }
             //guard let value = attributeDict["type"] else { parser.abortParsing(); return }
             
-            var propertyType = "string"
-            if let ptype = attributeDict["type"] {
-                propertyType = ptype
-            }
-            
             // stash properties
             properties[name] = value            
         }
@@ -392,8 +388,8 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         
         // look for last element to be a tileset or imagelayer
         if (elementName == "image") {
-            guard let imageWidth = attributeDict["width"] else { parser.abortParsing(); return }
-            guard let imageHeight = attributeDict["height"] else { parser.abortParsing(); return }
+            guard attributeDict["width"] != nil else { parser.abortParsing(); return }
+            guard attributeDict["height"] != nil else { parser.abortParsing(); return }
             guard let imageSource = attributeDict["source"] else { parser.abortParsing(); return }
             
             // update an image layer
@@ -407,7 +403,10 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 // If `currentID` == nil, look for lastElement to be a tileset, otherwise, the image is part of a collections tileset.
                 if let currentID = currentID {
                     // add an image property to the tileset collection
-                    tileset.addTilesetTile(currentID + tileset.firstGID, source: imageSource)
+                    let tileData = tileset.addTilesetTile(currentID + tileset.firstGID, source: imageSource)
+                    if (tileData == nil) {
+                        print("[SKTilemapParser]: Warning: tile id \(currentID) is invalid.")
+                    }
                 } else {
                     // add the tileset spritesheet image
                     tileset.addTextures(fromSpriteSheet: imageSource)
@@ -451,7 +450,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 return
             }
                 
-            objectGroup.addObject(tileObject)
+            let _ = objectGroup.addObject(tileObject)
             currentID = tileObject.id
         }
         
@@ -524,7 +523,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             let durationInSeconds: TimeInterval = Double(duration)! / 1000.0
             if let currentTileData = tileset.getTileData(currentID + tileset.firstGID) {
                 // add the frame id to the frames property
-                currentTileData.addFrame(Int(id)! + tileset.firstGID, interval: durationInSeconds)
+                currentTileData.addFrame(withID: Int(id)! + tileset.firstGID, interval: durationInSeconds)
             }
         }
 
@@ -553,24 +552,31 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                        namespaceURI: String?,
                        qualifiedName qName: String?) {
         
-
         // look for last element to add properties to
         if elementName == "properties" {
+                        
+            /* TILEMAP */
             if let tilemap = lastElement as? SKTilemap {
-                tilemap.properties = properties
+                for (key, value) in properties {
+                    tilemap.properties[key] = value
+                }
                 tilemap.parseProperties(completion: nil)
             }
             
-            if let tileLayer = lastElement as? TiledLayerObject {
-                tileLayer.properties = properties
-                //tileLayer.parseProperties(completion: nil)   // moved this to render
+            if let layer = lastElement as? TiledLayerObject {
+                if (currentID == nil){
+                    for (key, value) in properties {
+                        layer.properties[key] = value
+                    }
+                }
+                
+                //tileLayer.parseProperties(completion: nil)   // moved to render
             }
             
             if let tileset = lastElement as? SKTileset {
                 if (currentID == nil){
                     tileset.properties = properties
                     tileset.parseProperties(completion: nil)
-                    
                 } else {
                     
                     let tileID = tileset.firstGID + currentID!
@@ -583,7 +589,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     }
                 }
             }
-            
+
             // clear if no last ID
             if currentID == nil {
                 properties = [:]
@@ -657,7 +663,12 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             if let objectsgroup = lastElement as? SKObjectGroup {                
                 if (currentID != nil) {
                     if let lastObject = objectsgroup.getObject(withID: currentID!) {
-                        lastObject.properties = properties
+                        //lastObject.properties = properties
+                        for (key, value) in properties {
+                            lastObject.properties[key] = value
+                        }
+                        
+                        
                         lastObject.parseProperties(completion: nil)
                         properties = [:]
                     }
@@ -680,6 +691,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     
     open func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
         //if parseError.code == NSXMLParserError.InternalError {}
+        print(parseError)
     }
     
     // MARK: - Decoding

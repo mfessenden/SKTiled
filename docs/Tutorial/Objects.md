@@ -35,10 +35,15 @@ Note that this will return objects from multiple object layers.
 
 ###Dynamics
 
-![Object Dynamics](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/dynamics-start.png)
+You also have the option of enabling physics for each object, allowing them to react as dynamics bodies in your scene. Passing properties from **Tiled** allows you to easily create dynamic objects in your scenes.
 
-You also have the option of enabling physics for each object, allowing them to react as dynamics bodies in your scene. Enabling the `SKTileObject.isDynamic` property allows you to easily create dynamic objects in your scenes.
+![Dynamics Setup](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/dynamics-start.png)
 
+In this scene, the shape objects are assigned a boolean property `isDynamic`, while the floor objects are assigned the boolean property `isCollider`. In the map properties, a float property `yGravity` property is created and given a value of `-9.8`.
+
+Loaded in **SKTiled**, the scene renders as this:
+
+![Object Dynamics](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/dynamic-objects.gif)
 
 
  Next: [Properties](properties.html) - [Index](Tutorial.html)

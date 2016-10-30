@@ -107,6 +107,10 @@ public extension SKTilemap {
             if (attr == "yGravity") {
                 gravity.dy = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : 0
             }
+            
+            if (attr == "showGrid") {
+                baseLayer.showGrid = boolForKey(attr)
+            }
         }
         
         if completion != nil { completion!() }
@@ -148,6 +152,10 @@ public extension TiledLayerObject {
             
             if (attr == "visible") {
                 visible = boolForKey(attr)
+            }
+            
+            if (attr == "antialiasing") {
+                antialiased = boolForKey(attr)
             }
             
             if (attr == "antialiasing") {
@@ -230,6 +238,13 @@ public extension SKTileObject {
                 lineWidth = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : lineWidth
             }
         }
+        
+        // Physics
+        let isDynamic:  Bool = boolForKey("isDynamic")
+        let isCollider: Bool = boolForKey("isCollider")
+
+        physicsType = Int(isDynamic) ^ Int(isCollider) == 0 ? .none : (isDynamic == true) ? .dynamic : .collision
+
         if completion != nil { completion!() }
     }
 }
@@ -239,11 +254,8 @@ public extension SKTilesetData {
     /**
      Parse the tile data's properties value.
      */
-    public func parseProperties(completion: (() -> ())?) {
-        for (attr, value) in properties {
-            //print("\(id): \(attr) = \(value)")
-        }
-        
+    public func parseProperties(completion: (() -> ())?) {        
         if completion != nil { completion!() }
     }
 }
+

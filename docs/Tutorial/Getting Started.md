@@ -1,57 +1,47 @@
-#Getting Started
+# Getting Started
 
 **SKTiled** was designed to be flexible and easy to use. Installation is very straightforward. If you have any problems or requests, please open an issue at the [Github page](https://github.com/mfessenden/SKTiled/issues).
 
 
-##Requirements
+## Requirements
 
-- iOS9+ / macOS 10.11+
-- Xcode 8
-- Swift 2.3+
+- [x] iOS10+ / macOS 10.11+
+- [x] Xcode 8
+- [x] Swift 3
 
-Check out the [master](https://github.com/mfessenden/SKTiled/tree/master) branch for Swift 2.3, or the [master](https://github.com/mfessenden/SKTiled/tree/master) branch for Swift 3. Going forward, the minimum requirements will be pushed up to Swift 3/master/macOS 10.11 as some features will require newer versions of Apple's tools.
 
-**SKTiled** should work with tvOS, though it has not yet been extensively tested.
+### Swift 2 Note
 
-##Swift 2.3 Note
+Check out the [Swift 2](https://github.com/mfessenden/SKTiled/tree/swift2) branch for Swift 2.3. Going forward, the minimum requirements will be pushed up to Swift 3 as some features will require newer versions of Apple's APIs.
+
 
 If you're using one of the older toolchains, you'll need to enable the **Use Legacy Swift Language Version** option in the project **Build Settings.**
 
 ![Legacy Swift Version](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/swift_legacy.png)
 
 
-##Installation
-
-- Copy the *Sources* directory to your project (or drag the individual files).
-- Set the appropriate Swift language target.
+## Installation
 
 ![Xcode installation](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/installation.png)
 
-
-### Linking zlib
-
-You'll need to add a path to the zlib module in your project under **Import Paths:**
-
-*Project > Build Settings > Swift Compiler - Search Paths > Import Paths*
-
-Add the following to the project:
-
-`$(SRCROOT)/Sources`
-
+1. Copy the `Sources` and `zlib` directories to your project. Make sure the swift files are added to your target(s).
+2. Add the `zlib` directory to your project's include paths:
+    - *Project > Build Settings > Swift Compiler - Search Paths > Import Paths*
 
 ![zlib compression](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/zlib_linking.png)
- 
-
-##Adding Tiled Assets
-
-When adding maps (TMX files), images and tilesets (TSX files) to your Xcode project, you'll need to make sure to add the files as *groups* and not folder references as the assets are stored in the root of the app bundle when compiled.
 
 
-##Setting up your Scenes
+## Adding Tiled Assets
 
-Using tiled maps in your own projects is very easy. The included [`SKTiledScene`](Classes/SKTiledScene.html) class conforms to the [`SKTiledSceneDelegate`](Protocols/SKTiledSceneDelegate.html) protocol and could serve as a template for your scenes, though you are free to implement your own setups.
+When adding maps (TMX files), images and tilesets (TSX files) to your Xcode project, you'll need to make sure to add the files as **groups** and not folder references as the assets are stored in the root of the app bundle when compiled. Relative file references in your Tiled files will break when the are added to your app's bundle.
 
-If you choose to create your own scene type, a simple setup could be as simple as:
+
+## Setting up your Scenes
+
+
+Using tiled maps in your own projects is very straightforward. The included [`SKTiledScene`](Classes/SKTiledScene.html) class conforms to the [`SKTiledSceneDelegate`](Protocols/SKTiledSceneDelegate.html) protocol and could serve as a template for your scenes, though you are free to implement your own setups.
+
+If you choose to use your own scene type, a simple setup could be as simple as:
 
 
 ```swift
@@ -109,19 +99,19 @@ See the [Coordinates](coordinates.html) page for more information.
 
 ###Default Layer
 
-By default, the [`SKTilemap`](Classes/SKTilemap.html) class uses a default tile layer accessible via `SKTilemap.baseLayer`. The base layer is automatically created is used for coordinate transforms and for visualizing the grid (the base layer's z-position is always higher than the other layers).
+By default, the [`SKTilemap`](Classes/SKTilemap.html) class uses a default tile layer accessible via the `SKTilemap.baseLayer` property. The base layer is automatically created is used for coordinate transforms and for visualizing the grid (the base layer's z-position is always higher than the other layers).
 
 
 
 ###Isolating Layers
 
-You can isolate layers easily (just as you can in Tiled):
+You can isolate a layer (as you can in Tiled):
 
 ```swift
 // isolate the layer named 'Background'
 tilemap.isolateLayer("Background")
 
-// show all layers
+// pass nil to the method to show all layers
 tilemap.isolateLayer(nil)
 ```
 

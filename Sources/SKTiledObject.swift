@@ -23,6 +23,7 @@ public protocol SKTiledObject: Hashable {
     var uuid: String { get set }
     /// Properties shared by most objects.
     var properties: [String: String] { get set }
+    /// Parse function (with optional completion block).
     func parseProperties(completion: (() -> ())?)
 }
 
@@ -32,6 +33,15 @@ public extension SKTiledObject {
     public var hashValue: Int { return uuid.hashValue }
     
     // MARK: - Properties Parsing
+    /**
+     Returns true if the node stored properties.
+     
+     - returns: `Bool` properties are not empty.
+     */
+    public var hasProperties: Bool {
+        return properties.count > 0
+    }
+    
     /**
      Returns true if the node has the given property.
      
@@ -135,7 +145,7 @@ public extension SKTiledObject {
      */
     public func doubleArrayForKey(_ key: String, separatedBy: String=",") -> [Double] {
         if let value = properties[key] {
-            return  value.components(separatedBy: separatedBy).flatMap { Double($0) }
+            return value.components(separatedBy: separatedBy).flatMap { Double($0) }
         }
         return [Double]()
     }
@@ -152,7 +162,8 @@ public extension SKTiledObject {
     }
     
     /// Returns a string representation of the node's properties.
-    public var propertiesString: String {
+    public var propertiesString: String? {
+        if (properties.count == 0) { return nil }
         var pstring = ""
         for value in properties.enumerated() {
             let indexIsLast = value.0 < (properties.count - 1)
@@ -160,7 +171,7 @@ public extension SKTiledObject {
         }
         return pstring
     }
-    
+
     // MARK: - Key/Value Parsing
     /**
      Parses a key/value string (separated byt '=') and returns a tuple.

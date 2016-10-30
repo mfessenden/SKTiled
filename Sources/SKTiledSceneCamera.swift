@@ -44,8 +44,9 @@ open class SKTiledSceneCamera: SKCameraNode {
     #endif
     
     // locations
-    fileprivate var focusLocation = CGPoint.zero
+    fileprivate var focusLocation: CGPoint = CGPoint.zero
     fileprivate var lastLocation: CGPoint!
+    
     // quick & dirty overlay node
     internal let overlay: SKNode = SKNode()
     
@@ -180,7 +181,7 @@ open class SKTiledSceneCamera: SKCameraNode {
         guard let scene = self.scene as? SKTiledScene else { return }
         guard let view = scene.view else { return }
         guard let tilemap = scene.tilemap else { return }
-        
+                
         let screenScaleWidth: CGFloat = 0.75
         let viewSize = view.bounds.size
         
@@ -274,7 +275,7 @@ extension SKTiledSceneCamera {
      */
     open func sceneDoubleClicked(_ event: NSEvent) {
         guard let scene = self.scene as? SKTiledScene else { return }
-        //let sceneLocation = event.location(in: scene)
+        let _ = event.location(in: scene)
     }
     
     override open func mouseDown(with event: NSEvent) {
@@ -293,7 +294,7 @@ extension SKTiledSceneCamera {
         focusLocation = location
         centerOn(scenePoint: focusLocation)
         
-        zoom += (event.deltaY * 0.10)  // was 0.25
+        zoom += (event.deltaY * 0.05) // max 0.25
         // set the world scaling here
         setWorldScale(zoom)
     }

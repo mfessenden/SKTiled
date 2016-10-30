@@ -67,6 +67,8 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     open var size: CGSize = CGSize.zero
     open var properties: [String: String] = [:]             // custom properties
     
+    open var physicsType: ObjectPhysics = .none             // physics body type
+    
     /// Object opacity
     open var opacity: CGFloat {
         get { return self.alpha }
@@ -79,8 +81,11 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         set { self.isHidden = !newValue }
     }
     
-    // dynamics
-    open var isDynamic: Bool = false
+    
+    /// Returns the bounding box of the shape.
+    override open var frame: CGRect {
+        return CGRect(x: 0, y: 0, width: size.width, height: -size.height)
+    }
     
     // MARK: - Init
     override public init(){
@@ -193,13 +198,15 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         drawObject()
     }
     
+    // MARK: - Rendering
+    
     /**
      Render the object.
      */
     public func drawObject() {
         guard let layer = layer else { return }
         guard points.count > 1 else { return }
-        
+
         
         // polyline objects should have no fill
         self.zPosition = layer.tilemap.lastZPosition + layer.tilemap.zDeltaForLayers
@@ -211,6 +218,9 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         self.lineWidth = (lwidth / layer.tileHeight < 0.075) ? lwidth : 0.75
         
         if let vertices = getVertices() {
+            
+            // render tile image here if gid provided
+            
             switch objectType {
             case .ellipse:
                 
@@ -251,6 +261,33 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                 anchor.strokeColor = SKColor.clear
                 anchor.fillColor = self.strokeColor
                 anchor.isAntialiased = isAntialiased
+            }
+        }
+        
+        // render the object with a tile image
+        if (self.gid != nil) {
+            renderWith(gid: self.gid!)
+        }
+    }
+    
+    /**
+     Render with a tile ID. Bit of a hack for now, it's not a supported feature in Tiled.
+     */
+    internal func renderWith(gid: Int) {
+        if let objectGroup = layer {
+            if let tileData = objectGroup.tilemap.getTileData(gid) {
+                let boundingRect = calculateAccumulatedFrame()
+                
+                if (tileData.texture != nil) {
+                    childNode(withName: "GID_Sprite")?.removeFromParent()
+                    let sprite = SKSpriteNode(texture: tileData.texture)
+                    sprite.name = "GID_Sprite"
+                    sprite.size.width = boundingRect.size.width
+                    sprite.size.height = boundingRect.size.height
+                    addChild(sprite)
+                    strokeColor = SKColor.clear
+                    fillColor = SKColor.clear
+                }
             }
         }
     }
@@ -302,13 +339,32 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         return vertices
     }
     
+    // MARK: - Callbacks
+    open func didBeginRendering(completion: (() -> ())? = nil) {
+        if completion != nil { completion!() }
+    }
+    
+    open func didFinishRendering(completion: (() -> ())? = nil) {
+        if completion != nil { completion!() }
+    }
+    
+    // MARK: - Dynamics
+    
+    /**
+     Setup physics for the object based on properties set up in Tiled.
+     */
     open func setupPhysics() {
         guard let objectPath = path else {
             print("[SKTileObject]: WARNING: object path not set: \"\(self.name != nil ? self.name! : "null")\"")
             return
         }
-        physicsBody = SKPhysicsBody(edgeLoopFrom: objectPath)
-        physicsBody?.isDynamic = isDynamic
+        
+        physicsBody = SKPhysicsBody(polygonFrom: objectPath)
+        physicsBody?.isDynamic = (physicsType == .dynamic)
+        physicsBody?.affectedByGravity = (physicsType == .dynamic)
+        physicsBody?.mass = (doubleForKey("mass") != nil) ? CGFloat(doubleForKey("mass")!) : 1.0
+        physicsBody?.friction = (doubleForKey("friction") != nil) ? CGFloat(doubleForKey("friction")!) : 0.2
+        physicsBody?.restitution = (doubleForKey("restitution") != nil) ? CGFloat(doubleForKey("restitution")!) : 0.2  // bounciness
     }
 }
 
@@ -316,9 +372,10 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
 
 extension SKTileObject {
     override open var hashValue: Int { return id.hashValue }
+    
+    /// Tile data description.
     override open var description: String {
-        let objectName: String = name != nil ? "\"\(name!)\"" : "(null)"
-        return "\(String(describing: objectType).capitalized) Object: \(objectName), id: \(self.id)"
+        return "Object: \(id), \(name ?? "null"), \(propertiesString ?? "")"
     }
     
     override open var debugDescription: String { return description }

@@ -5,8 +5,19 @@ Change Log
 --------------------------
 
 #### Changes
-- add `SKTileObject.isDynamic` property
-- add `SKTiledSceneCamera.overlay` property
+- fixed a bug where object properties were added to the parent object group
+- `SKTileLayer.addTileAt` now  tries to resolves `gid` argument
+- add support for `SKTileObject` physics:
+    - add `SKTiledObject.hasProperties` property
+    - add `SKTileObject.physicsType` property
+    - add `SKTiledSceneCamera.overlay` property
+- add `SKTileObject` texture rendering
+- add `flippedTileFlags` function
+- add `SKTileset.getTileRealID` method
+- `SKTiledScene` automatically resizes maps with the `SKTilemap.autoResize` is set
+- add `SKTileLayer.addTileAt(coord:texture)`
+- add `SKTilemap.pointForCoordinate` and `SKTilemap.coordinateForPoint` methods
+- updated README
 
 1.0.3
 --------------------------

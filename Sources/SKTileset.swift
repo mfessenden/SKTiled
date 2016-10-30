@@ -215,7 +215,7 @@ open class SKTileset: SKTiledObject {
             return nil
         }
         
-        let data = SKTilesetData(tileId: tileID, texture: texture, tileSet: self)
+        let data = SKTilesetData(id: tileID, texture: texture, tileSet: self)
         self.tileData.insert(data)
         data.parseProperties(completion: nil)
         return data
@@ -240,7 +240,7 @@ open class SKTileset: SKTiledObject {
         let texture = SKTexture(imageNamed: source)
         
         texture.filteringMode = .nearest
-        let data = SKTilesetData(tileId: tileID, texture: texture, tileSet: self)
+        let data = SKTilesetData(id: tileID, texture: texture, tileSet: self)
         
         // add the image name to the source attribute
         data.source = source
@@ -258,7 +258,8 @@ open class SKTileset: SKTiledObject {
      - returns: `SKTilesetData?` tile data object.
      */
     open func getTileData(_ gid: Int) -> SKTilesetData? {
-        if let index = tileData.index( where: { $0.id == gid } ) {
+        let id = getTileRealID(id: gid)
+        if let index = tileData.index( where: { $0.id == id } ) {
             return tileData[index]
         }
         return nil
@@ -302,12 +303,37 @@ open class SKTileset: SKTiledObject {
         return (id - firstGID) > 0 ? (id - firstGID) : -1
     }
     
+    
+    /**
+     Check for tile ID flip flags.
+     
+     - Parameter id: `Int` tile ID
+     - Returns: `Int` translated ID.
+     */
+    internal func getTileRealID(id: Int) -> Int {
+        let uid: UInt32 = UInt32(id)
+        // masks for tile flipping
+        let flippedDiagonalFlag: UInt32   = 0x20000000
+        let flippedVerticalFlag: UInt32   = 0x40000000
+        let flippedHorizontalFlag: UInt32 = 0x80000000
+        
+        let flippedAll = (flippedHorizontalFlag | flippedVerticalFlag | flippedDiagonalFlag)
+        let flippedMask = ~(flippedAll)
+        
+        // get the actual gid from the mask
+        let gid = uid & flippedMask
+        return Int(gid)
+    }
+    
     /**
      Print out tileset data values.
      */
     internal func debugTileset(){
+        print("# Tileset: \"\(name)\":")
         for data in tileData.sorted(by: {$0.id < $1.id}) {
-            print(data.description)
+            if data.hasProperties {
+                print(data.description)
+            }
         }
     }
 }

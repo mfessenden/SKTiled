@@ -37,6 +37,17 @@ public class SKTiledDemoScene: SKTiledScene {
         setupDemoUI()
         setupDebuggingLabels()
         updateHud()
+        
+        #if os(OSX)
+        updateTrackingViews()
+        #endif
+        
+        
+        if let tilemap = tilemap {
+            tilemap.baseLayer.showGrid = true
+        }
+        
+        
     }
     
     // MARK: - Setup
@@ -45,6 +56,8 @@ public class SKTiledDemoScene: SKTiledScene {
      */
     public func setupDemoUI() {
         guard let view = self.view else { return }
+        guard let cameraNode = cameraNode else { return }
+        
         // set up camera overlay UI
         let lastZPosition: CGFloat = (tilemap != nil) ? tilemap.lastZPosition * 10 : 5000
 
@@ -54,7 +67,8 @@ public class SKTiledDemoScene: SKTiledScene {
                     cameraNode.fitToView()
                 }
             })
-            cameraNode.addChild(resetButton)
+            
+            cameraNode.overlay.addChild(resetButton)
             buttons.append(resetButton)
             
             // position towards the bottom of the scene
@@ -72,7 +86,7 @@ public class SKTiledDemoScene: SKTiledScene {
                 tilemap.baseLayer.drawBounds()
             })
             
-            cameraNode.addChild(showGridButton)
+            cameraNode.overlay.addChild(showGridButton)
             buttons.append(showGridButton)
             // position towards the bottom of the scene
             showGridButton.position.y -= (view.bounds.size.height / 2.25)
@@ -86,7 +100,7 @@ public class SKTiledDemoScene: SKTiledScene {
                 tilemap.showObjects = debugState
             })
             
-            cameraNode.addChild(showObjectsButton)
+            cameraNode.overlay.addChild(showObjectsButton)
             buttons.append(showObjectsButton)
             // position towards the bottom of the scene
             showObjectsButton.position.y -= (view.bounds.size.height / 2.25)
@@ -101,7 +115,7 @@ public class SKTiledDemoScene: SKTiledScene {
             loadNextButton = ButtonNode(defaultImage: "next-button-norm", highlightImage: "next-button-pressed", action: {
                 self.loadNextScene()
             })
-            cameraNode.addChild(loadNextButton)
+            cameraNode.overlay.addChild(loadNextButton)
             buttons.append(loadNextButton)
             // position towards the bottom of the scene
             loadNextButton.position.x += (view.bounds.size.width / 7)
@@ -114,7 +128,7 @@ public class SKTiledDemoScene: SKTiledScene {
      Setup debugging labels.
      */
     public func setupDebuggingLabels() {
-        guard let view = self.view else { return }
+        guard self.view != nil else { return }
         guard let cameraNode = cameraNode else { return }
         var tilemapInfoY: CGFloat = 0.77
         var tileInfoY: CGFloat = 0.81
@@ -131,7 +145,7 @@ public class SKTiledDemoScene: SKTiledScene {
             mapInformationLabel = SKLabelNode(fontNamed: "Courier")
             mapInformationLabel.fontSize = labelFontSize
             mapInformationLabel.text = "Tilemap:"
-            cameraNode.addChild(mapInformationLabel)
+            cameraNode.overlay.addChild(mapInformationLabel)
         }
         
         if (tileInformationLabel == nil){
@@ -139,7 +153,7 @@ public class SKTiledDemoScene: SKTiledScene {
             tileInformationLabel = SKLabelNode(fontNamed: "Courier")
             tileInformationLabel.fontSize = labelFontSize
             tileInformationLabel.text = "Tile:"
-            cameraNode.addChild(tileInformationLabel)
+            cameraNode.overlay.addChild(tileInformationLabel)
         }
         
         if (propertiesInformationLabel == nil){
@@ -147,7 +161,7 @@ public class SKTiledDemoScene: SKTiledScene {
             propertiesInformationLabel = SKLabelNode(fontNamed: "Courier")
             propertiesInformationLabel.fontSize = labelFontSize
             propertiesInformationLabel.text = "ID:"
-            cameraNode.addChild(propertiesInformationLabel)
+            cameraNode.overlay.addChild(propertiesInformationLabel)
         }
         
         mapInformationLabel.posByCanvas(x: 0.5, y: tilemapInfoY)
@@ -188,9 +202,10 @@ public class SKTiledDemoScene: SKTiledScene {
     
     // MARK: - Deinitialization
     deinit {
-        print("[SKTiledDemoScene]: Deinitializing...")
         // Deregister for scene updates
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "loadNextScene"), object: nil)
+        removeAllActions()
+        removeAllChildren()
     }
     
     /**
@@ -243,7 +258,6 @@ public class SKTiledDemoScene: SKTiledScene {
         
         activeButtons.forEach {$0.setScale(uiScale)}
         activeButtons.forEach {$0.zPosition = lastZPosition * 2}
-        
         
         var tilemapInfoY: CGFloat = 0.77
         var tileInfoY: CGFloat = 0.81
@@ -324,9 +338,8 @@ extension SKTiledDemoScene {
             var propertiesInfoString = "ID: ~"
             if let tile = tilemap.firstTileAt(coord) {
                 propertiesInfoString = "ID: \(tile.tileData.id)"
-                if tile.tileData.propertiesString != "" {
-                    propertiesInfoString += "; \(tile.tileData.propertiesString)"
-                }
+                propertiesInfoString += ", \(tile.tileData.propertiesString ?? "")"
+                
             }
             propertiesInformationLabel.isHidden = false
             propertiesInformationLabel.text = propertiesInfoString
@@ -375,7 +388,7 @@ extension SKTiledDemoScene {
         
         if (tilemap.isPaused == false){
             // highlight the current coordinate
-            let _ = addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y), duration: 5)
+            let _ = addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y), duration: 3)
         }
 
         // update the tile information label
@@ -385,7 +398,36 @@ extension SKTiledDemoScene {
         
         // tile properties output
         var propertiesInfoString = "ID: ~"
-        if let tile = tilemap.firstTileAt(coord) {
+        if let tile = tilemap.firstTileAt(coord: coord) {
+            propertiesInfoString = "ID: \(tile.tileData.id)"
+            if tile.tileData.propertiesString != nil {
+                propertiesInfoString += "; \(tile.tileData.propertiesString!)"
+            }
+        }
+        propertiesInformationLabel.isHidden = false
+        propertiesInformationLabel.text = propertiesInfoString
+    }
+    
+    override open func mouseMoved(with event: NSEvent) {
+        super.mouseMoved(with: event)
+        
+        guard let tilemap = tilemap else { return }
+        let baseLayer = tilemap.baseLayer
+        
+        // make sure there are no UI objects under the mouse
+        let scenePosition = event.location(in: self)
+        if !isValidPosition(point: scenePosition) { return }
+        
+        // get the position in the baseLayer (inverted)
+        let positionInLayer = baseLayer.mouseLocation(event: event)
+        let coord = baseLayer.screenToTileCoords(positionInLayer)
+        
+        tileInformationLabel?.isHidden = false
+        tileInformationLabel?.text = "Tile: \(coord.coordDescription), \(positionInLayer.roundTo())"
+        
+        // tile properties output
+        var propertiesInfoString = "ID: ~"
+        if let tile = tilemap.firstTileAt(coord: coord) {
             propertiesInfoString = "ID: \(tile.tileData.id)"
             if tile.tileData.propertiesString != "" {
                 propertiesInfoString += "; \(tile.tileData.propertiesString)"
@@ -415,7 +457,7 @@ extension SKTiledDemoScene {
         
         // 'F' key fits the map to the view
         if event.keyCode == 0x03 {
-            if let tilemap = tilemap {
+            if (tilemap != nil) {
                 cameraNode.fitToView()
             }
         }
@@ -451,14 +493,10 @@ extension SKTiledDemoScene {
         
         // 'H' hides the HUD
         if event.keyCode == 0x04 {
-            for button in buttons{
-                if (button.isHidden == false) {
-                    button.alpha = button.alpha != 0 ? 0 : 1.0
-                }
-            }
+            cameraNode.overlay.isHidden = !cameraNode.overlay.isHidden
         }
         
-        // 'A', '0' reset the camera
+        // 'A', '0' reset the camera to 100%
         if event.keyCode == 0x00 || event.keyCode == 0x52 || event.keyCode == 0x1D {
             if let tilemap = tilemap {
                 cameraNode.resetCamera(toScale: tilemap.worldScale)
@@ -473,7 +511,6 @@ extension SKTiledDemoScene {
     */
     open func updateTrackingViews(){
         if let view = self.view {
-            print("[SKTiledDemoScene]: updating tracking views...")
             let options = [NSTrackingAreaOptions.mouseMoved, NSTrackingAreaOptions.activeAlways] as NSTrackingAreaOptions
             // clear out old tracking areas
             for oldTrackingArea in view.trackingAreas {

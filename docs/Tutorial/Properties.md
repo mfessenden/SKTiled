@@ -1,9 +1,9 @@
 #Custom Properties
 
-One of the most powerful features of *SKTiled* is the ability to exploit Tiled's custom properties for most objects. 
+One of the most powerful features of **SKTiled** is the ability to exploit Tiled's custom properties for most objects. 
 All objects that conform to the [`SKTiledObject`](Protocols/SKTiledObject.html) protocol have methods for parsing Tiled object properties. Tiled property values are all encoded as strings. **SKTiled** will attempt to parse the intended type, but be sure to check the type of property you are querying.
 
-If you are using the v0.17 of Tiled or newer, *SKTiled* supports the new **color** and **file** property types (values are stored as strings internally anyway, which *SKTiled* already supports). The custom color/file types listed above will also be parsed if they are created as string types in Tiled.
+If you are using the v0.17 of Tiled or newer, **SKTiled** supports the new **color** and **file** property types (values are stored as strings internally anyway, which *SKTiled* already supports). The custom color/file types listed above will also be parsed if they are created as string types in Tiled.
 
 
     SKTilemap:
@@ -34,6 +34,7 @@ If you are using the v0.17 of Tiled or newer, *SKTiled* supports the new **color
       color               (String)    - hex string to override color.
       zPosition           (Float)     - used to manually override layer zPosition.
       gridColor           (Color)     - hex string used for visualizing the tile grid.
+      isDynamic           (Bool)      - creates a collision object from the layer's border. 
 
     SKObjectGroup:
       lineWidth           (Float)     - object line width.
@@ -58,6 +59,10 @@ If you are using the v0.17 of Tiled or newer, *SKTiled* supports the new **color
       isDynamic           (Bool)      - object is dynamic.
       isCollider          (Bool)      - object is passive collision object.
       mass                (Float)     - physics mass.
+      friction            (Float)     - physics friction.
+      restitution         (Float)     - physics 'bounciness'.
+      linearDamping       (Float)     - physics linear damping.
+      angularDamping      (Float)     - physics angular damping.
 
     ** not yet implemented
 

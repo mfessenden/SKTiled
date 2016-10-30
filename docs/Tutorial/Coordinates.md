@@ -3,7 +3,7 @@
 
 ##Coordinate Conversion
 
-SpriteKit uses a coordinate system that is different from Tiled's; in SpriteKit, a SpriteKit node's origin is on the bottom-left, while Tiled's origin is top-left. 
+SpriteKit uses a coordinate system that is different from Tiled's. In SpriteKit, scenes have an origin at the bottom-left, while Tiled sets the origin at top-left. 
 
 To emulate this, the [`SKTilemap`](Classes/SKTilemap.html) node draws its layers starting at the origin and moving *downwards* into the negative y-space. To accommodate this, each layer type has conversion methods for converting points to coordinates and vice-versa:
 

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" backgroundcolor="#1e1b23" nextobjectid="25">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" backgroundcolor="#1e1b23" nextobjectid="31">
  <properties>
+  <property name="autoResize" type="bool" value="true"/>
   <property name="frameColor" type="color" value="#ff63a4b2"/>
   <property name="gridColor" type="color" value="#ff80d1e2"/>
   <property name="maxZoom" type="float" value="3.25"/>
   <property name="minZoom" type="float" value="0.3"/>
   <property name="tileOverlap" type="float" value="3"/>
-  <property name="worldScale" type="float" value="1.2"/>
  </properties>
  <tileset firstgid="1" name="ortho4-16x16" tilewidth="16" tileheight="16" tilecount="552" columns="23">
   <image source="ortho4-16x16.png" trans="5e81a2" width="368" height="384"/>
@@ -77,9 +77,11 @@
     <property name="type" value="fire"/>
    </properties>
    <animation>
-    <frame tileid="173" duration="80"/>
-    <frame tileid="174" duration="80"/>
-    <frame tileid="175" duration="80"/>
+    <frame tileid="174" duration="175"/>
+    <frame tileid="175" duration="300"/>
+    <frame tileid="220" duration="250"/>
+    <frame tileid="221" duration="175"/>
+    <frame tileid="173" duration="300"/>
    </animation>
   </tile>
   <tile id="175">
@@ -102,9 +104,11 @@
     <property name="type" value="fire"/>
    </properties>
    <animation>
-    <frame tileid="196" duration="45"/>
-    <frame tileid="197" duration="60"/>
-    <frame tileid="198" duration="45"/>
+    <frame tileid="197" duration="175"/>
+    <frame tileid="198" duration="300"/>
+    <frame tileid="243" duration="250"/>
+    <frame tileid="244" duration="175"/>
+    <frame tileid="196" duration="300"/>
    </animation>
   </tile>
   <tile id="198">
@@ -117,9 +121,11 @@
     <property name="type" value="fire"/>
    </properties>
    <animation>
-    <frame tileid="173" duration="150"/>
-    <frame tileid="220" duration="150"/>
-    <frame tileid="221" duration="150"/>
+    <frame tileid="220" duration="225"/>
+    <frame tileid="221" duration="225"/>
+    <frame tileid="173" duration="275"/>
+    <frame tileid="174" duration="225"/>
+    <frame tileid="175" duration="275"/>
    </animation>
   </tile>
   <tile id="221">
@@ -132,9 +138,11 @@
     <property name="type" value="fire"/>
    </properties>
    <animation>
-    <frame tileid="243" duration="150"/>
-    <frame tileid="196" duration="150"/>
-    <frame tileid="244" duration="150"/>
+    <frame tileid="243" duration="225"/>
+    <frame tileid="244" duration="225"/>
+    <frame tileid="196" duration="275"/>
+    <frame tileid="197" duration="225"/>
+    <frame tileid="198" duration="275"/>
    </animation>
   </tile>
   <tile id="244">
@@ -180,43 +188,141 @@
   <properties>
    <property name="gridColor" value="#e42020"/>
   </properties>
-  <data encoding="base64" compression="zlib">
-   eJx7z8DA8H4Uj+JRPIqHAAYAykYYJA==
-  </data>
+  <data encoding="csv">
+239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,
+239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,
+239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,
+239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,
+239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,
+239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,
+239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,
+239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,
+239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,
+239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,
+239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,
+239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,
+239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,
+239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,
+239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239
+</data>
  </layer>
  <layer name="Geometry" width="20" height="15">
-  <data encoding="base64" compression="zlib">
-   eJy1kl2OAVEQhctfjB0MJtgB1wQvnv0FO9Bm4hVPZnS8YhPYlF1YhlOJTlfqlkl7mJN8SXfV6T43N6dIRCVQBh/kq2bMIl2NWQM40ASfxr4F3gQFsbsZ/j4YgCEYGfsxqArkebuGPwBz8AW+xTyvztV+0BGeivG/H/ALtiBUXj7bBEzVc6ToLuQdPJOVrRXdRS2Bd5HAkwJpkAFZkBNz+c7aJfjfO1iCFVhT3Dee6/7pbJ3H6oE9OIAjxf2ok98/zihS3HVHft/ZcwJncBF7ztH94wzZdUd+32dk921Gfv84Q3bdkd/3Ddl925DfP50dqLxXZWWHf37xP7oDtb4kFg==
-  </data>
+  <data encoding="csv">
+25,26,27,28,0,0,0,0,32,0,0,0,0,0,0,209,0,0,0,0,
+48,49,50,51,0,0,0,0,53,8,8,8,9,0,0,232,0,0,0,0,
+71,72,73,74,0,0,0,0,76,31,31,31,32,0,0,60,0,0,0,0,
+94,95,96,97,0,0,7,8,8,8,54,54,55,0,0,30,0,0,0,0,
+117,118,119,120,0,0,30,76,77,78,76,77,78,0,0,53,8,9,0,0,
+0,0,0,0,0,0,30,0,0,0,0,0,0,0,0,76,31,32,0,0,
+0,0,0,0,0,0,99,0,0,0,0,0,0,0,0,1,2,3,4,5,
+0,1,4,5,0,0,122,0,0,0,0,0,0,0,0,24,108,109,110,28,
+0,24,27,28,0,0,1,2,3,4,4,5,0,0,0,70,131,132,133,74,
+0,47,50,51,0,0,24,25,26,27,49,28,0,0,0,24,154,155,156,28,
+0,70,73,74,0,0,47,48,49,50,49,51,0,0,0,93,94,95,96,97,
+0,93,96,97,0,0,70,71,72,73,49,74,0,0,0,116,117,118,119,120,
+0,116,119,120,0,0,93,94,95,96,94,97,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,116,117,118,119,120,120,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
  </layer>
  <layer name="Geometry2" width="20" height="15">
-  <data encoding="base64" compression="zlib">
-   eJy7yMDAcBGILzFQB7yA4pdUMm8UoIKdQLwLindTwTwJIHYHYiMgNsahxpAE8y5A1VMrTT0HYlUGSHoaTVOjAACUOg6N
-  </data>
+  <data encoding="csv">
+209,209,210,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+232,232,233,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,185,186,186,187,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,24,71,50,51,0,0,0,0,0,49,0,0,
+0,0,0,0,0,0,0,0,208,49,209,210,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,231,37,233,233,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
  </layer>
  <layer name="Bridges" width="20" height="15">
-  <data encoding="base64" compression="zlib">
-   eJxjYBiZYA2VzTs8xMyj1P+3CJhPKUA3nxZgChBPRcLT6GAnLvtHAXEAABIgCsA=
-  </data>
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,172,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,195,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,195,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,195,0,0,0,172,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,218,0,0,0,195,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,218,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,148,149,149,149,150,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,148,149,149,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
  </layer>
  <layer name="Objects" width="20" height="15">
-  <data encoding="base64" compression="zlib">
-   eJxjYKAuWA/EcowMDHfJ0CvLiCl2DEp/ocBNAw2AYdKwnnpmgcKkARQu6GGMbgeMfxeHPAMDInxBAD2Mj+Hgf8EhTwjcwcFHp0kF6WTqQwegeELjw8F0Msw7hmYeKeE1A03vKIAAALWSGlQ=
-  </data>
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+175,286,221,0,0,0,0,0,0,0,0,0,0,0,0,285,0,0,0,0,
+198,0,244,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,2147483823,175,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,175,2147483846,198,221,0,0,0,175,0,0,0,175,
+0,221,0,175,0,0,0,0,198,0,0,244,0,0,0,198,0,0,0,198,
+0,244,0,198,0,0,0,0,0,0,0,0,0,0,0,220,0,0,0,220,
+0,220,0,220,0,0,0,0,0,0,0,0,0,0,0,0,0,103,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2147483823,0,0,0,175,
+0,0,151,0,0,0,0,0,0,0,0,0,0,0,0,2147483846,0,0,0,198,
+0,0,0,0,0,0,0,0,0,0,2147483800,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
  </layer>
  <layer name="Enemies" width="20" height="15">
-  <data encoding="base64" compression="zlib">
-   eJxjYCAOKDAyMCgyEqmYCGAONMuCiubRCwQA3RxIRXenA83KGOBw8APa709FN6QCzUojwbwgoNpgKtqfCTQriw5h+gmIP1PRPE6gm7mGYJ6gJwAANG0HCw==
-  </data>
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,288,289,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,311,312,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,336,337,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,359,360,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,334,335,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,357,358,0,0,0,0,0,0,0,0,0,
+0,338,339,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,361,362,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,242,243,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,265,266,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
  </layer>
  <layer name="Graph" width="20" height="15" visible="0">
   <properties>
    <property name="buildGraph" type="bool" value="true"/>
    <property name="derpy" value="340,341,342"/>
   </properties>
-  <data encoding="base64" compression="zlib">
-   eJzVkcEJACEMBGORp/134kdQdBNmn7eQj8bJECN2vhZP1BlNxruLcpxeOr/yUj1kruOa7SDjER+Hd3o4jpVf9UbdO/+heAPy+qrqrx0/xSP7y2YRHg3Z3x8zAd69Jak=
-  </data>
+  <data encoding="csv">
+0,0,0,341,0,0,0,0,341,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,341,0,0,0,0,341,341,341,341,341,0,0,0,0,0,0,0,
+0,341,0,341,0,0,0,0,0,0,0,0,341,0,0,341,0,0,0,0,
+341,341,341,341,0,0,341,341,341,341,341,341,341,0,0,341,0,0,0,0,
+0,0,341,0,0,0,341,0,0,0,0,0,0,0,0,341,341,341,0,0,
+0,0,341,0,0,0,341,0,341,0,0,341,0,0,0,0,0,341,0,0,
+0,0,341,0,0,0,341,0,0,341,341,0,0,0,0,0,341,341,341,0,
+0,0,341,0,0,0,341,0,341,341,341,341,0,0,0,341,341,341,341,341,
+0,341,341,341,0,0,341,341,341,341,341,341,0,0,0,341,341,343,341,341,
+0,341,341,341,0,0,341,342,342,341,341,341,341,341,341,341,341,341,341,341,
+0,341,341,341,0,0,341,342,342,341,341,341,0,0,0,0,341,341,341,0,
+0,341,341,341,341,341,341,342,342,341,341,341,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,341,341,341,341,341,341,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
  </layer>
  <objectgroup name="Locations" visible="0">
   <properties>
@@ -310,9 +416,9 @@
    </properties>
    <ellipse/>
   </object>
-  <object id="22" name="chest1" type="Bonus" gid="2147483751" x="144" y="192" width="16" height="16"/>
   <object id="24" x="177" y="16.6667">
    <polygon points="-1,-0.666667 -1,15.3333 15,15.3333 15,31.3333 -1,31.3333 -1,47.3333 31,47.3333 31,-0.666667"/>
   </object>
  </objectgroup>
+ <imagelayer name="Image"/>
 </map>

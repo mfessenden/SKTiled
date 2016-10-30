@@ -17,6 +17,8 @@ import Cocoa
 #endif
 
 
+// MARK: - Functions
+
 #if os(iOS)
 /**
  Returns an image of the given size.
@@ -53,9 +55,44 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
 #endif
 
 
+/**
+ Check for tile ID flip flags. Returns the translated tile ID
+ and the corresponding flip flags.
+ 
+ - Parameter id: `UInt32` tile ID
+ - Returns: tuple of global id and flip flags.
+ */
+public func flippedTileFlags(id: UInt32) -> (gid: UInt32, hflip: Bool, vflip: Bool, dflip: Bool) {
+    // masks for tile flipping
+    let flippedDiagonalFlag: UInt32   = 0x20000000
+    let flippedVerticalFlag: UInt32   = 0x40000000
+    let flippedHorizontalFlag: UInt32 = 0x80000000
+    
+    let flippedAll = (flippedHorizontalFlag | flippedVerticalFlag | flippedDiagonalFlag)
+    let flippedMask = ~(flippedAll)
+    
+    let flipHoriz: Bool = (id & flippedHorizontalFlag) != 0
+    let flipVert:  Bool = (id & flippedVerticalFlag) != 0
+    let flipDiag:  Bool = (id & flippedDiagonalFlag) != 0
+    
+    // get the actual gid from the mask
+    let gid = id & flippedMask
+    return (gid, flipHoriz, flipVert, flipDiag)
+}
+
+
+// MARK: - Extensions
+
 public extension Bool {
     init<T : Integer>(_ integer: T){
         self.init(integer != 0)
+    }
+}
+
+
+extension Integer {
+    init(_ bool: Bool) {
+        self = bool ? 1 : 0
     }
 }
 
@@ -773,6 +810,9 @@ public func normalize(_ value: CGFloat, _ minimum: CGFloat, _ maximum: CGFloat) 
 }
 
 
+// MARK: - Operators
+
+
 /**
  Generate a visual grid texture.
  
@@ -1201,11 +1241,16 @@ public extension Data {
      - returns: Whether the data is compressed.
      */
     public var isGzipped: Bool {
-        return self.starts(with: [0x1f, 0x8b])  // check magic number
+        return self.starts(with: [0x1f, 0x8b])
     }
     
-    public var isZCompressed: Bool {
-        return self.starts(with: [0x1f, 0x8b])  // check magic number
+    /**
+     Check if the reciever is already zlib compressed.
+     
+     - returns: Whether the data is compressed.
+     */
+    public var isZlibCompressed: Bool {
+        return self.starts(with: [0x78, 0x9C])
     }
     
     /**

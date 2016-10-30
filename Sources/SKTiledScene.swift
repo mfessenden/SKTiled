@@ -76,7 +76,8 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     }
     
     deinit {
-        print("[SKTiledScene]: Deinitializing...")
+        removeAllActions()
+        removeAllChildren()
     }
     
     override open func sceneDidLoad() {
@@ -95,15 +96,24 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
         // load the current tmx file name
         guard let tmxFilename = tmxFilename else { return }
         
-        if let tilemapNode = load(fromFile: tmxFilename) {
+        if let tilemap = load(fromFile: tmxFilename) {
             // add the tilemap to the world container node.
-            worldNode.addChild(tilemapNode)
-            self.tilemap = tilemapNode
+            worldNode.addChild(tilemap)
+            self.tilemap = tilemap
             
-            // set the camera world scale to the tilemap worldScale
-            cameraNode.setWorldScale(self.tilemap.worldScale)
+            // apply gravity from the tile map
+            physicsWorld.gravity = self.tilemap.gravity
+            
+            // cmera properties inherited from tilemap
             cameraNode.allowMovement = self.tilemap.allowMovement
             cameraNode.allowZoom = self.tilemap.allowZoom
+            
+            // initial zoom level
+            if (self.tilemap.autoResize == true) {
+                cameraNode.fitToView()
+            } else {
+                cameraNode.setWorldScale(self.tilemap.worldScale)
+            }
         }
     }
     

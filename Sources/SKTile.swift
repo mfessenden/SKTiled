@@ -8,6 +8,18 @@
 
 import SpriteKit
 
+/**
+ Represents the tile's physics type
+ 
+ - none:       tile has no physics body.
+ - rectangle:  tile physics shape is a rectangle.
+ - texture:    tile physics shape is based on texture.
+ */
+public enum TilePhysics {
+    case none
+    case rectangle
+    case texture
+}
 
 /**
  Custom sprite type for rendering tile objects. Tile data (including texture) stored in `SKTilesetData` property.
@@ -21,6 +33,9 @@ public class SKTile: SKSpriteNode {
     open var tileData: SKTilesetData                    // tile data
     open var tileSize: CGSize                           // tile size
     open var highlightColor: SKColor = SKColor.white    // tile highlight color
+    
+    // dynamics
+    open var physicsType: TilePhysics = .rectangle      // physics type
     
     /// Opacity value of the tile
     open var opacity: CGFloat {
@@ -46,6 +61,21 @@ public class SKTile: SKSpriteNode {
         tileData = SKTilesetData()
         tileSize = CGSize.zero
         super.init(texture: SKTexture(), color: SKColor.clear, size: tileSize)
+        colorBlendFactor = 0
+    }
+    
+    // MARK: - Init
+    /**
+     Initialize the tile texture.
+     
+     - parameter texture: `SKTexture?` tile texture.
+     - returns: `SKTile` tile sprite.
+     */
+    public init(texture: SKTexture?){
+        // create empty tileset data
+        tileData = SKTilesetData()
+        tileSize = CGSize.zero
+        super.init(texture: texture, color: SKColor.clear, size: tileSize)
         colorBlendFactor = 0
     }
     
@@ -81,11 +111,47 @@ public class SKTile: SKSpriteNode {
     /**
      Set up the tile's dynamics body.
      
-     - parameter withSize: `CGFloat` dynamics body size.
+     - parameter isDynamic: `Bool` physics body is active.
      */
-    public func setupDynamics(withSize: CGFloat){
+    public func setupPhysics(isDynamic: Bool = false){
+        switch physicsType {
+        case .none:
+            physicsBody = nil
+        case .rectangle:
+            physicsBody = SKPhysicsBody(rectangleOf: tileSize)
+        case .texture:
+            guard let texture = texture else {
+                physicsBody = nil
+                return
+            }
+            physicsBody = SKPhysicsBody(texture: texture, size: tileSize)
+        }
+        
+        physicsBody?.isDynamic = isDynamic
+    }
+    
+    /**
+     Set up the tile's dynamics body.
+     
+     - parameter rectSize:  `CGSize` rectangle size.
+     - parameter isDynamic: `Bool` physics body is active.
+     */
+    public func setupPhysics(rectSize: CGSize, isDynamic: Bool = false){
+        physicsType = .rectangle
+        physicsBody = SKPhysicsBody(rectangleOf: rectSize)
+        physicsBody?.isDynamic = isDynamic
+    }
+    
+    /**
+     Set up the tile's dynamics body.
+     
+     - parameter withSize:  `CGFloat` rectangle size.
+     - parameter isDynamic: `Bool` physics body is active.
+     */
+    public func setupPhysics(withSize: CGFloat, isDynamic: Bool = false){
+        physicsType = .rectangle
         physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: withSize, height: withSize))
-        physicsBody?.isDynamic = false
+        physicsBody?.isDynamic = isDynamic
     }
     
     /**
@@ -486,7 +552,7 @@ internal class DebugTileShape: SKShapeNode {
                 hexPoints[4] = CGPoint(x: position.x - (variableSize / 2), y: position.y - h)
                 hexPoints[5] = CGPoint(x: position.x - (tileWidth / 2), y: position.y)
             } else {
-                let r = tileWidth / 2
+                //let r = tileWidth / 2
                 let h = (tileHeight - sideLengthY) / 2
                 variableSize = tileHeight - (h * 2)
                 hexPoints[0] = CGPoint(x: position.x, y: position.y + (tileHeight / 2))
