@@ -41,13 +41,6 @@ public class SKTiledDemoScene: SKTiledScene {
         #if os(OSX)
         updateTrackingViews()
         #endif
-        
-        
-        if let tilemap = tilemap {
-            tilemap.baseLayer.showGrid = true
-        }
-        
-        
     }
     
     // MARK: - Setup
@@ -204,6 +197,7 @@ public class SKTiledDemoScene: SKTiledScene {
     deinit {
         // Deregister for scene updates
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "loadNextScene"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "loadPreviousScene"), object: nil)
         removeAllActions()
         removeAllChildren()
     }
@@ -213,6 +207,10 @@ public class SKTiledDemoScene: SKTiledScene {
      */
     public func loadNextScene() {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "loadNextScene"), object: nil)
+    }
+    
+    public func loadPreviousScene() {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "loadPreviousScene"), object: nil)
     }
     
     override public func didChangeSize(_ oldSize: CGSize) {
@@ -493,7 +491,7 @@ extension SKTiledDemoScene {
         
         // 'H' hides the HUD
         if event.keyCode == 0x04 {
-            cameraNode.overlay.isHidden = !cameraNode.overlay.isHidden
+            cameraNode.showOverlay = !cameraNode.showOverlay
         }
         
         // 'A', '0' reset the camera to 100%
@@ -503,6 +501,16 @@ extension SKTiledDemoScene {
             } else {
                 cameraNode.resetCamera()
             }
+        }
+        
+        // '→' advances to the next scene
+        if event.keyCode == 0x7C {
+            self.loadNextScene()
+        }
+        
+        // '←' advances to the next scene
+        if event.keyCode == 0x7B {
+            self.loadPreviousScene()
         }
     }
     

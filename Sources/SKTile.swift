@@ -9,16 +9,18 @@
 import SpriteKit
 
 /**
- Represents the tile's physics type
+ Describes a tile's physics body shape.
  
  - none:       tile has no physics body.
  - rectangle:  tile physics shape is a rectangle.
  - texture:    tile physics shape is based on texture.
  */
-public enum TilePhysics {
+public enum PhysicsShape {
     case none
     case rectangle
+    case ellipse
     case texture
+    case path
 }
 
 /**
@@ -35,7 +37,7 @@ public class SKTile: SKSpriteNode {
     open var highlightColor: SKColor = SKColor.white    // tile highlight color
     
     // dynamics
-    open var physicsType: TilePhysics = .rectangle      // physics type
+    open var physicsShape: PhysicsShape = .rectangle    // physics type
     
     /// Opacity value of the tile
     open var opacity: CGFloat {
@@ -114,43 +116,60 @@ public class SKTile: SKSpriteNode {
      - parameter isDynamic: `Bool` physics body is active.
      */
     public func setupPhysics(isDynamic: Bool = false){
-        switch physicsType {
+        switch physicsShape {
         case .none:
             physicsBody = nil
+            
         case .rectangle:
             physicsBody = SKPhysicsBody(rectangleOf: tileSize)
+            
         case .texture:
             guard let texture = texture else {
                 physicsBody = nil
                 return
             }
             physicsBody = SKPhysicsBody(texture: texture, size: tileSize)
+            
+        default:
+            physicsBody = nil
         }
         
         physicsBody?.isDynamic = isDynamic
     }
     
     /**
-     Set up the tile's dynamics body.
+     Set up the tile's dynamics body with a rectanglular shape.
      
      - parameter rectSize:  `CGSize` rectangle size.
      - parameter isDynamic: `Bool` physics body is active.
      */
     public func setupPhysics(rectSize: CGSize, isDynamic: Bool = false){
-        physicsType = .rectangle
+        physicsShape = .rectangle
         physicsBody = SKPhysicsBody(rectangleOf: rectSize)
         physicsBody?.isDynamic = isDynamic
     }
     
     /**
-     Set up the tile's dynamics body.
+     Set up the tile's dynamics body with a rectanglular shape.
      
      - parameter withSize:  `CGFloat` rectangle size.
      - parameter isDynamic: `Bool` physics body is active.
      */
     public func setupPhysics(withSize: CGFloat, isDynamic: Bool = false){
-        physicsType = .rectangle
+        physicsShape = .rectangle
         physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: withSize, height: withSize))
+        physicsBody?.isDynamic = isDynamic
+    }
+    
+    /**
+     Set up the tile's dynamics body with a circular shape.
+     
+     - parameter radius:  `CGFloat` circle radius.
+     - parameter isDynamic: `Bool` physics body is active.
+     */
+    public func setupPhysics(radius: CGFloat, isDynamic: Bool = false){
+        physicsShape = .ellipse
+        physicsBody = SKPhysicsBody(circleOfRadius: radius)
         physicsBody?.isDynamic = isDynamic
     }
     

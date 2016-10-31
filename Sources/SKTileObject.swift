@@ -25,13 +25,13 @@ public enum SKObjectType: String {
 
 
 /**
- Represents the object's physics body type
+ Represents the object's physics body type.
  
  - none:      object has no physics properties.
  - dynamic:   object is an active physics body.
  - collision: object is a passive physics body.
  */
-public enum ObjectPhysics {
+public enum CollisionType {
     case none
     case dynamic
     case collision
@@ -44,7 +44,7 @@ public enum ObjectPhysics {
  - above: labels are rendered above the object.
  - below: labels are rendered below the object.
  */
-public enum LabelPosition {
+internal enum LabelPosition {
     case above
     case below
 }
@@ -62,12 +62,13 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     open var id: Int = 0                                    // object id
     open var gid: Int!                                      // tile gid
     open var type: String!                                  // object type
+    
     internal var objectType: SKObjectType = .rectangle      // shape type
-    open var points: [CGPoint] = []                         // points that describe the object's shape.    
+    internal var points: [CGPoint] = []                     // points that describe the object's shape.
+    
     open var size: CGSize = CGSize.zero
     open var properties: [String: String] = [:]             // custom properties
-    
-    open var physicsType: ObjectPhysics = .none             // physics body type
+    internal var physicsType: CollisionType = .none         // physics collision type
     
     /// Object opacity
     open var opacity: CGFloat {
@@ -81,9 +82,8 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         set { self.isHidden = !newValue }
     }
     
-    
     /// Returns the bounding box of the shape.
-    override open var frame: CGRect {
+    open var boundingRect: CGRect {
         return CGRect(x: 0, y: 0, width: size.width, height: -size.height)
     }
     
@@ -276,14 +276,14 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     internal func renderWith(gid: Int) {
         if let objectGroup = layer {
             if let tileData = objectGroup.tilemap.getTileData(gid) {
-                let boundingRect = calculateAccumulatedFrame()
+                let boundingBox = calculateAccumulatedFrame()
                 
                 if (tileData.texture != nil) {
                     childNode(withName: "GID_Sprite")?.removeFromParent()
                     let sprite = SKSpriteNode(texture: tileData.texture)
                     sprite.name = "GID_Sprite"
-                    sprite.size.width = boundingRect.size.width
-                    sprite.size.height = boundingRect.size.height
+                    sprite.size.width = boundingBox.size.width
+                    sprite.size.height = boundingBox.size.height
                     addChild(sprite)
                     strokeColor = SKColor.clear
                     fillColor = SKColor.clear
@@ -322,7 +322,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     }
     
     /**
-     Return the current points.
+     Returns the internal `SKTileObject.points` translated into the current map projection.
      
      - returns: `[CGPoint]?` array of points.
      */

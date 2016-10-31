@@ -1,4 +1,4 @@
-#Working with Objects
+# Working with Objects
 
 By default, objects are not shown when rendered in **SKTiled**. To enable them, set the `SKTilemap.showObjects` global attribute. This override has the advantage of allowing you to work in your Tiled scene with objects visible, but not see them in your game view.
 
@@ -12,7 +12,7 @@ The [`SKTileObject`](Classes/SKTileObject.html) class represents a vector object
 [`SKTileObject`](Classes/SKTileObject.html) objects are subclasses of `SKShapeNode`. Each object's path is drawn from the `SKTileObject.points` property.
 
 
-###Object Types
+## Object Types
 
 Objects assigned a type in Tiled will retain that property in **SKTiled**, accessed with the optional `SKTileObject.type` property:
 
@@ -33,15 +33,14 @@ let allEmitterObjects = tilemap.getObjects(ofType: "Emitter")
 Note that this will return objects from multiple object layers.
 
 
-###Dynamics
+## Dynamics
 
-You also have the option of enabling physics for each object, allowing them to react as dynamics bodies in your scene. Passing properties from **Tiled** allows you to easily create dynamic objects in your scenes.
+You also have the option of enabling physics for each object, allowing them to react as dynamics bodies in your scene. Passing properties from **Tiled** allows you to easily create dynamic objects in your scenes. Here, a simple scene with one object group and five objects is loaded:
 
-![Dynamics Setup](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/dynamics-start.png)
+- shape objects are assigned a property of `isDynamic = true`
+- floor objects are assigned a property of `isCollider = true`
+- map properties contain a `yGravity` value of `-9.8`
 
-In this scene, the shape objects are assigned a boolean property `isDynamic`, while the floor objects are assigned the boolean property `isCollider`. In the map properties, a float property `yGravity` property is created and given a value of `-9.8`.
-
-Loaded in **SKTiled**, the scene renders as this:
 
 ![Object Dynamics](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/dynamic-objects.gif)
 

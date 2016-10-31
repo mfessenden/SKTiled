@@ -1,19 +1,18 @@
 # Getting Started
 
-**SKTiled** was designed to be flexible and easy to use. Installation is very straightforward. If you have any problems or requests, please open an issue at the [Github page](https://github.com/mfessenden/SKTiled/issues).
+**SKTiled** was designed to be flexible and easy to use. To get started, simply drop the source files into your project and link the **zlib** library (see below). If you have any problems or requests, please open an issue at the [Github page](https://github.com/mfessenden/SKTiled/issues).
 
 
 ## Requirements
 
-- [x] iOS10+ / macOS 10.11+
-- [x] Xcode 8
-- [x] Swift 3
+- iOS10+ / macOS 10.11+
+- Xcode 8
+- Swift 3
 
 
 ### Swift 2 Note
 
-Check out the [Swift 2](https://github.com/mfessenden/SKTiled/tree/swift2) branch for Swift 2.3. Going forward, the minimum requirements will be pushed up to Swift 3 as some features will require newer versions of Apple's APIs.
-
+Check out the [Swift 2](https://github.com/mfessenden/SKTiled/tree/swift2) branch for Swift 2.3. Currently, some features are not supported so going forward the minimum requirements will be pushed up to Swift 3.
 
 If you're using one of the older toolchains, you'll need to enable the **Use Legacy Swift Language Version** option in the project **Build Settings.**
 
@@ -57,6 +56,16 @@ public class GameScene: SKScene {
         }
     }
 }
+```
+
+If you choose to use the included `SKTiledScene`, 
+
+```swift
+// initialize a tiled scene in the GameViewController
+let scene = SKTiledScene(size: viewSize, tmxFile: "first-scene")
+
+// transition to another scene
+scene.transitionTo(tmxFile: "second-scene", duration: 1.0)
 ```
 
 Calling the class method [`SKTilemap.load(fromFile:)`](Classes/SKTilemap.html#/s:ZFC7SKTiled9SKTilemap4loadFT8fromFileSS_GSqS0__) will initialize a parser to read the file name you give it. **SKTiled** can load internal & external tilesets, though there is a slight speed penalty for loading an external tileset with larger scenes.

@@ -28,6 +28,7 @@ class GameViewController: NSViewController {
         #if DEBUG
         skView.showsFPS = true
         skView.showsNodeCount = true
+        skView.showsDrawCount = true
         #endif
         
         /* Sprite Kit applies additional optimizations to improve rendering performance */
@@ -41,6 +42,7 @@ class GameViewController: NSViewController {
         
         //set up notification for scene to load the next file
         NotificationCenter.default.addObserver(self, selector: #selector(loadNextScene), name: NSNotification.Name(rawValue: "loadNextScene"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadPreviousScene), name: NSNotification.Name(rawValue: "loadPreviousScene"), object: nil)
         skView.presentScene(scene)
     }
     
@@ -76,7 +78,9 @@ class GameViewController: NSViewController {
         guard let view = self.view as? SKView else { return }
         var debugMode = false
         var currentFilename = demoFiles.first!
+        var showOverlay: Bool = true
         if let currentScene = view.scene as? SKTiledDemoScene {
+            showOverlay = currentScene.cameraNode.showOverlay ?? true
             debugMode = currentScene.debugMode
             if let tilemap = currentScene.tilemap {
                 currentFilename = tilemap.name!
@@ -98,7 +102,42 @@ class GameViewController: NSViewController {
         nextScene.debugMode = debugMode
         view.presentScene(nextScene, transition: transition)
         
+        nextScene.cameraNode?.showOverlay = showOverlay
         updateWindowTitle(withFile: nextFilename)
+    }
+    
+    /**
+     Load the previous tilemap scene.
+     
+     - parameter interval: `TimeInterval` transition duration.
+     */
+    func loadPreviousScene(_ interval: TimeInterval=0.4) {
+        guard let view = self.view as? SKView else { return }
+        
+        var currentFilename = demoFiles.first!
+        var showOverlay: Bool = true
+        if let currentScene = view.scene as? SKTiledDemoScene {
+            showOverlay = currentScene.cameraNode.showOverlay ?? true
+            if let tilemap = currentScene.tilemap {
+                currentFilename = tilemap.name!
+            }
+            
+            currentScene.removeFromParent()
+            currentScene.removeAllActions()
+        }
+        
+        view.presentScene(nil)
+        
+        var nextFilename = demoFiles.last!
+        if let index = demoFiles.index(of: currentFilename), index > 0, index - 1 < demoFiles.count {
+            nextFilename = demoFiles[index - 1]
+        }
+        
+        let nextScene = SKTiledDemoScene(size: view.bounds.size, tmxFile: nextFilename)
+        nextScene.scaleMode = .aspectFill
+        let transition = SKTransition.fade(withDuration: interval)
+        view.presentScene(nextScene, transition: transition)
+        nextScene.cameraNode?.showOverlay = showOverlay
     }
     
     /**

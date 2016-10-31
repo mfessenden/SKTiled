@@ -128,7 +128,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
     
     /// Returns the frame rectangle of the layer (used to draw bounds).
-    override open var frame: CGRect {
+    open var boundingRect: CGRect {
         return CGRect(x: 0, y: 0, width: sizeInPoints.width, height: -sizeInPoints.height)
     }
     
@@ -676,7 +676,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         
         switch orientation {
         case .orthogonal:
-            objectPath = polygonPath(self.frame.points)
+            objectPath = polygonPath(self.boundingRect.points)
             
         case .isometric:
             let topPoint = CGPoint(x: 0, y: 0)
@@ -696,7 +696,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
             objectPath = polygonPath(invertedPoints)
             
         case .hexagonal, .staggered:            
-            objectPath = polygonPath(self.frame.points)
+            objectPath = polygonPath(self.boundingRect.points)
         }
         
         if let objectPath = objectPath {
@@ -757,10 +757,12 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     
     /**
      Set up physics for the entire layer.
+     
+     - parameter isDynamic: `Bool` layer is dynamic.
      */
-    open func setupPhysics(){
-        physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
-        physicsBody?.isDynamic = false
+    open func setupPhysics(isDynamic: Bool=false){
+        physicsBody = SKPhysicsBody(edgeLoopFrom: self.boundingRect)
+        physicsBody?.isDynamic = isDynamic
     }
     
     override open var hashValue: Int {
@@ -1726,20 +1728,6 @@ extension TiledLayerObject {
         let coord = CGPoint(x, y)
         let offset = CGPoint(x: dx, y: dy)
         addChild(node, coord: coord, offset: offset, zpos: zpos)
-    }
-    
-    /**
-     Add a node at the given coordinates. By default, the zPositon
-     will be higher than all of the other nodes in the layer.
-     
-     - parameter node:      `SKNode` object.
-     - parameter x:         `Int` x-coordinate.
-     - parameter y:         `Int` y-coordinate.
-     - parameter zpos:      `CGFloat?` optional z-position.
-     */
-    public func addChild(_ node: SKNode, _ x: Int, _ y: Int, zpos: CGFloat? = nil) {
-        let coord = CGPoint(x, y)
-        addChild(node, coord: coord, offset: CGPoint.zero, zpos: zpos)
     }
     
     /**

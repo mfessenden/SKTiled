@@ -295,7 +295,7 @@ open class SKTilemap: SKNode, SKTiledObject{
         didSet {
             guard oldValue != isPaused else { return }
             let newColor: SKColor = isPaused ? SKColor(white: 0, alpha: 0.25) : SKColor.clear
-            let newColorBlendFactor: CGFloat = isPaused ? 0.3 : 0.0
+            let newColorBlendFactor: CGFloat = isPaused ? 0.2 : 0.0
             
             speed = isPaused ? 0 : 1.0
             color = newColor
@@ -981,7 +981,7 @@ open class SKTilemap: SKNode, SKTiledObject{
         // time results
         let timeInterval = Date().timeIntervalSince(timeStarted)
         let timeStamp = String(format: "%.\(String(3))f", timeInterval)        
-        print("\n# Success! tile map \"\(name!)\" rendered in: \(timeStamp)s\n")
+        print("\n# Success! tile map \"\(name != nil ? name! : "null")\" rendered in: \(timeStamp)s\n")
         
         // dump the output of the current map to stdout
         if (verbose == true) {
@@ -1225,11 +1225,14 @@ extension SKTilemap {
      Output a summary of the current scenes layer data.
      */
     public func debugLayers(reverse: Bool = false) {
-        guard (layerCount > 0) else { return }
+        guard (layerCount > 0) else {
+            print("# Tilemap \"\(name != nil ? name! : "null")\": 0 Layers")
+            return
+        }
         let largestName = layerNames().max() { (a, b) -> Bool in a.characters.count < b.characters.count }
         
         // format the header
-        let tilemapHeaderString = "# Tilemap \"\(name!)\": \(tileCount) Tiles: \(layerCount) Layers"
+        let tilemapHeaderString = "# Tilemap \"\(name != nil ? name! : "null")\": \(tileCount) Tiles: \(layerCount) Layers"
         let filled = String(repeating: "-", count: tilemapHeaderString.characters.count)
         print("\n\(tilemapHeaderString)\n\(filled)")
         

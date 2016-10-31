@@ -31,7 +31,7 @@ The `SKTilesetData` class stores data for a single tileset tile, with texture, i
 */
 open class SKTilesetData: SKTiledObject  {
     
-    weak open var tileset: SKTileset!             // is assigned on add
+    weak open var tileset: SKTileset!             // reference to parent tileset
     open var uuid: String = UUID().uuidString     // unique id
     open var id: Int = 0                          // tile id
     open var texture: SKTexture!                  // initial tile texture

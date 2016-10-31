@@ -49,6 +49,12 @@ open class SKTiledSceneCamera: SKCameraNode {
     
     // quick & dirty overlay node
     internal let overlay: SKNode = SKNode()
+    open var showOverlay: Bool = true {
+        didSet {
+            guard oldValue != showOverlay else { return }
+            overlay.isHidden = !showOverlay
+        }
+    }
     
     // MARK: - Init
     public init(view: SKView, world node: SKNode) {

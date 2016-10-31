@@ -88,7 +88,7 @@ let animatedTiles = tileLayer.getAnimatedTiles()
 let allAnimatedTiles = tilemap.getAnimatedTiles()
 ```
 
-All [`SKTile`](Classes/SKTile.html) objects allow you to pause & remove animations:
+All [`SKTile`](Classes/SKTile.html) instances allow you to pause & remove animations:
 
 ```swift
 
@@ -103,13 +103,16 @@ for animatedTile in animatedTiles {
 }
 ```
 
+Since animation data is stored in the `SKTilesetData` node, to restart removed animation, simply run the `SKTile.runAnimation` method again.
+
 To add animation to a tile, add GID values to the `SKTilesetData` instance associated with each tile:
 
 ```swift
 // add frame GIDs
-tile.tileData.addFrame(withID: 33, interval: 0.25)
-tile.tileData.addFrame(withID: 34, interval: 0.35)
-tile.tileData.addFrame(withID: 35, interval: 0.15)
+let tileData = tile.tileData
+tileData.addFrame(withID: 33, interval: 0.25)
+tileData.addFrame(withID: 34, interval: 0.35)
+tileData.addFrame(withID: 35, interval: 0.15)
 
 // run the animation
 tile.runAnimation()
@@ -117,7 +120,7 @@ tile.runAnimation()
 
 ## Dynamics
 
-Dynamics can be turned on for tile objects with the `SKTileObject.setupPhysics` methods:
+Dynamics can be turned on for tile objects with the `SKTileObject.setupPhysics` methods. Passing the argument `isDynamic` determines whether the physics body is active or passive. 
 
 ```swift
 // create a physics body with a rectangle of size 8
@@ -125,7 +128,7 @@ tile.setupPhysics(rectSize: CGSize(width: 8, height: 8), isDynamic: true)
 
 // setup dynamics on an array of tiles with a radius of 4
 let dots = dotsLayer.getTilesWithProperty("type", "dot" as AnyObject)
-dots.forEach {$0.setupDynamics(withSize: 4)}
+dots.forEach {$0.setupDynamics(radius: 4)}
 ```
 
 ## Tile Overlap
