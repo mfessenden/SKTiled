@@ -106,30 +106,22 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Data Types.html">Data Types</a>
+            <a href="Other.html">Other</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
               </li>
               <li class="nav-group-task">
-                <a href="Data Types.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+                <a href="Other.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
               </li>
               <li class="nav-group-task">
-                <a href="Data Types.html#/s:O7SKTiled10TileOffset">TileOffset</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Enums.html">Other Enums</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled13LabelPosition">LabelPosition</a>
+                <a href="Other.html#/s:O7SKTiled10TileOffset">TileOffset</a>
               </li>
               <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled13ObjectPhysics">ObjectPhysics</a>
+                <a href="Other.html#/s:O7SKTiled13CollisionType">CollisionType</a>
               </li>
               <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled11TilePhysics">TilePhysics</a>
+                <a href="Other.html#/s:O7SKTiled12PhysicsShape">PhysicsShape</a>
               </li>
             </ul>
           </li>
@@ -207,7 +199,7 @@
 <span class="k">let</span> <span class="nv">allAnimatedTiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getAnimatedTiles</span><span class="p">()</span>
 </code></pre>
 
-<p>All <a href="Classes/SKTile.html"><code>SKTile</code></a> objects allow you to pause &amp; remove animations:</p>
+<p>All <a href="Classes/SKTile.html"><code>SKTile</code></a> instances allow you to pause &amp; remove animations:</p>
 <pre class="highlight swift"><code>
 <span class="c1">// pause or unpause tile animation </span>
 <span class="k">for</span> <span class="n">animatedTile</span> <span class="k">in</span> <span class="n">animatedTiles</span> <span class="p">{</span>
@@ -220,24 +212,27 @@
 <span class="p">}</span>
 </code></pre>
 
+<p>Since animation data is stored in the <code>SKTilesetData</code> node, to restart removed animation, simply run the <code>SKTile.runAnimation</code> method again.</p>
+
 <p>To add animation to a tile, add GID values to the <code>SKTilesetData</code> instance associated with each tile:</p>
 <pre class="highlight swift"><code><span class="c1">// add frame GIDs</span>
-<span class="n">tile</span><span class="o">.</span><span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">33</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">)</span>
-<span class="n">tile</span><span class="o">.</span><span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mf">0.35</span><span class="p">)</span>
-<span class="n">tile</span><span class="o">.</span><span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mf">0.15</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">tileData</span> <span class="o">=</span> <span class="n">tile</span><span class="o">.</span><span class="n">tileData</span>
+<span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">33</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">)</span>
+<span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mf">0.35</span><span class="p">)</span>
+<span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mf">0.15</span><span class="p">)</span>
 
 <span class="c1">// run the animation</span>
 <span class="n">tile</span><span class="o">.</span><span class="nf">runAnimation</span><span class="p">()</span>
 </code></pre>
 <a href='#dynamics' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='dynamics'>Dynamics</h2>
 
-<p>Dynamics can be turned on for tile objects with the <code>SKTileObject.setupPhysics</code> methods:</p>
+<p>Dynamics can be turned on for tile objects with the <code>SKTileObject.setupPhysics</code> methods. Passing the argument <code>isDynamic</code> determines whether the physics body is active or passive. </p>
 <pre class="highlight swift"><code><span class="c1">// create a physics body with a rectangle of size 8</span>
 <span class="n">tile</span><span class="o">.</span><span class="nf">setupPhysics</span><span class="p">(</span><span class="nv">rectSize</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="mi">8</span><span class="p">),</span> <span class="nv">isDynamic</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
 
 <span class="c1">// setup dynamics on an array of tiles with a radius of 4</span>
 <span class="k">let</span> <span class="nv">dots</span> <span class="o">=</span> <span class="n">dotsLayer</span><span class="o">.</span><span class="nf">getTilesWithProperty</span><span class="p">(</span><span class="s">"type"</span><span class="p">,</span> <span class="s">"dot"</span> <span class="k">as</span> <span class="kt">AnyObject</span><span class="p">)</span>
-<span class="n">dots</span><span class="o">.</span><span class="n">forEach</span> <span class="p">{</span><span class="nv">$0</span><span class="o">.</span><span class="nf">setupDynamics</span><span class="p">(</span><span class="nv">withSize</span><span class="p">:</span> <span class="mi">4</span><span class="p">)}</span>
+<span class="n">dots</span><span class="o">.</span><span class="n">forEach</span> <span class="p">{</span><span class="nv">$0</span><span class="o">.</span><span class="nf">setupDynamics</span><span class="p">(</span><span class="nv">radius</span><span class="p">:</span> <span class="mi">4</span><span class="p">)}</span>
 </code></pre>
 <a href='#tile-overlap' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='tile-overlap'>Tile Overlap</h2>
 

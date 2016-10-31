@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Data Types  Reference</title>
+    <title>Other  Reference</title>
     <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,7 +10,7 @@
     
   </head>
   <body>
-    <a title="Data Types  Reference"></a>
+    <a title="Other  Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="index.html">SKTiled Docs</a></p>
@@ -21,7 +21,7 @@
       <p id="breadcrumbs">
         <a href="index.html">SKTiled Reference</a>
         <img id="carat" src="img/carat.png" />
-        Data Types  Reference
+        Other  Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -106,30 +106,22 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Data Types.html">Data Types</a>
+            <a href="Other.html">Other</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
               </li>
               <li class="nav-group-task">
-                <a href="Data Types.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+                <a href="Other.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
               </li>
               <li class="nav-group-task">
-                <a href="Data Types.html#/s:O7SKTiled10TileOffset">TileOffset</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Enums.html">Other Enums</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled13LabelPosition">LabelPosition</a>
+                <a href="Other.html#/s:O7SKTiled10TileOffset">TileOffset</a>
               </li>
               <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled13ObjectPhysics">ObjectPhysics</a>
+                <a href="Other.html#/s:O7SKTiled13CollisionType">CollisionType</a>
               </li>
               <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled11TilePhysics">TilePhysics</a>
+                <a href="Other.html#/s:O7SKTiled12PhysicsShape">PhysicsShape</a>
               </li>
             </ul>
           </li>
@@ -138,7 +130,7 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>Data Types</h1>
+            <h1>Other</h1>
             
           </section>
           <section class="section task-group-section">
@@ -260,6 +252,82 @@
                       </div>
                       <div class="slightly-smaller">
                         <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L19-L24">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:O7SKTiled13CollisionType"></a>
+                    <a name="//apple_ref/swift/Enum/CollisionType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:O7SKTiled13CollisionType">CollisionType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Represents the object&rsquo;s physics body type.</p>
+
+<ul>
+<li>none:      object has no physics properties.</li>
+<li>dynamic:   object is an active physics body.</li>
+<li>collision: object is a passive physics body.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">CollisionType</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L34-L38">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:O7SKTiled12PhysicsShape"></a>
+                    <a name="//apple_ref/swift/Enum/PhysicsShape" class="dashAnchor"></a>
+                    <a class="token" href="#/s:O7SKTiled12PhysicsShape">PhysicsShape</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Describes a tile&rsquo;s physics body shape.</p>
+
+<ul>
+<li>none:       tile has no physics body.</li>
+<li>rectangle:  tile physics shape is a rectangle.</li>
+<li>texture:    tile physics shape is based on texture.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">PhysicsShape</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTile.swift#L18-L24">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

@@ -106,30 +106,22 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Data Types.html">Data Types</a>
+            <a href="Other.html">Other</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
               </li>
               <li class="nav-group-task">
-                <a href="Data Types.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+                <a href="Other.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
               </li>
               <li class="nav-group-task">
-                <a href="Data Types.html#/s:O7SKTiled10TileOffset">TileOffset</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Enums.html">Other Enums</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled13LabelPosition">LabelPosition</a>
+                <a href="Other.html#/s:O7SKTiled10TileOffset">TileOffset</a>
               </li>
               <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled13ObjectPhysics">ObjectPhysics</a>
+                <a href="Other.html#/s:O7SKTiled13CollisionType">CollisionType</a>
               </li>
               <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled11TilePhysics">TilePhysics</a>
+                <a href="Other.html#/s:O7SKTiled12PhysicsShape">PhysicsShape</a>
               </li>
             </ul>
           </li>
@@ -153,7 +145,7 @@
 </ul>
 
 <p><a href="Classes/SKTileObject.html"><code>SKTileObject</code></a> objects are subclasses of <code>SKShapeNode</code>. Each object&rsquo;s path is drawn from the <code>SKTileObject.points</code> property.</p>
-<a href='#object-types' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='object-types'>Object Types</h3>
+<a href='#object-types' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='object-types'>Object Types</h2>
 
 <p>Objects assigned a type in Tiled will retain that property in <strong>SKTiled</strong>, accessed with the optional <code>SKTileObject.type</code> property:</p>
 
@@ -168,15 +160,15 @@
 </code></pre>
 
 <p>Note that this will return objects from multiple object layers.</p>
-<a href='#dynamics' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='dynamics'>Dynamics</h3>
+<a href='#dynamics' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='dynamics'>Dynamics</h2>
 
-<p>You also have the option of enabling physics for each object, allowing them to react as dynamics bodies in your scene. Passing properties from <strong>Tiled</strong> allows you to easily create dynamic objects in your scenes.</p>
+<p>You also have the option of enabling physics for each object, allowing them to react as dynamics bodies in your scene. Passing properties from <strong>Tiled</strong> allows you to easily create dynamic objects in your scenes. Here, a simple scene with one object group and five objects is loaded:</p>
 
-<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/dynamics-start.png" alt="Dynamics Setup"></p>
-
-<p>In this scene, the shape objects are assigned a boolean property <code>isDynamic</code>, while the floor objects are assigned the boolean property <code>isCollider</code>. In the map properties, a float property <code>yGravity</code> property is created and given a value of <code>-9.8</code>.</p>
-
-<p>Loaded in <strong>SKTiled</strong>, the scene renders as this:</p>
+<ul>
+<li>shape objects are assigned a property of <code>isDynamic = true</code></li>
+<li>floor objects are assigned a property of <code>isCollider = true</code></li>
+<li>map properties contain a <code>yGravity</code> value of <code>-9.8</code></li>
+</ul>
 
 <p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/dynamic-objects.gif" alt="Object Dynamics"></p>
 

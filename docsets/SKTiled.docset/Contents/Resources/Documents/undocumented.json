@@ -3,69 +3,83 @@
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTile.swift",
       "line": 19,
-      "symbol": "TilePhysics.none",
+      "symbol": "PhysicsShape.none",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTile.swift",
       "line": 20,
-      "symbol": "TilePhysics.rectangle",
+      "symbol": "PhysicsShape.rectangle",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTile.swift",
       "line": 21,
-      "symbol": "TilePhysics.texture",
+      "symbol": "PhysicsShape.ellipse",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTile.swift",
-      "line": 33,
+      "line": 22,
+      "symbol": "PhysicsShape.texture",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/Sources/SKTile.swift",
+      "line": 23,
+      "symbol": "PhysicsShape.path",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/Sources/SKTile.swift",
+      "line": 35,
       "symbol": "SKTile.tileData",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTile.swift",
-      "line": 34,
+      "line": 36,
       "symbol": "SKTile.tileSize",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTile.swift",
-      "line": 35,
+      "line": 37,
       "symbol": "SKTile.highlightColor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTile.swift",
-      "line": 38,
-      "symbol": "SKTile.physicsType",
+      "line": 40,
+      "symbol": "SKTile.physicsShape",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTile.swift",
-      "line": 59,
+      "line": 61,
       "symbol": "SKTile.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTile.swift",
-      "line": 167,
+      "line": 186,
       "symbol": "SKTile.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTile.swift",
-      "line": 420,
+      "line": 439,
       "symbol": "SKTile.debugDescription",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -177,84 +191,84 @@
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTileLayer.swift",
-      "line": 784,
+      "line": 786,
       "symbol": "TiledLayerObject.debugLayer()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTileLayer.swift",
-      "line": 815,
+      "line": 817,
       "symbol": "SKTileLayer.render",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTileLayer.swift",
-      "line": 817,
+      "line": 819,
       "symbol": "SKTileLayer.isPaused",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTileLayer.swift",
-      "line": 855,
+      "line": 857,
       "symbol": "SKTileLayer.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTileLayer.swift",
-      "line": 1250,
+      "line": 1252,
       "symbol": "SKTileLayer.debugLayer()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTileLayer.swift",
-      "line": 1362,
+      "line": 1364,
       "symbol": "SKObjectGroup.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTileLayer.swift",
-      "line": 1553,
+      "line": 1555,
       "symbol": "SKImageLayer.image",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTileLayer.swift",
-      "line": 1556,
+      "line": 1558,
       "symbol": "SKImageLayer.wrapX",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTileLayer.swift",
-      "line": 1557,
+      "line": 1559,
       "symbol": "SKImageLayer.wrapY",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTileLayer.swift",
-      "line": 1605,
+      "line": 1607,
       "symbol": "SKImageLayer.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTileLayer.swift",
-      "line": 1878,
+      "line": 1866,
       "symbol": "TiledLayerObject.description",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTileLayer.swift",
-      "line": 1879,
+      "line": 1867,
       "symbol": "TiledLayerObject.debugDescription",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -290,35 +304,21 @@
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTileObject.swift",
       "line": 35,
-      "symbol": "ObjectPhysics.none",
+      "symbol": "CollisionType.none",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTileObject.swift",
       "line": 36,
-      "symbol": "ObjectPhysics.dynamic",
+      "symbol": "CollisionType.dynamic",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTileObject.swift",
       "line": 37,
-      "symbol": "ObjectPhysics.collision",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/Sources/SKTileObject.swift",
-      "line": 48,
-      "symbol": "LabelPosition.above",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/Sources/SKTileObject.swift",
-      "line": 49,
-      "symbol": "LabelPosition.below",
+      "symbol": "CollisionType.collision",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -352,22 +352,8 @@
     },
     {
       "file": "/Users/michael/git/SKTiled/Sources/SKTileObject.swift",
-      "line": 66,
-      "symbol": "SKTileObject.points",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/Sources/SKTileObject.swift",
-      "line": 67,
+      "line": 69,
       "symbol": "SKTileObject.size",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/Sources/SKTileObject.swift",
-      "line": 70,
-      "symbol": "SKTileObject.physicsType",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
