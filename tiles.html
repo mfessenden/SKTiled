@@ -224,10 +224,13 @@
 <span class="c1">// run the animation</span>
 <span class="n">tile</span><span class="o">.</span><span class="nf">runAnimation</span><span class="p">()</span>
 </code></pre>
-<a href='#dynamics' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='dynamics'>Dynamics</h2>
+<a href='#physics' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='physics'>Physics</h2>
 
-<p>Dynamics can be turned on for tile objects with the <code>SKTileObject.setupPhysics</code> methods. Passing the argument <code>isDynamic</code> determines whether the physics body is active or passive. </p>
+<p>Physics can be turned on for tile objects with the <code>SKTileObject.setupPhysics</code> methods. Passing the argument <code>isDynamic</code> determines whether the physics body is active or passive. </p>
 <pre class="highlight swift"><code><span class="c1">// create a physics body with a rectangle of size 8</span>
+<span class="n">tile</span><span class="o">.</span><span class="nf">setupPhysics</span><span class="p">(</span><span class="nv">shapeOf</span><span class="p">:</span> <span class="o">.</span><span class="n">rectangle</span><span class="p">,</span> <span class="nv">isDynamic</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+
+<span class="c1">// create a physics body with a rectangle of size 8</span>
 <span class="n">tile</span><span class="o">.</span><span class="nf">setupPhysics</span><span class="p">(</span><span class="nv">rectSize</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="mi">8</span><span class="p">),</span> <span class="nv">isDynamic</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
 
 <span class="c1">// setup dynamics on an array of tiles with a radius of 4</span>
