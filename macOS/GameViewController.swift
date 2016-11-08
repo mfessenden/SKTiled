@@ -16,7 +16,6 @@ class GameViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
         // load demo files from a propertly list
         demoFiles = loadDemoFiles("DemoFiles")
@@ -69,6 +68,10 @@ class GameViewController: NSViewController {
         }
     }
     
+    override func mouseEntered(with event: NSEvent) {
+        
+    }
+    
     /**
      Load the next tilemap scene.
      
@@ -80,7 +83,9 @@ class GameViewController: NSViewController {
         var currentFilename = demoFiles.first!
         var showOverlay: Bool = true
         if let currentScene = view.scene as? SKTiledDemoScene {
-            showOverlay = currentScene.cameraNode.showOverlay ?? true
+            if let cameraNode = currentScene.cameraNode {
+                showOverlay = cameraNode.showOverlay
+            }
             debugMode = currentScene.debugMode
             if let tilemap = currentScene.tilemap {
                 currentFilename = tilemap.name!
@@ -117,7 +122,9 @@ class GameViewController: NSViewController {
         var currentFilename = demoFiles.first!
         var showOverlay: Bool = true
         if let currentScene = view.scene as? SKTiledDemoScene {
-            showOverlay = currentScene.cameraNode.showOverlay ?? true
+            if let cameraNode = currentScene.cameraNode {
+                showOverlay = cameraNode.showOverlay
+            }
             if let tilemap = currentScene.tilemap {
                 currentFilename = tilemap.name!
             }

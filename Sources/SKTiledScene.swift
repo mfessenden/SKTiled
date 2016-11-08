@@ -112,7 +112,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
             if (self.tilemap.autoResize == true) {
                 cameraNode.fitToView()
             } else {
-                cameraNode.setWorldScale(self.tilemap.worldScale)
+                cameraNode.setCameraZoom(self.tilemap.worldScale)
             }
         }
     }

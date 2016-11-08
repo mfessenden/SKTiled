@@ -103,7 +103,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     public init(width: CGFloat, height: CGFloat, type: SKObjectType = .rectangle){
         super.init()
     
-        // Rectangular and ellipse objects need initial points.
+        // Rectangular and ellipse objects get initial points.
         if (width > 0) && (height > 0) {
             points = [CGPoint(x: 0, y: 0),
                       CGPoint(x: width, y: 0),
@@ -375,7 +375,8 @@ extension SKTileObject {
     
     /// Tile data description.
     override open var description: String {
-        return "Object: \(id), \(name ?? "null"), \(propertiesString ?? "")"
+        let comma = propertiesString.characters.count > 0 ? ", " : ""
+        return "Object: \(id), \(name ?? "null")\(comma)\(propertiesString)"
     }
     
     override open var debugDescription: String { return description }

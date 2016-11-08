@@ -52,7 +52,7 @@ open class SKTileset: SKTiledObject {
     open var isExternalTileset: Bool { return filename != nil }  // tileset is an external file
     open var transparentColor: SKColor = SKColor.clear           // sprite transparency color
     
-    // returns the last GID in the tileset
+    /// Returns the last GID in the tileset
     open var lastGID: Int {
         var gid = firstGID
         for data in tileData {

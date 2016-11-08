@@ -30,6 +30,9 @@ public class SKTiledDemoScene: SKTiledScene {
     /// global information label font size.
     private let labelFontSize: CGFloat = 11
     
+    internal var selected: [TiledLayerObject] = []
+    internal var editMode: Bool = false
+    
     override public func didMove(to view: SKView) {
         super.didMove(to: view)
         
@@ -73,10 +76,7 @@ public class SKTiledDemoScene: SKTiledScene {
         if (showGridButton == nil){
             showGridButton = ButtonNode(defaultImage: "grid-button-norm", highlightImage: "grid-button-pressed", action: {
                 guard let tilemap = self.tilemap else { return }
-                let debugState = !tilemap.baseLayer.showGrid
-                tilemap.baseLayer.showGrid = debugState
-                
-                tilemap.baseLayer.drawBounds()
+                tilemap.debugDraw = !tilemap.debugDraw
             })
             
             cameraNode.overlay.addChild(showGridButton)
@@ -240,7 +240,6 @@ public class SKTiledDemoScene: SKTiledScene {
         return true
     }
 
-
     /**
      Update HUD elements when the view size changes.
      */
@@ -321,6 +320,8 @@ extension SKTiledDemoScene {
             
             // get the position in the baseLayer
             let positionInLayer = baseLayer.touchLocation(touch)
+            
+            
             let coord = baseLayer.coordinateAtTouchLocation(touch)
             // add a tile shape to the base layer where the user has clicked
             
@@ -328,37 +329,21 @@ extension SKTiledDemoScene {
             let _ = addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y), duration: 5)
             
             // update the tile information label
-            var coordStr = "Tile: \(coord.coordDescription), \(positionInLayer.roundTo())"
+            let coordStr = "Coord: \(coord.coordDescription), \(positionInLayer.roundTo())"
             tileInformationLabel.isHidden = false
             tileInformationLabel.text = coordStr
             
             // tile properties output
-            var propertiesInfoString = "ID: ~"
-            if let tile = tilemap.firstTileAt(coord) {
-                propertiesInfoString = "ID: \(tile.tileData.id)"
-                propertiesInfoString += ", \(tile.tileData.propertiesString ?? "")"
-                
+            var propertiesInfoString = ""
+            if let tile = tilemap.firstTileAt(coord: coord) {
+                propertiesInfoString = "Tile ID: \(tile.tileData.id)"
+                if tile.tileData.propertiesString != "" {
+                    propertiesInfoString += "; \(tile.tileData.propertiesString)"
+                }
             }
+            
             propertiesInformationLabel.isHidden = false
             propertiesInformationLabel.text = propertiesInfoString
-        }
-    }
-    
-    override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches {
-            // do something here
-        }
-    }
-    
-    override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches {
-            // do something here
-        }
-    }
-    
-    override open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches {
-            // do something here
         }
     }
 }
@@ -382,24 +367,31 @@ extension SKTiledDemoScene {
         
         // get the position in the baseLayer
         let positionInLayer = baseLayer.mouseLocation(event: event)
+        // get the coordinate at that position
         let coord = baseLayer.coordinateAtMouseEvent(event: event)
-        
+
         if (tilemap.isPaused == false){
             // highlight the current coordinate
-            let _ = addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y), duration: 3)
+            let _ = addTileAt(layer: baseLayer, Int(floor(coord.x)), Int(floor(coord.y)), duration: 3)
         }
 
         // update the tile information label
-        let coordStr = "Tile: \(coord.coordDescription), \(positionInLayer.roundTo())"
+        let coordStr = "Coord: \(coord.coordDescription), \(positionInLayer.roundTo())"
         tileInformationLabel.isHidden = false
         tileInformationLabel.text = coordStr
         
         // tile properties output
-        var propertiesInfoString = "ID: ~"
+        var propertiesInfoString = ""
         if let tile = tilemap.firstTileAt(coord: coord) {
-            propertiesInfoString = "ID: \(tile.tileData.id)"
-            if tile.tileData.propertiesString != nil {
-                propertiesInfoString += "; \(tile.tileData.propertiesString!)"
+            propertiesInfoString = "Tile ID: \(tile.tileData.id)"
+            if tile.tileData.propertiesString != "" {
+                propertiesInfoString += "; \(tile.tileData.propertiesString)"
+            }
+            
+            if let layer = tile.layer {
+                if !selected.contains(layer) {
+                    selected.append(layer)
+                }
             }
         }
         propertiesInformationLabel.isHidden = false
@@ -421,20 +413,22 @@ extension SKTiledDemoScene {
         let coord = baseLayer.screenToTileCoords(positionInLayer)
         
         tileInformationLabel?.isHidden = false
-        tileInformationLabel?.text = "Tile: \(coord.coordDescription), \(positionInLayer.roundTo())"
+        tileInformationLabel?.text = "Coord: \(coord.coordDescription), \(positionInLayer.roundTo())"
         
         // tile properties output
-        var propertiesInfoString = "ID: ~"
+        var propertiesInfoString = ""
         if let tile = tilemap.firstTileAt(coord: coord) {
-            propertiesInfoString = "ID: \(tile.tileData.id)"
+            //tile.highlightWithColor(tilemap.highlightColor)
+            propertiesInfoString = "Tile ID: \(tile.tileData.id)"
             if tile.tileData.propertiesString != "" {
                 propertiesInfoString += "; \(tile.tileData.propertiesString)"
             }
         }
+        
         propertiesInformationLabel.isHidden = false
         propertiesInformationLabel.text = propertiesInfoString
     }
-    
+        
     override open func mouseDragged(with event: NSEvent) {
         guard let cameraNode = cameraNode else { return }
         cameraNode.scenePositionChanged(event)
@@ -443,6 +437,7 @@ extension SKTiledDemoScene {
     override open func mouseUp(with event: NSEvent) {
         guard let cameraNode = cameraNode else { return }
         cameraNode.mouseUp(with: event)
+        selected = []
     }
     
     override open func scrollWheel(with event: NSEvent) {
@@ -485,17 +480,25 @@ extension SKTiledDemoScene {
         // 'G' shows the grid
         if event.keyCode == 0x05 {
             if let tilemap = tilemap {
-                tilemap.baseLayer.showGrid = !tilemap.baseLayer.showGrid
+                tilemap.debugDraw = !tilemap.debugDraw
             }
         }
         
         // 'H' hides the HUD
         if event.keyCode == 0x04 {
-            cameraNode.showOverlay = !cameraNode.showOverlay
+            let debugState = !cameraNode.showOverlay
+            cameraNode.showOverlay = debugState
+            
+            if let view = self.view {
+                view.showsFPS = debugState
+                view.showsNodeCount = debugState
+                view.showsDrawCount = debugState
+            }
         }
         
-        // 'A', '0' reset the camera to 100%
-        if event.keyCode == 0x00 || event.keyCode == 0x52 || event.keyCode == 0x1D {
+        
+        // 'A' & '1' reset the camera to 100%
+        if event.keyCode == 0x12 || event.keyCode == 0x00 {
             if let tilemap = tilemap {
                 cameraNode.resetCamera(toScale: tilemap.worldScale)
             } else {
@@ -511,6 +514,11 @@ extension SKTiledDemoScene {
         // '←' advances to the next scene
         if event.keyCode == 0x7B {
             self.loadPreviousScene()
+        }
+        
+        // 'E' toggles edit mode
+        if event.keyCode == 0x0E {
+            editMode = !editMode
         }
     }
     

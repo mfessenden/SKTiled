@@ -54,7 +54,10 @@ class GameViewController: UIViewController {
         var currentFilename = demoFiles.first!
         var showOverlay: Bool = true
         if let currentScene = view.scene as? SKTiledDemoScene {
-            showOverlay = currentScene.cameraNode.showOverlay ?? true
+            if let cameraNode = currentScene.cameraNode {
+                showOverlay = cameraNode.showOverlay
+            }
+
             debugMode = currentScene.debugMode
             if let tilemap = currentScene.tilemap {
                 currentFilename = tilemap.name!
@@ -77,7 +80,6 @@ class GameViewController: UIViewController {
         view.presentScene(nextScene, transition: transition)
         
         nextScene.cameraNode?.showOverlay = showOverlay
-        updateWindowTitle(withFile: nextFilename)
     }
     
     /**
@@ -91,7 +93,9 @@ class GameViewController: UIViewController {
         var currentFilename = demoFiles.first!
         var showOverlay: Bool = true
         if let currentScene = view.scene as? SKTiledDemoScene {
-            showOverlay = currentScene.cameraNode.showOverlay ?? true
+            if let cameraNode = currentScene.cameraNode {
+                showOverlay = cameraNode.showOverlay
+            }
             if let tilemap = currentScene.tilemap {
                 currentFilename = tilemap.name!
             }

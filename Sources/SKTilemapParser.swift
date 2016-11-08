@@ -162,8 +162,10 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     
     /**
      Post-process to render each layer.
+     
+     - parameter duration: `TimeInterval` fade-in time for each layer.
      */
-    fileprivate func didFinishParsing(duration: TimeInterval=0.05)  {
+    fileprivate func didFinishParsing(duration: TimeInterval=0.075)  {
         guard let tilemap = tilemap else { return }
         
         // worker queue
@@ -179,13 +181,13 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 // render object groups
                 if let objectGroup = layer as? SKObjectGroup {
                     objectGroup.drawObjects()
-                    objectGroup.didFinishRendering()
+                    objectGroup.didFinishRendering(duration: duration)
                     continue
                 }
                 
                 // render image layers
                 if let imageLayer = layer as? SKImageLayer {
-                    imageLayer.didFinishRendering()
+                    imageLayer.didFinishRendering(duration: duration)
                     continue
                 }
                 
@@ -193,11 +195,11 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 if let tileLayer = layer as? SKTileLayer {
                     
                     guard let tileData = self.data[tileLayer.uuid] else { continue }
-
                     // add the layer data and completion handler
                     let _ = tileLayer.setLayerData(tileData, completion: { (_ layer: SKTileLayer) -> Void in
                         // run the tilemap completion handler
                         tileLayer.didFinishRendering(duration: duration)
+                        
                     })
                 
                     // report errors
@@ -218,17 +220,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     }
     
     // MARK: - XMLParserDelegate
-    
-    open func parserDidStartDocument(_ parser: XMLParser) {
-        //print("[SKTilemapParser]: starting parsing...")
-    }
-    
-    open func parserDidEndDocument(_ parser: XMLParser) {
-        //print("[SKTilemapParser]: ending parsing...")
-    }
-    
-    
-    // didStartElement happens whenever parser starts a key: <key>
     open func parser(_ parser: XMLParser,
                        didStartElement elementName: String,
                        namespaceURI: String?,
@@ -691,7 +682,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     
     open func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
         //if parseError.code == NSXMLParserError.InternalError {}
-        print(parseError)
     }
     
     // MARK: - Decoding

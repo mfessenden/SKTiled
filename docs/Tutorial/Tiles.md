@@ -118,11 +118,14 @@ tileData.addFrame(withID: 35, interval: 0.15)
 tile.runAnimation()
 ```
 
-## Dynamics
+## Physics
 
-Dynamics can be turned on for tile objects with the `SKTileObject.setupPhysics` methods. Passing the argument `isDynamic` determines whether the physics body is active or passive. 
+Physics can be turned on for tile objects with the `SKTileObject.setupPhysics` methods. Passing the argument `isDynamic` determines whether the physics body is active or passive. 
 
 ```swift
+// create a physics body with a rectangle of size 8
+tile.setupPhysics(shapeOf: .rectangle, isDynamic: true)
+
 // create a physics body with a rectangle of size 8
 tile.setupPhysics(rectSize: CGSize(width: 8, height: 8), isDynamic: true)
 

@@ -324,7 +324,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="Locations" visible="0">
+ <objectgroup name="Locations">
   <properties>
    <property name="lineWidth" type="float" value="1.5"/>
   </properties>

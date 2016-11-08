@@ -66,7 +66,6 @@ public class SKTile: SKSpriteNode {
         colorBlendFactor = 0
     }
     
-    // MARK: - Init
     /**
      Initialize the tile texture.
      
@@ -110,16 +109,23 @@ public class SKTile: SKSpriteNode {
         orientTile()
     }
     
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    // MARK: - Physics
+    
     /**
      Set up the tile's dynamics body.
      
+     - parameter ofType:    `shapeOf` tile physics shape type.
      - parameter isDynamic: `Bool` physics body is active.
      */
-    public func setupPhysics(isDynamic: Bool = false){
+    public func setupPhysics(shapeOf: PhysicsShape = .rectangle, isDynamic: Bool = false){
+        physicsShape = shapeOf
+        
         switch physicsShape {
-        case .none:
-            physicsBody = nil
-            
         case .rectangle:
             physicsBody = SKPhysicsBody(rectangleOf: tileSize)
             
@@ -134,6 +140,7 @@ public class SKTile: SKSpriteNode {
             physicsBody = nil
         }
         
+        // set the dynamic flag
         physicsBody?.isDynamic = isDynamic
     }
     
@@ -174,18 +181,15 @@ public class SKTile: SKSpriteNode {
     }
     
     /**
-     Remove tile dynamics body.
+     Remove tile physics body.
      
      - parameter withSize: `CGFloat` dynamics body size.
      */
-    public func removeDynamics(){
+    public func removePhysics(){
         physicsBody = nil
         physicsBody?.isDynamic = false
     }
 
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     // MARK: - Animation
     
@@ -294,7 +298,7 @@ public class SKTile: SKSpriteNode {
      
      - returns: `[CGPoint]?` array of points.
      */
-    private func getVertices() -> [CGPoint] {
+    fileprivate func getVertices() -> [CGPoint] {
         var vertices: [CGPoint] = []
         guard let layer = layer else { return vertices }
         
@@ -400,20 +404,6 @@ public class SKTile: SKSpriteNode {
             })
         }
     }
-    
-    /**
-     Set the tile's shader.
-     
-     - parameter fileNamed: `String?` shader file name.
-     */
-    public func setTileShader(shaderFile named: String?=nil) {      
-        guard let filename = named else {
-            shader = nil
-            return
-        }
-        print("# setting tile shader: \"\(filename)\"")
-        shader = SKShader(fileNamed: filename)
-    }
 }
     
 
@@ -445,39 +435,50 @@ extension SKTile {
      */
     public func highlightWithColor(_ color: SKColor?=nil, duration: TimeInterval=1.0, antialiasing: Bool=true) {
         
-        let highlight: SKColor = (color == nil) ? highlightColor : color!
-        
+        let highlight: SKColor = (color == nil) ? highlightColor : color!        
         let orientation = tileData.tileset.tilemap.orientation
         
-        if orientation == .orthogonal {
+        if orientation == .orthogonal || orientation == .hexagonal {
             childNode(withName: "Highlight")?.removeFromParent()
-            let highlightNode = SKShapeNode(rectOf: tileSize, cornerRadius: 0)
-            highlightNode.strokeColor = highlight.withAlphaComponent(0.1)
-            highlightNode.fillColor = highlight.withAlphaComponent(0.35)
-            highlightNode.name = "Highlight"
             
-            highlightNode.isAntialiased = antialiasing
-            addChild(highlightNode)
-            highlightNode.zPosition = zPosition + 10
+            var highlightNode: SKShapeNode? = nil
+            if orientation == .orthogonal {
+                highlightNode = SKShapeNode(rectOf: tileSize, cornerRadius: 0)
+            }
             
-            // fade out highlight
-            removeAction(forKey: "Highlight_Fade")
-            let fadeAction = SKAction.sequence([
-                SKAction.wait(forDuration: duration * 1.5),
-                SKAction.fadeAlpha(to: 0, duration: duration/4.0)
-                ])
+            if orientation == .hexagonal {
+                let hexPath = polygonPath(self.getVertices())
+                highlightNode = SKShapeNode(path: hexPath, centered: true)
+            }
             
-            highlightNode.runAction(fadeAction, withKey: "Highlight_Fade", optionalCompletion: {
-                highlightNode.removeFromParent()
-            })
+            if let highlightNode = highlightNode {
+                highlightNode.strokeColor = SKColor.clear
+                highlightNode.fillColor = highlight.withAlphaComponent(0.35)
+                highlightNode.name = "Highlight"
+                
+                highlightNode.isAntialiased = antialiasing
+                addChild(highlightNode)
+                highlightNode.zPosition = zPosition + 10
+                
+                // fade out highlight
+                removeAction(forKey: "Highlight_Fade")
+                let fadeAction = SKAction.sequence([
+                    SKAction.wait(forDuration: duration * 1.5),
+                    SKAction.fadeAlpha(to: 0, duration: duration/4.0)
+                    ])
+                
+                highlightNode.runAction(fadeAction, withKey: "Highlight_Fade", optionalCompletion: {
+                    highlightNode.removeFromParent()
+                })
+            }
         }
         
-        if orientation == .isometric {
+        if orientation == .isometric || orientation == .staggered {
             removeAction(forKey: "Highlight_Fade")
             let fadeOutAction = SKAction.colorize(with: SKColor.clear, colorBlendFactor: 1, duration: duration)
             runAction(fadeOutAction, withKey: "Highlight_Fade", optionalCompletion: {
                 let fadeInAction = SKAction.sequence([
-                    SKAction.wait(forDuration: duration * 1.5),
+                    SKAction.wait(forDuration: duration * 2.5),
                     //fadeOutAction.reversedAction()
                     SKAction.colorize(with: SKColor.clear, colorBlendFactor: 0, duration: duration/4.0)
                     ])
@@ -535,6 +536,9 @@ internal class DebugTileShape: SKShapeNode {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /**
+     Draw the object.
+     */
     fileprivate func drawObject() {
         // draw the path
         var points: [CGPoint] = []
@@ -592,7 +596,7 @@ internal class DebugTileShape: SKShapeNode {
         self.miterLimit = 0
         self.lineWidth = 0.5
         
-        self.strokeColor = self.color.withAlphaComponent(0.8)
+        self.strokeColor = SKColor.clear
         self.fillColor = self.color.withAlphaComponent(0.35)
         
         // anchor

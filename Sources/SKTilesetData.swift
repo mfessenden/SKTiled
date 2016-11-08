@@ -160,7 +160,7 @@ extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
         guard let tileset = tileset else { return "Tile ID: \(id) (no tileset)" }
         let tileSizeString = "\(Int(tileset.tileSize.width))x\(Int(tileset.tileSize.height))"
         let dataString = properties.count > 0 ? "Tile ID: \(id) @ \(tileSizeString), " : "Tile ID: \(id) @ \(tileSizeString)"
-        return "\(dataString)\(propertiesString ?? "")"
+        return "\(dataString)\(propertiesString)"
     }
     
     public var debugDescription: String { return description }

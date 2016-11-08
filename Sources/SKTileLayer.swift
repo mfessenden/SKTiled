@@ -157,6 +157,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         } set {
             frameShape.isHidden = !newValue
             drawBounds()
+            showGrid = newValue
         }
     }
     
@@ -386,9 +387,9 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     internal func pixelToTileCoords(_ point: CGPoint) -> CGPoint {
         switch orientation {
         case .orthogonal:
-            return CGPoint(x: point.x / tileWidth, y: point.y / tileHeight)
+            return CGPoint(x: floor(point.x / tileWidth), y: floor(point.y / tileHeight))
         case .isometric:
-            return CGPoint(x: point.x / tileHeight, y: point.y / tileHeight)
+            return CGPoint(x: floor(point.x / tileHeight), y: floor(point.y / tileHeight))
         case .hexagonal:
             return screenToTileCoords(point)
         case .staggered:
@@ -425,21 +426,19 @@ open class TiledLayerObject: SKNode, SKTiledObject {
      */
     internal func screenToTileCoords(_ point: CGPoint) -> CGPoint {
         
-        //var pixelX = floor(point.x)
-        //var pixelY = floor(point.y)
         var pixelX = point.x
         var pixelY = point.y
         
         switch orientation {
             
         case .orthogonal:
-            return CGPoint(x: pixelX / tileWidth, y: pixelY / tileHeight)
+            return CGPoint(x: floor(pixelX / tileWidth), y: floor(pixelY / tileHeight))
             
         case .isometric:
             pixelX -= height * tileWidthHalf
             let tileY = pixelY / tileHeight
             let tileX = pixelX / tileWidth
-            return CGPoint(x: tileY + tileX, y: tileY - tileX)
+            return CGPoint(x: floor(tileY + tileX), y: floor(tileY - tileX))
             
         case .hexagonal:
             
@@ -647,7 +646,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
      - parameter zpos: `CGFloat?` optional z-position.
      */
     public func addChild(_ node: SKNode, _ x: Int=0, _ y: Int=0, offset: CGPoint = CGPoint.zero, zpos: CGFloat? = nil) {
-        let coord = CGPoint(x, y)
+        let coord = CGPoint(x: CGFloat(x), y: CGFloat(y))
         addChild(node, coord: coord, offset: offset, zpos: zpos)
     }
     
@@ -747,7 +746,8 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     open func didFinishRendering(duration: TimeInterval=0) {
         let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: duration)
         run(fadeIn, completion: { self.isRendered = true })
-        // setup physics for the layer's edge
+        
+        // setup physics for the layer boundary
         if hasKey("isDynamic") || hasKey("isCollider"){
             setupPhysics()
         }
@@ -772,7 +772,8 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     // MARK: - Debugging
     open func debugLayer() {
         /* override in subclass */
-        print("Layer: \(name != nil ? "\"\(name!)\"" : "null"), \(propertiesString ?? "")")
+        let comma = propertiesString.characters.count > 0 ? ", " : ""
+        print("Layer: \(name != nil ? "\"\(name!)\"" : "null")\(comma)\(propertiesString)")
     }
 }
 
@@ -983,7 +984,11 @@ open class SKTileLayer: TiledLayerObject {
             // skip empty tiles
             if (gid == 0) { continue }
             
-            let coord = CGPoint(index % Int(self.size.width), index / Int(self.size.width))
+            let x: Int = index % Int(self.size.width)
+            let y: Int = index / Int(self.size.width)
+            
+            let coord = CGPoint(x: CGFloat(x), y: CGFloat(y))
+            
             let tile = self.buildTileAt(coord: coord, id: gid)
             
             if (tile == nil) {
@@ -1077,7 +1082,7 @@ open class SKTileLayer: TiledLayerObject {
      - returns: `SKTile?` tile.
      */
     open func addTileAt(_ x: Int, _ y: Int, gid: Int? = nil) -> SKTile? {
-        let coord = CGPoint(x, y)
+        let coord = CGPoint(x: CGFloat(x), y: CGFloat(y))
         return addTileAt(coord: coord, gid: gid)
     }
     
@@ -1091,7 +1096,7 @@ open class SKTileLayer: TiledLayerObject {
      - returns: `SKTile?` tile.
      */
     open func addTileAt(_ x: Int, _ y: Int, texture: SKTexture? = nil) -> SKTile? {
-        let coord = CGPoint(x, y)
+        let coord = CGPoint(x: CGFloat(x), y: CGFloat(y))
         return addTileAt(coord: coord, texture: texture)
     }
     
@@ -1103,7 +1108,7 @@ open class SKTileLayer: TiledLayerObject {
      - returns: `SKTile?` removed tile.
      */
     open func removeTileAt(_ x: Int, _ y: Int) -> SKTile? {
-        let coord = CGPoint(x, y)
+        let coord = CGPoint(x: CGFloat(x), y: CGFloat(y))
         return removeTileAt(coord: coord)
     }
     
@@ -1227,11 +1232,14 @@ open class SKTileLayer: TiledLayerObject {
     /**
      Set a shader for the tile layer.
      
-     - parameter fileNamed: `String` shader file name.
+     - parameter named:    `String` shader file name.
+     - parameter uniforms: `[SKUniform]` array of shader uniforms.
      */
-    open func setShader(fileNamed: String) {
-        for tile in tiles where tile != nil {
-            tile!.setTileShader(shaderFile: fileNamed)
+    open func setShader(named: String, uniforms: [SKUniform]=[]) {
+        let shader = SKShader(fileNamed: named)
+        shader.uniforms = uniforms
+        for tile in tiles.flatMap({$0}) {
+            tile.shader = shader
         }
     }
     
@@ -1516,6 +1524,8 @@ open class SKObjectGroup: TiledLayerObject {
      */
     override open func didFinishRendering(duration: TimeInterval=0) {
         super.didFinishRendering(duration: duration)
+        
+        // setup dynamics for objects.
         for object in objects {
             if object.hasKey("isDynamic") || object.hasKey("isCollider"){
                 object.setupPhysics()
@@ -1604,7 +1614,6 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
     private var layer: TiledLayerObject
     private var gridTexture: SKTexture! = nil
     private var graphTexture: SKTexture! = nil
-    private var imageScale: CGFloat = 1
 
     private var gridOpacity: CGFloat { return layer.gridOpacity }
 
@@ -1646,27 +1655,26 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
 
                 // generate the texture
                 if (gridTexture == nil) {
-                    let gridImage = drawGrid(self.layer, scale: imageScale)
+                    let gridImage = drawGrid(self.layer)
                     gridTexture = SKTexture(cgImage: gridImage)
                     gridTexture.filteringMode = .linear
                 }
                 
-                
+                #if os(iOS)
+                let imageScale: CGFloat = UIScreen.main.scale
                 gridSize = gridTexture.size() / imageScale
+                position.y = -gridSize.height
+                #endif
+                
                 #if os(OSX)
                 gridSize = gridTexture.size()
+                yScale = -1
                 #endif
                 
                 texture = gridTexture
                 alpha = gridOpacity
                 size = gridSize
-                
-                #if os(iOS)
-                gridTexture.filteringMode = .linear
-                position.y = -gridSize.height
-                #else
-                yScale = -1
-                #endif
+
             }
         }
     }
@@ -1674,7 +1682,7 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
 
 
 /**
- *  Two-dimensional array structure.
+ Two-dimensional array structure.
  */
 internal struct Array2D<T> {
     public let columns: Int
@@ -1707,8 +1715,6 @@ internal struct Array2D<T> {
 
 
 
-
-
 extension TiledLayerObject {
     
     // MARK: - Extensions
@@ -1725,7 +1731,7 @@ extension TiledLayerObject {
      - parameter zpos:      `CGFloat?` optional z-position.
      */
     public func addChild(_ node: SKNode, _ x: Int, _ y: Int, dx: CGFloat = 0, dy: CGFloat = 0, zpos: CGFloat? = nil) {
-        let coord = CGPoint(x, y)
+        let coord = CGPoint(x: CGFloat(x), y: CGFloat(y))
         let offset = CGPoint(x: dx, y: dy)
         addChild(node, coord: coord, offset: offset, zpos: zpos)
     }
@@ -1740,7 +1746,7 @@ extension TiledLayerObject {
      - returns: `CGPoint` position in layer.
      */
     public func pointForCoordinate(_ x: Int, _ y: Int, offsetX: CGFloat=0, offsetY: CGFloat=0) -> CGPoint {
-        return self.pointForCoordinate(coord: CGPoint(x, y), offsetX: offsetX, offsetY: offsetY)
+        return self.pointForCoordinate(coord: CGPoint(x: CGFloat(x), y: CGFloat(y)), offsetX: offsetX, offsetY: offsetY)
     }
     
     /**
@@ -1794,7 +1800,7 @@ extension TiledLayerObject {
      - returns: `CGPoint` position in layer.
      */
     public func coordinateForPoint(_ x: Int, _ y: Int) -> CGPoint {
-        return self.coordinateForPoint(CGPoint(x, y))
+        return self.coordinateForPoint(CGPoint(x: CGFloat(x), y: CGFloat(y)))
     }
     
     /**

@@ -131,7 +131,7 @@ internal let TileSize32x32 = CGSize(width: 32, height: 32)
 
     
 /**
- The `SKTilemap` class represents a container node which manages layers, tiles (sprites), objects & images.
+ The `SKTilemap` class represents a container which manages layers, tiles (sprites), vector objects & images.
  
  - size:         tile map size in tiles.
  - tileSize:     tile map tile size in pixels.
@@ -139,7 +139,7 @@ internal let TileSize32x32 = CGSize(width: 32, height: 32)
  
  Tile data is stored in `SKTileset` tile sets.
  */
-open class SKTilemap: SKNode, SKTiledObject{
+open class SKTilemap: SKNode, SKTiledObject {
     
     open var filename: String!                                    // tilemap filename
     open var uuid: String = UUID().uuidString                     // unique id
@@ -165,7 +165,7 @@ open class SKTilemap: SKNode, SKTiledObject{
     
     // current layers
     private var layers: Set<TiledLayerObject> = []                // layers
-    open var layerCount: Int { return self.layers.count - 1 }     // layer count attribute
+    open var layerCount: Int { return self.layers.count }         // layer count attribute
     open var properties: [String: String] = [:]                   // custom properties
     open var zDeltaForLayers: CGFloat = 50                        // z-position range for layers
     open var backgroundColor: SKColor? = nil                      // optional background color (read from the Tiled file)
@@ -755,7 +755,7 @@ open class SKTilemap: SKNode, SKTiledObject{
      - returns: `[SKTile]` array of tiles.
      */
     open func tilesAt(_ x: Int, _ y: Int) -> [SKTile] {
-        return tilesAt(coord: CGPoint(x,y))
+        return tilesAt(coord: CGPoint(x: CGFloat(x), y: CGFloat(y)))
     }
     
     /**
@@ -775,7 +775,7 @@ open class SKTilemap: SKNode, SKTiledObject{
     }
     
     open func tileAt(_ x: Int, _ y: Int, inLayer name: String?) -> SKTile? {
-        return tileAt(coord: CGPoint(x, y), inLayer: name)
+        return tileAt(coord: CGPoint(x: CGFloat(x), y: CGFloat(y)), inLayer: name)
     }
     
     /**
@@ -981,7 +981,7 @@ open class SKTilemap: SKNode, SKTiledObject{
         // time results
         let timeInterval = Date().timeIntervalSince(timeStarted)
         let timeStamp = String(format: "%.\(String(3))f", timeInterval)        
-        print("\n# Success! tile map \"\(name != nil ? name! : "null")\" rendered in: \(timeStamp)s\n")
+        print("\n -> Success! tile map \"\(name != nil ? name! : "null")\" rendered in: \(timeStamp)s\n")
         
         // dump the output of the current map to stdout
         if (verbose == true) {
@@ -1216,8 +1216,6 @@ extension SKTilemap {
         } set {
             guard newValue != baseLayer.debugDraw else { return }
             baseLayer.debugDraw = newValue
-            baseLayer.showGrid = newValue
-            showObjects = newValue
         }
     }
     

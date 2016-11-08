@@ -1,5 +1,13 @@
 Change Log
 ==========================
+1.0.5
+--------------------------
+
+#### Changes
+- add dynamics properties to layers and objects
+- `SKTilemap.baseLayer` is ignored when querying layers
+- add Data extension to check for compressed data
+- fix coordinate error with negative tile coordinates
 
 1.0.4
 --------------------------

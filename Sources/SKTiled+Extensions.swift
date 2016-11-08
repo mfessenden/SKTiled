@@ -164,10 +164,6 @@ public func floor(_ flt: CGFloat) -> CGFloat {
 
 public extension CGPoint {
     
-    public init(_ x: Int, _ y: Int) {
-        self.init(x: CGFloat(x), y: CGFloat(y))
-    }
-    
     /// Returns an point inverted in the Y-coordinate.
     public var invertedY: CGPoint {
         return CGPoint(x: self.x, y: self.y * -1)
@@ -441,6 +437,15 @@ public extension SKColor {
         
         return SKColor(red: r, green: g, blue: b, alpha: 1.0)
     }
+    
+    func vec4() -> GLKVector4 {
+        var r: CGFloat = 0.0
+        var g: CGFloat = 0.0
+        var b: CGFloat = 0.0
+        var a: CGFloat = 0.0
+        getRed(&r, green: &g, blue: &b, alpha: &a)
+        return GLKVector4(v: (Float(r), Float(g), Float(b), Float(a)))
+    }
 }
 
 
@@ -452,7 +457,7 @@ public extension String {
     }
     
     /**
-     Simple function to split the
+     Simple function to split a string with the given pattern.
      
      - parameter pattern: `String` pattern to split string with.
      - returns: `[String]` groups of split strings.
@@ -820,8 +825,15 @@ public func normalize(_ value: CGFloat, _ minimum: CGFloat, _ maximum: CGFloat) 
  - parameter scale: `CGFloat` image scale.
  - returns: `SKTexture?` visual grid texture.
  */
-public func drawGrid(_ layer: TiledLayerObject,  scale: CGFloat = 1) -> CGImage {
-        
+public func drawGrid(_ layer: TiledLayerObject) -> CGImage {
+    
+    let uiScale: CGFloat
+    #if os(iOS)
+    uiScale = UIScreen.main.scale
+    #endif
+    #if os(OSX)
+    uiScale = NSScreen.main()!.backingScaleFactor
+    #endif
     let size = layer.size
     let tileWidth = layer.tileWidth    //* scale
     let tileHeight = layer.tileHeight  //* scale
@@ -832,7 +844,7 @@ public func drawGrid(_ layer: TiledLayerObject,  scale: CGFloat = 1) -> CGImage 
     var sizeInPoints = layer.sizeInPoints
     sizeInPoints = sizeInPoints + 1
     
-    return imageOfSize(sizeInPoints, scale: scale) { context, bounds, scale in
+    return imageOfSize(sizeInPoints, scale: uiScale) { context, bounds, scale in
                 
         let innerColor = layer.gridColor
         // line width should be at least 1 for larger tile sizes
@@ -1024,6 +1036,7 @@ public func polygonPath(_ points: [CGPoint], closed: Bool=true) -> CGPath {
 
 /**
  Draw a polygon shape based on an aribitrary number of sides.
+ 
  - parameter sides:    `Int` number of sides.
  - parameter radius:   `CGSize` w/h radius.
  - parameter offset:   `CGFloat` rotation offset (45 to return a rectangle).

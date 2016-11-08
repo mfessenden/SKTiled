@@ -26,6 +26,7 @@ open class ButtonNode: SKSpriteNode {
     
     // textures
     open var selectedTexture: SKTexture!
+    open var hoveredTexture: SKTexture!
     open var defaultTexture: SKTexture! {
         didSet {
             defaultTexture.filteringMode = .linear
@@ -40,8 +41,9 @@ open class ButtonNode: SKSpriteNode {
         }
     }
     
-    // action to show highlight scaling
+    // actions to show highlight scaling & hover (OSX)
     fileprivate let scaleAction: SKAction = SKAction.scale(by: 0.95, duration: 0.025)
+    fileprivate let hoverAction: SKAction = SKAction.colorize(with: SKColor.white, colorBlendFactor: 0.5, duration: 0.025)
     
     public init(defaultImage: String, highlightImage: String, action: @escaping () -> ()) {
         buttonAction = action
@@ -95,8 +97,18 @@ open class ButtonNode: SKSpriteNode {
         didSet {
             // Guard against repeating the same action.
             guard oldValue != wasPressed else { return }
-            texture = wasPressed ? selectedTexture : defaultTexture
             let action = wasPressed ? scaleAction : scaleAction.reversed()
+            run(action)
+        }
+    }
+    
+    // swap textures when mouse hovers
+    open var mouseHover = false {
+        didSet {
+            // Guard against repeating the same action.
+            guard oldValue != mouseHover else { return }
+            texture = mouseHover ? selectedTexture : defaultTexture
+            let action = mouseHover ? hoverAction : hoverAction.reversed()
             run(action)
         }
     }
@@ -146,6 +158,18 @@ public extension ButtonNode {
 
 #if os(OSX)
 extension ButtonNode {
+    
+    override open func mouseEntered(with event: NSEvent) {
+        if isUserInteractionEnabled {
+            if containsEvent(event){
+                mouseHover = true
+            }
+        }
+    }
+    
+    override open func mouseExited(with event: NSEvent) {
+        mouseHover = false
+    }
     
     override open func mouseDown(with event: NSEvent) {
         if isUserInteractionEnabled {

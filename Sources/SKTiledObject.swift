@@ -53,6 +53,17 @@ public extension SKTiledObject {
     }
     
     /**
+     Returns true if the value is a numeric type.
+     
+     - parameter key: `String` key to query.
+     - returns: `Bool` value is a numeric type.
+     */
+    public func isNumber(_ key: String) -> Bool {
+        guard let value = properties[key] else { return false }
+        return Int(value) != nil || Double(value) != nil
+    }
+    
+    /**
      Sets a named property. Returns the value, or nil if it does not exist.
      
      - parameter key:   `String` property key.
@@ -158,18 +169,16 @@ public extension SKTiledObject {
      */
     public func boolForKey(_ key: String) -> Bool {
         guard let value = properties[key]?.lowercased() else { return false }
-        return ["true", "false", "yes", "no"].contains(value.lowercased()) ? (["true", "yes"].contains(value)) ? true : false : false
+        return Bool(value) ?? false || Int(value) == 1
     }
     
     /// Returns a string representation of the node's properties.
-    public var propertiesString: String? {
-        if (properties.count == 0) { return nil }
-        var pstring = ""
-        for value in properties.enumerated() {
-            let indexIsLast = value.0 < (properties.count - 1)
-            pstring += (indexIsLast==true) ? "\(value.1.0): \(value.1.1), " : "\(value.1.0): \(value.1.1)"
-        }
-        return pstring
+    public var propertiesString: String {
+        return properties.reduce("", { (aggregate: String, pair) -> String in
+            let comma: String = (pair.key == Array(properties.keys).last) ? "" : ","
+            return "\(aggregate)\(pair.key): \(pair.value)\(comma) "
+            
+        })
     }
 
     // MARK: - Key/Value Parsing
