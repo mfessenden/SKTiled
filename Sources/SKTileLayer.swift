@@ -68,7 +68,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     open var properties: [String: String] = [:]
     
     /// Layer color.
-    open var color: SKColor = SKColor.gray
+    open var color: SKColor = SKColor.clear
     /// Grid visualization color.
     open var gridColor: SKColor = SKColor.black
     /// Bounding box color.
@@ -80,6 +80,8 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     
     /// Layer size (in tiles).
     open var size: CGSize { return tilemap.size }
+    /// Layer size (in points)
+    open var sizeInPoints: CGSize { return tilemap.sizeInPoints }
     /// Layer tile size (in pixels).
     open var tileSize: CGSize { return tilemap.tileSize }
     /// Tile map orientation.
@@ -98,7 +100,6 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     open var sizeHalved: CGSize { return tilemap.sizeHalved }
     open var tileWidthHalf: CGFloat { return tilemap.tileWidthHalf }
     open var tileHeightHalf: CGFloat { return tilemap.tileHeightHalf }
-    open var sizeInPoints: CGSize { return tilemap.sizeInPoints }
     
     // debug visualizations
     open var gridOpacity: CGFloat = 0.20
@@ -108,6 +109,20 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     internal var isRendered: Bool = false
     open var antialiased: Bool = false
     open var colorBlendFactor: CGFloat = 1.0
+    
+    /**
+     Layer background sprite.
+     */
+    lazy open var background: SKSpriteNode = {
+        let sprite = SKSpriteNode(color: SKColor.clear, size: self.tilemap.sizeInPoints)
+        sprite.anchorPoint = CGPoint.zero
+        
+        #if os(iOS)
+        sprite.position.y = -self.tilemap.sizeInPoints.height
+        #endif
+        self.addChild(sprite)
+        return sprite
+    }()
     
     /// Returns the position of layer origin point (used to place tiles).
     open var origin: CGPoint {

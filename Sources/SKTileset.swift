@@ -141,19 +141,28 @@ open class SKTileset: SKTiledObject {
     /**
      Add tile data from a sprite sheet image.
      
-     - parameter source: `String` image named referenced in the tileset.
+     - parameter source:  `String` image named referenced in the tileset.
+     - parameter replace: `Bool` replace the current texture.
      */
-    internal func addTextures(fromSpriteSheet source: String) {
+    internal func addTextures(fromSpriteSheet source: String, replace: Bool = false) {
         // images are stored in separate directories in the project will render incorrectly unless we use just the filename
         let sourceFilename = source.components(separatedBy: "/").last!
         let timer = Date()
+        
+        guard (self.source != sourceFilename) else {
+            print("[SKTileset]: Warning: source texture is already \"\(sourceFilename)\"")
+            return
+        }
+        
         self.source = sourceFilename
         
         let sourceTexture = SKTexture(imageNamed: self.source!)
         let textureSize = sourceTexture.size()
         
         sourceTexture.filteringMode = .nearest
-        print("[SKTileset]: adding sprite sheet source: \"\(self.source!)\": (\(Int(textureSize.width)) x \(Int(textureSize.height)))")
+        
+        let actionName: String = (replace == false) ? "adding" : "replacing"
+        print("[SKTileset]: \(actionName) sprite sheet source: \"\(self.source!)\": (\(Int(textureSize.width)) x \(Int(textureSize.height)))")
         
         let textureWidth = Int(sourceTexture.size().width)
         let textureHeight = Int(sourceTexture.size().height)
@@ -185,7 +194,11 @@ open class SKTileset: SKTiledObject {
             let tileTexture = SKTexture(rect: tileRect, in: sourceTexture)
             
             // add the tile data properties
-            let _ = addTilesetTile(gid, texture: tileTexture)
+            if replace == false {
+                let _ = addTilesetTile(gid, texture: tileTexture)
+            } else {
+                setDataTexture(gid, texture: tileTexture)
+            }
             
             x += Int(tileSize.width) + spacing
             if x >= textureWidth {
@@ -195,10 +208,13 @@ open class SKTileset: SKTiledObject {
         }
         
         // time results
-        let timeInterval = Date().timeIntervalSince(timer)
-        let timeStamp = String(format: "%.\(String(3))f", timeInterval)
-        print("[SKTileset]: tileset \"\(name)\" built in: \(timeStamp)s")
+        if replace == false {
+            let timeInterval = Date().timeIntervalSince(timer)
+            let timeStamp = String(format: "%.\(String(3))f", timeInterval)
+            print("[SKTileset]: tileset \"\(name)\" built in: \(timeStamp)s")
+        }
     }
+    
     
     // MARK: - Tile Data
     
@@ -247,6 +263,20 @@ open class SKTileset: SKTiledObject {
         self.tileData.insert(data)
         data.parseProperties(completion: nil)
         return data
+    }
+    
+    /**
+     Set tileset texture.
+     
+     - parameter tileID:  `Int` tile ID.
+     - parameter texture: `SKTexture` texture for tile at the given id.
+     */
+    open func setDataTexture(_ tileID: Int, texture: SKTexture) {
+        guard let data = getTileData(tileID) else {
+            print("[SKTileset]: tile data not found for id: \(tileID)")
+            return
+        }
+        data.texture = texture
     }
     
     /**

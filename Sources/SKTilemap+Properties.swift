@@ -111,6 +111,10 @@ public extension SKTilemap {
             if (attr == "showGrid") {
                 baseLayer.showGrid = boolForKey(attr)
             }
+            
+            if (attr == "cropAtBoundary") {
+                cropAtBoundary = boolForKey(attr)
+            }
         }
         
         if completion != nil { completion!() }
@@ -134,7 +138,6 @@ public extension TiledLayerObject {
      Parse the layer's properties value.
      */
     public func parseProperties(completion: (() -> ())?) {
-        
         for (attr, value) in properties {
             
             if (attr == "zPosition") {
@@ -144,6 +147,11 @@ public extension TiledLayerObject {
             
             if (attr == "color") {
                 setColor(color: SKColor(hexString: value))
+            }
+            
+            if (attr == "backgroundColor") {
+                background.color = SKColor(hexString: value)
+                background.colorBlendFactor = 1.0
             }
             
             if (attr == "hidden") {

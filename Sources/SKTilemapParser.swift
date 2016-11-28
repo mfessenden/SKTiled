@@ -199,6 +199,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     let _ = tileLayer.setLayerData(tileData, completion: { (_ layer: SKTileLayer) -> Void in
                         // run the tilemap completion handler
                         tileLayer.didFinishRendering(duration: duration)
+                        tilemap.tileLayerDidFinishRendering(layer: tileLayer, duration: 0)
                         
                     })
                 

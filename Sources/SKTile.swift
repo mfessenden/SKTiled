@@ -113,6 +113,18 @@ public class SKTile: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /**
+     Force the tile to update it's textures.
+     
+     - parameter data: `SKTilesetData` tile data.
+     - returns: `SKTile` tile sprite.
+     */
+    public func update(){
+        removeAllActions()
+        texture = nil
+        texture = tileData.texture
+        runAnimation()
+    }
     
     // MARK: - Physics
     

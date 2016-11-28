@@ -171,6 +171,8 @@ open class SKTilemap: SKNode, SKTiledObject {
     open var backgroundColor: SKColor? = nil                      // optional background color (read from the Tiled file)
     open var ignoreBackground: Bool = false                       // ignore Tiled scene background color
     
+    open var cropAtBoundary: Bool = false
+    
     /** 
     The tile map default base layer, used for displaying the current grid, getting coordinates, etc.
     */

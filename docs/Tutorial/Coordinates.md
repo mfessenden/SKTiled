@@ -71,4 +71,10 @@ The [`TileOffset`](Classes/TileOffset.html) enum represents a hint for placement
      TileOffset.right         // returns the right side of the tile.
     
 
+##Converting Coordinates
+
+```swift
+let playerPosition = worldNode.convert(tilemap.baseLayer.pointForCoordinate(0, 17), from: tilemap.baseLayer)
+```
+
  Next: [Working with Objects](objects.html) - [Index](Tutorial.html)

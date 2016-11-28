@@ -22,11 +22,26 @@ public protocol SKTiledSceneDelegate {
     /** 
      World container node. All Tiled assets are parented to this node.
     */
-    var worldNode: SKNode! { get set }
+    var worldNode: SKWorld! { get set }
     /// Custom scene camera.
     var cameraNode: SKTiledSceneCamera! { get set }
     /// Tile map node.
     var tilemap: SKTilemap! { get set }
+}
+
+
+/**
+ Custom parent node for all Tiled assets. If the tilemap has the `cropAtBoundary` flag enabled, the world
+ will crop the contents at the map edge.
+ */
+open class SKWorld: SKCropNode {
+    override open func addChild(_ node: SKNode) {
+        if let tilemap = node as? SKTilemap {
+            let mapSize = CGSize(width: tilemap.sizeInPoints.width * tilemap.xScale, height: tilemap.sizeInPoints.height * tilemap.yScale)
+            maskNode = (tilemap.cropAtBoundary == true) ? SKSpriteNode(color: SKColor.black, size: mapSize) : nil
+        }
+        super.addChild(node)
+    }
 }
 
 
@@ -40,7 +55,7 @@ public protocol SKTiledSceneDelegate {
 open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate {
     
     /// World container node.
-    open var worldNode: SKNode!
+    open var worldNode: SKWorld!
     /// Custom scene camera.
     open var cameraNode: SKTiledSceneCamera!
     /// Tile map node.
@@ -128,8 +143,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
             worldNode.removeFromParent()
         }
         // set up world node
-        worldNode = SKNode()
-        worldNode.name = "World"
+        worldNode = SKWorld()
         addChild(worldNode)
     }
     
