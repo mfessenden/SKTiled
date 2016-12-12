@@ -33,7 +33,7 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 
 ## Requirements
 
-- iOS 10+
+- iOS 9+
 - macOS 10.11+
 - Xcode 8
 

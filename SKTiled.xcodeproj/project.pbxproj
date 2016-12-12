@@ -139,13 +139,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4C0E59511DC053CA00921F75 /* Frameworks */ = {
+		4C0A864B1DECC1BA008EF817 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				4C0EE1E51DC116DB00A052E4 /* libz.tbd */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		4C0A864C1DECC1C0008EF817 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
 				4C0EE1E71DC116E300A052E4 /* libz.tbd */,
-				4C0EE1E51DC116DB00A052E4 /* libz.tbd */,
 			);
-			name = Frameworks;
+			name = macOS;
+			sourceTree = "<group>";
+		};
+		4C0E59511DC053CA00921F75 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				4C0A864C1DECC1C0008EF817 /* macOS */,
+				4C0A864B1DECC1BA008EF817 /* iOS */,
+			);
+			name = Libraries;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		4C440B971DAE911000DEC9A4 /* Shared */ = {
@@ -185,6 +202,7 @@
 		4C6480BE1DC1231C006F4CB3 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				4C0E59511DC053CA00921F75 /* Libraries */,
 				4C8E42DF1DC26FD1002C76DA /* zlib */,
 			);
 			name = Modules;
@@ -219,7 +237,6 @@
 				4C440BAB1DAE913A00DEC9A4 /* iOS */,
 				4C440BA11DAE913000DEC9A4 /* macOS */,
 				4CBA61661D8A048200B31FC1 /* Products */,
-				4C0E59511DC053CA00921F75 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
