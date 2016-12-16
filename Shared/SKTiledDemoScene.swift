@@ -300,6 +300,17 @@ public class SKTiledDemoScene: SKTiledScene {
             propertiesInformationLabel.posByCanvas(x: 0.5, y: propertiesInfoY)
         }
     }
+    
+    // MARK: - Callbacks
+    override open func didRenderMap(_ tilemap: SKTilemap, completion: (() -> ())? = nil) {
+        let waitAction = SKAction.wait(forDuration: 2.0)
+        tilemap.run(waitAction, completion: {
+            tilemap.debugLayers()
+        })
+        
+        // run completion handler
+        if completion != nil { completion!() }
+    }
 }
 
 

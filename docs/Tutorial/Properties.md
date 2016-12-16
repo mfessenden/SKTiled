@@ -27,13 +27,15 @@ If you are using the v0.17 of Tiled or newer, **SKTiled** supports the new **col
       autoResize          (Bool)      - automatically resize the map to best fit the view.
       xGravity            (Float)     - gravity in x.
       yGravity            (Float)     - gravity in y.
+      cropAtBoundary      (Bool)      - crop the map at boundaries.
 
     TiledLayerObject:
       antialiasing        (Bool)      - antialias lines.
       hidden              (Bool)      - hide the layer.
       color               (String)    - hex string to override color.
-      zPosition           (Float)     - used to manually override layer zPosition.
       gridColor           (Color)     - hex string used for visualizing the tile grid.
+      backgroundColor     (Color)     - hex string used for visualizing the tile grid.
+      zPosition           (Float)     - used to manually override layer zPosition.
       isDynamic           (Bool)      - creates a collision object from the layer's border. 
 
     SKObjectGroup:

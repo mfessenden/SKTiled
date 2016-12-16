@@ -5,7 +5,7 @@
 
 ## Requirements
 
-- iOS10+ / macOS 10.11+
+- iOS9+ / macOS 10.11+
 - Xcode 8
 - Swift 3
 

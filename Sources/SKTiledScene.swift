@@ -18,7 +18,7 @@ import SpriteKit
  - parameter cameraNode: `SKTiledSceneCamera!` scene camera node.
  - parameter tilemap:    `SKTilemap!` tile map node.
  */
-public protocol SKTiledSceneDelegate {
+public protocol SKTiledSceneDelegate: SKTilemapDelegate {
     /** 
      World container node. All Tiled assets are parented to this node.
     */
@@ -96,7 +96,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
         // load the current tmx file name
         guard let tmxFilename = tmxFilename else { return }
         
-        if let tilemap = load(fromFile: tmxFilename) {
+        if let tilemap = loadTilemap(fromFile: tmxFilename) {
             // add the tilemap to the world container node.
             worldNode.addChild(tilemap)
             self.tilemap = tilemap
@@ -149,13 +149,23 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
      - parameter fileNamed: `String` TMX file name.
      - returns: `SKTilemap?` tile map node.
      */
-    open func load(fromFile filename: String) -> SKTilemap? {
-        if let tilemapNode = SKTilemap.load(fromFile: filename) {
+    open func loadTilemap(fromFile filename: String, completion: (() -> ())? = nil) -> SKTilemap? {
+        if let tilemapNode = SKTilemap.load(fromFile: filename, delegate: self, completion: completion) {
             if (tilemapNode.backgroundColor != nil) {
                 self.backgroundColor = tilemapNode.backgroundColor!
             }
             return tilemapNode
         }
         return nil
+    }
+    
+    // MARK: - Callbacks
+    /**
+     Callback for post-processing the rendered tilemap.
+     
+     - parameter tilemap: `SKTilemap` tile map node.
+     */
+    open func didRenderMap(_ tilemap: SKTilemap, completion: (() -> ())? = nil) {
+        // placeholder for users to develop their own callbacks
     }
 }

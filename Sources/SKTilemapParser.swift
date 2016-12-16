@@ -52,6 +52,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     open var fileNames: [String] = []                               // list of files to read
     open var currentFileName: String!
     
+    weak var mapDelegate: SKTilemapDelegate?
     open var tilemap: SKTilemap!
     fileprivate var encoding: TilemapEncoding = .xml                // encoding
     fileprivate var externalTilesets: [String: SKTileset] = [:]     // hold external tilesets 
@@ -79,12 +80,13 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
      - parameter fileNamed: `String` file base name - TMX/TSX not required.     
      - returns: `SKTilemap?` tiled map node.
      */
-    open func load(fromFile filename: String) -> SKTilemap? {
+    open func load(fromFile filename: String, delegate: SKTilemapDelegate? = nil, completion: (() -> ())? = nil) -> SKTilemap? {
         guard let targetFile = getBundledFile(named: filename) else {
             print("[SKTilemapParser]: unable to locate file: \"\(filename)\"")
             return nil
         }
         
+        mapDelegate = delegate
         timer = Date()
         fileNames.append(targetFile)
                 
@@ -132,7 +134,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         externalTilesets = [:]
         
         // render and complete
-        didFinishParsing()
+        didFinishParsing(completion: completion)
         
         return tilemap
     }
@@ -165,7 +167,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
      
      - parameter duration: `TimeInterval` fade-in time for each layer.
      */
-    fileprivate func didFinishParsing(duration: TimeInterval=0.075)  {
+    fileprivate func didFinishParsing(duration: TimeInterval=0.075, completion: (() -> ())? = nil)  {
         guard let tilemap = tilemap else { return }
         
         // worker queue
@@ -215,7 +217,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         // reset the data property when all layers are rendered & run a callback on the tilemap node
         tileGroup.notify(queue: DispatchQueue.main) {
             self.data = [:]
-            self.tilemap.didFinishParsing(timeStarted: self.timer)
+            self.tilemap.didFinishParsing(timeStarted: self.timer, completion: completion)
         }
     }
     
@@ -244,6 +246,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             }
             
             self.tilemap = tilemap
+            self.tilemap.delegate = self.mapDelegate
             
             let currentBasename = currentFileName.components(separatedBy: ".").first!
             self.tilemap.filename = currentBasename

@@ -129,7 +129,15 @@ internal let TileSize8x8   = CGSize(width: 8, height: 8)
 internal let TileSize16x16 = CGSize(width: 16, height: 16)
 internal let TileSize32x32 = CGSize(width: 32, height: 32)
 
-    
+
+/**
+ Delegate for users to implement their own post-processing callbacks.
+ */
+public protocol SKTilemapDelegate: class {
+    func didRenderMap(_ tilemap: SKTilemap, completion: (() -> ())? )
+}
+
+
 /**
  The `SKTilemap` class represents a container which manages layers, tiles (sprites), vector objects & images.
  
@@ -191,6 +199,9 @@ open class SKTilemap: SKNode, SKTiledObject {
     
     // dynamics
     open var gravity: CGVector = CGVector.zero
+    
+    // delegate
+    weak open var delegate: SKTilemapDelegate?
     
     /// Rendered size of the map in pixels.
     open var sizeInPoints: CGSize {
@@ -318,8 +329,10 @@ open class SKTilemap: SKNode, SKTiledObject {
      - parameter filename: `String` Tiled file name.
      - returns: `SKTilemap?` tilemap object (if file read succeeds).
      */
-    open class func load(fromFile filename: String) -> SKTilemap? {
-        if let tilemap = SKTilemapParser().load(fromFile: filename) {
+    open class func load(fromFile filename: String,
+                         delegate: SKTilemapDelegate? = nil,
+                         completion: (() -> ())? = nil) -> SKTilemap? {
+        if let tilemap = SKTilemapParser().load(fromFile: filename, delegate: delegate, completion: completion) {
             return tilemap
         }
         return nil
@@ -974,7 +987,7 @@ open class SKTilemap: SKNode, SKTiledObject {
      - parameter verbose:     `Bool` verbose output.
      - parameter completion:  `()->()?` optional completion handler.
      */
-    open func didFinishParsing(timeStarted: Date, verbose: Bool=true, completion: (() -> ())? = nil) {
+    open func didFinishParsing(timeStarted: Date, completion: (() -> ())? = nil) {
         // set the z-depth of the baseLayer
         baseLayer.zPosition = lastZPosition + (zDeltaForLayers * 0.5)
         
@@ -983,18 +996,13 @@ open class SKTilemap: SKNode, SKTiledObject {
         let timeStamp = String(format: "%.\(String(3))f", timeInterval)        
         print("\n -> Success! tile map \"\(name != nil ? name! : "null")\" rendered in: \(timeStamp)s\n")
         
-        // dump the output of the current map to stdout
-        if (verbose == true) {
-            debugLayers()
-        }
-        
         // transfer attributes
         if let scene = scene as? SKTiledScene {
             scene.physicsWorld.gravity = gravity
         }
-        
-        // run completion handler
-        if completion != nil { completion!() }
+
+        // delegate callbacks
+        if self.delegate != nil { delegate!.didRenderMap(self, completion: completion) }
     }
     
     /**

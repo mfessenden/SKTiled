@@ -1,5 +1,5 @@
 module: SKTiled
-module_version: 1.0
+module_version: 1.0.5
 author: Michael Fessenden 
 author_url: https://github.com/mfessenden
 github_url: https://github.com/mfessenden/SKTiled
@@ -10,18 +10,15 @@ output: docs/swift
 readme: docs/Start.md
 #docset_path:
 #docset_icon: Swift/Shared/Assets.xcassets/AppIcon.appiconset/Icon.png
-#sdk: iphonesimulator
 #min_acl: private
 skip_undocumented: true
 hide_documentation_coverage: true
-#head: '<h4><center> SKTiled - SpriteKit</center> </h4>'
 
 exclude:
   - "**/*-ObjC.swift"
   - "Sources/SKTiled+Extensions.swift"
 
 copyright: '© 2016 [Michael Fessenden](https://github.com/mfessenden) under [open source license](https://github.com/mfessenden/SKTiled/tree/master/LICENSE).'
-
 #swift_version: 3.0
 
 theme: apple
@@ -72,8 +69,10 @@ custom_categories:
     - SKTiledScene
     - SKTiledSceneCamera
 
-  - name: Data Types
+  - name: Other
     children:
     - TilemapOrientation
     - SKObjectType
     - TileOffset
+    - CollisionType
+    - PhysicsShape
