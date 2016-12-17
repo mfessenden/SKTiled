@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                  = "SKTiled"
-  s.version               = "1.0.6"
+  s.version               = "1.06"
   s.summary               = "SKTiled is a lightweight framework for using Tiled files with Apple's SpriteKit."
   s.description           = <<-DESC
                             SKTiled is a simple framework for using Tiled files with Apple's SpriteKit, allowing the creation of game assets from .tmx files.
@@ -12,9 +12,9 @@ Pod::Spec.new do |s|
 
   s.screenshot            = "https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/header.png"
 
-  s.ios.deployment_target = '10.0'
+  s.ios.deployment_target = '9.0'
   s.osx.deployment_target = '10.11'
-  s.source                = { :git => "file:///Users/michael/Dropbox/git/SKTiled.git",
+  s.source                = { :git => "https://github.com/mfessenden/SKTiled.git",
                               :tag => s.version }
   s.source_files          = 'Sources/*.swift'
 
