@@ -1,5 +1,8 @@
 #Coordinates
 
+- [Coordinate Conversion](#coordinate-conversion)
+- [User Interaction](#user-interaction)
+- [Coordinate Offsets & Hints](#coordinate-offsets-amp-hints)
 
 ##Coordinate Conversion
 
@@ -26,9 +29,17 @@ let point = tileLayer.pointForCoordinate(3, 4, offsetX: 4, offsetY: 0)
 let point = tileLayer.pointForCoordinate(3, 4, offset: TileOffset.center)
 ```
 
+###Converting Coordinates from Other Nodes
+
+Use the default `SKNode.convert` method to convert a tile position to another node's coordinate space:
+
+```swift
+let playerPosition = worldNode.convert(tilemap.baseLayer.pointForCoordinate(0, 17), from: tilemap.baseLayer)
+```
+
 ##User Interaction
 
-**SKTiled** also has methods for handling touch events (iOS) and mouse events (OSX):
+**SKTiled** also has methods for handling touch events (iOS) and mouse events (macOS):
 
 
 ```swift
@@ -71,10 +82,5 @@ The [`TileOffset`](Classes/TileOffset.html) enum represents a hint for placement
      TileOffset.right         // returns the right side of the tile.
     
 
-##Converting Coordinates
-
-```swift
-let playerPosition = worldNode.convert(tilemap.baseLayer.pointForCoordinate(0, 17), from: tilemap.baseLayer)
-```
 
  Next: [Working with Objects](objects.html) - [Index](Tutorial.html)

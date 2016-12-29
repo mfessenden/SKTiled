@@ -1,5 +1,8 @@
 # Working with Objects
 
+- [Object Types](#object-types)
+- [Dynamics](#dynamics)
+
 By default, objects are not shown when rendered in **SKTiled**. To enable them, set the `SKTilemap.showObjects` global attribute. This override has the advantage of allowing you to work in your Tiled scene with objects visible, but not see them in your game view.
 
 The [`SKTileObject`](Classes/SKTileObject.html) class represents a vector object in a object group layer. **SKTiled** renders all Tiled object types:

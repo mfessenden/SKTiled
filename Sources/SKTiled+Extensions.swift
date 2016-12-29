@@ -8,7 +8,6 @@
 
 import Foundation
 import SpriteKit
-import Compression
 import zlib
 #if os(iOS)
 import UIKit
@@ -59,8 +58,8 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
  Check for tile ID flip flags. Returns the translated tile ID
  and the corresponding flip flags.
  
- - Parameter id: `UInt32` tile ID
- - Returns: tuple of global id and flip flags.
+ - parameter id: `UInt32` tile ID
+ - returns: tuple of global id and flip flags.
  */
 public func flippedTileFlags(id: UInt32) -> (gid: UInt32, hflip: Bool, vflip: Bool, dflip: Bool) {
     // masks for tile flipping
@@ -328,11 +327,11 @@ internal extension SKNode {
     /**
      Run an action with key & optional completion function.
      
-     - parameter action:             `SKAction` SpriteKit action.
-     - parameter withKey:            `String` action key.
+     - parameter action:             `SKAction!` SpriteKit action.
+     - parameter withKey:            `String!` action key.
      - parameter optionalCompletion: `() -> ()` optional completion function.
      */
-    internal func runAction(_ action: SKAction!, withKey: String!, optionalCompletion block: (()->())?) {
+    internal func run(_ action: SKAction!, withKey: String!, optionalCompletion block: (()->())?) {
         if let block = block {
             let completionAction = SKAction.run( block )
             let compositeAction = SKAction.sequence([ action, completionAction ])

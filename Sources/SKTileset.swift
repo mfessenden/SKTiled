@@ -173,6 +173,7 @@ open class SKTileset: SKTiledObject {
         // invert the y-coord
         var y = margin + rowHeight + rowSpacing - Int(tileSize.height)
         
+        var tilesAdded: Int = 0
         for gid in firstGID..<(firstGID + totalTileCount) {            
             let rectStartX = CGFloat(x) / CGFloat(textureWidth)
             let rectStartY = CGFloat(y) / CGFloat(textureHeight)
@@ -192,12 +193,14 @@ open class SKTileset: SKTiledObject {
                 x = margin
                 y -= Int(tileSize.height) + spacing
             }
+            
+            tilesAdded += 1
         }
         
         // time results
         let timeInterval = Date().timeIntervalSince(timer)
         let timeStamp = String(format: "%.\(String(3))f", timeInterval)
-        print("[SKTileset]: tileset \"\(name)\" built in: \(timeStamp)s")
+        print("[SKTileset]: tileset \"\(name)\" built in: \(timeStamp)s (\(tilesAdded) tiles)")
     }
     
     // MARK: - Tile Data
@@ -307,8 +310,8 @@ open class SKTileset: SKTiledObject {
     /**
      Check for tile ID flip flags.
      
-     - Parameter id: `Int` tile ID
-     - Returns: `Int` translated ID.
+     - parameter id: `Int` tile ID.
+     - returns: `Int` translated ID.
      */
     internal func getTileRealID(id: Int) -> Int {
         let uid: UInt32 = UInt32(id)

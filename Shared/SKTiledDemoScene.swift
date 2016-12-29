@@ -302,14 +302,9 @@ public class SKTiledDemoScene: SKTiledScene {
     }
     
     // MARK: - Callbacks
-    override open func didRenderMap(_ tilemap: SKTilemap, completion: (() -> ())? = nil) {
-        let waitAction = SKAction.wait(forDuration: 2.0)
-        tilemap.run(waitAction, completion: {
-            tilemap.debugLayers()
-        })
-        
-        // run completion handler
-        if completion != nil { completion!() }
+    override open func didRenderMap(_ tilemap: SKTilemap) {
+        // update the HUD to reflect the number of tiles created
+        updateHud()
     }
 }
 

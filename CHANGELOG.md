@@ -1,5 +1,16 @@
 Change Log
 ==========================
+1.0.7
+--------------------------
+
+#### Changes
+- add `SKTilemapDelegate` methods callbacks:
+    - `didBeginParsing`, `didAddTileset`, `didAddLayer`, `didReadMap`
+    - add default implementations via extension
+- tweaks to GCD parsing & rendering
+- now `SKTiledScene` conforms to `SKTilemapDelegate` & `SKTiledSceneDelegate` protocols
+- documentation update
+
 1.0.6
 --------------------------
 

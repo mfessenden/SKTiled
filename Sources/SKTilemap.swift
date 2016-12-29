@@ -131,10 +131,14 @@ internal let TileSize32x32 = CGSize(width: 32, height: 32)
 
 
 /**
- Delegate for users to implement their own post-processing callbacks.
+ Delegate for users to implement their own callbacks.
  */
 public protocol SKTilemapDelegate: class {
-    func didRenderMap(_ tilemap: SKTilemap, completion: (() -> ())? )
+    func didBeginParsing(_ tilemap: SKTilemap)
+    func didAddTileset(_ tileset: SKTileset)
+    func didAddLayer(_ layer: TiledLayerObject)
+    func didReadMap(_ tilemap: SKTilemap)
+    func didRenderMap(_ tilemap: SKTilemap)
 }
 
 
@@ -172,7 +176,7 @@ open class SKTilemap: SKNode, SKTiledObject {
     open var tilesets: Set<SKTileset> = []                        // tilesets
     
     // current layers
-    private var layers: Set<TiledLayerObject> = []                // layers
+    private var layers: Set<TiledLayerObject> = []                // tile map layers
     open var layerCount: Int { return self.layers.count }         // layer count attribute
     open var properties: [String: String] = [:]                   // custom properties
     open var zDeltaForLayers: CGFloat = 50                        // z-position range for layers
@@ -200,10 +204,10 @@ open class SKTilemap: SKNode, SKTiledObject {
     // dynamics
     open var gravity: CGVector = CGVector.zero
     
-    // delegate
+    /// Weak reference to tile map delegate.
     weak open var delegate: SKTilemapDelegate?
     
-    /// Rendered size of the map in pixels.
+    /// Rendered size of the map in points.
     open var sizeInPoints: CGSize {
         switch orientation {
         case .orthogonal:
@@ -235,12 +239,12 @@ open class SKTilemap: SKNode, SKTiledObject {
         }
     }
     
-    // returns the last GID for all of the tilesets.
+    /// Returns the last GID for all of the tilesets.
     open var lastGID: Int {
         return tilesets.count > 0 ? tilesets.map {$0.lastGID}.max()! : 0
     }    
     
-    /// Returns the last GID for all tilesets.
+    /// Returns the last index for all tilesets.
     open var lastIndex: Int {
         return layers.count > 0 ? layers.map {$0.index}.max()! : 0
     }
@@ -301,7 +305,7 @@ open class SKTilemap: SKNode, SKTiledObject {
         }
     }
     
-    /// pauses the node, and colors all of its children darker.
+    /// Pauses the node, and colors all of its children darker.
     override open var isPaused: Bool {
         didSet {
             guard oldValue != isPaused else { return }
@@ -326,13 +330,12 @@ open class SKTilemap: SKNode, SKTiledObject {
     /**
      Load a Tiled tmx file and return a new `SKTilemap` object. Returns nil if there is a problem reading the file
      
-     - parameter filename: `String` Tiled file name.
+     - parameter filename:   `String` Tiled file name.
+     - parameter delegate:   `SKTilemapDelegate?` optional tilemap delegate instance.
      - returns: `SKTilemap?` tilemap object (if file read succeeds).
      */
-    open class func load(fromFile filename: String,
-                         delegate: SKTilemapDelegate? = nil,
-                         completion: (() -> ())? = nil) -> SKTilemap? {
-        if let tilemap = SKTilemapParser().load(fromFile: filename, delegate: delegate, completion: completion) {
+    open class func load(fromFile filename: String, delegate: SKTilemapDelegate? = nil) -> SKTilemap? {
+        if let tilemap = SKTilemapParser().load(fromFile: filename, delegate: delegate) {
             return tilemap
         }
         return nil
@@ -527,7 +530,7 @@ open class SKTilemap: SKNode, SKTiledObject {
         layer.index = layers.count > 0 ? lastIndex + 1 : 0
         
         // setup the layer
-        tileLayerDidBeginRendering(layer: layer)
+        layer.opacity = 0
         
         // don't add the base layer
         if base == false {
@@ -615,7 +618,7 @@ open class SKTilemap: SKNode, SKTiledObject {
      
      - parameter named: `String` layer name.
      */
-    open func isolateLayer(_ named: String?=nil) {
+    open func isolateLayer(_ named: String? = nil) {
         guard named != nil else {
             layers.forEach {$0.visible = true}
             return
@@ -971,23 +974,13 @@ open class SKTilemap: SKNode, SKTiledObject {
     }
     
     // MARK: - Callbacks
-    /**
-     Called when parser begins reading the map.
-     
-     - parameter verbose: `Bool` verbose output.
-     */
-    open func didBeginParsing(verbose: Bool=false, completion: (() -> ())? = nil) {
-        if completion != nil { completion!() }
-    }
     
     /**
      Called when parser has finished reading the map.
      
      - parameter timeStarted: `Date` render start time.
-     - parameter verbose:     `Bool` verbose output.
-     - parameter completion:  `()->()?` optional completion handler.
      */
-    open func didFinishParsing(timeStarted: Date, completion: (() -> ())? = nil) {
+    open func didFinishRendering(timeStarted: Date) {
         // set the z-depth of the baseLayer
         baseLayer.zPosition = lastZPosition + (zDeltaForLayers * 0.5)
         
@@ -1000,29 +993,9 @@ open class SKTilemap: SKNode, SKTiledObject {
         if let scene = scene as? SKTiledScene {
             scene.physicsWorld.gravity = gravity
         }
-
+        
         // delegate callbacks
-        if self.delegate != nil { delegate!.didRenderMap(self, completion: completion) }
-    }
-    
-    /**
-     Called when parser begins rendering a layer.
-     
-     - parameter layer: `TiledLayerObject` layer instance.
-     */
-    open func tileLayerDidBeginRendering(layer: TiledLayerObject) {
-        layer.opacity = 0
-        layer.isRendered = false
-    }
-    
-    /**
-     Called when parser finishes rendering a layer.
-     
-     - parameter layer:    `TiledLayerObject` layer instance.
-     - parameter duration: `TimeInterval` fade-in duration.
-     */
-    open func tileLayerDidFinishRendering(layer: TiledLayerObject, duration: TimeInterval=0) {
-        layer.parseProperties(completion: nil)
+        if self.delegate != nil { delegate!.didRenderMap(self) }
     }
 }
 
@@ -1204,15 +1177,11 @@ extension SKTilemap {
     }
     
     override open var description: String {
-        var tilemapName = "(None)"
-        if let name = name {
-            tilemapName = "\"\(name)\""
-        }
         let renderSizeDesc = "\(sizeInPoints.width.roundTo(1)) x \(sizeInPoints.height.roundTo(1))"
         let sizeDesc = "\(Int(size.width)) x \(Int(size.height))"
         let tileSizeDesc = "\(Int(tileSize.width)) x \(Int(tileSize.height))"
         
-        return "Map: \(tilemapName), \(renderSizeDesc): (\(sizeDesc) @ \(tileSizeDesc))"
+        return "Map: \(name ?? "(None)"), \(renderSizeDesc): (\(sizeDesc) @ \(tileSizeDesc)): \(tileCount) tiles"
     }
     
     override open var debugDescription: String { return description }
@@ -1235,6 +1204,7 @@ extension SKTilemap {
             print("# Tilemap \"\(name != nil ? name! : "null")\": 0 Layers")
             return
         }
+        
         let largestName = layerNames().max() { (a, b) -> Bool in a.characters.count < b.characters.count }
         
         // format the header
@@ -1263,4 +1233,41 @@ extension SKTilemap {
         
         print("\n")
     }
+}
+
+
+/**
+ Fuck, you're reading this from the bottom of the page!
+ */
+extension SKTilemapDelegate {
+    /**
+     Called when the tilemap is instantiated.
+
+     - parameter tilemap:  `SKTilemap` tilemap instance.
+     */
+    public func didBeginParsing(_ tilemap: SKTilemap) {}
+    /**
+     Called when a tileset is instantiated.
+
+     - parameter tileset:  `SKTileset` tileset instance.
+     */
+    public func didAddTileset(_ tileset: SKTileset) {}
+    /**
+     Called when a layer is added to a tilemap.
+
+     - parameter layer:  `TiledLayerObject` tilemap instance.
+     */
+    public func didAddLayer(_ layer: TiledLayerObject) {}
+    /**
+     Called when the tilemap is finished parsing.
+
+     - parameter tilemap:  `SKTilemap` tilemap instance.
+     */
+    public func didReadMap(_ tilemap: SKTilemap) {}
+    /**
+     Called when the tilemap layers are finished rendering.
+
+     - parameter tilemap:  `SKTilemap` tilemap instance.
+     */
+    public func didRenderMap(_ tilemap: SKTilemap) {}
 }

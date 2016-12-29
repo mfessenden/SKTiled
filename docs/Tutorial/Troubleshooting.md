@@ -1,6 +1,10 @@
 # Troubleshooting
 
-### Linking Errors
+- [Linking Errors](#linking-errors)
+- [XML Parsing Errors](#xml-parsing-errors)
+- [Code Signing Errors](#code-signing-errors)
+
+## Linking Errors
 
 If you get a zlib import error, make sure you have linked zlib in your Xcode project:
 
@@ -19,12 +23,12 @@ In your Xcode project file, the path entry will look like this:
 `SWIFT_INCLUDE_PATHS = "zlib";`
 
 
-### XML Parsing Errors
+## XML Parsing Errors
 
 Sometimes the XML parser will throw errors with external tilesets that have been downloaded from the internet. Importing & re-exporting the tileset should make the error go away.
 
 
-### Code Signing Errors
+## Code Signing Errors
 
 Occasionally you'll get a code signing error when compiling on OSX:
 

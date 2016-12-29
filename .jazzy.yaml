@@ -1,5 +1,5 @@
 module: SKTiled
-module_version: 1.0.5
+module_version: 1.06
 author: Michael Fessenden 
 author_url: https://github.com/mfessenden
 github_url: https://github.com/mfessenden/SKTiled
@@ -10,7 +10,7 @@ output: docs/swift
 readme: docs/Start.md
 #docset_path:
 #docset_icon: Swift/Shared/Assets.xcassets/AppIcon.appiconset/Icon.png
-#min_acl: private
+min_acl: private
 skip_undocumented: true
 hide_documentation_coverage: true
 
@@ -29,8 +29,10 @@ documentation:
 #  - docs/Tutorial/Extending.md
 #  - docs/Tutorial/GameplayKit.md
   - docs/Tutorial/Getting Started.md
+  - docs/Tutorial/Layers.md
   - docs/Tutorial/Objects.md
   - docs/Tutorial/Properties.md
+  - docs/Tutorial/Scenes.md
   - docs/Tutorial/Tiles.md
   - docs/Tutorial/Troubleshooting.md
 
@@ -40,6 +42,8 @@ custom_categories:
   - name: Tutorial    # references the section page
     children:
       - Getting Started
+      - Scenes
+      - Layers
       - Tiles
       - Coordinates
       - Objects
@@ -52,6 +56,7 @@ custom_categories:
   - name: Protocols
     children:
     - SKTiledObject
+    - SKTilemapDelegate
     - SKTiledSceneDelegate
 
   - name: Class Reference  # references the section page

@@ -6,8 +6,6 @@
 //  Copyright © 2016 Michael Fessenden. All rights reserved.
 //
 
-import SpriteKit
-
 
 /**
 The `SKTiledObject` protocol describes a generic Tiled object containing a dictionary of properties parsed from the TMX file.
@@ -34,7 +32,7 @@ public extension SKTiledObject {
     
     // MARK: - Properties Parsing
     /**
-     Returns true if the node stored properties.
+     Returns true if the node has stored properties.
      
      - returns: `Bool` properties are not empty.
      */

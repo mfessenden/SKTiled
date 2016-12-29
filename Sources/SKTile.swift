@@ -467,7 +467,7 @@ extension SKTile {
                     SKAction.fadeAlpha(to: 0, duration: duration/4.0)
                     ])
                 
-                highlightNode.runAction(fadeAction, withKey: "Highlight_Fade", optionalCompletion: {
+                highlightNode.run(fadeAction, withKey: "Highlight_Fade", optionalCompletion: {
                     highlightNode.removeFromParent()
                 })
             }
@@ -476,7 +476,7 @@ extension SKTile {
         if orientation == .isometric || orientation == .staggered {
             removeAction(forKey: "Highlight_Fade")
             let fadeOutAction = SKAction.colorize(with: SKColor.clear, colorBlendFactor: 1, duration: duration)
-            runAction(fadeOutAction, withKey: "Highlight_Fade", optionalCompletion: {
+            run(fadeOutAction, withKey: "Highlight_Fade", optionalCompletion: {
                 let fadeInAction = SKAction.sequence([
                     SKAction.wait(forDuration: duration * 2.5),
                     //fadeOutAction.reversedAction()

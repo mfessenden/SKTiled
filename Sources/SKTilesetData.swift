@@ -48,6 +48,10 @@ open class SKTilesetData: SKTiledObject  {
     open var flipVert:  Bool = false              // tile is flipped vertically
     open var flipDiag:  Bool = false              // tile is flipped diagonally
     
+    // pathfinding
+    open var walkable: Bool = false               // tile is walkable.
+    open var weight: CGFloat = 1                  // tile weight.
+    
     open var localID: Int {                       // return the local id for this tile
         guard let tileset = tileset else { return id }
         return tileset.getLocalID(forGlobalID: id)
@@ -115,7 +119,7 @@ open class SKTilesetData: SKTiledObject  {
      Translate the global id. Returns the translated tile ID
      and the corresponding flip flags.
      
-     - Parameter id: `Int` tile ID
+     - parameter id: `Int` tile ID
      */
     private func parseTileID(id: Int) {
         // masks for tile flipping

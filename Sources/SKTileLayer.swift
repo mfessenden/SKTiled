@@ -731,21 +731,17 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     
     // MARK: - Callbacks
     /**
-     Called before the layer is rendered.
-     */
-    open func didBeginRendering() {
-        isRendered = false
-        opacity = 0
-    }
-    
-    /**
      Called when the layer is finished rendering.
      
      - parameter duration: `TimeInterval` fade-in duration.
      */
     open func didFinishRendering(duration: TimeInterval=0) {
         let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: duration)
-        run(fadeIn, completion: { self.isRendered = true })
+        
+        run(fadeIn, completion: {
+            self.isRendered = true
+            self.parseProperties(completion: nil)
+        })
         
         // setup physics for the layer boundary
         if hasKey("isDynamic") || hasKey("isCollider"){
@@ -965,7 +961,7 @@ open class SKTileLayer: TiledLayerObject {
     // MARK: - Layer Data
     
     /**
-     Add tile data array to the layer and render it. Rendering takes place on a background queue.
+     Add tile data array to the layer and render it.
      
      - parameter data: `[Int]` tile data.
      - returns: `Bool` data was successfully added.
@@ -1020,6 +1016,7 @@ open class SKTileLayer: TiledLayerObject {
         let _ = removeTileAt(coord: coord)
         
         let tileData: SKTilesetData? = (gid != nil) ? getTileData(withID: gid!) : nil
+        
         let tile = SKTile(tileSize: tileSize)
         
         if let tileData = tileData {
@@ -1226,6 +1223,16 @@ open class SKTileLayer: TiledLayerObject {
             tile!.setTileOverlap(overlap)
         }
     }
+    // MARK: - Callbacks
+    /**
+     Called when the layer is finished rendering.
+     
+     - parameter duration: `TimeInterval` fade-in duration.
+     */
+    override open func didFinishRendering(duration: TimeInterval=0) {
+        super.didFinishRendering(duration: duration)
+    }
+    
     
     // MARK: - Shaders
     
@@ -1517,6 +1524,8 @@ open class SKObjectGroup: TiledLayerObject {
         return objects.filter( {$0.name == named})
     }
     
+    // MARK: - Callbacks
+    
     /**
      Called when the layer is finished rendering.
      
@@ -1524,10 +1533,10 @@ open class SKObjectGroup: TiledLayerObject {
      */
     override open func didFinishRendering(duration: TimeInterval=0) {
         super.didFinishRendering(duration: duration)
-        
+                
         // setup dynamics for objects.
         for object in objects {
-            if object.hasKey("isDynamic") || object.hasKey("isCollider"){
+            if object.hasKey("isDynamic") || object.hasKey("isCollider") {
                 object.setupPhysics()
                 // override object visibility
                 object.visible = true
@@ -1667,7 +1676,8 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
                 #endif
                 
                 #if os(OSX)
-                gridSize = gridTexture.size()
+                let imageScale: CGFloat =  NSScreen.main()!.backingScaleFactor
+                gridSize = gridTexture.size() / imageScale
                 yScale = -1
                 #endif
                 
@@ -1819,7 +1829,7 @@ extension TiledLayerObject {
         return CGVector(dx: dx, dy: dy)
     }
     
-    override open var description: String { return "\(layerType.stringValue.capitalized) Layer: \"\(name!)\"" }
+    override open var description: String { return "\(layerType.stringValue.capitalized) Layer: \"\(self.name ?? "null")\"" }
     override open var debugDescription: String { return description }
 }
 
