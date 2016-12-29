@@ -34,6 +34,12 @@
                 <a href="getting-started.html">Getting Started</a>
               </li>
               <li class="nav-group-task">
+                <a href="scenes.html">Scenes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="layers.html">Layers</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="tiles.html">Tiles</a>
               </li>
               <li class="nav-group-task">
@@ -58,6 +64,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Protocols/SKTiledObject.html">SKTiledObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
@@ -125,6 +134,82 @@
               </li>
             </ul>
           </li>
+          <li class="nav-group-name">
+            <a href="Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/DebugTileShape.html">DebugTileShape</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Global Variables.html">Other Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other Global Variables.html#/s:v7SKTiled12TileSizeZeroVSC6CGSize">TileSizeZero</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Enums.html">Other Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled15CompressionType">CompressionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled8FileType">FileType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled13LabelPosition">LabelPosition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/LayerPosition.html">LayerPosition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled12ParsingError">ParsingError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled22SKObjectGroupDrawOrder">SKObjectGroupDrawOrder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/SKTiledLayerType.html">SKTiledLayerType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled11StaggerAxis">StaggerAxis</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled12StaggerIndex">StaggerIndex</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled15TilemapEncoding">TilemapEncoding</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Functions.html">Other Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other Functions.html#/s:F7SKTiled14SKColorWithRGBFTSi1gSi1bSi_CSo7NSColor">SKColorWithRGB(_:g:b:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Functions.html#/s:F7SKTiled15SKColorWithRGBAFTSi1gSi1bSi1aSi_CSo7NSColor">SKColorWithRGBA(_:g:b:a:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Structs.html">Other Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/AnimationFrame.html">AnimationFrame</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Array2D.html">Array2D</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class="main-content">
@@ -133,18 +218,78 @@
             <h1>Tutorial</h1>
             
 <ul>
-<li><p><a href="getting-started.html">Getting Started</a></p></li>
-<li><p><a href="tiles.html">Working with Tiles</a></p></li>
-<li><p><a href="coordinates.html">Coordinates</a></p></li>
-<li><p><a href="objects.html">Working with Objects</a></p></li>
-<li><p><a href="properties.html">Properties</a></p></li>
+<li><a href="getting-started.html">Getting Started</a>
+
+<ul>
+<li><a href="getting-started.html#requirements">Requirements</a>
+
+<ul>
+<li><a href="getting-started.html#swift-2-note">Swift 2 Note</a></li>
+</ul></li>
+<li><a href="getting-started.html#installation">Installation</a></li>
+<li><a href="getting-started.html#adding-tiled-assets">Adding Tiled Assets to Xcode</a></li>
+</ul></li>
+<li><a href="scenes.html">Setting Up Your Scenes</a>
+
+<ul>
+<li><a href="scenes.html#sktilemapdelegate-protocol"><code>SKTilemapDelegate</code> Protocol</a></li>
+<li><a href="scenes.html#sktiledscene"><code>SKTiledScene</code></a></li>
+</ul></li>
+<li><a href="layers.html">Working with Layers</a>
+
+<ul>
+<li><a href="layers.html#default-layer">Default Layer</a></li>
+<li><a href="layers.html#isolating-layers">Isolating Layers</a></li>
+</ul></li>
+<li><a href="tiles.html">Working with Tiles</a>
+
+<ul>
+<li><a href="tiles.html#getting-tiles-with-tile-id">Getting Tiles with Tile ID</a></li>
+<li><a href="tiles.html#getting-tiles-of-type">Getting Tiles of Type</a></li>
+<li><a href="tiles.html#getting-tiles-with-property">Getting Tiles with Property</a></li>
+<li><a href="tiles.html#adding-tiles">Adding Tiles</a></li>
+<li><a href="tiles.html#removing-tiles">Removing Tiles</a></li>
+<li><a href="tiles.html#animated-tiles">Animated Tiles</a></li>
+<li><a href="tiles.html#physics">Physics</a></li>
+<li><a href="tiles.html#tile-overlap">Tile Overlap</a></li>
+</ul></li>
+<li><a href="coordinates.html">Coordinates</a>
+
+<ul>
+<li><a href="coordinates.html#coordinate-conversion">Coordinate Conversion</a></li>
+<li><a href="coordinates.html#user-interaction">User Interaction</a></li>
+<li><a href="coordinates.html#coordinate-offsets-amp-hints">Coordinate Offsets &amp; Hints</a></li>
+</ul></li>
+<li><a href="objects.html">Working with Objects</a>
+
+<ul>
+<li><a href="objects.html#object-types">Object Types</a></li>
+<li><a href="objects.html#dynamics">Dynamics</a></li>
+</ul></li>
+<li><a href="properties.html">Properties</a></li>
 </ul>
 
 <!--- - [GameplayKit Integration](gameplaykit.html) --->
 
 <ul>
-<li><p><a href="debugging.html">Debugging</a></p></li>
-<li><p><a href="troubleshooting.html">Troubleshooting</a></p></li>
+<li><a href="debugging.html">Debugging</a>
+
+<ul>
+<li><a href="debugging.html#visualizing-objects">Visualizing Objects</a></li>
+<li><a href="debugging.html#visualizing-the-tile-grid">Visualizing the Tile Grid</a></li>
+<li><a href="debugging.html#highlighting-tiles">Highlighting Tiles</a></li>
+<li><a href="debugging.html#layer-boundary">Layer Boundary</a></li>
+<li><a href="debugging.html#debugging-layers">Debugging Layers</a></li>
+<li><a href="debugging.html#debugging-colors">Debugging Colors</a></li>
+<li><a href="debugging.html#properties">Properties</a></li>
+</ul></li>
+<li><a href="troubleshooting.html">Troubleshooting</a></li>
+<li><a href="troubleshooting.html#linking-errors">Linking Errors</a>
+
+<ul>
+<li><a href="troubleshooting.html#xml-parsing-errors">XML Parsing Errors</a></li>
+<li><a href="troubleshooting.html#code-signing-errors">Code Signing Errors</a></li>
+</ul></li>
 </ul>
 
 <p><a href="index.html">Home</a></p>

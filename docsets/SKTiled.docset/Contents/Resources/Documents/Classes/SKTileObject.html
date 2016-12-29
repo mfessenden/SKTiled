@@ -35,6 +35,12 @@
                 <a href="../getting-started.html">Getting Started</a>
               </li>
               <li class="nav-group-task">
+                <a href="../scenes.html">Scenes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../layers.html">Layers</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../tiles.html">Tiles</a>
               </li>
               <li class="nav-group-task">
@@ -59,6 +65,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Protocols/SKTiledObject.html">SKTiledObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
@@ -126,6 +135,82 @@
               </li>
             </ul>
           </li>
+          <li class="nav-group-name">
+            <a href="../Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/DebugTileShape.html">DebugTileShape</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Global Variables.html">Other Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Other Global Variables.html#/s:v7SKTiled12TileSizeZeroVSC6CGSize">TileSizeZero</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Enums.html">Other Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Other Enums.html#/s:O7SKTiled15CompressionType">CompressionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Enums.html#/s:O7SKTiled8FileType">FileType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Enums.html#/s:O7SKTiled13LabelPosition">LabelPosition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LayerPosition.html">LayerPosition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Enums.html#/s:O7SKTiled12ParsingError">ParsingError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Enums.html#/s:O7SKTiled22SKObjectGroupDrawOrder">SKObjectGroupDrawOrder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SKTiledLayerType.html">SKTiledLayerType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Enums.html#/s:O7SKTiled11StaggerAxis">StaggerAxis</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Enums.html#/s:O7SKTiled12StaggerIndex">StaggerIndex</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Enums.html#/s:O7SKTiled15TilemapEncoding">TilemapEncoding</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Functions.html">Other Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Other Functions.html#/s:F7SKTiled14SKColorWithRGBFTSi1gSi1bSi_CSo7NSColor">SKColorWithRGB(_:g:b:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Functions.html#/s:F7SKTiled15SKColorWithRGBAFTSi1gSi1bSi1aSi_CSo7NSColor">SKColorWithRGBA(_:g:b:a:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Structs.html">Other Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/AnimationFrame.html">AnimationFrame</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Array2D.html">Array2D</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class="main-content">
@@ -140,7 +225,7 @@
               </div>
             <p>The <code>SKTileObject</code> object represents a Tiled object type (rectangle, ellipse, polygon &amp; polyline).</p>
 
-<p>When the object is created, points can be added either with an array of <code>CGPoint</code> objects, or a string. In order to render the object, the <code>SKTileObject.getVertices()</code> method is called, which returns the points that make up the shape.</p>
+<p>When the object is created, points can be added either with an array of <code>CGPoint</code> objects, or a string. In order to render the object, the <code><a href="../Classes/SKTileObject.html#/s:FC7SKTiled12SKTileObjectP33_39629B3ACAFC7125CD3C2D1C5AA0FDAD11getVerticesFT_GSqGSaVSC7CGPoint__">SKTileObject.getVertices()</a></code> method is called, which returns the points that make up the shape.</p>
 
           </section>
           <section class="section task-group-section">
@@ -170,7 +255,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L23">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L21">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -199,7 +284,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L25">Show on GitHub</a>
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L23">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -555,6 +640,195 @@
                       </div>
                       <div class="slightly-smaller">
                         <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L206-L271">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC7SKTiled12SKTileObject10renderWithFT3gidSi_T_"></a>
+                    <a name="//apple_ref/swift/Method/renderWith(gid:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC7SKTiled12SKTileObject10renderWithFT3gidSi_T_">renderWith(gid:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Render with a tile ID. Bit of a hack for now, it&rsquo;s not a supported feature in Tiled.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">internal</span> <span class="kd">func</span> <span class="nf">renderWith</span><span class="p">(</span><span class="nv">gid</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L276-L293">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Polygon%20Points"></a>
+                <a name="//apple_ref/swift/Section/Polygon Points" class="dashAnchor"></a>
+                <a href="#/Polygon%20Points">
+                  <h3 class="section-name">Polygon Points</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC7SKTiled12SKTileObject9addPointsFTGSaGSaV12CoreGraphics7CGFloat__6closedSb_T_"></a>
+                    <a name="//apple_ref/swift/Method/addPoints(_:closed:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC7SKTiled12SKTileObject9addPointsFTGSaGSaV12CoreGraphics7CGFloat__6closedSb_T_">addPoints(_:closed:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add polygons points.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">internal</span> <span class="kd">func</span> <span class="nf">addPoints</span><span class="p">(</span><span class="n">_</span> <span class="nv">coordinates</span><span class="p">:</span> <span class="p">[[</span><span class="kt">CGFloat</span><span class="p">]],</span> <span class="nv">closed</span><span class="p">:</span> <span class="kt">Bool</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>points</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>[[CGFloat]]</code> array of coordinates.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>closed</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>Bool</code> close the object path.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L302-L307">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC7SKTiled12SKTileObject19addPointsWithStringFSST_"></a>
+                    <a name="//apple_ref/swift/Method/addPointsWithString(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC7SKTiled12SKTileObject19addPointsWithStringFSST_">addPointsWithString(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add points from a string.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">internal</span> <span class="kd">func</span> <span class="nf">addPointsWithString</span><span class="p">(</span><span class="n">_</span> <span class="nv">points</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>points</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>String</code> string of coordinates.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L314-L322">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC7SKTiled12SKTileObjectP33_39629B3ACAFC7125CD3C2D1C5AA0FDAD11getVerticesFT_GSqGSaVSC7CGPoint__"></a>
+                    <a name="//apple_ref/swift/Method/getVertices()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC7SKTiled12SKTileObjectP33_39629B3ACAFC7125CD3C2D1C5AA0FDAD11getVerticesFT_GSqGSaVSC7CGPoint__">getVertices()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the internal <code>SKTileObject.points</code> translated into the current map projection.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">fileprivate</span> <span class="kd">func</span> <span class="nf">getVertices</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">CGPoint</span><span class="p">]?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>[CGPoint]?</code> array of points.</p>
+
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTileObject.swift#L329-L340">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

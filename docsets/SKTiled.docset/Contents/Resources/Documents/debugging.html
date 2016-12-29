@@ -34,6 +34,12 @@
                 <a href="getting-started.html">Getting Started</a>
               </li>
               <li class="nav-group-task">
+                <a href="scenes.html">Scenes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="layers.html">Layers</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="tiles.html">Tiles</a>
               </li>
               <li class="nav-group-task">
@@ -58,6 +64,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Protocols/SKTiledObject.html">SKTiledObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
@@ -125,6 +134,82 @@
               </li>
             </ul>
           </li>
+          <li class="nav-group-name">
+            <a href="Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/DebugTileShape.html">DebugTileShape</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Global Variables.html">Other Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other Global Variables.html#/s:v7SKTiled12TileSizeZeroVSC6CGSize">TileSizeZero</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Enums.html">Other Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled15CompressionType">CompressionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled8FileType">FileType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled13LabelPosition">LabelPosition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/LayerPosition.html">LayerPosition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled12ParsingError">ParsingError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled22SKObjectGroupDrawOrder">SKObjectGroupDrawOrder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/SKTiledLayerType.html">SKTiledLayerType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled11StaggerAxis">StaggerAxis</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled12StaggerIndex">StaggerIndex</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled15TilemapEncoding">TilemapEncoding</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Functions.html">Other Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other Functions.html#/s:F7SKTiled14SKColorWithRGBFTSi1gSi1bSi_CSo7NSColor">SKColorWithRGB(_:g:b:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Functions.html#/s:F7SKTiled15SKColorWithRGBAFTSi1gSi1bSi1aSi_CSo7NSColor">SKColorWithRGBA(_:g:b:a:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Structs.html">Other Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/AnimationFrame.html">AnimationFrame</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Array2D.html">Array2D</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class="main-content">
@@ -133,10 +218,20 @@
             
             <a href='#debugging' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='debugging'>Debugging</h1>
 
+<ul>
+<li><a href="#visualizing-objects">Visualizing Objects</a></li>
+<li><a href="#visualizing-the-tile-grid">Visualizing the Tile Grid</a></li>
+<li><a href="#highlighting-tiles">Highlighting Tiles</a></li>
+<li><a href="#layer-boundary">Layer Boundary</a></li>
+<li><a href="#debugging-layers">Debugging Layers</a></li>
+<li><a href="#debugging-colors">Debugging Colors</a></li>
+<li><a href="#properties">Properties</a></li>
+</ul>
+
 <p>There are several functions for troubleshooting your tiled scenes. The <code>SKTilemap</code> node has a <code>debugDraw</code> property that will quickly show the grid and any object layers:</p>
 <pre class="highlight swift"><code><span class="n">tilemap</span><span class="o">.</span><span class="n">debugDraw</span> <span class="o">=</span> <span class="kc">true</span>
 </code></pre>
-<a href='#visualizing-objects' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='visualizing-objects'>Visualizing Objects</h3>
+<a href='#visualizing-objects' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='visualizing-objects'>Visualizing Objects</h2>
 
 <p>By default, object layers are hidden so that you may easily work with them in Tiled, but not see them in your game. To see them, you can either show <em>all</em> object layers, or on a layer by layer basis:</p>
 <pre class="highlight swift"><code><span class="c1">// show all objects in the scene</span>
@@ -148,7 +243,7 @@
     <span class="n">layer</span><span class="o">.</span><span class="n">showObjects</span> <span class="o">=</span> <span class="kc">true</span>
 <span class="p">}</span>
 </code></pre>
-<a href='#visualizing-the-tile-grid' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='visualizing-the-tile-grid'>Visualizing the Tile Grid</h3>
+<a href='#visualizing-the-tile-grid' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='visualizing-the-tile-grid'>Visualizing the Tile Grid</h2>
 
 <p>To visualize the current grid on any layer type, use the layer&rsquo;s <code>showGrid</code> property:</p>
 
@@ -157,7 +252,7 @@
 </code></pre>
 
 <p>To change the grid color, set layer&rsquo;s <code>gridColor</code> property.</p>
-<a href='#highlighting-tiles' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='highlighting-tiles'>Highlighting Tiles</h3>
+<a href='#highlighting-tiles' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='highlighting-tiles'>Highlighting Tiles</h2>
 
 <p>You can highlight a tile using the <code>SKTile.drawBounds</code> method. </p>
 <pre class="highlight swift"><code>
@@ -173,24 +268,24 @@
 <span class="c1">// set the highlight color for *all* tiles in the layer </span>
 <span class="n">tileLayer</span><span class="o">.</span><span class="n">highlightColor</span> <span class="o">=</span> <span class="kt">SKColor</span><span class="o">.</span><span class="n">blue</span>
 </code></pre>
-<a href='#layer-boundary' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='layer-boundary'>Layer Boundary</h3>
+<a href='#layer-boundary' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='layer-boundary'>Layer Boundary</h2>
 
 <p>All <code>TiledLayerObject</code> objects allow you to visualize the layer&rsquo;s boundary: </p>
 <pre class="highlight swift"><code><span class="n">tileLayer</span><span class="o">.</span><span class="nf">drawBounds</span><span class="p">()</span>
 </code></pre>
-<a href='#debugging-layers' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='debugging-layers'>Debugging Layers</h3>
+<a href='#debugging-layers' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='debugging-layers'>Debugging Layers</h2>
 
 <p>To see a quick overview of the current tilemap&rsquo;s layers, use the <code>SKTilemap.debugLayers</code> method: </p>
 
 <p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/debugLayers.png" alt="Debug Layers"></p>
 
 <p>Data shown includes layer index, size, positioning, offset, z-position and anchor point.</p>
-<a href='#debugging-colors' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='debugging-colors'>Debugging Colors</h3>
+<a href='#debugging-colors' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='debugging-colors'>Debugging Colors</h2>
 <pre class="highlight plaintext"><code>SKTilemap:
 
   highlightColor   -&gt; overrides all layers highlighColor -&gt; overrides SKTile highlight color
 </code></pre>
-<a href='#properties' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='properties'>Properties</h3>
+<a href='#properties' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='properties'>Properties</h2>
 
 <p>Debugging properties for <strong>SKTiled</strong> classes:</p>
 <pre class="highlight plaintext"><code>SKTilemap:

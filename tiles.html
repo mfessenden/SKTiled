@@ -34,6 +34,12 @@
                 <a href="getting-started.html">Getting Started</a>
               </li>
               <li class="nav-group-task">
+                <a href="scenes.html">Scenes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="layers.html">Layers</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="tiles.html">Tiles</a>
               </li>
               <li class="nav-group-task">
@@ -58,6 +64,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Protocols/SKTiledObject.html">SKTiledObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
@@ -125,6 +134,82 @@
               </li>
             </ul>
           </li>
+          <li class="nav-group-name">
+            <a href="Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/DebugTileShape.html">DebugTileShape</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Global Variables.html">Other Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other Global Variables.html#/s:v7SKTiled12TileSizeZeroVSC6CGSize">TileSizeZero</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Enums.html">Other Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled15CompressionType">CompressionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled8FileType">FileType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled13LabelPosition">LabelPosition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/LayerPosition.html">LayerPosition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled12ParsingError">ParsingError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled22SKObjectGroupDrawOrder">SKObjectGroupDrawOrder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/SKTiledLayerType.html">SKTiledLayerType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled11StaggerAxis">StaggerAxis</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled12StaggerIndex">StaggerIndex</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled15TilemapEncoding">TilemapEncoding</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Functions.html">Other Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other Functions.html#/s:F7SKTiled14SKColorWithRGBFTSi1gSi1bSi_CSo7NSColor">SKColorWithRGB(_:g:b:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Functions.html#/s:F7SKTiled15SKColorWithRGBAFTSi1gSi1bSi1aSi_CSo7NSColor">SKColorWithRGBA(_:g:b:a:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Structs.html">Other Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/AnimationFrame.html">AnimationFrame</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Array2D.html">Array2D</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class="main-content">
@@ -132,6 +217,17 @@
           <section class="section">
             
             <a href='#working-with-tiles' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='working-with-tiles'>Working with Tiles</h1>
+
+<ul>
+<li><a href="#getting-tiles-with-tile-id">Getting Tiles with Tile ID</a></li>
+<li><a href="#getting-tiles-of-type">Getting Tiles of Type</a></li>
+<li><a href="#getting-tiles-with-property">Getting Tiles with Property</a></li>
+<li><a href="#adding-tiles">Adding Tiles</a></li>
+<li><a href="#removing-tiles">Removing Tiles</a></li>
+<li><a href="#animated-tiles">Animated Tiles</a></li>
+<li><a href="#physics">Physics</a></li>
+<li><a href="#tile-overlap">Tile Overlap</a></li>
+</ul>
 
 <p><strong>SKTiled</strong> provides several ways to work with tiles in your tilemap. Most of the methods for querying tiles from tile layer instances have corresponding methods in the parent <code>SKTilemap</code> node which will aggregate the results from <em>all</em> tile layers.</p>
 

@@ -34,6 +34,12 @@
                 <a href="getting-started.html">Getting Started</a>
               </li>
               <li class="nav-group-task">
+                <a href="scenes.html">Scenes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="layers.html">Layers</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="tiles.html">Tiles</a>
               </li>
               <li class="nav-group-task">
@@ -58,6 +64,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Protocols/SKTiledObject.html">SKTiledObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
@@ -125,6 +134,82 @@
               </li>
             </ul>
           </li>
+          <li class="nav-group-name">
+            <a href="Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/DebugTileShape.html">DebugTileShape</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Global Variables.html">Other Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other Global Variables.html#/s:v7SKTiled12TileSizeZeroVSC6CGSize">TileSizeZero</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Enums.html">Other Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled15CompressionType">CompressionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled8FileType">FileType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled13LabelPosition">LabelPosition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/LayerPosition.html">LayerPosition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled12ParsingError">ParsingError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled22SKObjectGroupDrawOrder">SKObjectGroupDrawOrder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/SKTiledLayerType.html">SKTiledLayerType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled11StaggerAxis">StaggerAxis</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled12StaggerIndex">StaggerIndex</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Enums.html#/s:O7SKTiled15TilemapEncoding">TilemapEncoding</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Functions.html">Other Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other Functions.html#/s:F7SKTiled14SKColorWithRGBFTSi1gSi1bSi_CSo7NSColor">SKColorWithRGB(_:g:b:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Functions.html#/s:F7SKTiled15SKColorWithRGBAFTSi1gSi1bSi1aSi_CSo7NSColor">SKColorWithRGBA(_:g:b:a:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Structs.html">Other Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/AnimationFrame.html">AnimationFrame</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Array2D.html">Array2D</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class="main-content">
@@ -132,6 +217,12 @@
           <section class="section">
             
             <a href='#coordinates' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='coordinates'>Coordinates</h1>
+
+<ul>
+<li><a href="#coordinate-conversion">Coordinate Conversion</a></li>
+<li><a href="#user-interaction">User Interaction</a></li>
+<li><a href="#coordinate-offsets-amp-hints">Coordinate Offsets &amp; Hints</a></li>
+</ul>
 <a href='#coordinate-conversion' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='coordinate-conversion'>Coordinate Conversion</h2>
 
 <p>SpriteKit uses a coordinate system that is different from Tiled&rsquo;s. In SpriteKit, scenes have an origin at the bottom-left, while Tiled sets the origin at top-left. </p>
@@ -151,9 +242,14 @@
 <span class="c1">// use TileOffset </span>
 <span class="k">let</span> <span class="nv">point</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">pointForCoordinate</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="nv">offset</span><span class="p">:</span> <span class="kt">TileOffset</span><span class="o">.</span><span class="n">center</span><span class="p">)</span>
 </code></pre>
+<a href='#converting-coordinates-from-other-nodes' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='converting-coordinates-from-other-nodes'>Converting Coordinates from Other Nodes</h3>
+
+<p>Use the default <code>SKNode.convert</code> method to convert a tile position to another node&rsquo;s coordinate space:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">playerPosition</span> <span class="o">=</span> <span class="n">worldNode</span><span class="o">.</span><span class="nf">convert</span><span class="p">(</span><span class="n">tilemap</span><span class="o">.</span><span class="n">baseLayer</span><span class="o">.</span><span class="nf">pointForCoordinate</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">17</span><span class="p">),</span> <span class="nv">from</span><span class="p">:</span> <span class="n">tilemap</span><span class="o">.</span><span class="n">baseLayer</span><span class="p">)</span>
+</code></pre>
 <a href='#user-interaction' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='user-interaction'>User Interaction</h2>
 
-<p><strong>SKTiled</strong> also has methods for handling touch events (iOS) and mouse events (OSX):</p>
+<p><strong>SKTiled</strong> also has methods for handling touch events (iOS) and mouse events (macOS):</p>
 <pre class="highlight swift"><code><span class="c1">// iOS with UITouch</span>
 <span class="k">let</span> <span class="nv">touchPosition</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">touchLocation</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
 
