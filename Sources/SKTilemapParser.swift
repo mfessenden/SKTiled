@@ -49,9 +49,12 @@ The `SKTilemapParser` is a custom `XMLParserDelegate` parser for reading Tiled T
  */
 open class SKTilemapParser: NSObject, XMLParserDelegate {
     
+    //let queue: DispatchQueue = DispatchQueue.global(qos: .userInteractive)
+    
     open var fileNames: [String] = []                               // list of files to read
     open var currentFileName: String!
     
+    weak var mapDelegate: SKTilemapDelegate?
     open var tilemap: SKTilemap!
     fileprivate var encoding: TilemapEncoding = .xml                // encoding
     fileprivate var externalTilesets: [String: SKTileset] = [:]     // hold external tilesets 
@@ -76,15 +79,18 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     /**
      Load a TMX file and parse it.
      
-     - parameter fileNamed: `String` file base name - TMX/TSX not required.     
+     - parameter filename:   `String` Tiled file name (does not need TMX extension).
+     - parameter delegate:   `SKTilemapDelegate?` optional tilemap delegate instance.
      - returns: `SKTilemap?` tiled map node.
      */
-    open func load(fromFile filename: String) -> SKTilemap? {
+    open func load(fromFile filename: String, delegate: SKTilemapDelegate? = nil) -> SKTilemap? {
         guard let targetFile = getBundledFile(named: filename) else {
             print("[SKTilemapParser]: unable to locate file: \"\(filename)\"")
             return nil
         }
         
+        // set the delegate property
+        mapDelegate = delegate
         timer = Date()
         fileNames.append(targetFile)
                 
@@ -158,23 +164,40 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         return nil
     }
 
-    // MARK: - Callbacks
+    // MARK: - Post-Processing
+    
+    /**
+     Post-process called when tilemap is finished parsing.     
+     */
+    fileprivate func didFinishParsing() {
+        guard let tilemap = tilemap else { return }
+        
+        let queue = DispatchQueue.main
+        let parseGroup = DispatchGroup()
+        
+        // pre-processing callback
+        queue.async(group: parseGroup) {
+            if self.mapDelegate != nil { self.mapDelegate!.didReadMap(tilemap) }
+    }
+
+        // start rendering layers when queue is complete.
+        parseGroup.notify(queue: DispatchQueue.main) {
+            self.didBeginRendering(tilemap)
+        }
+    }
     
     /**
      Post-process to render each layer.
      
+     - parameter tilemap:  `SKTilemap`    tile map node.
      - parameter duration: `TimeInterval` fade-in time for each layer.
      */
-    fileprivate func didFinishParsing(duration: TimeInterval=0.075)  {
-        guard let tilemap = tilemap else { return }
+    fileprivate func didBeginRendering(_ tilemap: SKTilemap, duration: TimeInterval=0.05)  {
+        // worker queue & group
+        let queue = DispatchQueue.global(qos: .userInteractive)
+        let renderGroup = DispatchGroup()
         
-        // worker queue
-        let queue = DispatchQueue.global(qos: .userInitiated )
-        
-        // create a group for each tile layer
-        let tileGroup = DispatchGroup()
-        
-        queue.async(group: tileGroup){
+        queue.async(group: renderGroup) {
             
             for layer in tilemap.allLayers() {
                 
@@ -193,13 +216,11 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 
                 // render tile layers
                 if let tileLayer = layer as? SKTileLayer {
-                    
                     guard let tileData = self.data[tileLayer.uuid] else { continue }
                     // add the layer data and completion handler
                     let _ = tileLayer.setLayerData(tileData, completion: { (_ layer: SKTileLayer) -> Void in
-                        // run the tilemap completion handler
+                        // run the tile layer completion callback
                         tileLayer.didFinishRendering(duration: duration)
-                        tilemap.tileLayerDidFinishRendering(layer: tileLayer, duration: 0)
                         
                     })
                 
@@ -214,10 +235,11 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         }
         
         // reset the data property when all layers are rendered & run a callback on the tilemap node
-        tileGroup.notify(queue: DispatchQueue.main) {
+        renderGroup.notify(queue: DispatchQueue.main) {
             self.data = [:]
-            self.tilemap.didFinishParsing(timeStarted: self.timer)
+            self.tilemap.didFinishRendering(timeStarted: self.timer)
         }
+        
     }
     
     // MARK: - XMLParserDelegate
@@ -245,12 +267,14 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             }
             
             self.tilemap = tilemap
+            self.tilemap.delegate = self.mapDelegate
             
             let currentBasename = currentFileName.components(separatedBy: ".").first!
             self.tilemap.filename = currentBasename
             self.tilemap.name = currentBasename
+            
             // run setup functions on tilemap
-            self.tilemap.didBeginParsing()
+            self.mapDelegate?.didBeginParsing(tilemap)
             lastElement = tilemap
         }
         
@@ -273,6 +297,9 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     externalTilesets[source] = tileset
                     self.tilemap.addTileset(tileset)
                     lastElement = tileset
+                    // delegate callback
+
+                    if mapDelegate != nil { mapDelegate!.didAddTileset(tileset) }
 
                     // set this to nil, just in case we're looking for a collections tileset.
                     currentID = nil
@@ -310,6 +337,9 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     self.tilemap.addTileset(tileset)
                     lastElement = tileset
 
+                    // delegate callback
+                    if mapDelegate != nil { mapDelegate!.didAddTileset(tileset) }
+
                     // set this to nil, just in case we're looking for a collections tileset.
                     currentID = nil
                 }
@@ -329,7 +359,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         if elementName == "property" {
             guard let name = attributeDict["name"] else { parser.abortParsing(); return }
             guard let value = attributeDict["value"] else { parser.abortParsing(); return }
-            //guard let value = attributeDict["type"] else { parser.abortParsing(); return }
+            //guard let propertyType = attributeDict["type"] else { parser.abortParsing(); return }
             
             // stash properties
             properties[name] = value            
@@ -347,6 +377,10 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             }
             
             self.tilemap!.addLayer(layer)
+            
+            // delegate callback
+            if mapDelegate != nil { mapDelegate!.didAddLayer(layer) }
+            
             lastElement = layer
         }
         
@@ -362,6 +396,10 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             }
             
             self.tilemap!.addLayer(objectsGroup)
+            
+            // delegate callback
+            if mapDelegate != nil { mapDelegate!.didAddLayer(objectsGroup) }
+            
             lastElement = objectsGroup
         }
         
@@ -375,6 +413,10 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             }
             
             self.tilemap!.addLayer(imageLayer)
+            
+            // delegate callback
+            if mapDelegate != nil { mapDelegate!.didAddLayer(imageLayer) }
+            
             lastElement = imageLayer
         }
         

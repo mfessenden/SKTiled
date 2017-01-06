@@ -1,4 +1,9 @@
-# GameplayKit Integration
+# GameplayKit Integration (WIP)
+
+- [Custom Node Weights](#)
+- [Debugging the Graph](#debugging-the-graph)
+- [Querying Neighbor Nodes](#querying-neighbor-nodes)
+
 
 **SKTiled** supports Apple's GameplayKit by allowing users to build pathfinding graphs in tile layers (currently only orthogonal tile layers are supported). Every `SKTileLayer` instance has an optional `GKGridGraph` attribute accessible via the `SKTileLayer.graph` attribute:
   

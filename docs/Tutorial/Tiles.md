@@ -1,5 +1,14 @@
 # Working with Tiles
 
+- [Getting Tiles with Tile ID](#getting-tiles-with-tile-id)
+- [Getting Tiles of Type](#getting-tiles-of-type)
+- [Getting Tiles with Property](#getting-tiles-with-property)
+- [Adding Tiles](#adding-tiles)
+- [Removing Tiles](#removing-tiles)
+- [Animated Tiles](#animated-tiles)
+- [Physics](#physics)
+- [Tile Overlap](#tile-overlap)
+
 **SKTiled** provides several ways to work with tiles in your tilemap. Most of the methods for querying tiles from tile layer instances have corresponding methods in the parent `SKTilemap` node which will aggregate the results from *all* tile layers.
 
 Accessing tiles is simple: simply query a tile layer or the tile map node for tiles at a given coordinate:

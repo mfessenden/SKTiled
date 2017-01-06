@@ -1,5 +1,23 @@
 Change Log
 ==========================
+1.0.7
+--------------------------
+
+#### Changes
+- add `SKTilemapDelegate` methods callbacks:
+    - `didBeginParsing`, `didAddTileset`, `didAddLayer`, `didReadMap`
+    - add default implementations via extension
+- tweaks to GCD parsing & rendering
+- now `SKTiledScene` conforms to `SKTilemapDelegate` & `SKTiledSceneDelegate` protocols
+- documentation update
+- add `SKTileset.setDataTexture` method to replace tilset data texture
+
+1.0.6
+--------------------------
+
+#### Changes
+- add SKTilemapDelegate protocol
+
 1.0.5
 --------------------------
 

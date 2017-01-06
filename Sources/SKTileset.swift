@@ -139,7 +139,7 @@ open class SKTileset: SKTiledObject {
     // MARK: - Textures
     
     /**
-     Add tile data from a sprite sheet image.
+     Add tile texture data from a sprite sheet image.
      
      - parameter source:  `String` image named referenced in the tileset.
      - parameter replace: `Bool` replace the current texture.
@@ -148,12 +148,6 @@ open class SKTileset: SKTiledObject {
         // images are stored in separate directories in the project will render incorrectly unless we use just the filename
         let sourceFilename = source.components(separatedBy: "/").last!
         let timer = Date()
-        
-        guard (self.source != sourceFilename) else {
-            print("[SKTileset]: Warning: source texture is already \"\(sourceFilename)\"")
-            return
-        }
-        
         self.source = sourceFilename
         
         let sourceTexture = SKTexture(imageNamed: self.source!)
@@ -182,6 +176,7 @@ open class SKTileset: SKTiledObject {
         // invert the y-coord
         var y = margin + rowHeight + rowSpacing - Int(tileSize.height)
         
+        var tilesAdded: Int = 0
         for gid in firstGID..<(firstGID + totalTileCount) {            
             let rectStartX = CGFloat(x) / CGFloat(textureWidth)
             let rectStartY = CGFloat(y) / CGFloat(textureHeight)
@@ -193,7 +188,7 @@ open class SKTileset: SKTiledObject {
             let tileRect = CGRect(x: rectStartX, y: rectStartY, width: rectWidth, height: rectHeight)
             let tileTexture = SKTexture(rect: tileRect, in: sourceTexture)
             
-            // add the tile data properties
+            // add the tile data properties, or replace the texture
             if replace == false {
                 let _ = addTilesetTile(gid, texture: tileTexture)
             } else {
@@ -205,16 +200,17 @@ open class SKTileset: SKTiledObject {
                 x = margin
                 y -= Int(tileSize.height) + spacing
             }
+            
+            tilesAdded += 1
         }
         
         // time results
         if replace == false {
             let timeInterval = Date().timeIntervalSince(timer)
             let timeStamp = String(format: "%.\(String(3))f", timeInterval)
-            print("[SKTileset]: tileset \"\(name)\" built in: \(timeStamp)s")
+            print("[SKTileset]: tileset \"\(name)\" built in: \(timeStamp)s (\(tilesAdded) tiles)")
         }
     }
-    
     
     // MARK: - Tile Data
     
@@ -266,7 +262,7 @@ open class SKTileset: SKTiledObject {
     }
     
     /**
-     Set tileset texture.
+     Set(replace) the texture for a given tile gid.
      
      - parameter tileID:  `Int` tile ID.
      - parameter texture: `SKTexture` texture for tile at the given id.
@@ -337,8 +333,8 @@ open class SKTileset: SKTiledObject {
     /**
      Check for tile ID flip flags.
      
-     - Parameter id: `Int` tile ID
-     - Returns: `Int` translated ID.
+     - parameter id: `Int` tile ID.
+     - returns: `Int` translated ID.
      */
     internal func getTileRealID(id: Int) -> Int {
         let uid: UInt32 = UInt32(id)

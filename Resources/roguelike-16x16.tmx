@@ -4,12 +4,521 @@
   <property name="autoResize" type="bool" value="true"/>
   <property name="gridColor" type="color" value="#99252525"/>
   <property name="level" type="int" value="1"/>
+  <property name="tileOverlap" type="float" value="0"/>
   <property name="worldScale" type="float" value="0.7"/>
  </properties>
- <tileset firstgid="1" source="roguelike-16x16.tsx"/>
+ <tileset firstgid="1" name="roguelike-16x16" tilewidth="16" tileheight="16" spacing="1" tilecount="1938" columns="57">
+  <image source="roguelike-16x16-anim.png" width="968" height="577"/>
+  <terraintypes>
+   <terrain name="water" tile="1"/>
+   <terrain name="path-dark" tile="578"/>
+   <terrain name="path-light" tile="1262"/>
+   <terrain name="path-gravel" tile="920"/>
+   <terrain name="grass-edge" tile="914"/>
+  </terraintypes>
+  <tile id="0" probability="0.5">
+   <properties>
+    <property name="waterLevel" value="1.0"/>
+   </properties>
+  </tile>
+  <tile id="1" probability="0.5">
+   <properties>
+    <property name="waterLevel" value="1.0"/>
+   </properties>
+  </tile>
+  <tile id="2" terrain=",,,0">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="3" terrain=",,0,0">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="4" terrain=",,0,">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="5" probability="0.5">
+   <properties>
+    <property name="groundType" value="grass"/>
+   </properties>
+  </tile>
+  <tile id="6" probability="0.5">
+   <properties>
+    <property name="groundType" value="dirt"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="groundType" value="gravel"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="groundType" value="dirt"/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <animation>
+    <frame tileid="13" duration="100"/>
+    <frame tileid="14" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="57" terrain="0,0,0,">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="58" terrain="0,0,,0">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="59" terrain=",0,,0">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="60" terrain="0,0,0,0">
+   <properties>
+    <property name="waterLevel" value="1.0"/>
+   </properties>
+  </tile>
+  <tile id="61" terrain="0,,0,">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="62" probability="0.5">
+   <properties>
+    <property name="groundType" value="grass"/>
+   </properties>
+  </tile>
+  <tile id="63" probability="0.5">
+   <properties>
+    <property name="groundType" value="dirt"/>
+   </properties>
+  </tile>
+  <tile id="64">
+   <properties>
+    <property name="groundType" value="gravel"/>
+   </properties>
+  </tile>
+  <tile id="65">
+   <properties>
+    <property name="groundType" value="dirt"/>
+   </properties>
+  </tile>
+  <tile id="114" terrain="0,,0,0">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="115" terrain=",0,0,0">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="116" terrain=",0,,">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="117" terrain="0,0,,">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="118" terrain="0,,,">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="171">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="172">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="173">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="174">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="175">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="228">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="229">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="230">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="231" probability="0.5">
+   <properties>
+    <property name="waterLevel" value="1.0"/>
+   </properties>
+  </tile>
+  <tile id="232">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="287">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="288">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="289">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="396">
+   <animation>
+    <frame tileid="396" duration="100"/>
+    <frame tileid="397" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="416">
+   <animation>
+    <frame tileid="416" duration="100"/>
+    <frame tileid="417" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="453">
+   <animation>
+    <frame tileid="453" duration="100"/>
+    <frame tileid="454" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="470">
+   <animation>
+    <frame tileid="470" duration="200"/>
+    <frame tileid="471" duration="200"/>
+   </animation>
+  </tile>
+  <tile id="473">
+   <animation>
+    <frame tileid="473" duration="100"/>
+    <frame tileid="474" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="510">
+   <animation>
+    <frame tileid="510" duration="100"/>
+    <frame tileid="511" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="518" terrain="1,1,1,"/>
+  <tile id="519" terrain="1,1,,1"/>
+  <tile id="520" terrain=",,,1"/>
+  <tile id="521" terrain=",,1,1"/>
+  <tile id="522" terrain=",,1,"/>
+  <tile id="526">
+   <properties>
+    <property name="tree" value="true"/>
+   </properties>
+  </tile>
+  <tile id="527">
+   <properties>
+    <property name="tree" value="true"/>
+   </properties>
+  </tile>
+  <tile id="528">
+   <properties>
+    <property name="tree" value="true"/>
+   </properties>
+  </tile>
+  <tile id="529">
+   <properties>
+    <property name="tree" value="true"/>
+   </properties>
+  </tile>
+  <tile id="530">
+   <properties>
+    <property name="tree" value="true"/>
+   </properties>
+  </tile>
+  <tile id="531">
+   <properties>
+    <property name="tree" value="true"/>
+   </properties>
+  </tile>
+  <tile id="541">
+   <animation>
+    <frame tileid="1795" duration="350"/>
+    <frame tileid="541" duration="350"/>
+    <frame tileid="1852" duration="350"/>
+   </animation>
+  </tile>
+  <tile id="542">
+   <animation>
+    <frame tileid="1796" duration="350"/>
+    <frame tileid="542" duration="350"/>
+    <frame tileid="1853" duration="350"/>
+   </animation>
+  </tile>
+  <tile id="543">
+   <animation>
+    <frame tileid="1797" duration="350"/>
+    <frame tileid="543" duration="350"/>
+    <frame tileid="1854" duration="350"/>
+   </animation>
+  </tile>
+  <tile id="544">
+   <animation>
+    <frame tileid="1798" duration="350"/>
+    <frame tileid="544" duration="350"/>
+    <frame tileid="1855" duration="350"/>
+   </animation>
+  </tile>
+  <tile id="567">
+   <animation>
+    <frame tileid="567" duration="100"/>
+    <frame tileid="568" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="575" terrain="1,,1,1"/>
+  <tile id="576" terrain=",1,1,1"/>
+  <tile id="577" terrain=",1,,1"/>
+  <tile id="578" terrain="1,1,1,1"/>
+  <tile id="579" terrain="1,,1,"/>
+  <tile id="624">
+   <animation>
+    <frame tileid="510" duration="100"/>
+    <frame tileid="511" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="634" terrain=",1,,"/>
+  <tile id="635" terrain="1,1,,"/>
+  <tile id="636" terrain="1,,,"/>
+  <tile id="640">
+   <properties>
+    <property name="tree" value="true"/>
+   </properties>
+  </tile>
+  <tile id="641">
+   <properties>
+    <property name="tree" value="true"/>
+   </properties>
+  </tile>
+  <tile id="642">
+   <properties>
+    <property name="tree" value="true"/>
+   </properties>
+  </tile>
+  <tile id="643">
+   <properties>
+    <property name="tree" value="true"/>
+   </properties>
+  </tile>
+  <tile id="644">
+   <properties>
+    <property name="tree" value="true"/>
+   </properties>
+  </tile>
+  <tile id="645">
+   <properties>
+    <property name="tree" value="true"/>
+   </properties>
+  </tile>
+  <tile id="855" terrain="4,4,4,"/>
+  <tile id="856" terrain="4,4,,4"/>
+  <tile id="857" terrain=",,,4"/>
+  <tile id="858" terrain=",,4,4"/>
+  <tile id="859" terrain=",,4,"/>
+  <tile id="860" terrain="3,3,3,"/>
+  <tile id="861" terrain="3,3,,3"/>
+  <tile id="862" terrain=",,,3"/>
+  <tile id="863" terrain=",,3,3"/>
+  <tile id="864" terrain=",,3,"/>
+  <tile id="912" terrain="4,,4,4"/>
+  <tile id="913" terrain=",4,4,4"/>
+  <tile id="914" terrain=",4,,4"/>
+  <tile id="915" terrain="4,4,4,4"/>
+  <tile id="916" terrain="4,,4,"/>
+  <tile id="917" terrain="3,,3,3"/>
+  <tile id="918" terrain=",3,3,3"/>
+  <tile id="919" terrain=",3,,3"/>
+  <tile id="920" terrain="3,3,3,3"/>
+  <tile id="921" terrain="3,,3,"/>
+  <tile id="971" terrain=",4,,"/>
+  <tile id="972" terrain="4,4,,"/>
+  <tile id="973" terrain="4,,,"/>
+  <tile id="976" terrain=",3,,"/>
+  <tile id="977" terrain="3,3,,"/>
+  <tile id="978" terrain="3,,,"/>
+  <tile id="1119">
+   <properties>
+    <property name="emitter_smoke" value="1"/>
+   </properties>
+  </tile>
+  <tile id="1136">
+   <properties>
+    <property name="wall" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1137">
+   <properties>
+    <property name="wall" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1138">
+   <properties>
+    <property name="wall" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1139">
+   <properties>
+    <property name="wall" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1176">
+   <properties>
+    <property name="emitter_smoke" value="1.0"/>
+   </properties>
+  </tile>
+  <tile id="1193">
+   <properties>
+    <property name="wall" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1194">
+   <properties>
+    <property name="wall" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1195">
+   <properties>
+    <property name="wall" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1196">
+   <properties>
+    <property name="wall" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1202" terrain="2,2,2,"/>
+  <tile id="1203" terrain="2,2,,2"/>
+  <tile id="1204" terrain=",,,2"/>
+  <tile id="1205" terrain=",,2,2"/>
+  <tile id="1206" terrain=",,2,"/>
+  <tile id="1250">
+   <properties>
+    <property name="wall" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1251">
+   <properties>
+    <property name="wall" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1252">
+   <properties>
+    <property name="wall" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1253">
+   <properties>
+    <property name="wall" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1259" terrain="2,,2,2"/>
+  <tile id="1260" terrain=",2,2,2"/>
+  <tile id="1261" terrain=",2,,2"/>
+  <tile id="1262" terrain="2,2,2,2"/>
+  <tile id="1263" terrain="2,,2,"/>
+  <tile id="1307">
+   <properties>
+    <property name="wall" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1308">
+   <properties>
+    <property name="wall" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1309">
+   <properties>
+    <property name="wall" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1310">
+   <properties>
+    <property name="wall" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1318" terrain=",2,,"/>
+  <tile id="1319" terrain="2,2,,"/>
+  <tile id="1320" terrain="2,,,"/>
+  <tile id="1365">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="1366">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="1367">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="1422">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="1423">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="1424">
+   <properties>
+    <property name="waterLevel" value="0.5"/>
+   </properties>
+  </tile>
+ </tileset>
  <layer name="Ground/terrain" width="42" height="42">
   <data encoding="base64" compression="zlib">
-   eJztl20OwiAQRGlVDlW/LqX1+tKkJOsGqIFBGNMfL2lJoM/Z3TZaY4wV3BV6Xd7bALG9sbP1Oan10L6ts0LEvL7do9dSGeyUsWeKz7O1Qw+eDDOLfr/U+p1Iz5r1QHv+yq83z5hv6Vm1PA+Oo+JU8Xm5XByD47qyXN86yFPn9xCOnlxPdH7eZww4lngi85SeMUo8Ua4xT5lta8+lN3U/DuZzjkr7E+GpsxyF5+SYV16g2iFr7j17mPGt3tS1zu0z1Aw9RW3PwnEC1brGd1Nm21PNU9ki56bX/wOMngyOTDDlyeDK4Og9mVxbO/wTDHkyOLLBkimDJ8v78w2SbJY9
+   eJztl0sKwzAMREUXzrFq6P3vFEIrGFQ5LbZUe0oWgxODlZfnT0gRkQK5m9h+vC9OWmNbtW2ds35v3KdaXlpc346xfWcOrozlchrvczbDCpwMezb6fMl6z0jOzPmI5vwV32qcLd7RWlmcj5tIfbVHNnneZz1vhPNgUz7lne0T/SGX8mo725+6s1x6rewr+FQe5EPu2lk78vz03HmZybnJu8Mq/jrofUYEJzKpy5bbqHXW6xPXYsRZlBH0pw7R8eg6i9pDHh86Ha2f8d1E5pXm3AbnuwbWXfV/gJGTgZEpTD4ZWBkYlZOJdTbDP4XBJwMjW1icMnCynJ87dcaTyA==
+  </data>
+ </layer>
+ <layer name="Water" width="42" height="42">
+  <data encoding="base64" compression="zlib">
+   eJztktsNAjEMBH0caYpXVTzKgKqoi1iX6IyV49cWmpFWyedovSIAAAAA/8dcs3cpoUZjTjVTzblF/5dQowXf31W+HfXN4Kn9da+d+dtk8nyVsWM2Tx/brXq+5yjDZZt2j32Tk+Tq029T0z0PNfeWR5RgY3Tz7hndoWVrm8+Sy/Mm622PsnrqzaNvvYXtNlOXHttt1i4BAAAAAH7xAbu9GBk=
   </data>
  </layer>
  <layer name="Ground overlay" width="42" height="42">
@@ -19,7 +528,7 @@
  </layer>
  <layer name="Objects" width="42" height="42">
   <data encoding="base64" compression="zlib">
-   eJztWM1qFEEQzuzsgjnlZFCEGD3lEWKeIJCLWQVfIEo2OXlUCLKwhmgUvSTBq9415CESQUMgl1wjOahvYTXbxVZqq6r/doVAPih6pv/m66+ranpmYuIa17haWGqE+7yN6DNu9DyHGL4aliPGviyYf4lwdHw5V4m7th5J8zap+1Tlc0RuvET0hGdLdYgOtK2R9m2F52KCthpHzsPyh9us7TPcf2nIfSjPbgLPkJ5YSvqdQ90vX8811OpS950+3+Jq7S8F1fCsGq47rfq2m8iTxncqRyuuadsroZ3rORWhg8UNy1CuiY0F7Od4psQPcgn5JYVUFxsLXcIzJX5CXF3Jc2Gsr1qw4ugr2DewfaEtJn863Mng+F4YgzzdfHz/f4P9AfsrzBUTQ9J+383U1sqfs9B2D+y+oHlMnPP7mcYw14+teJ4xMW5xRE6o3/OmPnYm4VnzMM9hPeDpkMJVi3PJPxHSfs8b6+HIPYeUvocQUszQOMH1WTw7oPl6LbdJe8450vFtKB/568e1ztFBypPIk3N6CP79DO5XFZ5WzODeW+Mpnvj+H4yYcjxXGvFzaqB+uVcNzg8HBTmevnv5vl8k+DaC73muzzvwfHCTzPmmNWzvAnnNOrdrPKk+h6DHEdh3rwuNHeRK9+WEXGsm7Z0U14ssNjkXirV6YA5W7GjI/XbsMp6UyxHj3PH1Wj6h82i5PSUH4tlI8nnHZavZ5/Kg1bcF708ubp+S2JXOliV+bmGZ6dmpL2vK9XP9bvlrtxftgJ9Pwprnat1uJOYAnP91s6+Zs83mZf1oP1zftsEz9F7nPsC/JyRfxvl/QPnT23E1rE8o14xST76OPSOH8Hp+v8PuN/zcqee5GOR8F2pjOUbpnzkxOsXiT4P1/yr1nOaeNa20hb6VKU/KQfu3UvKvsCTn0bG9BK1yvmdHxXPcGBfPUf+Tvip6vihY9//kWYKSNVL8A9kGyuA=
+   eJztmM1KHEEQx2d2dkFPngyGgFFPPoLmCRb2ohvBF0hCVk8eExBZWEPi6tGIV3OPIQ8RA0kI5JJrQg7qW9jNdmFZW1X9tRsQ9g/F7HRP9/y6uqp2Zopioonul1o1/zUHAdeMWz3HEMIraT1g7OuM+VuI0fJSVo5dWg/n8zZqOy3TGYGNHkE95t5cG6hj+rZQf1/gbEb4VmKkHFo8PCR9Z+b8Q42/BnN2Izh9/oQj578/pu2va6c+lNpi9x3fX2PV9hcL+/B3Odz2qxzY+0hOnN+xjFpe4749pp/6cybADxobHH21JjQX4DrLGZM/wOKLSyyuLTQXuogzJn98rPZIa2ForGrS8uijsXNjn5i+kPpp9SiB8YgZA5x2Prr/l8aujF0zc4XkELffjxN9q9XPBdO3aGyJ8XlIntPz+Vo6q+UMyXGNEZjAfzt1eex8xL1W0DzgzxhWKc+5+ARxPlxR1kOV+hyS+z8E4nIG5wmsT+PsVEWxXfF93J5TRjy+bY5P3e+NSma04uokcFKmtUZRvDDnLwVOLWdg77XxWJsBe2A5n9XC55SE4/KkvH1++JxR4/F/L933fxGxDaJ7nhrzVrQezKI53zWG7bDhZwPRGJA4sX++GH9cGPvq/IJzB1jxvvxEvyXj9o7L6ybJTcqCtVXdmpWWO5JS3x27hBOzXBDmjmuX6gmeR6rtMTUQno24mLcsb+sDltXGwJ64eLJ5+xzlLvdsmRPnmtaJPzvVXZ9S/9nr5txvuxdtT5xPmzUvV7JNRdYAmH+/PvCZtTf1u/7D18H6+gqn73+dxgB9n+BiGeb/Zo7fnf0oh/3jqzWj9Cddx4lSQ2g7PT8m57tu7tjnuRClvBdKY6lGGZ8pOTpD8k+S9v0q9jnN3uuB0Od7V8acmEH6tpLzrTCn5uGxvQhfpbzPjopz3BoX56i/Sd8Xf77KWPf/5MxRzhqxbgAaH8ju
   </data>
  </layer>
  <layer name="Doors/windows/roof" width="42" height="42">

@@ -52,7 +52,7 @@ open class SKWorld: SKCropNode {
  - parameter cameraNode: `SKTiledSceneCamera!` scene camera node.
  - parameter tilemap:    `SKTilemap!` tile map node.
  */
-open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate {
+open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate, SKTilemapDelegate {
     
     /// World container node.
     open var worldNode: SKWorld!
@@ -97,8 +97,8 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     
     override open func sceneDidLoad() {
         setupWorld()
-    }    
-
+    }
+    
     override open func didMove(to view: SKView) {
         guard let worldNode = worldNode else { return }
         
@@ -111,7 +111,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
         // load the current tmx file name
         guard let tmxFilename = tmxFilename else { return }
         
-        if let tilemap = load(fromFile: tmxFilename) {
+        if let tilemap = load(fromFile: tmxFilename ) {
             // add the tilemap to the world container node.
             worldNode.addChild(tilemap)
             self.tilemap = tilemap
@@ -131,7 +131,6 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
             }
         }
     }
-    
     
     // MARK: - Setup
     
@@ -160,16 +159,37 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     /**
      Load a named TMX file.
      
-     - parameter fileNamed: `String` TMX file name.
+     - parameter filename:  `String` TMX file name.
      - returns: `SKTilemap?` tile map node.
      */
     open func load(fromFile filename: String) -> SKTilemap? {
-        if let tilemapNode = SKTilemap.load(fromFile: filename) {
+        if let tilemapNode = SKTilemap.load(fromFile: filename, delegate: self) {
             if (tilemapNode.backgroundColor != nil) {
                 self.backgroundColor = tilemapNode.backgroundColor!
             }
             return tilemapNode
         }
         return nil
+    }
+    
+    // MARK: - Callbacks
+    open func didBeginParsing(_ tilemap: SKTilemap) {
+        // Called when tilemap is instantiated.
+    }
+    
+    open func didAddTileset(_ tileset: SKTileset) {
+        // Called when a tileset has been added.
+    }
+    
+    open func didAddLayer(_ layer: TiledLayerObject) {
+        // Called when a layer has been added.
+    }
+    
+    open func didReadMap(_ tilemap: SKTilemap) {
+        // Called before layers are rendered.
+    }
+    
+    open func didRenderMap(_ tilemap: SKTilemap) {
+        // Called after layers are rendered. Perform any post-processing here.
     }
 }

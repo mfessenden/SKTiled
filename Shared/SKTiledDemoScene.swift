@@ -300,6 +300,12 @@ public class SKTiledDemoScene: SKTiledScene {
             propertiesInformationLabel.posByCanvas(x: 0.5, y: propertiesInfoY)
         }
     }
+    
+    // MARK: - Callbacks
+    override open func didRenderMap(_ tilemap: SKTilemap) {
+        // update the HUD to reflect the number of tiles created
+        updateHud()
+    }
 }
 
 

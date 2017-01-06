@@ -1,14 +1,21 @@
 #Debugging
 
+- [Visualizing Objects](#visualizing-objects)
+- [Visualizing the Tile Grid](#visualizing-the-tile-grid)
+- [Highlighting Tiles](#highlighting-tiles)
+- [Layer Boundary](#layer-boundary)
+- [Debugging Layers](#debugging-layers)
+- [Debugging Colors](#debugging-colors)
+- [Properties](#properties)
+
+
 There are several functions for troubleshooting your tiled scenes. The `SKTilemap` node has a `debugDraw` property that will quickly show the grid and any object layers:
 
 ```swift
 tilemap.debugDraw = true
 ```
 
-
-
-###Visualizing Objects
+##Visualizing Objects
 
 By default, object layers are hidden so that you may easily work with them in Tiled, but not see them in your game. To see them, you can either show *all* object layers, or on a layer by layer basis:
 
@@ -24,7 +31,7 @@ for layer in tilemap.objectLayers {
 }
 ```
 
-###Visualizing the Tile Grid
+##Visualizing the Tile Grid
 
 To visualize the current grid on any layer type, use the layer's `showGrid` property:
 
@@ -40,7 +47,7 @@ To change the grid color, set layer's `gridColor` property.
 
 
 
-###Highlighting Tiles
+##Highlighting Tiles
 
 You can highlight a tile using the `SKTile.drawBounds` method. 
 
@@ -61,7 +68,7 @@ tile.highlightColor = SKColor.red
 tileLayer.highlightColor = SKColor.blue
 ```
 
-###Layer Boundary
+##Layer Boundary
 
 All `TiledLayerObject` objects allow you to visualize the layer's boundary: 
 
@@ -69,7 +76,7 @@ All `TiledLayerObject` objects allow you to visualize the layer's boundary:
 tileLayer.drawBounds()
 ```
 
-###Debugging Layers
+##Debugging Layers
 
 To see a quick overview of the current tilemap's layers, use the `SKTilemap.debugLayers` method: 
 
@@ -78,13 +85,13 @@ To see a quick overview of the current tilemap's layers, use the `SKTilemap.debu
 Data shown includes layer index, size, positioning, offset, z-position and anchor point.
 
 
-###Debugging Colors
+##Debugging Colors
 
     SKTilemap:
 
       highlightColor   -> overrides all layers highlighColor -> overrides SKTile highlight color
 
-###Properties
+##Properties
 
 
 Debugging properties for **SKTiled** classes:
