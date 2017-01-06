@@ -131,9 +131,14 @@ internal let TileSize32x32 = CGSize(width: 32, height: 32)
 
 
 /**
- Delegate for users to implement their own callbacks.
- */
+ Delegate that allows your application to interact with a tile map as it is being created.
+*/
 public protocol SKTilemapDelegate: class {
+    /**
+     Called when the tilemap is instantiated.
+     
+     - parameter tilemap:  `SKTilemap` tilemap instance.
+     */
     func didBeginParsing(_ tilemap: SKTilemap)
     func didAddTileset(_ tileset: SKTileset)
     func didAddLayer(_ layer: TiledLayerObject)
@@ -1236,7 +1241,7 @@ extension SKTilemap {
     }
 }
 
-
+/*
 /**
  Add default implementations of callback methods
  */
@@ -1272,3 +1277,4 @@ extension SKTilemapDelegate {
      */
     public func didRenderMap(_ tilemap: SKTilemap) {}
 }
+*/
