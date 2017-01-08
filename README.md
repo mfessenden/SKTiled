@@ -26,6 +26,7 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 - [x] renders all layer types: (tile, object, image)
 - [x] supports all compression types: (base64, zlib, gzip)
 - [x] renders animated and fliped tiles
+- [ ] pre-load tilesets
 - [ ] multi-threaded rendering
 - [ ] generate GKGridGraph graphs from custom attributes (iOS10, macOS 10.11+)
 - [ ] user-definable cost properties for GKGridGraph nodes (iOS10, macOS 10.11+)

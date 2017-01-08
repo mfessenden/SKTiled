@@ -16,7 +16,7 @@ class GameViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // load demo files from a propertly list
         demoFiles = loadDemoFiles("DemoFiles")
         let currentFilename = demoFiles.first!

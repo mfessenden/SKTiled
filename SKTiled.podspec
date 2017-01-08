@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                  = "SKTiled"
-  s.version               = "1.06"
+  s.version               = "1.07"
   s.summary               = "SKTiled is a lightweight framework for using Tiled files with Apple's SpriteKit."
   s.description           = <<-DESC
                             SKTiled is a simple framework for using Tiled files with Apple's SpriteKit, allowing the creation of game assets from .tmx files.

@@ -149,11 +149,11 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
      - returns: `SKTilemap?` tile map node.
      */
     open func load(fromFile filename: String) -> SKTilemap? {
-        if let tilemapNode = SKTilemap.load(fromFile: filename, delegate: self) {
-            if (tilemapNode.backgroundColor != nil) {
-                self.backgroundColor = tilemapNode.backgroundColor!
+        if let tilemap = SKTilemap.load(fromFile: filename, delegate: self) {
+            if (tilemap.backgroundColor != nil) {
+                self.backgroundColor = tilemap.backgroundColor!
             }
-            return tilemapNode
+            return tilemap
         }
         return nil
     }

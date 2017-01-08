@@ -216,7 +216,10 @@ public class SKTiledDemoScene: SKTiledScene {
     override public func didChangeSize(_ oldSize: CGSize) {
         super.didChangeSize(oldSize)
         
-        uiScale = size.width / 400
+        let currentScale = Int(size.width / 400)
+        uiScale = CGFloat(currentScale > 1 ? currentScale : 1)
+        //uiScale = pow(2, ceil(log(uiScale)/log(2)))
+        
         updateHud()
         
         #if os(OSX)
@@ -268,6 +271,7 @@ public class SKTiledDemoScene: SKTiledScene {
         
         let buttonWidths = activeButtons.map { $0.size.width }
         let maxWidth = buttonWidths.reduce(0, {$0 + $1})
+
         let spacing = (viewSize.width - maxWidth) / CGFloat(activeButtons.count + 1)
         
         var current = spacing + (buttonWidths[0] / 2)

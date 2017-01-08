@@ -326,7 +326,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
      
      - returns: `[CGPoint]?` array of points.
      */
-    fileprivate func getVertices() -> [CGPoint]? {
+    public func getVertices() -> [CGPoint]? {
         guard let layer = layer else { return nil}
         guard points.count > 1 else { return nil}
                 

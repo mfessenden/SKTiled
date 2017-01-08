@@ -131,7 +131,7 @@ internal let TileSize32x32 = CGSize(width: 32, height: 32)
 
 
 /**
- Delegate for users to implement their own callbacks.
+ Delegate that allows your application to interact with a tile map as it is being created.
  */
 public protocol SKTilemapDelegate: class {
     func didBeginParsing(_ tilemap: SKTilemap)
@@ -180,9 +180,18 @@ open class SKTilemap: SKNode, SKTiledObject {
     open var layerCount: Int { return self.layers.count }         // layer count attribute
     open var properties: [String: String] = [:]                   // custom properties
     open var zDeltaForLayers: CGFloat = 50                        // z-position range for layers
-    open var backgroundColor: SKColor? = nil                      // optional background color (read from the Tiled file)
-    open var ignoreBackground: Bool = false                       // ignore Tiled scene background color
     
+    /// ignore Tiled background color
+    open var ignoreBackground: Bool = false
+    
+    /// Optional background color (read from the Tiled file)
+    open var backgroundColor: SKColor? = nil {
+        didSet {
+            self.backgroundSprite.color = (backgroundColor != nil) ? backgroundColor! : SKColor.clear
+            self.backgroundSprite.colorBlendFactor = (backgroundColor != nil) ? 1.0 : 0
+        }
+    }
+
     /** 
     The tile map default base layer, used for displaying the current grid, getting coordinates, etc.
     */
@@ -191,6 +200,13 @@ open class SKTilemap: SKNode, SKTiledObject {
         self.addLayer(layer, base: true)
         layer.didFinishRendering()
         return layer
+    }()
+    
+    lazy var backgroundSprite: SKSpriteNode = {
+        let background = SKSpriteNode(color: SKColor.clear, size: self.size)
+        background.size = self.sizeInPoints
+        self.addChild(background)
+        return background
     }()
     
     // debugging
@@ -323,19 +339,21 @@ open class SKTilemap: SKNode, SKTiledObject {
             }
         }
     }
-    
 
     // MARK: - Loading
     
     /**
      Load a Tiled tmx file and return a new `SKTilemap` object. Returns nil if there is a problem reading the file
      
-     - parameter filename:   `String` Tiled file name.
-     - parameter delegate:   `SKTilemapDelegate?` optional tilemap delegate instance.
+     - parameter filename:    `String` Tiled file name.
+     - parameter delegate:    `SKTilemapDelegate?` optional tilemap delegate instance.
+     - parameter withTilesets `[SKTileset]?` optional tilesets.
      - returns: `SKTilemap?` tilemap object (if file read succeeds).
      */
-    open class func load(fromFile filename: String, delegate: SKTilemapDelegate? = nil) -> SKTilemap? {
-        if let tilemap = SKTilemapParser().load(fromFile: filename, delegate: delegate) {
+    open class func load(fromFile filename: String,
+                         delegate: SKTilemapDelegate? = nil,
+                         withTilesets: [SKTileset]? = nil) -> SKTilemap? {
+        if let tilemap = SKTilemapParser().load(fromFile: filename, delegate: delegate, withTilesets: withTilesets) {
             return tilemap
         }
         return nil
@@ -395,16 +413,16 @@ open class SKTilemap: SKNode, SKTiledObject {
             self.staggerindex = hexindex
         }
         
-        // background color
-        if let backgroundHexColor = attributes["backgroundcolor"] {
-            if !(ignoreBackground == true){
-                self.backgroundColor = SKColor(hexString: backgroundHexColor)
-            }
-        }
-        
         // global antialiasing
         antialiasLines = tileSize.width > 16 ? true : false
         super.init()
+        
+        // background color
+        if let backgroundHexColor = attributes["backgroundcolor"] {
+            if !(ignoreBackground == true){
+                backgroundColor = SKColor(hexString: backgroundHexColor)
+            }
+        }
     }
     
     /**
@@ -523,7 +541,8 @@ open class SKTilemap: SKNode, SKTiledObject {
     /**
      Add a layer to the layers set. Automatically sets zPosition based on the zDeltaForLayers attributes.
      
-     - parameter layer: `TiledLayerObject` layer object.
+     - parameter layer:  `TiledLayerObject` layer object.
+     - parameter base:   `Bool` layer represents default layer.
      */
     open func addLayer(_ layer: TiledLayerObject, base: Bool=false) {
         // set the layer index
@@ -532,10 +551,8 @@ open class SKTilemap: SKNode, SKTiledObject {
         // setup the layer
         layer.opacity = 0
         
-        // don't add the base layer
-        if base == false {
-            layers.insert(layer)
-        }
+        // don't add the default layer
+        if base == false { layers.insert(layer) }
         addChild(layer)
         
         // align the layer to the anchorpoint
@@ -1235,9 +1252,9 @@ extension SKTilemap {
     }
 }
 
-
+/*
 /**
- Fuck, you're reading this from the bottom of the page!
+ Add default implementations of callback methods
  */
 extension SKTilemapDelegate {
     /**
@@ -1271,3 +1288,4 @@ extension SKTilemapDelegate {
      */
     public func didRenderMap(_ tilemap: SKTilemap) {}
 }
+*/

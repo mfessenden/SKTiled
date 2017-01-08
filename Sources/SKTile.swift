@@ -113,6 +113,18 @@ public class SKTile: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /**
+     Force the tile to update it's textures.
+     
+     - parameter data: `SKTilesetData` tile data.
+     - returns: `SKTile` tile sprite.
+     */
+    public func update(){
+        removeAllActions()
+        texture = nil
+        texture = tileData.texture
+        runAnimation()
+    }
     
     // MARK: - Physics
     
@@ -194,7 +206,7 @@ public class SKTile: SKSpriteNode {
     // MARK: - Animation
     
     /**
-     Checks if the tile is animated and run an action to animated it.
+     Checks if the tile is animated and runs an action to animate it.
      */
     public func runAnimation(){
         guard tileData.isAnimated == true else { return }
@@ -298,7 +310,7 @@ public class SKTile: SKSpriteNode {
      
      - returns: `[CGPoint]?` array of points.
      */
-    fileprivate func getVertices() -> [CGPoint] {
+    public func getVertices() -> [CGPoint] {
         var vertices: [CGPoint] = []
         guard let layer = layer else { return vertices }
         

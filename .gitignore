@@ -6,3 +6,5 @@ docs/swift/
 *.html
 *.js
 *.css
+SKTiled.playground/
+SKTiled.xcworkspace/

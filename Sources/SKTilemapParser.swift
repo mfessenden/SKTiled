@@ -51,13 +51,13 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     
     //let queue: DispatchQueue = DispatchQueue.global(qos: .userInteractive)
     
-    open var fileNames: [String] = []                               // list of files to read
+    open var fileNames: [String] = []                               // list of resource files
     open var currentFileName: String!
     
     weak var mapDelegate: SKTilemapDelegate?
     open var tilemap: SKTilemap!
     fileprivate var encoding: TilemapEncoding = .xml                // encoding
-    fileprivate var externalTilesets: [String: SKTileset] = [:]     // hold external tilesets 
+    fileprivate var tilesets: [String: SKTileset] = [:]             // stash external tilesets
     
     // stash current elements
     fileprivate var activeElement: String?                          // current object
@@ -79,11 +79,15 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     /**
      Load a TMX file and parse it.
      
-     - parameter filename:   `String` Tiled file name (does not need TMX extension).
-     - parameter delegate:   `SKTilemapDelegate?` optional tilemap delegate instance.
+     - parameter filename:     `String` Tiled file name (does not need TMX extension).
+     - parameter delegate:     `SKTilemapDelegate?` optional tilemap delegate instance.
+     - parameter withTilesets: `[SKTileset]?` optional tilesets.
      - returns: `SKTilemap?` tiled map node.
      */
-    open func load(fromFile filename: String, delegate: SKTilemapDelegate? = nil) -> SKTilemap? {
+    open func load(fromFile filename: String,
+                   delegate: SKTilemapDelegate? = nil,
+                   withTilesets: [SKTileset]? = nil) -> SKTilemap? {
+        
         guard let targetFile = getBundledFile(named: filename) else {
             print("[SKTilemapParser]: unable to locate file: \"\(filename)\"")
             return nil
@@ -93,7 +97,14 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         mapDelegate = delegate
         timer = Date()
         fileNames.append(targetFile)
-                
+        
+        // add tilesets
+        if let withTilesets = withTilesets {
+            for tileset in withTilesets {
+                tilesets[tileset.name] = tileset
+            }
+        }
+        
         while !(fileNames.isEmpty) {
             if let firstFileName = fileNames.first {
                 
@@ -135,11 +146,10 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         }
         
         // reset tileset data
-        externalTilesets = [:]
+        tilesets = [:]
         
         // render and complete
         didFinishParsing()
-        
         return tilemap
     }
     
@@ -194,7 +204,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
      */
     fileprivate func didBeginRendering(_ tilemap: SKTilemap, duration: TimeInterval=0.05)  {
         // worker queue & group
-        let queue = DispatchQueue.global(qos: .userInteractive)
+        let queue = DispatchQueue(label: "com.sktiled.renderqueue", qos: .userInteractive)
         let renderGroup = DispatchGroup()
         
         queue.async(group: renderGroup) {
@@ -284,25 +294,40 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             // external tileset
             if let source = attributeDict["source"] {
                 
-                // source is a file reference
-                if !(fileNames.contains(source)) {
-                    fileNames.append(source)
-                    
-                    guard let firstGID = attributeDict["firstgid"] else { parser.abortParsing(); return }
-                    let firstGIDInt = Int(firstGID)!
-                    
-                    let tileset = SKTileset(source: source, firstgid: firstGIDInt, tilemap: self.tilemap)
-                    
-                    // add tileset to external file list
-                    externalTilesets[source] = tileset
-                    self.tilemap.addTileset(tileset)
-                    lastElement = tileset
-                    
-                    // delegate callback
-                    if mapDelegate != nil { mapDelegate!.didAddTileset(tileset) }
+                // check to see if tileset already exists
+                if let existingTileset = tilesets[source] {
+                    self.tilemap.addTileset(existingTileset)
+                    lastElement = existingTileset
 
                     // set this to nil, just in case we're looking for a collections tileset.
                     currentID = nil
+                    
+                } else {
+                    // source is a file reference
+                    if !(fileNames.contains(source)) {
+                        fileNames.append(source)
+                        
+                        guard let firstGID = attributeDict["firstgid"] else { parser.abortParsing(); return }
+                        let firstGIDInt = Int(firstGID)!
+                        
+                        let tileset = SKTileset(source: source, firstgid: firstGIDInt, tilemap: self.tilemap)
+                        
+                        // add tileset to external file list
+                        tilesets[source] = tileset
+                        
+                        // add the tileset to the tilemap
+                        if let tilemap = self.tilemap {
+                            tilemap.addTileset(tileset)
+                        }
+                        
+                        lastElement = tileset
+                        
+                        // delegate callback
+                        if mapDelegate != nil { mapDelegate!.didAddTileset(tileset) }
+
+                        // set this to nil, just in case we're looking for a collections tileset.
+                        currentID = nil
+                    }
                 }
             }
             
@@ -310,7 +335,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             if let name = attributeDict["name"] {
                 
                 // update an existing tileset
-                if let existingTileset = externalTilesets[currentFileName] {
+                if let existingTileset = tilesets[currentFileName] {
                     
                     guard let width = attributeDict["tilewidth"] else { parser.abortParsing(); return }
                     guard let height = attributeDict["tileheight"] else { parser.abortParsing(); return }
@@ -334,7 +359,12 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 } else {
                     // create inline tileset
                     guard let tileset = SKTileset(attributes: attributeDict) else { parser.abortParsing(); return }
-                    self.tilemap.addTileset(tileset)
+                    
+                    // add the tileset to the tilemap
+                    if let tilemap = self.tilemap {
+                        tilemap.addTileset(tileset)
+                    }
+                    
                     lastElement = tileset
 
                     // delegate callback

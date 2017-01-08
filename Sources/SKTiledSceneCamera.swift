@@ -17,7 +17,6 @@ import Cocoa
 /**
   Custom scene camera that responds to finger/mouse gestures.
  */
-@available(OSX 10.11, *)
 open class SKTiledSceneCamera: SKCameraNode {
     
     unowned let world: SKNode

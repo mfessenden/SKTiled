@@ -146,6 +146,11 @@ public extension TiledLayerObject {
                 setColor(color: SKColor(hexString: value))
             }
             
+            if (attr == "backgroundColor") {
+                background.color = SKColor(hexString: value)
+                background.colorBlendFactor = 1.0
+            }
+            
             if (attr == "hidden") {
                 isHidden = boolForKey(attr)
             }

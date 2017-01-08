@@ -109,6 +109,20 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     open var antialiased: Bool = false
     open var colorBlendFactor: CGFloat = 1.0
     
+    /**
+     Layer background sprite.
+     */
+    lazy open var background: SKSpriteNode = {
+        let sprite = SKSpriteNode(color: SKColor.clear, size: self.tilemap.sizeInPoints)
+        sprite.anchorPoint = CGPoint.zero
+        
+        #if os(iOS)
+        sprite.position.y = -self.tilemap.sizeInPoints.height
+        #endif
+        self.addChild(sprite)
+        return sprite
+    }()
+    
     /// Returns the position of layer origin point (used to place tiles).
     open var origin: CGPoint {
         switch orientation {

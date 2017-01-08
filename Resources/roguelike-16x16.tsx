@@ -35,22 +35,22 @@
  </tile>
  <tile id="5" probability="0.5">
   <properties>
-   <property name="groundType" value="grass"/>
+   <property name="type" value="grass"/>
   </properties>
  </tile>
  <tile id="6" probability="0.5">
   <properties>
-   <property name="groundType" value="dirt"/>
+   <property name="type" value="dirt"/>
   </properties>
  </tile>
  <tile id="7">
   <properties>
-   <property name="groundType" value="gravel"/>
+   <property name="type" value="gravel"/>
   </properties>
  </tile>
  <tile id="8">
   <properties>
-   <property name="groundType" value="dirt"/>
+   <property name="type" value="dirt"/>
   </properties>
  </tile>
  <tile id="13">
@@ -86,22 +86,22 @@
  </tile>
  <tile id="62" probability="0.5">
   <properties>
-   <property name="groundType" value="grass"/>
+   <property name="type" value="grass"/>
   </properties>
  </tile>
  <tile id="63" probability="0.5">
   <properties>
-   <property name="groundType" value="dirt"/>
+   <property name="type" value="dirt"/>
   </properties>
  </tile>
  <tile id="64">
   <properties>
-   <property name="groundType" value="gravel"/>
+   <property name="type" value="gravel"/>
   </properties>
  </tile>
  <tile id="65">
   <properties>
-   <property name="groundType" value="dirt"/>
+   <property name="type" value="dirt"/>
   </properties>
  </tile>
  <tile id="114" terrain="0,,0,0">

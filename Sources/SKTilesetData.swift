@@ -141,7 +141,7 @@ open class SKTilesetData: SKTiledObject  {
 }
 
 
-public func ==(lhs: SKTilesetData, rhs: SKTilesetData) -> Bool{
+public func ==(lhs: SKTilesetData, rhs: SKTilesetData) -> Bool {
     return (lhs.hashValue == rhs.hashValue)
 }
 
