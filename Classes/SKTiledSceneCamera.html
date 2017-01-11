@@ -67,7 +67,7 @@
                 <a href="../Protocols/SKTiledObject.html">SKTiledObject</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a>
+                <a href="../Protocols.html#/s:P7SKTiled17SKTilemapDelegate">SKTilemapDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
@@ -139,75 +139,7 @@
             <a href="../Other Classes.html">Other Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Classes/DebugTileShape.html">DebugTileShape</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="../Other Global Variables.html">Other Global Variables</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Other Global Variables.html#/s:v7SKTiled12TileSizeZeroVSC6CGSize">TileSizeZero</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="../Other Enums.html">Other Enums</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Other Enums.html#/s:O7SKTiled15CompressionType">CompressionType</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Other Enums.html#/s:O7SKTiled8FileType">FileType</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Other Enums.html#/s:O7SKTiled13LabelPosition">LabelPosition</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Enums/LayerPosition.html">LayerPosition</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Other Enums.html#/s:O7SKTiled12ParsingError">ParsingError</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Other Enums.html#/s:O7SKTiled22SKObjectGroupDrawOrder">SKObjectGroupDrawOrder</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Enums/SKTiledLayerType.html">SKTiledLayerType</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Other Enums.html#/s:O7SKTiled11StaggerAxis">StaggerAxis</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Other Enums.html#/s:O7SKTiled12StaggerIndex">StaggerIndex</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Other Enums.html#/s:O7SKTiled15TilemapEncoding">TilemapEncoding</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="../Other Functions.html">Other Functions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Other Functions.html#/s:F7SKTiled14SKColorWithRGBFTSi1gSi1bSi_CSo7NSColor">SKColorWithRGB(_:g:b:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Other Functions.html#/s:F7SKTiled15SKColorWithRGBAFTSi1gSi1bSi1aSi_CSo7NSColor">SKColorWithRGBA(_:g:b:a:)</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="../Other Structs.html">Other Structs</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Structs/AnimationFrame.html">AnimationFrame</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Structs/Array2D.html">Array2D</a>
               </li>
             </ul>
           </li>
@@ -224,6 +156,10 @@
                 </div>
               </div>
             <p>Custom scene camera that responds to finger/mouse gestures.</p>
+
+<p>The <code>SKTiledSceneCamera</code> is a custom camera meant to be used with a <code><a href="../Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a></code> scene. The camera defines a position in the scene to render the scene from, with a reference to the <code><a href="../Protocols/SKTiledSceneDelegate.html#/s:vP7SKTiled20SKTiledSceneDelegate9worldNodeGSQCSo6SKNode_">SKTiledSceneDelegate.worldNode</a></code> to interact with tile maps. </p>
+
+<p>The <code>SKTiledSceneCamera</code> implements custom <code>UIGestureRecognizer</code> (iOS) and <code>NSEvent</code> mouse events (macOS) to aid in navigating your scenes.</p>
 
           </section>
           <section class="section task-group-section">
@@ -281,7 +217,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTiledSceneCamera.swift#L99-L109">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/blob/master/Sources/SKTiledSceneCamera.swift#L103-L113">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -344,7 +280,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTiledSceneCamera.swift#L117-L120">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/blob/master/Sources/SKTiledSceneCamera.swift#L121-L124">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -407,7 +343,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTiledSceneCamera.swift#L128-L132">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/blob/master/Sources/SKTiledSceneCamera.swift#L132-L136">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -481,7 +417,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTiledSceneCamera.swift#L142-L146">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/blob/master/Sources/SKTiledSceneCamera.swift#L146-L150">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -544,7 +480,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTiledSceneCamera.swift#L154-L156">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/blob/master/Sources/SKTiledSceneCamera.swift#L158-L160">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -607,7 +543,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTiledSceneCamera.swift#L164-L172">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/blob/master/Sources/SKTiledSceneCamera.swift#L168-L176">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -670,7 +606,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTiledSceneCamera.swift#L180-L191">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/blob/master/Sources/SKTiledSceneCamera.swift#L184-L195">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -700,7 +636,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTiledSceneCamera.swift#L196-L199">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/blob/master/Sources/SKTiledSceneCamera.swift#L200-L203">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -750,7 +686,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTiledSceneCamera.swift#L206-L209">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/blob/master/Sources/SKTiledSceneCamera.swift#L210-L213">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -781,7 +717,7 @@ Also sets the <code>SKTilemap.autoResize</code> parameter.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTiledSceneCamera.swift#L215-L233">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/blob/master/Sources/SKTiledSceneCamera.swift#L219-L237">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -842,7 +778,7 @@ Also sets the <code>SKTilemap.autoResize</code> parameter.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTiledSceneCamera.swift#L313-L316">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/blob/master/Sources/SKTiledSceneCamera.swift#L317-L320">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

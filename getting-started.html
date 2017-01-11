@@ -66,7 +66,7 @@
                 <a href="Protocols/SKTiledObject.html">SKTiledObject</a>
               </li>
               <li class="nav-group-task">
-                <a href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a>
+                <a href="Protocols.html#/s:P7SKTiled17SKTilemapDelegate">SKTilemapDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
@@ -138,75 +138,7 @@
             <a href="Other Classes.html">Other Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Classes/DebugTileShape.html">DebugTileShape</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Global Variables.html">Other Global Variables</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Other Global Variables.html#/s:v7SKTiled12TileSizeZeroVSC6CGSize">TileSizeZero</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Enums.html">Other Enums</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled15CompressionType">CompressionType</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled8FileType">FileType</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled13LabelPosition">LabelPosition</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Enums/LayerPosition.html">LayerPosition</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled12ParsingError">ParsingError</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled22SKObjectGroupDrawOrder">SKObjectGroupDrawOrder</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Enums/SKTiledLayerType.html">SKTiledLayerType</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled11StaggerAxis">StaggerAxis</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled12StaggerIndex">StaggerIndex</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled15TilemapEncoding">TilemapEncoding</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Functions.html">Other Functions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Other Functions.html#/s:F7SKTiled14SKColorWithRGBFTSi1gSi1bSi_CSo7NSColor">SKColorWithRGB(_:g:b:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other Functions.html#/s:F7SKTiled15SKColorWithRGBAFTSi1gSi1bSi1aSi_CSo7NSColor">SKColorWithRGBA(_:g:b:a:)</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Structs.html">Other Structs</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Structs/AnimationFrame.html">AnimationFrame</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/Array2D.html">Array2D</a>
               </li>
             </ul>
           </li>
@@ -224,7 +156,17 @@
 <ul>
 <li><a href="#swift-2-note">Swift 2 Note</a></li>
 </ul></li>
-<li><a href="#installation">Installation</a></li>
+<li><a href="#sktiled-project">SKTiled Project</a></li>
+<li><a href="#installation">Installation</a>
+
+<ul>
+<li><a href="#framework-framework">Framework Installation</a></li>
+<li><a href="#source-code-installation">Source Code Installation</a>
+
+<ul>
+<li><a href="#linking-zlib">Linking zlib</a></li>
+</ul></li>
+</ul></li>
 <li><a href="#adding-tiled-assets-to-xcode">Adding Tiled Assets to Xcode</a></li>
 </ul>
 
@@ -236,27 +178,61 @@
 <li>Xcode 8</li>
 <li>Swift 3</li>
 </ul>
-<a href='#strong-swift-2-note-strong' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='strong-swift-2-note-strong'><strong>Swift 2 Note</strong></h3>
+<a href='#strong-swift-2-note-strong' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='strong-swift-2-note-strong'><strong>Swift 2 Note</strong></h4>
 
 <p>Check out the <a href="https://github.com/mfessenden/SKTiled/tree/swift2">Swift 2</a> branch for Swift 2.3. As Apple is moving forward so quickly to Swift 3, the Swift 2.3 branch is now considered legacy and won&rsquo;t be updated. </p>
 
 <p>If you&rsquo;re using one of the older toolchains, you&rsquo;ll need to enable the <strong>Use Legacy Swift Language Version</strong> option in the project <strong>Build Settings.</strong></p>
 
-<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/swift_legacy.png" alt="Legacy Swift Version"></p>
+<p><img src="images/swift_legacy.png" alt="Legacy Swift Version"></p>
 <a href='#installation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='installation'>Installation</h2>
 
-<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/installation.png" alt="Xcode installation"></p>
+<p>When you clone the <strong>SKTiled</strong> project, you&rsquo;ll see that there are four targets included:</p>
 
-<ol>
-<li>Copy the <code>Sources</code> and <code>zlib</code> directories to your project. Make sure the swift files are added to your target(s).</li>
-<li>Add the <code>zlib</code> directory to your project&rsquo;s include paths:
+<p><img src="images/project_targets.png" alt="Project Targets"></p>
 
 <ul>
-<li><em>Project &gt; Build Settings &gt; Swift Compiler - Search Paths &gt; Import Paths</em></li>
-</ul></li>
-</ol>
+<li>SKTiled iOS Framework</li>
+<li>SKTiled macOS Framework</li>
+<li>SKTiled iOS Demo Project</li>
+<li>SKTiled macOS Demo Project</li>
+</ul>
 
-<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/zlib_linking.png" alt="zlib compression"></p>
+<p>The demo projects are there for you to build and test your own Tiled content. The frameworks are bundles that can be linked in your SpriteKit projects. </p>
+
+<p>To use the frameworks, build one or both of the targets and install them in a location accessible to your project.</p>
+<a href='#strong-framework-installation-strong' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='strong-framework-installation-strong'><strong>Framework Installation</strong></h3>
+
+<p>After building the framework(s), you&rsquo;ll need to add it to your Xcode project and </p>
+
+<p><img src="images/framework.png" alt="adding framework"></p>
+
+<p>Select your target, and add the framework to the <em>Embedded Binaries</em> and <em>Linked Frameworks and Libraries</em> sections of the <em>General</em> tab. </p>
+
+<p><img src="images/link_binary.png" alt="framework linking"></p>
+
+<p>You&rsquo;ll also add it to the <em>Build Phases &gt; Embed Frameworks</em> section. </p>
+
+<p><img src="images/links.png" alt="framework embed"></p>
+<a href='#strong-source-code-installation-strong' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='strong-source-code-installation-strong'><strong>Source Code Installation</strong></h3>
+
+<p>It is also possible to integrate the source code directly into your project. To do this, you&rsquo;ll need to copy the <code>Sources</code> and <code>zlib</code> directories to your project. Make sure the swift files are added to your target(s). </p>
+
+<p><img src="images/installation.png" alt="Xcode installation"></p>
+<a href='#linking-zlib' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='linking-zlib'>Linking zlib</h4>
+
+<p>Add the <code>zlib</code> directory to your project&rsquo;s include paths:
+    - <em>Project &gt; Build Settings &gt; Swift Compiler - Search Paths &gt; Import Paths</em></p>
+
+<p><img src="images/zlib_linking.png" alt="zlib compression"></p>
+<a href='#deployment-target' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='deployment-target'>Deployment Target</h2>
+
+<p>Make sure the <em>Minimum Deployment Target</em> is set correctly for your project:</p>
+
+<ul>
+<li>iOS 9</li>
+<li>macOS 10.11</li>
+</ul>
 <a href='#adding-tiled-assets-to-xcode' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='adding-tiled-assets-to-xcode'>Adding Tiled Assets to Xcode</h2>
 
 <p>When adding maps (TMX files), images and tilesets (TSX files) to your Xcode project, you&rsquo;ll need to make sure to add the files as <strong>groups</strong> and not folder references as the assets are stored in the root of the app bundle when compiled. Relative file references in your Tiled files will break when the are added to your app&rsquo;s bundle.</p>

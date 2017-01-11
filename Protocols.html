@@ -66,7 +66,7 @@
                 <a href="Protocols/SKTiledObject.html">SKTiledObject</a>
               </li>
               <li class="nav-group-task">
-                <a href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a>
+                <a href="Protocols.html#/s:P7SKTiled17SKTilemapDelegate">SKTilemapDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
@@ -138,75 +138,7 @@
             <a href="Other Classes.html">Other Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Classes/DebugTileShape.html">DebugTileShape</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Global Variables.html">Other Global Variables</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Other Global Variables.html#/s:v7SKTiled12TileSizeZeroVSC6CGSize">TileSizeZero</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Enums.html">Other Enums</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled15CompressionType">CompressionType</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled8FileType">FileType</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled13LabelPosition">LabelPosition</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Enums/LayerPosition.html">LayerPosition</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled12ParsingError">ParsingError</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled22SKObjectGroupDrawOrder">SKObjectGroupDrawOrder</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Enums/SKTiledLayerType.html">SKTiledLayerType</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled11StaggerAxis">StaggerAxis</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled12StaggerIndex">StaggerIndex</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other Enums.html#/s:O7SKTiled15TilemapEncoding">TilemapEncoding</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Functions.html">Other Functions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Other Functions.html#/s:F7SKTiled14SKColorWithRGBFTSi1gSi1bSi_CSo7NSColor">SKColorWithRGB(_:g:b:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other Functions.html#/s:F7SKTiled15SKColorWithRGBAFTSi1gSi1bSi1aSi_CSo7NSColor">SKColorWithRGBA(_:g:b:a:)</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Structs.html">Other Structs</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Structs/AnimationFrame.html">AnimationFrame</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/Array2D.html">Array2D</a>
               </li>
             </ul>
           </li>
@@ -282,7 +214,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTiledObject.swift#L19-L26">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/blob/master/Sources/SKTiledObject.swift#L18-L25">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -304,9 +236,38 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Delegate for users to implement their own callbacks.</p>
+                        <p>The <code>SKTilemapDelegate</code> protocol is used to implement a delegate that allows your application to interact with a tile map as it is being created.</p>
 
-                        <a href="Protocols/SKTilemapDelegate.html" class="slightly-smaller">See more</a>
+<p><a href='#strong-symbols-strong' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='strong-symbols-strong'><strong>Symbols</strong></h3></p>
+
+<ul>
+<li><code>didBeginParsing(_ tilemap: SKTilemap)</code>
+
+<ul>
+<li>called when the tilemap is initialized.</li>
+</ul></li>
+<li><code>didAddTileset(_ tileset: SKTileset)</code>
+
+<ul>
+<li>called when a tileset is added to the map.</li>
+</ul></li>
+<li><code>didAddLayer(_ layer: TiledLayerObject)</code>
+
+<ul>
+<li>called when a layer is added to the map.</li>
+</ul></li>
+<li><code>didReadMap(_ tilemap: SKTilemap)</code>
+
+<ul>
+<li>called when the map is finished parsing (before rendering).</li>
+</ul></li>
+<li><code>didRenderMap(_ tilemap: SKTilemap)</code>
+
+<ul>
+<li>called when the map is finished rendering.</li>
+</ul></li>
+</ul>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -317,7 +278,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTilemap.swift#L136-L142">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/blob/master/Sources/SKTilemap.swift#L160-L166">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -400,7 +361,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://mfessenden.github.io/SKTiled/Sources/SKTiledScene.swift#L22-L31">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/blob/master/Sources/SKTiledScene.swift#L22-L31">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
