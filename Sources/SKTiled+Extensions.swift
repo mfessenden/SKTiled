@@ -55,8 +55,7 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
 
 
 /**
- Check for tile ID flip flags. Returns the translated tile ID
- and the corresponding flip flags.
+ Check for tile ID flip flags. Returns the translated tile ID and the corresponding flip flags.
  
  - parameter id: `UInt32` tile ID
  - returns: tuple of global id and flip flags.
@@ -82,8 +81,8 @@ public func flippedTileFlags(id: UInt32) -> (gid: UInt32, hflip: Bool, vflip: Bo
 
 // MARK: - Extensions
 
-public extension Bool {
-    init<T : Integer>(_ integer: T){
+extension Bool {
+    init<T : Integer>(_ integer: T) {
         self.init(integer != 0)
     }
 }
@@ -96,14 +95,14 @@ extension Integer {
 }
 
 
-public extension CGFloat {
+internal extension CGFloat {
     
     /**
      Convert a float to radians.
      
      - returns: `CGFloat`
      */
-    public func radians() -> CGFloat {
+    internal func radians() -> CGFloat {
         let b = CGFloat(M_PI) * (self/180)
         return b
     }
@@ -115,7 +114,7 @@ public extension CGFloat {
      - parameter v2: `CGFloat` min value.
      - returns: `CGFloat` clamped result.
      */
-    public func clamped(_ minv: CGFloat, _ maxv: CGFloat) -> CGFloat {
+    internal func clamped(_ minv: CGFloat, _ maxv: CGFloat) -> CGFloat {
         let min = minv < maxv ? minv : maxv
         let max = minv > maxv ? minv : maxv
         return self < min ? min : (self > max ? max : self)
@@ -128,7 +127,7 @@ public extension CGFloat {
      - parameter v2: `CGFloat` min value.
      - returns: `CGFloat` clamped result.
      */
-    public mutating func clamp(_ minv: CGFloat, _ maxv: CGFloat) -> CGFloat {
+    internal mutating func clamp(_ minv: CGFloat, _ maxv: CGFloat) -> CGFloat {
         self = clamped(minv, maxv)
         return self
     }
@@ -139,7 +138,7 @@ public extension CGFloat {
      - parameter decimals: `Int` number of decimals to round to.
      - returns: `String` rounded display string.
      */
-    public func roundTo(_ decimals: Int=2) -> String {
+    internal func roundTo(_ decimals: Int=2) -> String {
         return String(format: "%.\(String(decimals))f", self)
     }
     
@@ -148,16 +147,11 @@ public extension CGFloat {
      
      - returns: `CGFloat` rounded value.
      */
-    public func roundToHalf() -> CGFloat {
+    internal func roundToHalf() -> CGFloat {
         let scaled = self * 10.0
         let result = scaled - (scaled.truncatingRemainder(dividingBy: 5))
         return result.rounded() / 10
     }
-}
-
-
-public func floor(_ flt: CGFloat) -> CGFloat {
-    return CGFloat(floor(Double(flt)))
 }
 
 
@@ -188,11 +182,6 @@ public extension CGPoint {
     
     public var description: String { return "x: \(x.roundTo()), y: \(y.roundTo())" }
     public var coordDescription: String { return "x: \(Int(x)), y: \(Int(y))" }
-}
-
-
-public func lerp(start: CGPoint, end: CGPoint, t: CGFloat) -> CGPoint {
-    return start + (end - start) * t
 }
 
 
@@ -273,7 +262,6 @@ public extension SKScene {
 }
 
 
-
 internal extension SKNode {
     
     /**
@@ -283,45 +271,6 @@ internal extension SKNode {
         guard let scene = scene else { return }
         guard let view = scene.view else { return }
         self.position = scene.convertPoint(fromView: (CGPoint(x: CGFloat(view.bounds.size.width * x), y: CGFloat(view.bounds.size.height * (1.0 - y)))))
-    }
-    
-    /// visualize a node's anchor point.
-    internal var drawAnchor: Bool {
-        get {
-            return childNode(withName: "Anchor") != nil
-        } set {
-            childNode(withName: "Anchor")?.removeFromParent()
-            
-            if (newValue == true) {
-                let anchorNode = SKNode()
-                anchorNode.name = "Anchor"
-                addChild(anchorNode)
-                
-                let radius: CGFloat = self.frame.size.width / 24 < 2 ? 1.0 : self.frame.size.width / 36
-                
-                let anchorShape = SKShapeNode(circleOfRadius: radius)
-                anchorShape.strokeColor = SKColor.clear
-                anchorShape.fillColor = SKColor(white: 1, alpha: 0.4)
-                anchorShape.zPosition = zPosition + 10
-                anchorNode.addChild(anchorShape)
-                
-                
-                
-                if let name = name {
-                    let label = SKLabelNode(fontNamed: "Courier")
-                    label.fontSize = 8
-                    label.position.y -= 10
-                    label.position.x -= 6
-                    anchorNode.addChild(label)
-                    var labelText = name
-                    if let scene = scene {
-                        labelText += ": \(scene.convertPoint(fromView: position).roundTo(1))"
-                        labelText += ": \(position.roundTo(1))"
-                    }
-                    label.text = labelText
-                }
-            }
-        }
     }
     
     /**
@@ -413,6 +362,23 @@ public extension SKColor {
         return cgColor.components!
     }
     
+    /**
+      Returns a hexadecimal string representation of the color.
+     
+     - returns: `String` hexadecimal string.
+     */
+    public func hexString() -> String {
+        let comps = components
+        let r = Int(comps[0] * 255)
+        let g = Int(comps[1] * 255)
+        let b = Int(comps[2] * 255)
+        let a = Int(comps[3] * 255)
+        
+        var rgbHex = "#\(String(format: "%02X%02X%02X", r, g, b))"
+        rgbHex += (a == 255) ? "" : String(format: "%02X", a)
+        return rgbHex
+    }
+    
     /*
      Blend current color with another `SKColor`.
      
@@ -466,15 +432,6 @@ public extension String {
     }
     
     /**
-     Returns an array of characters.
-     
-     - returns: `[String]`
-     */
-    public func toStringArray() -> [String] {
-        return self.unicodeScalars.map { String($0) }
-    }
-    
-    /**
      Pads string on the with a pattern to fill width.
      
      - parameter length:  `Int` length to fill.
@@ -516,22 +473,6 @@ public extension String {
      */
     public func substitute(_ pattern: String, replaceWith: String) -> String {
         return self.replacingOccurrences(of: pattern, with: replaceWith)
-    }
-    
-    /**
-     Returns an array of hexadecimal components.
-     
-     - returns: `[String]?` hexadecimal components.
-     */
-    public func hexComponents() -> [String?] {
-        let code = self
-        let offset = code.hasPrefix("#") ? 1 : 0
-        
-        let startIndex = code.index(code.startIndex, offsetBy: offset)
-        let firstIndex = code.index(startIndex, offsetBy: 2)
-        let secondIndex = code.index(firstIndex, offsetBy: 2)
-        let thirdIndex = code.index(secondIndex, offsetBy: 2)
-        return [code[startIndex..<firstIndex], code[firstIndex..<secondIndex], code[secondIndex..<thirdIndex]]
     }
     
     /**
@@ -616,6 +557,12 @@ public extension Data {
 // MARK: - Operators
 
 // MARK: CGFloat
+
+public func floor(_ flt: CGFloat) -> CGFloat {
+    return CGFloat(floor(Double(flt)))
+}
+
+
 public func + (lhs: Int, rhs: CGFloat) -> CGFloat {
     return CGFloat(lhs) + rhs
 }
@@ -661,6 +608,7 @@ public func / (lhs: CGFloat, rhs: Int) -> CGFloat {
 }
 
 // MARK: CGPoint
+
 public func + (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
     return CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
 }
@@ -693,6 +641,10 @@ public func * (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
 
 public func / (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
     return CGPoint(x: lhs.x / rhs, y: lhs.y / rhs)
+}
+
+public func lerp(start: CGPoint, end: CGPoint, t: CGFloat) -> CGPoint {
+    return start + (end - start) * t
 }
 
 
@@ -824,7 +776,7 @@ public func normalize(_ value: CGFloat, _ minimum: CGFloat, _ maximum: CGFloat) 
  - parameter scale: `CGFloat` image scale.
  - returns: `SKTexture?` visual grid texture.
  */
-public func drawGrid(_ layer: TiledLayerObject) -> CGImage {
+internal func drawGrid(_ layer: TiledLayerObject) -> CGImage {
     
     let uiScale: CGFloat
     #if os(iOS)
@@ -961,7 +913,7 @@ public func drawGrid(_ layer: TiledLayerObject) -> CGImage {
  - parameter origin: `CGPoint` rectangle origin.
  - returns: `[CGPoint]` array of points.
  */
-public func rectPointArray(_ width: CGFloat, height: CGFloat, origin: CGPoint=CGPoint.zero) -> [CGPoint] {
+public func rectPointArray(_ width: CGFloat, height: CGFloat, origin: CGPoint = .zero) -> [CGPoint] {
     let points: [CGPoint] = [
         origin,
         CGPoint(x: origin.x + width, y: origin.y),
@@ -978,7 +930,7 @@ public func rectPointArray(_ width: CGFloat, height: CGFloat, origin: CGPoint=CG
  - parameter origin: `CGPoint` rectangle origin.
  - returns: `[CGPoint]` array of points.
  */
-public func rectPointArray(_ size: CGSize, origin: CGPoint=CGPoint.zero) -> [CGPoint] {
+public func rectPointArray(_ size: CGSize, origin: CGPoint = .zero) -> [CGPoint] {
     return rectPointArray(size.width, height: size.height, origin: origin)
 }
 
@@ -992,7 +944,7 @@ public func rectPointArray(_ size: CGSize, origin: CGPoint=CGPoint.zero) -> [CGP
  - parameter origin: `CGPoint` origin point.
   - returns: `[CGPoint]` array of points.
  */
-public func polygonPointArray(_ sides: Int, radius: CGSize, offset: CGFloat=0, origin: CGPoint=CGPoint.zero) -> [CGPoint] {
+public func polygonPointArray(_ sides: Int, radius: CGSize, offset: CGFloat=0, origin: CGPoint = .zero) -> [CGPoint] {
     let angle = (360 / CGFloat(sides)).radians()
     let cx = origin.x // x origin
     let cy = origin.y // y origin
@@ -1373,7 +1325,6 @@ public extension Data {
         
         return data
     }
-    
     
     private func createZStream() -> z_stream {
         

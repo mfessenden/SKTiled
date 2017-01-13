@@ -1,8 +1,10 @@
 Sources/SKTiled+Debug.swift
 Resources/shaders/
 Resources/test/
-docs/swift/
+docs/jazzy_output/
 *.psd
 *.html
 *.js
 *.css
+SKTiled.playground/
+SKTiled.xcworkspace/

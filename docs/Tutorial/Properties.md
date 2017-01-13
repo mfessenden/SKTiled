@@ -22,12 +22,12 @@ If you are using the v0.17 of Tiled or newer, **SKTiled** supports the new **col
       tileOverlap         (Float)     - tile overlap amount.
       maxZoom             (Float)     - maximum camera zoom.
       minZoom             (Float)     - minimum camera zoom.
-      ignoreBackground    (Bool)      - ignore Tiled scene background color.
+      ignoreBackground    (Bool)      - ignore Tiled background color.
       antialiasLines      (Bool)      - antialias lines.
       autoResize          (Bool)      - automatically resize the map to best fit the view.
       xGravity            (Float)     - gravity in x.
       yGravity            (Float)     - gravity in y.
-      cropAtBoundary      (Bool)      - crop the map at boundaries.
+      cropAtBoundary      (Bool)      - crop the map at boundaries.**
 
     TiledLayerObject:
       antialiasing        (Bool)      - antialias lines.
@@ -51,7 +51,7 @@ If you are using the v0.17 of Tiled or newer, **SKTiled** supports the new **col
     SKTilesetData:
       collisionSize       (Float)     - used to add collision to the tile.
       collisionShape      (Int)       - 0 = rectangle, 1 = circle.
-      nodeClass           (String)    - tile node class**
+      nodeClass           (String)    - tile node class.**
 
     SKTileObject:
       hidden              (Bool)      - hide the object.

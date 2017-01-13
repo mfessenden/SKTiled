@@ -14,7 +14,6 @@ The `SKTiledObject` protocol describes a generic Tiled object containing a dicti
 
 - parameter uuid:       `String` unique object id.
 - parameter properties: `[String: String]` dictionary of object properties.
-
  */
 public protocol SKTiledObject: Hashable {
     /// Unique id (layer & object names may not be unique).

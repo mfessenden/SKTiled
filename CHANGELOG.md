@@ -1,25 +1,29 @@
 Change Log
-==========================
-1.0.7
---------------------------
+==========
+
+1.07
+-----
 
 #### Changes
 - add `SKTilemapDelegate` methods callbacks:
     - `didBeginParsing`, `didAddTileset`, `didAddLayer`, `didReadMap`
     - add default implementations via extension
-- tweaks to GCD parsing & rendering
+- tweaks to GCD rendering
 - now `SKTiledScene` conforms to `SKTilemapDelegate` & `SKTiledSceneDelegate` protocols
 - documentation update
-- add `SKTileset.setDataTexture` method to replace tilset data texture
+- add `SKTileset.setDataTexture` method to replace tileset data texture
+- add `SKColor.hexString` function
+- add `SKTilemap` background color sprite
+- change access control of some functions & extensions
 
-1.0.6
---------------------------
+1.06
+-----
 
 #### Changes
 - add SKTilemapDelegate protocol
 
-1.0.5
---------------------------
+1.05
+-----
 
 #### Changes
 - add dynamics properties to layers and objects
@@ -27,8 +31,8 @@ Change Log
 - add Data extension to check for compressed data
 - fix coordinate error with negative tile coordinates
 
-1.0.4
---------------------------
+1.04
+-----
 
 #### Changes
 - fixed a bug where object properties were added to the parent object group
@@ -45,8 +49,8 @@ Change Log
 - add `SKTilemap.pointForCoordinate` and `SKTilemap.coordinateForPoint` methods
 - updated README
 
-1.0.3
---------------------------
+1.03
+----
 
 #### Changes
 - add gzip & zlib decompression

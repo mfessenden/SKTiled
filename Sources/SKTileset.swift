@@ -11,7 +11,7 @@ import SpriteKit
 
 
 /**
- The `SKTileset` class manages an array of `SKTilesetData` objects, which hold tile data including global id and texture.
+ The `SKTileset` class manages a set of `SKTilesetData` objects, which store tile data including global id and texture.
  
  Tile data is accessed via the global id ('gid'):
  
@@ -53,15 +53,7 @@ open class SKTileset: SKTiledObject {
     open var transparentColor: SKColor = SKColor.clear           // sprite transparency color
     
     /// Returns the last GID in the tileset
-    open var lastGID: Int {
-        var gid = firstGID
-        for data in tileData {
-            if data.id > gid {
-                gid = data.id
-            }
-        }
-        return gid
-    }
+    open var lastGID: Int { return tileData.map { $0.id }.max() ?? firstGID }
     
     /**
      Initialize with basic properties.
@@ -82,7 +74,7 @@ open class SKTileset: SKTiledObject {
     }
     
     /**
-     Initialize from an external tileset. (only source and first gid are given).
+     Initialize from an external tileset (only source and first gid are given).
      
      - parameter source:   `String` source file name.
      - parameter firstgid: `Int` first gid value.
@@ -144,7 +136,7 @@ open class SKTileset: SKTiledObject {
      - parameter source:  `String` image named referenced in the tileset.
      - parameter replace: `Bool` replace the current texture.
      */
-    internal func addTextures(fromSpriteSheet source: String, replace: Bool = false) {
+    open func addTextures(fromSpriteSheet source: String, replace: Bool = false) {
         // images are stored in separate directories in the project will render incorrectly unless we use just the filename
         let sourceFilename = source.components(separatedBy: "/").last!
         let timer = Date()
@@ -177,12 +169,13 @@ open class SKTileset: SKTiledObject {
         var y = margin + rowHeight + rowSpacing - Int(tileSize.height)
         
         var tilesAdded: Int = 0
-        for gid in firstGID..<(firstGID + totalTileCount) {            
+    
+        for gid in self.firstGID..<(self.firstGID + totalTileCount) {
             let rectStartX = CGFloat(x) / CGFloat(textureWidth)
             let rectStartY = CGFloat(y) / CGFloat(textureHeight)
             
-            let rectWidth = tileSize.width / CGFloat(textureWidth)
-            let rectHeight = tileSize.height / CGFloat(textureHeight)
+            let rectWidth = self.tileSize.width / CGFloat(textureWidth)
+            let rectHeight = self.tileSize.height / CGFloat(textureHeight)
             
             // create texture rectangle
             let tileRect = CGRect(x: rectStartX, y: rectStartY, width: rectWidth, height: rectHeight)
@@ -190,19 +183,20 @@ open class SKTileset: SKTiledObject {
             
             // add the tile data properties, or replace the texture
             if replace == false {
-                let _ = addTilesetTile(gid, texture: tileTexture)
+                let _ = self.addTilesetTile(gid, texture: tileTexture)
             } else {
-                setDataTexture(gid, texture: tileTexture)
+                self.setDataTexture(gid, texture: tileTexture)
             }
             
-            x += Int(tileSize.width) + spacing
+            x += Int(self.tileSize.width) + self.spacing
             if x >= textureWidth {
-                x = margin
-                y -= Int(tileSize.height) + spacing
+                x = self.margin
+                y -= Int(self.tileSize.height) + self.spacing
             }
             
             tilesAdded += 1
         }
+        
         
         // time results
         if replace == false {
@@ -286,6 +280,7 @@ open class SKTileset: SKTiledObject {
     open func getTileData(_ gid: Int) -> SKTilesetData? {
         let id = getTileRealID(id: gid)
         if let index = tileData.index( where: { $0.id == id } ) {
+            // FIXME: odd crash here with threaded tileset rendering
             return tileData[index]
         }
         return nil

@@ -206,7 +206,7 @@ public class SKTile: SKSpriteNode {
     // MARK: - Animation
     
     /**
-     Checks if the tile is animated and run an action to animated it.
+     Checks if the tile is animated and runs an action to animate it.
      */
     public func runAnimation(){
         guard tileData.isAnimated == true else { return }
@@ -310,7 +310,7 @@ public class SKTile: SKSpriteNode {
      
      - returns: `[CGPoint]?` array of points.
      */
-    fileprivate func getVertices() -> [CGPoint] {
+    public func getVertices() -> [CGPoint] {
         var vertices: [CGPoint] = []
         guard let layer = layer else { return vertices }
         

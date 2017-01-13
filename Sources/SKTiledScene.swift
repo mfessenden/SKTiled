@@ -163,16 +163,14 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
      - returns: `SKTilemap?` tile map node.
      */
     open func load(fromFile filename: String) -> SKTilemap? {
-        if let tilemapNode = SKTilemap.load(fromFile: filename, delegate: self) {
-            if (tilemapNode.backgroundColor != nil) {
-                self.backgroundColor = tilemapNode.backgroundColor!
-            }
-            return tilemapNode
+        if let tilemap = SKTilemap.load(fromFile: filename, delegate: self) {
+            backgroundColor = tilemap.backgroundColor ?? SKColor.clear
+            return tilemap
         }
         return nil
     }
     
-    // MARK: - Callbacks
+    // MARK: - Delegate Callbacks
     open func didBeginParsing(_ tilemap: SKTilemap) {
         // Called when tilemap is instantiated.
     }
