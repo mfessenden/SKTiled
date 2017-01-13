@@ -980,14 +980,13 @@ open class SKTileLayer: TiledLayerObject {
      - parameter data: `[Int]` tile data.
      - returns: `Bool` data was successfully added.
      */
-    open func setLayerData(_ data: [UInt32], completion: (_ layer: SKTileLayer) -> ()) -> Bool {
+    open func setLayerData(_ data: [UInt32]) -> Bool {
         if !(data.count == size.count) {
             print("[SKTileLayer]: ERROR: invalid data size: \(data.count), expected: \(size.count)")
             return false
         }
         
         var errorCount: Int = 0
-
         for index in data.indices {
             let gid = data[index]
             
@@ -998,20 +997,16 @@ open class SKTileLayer: TiledLayerObject {
             let y: Int = index / Int(self.size.width)
             
             let coord = CGPoint(x: CGFloat(x), y: CGFloat(y))
-            
             let tile = self.buildTileAt(coord: coord, id: gid)
             
             if (tile == nil) {
                 errorCount += 1
             }
         }
-
+            
         if (errorCount != 0){
-            print("[SKTileLayer]: WARNING: layer \"\(name!)\": \(errorCount) \(errorCount > 1 ? "errors" : "error") loading data.")
+            print("[SKTileLayer]: WARNING: layer \"\(self.name!)\": \(errorCount) \(errorCount > 1 ? "errors" : "error") loading data.")
         }
-    
-        // run the completion handler
-        completion(self)
         return errorCount == 0
     }
     

@@ -25,12 +25,23 @@ internal enum TiledColors: String {
 
 
 /**
- Describes the map tile orientation.
+ Describes the map's tile orientation (shape).
 
- - orthogonal:   map is orthogonal type.
- - isometric:    map is isometric type.
- - hexagonal:    map is hexagonal type.
- - staggered:    map is isometric staggered type.
+ - `orthogonal`:   map is orthogonal type.
+
+    ![Orthogonal Map](../../Images/orthogonal_mapping.png "Orthogonal Map")
+ 
+ - `isometric`:    map is isometric type.
+ 
+    ![Isometric Map](../../Images/isometric_mapping.png "Isometric Map")
+ 
+ - `hexagonal`:    map is hexagonal type.
+ 
+    ![Hexagonal Map](../../Images/hexagonal_mapping.png "Hexagonal Map")
+ 
+ - `staggered`:    map is isometric staggered type.
+ 
+    ![Staggered Map](../../Images/staggered_mapping.png "Staggered Isometric Map")
  */
 public enum TilemapOrientation: String {
     case orthogonal   = "orthogonal"
@@ -89,9 +100,9 @@ internal enum TilemapEncoding: String {
 /**
  Alignment hint used to position the layers within the `SKTilemap` node.
 
- - bottomLeft:   node bottom left rests at parent zeropoint (0)
- - center:       node center rests at parent zeropoint (0.5)
- - topRight:     node top right rests at parent zeropoint. (1)
+ - `bottomLeft`:   node bottom left rests at parent zeropoint (0)
+ - `center`:       node center rests at parent zeropoint (0.5)
+ - `topRight`:     node top right rests at parent zeropoint. (1)
  */
 internal enum LayerPosition {
     case bottomLeft
@@ -102,8 +113,8 @@ internal enum LayerPosition {
 /**
  Hexagonal stagger axis.
  
- - x: axis is along the x-coordinate.
- - y: axis is along the y-coordinate.
+ - `x`: axis is along the x-coordinate.
+ - `y`: axis is along the y-coordinate.
  */
 internal enum StaggerAxis: String {
     case x  = "x"
@@ -114,8 +125,8 @@ internal enum StaggerAxis: String {
 /**
  Hexagonal stagger index.
  
- - even: stagger evens.
- - odd:  stagger odds.
+ - `even`: stagger evens.
+ - `odd`:  stagger odds.
  */
 internal enum StaggerIndex: String {
     case odd   
@@ -123,7 +134,7 @@ internal enum StaggerIndex: String {
 }
 
 
-///  Common tile size aliases
+//  Common tile size aliases
 internal let TileSizeZero  = CGSize(width: 0, height: 0)
 internal let TileSize8x8   = CGSize(width: 8, height: 8)
 internal let TileSize16x16 = CGSize(width: 16, height: 16)
@@ -131,7 +142,20 @@ internal let TileSize32x32 = CGSize(width: 32, height: 32)
 
 
 /**
- Delegate that allows your application to interact with a tile map as it is being created.
+ The `SKTilemapDelegate` protocol is used to implement a delegate that allows your application to interact with a tile map as it is being created.
+ 
+ ### **Symbols**
+ 
+ - `didBeginParsing(_ tilemap: SKTilemap)`
+    - called when the tilemap is initialized.
+ - `didAddTileset(_ tileset: SKTileset)`
+    - called when a tileset is added to the map.
+ - `didAddLayer(_ layer: TiledLayerObject)`
+    - called when a layer is added to the map.
+ - `didReadMap(_ tilemap: SKTilemap)`
+    - called when the map is finished parsing (before rendering).
+ - `didRenderMap(_ tilemap: SKTilemap)`
+    - called when the map is finished rendering.
  */
 public protocol SKTilemapDelegate: class {
     func didBeginParsing(_ tilemap: SKTilemap)
@@ -202,9 +226,11 @@ open class SKTilemap: SKNode, SKTiledObject {
         return layer
     }()
     
+    /**
+     Sprite background (if different than scene).
+     */
     lazy var backgroundSprite: SKSpriteNode = {
-        let background = SKSpriteNode(color: SKColor.clear, size: self.size)
-        background.size = self.sizeInPoints
+        let background = SKSpriteNode(color: self.backgroundColor ?? SKColor.clear, size: self.sizeInPoints)
         self.addChild(background)
         return background
     }()
@@ -220,7 +246,7 @@ open class SKTilemap: SKNode, SKTiledObject {
     // dynamics
     open var gravity: CGVector = CGVector.zero
     
-    /// Weak reference to tile map delegate.
+    /// Weak reference to `SKTilemapDelegate` delegate.
     weak open var delegate: SKTilemapDelegate?
     
     /// Rendered size of the map in points.
@@ -419,7 +445,7 @@ open class SKTilemap: SKNode, SKTiledObject {
         
         // background color
         if let backgroundHexColor = attributes["backgroundcolor"] {
-            if !(ignoreBackground == true){
+            if (ignoreBackground == false){
                 backgroundColor = SKColor(hexString: backgroundHexColor)
             }
         }
@@ -552,7 +578,9 @@ open class SKTilemap: SKNode, SKTiledObject {
         layer.opacity = 0
         
         // don't add the default layer
-        if base == false { layers.insert(layer) }
+        if base == false {
+            layers.insert(layer)
+        }
         addChild(layer)
         
         // align the layer to the anchorpoint
@@ -1251,41 +1279,3 @@ extension SKTilemap {
         print("\n")
     }
 }
-
-/*
-/**
- Add default implementations of callback methods
- */
-extension SKTilemapDelegate {
-    /**
-     Called when the tilemap is instantiated.
-
-     - parameter tilemap:  `SKTilemap` tilemap instance.
-     */
-    public func didBeginParsing(_ tilemap: SKTilemap) {}
-    /**
-     Called when a tileset is instantiated.
-
-     - parameter tileset:  `SKTileset` tileset instance.
-     */
-    public func didAddTileset(_ tileset: SKTileset) {}
-    /**
-     Called when a layer is added to a tilemap.
-
-     - parameter layer:  `TiledLayerObject` tilemap instance.
-     */
-    public func didAddLayer(_ layer: TiledLayerObject) {}
-    /**
-     Called when the tilemap is finished parsing.
-
-     - parameter tilemap:  `SKTilemap` tilemap instance.
-     */
-    public func didReadMap(_ tilemap: SKTilemap) {}
-    /**
-     Called when the tilemap layers are finished rendering.
-
-     - parameter tilemap:  `SKTilemap` tilemap instance.
-     */
-    public func didRenderMap(_ tilemap: SKTilemap) {}
-}
-*/

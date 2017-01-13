@@ -1,4 +1,4 @@
-![SKTiled](docs/Images/header.png)
+![SKTiled](images/header.png)
 
 > SKTiled is a lightweight framework for using [Tiled](http://www.mapeditor.org) files with Apple's SpriteKit.
 
@@ -12,7 +12,7 @@
 **SKTiled** is a simple library for using [Tiled](http://www.mapeditor.org) files with Apple's SpriteKit, allowing the creation of game assets from .tmx files. Inspired by [TilemapKit](http://tilemapkit.com) and written purely in Swift, I began working on this for a project after the development of TilemapKit was halted. Initially created as an exercise to learn Apple's new programming language, I've decided to open-source it in case others find it helpful.
 
 
-![macOS Demo](docs/Images/demo-macos-iso.png)
+![macOS Demo](images/demo-macos-iso.png)
 
 
 Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).

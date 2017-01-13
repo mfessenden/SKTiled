@@ -27,9 +27,9 @@ public enum SKObjectType: String {
 /**
  Represents the object's physics body type.
  
- - none:      object has no physics properties.
- - dynamic:   object is an active physics body.
- - collision: object is a passive physics body.
+ - `none`:      object has no physics properties.
+ - `dynamic`:   object is an active physics body.
+ - `collision`: object is a passive physics body.
  */
 public enum CollisionType {
     case none
@@ -41,8 +41,8 @@ public enum CollisionType {
 /**
  Label description orientation.
 
- - above: labels are rendered above the object.
- - below: labels are rendered below the object.
+ - `above`: labels are rendered above the object.
+ - `below`: labels are rendered below the object.
  */
 internal enum LabelPosition {
     case above

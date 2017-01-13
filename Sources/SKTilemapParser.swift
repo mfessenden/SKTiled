@@ -9,7 +9,7 @@
 import SpriteKit
 
 
-/// XML Parser error types.
+// XML Parser error types.
 internal enum ParsingError: Error {
     case attribute(attr: String)
     case attributeValue(attr: String, value: String)
@@ -20,7 +20,7 @@ internal enum ParsingError: Error {
 }
 
 
-/// File types recognized by the parser
+// File types recognized by the parser
 internal enum FileType: String {
     case tmx
     case tsx
@@ -28,7 +28,7 @@ internal enum FileType: String {
 }
 
 
-/// Document compression type.
+// Document compression type.
 internal enum CompressionType: String {
     case uncompressed
     case zlib
@@ -49,13 +49,11 @@ The `SKTilemapParser` is a custom `XMLParserDelegate` parser for reading Tiled T
  */
 open class SKTilemapParser: NSObject, XMLParserDelegate {
     
-    //let queue: DispatchQueue = DispatchQueue.global(qos: .userInteractive)
-    
     open var fileNames: [String] = []                               // list of resource files
     open var currentFileName: String!
-    
     weak var mapDelegate: SKTilemapDelegate?
     open var tilemap: SKTilemap!
+    
     fileprivate var encoding: TilemapEncoding = .xml                // encoding
     fileprivate var tilesets: [String: SKTileset] = [:]             // stash external tilesets
     
@@ -74,14 +72,39 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     fileprivate var timer: Date = Date()                            // timer
     fileprivate var finishedParsing: Bool = false
     
+    // dispatch queues & groups
+    internal let renderQueue = DispatchQueue(label: "com.sktiled.renderqueue", qos: .userInteractive)
+    internal let renderGroup = DispatchGroup()
+    
     // MARK: - Loading
+    
+    /**
+     Return the appropriate filename string for the given file (TMX or TSX) since Tiled stores
+     xml files with multiple extensions.
+     
+     - parameter fileName: `String` file name to search for.
+     - returns: `String?` name of file in bundle.
+     */
+    fileprivate func getBundledFile(named filename: String, extensions: [String] = ["tmx", "tsx"]) -> String? {
+        // strip off the file extension
+        let fileBaseName = filename.components(separatedBy: ".")[0]
+        for fileExtension in extensions {
+            if let url = Bundle.main.url(forResource: fileBaseName, withExtension: fileExtension) {
+                let filepath = url.absoluteString
+                if let filename = filepath.components(separatedBy: "/").last {
+                    return filename
+                }
+            }
+        }
+        return nil
+    }
     
     /**
      Load a TMX file and parse it.
      
      - parameter filename:     `String` Tiled file name (does not need TMX extension).
      - parameter delegate:     `SKTilemapDelegate?` optional tilemap delegate instance.
-     - parameter withTilesets: `[SKTileset]?` optional tilesets.
+     - parameter withTilesets: `[SKTileset]?` use existing tilesets to create the tile map.
      - returns: `SKTilemap?` tiled map node.
      */
     open func load(fromFile filename: String,
@@ -98,7 +121,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         timer = Date()
         fileNames.append(targetFile)
         
-        // add tilesets
+        // add existing tilesets
         if let withTilesets = withTilesets {
             for tileset in withTilesets {
                 tilesets[tileset.name] = tileset
@@ -144,57 +167,27 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 }
             }
         }
+    
+        guard let currentMap = self.tilemap else { return nil }
         
         // reset tileset data
         tilesets = [:]
         
-        // render and complete
-        didFinishParsing()
-        return tilemap
-    }
-    
-    /**
-     Return the appropriate filename string for the given file (TMX or TSX) since Tiled stores
-     xml files with multiple extensions.
-     
-     - parameter fileName: `String` file name to search for.
-     - returns: `String?` name of file in bundle.
-     */
-    fileprivate func getBundledFile(named filename: String) -> String? {
-        // strip off the file extension
-        let fileBaseName = filename.components(separatedBy: ".")[0]
-        for fileExtension in ["tmx", "tsx"] {
-            if let url = Bundle.main.url(forResource: fileBaseName, withExtension: fileExtension) {
-                let filepath = url.absoluteString
-                if let filename = filepath.components(separatedBy: "/").last {
-                    return filename
-                }
-            }
-        }
-        return nil
-    }
-
-    // MARK: - Post-Processing
-    
-    /**
-     Post-process called when tilemap is finished parsing.     
-     */
-    fileprivate func didFinishParsing() {
-        guard let tilemap = tilemap else { return }
-        
-        let queue = DispatchQueue.main
-        let parseGroup = DispatchGroup()
-        
         // pre-processing callback
-        queue.async(group: parseGroup) {
-            if self.mapDelegate != nil { self.mapDelegate!.didReadMap(tilemap) }
+        DispatchQueue.main.async(group: renderGroup) {
+            if self.mapDelegate != nil { self.mapDelegate!.didReadMap(currentMap) }
         }
         
         // start rendering layers when queue is complete.
-        parseGroup.notify(queue: DispatchQueue.main) {
-            self.didBeginRendering(tilemap)
+        renderGroup.notify(queue: DispatchQueue.main) {
+            self.didBeginRendering(currentMap)
         }
+
+        return currentMap
     }
+
+    
+    // MARK: - Post-Processing
     
     /**
      Post-process to render each layer.
@@ -202,54 +195,47 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
      - parameter tilemap:  `SKTilemap`    tile map node.
      - parameter duration: `TimeInterval` fade-in time for each layer.
      */
-    fileprivate func didBeginRendering(_ tilemap: SKTilemap, duration: TimeInterval=0.05)  {
-        // worker queue & group
-        let queue = DispatchQueue(label: "com.sktiled.renderqueue", qos: .userInteractive)
-        let renderGroup = DispatchGroup()
-        
-        queue.async(group: renderGroup) {
-        
-            for layer in tilemap.allLayers() {
-
+    fileprivate func didBeginRendering(_ tilemap: SKTilemap, duration: TimeInterval=0.025)  {
+        // assign each layer a work item
+        for layer in tilemap.allLayers() {
+            
+            let renderItem = DispatchWorkItem() {
                 // render object groups
                 if let objectGroup = layer as? SKObjectGroup {
                     objectGroup.drawObjects()
-                    objectGroup.didFinishRendering(duration: duration)
-                    continue
                 }
                 
                 // render image layers
-                if let imageLayer = layer as? SKImageLayer {
-                    imageLayer.didFinishRendering(duration: duration)
-                    continue
-                }
+                if let _ = layer as? SKImageLayer {}
                 
                 // render tile layers
                 if let tileLayer = layer as? SKTileLayer {
-                    guard let tileData = self.data[tileLayer.uuid] else { continue }
-                    // add the layer data and completion handler
-                    let _ = tileLayer.setLayerData(tileData, completion: { (_ layer: SKTileLayer) -> Void in
-                        // run the tile layer completion callback
-                        tileLayer.didFinishRendering(duration: duration)
-
-                    })
+                    if let tileData = self.data[tileLayer.uuid] {
+                        // add the layer data
+                        let _ = tileLayer.setLayerData(tileData)
+                    }
                 
                     // report errors
                     if tileLayer.gidErrors.count > 0 {
                         let gidErrorString : String = tileLayer.gidErrors.reduce("", { "\($0)" == "" ? "\($1)" : "\($0)" + ", " + "\($1)" })
                         print("[SKTilemapParser]: WARNING: layer \"\(tileLayer.name!)\": the following gids could not be found: \(gidErrorString)")
                     }
-                    continue
                 }
             }
-        }
 
-        // reset the data property when all layers are rendered & run a callback on the tilemap node
-        renderGroup.notify(queue: DispatchQueue.main) {
-            self.data = [:]
-            self.tilemap.didFinishRendering(timeStarted: self.timer)
+            self.renderQueue.async(group: self.renderGroup, execute: renderItem)
         }
         
+        // run callbacks when the group is finished
+        renderGroup.notify(queue: DispatchQueue.main) {
+            self.data = [:]
+            self.tilesets = [:]
+            self.tilemap.didFinishRendering(timeStarted: self.timer)
+            
+            for layer in self.tilemap.allLayers() {
+                layer.didFinishRendering(duration: duration)
+            }
+        }
     }
     
     // MARK: - XMLParserDelegate
@@ -296,7 +282,10 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 
                 // check to see if tileset already exists
                 if let existingTileset = tilesets[source] {
-                    self.tilemap.addTileset(existingTileset)
+                    
+                    if self.tilemap != nil {
+                        self.tilemap.addTileset(existingTileset)
+                    }
                     lastElement = existingTileset
 
                     // set this to nil, just in case we're looking for a collections tileset.
@@ -310,8 +299,8 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                         guard let firstGID = attributeDict["firstgid"] else { parser.abortParsing(); return }
                         let firstGIDInt = Int(firstGID)!
                         
-                        let tileset = SKTileset(source: source, firstgid: firstGIDInt, tilemap: self.tilemap)
-                        
+                        let  tileset = SKTileset(source: source, firstgid: firstGIDInt, tilemap: self.tilemap)
+
                         // add tileset to external file list
                         tilesets[source] = tileset
                         
@@ -324,7 +313,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                         
                         // delegate callback
                         if mapDelegate != nil { mapDelegate!.didAddTileset(tileset) }
-
                         // set this to nil, just in case we're looking for a collections tileset.
                         currentID = nil
                     }
@@ -474,6 +462,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 } else {
                     // add the tileset spritesheet image
                     tileset.addTextures(fromSpriteSheet: imageSource)
+
                 }
             }
         }

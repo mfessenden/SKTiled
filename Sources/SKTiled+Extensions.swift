@@ -373,7 +373,10 @@ public extension SKColor {
         let g = Int(comps[1] * 255)
         let b = Int(comps[2] * 255)
         let a = Int(comps[3] * 255)
-        return "#\(String(format: "%02X%02X%02X", r, g, b))"
+        
+        var rgbHex = "#\(String(format: "%02X%02X%02X", r, g, b))"
+        rgbHex += (a == 255) ? "" : String(format: "%02X", a)
+        return rgbHex
     }
     
     /*
