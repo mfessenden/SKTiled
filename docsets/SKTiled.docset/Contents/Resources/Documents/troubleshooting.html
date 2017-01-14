@@ -15,6 +15,7 @@
       <div class="content-wrapper">
         <p><a href="index.html">SKTiled Docs</a></p>
         <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2Fdocsets%2FSKTiled%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -66,7 +67,7 @@
                 <a href="Protocols/SKTiledObject.html">SKTiledObject</a>
               </li>
               <li class="nav-group-task">
-                <a href="Protocols.html#/s:P7SKTiled17SKTilemapDelegate">SKTilemapDelegate</a>
+                <a href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
@@ -134,14 +135,6 @@
               </li>
             </ul>
           </li>
-          <li class="nav-group-name">
-            <a href="Other Classes.html">Other Classes</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
-              </li>
-            </ul>
-          </li>
         </ul>
       </nav>
       <article class="main-content">
@@ -165,7 +158,7 @@
 
 <p><code>$(SRCROOT)/Sources</code></p>
 
-<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/zlib_linking.png" alt="zlib compression"></p>
+<p><img src="images/zlib_linking.png" alt="zlib compression"></p>
 
 <p>In your Xcode project file, the path entry will look like this:</p>
 
@@ -177,7 +170,7 @@
 
 <p>Occasionally you&rsquo;ll get a code signing error when compiling on OSX:</p>
 
-<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/codesign-error.png" alt="Codesign Error"></p>
+<p><img src="images/codesign-error.png" alt="Codesign Error"></p>
 
 <p>If you&rsquo;re using Photoshop to save images, you might need to cleanup Finder metadata. To check, browse to your images directory in shell and run the following command:</p>
 <pre class="highlight plaintext"><code>ls -al@
@@ -185,7 +178,7 @@
 
 <p>If any of your files have extra metadata that Xcode doesn&rsquo;t like, you&rsquo;ll see it listed below the file name:</p>
 
-<p><img src="https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/xattr-cleanup.png" alt="Image Metadata"></p>
+<p><img src="images/xattr-cleanup.png" alt="Image Metadata"></p>
 
 <p>Running the following command will clean up the extra data:</p>
 <pre class="highlight plaintext"><code>xattr -c *.png
