@@ -36,7 +36,7 @@ let tiles = tileLayer.getTiles(withID: 10)
 
 The property "type" can be used to label or group tiles in **SKTiled**. Simply adding a string property to a tile ID will allow it to be accessed from SpriteKit:
 
-![Tile Types](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/tile-types.png)
+![Tile Types](images/tile-types.png)
 
 Querying any tile with that property is simple:
 
@@ -85,7 +85,7 @@ if let removedTile = tileLayer.removeTileAt(10, 8) {
 
 ## Animated Tiles
 
-![Animated Tiles](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/animated-tiles.gif)
+![Animated Tiles](images/animated-tiles.gif)
 
 Tiles animated in Tiled are have custom SpriteKit actions automatically created to animate the tile texture. Animated tiles are accessed with the `SKTileLayer.getAnimatedTiles` method, or globally via the `SKTilemap.getAnimatedTiles` method:
 

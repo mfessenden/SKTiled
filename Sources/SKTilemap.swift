@@ -158,10 +158,15 @@ internal let TileSize32x32 = CGSize(width: 32, height: 32)
     - called when the map is finished rendering.
  */
 public protocol SKTilemapDelegate: class {
+    /// Called when the tilemap is instantiated.
     func didBeginParsing(_ tilemap: SKTilemap)
+    /// Called when a tileset has been added.
     func didAddTileset(_ tileset: SKTileset)
+    /// Called when a layer has been added.
     func didAddLayer(_ layer: TiledLayerObject)
+    /// Called before layers are rendered.
     func didReadMap(_ tilemap: SKTilemap)
+    /// Called when layers are rendered. Perform post-processing here.
     func didRenderMap(_ tilemap: SKTilemap)
 }
 
@@ -1279,3 +1284,16 @@ extension SKTilemap {
         print("\n")
     }
 }
+
+
+/**
+ Default implementations of callbacks.
+ */
+extension SKTilemapDelegate {
+    public func didBeginParsing(_ tilemap: SKTilemap) {}
+    public func didAddTileset(_ tileset: SKTileset) {}
+    public func didAddLayer(_ layer: TiledLayerObject) {}
+    public func didReadMap(_ tilemap: SKTilemap) {}
+    public func didRenderMap(_ tilemap: SKTilemap) {}
+}
+

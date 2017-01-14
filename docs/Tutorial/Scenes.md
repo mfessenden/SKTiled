@@ -78,7 +78,7 @@ class GameScene: SKScene, SKTiledSceneDelegate  {
 }
 ```
 
-![Scene Hierarchy](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/scene_hierarchy.png)
+![Scene Hierarchy](images/scene_hierarchy.png)
 
 The tile map is parented to a world container node, which interacts with the included [`SKTiledSceneCamera`](Classes/SKTiledSceneCamera.html) class and allows you to easily move the scene around with mouse & touch events. The world node is set to 0,0 in the scene by default. 
 

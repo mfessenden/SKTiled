@@ -19,7 +19,7 @@ The [`SKTileObject`](Classes/SKTileObject.html) class represents a vector object
 
 Objects assigned a type in Tiled will retain that property in **SKTiled**, accessed with the optional `SKTileObject.type` property:
 
-![Tiled obeject types](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/object_types.png)
+![Tiled obeject types](images/object_types.png)
 
 Objects assigned a type property can be queried from the parent [`SKObjectGroup`](Classes/SKObjectGroup.html):
 
@@ -45,7 +45,7 @@ You also have the option of enabling physics for each object, allowing them to r
 - map properties contain a `yGravity` value of `-9.8`
 
 
-![Object Dynamics](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/dynamic-objects.gif)
+![Object Dynamics](images/dynamic-objects.gif)
 
 
  Next: [Properties](properties.html) - [Index](Tutorial.html)

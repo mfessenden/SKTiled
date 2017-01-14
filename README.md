@@ -230,6 +230,7 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", "1")
 
 ## Acknowledgments
 
+- [Thorbjørn Lindeijer](https://github.com/bjorn): creator of *Tiled*
 - [GZipSwift](https://github.com/1024jp/GzipSwift): zlib decompression extensions
 - [Steffen Itterheim](http://www.learn-cocos2d.com): Author of TilemapKit, the inspiration for this project
 - [Kenney Vleugels](http://www.kenney.nl): demo spritesheet assets
