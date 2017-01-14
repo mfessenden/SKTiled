@@ -141,8 +141,8 @@ internal let TileSize16x16 = CGSize(width: 16, height: 16)
 internal let TileSize32x32 = CGSize(width: 32, height: 32)
 
 
- The `SKTilemapDelegate` protocol is used to implement a delegate that allows your application to interact with a tile map as it is being created.
 /**
+ The `SKTilemapDelegate` protocol is used to implement a delegate that allows your application to interact with a tile map as it is being created.
  
  ### **Symbols**
  
@@ -158,15 +158,15 @@ internal let TileSize32x32 = CGSize(width: 32, height: 32)
     - called when the map is finished rendering.
 */
 public protocol SKTilemapDelegate: class {
-    /**
-     Called when the tilemap is instantiated.
-     
-     - parameter tilemap:  `SKTilemap` tilemap instance.
-     */
+    /// Called when the tilemap is instantiated.
     func didBeginParsing(_ tilemap: SKTilemap)
+    /// Called when a tileset has been added.
     func didAddTileset(_ tileset: SKTileset)
+    /// Called when a layer has been added.
     func didAddLayer(_ layer: TiledLayerObject)
+    /// Called before layers are rendered.
     func didReadMap(_ tilemap: SKTilemap)
+    /// Called when layers are rendered. Perform post-processing here.
     func didRenderMap(_ tilemap: SKTilemap)
 }
 
@@ -1285,40 +1285,15 @@ extension SKTilemap {
     }
 }
 
-/*
+
 /**
- Add default implementations of callback methods
+ Default implementations of callbacks.
  */
 extension SKTilemapDelegate {
-    /**
-     Called when the tilemap is instantiated.
-
-     - parameter tilemap:  `SKTilemap` tilemap instance.
-     */
     public func didBeginParsing(_ tilemap: SKTilemap) {}
-    /**
-     Called when a tileset is instantiated.
-
-     - parameter tileset:  `SKTileset` tileset instance.
-     */
     public func didAddTileset(_ tileset: SKTileset) {}
-    /**
-     Called when a layer is added to a tilemap.
-
-     - parameter layer:  `TiledLayerObject` tilemap instance.
-     */
     public func didAddLayer(_ layer: TiledLayerObject) {}
-    /**
-     Called when the tilemap is finished parsing.
-
-     - parameter tilemap:  `SKTilemap` tilemap instance.
-     */
     public func didReadMap(_ tilemap: SKTilemap) {}
-    /**
-     Called when the tilemap layers are finished rendering.
-
-     - parameter tilemap:  `SKTilemap` tilemap instance.
-     */
     public func didRenderMap(_ tilemap: SKTilemap) {}
 }
-*/
+

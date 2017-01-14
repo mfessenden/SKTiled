@@ -68,7 +68,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     open var properties: [String: String] = [:]
     
     /// Layer color.
-    open var color: SKColor = SKColor.clear
+    open var color: SKColor = SKColor.gray
     /// Grid visualization color.
     open var gridColor: SKColor = SKColor.black
     /// Bounding box color.
@@ -80,8 +80,6 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     
     /// Layer size (in tiles).
     open var size: CGSize { return tilemap.size }
-    /// Layer size (in points)
-    open var sizeInPoints: CGSize { return tilemap.sizeInPoints }
     /// Layer tile size (in pixels).
     open var tileSize: CGSize { return tilemap.tileSize }
     /// Tile map orientation.
@@ -100,6 +98,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     open var sizeHalved: CGSize { return tilemap.sizeHalved }
     open var tileWidthHalf: CGFloat { return tilemap.tileWidthHalf }
     open var tileHeightHalf: CGFloat { return tilemap.tileHeightHalf }
+    open var sizeInPoints: CGSize { return tilemap.sizeInPoints }
     
     // debug visualizations
     open var gridOpacity: CGFloat = 0.20

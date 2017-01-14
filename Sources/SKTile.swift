@@ -119,7 +119,7 @@ public class SKTile: SKSpriteNode {
      - parameter data: `SKTilesetData` tile data.
      - returns: `SKTile` tile sprite.
      */
-    public func update(){
+    internal func update(){
         removeAllActions()
         texture = nil
         texture = tileData.texture

@@ -1,7 +1,7 @@
-![SKTiled](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/header.png)
+![SKTiled](images/header.png)
 
 
-##SKTiled v1.0.7 Documentation
+##SKTiled v1.07 Documentation
 
 
 - [Tutorial](Tutorial.html)
@@ -9,7 +9,4 @@
 
 **SKTiled** is a lightweight framework for using [Tiled](http://www.mapeditor.org) assets with Apple's SpriteKit.
 
-![Isometric Preview](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/iso-start.png)
-
-
-
+![Isometric Preview](images/iso-start.png)

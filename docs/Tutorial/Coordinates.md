@@ -69,7 +69,7 @@ It's important to remember that each layer has the ability to independently quer
 ##Coordinate Offsets & Hints
 
 
-The [`TileOffset`](Classes/TileOffset.html) enum represents a hint for placement within each layer type:
+The [`TileOffset`](Enums/TileOffset.html) enum represents a hint for placement within each layer type:
     
      TileOffset.center        // returns the center of the tile.    
      TileOffset.top           // returns the top of the tile.

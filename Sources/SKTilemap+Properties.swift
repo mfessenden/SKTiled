@@ -138,6 +138,7 @@ public extension TiledLayerObject {
      Parse the layer's properties value.
      */
     public func parseProperties(completion: (() -> ())?) {
+        
         for (attr, value) in properties {
             
             if (attr == "zPosition") {

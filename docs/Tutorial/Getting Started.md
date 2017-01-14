@@ -25,14 +25,14 @@ Check out the [Swift 2](https://github.com/mfessenden/SKTiled/tree/swift2) branc
 
 If you're using one of the older toolchains, you'll need to enable the **Use Legacy Swift Language Version** option in the project **Build Settings.**
 
-![Legacy Swift Version](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/swift_legacy.png)
+![Legacy Swift Version](images/swift_legacy.png)
 
 
 ## Installation
 
 When you clone the **SKTiled** project, you'll see that there are four targets included:
 
-![Project Targets](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/project_targets.png)
+![Project Targets](images/project_targets.png)
 
 - SKTiled iOS Framework
 - SKTiled macOS Framework
@@ -43,32 +43,32 @@ The demo projects are there for you to build and test your own Tiled content. Th
 
 To use the frameworks, build one or both of the targets and install them in a location accessible to your project.
 
-### Framework Installation
+### **Framework Installation**
 
 After building the framework(s), you'll need to add it to your Xcode project and 
 
-![adding framework](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/framework.png)
+![adding framework](images/framework.png)
 
 Select your target, and add the framework to the *Embedded Binaries* and *Linked Frameworks and Libraries* sections of the *General* tab. 
 
-![framework linking](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/link_binary.png)
+![framework linking](images/link_binary.png)
 
 You'll also add it to the *Build Phases > Embed Frameworks* section. 
 
-![framework embed](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/links.png)
+![framework embed](images/links.png)
 
-### Source Code Installation
+### **Source Code Installation**
 
 It is also possible to integrate the source code directly into your project. To do this, you'll need to copy the `Sources` and `zlib` directories to your project. Make sure the swift files are added to your target(s). 
 
-![Xcode installation](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/installation.png)
+![Xcode installation](images/installation.png)
 
 #### Linking zlib
 
 Add the `zlib` directory to your project's include paths:
     - *Project > Build Settings > Swift Compiler - Search Paths > Import Paths*
 
-![zlib compression](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/zlib_linking.png)
+![zlib compression](images/zlib_linking.png)
 
 ## Deployment Target
 

@@ -16,7 +16,7 @@ Add a path that represents the SKTiled zlib module:
 `$(SRCROOT)/Sources`
 
 
-![zlib compression](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/zlib_linking.png)
+![zlib compression](images/zlib_linking.png)
 
 In your Xcode project file, the path entry will look like this:
 
@@ -32,7 +32,7 @@ Sometimes the XML parser will throw errors with external tilesets that have been
 
 Occasionally you'll get a code signing error when compiling on OSX:
 
-![Codesign Error](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/codesign-error.png)
+![Codesign Error](images/codesign-error.png)
 
 If you're using Photoshop to save images, you might need to cleanup Finder metadata. To check, browse to your images directory in shell and run the following command:
  
@@ -40,7 +40,7 @@ If you're using Photoshop to save images, you might need to cleanup Finder metad
 
 If any of your files have extra metadata that Xcode doesn't like, you'll see it listed below the file name:
 
-![Image Metadata](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/xattr-cleanup.png)
+![Image Metadata](images/xattr-cleanup.png)
 
 Running the following command will clean up the extra data:
 

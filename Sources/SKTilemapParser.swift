@@ -174,17 +174,10 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         tilesets = [:]
         
         // pre-processing callback
-<<<<<<< HEAD
-        queue.async(group: parseGroup) {
-            if self.mapDelegate != nil { self.mapDelegate!.didReadMap(tilemap) }
-    }
-
-=======
         DispatchQueue.main.async(group: renderGroup) {
             if self.mapDelegate != nil { self.mapDelegate!.didReadMap(currentMap) }
         }
         
->>>>>>> master
         // start rendering layers when queue is complete.
         renderGroup.notify(queue: DispatchQueue.main) {
             self.didBeginRendering(currentMap)
@@ -202,23 +195,11 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
      - parameter tilemap:  `SKTilemap`    tile map node.
      - parameter duration: `TimeInterval` fade-in time for each layer.
      */
-<<<<<<< HEAD
-    fileprivate func didBeginRendering(_ tilemap: SKTilemap, duration: TimeInterval=0.05)  {
-        // worker queue & group
-        let queue = DispatchQueue.global(qos: .userInteractive)
-        let renderGroup = DispatchGroup()
-        
-        queue.async(group: renderGroup) {
-            
-            for layer in tilemap.allLayers() {
-                
-=======
     fileprivate func didBeginRendering(_ tilemap: SKTilemap, duration: TimeInterval=0.025)  {
         // assign each layer a work item
         for layer in tilemap.allLayers() {
             
             let renderItem = DispatchWorkItem() {
->>>>>>> master
                 // render object groups
                 if let objectGroup = layer as? SKObjectGroup {
                     objectGroup.drawObjects()
@@ -229,39 +210,23 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 
                 // render tile layers
                 if let tileLayer = layer as? SKTileLayer {
-<<<<<<< HEAD
-                    guard let tileData = self.data[tileLayer.uuid] else { continue }
-                    // add the layer data and completion handler
-                    let _ = tileLayer.setLayerData(tileData, completion: { (_ layer: SKTileLayer) -> Void in
-                        // run the tile layer completion callback
-                        tileLayer.didFinishRendering(duration: duration)
-                        
-                    })
-=======
                     if let tileData = self.data[tileLayer.uuid] {
                         // add the layer data
                         let _ = tileLayer.setLayerData(tileData)
                     }
->>>>>>> master
                 
                     // report errors
                     if tileLayer.gidErrors.count > 0 {
                         let gidErrorString : String = tileLayer.gidErrors.reduce("", { "\($0)" == "" ? "\($1)" : "\($0)" + ", " + "\($1)" })
                         print("[SKTilemapParser]: WARNING: layer \"\(tileLayer.name!)\": the following gids could not be found: \(gidErrorString)")
-                    }
                 }
             }
-<<<<<<< HEAD
         }
         
-        // reset the data property when all layers are rendered & run a callback on the tilemap node
-=======
-
             self.renderQueue.async(group: self.renderGroup, execute: renderItem)
         }
         
         // run callbacks when the group is finished
->>>>>>> master
         renderGroup.notify(queue: DispatchQueue.main) {
             self.data = [:]
             self.tilesets = [:]
@@ -314,25 +279,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             
             // external tileset
             if let source = attributeDict["source"] {
-                
-<<<<<<< HEAD
-                // source is a file reference
-                if !(fileNames.contains(source)) {
-                    fileNames.append(source)
                     
-                    guard let firstGID = attributeDict["firstgid"] else { parser.abortParsing(); return }
-                    let firstGIDInt = Int(firstGID)!
-                    
-                    let tileset = SKTileset(source: source, firstgid: firstGIDInt, tilemap: self.tilemap)
-                    
-                    // add tileset to external file list
-                    externalTilesets[source] = tileset
-                    self.tilemap.addTileset(tileset)
-                    lastElement = tileset
-                    // delegate callback
-
-                    if mapDelegate != nil { mapDelegate!.didAddTileset(tileset) }
-=======
                 // check to see if tileset already exists
                 if let existingTileset = tilesets[source] {
                     
@@ -340,7 +287,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                         self.tilemap.addTileset(existingTileset)
                     }
                     lastElement = existingTileset
->>>>>>> master
 
                     // set this to nil, just in case we're looking for a collections tileset.
                     currentID = nil
