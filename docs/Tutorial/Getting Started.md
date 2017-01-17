@@ -8,6 +8,7 @@
     - [Source Code Installation](#source-code-installation)
         - [Linking zlib](#linking-zlib)
     - [Carthage Installation](#carthage-installation)
+    - [CocoaPods Installation](#cocoapods-installation)
 - [Adding Tiled Assets to Xcode](#adding-tiled-assets-to-xcode)
 
 
@@ -94,6 +95,50 @@ Once you've run the build command frameworks are built, you'll find a **Carthage
 
 
 See the [Carthage](https://github.com/Carthage/Carthage) home page for help and additional build instructions. 
+
+
+### CocoaPods Installation
+
+Installation with [CocoaPods](https://cocoapods.org) is similar to Carthage. To use it, browse to your project root directory in the terminal and run the command:
+
+    pod init
+
+This will create a file called **Podfile** in the directory. Open it up and add references to **SKTiled** in each of your targets:
+
+
+    # Uncomment the next line to define a global platform for your project
+    # platform :ios, '9.0'
+
+    target 'iOS' do
+      # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+      use_frameworks!
+      
+      # Pods for iOS
+      pod 'SKTiled', '1.07'
+
+    end
+
+    target 'macOS' do
+      # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+      use_frameworks!
+
+      # Pods for macOS
+      pod 'SKTiled', '1.07'
+      
+    end
+
+
+
+As before, be sure to check the version number. In the terminal, run the following command:
+
+    pod install
+    
+
+CocoaPods will create an **.xcworkspace** file with the name of your project. Open that and use this to compile your targets; dependencies will be linked automatically. 
+
+
+See the [CocoaPods](https://cocoapods.org) home page for help and additional instructions.
+
 
 ## Adding Tiled Assets to Xcode
 
