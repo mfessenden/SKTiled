@@ -32,33 +32,25 @@ If you're using one of the older toolchains, you'll need to enable the **Use Leg
 
 ## Installation
 
-When you clone the **SKTiled** project, you'll see that there are four targets included. Two are demo applications, one for iOS and one for macOS. Those are included to let you quickly test your own content, or simple play around with the included demo content. 
+When you clone the **SKTiled** project, you'll see that there are four targets included. Two are demo applications, one for iOS and one for macOS. These are included to let you quickly test your own content, or simple play around with the included demo files. 
 
 
 ![Project Targets](images/project_targets.png)
 
-- SKTiled iOS Framework
-- SKTiled macOS Framework
-- SKTiled iOS Demo Project
-- SKTiled macOS Demo Project
+The frameworks are bundles that can be linked in your SpriteKit projects. To use them, build one or both of the targets and add them to your project. Make sure the *Minimum Deployment Target* is set correctly for your project (iOS 9+/macOS 10.11+).
 
-The demo projects are there for you to build and test your own Tiled content. The frameworks are bundles that can be linked in your SpriteKit projects. 
-
-To use the frameworks, build one or both of the targets and install them in a location accessible to your project. Make sure the *Minimum Deployment Target* is set correctly for your project (iOS 9+/macOS 10.11+).
-
-### **Framework Installation**
-
-After building the framework(s), you'll need to add it to your Xcode project and 
 
 ![adding framework](images/framework.png)
 
-Select your target, and add the framework to the *Embedded Binaries* and *Linked Frameworks and Libraries* sections of the *General* tab. 
+### **Framework Installation**
+
+
+After building the framework(s), you'll need to add them to your project. Select your target, and add the framework to the *Embedded Binaries* and *Linked Frameworks and Libraries* sections of the *General* tab. You'll also need to make sure it is linked in the *Build Phases > Embed Frameworks* section.
 
 ![framework linking](images/link_binary.png)
 
-You'll also add it to the *Build Phases > Embed Frameworks* section. 
-
 ![framework embed](images/links.png)
+
 
 ### **Source Code Installation**
 
@@ -89,7 +81,7 @@ Open the Cartfile with a text editor and add a reference to **SKTiled** (be sure
     
 Close the file and run Carthage from the terminal to build the framework(s) for the platform you want: 
 
-    carthage update --platform iOS   // specify `iOS` or `macOS` 
+    carthage update --platform iOS
 
 Updating is just as simple. Simply change the version number in the Cartfile to the one you want, and carthage can update the frameworks for you:
 

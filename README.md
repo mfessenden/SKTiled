@@ -7,7 +7,7 @@
 [![License][license-image]][license-url]
 [![iOS][ios-image]][ios-url]
 [![macOS][macos-image]][macos-url]
-
+[![Carthage Compatible][carthage-image]][carthage-url]
 
 **SKTiled** is a simple library for using [Tiled](http://www.mapeditor.org) files with Apple's SpriteKit, allowing the creation of game assets from .tmx files. Inspired by [TilemapKit](http://tilemapkit.com) and written purely in Swift, I began working on this for a project after the development of TilemapKit was halted. Initially created as an exercise to learn Apple's new programming language, I've decided to open-source it in case others find it helpful.
 
@@ -248,3 +248,5 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", "1")
 [ios-url]:http://www.apple.com/ios/ios-10
 [macos-image]:https://img.shields.io/badge/platform-macos-lightgrey.svg
 [macos-url]:http://www.apple.com/macos
+[carthage-image]:https://img.shields.io/badge/Carthage-compatible-4BC51D.svg
+[carthage-url]:https://github.com/Carthage/Carthage
