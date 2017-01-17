@@ -4,10 +4,12 @@
     - [Swift 2 Note](#swift-2-note)
 - [SKTiled Project](#sktiled-project)
 - [Installation](#installation)
-    - [Framework Installation](#framework-framework)
+    - [Framework Installation](#framework-installation)
     - [Source Code Installation](#source-code-installation)
         - [Linking zlib](#linking-zlib)
+    - [Carthage Installation](#carthage-installation)
 - [Adding Tiled Assets to Xcode](#adding-tiled-assets-to-xcode)
+
 
 **SKTiled** was designed to be flexible and easy to use. To get started, simply drop the source files into your project and link the **zlib** library (see below). If you have any problems or requests, please open an issue at the [Github page](https://github.com/mfessenden/SKTiled/issues).
 
@@ -30,7 +32,8 @@ If you're using one of the older toolchains, you'll need to enable the **Use Leg
 
 ## Installation
 
-When you clone the **SKTiled** project, you'll see that there are four targets included:
+When you clone the **SKTiled** project, you'll see that there are four targets included. Two are demo applications, one for iOS and one for macOS. Those are included to let you quickly test your own content, or simple play around with the included demo content. 
+
 
 ![Project Targets](images/project_targets.png)
 
@@ -41,7 +44,7 @@ When you clone the **SKTiled** project, you'll see that there are four targets i
 
 The demo projects are there for you to build and test your own Tiled content. The frameworks are bundles that can be linked in your SpriteKit projects. 
 
-To use the frameworks, build one or both of the targets and install them in a location accessible to your project.
+To use the frameworks, build one or both of the targets and install them in a location accessible to your project. Make sure the *Minimum Deployment Target* is set correctly for your project (iOS 9+/macOS 10.11+).
 
 ### **Framework Installation**
 
@@ -70,13 +73,35 @@ Add the `zlib` directory to your project's include paths:
 
 ![zlib compression](images/zlib_linking.png)
 
-## Deployment Target
 
-Make sure the *Minimum Deployment Target* is set correctly for your project:
+### Carthage Installation
 
-- iOS 9 
-- macOS 10.11
+To install with [Carthage](https://github.com/Carthage/Carthage), browse to the root of the project that you want to build the SKTiled framework with and create an empty Cartfile:
 
+
+    touch Cartfile
+
+
+Open the Cartfile with a text editor and add a reference to **SKTiled** (be sure to check the current version number):
+ 
+    github "mfessenden/SKTiled" == 1.07
+    
+    
+Close the file and run Carthage from the terminal to build the framework(s) for the platform you want: 
+
+    carthage update --platform iOS   // specify `iOS` or `macOS` 
+
+Updating is just as simple. Simply change the version number in the Cartfile to the one you want, and carthage can update the frameworks for you:
+
+    carthage update --platform iOS
+
+Once you've run the build command frameworks are built, you'll find a **Carthage** directory in the root of your project. The frameworks are located in the **Carthage/Build/$PLATFORM_NAME** directories, simply install them as described in the [framework installation](#framework-installation) section above.
+
+
+![Carthage Directories](images/carthage_directories.png)
+
+
+See the [Carthage](https://github.com/Carthage/Carthage) home page for help and additional build instructions. 
 
 ## Adding Tiled Assets to Xcode
 

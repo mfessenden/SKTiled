@@ -47,5 +47,4 @@ Running the following command will clean up the extra data:
     xattr -c *.png
 
 
-
 Next: [Getting Started](getting-started.html) - [Index](Tutorial.html)

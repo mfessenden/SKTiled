@@ -299,7 +299,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                         guard let firstGID = attributeDict["firstgid"] else { parser.abortParsing(); return }
                         let firstGIDInt = Int(firstGID)!
                         
-                        let  tileset = SKTileset(source: source, firstgid: firstGIDInt, tilemap: self.tilemap)
+                        let tileset = SKTileset(source: source, firstgid: firstGIDInt, tilemap: self.tilemap)
 
                         // add tileset to external file list
                         tilesets[source] = tileset
@@ -462,7 +462,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 } else {
                     // add the tileset spritesheet image
                     tileset.addTextures(fromSpriteSheet: imageSource)
-
                 }
             }
         }
