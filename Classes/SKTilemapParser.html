@@ -153,7 +153,7 @@
 <p>To read a tile map, used the <code>SKTilemapParser.load</code> method:</p>
 
 <pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemapParser</span><span class="p">()</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">fromFile</span><span class="p">:</span> <span class="s">"sample-file"</span><span class="p">)</span> <span class="p">{</span>
-   <span class="n">scene</span><span class="o">.</span><span class="n">worldNode</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
+<span class="n">scene</span><span class="o">.</span><span class="n">worldNode</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -181,7 +181,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Loads a Tiled tmx file and parses it. Supply an optional delegate to interact with the tilemap at various stages of parsing and rendering. You may also pass already-built tilesets to the parser, to speed up rendering time.</p>
+                        <p>Load a TMX file and parse it.</p>
 
                       </div>
                       <div class="declaration">
@@ -219,7 +219,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p><code>SKTilemapDelegate?</code> optional <code>SKTilemapDelegate</code> delegate instance.</p>
+                                  <p><code>SKTilemapDelegate?</code> optional tilemap delegate instance.</p>
 
                                 </div>
                               </td>
@@ -246,7 +246,7 @@
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.07/Sources/SKTilemapParser.swift#L87-L154">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.07/Sources/SKTilemapParser.swift#L110-L187">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
