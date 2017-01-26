@@ -180,7 +180,7 @@ public protocol SKTilemapDelegate: class {
  
  Tile data is stored in `SKTileset` tile sets.
  */
-open class SKTilemap: SKNode, SKTiledObject {
+open class SKTilemap: SKCropNode, SKTiledObject {
     
     open var filename: String!                                    // tilemap filename
     open var uuid: String = UUID().uuidString                     // unique id
@@ -221,6 +221,14 @@ open class SKTilemap: SKNode, SKTiledObject {
         }
     }
     
+    /// Crop the tilemap at the map edges.
+    open var cropAtBoundary: Bool = false {
+        didSet {
+            if let currentMask = maskNode { currentMask.removeFromParent() }
+            maskNode = (cropAtBoundary == true) ? SKSpriteNode(color: SKColor.black, size: self.renderSize) : nil
+        }
+    }
+
     /** 
     The tile map default base layer, used for displaying the current grid, getting coordinates, etc.
     */
@@ -254,7 +262,7 @@ open class SKTilemap: SKNode, SKTiledObject {
     /// Weak reference to `SKTilemapDelegate` delegate.
     weak open var delegate: SKTilemapDelegate?
     
-    /// Rendered size of the map in points.
+    /// Size of the map in points.
     open var sizeInPoints: CGSize {
         switch orientation {
         case .orthogonal:
@@ -277,6 +285,11 @@ open class SKTilemap: SKNode, SKTiledObject {
             }
             return result
         }
+    }
+    
+    /// Rendered size of the map.
+    open var renderSize: CGSize {
+        return CGSize(width: sizeInPoints.width * xScale, height: sizeInPoints.height * yScale)
     }
     
     // used to align the layers within the tile map
