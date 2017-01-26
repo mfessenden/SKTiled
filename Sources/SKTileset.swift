@@ -74,7 +74,7 @@ open class SKTileset: SKTiledObject {
     }
     
     /**
-     Initialize from an external tileset (only source and first gid are given).
+     Initialize with an external tileset (only source and first gid are given).
      
      - parameter source:   `String` source file name.
      - parameter firstgid: `Int` first gid value.
@@ -280,7 +280,6 @@ open class SKTileset: SKTiledObject {
     open func getTileData(_ gid: Int) -> SKTilesetData? {
         let id = getTileRealID(id: gid)
         if let index = tileData.index( where: { $0.id == id } ) {
-            // FIXME: odd crash here with threaded tileset rendering
             return tileData[index]
         }
         return nil

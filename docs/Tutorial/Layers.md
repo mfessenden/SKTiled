@@ -26,7 +26,7 @@ It is also possible to provide an offset value in x/y for more precise positioni
 player.position = playerLayer.pointForCoordinate(4, 12, offsetX: 8.0, offsetY: 4.0)
 ```
 
-All [`TiledLayerObject`](Classes/TiledLayerObject.html) objects have convenience methods for adding children with coordinate values & optional offset and even zPosition values:
+All [`TiledLayerObject`](Classes/TiledLayerObject.html) objects have convenience methods for adding children with coordinate values & optional offset and zPosition values:
 
 ```swift
 playerLayer.addChild(player, 4, 12, zpos: 25.0)

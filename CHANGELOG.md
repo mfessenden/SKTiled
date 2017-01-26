@@ -15,6 +15,8 @@ Change Log
 - add `SKColor.hexString` function
 - add `SKTilemap` background color sprite
 - change access control of some functions & extensions
+- update Xcode project for Carthage support
+- update documentation with CocoaPods instructions 
 
 1.06
 -----
