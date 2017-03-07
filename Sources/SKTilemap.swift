@@ -831,7 +831,7 @@ open class SKTilemap: SKNode, SKTiledObject {
      - parameter name:  `String?` layer name.
      - returns: `SKTile?` tile, or nil.
      */
-    open func tileAt(coord: CGPoint, inLayer: String?) -> SKTile? {
+    open func tileAt(coord: CGPoint, inLayer name: String?) -> SKTile? {
         if let name = name {
             if let layer = getLayer(named: name) as? SKTileLayer {
                 return layer.tileAt(coord: coord)
