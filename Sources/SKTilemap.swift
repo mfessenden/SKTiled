@@ -828,20 +828,28 @@ open class SKTilemap: SKNode, SKTiledObject {
      Returns a tile at the given coordinate from a layer.
      
      - parameter coord: `CGPoint` tile coordinate.
-     - parameter name:  `String?` layer name.
+     - parameter named: `String?` layer name.
      - returns: `SKTile?` tile, or nil.
      */
-    open func tileAt(coord: CGPoint, inLayer name: String?) -> SKTile? {
-        if let name = name {
-            if let layer = getLayer(named: name) as? SKTileLayer {
+    open func tileAt(coord: CGPoint, inLayer named: String?) -> SKTile? {
+        if let named = named {
+            if let layer = getLayer(named: named) as? SKTileLayer {
                 return layer.tileAt(coord: coord)
             }
         }
         return nil
     }
     
-    open func tileAt(_ x: Int, _ y: Int, inLayer name: String?) -> SKTile? {
-        return tileAt(coord: CGPoint(x: CGFloat(x), y: CGFloat(y)), inLayer: name)
+    /**
+     Returns a tile at the given coordinate from a layer.
+     
+     - parameter x: `Int` tile x-coordinate.
+     - parameter y: `Int` tile y-coordinate.
+     - parameter named: `String?` layer name.
+     - returns: `SKTile?` tile, or nil.
+     */
+    open func tileAt(_ x: Int, _ y: Int, inLayer named: String?) -> SKTile? {
+        return tileAt(coord: CGPoint(x: CGFloat(x), y: CGFloat(y)), inLayer: named)
     }
     
     /**
