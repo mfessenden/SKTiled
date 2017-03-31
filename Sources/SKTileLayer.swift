@@ -387,8 +387,8 @@ open class TiledLayerObject: SKNode, SKTiledObject {
      - returns: `CGPoint` tile coordinate.
      */
     open func coordinateForPoint(_ point: CGPoint) -> CGPoint {
-        let coordinate = screenToTileCoords(point)
-        return floor(point: coordinate).invertedY
+        let coordinate = screenToTileCoords(point.invertedY)
+        return floor(point: coordinate)
     }
         
     /**
