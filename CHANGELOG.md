@@ -1,6 +1,18 @@
 Change Log
 ==========
 
+1.10
+-----
+
+#### Changes
+- add `SKTilemap.renderQueue` (was previously a property of the parser)
+- `SKTilemap.renderQueue` syncs before pausing
+- add `SKTilemap.cropAtBoundary` property
+- add `SKTilemap.renderSize` property
+- `SKTilemap` now a subclass of `SKCropNode`
+- `TiledLayerObject.coordinateForPoint` method inverts y-value before converting
+- update references to `M_PI` -> `Double.pi`
+
 1.07
 -----
 
@@ -16,7 +28,7 @@ Change Log
 - add `SKTilemap` background color sprite
 - change access control of some functions & extensions
 - update Xcode project for Carthage support
-- update documentation with CocoaPods instructions 
+- update documentation with CocoaPods instructions
 
 1.06
 -----

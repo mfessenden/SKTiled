@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="isometric" renderorder="right-down" width="10" height="10" tilewidth="130" tileheight="66" backgroundcolor="#634930" nextobjectid="14">
  <properties>
-  <property name="autoResize" type="bool" value="true"/>
   <property name="allowMovement" type="bool" value="true"/>
   <property name="allowZoom" type="bool" value="true"/>
+  <property name="autoResize" type="bool" value="true"/>
   <property name="worldScale" type="float" value="0.4"/>
  </properties>
  <tileset firstgid="1" name="isometric-130x230" tilewidth="130" tileheight="230" tilecount="72" columns="12">
@@ -204,7 +204,7 @@
    eJxjYBgFgwkAAAGQAAE=
   </data>
  </layer>
- <objectgroup color="#e10000" name="Locations">
+ <objectgroup color="#e10000" name="Locations" visible="0" opacity="0.05">
   <properties>
    <property name="lineWidth" type="float" value="4"/>
   </properties>

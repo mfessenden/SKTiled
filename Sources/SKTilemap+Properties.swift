@@ -111,6 +111,14 @@ public extension SKTilemap {
             if (attr == "showGrid") {
                 baseLayer.showGrid = boolForKey(attr)
             }
+            
+            if (attr == "cropAtBoundary") {
+                cropAtBoundary = boolForKey(attr)
+            }
+            
+            if (attr == "overlayColor") {
+                overlayColor = SKColor(hexString: value)
+            }
         }
         
         if completion != nil { completion!() }

@@ -10,7 +10,7 @@
 [![CocoaPods Compatible][pod-image]][pod-url]
 
 
-**SKTiled** is a simple library for using [Tiled](http://www.mapeditor.org) files with Apple's SpriteKit, allowing the creation of game assets from .tmx files. Inspired by [TilemapKit](http://tilemapkit.com) and written purely in Swift, I began working on this for a project after the development of TilemapKit was halted. Initially created as an exercise to learn Apple's new programming language, I've decided to open-source it in case others find it helpful.
+**SKTiled** is a Swift framework for using [Tiled](http://www.mapeditor.org) files with Apple's SpriteKit, allowing the creation of game assets from .tmx files. Inspired by [TilemapKit](http://tilemapkit.com) and written purely in Swift, I began working on this for a project after the development of TilemapKit was halted. Initially created as an exercise to learn Apple's new programming language, I've decided to open-source it in case others find it helpful.
 
 
 ![macOS Demo](images/demo-macos-iso.png)
@@ -29,6 +29,7 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 - [x] renders animated and fliped tiles
 - [ ] pre-load tilesets
 - [ ] multi-threaded rendering
+- [ ] group nodes
 - [ ] generate GKGridGraph graphs from custom attributes (iOS10, macOS 10.11+)
 - [ ] user-definable cost properties for GKGridGraph nodes (iOS10, macOS 10.11+)
 - [ ] custom tile classes (iOS10, macOS 10.11+)
@@ -41,11 +42,17 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 
 ## Installation
 
-1. Clone and drag the `Sources` and `zlib` directories to your project.  
-2. Add the `zlib` path to your project's include paths.  
+### Carthage Installation
 
-The demo project includes targets for iOS and macOS, with example scenes you can compile and run.
+Create a Cartfile in the root of your project:
 
+    github "mfessenden/SKTiled" ~> 1.10
+
+### CocoaPods Installation
+
+Add a reference in your podfile:
+
+    pod 'SKTiled', '~> 1.10'
 
 ## Usage
 
@@ -67,7 +74,7 @@ The `SKTilemap` node also allows access to child layers, tilesets, objects and i
 
 ### Working with Layers
 
-Layers represent containers that house various types of data: 
+Layers represent containers that house various types of data:
 
 - tile layers hold an array of tile sprites and associated tileset data
 - object groups contain vector shape objects
@@ -99,7 +106,7 @@ let firstLayer = tilemap.getLayer(atIndex: 1) as! SKTileLayer
 
 ### Working with Tiles
 
-There are a number of ways to access and work with tile objects. Tiles can be queried from the `SKTilemap` node, or the parent `SKTileLayer` layer: 
+There are a number of ways to access and work with tile objects. Tiles can be queried from the `SKTilemap` node, or the parent `SKTileLayer` layer:
 
 ```swift
 // access a tile via CGPoint
@@ -206,7 +213,7 @@ for tile in allAnimated {
 
 ## Custom Properties
 
-Custom properties are supported on all object types. All **SKTiled** objects conform to the `SKTiledObject` protocol and allow access to and parsing of custom properties. 
+Custom properties are supported on all object types. All **SKTiled** objects conform to the `SKTiledObject` protocol and allow access to and parsing of custom properties.
 
 Any property added to an object in **Tiled** will be translated and stored in the `SKTiledObject.properties` dictionary.
 

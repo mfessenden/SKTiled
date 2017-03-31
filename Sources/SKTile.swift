@@ -278,21 +278,21 @@ public class SKTile: SKSpriteNode {
         
         if (tileData.flipDiag) {
             if (tileData.flipHoriz && !tileData.flipVert) {
-                zRotation = CGFloat(-M_PI_2)   // rotate 90deg
+                zRotation = CGFloat(-Double.pi / 2)   // rotate 90deg
             }
             
             if (tileData.flipHoriz && tileData.flipVert) {
-                zRotation = CGFloat(-M_PI_2)   // rotate 90deg
-                xScale *= -1                   // flip horizontally
+                zRotation = CGFloat(-Double.pi / 2)   // rotate 90deg
+                xScale *= -1                          // flip horizontally
             }
 
             if (!tileData.flipHoriz && tileData.flipVert) {
-                zRotation = CGFloat(M_PI_2)    // rotate -90deg
+                zRotation = CGFloat(Double.pi / 2)    // rotate -90deg
             }
 
             if (!tileData.flipHoriz && !tileData.flipVert) {
-                zRotation = CGFloat(M_PI_2)    // rotate -90deg
-                xScale *= -1                   // flip horizontally
+                zRotation = CGFloat(Double.pi / 2)    // rotate -90deg
+                xScale *= -1                          // flip horizontally
             }
         } else {
             if (tileData.flipHoriz) {

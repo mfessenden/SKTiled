@@ -51,6 +51,7 @@ open class SKTileset: SKTiledObject {
     open var isImageCollection: Bool = false                     // image collection tileset
     open var isExternalTileset: Bool { return filename != nil }  // tileset is an external file
     open var transparentColor: SKColor = SKColor.clear           // sprite transparency color
+    open var isRendered: Bool = false                            // indicates the tileset is rendered
     
     /// Returns the last GID in the tileset
     open var lastGID: Int { return tileData.map { $0.id }.max() ?? firstGID }
@@ -158,7 +159,9 @@ open class SKTileset: SKTiledObject {
         let rowTileCount = (textureHeight - marginReal + spacing) / (Int(tileSize.height) + spacing)  // number of tiles (height)
         let colTileCount = (textureWidth - marginReal + spacing) / (Int(tileSize.width) + spacing)    // number of tiles (width)
         
+        // tile count
         let totalTileCount = colTileCount * rowTileCount
+        tilecount = tilecount > 0 ? tilecount : totalTileCount
         
         let rowHeight = Int(tileSize.height) * rowTileCount     // row height (minus spacing)
         let rowSpacing = spacing * (rowTileCount - 1)           // actual row spacing
@@ -169,7 +172,6 @@ open class SKTileset: SKTiledObject {
         var y = margin + rowHeight + rowSpacing - Int(tileSize.height)
         
         var tilesAdded: Int = 0
-    
         for gid in self.firstGID..<(self.firstGID + totalTileCount) {
             let rectStartX = CGFloat(x) / CGFloat(textureWidth)
             let rectStartY = CGFloat(y) / CGFloat(textureHeight)
@@ -197,6 +199,7 @@ open class SKTileset: SKTiledObject {
             tilesAdded += 1
         }
         
+        self.isRendered = true
         
         // time results
         if replace == false {
@@ -359,7 +362,7 @@ open class SKTileset: SKTiledObject {
 }
 
 
-public func ==(lhs: SKTileset, rhs: SKTileset) -> Bool{
+public func ==(lhs: SKTileset, rhs: SKTileset) -> Bool {
     return (lhs.hashValue == rhs.hashValue)
 }
 

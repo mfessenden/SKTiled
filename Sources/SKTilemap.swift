@@ -180,7 +180,7 @@ public protocol SKTilemapDelegate: class {
  
  Tile data is stored in `SKTileset` tile sets.
  */
-open class SKTilemap: SKNode, SKTiledObject {
+open class SKTilemap: SKCropNode, SKTiledObject {
     
     open var filename: String!                                    // tilemap filename
     open var uuid: String = UUID().uuidString                     // unique id
@@ -212,12 +212,27 @@ open class SKTilemap: SKNode, SKTiledObject {
     
     /// ignore Tiled background color
     open var ignoreBackground: Bool = false
+    open private(set) var isRendered: Bool = false
+    
+    // dispatch queues & groups
+    internal let renderQueue = DispatchQueue(label: "com.sktiled.renderqueue", qos: .userInteractive)  // serial queue
+    internal let renderGroup = DispatchGroup()
+    
+    open var overlayColor: SKColor = SKColor(hexString: "#40000000")
     
     /// Optional background color (read from the Tiled file)
     open var backgroundColor: SKColor? = nil {
         didSet {
             self.backgroundSprite.color = (backgroundColor != nil) ? backgroundColor! : SKColor.clear
             self.backgroundSprite.colorBlendFactor = (backgroundColor != nil) ? 1.0 : 0
+        }
+    }
+
+    /// Crop the tilemap at the map edges.
+    open var cropAtBoundary: Bool = false {
+        didSet {
+            if let currentMask = maskNode { currentMask.removeFromParent() }
+            maskNode = (cropAtBoundary == true) ? SKSpriteNode(color: SKColor.black, size: self.renderSize) : nil
         }
     }
 
@@ -277,6 +292,16 @@ open class SKTilemap: SKNode, SKTiledObject {
             }
             return result
         }
+    }
+    
+    /// Rendered size of the map.
+    open var renderSize: CGSize {
+        // tilesets with larger tile sizes extend render size.
+        //var heightPadded = tilesets.map { ($0.tileSize.height + ($0.tileOffset.y) * -1) }.max() ?? 0
+        var heightPadded = tilesets.map { $0.tileSize.height + $0.tileOffset.y }.max() ?? 0
+        heightPadded = heightPadded - tileSize.height
+        let scaledSize = CGSize(width: sizeInPoints.width * xScale, height: sizeInPoints.height * yScale)
+        return CGSize(width: scaledSize.width, height: scaledSize.height + heightPadded)
     }
     
     // used to align the layers within the tile map
@@ -354,20 +379,9 @@ open class SKTilemap: SKNode, SKTiledObject {
     
     /// Pauses the node, and colors all of its children darker.
     override open var isPaused: Bool {
-        didSet {
-            guard oldValue != isPaused else { return }
-            let newColor: SKColor = isPaused ? SKColor(white: 0, alpha: 0.25) : SKColor.clear
-            let newColorBlendFactor: CGFloat = isPaused ? 0.2 : 0.0
-            
-            speed = isPaused ? 0 : 1.0
-            color = newColor
-            
-            layers.forEach { layer in
-                layer.color = newColor
-                layer.colorBlendFactor = newColorBlendFactor
-                layer.isPaused = isPaused
-                //layer.speed = speed
-            }
+        willSet (pauseValue) {
+            // make sure the map is finished rendering
+            self.renderQueue.sync {}
         }
     }
 
@@ -452,6 +466,10 @@ open class SKTilemap: SKNode, SKTiledObject {
         if let backgroundHexColor = attributes["backgroundcolor"] {
             if (ignoreBackground == false){
                 backgroundColor = SKColor(hexString: backgroundHexColor)
+                
+                if let backgroundCGColor = backgroundColor?.withAlphaComponent(0.6) {
+                    overlayColor = backgroundCGColor
+                }
             }
         }
     }
@@ -583,9 +601,9 @@ open class SKTilemap: SKNode, SKTiledObject {
         layer.opacity = 0
         
         // don't add the default layer
-        if base == false {
-            layers.insert(layer)
-        }
+        if base == false { layers.insert(layer) }
+        
+        // add the layer as a child
         addChild(layer)
         
         // align the layer to the anchorpoint
@@ -828,7 +846,7 @@ open class SKTilemap: SKNode, SKTiledObject {
      Returns a tile at the given coordinate from a layer.
      
      - parameter coord: `CGPoint` tile coordinate.
-     - parameter named: `String?` layer name.
+     - parameter name:  `String?` layer name.
      - returns: `SKTile?` tile, or nil.
      */
     open func tileAt(coord: CGPoint, inLayer named: String?) -> SKTile? {
@@ -1032,16 +1050,25 @@ open class SKTilemap: SKNode, SKTiledObject {
     }
     
     // MARK: - Callbacks
-    
     /**
      Called when parser has finished reading the map.
+     
+     - parameter timeStarted: `Date` render start time.
+     - parameter tasks:       `Int`  number of tasks to complete.
+     */
+    open func didFinishParsing(timeStarted: Date, tasks: Int=0) {
+        //if self.delegate != nil { delegate!.didRenderMap(self) }
+    }
+    
+    /**
+     Called when parser has finished rendering the map.
      
      - parameter timeStarted: `Date` render start time.
      */
     open func didFinishRendering(timeStarted: Date) {
         // set the z-depth of the baseLayer
         baseLayer.zPosition = lastZPosition + (zDeltaForLayers * 0.5)
-        
+        isRendered = true
         // time results
         let timeInterval = Date().timeIntervalSince(timeStarted)
         let timeStamp = String(format: "%.\(String(3))f", timeInterval)        
@@ -1238,7 +1265,6 @@ extension SKTilemap {
         let renderSizeDesc = "\(sizeInPoints.width.roundTo(1)) x \(sizeInPoints.height.roundTo(1))"
         let sizeDesc = "\(Int(size.width)) x \(Int(size.height))"
         let tileSizeDesc = "\(Int(tileSize.width)) x \(Int(tileSize.height))"
-        
         return "Map: \(name ?? "(None)"), \(renderSizeDesc): (\(sizeDesc) @ \(tileSizeDesc)): \(tileCount) tiles"
     }
     
