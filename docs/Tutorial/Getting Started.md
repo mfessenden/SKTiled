@@ -78,7 +78,7 @@ To install with [Carthage](https://github.com/Carthage/Carthage), browse to the 
 
 Open the Cartfile with a text editor and add a reference to **SKTiled** (be sure to check the current version number):
  
-    github "mfessenden/SKTiled" == 1.07
+    github "mfessenden/SKTiled" == 1.10
     
     
 Close the file and run Carthage from the terminal to build the framework(s) for the platform you want: 
@@ -115,7 +115,7 @@ This will create a file called **Podfile** in the directory. Open it up and add 
       use_frameworks!
       
       # Pods for iOS
-      pod 'SKTiled', '1.07'
+      pod 'SKTiled', '1.10'
 
     end
 
@@ -124,7 +124,7 @@ This will create a file called **Podfile** in the directory. Open it up and add 
       use_frameworks!
 
       # Pods for macOS
-      pod 'SKTiled', '1.07'
+      pod 'SKTiled', '1.10'
       
     end
 

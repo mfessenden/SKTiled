@@ -73,8 +73,8 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     fileprivate var finishedParsing: Bool = false
     
     // dispatch queues & groups
-    internal let renderQueue = DispatchQueue(label: "com.sktiled.renderqueue", qos: .userInteractive)
-    internal let renderGroup = DispatchGroup()
+    internal let parsingQueue = DispatchQueue(label: "com.sktiled.parsequeue", qos: .userInitiated, attributes: .concurrent)  // serial queue
+    internal let parsingGroup = DispatchGroup()
     
     // MARK: - Loading
     
@@ -174,12 +174,12 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         tilesets = [:]
         
         // pre-processing callback
-        DispatchQueue.main.async(group: renderGroup) {
+        DispatchQueue.main.async(group: self.parsingGroup) {
             if self.mapDelegate != nil { self.mapDelegate!.didReadMap(currentMap) }
         }
         
         // start rendering layers when queue is complete.
-        renderGroup.notify(queue: DispatchQueue.main) {
+        self.parsingGroup.notify(queue: DispatchQueue.main) {
             self.didBeginRendering(currentMap)
         }
 
@@ -223,11 +223,12 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             }
         }
         
-            self.renderQueue.async(group: self.renderGroup, execute: renderItem)
+            tilemap.renderQueue.async(group: tilemap.renderGroup, execute: renderItem)
         }
+
         
         // run callbacks when the group is finished
-        renderGroup.notify(queue: DispatchQueue.main) {
+        tilemap.renderGroup.notify(queue: DispatchQueue.main) {
             self.data = [:]
             self.tilesets = [:]
             self.tilemap.didFinishRendering(timeStarted: self.timer)
@@ -305,10 +306,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                         tilesets[source] = tileset
                         
                         // add the tileset to the tilemap
-                        if let tilemap = self.tilemap {
-                            tilemap.addTileset(tileset)
-                        }
-                        
+                        self.tilemap?.addTileset(tileset)
                         lastElement = tileset
                         
                         // delegate callback
@@ -393,8 +391,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 parser.abortParsing()
                 return
             }
-            
-            self.tilemap!.addLayer(layer)
+            self.tilemap?.addLayer(layer)
             
             // delegate callback
             if mapDelegate != nil { mapDelegate!.didAddLayer(layer) }
@@ -413,8 +410,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     return
             }
             
-            self.tilemap!.addLayer(objectsGroup)
-            
+            self.tilemap?.addLayer(objectsGroup)
             // delegate callback
             if mapDelegate != nil { mapDelegate!.didAddLayer(objectsGroup) }
             
@@ -430,7 +426,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     return
             }
             
-            self.tilemap!.addLayer(imageLayer)
+            self.tilemap?.addLayer(imageLayer)
             
             // delegate callback
             if mapDelegate != nil { mapDelegate!.didAddLayer(imageLayer) }

@@ -2,7 +2,9 @@
 <map version="1.0" orientation="hexagonal" renderorder="right-down" width="10" height="10" tilewidth="65" tileheight="65" hexsidelength="31" staggeraxis="y" staggerindex="odd" backgroundcolor="#90a1a2" nextobjectid="37">
  <properties>
   <property name="autoResize" type="bool" value="true"/>
+  <property name="cropAtBoundary" type="bool" value="false"/>
   <property name="worldScale" type="float" value="0.4"/>
+  <property name="overlayColor" type="color" value="#a1413763"/>
  </properties>
  <tileset firstgid="1" name="hex1-65x65-65x230" tilewidth="65" tileheight="230" tilecount="60" columns="20">
   <image source="hex-65x65-65x230.png" width="1300" height="690"/>

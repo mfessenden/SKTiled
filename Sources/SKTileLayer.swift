@@ -59,7 +59,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     internal var layerType: SKTiledLayerType = .invalid
     open var tilemap: SKTilemap
     /// Unique object id.
-    public var uuid: String = UUID().uuidString
+    open var uuid: String = UUID().uuidString
     
     /// Layer index. Matches the index of the layer in the source TMX file.
     open var index: Int = 0
@@ -757,6 +757,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
             self.parseProperties(completion: nil)
         })
         
+        //self.parseProperties(completion: nil)
         // setup physics for the layer boundary
         if hasKey("isDynamic") || hasKey("isCollider"){
             setupPhysics()
@@ -814,15 +815,6 @@ open class SKTileLayer: TiledLayerObject {
     fileprivate var tiles: TilesArray                   // array of tiles
     open var render: Bool = false                       // render tile layer as a single image
     
-    override open var isPaused: Bool {
-        didSet {
-            tiles.forEach { tile in
-                tile?.color = self.color
-                tile?.colorBlendFactor = self.colorBlendFactor
-            }
-        }
-    }
-    
     // MARK: - Init
     /**
      Initialize with layer name and parent `SKTilemap`.
@@ -854,6 +846,12 @@ open class SKTileLayer: TiledLayerObject {
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    deinit {
+        removeAllActions()
+        removeAllChildren()
     }
     
     // MARK: - Tiles
@@ -1242,7 +1240,6 @@ open class SKTileLayer: TiledLayerObject {
         super.didFinishRendering(duration: duration)
     }
     
-    
     // MARK: - Shaders
     
     /**
@@ -1553,7 +1550,6 @@ open class SKObjectGroup: TiledLayerObject {
         }
     }
 }
-
 
 
 /**

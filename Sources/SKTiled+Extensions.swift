@@ -103,7 +103,7 @@ internal extension CGFloat {
      - returns: `CGFloat`
      */
     internal func radians() -> CGFloat {
-        let b = CGFloat(M_PI) * (self/180)
+        let b = CGFloat(Double.pi) * (self/180)
         return b
     }
     
@@ -450,15 +450,18 @@ public extension String {
     }
     
     /**
-     Pad a string with zero's (for binary conversion).
+     Pad a string with spaces.
      
      - parameter toSize: `Int` size of resulting string.
      - returns: `String` padded string.
      */
     public func pad(_ toSize: Int) -> String {
+        // current string length
+        let currentLength = self.characters.count
         if (toSize < 1) { return self }
+        if (currentLength >= toSize) { return self }
         var padded = self
-        for _ in 0..<toSize - self.characters.count {
+        for _ in 0..<toSize - currentLength {
             padded = " " + padded
         }
         return padded

@@ -128,6 +128,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
         }
         // set up world node
         worldNode = SKNode()
+        worldNode.name = "World"
         addChild(worldNode)
     }
     

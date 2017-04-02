@@ -33,8 +33,6 @@
 		4C1774BA1D9099A3000C0AFD /* SKTiledObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA21D8CC2C100DB56F1 /* SKTiledObject.swift */; };
 		4C440B9B1DAE911000DEC9A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C440B981DAE911000DEC9A4 /* Assets.xcassets */; };
 		4C440B9C1DAE911000DEC9A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C440B981DAE911000DEC9A4 /* Assets.xcassets */; };
-		4C440B9D1DAE911000DEC9A4 /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440B991DAE911000DEC9A4 /* ButtonNode.swift */; };
-		4C440B9E1DAE911000DEC9A4 /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440B991DAE911000DEC9A4 /* ButtonNode.swift */; };
 		4C440B9F1DAE911000DEC9A4 /* SKTiledDemoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */; };
 		4C440BA01DAE911000DEC9A4 /* SKTiledDemoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */; };
 		4C440BA71DAE913000DEC9A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440BA21DAE913000DEC9A4 /* AppDelegate.swift */; };
@@ -107,7 +105,6 @@
 		4C0EE1E71DC116E300A052E4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
 		4C17747F1D909740000C0AFD /* SKTiledDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKTiledDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C440B981DAE911000DEC9A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		4C440B991DAE911000DEC9A4 /* ButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
 		4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTiledDemoScene.swift; sourceTree = "<group>"; };
 		4C440BA21DAE913000DEC9A4 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4C440BA41DAE913000DEC9A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -123,7 +120,6 @@
 		4C5812631E255E6400E80BFC /* SKTiled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTiled.h; sourceTree = "<group>"; };
 		4C5812671E255E7300E80BFC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C5812681E255E7300E80BFC /* SKTiled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTiled.h; sourceTree = "<group>"; };
-		4C58126F1E258FF400E80BFC /* SKTiled.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = SKTiled.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		4C88E18B1D8A1BC400FCCFA3 /* roguelike-16x16.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "roguelike-16x16.tmx"; sourceTree = "<group>"; };
 		4C88E1AA1D8A241F00FCCFA3 /* ortho4-16x16.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "ortho4-16x16.tmx"; sourceTree = "<group>"; };
 		4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ortho4-16x16.png"; sourceTree = "<group>"; };
@@ -222,7 +218,6 @@
 			isa = PBXGroup;
 			children = (
 				4C440B981DAE911000DEC9A4 /* Assets.xcassets */,
-				4C440B991DAE911000DEC9A4 /* ButtonNode.swift */,
 				4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */,
 			);
 			path = Shared;
@@ -301,9 +296,8 @@
 		4CBA615C1D8A048200B31FC1 = {
 			isa = PBXGroup;
 			children = (
-				4C0E59501DC046E700921F75 /* CHANGELOG.md */,
 				4CBA617E1D8A0A3900B31FC1 /* README.md */,
-				4C58126F1E258FF400E80BFC /* SKTiled.podspec */,
+				4C0E59501DC046E700921F75 /* CHANGELOG.md */,
 				4C6480BE1DC1231C006F4CB3 /* Modules */,
 				4CBA61931D8A0A6C00B31FC1 /* Sources */,
 				4CBA617F1D8A0A4600B31FC1 /* Resources */,
@@ -672,7 +666,6 @@
 				4C440BA91DAE913000DEC9A4 /* GameViewController.swift in Sources */,
 				4C1774B91D9099A3000C0AFD /* SKTilesetData.swift in Sources */,
 				4C1774B51D9099A3000C0AFD /* SKTilemap.swift in Sources */,
-				4C440B9E1DAE911000DEC9A4 /* ButtonNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -695,7 +688,6 @@
 				4C440BB61DAE913A00DEC9A4 /* GameViewController.swift in Sources */,
 				4C88E1E21D8A4EBE00FCCFA3 /* SKTileLayer.swift in Sources */,
 				4C88E1DE1D8A4EBE00FCCFA3 /* SKTile.swift in Sources */,
-				4C440B9D1DAE911000DEC9A4 /* ButtonNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

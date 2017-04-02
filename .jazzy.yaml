@@ -1,9 +1,9 @@
 module: SKTiled
-module_version: 1.07
-author: Michael Fessenden 
+module_version: 1.10
+author: Michael Fessenden
 author_url: https://github.com/mfessenden
 github_url: https://github.com/mfessenden/SKTiled
-github_file_prefix: https://github.com/mfessenden/SKTiled/tree/1.07    # url of source file links on server
+github_file_prefix: https://github.com/mfessenden/SKTiled/tree/1.10    # url of source file links on server
 root_url: https://mfessenden.github.io/SKTiled                         # absolute url of file location on server
 clean: true
 skip_undocumented: true
@@ -24,7 +24,7 @@ copyright: '© 2016 [Michael Fessenden](https://github.com/mfessenden) under [op
 
 theme: apple
 
-documentation: 
+documentation:
   - docs/Tutorial/Coordinates.md
   - docs/Tutorial/Debugging.md
 #  - docs/Tutorial/Extending.md
