@@ -102,6 +102,9 @@
                 <a href="Classes/SKImageLayer.html">SKImageLayer</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/SKGroupLayer.html">SKGroupLayer</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/SKTile.html">SKTile</a>
               </li>
               <li class="nav-group-task">
@@ -112,6 +115,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
               </li>
             </ul>
           </li>
@@ -133,6 +139,9 @@
               <li class="nav-group-task">
                 <a href="Other.html#/s:O7SKTiled12PhysicsShape">PhysicsShape</a>
               </li>
+              <li class="nav-group-task">
+                <a href="Other.html#/s:O7SKTiled16SKTiledLayerType">SKTiledLayerType</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -141,29 +150,7 @@
         <section>
           <section class="section">
             <h1>Class Reference</h1>
-            <p><a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> - tile map node.</p>
-
-<p><a href="Classes/SKTilemapParser.html"><code>SKTilemapParser</code></a> - Tiled XML parser.</p>
-
-<p><a href="Classes/SKTileset.html"><code>SKTileset</code></a> - tile set data structure.</p>
-
-<p><a href="Classes/SKTilesetData.html"><code>SKTilesetData</code></a> - tile data structure.</p>
-
-<p><a href="Classes/TiledLayerObject.html"><code>TiledLayerObject</code></a> - Tiled layer base class. </p>
-
-<p><a href="Classes/SKTileLayer.html"><code>SKTileLayer</code></a> - Tile layer type.</p>
-
-<p><a href="Classes/SKObjectGroup.html"><code>SKObjectGroup</code></a> - Object group type.</p>
-
-<p><a href="Classes/SKImageLayer.html"><code>SKImageLayer</code></a> - Image layer type.</p>
-
-<p><a href="Classes/SKTile.html"><code>SKTile</code></a> - Tile object type.</p>
-
-<p><a href="Classes/SKTileObject.html"><code>SKTileObject</code></a> - Object type.</p>
-
-<p><a href="Classes/SKTiledScene.html"><code>SKTiledScene</code></a> - custom SKScene for displaying tile maps.</p>
-
-<p><a href="Classes/SKTiledSceneCamera.html"><code>SKTiledSceneCamera</code></a> - custom scene camera.</p>
+            <p><strong>SKTiled</strong> class reference.</p>
 
           </section>
           <section class="section task-group-section">
@@ -198,12 +185,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">SKTilemap</span><span class="p">:</span> <span class="kt">SKNode</span><span class="p">,</span> <span class="kt"><a href="Protocols/SKTiledObject.html">SKTiledObject</a></span></code></pre>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">SKTilemap</span><span class="p">:</span> <span class="kt">SKCropNode</span><span class="p">,</span> <span class="kt"><a href="Protocols/SKTiledObject.html">SKTiledObject</a></span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.07/Sources/SKTilemap.swift#L183-L1050">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTilemap.swift#L185-L1112">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -230,7 +217,7 @@
 <p>To read a tile map, used the <code>SKTilemapParser.load</code> method:</p>
 
 <pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemapParser</span><span class="p">()</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">fromFile</span><span class="p">:</span> <span class="s">"sample-file"</span><span class="p">)</span> <span class="p">{</span>
-<span class="n">scene</span><span class="o">.</span><span class="n">worldNode</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
+   <span class="n">scene</span><span class="o">.</span><span class="n">worldNode</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -245,7 +232,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.07/Sources/SKTilemapParser.swift#L50-L789">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTilemapParser.swift#L50-L820">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -286,7 +273,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.07/Sources/SKTileset.swift#L23-L359">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileset.swift#L23-L362">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -327,7 +314,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.07/Sources/SKTilesetData.swift#L32-L141">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTilesetData.swift#L32-L141">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -375,7 +362,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.07/Sources/SKTileLayer.swift#L59-L802">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L61-L805">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -418,7 +405,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.07/Sources/SKTileLayer.swift#L823-L1300">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L826-L1282">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -466,7 +453,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.07/Sources/SKTileLayer.swift#L1339-L1586">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L1321-L1568">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -502,7 +489,48 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.07/Sources/SKTileLayer.swift#L1599-L1656">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L1580-L1637">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:C7SKTiled12SKGroupLayer"></a>
+                    <a name="//apple_ref/swift/Class/SKGroupLayer" class="dashAnchor"></a>
+                    <a class="token" href="#/s:C7SKTiled12SKGroupLayer">SKGroupLayer</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The <code>SKGroupLayer</code> object is a container for grouping other layers.</p>
+
+<p>Add layers to the group with:</p>
+
+<pre class="highlight swift"><code><span class="n">groupLayer</span><span class="o">.</span><span class="nf">addLayer</span><span class="p">(</span><span class="n">playerLayer</span><span class="p">)</span>
+</code></pre>
+
+<p>Remove with:</p>
+
+<pre class="highlight swift"><code><span class="n">groupLayer</span><span class="o">.</span><span class="nf">removeLayer</span><span class="p">(</span><span class="n">playerLayer</span><span class="p">)</span>
+</code></pre>
+
+                        <a href="Classes/SKGroupLayer.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">SKGroupLayer</span><span class="p">:</span> <span class="kt"><a href="Classes/TiledLayerObject.html">TiledLayerObject</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L1655-L1757">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -537,7 +565,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.07/Sources/SKTile.swift#L29-L419">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTile.swift#L29-L419">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -574,7 +602,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.07/Sources/SKTileObject.swift#L58-L369">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileObject.swift#L58-L369">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -655,7 +683,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.07/Sources/SKTiledScene.swift#L41-L183">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTiledScene.swift#L41-L183">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -694,7 +722,52 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.07/Sources/SKTiledSceneCamera.swift#L25-L238">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTiledSceneCamera.swift#L25-L238">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:C7SKTiled16SKTiledGraphNode"></a>
+                    <a name="//apple_ref/swift/Class/SKTiledGraphNode" class="dashAnchor"></a>
+                    <a class="token" href="#/s:C7SKTiled16SKTiledGraphNode">SKTiledGraphNode</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Custom <code>GKGridGraphNode</code> object that adds a weight parameter for used with Tiled scene properties. Can be used with 
+normal <code>GKGridGraphNode</code> instances.</p>
+
+<p>The <code>SKTiledGraphNode.weight</code> property is used to affect the estimated cost to a connected node. (Increasing the weight makes
+it less likely to be travelled to, decreasing more likely).</p>
+
+<pre class="highlight swift"><code><span class="c1">// query a node in the graph and increase the weight property</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">node</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="nf">node</span><span class="p">(</span><span class="nv">atGridPosition</span><span class="p">:</span> <span class="n">coord</span><span class="p">)</span> <span class="p">{</span>
+   <span class="n">node</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="mf">25.0</span>
+<span class="p">}</span>
+</code></pre>
+
+                        <a href="Classes/SKTiledGraphNode.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTiledGraphNode</span><span class="p">:</span> <span class="kt">GKGridGraphNode</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTiled+GameplayKit.swift#L316-L371">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -705,7 +778,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
         </section>
         <section id="footer">
           <p>© 2016 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external">Michael Fessenden</a> under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.5</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
