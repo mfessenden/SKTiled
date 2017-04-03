@@ -95,8 +95,6 @@
 		4CFEA3591D8D02D20055C150 /* staggered-64x192.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEA3571D8D02D20055C150 /* staggered-64x192.png */; };
 		4CFEA35C1D8D04320055C150 /* hex-65x65-65x230.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEA35A1D8D04320055C150 /* hex-65x65-65x230.png */; };
 		4CFEA35D1D8D04320055C150 /* hex1-65x65.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEA35B1D8D04320055C150 /* hex1-65x65.tmx */; };
-		4CFFD2891E2016DF0023C0F7 /* SKTiled.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFFD2871E2016DF0023C0F7 /* SKTiled.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CFFD2971E2019510023C0F7 /* SKTiled.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFFD2951E2019510023C0F7 /* SKTiled.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -149,11 +147,7 @@
 		4CFEA35A1D8D04320055C150 /* hex-65x65-65x230.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hex-65x65-65x230.png"; sourceTree = "<group>"; };
 		4CFEA35B1D8D04320055C150 /* hex1-65x65.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "hex1-65x65.tmx"; sourceTree = "<group>"; };
 		4CFFD2851E2016DF0023C0F7 /* SKTiled.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SKTiled.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4CFFD2871E2016DF0023C0F7 /* SKTiled.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKTiled.h; sourceTree = "<group>"; };
-		4CFFD2881E2016DF0023C0F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4CFFD2931E2019510023C0F7 /* SKTiled.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SKTiled.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4CFFD2951E2019510023C0F7 /* SKTiled.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKTiled.h; sourceTree = "<group>"; };
-		4CFFD2961E2019510023C0F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -372,24 +366,6 @@
 				4CFEA3571D8D02D20055C150 /* staggered-64x192.png */,
 			);
 			name = png;
-			sourceTree = "<group>";
-		};
-		4CFFD2861E2016DF0023C0F7 /* framework */ = {
-			isa = PBXGroup;
-			children = (
-				4CFFD2871E2016DF0023C0F7 /* SKTiled.h */,
-				4CFFD2881E2016DF0023C0F7 /* Info.plist */,
-			);
-			path = framework;
-			sourceTree = "<group>";
-		};
-		4CFFD28D1E20191F0023C0F7 /* framework */ = {
-			isa = PBXGroup;
-			children = (
-				4CFFD2951E2019510023C0F7 /* SKTiled.h */,
-				4CFFD2961E2019510023C0F7 /* Info.plist */,
-			);
-			path = framework;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

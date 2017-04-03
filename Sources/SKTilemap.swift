@@ -205,7 +205,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     open var tilesets: Set<SKTileset> = []                        // tilesets
     
     // current layers
-    private var layers: Set<TiledLayerObject> = []                // tile map layers
+    private var _layers: Set<TiledLayerObject> = []               // tile map layers
     open var layerCount: Int { return self.layers.count }         // layer count attribute
     open var properties: [String: String] = [:]                   // custom properties
     open var zDeltaForLayers: CGFloat = 50                        // z-position range for layers
@@ -219,6 +219,16 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     internal let renderGroup = DispatchGroup()
     
     open var overlayColor: SKColor = SKColor(hexString: "#40000000")
+    
+    /// Returns a flattened array of child layers.
+    private var layers: [TiledLayerObject] {
+        return _layers.reduce([]) { nodes, node in
+            if let node = node as? SKGroupLayer {
+                return nodes + [node] + node.allLayers()
+            }
+            return nodes + [node]
+        }
+    }
     
     /// Optional background color (read from the Tiled file)
     open var backgroundColor: SKColor? = nil {
@@ -361,6 +371,11 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     /// Convenience property to return all image layers.
     open var imageLayers: [SKImageLayer] {
         return layers.sorted(by: {$0.index < $1.index}).filter({$0 as? SKImageLayer != nil}) as! [SKImageLayer]
+    }
+    
+    /// Convenience property to return all group layers.
+    open var groupLayers: [SKGroupLayer] {
+        return layers.sorted(by: {$0.index < $1.index}).filter({$0 as? SKGroupLayer != nil}) as! [SKGroupLayer]
     }
     
     /// Global antialiasing of lines
@@ -601,7 +616,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
         layer.opacity = 0
         
         // don't add the default layer
-        if base == false { layers.insert(layer) }
+        if base == false { _layers.insert(layer) }
         
         // add the layer as a child
         addChild(layer)
@@ -623,7 +638,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      - returns: `TiledLayerObject?` removed layer.
      */
     open func removeLayer(_ layer: TiledLayerObject) -> TiledLayerObject? {
-        return layers.remove(layer)
+        return _layers.remove(layer)
     }
     
     /**
@@ -678,6 +693,16 @@ open class SKTilemap: SKCropNode, SKTiledObject {
             return layer
         }
         return nil
+    }
+    
+    /**
+     Return layers of the given type.
+     
+     - parameter layerType: `SKTiledLayerType` layer type.
+     - returns: `[TiledLayerObject]` array of layers.
+     */
+    open func getLayers(ofType layerType: SKTiledLayerType) -> [TiledLayerObject] {
+        return layers.filter( {$0.layerType == layerType} )
     }
     
     /**
@@ -772,7 +797,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      
      - parameter layer: `TiledLayerObject` layer.
      */
-    fileprivate func positionLayer(_ layer: TiledLayerObject) {
+    internal func positionLayer(_ layer: TiledLayerObject) {
         var layerPos = CGPoint.zero
         switch orientation {
             

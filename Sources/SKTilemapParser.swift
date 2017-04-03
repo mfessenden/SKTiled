@@ -198,7 +198,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     fileprivate func didBeginRendering(_ tilemap: SKTilemap, duration: TimeInterval=0.025)  {
         // assign each layer a work item
         for layer in tilemap.allLayers() {
-            
             let renderItem = DispatchWorkItem() {
                 // render object groups
                 if let objectGroup = layer as? SKObjectGroup {
@@ -219,9 +218,9 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     if tileLayer.gidErrors.count > 0 {
                         let gidErrorString : String = tileLayer.gidErrors.reduce("", { "\($0)" == "" ? "\($1)" : "\($0)" + ", " + "\($1)" })
                         print("[SKTilemapParser]: WARNING: layer \"\(tileLayer.name!)\": the following gids could not be found: \(gidErrorString)")
+                    }
                 }
             }
-        }
         
             tilemap.renderQueue.async(group: tilemap.renderGroup, execute: renderItem)
         }
@@ -391,7 +390,12 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 parser.abortParsing()
                 return
             }
-            self.tilemap?.addLayer(layer)
+            
+            if let group = lastElement as? SKGroupLayer {
+                group.addLayer(layer)
+            } else {
+                self.tilemap?.addLayer(layer)
+            }
             
             // delegate callback
             if mapDelegate != nil { mapDelegate!.didAddLayer(layer) }
@@ -410,7 +414,12 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     return
             }
             
-            self.tilemap?.addLayer(objectsGroup)
+            if let group = lastElement as? SKGroupLayer {
+                group.addLayer(objectsGroup)
+            } else {
+                self.tilemap?.addLayer(objectsGroup)
+            }
+
             // delegate callback
             if mapDelegate != nil { mapDelegate!.didAddLayer(objectsGroup) }
             
@@ -426,12 +435,38 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     return
             }
             
-            self.tilemap?.addLayer(imageLayer)
+            if let group = lastElement as? SKGroupLayer {
+                group.addLayer(imageLayer)
+            } else {
+                self.tilemap?.addLayer(imageLayer)
+            }
             
             // delegate callback
             if mapDelegate != nil { mapDelegate!.didAddLayer(imageLayer) }
             
             lastElement = imageLayer
+        }
+        
+        // 'group' indicates a Group layer
+        if (elementName == "group") {
+            guard let _ = attributeDict["name"] else { parser.abortParsing(); return }
+            guard let groupLayer = SKGroupLayer(tilemap: self.tilemap!, attributes: attributeDict)
+                else {
+                    parser.abortParsing()
+                    return
+            }
+            
+            if let group = lastElement as? SKGroupLayer {
+                group.addLayer(groupLayer)
+            } else {
+                self.tilemap?.addLayer(groupLayer)
+            }
+            
+            
+            // delegate callback
+            if mapDelegate != nil { mapDelegate!.didAddLayer(groupLayer) }
+            
+            lastElement = groupLayer
         }
         
         // look for last element to be a tileset or imagelayer

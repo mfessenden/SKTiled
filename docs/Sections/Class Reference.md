@@ -15,6 +15,8 @@
 
 [`SKImageLayer`](Classes/SKImageLayer.html) - Image layer type.
 
+[`SKGroupLayer`](Classes/SKGroupLayer.html) - Group layer type.
+
 [`SKTile`](Classes/SKTile.html) - Tile object type.
 
 [`SKTileObject`](Classes/SKTileObject.html) - Object type.

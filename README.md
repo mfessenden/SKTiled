@@ -29,7 +29,7 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 - [x] renders animated and fliped tiles
 - [ ] pre-load tilesets
 - [ ] multi-threaded rendering
-- [ ] group nodes
+- [x] group nodes
 - [ ] generate GKGridGraph graphs from custom attributes (iOS10, macOS 10.11+)
 - [ ] user-definable cost properties for GKGridGraph nodes (iOS10, macOS 10.11+)
 - [ ] custom tile classes (iOS10, macOS 10.11+)
@@ -46,13 +46,13 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 
 Create a Cartfile in the root of your project:
 
-    github "mfessenden/SKTiled" ~> 1.10
+    github "mfessenden/SKTiled" ~> 1.12
 
 ### CocoaPods Installation
 
 Add a reference in your podfile:
 
-    pod 'SKTiled', '~> 1.10'
+    pod 'SKTiled', '~> 1.12'
 
 ## Usage
 

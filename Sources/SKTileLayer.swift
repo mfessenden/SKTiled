@@ -22,12 +22,14 @@ import Cocoa
  - tile:    Tile-based layers.
  - object:  Object group.
  - image:   Image layer.
+ - group:   Group layer.
  */
-internal enum SKTiledLayerType: Int {
+public enum SKTiledLayerType: Int {
     case invalid    = -1
     case tile
     case object
     case image
+    case group
 }
 
 
@@ -1619,6 +1621,126 @@ open class SKImageLayer: TiledLayerObject {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+
+/**
+ The `SKGroupLayer` object is a container for grouping other layers.
+ 
+ Add layers to the group with:
+ 
+ ```swift
+ groupLayer.addLayer(playerLayer)
+ ```
+ 
+ Remove with:
+ ```swift
+ groupLayer.removeLayer(playerLayer)
+ ```
+ */
+open class SKGroupLayer: TiledLayerObject {
+    
+    private var _layers: Set<TiledLayerObject> = []
+    
+    /// Returns the last index for all tilesets.
+    open var lastIndex: Int {
+        return layers.count > 0 ? layers.map {$0.index}.max()! : 0
+    }
+    
+    /// Returns the last (highest) z-position in the map.
+    open var lastZPosition: CGFloat {
+        return layers.count > 0 ? layers.map {$0.zPosition}.max()! : 0
+    }
+    
+    /// Returns a flattened array of child layers.
+    private var layers: [TiledLayerObject] {
+        return _layers.reduce([]) { nodes, node in
+            if let node = node as? SKGroupLayer {
+                return nodes + [node] + node.allLayers()
+            }
+            return nodes + [node]
+        }
+    }
+    
+    // MARK: - Init
+    /**
+     Initialize with a layer name, and parent `SKTilemap` node.
+     
+     - parameter layerName: `String` image layer name.
+     - parameter tilemap:   `SKTilemap` parent map.
+     */
+    override public init(layerName: String, tilemap: SKTilemap) {
+        super.init(layerName: layerName, tilemap: tilemap)
+        self.layerType = .group
+    }
+    
+    /**
+     Initialize with parent `SKTilemap` and layer attributes.
+     
+     **Do not use this intializer directly**
+     
+     - parameter tilemap:      `SKTilemap` parent map.
+     - parameter attributes:   `[String: String]` layer attributes.
+     */
+    public init?(tilemap: SKTilemap, attributes: [String: String]) {
+        guard let layerName = attributes["name"] else { return nil }
+        super.init(layerName: layerName, tilemap: tilemap, attributes: attributes)
+        self.layerType = .group
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Layers
+    
+    /**
+     Returns all layers, sorted by index (first is lowest, last is highest).
+     
+     - returns: `[TiledLayerObject]` array of layers.
+     */
+    open func allLayers() -> [TiledLayerObject] {
+        return layers.sorted(by: {$0.index < $1.index})
+    }
+    
+    /**
+     Returns an array of layer names.
+     
+     - returns: `[String]` layer names.
+     */
+    open func layerNames() -> [String] {
+        return layers.flatMap { $0.name }
+    }
+    
+    /**
+     Add a layer to the layers set. Automatically sets zPosition based on the tilemap zDeltaForLayers attributes.
+     
+     - parameter layer:  `TiledLayerObject` layer object.
+     - parameter base:   `Bool` layer represents default layer.
+     */
+    open func addLayer(_ layer: TiledLayerObject) {
+        // set the layer index
+        layer.index = layers.count > 0 ? lastIndex + 1 : 0
+        _layers.insert(layer)
+        addChild(layer)
+        layer.zPosition = self.tilemap.zDeltaForLayers * CGFloat(layer.index)
+        
+        // override debugging colors
+        layer.gridColor = self.gridColor
+        layer.frameColor = self.frameColor
+        layer.highlightColor = self.highlightColor
+    }
+    
+    /**
+     Remove a layer from the current layers set.
+     
+     - parameter layer: `TiledLayerObject` layer object.
+     - returns: `TiledLayerObject?` removed layer.
+     */
+    open func removeLayer(_ layer: TiledLayerObject) -> TiledLayerObject? {
+        return _layers.remove(layer)
+    }
+}
+
 
 // MARK: - Debugging
 

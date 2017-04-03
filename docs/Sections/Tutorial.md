@@ -10,6 +10,7 @@
     - [`SKTiledScene`](scenes.html#sktiledscene)
 - [Working with Layers](layers.html)
     - [Default Layer](layers.html#default-layer)
+    - [Group Layers](layers.html#group-layers)
     - [Isolating Layers](layers.html#isolating-layers)
 - [Working with Tiles](tiles.html)
     - [Getting Tiles with Tile ID](tiles.html#getting-tiles-with-tile-id)
