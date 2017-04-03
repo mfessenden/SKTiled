@@ -1,7 +1,7 @@
 ![SKTiled](images/header.png)
 
 
-##SKTiled v1.10 Documentation
+##SKTiled v1.12 Documentation
 
 
 - [Tutorial](Tutorial.html)
