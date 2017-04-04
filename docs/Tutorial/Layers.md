@@ -1,6 +1,7 @@
 #Working with Layers
 
 - [Default Layer](#default-layer)
+- [Group Layers](#group-layers)
 - [Isolating Layers](#isolating-layers)
 
 Once the map is loaded, you can begin working with the layers. There are several ways to access layers from the [`SKTilemap`](Classes/SKTilemap.html) object:
@@ -38,7 +39,17 @@ See the [Coordinates](coordinates.html) page for more information.
 
 By default, the [`SKTilemap`](Classes/SKTilemap.html) class uses a default tile layer accessible via the `SKTilemap.baseLayer` property. The base layer is automatically created is used for coordinate transforms and for visualizing the grid (the base layer's z-position is always higher than the other layers).
 
+##Group Layers
 
+![Group Layers](images/group-layers.png)
+
+Group layers are a new feature in Tiled v0.18.2. Group layers are treated as any other layer type; adding or changing properties on a parent group will affect layers in the group.
+
+
+```swift
+// query all of the group layers in the map
+let groupLayers = tilemap.groupLayers
+```
 
 ##Isolating Layers
 
