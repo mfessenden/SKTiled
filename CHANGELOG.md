@@ -1,6 +1,16 @@
 Change Log
 ==========
 
+1.12
+-----
+
+#### Changes
+- add `SKGroupLayer` layer type (new Tiled feature)
+- `SKTilemap.allLayers` method now returns a flattened array of layers
+- add `SKTilemap.getLayers(layerType:)` method
+- add `SKTilemap.groupLayers` property
+
+
 1.10
 -----
 

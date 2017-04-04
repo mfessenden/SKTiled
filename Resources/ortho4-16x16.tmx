@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" backgroundcolor="#1e1b23" nextobjectid="31">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" backgroundcolor="#1e1b23" nextobjectid="36">
  <properties>
   <property name="autoResize" type="bool" value="true"/>
   <property name="frameColor" type="color" value="#ff63a4b2"/>
@@ -206,8 +206,9 @@
 239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239,239
 </data>
  </layer>
- <layer name="Geometry" width="20" height="15">
-  <data encoding="csv">
+ <group name="GEO">
+  <layer name="Geometry" width="20" height="15">
+   <data encoding="csv">
 25,26,27,28,0,0,0,0,32,0,0,0,0,0,0,209,0,0,0,0,
 48,49,50,51,0,0,0,0,53,8,8,8,9,0,0,232,0,0,0,0,
 71,72,73,74,0,0,0,0,76,31,31,31,32,0,0,60,0,0,0,0,
@@ -224,9 +225,9 @@
 0,0,0,0,0,0,116,117,118,119,120,120,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
- </layer>
- <layer name="Geometry2" width="20" height="15">
-  <data encoding="csv">
+  </layer>
+  <layer name="Geometry2" width="20" height="15">
+   <data encoding="csv">
 209,209,210,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 232,232,233,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -243,7 +244,8 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
- </layer>
+  </layer>
+ </group>
  <layer name="Bridges" width="20" height="15">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -301,7 +303,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="Locations" visible="0">
+ <objectgroup name="Locations">
   <properties>
    <property name="lineWidth" type="float" value="1.5"/>
   </properties>
@@ -393,8 +395,13 @@
    </properties>
    <ellipse/>
   </object>
-  <object id="24" x="177" y="16.6667">
+  <object id="24" name="hitbox1" type="Hitbox" x="177" y="16.6667">
    <polygon points="-1,-0.666667 -1,15.3333 15,15.3333 15,31.3333 -1,31.3333 -1,47.3333 31,47.3333 31,-0.666667"/>
+  </object>
+  <object id="32" name="chest1" type="Chest" gid="103" x="112" y="160" width="16" height="16"/>
+  <object id="33" name="chest2" type="Chest" gid="103" x="0" y="240" width="32" height="32"/>
+  <object id="34" name="level-title" x="240" y="208" width="64" height="16">
+   <text fontfamily="KenPixel" pixelsize="12" color="#2f313d">Level 1</text>
   </object>
  </objectgroup>
 </map>

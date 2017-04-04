@@ -24,17 +24,34 @@
  </layer>
  <layer name="Objects" width="42" height="42">
   <data encoding="base64" compression="zlib">
-   eJztmM1KHEEQx2d2dkFPngyGgFFPPoLmCRb2ohvBF0hCVk8eExBZWEPi6tGIV3OPIQ8RA0kI5JJrQg7qW9jNdmFZW1X9tRsQ9g/F7HRP9/y6uqp2Zopioonul1o1/zUHAdeMWz3HEMIraT1g7OuM+VuI0fJSVo5dWg/n8zZqOy3TGYGNHkE95t5cG6hj+rZQf1/gbEb4VmKkHFo8PCR9Z+b8Q42/BnN2Izh9/oQj578/pu2va6c+lNpi9x3fX2PV9hcL+/B3Odz2qxzY+0hOnN+xjFpe4749pp/6cybADxobHH21JjQX4DrLGZM/wOKLSyyuLTQXuogzJn98rPZIa2ForGrS8uijsXNjn5i+kPpp9SiB8YgZA5x2Prr/l8aujF0zc4XkELffjxN9q9XPBdO3aGyJ8XlIntPz+Vo6q+UMyXGNEZjAfzt1eex8xL1W0DzgzxhWKc+5+ARxPlxR1kOV+hyS+z8E4nIG5wmsT+PsVEWxXfF93J5TRjy+bY5P3e+NSma04uokcFKmtUZRvDDnLwVOLWdg77XxWJsBe2A5n9XC55SE4/KkvH1++JxR4/F/L933fxGxDaJ7nhrzVrQezKI53zWG7bDhZwPRGJA4sX++GH9cGPvq/IJzB1jxvvxEvyXj9o7L6ybJTcqCtVXdmpWWO5JS3x27hBOzXBDmjmuX6gmeR6rtMTUQno24mLcsb+sDltXGwJ64eLJ5+xzlLvdsmRPnmtaJPzvVXZ9S/9nr5txvuxdtT5xPmzUvV7JNRdYAmH+/PvCZtTf1u/7D18H6+gqn73+dxgB9n+BiGeb/Zo7fnf0oh/3jqzWj9Cddx4lSQ2g7PT8m57tu7tjnuRClvBdKY6lGGZ8pOTpD8k+S9v0q9jnN3uuB0Od7V8acmEH6tpLzrTCn5uGxvQhfpbzPjopz3BoX56i/Sd8Xf77KWPf/5MxRzhqxbgAaH8ju
+   eJztmM1KAzEQx7tdC3rqSVEEv04+Qh+h0FOr4DPozaOCSKEXrR61eNW7iq+hInjxqnhQ38KE7uAwnUkyyVYo9A9hd5Ns9pfJzGx2K5Wpppostar+PqcBfcatXsEQwiupHXDvYcL4LcRoeSkrxy7Nh7N5B9VdZfGMwEaPoB7zbK4OtGva9lB7X+BsKmwrMVIOlz8skbZrc31T5ftgzq6C02dPOHL2ezd1H0U9taFUp113/HwXq2t9sbAN37LRutdsWC6VnDi+tYyuuMZtx0w7tWc9wA4uNjj6ck1oLEA/y6mJH2Dx+SUWVxcaC13EqYkfH6s90lwY6qsuueLo1pQ7U+6ZtpD8abUcwXjO3AOcdjy6/l+mfJvyw4wVEkPceq9G2taVP9dM27opG4zNQ+KcXq9U41ktZ0iMuxiBCey3PyPfu6J4VgONA/bUsEpxzvkniLNhwzEfqth9SOp7CMTFDI4TmF/qfokyS+rklcpWPjzfzmVGKy5PpthTutbumXcC+sdyUmG2Qfa3f3hIyPH43Us5PxW+DaJrnjJ3mg/m0ZgntdFyVvOzgagPSJyuvQmOHWDF6/KCzqXCrR0XM82E2IyJndhvx25iDqHy5XZNDoS9kcvnQ8TtLcuaL1VbaU/bb7E4t2vR8fj5nInxzVwus8ocoOG0gvn1HZy+9zr1ARqznC/D+I/m+FSU52yU35dryrQnncfAkUNoPb2+INdHxdja/VyIYr4LpXupyvTPmBitB8af6/+Vdp9mn7UgtPm+lTEnZpD+raT8K0zJefjensJWMd+zZXGOW+PiLPuf9KTY8yBh3v/JmaKUOWL9AkdYr48=
   </data>
  </layer>
+ <group name="House Group">
+  <layer name="Main" width="42" height="42">
+   <data encoding="base64" compression="zlib">
+   eJzt1NEJwjAUheFbkwxlp3AIK8bOUXEyK1SncBETUtDmQcRWcx/+D+5DW5IcDqQiAAAAAADNvBFpTbn1n+y5cSK78Lyfcc7c9bntavk9f+1uSyfQ5Rz66MNcFPTyLsvBPKe01yx9ltmP75f+H3wjZjnZlGXt0tQufYv3tlFyd72Zdqqlv1xnU2dxjlZPf7mhErmOc6tKpwEA4L8eJI4dew==
+  </data>
+  </layer>
+  <layer name="Roof" width="42" height="42">
+   <data encoding="base64" compression="zlib">
+   eJzt00sKwjAUheFbSAfalThXcFxdShfgBsS9VdCpLsVxFTwZVaQo5EEU/g8uCYETzuSaAQCAf7fVNJp96SJfLCqzm86uKt0EQG4XZ3Z14fle2WNEfsp7p5Pus9psXof/uVP2nrin73R46bTWvdVsInoulV1F5KfEdkJZfsfOGfYsdZfBv2XYsxCfuvgde7j0exbil7oAAABg9ARQzReI
+  </data>
+  </layer>
+  <layer name="Rooftop" width="42" height="42">
+   <data encoding="base64" compression="zlib">
+   eJztzgENAAAIA6CbyP7tjOGmkIAEAADgvq7tAQAAAF8N120AMQ==
+  </data>
+  </layer>
+  <layer name="Doors &amp; Windows" width="42" height="42">
+   <data encoding="base64" compression="zlib">
+   eJzt07EJgEAQBMC7VixH7MA6tB+L0zp8MBEFAz94hZnkooVl4SIAAACg3pQRc77PryW7VeSBZ0v5ryGP+3Vj6wIn/WWvP+zXtS4AANzsX90Ftg==
+  </data>
+  </layer>
+ </group>
  <layer name="Doors/windows/roof" width="42" height="42">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUjIJRMApGwVAHLkDMDcS1A+0QAkCTkYHhI5BOYRxol9AXyDINtAuIA2FDxJ2jYGiACywMDBdZyNd/CKj3MAX6sQF0Nx0DsjlZGRi4WMk3swCo9w+V3QlyUz2SmyyAbCcgdqbAnSZAvaYU6McGsLmpFFi+l5FZxq8C6nsKxM+GWB0ROETLTlAeO06DfEZtt/wGiRGRz3LpEA/43ALKY39ZCOezZXRwJz63LATmLx9GCE0syAO62WwA0nk0FrF+PO5YDpRbgSS/gopu9kILL1LCjxTgjcfN+OSwASXKnMJgDrRvJdROUxLSQMsgKRNJDS9a22uOQ3ygwouQvdj8MVBhig8MlvQ2CkbBKBgFxAIAE4UocQ==
-  </data>
- </layer>
- <layer name="Roof object" width="42" height="42">
-  <data encoding="base64" compression="zlib">
-   eJztzgENAAAIA6CbyP7tjOGmkIAEAADgvq7tAQAAAF8N120AMQ==
+   eJzt1b0RQEAQBeAjVYMCFIAGZCKJCqR0IJPrwl93OrCBQMAdAbtr3jdzY8YG++zdHGMAAABAu4xWQKvlDuIQecas9Kw87iTfCn3uBPeUSnICwD8tSv8NBe5OEWol+zAoyXnUUOZESO7ekmOk2nSoT0IyP5FbMttqb0ip37z3jB+cgU7I3L+el6tvevGea16uvmffwTVTGynnDQDgrg3yfg2B
   </data>
  </layer>
  <objectgroup color="#8984ff" name="Locations">
