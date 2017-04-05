@@ -10,7 +10,7 @@ import SpriteKit
 
 
 /**
- Delegate for managing `SKTilemap` nodes in an `SKScene`. This protocol and the `SKTiledScene` objects are included as a suggested way to use the `SKTilemap` class, but are not required.
+ Delegate for managing `SKTilemap` nodes in an [`SKScene`](https://developer.apple.com/reference/spritekit/skscene). This protocol and the `SKTiledScene` objects are included as a suggested way to use the `SKTilemap` class, but are not required.
  
  In this configuration, the tile map is a child of the world node and reference the custom `SKTiledSceneCamera` camera.
  

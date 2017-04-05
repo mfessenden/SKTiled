@@ -23,11 +23,10 @@ internal struct AnimationFrame {
 
 
 /**
-The `SKTilesetData` class stores data for a single tileset tile, with texture, id and properties:
+ The `SKTilesetData` object stores data for a single tileset tile, referencing the
+ tile texture, animation frames (for animated tiles) as well as tile flip flags.
  
-- tile texture
-- tile animation
-- tile orientation
+ Also includes pathfinding properties for tile accessability, and graph node weight.
 */
 open class SKTilesetData: SKTiledObject  {
     
@@ -169,4 +168,3 @@ extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
     
     public var debugDescription: String { return description }
 }
-

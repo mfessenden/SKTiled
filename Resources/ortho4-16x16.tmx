@@ -398,10 +398,5 @@
   <object id="24" name="hitbox1" type="Hitbox" x="177" y="16.6667">
    <polygon points="-1,-0.666667 -1,15.3333 15,15.3333 15,31.3333 -1,31.3333 -1,47.3333 31,47.3333 31,-0.666667"/>
   </object>
-  <object id="32" name="chest1" type="Chest" gid="103" x="112" y="160" width="16" height="16"/>
-  <object id="33" name="chest2" type="Chest" gid="103" x="0" y="240" width="32" height="32"/>
-  <object id="34" name="level-title" x="240" y="208" width="64" height="16">
-   <text fontfamily="KenPixel" pixelsize="12" color="#2f313d">Level 1</text>
-  </object>
  </objectgroup>
 </map>

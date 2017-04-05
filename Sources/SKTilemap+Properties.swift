@@ -127,6 +127,7 @@ public extension SKTilemap {
 
 
 public extension SKTileset {
+    // MARK: - Properties
     /**
      Parse the tileset's properties value.
      */
@@ -137,7 +138,7 @@ public extension SKTileset {
 
 
 public extension TiledLayerObject {
-    
+    // MARK: - Properties
     /**
      Parse the layer's properties value.
      */
@@ -202,6 +203,7 @@ public extension TiledLayerObject {
 
 
 public extension SKTileLayer {
+    // MARK: - Properties
     /**
      Parse the tile layer's properties.
     */
@@ -212,8 +214,9 @@ public extension SKTileLayer {
 
 
 public extension SKObjectGroup {
+    // MARK: - Properties
     /**
-     Parse the object groups properties.
+     Parse the object group's properties.
     */
     override public func parseProperties(completion: (() -> ())?) {
         for (attr, _ ) in properties {
@@ -228,6 +231,7 @@ public extension SKObjectGroup {
 
 
 public extension SKImageLayer {
+    // MARK: - Properties
     /**
      Parse the image layer's properties.
     */
@@ -238,6 +242,7 @@ public extension SKImageLayer {
 
 
 public extension SKTileObject {
+    // MARK: - Properties
     /**
      Parse the object's properties value.
      */
@@ -264,6 +269,7 @@ public extension SKTileObject {
 
 
 public extension SKTilesetData {
+    // MARK: - Properties
     /**
      Parse the tile data's properties value.
      */
@@ -271,4 +277,3 @@ public extension SKTilesetData {
         if completion != nil { completion!() }
     }
 }
-
