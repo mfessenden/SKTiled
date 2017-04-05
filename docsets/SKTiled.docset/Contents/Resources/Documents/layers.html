@@ -75,7 +75,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Class Reference.html">Class Reference</a>
+            <a href="Class Hierarchy.html">Class Hierarchy</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Classes/SKTilemap.html">SKTilemap</a>
@@ -116,23 +116,11 @@
               <li class="nav-group-task">
                 <a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
               </li>
-              <li class="nav-group-task">
-                <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
-              </li>
             </ul>
           </li>
           <li class="nav-group-name">
             <a href="Other.html">Other</a>
             <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:O7SKTiled10TileOffset">TileOffset</a>
-              </li>
               <li class="nav-group-task">
                 <a href="Other.html#/s:O7SKTiled13CollisionType">CollisionType</a>
               </li>
@@ -140,7 +128,24 @@
                 <a href="Other.html#/s:O7SKTiled12PhysicsShape">PhysicsShape</a>
               </li>
               <li class="nav-group-task">
+                <a href="Other.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Other.html#/s:O7SKTiled16SKTiledLayerType">SKTiledLayerType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other.html#/s:O7SKTiled10TileOffset">TileOffset</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
               </li>
             </ul>
           </li>
@@ -153,17 +158,31 @@
             <a href='#working-with-layers' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='working-with-layers'>Working with Layers</h1>
 
 <ul>
-<li><a href="#default-layer">Default Layer</a></li>
 <li><a href="#group-layers">Group Layers</a></li>
 <li><a href="#isolating-layers">Isolating Layers</a></li>
 </ul>
 
-<p>Once the map is loaded, you can begin working with the layers. There are several ways to access layers from the <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> object:</p>
-<pre class="highlight swift"><code><span class="c1">// returns a tile layer with a given name</span>
-<span class="k">let</span> <span class="nv">backgoundLayer</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getLayer</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"Background"</span><span class="p">)</span> <span class="k">as!</span> <span class="kt">SKTileLayer</span>
+<p>Once a map is loaded, you can interact with the layers within. Layers can be queried either by name, layer index, or type. Layers are parsed and indexed in the order they are read in your TMX document, so the bottom-most layer in Tiled will have an index of 0.</p>
+
+<p>There are several ways to query layers from the <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> object:</p>
+<pre class="highlight swift"><code><span class="c1">// access a tile layer with a given name</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">backgoundLayer</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getLayer</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"Background"</span><span class="p">)</span> <span class="k">as!</span> <span class="kt">SKTileLayer</span> <span class="p">{</span>
+    <span class="n">backgroundLayer</span><span class="o">.</span><span class="n">opacity</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">}</span>
+
+<span class="c1">// filter tile layers based on name</span>
+<span class="k">let</span> <span class="nv">allBackgroundLayers</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="n">tileLayers</span><span class="o">.</span><span class="n">filter</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">"Background"</span> <span class="p">}</span>
+
+<span class="c1">// return tile layers of a given type</span>
+<span class="k">let</span> <span class="nv">allTileLayers</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getLayers</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="o">.</span><span class="n">tile</span><span class="p">)</span>
 </code></pre>
 
-<p>Once you have a layer, you can add child nodes to it (any <code>SKNode</code> type is allowed):</p>
+<p>If you need to access a layer <em>before</em> it is rendered, implement the <a href="Protocols/SKTilemapDelegate.html"><code>SKTilemapDelegate.didAddLayer</code></a> method. See the <a href="scenes.html#sktilemapdelegate-protocol">Setting Up Your Scenes</a> page for more details.</p>
+<a href='#tile-coordinates' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='tile-coordinates'>Tile Coordinates</h2>
+
+<p>Because all <strong>SKTiled</strong> objects are derived from SpriteKit&rsquo;s default <a href="https://developer.apple.com/reference/spritekit/sknode"><code>SKNode</code></a> type, you can technically parent any object converted from your Tiled scene to any layer type, or have own your sprite objects interacting with <a href="Classes/SKTile.html"><code>SKTile</code></a> sprites.</p>
+
+<p>To aid in positioning your objects, ever <a href="Classes/TiledLayerObject.html"><code>TiledLayerObject</code></a> layer type contains methods for converting tile coordinates to and from the current projection.</p>
 <pre class="highlight swift"><code><span class="c1">// add a child node</span>
 <span class="n">playerLayer</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
 
@@ -180,9 +199,6 @@
 </code></pre>
 
 <p>See the <a href="coordinates.html">Coordinates</a> page for more information.</p>
-<a href='#default-layer' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='default-layer'>Default Layer</h2>
-
-<p>By default, the <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> class uses a default tile layer accessible via the <code>SKTilemap.baseLayer</code> property. The base layer is automatically created is used for coordinate transforms and for visualizing the grid (the base layer&rsquo;s z-position is always higher than the other layers).</p>
 <a href='#group-layers' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='group-layers'>Group Layers</h2>
 
 <p><img src="images/group-layers.png" alt="Group Layers"></p>
@@ -190,6 +206,16 @@
 <p>Group layers are a new feature in Tiled v0.18.2. Group layers are treated as any other layer type; adding or changing properties on a parent group will affect layers in the group.</p>
 <pre class="highlight swift"><code><span class="c1">// query all of the group layers in the map</span>
 <span class="k">let</span> <span class="nv">groupLayers</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="n">groupLayers</span>
+
+<span class="c1">// access a tile layer with a given name</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">housesGroup</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getLayer</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"Houses"</span><span class="p">)</span> <span class="k">as!</span> <span class="kt">SKGroupLayer</span> <span class="p">{</span>
+    <span class="c1">// add custom prop objects</span>
+    <span class="k">for</span> <span class="n">childLayer</span> <span class="k">in</span> <span class="n">housesGroup</span><span class="o">.</span><span class="nf">allLayers</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">lampPost</span> <span class="o">=</span> <span class="kt">LampPostProp</span><span class="p">()</span>
+        <span class="n">childLayer</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">lampPost</span><span class="p">)</span>
+        <span class="n">lampPost</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">childLayer</span><span class="o">.</span><span class="nf">pointForCoordinate</span><span class="p">(</span><span class="n">lampCoord</span><span class="o">.</span><span class="n">defaultCoords</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre>
 <a href='#isolating-layers' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='isolating-layers'>Isolating Layers</h2>
 

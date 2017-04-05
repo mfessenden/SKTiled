@@ -75,7 +75,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Class Reference.html">Class Reference</a>
+            <a href="Class Hierarchy.html">Class Hierarchy</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Classes/SKTilemap.html">SKTilemap</a>
@@ -116,23 +116,11 @@
               <li class="nav-group-task">
                 <a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
               </li>
-              <li class="nav-group-task">
-                <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
-              </li>
             </ul>
           </li>
           <li class="nav-group-name">
             <a href="Other.html">Other</a>
             <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:O7SKTiled10TileOffset">TileOffset</a>
-              </li>
               <li class="nav-group-task">
                 <a href="Other.html#/s:O7SKTiled13CollisionType">CollisionType</a>
               </li>
@@ -140,7 +128,24 @@
                 <a href="Other.html#/s:O7SKTiled12PhysicsShape">PhysicsShape</a>
               </li>
               <li class="nav-group-task">
+                <a href="Other.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Other.html#/s:O7SKTiled16SKTiledLayerType">SKTiledLayerType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other.html#/s:O7SKTiled10TileOffset">TileOffset</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
               </li>
             </ul>
           </li>
@@ -153,23 +158,19 @@
             <a href='#getting-started' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='getting-started'>Getting Started</h1>
 
 <ul>
-<li><a href="#requirements">Requirements</a>
-
-<ul>
-<li><a href="#swift-2-note">Swift 2 Note</a></li>
-</ul></li>
+<li><a href="#requirements">Requirements</a></li>
 <li><a href="#sktiled-project">SKTiled Project</a></li>
 <li><a href="#installation">Installation</a>
 
 <ul>
 <li><a href="#framework-installation">Framework Installation</a></li>
+<li><a href="#carthage-installation">Carthage Installation</a></li>
+<li><a href="#cocoapods-installation">CocoaPods Installation</a></li>
 <li><a href="#source-code-installation">Source Code Installation</a>
 
 <ul>
 <li><a href="#linking-zlib">Linking zlib</a></li>
 </ul></li>
-<li><a href="#carthage-installation">Carthage Installation</a></li>
-<li><a href="#cocoapods-installation">CocoaPods Installation</a></li>
 </ul></li>
 <li><a href="#adding-tiled-assets-to-xcode">Adding Tiled Assets to Xcode</a></li>
 </ul>
@@ -182,22 +183,13 @@
 <li>Xcode 8</li>
 <li>Swift 3</li>
 </ul>
-<a href='#strong-swift-2-note-strong' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='strong-swift-2-note-strong'><strong>Swift 2 Note</strong></h4>
-
-<p>Check out the <a href="https://github.com/mfessenden/SKTiled/tree/swift2">Swift 2</a> branch for Swift 2.3. As Apple is moving forward so quickly to Swift 3, the Swift 2.3 branch is now considered legacy and won&rsquo;t be updated.</p>
-
-<p>If you&rsquo;re using one of the older toolchains, you&rsquo;ll need to enable the <strong>Use Legacy Swift Language Version</strong> option in the project <strong>Build Settings.</strong></p>
-
-<p><img src="images/swift_legacy.png" alt="Legacy Swift Version"></p>
 <a href='#installation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='installation'>Installation</h2>
 
-<p>When you clone the <strong>SKTiled</strong> project, you&rsquo;ll see that there are four targets included. Two are demo applications, one for iOS and one for macOS. These are included to let you quickly test your own content, or simple play around with the included demo files.</p>
+<p>The <strong>SKTiled</strong> project contains four targets; two are demo applications for iOS &amp; macOS. These are included to let you quickly test your own content, or simple play around with the included demo files. The other two are frameworks for use in your own projects.</p>
 
 <p><img src="images/project_targets.png" alt="Project Targets"></p>
 
-<p>The frameworks are bundles that can be linked in your SpriteKit projects. To use them, build one or both of the targets and add them to your project. Make sure the <em>Minimum Deployment Target</em> is set correctly for your project (iOS 9+/macOS 10.11+).</p>
-
-<p><img src="images/framework.png" alt="adding framework"></p>
+<p>To use the frameworks, build one or both of the targets and add them to your project. Make sure the <em>Minimum Deployment Target</em> is set correctly for your project (iOS 9+/macOS 10.11+).</p>
 <a href='#strong-framework-installation-strong' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='strong-framework-installation-strong'><strong>Framework Installation</strong></h3>
 
 <p><img src="images/framework.png" alt="adding framework"></p>
@@ -207,32 +199,13 @@
 <p><img src="images/link_binary.png" alt="framework linking"></p>
 
 <p><img src="images/links.png" alt="framework embed"></p>
-<a href='#strong-source-code-installation-strong' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='strong-source-code-installation-strong'><strong>Source Code Installation</strong></h3>
-
-<p>It is also possible to integrate the source code directly into your project. To do this, you&rsquo;ll need to copy the <code>Sources</code> and <code>zlib</code> directories to your project. Make sure the swift files are added to your target(s).</p>
-
-<p><img src="images/installation.png" alt="Xcode installation"></p>
-<a href='#linking-zlib' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='linking-zlib'>Linking zlib</h4>
-
-<p>Add the <code>zlib</code> directory to your project&rsquo;s include paths:
-    - <em>Project &gt; Build Settings &gt; Swift Compiler - Search Paths &gt; Import Paths</em></p>
-
-<p><img src="images/zlib_linking.png" alt="zlib compression"></p>
 <a href='#carthage-installation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='carthage-installation'>Carthage Installation</h3>
 
-<p>To install with <a href="https://github.com/Carthage/Carthage">Carthage</a>, browse to the root of the project that you want to build the SKTiled framework with and create an empty Cartfile:</p>
-<pre class="highlight plaintext"><code>touch Cartfile
-</code></pre>
-
-<p>Open the Cartfile with a text editor and add a reference to <strong>SKTiled</strong> (be sure to check the current version number):</p>
+<p>To build with <a href="https://github.com/Carthage/Carthage">Carthage</a>, create a Cartfile in your project root and add a reference to <strong>SKTiled</strong> (be sure to check the current version number):</p>
 <pre class="highlight plaintext"><code>github "mfessenden/SKTiled" ~&gt; 1.12
 </code></pre>
 
 <p>Close the file and run Carthage from the terminal to build the framework(s) for the platform you want:</p>
-<pre class="highlight plaintext"><code>carthage update --platform iOS
-</code></pre>
-
-<p>Updating is just as simple. Simply change the version number in the Cartfile to the one you want, and carthage can update the frameworks for you:</p>
 <pre class="highlight plaintext"><code>carthage update --platform iOS
 </code></pre>
 
@@ -243,11 +216,11 @@
 <p>See the <a href="https://github.com/Carthage/Carthage">Carthage</a> home page for help and additional build instructions.</p>
 <a href='#cocoapods-installation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='cocoapods-installation'>CocoaPods Installation</h3>
 
-<p>Installation with <a href="https://cocoapods.org">CocoaPods</a> is similar to Carthage. To use it, browse to your project root directory in the terminal and run the command:</p>
+<p>Installation with <a href="https://cocoapods.org">CocoaPods</a> is similar to Carthage. Create a <strong>podfile</strong> in your project root with the command:</p>
 <pre class="highlight plaintext"><code>pod init
 </code></pre>
 
-<p>This will create a file called <strong>Podfile</strong> in the directory. Open it up and add references to <strong>SKTiled</strong> in each of your targets:</p>
+<p>Add references to <strong>SKTiled</strong> in each of your targets:</p>
 <pre class="highlight plaintext"><code># Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
 
@@ -270,13 +243,24 @@ target 'macOS' do
 end
 </code></pre>
 
-<p>As before, be sure to check the version number. In the terminal, run the following command:</p>
+<p>As before, be sure to check the version number. In the terminal, run the installer:</p>
 <pre class="highlight plaintext"><code>pod install
 </code></pre>
 
 <p>CocoaPods will create an <strong>.xcworkspace</strong> file with the name of your project. Open that and use this to compile your targets; dependencies will be linked automatically.</p>
 
 <p>See the <a href="https://cocoapods.org">CocoaPods</a> home page for help and additional instructions.</p>
+<a href='#strong-source-code-installation-strong' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='strong-source-code-installation-strong'><strong>Source Code Installation</strong></h3>
+
+<p>It is also possible to integrate the source code directly into your project. To do this, you&rsquo;ll need to copy the <code>Sources</code> and <code>zlib</code> directories to your project. Make sure the swift files are added to your target(s).</p>
+
+<p><img src="images/installation.png" alt="Xcode installation"></p>
+<a href='#linking-zlib' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='linking-zlib'>Linking zlib</h4>
+
+<p>Add the <code>zlib</code> directory to your project&rsquo;s include paths:
+    - <em>Project &gt; Build Settings &gt; Swift Compiler - Search Paths &gt; Import Paths</em></p>
+
+<p><img src="images/zlib_linking.png" alt="zlib compression"></p>
 <a href='#adding-tiled-assets-to-xcode' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='adding-tiled-assets-to-xcode'>Adding Tiled Assets to Xcode</h2>
 
 <p>When adding maps (TMX files), images and tilesets (TSX files) to your Xcode project, you&rsquo;ll need to make sure to add the files as <strong>groups</strong> and not folder references as the assets are stored in the root of the app bundle when compiled. Relative file references in your Tiled files will break when the are added to your app&rsquo;s bundle.</p>

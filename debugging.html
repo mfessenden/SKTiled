@@ -75,7 +75,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Class Reference.html">Class Reference</a>
+            <a href="Class Hierarchy.html">Class Hierarchy</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Classes/SKTilemap.html">SKTilemap</a>
@@ -116,23 +116,11 @@
               <li class="nav-group-task">
                 <a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
               </li>
-              <li class="nav-group-task">
-                <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
-              </li>
             </ul>
           </li>
           <li class="nav-group-name">
             <a href="Other.html">Other</a>
             <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:O7SKTiled10TileOffset">TileOffset</a>
-              </li>
               <li class="nav-group-task">
                 <a href="Other.html#/s:O7SKTiled13CollisionType">CollisionType</a>
               </li>
@@ -140,7 +128,24 @@
                 <a href="Other.html#/s:O7SKTiled12PhysicsShape">PhysicsShape</a>
               </li>
               <li class="nav-group-task">
+                <a href="Other.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Other.html#/s:O7SKTiled16SKTiledLayerType">SKTiledLayerType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other.html#/s:O7SKTiled10TileOffset">TileOffset</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
               </li>
             </ul>
           </li>
@@ -158,8 +163,7 @@
 <li><a href="#highlighting-tiles">Highlighting Tiles</a></li>
 <li><a href="#layer-boundary">Layer Boundary</a></li>
 <li><a href="#debugging-layers">Debugging Layers</a></li>
-<li><a href="#debugging-colors">Debugging Colors</a></li>
-<li><a href="#properties">Properties</a></li>
+<li><a href="#debugging-properties">Debugging Properties</a></li>
 </ul>
 
 <p>There are several functions for troubleshooting your tiled scenes. The <code>SKTilemap</code> node has a <code>debugDraw</code> property that will quickly show the grid and any object layers:</p>
@@ -214,12 +218,7 @@
 <p><img src="images/debugLayers.png" alt="Debug Layers"></p>
 
 <p>Data shown includes layer index, size, positioning, offset, z-position and anchor point.</p>
-<a href='#debugging-colors' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='debugging-colors'>Debugging Colors</h2>
-<pre class="highlight plaintext"><code>SKTilemap:
-
-  highlightColor   -&gt; overrides all layers highlightColor -&gt; overrides SKTile highlight color
-</code></pre>
-<a href='#properties' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='properties'>Properties</h2>
+<a href='#debugging-properties' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='debugging-properties'>Debugging Properties</h2>
 
 <p>Debugging properties for <strong>SKTiled</strong> classes:</p>
 <pre class="highlight plaintext"><code>SKTilemap:
@@ -227,7 +226,6 @@
   showObjects     (Bool)      - visibility flag for all object layers.  
 
 TiledLayerObject:
-  color           (SKColor)   - *not currently used
   highlightColor  (SKColor)   - layer highlight color (tile highlight color).
   gridColor       (SKColor)   - grid color.
   frameColor      (SKColor)   - bounding box color.

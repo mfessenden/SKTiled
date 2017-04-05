@@ -75,7 +75,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Class Reference.html">Class Reference</a>
+            <a href="Class Hierarchy.html">Class Hierarchy</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Classes/SKTilemap.html">SKTilemap</a>
@@ -116,23 +116,11 @@
               <li class="nav-group-task">
                 <a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
               </li>
-              <li class="nav-group-task">
-                <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
-              </li>
             </ul>
           </li>
           <li class="nav-group-name">
             <a href="Other.html">Other</a>
             <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:O7SKTiled10TileOffset">TileOffset</a>
-              </li>
               <li class="nav-group-task">
                 <a href="Other.html#/s:O7SKTiled13CollisionType">CollisionType</a>
               </li>
@@ -140,7 +128,24 @@
                 <a href="Other.html#/s:O7SKTiled12PhysicsShape">PhysicsShape</a>
               </li>
               <li class="nav-group-task">
+                <a href="Other.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Other.html#/s:O7SKTiled16SKTiledLayerType">SKTiledLayerType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other.html#/s:O7SKTiled10TileOffset">TileOffset</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
               </li>
             </ul>
           </li>
@@ -153,6 +158,166 @@
             
           </section>
           <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:O7SKTiled13CollisionType"></a>
+                    <a name="//apple_ref/swift/Enum/CollisionType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:O7SKTiled13CollisionType">CollisionType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Represents the object&rsquo;s physics body type.</p>
+
+<ul>
+<li><code>none</code>:      object has no physics properties.</li>
+<li><code>dynamic</code>:   object is an active physics body.</li>
+<li><code>collision</code>: object is a passive physics body.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">CollisionType</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileObject.swift#L34-L38">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:O7SKTiled12SKObjectType"></a>
+                    <a name="//apple_ref/swift/Enum/SKObjectType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Describes the <code><a href="Classes/SKTileObject.html">SKTileObject</a></code> shape type.</p>
+
+<ul>
+<li>rectangle:  rectangular shape</li>
+<li>ellipse:    circular shape</li>
+<li>polygon:    closed polygon</li>
+<li>polyline:   open polygon</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">SKObjectType</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileObject.swift#L19-L24">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:O7SKTiled12PhysicsShape"></a>
+                    <a name="//apple_ref/swift/Enum/PhysicsShape" class="dashAnchor"></a>
+                    <a class="token" href="#/s:O7SKTiled12PhysicsShape">PhysicsShape</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Describes a tile&rsquo;s physics body shape.</p>
+
+<ul>
+<li><code>none</code>:       tile has no physics body.</li>
+<li><code>rectangle</code>:  tile physics shape is a rectangle.</li>
+<li><code>texture</code>:    tile physics shape is based on texture.</li>
+<li><code>path</code>:       tile physics shape is derived from a path.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">PhysicsShape</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTile.swift#L19-L25">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:O7SKTiled16SKTiledLayerType"></a>
+                    <a name="//apple_ref/swift/Enum/SKTiledLayerType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:O7SKTiled16SKTiledLayerType">SKTiledLayerType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Describes the layer type.</p>
+
+<ul>
+<li>invalid: Layer is invalid.</li>
+<li>tile:    Tile-based layers.</li>
+<li>object:  Object group.</li>
+<li>image:   Image layer.</li>
+<li>group:   Group layer.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">SKTiledLayerType</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L29-L35">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
             <div class="task-group">
               <ul>
                 <li class="item">
@@ -247,165 +412,6 @@
                       </div>
                       <div class="slightly-smaller">
                         <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTilemap.swift#L78-L88">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:O7SKTiled12SKObjectType"></a>
-                    <a name="//apple_ref/swift/Enum/SKObjectType" class="dashAnchor"></a>
-                    <a class="token" href="#/s:O7SKTiled12SKObjectType">SKObjectType</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Describes the <code><a href="Classes/SKTileObject.html">SKTileObject</a></code> shape type.</p>
-
-<ul>
-<li>rectangle:  rectangular shape</li>
-<li>ellipse:    circular shape</li>
-<li>polygon:    closed polygon</li>
-<li>polyline:   open polygon</li>
-</ul>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">SKObjectType</span><span class="p">:</span> <span class="kt">String</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileObject.swift#L19-L24">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:O7SKTiled13CollisionType"></a>
-                    <a name="//apple_ref/swift/Enum/CollisionType" class="dashAnchor"></a>
-                    <a class="token" href="#/s:O7SKTiled13CollisionType">CollisionType</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Represents the object&rsquo;s physics body type.</p>
-
-<ul>
-<li><code>none</code>:      object has no physics properties.</li>
-<li><code>dynamic</code>:   object is an active physics body.</li>
-<li><code>collision</code>: object is a passive physics body.</li>
-</ul>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">CollisionType</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileObject.swift#L34-L38">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:O7SKTiled12PhysicsShape"></a>
-                    <a name="//apple_ref/swift/Enum/PhysicsShape" class="dashAnchor"></a>
-                    <a class="token" href="#/s:O7SKTiled12PhysicsShape">PhysicsShape</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Describes a tile&rsquo;s physics body shape.</p>
-
-<ul>
-<li>none:       tile has no physics body.</li>
-<li>rectangle:  tile physics shape is a rectangle.</li>
-<li>texture:    tile physics shape is based on texture.</li>
-</ul>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">PhysicsShape</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTile.swift#L18-L24">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:O7SKTiled16SKTiledLayerType"></a>
-                    <a name="//apple_ref/swift/Enum/SKTiledLayerType" class="dashAnchor"></a>
-                    <a class="token" href="#/s:O7SKTiled16SKTiledLayerType">SKTiledLayerType</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Describes the layer type.</p>
-
-<ul>
-<li>invalid: Layer is invalid.</li>
-<li>tile:    Tile-based layers.</li>
-<li>object:  Object group.</li>
-<li>image:   Image layer.</li>
-<li>group:   Group layer.</li>
-</ul>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">SKTiledLayerType</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L29-L35">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

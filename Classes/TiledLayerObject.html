@@ -76,7 +76,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Class Reference.html">Class Reference</a>
+            <a href="../Class Hierarchy.html">Class Hierarchy</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Classes/SKTilemap.html">SKTilemap</a>
@@ -117,23 +117,11 @@
               <li class="nav-group-task">
                 <a href="../Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
               </li>
-              <li class="nav-group-task">
-                <a href="../Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
-              </li>
             </ul>
           </li>
           <li class="nav-group-name">
             <a href="../Other.html">Other</a>
             <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Enums/TilemapOrientation.html">TilemapOrientation</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Other.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Other.html#/s:O7SKTiled10TileOffset">TileOffset</a>
-              </li>
               <li class="nav-group-task">
                 <a href="../Other.html#/s:O7SKTiled13CollisionType">CollisionType</a>
               </li>
@@ -141,7 +129,24 @@
                 <a href="../Other.html#/s:O7SKTiled12PhysicsShape">PhysicsShape</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Other.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Other.html#/s:O7SKTiled16SKTiledLayerType">SKTiledLayerType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TilemapOrientation.html">TilemapOrientation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other.html#/s:O7SKTiled10TileOffset">TileOffset</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
               </li>
             </ul>
           </li>
@@ -170,6 +175,11 @@ doesn&rsquo;t define any object or child types, but manages several important as
 
 <pre class="highlight plaintext"><code> layer.size            // size (in tiles)
  layer.tileSize        // tile size (in pixels)
+</code></pre>
+
+<p>Coordinate transformation functions return coordinates in the current tilemap projection:</p>
+
+<pre class="highlight plaintext"><code> node.position = tileLayer.pointForCoordinate(2, 1)
 </code></pre>
 
           </section>
@@ -201,7 +211,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L66">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L71">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -231,7 +241,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L69">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L74">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -261,7 +271,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L72">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L77">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -291,7 +301,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L75">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L80">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -321,7 +331,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L77">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L82">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -351,7 +361,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L79">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L84">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -381,7 +391,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L81">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L86">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -411,7 +421,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L83">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L88">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -441,7 +451,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L86">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L91">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -471,7 +481,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L88">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L93">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -501,7 +511,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L92">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L97">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -531,7 +541,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L117">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L122">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -561,7 +571,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L125">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L130">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -591,7 +601,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L137-L152">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L142-L157">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -621,7 +631,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L155-L157">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L160-L162">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -651,7 +661,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L160-L163">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L165-L168">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -681,7 +691,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L166-L169">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L171-L174">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -711,7 +721,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L172-L175">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L177-L180">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -741,7 +751,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L178-L181">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L183-L186">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -771,7 +781,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L184-L192">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L189-L197">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -865,7 +875,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L206-L243">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L211-L248">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -933,7 +943,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L252-L264">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L257-L269">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -994,7 +1004,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L276-L278">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L281-L283">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1044,7 +1054,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L285-L287">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L290-L292">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1110,7 +1120,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L320-L322">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L325-L327">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1165,7 +1175,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L330-L332">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L335-L337">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1244,7 +1254,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L343-L345">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L348-L350">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1299,7 +1309,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L353-L355">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L358-L360">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1354,7 +1364,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L363-L365">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L368-L370">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1409,7 +1419,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L373-L397">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L378-L402">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1464,7 +1474,7 @@ doesn&rsquo;t define any object or child types, but manages several important as
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L405-L408">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L410-L413">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1578,7 +1588,7 @@ will be higher than all of the other nodes in the layer.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L678-L681">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L683-L686">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1668,7 +1678,7 @@ will be higher than all of the other nodes in the layer.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L692-L698">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L697-L703">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1698,7 +1708,7 @@ will be higher than all of the other nodes in the layer.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L703-L744">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L708-L749">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1759,7 +1769,7 @@ will be higher than all of the other nodes in the layer.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L768-L781">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L773-L786">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1820,7 +1830,7 @@ will be higher than all of the other nodes in the layer.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L790-L793">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L795-L798">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1850,7 +1860,7 @@ will be higher than all of the other nodes in the layer.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L795-L797">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L800-L802">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1977,7 +1987,7 @@ will be higher than all of the other nodes in the layer.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L1929-L1933">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L1934-L1938">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2071,7 +2081,7 @@ will be higher than all of the other nodes in the layer.</p>
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L1944-L1946">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L1949-L1951">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2139,7 +2149,7 @@ will be higher than all of the other nodes in the layer.</p>
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L1955-L1957">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L1960-L1962">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2207,7 +2217,7 @@ will be higher than all of the other nodes in the layer.</p>
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L1966-L1989">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L1971-L1994">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2275,7 +2285,7 @@ will be higher than all of the other nodes in the layer.</p>
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L1998-L2000">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L2003-L2005">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2305,7 +2315,7 @@ will be higher than all of the other nodes in the layer.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L2005-L2007">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L2010-L2012">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2335,7 +2345,7 @@ will be higher than all of the other nodes in the layer.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L2012-L2016">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTileLayer.swift#L2017-L2021">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2343,6 +2353,13 @@ will be higher than all of the other nodes in the layer.</p>
               </ul>
             </div>
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Properties"></a>
+                <a name="//apple_ref/swift/Section/Properties" class="dashAnchor"></a>
+                <a href="#/Properties">
+                  <h3 class="section-name">Properties</h3>
+                </a>
+              </div>
               <ul>
                 <li class="item">
                   <div>
@@ -2369,7 +2386,7 @@ will be higher than all of the other nodes in the layer.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTilemap+Properties.swift#L144-L180">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTilemap+Properties.swift#L145-L181">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2424,7 +2441,7 @@ will be higher than all of the other nodes in the layer.</p>
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTilemap+Properties.swift#L188-L190">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTilemap+Properties.swift#L189-L191">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2487,7 +2504,7 @@ will be higher than all of the other nodes in the layer.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTilemap+Properties.swift#L198-L200">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTilemap+Properties.swift#L199-L201">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

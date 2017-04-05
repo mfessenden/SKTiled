@@ -75,7 +75,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Class Reference.html">Class Reference</a>
+            <a href="Class Hierarchy.html">Class Hierarchy</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Classes/SKTilemap.html">SKTilemap</a>
@@ -116,23 +116,11 @@
               <li class="nav-group-task">
                 <a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
               </li>
-              <li class="nav-group-task">
-                <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
-              </li>
             </ul>
           </li>
           <li class="nav-group-name">
             <a href="Other.html">Other</a>
             <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:O7SKTiled10TileOffset">TileOffset</a>
-              </li>
               <li class="nav-group-task">
                 <a href="Other.html#/s:O7SKTiled13CollisionType">CollisionType</a>
               </li>
@@ -140,7 +128,24 @@
                 <a href="Other.html#/s:O7SKTiled12PhysicsShape">PhysicsShape</a>
               </li>
               <li class="nav-group-task">
+                <a href="Other.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Other.html#/s:O7SKTiled16SKTiledLayerType">SKTiledLayerType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other.html#/s:O7SKTiled10TileOffset">TileOffset</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
               </li>
             </ul>
           </li>
@@ -150,38 +155,46 @@
         <section>
           <section class="section">
             <h1>Tutorial</h1>
-            
+            <a href='#strong-index-strong' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='strong-index-strong'><strong>Index</strong></h3>
+
 <ul>
 <li><a href="getting-started.html">Getting Started</a>
 
 <ul>
-<li><a href="getting-started.html#requirements">Requirements</a>
+<li><a href="getting-started.html#requirements">Requirements</a></li>
+<li><a href="getting-started.html#installation">Installation</a>
 
 <ul>
-<li><a href="getting-started.html#swift-2-note">Swift 2 Note</a></li>
+<li><a href="getting-started.html#framework-installation">Framework Installation</a></li>
+<li><a href="getting-started.html#carthage-installation">Carthage Installation</a></li>
+<li><a href="getting-started.html#cocoapods-installation">CocoaPods Installation</a></li>
+<li><a href="getting-started.html#source-code-installation">Source Code Installation</a>
+
+<ul>
+<li><a href="getting-started.html#linking-zlib">Linking zlib</a></li>
 </ul></li>
-<li><a href="getting-started.html#installation">Installation</a></li>
+</ul></li>
 <li><a href="getting-started.html#adding-tiled-assets">Adding Tiled Assets to Xcode</a></li>
 </ul></li>
 <li><a href="scenes.html">Setting Up Your Scenes</a>
 
 <ul>
-<li><a href="scenes.html#sktilemapdelegate-protocol"><code>SKTilemapDelegate</code> Protocol</a></li>
-<li><a href="scenes.html#sktiledscene"><code>SKTiledScene</code></a></li>
+<li><a href="scenes.html#sktilemapdelegate-protocol">SKTilemapDelegate Protocol</a></li>
+<li><a href="scenes.html#scene-setup">Scene Setup</a></li>
+<li><a href="scenes.html#sktiledscene">SKTiledScene</a></li>
 </ul></li>
 <li><a href="layers.html">Working with Layers</a>
 
 <ul>
-<li><a href="layers.html#default-layer">Default Layer</a></li>
 <li><a href="layers.html#group-layers">Group Layers</a></li>
 <li><a href="layers.html#isolating-layers">Isolating Layers</a></li>
 </ul></li>
 <li><a href="tiles.html">Working with Tiles</a>
 
 <ul>
-<li><a href="tiles.html#getting-tiles-with-tile-id">Getting Tiles with Tile ID</a></li>
-<li><a href="tiles.html#getting-tiles-of-type">Getting Tiles of Type</a></li>
-<li><a href="tiles.html#getting-tiles-with-property">Getting Tiles with Property</a></li>
+<li><a href="tiles.html#find-tiles-with-tile-id">Find Tiles with Tile ID</a></li>
+<li><a href="tiles.html#find-tiles-of-type">Find Tiles of Type</a></li>
+<li><a href="tiles.html#find-tiles-with-property">Find Tiles with Property</a></li>
 <li><a href="tiles.html#adding-tiles">Adding Tiles</a></li>
 <li><a href="tiles.html#removing-tiles">Removing Tiles</a></li>
 <li><a href="tiles.html#animated-tiles">Animated Tiles</a></li>
@@ -216,7 +229,7 @@
 <li><a href="debugging.html#layer-boundary">Layer Boundary</a></li>
 <li><a href="debugging.html#debugging-layers">Debugging Layers</a></li>
 <li><a href="debugging.html#debugging-colors">Debugging Colors</a></li>
-<li><a href="debugging.html#properties">Properties</a></li>
+<li><a href="debugging.html#debugging-properties">Debugging Properties</a></li>
 </ul></li>
 <li><a href="troubleshooting.html">Troubleshooting</a></li>
 <li><a href="troubleshooting.html#linking-errors">Linking Errors</a>

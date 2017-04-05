@@ -75,7 +75,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Class Reference.html">Class Reference</a>
+            <a href="Class Hierarchy.html">Class Hierarchy</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Classes/SKTilemap.html">SKTilemap</a>
@@ -116,23 +116,11 @@
               <li class="nav-group-task">
                 <a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
               </li>
-              <li class="nav-group-task">
-                <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
-              </li>
             </ul>
           </li>
           <li class="nav-group-name">
             <a href="Other.html">Other</a>
             <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:O7SKTiled10TileOffset">TileOffset</a>
-              </li>
               <li class="nav-group-task">
                 <a href="Other.html#/s:O7SKTiled13CollisionType">CollisionType</a>
               </li>
@@ -140,7 +128,24 @@
                 <a href="Other.html#/s:O7SKTiled12PhysicsShape">PhysicsShape</a>
               </li>
               <li class="nav-group-task">
+                <a href="Other.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Other.html#/s:O7SKTiled16SKTiledLayerType">SKTiledLayerType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other.html#/s:O7SKTiled10TileOffset">TileOffset</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
               </li>
             </ul>
           </li>
@@ -153,12 +158,13 @@
             <a href='#setting-up-your-scenes' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='setting-up-your-scenes'>Setting Up Your Scenes</h1>
 
 <ul>
-<li><a href="#sktilemapdelegate-protocol"><code>SKTilemapDelegate</code> Protocol</a></li>
-<li><a href="#sktiledscene"><code>SKTiledScene</code></a></li>
+<li><a href="#sktilemapdelegate-protocol">SKTilemapDelegate Protocol</a></li>
+<li><a href="#scene-setup">Scene Setup</a></li>
+<li><a href="#sktiledscene">SKTiledScene</a></li>
 </ul>
 
 <p>Using tile map content in your projects is very straightforward. <strong>SKTiled</strong> includes tools that allow you to easily access and customize content for your game.</p>
-<a href='#code-sktilemapdelegate-code-protocol' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='code-sktilemapdelegate-code-protocol'><code>SKTilemapDelegate</code> Protocol</h2>
+<a href='#sktilemapdelegate-protocol' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='sktilemapdelegate-protocol'>SKTilemapDelegate Protocol</h2>
 
 <p>The <a href="Protocols/SKTilemapDelegate.html"><code>SKTilemapDelegate</code></a> protocol allows you to use optional callbacks that are called at various stages of tile map creation. It is recommended that your SpriteKit scenes conform to this protocol.</p>
 <pre class="highlight swift"><code><span class="kd">protocol</span> <span class="kt">SKTilemapDelegate</span> <span class="p">{</span>
@@ -176,8 +182,9 @@
 </code></pre>
 
 <p>The callback methods are optional; you are free to implement any or all of them as needed.</p>
+<a href='#scene-setup' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='scene-setup'>Scene Setup</h2>
 
-<p>A basic scene setup could be as simple as: </p>
+<p>Setting up your <a href="https://developer.apple.com/reference/spritekit/skscene"><code>SKScene</code></a> with the delegate is very easy. A basic scene setup could be as simple as:</p>
 <pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">GameScene</span><span class="p">:</span> <span class="kt">SKScene</span><span class="p">,</span> <span class="kt">SKTilemapDelegate</span> <span class="p">{</span>
     <span class="k">override</span> <span class="kd">func</span> <span class="nf">didMove</span><span class="p">(</span><span class="n">to</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">SKView</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">fromFile</span><span class="p">:</span> <span class="s">"myTiledFile"</span><span class="p">,</span> <span class="nv">delegate</span><span class="p">:</span> <span class="k">self</span><span class="p">)</span> <span class="p">{</span>
@@ -190,7 +197,7 @@
 <span class="p">}</span>
 </code></pre>
 
-<p>To access the rendered layers, implement the <code>SKTilemapDelegate.didRenderMap</code> method:</p>
+<p>To access the rendered tilemap, implement the <a href="Protocols/SKTilemapDelegate.html#/s:FE7SKTiledPS_17SKTilemapDelegate12didRenderMapFCS_9SKTilemapT_"><code>SKTilemapDelegate.didRenderMap</code></a> method:</p>
 <pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">GameScene</span><span class="p">:</span> <span class="kt">SKScene</span><span class="p">,</span> <span class="kt">SKTilemapDelegate</span> <span class="p">{</span>
     <span class="k">override</span> <span class="kd">func</span> <span class="nf">didMove</span><span class="p">(</span><span class="n">to</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">SKView</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">fromFile</span><span class="p">:</span> <span class="s">"myTiledFile"</span><span class="p">,</span> <span class="nv">delegate</span><span class="p">:</span> <span class="k">self</span><span class="p">)</span> <span class="p">{</span>
@@ -202,6 +209,7 @@
     <span class="p">}</span>
 
     <span class="kd">func</span> <span class="nf">didRenderMap</span><span class="p">(</span><span class="n">_</span> <span class="nv">tilemap</span><span class="p">:</span> <span class="kt">SKTilemap</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// finish setting up map here</span>
         <span class="k">if</span> <span class="k">let</span> <span class="nv">obstaclesLayer</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">objectGroup</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"Obstacles"</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">obstaclesLayer</span><span class="o">.</span><span class="n">isHidden</span> <span class="o">=</span> <span class="kc">true</span>
             <span class="n">obstaclesLayer</span><span class="o">.</span><span class="nf">setupPhysics</span><span class="p">()</span>
@@ -211,7 +219,7 @@
 </code></pre>
 <a href='#sktiledscene' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='sktiledscene'>SKTiledScene</h2>
 
-<p>The <a href="Protocols/SKTiledSceneDelegate.html"><code>SKTiledSceneDelegate</code></a> protocol outlines a basic game scene setup with a world container node and camera. The included <a href="Classes/SKTiledScene.html"><code>SKTiledScene</code></a> conforms to this protocol and is meant to serve as a template, though you are free to implement your own setup.</p>
+<p>The <a href="Protocols/SKTiledSceneDelegate.html"><code>SKTiledSceneDelegate</code></a> protocol outlines a basic game scene setup with a world container node and camera. The included <a href="Classes/SKTiledScene.html"><code>SKTiledScene</code></a> conforms to this protocol and can serve as a template, though you are free to implement your own setups.</p>
 <pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">GameScene</span><span class="p">:</span> <span class="kt">SKScene</span><span class="p">,</span> <span class="kt">SKTiledSceneDelegate</span>  <span class="p">{</span>
     <span class="k">var</span> <span class="nv">worldNode</span><span class="p">:</span> <span class="kt">SKNode</span><span class="o">!</span>                  <span class="c1">// world container node</span>
     <span class="k">var</span> <span class="nv">cameraNode</span><span class="p">:</span> <span class="kt">SKTiledSceneCamera</span><span class="o">!</span>     <span class="c1">// custom scene camera</span>
@@ -221,17 +229,19 @@
 
 <p><img src="images/scene_hierarchy.png" alt="Scene Hierarchy"></p>
 
-<p>The tile map is parented to a world container node, which interacts with the included <a href="Classes/SKTiledSceneCamera.html"><code>SKTiledSceneCamera</code></a> class and allows you to easily move the scene around with mouse &amp; touch events. The world node is set to 0,0 in the scene by default. </p>
+<p>The tilemap is parented to a world container node, which interacts with the included <a href="Classes/SKTiledSceneCamera.html"><code>SKTiledSceneCamera</code></a> object and allows you to easily navigate the scene with mouse &amp; touch events. The world node is set to 0,0 in the scene by default.</p>
 
-<p>If you choose to subclass <a href="Classes/SKTiledScene.html"><code>SKTiledScene</code></a>, you can simply initialize the object with the name of the map you want to load:</p>
-<pre class="highlight swift"><code><span class="c1">// initialize a tiled scene in the GameViewController</span>
-<span class="k">let</span> <span class="nv">scene</span> <span class="o">=</span> <span class="kt">SKTiledScene</span><span class="p">(</span><span class="nv">size</span><span class="p">:</span> <span class="n">viewSize</span><span class="p">,</span> <span class="nv">tmxFile</span><span class="p">:</span> <span class="s">"first-scene"</span><span class="p">)</span>
+<p>The <a href="Classes/SKTiledScene.html"><code>SKTiledScene</code></a> class includes some convenience methods for initializing &amp; transitioning between Tiled scenes:
+&ldquo;`swift</p>
 
-<span class="c1">// transition to another scene</span>
-<span class="n">scene</span><span class="o">.</span><span class="nf">transitionTo</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="s">"second-scene"</span><span class="p">,</span> <span class="nv">duration</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">)</span>
-</code></pre>
+<p>// initialize a tiled scene in the GameViewController
+let scene = SKTiledScene(size: viewSize, tmxFile: <q>first-scene</q>)</p>
 
-<p>Calling the class method <a href="Classes/SKTilemap.html#/Loading"><code>SKTilemap.load(fromFile:)</code></a> will initialize a parser to read the file name given. To see the <a href="Classes/SKTiledScene.html"><code>SKTiledScene</code></a> in action, compile the project demo target and look at the <code>SKTiledDemoScene</code>.</p>
+<p>// transition to another scene
+scene.transitionTo(tmxFile: <q>second-scene</q>, duration: 1.0)
+&rdquo;`</p>
+
+<p>Calling the class method <a href="Classes/SKTilemap.html#/Loading"><code>SKTilemap.load(fromFile:)</code></a> will initialize a parser to read the file name given. To see the <a href="Classes/SKTiledScene.html"><code>SKTiledScene</code></a> in action, compile one of the demo targets and look at the <a href="Classes/SKTiledDemoScene.html"><code>SKTiledDemoScene</code></a>.</p>
 
 <p>Next: <a href="layers.html">Working with Layers</a> - <a href="Tutorial.html">Index</a></p>
 

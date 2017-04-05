@@ -75,7 +75,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Class Reference.html">Class Reference</a>
+            <a href="Class Hierarchy.html">Class Hierarchy</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Classes/SKTilemap.html">SKTilemap</a>
@@ -116,23 +116,11 @@
               <li class="nav-group-task">
                 <a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
               </li>
-              <li class="nav-group-task">
-                <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
-              </li>
             </ul>
           </li>
           <li class="nav-group-name">
             <a href="Other.html">Other</a>
             <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:O7SKTiled10TileOffset">TileOffset</a>
-              </li>
               <li class="nav-group-task">
                 <a href="Other.html#/s:O7SKTiled13CollisionType">CollisionType</a>
               </li>
@@ -140,7 +128,24 @@
                 <a href="Other.html#/s:O7SKTiled12PhysicsShape">PhysicsShape</a>
               </li>
               <li class="nav-group-task">
+                <a href="Other.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Other.html#/s:O7SKTiled16SKTiledLayerType">SKTiledLayerType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TilemapOrientation.html">TilemapOrientation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other.html#/s:O7SKTiled10TileOffset">TileOffset</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
               </li>
             </ul>
           </li>
@@ -153,9 +158,9 @@
             <a href='#working-with-tiles' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='working-with-tiles'>Working with Tiles</h1>
 
 <ul>
-<li><a href="#getting-tiles-with-tile-id">Getting Tiles with Tile ID</a></li>
-<li><a href="#getting-tiles-of-type">Getting Tiles of Type</a></li>
-<li><a href="#getting-tiles-with-property">Getting Tiles with Property</a></li>
+<li><a href="#find-tiles-with-tile-id">Find Tiles with Tile ID</a></li>
+<li><a href="#find-tiles-of-type">Find Tiles of Type</a></li>
+<li><a href="#find-tiles-with-property">Find Tiles with Property</a></li>
 <li><a href="#adding-tiles">Adding Tiles</a></li>
 <li><a href="#removing-tiles">Removing Tiles</a></li>
 <li><a href="#animated-tiles">Animated Tiles</a></li>
@@ -171,7 +176,7 @@
 <span class="k">let</span> <span class="nv">tilesForCoord</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">tileAt</span><span class="p">(</span><span class="nv">coord</span><span class="p">:</span> <span class="n">coord</span><span class="p">)</span>
 <span class="k">let</span> <span class="nv">allTilesForCoord</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">tilesAt</span><span class="p">(</span><span class="nv">coord</span><span class="p">:</span> <span class="n">coord</span><span class="p">)</span>
 </code></pre>
-<a href='#getting-tiles-with-tile-id' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='getting-tiles-with-tile-id'>Getting Tiles with Tile ID</h3>
+<a href='#strong-find-tiles-with-tile-id-strong' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='strong-find-tiles-with-tile-id-strong'><strong>Find Tiles with Tile ID</strong></h3>
 
 <p>To query tiles with a global ID, pass the value to either the <code>SKTilemap</code> node, or an individual <code>SKTileLayer</code> node:</p>
 <pre class="highlight swift"><code><span class="c1">// query tiles from the tile map node</span>
@@ -180,9 +185,9 @@
 <span class="c1">// query tiles from the parent layer</span>
 <span class="k">let</span> <span class="nv">tiles</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
 </code></pre>
-<a href='#getting-tiles-of-type' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='getting-tiles-of-type'>Getting Tiles of Type</h3>
+<a href='#strong-find-tiles-of-type-strong' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='strong-find-tiles-of-type-strong'><strong>Find Tiles of Type</strong></h3>
 
-<p>The property <q>type</q> can be used to label or group tiles in <strong>SKTiled</strong>. Simply adding a string property to a tile ID will allow it to be accessed from SpriteKit:</p>
+<p>The string property <strong>type</strong> can be used to label or group tiles in <strong>SKTiled</strong>. Adding a string property to a tile ID will allow it to be accessed from SpriteKit:</p>
 
 <p><img src="images/tile-types.png" alt="Tile Types"></p>
 
@@ -190,7 +195,7 @@
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">allFireTiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="s">"Fire"</span><span class="p">)</span>
 <span class="k">let</span> <span class="nv">waterTiles</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="s">"Water"</span><span class="p">)</span>
 </code></pre>
-<a href='#getting-tiles-with-property' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='getting-tiles-with-property'>Getting Tiles with Property</h3>
+<a href='#strong-find-tiles-with-custom-property-strong' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='strong-find-tiles-with-custom-property-strong'><strong>Find Tiles with Custom Property</strong></h3>
 
 <p>You are not restricted to using <strong>type</strong> as a property name, any property name can be queried:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">fireTiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTilesWithProperty</span><span class="p">(</span><span class="s">"type"</span><span class="p">,</span> <span class="s">"Fire"</span> <span class="k">as</span> <span class="kt">AnyObject</span><span class="p">)</span>
@@ -212,7 +217,7 @@
 </code></pre>
 <a href='#removing-tiles' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='removing-tiles'>Removing Tiles</h2>
 
-<p>To remove a tile, simply call one of the <code>SKTileLayer.removeTileAt</code> methods:</p>
+<p>To remove a tile, simply call one of the <a href="Classes/SKTileLayer.html#/s:FC7SKTiled11SKTileLayer12removeTileAtFTSiSi_GSqCS_6SKTile_"><code>SKTileLayer.removeTileAt</code></a> methods:</p>
 <pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">removedTile</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">removeTileAt</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// do something with tile</span>
 <span class="p">}</span>
@@ -221,7 +226,7 @@
 
 <p><img src="images/animated-tiles.gif" alt="Animated Tiles"></p>
 
-<p>Tiles animated in Tiled are have custom SpriteKit actions automatically created to animate the tile texture. Animated tiles are accessed with the <code>SKTileLayer.getAnimatedTiles</code> method, or globally via the <code>SKTilemap.getAnimatedTiles</code> method:</p>
+<p>Tiles animated in Tiled are have custom SpriteKit actions automatically created to animate the tile texture. Animated tiles are accessed with the  <a href="Classes/SKTileLayer.html"><code>SKTileLayer.getAnimatedTiles</code></a> method, or globally via the <a href="Classes/SKTilemap.html#/s:FC7SKTiled9SKTilemap16getAnimatedTilesFT_GSaCS_6SKTile_"><code>SKTilemap.getAnimatedTiles</code></a> method:</p>
 <pre class="highlight swift"><code><span class="c1">// return animated tiles in a single layer</span>
 <span class="k">let</span> <span class="nv">animatedTiles</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">getAnimatedTiles</span><span class="p">()</span>
 
@@ -231,7 +236,7 @@
 
 <p>All <a href="Classes/SKTile.html"><code>SKTile</code></a> instances allow you to pause &amp; remove animations:</p>
 <pre class="highlight swift"><code>
-<span class="c1">// pause or unpause tile animation </span>
+<span class="c1">// pause or unpause tile animation</span>
 <span class="k">for</span> <span class="n">animatedTile</span> <span class="k">in</span> <span class="n">animatedTiles</span> <span class="p">{</span>
     <span class="n">animatedTile</span><span class="o">.</span><span class="n">pauseAnimation</span> <span class="o">=</span> <span class="kc">true</span>
 <span class="p">}</span>
@@ -242,9 +247,9 @@
 <span class="p">}</span>
 </code></pre>
 
-<p>Since animation data is stored in the <code>SKTilesetData</code> node, to restart removed animation, simply run the <code>SKTile.runAnimation</code> method again.</p>
+<p>Since animation data is stored in the <a href="Classes/SKTilesetData.html"><code>SKTilesetData</code></a> node, to restart removed animation, simply run the <a href="Classes/SKTile.html"><code>SKTile.runAnimation</code></a> method again.</p>
 
-<p>To add animation to a tile, add GID values to the <code>SKTilesetData</code> instance associated with each tile:</p>
+<p>To add animation to a tile, add GID values to the <a href="Classes/SKTilesetData.html"><code>SKTilesetData</code></a>  instance associated with each tile:</p>
 <pre class="highlight swift"><code><span class="c1">// add frame GIDs</span>
 <span class="k">let</span> <span class="nv">tileData</span> <span class="o">=</span> <span class="n">tile</span><span class="o">.</span><span class="n">tileData</span>
 <span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">33</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">)</span>
@@ -256,7 +261,7 @@
 </code></pre>
 <a href='#physics' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='physics'>Physics</h2>
 
-<p>Physics can be turned on for tile objects with the <code>SKTileObject.setupPhysics</code> methods. Passing the argument <code>isDynamic</code> determines whether the physics body is active or passive. </p>
+<p>Physics can be turned on for tile objects with the <code>SKTileObject.setupPhysics</code> methods. Passing the argument <code>isDynamic</code> determines whether the physics body is active or passive.</p>
 <pre class="highlight swift"><code><span class="c1">// create a physics body with a rectangle of size 8</span>
 <span class="n">tile</span><span class="o">.</span><span class="nf">setupPhysics</span><span class="p">(</span><span class="nv">shapeOf</span><span class="p">:</span> <span class="o">.</span><span class="n">rectangle</span><span class="p">,</span> <span class="nv">isDynamic</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
 

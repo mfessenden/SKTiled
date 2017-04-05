@@ -76,7 +76,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Class Reference.html">Class Reference</a>
+            <a href="../Class Hierarchy.html">Class Hierarchy</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Classes/SKTilemap.html">SKTilemap</a>
@@ -117,23 +117,11 @@
               <li class="nav-group-task">
                 <a href="../Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
               </li>
-              <li class="nav-group-task">
-                <a href="../Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
-              </li>
             </ul>
           </li>
           <li class="nav-group-name">
             <a href="../Other.html">Other</a>
             <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Enums/TilemapOrientation.html">TilemapOrientation</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Other.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Other.html#/s:O7SKTiled10TileOffset">TileOffset</a>
-              </li>
               <li class="nav-group-task">
                 <a href="../Other.html#/s:O7SKTiled13CollisionType">CollisionType</a>
               </li>
@@ -141,7 +129,24 @@
                 <a href="../Other.html#/s:O7SKTiled12PhysicsShape">PhysicsShape</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Other.html#/s:O7SKTiled12SKObjectType">SKObjectType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Other.html#/s:O7SKTiled16SKTiledLayerType">SKTiledLayerType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TilemapOrientation.html">TilemapOrientation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other.html#/s:O7SKTiled10TileOffset">TileOffset</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
               </li>
             </ul>
           </li>
@@ -157,9 +162,8 @@
 
                 </div>
               </div>
-            <p>The <code>SKTilemapParser</code> is a custom <code>XMLParserDelegate</code> parser for reading Tiled TMX and tileset TSX files.</p>
-
-<p>To read a tile map, used the <code>SKTilemapParser.load</code> method:</p>
+            <p>The <code>SKTilemapParser</code> is a custom <a href="https://developer.apple.com/reference/foundation/xmlparserdelegate"><code>XMLParserDelegate</code></a> parser for reading Tiled TMX and tileset TSX files.
+To read a tile map, used the <code>SKTilemapParser.load</code> method:</p>
 
 <pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemapParser</span><span class="p">()</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">fromFile</span><span class="p">:</span> <span class="s">"sample-file"</span><span class="p">)</span> <span class="p">{</span>
    <span class="n">scene</span><span class="o">.</span><span class="n">worldNode</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
@@ -255,7 +259,7 @@
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTilemapParser.swift#L110-L187">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.12/Sources/SKTilemapParser.swift#L108-L185">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
