@@ -19,7 +19,7 @@ exclude:
   - "Sources/SKTiled+Extensions.swift"
 
 copyright: '© 2016 [Michael Fessenden](https://github.com/mfessenden) under [open source license](https://github.com/mfessenden/SKTiled/tree/master/LICENSE).'
-#swift_version: 3.0
+swift_version: 3.1
 
 theme: apple
 

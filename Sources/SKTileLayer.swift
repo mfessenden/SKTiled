@@ -1287,7 +1287,7 @@ internal enum SKObjectGroupDrawOrder: String {
 
 
 /**
- The `SKObjectGroup` class  child objects that are drawn in the current coordinate space.
+ The `SKObjectGroup` object is a container that manages child vector objects that are drawn in the current coordinate space.
  
  Most object properties can be set on the parent `SKObjectGroup` which is then applied to all child objects.
  
@@ -1638,6 +1638,7 @@ open class SKImageLayer: TiledLayerObject {
  ```
  
  Remove with:
+
  ```swift
  groupLayer.removeLayer(playerLayer)
  ```
