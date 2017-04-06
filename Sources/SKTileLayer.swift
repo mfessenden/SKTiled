@@ -55,6 +55,11 @@ internal enum SKObjectGroupColors: String {
   layer.size            // size (in tiles)
   layer.tileSize        // tile size (in pixels)
  ```
+ Coordinate transformation functions return coordinates in the current tilemap projection:
+
+ ```
+  node.position = tileLayer.pointForCoordinate(2, 1)
+ ```
  */
 open class TiledLayerObject: SKNode, SKTiledObject {
     
@@ -1633,6 +1638,7 @@ open class SKImageLayer: TiledLayerObject {
  ```
  
  Remove with:
+
  ```swift
  groupLayer.removeLayer(playerLayer)
  ```

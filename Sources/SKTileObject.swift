@@ -271,7 +271,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     }
     
     /**
-     Render with a tile ID. Bit of a hack for now, it's not a supported feature in Tiled.
+     Render with a tile ID.
      */
     internal func renderWith(gid: Int) {
         if let objectGroup = layer {
