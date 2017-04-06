@@ -158,15 +158,10 @@ internal let TileSize32x32 = CGSize(width: 32, height: 32)
     - called when the map is finished rendering.
 */
 public protocol SKTilemapDelegate: class {
-    /// Called when the tilemap is instantiated.
     func didBeginParsing(_ tilemap: SKTilemap)
-    /// Called when a tileset has been added.
     func didAddTileset(_ tileset: SKTileset)
-    /// Called when a layer has been added.
     func didAddLayer(_ layer: TiledLayerObject)
-    /// Called before layers are rendered.
     func didReadMap(_ tilemap: SKTilemap)
-    /// Called when layers are rendered. Perform post-processing here.
     func didRenderMap(_ tilemap: SKTilemap)
 }
 
@@ -174,9 +169,10 @@ public protocol SKTilemapDelegate: class {
 /**
  The `SKTilemap` class represents a container which manages layers, tiles (sprites), vector objects & images.
  
- - size:         tile map size in tiles.
- - tileSize:     tile map tile size in pixels.
- - sizeInPoints: tile map size in points.
+
+ - `size`:          `CGSize` tile map size in tiles.
+ - `tileSize`:      `CGSize` tile map tile size in pixels.
+ - `sizeInPoints`:  `CGSize` tile map size in points.
  
  Tile data is stored in `SKTileset` tile sets.
  */
@@ -406,7 +402,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      Load a Tiled tmx file and return a new `SKTilemap` object. Returns nil if there is a problem reading the file
      
      - parameter filename:    `String` Tiled file name.
-     - parameter delegate:    `SKTilemapDelegate?` optional tilemap delegate instance.
+     - parameter delegate:    `SKTilemapDelegate?` optional [`SKTilemapDelegate`](Protocols/SKTilemapDelegate.html) instance.
      - parameter withTilesets `[SKTileset]?` optional tilesets.
      - returns: `SKTilemap?` tilemap object (if file read succeeds).
      */
@@ -1349,10 +1345,35 @@ extension SKTilemap {
  Default implementations of callbacks.
  */
 extension SKTilemapDelegate {
-    public func didBeginParsing(_ tilemap: SKTilemap) {}
-    public func didAddTileset(_ tileset: SKTileset) {}
-    public func didAddLayer(_ layer: TiledLayerObject) {}
-    public func didReadMap(_ tilemap: SKTilemap) {}
-    public func didRenderMap(_ tilemap: SKTilemap) {}
-}
+    /**
+     Called when the tilemap is instantiated.
 
+     - parameter tilemap:  `SKTilemap` tilemap instance.
+     */
+    public func didBeginParsing(_ tilemap: SKTilemap) {}
+    /**
+     Called when a tileset is instantiated.
+
+     - parameter tileset:  `SKTileset` tileset instance.
+     */
+    public func didAddTileset(_ tileset: SKTileset) {}
+    /**
+     Called when a layer is added to a tilemap.
+
+     - parameter layer:  `TiledLayerObject` tilemap instance.
+     */
+    public func didAddLayer(_ layer: TiledLayerObject) {}
+    /**
+     Called when the tilemap is finished parsing.
+
+     - parameter tilemap:  `SKTilemap` tilemap instance.
+     */
+    public func didReadMap(_ tilemap: SKTilemap) {}
+    /**
+     Called when the tilemap layers are finished rendering.
+
+     - parameter tilemap:  `SKTilemap` tilemap instance.
+     */
+    public func didRenderMap(_ tilemap: SKTilemap) {}
+
+}

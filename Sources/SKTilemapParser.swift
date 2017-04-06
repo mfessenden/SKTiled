@@ -37,8 +37,7 @@ internal enum CompressionType: String {
 
 
 /**
-The `SKTilemapParser` is a custom `XMLParserDelegate` parser for reading Tiled TMX and tileset TSX files.
- 
+ The `SKTilemapParser` is a custom [`XMLParserDelegate`](https://developer.apple.com/reference/foundation/xmlparserdelegate) parser for reading Tiled TMX and tileset TSX files.
  To read a tile map, used the `SKTilemapParser.load` method:
  
  ```swift
@@ -60,7 +59,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     // stash current elements
     fileprivate var activeElement: String?                          // current object
     fileprivate var lastElement: AnyObject?                         // last object created
-    
     fileprivate var currentID: Int?                                 // current tile/object ID
     
     fileprivate var properties: [String: String] = [:]              // last properties created
@@ -239,7 +237,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     }
     
     // MARK: - XMLParserDelegate
-    open func parser(_ parser: XMLParser,
+    public func parser(_ parser: XMLParser,
                        didStartElement elementName: String,
                        namespaceURI: String?,
                        qualifiedName qName: String?,
@@ -630,7 +628,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     
     
     // didEndElement happens when parser ends a key: </key>
-    open func parser(_ parser: XMLParser,
+    public func parser(_ parser: XMLParser,
                        didEndElement elementName: String,
                        namespaceURI: String?,
                        qualifiedName qName: String?) {
@@ -767,12 +765,12 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
  
     
     // foundCharacters happens whenever parser enters a key poop
-    open func parser(_ parser: XMLParser, foundCharacters string: String) {
+    public func parser(_ parser: XMLParser, foundCharacters string: String) {
         // append data attribute
         characterData += string
     }
-    
-    open func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
+
+    public func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
         //if parseError.code == NSXMLParserError.InternalError {}
     }
     
@@ -783,7 +781,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
      - parameter data: `String` data to decode
      - returns: `[UInt32]` parsed CSV data.
      */
-    private func decode(csvString data: String) -> [UInt32] {
+    fileprivate func decode(csvString data: String) -> [UInt32] {
         return data.scrub().components(separatedBy: ",").map {UInt32($0)!}
     }
     
@@ -799,7 +797,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
      - parameter compression: `CompressionType` compression type.
      - returns: `[UInt32]?` parsed data.
      */
-    private func decode(base64String data: String, compression: CompressionType = .uncompressed) -> [UInt32]? {
+    fileprivate func decode(base64String data: String, compression: CompressionType = .uncompressed) -> [UInt32]? {
         guard let decodedData = Data(base64Encoded: data, options: .ignoreUnknownCharacters) else {
             print("Error: data is not base64 encoded.")
             return nil

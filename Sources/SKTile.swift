@@ -11,9 +11,10 @@ import SpriteKit
 /**
  Describes a tile's physics body shape.
  
- - none:       tile has no physics body.
- - rectangle:  tile physics shape is a rectangle.
- - texture:    tile physics shape is based on texture.
+ - `none`:       tile has no physics body.
+ - `rectangle`:  tile physics shape is a rectangle.
+ - `texture`:    tile physics shape is based on texture.
+ - `path`:       tile physics shape is derived from a path.
  */
 public enum PhysicsShape {
     case none
