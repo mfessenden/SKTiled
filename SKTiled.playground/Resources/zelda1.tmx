@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="28" height="20" tilewidth="16" tileheight="16" nextobjectid="2">
+ <tileset firstgid="1" source="overworld-16x16.tsx"/>
+ <imagelayer name="template" opacity="0.47" offsetx="-6" offsety="-12">
+  <image source="zelda-bg.png" width="454" height="340"/>
+ </imagelayer>
+ <group name="Layer1" visible="0">
+  <layer name="LayerA" width="28" height="20">
+   <data encoding="base64" compression="zlib">
+   eJzzYGBg8KACVgRiJShWAWImIGamktnYsCMQsyLZCbOX1nY6odlLL7+i26tMQ/uwhTE97EO2k172gbDiqH1D2j5QmnGmo32jeORgSSCWoqN9lkBsRUf7IukcnpVUNg8AbXGWtg==
+  </data>
+  </layer>
+  <layer name="LayerB" width="28" height="20" opacity="0.78">
+   <data encoding="base64" compression="zlib">
+   eJztld0KgDAIRu1nDzKrB6ne/51ScDCiEcn0QvrgsItdHBw6AfpkJxKxEtPDfSaWTq4350BsBr67cxTYNROnga84D4HdCDa1tdzJ0cex6JXfF9NXZr3171gEBa8g+Dqj11d7owXh+3vyDPEe08yPxpdBv8NqD58XOJ8Isw==
+  </data>
+  </layer>
+  <layer name="LayerC" width="28" height="20">
+   <data encoding="base64" compression="zlib">
+   eJxjYKAMJFOofxSMAloActKlATPVnYEXDETeEaCzH0fBKKAFGE3H1AOMQMwExPQKUkUgVgJiZSqYBQBqlgHv
+  </data>
+  </layer>
+  <layer name="LayerD" width="28" height="20">
+   <data encoding="base64" compression="zlib">
+   eJxjYBgF9ARPmehrHyszfe2jBVAC+kEZiFWYUdmqNPKbE9BcZyB2YUZlj4JRMApGwSgYPAAAcF4DoA==
+  </data>
+  </layer>
+  <layer name="LayerE" width="28" height="20">
+   <data encoding="base64" compression="zlib">
+   eJxjYBgF1AQyzAwMskAsB8TyaGwFZurbZwM00xaI7YDYHo3tQAP7YoBmxgJxHBDHo7ETaGBfDdDMWiCuA+J6NHYDDewbBaNgFIyCUTA0AAD2Twoh
+  </data>
+  </layer>
+ </group>
+ <group name="Layer2">
+  <layer name="Tile Layer 7" width="28" height="20">
+   <data encoding="base64" compression="zlib">
+   eJxjYBgFAw048GBOGtingQdrArEWDezEB0aCnZ5A7DWC7cOXxmlhH740Tgv7qA3Isc8CirGJoYujq6eFfYxAzATFzDSyDxkoAjELEDsBsTOaHC77pIBYGohliLAfXZ0jFnsI2WcFxNZAbAPEGVgwMsCnDh1nAnEWHrfHAHEHFkysOnTcCcRdeOyrAeIVWDCx6tDxSiBehUU/AB57KwA=
+  </data>
+  </layer>
+  <layer name="LayerA" width="28" height="20">
+   <data encoding="base64" compression="zlib">
+   eJxjYCAfSFBJzSgYBdQGyQPtgFEwCugMJBgwy1sJHOK41A81+wYCTIdibGLo4qOAtgAAI7wFBw==
+  </data>
+  </layer>
+ </group>
+ <objectgroup name="Objects">
+  <object id="1" x="0" y="0" width="16" height="16"/>
+ </objectgroup>
+</map>
