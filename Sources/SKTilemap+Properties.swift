@@ -176,6 +176,12 @@ public extension TiledLayerObject {
                 antialiased = boolForKey(attr)
             }
             
+            if (attr == "drawBounds") {
+                if boolForKey(attr) == true {
+                    drawBounds()
+                }
+            }
+            
             if completion != nil { completion!() }
         }
     }

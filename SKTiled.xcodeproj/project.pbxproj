@@ -31,6 +31,46 @@
 		4C1774B81D9099A3000C0AFD /* SKTileset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DA1D8A4EBE00FCCFA3 /* SKTileset.swift */; };
 		4C1774B91D9099A3000C0AFD /* SKTilesetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */; };
 		4C1774BA1D9099A3000C0AFD /* SKTiledObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA21D8CC2C100DB56F1 /* SKTiledObject.swift */; };
+		4C30B8BC1E9729610056036A /* barrels-12x10.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8361E9729610056036A /* barrels-12x10.tsx */; };
+		4C30B8BD1E9729610056036A /* barrels-12x10.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8361E9729610056036A /* barrels-12x10.tsx */; };
+		4C30B93C1E9729610056036A /* characters-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8781E9729610056036A /* characters-16x16.tsx */; };
+		4C30B93D1E9729610056036A /* characters-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8781E9729610056036A /* characters-16x16.tsx */; };
+		4C30B94E1E9729610056036A /* dk-arcade-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8821E9729610056036A /* dk-arcade-8x8.png */; };
+		4C30B94F1E9729610056036A /* dk-arcade-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8821E9729610056036A /* dk-arcade-8x8.png */; };
+		4C30B9501E9729610056036A /* dk-arcade-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8831E9729610056036A /* dk-arcade-8x8.tsx */; };
+		4C30B9511E9729610056036A /* dk-arcade-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8831E9729610056036A /* dk-arcade-8x8.tsx */; };
+		4C30B9521E9729610056036A /* dk-fonts-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8841E9729610056036A /* dk-fonts-8x8.png */; };
+		4C30B9531E9729610056036A /* dk-fonts-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8841E9729610056036A /* dk-fonts-8x8.png */; };
+		4C30B9541E9729610056036A /* dk-fonts-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8851E9729610056036A /* dk-fonts-8x8.tsx */; };
+		4C30B9551E9729610056036A /* dk-fonts-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8851E9729610056036A /* dk-fonts-8x8.tsx */; };
+		4C30B9561E9729610056036A /* help_drk_001.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8861E9729610056036A /* help_drk_001.png */; };
+		4C30B9571E9729610056036A /* help_drk_001.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8861E9729610056036A /* help_drk_001.png */; };
+		4C30B9581E9729610056036A /* help_lgt_001.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8871E9729610056036A /* help_lgt_001.png */; };
+		4C30B9591E9729610056036A /* help_lgt_001.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8871E9729610056036A /* help_lgt_001.png */; };
+		4C30B9901E9729610056036A /* kong-50x32.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8A41E9729610056036A /* kong-50x32.tsx */; };
+		4C30B9911E9729610056036A /* kong-50x32.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8A41E9729610056036A /* kong-50x32.tsx */; };
+		4C30B9921E9729610056036A /* level-conveyors.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8A51E9729610056036A /* level-conveyors.tmx */; };
+		4C30B9931E9729610056036A /* level-conveyors.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8A51E9729610056036A /* level-conveyors.tmx */; };
+		4C30B9941E9729610056036A /* level-elevators.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8A61E9729610056036A /* level-elevators.tmx */; };
+		4C30B9951E9729610056036A /* level-elevators.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8A61E9729610056036A /* level-elevators.tmx */; };
+		4C30B9961E9729610056036A /* level-ramps.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8A71E9729610056036A /* level-ramps.tmx */; };
+		4C30B9971E9729610056036A /* level-ramps.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8A71E9729610056036A /* level-ramps.tmx */; };
+		4C30B9981E9729610056036A /* level-rivets.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8A81E9729610056036A /* level-rivets.tmx */; };
+		4C30B9991E9729610056036A /* level-rivets.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8A81E9729610056036A /* level-rivets.tmx */; };
+		4C30B99A1E9729610056036A /* other-16x32.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8A91E9729610056036A /* other-16x32.tsx */; };
+		4C30B99B1E9729610056036A /* other-16x32.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8A91E9729610056036A /* other-16x32.tsx */; };
+		4C30B99C1E9729610056036A /* template.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8AB1E9729610056036A /* template.tmx */; };
+		4C30B99D1E9729610056036A /* template.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B8AB1E9729610056036A /* template.tmx */; };
+		4C30B9A31E972AE80056036A /* barrels-12x10 in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B99E1E972AE80056036A /* barrels-12x10 */; };
+		4C30B9A41E972AE80056036A /* barrels-12x10 in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B99E1E972AE80056036A /* barrels-12x10 */; };
+		4C30B9A51E972AE80056036A /* characters-16x16 in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B99F1E972AE80056036A /* characters-16x16 */; };
+		4C30B9A61E972AE80056036A /* characters-16x16 in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B99F1E972AE80056036A /* characters-16x16 */; };
+		4C30B9A71E972AE80056036A /* characters-16x32 in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B9A01E972AE80056036A /* characters-16x32 */; };
+		4C30B9A81E972AE80056036A /* characters-16x32 in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B9A01E972AE80056036A /* characters-16x32 */; };
+		4C30B9A91E972AE80056036A /* kong-50x32 in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B9A11E972AE80056036A /* kong-50x32 */; };
+		4C30B9AA1E972AE80056036A /* kong-50x32 in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B9A11E972AE80056036A /* kong-50x32 */; };
+		4C30B9AB1E972AE80056036A /* sprites-8x8 in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B9A21E972AE80056036A /* sprites-8x8 */; };
+		4C30B9AC1E972AE80056036A /* sprites-8x8 in Resources */ = {isa = PBXBuildFile; fileRef = 4C30B9A21E972AE80056036A /* sprites-8x8 */; };
 		4C440B9B1DAE911000DEC9A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C440B981DAE911000DEC9A4 /* Assets.xcassets */; };
 		4C440B9C1DAE911000DEC9A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C440B981DAE911000DEC9A4 /* Assets.xcassets */; };
 		4C440B9F1DAE911000DEC9A4 /* SKTiledDemoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */; };
@@ -102,6 +142,26 @@
 		4C0EE1E51DC116DB00A052E4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		4C0EE1E71DC116E300A052E4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
 		4C17747F1D909740000C0AFD /* SKTiledDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKTiledDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C30B8361E9729610056036A /* barrels-12x10.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "barrels-12x10.tsx"; path = "test/dkong/barrels-12x10.tsx"; sourceTree = "<group>"; };
+		4C30B8781E9729610056036A /* characters-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "characters-16x16.tsx"; path = "test/dkong/characters-16x16.tsx"; sourceTree = "<group>"; };
+		4C30B8821E9729610056036A /* dk-arcade-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dk-arcade-8x8.png"; path = "test/dkong/dk-arcade-8x8.png"; sourceTree = "<group>"; };
+		4C30B8831E9729610056036A /* dk-arcade-8x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "dk-arcade-8x8.tsx"; path = "test/dkong/dk-arcade-8x8.tsx"; sourceTree = "<group>"; };
+		4C30B8841E9729610056036A /* dk-fonts-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dk-fonts-8x8.png"; path = "test/dkong/dk-fonts-8x8.png"; sourceTree = "<group>"; };
+		4C30B8851E9729610056036A /* dk-fonts-8x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "dk-fonts-8x8.tsx"; path = "test/dkong/dk-fonts-8x8.tsx"; sourceTree = "<group>"; };
+		4C30B8861E9729610056036A /* help_drk_001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help_drk_001.png; path = test/dkong/help_drk_001.png; sourceTree = "<group>"; };
+		4C30B8871E9729610056036A /* help_lgt_001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help_lgt_001.png; path = test/dkong/help_lgt_001.png; sourceTree = "<group>"; };
+		4C30B8A41E9729610056036A /* kong-50x32.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "kong-50x32.tsx"; path = "test/dkong/kong-50x32.tsx"; sourceTree = "<group>"; };
+		4C30B8A51E9729610056036A /* level-conveyors.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "level-conveyors.tmx"; path = "test/dkong/level-conveyors.tmx"; sourceTree = "<group>"; };
+		4C30B8A61E9729610056036A /* level-elevators.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "level-elevators.tmx"; path = "test/dkong/level-elevators.tmx"; sourceTree = "<group>"; };
+		4C30B8A71E9729610056036A /* level-ramps.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "level-ramps.tmx"; path = "test/dkong/level-ramps.tmx"; sourceTree = "<group>"; };
+		4C30B8A81E9729610056036A /* level-rivets.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "level-rivets.tmx"; path = "test/dkong/level-rivets.tmx"; sourceTree = "<group>"; };
+		4C30B8A91E9729610056036A /* other-16x32.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "other-16x32.tsx"; path = "test/dkong/other-16x32.tsx"; sourceTree = "<group>"; };
+		4C30B8AB1E9729610056036A /* template.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = template.tmx; path = test/dkong/template.tmx; sourceTree = "<group>"; };
+		4C30B99E1E972AE80056036A /* barrels-12x10 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "barrels-12x10"; path = "test/dkong/barrels-12x10"; sourceTree = "<group>"; };
+		4C30B99F1E972AE80056036A /* characters-16x16 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "characters-16x16"; path = "test/dkong/characters-16x16"; sourceTree = "<group>"; };
+		4C30B9A01E972AE80056036A /* characters-16x32 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "characters-16x32"; path = "test/dkong/characters-16x32"; sourceTree = "<group>"; };
+		4C30B9A11E972AE80056036A /* kong-50x32 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "kong-50x32"; path = "test/dkong/kong-50x32"; sourceTree = "<group>"; };
+		4C30B9A21E972AE80056036A /* sprites-8x8 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "sprites-8x8"; path = "test/dkong/sprites-8x8"; sourceTree = "<group>"; };
 		4C440B981DAE911000DEC9A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTiledDemoScene.swift; sourceTree = "<group>"; };
 		4C440BA21DAE913000DEC9A4 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -274,6 +334,26 @@
 		4C7A77AA1DA6A21A0018A55D /* External */ = {
 			isa = PBXGroup;
 			children = (
+				4C30B8361E9729610056036A /* barrels-12x10.tsx */,
+				4C30B8781E9729610056036A /* characters-16x16.tsx */,
+				4C30B8821E9729610056036A /* dk-arcade-8x8.png */,
+				4C30B8831E9729610056036A /* dk-arcade-8x8.tsx */,
+				4C30B8841E9729610056036A /* dk-fonts-8x8.png */,
+				4C30B8851E9729610056036A /* dk-fonts-8x8.tsx */,
+				4C30B8861E9729610056036A /* help_drk_001.png */,
+				4C30B8871E9729610056036A /* help_lgt_001.png */,
+				4C30B8A41E9729610056036A /* kong-50x32.tsx */,
+				4C30B8A51E9729610056036A /* level-conveyors.tmx */,
+				4C30B8A61E9729610056036A /* level-elevators.tmx */,
+				4C30B8A71E9729610056036A /* level-ramps.tmx */,
+				4C30B99E1E972AE80056036A /* barrels-12x10 */,
+				4C30B99F1E972AE80056036A /* characters-16x16 */,
+				4C30B9A01E972AE80056036A /* characters-16x32 */,
+				4C30B9A11E972AE80056036A /* kong-50x32 */,
+				4C30B9A21E972AE80056036A /* sprites-8x8 */,
+				4C30B8A81E9729610056036A /* level-rivets.tmx */,
+				4C30B8A91E9729610056036A /* other-16x32.tsx */,
+				4C30B8AB1E9729610056036A /* template.tmx */,
 			);
 			name = External;
 			sourceTree = "<group>";
@@ -522,20 +602,40 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C30B94E1E9729610056036A /* dk-arcade-8x8.png in Resources */,
 				4C8E42E11DC26FD1002C76DA /* zlib in Resources */,
 				4C1774AC1D90999C000C0AFD /* roguelike-16x16-anim.png in Resources */,
+				4C30B9A71E972AE80056036A /* characters-16x32 in Resources */,
+				4C30B9A51E972AE80056036A /* characters-16x16 in Resources */,
+				4C30B9AB1E972AE80056036A /* sprites-8x8 in Resources */,
+				4C30B93C1E9729610056036A /* characters-16x16.tsx in Resources */,
+				4C30B9901E9729610056036A /* kong-50x32.tsx in Resources */,
 				4C1774A21D90999C000C0AFD /* hex1-65x65.tmx in Resources */,
 				4C1774A71D90999C000C0AFD /* staggered-64x33.tmx in Resources */,
+				4C30B9A31E972AE80056036A /* barrels-12x10 in Resources */,
 				4C1774A81D90999C000C0AFD /* hex-65x65-65x230.png in Resources */,
+				4C30B9961E9729610056036A /* level-ramps.tmx in Resources */,
 				4C440B9C1DAE911000DEC9A4 /* Assets.xcassets in Resources */,
+				4C30B9981E9729610056036A /* level-rivets.tmx in Resources */,
+				4C30B9501E9729610056036A /* dk-arcade-8x8.tsx in Resources */,
+				4C30B8BC1E9729610056036A /* barrels-12x10.tsx in Resources */,
 				4C1774A61D90999C000C0AFD /* roguelike-16x16.tmx in Resources */,
+				4C30B9541E9729610056036A /* dk-fonts-8x8.tsx in Resources */,
+				4C30B99C1E9729610056036A /* template.tmx in Resources */,
 				4C1774A51D90999C000C0AFD /* ortho4-16x16.tmx in Resources */,
+				4C30B9A91E972AE80056036A /* kong-50x32 in Resources */,
 				4C440BA81DAE913000DEC9A4 /* Main.storyboard in Resources */,
+				4C30B9561E9729610056036A /* help_drk_001.png in Resources */,
 				4C1774AD1D90999C000C0AFD /* staggered-64x192.png in Resources */,
+				4C30B9581E9729610056036A /* help_lgt_001.png in Resources */,
 				4C1774AA1D90999C000C0AFD /* isometric-130x230.png in Resources */,
 				4C1774A11D90999C000C0AFD /* DemoFiles.plist in Resources */,
+				4C30B99A1E9729610056036A /* other-16x32.tsx in Resources */,
 				4C1774AB1D90999C000C0AFD /* ortho4-16x16.png in Resources */,
 				4C1774AE1D90999C000C0AFD /* roguelike-16x16.tsx in Resources */,
+				4C30B9921E9729610056036A /* level-conveyors.tmx in Resources */,
+				4C30B9941E9729610056036A /* level-elevators.tmx in Resources */,
+				4C30B9521E9729610056036A /* dk-fonts-8x8.png in Resources */,
 				4C1774A41D90999C000C0AFD /* isometric-130x66.tmx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -544,15 +644,35 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C30B9591E9729610056036A /* help_lgt_001.png in Resources */,
+				4C30B9A41E972AE80056036A /* barrels-12x10 in Resources */,
+				4C30B9951E9729610056036A /* level-elevators.tmx in Resources */,
+				4C30B9A81E972AE80056036A /* characters-16x32 in Resources */,
+				4C30B93D1E9729610056036A /* characters-16x16.tsx in Resources */,
 				4CFEA35D1D8D04320055C150 /* hex1-65x65.tmx in Resources */,
+				4C30B99B1E9729610056036A /* other-16x32.tsx in Resources */,
+				4C30B99D1E9729610056036A /* template.tmx in Resources */,
 				4CBA61831D8A0A4600B31FC1 /* roguelike-16x16-anim.png in Resources */,
+				4C30B9931E9729610056036A /* level-conveyors.tmx in Resources */,
 				4C88E1AB1D8A241F00FCCFA3 /* ortho4-16x16.tmx in Resources */,
+				4C30B9531E9729610056036A /* dk-fonts-8x8.png in Resources */,
 				4C8E42E01DC26FD1002C76DA /* zlib in Resources */,
+				4C30B8BD1E9729610056036A /* barrels-12x10.tsx in Resources */,
 				4C88E18C1D8A1BC400FCCFA3 /* roguelike-16x16.tmx in Resources */,
+				4C30B9551E9729610056036A /* dk-fonts-8x8.tsx in Resources */,
 				4C440B9B1DAE911000DEC9A4 /* Assets.xcassets in Resources */,
+				4C30B9511E9729610056036A /* dk-arcade-8x8.tsx in Resources */,
 				4C88E1AD1D8A242F00FCCFA3 /* ortho4-16x16.png in Resources */,
+				4C30B9A61E972AE80056036A /* characters-16x16 in Resources */,
 				4C440BB51DAE913A00DEC9A4 /* Main.storyboard in Resources */,
 				4CFEA3591D8D02D20055C150 /* staggered-64x192.png in Resources */,
+				4C30B9AC1E972AE80056036A /* sprites-8x8 in Resources */,
+				4C30B9AA1E972AE80056036A /* kong-50x32 in Resources */,
+				4C30B9971E9729610056036A /* level-ramps.tmx in Resources */,
+				4C30B9911E9729610056036A /* kong-50x32.tsx in Resources */,
+				4C30B9571E9729610056036A /* help_drk_001.png in Resources */,
+				4C30B9991E9729610056036A /* level-rivets.tmx in Resources */,
+				4C30B94F1E9729610056036A /* dk-arcade-8x8.png in Resources */,
 				4CA3DA0E1D8AF07C001E165A /* DemoFiles.plist in Resources */,
 				4CD6D2DE1D8B9EA10083DA7B /* isometric-130x230.png in Resources */,
 				4CFEA35C1D8D04320055C150 /* hex-65x65-65x230.png in Resources */,

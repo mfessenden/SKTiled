@@ -105,6 +105,8 @@ public class SKTile: SKSpriteNode {
         guard let tileset = data.tileset else { return nil }
         self.tileData = data
         
+        // 16x32
+        // TODO: get tilemap tilesize here
         self.tileSize = tileset.tileSize
         super.init(texture: data.texture, color: SKColor.clear, size: data.texture.size())
         orientTile()
@@ -319,8 +321,14 @@ public class SKTile: SKSpriteNode {
         
         switch layer.orientation {
         case .orthogonal:
-            let origin = CGPoint(x: -tileSizeHalved.width, y: tileSizeHalved.height)
+            var origin = CGPoint(x: -tileSizeHalved.width, y: tileSizeHalved.height)
+            
+            // adjust for tileset.tileOffset here
+            origin.x += tileData.tileOffset.x
+            //origin.y -= tileData.tileOffset.y
+            
             vertices = rectPointArray(tileSize, origin: origin)
+            vertices = vertices.map { $0.invertedY }
             
         case .isometric, .staggered:
             vertices = [
@@ -375,12 +383,16 @@ public class SKTile: SKSpriteNode {
      Draw the tile's boundary shape. Optional anti-aliasing & time duration
      (duration of 0 never fades).
      
+     - parameter toggle        `Bool` toggle on/off
      - parameter antialiasing: `Bool` antialias the effect.
      - parameter duration:     `TimeInterval` effect duration.
      */
-    public func drawBounds(antialiasing: Bool=true, duration: TimeInterval=0) {
+    public func drawBounds(_ toggle: Bool=true, antialiasing: Bool=false, duration: TimeInterval=0) {
         childNode(withName: "Anchor")?.removeFromParent()
         childNode(withName: "Bounds")?.removeFromParent()
+        
+        
+        if (toggle == false) { return }
         
         let vertices = getVertices()
         let path = polygonPath(vertices)
@@ -400,8 +412,9 @@ public class SKTile: SKSpriteNode {
         addChild(shape)
         
         // anchor
-        let anchorRadius: CGFloat = tileSize.width / 24 > 1.0 ? tileSize.width / 18 > 4.0 ? 4 : tileSize.width / 18 : 1.0
-        let anchor = SKShapeNode(circleOfRadius: anchorRadius)
+        let anchorRadius: CGFloat = tileSize.width / 24 > 1.0 ? tileSize.width / 18 > 4.0 ? 4 : tileSize.width / 22 : 1.0
+        
+        let anchor = SKShapeNode(circleOfRadius: (anchorRadius > 8) ? 8 : anchorRadius )
         anchor.name = "Anchor"
         shape.addChild(anchor)
         anchor.fillColor = highlightColor.withAlphaComponent(0.2)

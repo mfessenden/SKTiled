@@ -689,9 +689,17 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
     
     /**
-     Visualize the layer's bounds.
+     Visualize the layer's boundary shape.
+     
+     - parameter toggle `Bool` toggle on/off
      */
-    public func drawBounds() {
+    public func drawBounds(_ toggle: Bool=true) {
+        
+        if (toggle == false) {
+            frameShape.strokeColor = SKColor.clear
+            frameShape.fillColor = SKColor.clear
+        }
+        
         let objectPath: CGPath!
         
         switch orientation {
@@ -1171,13 +1179,24 @@ open class SKTileLayer: TiledLayerObject {
                 let tilePosition = pointForCoordinate(coord: coord, offsetX: tileData.tileset.tileOffset.x, offsetY: tileData.tileset.tileOffset.y)
                 
                 // get the y-anchor point (half tile height / tileset height) to align the sprite properly to the grid
-                let tileAlignment = tileHeightHalf / tileData.tileset.tileSize.height
-
+                let tileAlignmentY = tileHeightHalf / tileData.tileset.tileSize.height
+                let tileAlignmentX = tileWidthHalf / tileData.tileset.tileSize.width
+                
+                if tileData.tileset.mapOffset.x != 0 || tileData.tileset.mapOffset.y != 0 {
+                    print("map offset: \(tileData.tileset.mapOffset), gid: \(tileData.id)")
+                }
+                
                 
                 self.tiles[Int(coord.x), Int(coord.y)] = tile
 
                 tile.position = tilePosition
-                tile.anchorPoint.y = tileAlignment
+                
+                tile.anchorPoint.y = tileAlignmentY
+                //tile.anchorPoint.x = tileAlignmentX
+                
+                // tileset tile offset
+                tile.position.x -= tileData.tileOffset.x
+                
                 addChild(tile)
                 
                 // run animation for tiles with multiple frames
@@ -1264,6 +1283,19 @@ open class SKTileLayer: TiledLayerObject {
     }
     
     // MARK: - Debugging
+    /**
+     Visualize the layer's boundary shape.
+     
+     - parameter toggle `Bool` toggle on/off
+     */
+    override open func drawBounds(_ toggle: Bool=true) {
+        for tile in tiles {
+            tile?.drawBounds(toggle, antialiasing: false, duration: 0)
+        }
+        
+        super.drawBounds(toggle)
+    }
+    
     override open func debugLayer() {
         super.debugLayer()
         for tile in validTiles() {

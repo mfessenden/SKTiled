@@ -806,7 +806,7 @@ internal func drawGrid(_ layer: TiledLayerObject) -> CGImage {
                 
         context.setLineWidth(lineWidth)
         //context.setLineDash(phase: 0.5, lengths: [0.5, 1.0])
-        context.setShouldAntialias(layer.antialiased)
+        context.setShouldAntialias(false)  // layer.antialiased
                 
         for col in 0 ..< Int(size.width) {
             for row in (0 ..< Int(size.height)) {

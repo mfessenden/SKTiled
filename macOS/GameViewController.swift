@@ -35,7 +35,7 @@ class GameViewController: NSViewController {
         
         /* create the game scene */
         let scene = SKTiledDemoScene(size: self.view.bounds.size, tmxFile: currentFilename)
-        
+                
         /* Set the scale mode to scale to fit the window */
         scene.scaleMode = .aspectFill
         
