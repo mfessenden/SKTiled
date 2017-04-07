@@ -56,6 +56,12 @@ open class SKTileset: SKTiledObject {
     /// Returns the last GID in the tileset
     open var lastGID: Int { return tileData.map { $0.id }.max() ?? firstGID }
     
+    /// Returns the difference in tile size
+    open var mapOffset: CGPoint {
+        guard let tilemap = tilemap else { return .zero }
+        return CGPoint(x: tileSize.width - tilemap.tileSize.width, y: tileSize.height - tilemap.tileSize.height)
+    }
+    
     /**
      Initialize with basic properties.
      
@@ -374,7 +380,11 @@ extension SKTileset: Hashable {
 
 extension SKTileset: CustomStringConvertible, CustomDebugStringConvertible {
     public var description: String {
-        return "Tile Set: \"\(name)\" @ \(tileSize), firstgid: \(firstGID), \(dataCount) tiles"
+        var desc = "Tileset: \"\(name)\" @ \(tileSize), firstgid: \(firstGID), \(dataCount) tiles"
+        if tileOffset.x != 0 || tileOffset.y != 0 {
+            desc += ", offset: \(tileOffset.x)x\(tileOffset.y)"
+        }
+        return desc
     }
     
     public var debugDescription: String { return description }

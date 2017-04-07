@@ -316,6 +316,17 @@ public class SKTiledDemoScene: SKTiledScene {
     override open func didRenderMap(_ tilemap: SKTilemap) {
         // update the HUD to reflect the number of tiles created
         updateHud()
+        
+        // Donkey Kong test levels
+        if ["level-ramps", "level-rivets", "level-elevators", "level-conveyors"].contains(tmxFilename) {
+            for tileset in tilemap.tilesets {
+                print("\(tileset)")
+                
+                for tileLayer in tilemap.tileLayers {
+                    //tileLayer.drawBounds()
+                }
+            }
+        }
     }
 }
 
@@ -534,6 +545,12 @@ extension SKTiledDemoScene {
         if event.keyCode == 0x0E {
             editMode = !editMode
         }
+        
+        // 'B' draws bounds
+        if event.keyCode == 0xb {
+            tilemap.tileLayers.forEach{ $0.drawBounds() }
+        }
+        
     }
     
     /**
