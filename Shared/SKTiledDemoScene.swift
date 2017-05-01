@@ -317,16 +317,12 @@ public class SKTiledDemoScene: SKTiledScene {
         // update the HUD to reflect the number of tiles created
         updateHud()
         
-        // Donkey Kong test levels
-        if ["level-ramps", "level-rivets", "level-elevators", "level-conveyors"].contains(tmxFilename) {
-            for tileset in tilemap.tilesets {
-                print("\(tileset)")
-                
-                for tileLayer in tilemap.tileLayers {
-                    //tileLayer.drawBounds()
-                }
-            }
+        if let playerLayer = tilemap.getLayer(named: "Objects") as? SKTileLayer {
+            let point = playerLayer.pointForCoordinate(13, -1)
+            let coord = playerLayer.coordinateForPoint(point)
+            print("coord: \(coord)")
         }
+        
     }
 }
 

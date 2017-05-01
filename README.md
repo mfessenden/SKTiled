@@ -27,6 +27,7 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 - [x] renders all layer types: (tile, object, image)
 - [x] supports all compression types: (base64, zlib, gzip)
 - [x] renders animated and fliped tiles
+- [ ] tile collision objects
 - [ ] pre-load tilesets
 - [ ] multi-threaded rendering
 - [x] group nodes
