@@ -33,6 +33,7 @@ open class SKTiledSceneCamera: SKCameraNode {
     open var allowMovement: Bool = true
     open var allowZoom: Bool = true
     open var allowRotation: Bool = false
+    open var allowPause: Bool = true
     
     // zoom constraints
     private var minZoom: CGFloat = 0.2
@@ -269,7 +270,7 @@ extension SKTiledSceneCamera {
      - parameter recognizer: `UITapGestureRecognizer` tap gesture recognizer.
      */
     open func sceneDoubleTapped(_ recognizer: UITapGestureRecognizer) {
-        if (recognizer.state == UIGestureRecognizerState.ended) {
+        if (recognizer.state == UIGestureRecognizerState.ended && allowPause) {
             //focusLocation = recognizer.location(in: recognizer.view)
             guard let scene = self.scene as? SKTiledScene else { return }
             // get the current point
