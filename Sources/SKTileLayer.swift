@@ -384,7 +384,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         screenPoint.x += tileOffsetX
         screenPoint.y += tileOffsetY
         
-        return screenPoint.invertedY
+        return floor(point: screenPoint.invertedY)
     }
     
     /**
@@ -478,13 +478,13 @@ open class TiledLayerObject: SKNode, SKTiledObject {
                 r = (tileWidth - tilemap.sideLengthX) / 2
                 h = tileHeight / 2
                 
-                pixelX -= r
+                pixelX -= (r / 2)  //pixelX -= r
                 sectionX = pixelX / (r + s)
                 sectionY = pixelY / (h * 2)
                 
                 // y-offset
                 if tilemap.doStaggerX(Int(sectionX)){
-                    sectionY -= 0.5
+                    sectionY -= 0.5  // was -=
                 }
                 
             // pointy
@@ -1178,7 +1178,10 @@ open class SKTileLayer: TiledLayerObject {
                 // get the position in the layer (plus tileset offset)
                 let tilePosition = pointForCoordinate(coord: coord, offsetX: tileData.tileset.tileOffset.x, offsetY: tileData.tileset.tileOffset.y)
                 
+                
+                // TODO: tile anchor point is halfWidth/halfHeight
                 // get the y-anchor point (half tile height / tileset height) to align the sprite properly to the grid
+                
                 let tileAlignmentY = tileHeightHalf / tileData.tileset.tileSize.height
                 let tileAlignmentX = tileWidthHalf / tileData.tileset.tileSize.width
                 

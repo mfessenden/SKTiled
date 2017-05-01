@@ -88,8 +88,10 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         let fileBaseName = filename.components(separatedBy: ".")[0]
         for fileExtension in extensions {
             if let url = Bundle.main.url(forResource: fileBaseName, withExtension: fileExtension) {
+                
                 let filepath = url.absoluteString
                 if let filename = filepath.components(separatedBy: "/").last {
+                    print("matched: \(filename)")
                     return filename
                 }
             }
