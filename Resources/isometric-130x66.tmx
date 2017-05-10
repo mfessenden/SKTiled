@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="isometric" renderorder="right-down" width="10" height="10" tilewidth="130" tileheight="66" backgroundcolor="#634930" nextobjectid="16">
+<map version="1.0.0" orientation="isometric" renderorder="right-down" width="10" height="10" tilewidth="130" tileheight="66" backgroundcolor="#634930" nextobjectid="16">
  <properties>
   <property name="allowMovement" type="bool" value="true"/>
   <property name="allowZoom" type="bool" value="true"/>
@@ -8,11 +8,6 @@
  </properties>
  <tileset firstgid="1" name="isometric-130x230" tilewidth="130" tileheight="230" tilecount="72" columns="12">
   <image source="isometric-130x230.png" width="1560" height="1380"/>
-  <tile id="0">
-   <objectgroup draworder="index">
-    <object id="1" x="28.75" y="86.25" width="201.25" height="143.75"/>
-   </objectgroup>
-  </tile>
   <tile id="2">
    <properties>
     <property name="type" value="road"/>

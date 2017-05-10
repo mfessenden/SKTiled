@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
     <device id="retina4_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,13 +19,92 @@
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="F49-q1-qia" userLabel="Labels View">
+                                <rect key="frame" x="14" y="334" width="640" height="33"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jka-p9-ujh" userLabel="Map Info Label">
+                                        <rect key="frame" x="0.0" y="0.0" width="640" height="11"/>
+                                        <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="11"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KK8-ld-8Vw" userLabel="Tile Info Label">
+                                        <rect key="frame" x="0.0" y="11" width="640" height="11"/>
+                                        <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="11"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1r7-2g-tZe" userLabel="Properties Info Label">
+                                        <rect key="frame" x="0.0" y="22" width="640" height="11"/>
+                                        <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="11"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="640" id="KWJ-Gf-eZu"/>
+                                    <constraint firstItem="Jka-p9-ujh" firstAttribute="centerX" secondItem="F49-q1-qia" secondAttribute="centerX" id="lMj-MV-Obw"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="KQt-8c-Ymk" userLabel="Navigation View">
+                                <rect key="frame" x="169" y="304" width="328" height="22"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6JX-pH-yGw" userLabel="Fit Button">
+                                        <rect key="frame" x="0.0" y="0.0" width="82" height="22"/>
+                                        <state key="normal" image="scale-button-norm"/>
+                                        <connections>
+                                            <action selector="fitButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="eB7-oG-WF6"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pWz-Go-egU" userLabel="Grid Button">
+                                        <rect key="frame" x="82" y="0.0" width="82" height="22"/>
+                                        <state key="normal" image="grid-button-norm"/>
+                                        <connections>
+                                            <action selector="gridButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="o70-qJ-n2f"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jo5-WN-YbM" userLabel="Objects Button">
+                                        <rect key="frame" x="164" y="0.0" width="82" height="22"/>
+                                        <state key="normal" image="objects-button-norm"/>
+                                        <connections>
+                                            <action selector="objectsButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Myy-50-y6H"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ao-Za-AsF" userLabel="Next Button">
+                                        <rect key="frame" x="246" y="0.0" width="82" height="22"/>
+                                        <state key="normal" image="next-button-norm"/>
+                                        <connections>
+                                            <action selector="nextButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="kv8-sk-pdp"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="F49-q1-qia" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="7db-Gj-dfo"/>
+                            <constraint firstItem="KQt-8c-Ymk" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="RIC-to-fcB"/>
+                            <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="F49-q1-qia" secondAttribute="bottom" constant="8" id="Y9q-1B-tRn"/>
+                            <constraint firstItem="F49-q1-qia" firstAttribute="top" secondItem="KQt-8c-Ymk" secondAttribute="bottom" constant="8" id="vih-hF-hTM"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mapInfoLabel" destination="Jka-p9-ujh" id="eFm-mZ-CHV"/>
+                        <outlet property="propertiesInfoLabel" destination="1r7-2g-tZe" id="tqy-a1-auA"/>
+                        <outlet property="tileInfoLabel" destination="KK8-ld-8Vw" id="a2P-EG-zFL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="117.39130434782609" y="124"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="grid-button-norm" width="82" height="16"/>
+        <image name="next-button-norm" width="82" height="16"/>
+        <image name="objects-button-norm" width="82" height="16"/>
+        <image name="scale-button-norm" width="82" height="16"/>
+    </resources>
 </document>

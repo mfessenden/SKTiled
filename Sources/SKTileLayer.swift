@@ -384,7 +384,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         screenPoint.x += tileOffsetX
         screenPoint.y += tileOffsetY
         
-        return floor(point: screenPoint.invertedY)
+        return screenPoint.invertedY
     }
     
     /**
@@ -460,8 +460,10 @@ open class TiledLayerObject: SKNode, SKTiledObject {
             let tileY = pixelY / tileHeight
             let tileX = pixelX / tileWidth
             return CGPoint(x: floor(tileY + tileX), y: floor(tileY - tileX))
-            
+        
+        // FIXME: error here with negative values
         case .hexagonal:
+            //print("input: \(pixelX.roundTo()), \(pixelY.roundTo())")
             
             // calculate r, h, & s
             var r: CGFloat = 0
@@ -474,21 +476,23 @@ open class TiledLayerObject: SKNode, SKTiledObject {
             
             //flat
             if (tilemap.staggerX == true) {
+                //pixelY = pixelY * -1
                 s = tilemap.sideLengthX
                 r = (tileWidth - tilemap.sideLengthX) / 2
                 h = tileHeight / 2
                 
-                pixelX -= (r / 2)  //pixelX -= r
+                pixelX -= r
                 sectionX = pixelX / (r + s)
                 sectionY = pixelY / (h * 2)
                 
                 // y-offset
                 if tilemap.doStaggerX(Int(sectionX)){
-                    sectionY -= 0.5  // was -=
+                    sectionY -= 0.5
                 }
                 
             // pointy
             } else {
+                //if pixelY < 1 { pixelX -= tileWidthHalf }
                 s = tilemap.sideLengthY
                 r = tileWidth / 2
                 h = (tileHeight - tilemap.sideLengthY) / 2
@@ -689,17 +693,9 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
     
     /**
-     Visualize the layer's boundary shape.
-     
-     - parameter toggle `Bool` toggle on/off
+     Visualize the layer's bounds.
      */
-    public func drawBounds(_ toggle: Bool=true) {
-        
-        if (toggle == false) {
-            frameShape.strokeColor = SKColor.clear
-            frameShape.fillColor = SKColor.clear
-        }
-        
+    public func drawBounds() {
         let objectPath: CGPath!
         
         switch orientation {
@@ -1178,28 +1174,14 @@ open class SKTileLayer: TiledLayerObject {
                 // get the position in the layer (plus tileset offset)
                 let tilePosition = pointForCoordinate(coord: coord, offsetX: tileData.tileset.tileOffset.x, offsetY: tileData.tileset.tileOffset.y)
                 
-                
-                // TODO: tile anchor point is halfWidth/halfHeight
                 // get the y-anchor point (half tile height / tileset height) to align the sprite properly to the grid
-                
-                let tileAlignmentY = tileHeightHalf / tileData.tileset.tileSize.height
-                let tileAlignmentX = tileWidthHalf / tileData.tileset.tileSize.width
-                
-                if tileData.tileset.mapOffset.x != 0 || tileData.tileset.mapOffset.y != 0 {
-                    print("map offset: \(tileData.tileset.mapOffset), gid: \(tileData.id)")
-                }
-                
+                let tileAlignment = tileHeightHalf / tileData.tileset.tileSize.height
+
                 
                 self.tiles[Int(coord.x), Int(coord.y)] = tile
 
                 tile.position = tilePosition
-                
-                tile.anchorPoint.y = tileAlignmentY
-                //tile.anchorPoint.x = tileAlignmentX
-                
-                // tileset tile offset
-                tile.position.x -= tileData.tileOffset.x
-                
+                tile.anchorPoint.y = tileAlignment
                 addChild(tile)
                 
                 // run animation for tiles with multiple frames
@@ -1286,19 +1268,6 @@ open class SKTileLayer: TiledLayerObject {
     }
     
     // MARK: - Debugging
-    /**
-     Visualize the layer's boundary shape.
-     
-     - parameter toggle `Bool` toggle on/off
-     */
-    override open func drawBounds(_ toggle: Bool=true) {
-        for tile in tiles {
-            tile?.drawBounds(toggle, antialiasing: false, duration: 0)
-        }
-        
-        super.drawBounds(toggle)
-    }
-    
     override open func debugLayer() {
         super.debugLayer()
         for tile in validTiles() {
@@ -1322,7 +1291,7 @@ internal enum SKObjectGroupDrawOrder: String {
 
 
 /**
- The `SKObjectGroup` class  child objects that are drawn in the current coordinate space.
+ The `SKObjectGroup` object is a container that manages child vector objects that are drawn in the current coordinate space.
  
  Most object properties can be set on the parent `SKObjectGroup` which is then applied to all child objects.
  

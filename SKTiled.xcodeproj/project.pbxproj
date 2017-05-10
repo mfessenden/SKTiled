@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C1774A11D90999C000C0AFD /* DemoFiles.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CA3DA0D1D8AF07C001E165A /* DemoFiles.plist */; };
 		4C1774A21D90999C000C0AFD /* hex1-65x65.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEA35B1D8D04320055C150 /* hex1-65x65.tmx */; };
 		4C1774A41D90999C000C0AFD /* isometric-130x66.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2D91D8B9EA10083DA7B /* isometric-130x66.tmx */; };
 		4C1774A51D90999C000C0AFD /* ortho4-16x16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E1AA1D8A241F00FCCFA3 /* ortho4-16x16.tmx */; };
@@ -31,18 +30,7 @@
 		4C1774B81D9099A3000C0AFD /* SKTileset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DA1D8A4EBE00FCCFA3 /* SKTileset.swift */; };
 		4C1774B91D9099A3000C0AFD /* SKTilesetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */; };
 		4C1774BA1D9099A3000C0AFD /* SKTiledObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA21D8CC2C100DB56F1 /* SKTiledObject.swift */; };
-		4C3496811EA51395003900C8 /* hexf-75x65.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C34967F1EA51395003900C8 /* hexf-75x65.tsx */; };
-		4C3496821EA51395003900C8 /* hexf-75x65.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C34967F1EA51395003900C8 /* hexf-75x65.tsx */; };
-		4C3496831EA51395003900C8 /* hexf-test.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C3496801EA51395003900C8 /* hexf-test.tmx */; };
-		4C3496841EA51395003900C8 /* hexf-test.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C3496801EA51395003900C8 /* hexf-test.tmx */; };
-		4C3496861EA5139C003900C8 /* hexf-75x65 in Resources */ = {isa = PBXBuildFile; fileRef = 4C3496851EA5139C003900C8 /* hexf-75x65 */; };
-		4C3496871EA5139C003900C8 /* hexf-75x65 in Resources */ = {isa = PBXBuildFile; fileRef = 4C3496851EA5139C003900C8 /* hexf-75x65 */; };
-		4C34968B1EA52728003900C8 /* hexp-75x65.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C3496891EA52728003900C8 /* hexp-75x65.tsx */; };
-		4C34968C1EA52728003900C8 /* hexp-75x65.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C3496891EA52728003900C8 /* hexp-75x65.tsx */; };
-		4C34968D1EA52728003900C8 /* hexp-test.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C34968A1EA52728003900C8 /* hexp-test.tmx */; };
-		4C34968E1EA52728003900C8 /* hexp-test.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C34968A1EA52728003900C8 /* hexp-test.tmx */; };
-		4C3496901EA52730003900C8 /* hexp-75x65 in Resources */ = {isa = PBXBuildFile; fileRef = 4C34968F1EA52730003900C8 /* hexp-75x65 */; };
-		4C3496911EA52730003900C8 /* hexp-75x65 in Resources */ = {isa = PBXBuildFile; fileRef = 4C34968F1EA52730003900C8 /* hexp-75x65 */; };
+		4C2AB4FE1EC37A5D00D750D7 /* User in Resources */ = {isa = PBXBuildFile; fileRef = 4C2AB4FD1EC37A5D00D750D7 /* User */; };
 		4C440B9B1DAE911000DEC9A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C440B981DAE911000DEC9A4 /* Assets.xcassets */; };
 		4C440B9C1DAE911000DEC9A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C440B981DAE911000DEC9A4 /* Assets.xcassets */; };
 		4C440B9F1DAE911000DEC9A4 /* SKTiledDemoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */; };
@@ -71,7 +59,6 @@
 		4C88E1EA1D8A4EBE00FCCFA3 /* SKTilesetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */; };
 		4C8E42E01DC26FD1002C76DA /* zlib in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E42DF1DC26FD1002C76DA /* zlib */; };
 		4C8E42E11DC26FD1002C76DA /* zlib in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E42DF1DC26FD1002C76DA /* zlib */; };
-		4CA3DA0E1D8AF07C001E165A /* DemoFiles.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CA3DA0D1D8AF07C001E165A /* DemoFiles.plist */; };
 		4CAFDA4D1E20326D006F2D83 /* SKTiled+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D71D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift */; };
 		4CAFDA4E1E20326E006F2D83 /* SKTiled+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D71D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift */; };
 		4CAFDA4F1E203270006F2D83 /* SKTilemap+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */; };
@@ -114,12 +101,7 @@
 		4C0EE1E51DC116DB00A052E4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		4C0EE1E71DC116E300A052E4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
 		4C17747F1D909740000C0AFD /* SKTiledDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKTiledDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4C34967F1EA51395003900C8 /* hexf-75x65.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "hexf-75x65.tsx"; path = "test/hexf-75x65.tsx"; sourceTree = "<group>"; };
-		4C3496801EA51395003900C8 /* hexf-test.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "hexf-test.tmx"; path = "test/hexf-test.tmx"; sourceTree = "<group>"; };
-		4C3496851EA5139C003900C8 /* hexf-75x65 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "hexf-75x65"; path = "test/hexf-75x65"; sourceTree = "<group>"; };
-		4C3496891EA52728003900C8 /* hexp-75x65.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "hexp-75x65.tsx"; path = "test/hexp-75x65.tsx"; sourceTree = "<group>"; };
-		4C34968A1EA52728003900C8 /* hexp-test.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "hexp-test.tmx"; path = "test/hexp-test.tmx"; sourceTree = "<group>"; };
-		4C34968F1EA52730003900C8 /* hexp-75x65 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "hexp-75x65"; path = "test/hexp-75x65"; sourceTree = "<group>"; };
+		4C2AB4FD1EC37A5D00D750D7 /* User */ = {isa = PBXFileReference; lastKnownFileType = folder; path = User; sourceTree = "<group>"; };
 		4C440B981DAE911000DEC9A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTiledDemoScene.swift; sourceTree = "<group>"; };
 		4C440BA21DAE913000DEC9A4 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -149,7 +131,6 @@
 		4C88E1DA1D8A4EBE00FCCFA3 /* SKTileset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTileset.swift; sourceTree = "<group>"; };
 		4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTilesetData.swift; sourceTree = "<group>"; };
 		4C8E42DF1DC26FD1002C76DA /* zlib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = zlib; sourceTree = SOURCE_ROOT; };
-		4CA3DA0D1D8AF07C001E165A /* DemoFiles.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DemoFiles.plist; sourceTree = "<group>"; };
 		4CBA61651D8A048200B31FC1 /* SKTiledDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKTiledDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CBA617E1D8A0A3900B31FC1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "roguelike-16x16-anim.png"; sourceTree = "<group>"; };
@@ -279,19 +260,6 @@
 			path = framework;
 			sourceTree = "<group>";
 		};
-		4C61084D1E9C266F003E982C /* External */ = {
-			isa = PBXGroup;
-			children = (
-				4C3496851EA5139C003900C8 /* hexf-75x65 */,
-				4C34968F1EA52730003900C8 /* hexp-75x65 */,
-				4C3496891EA52728003900C8 /* hexp-75x65.tsx */,
-				4C34968A1EA52728003900C8 /* hexp-test.tmx */,
-				4C34967F1EA51395003900C8 /* hexf-75x65.tsx */,
-				4C3496801EA51395003900C8 /* hexf-test.tmx */,
-			);
-			name = External;
-			sourceTree = "<group>";
-		};
 		4C6480BE1DC1231C006F4CB3 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
@@ -340,9 +308,8 @@
 		4CBA617F1D8A0A4600B31FC1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4C61084D1E9C266F003E982C /* External */,
+				4C2AB4FD1EC37A5D00D750D7 /* User */,
 				4CD5229E1DA624C400D78D81 /* CREDITS */,
-				4CA3DA0D1D8AF07C001E165A /* DemoFiles.plist */,
 				4CFEA35B1D8D04320055C150 /* hex1-65x65.tmx */,
 				4CD6D2D91D8B9EA10083DA7B /* isometric-130x66.tmx */,
 				4C88E1AA1D8A241F00FCCFA3 /* ortho4-16x16.tmx */,
@@ -438,7 +405,6 @@
 			buildPhases = (
 				4CBA61611D8A048200B31FC1 /* Sources */,
 				4CBA61621D8A048200B31FC1 /* Frameworks */,
-				4C3496881EA513D9003900C8 /* ShellScript */,
 				4CBA61631D8A048200B31FC1 /* Resources */,
 			);
 			buildRules = (
@@ -548,26 +514,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C8E42E11DC26FD1002C76DA /* zlib in Resources */,
-				4C1774AC1D90999C000C0AFD /* roguelike-16x16-anim.png in Resources */,
 				4C1774A21D90999C000C0AFD /* hex1-65x65.tmx in Resources */,
-				4C1774A71D90999C000C0AFD /* staggered-64x33.tmx in Resources */,
-				4C1774A81D90999C000C0AFD /* hex-65x65-65x230.png in Resources */,
-				4C440B9C1DAE911000DEC9A4 /* Assets.xcassets in Resources */,
-				4C1774A61D90999C000C0AFD /* roguelike-16x16.tmx in Resources */,
-				4C1774A51D90999C000C0AFD /* ortho4-16x16.tmx in Resources */,
-				4C440BA81DAE913000DEC9A4 /* Main.storyboard in Resources */,
-				4C3496831EA51395003900C8 /* hexf-test.tmx in Resources */,
-				4C3496861EA5139C003900C8 /* hexf-75x65 in Resources */,
-				4C1774AD1D90999C000C0AFD /* staggered-64x192.png in Resources */,
-				4C1774AA1D90999C000C0AFD /* isometric-130x230.png in Resources */,
-				4C3496811EA51395003900C8 /* hexf-75x65.tsx in Resources */,
-				4C34968D1EA52728003900C8 /* hexp-test.tmx in Resources */,
-				4C3496901EA52730003900C8 /* hexp-75x65 in Resources */,
-				4C1774A11D90999C000C0AFD /* DemoFiles.plist in Resources */,
-				4C1774AB1D90999C000C0AFD /* ortho4-16x16.png in Resources */,
-				4C34968B1EA52728003900C8 /* hexp-75x65.tsx in Resources */,
-				4C1774AE1D90999C000C0AFD /* roguelike-16x16.tsx in Resources */,
+				4C2AB4FE1EC37A5D00D750D7 /* User in Resources */,
 				4C1774A41D90999C000C0AFD /* isometric-130x66.tmx in Resources */,
+				4C1774A51D90999C000C0AFD /* ortho4-16x16.tmx in Resources */,
+				4C1774A61D90999C000C0AFD /* roguelike-16x16.tmx in Resources */,
+				4C1774A71D90999C000C0AFD /* staggered-64x33.tmx in Resources */,
+				4C1774AE1D90999C000C0AFD /* roguelike-16x16.tsx in Resources */,
+				4C1774A81D90999C000C0AFD /* hex-65x65-65x230.png in Resources */,
+				4C1774AA1D90999C000C0AFD /* isometric-130x230.png in Resources */,
+				4C1774AB1D90999C000C0AFD /* ortho4-16x16.png in Resources */,
+				4C1774AC1D90999C000C0AFD /* roguelike-16x16-anim.png in Resources */,
+				4C1774AD1D90999C000C0AFD /* staggered-64x192.png in Resources */,
+				4C440B9C1DAE911000DEC9A4 /* Assets.xcassets in Resources */,
+				4C440BA81DAE913000DEC9A4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -576,27 +536,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CFEA35D1D8D04320055C150 /* hex1-65x65.tmx in Resources */,
-				4CBA61831D8A0A4600B31FC1 /* roguelike-16x16-anim.png in Resources */,
-				4C88E1AB1D8A241F00FCCFA3 /* ortho4-16x16.tmx in Resources */,
-				4C3496841EA51395003900C8 /* hexf-test.tmx in Resources */,
-				4C34968C1EA52728003900C8 /* hexp-75x65.tsx in Resources */,
-				4C8E42E01DC26FD1002C76DA /* zlib in Resources */,
-				4C88E18C1D8A1BC400FCCFA3 /* roguelike-16x16.tmx in Resources */,
-				4C3496911EA52730003900C8 /* hexp-75x65 in Resources */,
-				4C440B9B1DAE911000DEC9A4 /* Assets.xcassets in Resources */,
-				4C88E1AD1D8A242F00FCCFA3 /* ortho4-16x16.png in Resources */,
-				4C440BB51DAE913A00DEC9A4 /* Main.storyboard in Resources */,
-				4CFEA3591D8D02D20055C150 /* staggered-64x192.png in Resources */,
-				4CA3DA0E1D8AF07C001E165A /* DemoFiles.plist in Resources */,
-				4CD6D2DE1D8B9EA10083DA7B /* isometric-130x230.png in Resources */,
-				4CFEA35C1D8D04320055C150 /* hex-65x65-65x230.png in Resources */,
-				4C3496821EA51395003900C8 /* hexf-75x65.tsx in Resources */,
-				4CFEA3581D8D02D20055C150 /* staggered-64x33.tmx in Resources */,
-				4C34968E1EA52728003900C8 /* hexp-test.tmx in Resources */,
-				4C440BB41DAE913A00DEC9A4 /* LaunchScreen.storyboard in Resources */,
-				4C3496871EA5139C003900C8 /* hexf-75x65 in Resources */,
-				4CD6D2D51D8B9DE20083DA7B /* roguelike-16x16.tsx in Resources */,
 				4CD6D2DD1D8B9EA10083DA7B /* isometric-130x66.tmx in Resources */,
+				4C88E1AB1D8A241F00FCCFA3 /* ortho4-16x16.tmx in Resources */,
+				4C88E18C1D8A1BC400FCCFA3 /* roguelike-16x16.tmx in Resources */,
+				4CFEA3581D8D02D20055C150 /* staggered-64x33.tmx in Resources */,
+				4CD6D2D51D8B9DE20083DA7B /* roguelike-16x16.tsx in Resources */,
+				4CFEA35C1D8D04320055C150 /* hex-65x65-65x230.png in Resources */,
+				4CD6D2DE1D8B9EA10083DA7B /* isometric-130x230.png in Resources */,
+				4C88E1AD1D8A242F00FCCFA3 /* ortho4-16x16.png in Resources */,
+				4CBA61831D8A0A4600B31FC1 /* roguelike-16x16-anim.png in Resources */,
+				4CFEA3591D8D02D20055C150 /* staggered-64x192.png in Resources */,
+				4C8E42E01DC26FD1002C76DA /* zlib in Resources */,
+				4C440B9B1DAE911000DEC9A4 /* Assets.xcassets in Resources */,
+				4C440BB51DAE913A00DEC9A4 /* Main.storyboard in Resources */,
+				4C440BB41DAE913A00DEC9A4 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,19 +570,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4C3496881EA513D9003900C8 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "xattr -rc $PROJECT_DIR";
-		};
 		4CABC4D71DAEE1F900ACA1A4 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -641,7 +581,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "xattr -rc $PROJECT_DIR";
+			shellScript = export;
 		};
 		4CAFDA651E20391A006F2D83 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -802,7 +742,7 @@
 				PRODUCT_NAME = SKTiledDemo;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 3.1;
 			};
 			name = Debug;
 		};
@@ -823,7 +763,7 @@
 				PRODUCT_NAME = SKTiledDemo;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 3.1;
 			};
 			name = Release;
 		};
@@ -925,12 +865,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 747QKN4G7U;
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
 				PRODUCT_NAME = SKTiledDemo;
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				SWIFT_VERSION = 3.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -941,12 +881,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 747QKN4G7U;
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
 				PRODUCT_NAME = SKTiledDemo;
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				SWIFT_VERSION = 3.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -959,7 +899,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEPLOYMENT_LOCATION = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DEVELOPMENT_TEAM = 747QKN4G7U;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -974,7 +913,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 3.1;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -989,7 +928,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEPLOYMENT_LOCATION = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DEVELOPMENT_TEAM = 747QKN4G7U;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1003,7 +941,7 @@
 				PRODUCT_NAME = SKTiled;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 3.1;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1016,7 +954,6 @@
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEPLOYMENT_LOCATION = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DEVELOPMENT_TEAM = 747QKN4G7U;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1029,7 +966,7 @@
 				PRODUCT_NAME = SKTiled;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 3.1;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1042,7 +979,6 @@
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEPLOYMENT_LOCATION = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DEVELOPMENT_TEAM = 747QKN4G7U;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1055,7 +991,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
 				PRODUCT_NAME = SKTiled;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 3.1;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};

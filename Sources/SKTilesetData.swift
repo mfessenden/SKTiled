@@ -37,7 +37,6 @@ open class SKTilesetData: SKTiledObject  {
     open var source: String! = nil                // source image name (part of a collections tileset)
     open var probability: CGFloat = 1.0           // used in Tiled application, might not be useful here.
     open var properties: [String: String] = [:]
-    open var tileOffset: CGPoint = .zero          // tile offset
     
     // animation frames
     internal var frames: [AnimationFrame] = []    // animation frames
@@ -71,7 +70,6 @@ open class SKTilesetData: SKTiledObject  {
         self.id = id
         self.tileset = tileSet
         self.parseTileID(id: id)
-        self.tileOffset = tileSet.tileOffset
     }
     
     /**
@@ -88,7 +86,6 @@ open class SKTilesetData: SKTiledObject  {
         self.texture.filteringMode = .nearest
         self.tileset = tileSet
         self.parseTileID(id: id)
-        self.tileOffset = tileSet.tileOffset
     }
     
     // MARK: - Animation

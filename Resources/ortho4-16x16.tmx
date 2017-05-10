@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" backgroundcolor="#1e1b23" nextobjectid="36">
+<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" backgroundcolor="#1e1b23" nextobjectid="36">
  <properties>
   <property name="autoResize" type="bool" value="true"/>
   <property name="frameColor" type="color" value="#ff63a4b2"/>
@@ -268,7 +268,7 @@
  <layer name="Objects" width="20" height="15">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-175,286,221,0,0,0,0,0,0,0,0,0,0,342,0,285,0,0,0,0,
+175,286,221,0,0,0,0,0,0,0,0,0,0,0,0,285,0,0,0,0,
 198,0,244,0,0,0,2147483823,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,2147483846,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,2147483823,175,0,0,0,0,0,0,0,0,0,

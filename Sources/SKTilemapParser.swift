@@ -49,10 +49,12 @@ internal enum CompressionType: String {
 open class SKTilemapParser: NSObject, XMLParserDelegate {
     
     open var fileNames: [String] = []                               // list of resource files
-    open var currentFileName: String!
+    open var currentFilename: String!
     weak var mapDelegate: SKTilemapDelegate?
     open var tilemap: SKTilemap!
     
+    fileprivate var assetManager = AssetManager.default             // asset manager instance
+    fileprivate var rootDirectory: String? = nil                    // current root directory
     fileprivate var encoding: TilemapEncoding = .xml                // encoding
     fileprivate var tilesets: [String: SKTileset] = [:]             // stash external tilesets
     
@@ -74,31 +76,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     internal let parsingQueue = DispatchQueue(label: "com.sktiled.parsequeue", qos: .userInitiated, attributes: .concurrent)  // serial queue
     internal let parsingGroup = DispatchGroup()
     
-    // MARK: - Loading
-    
-    /**
-     Return the appropriate filename string for the given file (TMX or TSX) since Tiled stores
-     xml files with multiple extensions.
-     
-     - parameter fileName: `String` file name to search for.
-     - returns: `String?` name of file in bundle.
-     */
-    fileprivate func getBundledFile(named filename: String, extensions: [String] = ["tmx", "tsx"]) -> String? {
-        // strip off the file extension
-        let fileBaseName = filename.components(separatedBy: ".")[0]
-        for fileExtension in extensions {
-            if let url = Bundle.main.url(forResource: fileBaseName, withExtension: fileExtension) {
-                
-                let filepath = url.absoluteString
-                if let filename = filepath.components(separatedBy: "/").last {
-                    print("matched: \(filename)")
-                    return filename
-                }
-            }
-        }
-        return nil
-    }
-    
+    // MARK: - Loading    
     /**
      Load a TMX file and parse it.
      
@@ -111,7 +89,8 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                    delegate: SKTilemapDelegate? = nil,
                    withTilesets: [SKTileset]? = nil) -> SKTilemap? {
         
-        guard let targetFile = getBundledFile(named: filename) else {
+
+        guard let targetFile = assetManager.matchBundledResource(named: filename) else {
             print("[SKTilemapParser]: unable to locate file: \"\(filename)\"")
             return nil
         }
@@ -119,7 +98,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         // set the delegate property
         mapDelegate = delegate
         timer = Date()
-        fileNames.append(targetFile)
+        fileNames.append(targetFile.relativePath)
         
         // add existing tilesets
         if let withTilesets = withTilesets {
@@ -131,28 +110,29 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         while !(fileNames.isEmpty) {
             if let firstFileName = fileNames.first {
                 
-                currentFileName = firstFileName
+                currentFilename = firstFileName
                 defer { fileNames.remove(at: 0) }
                 
-                guard let path: String = Bundle.main.path(forResource: currentFileName! , ofType: nil) else {
-                    print("[SKTilemapParser]: no path for: \"\(currentFileName!)\"")
+                
+                guard let path = assetManager.matchBundledResource(named: currentFilename!) else {
+                    print("[SKTilemapParser]: no path for: \"\(currentFilename!)\", in: \"\(rootDirectory ?? "nil")\"")
                     return nil
                 }
                 
-                let data: Data = try! Data(contentsOf: URL(fileURLWithPath: path))
+                let data: Data = try! Data(contentsOf: path)
                 let parser: XMLParser = XMLParser(data: data)
 
                 parser.shouldResolveExternalEntities = false
                 parser.delegate = self
                 
                 // check file type
-                let fileExt = currentFileName.components(separatedBy: ".").last!
+                let fileExt = currentFilename.components(separatedBy: ".").last!
                 var filetype = "filename"
                 if let ftype = FileType(rawValue: fileExt) {
                     filetype = ftype.description
                 }
                 
-                print("[SKTilemapParser]: reading \(filetype): \"\(currentFileName!)\"")
+                print("[SKTilemapParser]: reading \(filetype): \"\(currentFilename!)\"")
                 
                 // parse the file
                 let successs: Bool = parser.parse()
@@ -265,9 +245,11 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             self.tilemap = tilemap
             self.tilemap.delegate = self.mapDelegate
             
-            let currentBasename = currentFileName.components(separatedBy: ".").first!
-            self.tilemap.filename = currentBasename
-            self.tilemap.name = currentBasename
+            //let filenameOnly = currentFilename.components(separatedBy: "/").last!
+            let currentBasename = currentFilename.components(separatedBy: ".").first!
+            
+            self.tilemap.filename = currentFilename
+            self.tilemap.name = currentBasename.components(separatedBy: "/").last!
             
             // run setup functions on tilemap
             self.mapDelegate?.didBeginParsing(tilemap)
@@ -320,7 +302,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             if let name = attributeDict["name"] {
                 
                 // update an existing tileset
-                if let existingTileset = tilesets[currentFileName] {
+                if let existingTileset = tilesets[currentFilename] {
                     
                     guard let width = attributeDict["tilewidth"] else { parser.abortParsing(); return }
                     guard let height = attributeDict["tileheight"] else { parser.abortParsing(); return }
@@ -475,10 +457,15 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             guard attributeDict["height"] != nil else { parser.abortParsing(); return }
             guard let imageSource = attributeDict["source"] else { parser.abortParsing(); return }
             
+            // match images to the AssetManager's `images` value
+            guard let matchedImage = assetManager.matchBundledResource(named: imageSource, inDirectory: nil) else { return }
+            
+            // relativeString works, relativePath works
+            
             // update an image layer
             if let imageLayer = lastElement as? SKImageLayer {
                 // set the image property
-                imageLayer.setLayerImage(imageSource)
+                imageLayer.setLayerImage(matchedImage.absoluteURL.relativePath)
             }
             
             // update a tileset
@@ -486,13 +473,13 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 // If `currentID` == nil, look for lastElement to be a tileset, otherwise, the image is part of a collections tileset.
                 if let currentID = currentID {
                     // add an image property to the tileset collection
-                    let tileData = tileset.addTilesetTile(currentID + tileset.firstGID, source: imageSource)
+                    let tileData = tileset.addTilesetTile(currentID + tileset.firstGID, source: matchedImage.absoluteURL.relativePath)
                     if (tileData == nil) {
                         print("[SKTilemapParser]: Warning: tile id \(currentID) is invalid.")
                     }
                 } else {
                     // add the tileset spritesheet image
-                    tileset.addTextures(fromSpriteSheet: imageSource)
+                    tileset.addTextures(fromSpriteSheet: matchedImage.absoluteURL.relativePath)
                 }
             }
         }
@@ -766,14 +753,9 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     }
  
     
-    // foundCharacters happens whenever parser enters a key poop
     public func parser(_ parser: XMLParser, foundCharacters string: String) {
         // append data attribute
         characterData += string
-    }
-
-    public func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
-        //if parseError.code == NSXMLParserError.InternalError {}
     }
     
     // MARK: - Decoding
@@ -831,5 +813,127 @@ extension FileType {
         case .png:
             return "image"
         }
+    }
+}
+
+
+public class AssetManager {
+    
+    static let `default` = AssetManager()
+    private var roots: [String] = []
+    private var resourses: [URL] = []
+    
+    public var resourceTypes: [String] = ["tmx", "tsx", "png"]
+    
+    public init() {
+        // add the current resource path
+        if let rpath = Bundle.main.resourcePath {
+            //print("[AssetManager]: adding root:  \"\(rpath)\"")
+            roots.append(rpath)
+        }
+        scanForResourceTypes()
+    }
+    
+    public var tilemaps: [String] {
+        return resourses.filter { $0.fileExtension?.lowercased() == "tmx" }.map { $0.relativePath }
+    }
+    
+    public var tilesets: [String] {
+        return resourses.filter { $0.fileExtension?.lowercased() == "tsx" }.map { $0.relativePath }
+    }
+    
+    /**
+     Attempt to match a given file name with the currently loaded resources.
+     
+     - parameter named:       `String` resource file name.
+     - parameter inDirectory: `String?` optional search directory (nyi).
+     */
+    public func matchBundledResource(named: String, inDirectory: String?=nil) -> URL? {
+        let filename = named.components(separatedBy: "/").last!
+        for url in resourses {
+            if url.filename == named || url.filename == filename {
+                return url
+            }
+        }
+        return nil
+    }
+    
+    /**
+     Add a new root path and scan.
+     
+     - parameter path: `String` resource root path.
+     */
+    public func addRoot(_ path: String) {
+        if !roots.contains(path) {
+            roots.append(path)
+            //print("[AssetManager]: adding root:  \"\(path)\"")
+            scanForResourceTypes()
+        }
+    }
+    
+    /**
+     Scan root directories and return any matching resource files.
+     */
+    private func scanForResourceTypes() {
+        var resourcesAdded = 0
+        
+        for root in roots {
+            let rootURL = URL(fileURLWithPath: root)
+            let enumerator = FileManager.default.enumerator(at: rootURL, includingPropertiesForKeys: [], options: .skipsHiddenFiles, errorHandler: nil)
+            
+            while let url = enumerator?.nextObject() as? URL {
+                if !url.hasDirectoryPath {
+                    if resourceTypes.contains(url.pathExtension.lowercased()) {
+                        
+                        var relativePath = url.relativePath.replacingOccurrences(of: root, with: "")
+                        
+                        // remove leading "/"
+                        if relativePath.hasPrefix("/") {
+                            relativePath.remove(at: relativePath.startIndex)
+                        }
+                        
+                        let relativeURL = URL(fileURLWithPath: relativePath, relativeTo: rootURL)
+                        resourses.append(relativeURL)
+                        //print("[AssetManager]: adding resource:  \"\(relativeURL)\"")
+                        resourcesAdded += 1
+                    }
+                }
+            }
+        }
+        print("[AssetManager]: \(resourcesAdded) resources added.")
+    }
+}
+
+
+extension URL {
+    
+    /**
+     Returns the path file name without file extension.
+     */
+    var basename: String {
+        return self.deletingPathExtension().lastPathComponent
+    }
+    
+    /**
+     Returns the file name without the parent directory.
+     */
+    var filename: String {
+        return self.lastPathComponent
+    }
+    
+    /**
+     Returns the parent path of the file.
+     */
+    var parent: String? {
+        var mutableURL = self
+        let result = (mutableURL.deletingLastPathComponent().relativePath == ".") ? nil : mutableURL.deletingLastPathComponent().relativePath
+        return result
+    }
+    
+    /**
+     Returns the path file name without file extension.
+     */
+    var fileExtension: String? {
+        return self.lastPathComponent.components(separatedBy: ".").last
     }
 }

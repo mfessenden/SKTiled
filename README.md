@@ -1,4 +1,4 @@
-![SKTiled](images/header.png)
+![SKTiled](images/Header-@1x.png)
 
 > SKTiled is a lightweight framework for using [Tiled](http://www.mapeditor.org) files with Apple's SpriteKit.
 
@@ -27,9 +27,7 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 - [x] renders all layer types: (tile, object, image)
 - [x] supports all compression types: (base64, zlib, gzip)
 - [x] renders animated and fliped tiles
-- [ ] tile collision objects
-- [ ] pre-load tilesets
-- [ ] multi-threaded rendering
+- [x] pre-loading of tilesets
 - [x] group nodes
 - [ ] generate GKGridGraph graphs from custom attributes (iOS10, macOS 10.11+)
 - [ ] user-definable cost properties for GKGridGraph nodes (iOS10, macOS 10.11+)
@@ -47,13 +45,13 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 
 Create a Cartfile in the root of your project:
 
-    github "mfessenden/SKTiled" ~> 1.12
+github "mfessenden/SKTiled" ~> 1.13
 
 ### CocoaPods Installation
 
 Add a reference in your podfile:
 
-    pod 'SKTiled', '~> 1.12'
+pod 'SKTiled', '~> 1.13'
 
 ## Usage
 
@@ -61,7 +59,7 @@ Loading a tilemap is very straightforward:
 
 ```swift
 if let tilemap = SKTilemap.load(fromFile: "sample-map") {
-    scene.addChild(tilemap)
+scene.addChild(tilemap)
 }
 ```
 Once loaded, the rendered `SKTilemap` node reflects the various properties defined in the originating scene:
@@ -75,7 +73,7 @@ The `SKTilemap` node also allows access to child layers, tilesets, objects and i
 
 ### Working with Layers
 
-Layers represent containers that house various types of data:
+Layers represent containers that house various types of data: 
 
 - tile layers hold an array of tile sprites and associated tileset data
 - object groups contain vector shape objects
@@ -98,7 +96,7 @@ let hudLayer = tilemap.getLayer(named: "HUD") as! SKImageLayer
 
 // query a named tile layer
 if let groundLayer = tilemap.tileLayer(named: "Ground") {
-    groundLayer.showGrid = true
+groundLayer.showGrid = true
 }
 
 // query layer at a specific index
@@ -107,7 +105,7 @@ let firstLayer = tilemap.getLayer(atIndex: 1) as! SKTileLayer
 
 ### Working with Tiles
 
-There are a number of ways to access and work with tile objects. Tiles can be queried from the `SKTilemap` node, or the parent `SKTileLayer` layer:
+There are a number of ways to access and work with tile objects. Tiles can be queried from the `SKTilemap` node, or the parent `SKTileLayer` layer: 
 
 ```swift
 // access a tile via CGPoint
@@ -123,7 +121,7 @@ Tiles assigned custom properties in **Tiled** can be accessed in **SKTiled**:
 ```swift
 // query tiles of a certain type
 if let fireTiles = tilemap.getTiles(ofType: "fire") {
-    // do something fiery here...
+// do something fiery here...
 }
 
 // query tiles from all layers
@@ -134,7 +132,7 @@ You can also return tiles with a specific ID value:
 
 ```swift
 if let waterTiles = waterLayer.getTiles(withID: 17) {
-    // do something watery here
+// do something watery here
 }
 ```
 
@@ -194,7 +192,7 @@ groundLayer.addChild(newNode, 4, 5, zpos: 100.0)
 **SKTiled** also provides methods for getting coordinate data from `UITouch` and `NSEvent` mouse events:
 
 ```swift
-// get the coordinate at the location of a mouse event
+// get the coordinate at the location of a touch event
 let touchLocation: CGPoint = objectsLayer.coordinateAtTouchLocation(touch)
 ```
 
@@ -207,14 +205,15 @@ let allAnimated = tilemap.getAnimatedTiles()
 let layerAnimated = groundLayer.getAnimatedTiles()
 
 for tile in allAnimated {
-    // pause the current animation
-    tile.pauseAnimation = true
+// pause the current animation
+tile.pauseAnimation = true
 }
 ```
 
+
 ## Custom Properties
 
-Custom properties are supported on all object types. All **SKTiled** objects conform to the `SKTiledObject` protocol and allow access to and parsing of custom properties.
+Custom properties are supported on all object types. All **SKTiled** objects conform to the `SKTiledObject` protocol and allow access to and parsing of custom properties. 
 
 Any property added to an object in **Tiled** will be translated and stored in the `SKTiledObject.properties` dictionary.
 
