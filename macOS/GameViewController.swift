@@ -95,7 +95,7 @@ class GameViewController: NSViewController {
         guard let scene = view.scene as? SKTiledScene else { return }
         
         if let cameraNode = scene.cameraNode {
-            cameraNode.fitToView()
+            cameraNode.fitToView(newSize: view.bounds.size)
         }
     }
     
@@ -217,7 +217,7 @@ class GameViewController: NSViewController {
      
      - parameter withFile: `String` currently loaded scene name.
      */
-    fileprivate func updateWindowTitle(withFile named: String) {
+    func updateWindowTitle(withFile named: String) {
         // Update the application window title with the current scene
         if let infoDictionary = Bundle.main.infoDictionary {
             if let bundleName = infoDictionary[kCFBundleNameKey as String] as? String {

@@ -22,7 +22,6 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-    
         window?.delegate = self
     }
     
@@ -45,6 +44,12 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
         let viewSize = view.bounds.size
         if let scene = view.scene {
             scene.size = viewSize
+            
+            if let sceneDelegate = scene as? SKTiledSceneDelegate {
+                if let cameraNode = sceneDelegate.cameraNode {
+                    cameraNode.fitToView(newSize: viewSize)
+                }
+            }
         }
     }
     
@@ -58,6 +63,9 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
                 if let tilemap = sceneDelegate.tilemap {
                     //tilemap.isPaused = false
                     tilemap.autoResize = false
+                }
+                if let cameraNode = sceneDelegate.cameraNode {
+                    cameraNode.fitToView(newSize: view.bounds.size)
                 }
             }
         }

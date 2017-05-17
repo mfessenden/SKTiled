@@ -10,7 +10,7 @@
 [![CocoaPods Compatible][pod-image]][pod-url]
 
 
-**SKTiled** is a Swift framework for using [Tiled](http://www.mapeditor.org) files with Apple's SpriteKit, allowing the creation of game assets from .tmx files. Inspired by [TilemapKit](http://tilemapkit.com) and written purely in Swift, I began working on this for a project after the development of TilemapKit was halted. Initially created as an exercise to learn Apple's new programming language, I've decided to open-source it in case others find it helpful.
+**SKTiled** is a Swift framework for using [Tiled](http://www.mapeditor.org) files with Apple's SpriteKit, allowing the creation of game assets from Tiled's .tmx files. Inspired by [TilemapKit](http://tilemapkit.com) and written purely in Swift, I began working on this for a project after the development of TilemapKit was halted. Initially created as an exercise to learn Apple's new programming language, I've decided to open-source it in case others find it helpful.
 
 
 ![macOS Demo](images/demo-macos-iso.png)
@@ -88,6 +88,7 @@ Layers can be accessed by type, name or index:
 let tileLayers = tilemap.tileLayers
 let objectGroups = tilemap.objectGroups
 let imageLayers = tilemap.imageLayers
+let groupLayers = tilemap.groupLayers
 
 // query named layers
 let groundLayer = tilemap.getLayer(named: "Ground") as! SKTileLayer

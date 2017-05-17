@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0.0" orientation="isometric" renderorder="right-down" width="10" height="10" tilewidth="130" tileheight="66" backgroundcolor="#634930" nextobjectid="16">
+<map version="1.0.0" orientation="isometric" renderorder="right-down" width="10" height="10" tilewidth="130" tileheight="66" backgroundcolor="#634930" nextobjectid="17">
  <properties>
   <property name="allowMovement" type="bool" value="true"/>
   <property name="allowZoom" type="bool" value="true"/>
@@ -194,26 +194,22 @@
    eJxtz8kOgjAUheEKbnQtxmpi2MgCcIxKkzog7/9QnCY/SdO4+HIYTofrjTE3aXCSQTK5ywMXemfZSC6VrMTJjHUdvfDNSi8HWbJm0tI70gvnvWUuH7KPemHvnWyxlloKKelemSHjvWMfR3qef8lsT/5/yVd0z2lWSy6SHDjLRumTORrOdNEM+z/3C/OMgtEN9g==
   </data>
  </layer>
- <layer name="Decoration" width="10" height="10">
+ <layer name="Objects" width="10" height="10">
   <data encoding="base64" compression="zlib">
    eJxjYBh44D7QDiATOFPBDHS/AwBmUADS
   </data>
  </layer>
- <layer name="Objects" width="10" height="10">
-  <data encoding="base64" compression="zlib">
-   eJxjYBgFgwkAAAGQAAE=
-  </data>
- </layer>
- <objectgroup color="#e10000" name="Locations">
+ <objectgroup color="#e10000" name="Collision" visible="0">
   <properties>
    <property name="lineWidth" type="float" value="4"/>
   </properties>
-  <object id="8" name="center" x="66" y="66" width="132" height="132"/>
+  <object id="8" name="river01" type="River" x="48" y="-36" width="28" height="376"/>
   <object id="9" name="road01" type="Road" x="354.75" y="-33">
    <polygon points="57.75,82.5 24.75,82.5 24.75,511.5 272.25,511.5 272.25,478.5 156.75,478.5 57.75,478.5 57.75,231"/>
   </object>
   <object id="12" name="circle1" x="198" y="528" width="132" height="132">
    <ellipse/>
   </object>
+  <object id="16" name="river02" type="River" x="118" y="372" width="188" height="32"/>
  </objectgroup>
 </map>
