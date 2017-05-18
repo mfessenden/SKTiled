@@ -185,6 +185,10 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     open var orientation: TilemapOrientation                      // map orientation
     internal var renderOrder: RenderOrder = .rightDown            // render order
     
+    open var isPortrait: Bool {
+        return size.height > size.width
+    }
+    
     // hexagonal
     open var hexsidelength: Int = 0                               // hexagonal side length
     internal var staggeraxis: StaggerAxis = .y                    // stagger axis

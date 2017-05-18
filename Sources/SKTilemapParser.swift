@@ -49,7 +49,7 @@ internal enum CompressionType: String {
 open class SKTilemapParser: NSObject, XMLParserDelegate {
     
     open var fileNames: [String] = []                               // list of resource files
-    open var currentFileName: String!
+    open var currentFilename: String!
     weak var mapDelegate: SKTilemapDelegate?
     open var tilemap: SKTilemap!
     
@@ -131,11 +131,11 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         while !(fileNames.isEmpty) {
             if let firstFileName = fileNames.first {
                 
-                currentFileName = firstFileName
+                currentFilename = firstFileName
                 defer { fileNames.remove(at: 0) }
                 
-                guard let path: String = Bundle.main.path(forResource: currentFileName! , ofType: nil) else {
-                    print("[SKTilemapParser]: no path for: \"\(currentFileName!)\"")
+                guard let path: String = Bundle.main.path(forResource: currentFilename! , ofType: nil) else {
+                    print("[SKTilemapParser]: no path for: \"\(currentFilename!)\"")
                     return nil
                 }
                 
@@ -146,13 +146,13 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 parser.delegate = self
                 
                 // check file type
-                let fileExt = currentFileName.components(separatedBy: ".").last!
+                let fileExt = currentFilename.components(separatedBy: ".").last!
                 var filetype = "filename"
                 if let ftype = FileType(rawValue: fileExt) {
                     filetype = ftype.description
                 }
                 
-                print("[SKTilemapParser]: reading \(filetype): \"\(currentFileName!)\"")
+                print("[SKTilemapParser]: reading \(filetype): \"\(currentFilename!)\"")
                 
                 // parse the file
                 let successs: Bool = parser.parse()
@@ -265,7 +265,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             self.tilemap = tilemap
             self.tilemap.delegate = self.mapDelegate
             
-            let currentBasename = currentFileName.components(separatedBy: ".").first!
+            let currentBasename = currentFilename.components(separatedBy: ".").first!
             self.tilemap.filename = currentBasename
             self.tilemap.name = currentBasename
             
@@ -320,7 +320,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             if let name = attributeDict["name"] {
                 
                 // update an existing tileset
-                if let existingTileset = tilesets[currentFileName] {
+                if let existingTileset = tilesets[currentFilename] {
                     
                     guard let width = attributeDict["tilewidth"] else { parser.abortParsing(); return }
                     guard let height = attributeDict["tileheight"] else { parser.abortParsing(); return }

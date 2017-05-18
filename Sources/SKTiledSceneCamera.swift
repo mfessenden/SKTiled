@@ -25,7 +25,7 @@ import Cocoa
 open class SKTiledSceneCamera: SKCameraNode {
     
     unowned let world: SKNode
-    fileprivate var bounds: CGRect
+    open var bounds: CGRect
     open var zoom: CGFloat = 1.0
     open var initialZoom: CGFloat = 1.0
     
@@ -33,6 +33,7 @@ open class SKTiledSceneCamera: SKCameraNode {
     open var allowMovement: Bool = true
     open var allowZoom: Bool = true
     open var allowRotation: Bool = false
+    open var allowPause: Bool = true
     
     // zoom constraints
     private var minZoom: CGFloat = 0.2
@@ -213,27 +214,32 @@ open class SKTiledSceneCamera: SKCameraNode {
     }
     
     /**
-     Center & fit the current tilemap in the frame. 
-     Also sets the `SKTilemap.autoResize` parameter.
+     Center & fit the current tilemap in the frame when the parent scene is resized.
+     
+     - parameter newSize: `CGSize` updated scene size.
      */
-    open func fitToView() {
-        guard let scene = self.scene as? SKTiledScene else { return }
+    open func fitToView(newSize: CGSize) {
+        
+        guard let scene = scene else { return }
         guard let view = scene.view else { return }
-        guard let tilemap = scene.tilemap else { return }
+        guard let tiledScene = scene as? SKTiledSceneDelegate else { return }
+        guard let tilemap = tiledScene.tilemap else { return }
                 
-        let screenScaleWidth: CGFloat = 0.75
-        let viewSize = view.bounds.size
+        
+        let tilemapSize = tilemap.renderSize //* zoom        
+        let isPortrait: Bool = newSize.height > newSize.width
+        
+        let screenScaleWidth: CGFloat = isPortrait ? 0.9 : 0.9
+        let screenScaleHeight: CGFloat = isPortrait ? 0.9 : 0.95   // was 0.8 & 0.7
         
         // get the usable height/width
-        let useableWidth: CGFloat = viewSize.width * screenScaleWidth
-        let currentWidth = tilemap.sizeInPoints.width
+        let usableWidth: CGFloat = newSize.width * screenScaleWidth
+        let usableHeight: CGFloat = newSize.height * screenScaleHeight
+        let scaleFactor = (tilemap.isPortrait == true) ? usableHeight / tilemapSize.height : usableWidth / tilemapSize.width
         
-        let scaleFactor = (useableWidth / currentWidth)
         centerOn(scenePoint: CGPoint(x: 0, y: 0))
         setCameraZoom(scaleFactor)
-        
-        // flag the map as auto-resized
-        tilemap.autoResize = true
+        tilemap.autoResize = !tilemap.autoResize
     }
 }
 
@@ -269,7 +275,7 @@ extension SKTiledSceneCamera {
      - parameter recognizer: `UITapGestureRecognizer` tap gesture recognizer.
      */
     open func sceneDoubleTapped(_ recognizer: UITapGestureRecognizer) {
-        if (recognizer.state == UIGestureRecognizerState.ended) {
+        if (recognizer.state == UIGestureRecognizerState.ended && allowPause) {
             //focusLocation = recognizer.location(in: recognizer.view)
             guard let scene = self.scene as? SKTiledScene else { return }
             // get the current point
@@ -306,6 +312,7 @@ extension SKTiledSceneCamera {
 
 
 #if os(OSX)
+// need to make sure that lastLocation is a location in *this* node
 extension SKTiledSceneCamera {
     // MARK: - Mouse Events
     
@@ -316,38 +323,48 @@ extension SKTiledSceneCamera {
      */
     open func sceneDoubleClicked(_ event: NSEvent) {
         guard let scene = self.scene as? SKTiledScene else { return }
-        let _ = event.location(in: scene)
+        let _ = event.location(in: self)
     }
     
     override open func mouseDown(with event: NSEvent) {
+        guard let scene = self.scene as? SKTiledScene else { return }
         let location = event.location(in: self)
         lastLocation = location
     }
     
     override open func mouseUp(with event: NSEvent) {
+        guard let scene = self.scene as? SKTiledScene else { return }
         let location = event.location(in: self)
         lastLocation = location
         focusLocation = location
     }
     
+    // need to make sure the
     override open func scrollWheel(with event: NSEvent) {
-        let location = event.location(in: self)
-        focusLocation = location
-        centerOn(scenePoint: focusLocation)
+        guard let scene = self.scene as? SKTiledScene else { return }
         
-        zoom += (event.deltaY * 0.05) // max 0.25
-        // set the world scaling here
+        var anchorPoint = event.locationInWindow
+        anchorPoint = scene.convertPoint(fromView: anchorPoint)
+         
+        let anchorPointInCamera = convert(anchorPoint, from: scene)
+        zoom += (event.deltaY * 0.05)
         setCameraZoom(zoom)
+         
+        let anchorPointInScene = scene.convert(anchorPointInCamera, from: self)
+         
+        let translationOfAnchorInScene = (x: anchorPoint.x - anchorPointInScene.x, y: anchorPoint.y - anchorPointInScene.y)
+        position = CGPoint(x: position.x - translationOfAnchorInScene.x, y: position.y - translationOfAnchorInScene.y)
     }
     
     open func scenePositionChanged(_ event: NSEvent) {
-        guard let _ = self.scene as? SKTiledScene else { return }
+        guard let scene = self.scene as? SKTiledScene else { return }
         let location = event.location(in: self)
+        
         if lastLocation == nil { lastLocation = location }
         if allowMovement == true {
             if lastLocation == nil { return }
             let difference = CGPoint(x: location.x - lastLocation.x, y: location.y - lastLocation.y)
-            centerOn(scenePoint: CGPoint(x: Int(position.x - difference.x), y: Int(position.y - difference.y)))
+            position = CGPoint(x: Int(position.x - difference.x), y: Int(position.y - difference.y))
             lastLocation = location
         }
     }

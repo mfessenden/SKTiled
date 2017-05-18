@@ -1,4 +1,4 @@
-![SKTiled](images/header.png)
+![SKTiled](images/Header-@1x.png)
 
 > SKTiled is a lightweight framework for using [Tiled](http://www.mapeditor.org) files with Apple's SpriteKit.
 
@@ -10,7 +10,7 @@
 [![CocoaPods Compatible][pod-image]][pod-url]
 
 
-**SKTiled** is a Swift framework for using [Tiled](http://www.mapeditor.org) files with Apple's SpriteKit, allowing the creation of game assets from .tmx files. Inspired by [TilemapKit](http://tilemapkit.com) and written purely in Swift, I began working on this for a project after the development of TilemapKit was halted. Initially created as an exercise to learn Apple's new programming language, I've decided to open-source it in case others find it helpful.
+**SKTiled** is a Swift framework for using [Tiled](http://www.mapeditor.org) files with Apple's SpriteKit, allowing the creation of game assets from Tiled's .tmx files. Inspired by [TilemapKit](http://tilemapkit.com) and written purely in Swift, I began working on this for a project after the development of TilemapKit was halted. Initially created as an exercise to learn Apple's new programming language, I've decided to open-source it in case others find it helpful.
 
 
 ![macOS Demo](images/demo-macos-iso.png)
@@ -27,9 +27,7 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 - [x] renders all layer types: (tile, object, image)
 - [x] supports all compression types: (base64, zlib, gzip)
 - [x] renders animated and fliped tiles
-- [ ] tile collision objects
-- [ ] pre-load tilesets
-- [ ] multi-threaded rendering
+- [x] pre-loading of tilesets
 - [x] group nodes
 - [ ] generate GKGridGraph graphs from custom attributes (iOS10, macOS 10.11+)
 - [ ] user-definable cost properties for GKGridGraph nodes (iOS10, macOS 10.11+)
@@ -47,13 +45,13 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 
 Create a Cartfile in the root of your project:
 
-    github "mfessenden/SKTiled" ~> 1.12
+github "mfessenden/SKTiled" ~> 1.13
 
 ### CocoaPods Installation
 
 Add a reference in your podfile:
 
-    pod 'SKTiled', '~> 1.12'
+pod 'SKTiled', '~> 1.13'
 
 ## Usage
 
@@ -90,6 +88,7 @@ Layers can be accessed by type, name or index:
 let tileLayers = tilemap.tileLayers
 let objectGroups = tilemap.objectGroups
 let imageLayers = tilemap.imageLayers
+let groupLayers = tilemap.groupLayers
 
 // query named layers
 let groundLayer = tilemap.getLayer(named: "Ground") as! SKTileLayer
@@ -194,7 +193,7 @@ groundLayer.addChild(newNode, 4, 5, zpos: 100.0)
 **SKTiled** also provides methods for getting coordinate data from `UITouch` and `NSEvent` mouse events:
 
 ```swift
-// get the coordinate at the location of a mouse event
+// get the coordinate at the location of a touch event
 let touchLocation: CGPoint = objectsLayer.coordinateAtTouchLocation(touch)
 ```
 
@@ -211,6 +210,7 @@ for tile in allAnimated {
     tile.pauseAnimation = true
 }
 ```
+
 
 ## Custom Properties
 

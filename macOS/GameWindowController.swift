@@ -11,9 +11,10 @@ import SpriteKit
 
 
 class GameWindowController: NSWindowController, NSWindowDelegate {
+    // MARK: Properties
     
     // if this value is true, the tilemap was already paused when the window resize began
-    var pauseManuallySet: Bool = false
+    var isManuallyPaused: Bool = false
     
     var view: SKView {
         let gameViewController = window!.contentViewController as! GameViewController
@@ -31,7 +32,7 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
         // Pause the scene while the window resizes if the game is active.
         if let scene = view.scene {
             
-            pauseManuallySet = scene.isPaused
+            isManuallyPaused = scene.isPaused
             scene.isPaused = true
             
             if let sceneDelegate = scene as? SKTiledSceneDelegate {
@@ -75,7 +76,7 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
         // Un-pause the scene when the window stops resizing if the game is active.
         if let scene = view.scene {
             if let sceneDelegate = scene as? SKTiledSceneDelegate {
-                scene.isPaused = pauseManuallySet
+                scene.isPaused = isManuallyPaused
                 
                 if let tilemap = sceneDelegate.tilemap {
                     // if the tilemap is set to autosize, fit the map in the view

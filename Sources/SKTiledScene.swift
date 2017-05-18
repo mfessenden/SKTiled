@@ -110,7 +110,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
             
             // initial zoom level
             if (self.tilemap.autoResize == true) {
-                cameraNode.fitToView()
+                cameraNode.fitToView(newSize: view.bounds.size)
             } else {
                 cameraNode.setCameraZoom(self.tilemap.worldScale)
             }

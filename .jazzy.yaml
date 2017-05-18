@@ -1,9 +1,9 @@
 module: SKTiled
-module_version: 1.12
+module_version: 1.13
 author: Michael Fessenden
 author_url: https://github.com/mfessenden
 github_url: https://github.com/mfessenden/SKTiled
-github_file_prefix: https://github.com/mfessenden/SKTiled/tree/1.12    # url of source file links on server
+github_file_prefix: https://github.com/mfessenden/SKTiled/tree/1.13    # url of source file links on server
 root_url: https://mfessenden.github.io/SKTiled                         # absolute url of file location on server
 clean: true
 skip_undocumented: true

@@ -461,7 +461,9 @@ open class TiledLayerObject: SKNode, SKTiledObject {
             let tileX = pixelX / tileWidth
             return CGPoint(x: floor(tileY + tileX), y: floor(tileY - tileX))
             
+        // FIXME: error here with negative values
         case .hexagonal:
+            //print("input: \(pixelX.roundTo()), \(pixelY.roundTo())")
             
             // calculate r, h, & s
             var r: CGFloat = 0
@@ -474,21 +476,23 @@ open class TiledLayerObject: SKNode, SKTiledObject {
             
             //flat
             if (tilemap.staggerX == true) {
+                //pixelY = pixelY * -1
                 s = tilemap.sideLengthX
                 r = (tileWidth - tilemap.sideLengthX) / 2
                 h = tileHeight / 2
                 
-                pixelX -= (r / 2)  //pixelX -= r
+                pixelX -= r
                 sectionX = pixelX / (r + s)
                 sectionY = pixelY / (h * 2)
                 
                 // y-offset
                 if tilemap.doStaggerX(Int(sectionX)){
-                    sectionY -= 0.5  // was -=
+                    sectionY -= 0.5
                 }
                 
             // pointy
             } else {
+                //if pixelY < 1 { pixelX -= tileWidthHalf }
                 s = tilemap.sideLengthY
                 r = tileWidth / 2
                 h = (tileHeight - tilemap.sideLengthY) / 2
@@ -689,7 +693,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
     
     /**
-     Visualize the layer's boundary shape.
+     Visualize the layer's bounds.
      
      - parameter toggle `Bool` toggle on/off
      */
@@ -1184,11 +1188,6 @@ open class SKTileLayer: TiledLayerObject {
                 
                 let tileAlignmentY = tileHeightHalf / tileData.tileset.tileSize.height
                 let tileAlignmentX = tileWidthHalf / tileData.tileset.tileSize.width
-                
-                if tileData.tileset.mapOffset.x != 0 || tileData.tileset.mapOffset.y != 0 {
-                    print("map offset: \(tileData.tileset.mapOffset), gid: \(tileData.id)")
-                }
-                
                 
                 self.tiles[Int(coord.x), Int(coord.y)] = tile
 

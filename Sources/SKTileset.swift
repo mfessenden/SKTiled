@@ -56,12 +56,6 @@ open class SKTileset: SKTiledObject {
     /// Returns the last GID in the tileset
     open var lastGID: Int { return tileData.map { $0.id }.max() ?? firstGID }
     
-    /// Returns the difference in tile size
-    open var mapOffset: CGPoint {
-        guard let tilemap = tilemap else { return .zero }
-        return CGPoint(x: tileSize.width - tilemap.tileSize.width, y: tileSize.height - tilemap.tileSize.height)
-    }
-    
     /**
      Initialize with basic properties.
      
@@ -144,10 +138,9 @@ open class SKTileset: SKTiledObject {
      - parameter replace: `Bool` replace the current texture.
      */
     open func addTextures(fromSpriteSheet source: String, replace: Bool = false) {
-        // images are stored in separate directories in the project will render incorrectly unless we use just the filename
-        let sourceFilename = source.components(separatedBy: "/").last!
         let timer = Date()
-        self.source = sourceFilename
+        self.source = source
+        let sourceFilename = source.components(separatedBy: "/").last!
         
         let sourceTexture = SKTexture(imageNamed: self.source!)
         let textureSize = sourceTexture.size()
@@ -155,7 +148,7 @@ open class SKTileset: SKTiledObject {
         sourceTexture.filteringMode = .nearest
         
         let actionName: String = (replace == false) ? "adding" : "replacing"
-        print("[SKTileset]: \(actionName) sprite sheet source: \"\(self.source!)\": (\(Int(textureSize.width)) x \(Int(textureSize.height)))")
+        print("[SKTileset]: \(actionName) sprite sheet source: \"\(sourceFilename)\": (\(Int(textureSize.width)) x \(Int(textureSize.height)))")
         
         let textureWidth = Int(sourceTexture.size().width)
         let textureHeight = Int(sourceTexture.size().height)
@@ -380,11 +373,7 @@ extension SKTileset: Hashable {
 
 extension SKTileset: CustomStringConvertible, CustomDebugStringConvertible {
     public var description: String {
-        var desc = "Tileset: \"\(name)\" @ \(tileSize), firstgid: \(firstGID), \(dataCount) tiles"
-        if tileOffset.x != 0 || tileOffset.y != 0 {
-            desc += ", offset: \(tileOffset.x)x\(tileOffset.y)"
-        }
-        return desc
+        return "Tile Set: \"\(name)\" @ \(tileSize), firstgid: \(firstGID), \(dataCount) tiles"
     }
     
     public var debugDescription: String { return description }
