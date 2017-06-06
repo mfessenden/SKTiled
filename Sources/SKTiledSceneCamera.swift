@@ -349,11 +349,15 @@ extension SKTiledSceneCamera {
         let anchorPointInCamera = convert(anchorPoint, from: scene)
         zoom += (event.deltaY * 0.05)
         setCameraZoom(zoom)
-         
+
         let anchorPointInScene = scene.convert(anchorPointInCamera, from: self)
-         
         let translationOfAnchorInScene = (x: anchorPoint.x - anchorPointInScene.x, y: anchorPoint.y - anchorPointInScene.y)
         position = CGPoint(x: position.x - translationOfAnchorInScene.x, y: position.y - translationOfAnchorInScene.y)
+        
+        // TODO: debug these
+        focusLocation = position
+        lastLocation = position
+        //setCameraZoomAtLocation(scale: zoom, location: position)
     }
     
     open func scenePositionChanged(_ event: NSEvent) {

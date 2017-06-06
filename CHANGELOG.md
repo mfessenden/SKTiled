@@ -6,6 +6,9 @@ Change Log
 
 #### Changes
 
+- better `SKTiledSceneCamera` zooming
+- `SKTiledDemoScene` draws debug shapes with coordinate as mouse moves (macOS)
+
 
 1.12
 -----

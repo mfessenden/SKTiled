@@ -1308,7 +1308,7 @@ extension SKTilemap {
     /**
      Output a summary of the current scenes layer data.
      */
-    public func debugLayers(reverse: Bool = false) {
+    public func layerStatistics(reverse: Bool = false) {
         guard (layerCount > 0) else {
             print("# Tilemap \"\(name != nil ? name! : "null")\": 0 Layers")
             return

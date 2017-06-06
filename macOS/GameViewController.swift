@@ -22,6 +22,7 @@ class GameViewController: NSViewController {
     @IBOutlet weak var gridButton: NSButton!
     @IBOutlet weak var objectsButton: NSButton!
     @IBOutlet weak var nextButton: NSButton!
+    @IBOutlet weak var cursorTracker: NSTextField!
     
     var demoFiles: [String] = []
 
@@ -173,6 +174,8 @@ class GameViewController: NSViewController {
         
         nextScene.cameraNode?.showOverlay = showOverlay
         updateWindowTitle(withString: nextFilename)
+        
+        nextScene.tilemap?.layerStatistics()
     }
     
     /**
@@ -209,6 +212,8 @@ class GameViewController: NSViewController {
         let transition = SKTransition.fade(withDuration: interval)
         view.presentScene(nextScene, transition: transition)
         nextScene.cameraNode?.showOverlay = showOverlay
+        
+        nextScene.tilemap?.layerStatistics()
     }
     
     /**

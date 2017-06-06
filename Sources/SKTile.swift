@@ -545,7 +545,7 @@ internal class DebugTileShape: SKShapeNode {
         self.color = tileColor
         super.init()
         self.orientation = layer.orientation
-        drawObject()
+        drawObject(true)
     }
     
     public init(layer: TiledLayerObject, tileColor: SKColor){
@@ -555,7 +555,7 @@ internal class DebugTileShape: SKShapeNode {
         self.color = tileColor
         super.init()
         self.orientation = layer.orientation
-        drawObject()
+        drawObject(true)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -565,7 +565,7 @@ internal class DebugTileShape: SKShapeNode {
     /**
      Draw the object.
      */
-    fileprivate func drawObject() {
+    fileprivate func drawObject(_ useLabel: Bool=false) {
         // draw the path
         var points: [CGPoint] = []
         
@@ -635,6 +635,14 @@ internal class DebugTileShape: SKShapeNode {
         anchor.strokeColor = SKColor.clear
         anchor.zPosition = zPosition + 10
         anchor.isAntialiased = true
+        
+        // draw the coordinate label
+        if useLabel == true {
+            let label = SKLabelNode(fontNamed: "Courier")
+            label.fontSize = anchorRadius * 6
+            label.text = "\(Int(coord.x)),\(Int(coord.y))"
+            addChild(label)
+        }
     }
 }
 
