@@ -8,7 +8,16 @@ Change Log
 
 - better `SKTiledSceneCamera` zooming
 - `SKTiledDemoScene` draws debug shapes with coordinate as mouse moves (macOS)
-
+- support for tile objects
+- background color for layers
+- flag to ignore properties
+- SKTilemap.backgroundColor
+- add `SKTiledObject.type` property
+- fixed `SKTileLayer.getTiles(ofType:)`
+- add `SKObjectGroup.getTileObjects` & `SKTilemap.getTileObjects` methods
+- add `SKTileset.load(fromFiles:)` method for pre-loading tilesets
+- removed `SKTilemap.positionInMap` method
+- fix for hexagonal tiles not having the correct z-position
 
 1.12
 -----
