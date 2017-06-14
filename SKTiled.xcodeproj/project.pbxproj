@@ -285,8 +285,8 @@
 				4C3496851EA5139C003900C8 /* hexf-75x65 */,
 				4C34968F1EA52730003900C8 /* hexp-75x65 */,
 				4C3496891EA52728003900C8 /* hexp-75x65.tsx */,
-				4C34968A1EA52728003900C8 /* hexp-test.tmx */,
 				4C34967F1EA51395003900C8 /* hexf-75x65.tsx */,
+				4C34968A1EA52728003900C8 /* hexp-test.tmx */,
 				4C3496801EA51395003900C8 /* hexf-test.tmx */,
 			);
 			name = External;

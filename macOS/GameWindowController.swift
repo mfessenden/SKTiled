@@ -47,10 +47,8 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
      Tweak the window title bar when the window is resized.
      */
     func windowDidResize(_ notification: Notification) {
-        var wintitle = "Donkey Kong"
         if let scene = view.scene {
             scene.size = view.bounds.size
-            wintitle += ": view: \(Int(view.bounds.size.width)) x \(Int(view.bounds.size.height))"
             
             if let sceneDelegate = scene as? SKTiledSceneDelegate {
                 if let tilemap = sceneDelegate.tilemap {
@@ -60,14 +58,12 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
                     var renderSize = tilemap.renderSize
                     renderSize.width = renderSize.width * sceneDelegate.cameraNode.zoom
                     renderSize.height = renderSize.height * sceneDelegate.cameraNode.zoom
-                    wintitle += " ~ map: \(Int(renderSize.width)) x \(Int(renderSize.height))"
-                    
                     sceneDelegate.cameraNode.fitToView(newSize: view.bounds.size)
                 }
             }
             
             if let controller = window!.contentViewController as? GameViewController {
-                controller.updateWindowTitle(withString: wintitle)
+                //controller.updateWindowTitle(withString: wintitle)
             }
         }
     }

@@ -18,6 +18,7 @@ import Cocoa
 
 // MARK: - Functions
 
+
 #if os(iOS)
 /**
  Returns an image of the given size.
@@ -79,6 +80,15 @@ public func flippedTileFlags(id: UInt32) -> (gid: UInt32, hflip: Bool, vflip: Bo
 }
 
 
+// MARK:  - Timers
+
+public func duration(_ block: () -> ()) -> TimeInterval {
+    let startTime = Date()
+    block()
+    return Date().timeIntervalSince(startTime)
+}
+
+
 // MARK: - Extensions
 
 extension Bool {
@@ -91,6 +101,27 @@ extension Bool {
 extension Integer {
     init(_ bool: Bool) {
         self = bool ? 1 : 0
+    }
+}
+
+
+
+
+public extension Int {
+    /// returns number of digits in Int number
+    public var digitCount: Int {
+        get {
+            return numberOfDigits(in: self)
+        }
+    }
+    
+    // private recursive method for counting digits
+    private func numberOfDigits(in number: Int) -> Int {
+        if abs(number) < 10 {
+            return 1
+        } else {
+            return 1 + numberOfDigits(in: number/10)
+        }
     }
 }
 
@@ -181,7 +212,7 @@ public extension CGPoint {
     public var yCoord: Int { return Int(y) }
     
     public var description: String { return "x: \(x.roundTo()), y: \(y.roundTo())" }
-    public var coordDescription: String { return "x: \(Int(x)), y: \(Int(y))" }
+    public var shortDescription: String { return "\(Int(x)),\(Int(y))" }
 }
 
 
@@ -194,6 +225,14 @@ public extension CGSize {
     
     public func roundTo(_ decimals: Int=1) -> String {
         return "w: \(self.width.roundTo(decimals)), h: \(self.height.roundTo(decimals))"
+    }
+    
+    public var shortDescription: String {
+        return "\(self.width.roundTo(0))x\(self.height.roundTo(0))"
+    }
+
+    public var toVec2: vector_float2 {
+        return vector_float2(Float(width), Float(height))
     }
 }
 
@@ -292,6 +331,20 @@ internal extension SKNode {
 }
 
 
+internal extension SKSpriteNode {
+    
+    /**
+     Convenience initalizer to set texture filtering to nearest neighbor.
+     
+     - parameter pixelImage: `String` texture image named.
+     */
+    convenience init(pixelImage named: String) {
+        self.init(imageNamed: named)
+        self.texture?.filteringMode = .nearest
+    }
+}
+
+
 public extension SKColor {
     
     /// Returns the hue, saturation, brightess & alpha components of the color
@@ -356,10 +409,13 @@ public extension SKColor {
         self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
     }
     
-    
     /// Returns the individual color components.
     internal var components: [CGFloat] {
-        return cgColor.components!
+        guard let comps = cgColor.components else { return [0,0,0,0] }
+        if comps.count < 4 {
+            return [comps.first!,comps.first!,comps.first!,comps.last!]
+        }
+        return comps
     }
     
     /**
@@ -403,13 +459,35 @@ public extension SKColor {
         return SKColor(red: r, green: g, blue: b, alpha: 1.0)
     }
     
-    func vec4() -> GLKVector4 {
+    /**
+     Return the color as a vector4.
+     
+     - returns: `GLKVector4` color as a vector4.
+     */
+    internal func vec4() -> GLKVector4 {
         var r: CGFloat = 0.0
         var g: CGFloat = 0.0
         var b: CGFloat = 0.0
         var a: CGFloat = 0.0
         getRed(&r, green: &g, blue: &b, alpha: &a)
         return GLKVector4(v: (Float(r), Float(g), Float(b), Float(a)))
+    }
+    
+    public var toVec4: vector_float4 {
+        return vector_float4(components.map {Float($0)})
+    }
+    
+    public var hexDescription: String {
+        return "SKColor(hexString:  \"\(self.hexString())\")"
+    }
+    
+    public var rgbDescription: String {
+        let comps = components
+        let r = Int(comps[0] * 255)
+        let g = Int(comps[1] * 255)
+        let b = Int(comps[2] * 255)
+        let a = Int(comps[3] * 255)
+        return "SKColor(r: \(r), g: \(g), b: \(b), a: \(a))"
     }
 }
 
@@ -527,6 +605,15 @@ public extension SKAction {
         }
         return SKAction.sequence(actions)
     }
+    
+    /**
+     Custom action to fade a node's alpha after a pause.
+     
+     - returns: `SKAction` custom fade action.
+     */
+    public class func fadeAfter(wait duration: TimeInterval, alpha: CGFloat) -> SKAction {
+        return SKAction.sequence([SKAction.wait(forDuration: duration), SKAction.fadeAlpha(to: alpha, duration: 0.5)])
+    }
 }
 
 
@@ -560,11 +647,6 @@ public extension Data {
 // MARK: - Operators
 
 // MARK: CGFloat
-
-public func floor(_ flt: CGFloat) -> CGFloat {
-    return CGFloat(floor(Double(flt)))
-}
-
 
 public func + (lhs: Int, rhs: CGFloat) -> CGFloat {
     return CGFloat(lhs) + rhs
@@ -802,7 +884,7 @@ internal func drawGrid(_ layer: TiledLayerObject) -> CGImage {
                 
         let innerColor = layer.gridColor
         // line width should be at least 1 for larger tile sizes
-        let lineWidth: CGFloat = (tileHeight <= 16) ? 1 / scale : 1
+        let lineWidth: CGFloat = (tileHeight <= 16) ? 0.5 : 0.5
                 
         context.setLineWidth(lineWidth)
         //context.setLineDash(phase: 0.5, lengths: [0.5, 1.0])

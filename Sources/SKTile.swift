@@ -8,6 +8,7 @@
 
 import SpriteKit
 
+
 /**
  Describes a tile's physics body shape.
  
@@ -23,6 +24,7 @@ public enum PhysicsShape {
     case texture
     case path
 }
+
 
 /**
  Custom sprite type for rendering tile objects. Tile data (including texture) stored in `SKTilesetData` property.
@@ -59,6 +61,43 @@ public class SKTile: SKSpriteNode {
     }
     
     // MARK: - Init
+    /**
+     Initialize the tile with a tile size.
+     
+     - parameter tileSize: `CGSize` tile size in pixels.
+     - returns: `SKTile` tile sprite.
+     */
+    required public init(tileSize size: CGSize){
+        // create empty tileset data
+        tileData = SKTilesetData()
+        tileSize = size
+        super.init(texture: SKTexture(), color: SKColor.clear, size: tileSize)
+        colorBlendFactor = 0
+    }
+    
+    /**
+     Initialize the tile object with `SKTilesetData`.
+     
+     - parameter data: `SKTilesetData` tile data.
+     - returns: `SKTile` tile sprite.
+     */
+    required public init?(data: SKTilesetData) {
+        guard let tileset = data.tileset else { return nil }
+        self.tileData = data
+        
+        // TODO: need get acess to get tilemap tilesize here
+        self.tileSize = tileset.tileSize
+        super.init(texture: data.texture, color: SKColor.clear, size: data.texture.size())
+        orientTile()
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    /**
+     Initialize an empty tile.
+     */
     public init(){
         // create empty tileset data
         tileData = SKTilesetData()
@@ -73,47 +112,12 @@ public class SKTile: SKSpriteNode {
      - parameter texture: `SKTexture?` tile texture.
      - returns: `SKTile` tile sprite.
      */
-    public init(texture: SKTexture?){
+    public init(texture: SKTexture?) {
         // create empty tileset data
         tileData = SKTilesetData()
         tileSize = CGSize.zero
         super.init(texture: texture, color: SKColor.clear, size: tileSize)
         colorBlendFactor = 0
-    }
-    
-    /**
-     Initialize the tile with a tile size.
-     
-     - parameter tileSize: `CGSize` tile size in pixels.
-     - returns: `SKTile` tile sprite.
-     */
-    public init(tileSize size: CGSize){
-        // create empty tileset data
-        tileData = SKTilesetData()
-        tileSize = size
-        super.init(texture: SKTexture(), color: SKColor.clear, size: tileSize)
-        colorBlendFactor = 0
-    }
-    
-    /**
-     Initialize the tile object with `SKTilesetData`.
-     
-     - parameter data: `SKTilesetData` tile data.
-     - returns: `SKTile` tile sprite.
-     */
-    public init?(data: SKTilesetData){
-        guard let tileset = data.tileset else { return nil }
-        self.tileData = data
-        
-        // 16x32
-        // TODO: get tilemap tilesize here
-        self.tileSize = tileset.tileSize
-        super.init(texture: data.texture, color: SKColor.clear, size: data.texture.size())
-        orientTile()
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     /**
@@ -134,7 +138,7 @@ public class SKTile: SKSpriteNode {
     /**
      Set up the tile's dynamics body.
      
-     - parameter ofType:    `shapeOf` tile physics shape type.
+     - parameter shapeOf:   `PhysicsShape` tile physics shape type.
      - parameter isDynamic: `Bool` physics body is active.
      */
     public func setupPhysics(shapeOf: PhysicsShape = .rectangle, isDynamic: Bool = false){
@@ -204,7 +208,6 @@ public class SKTile: SKSpriteNode {
         physicsBody = nil
         physicsBody?.isDynamic = false
     }
-
     
     // MARK: - Animation
     
@@ -213,15 +216,18 @@ public class SKTile: SKSpriteNode {
      */
     public func runAnimation(){
         guard tileData.isAnimated == true else { return }
+        guard let tileset = tileData.tileset else { return }
         var framesData: [(texture: SKTexture, duration: TimeInterval)] = []
         for frame in tileData.frames {
-            guard let frameTexture = tileData.tileset.getTileData(frame.gid)?.texture else {
+            guard let frameTexture = tileset.getTileData(localID: frame.gid)?.texture else {
                 print("Error: Cannot access texture for id: \(frame.gid)")
                 return
             }
+            frameTexture.filteringMode = .nearest
             framesData.append((texture: frameTexture, duration: frame.duration))
         }
         
+        // run tile action
         let animationAction = SKAction.tileAnimation(framesData)
         run(animationAction, withKey: "Animation")
     }
@@ -413,7 +419,6 @@ public class SKTile: SKSpriteNode {
         
         // anchor
         let anchorRadius: CGFloat = tileSize.width / 24 > 1.0 ? tileSize.width / 18 > 4.0 ? 4 : tileSize.width / 22 : 1.0
-        
         let anchor = SKShapeNode(circleOfRadius: (anchorRadius > 8) ? 8 : anchorRadius )
         anchor.name = "Anchor"
         shape.addChild(anchor)

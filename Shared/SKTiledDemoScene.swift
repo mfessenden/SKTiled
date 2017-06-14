@@ -28,6 +28,7 @@ public class SKTiledDemoScene: SKTiledScene {
     internal var selected: [TiledLayerObject] = []
     internal var coordinates: [CGPoint] = []
     internal var editMode: Bool = false
+    internal var liveMode: Bool = false
     
     override public func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -41,7 +42,6 @@ public class SKTiledDemoScene: SKTiledScene {
         
         NotificationCenter.default.addObserver(self, selector: #selector(removeCoordinate), name: NSNotification.Name(rawValue: "removeCoordinate"), object: nil)
     }
-    
 
     /**
      Add a tile shape to a layer at the given coordinate.
@@ -51,7 +51,8 @@ public class SKTiledDemoScene: SKTiledScene {
      - parameter y:         `Int` y-coordinate.
      - parameter duration:  `TimeInterval` tile life.
      */
-    func addTileAt(layer: TiledLayerObject, _ x: Int, _ y: Int, duration: TimeInterval=0) -> DebugTileShape {
+    func addTileAt(layer: TiledLayerObject, _ x: Int, _ y: Int, duration: TimeInterval=0) -> DebugTileShape? {
+        guard let tilemap = tilemap else { return nil }
         // validate the coordinate
         let validCoord = layer.isValid(x, y)
         let tileColor: SKColor = (validCoord == true) ? tilemap.highlightColor : TiledColors.red.color
@@ -80,6 +81,9 @@ public class SKTiledDemoScene: SKTiledScene {
      - parameter duration:  `TimeInterval` tile life.
      */
     func addTileAt(_ x: Int, _ y: Int, duration: TimeInterval=0) -> DebugTileShape? {
+        guard let tilemap = tilemap else { return nil }
+        guard let worldNode = worldNode else { return nil }
+        
         // validate the coordinate
         let layer = tilemap.baseLayer
         let validCoord = layer.isValid(x, y)
@@ -144,6 +148,10 @@ public class SKTiledDemoScene: SKTiledScene {
     public func updatePropertiesInfo(msg: String) {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["propertiesInfo": msg])
     }
+    
+    public func updateDebugInfo(msg: String) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["debugInfo": msg])
+    }
 
     /**
      Call back to remove coordinates.
@@ -204,7 +212,7 @@ extension SKTiledDemoScene {
             let _ = addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y), duration: 6)
             
             // update the tile information label
-            let coordStr = "Coord: \(coord.coordDescription), \(positionInLayer.roundTo())"
+            let coordStr = "Coord: \(coord.shortDescription), \(positionInLayer.roundTo())"
             
             updateTileInfo(msg: coordStr)
             
@@ -242,11 +250,12 @@ extension SKTiledDemoScene {
 
         if (tilemap.isPaused == false){
             // highlight the current coordinate
-            let _ = addTileAt(layer: baseLayer, Int(floor(coord.x)), Int(floor(coord.y)), duration: 6)
+            let _ = addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y), duration: 6)
         }
 
         // update the tile information label
-        let coordStr = "Coord: \(coord.coordDescription), \(positionInLayer.roundTo())"
+        let coordDescription = "\(Int(coord.x)), \(Int(coord.y))"
+        let coordStr = "Coord: \(coordDescription), \(positionInLayer.roundTo())"
         updateTileInfo(msg: coordStr)
         
         // tile properties output
@@ -269,15 +278,26 @@ extension SKTiledDemoScene {
     override open func mouseMoved(with event: NSEvent) {
         super.mouseMoved(with: event)
         guard let tilemap = tilemap else { return }
+        guard let view = view else { return }
+
         let baseLayer = tilemap.baseLayer
         
         // get the position in the baseLayer (inverted)
+        var positionInWindow = event.locationInWindow
+        let positionInView = convertPoint(toView: positionInWindow)
+        let positionInScene = view.convert(positionInView, to: self)
+        
+        
+        // get the position relative as drawn by the
         let positionInLayer = baseLayer.mouseLocation(event: event)
         let coord = baseLayer.screenToTileCoords(positionInLayer)
         
-        if let _ = self.addTileAt(Int(coord.x), Int(coord.y), duration: 0.7) {}
+        if liveMode == true {
+            if let _ = self.addTileAt(Int(coord.x), Int(coord.y), duration: 0.7) {}
+        }
         
-        updateTileInfo(msg: "Coord: \(coord.coordDescription), \(positionInLayer.roundTo())")
+        let coordDescription = "\(Int(coord.x)), \(Int(coord.y))"
+        updateTileInfo(msg: "Coord: \(coordDescription), \(positionInLayer.roundTo())")
         
         // tile properties output
         var propertiesInfoString = ""
@@ -289,7 +309,11 @@ extension SKTiledDemoScene {
             }
         }
         
+        var debugInfoString = ""
+        
+        
         updatePropertiesInfo(msg: propertiesInfoString)
+        updateDebugInfo(msg: debugInfoString)
     }
         
     override open func mouseDragged(with event: NSEvent) {
@@ -310,18 +334,28 @@ extension SKTiledDemoScene {
     
     override open func keyDown(with event: NSEvent) {
         guard let cameraNode = cameraNode else { return }
+        guard let tilemap = tilemap else { return }
         
-        // 'D' shows debug view
+        // 'D' shows/hides debug view
         if event.keyCode == 0x02 {
-            if let tilemap = tilemap {
-                tilemap.debugDraw = !tilemap.debugDraw
-            }
+            tilemap.debugDraw = !tilemap.debugDraw
+        }
+        
+        // 'O' shows/hides object layers
+        if event.keyCode == 0x1f {
+            tilemap.showObjects = !tilemap.showObjects
         }
         
         // 'P' pauses the map
         if event.keyCode == 0x23 {
             self.isPaused = !self.isPaused
         }
+        
+        // 'Q' print layer stats
+        if event.keyCode == 0xc {
+            tilemap.layerStatistics()
+        }
+        
         
         // 'H' hides the HUD
         if event.keyCode == 0x04 {
@@ -341,6 +375,16 @@ extension SKTiledDemoScene {
         // 'E' toggles edit mode
         if event.keyCode == 0x0E {
             editMode = !editMode
+        }
+        
+        // 'L' toggles live mode
+        if event.keyCode == 0x25 {
+            liveMode = !liveMode
+        }
+        
+        // '1' zooms to 100%
+        if event.keyCode == 0x12 || event.keyCode == 0x53 {
+            cameraNode.resetCamera()
         }
     }
     

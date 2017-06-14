@@ -32,11 +32,13 @@ open class SKTilesetData: SKTiledObject  {
     
     weak open var tileset: SKTileset!             // reference to parent tileset
     open var uuid: String = UUID().uuidString     // unique id
+    open var type: String!                        // object type.
     open var id: Int = 0                          // tile id
     open var texture: SKTexture!                  // initial tile texture
     open var source: String! = nil                // source image name (part of a collections tileset)
     open var probability: CGFloat = 1.0           // used in Tiled application, might not be useful here.
     open var properties: [String: String] = [:]
+    open var ignoreProperties: Bool = false       // ignore custom properties
     open var tileOffset: CGPoint = .zero          // tile offset
     
     // animation frames
@@ -51,6 +53,9 @@ open class SKTilesetData: SKTiledObject  {
     // pathfinding
     open var walkable: Bool = false               // tile is walkable.
     open var weight: CGFloat = 1                  // tile weight.
+    
+    // collision objects
+    open var collisions: [SKTileObject] = []
     
     open var localID: Int {                       // return the local id for this tile
         guard let tileset = tileset else { return id }
@@ -72,6 +77,7 @@ open class SKTilesetData: SKTiledObject  {
         self.tileset = tileSet
         self.parseTileID(id: id)
         self.tileOffset = tileSet.tileOffset
+        self.ignoreProperties = tileSet.ignoreProperties
     }
     
     /**
@@ -89,6 +95,7 @@ open class SKTilesetData: SKTiledObject  {
         self.tileset = tileSet
         self.parseTileID(id: id)
         self.tileOffset = tileSet.tileOffset
+        self.ignoreProperties = tileSet.ignoreProperties
     }
     
     // MARK: - Animation
@@ -101,20 +108,22 @@ open class SKTilesetData: SKTiledObject  {
      - parameter tileTexture: `SKTexture?` frame texture.
      */
     open func addFrame(withID: Int, interval: TimeInterval, tileTexture: SKTexture? = nil) {
-        frames.append(AnimationFrame(gid: withID, duration: interval, texture: tileTexture))
+        var id = withID
+        // if the tileset firstGID is already set, subtract it to get the internal id
+        if let tileset = tileset, tileset.firstGID > 0 {
+            id = withID - tileset.firstGID
+    }
+        frames.append(AnimationFrame(gid: id, duration: interval, texture: tileTexture))
     }
     
     /**
-     Remove a tile animation frame.
+     Remove a tile animation frame at a given index.
      
-     - parameter gid: `Int` id for frame.
+     - parameter at: `Int` frame index.
      - returns: `AnimationFrame?` animation frame (if it exists).
      */
-    func removeFrame(_ gid: Int) -> AnimationFrame? {
-        if let index = frames.index( where: { $0.gid == gid } ) {
+    func removeFrame(at index: Int) -> AnimationFrame? {
             return frames.remove(at: index)
-        }
-        return nil
     }
     
     /**
@@ -154,7 +163,7 @@ extension SKTilesetData: Hashable {
 
 
 extension AnimationFrame: CustomStringConvertible, CustomDebugStringConvertible {
-    var description: String { return "\(gid): \(duration)" }
+    var description: String { return "Frame: \(gid): \(duration * 1000)" }
     var debugDescription: String { return description }
 }
 
@@ -163,10 +172,10 @@ extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
     
     /// Tile data description.
     public var description: String {
-        guard let tileset = tileset else { return "Tile ID: \(id) (no tileset)" }
+        guard let tileset = tileset else { return "<Tile ID: \(id) (no tileset)>" }
         let tileSizeString = "\(Int(tileset.tileSize.width))x\(Int(tileset.tileSize.height))"
         let dataString = properties.count > 0 ? "Tile ID: \(id) @ \(tileSizeString), " : "Tile ID: \(id) @ \(tileSizeString)"
-        return "\(dataString)\(propertiesString)"
+        return "<\(dataString)\(propertiesString)>"
     }
     
     public var debugDescription: String { return description }

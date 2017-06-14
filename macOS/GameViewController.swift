@@ -16,6 +16,7 @@ class GameViewController: NSViewController {
     @IBOutlet weak var mapInfoLabel: NSTextField!
     @IBOutlet weak var tileInfoLabel: NSTextField!
     @IBOutlet weak var propertiesInfoLabel: NSTextField!
+    @IBOutlet weak var debugInfoLabel: NSTextField!
     
     @IBOutlet weak var chooseButton: NSButton!
     @IBOutlet weak var fitButton: NSButton!
@@ -48,7 +49,8 @@ class GameViewController: NSViewController {
         
         
         /* create the game scene */
-        let scene = SKTiledDemoScene(size: self.view.bounds.size, tmxFile: currentFilename)
+        let scene = SKTiledDemoScene(size: self.view.bounds.size)
+        //let scene = SKTiledDemoScene(size: self.view.bounds.size, tmxFile: currentFilename)
         
         /* set the scale mode to scale to fit the window */
         scene.scaleMode = .aspectFill
@@ -59,6 +61,11 @@ class GameViewController: NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(updateDebugLabels), name: NSNotification.Name(rawValue: "updateDebugLabels"), object: nil)
         
         skView.presentScene(scene)
+        scene.setup(tmxFile: currentFilename)
+        
+        debugInfoLabel?.isHidden = (scene.tilemap?.orientation == .hexagonal)
+        
+        scene.tilemap?.layerStatistics()
     }
     
     override func viewDidAppear() {
@@ -87,7 +94,6 @@ class GameViewController: NSViewController {
         mapInfoLabel.shadow = shadow
         tileInfoLabel.shadow = shadow
         propertiesInfoLabel.shadow = shadow
-        
     }
     
     @IBAction func fitButtonPressed(_ sender: Any) {
@@ -143,15 +149,20 @@ class GameViewController: NSViewController {
      */
     func loadNextScene(_ interval: TimeInterval=0.4) {
         guard let view = self.view as? SKView else { return }
+        
         var debugMode = false
+        var liveMode = false
+        var showOverlay = true
+        
         var currentFilename = demoFiles.first!
-        var showOverlay: Bool = true
         if let currentScene = view.scene as? SKTiledDemoScene {
             if let cameraNode = currentScene.cameraNode {
                 showOverlay = cameraNode.showOverlay
             }
             debugMode = currentScene.debugMode
+            liveMode = currentScene.liveMode
             if let tilemap = currentScene.tilemap {
+                debugMode = tilemap.debugDraw
                 currentFilename = tilemap.filename!
             }
             
@@ -166,16 +177,20 @@ class GameViewController: NSViewController {
             nextFilename = demoFiles[index + 1]
         }
         
-        let nextScene = SKTiledDemoScene(size: view.bounds.size, tmxFile: nextFilename)
+        let nextScene = SKTiledDemoScene(size: view.bounds.size) //, tmxFile: nextFilename)
         nextScene.scaleMode = .aspectFill
         let transition = SKTransition.fade(withDuration: interval)
         nextScene.debugMode = debugMode
         view.presentScene(nextScene, transition: transition)
         
+        nextScene.setup(tmxFile: nextFilename)
+        nextScene.liveMode = liveMode
         nextScene.cameraNode?.showOverlay = showOverlay
         updateWindowTitle(withString: nextFilename)
-        
+        nextScene.tilemap?.debugDraw = debugMode
         nextScene.tilemap?.layerStatistics()
+        
+        debugInfoLabel?.isHidden = (nextScene.tilemap?.orientation == .hexagonal)
     }
     
     /**
@@ -186,13 +201,19 @@ class GameViewController: NSViewController {
     func loadPreviousScene(_ interval: TimeInterval=0.4) {
         guard let view = self.view as? SKView else { return }
         
+        var debugMode = false
+        var liveMode = false
+        var showOverlay = true
+        
         var currentFilename = demoFiles.first!
-        var showOverlay: Bool = true
         if let currentScene = view.scene as? SKTiledDemoScene {
             if let cameraNode = currentScene.cameraNode {
                 showOverlay = cameraNode.showOverlay
             }
+            debugMode = currentScene.debugMode
+            liveMode = currentScene.liveMode
             if let tilemap = currentScene.tilemap {
+                debugMode = tilemap.debugDraw
                 currentFilename = tilemap.filename!
             }
             
@@ -207,13 +228,18 @@ class GameViewController: NSViewController {
             nextFilename = demoFiles[index - 1]
         }
         
-        let nextScene = SKTiledDemoScene(size: view.bounds.size, tmxFile: nextFilename)
+        let nextScene = SKTiledDemoScene(size: view.bounds.size) //, tmxFile: nextFilename)
         nextScene.scaleMode = .aspectFill
         let transition = SKTransition.fade(withDuration: interval)
         view.presentScene(nextScene, transition: transition)
-        nextScene.cameraNode?.showOverlay = showOverlay
         
+        nextScene.setup(tmxFile: nextFilename)
+        nextScene.liveMode = liveMode
+        nextScene.cameraNode?.showOverlay = showOverlay
+        nextScene.tilemap?.debugDraw = debugMode
         nextScene.tilemap?.layerStatistics()
+        
+        debugInfoLabel?.isHidden = (nextScene.tilemap?.orientation == .hexagonal)
     }
     
     /**
@@ -256,6 +282,10 @@ class GameViewController: NSViewController {
         
         if let propertiesInfo = notification.userInfo!["propertiesInfo"] {
             propertiesInfoLabel.stringValue = propertiesInfo as! String
+        }
+        
+        if let debugInfo = notification.userInfo!["debugInfo"] {
+            debugInfoLabel.stringValue = debugInfo as! String
         }
     }
 }
