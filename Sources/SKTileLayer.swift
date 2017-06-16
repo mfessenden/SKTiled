@@ -811,7 +811,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
                 pixelToScreenCoords(leftPoint)
             ]
             
-            let invertedPoints = points.map{$0.invertedY}
+            let invertedPoints = points.map{ $0.invertedY }
             objectPath = polygonPath(invertedPoints)
             
         case .hexagonal, .staggered:            
@@ -822,6 +822,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
             frameShape.path = objectPath
             frameShape.isAntialiased = false
             frameShape.lineWidth = 1
+            frameShape.lineJoin = .miter
             
             // don't draw bounds of hexagonal maps
             frameShape.strokeColor = frameColor
@@ -1058,18 +1059,18 @@ open class SKTileLayer: TiledLayerObject {
      
      - returns: `[SKTile]` array of animated tiles.
      */
-    open func getAnimatedTiles() -> [SKTile] {
+    open func animatedTiles() -> [SKTile] {
         return validTiles().filter({ $0.tileData.isAnimated == true })
     }
     
     /**
      Return tile data from a global id.
      
-     - parameter withID: `Int` global tile id.
+     - parameter globalID: `Int` global tile id.
      - returns: `SKTilesetData?` tile data (for valid id).
      */
-    open func getTileData(withID gid: Int) -> SKTilesetData? {
-        return tilemap.getTileData(gid)
+    open func getTileData(globalID gid: Int) -> SKTilesetData? {
+        return tilemap.getTileData(globalID: gid)
     }
     
     /**
@@ -1141,7 +1142,7 @@ open class SKTileLayer: TiledLayerObject {
         // remove the current tile
         let _ = removeTileAt(coord: coord)
         
-        let tileData: SKTilesetData? = (gid != nil) ? getTileData(withID: gid!) : nil
+        let tileData: SKTilesetData? = (gid != nil) ? getTileData(globalID: gid!) : nil
         
         let Tile = tilemap.delegate != nil ? tilemap.delegate!.objectForTile(className: tileType) : SKTile.self
         let tile = Tile.init(tileSize: tileSize)
@@ -1265,7 +1266,7 @@ open class SKTileLayer: TiledLayerObject {
         // get tile attributes from the current id
         let tileAttrs = flippedTileFlags(id: id)
         
-        if let tileData = tilemap.getTileData(Int(tileAttrs.gid)) {
+        if let tileData = tilemap.getTileData(globalID: Int(tileAttrs.gid)) {
             
             // set the tile data flip flags
             tileData.flipHoriz = tileAttrs.hflip
@@ -1461,7 +1462,7 @@ open class SKObjectGroup: TiledLayerObject {
      */
     open var showObjects: Bool = false {
         didSet {
-            objects.filter { $0.gid == nil }.forEach {$0.visible = showObjects}
+            objects.filter { $0.isRenderableType == false }.forEach { $0.visible = showObjects }
         }
     }
     
@@ -1470,12 +1471,6 @@ open class SKObjectGroup: TiledLayerObject {
      */
     open var count: Int { return objects.count }
     
-    /**
-     Returns tile objects in the layer.
-     */
-    open var tileObjects: [SKTileObject] {
-        return objects.filter{ $0.gid != nil }
-    }
     
     /// Controls antialiasing for each object
     override open var antialiased: Bool {
@@ -1577,11 +1572,6 @@ open class SKObjectGroup: TiledLayerObject {
         // hide the object if the tilemap `showObjects` property is set to false
         object.visible = (object.gid != nil) ? true : tilemap.showObjects
         return object
-    }
-    
-    
-    open func tileObject(withGID: Int) -> SKTileObject? {
-        return nil
     }
     
     /**
@@ -1696,13 +1686,36 @@ open class SKObjectGroup: TiledLayerObject {
         return objects.filter( {$0.name == named})
     }
     
+    // MARK: - Tile Objects
+    
     /**
      Return objects with a tile id.
      
-     - returns: `[SKTileObject]` objects with tileID.
+     - returns: `[SKTileObject]` objects with a tile gid.
      */
-    open func getTileObjects() -> [SKTileObject] {
+    open func tileObjects() -> [SKTileObject] {
         return objects.filter { $0.gid != nil }
+    }
+    
+    /**
+     Returns an `SKTileObject` object from the objects set.
+     
+     - parameter object:    `SKTileObject` object.
+     - returns: `SKTileObject?` removed object.
+     */
+    open func tileObjects(globalID: Int) -> [SKTileObject] {
+        return objects.filter { $0.gid == globalID }
+    }
+    
+    // MARK: - Text Objects
+    
+    /**
+     Return text objects.
+     
+     - returns: `[SKTileObject]` text objects.
+     */
+    open func textObjects() -> [SKTileObject] {
+        return objects.filter { $0.textAttributes != nil }
     }
     
     // MARK: - Callbacks
@@ -1891,7 +1904,7 @@ open class SKGroupLayer: TiledLayerObject {
      - parameter base:   `Bool` layer represents default layer.
      */
     open func addLayer(_ layer: TiledLayerObject) {
-        let nextZPosition = (_layers.count > 0) ? tilemap.zDeltaForLayers * CGFloat(_layers.count) : tilemap.zDeltaForLayers
+        let nextZPosition = (_layers.count > 0) ? (tilemap.zDeltaForLayers / 2) * CGFloat(_layers.count) : 0
         
         // set the layer index
         layer.index = lastIndex + 1
@@ -1958,35 +1971,55 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
             guard oldValue != showGrid else { return }
             texture = nil
             isHidden = true
+            
             if (showGrid == true){
                 
                 // get the last z-position
                 zPosition = layer.tilemap.lastZPosition + layer.tilemap.zDeltaForLayers
                 isHidden = false
                 var gridSize = CGSize.zero
-
+                
+                // scale factor for texture
+                let uiScale: CGFloat
+                let scaleValue: CGFloat
+                #if os(iOS)
+                uiScale = UIScreen.main.scale
+                scaleValue = 8
+                #else
+                uiScale = NSScreen.main()!.backingScaleFactor
+                scaleValue = 8
+                #endif
+                print("# [SKTileLayer]: showing grid, ui scale: \(uiScale.roundTo()), scale: \(scaleValue.roundTo())")
+                
                 // generate the texture
                 if (gridTexture == nil) {
-                    let gridImage = drawGrid(self.layer)
+                    let gridImage = drawGrid(self.layer, imageScale: scaleValue)
                     gridTexture = SKTexture(cgImage: gridImage)
-                    gridTexture.filteringMode = .nearest
+                    print("  -> grid texture size: \(gridTexture.size().shortDescription)")
+                    gridTexture.filteringMode = .linear
                 }
                 
-                #if os(iOS)
-                let imageScale: CGFloat = UIScreen.main.scale
-                gridSize = gridTexture.size() / imageScale
-                position.y = -gridSize.height
-                #endif
+                // sprite scaling factor
+                let spriteScaleFactor: CGFloat = (1 / scaleValue)
+                print("  -> scale factor: \(spriteScaleFactor.roundTo())")
                 
-                #if os(OSX)
-                let imageScale: CGFloat =  NSScreen.main()!.backingScaleFactor
-                gridSize = gridTexture.size() / imageScale
-                yScale = -1
+                gridSize = gridTexture.size() / uiScale
+                
+                #if os(iOS)
+                //position.y = -(gridSize.height / scaleValue)
+                setScale(spriteScaleFactor)
+                #else
+                setScale(spriteScaleFactor)
                 #endif
                 
                 texture = gridTexture
                 alpha = gridOpacity
-                size = gridSize
+                size = gridSize / scaleValue
+                print("  -> grid sprite size: \(size.shortDescription)")
+                
+                #if os(OSX)
+                yScale *= -1
+                #endif
 
             }
         }
@@ -2169,6 +2202,13 @@ extension TiledLayerObject {
         }
     }
     
+    /// Returns the actual zPosition
+    public var actualZPosition: CGFloat {
+        return (isTopLevel == true) ? zPosition : parents.reduce(zPosition, { result, parent in
+            return result + parent.zPosition
+        })
+    }
+    
     /// Returns a string representing the current layer name & index.
     public var layerStatsDescription: [String] {
         let digitCount: Int = self.tilemap.lastIndex.digitCount + 1
@@ -2228,7 +2268,7 @@ public extension SKTileLayer {
      - returns: `[SKTile]` array of tiles.
      */
     public func validTiles() -> [SKTile] {
-        return tiles.flatMap({$0})
+        return tiles.flatMap({ $0 })
     }
     
     /// Returns a count of valid tiles.

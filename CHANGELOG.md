@@ -1,6 +1,36 @@
 Change Log
 ==========
 
+1.14
+-----
+
+#### Changes
+
+- add `SKObjectGroup.textObjects` & `SKTilemap.textObjects` methods
+
+API Updates
+`SKTilemap.getLayer(named:)` -> `SKTilemap.getLayers(named:,recursive:)`
+`SKTilemap.allLayers` -> `SKTilemap.getLayers(recursive:)`
+`SKTilemap.tileLayer(named:)` -> `SKTilemap.tileLayers(named:,recursive:)`
+`SKTilemap.objectGroups(named:)` -> `SKTilemap.objectGroups(named:,recursive:)`
+`SKTilemap.getLayers(ofType:)` -> `SKTilemap.getLayers(ofType:,recursive:)`
+`SKTilemap.tileLayers` -> `SKTilemap.tileLayers(recursive:)`
+`SKTilemap.objectGroups` -> `SKTilemap.objectGroups(recursive:)`
+`SKTilemap.imageLayers` -> `SKTilemap.imageLayers(recursive:)`
+`SKTilemap.groupLayers` -> `SKTilemap.groupLayers(recursive:)`
+`SKTilemap.getTiles(ofType:)` -> `SKTilemap.getTiles(ofType:,recursive:)`
+`SKTilemap.getTiles(withID:)` -> `SKTilemap.getTiles(withID:,recursive:)`
+`SKTilemap.getTilesWithProperty(_:, _:)` -> `SKTilemap.getTilesWithProperty(_:,_:,recursive:)`
+`SKTilemap.getAnimatedTiles()` -> `SKTilemap.animatedTiles(recursive:)`
+`SKTilemap.getObjects()` -> `SKTilemap.getObjects(recursive:)`
+`SKTilemap.getObjects(ofType:)` -> `SKTilemap.getObjects(ofType:,recursive:)`
+`SKTilemap.getObjects(named:)` -> `SKTilemap.getObjects(named:,recursive:)`
+
+removed `SKTilemap.indexOf(layerNamed:)`
+
+`SKTileLayer.getAnimatedTiles()` -> `SKTileLayer.animatedTiles()`
+
+
 1.13
 -----
 
@@ -14,7 +44,7 @@ Change Log
 - SKTilemap.backgroundColor
 - add `SKTiledObject.type` property
 - fixed `SKTileLayer.getTiles(ofType:)`
-- add `SKObjectGroup.getTileObjects` & `SKTilemap.getTileObjects` methods
+- add `SKObjectGroup.tileObjects` & `SKTilemap.tileObjects` methods
 - add `SKTileset.load(fromFiles:)` method for pre-loading tilesets
 - removed `SKTilemap.positionInMap` method
 - fix for hexagonal tiles not having the correct z-position

@@ -42,6 +42,8 @@ class GameViewController: NSViewController {
         skView.showsNodeCount = true
         skView.showsDrawCount = true
         #endif
+        skView.showsFields = true
+        skView.showsPhysics = true
         
         /* Sprite Kit applies additional optimizations to improve rendering performance */
         skView.ignoresSiblingOrder = true
@@ -64,8 +66,6 @@ class GameViewController: NSViewController {
         scene.setup(tmxFile: currentFilename)
         
         debugInfoLabel?.isHidden = (scene.tilemap?.orientation == .hexagonal)
-        
-        scene.tilemap?.layerStatistics()
     }
     
     override func viewDidAppear() {
@@ -117,7 +117,6 @@ class GameViewController: NSViewController {
     @IBAction func objectsButtonPressed(_ sender: Any) {
         guard let view = self.view as? SKView else { return }
         guard let scene = view.scene as? SKTiledScene else { return }
-        
         if let tilemap = scene.tilemap {
             let debugState = !tilemap.showObjects
             tilemap.showObjects = debugState
@@ -188,7 +187,6 @@ class GameViewController: NSViewController {
         nextScene.cameraNode?.showOverlay = showOverlay
         updateWindowTitle(withString: nextFilename)
         nextScene.tilemap?.debugDraw = debugMode
-        nextScene.tilemap?.layerStatistics()
         
         debugInfoLabel?.isHidden = (nextScene.tilemap?.orientation == .hexagonal)
     }
@@ -237,7 +235,6 @@ class GameViewController: NSViewController {
         nextScene.liveMode = liveMode
         nextScene.cameraNode?.showOverlay = showOverlay
         nextScene.tilemap?.debugDraw = debugMode
-        nextScene.tilemap?.layerStatistics()
         
         debugInfoLabel?.isHidden = (nextScene.tilemap?.orientation == .hexagonal)
     }

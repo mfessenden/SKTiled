@@ -32,25 +32,4 @@ view.presentScene(scene)
 
 
 PlaygroundSupport.PlaygroundPage.current.liveView = view
-
-
 let tilemap = scene.tilemap!
-
-
-print(tilemap.allLayers())
-tilemap.debugLayers()
-
-
-let layers = tilemap.tileLayers.filter { $0.name == "LayerA" }
-layers
-
-for layer in tilemap.tileLayers {
-    if layer.name == "Layer1" {
-        print("layer: \(layer.name!)")
-    }
-}
-
-if tilemap.isRendered {
-    PlaygroundSupport.PlaygroundPage.current.finishExecution()
-}
-

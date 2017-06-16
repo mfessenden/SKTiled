@@ -29,9 +29,11 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 - [x] renders animated and fliped tiles
 - [x] pre-loading of tilesets
 - [x] group nodes
+- [x] tile objects
+- [ ] text objects
+- [x] custom tile classes (iOS10, macOS 10.11+)
 - [ ] generate GKGridGraph graphs from custom attributes (iOS10, macOS 10.11+)
 - [ ] user-definable cost properties for GKGridGraph nodes (iOS10, macOS 10.11+)
-- [ ] custom tile classes (iOS10, macOS 10.11+)
 
 ## Requirements
 
@@ -41,17 +43,17 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 
 ## Installation
 
-### Carthage Installation
+### Carthage & CocoaPods Support
 
-Create a Cartfile in the root of your project:
+For Carthage installation, create a Cartfile in the root of your project:
 
-github "mfessenden/SKTiled" ~> 1.13
+    github "mfessenden/SKTiled" ~> 1.14
 
-### CocoaPods Installation
 
-Add a reference in your podfile:
+For CocoaPods, install via a reference in your podfile:
 
-pod 'SKTiled', '~> 1.13'
+    pod 'SKTiled', '~> 1.14'
+
 
 ## Usage
 
@@ -91,17 +93,15 @@ let imageLayers = tilemap.imageLayers
 let groupLayers = tilemap.groupLayers
 
 // query named layers
-let groundLayer = tilemap.getLayer(named: "Ground") as! SKTileLayer
-let objectsGroup = tilemap.getLayer(named: "Objects") as! SKObjectGroup
-let hudLayer = tilemap.getLayer(named: "HUD") as! SKImageLayer
+let groundLayers = tilemap.getLayers(named: "Ground") as! [SKTileLayer]
+let objectGroups = tilemap.getLayers(named: "Objects") as! [SKObjectGroup]
+let hudLayers = tilemap.getLayers(named: "HUD") as! [SKImageLayer]
 
-// query a named tile layer
-if let groundLayer = tilemap.tileLayer(named: "Ground") {
-    groundLayer.showGrid = true
-}
 
 // query layer at a specific index
-let firstLayer = tilemap.getLayer(atIndex: 1) as! SKTileLayer
+if let firstLayer = tilemap.getLayer(atIndex: 1) as! SKTileLayer {
+    firstLayer.showGrid = true
+}
 ```
 
 ### Working with Tiles
@@ -113,7 +113,7 @@ There are a number of ways to access and work with tile objects. Tiles can be qu
 let tileCoord = CGPoint(x: 7, y: 12)
 let tile = groundLayer.tileAt(coord: tileCoord)
 
-// access tile integer coordinates
+// access a tile with integer coordinates
 let tile = groundLayer.tileAt(7, 12)
 ```
 
@@ -132,7 +132,7 @@ let tiles = tilemap.tilesAt(2, 4)
 You can also return tiles with a specific ID value:
 
 ```swift
-if let waterTiles = waterLayer.getTiles(withID: 17) {
+if let waterTiles = waterLayer.getTiles(globalID: 17) {
     // do something watery here
 }
 ```
@@ -157,13 +157,13 @@ The `SKTilemap` node stores an array of individual tilesets parsed from the orig
 ```swift
 let tileSet = tilemap.getTileset("spritesheet-16x16")
 // get data for a specific id
-let tileData = tileSet.getTileData(gid: 177)
+let tileData = tileSet.getTileData(globalID: 177)
 ```
 
 and the parent `SKTilemap`:
 
 ```swift
-let tileData = tilemap.getTileData(gid: 177)
+let tileData = tilemap.getTileData(globalID: 177)
 ```
 
 
@@ -202,13 +202,16 @@ let touchLocation: CGPoint = objectsLayer.coordinateAtTouchLocation(touch)
 Tiles with animation will animate automatically; animated tiles can be accesssed from the either the `SKTilemap` node or the parent layer. The `SKTile.pauseAnimation` property can stop/start animations:
 
 ```swift
-let allAnimated = tilemap.getAnimatedTiles()
-let layerAnimated = groundLayer.getAnimatedTiles()
+// get all animated tiles, including nested layers
+let allAnimated = tilemap.animatedTiles(recursive: true)
 
 for tile in allAnimated {
     // pause the current animation
     tile.pauseAnimation = true
 }
+
+// get animated tiles from individual layers
+let layerAnimated = groundLayer.animatedTiles()
 ```
 
 

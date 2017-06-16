@@ -408,7 +408,8 @@ public class SKTile: SKSpriteNode {
         
         // draw the path
         shape.isAntialiased = antialiasing
-        shape.lineCap = .butt
+        shape.lineCap = .round
+        shape.lineJoin = .miter
         shape.miterLimit = 0
         shape.lineWidth = 0.5
         
@@ -623,7 +624,7 @@ internal class DebugTileShape: SKShapeNode {
         // draw the path
         self.path = polygonPath(points)
         self.isAntialiased = false
-        self.lineCap = .butt
+        self.lineJoin = .miter
         self.miterLimit = 0
         self.lineWidth = 0.5
         
@@ -644,9 +645,10 @@ internal class DebugTileShape: SKShapeNode {
         // draw the coordinate label
         if useLabel == true {
             let label = SKLabelNode(fontNamed: "Courier")
-            label.fontSize = anchorRadius * 6
+            label.fontSize = anchorRadius * 24   // was 6
             label.text = "\(Int(coord.x)),\(Int(coord.y))"
             addChild(label)
+            label.setScale(0.2)
         }
     }
 }

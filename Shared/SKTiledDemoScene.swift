@@ -81,8 +81,8 @@ public class SKTiledDemoScene: SKTiledScene {
      - parameter duration:  `TimeInterval` tile life.
      */
     func addTileAt(_ x: Int, _ y: Int, duration: TimeInterval=0) -> DebugTileShape? {
-        guard let tilemap = tilemap else { return nil }
-        guard let worldNode = worldNode else { return nil }
+        guard let tilemap = tilemap,
+                let worldNode = worldNode else { return nil }
         
         // validate the coordinate
         let layer = tilemap.baseLayer
@@ -183,6 +183,7 @@ public class SKTiledDemoScene: SKTiledScene {
     override open func didRenderMap(_ tilemap: SKTilemap) {
         // update the HUD to reflect the number of tiles created
         updateHud()
+        tilemap.layerStatistics()
     }
 }
 
@@ -333,8 +334,10 @@ extension SKTiledDemoScene {
     }
     
     override open func keyDown(with event: NSEvent) {
+        guard let view = view else { return }
         guard let cameraNode = cameraNode else { return }
         guard let tilemap = tilemap else { return }
+        guard let worldNode = worldNode else { return }
         
         // 'D' shows/hides debug view
         if event.keyCode == 0x02 {
@@ -386,6 +389,41 @@ extension SKTiledDemoScene {
         if event.keyCode == 0x12 || event.keyCode == 0x53 {
             cameraNode.resetCamera()
         }
+        
+        // 'A' or 'F' fits the map to the current view
+        if event.keyCode == 0x0 || event.keyCode == 0x3 {
+             cameraNode.fitToView(newSize: view.bounds.size)
+        }
+        
+        // 'I' runs a test
+        if event.keyCode == 0x22 {
+            var fadeTime: TimeInterval = 3
+            let shapeRadius = (tilemap.tileHeightHalf / 4) - 0.5
+            for x in 0..<Int(tilemap.size.width) {
+                for y in 0..<Int(tilemap.size.height) {
+                    
+                    let shape = SKShapeNode(circleOfRadius: shapeRadius)
+                    shape.alpha = 0.7
+                    shape.fillColor = SKColor(hexString: "#FD4444")
+                    shape.strokeColor = .clear
+                    worldNode.addChild(shape)
+                
+                    let shapePos = tilemap.baseLayer.pointForCoordinate(x, y)
+                    shape.position = worldNode.convert(shapePos, from: tilemap.baseLayer)
+                    shape.zPosition = tilemap.lastZPosition + tilemap.zDeltaForLayers
+                    
+                    let fadeAction = SKAction.fadeAfter(wait: fadeTime, alpha: 0)
+                    shape.run(fadeAction, completion: {
+                        shape.removeFromParent()
+                    })
+                    fadeTime += 0.003
+                    
+                }
+                //fadeTime += 0.02
+            }
+            
+        }
+        
     }
     
     /**

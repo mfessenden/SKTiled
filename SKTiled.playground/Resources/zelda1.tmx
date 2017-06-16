@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="28" height="20" tilewidth="16" tileheight="16" nextobjectid="2">
+<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="28" height="20" tilewidth="16" tileheight="16" nextobjectid="2">
  <tileset firstgid="1" source="overworld-16x16.tsx"/>
  <imagelayer name="template" opacity="0.47" offsetx="-6" offsety="-12">
   <image source="zelda-bg.png" width="454" height="340"/>
  </imagelayer>
  <group name="Layer1" visible="0">
+  <layer name="LayerA" width="28" height="20">
+   <data encoding="base64" compression="zlib">
+   eJzzYGBg8KACVgRiJShWAWImIGamktnYsCMQsyLZCbOX1nY6odlLL7+i26tMQ/uwhTE97EO2k172gbDiqH1D2j5QmnGmo32jeORgSSCWoqN9lkBsRUf7IukcnpVUNg8AbXGWtg==
+  </data>
+  </layer>
   <layer name="LayerA" width="28" height="20">
    <data encoding="base64" compression="zlib">
    eJzzYGBg8KACVgRiJShWAWImIGamktnYsCMQsyLZCbOX1nY6odlLL7+i26tMQ/uwhTE97EO2k172gbDiqH1D2j5QmnGmo32jeORgSSCWoqN9lkBsRUf7IukcnpVUNg8AbXGWtg==

@@ -226,7 +226,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     open var cropAtBoundary: Bool = false {
         didSet {
             if let currentMask = maskNode { currentMask.removeFromParent() }
-            
+    
             maskNode = (cropAtBoundary == true) ? SKSpriteNode(color: SKColor.black, size: self.sizeInPoints) : nil
             (maskNode as? SKSpriteNode)?.texture?.filteringMode = .nearest
         }
@@ -341,14 +341,14 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     
     /// Returns the last (highest) z-position in the map.
     open var lastZPosition: CGFloat {
-        return _layers.count > 0 ? _layers.map {$0.zPosition}.max()! : 0
+        return layers.count > 0 ? layers.map { $0.actualZPosition }.max()! : 0
     }
     
     /// Tile overlap amount. 1 is typically a good value.
     open var tileOverlap: CGFloat = 0.5 {
         didSet {
             guard oldValue != tileOverlap else { return }
-            for tileLayer in tileLayers {
+            for tileLayer in tileLayers(recursive: true) {
                 tileLayer.setTileOverlap(tileOverlap)
             }
         }
@@ -358,33 +358,52 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     open var showObjects: Bool = true {
         didSet {
             guard oldValue != showObjects else { return }
-            
-            for objectGroup in objectGroups {
-                print(" -> \((showObjects == true) ? "showing" : "hiding") layer: \"\(objectGroup.name ?? "null")\"...")
+            for objectGroup in objectGroups(recursive: true) {
                 objectGroup.showObjects = showObjects
             }
         }
     }
     
-    /// Convenience property to return all tile layers.
-    open var tileLayers: [SKTileLayer] {
-        return layers.sorted(by: {$0.index < $1.index}).filter({$0 as? SKTileLayer != nil}) as! [SKTileLayer]
+    /**
+     Return all tile layers. If recursive is false, only returns top-level layers.
+     
+     - parameter recursive: `Bool` include nested layers.
+     - returns: `[SKTileLayer]` array of tile layers.
+     */
+    open func tileLayers(recursive: Bool=true) -> [SKTileLayer] {
+        return getLayers(recursive: recursive).sorted(by: { $0.index < $1.index }).filter({ $0 as? SKTileLayer != nil }) as! [SKTileLayer]
     }
     
-    /// Convenience property to return all object groups.
-    open var objectGroups: [SKObjectGroup] {
-        return layers.sorted(by: {$0.index < $1.index}).filter({$0 as? SKObjectGroup != nil}) as! [SKObjectGroup]
+    /**
+     Return all object groups. If recursive is false, only returns top-level layers.
+     
+     - parameter recursive: `Bool` include nested layers.
+     - returns: `[SKObjectGroup]` array of object groups.
+     */
+    open func objectGroups(recursive: Bool=true) -> [SKObjectGroup] {
+        return getLayers(recursive: recursive).sorted(by: { $0.index < $1.index }).filter({ $0 as? SKObjectGroup != nil }) as! [SKObjectGroup]
     }
     
-    /// Convenience property to return all image layers.
-    open var imageLayers: [SKImageLayer] {
-        return layers.sorted(by: {$0.index < $1.index}).filter({$0 as? SKImageLayer != nil}) as! [SKImageLayer]
+    /**
+     Return all image layers. If recursive is false, only returns top-level layers.
+     
+     - parameter recursive: `Bool` include nested layers.
+     - returns: `[SKImageLayer]` array of image layers.
+     */
+    open func imageLayers(recursive: Bool=true) -> [SKImageLayer] {
+        return getLayers(recursive: recursive).sorted(by: { $0.index < $1.index }).filter({ $0 as? SKImageLayer != nil }) as! [SKImageLayer]
     }
     
-    /// Convenience property to return all group layers.
-    open var groupLayers: [SKGroupLayer] {
-        return layers.sorted(by: {$0.index < $1.index}).filter({$0 as? SKGroupLayer != nil}) as! [SKGroupLayer]
+    /**
+     Return all group layers. If recursive is false, only returns top-level layers.
+     
+     - parameter recursive: `Bool` include nested layers.
+     - returns: `[SKGroupLayer]` array of image layers.
+     */
+    open func groupLayers(recursive: Bool=true) -> [SKGroupLayer] {
+        return getLayers(recursive: recursive).sorted(by: { $0.index < $1.index }).filter({ $0 as? SKGroupLayer != nil }) as! [SKGroupLayer]
     }
+
     
     /// Global antialiasing of lines
     open var antialiasLines: Bool = false {
@@ -395,7 +414,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     
     /// Global tile count
     open var tileCount: Int {
-        return tileLayers.reduce(0) { (result: Int, layer: SKTileLayer) in
+        return tileLayers(recursive: true).reduce(0) { (result: Int, layer: SKTileLayer) in
             return result + layer.tileCount
         }
     }
@@ -601,21 +620,13 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     
     // MARK: - Layers
     /**
-     Returns an array of all child layers, sorted by index (first is lowest, last is highest).
+     Returns an array of child layers, sorted by index (first is lowest, last is highest).
      
+     - parameter recursive: `Bool` include nested layers.
      - returns: `[TiledLayerObject]` array of layers.
      */
-    open func allLayers() -> [TiledLayerObject] {
-        return layers.sorted(by: { $0.index < $1.index })
-    }
-    
-    /**
-     Returns an array of top-level child layers (group contents are excluded).
-     
-     - returns: `[TiledLayerObject]` array of layers.
-     */
-    open func topLevelLayers() -> [TiledLayerObject] {
-        return _layers.sorted(by: { $0.index < $1.index })
+    open func getLayers(recursive: Bool=true) -> [TiledLayerObject] {
+        return (recursive == true) ? self.layers : Array(self._layers)
     }
     
     /**
@@ -682,17 +693,19 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     }
     
     /**
-     Returns a named tile layer from the layers set.
+     Return layers matching the given name.
      
-     - parameter name: `String` tile layer name.
-     - returns: `TiledLayerObject?` layer object.
+     - parameter name:      `String` tile layer name.
+     - parameter recursive: `Bool` include nested layers.
+     - returns: `[TiledLayerObject]` layer objects.
      */
-    open func getLayer(named layerName: String) -> TiledLayerObject? {
-        if let index = layers.index( where: { $0.name == layerName } ) {
-            let layer = layers[index]
-            return layer
+    open func getLayers(named layerName: String, recursive: Bool=true) -> [TiledLayerObject] {
+        var result: [TiledLayerObject] = []
+        let layersToCheck = self.getLayers(recursive: recursive)
+        if let index = layersToCheck.index( where: { $0.name == layerName } ) {
+            result.append(layersToCheck[index])
         }
-        return nil
+        return result
     }
     
     /**
@@ -726,11 +739,12 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     /**
      Return layers assigned a custom `type` property.
      
-     - parameter ofType: `String` layer type.
+     - parameter ofType:    `String` layer type.
+     - parameter recursive: `Bool` include nested layers.
      - returns: `[TiledLayerObject]` array of layers.
      */
-    open func getLayers(ofType: String) -> [TiledLayerObject] {
-        return layers.filter { $0.type != nil }.filter { $0.type! == ofType }
+    open func getLayers(ofType: String, recursive: Bool=true) -> [TiledLayerObject] {
+        return getLayers(recursive: recursive).filter { $0.type != nil }.filter { $0.type! == ofType }
     }
     
     /**
@@ -740,12 +754,10 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      */
     open func isolateLayer(at index: Int) {
         guard index >= 0 else {
-            _layers.map { $0.visible = true }
+            let _ = _layers.map { $0.visible = true }
             return
         }
         
-        let sortedList = _layers.sorted(by: { $0.index < $1.index })
-
         _layers.forEach { layer in
             let hideLayer = (layer.index == index) ? false : true
             layer.isHidden = hideLayer
@@ -753,17 +765,14 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     }
     
     /**
-     Returns a named tile layer if it exists, otherwise, nil.
+     Return tile layers matching the given name. If recursive is false, only returns top-level layers.
      
-     - parameter named: `String` tile layer name.
-     - returns: `SKTileLayer?`
+     - parameter named:     `String` tile layer name.
+     - parameter recursive: `Bool` include nested layers.
+     - returns: `[SKTileLayer]` array of tile layers.
      */
-    open func tileLayer(named name: String) -> SKTileLayer? {
-        if let layerIndex = tileLayers.index( where: { $0.name == name } ) {
-            let layer = tileLayers[layerIndex]
-            return layer
-        }
-        return nil
+    open func tileLayers(named layerName: String, recursive: Bool=true) -> [SKTileLayer] {
+        return getLayers(recursive: recursive).filter { $0 as? SKTileLayer != nil }.filter { $0.name == layerName } as! [SKTileLayer]
     }
     
     /**
@@ -773,25 +782,22 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      - returns: `SKTileLayer?`
      */
     open func tileLayer(atIndex index: Int) -> SKTileLayer? {
-        if let layerIndex = tileLayers.index( where: { $0.index == index } ) {
-            let layer = tileLayers[layerIndex]
+        if let layerIndex = tileLayers(recursive: false).index( where: { $0.index == index } ) {
+            let layer = tileLayers(recursive: false)[layerIndex]
             return layer
         }
         return nil
     }
     
     /**
-     Returns a named object group if it exists, otherwise, nil.
+     Return object groups matching the given name. If recursive is false, only returns top-level layers.
      
-     - parameter named: `String` tile layer name.
-     - returns: `SKObjectGroup?`
+     - parameter named:     `String` tile layer name.
+     - parameter recursive: `Bool` include nested layers.
+     - returns: `[SKObjectGroup]` array of object groups.
      */
-    open func objectGroup(named name: String) -> SKObjectGroup? {
-        if let layerIndex = objectGroups.index( where: { $0.name == name } ) {
-            let layer = objectGroups[layerIndex]
-            return layer
-        }
-        return nil
+    open func objectGroups(named layerName: String, recursive: Bool=true) -> [SKObjectGroup] {
+        return getLayers(recursive: recursive).filter { $0 as? SKObjectGroup != nil }.filter { $0.name == layerName } as! [SKObjectGroup]
     }
     
     /**
@@ -801,25 +807,22 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      - returns: `SKObjectGroup?`
      */
     open func objectGroup(atIndex index: Int) -> SKObjectGroup? {
-        if let layerIndex = objectGroups.index( where: { $0.index == index } ) {
-            let layer = objectGroups[layerIndex]
+        if let layerIndex = objectGroups(recursive: false).index( where: { $0.index == index } ) {
+            let layer = objectGroups(recursive: false)[layerIndex]
             return layer
         }
         return nil
     }
-
+    
     /**
-     Returns a named group layer if it exists, otherwise, nil.
+     Return group layers matching the given name. If recursive is false, only returns top-level layers.
      
-     - parameter named: `String` tile layer name.
-     - returns: `SKGroupLayer?`
+     - parameter named:     `String` tile layer name.
+     - parameter recursive: `Bool` include nested layers.
+     - returns: `[SKGroupLayer]` array of group layers.
      */
-    open func groupLayer(named name: String) -> SKGroupLayer? {
-        if let layerIndex = groupLayers.index( where: { $0.name == name } ) {
-            let layer = groupLayers[layerIndex]
-            return layer
-        }
-        return nil
+    open func groupLayers(named layerName: String, recursive: Bool=true) -> [SKGroupLayer] {
+        return getLayers(recursive: recursive).filter { $0 as? SKGroupLayer != nil }.filter { $0.name == layerName } as! [SKGroupLayer]
     }
     
     /**
@@ -829,28 +832,15 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      - returns: `SKGroupLayer?`
      */
     open func groupLayer(atIndex index: Int) -> SKGroupLayer? {
-        if let layerIndex = groupLayers.index( where: { $0.index == index } ) {
-            let layer = groupLayers[layerIndex]
+        if let layerIndex = groupLayers(recursive: false).index( where: { $0.index == index } ) {
+            let layer = groupLayers(recursive: false)[layerIndex]
             return layer
         }
         return nil
     }
-
-    /**
-     Returns the index of a named layer.
-     
-     - parameter named: `String` layer name.
-     - returns: `Int` layer index.
-     */
-    open func indexOf(layedNamed named: String) -> Int {
-        if let layer = getLayer(named: named) {
-            return layer.index
-        }
-        return -1
-    }
     
     /**
-     Position child layers in relation to the anchorpoint.
+     Position child layers in relation to the map's anchorpoint.
      
      - parameter layer: `TiledLayerObject` layer.
      */
@@ -904,13 +894,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      - returns: `[SKTile]` array of tiles.
      */
     open func tilesAt(coord: CGPoint) -> [SKTile] {
-        var result: [SKTile] = []
-        for layer in tileLayers {
-            if let tile = layer.tileAt(coord: coord){
-                result.append(tile)
-            }
-        }
-        return result
+        return tileLayers(recursive: true).flatMap { $0.tileAt(coord: coord) }
     }
 
     /**
@@ -953,49 +937,89 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     }
     
     /**
-     Returns tiles with a property of the given type (all tile layers).
+     Returns tiles with a property of the given type. If recursive is false, only returns tiles from top-level layers.
      
-     - parameter type: `String` type.
+     - parameter type:      `String` type.
+     - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTile]` array of tiles.
      */
-    open func getTiles(ofType type: String) -> [SKTile] {
-        return tileLayers.flatMap { $0.getTiles(ofType: type) }
+    open func getTiles(ofType type: String, recursive: Bool=true) -> [SKTile] {
+        return tileLayers(recursive: recursive).flatMap { $0.getTiles(ofType: type) }
     }
     
     /**
-     Returns tiles matching the given gid (all tile layers).
+     Returns tiles with the given gid. If recursive is false, only returns tiles from top-level layers.
      
      - parameter type: `Int` tile gid.
+     - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTile]` array of tiles.
      */
-    open func getTiles(withID id: Int) -> [SKTile] {
-        var result: [SKTile] = []
-        for layer in tileLayers {
-            result += layer.getTiles(withID: id)
-        }
-        return result
+    open func getTiles(withID gid: Int, recursive: Bool=true) -> [SKTile] {
+        return tileLayers(recursive: recursive).flatMap { $0.getTiles(withID: gid) }
     }
     
     /**
-     Returns tiles with a property of the given type & value (all tile layers).
+     Returns tiles with a property of the given type & value. If recursive is false, only returns tiles from top-level layers.
      
      - parameter named: `String` property name.
      - parameter value: `Any` property value.
+     - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTile]` array of tiles.
      */
-    open func getTilesWithProperty(_ named: String, _ value: Any) -> [SKTile] {
+    open func getTilesWithProperty(_ named: String, _ value: Any, recursive: Bool=true) -> [SKTile] {
         var result: [SKTile] = []
-        for layer in tileLayers {
+        for layer in tileLayers(recursive: recursive) {
             result += layer.getTilesWithProperty(named, value as! String as Any)
         }
         return result
     }
     
     /**
-     Return tile data with a property of the given type (all tile layers).
+     Returns an array of all animated tile objects.
+     
+     - returns: `[SKTile]` array of tiles.
+     */
+    open func animatedTiles(recursive: Bool=true) -> [SKTile] {
+        return tileLayers(recursive: recursive).flatMap { $0.animatedTiles() }
+    }
+    
+    /**
+     Return the top-most tile at the given coordinate.
+     
+     - parameter coord: `CGPoint` coordinate.
+     - returns: `SKTile?` first tile in layers.
+     */
+    open func firstTileAt(coord: CGPoint) -> SKTile? {
+        for layer in tileLayers(recursive: false).reversed().filter({ $0.visible == true }) {
+            if let tile = layer.tileAt(coord: coord) {
+                return tile
+            }
+        }
+        return nil
+    }
+    
+    // MARK: - Data
+    /**
+     Returns data for a global tile id.
+     
+     - parameter globalID: `Int` global tile id.
+     - returns: `SKTilesetData` tile data, if it exists.
+     */
+    open func getTileData(globalID gid: Int) -> SKTilesetData? {
+        let realID = flippedTileFlags(id: UInt32(gid)).gid
+        for tileset in tilesets where tileset.contains(globalID: realID){
+            if let tileData = tileset.getTileData(globalID: Int(realID)) {
+                return tileData
+            }
+        }
+        return nil
+    }
+    
+    /**
+     Return tile data with a property of the given type (all tilesets).
      
      - parameter named: `String` property name.
-     - returns: `[SKTile]` array of tiles.
+     - returns: `[SKTilesetData]` array of tile data.
      */
     open func getTileData(withProperty named: String) -> [SKTilesetData] {
         return tilesets.flatMap { $0.getTileData(withProperty: named) }
@@ -1012,87 +1036,58 @@ open class SKTilemap: SKCropNode, SKTiledObject {
         return tilesets.flatMap { $0.getTileData(withProperty: named, value) }
     }
     
-    /**
-     Returns an array of all animated tile objects.
-     
-     - returns: `[SKTile]` array of tiles.
-     */
-    open func getAnimatedTiles() -> [SKTile] {
-        return tileLayers.flatMap { $0.getAnimatedTiles() }
-    }
-    
-    /**
-     Return the top-most tile at the given coordinate.
-     
-     - parameter coord: `CGPoint` coordinate.
-     - returns: `SKTile?` first tile in layers.
-     */
-    open func firstTileAt(coord: CGPoint) -> SKTile? {
-        for layer in tileLayers.reversed() {
-            if layer.visible == true {
-                if let tile = layer.tileAt(coord: coord) {
-                    return tile
-                }
-            }
-        }
-        return nil
-    }
-    
     // MARK: - Objects
     
     /**
-     Return all of the current tile objects.
+     Return all of the current tile objects. If recursive is false, only returns tiles from top-level layers.
      
+     - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTileObject]` array of objects.
      */
-    open func getObjects() -> [SKTileObject] {
-        return objectGroups.flatMap { $0.getObjects() }
+    open func getObjects(recursive: Bool=true) -> [SKTileObject] {
+        return objectGroups(recursive: recursive).flatMap { $0.getObjects() }
     }
     
     /**
-     Return objects matching a given type.
+     Return objects matching a given type. If recursive is false, only returns tiles from top-level layers.
      
-     - parameter type: `String` object type to query.
+     - parameter type:      `String` object type to query.
+     - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTileObject]` array of objects.
      */
-    open func getObjects(ofType type: String) -> [SKTileObject] {
-        return objectGroups.flatMap { $0.getObjects(ofType: type) }
+    open func getObjects(ofType type: String, recursive: Bool=true) -> [SKTileObject] {
+        return objectGroups(recursive: recursive).flatMap { $0.getObjects(ofType: type) }
     }
     
     /**
-     Return objects matching a given name.
+     Return objects matching a given name. If recursive is false, only returns tiles from top-level layers.
      
-     - parameter named: `String` object name to query.
+     - parameter named:     `String` object name to query.
+     - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTileObject]` array of objects.
      */
-    open func getObjects(_ named: String) -> [SKTileObject] {
-        return objectGroups.flatMap { $0.getObjects(named: named) }
+    open func getObjects(named: String, recursive: Bool=true) -> [SKTileObject] {
+        return objectGroups(recursive: recursive).flatMap { $0.getObjects(named: named) }
     }
     
     /**
-     Return objects with a tile id.
+     Return objects with a tile id. If recursive is false, only returns tiles from top-level layers.
      
-     - returns: `[SKTileObject]` objects with tileID.
+     - parameter recursive: `Bool` include nested layers.
+     - returns: `[SKTileObject]` objects with a tile gid.
      */
-    open func getTileObjects() -> [SKTileObject] {
-        return objectGroups.flatMap { $0.getTileObjects() }
+    open func tileObjects(recursive: Bool=true) -> [SKTileObject] {
+        return objectGroups(recursive: recursive).flatMap { $0.tileObjects() }
     }
     
-    // MARK: - Data
     /**
-     Returns data for a global tile id.
+     Return text objects. If recursive is false, only returns tiles from top-level layers.
      
-     - parameter gid: `Int` global tile id.
-     - returns: `SKTilesetData` tile data, if it exists.
+     - parameter recursive: `Bool` include nested layers.
+     - returns: `[SKTileObject]` text objects.
      */
-    open func getTileData(_ gid: Int) -> SKTilesetData? {
-        let id = flippedTileFlags(id: UInt32(gid)).gid
-        for tileset in tilesets where tileset.contains(globalID: id){
-            if let tileData = tileset.getTileData(globalID: Int(id)) {
-                return tileData
-            }
-        }
-        return nil
+    open func textObjects(recursive: Bool=true) -> [SKTileObject] {
+        return objectGroups(recursive: recursive).flatMap { $0.textObjects() }
     }
     
     // MARK: - Coordinates
@@ -1356,6 +1351,10 @@ extension SKTilemap {
         } set {
             guard newValue != baseLayer.debugDraw else { return }
             baseLayer.debugDraw = newValue
+            // show bounding box for renderable objects
+            for objectLayer in objectGroups(recursive: true) {
+                objectLayer.getObjects().filter { $0.isRenderableType == true }.map { $0.drawObject(debug: newValue) }
+            }
         }
     }
     
@@ -1374,10 +1373,11 @@ extension SKTilemap {
         let titleUnderline = String(repeating: "-", count: tilemapHeaderString.characters.count)
         var outputString = "\n\(tilemapHeaderString)\n\(titleUnderline)"
         
+        var allLayers = self.layers
+        allLayers.insert(self.baseLayer, at: 0)
+        // grab the stats from each layer
+        let allLayerStats = allLayers.map { $0.layerStatsDescription }
         
-        let allLayerStats = self.layers.map { $0.layerStatsDescription }
-        
-        print(allLayerStats)
         var columnSizes: [Int] = Array(repeating: 0, count: 9)
         var prefixes: [String] = ["", "", "", "", "pos", "size", "offset", "anc", "zpos"]
         var buffers: [Int] = [1, 2, 0, 0, 1, 1, 1, 1, 1]
@@ -1443,7 +1443,7 @@ extension SKTilemap {
         }
         
         
-        print(outputString)
+        print("\n" + outputString + "\n")
     }
 }
 
@@ -1492,20 +1492,64 @@ extension SKTilemapDelegate {
 }
 
 
-extension SKScene {
-    /// Returns a tilemap file name.
-    public var tmxFilename: String? {
-        var filename: String? = nil
-        enumerateChildNodes(withName: "//*") {
-            node, stop in
-            if node as? SKTilemap != nil {
-                filename = (node as? SKTilemap)?.filename
-                stop.pointee = true
-}
-        }
-        return filename
+// MARK: - Deprecated
+
+extension SKTilemap {
+    
+    /**
+     Returns an array of all child layers, sorted by index (first is lowest, last is highest).
+     
+     - returns: `[TiledLayerObject]` array of layers.
+     */
+    @available(*, deprecated, message: "use `getLayers()` instead")
+    open func allLayers() -> [TiledLayerObject] {
+        return layers.sorted(by: { $0.index < $1.index })
     }
+    
+    /**
+     Returns a named tile layer from the layers set.
+     
+     - parameter name: `String` tile layer name.
+     - returns: `TiledLayerObject?` layer object.
+     */
+    @available(*, deprecated, message: "use `getLayers(named:)` instead")
+    open func getLayer(named layerName: String) -> TiledLayerObject? {
+        if let index = layers.index( where: { $0.name == layerName } ) {
+            let layer = layers[index]
+            return layer
+        }
+        return nil
+    }
+    
+    /**
+     Returns a named tile layer if it exists, otherwise, nil.
+     
+     - parameter named: `String` tile layer name.
+     - returns: `SKTileLayer?`
+     */
+    @available(*, deprecated, message: "use `tileLayers(named:)` instead")
+    open func tileLayer(named name: String) -> SKTileLayer? {
+        if let layerIndex = tileLayers().index( where: { $0.name == name } ) {
+            let layer = tileLayers()[layerIndex]
+            return layer
+        }
+        return nil
+    }
+    
+    /**
+     Returns a named object group if it exists, otherwise, nil.
+     
+     - parameter named: `String` tile layer name.
+     - returns: `SKObjectGroup?`
+     */
+    @available(*, deprecated, message: "use `objectGroups(named:)` instead")
+    open func objectGroup(named name: String) -> SKObjectGroup? {
+        if let layerIndex = objectGroups().index( where: { $0.name == name } ) {
+            let layer = objectGroups()[layerIndex]
+            return layer
+        }
+        return nil
+    }
+    
 }
-
-
 

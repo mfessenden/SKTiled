@@ -30,20 +30,33 @@ import Cocoa
  */
 public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ context: CGContext, _ bounds: CGRect, _ scale: CGFloat) -> ()) -> CGImage {
     // create an image of size, not opaque, not scaled
+    
     UIGraphicsBeginImageContextWithOptions(size, false, scale)
     let context = UIGraphicsGetCurrentContext()
+    context!.interpolationQuality = .high
     let bounds = CGRect(origin: CGPoint.zero, size: size)
+    print("  -> size: \(size.shortDescription), bounds: \(bounds.size.shortDescription), ui scale: \(scale.roundTo())")
     whatToDraw(context!, bounds, scale)
     let result = UIGraphicsGetImageFromCurrentImageContext()
     return result!.cgImage!
 }
     
 #else
+/**
+ Returns an image of the given size.
+ 
+ - parameter size:       `CGSize` size of resulting image.
+ - parameter scale:      `CGFloat` scale of result, for macOS that should be 1.
+ - parameter whatToDraw: function detailing what to draw the image.
+ - returns: `CGImage` result.
+ */
 public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ context: CGContext, _ bounds: CGRect, _ scale: CGFloat) -> ()) -> CGImage {
     let scaledSize = size * scale
+    print("  -> size: \(scaledSize.shortDescription), ui scale: \(scale.roundTo())")
     let image = NSImage(size: scaledSize)
     image.lockFocus()
     let nsContext = NSGraphicsContext.current()!
+    nsContext.imageInterpolation = .high
     let context = nsContext.cgContext
     let bounds = CGRect(origin: CGPoint.zero, size: size)
     whatToDraw(context, bounds, scale)
@@ -245,27 +258,32 @@ public extension CGRect {
         self.size = size
     }
     
+    /// Returns the center point of the rectangle.
     public var center: CGPoint {
         return CGPoint(x: self.midX, y: self.midY)
     }
     
+    /// Returns the top-left corner point.
     public var topLeft: CGPoint {
         return origin
     }
     
+    /// Returns the top-right corner point.
     public var topRight: CGPoint {
         return CGPoint(x: origin.x + size.width, y: origin.y)
     }
     
+    /// Returns the bottom-left corner point.
     public var bottomLeft: CGPoint {
         return CGPoint(x: origin.x, y: origin.y + size.height)
     }
     
+    /// Returns the bottom-left corner point.
     public var bottomRight: CGPoint {
         return CGPoint(x: origin.x + size.width, y: origin.y + size.height)
     }
     
-    /// Returns the points of the four corners.
+    /// Return the four corner points.
     public var points: [CGPoint] {
         return [topLeft, topRight, bottomRight, bottomLeft]
     }
@@ -297,6 +315,19 @@ public extension SKScene {
         let dx = (pos.x - center.x)
         let dy = (pos.y - center.y)
         return CGVector(dx: dx, dy: dy)
+    }
+    
+    /// Returns a tilemap file name.
+    public var tmxFilename: String? {
+        var filename: String? = nil
+        enumerateChildNodes(withName: "//*") {
+            node, stop in
+            if node as? SKTilemap != nil {
+                filename = (node as? SKTilemap)?.filename
+                stop.pointee = true
+            }
+        }
+        return filename
     }
 }
 
@@ -773,6 +804,12 @@ public func / (lhs: CGSize, rhs: CGFloat) -> CGSize {
     return CGSize(width: lhs.width / rhs, height: lhs.height / rhs)
 }
 
+
+public func fabs(_ size: CGSize) -> CGSize {
+    return CGSize(width: fabs(size.width), height: fabs(size.height))
+}
+
+
 // MARK: CGVector
 public func + (lhs: CGVector, rhs: CGVector) -> CGVector {
     return CGVector(dx: lhs.dx + rhs.dx, dy: lhs.dy + rhs.dy)
@@ -861,7 +898,7 @@ public func normalize(_ value: CGFloat, _ minimum: CGFloat, _ maximum: CGFloat) 
  - parameter scale: `CGFloat` image scale.
  - returns: `SKTexture?` visual grid texture.
  */
-internal func drawGrid(_ layer: TiledLayerObject) -> CGImage {
+internal func drawGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8) -> CGImage {
     
     let uiScale: CGFloat
     #if os(iOS)
@@ -871,24 +908,25 @@ internal func drawGrid(_ layer: TiledLayerObject) -> CGImage {
     uiScale = NSScreen.main()!.backingScaleFactor
     #endif
     let size = layer.size
-    let tileWidth = layer.tileWidth    //* scale
-    let tileHeight = layer.tileHeight  //* scale
+    let tileWidth = layer.tileWidth * imageScale    //* scale
+    let tileHeight = layer.tileHeight * imageScale  //* scale
                 
     let tileWidthHalf = tileWidth / 2
     let tileHeightHalf = tileHeight / 2
                 
-    var sizeInPoints = layer.sizeInPoints
+    var sizeInPoints = (layer.sizeInPoints * imageScale)
     sizeInPoints = sizeInPoints + 1
     
     return imageOfSize(sizeInPoints, scale: uiScale) { context, bounds, scale in
                 
         let innerColor = layer.gridColor
         // line width should be at least 1 for larger tile sizes
-        let lineWidth: CGFloat = (tileHeight <= 16) ? 0.5 : 0.5
-                
+        //let actualTileHeight = (tileHeight / imageScale)
+        let lineWidth: CGFloat = (imageScale / 4 >= 3) ? imageScale / 4 : 3
+        print("    -> grid line width: \(lineWidth.roundTo())")
         context.setLineWidth(lineWidth)
         //context.setLineDash(phase: 0.5, lengths: [0.5, 1.0])
-        context.setShouldAntialias(false)  // layer.antialiased
+        context.setShouldAntialias(true)  // layer.antialiased
                 
         for col in 0 ..< Int(size.width) {
             for row in (0 ..< Int(size.height)) {
@@ -898,8 +936,8 @@ internal func drawGrid(_ layer: TiledLayerObject) -> CGImage {
                 
                 let screenPosition = layer.tileToScreenCoords(CGPoint(x: col, y: row))
                 
-                var xpos: CGFloat = screenPosition.x
-                var ypos: CGFloat = screenPosition.y
+                var xpos: CGFloat = screenPosition.x * imageScale
+                var ypos: CGFloat = screenPosition.y * imageScale
                 
                 switch layer.orientation {
                 case .orthogonal:
@@ -939,7 +977,8 @@ internal func drawGrid(_ layer: TiledLayerObject) -> CGImage {
                     
                         // flat - currently not working
                         if (staggerX == true) {
-                            r = (tileWidth - layer.tilemap.sideLengthX) / 2
+                            let sizeLengthX = (layer.tilemap.sideLengthX * imageScale)
+                            r = (tileWidth - sizeLengthX) / 2
                             h = tileHeight / 2
                             variableSize = tileWidth - (r * 2)
                             hexPoints[0] = CGPoint(x: xpos - (variableSize / 2), y: ypos + h)
@@ -952,7 +991,8 @@ internal func drawGrid(_ layer: TiledLayerObject) -> CGImage {
 
                         } else {
                             r = tileWidth / 2
-                            h = (tileHeight - layer.tilemap.sideLengthY) / 2
+                            let sizeLengthY = (layer.tilemap.sideLengthY * imageScale)
+                            h = (tileHeight - sizeLengthY) / 2
                             variableSize = tileHeight - (h * 2)
                             hexPoints[0] = CGPoint(x: xpos, y: ypos + (tileHeight / 2))
                             hexPoints[1] = CGPoint(x: xpos + (tileWidth / 2), y: ypos + (variableSize / 2))

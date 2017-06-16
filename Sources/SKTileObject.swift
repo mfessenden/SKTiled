@@ -116,7 +116,6 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     open var text: String!
     open var textAttributes: TextObjectAttributes!
     
-    
     /// Object opacity
     open var opacity: CGFloat {
         get { return self.alpha }
@@ -147,6 +146,11 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         return boundingRect.center
     }
     
+    /// Signifies that this object requires
+    open var isRenderableType: Bool {
+        return (gid != nil) || (textAttributes != nil)
+    }
+    
     // MARK: - Init
     /**
      Initialize the object with width & height attributes.
@@ -157,7 +161,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
      */
     public init(width: CGFloat, height: CGFloat, type: SKObjectType = .rectangle){
         super.init()
-    
+        
         // Rectangular and ellipse objects get initial points.
         if (width > 0) && (height > 0) {
             points = [CGPoint(x: 0, y: 0),
@@ -174,9 +178,9 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     
     public init?(attributes: [String: String]) {
         // required attributes
-        guard let objectID = attributes["id"] else { return nil }        
-        guard let xcoord = attributes["x"] else { return nil }        
-        guard let ycoord = attributes["y"] else { return nil }        
+        guard let objectID = attributes["id"],
+                let xcoord = attributes["x"],
+                let ycoord = attributes["y"] else { return nil }
         
         id = Int(objectID)!
         super.init()
@@ -267,16 +271,25 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     /**
      Render the object.
      */
-    public func drawObject(debug: Bool=false) {
+    open func drawObject(debug: Bool=false) {
         
-        guard let layer = layer else { return }
-        guard points.count > 1 else { return }
-        guard let vertices = getVertices() else { return }
+        guard let layer = layer,
+            let vertices = getVertices(),
+            points.count > 1 else { return }
+
+        let uiScale: CGFloat
+        #if os(iOS)
+        uiScale = UIScreen.main.scale
+        #endif
+        #if os(OSX)
+        uiScale = NSScreen.main()!.backingScaleFactor
+        #endif
+        
         
         // polyline objects should have no fill
-        self.zPosition = layer.tilemap.lastZPosition + layer.tilemap.zDeltaForLayers
         self.fillColor = (self.objectType == .polyline) ? SKColor.clear : self.fillColor
-        self.isAntialiased = layer.antialiased
+        self.isAntialiased = false //layer.antialiased
+        self.lineJoin = .miter
         
         // scale linewidth for smaller objects
         let lwidth = (doubleForKey("lineWidth") != nil) ? CGFloat(doubleForKey("lineWidth")!) : layer.lineWidth
@@ -284,42 +297,43 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             
         // flip the vertex values on the y-value for our coordinate transform.
         // for some odd reason tile objects are flipped in the y-axis already, so ignore the translated
-        var translatedVertices: [CGPoint] = (gid == nil) ? vertices.map {$0.invertedY} : vertices
+        var translatedVertices: [CGPoint] = (gid == nil) ? vertices.map { $0.invertedY } : vertices
             
-            switch objectType {
+        switch objectType {
                 
         case .ellipse:
-                var bezPoints: [CGPoint] = []
+            var bezPoints: [CGPoint] = []
             for (index, point) in translatedVertices.enumerated() {
                 let nextIndex = (index < translatedVertices.count - 1) ? index + 1 : 0
                 bezPoints.append(lerp(start: point, end: translatedVertices[nextIndex], t: 0.5))
-                }
-                
-                self.path = bezierPath(bezPoints, closed: true, alpha: 0.75)
-                
-                // draw a cage around the curve
-            if (layer.orientation == .isometric) {
-                let controlPath = polygonPath(translatedVertices)
-                    let controlShape = SKShapeNode(path: controlPath, centered: false)
-                    addChild(controlShape)
-                    controlShape.fillColor = SKColor.clear
-                    controlShape.strokeColor = self.strokeColor.withAlphaComponent(0.2)
-                    controlShape.isAntialiased = true
-                    controlShape.lineWidth = self.lineWidth / 2
-                }
-                
-            default:
-                let closedPath: Bool =  (self.objectType == .polyline) ? false : true
-            self.path = polygonPath(translatedVertices, closed: closedPath)
             }
             
-            // draw the first point of poly objects
-            if (self.objectType == .polyline) || (self.objectType == .polygon) {
+            self.path = bezierPath(bezPoints, closed: true, alpha: 0.75)
+                
+            // draw a cage around the curve
+            if (layer.orientation == .isometric) {
+                let controlPath = polygonPath(translatedVertices)
+                let controlShape = SKShapeNode(path: controlPath, centered: false)
+                addChild(controlShape)
+                controlShape.fillColor = SKColor.clear
+                controlShape.strokeColor = self.strokeColor.withAlphaComponent(0.2)
+                controlShape.isAntialiased = true
+                controlShape.lineWidth = self.lineWidth / 2
+            }
+            
+        default:
+            let closedPath: Bool = (self.objectType == .polyline) ? false : true
+            self.path = polygonPath(translatedVertices, closed: closedPath)
+        }
+        
+        // draw the first point of poly objects
+        if (self.objectType == .polyline) || (self.objectType == .polygon) {
                 
             if (self.gid == nil) {
                 childNode(withName: "FirstPoint")?.removeFromParent()
-
-                let anchor = SKShapeNode(circleOfRadius: self.lineWidth * 2.5)
+                
+                let anchorRadius = (self.lineWidth * 2 < 6) ? self.lineWidth * 2 : 6
+                let anchor = SKShapeNode(circleOfRadius: anchorRadius)
                 anchor.name = "FirstPoint"
                 addChild(anchor)
                 anchor.position = vertices[0].invertedY
@@ -331,7 +345,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         
         // if the object has a gid property, render it as a tile
         if let gid = gid {
-            guard let tileData = layer.tilemap.getTileData(gid) else {
+            guard let tileData = layer.tilemap.getTileData(globalID: gid) else {
                 print("Error: Tile object \"\(name ?? "null")\" cannot access tile data for id: \(gid)")
                 return
             }
@@ -350,8 +364,8 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             
             // remove existing tile
             self.tile?.removeFromParent()
-            
-                if (tileData.texture != nil) {
+
+            if (tileData.texture != nil) {
                 
                 childNode(withName: "TileObject")?.removeFromParent()
                 if let tileSprite = SKTile(data: tileData) {
@@ -370,7 +384,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                     // debug stroke color
                     isAntialiased = false
                     lineWidth = 0.75
-                    strokeColor = (debug == false) ? SKColor.clear : strokeColor
+                    strokeColor = (debug == false) ? SKColor.clear : layer.gridColor.withAlphaComponent(0.75)
                     fillColor = SKColor.clear
                     tileSprite.runAnimation()
                     
@@ -380,47 +394,79 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         }
         
         // render text object
-        if let textAttributes = textAttributes {
-            //self.drawTextObject(textValue: text, textColor: fontColor, fontSize: 24)
+        if let _ = textAttributes {
             
-            /*
-            let image = drawTextObject(textValue: text, size: self.size, inRect: rect, fontSize: 24)
+            let scaleValue: CGFloat = 8
+            let image = drawTextObject(textValue: text, withScale: scaleValue)
             
-            //strokeColor = (debug == false) ? SKColor.clear : strokeColor
-            //fillColor = SKColor.clear
+            strokeColor = (debug == false) ? SKColor.clear : layer.gridColor.withAlphaComponent(0.75)
+            fillColor = SKColor.clear
             
             childNode(withName: "TextObject")?.removeFromParent()
             let textTexture = SKTexture(cgImage: image)
             let textSprite = SKSpriteNode(texture: textTexture)
-            
+            print("  -> text sprite size: \(textSprite.size.roundTo())")
             textSprite.name = "TextObject"
             addChild(textSprite)
             
-            textSprite.zPosition = zPosition + 20000
-            textSprite.position = rect.center
-            */
+            let finalScaleValue: CGFloat = (1 / scaleValue) / uiScale
+            print("  -> final scale size: \(finalScaleValue.roundTo())")
+            
+            textSprite.zPosition = zPosition - 1
+            textSprite.setScale(finalScaleValue)
+            textSprite.position = self.boundingRect.center
+            
         }
     }
     
-    #if os(iOS)
-    func imageOfTextObject() -> CGImage? {
-        return nil
+    /**
+     Draw the text object. Scale factor is to allow for text to render clearly at higher zoom levels.
+     
+     - parameter textValue: `String` text string.
+     - parameter withScale: `CGFloat` size scale.
+     - returns: `CGImage` rendered text image.
+     */
+    open func drawTextObject(textValue: String, withScale: CGFloat=8) -> CGImage {
+        // TODO: Need to catch font errors here
+        let uiScale: CGFloat
+        #if os(iOS)
+        uiScale = UIScreen.main.scale
+        #endif
+        #if os(OSX)
+        uiScale = NSScreen.main()!.backingScaleFactor
+        #endif
+        
+        // need absolute size
+        let rectSize = fabs(self.boundingRect.size) * withScale
+        print("# [SKTileObject]: drawing text \"\(self.text!)\" in \(rectSize), scale: \(withScale.roundTo())")
+        return imageOfSize(rectSize, scale: uiScale) { context, bounds, scale in
+            context.saveGState()
+            
+            // text block style
+            let rectangleStyle = NSMutableParagraphStyle()
+            
+            // text block attributes
+            #if os(iOS)
+            rectangleStyle.alignment = NSTextAlignment(rawValue: Int(textAttributes.alignment.horizontal.toUInt))!
+            let rectangleFontAttributes: [String : Any] = [
+                    NSFontAttributeName: UIFont(name: textAttributes.fontName, size: textAttributes.fontSize * withScale)!,
+                    NSForegroundColorAttributeName: textAttributes.fontColor,
+                    NSParagraphStyleAttributeName: rectangleStyle,
+                    ]
+            #else
+            rectangleStyle.alignment = NSTextAlignment(rawValue: textAttributes.alignment.horizontal.toUInt)!
+            let rectangleFontAttributes: [String : Any] = [
+                NSFontAttributeName: NSFont(name: textAttributes.fontName, size: textAttributes.fontSize * withScale)!,
+                NSForegroundColorAttributeName: textAttributes.fontColor,
+                NSParagraphStyleAttributeName: rectangleStyle,
+                ]
+            #endif
+
+            
+            self.text!.draw(in: bounds, withAttributes: rectangleFontAttributes)
+            context.restoreGState()
+        }
     }
-    
-    func drawTextObject(textValue: String, textColor: SKColor, fontSize: CGFloat = 10) {
-        print("# [SKTileObject]: drawing text...")
-    }
-    
-    #else
-    func imageOfTextObject() -> CGImage? {
-        return nil
-    }
-    
-    
-    func drawTextObject(textValue: String, textColor: SKColor, fontSize: CGFloat = 10) {
-        print("# [SKTileObject]: drawing text...")
-    }
-    #endif
 
     // MARK: - Polygon Points
     /**
@@ -457,8 +503,8 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
      - returns: `[CGPoint]?` array of points.
      */
     public func getVertices() -> [CGPoint]? {
-        guard let layer = layer else { return nil}
-        guard points.count > 1 else { return nil}
+        guard let layer = layer,
+                (points.count > 1) else { return nil}
                 
         var vertices: [CGPoint] = []
         
@@ -518,7 +564,6 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
 }
 
 
-
 extension SKTileObject {
     override open var hashValue: Int { return id.hashValue }
     
@@ -561,3 +606,32 @@ extension SKTileObject {
     }
 }
 
+
+extension TextObjectAttributes.TextAlignment.HoriztonalAlignment {
+    /// Return a UInt value for passing to NSTextAlignment.
+    public var toUInt: UInt {
+        switch self {
+        case .left:
+            return 0
+        case .right:
+            return 1
+        case .center:
+            return 2
+        }
+    }
+}
+
+
+extension TextObjectAttributes.TextAlignment.VerticalAlignment {
+    /// Return a UInt value for passing to NSTextAlignment.
+    public var toUInt: UInt {
+        switch self {
+        case .top:
+            return 0
+        case .center:
+            return 1
+        case .bottom:
+            return 2
+        }
+    }
+}
