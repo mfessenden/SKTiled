@@ -17,12 +17,6 @@ class GameViewController: NSViewController {
     @IBOutlet weak var tileInfoLabel: NSTextField!
     @IBOutlet weak var propertiesInfoLabel: NSTextField!
     @IBOutlet weak var debugInfoLabel: NSTextField!
-    
-    @IBOutlet weak var chooseButton: NSButton!
-    @IBOutlet weak var fitButton: NSButton!
-    @IBOutlet weak var gridButton: NSButton!
-    @IBOutlet weak var objectsButton: NSButton!
-    @IBOutlet weak var nextButton: NSButton!
     @IBOutlet weak var cursorTracker: NSTextField!
     
     var demoFiles: [String] = []
@@ -42,8 +36,6 @@ class GameViewController: NSViewController {
         skView.showsNodeCount = true
         skView.showsDrawCount = true
         #endif
-        skView.showsFields = true
-        skView.showsPhysics = true
         
         /* Sprite Kit applies additional optimizations to improve rendering performance */
         skView.ignoresSiblingOrder = true
@@ -97,8 +89,8 @@ class GameViewController: NSViewController {
     }
     
     @IBAction func fitButtonPressed(_ sender: Any) {
-        guard let view = self.view as? SKView else { return }
-        guard let scene = view.scene as? SKTiledScene else { return }
+        guard let view = self.view as? SKView,
+            let scene = view.scene as? SKTiledScene else { return }
         
         if let cameraNode = scene.cameraNode {
             cameraNode.fitToView(newSize: view.bounds.size)
@@ -106,8 +98,8 @@ class GameViewController: NSViewController {
     }
     
     @IBAction func gridButtonPressed(_ sender: Any) {
-        guard let view = self.view as? SKView else { return }
-        guard let scene = view.scene as? SKTiledScene else { return }
+        guard let view = self.view as? SKView,
+            let scene = view.scene as? SKTiledScene else { return }
         
         if let tilemap = scene.tilemap {
             tilemap.debugDraw = !tilemap.debugDraw
@@ -115,8 +107,9 @@ class GameViewController: NSViewController {
     }
     
     @IBAction func objectsButtonPressed(_ sender: Any) {
-        guard let view = self.view as? SKView else { return }
-        guard let scene = view.scene as? SKTiledScene else { return }
+        guard let view = self.view as? SKView,
+            let scene = view.scene as? SKTiledScene else { return }
+        
         if let tilemap = scene.tilemap {
             let debugState = !tilemap.showObjects
             tilemap.showObjects = debugState
@@ -134,12 +127,11 @@ class GameViewController: NSViewController {
      */
     override func scrollWheel(with event: NSEvent) {
         guard let view = self.view as? SKView else { return }
+        
         if let currentScene = view.scene as? SKTiledDemoScene {
             currentScene.scrollWheel(with: event)
         }
     }
-    
-    override func mouseEntered(with event: NSEvent) {}
     
     /**
      Load the next tilemap scene.
@@ -158,6 +150,7 @@ class GameViewController: NSViewController {
             if let cameraNode = currentScene.cameraNode {
                 showOverlay = cameraNode.showOverlay
             }
+            
             debugMode = currentScene.debugMode
             liveMode = currentScene.liveMode
             if let tilemap = currentScene.tilemap {
@@ -176,7 +169,7 @@ class GameViewController: NSViewController {
             nextFilename = demoFiles[index + 1]
         }
         
-        let nextScene = SKTiledDemoScene(size: view.bounds.size) //, tmxFile: nextFilename)
+        let nextScene = SKTiledDemoScene(size: view.bounds.size)
         nextScene.scaleMode = .aspectFill
         let transition = SKTransition.fade(withDuration: interval)
         nextScene.debugMode = debugMode
@@ -208,6 +201,7 @@ class GameViewController: NSViewController {
             if let cameraNode = currentScene.cameraNode {
                 showOverlay = cameraNode.showOverlay
             }
+            
             debugMode = currentScene.debugMode
             liveMode = currentScene.liveMode
             if let tilemap = currentScene.tilemap {
@@ -226,7 +220,7 @@ class GameViewController: NSViewController {
             nextFilename = demoFiles[index - 1]
         }
         
-        let nextScene = SKTiledDemoScene(size: view.bounds.size) //, tmxFile: nextFilename)
+        let nextScene = SKTiledDemoScene(size: view.bounds.size)
         nextScene.scaleMode = .aspectFill
         let transition = SKTransition.fade(withDuration: interval)
         view.presentScene(nextScene, transition: transition)
@@ -268,6 +262,11 @@ class GameViewController: NSViewController {
         return result
     }
     
+    /**
+     Update the debugging labels with scene information.
+     
+     - parameter notification: `Notification` notification.
+     */
     func updateDebugLabels(notification: Notification) {
         if let mapInfo = notification.userInfo!["mapInfo"] {
             mapInfoLabel.stringValue = mapInfo as! String

@@ -12,12 +12,12 @@ import SpriteKit
 
 class GameViewControllerIOS: UIViewController {
 
-    var demoFiles: [String] = []
-
     @IBOutlet weak var mapInfoLabel: UILabel!
     @IBOutlet weak var tileInfoLabel: UILabel!
     @IBOutlet weak var propertiesInfoLabel: UILabel!
-
+    
+    var demoFiles: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -34,7 +34,8 @@ class GameViewControllerIOS: UIViewController {
 
         /* Sprite Kit applies additional optimizations to improve rendering performance */
         skView.ignoresSiblingOrder = true
-
+        setupDebuggingLabels()
+        
         /* create the game scene */
         let scene = SKTiledDemoScene(size: self.view.bounds.size)
 
@@ -44,13 +45,24 @@ class GameViewControllerIOS: UIViewController {
         //set up notification for scene to load the next file
         NotificationCenter.default.addObserver(self, selector: #selector(loadNextScene), name: NSNotification.Name(rawValue: "loadNextScene"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadPreviousScene), name: NSNotification.Name(rawValue: "loadPreviousScene"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateDebugLabels), name: NSNotification.Name(rawValue: "updateDebugLabels"), object: nil)
+        
         skView.presentScene(scene)
         scene.setup(tmxFile: currentFilename)
     }
+    
+    /**
+     Set up the debugging labels.
+     */
+    func setupDebuggingLabels() {
+        mapInfoLabel.text = "Map: "
+        tileInfoLabel.text = "Tile: "
+        propertiesInfoLabel.text = "Properties:"
+    }
 
     @IBAction func fitButtonPressed(_ sender: Any) {
-        guard let view = self.view as? SKView else { return }
-        guard let scene = view.scene as? SKTiledScene else { return }
+        guard let view = self.view as? SKView,
+                let scene = view.scene as? SKTiledScene else { return }
 
         if let cameraNode = scene.cameraNode {
             cameraNode.fitToView(newSize: view.bounds.size)
@@ -58,8 +70,8 @@ class GameViewControllerIOS: UIViewController {
     }
 
     @IBAction func gridButtonPressed(_ sender: Any) {
-        guard let view = self.view as? SKView else { return }
-        guard let scene = view.scene as? SKTiledScene else { return }
+        guard let view = self.view as? SKView,
+            let scene = view.scene as? SKTiledScene else { return }
 
         if let tilemap = scene.tilemap {
             tilemap.debugDraw = !tilemap.debugDraw
@@ -67,8 +79,8 @@ class GameViewControllerIOS: UIViewController {
     }
 
     @IBAction func objectsButtonPressed(_ sender: Any) {
-        guard let view = self.view as? SKView else { return }
-        guard let scene = view.scene as? SKTiledScene else { return }
+        guard let view = self.view as? SKView,
+            let scene = view.scene as? SKTiledScene else { return }
 
         if let tilemap = scene.tilemap {
             let debugState = !tilemap.showObjects
@@ -87,9 +99,11 @@ class GameViewControllerIOS: UIViewController {
      */
     func loadNextScene(_ interval: TimeInterval=0.4) {
         guard let view = self.view as? SKView else { return }
+        
         var debugMode = false
+        var showOverlay = true
+        
         var currentFilename = demoFiles.first!
-        var showOverlay: Bool = true
         if let currentScene = view.scene as? SKTiledDemoScene {
             if let cameraNode = currentScene.cameraNode {
                 showOverlay = cameraNode.showOverlay
@@ -97,6 +111,7 @@ class GameViewControllerIOS: UIViewController {
 
             debugMode = currentScene.debugMode
             if let tilemap = currentScene.tilemap {
+                debugMode = tilemap.debugDraw
                 currentFilename = tilemap.name!
             }
 
@@ -110,13 +125,16 @@ class GameViewControllerIOS: UIViewController {
         if let index = demoFiles.index(of: currentFilename) , index + 1 < demoFiles.count {
             nextFilename = demoFiles[index + 1]
         }
+        
         let nextScene = SKTiledDemoScene(size: view.bounds.size)
         nextScene.scaleMode = .aspectFill
         let transition = SKTransition.fade(withDuration: interval)
+        
         nextScene.debugMode = debugMode
         view.presentScene(nextScene, transition: transition)
         nextScene.setup(tmxFile: nextFilename)
         nextScene.cameraNode?.showOverlay = showOverlay
+        nextScene.tilemap?.debugDraw = debugMode
     }
 
     /**
@@ -127,16 +145,21 @@ class GameViewControllerIOS: UIViewController {
     func loadPreviousScene(_ interval: TimeInterval=0.4) {
         guard let view = self.view as? SKView else { return }
 
+        var debugMode = false
+        var showOverlay = true
+        
         var currentFilename = demoFiles.first!
-        var showOverlay: Bool = true
         if let currentScene = view.scene as? SKTiledDemoScene {
             if let cameraNode = currentScene.cameraNode {
                 showOverlay = cameraNode.showOverlay
             }
+            
+            debugMode = currentScene.debugMode
             if let tilemap = currentScene.tilemap {
-                currentFilename = tilemap.name!
+                debugMode = tilemap.debugDraw
+                currentFilename = tilemap.filename!
             }
-
+            
             currentScene.removeFromParent()
             currentScene.removeAllActions()
         }
@@ -152,8 +175,10 @@ class GameViewControllerIOS: UIViewController {
         nextScene.scaleMode = .aspectFill
         let transition = SKTransition.fade(withDuration: interval)
         view.presentScene(nextScene, transition: transition)
+        
         nextScene.setup(tmxFile: nextFilename)
         nextScene.cameraNode?.showOverlay = showOverlay
+        nextScene.tilemap?.debugDraw = debugMode
     }
 
     override var shouldAutorotate: Bool {
@@ -161,11 +186,7 @@ class GameViewControllerIOS: UIViewController {
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
-        } else {
-            return .all
-        }
+        return .landscape
     }
 
     override func didReceiveMemoryWarning() {
@@ -190,5 +211,24 @@ class GameViewControllerIOS: UIViewController {
             }
         }
         return result
+    }
+    
+    /**
+     Update the debugging labels with scene information.
+     
+     - parameter notification: `Notification` notification.
+     */
+    func updateDebugLabels(notification: Notification) {
+        if let mapInfo = notification.userInfo!["mapInfo"] {
+            mapInfoLabel.text = mapInfo as? String
+        }
+        
+        if let tileInfo = notification.userInfo!["tileInfo"] {
+            tileInfoLabel.text = tileInfo as? String
+        }
+        
+        if let propertiesInfo = notification.userInfo!["propertiesInfo"] {
+            propertiesInfoLabel.text = propertiesInfo as? String
+        }
     }
 }

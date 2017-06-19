@@ -312,7 +312,6 @@ extension SKTiledDemoScene {
         
         var debugInfoString = ""
         
-        
         updatePropertiesInfo(msg: propertiesInfoString)
         updateDebugInfo(msg: debugInfoString)
     }
@@ -424,8 +423,21 @@ extension SKTiledDemoScene {
             
         }
         
+        // 'J' fades the layers in succession
+        if event.keyCode == 0x26 {
+            var fadeTime: TimeInterval = 3
+            let additionalTime: TimeInterval = (tilemap.layerCount > 6) ? 1.25 : 2.25
+            for (_, layer) in tilemap.layers.enumerated() {
+                guard (layer as? SKGroupLayer) == nil else { continue }
+                let fadeAction = SKAction.fadeAfter(wait: fadeTime, alpha: 0)
+                layer.run(fadeAction, completion: {
+                    //print(" -> hiding layer: \"\(layer.name ?? "null")\"")
+                })
+                fadeTime += additionalTime
+            }
+        }
     }
-    
+
     /**
      Remove old tracking views and add the current.
     */

@@ -171,16 +171,5 @@
    H4sIAAAAAAAAA2NgGFxAiIGhYaDdQAkQptD9ADVzzeSQAQAA
   </data>
  </layer>
- <objectgroup name="Collisions">
-  <object id="38" name="hex2" x="352" y="251">
-   <polygon points="0,0 32,-16 64,0 64,31 32,47 0,31"/>
-  </object>
-  <object id="39" name="hex1" x="0" y="0">
-   <properties>
-    <property name="color" type="color" value="#ff57bf18"/>
-   </properties>
-   <polygon points="0,0 32,-16 64,0 64,31 32,47 0,31"/>
-  </object>
-  <object id="40" name="tile1" gid="1" x="320" y="228" width="65" height="230"/>
- </objectgroup>
+ <objectgroup name="Collisions"/>
 </map>

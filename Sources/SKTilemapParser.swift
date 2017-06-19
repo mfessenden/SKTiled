@@ -850,6 +850,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
  
                         // create text attributes
                         currentObject.textAttributes = TextObjectAttributes(font: fontName, size: fontSize, color: fontColor)
+                        currentObject.visible = true
                         
                         if let bold = attributeDict["bold"] {
                             currentObject.textAttributes.isBold = (bold == "1")
@@ -883,7 +884,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                                 currentObject.textAttributes.alignment.vertical = valignment
                             }
                         }
-                        
                     }
                 }
             }

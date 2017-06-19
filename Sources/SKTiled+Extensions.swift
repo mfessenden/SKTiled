@@ -35,7 +35,7 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
     let context = UIGraphicsGetCurrentContext()
     context!.interpolationQuality = .high
     let bounds = CGRect(origin: CGPoint.zero, size: size)
-    print("  -> size: \(size.shortDescription), bounds: \(bounds.size.shortDescription), ui scale: \(scale.roundTo())")
+    //print("  -> size: \(size.shortDescription), bounds: \(bounds.size.shortDescription), ui scale: \(scale.roundTo())")
     whatToDraw(context!, bounds, scale)
     let result = UIGraphicsGetImageFromCurrentImageContext()
     return result!.cgImage!
@@ -52,7 +52,7 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
  */
 public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ context: CGContext, _ bounds: CGRect, _ scale: CGFloat) -> ()) -> CGImage {
     let scaledSize = size * scale
-    print("  -> size: \(scaledSize.shortDescription), ui scale: \(scale.roundTo())")
+    //print("  -> size: \(scaledSize.shortDescription), ui scale: \(scale.roundTo())")
     let image = NSImage(size: scaledSize)
     image.lockFocus()
     let nsContext = NSGraphicsContext.current()!
@@ -901,11 +901,13 @@ public func normalize(_ value: CGFloat, _ minimum: CGFloat, _ maximum: CGFloat) 
 internal func drawGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8) -> CGImage {
     
     let uiScale: CGFloat
+    let defaultLineWidth: CGFloat
     #if os(iOS)
     uiScale = UIScreen.main.scale
-    #endif
-    #if os(OSX)
+    defaultLineWidth = 1
+    #else
     uiScale = NSScreen.main()!.backingScaleFactor
+    defaultLineWidth = 3
     #endif
     let size = layer.size
     let tileWidth = layer.tileWidth * imageScale    //* scale
@@ -915,15 +917,14 @@ internal func drawGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8) -> CGIm
     let tileHeightHalf = tileHeight / 2
                 
     var sizeInPoints = (layer.sizeInPoints * imageScale)
-    sizeInPoints = sizeInPoints + 1
+    //sizeInPoints = sizeInPoints + 1
     
     return imageOfSize(sizeInPoints, scale: uiScale) { context, bounds, scale in
                 
         let innerColor = layer.gridColor
+        
         // line width should be at least 1 for larger tile sizes
-        //let actualTileHeight = (tileHeight / imageScale)
-        let lineWidth: CGFloat = (imageScale / 4 >= 3) ? imageScale / 4 : 3
-        print("    -> grid line width: \(lineWidth.roundTo())")
+        let lineWidth: CGFloat = (imageScale / 4 >= 3) ? imageScale / 4 : defaultLineWidth
         context.setLineWidth(lineWidth)
         //context.setLineDash(phase: 0.5, lengths: [0.5, 1.0])
         context.setShouldAntialias(true)  // layer.antialiased

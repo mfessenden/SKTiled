@@ -355,7 +355,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     }
     
     /// Global property to show/hide all `SKTileObject` objects.
-    open var showObjects: Bool = true {
+    open var showObjects: Bool = false {
         didSet {
             guard oldValue != showObjects else { return }
             for objectGroup in objectGroups(recursive: true) {

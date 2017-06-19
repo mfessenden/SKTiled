@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="staggered" renderorder="right-down" width="15" height="35" tilewidth="64" tileheight="33" staggeraxis="y" staggerindex="odd" backgroundcolor="#000000" nextobjectid="12">
+<map version="1.0" tiledversion="1.0.1" orientation="staggered" renderorder="right-down" width="15" height="35" tilewidth="64" tileheight="33" staggeraxis="y" staggerindex="odd" backgroundcolor="#000000" nextobjectid="12">
  <properties>
   <property name="autoResize" type="bool" value="true"/>
-  <property name="frameColor" type="color" value="#ff4f5051"/>
-  <property name="gridColor" type="color" value="#ffb4b7b9"/>
+  <property name="frameColor" type="color" value="#ff5adc1f"/>
+  <property name="gridColor" type="color" value="#ff91ff5d"/>
  </properties>
  <tileset firstgid="1" name="Iso5_64x33_64x192" tilewidth="64" tileheight="192" tilecount="72" columns="18">
   <image source="staggered-64x192.png" trans="5e81a2" width="1152" height="768"/>

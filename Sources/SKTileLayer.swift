@@ -1570,7 +1570,7 @@ open class SKObjectGroup: TiledLayerObject {
         addChild(object)
         
         // hide the object if the tilemap `showObjects` property is set to false
-        object.visible = (object.gid != nil) ? true : tilemap.showObjects
+        object.visible = (object.isRenderableType == true) ? true : tilemap.showObjects
         return object
     }
     
@@ -1984,29 +1984,25 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
                 let scaleValue: CGFloat
                 #if os(iOS)
                 uiScale = UIScreen.main.scale
-                scaleValue = 8
+                scaleValue = 1
                 #else
                 uiScale = NSScreen.main()!.backingScaleFactor
                 scaleValue = 8
                 #endif
-                print("# [SKTileLayer]: showing grid, ui scale: \(uiScale.roundTo()), scale: \(scaleValue.roundTo())")
+                //print("# [SKTileLayer]: showing grid, ui scale: \(uiScale.roundTo()), scale: \(scaleValue.roundTo())")
                 
                 // generate the texture
                 if (gridTexture == nil) {
                     let gridImage = drawGrid(self.layer, imageScale: scaleValue)
                     gridTexture = SKTexture(cgImage: gridImage)
-                    print("  -> grid texture size: \(gridTexture.size().shortDescription)")
                     gridTexture.filteringMode = .linear
                 }
                 
                 // sprite scaling factor
                 let spriteScaleFactor: CGFloat = (1 / scaleValue)
-                print("  -> scale factor: \(spriteScaleFactor.roundTo())")
-                
                 gridSize = gridTexture.size() / uiScale
                 
                 #if os(iOS)
-                //position.y = -(gridSize.height / scaleValue)
                 setScale(spriteScaleFactor)
                 #else
                 setScale(spriteScaleFactor)
@@ -2015,7 +2011,6 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
                 texture = gridTexture
                 alpha = gridOpacity
                 size = gridSize / scaleValue
-                print("  -> grid sprite size: \(size.shortDescription)")
                 
                 #if os(OSX)
                 yScale *= -1
@@ -2203,7 +2198,7 @@ extension TiledLayerObject {
     }
     
     /// Returns the actual zPosition
-    public var actualZPosition: CGFloat {
+    internal var actualZPosition: CGFloat {
         return (isTopLevel == true) ? zPosition : parents.reduce(zPosition, { result, parent in
             return result + parent.zPosition
         })
@@ -2243,20 +2238,6 @@ extension TiledLayerObject {
 extension SKTiledLayerType {
     /// Returns a string representation of the layer type.
     internal var stringValue: String { return "\(self)".lowercased() }
-    internal var icon: String {
-        switch self {
-        case .image:
-            return "⊏"
-        case .tile:
-            return "⊞"
-        case .object:
-            return "☍"
-        case .group:
-            return "⧉"    // ↳
-        default:
-            return "␀"
-        }
-    }
 }
 
 

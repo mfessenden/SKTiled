@@ -54,7 +54,7 @@ internal enum LabelPosition {
  Text object attributes.
  */
 public struct TextObjectAttributes {
-    public var fontName: String = "system"
+    public var fontName: String = "Arial"
     public var fontSize: CGFloat = 12
     public var fontColor: SKColor = .black
     public var alignment: TextAlignment = TextAlignment()
@@ -64,6 +64,7 @@ public struct TextObjectAttributes {
     public var isItalic: Bool = false
     public var isUnderline: Bool = false
     public var isStrikeout: Bool = false
+    public var scaleValue: CGFloat = 8
     
     public init(font: String, size: CGFloat, color: SKColor = .black) {
         fontName = font
@@ -138,7 +139,6 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         guard let layer = layer else { return .zero }
         
         if (gid != nil) {
-            let tileSize = layer.tilemap.tileSize
             let tileAlignmentX = layer.tilemap.tileWidthHalf
             let tileAlignmentY = layer.tilemap.tileHeightHalf
             return CGPoint(x: tileAlignmentX, y: tileAlignmentY)
@@ -271,17 +271,17 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     /**
      Render the object.
      */
-    open func drawObject(debug: Bool=false) {
+    open func drawObject(debug: Bool=false, scaled: CGFloat?=nil) {
         
         guard let layer = layer,
             let vertices = getVertices(),
             points.count > 1 else { return }
-
+        
+        
         let uiScale: CGFloat
         #if os(iOS)
         uiScale = UIScreen.main.scale
-        #endif
-        #if os(OSX)
+        #else
         uiScale = NSScreen.main()!.backingScaleFactor
         #endif
         
@@ -294,7 +294,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         // scale linewidth for smaller objects
         let lwidth = (doubleForKey("lineWidth") != nil) ? CGFloat(doubleForKey("lineWidth")!) : layer.lineWidth
         self.lineWidth = (lwidth / layer.tileHeight < 0.075) ? lwidth : 0.5
-            
+        
         // flip the vertex values on the y-value for our coordinate transform.
         // for some odd reason tile objects are flipped in the y-axis already, so ignore the translated
         var translatedVertices: [CGPoint] = (gid == nil) ? vertices.map { $0.invertedY } : vertices
@@ -332,7 +332,8 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             if (self.gid == nil) {
                 childNode(withName: "FirstPoint")?.removeFromParent()
                 
-                let anchorRadius = (self.lineWidth * 2 < 6) ? self.lineWidth * 2 : 6
+                // the first-point radius should be larger for thinner (>1.0) line widths
+                let anchorRadius = (self.lineWidth > 1) ? self.lineWidth * 2 : self.lineWidth * 3.5
                 let anchor = SKShapeNode(circleOfRadius: anchorRadius)
                 anchor.name = "FirstPoint"
                 addChild(anchor)
@@ -393,11 +394,11 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             }
         }
         
-        // render text object
-        if let _ = textAttributes {
+        // render text object as an image and use with a sprite
+        if let textAttributes = textAttributes {
             
-            let scaleValue: CGFloat = 8
-            let image = drawTextObject(textValue: text, withScale: scaleValue)
+            let scaleValue: CGFloat = scaled ?? textAttributes.scaleValue
+            let image = drawTextObject(withScale: scaleValue)
             
             strokeColor = (debug == false) ? SKColor.clear : layer.gridColor.withAlphaComponent(0.75)
             fillColor = SKColor.clear
@@ -405,12 +406,11 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             childNode(withName: "TextObject")?.removeFromParent()
             let textTexture = SKTexture(cgImage: image)
             let textSprite = SKSpriteNode(texture: textTexture)
-            print("  -> text sprite size: \(textSprite.size.roundTo())")
             textSprite.name = "TextObject"
             addChild(textSprite)
             
+            // final scaling value depends on the quality factor
             let finalScaleValue: CGFloat = (1 / scaleValue) / uiScale
-            print("  -> final scale size: \(finalScaleValue.roundTo())")
             
             textSprite.zPosition = zPosition - 1
             textSprite.setScale(finalScaleValue)
@@ -426,41 +426,30 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
      - parameter withScale: `CGFloat` size scale.
      - returns: `CGImage` rendered text image.
      */
-    open func drawTextObject(textValue: String, withScale: CGFloat=8) -> CGImage {
+    open func drawTextObject(withScale: CGFloat=8) -> CGImage {
         // TODO: Need to catch font errors here
         let uiScale: CGFloat
         #if os(iOS)
         uiScale = UIScreen.main.scale
-        #endif
-        #if os(OSX)
+        #else
         uiScale = NSScreen.main()!.backingScaleFactor
         #endif
         
         // need absolute size
         let rectSize = fabs(self.boundingRect.size) * withScale
-        print("# [SKTileObject]: drawing text \"\(self.text!)\" in \(rectSize), scale: \(withScale.roundTo())")
         return imageOfSize(rectSize, scale: uiScale) { context, bounds, scale in
             context.saveGState()
             
             // text block style
             let rectangleStyle = NSMutableParagraphStyle()
             
-            // text block attributes
-            #if os(iOS)
-            rectangleStyle.alignment = NSTextAlignment(rawValue: Int(textAttributes.alignment.horizontal.toUInt))!
+            // text block attributes            
+            rectangleStyle.alignment = NSTextAlignment(rawValue: textAttributes.alignment.horizontal.intValue)!
             let rectangleFontAttributes: [String : Any] = [
-                    NSFontAttributeName: UIFont(name: textAttributes.fontName, size: textAttributes.fontSize * withScale)!,
+                    NSFontAttributeName: textAttributes.font,
                     NSForegroundColorAttributeName: textAttributes.fontColor,
                     NSParagraphStyleAttributeName: rectangleStyle,
                     ]
-            #else
-            rectangleStyle.alignment = NSTextAlignment(rawValue: textAttributes.alignment.horizontal.toUInt)!
-            let rectangleFontAttributes: [String : Any] = [
-                NSFontAttributeName: NSFont(name: textAttributes.fontName, size: textAttributes.fontSize * withScale)!,
-                NSForegroundColorAttributeName: textAttributes.fontColor,
-                NSParagraphStyleAttributeName: rectangleStyle,
-                ]
-            #endif
 
             
             self.text!.draw(in: bounds, withAttributes: rectangleFontAttributes)
@@ -607,9 +596,29 @@ extension SKTileObject {
 }
 
 
+extension TextObjectAttributes {
+    #if os(iOS)
+    public var font: UIFont {
+        if let uifont = UIFont(name: fontName, size: fontSize * scaleValue) {
+            return uifont
+        }
+        return UIFont.systemFont(ofSize: fontSize * scaleValue)
+    }
+    #else
+    public var font: NSFont {
+        if let nsfont = NSFont(name: fontName, size: fontSize * scaleValue) {
+            return nsfont
+        }
+        return NSFont.systemFont(ofSize: fontSize * scaleValue)
+    }
+    #endif
+}
+
+
 extension TextObjectAttributes.TextAlignment.HoriztonalAlignment {
-    /// Return a UInt value for passing to NSTextAlignment.
-    public var toUInt: UInt {
+    /// Return a integer value for passing to NSTextAlignment.
+    #if os(iOS)
+    public var intValue: Int {
         switch self {
         case .left:
             return 0
@@ -619,12 +628,25 @@ extension TextObjectAttributes.TextAlignment.HoriztonalAlignment {
             return 2
         }
     }
+    #else
+    public var intValue: UInt {
+        switch self {
+        case .left:
+            return 0
+        case .right:
+            return 1
+        case .center:
+            return 2
+        }
+    }
+    #endif
 }
 
 
 extension TextObjectAttributes.TextAlignment.VerticalAlignment {
     /// Return a UInt value for passing to NSTextAlignment.
-    public var toUInt: UInt {
+    #if os(iOS)
+    public var intValue: Int {
         switch self {
         case .top:
             return 0
@@ -634,4 +656,16 @@ extension TextObjectAttributes.TextAlignment.VerticalAlignment {
             return 2
         }
     }
+    #else
+    public var intValue: UInt {
+        switch self {
+        case .top:
+            return 0
+        case .center:
+            return 1
+        case .bottom:
+            return 2
+        }
+    }
+    #endif
 }

@@ -193,13 +193,13 @@
   </data>
  </layer>
  <group name="GEO">
-  <layer name="Geometry1" width="20" height="15">
+  <layer name="base-geo" width="20" height="15">
    <data encoding="base64" compression="zlib">
    eJy1ks2OAVEQhYshzBv4i/EGNGE21v5iLO38xRYrMzq2w0vgpbyFx3AqdLpSt0hbOMmX3K6qvqdyc7JElAN5UCBXJaMW6GzUKsADVVAz+nWQFnyK3sWYb4MO6IKe0e+DL4Hct2nMj8EETMFM1FNqr8adbzFTNO77BX9gA3w1y7v9gIE6BwreQr7BI1neWsFblCLMzsV5GLuhxaU4+AAJkBR1+c3aRrgvAxZgCVYU5o3rOn/aW/uxWuAf7MCewnyUyc0fe2QpzLpHbt555gCO4CT67KPzxx4y6x65eR+RnbcRufljD5l1j9y8r8nO25rc/GnvsfJ7VZa3//SP9+gKHq4lcg==
   </data>
   </layer>
-  <group name="GEO1">
-   <layer name="Geometry2" width="20" height="15">
+  <group name="SUB-GEO">
+   <layer name="level1-geo" width="20" height="15">
     <data encoding="base64" compression="zlib">
    eJy7yMDAcBGILzFQB7yA4pdUMm8UoIKdQLwLindTwTwJIHYHYiMgNsahxpAE8y5A1VMrTT0HYlUGSHoaTVOjAACUOg6N
   </data>
@@ -223,11 +223,11 @@
  </layer>
  <group name="Objects">
   <objectgroup name="Text">
-   <object id="47" x="256" y="208" width="48" height="16">
-    <text fontfamily="Georgia" color="#493f58">Level 1</text>
+   <object id="47" name="level_title" x="256" y="208" width="48" height="16">
+    <text pixelsize="13" color="#493f58">Level 1</text>
    </object>
   </objectgroup>
-  <objectgroup name="Collisions" visible="0">
+  <objectgroup name="Collisions">
    <properties>
     <property name="lineWidth" type="float" value="1.5"/>
    </properties>

@@ -241,11 +241,11 @@ open class SKTiledSceneCamera: SKCameraNode {
      */
     open func fitToView(newSize: CGSize) {
         
-        guard let scene = scene else { return }
-        guard let view = scene.view else { return }
-        guard let tiledScene = scene as? SKTiledSceneDelegate else { return }
-        guard let tilemap = tiledScene.tilemap else { return }
-                
+        guard let scene = scene,
+            let view = scene.view,
+            let tiledScene = scene as? SKTiledSceneDelegate,
+            let tilemap = tiledScene.tilemap else { return }
+        
         
         let tilemapSize = tilemap.renderSize //* zoom        
         let isPortrait: Bool = newSize.height > newSize.width
@@ -275,8 +275,9 @@ extension SKTiledSceneCamera {
      - parameter recognizer: `UIPanGestureRecognizer` pan gesture recognizer.
     */
     open func cameraPanned(_ recognizer: UIPanGestureRecognizer) {
-        guard (self.scene != nil) else { return }
-        guard (allowMovement == true) else { return }
+        guard (self.scene != nil),
+                (allowMovement == true) else { return }
+        
         if (recognizer.state == .began) {
             let location = recognizer.location(in: recognizer.view)
             lastLocation = location
@@ -299,7 +300,7 @@ extension SKTiledSceneCamera {
     open func sceneDoubleTapped(_ recognizer: UITapGestureRecognizer) {
         if (recognizer.state == UIGestureRecognizerState.ended) {
             //focusLocation = recognizer.location(in: recognizer.view)
-            guard let scene = self.scene as? SKTiledScene else { return }
+            guard let _ = self.scene as? SKTiledScene else { return }
             // get the current point
         }
     }
@@ -310,8 +311,8 @@ extension SKTiledSceneCamera {
      - parameter recognizer: `UIPinchGestureRecognizer`
      */
     open func scenePinched(_ recognizer: UIPinchGestureRecognizer) {
-        guard let scene = self.scene else { return }
-        guard (allowZoom == true) else { return }
+        guard let scene = self.scene,
+                (allowZoom == true) else { return }
         
         if recognizer.state == .began {
             let location = recognizer.location(in: recognizer.view)

@@ -3,8 +3,6 @@
 <plist version="1.0">
 <array>
 	<string>ortho4-16x16</string>
-	<string>hexp-test</string>
-	<string>hexf-test</string>
 	<string>isometric-130x66</string>
 	<string>staggered-64x33</string>
 	<string>hex1-65x65</string>
