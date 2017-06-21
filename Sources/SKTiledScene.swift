@@ -14,12 +14,12 @@ import SpriteKit
  
  In this configuration, the tile map is a child of the world node and reference the custom `SKTiledSceneCamera` camera.
  
- - parameter worldNode:  `SKNode!` world container node.
+ - parameter worldNode:  `SKNode?` world container node.
  - parameter cameraNode: `SKTiledSceneCamera!` scene camera node.
- - parameter tilemap:    `SKTilemap!` tile map node.
+ - parameter tilemap:    `SKTilemap?` tile map node.
     */
 public protocol SKTiledSceneDelegate: class {
-    // World container node. Tiled assets are parented to this node.
+    /// World container node. Tiled assets are parented to this node.
     var worldNode: SKNode? { get set }
     /// Custom scene camera.
     var cameraNode: SKTiledSceneCamera! { get set }
@@ -27,7 +27,7 @@ public protocol SKTiledSceneDelegate: class {
     var tilemap: SKTilemap? { get set }
     /// Load a tilemap from disk, with optional tilesets
     func load(fromFile filename: String, withTilesets tilesets: [SKTileset]) -> SKTilemap?
-    
+
     func cameraPositionChanged(_ oldPosition: CGPoint)
     func cameraZoomChanged(_ oldZoom: CGFloat)
     func sceneDoubleTapped()

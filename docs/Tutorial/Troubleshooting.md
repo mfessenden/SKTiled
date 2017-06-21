@@ -3,6 +3,7 @@
 - [Linking Errors](#linking-errors)
 - [XML Parsing Errors](#xml-parsing-errors)
 - [Code Signing Errors](#code-signing-errors)
+- [Carthage Problems](#carthage-problems)
 
 ## Linking Errors
 
@@ -35,7 +36,7 @@ Occasionally you'll get a code signing error when compiling on OSX:
 ![Codesign Error](images/codesign-error.png)
 
 If you're using Photoshop to save images, you might need to cleanup Finder metadata. To check, browse to your images directory in shell and run the following command:
- 
+
     ls -al@
 
 If any of your files have extra metadata that Xcode doesn't like, you'll see it listed below the file name:
@@ -45,6 +46,8 @@ If any of your files have extra metadata that Xcode doesn't like, you'll see it 
 Running the following command will clean up the extra data:
 
     xattr -c *.png
+
+## Carthage Problems
 
 
 Next: [Getting Started](getting-started.html) - [Index](Tutorial.html)

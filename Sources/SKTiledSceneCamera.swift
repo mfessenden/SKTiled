@@ -242,7 +242,6 @@ open class SKTiledSceneCamera: SKCameraNode {
     open func fitToView(newSize: CGSize) {
         
         guard let scene = scene,
-            let view = scene.view,
             let tiledScene = scene as? SKTiledSceneDelegate,
             let tilemap = tiledScene.tilemap else { return }
         

@@ -62,7 +62,7 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
                 }
             }
             
-            if let controller = window!.contentViewController as? GameViewController {
+            if let _ = window!.contentViewController as? GameViewController {
                 //controller.updateWindowTitle(withString: wintitle)
             }
         }

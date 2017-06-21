@@ -4,6 +4,7 @@
   <property name="autoResize" type="bool" value="true"/>
   <property name="frameColor" type="color" value="#ff5adc1f"/>
   <property name="gridColor" type="color" value="#ff91ff5d"/>
+  <property name="objectColor" type="color" value="#ff6b81ff"/>
  </properties>
  <tileset firstgid="1" name="Iso5_64x33_64x192" tilewidth="64" tileheight="192" tilecount="72" columns="18">
   <image source="staggered-64x192.png" trans="5e81a2" width="1152" height="768"/>
@@ -147,7 +148,7 @@
  </tileset>
  <layer name="Floor1" width="15" height="35">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3SSQqAMAwF0DhrPFDvfzPtolBCZt1pIQslj3xrAP7z9YPJPgxaZJ4tT/uQvPdaaX7UaZZzWp/kiiNbdCbn37IFbC/N8t6Vldn7P2hWbTesOpJ2vGtxfBcweasdiJd2h3O1tuAd9HYKWMtxe56d2eyacP3cOZi3nrOzkZnU7w+sN6vXa/YCpWleRjQIAAA=
+   H4sIAAAAAAAAA+3RSw6AIAwE0PpXPBDX4+jaBQlpCu2gOyVhgemzQyH619dX6KwLoA3K2fKyLojvXlvrj7qW1VyrruYiUbKyoT01/5bNedGZIrOyMnvfIzq8N+vRacd7L457kZKX7SC8dj/5z+x4b+AMSjsB1nJROMRqb87ntcOVfWcwL6+zsEhP6fcHVsmaWs7yLXsBD1XkQDQIAAA=
   </data>
  </layer>
  <layer name="Walls" width="15" height="35">

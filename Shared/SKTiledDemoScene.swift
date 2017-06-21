@@ -283,8 +283,7 @@ extension SKTiledDemoScene {
 
         let baseLayer = tilemap.baseLayer
         
-        // get the position in the baseLayer (inverted)
-        var positionInWindow = event.locationInWindow
+        let positionInWindow = event.locationInWindow
         let positionInView = convertPoint(toView: positionInWindow)
         let positionInScene = view.convert(positionInView, to: self)
         
@@ -394,7 +393,52 @@ extension SKTiledDemoScene {
              cameraNode.fitToView(newSize: view.bounds.size)
         }
         
-        // 'I' runs a test
+
+        
+        // 'J' fades the layers in succession
+        if event.keyCode == 0x26 {
+            var fadeTime: TimeInterval = 3
+            let additionalTime: TimeInterval = (tilemap.layerCount > 6) ? 1.25 : 2.25
+            for layer in tilemap.getContentLayers() {
+                let fadeAction = SKAction.fadeAfter(wait: fadeTime, alpha: 0)
+                layer.run(fadeAction, completion: {
+                    print(" -> hiding layer: \"\(layer.layerName)\"")
+                })
+                fadeTime += additionalTime
+            }
+        }
+        
+        // 'K' updates the render quality
+        if event.keyCode == 0x28 {
+            if tilemap.renderQuality < 16 {
+                tilemap.renderQuality *= 2
+            }
+        }
+        
+        // MARK: - Debugging Tests
+        
+        // 'Z' queries the debug draw state
+        if event.keyCode == 0x6 {
+            print("tilemap debug draw: \(tilemap.debugDraw), (show bounds: \(tilemap.showBounds), show grid: \(tilemap.showGrid))")
+        }
+        
+        
+        // '+' runs a custom test
+        if event.keyCode == 0x45 || event.keyCode == 0x45 {
+            if let textLayer = tilemap.objectGroups(named: "Text").first {
+                print("text layer: \(textLayer.path)")
+                if let textObject = textLayer.getObject(withID: 47) {
+                    textObject.text = "suck my balls"
+                }
+            }
+            
+            if let geoLayer = tilemap.tileLayers(named: "level1-geo").first {
+                print(geoLayer.path)
+            }
+        }
+        
+        
+        // 'I' runs a custom test
         if event.keyCode == 0x22 {
             var fadeTime: TimeInterval = 3
             let shapeRadius = (tilemap.tileHeightHalf / 4) - 0.5
@@ -406,7 +450,7 @@ extension SKTiledDemoScene {
                     shape.fillColor = SKColor(hexString: "#FD4444")
                     shape.strokeColor = .clear
                     worldNode.addChild(shape)
-                
+                    
                     let shapePos = tilemap.baseLayer.pointForCoordinate(x, y)
                     shape.position = worldNode.convert(shapePos, from: tilemap.baseLayer)
                     shape.zPosition = tilemap.lastZPosition + tilemap.zDeltaForLayers
@@ -420,20 +464,13 @@ extension SKTiledDemoScene {
                 }
                 //fadeTime += 0.02
             }
-            
         }
         
-        // 'J' fades the layers in succession
-        if event.keyCode == 0x26 {
-            var fadeTime: TimeInterval = 3
-            let additionalTime: TimeInterval = (tilemap.layerCount > 6) ? 1.25 : 2.25
-            for (_, layer) in tilemap.layers.enumerated() {
-                guard (layer as? SKGroupLayer) == nil else { continue }
-                let fadeAction = SKAction.fadeAfter(wait: fadeTime, alpha: 0)
-                layer.run(fadeAction, completion: {
-                    //print(" -> hiding layer: \"\(layer.name ?? "null")\"")
-                })
-                fadeTime += additionalTime
+        // 'V' runs a custom test
+        if event.keyCode == 0x9 {
+            if let scoreLabel = tilemap.getObject(withID: 51) {
+                print("setting score...")
+                scoreLabel.text = "score: 0500"
             }
         }
     }

@@ -41,22 +41,22 @@ public extension SKTilemap {
             
             if (lattr == "gridcolor") {
                 gridColor = SKColor(hexString: value)
-                allLayers().forEach {$0.gridColor = gridColor}
+                getLayers().forEach {$0.gridColor = gridColor}
             }
             
             if (lattr == "gridopacity") {
                 baseLayer.gridOpacity = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : 0.10
-                allLayers().forEach {$0.gridOpacity = self.baseLayer.gridOpacity}
+                getLayers().forEach {$0.gridOpacity = self.baseLayer.gridOpacity}
             }
             
             if (lattr == "framecolor") {
                 frameColor = SKColor(hexString: value)
-                allLayers().forEach {$0.frameColor = frameColor}
+                getLayers().forEach {$0.frameColor = frameColor}
             }
             
             if (lattr == "highlightcolor") {
                 highlightColor = SKColor(hexString: value)
-                allLayers().forEach {$0.highlightColor = highlightColor}
+                getLayers().forEach {$0.highlightColor = highlightColor}
             }
             
             // initial world scale.
@@ -131,6 +131,10 @@ public extension SKTilemap {
             
             if (lattr == "overlaycolor") {
                 overlayColor = SKColor(hexString: value)
+            }
+            
+            if (lattr == "objectcolor") {
+                objectColor = SKColor(hexString: value)
             }
         }
         

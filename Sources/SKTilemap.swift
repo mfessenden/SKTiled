@@ -161,6 +161,17 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     open var orientation: TilemapOrientation                      // map orientation
     internal var renderOrder: RenderOrder = .rightDown            // render order
     
+    internal var maxRenderQuality: CGFloat = 16                   // max render quality
+    /// Scaling value for text objects, etc.
+    open var renderQuality: CGFloat = 8 {
+        didSet {
+            guard renderQuality != oldValue else { return }
+            for layer in layers {
+                layer.renderQuality = (renderQuality > maxRenderQuality) ? maxRenderQuality : renderQuality
+            }
+        }
+    }
+    
     open var isPortrait: Bool {
         return size.height > size.width
     }
@@ -202,8 +213,10 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     // dispatch queues & groups
     internal let renderQueue = DispatchQueue(label: "com.sktiled.renderqueue", qos: .userInteractive)  // serial queue
     internal let renderGroup = DispatchGroup()
-    
+    /// Overlay color.
     open var overlayColor: SKColor = SKColor(hexString: "#40000000")
+    /// Object color.
+    open var objectColor: SKColor = SKColor.gray
     
     /// Returns a flattened array of child layers.
     open var layers: [TiledLayerObject] {
@@ -630,6 +643,15 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     }
     
     /**
+     Returns all content layers (ie. not groups). Sorted by zPosition in scene.
+     
+     - returns: `[TiledLayerObject]` array of layers.
+     */
+    open func getContentLayers() -> [TiledLayerObject] {
+        return self.layers.filter( { $0 as? SKGroupLayer == nil }).sorted(by: { $0.actualZPosition > $1.actualZPosition })
+    }
+    
+    /**
      Returns an array of layer names.
      
      - returns: `[String]` layer names.
@@ -878,11 +900,11 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     /**
      Sort the layers in z based on a starting value (defaults to the current zPosition).
         
-     - parameter fromZ: `CGFloat?` optional starting z-positon.
+     - parameter from: `CGFloat?` optional starting z-positon.
      */
-    open func sortLayers(_ fromZ: CGFloat?=nil) {
-        let startingZ: CGFloat = (fromZ != nil) ? fromZ! : zPosition
-        allLayers().forEach {$0.zPosition = startingZ + (zDeltaForLayers * CGFloat($0.index))}
+    open func sortLayers(from: CGFloat?=nil) {
+        let startingZ: CGFloat = (from != nil) ? from! : zPosition
+        getLayers().forEach { $0.zPosition = startingZ + (zDeltaForLayers * CGFloat($0.index)) }
     }
     
     // MARK: - Tiles
@@ -1068,6 +1090,27 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      */
     open func getObjects(named: String, recursive: Bool=true) -> [SKTileObject] {
         return objectGroups(recursive: recursive).flatMap { $0.getObjects(named: named) }
+    }
+    
+    /**
+     Return objects with the given text value. If recursive is false, only returns tiles from top-level layers.
+     
+     - parameter withText:   `String` text value.
+     - parameter recursive: `Bool` include nested layers.
+     - returns: `[SKTileObject]` array of objects.
+     */
+    open func getObjects(withText text: String, recursive: Bool=true) -> [SKTileObject] {
+        return objectGroups(recursive: recursive).flatMap { $0.getObjects(withText: text) }
+    }
+    
+    /**
+     Returns an object with the given id.
+     
+     - parameter id: `Int` Object id.
+     - returns: `SKTileObject?`
+     */
+    open func getObject(withID id: Int) -> SKTileObject? {
+        return objectGroups(recursive: true).flatMap { $0.getObject(withID: id) }.first
     }
     
     /**
@@ -1344,8 +1387,24 @@ extension SKTilemap {
     
     override open var debugDescription: String { return description }
     
+    open var showGrid: Bool {
+        get { return baseLayer.showGrid }
+        set {
+            guard newValue != baseLayer.showGrid else { return }
+            baseLayer.showGrid = newValue
+        }
+    }
+    
+    open var showBounds: Bool {
+        get { return baseLayer.showBounds }
+        set {
+            guard newValue != baseLayer.showBounds else { return }
+            baseLayer.showBounds = newValue
+        }
+    }
+    
     /// Visualize the current grid & bounds.
-    public var debugDraw: Bool {
+    open var debugDraw: Bool {
         get {
             return baseLayer.debugDraw
         } set {
@@ -1353,7 +1412,7 @@ extension SKTilemap {
             baseLayer.debugDraw = newValue
             // show bounding box for renderable objects
             for objectLayer in objectGroups(recursive: true) {
-                objectLayer.getObjects().filter { $0.isRenderableType == true }.map { $0.drawObject(debug: newValue) }
+                (objectLayer.getObjects().filter { $0.isRenderableType == true }.map { $0.drawObject(debug: newValue) })
             }
         }
     }
@@ -1361,7 +1420,7 @@ extension SKTilemap {
     /**
      Output a summary of the current scenes layer data.
      */
-    public func layerStatistics() {
+    open func layerStatistics() {
         guard (layerCount > 0) else {
             print("# Tilemap \"\(name != nil ? name! : "null")\": 0 Layers")
             return
@@ -1382,7 +1441,7 @@ extension SKTilemap {
         var prefixes: [String] = ["", "", "", "", "pos", "size", "offset", "anc", "zpos"]
         var buffers: [Int] = [1, 2, 0, 0, 1, 1, 1, 1, 1]
         
-        for (idx, stats) in allLayerStats.enumerated() {
+        for (_, stats) in allLayerStats.enumerated() {
             for stat in stats {
                 let colIndex = Int(stats.index(of: stat)!)
                 
@@ -1551,5 +1610,12 @@ extension SKTilemap {
         return nil
     }
     
+    /**
+     Output a summary of the current scenes layer data.
+     */
+    @available(*, deprecated, message: "use `layerStatistics()` instead")
+    open func debugLayers(reverse: Bool=false) {
+        layerStatistics()
+    }
 }
 

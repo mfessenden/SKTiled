@@ -64,7 +64,9 @@ public struct TextObjectAttributes {
     public var isItalic: Bool = false
     public var isUnderline: Bool = false
     public var isStrikeout: Bool = false
-    public var scaleValue: CGFloat = 8
+    public var renderQuality: CGFloat = 8
+    
+    public init() {}
     
     public init(font: String, size: CGFloat, color: SKColor = .black) {
         fontName = font
@@ -90,7 +92,6 @@ public struct TextObjectAttributes {
     }
 }
 
-
 /**
  The `SKTileObject` object represents a Tiled object type (rectangle, ellipse, polygon & polyline).
  
@@ -105,7 +106,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     open var type: String!                                  // object type
     
     internal var objectType: SKObjectType = .rectangle      // shape type
-    internal var points: [CGPoint] = []                     // points that describe the object's shape.
+    internal var points: [CGPoint] = []                     // points that describe the object's shape
     internal var tile: SKTile? = nil                        // optional tile
     
     open var size: CGSize = CGSize.zero
@@ -113,9 +114,23 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     open var ignoreProperties: Bool = false                 // ignore custom properties
     internal var physicsType: CollisionType = .none         // physics collision type
     
-    // text object attributes
-    open var text: String!
-    open var textAttributes: TextObjectAttributes!
+    open var textAttributes: TextObjectAttributes!          // text object attributes
+    open var renderQuality: CGFloat = 8 {                   // text object render quality
+        didSet {
+            guard (renderQuality != oldValue),
+                renderQuality <= 16 else  { return }
+            textAttributes?.renderQuality = renderQuality
+            drawObject()
+        }
+    }
+    
+    /// Text object attributes
+    open var text: String! {
+        didSet {
+            guard text != oldValue else { return }
+            drawObject()
+        }
+    }
     
     /// Object opacity
     open var opacity: CGFloat {
@@ -145,8 +160,9 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         }
         return boundingRect.center
     }
+
     
-    /// Signifies that this object requires
+    /// Signifies that this object is a text or tile object.
     open var isRenderableType: Bool {
         return (gid != nil) || (textAttributes != nil)
     }
@@ -271,7 +287,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     /**
      Render the object.
      */
-    open func drawObject(debug: Bool=false, scaled: CGFloat?=nil) {
+    open func drawObject(debug: Bool=false) {
         
         guard let layer = layer,
             let vertices = getVertices(),
@@ -285,7 +301,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         uiScale = NSScreen.main()!.backingScaleFactor
         #endif
         
-        
+        print("# [SKTileObject]: drawing object...")
         // polyline objects should have no fill
         self.fillColor = (self.objectType == .polyline) ? SKColor.clear : self.fillColor
         self.isAntialiased = false //layer.antialiased
@@ -395,11 +411,13 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         }
         
         // render text object as an image and use with a sprite
-        if let textAttributes = textAttributes {
+        if let _ = text {
+            // initialize the text attrbutes if none exist
+            if (textAttributes == nil) {
+                textAttributes = TextObjectAttributes()
+            }
             
-            let scaleValue: CGFloat = scaled ?? textAttributes.scaleValue
-            let image = drawTextObject(withScale: scaleValue)
-            
+            let image = drawTextObject(withScale: renderQuality)
             strokeColor = (debug == false) ? SKColor.clear : layer.gridColor.withAlphaComponent(0.75)
             fillColor = SKColor.clear
             
@@ -410,8 +428,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             addChild(textSprite)
             
             // final scaling value depends on the quality factor
-            let finalScaleValue: CGFloat = (1 / scaleValue) / uiScale
-            
+            let finalScaleValue: CGFloat = (1 / renderQuality) / uiScale
             textSprite.zPosition = zPosition - 1
             textSprite.setScale(finalScaleValue)
             textSprite.position = self.boundingRect.center
@@ -577,6 +594,16 @@ extension SKTileObject {
         return false
     }
     
+    /// Signifies that the object is a text object.
+    open var isTextObject: Bool {
+        return (textAttributes != nil)
+    }
+    
+    /// Signifies that the object is a tile object.
+    open var isTileObject: Bool {
+        return (gid != nil)
+    }
+    
     /// Pause/unpause tile animation
     open var pauseAnimation: Bool {
         if let tile = self.tile {
@@ -599,17 +626,17 @@ extension SKTileObject {
 extension TextObjectAttributes {
     #if os(iOS)
     public var font: UIFont {
-        if let uifont = UIFont(name: fontName, size: fontSize * scaleValue) {
+        if let uifont = UIFont(name: fontName, size: fontSize * renderQuality) {
             return uifont
         }
-        return UIFont.systemFont(ofSize: fontSize * scaleValue)
+        return UIFont.systemFont(ofSize: fontSize * renderQuality)
     }
     #else
     public var font: NSFont {
-        if let nsfont = NSFont(name: fontName, size: fontSize * scaleValue) {
+        if let nsfont = NSFont(name: fontName, size: fontSize * renderQuality) {
             return nsfont
         }
-        return NSFont.systemFont(ofSize: fontSize * scaleValue)
+        return NSFont.systemFont(ofSize: fontSize * renderQuality)
     }
     #endif
 }

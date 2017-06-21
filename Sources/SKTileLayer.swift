@@ -117,7 +117,10 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     /// Bounding box color.
     open var frameColor: SKColor = SKColor.black
     /// Layer highlight color (for highlighting tiles)
-    open var highlightColor: SKColor = SKColor.white    
+    open var highlightColor: SKColor = SKColor.white
+    /// Layer highlight duration
+    open var highlightDuration: TimeInterval = 0.25
+    
     /// Layer offset value.
     open var offset: CGPoint = CGPoint.zero
     
@@ -145,12 +148,13 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     
     // debug visualizations
     open var gridOpacity: CGFloat = 0.20
-    fileprivate var frameShape: SKShapeNode = SKShapeNode()
+    
     fileprivate var grid: TiledLayerGrid!
     
     internal var isRendered: Bool = false
     open var antialiased: Bool = false
     open var colorBlendFactor: CGFloat = 1.0
+    open var renderQuality: CGFloat = 8
     
     /// Optional background color.
     open var backgroundColor: SKColor? = nil {
@@ -169,9 +173,20 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         
         #if os(iOS)
         sprite.position.y = -self.tilemap.sizeInPoints.height
+        #else
+        sprite.yScale *= -1
         #endif
         self.addChild(sprite)
         return sprite
+    }()
+    
+    /**
+     Layer boundary shape.
+     */
+    lazy open var frameShape: SKShapeNode = {
+        let shape = SKShapeNode()
+        self.addChild(shape)
+        return shape
     }()
     
     /// Returns the position of layer origin point (used to place tiles).
@@ -215,13 +230,22 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         set { grid.showGrid = newValue }
     }
     
+    /// Show/hide the layer's bounding shape.
+    open var showBounds: Bool {
+        get { return !frameShape.isHidden }
+        set {
+            frameShape.isHidden = !newValue
+            drawBounds()
+        }
+    }
+    
     /// Visualize the layer's bounds & tile grid.
     open var debugDraw: Bool {
         get {
-            return frameShape.isHidden == false
+            return showBounds && showGrid
         } set {
-            frameShape.isHidden = !newValue
-            drawBounds()
+            print("# debug draw: \(newValue)")
+            showBounds = newValue
             showGrid = newValue
         }
     }
@@ -277,10 +301,10 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         
         // set the layer's antialiasing based on tile size
         self.antialiased = self.tilemap.tileSize.width > 16 ? true : false
-        
-        self.frameShape.isHidden = true
         addChild(grid)
-        addChild(frameShape)
+        
+        //self.frameShape.isHidden = true
+        //addChild(frameShape)
     }
 
     /**
@@ -299,10 +323,10 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         
         // set the layer's antialiasing based on tile size
         self.antialiased = self.tilemap.tileSize.width > 16 ? true : false
-        
-        self.frameShape.isHidden = true
         addChild(grid)
-        addChild(frameShape)
+        
+        //self.frameShape.isHidden = true
+        //addChild(frameShape)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -781,15 +805,8 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     
     /**
      Visualize the layer's boundary shape.
-     
-     - parameter toggle `Bool` toggle on/off
      */
-    public func drawBounds(_ toggle: Bool=true) {
-        
-        if (toggle == false) {
-            frameShape.strokeColor = SKColor.clear
-            frameShape.fillColor = SKColor.clear
-        }
+    public func drawBounds() {
         
         let objectPath: CGPath!
         
@@ -929,16 +946,21 @@ open class SKTileLayer: TiledLayerObject {
     // container for the tile sprites
     fileprivate var tiles: TilesArray                   // array of tiles
     open var render: Bool = false                       // render tile layer as a single image
-    open var graph: GKGridGraph<GKGridGraphNode>?
+    open var graph: GKGridGraph<GKGridGraphNode>?       // pathfinding graph
     
-    // (idx: Int, zpos: Double, sw: Int, sh: Int, tsw: Int, tsh: Int, tc: Int, obj: Int)
+    /// Tuple of layer render statistics.
     override open var renderStatistics: renderInfo {
         var current = super.renderStatistics
         current.tc = tileCount
         return current
     }
     
-    
+    /// Tile highlight duration
+    override open var highlightDuration: TimeInterval {
+        didSet{
+            tiles.flatMap({ $0?.highlightDuration = highlightDuration})
+        }
+    }
     
     // MARK: - Init
     /**
@@ -1099,7 +1121,7 @@ open class SKTileLayer: TiledLayerObject {
      */
     open func setLayerData(_ data: [UInt32]) -> Bool {
         if !(data.count == size.count) {
-            print("Error: invalid data size for layer \"\(self.name ?? "null")\": \(data.count), expected: \(size.count)")
+            print("Error: invalid data size for layer \"\(self.layerName)\": \(data.count), expected: \(size.count)")
             return false
         }
         
@@ -1284,6 +1306,7 @@ open class SKTileLayer: TiledLayerObject {
                 
                 // set the layer property
                 tile.layer = self
+                tile.highlightDuration = highlightDuration
                 
                 // TODO: pointForCoorinate error?
                 // get the position in the layer (plus tileset offset)
@@ -1397,14 +1420,10 @@ open class SKTileLayer: TiledLayerObject {
     // MARK: - Debugging
     /**
      Visualize the layer's boundary shape.
-     
-     - parameter toggle `Bool` toggle on/off
      */
-    override open func drawBounds(_ toggle: Bool=true) {
-        for tile in tiles {
-            tile?.drawBounds(toggle, antialiasing: false, duration: 0)
-        }
-        super.drawBounds(toggle)
+    override open func drawBounds() {
+        tiles.flatMap({ $0?.drawBounds() })
+        super.drawBounds()
     }
     
     override open func debugLayer() {
@@ -1488,11 +1507,27 @@ open class SKObjectGroup: TiledLayerObject {
         }
     }
     
-    // (idx: Int, zpos: Double, sw: Int, sh: Int, tsw: Int, tsh: Int, tc: Int, obj: Int)
+    /**
+     Returns a tuple of render stats used for debugging.
+     */
     override open var renderStatistics: renderInfo {
         var current = super.renderStatistics
         current.obj = count
         return current
+    }
+    
+    /**
+     Set the render quality of every object.
+     */
+    override open var renderQuality: CGFloat {
+        didSet {
+            guard renderQuality != oldValue else { return }
+            for object in objects {
+                if (object.isRenderableType == true) {
+                    object.renderQuality = renderQuality
+                }
+            }
+        }
     }
     
     // MARK: - Init
@@ -1505,6 +1540,7 @@ open class SKObjectGroup: TiledLayerObject {
     override public init(layerName: String, tilemap: SKTilemap) {
         super.init(layerName: layerName, tilemap: tilemap)
         self.layerType = .object
+        self.color = tilemap.objectColor
     }    
     
     /**
@@ -1518,6 +1554,7 @@ open class SKObjectGroup: TiledLayerObject {
     public init?(tilemap: SKTilemap, attributes: [String: String]) {
         guard let layerName = attributes["name"] else { return nil }
         super.init(layerName: layerName, tilemap: tilemap, attributes: attributes)
+        self.color = tilemap.objectColor
         
         // set objects color
         if let hexColor = attributes["color"] {
@@ -1645,16 +1682,23 @@ open class SKObjectGroup: TiledLayerObject {
     }
     
     /**
-     Returns an object with the given name.
+     Return objects with matching text.
      
-     - parameter name: `String` Object name.
-     - returns: `SKTileObject?`
+     - parameter withText: `String` text string to match.
+     - returns: `[SKTileObject]` array of matching objects.
      */
-    open func getObject(named name: String) -> SKTileObject? {
-        if let index = objects.index( where: { $0.name == name } ) {
-            return objects[index]
-        }
-        return nil
+    open func getObjects(withText text: String) -> [SKTileObject] {
+        return objects.filter { $0.text == text }
+    }
+    
+    /**
+     Return objects with the given name.
+     
+     - parameter named: `String` Object name.
+     - returns: `[SKTileObject]` array of matching objects.
+     */
+    open func getObjects(named: String) -> [SKTileObject] {
+        return objects.filter { $0.name == named }
     }
      
     /**
@@ -1674,16 +1718,6 @@ open class SKObjectGroup: TiledLayerObject {
      */
     open func getObjects(ofType type: String) -> [SKTileObject] {
         return objects.filter( {$0.type == type})
-    }
-    
-    /**
-     Return objects matching a given name.
-     
-     - parameter named: `String` object name.
-     - returns: `[SKTileObject]` array of matching objects.
-     */
-    open func getObjects(named: String) -> [SKTileObject] {
-        return objects.filter( {$0.name == named})
     }
     
     // MARK: - Tile Objects
@@ -1939,11 +1973,13 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
     private var layer: TiledLayerObject
     private var gridTexture: SKTexture! = nil
     private var graphTexture: SKTexture! = nil
+    private var frameColor: SKColor = .black
 
     private var gridOpacity: CGFloat { return layer.gridOpacity }
 
     init(tileLayer: TiledLayerObject){
         layer = tileLayer
+        frameColor = layer.frameColor
         super.init(texture: SKTexture(), color: SKColor.clear, size: tileLayer.sizeInPoints)
         positionLayer()
     }
@@ -1982,9 +2018,10 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
                 // scale factor for texture
                 let uiScale: CGFloat
                 let scaleValue: CGFloat
+                let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1 : 0.85
                 #if os(iOS)
                 uiScale = UIScreen.main.scale
-                scaleValue = 1
+                scaleValue = 2
                 #else
                 uiScale = NSScreen.main()!.backingScaleFactor
                 scaleValue = 8
@@ -1993,7 +2030,7 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
                 
                 // generate the texture
                 if (gridTexture == nil) {
-                    let gridImage = drawGrid(self.layer, imageScale: scaleValue)
+                    let gridImage = drawGrid(self.layer, imageScale: scaleValue, lineScale: lineScale)
                     gridTexture = SKTexture(cgImage: gridImage)
                     gridTexture.filteringMode = .linear
                 }
@@ -2163,7 +2200,7 @@ extension TiledLayerObject {
     override open var description: String {
         let topLevel = self.parents.count == 1
         let indexString = (topLevel == true) ? ", index: \(index)" : ""
-        return "<\(layerType.stringValue.capitalized) Layer: \"\(self.path ?? "null")\"\(indexString)>"
+        return "<\(layerType.stringValue.capitalized) Layer: \"\(self.path)\"\(indexString)>"
     }
     
     override open var debugDescription: String { return description }
@@ -2171,7 +2208,11 @@ extension TiledLayerObject {
 
 
 extension TiledLayerObject {
-
+    /// Return a string representing the layer name.
+    public var layerName: String {
+        return self.name ?? "null"
+    }
+    
     /// Returns an array of parent layers.
     public var parents: [SKNode] {
         var current = self as SKNode
@@ -2185,19 +2226,20 @@ extension TiledLayerObject {
         return result
     }
     
+    /// Indicates the layer is a top-level layer.
     public var isTopLevel: Bool { return self.parents.count <= 1 }
 
     /// Translate the parent hierarchy to a path string
     public var path: String {
         let allParents: [SKNode] = self.parents.reversed()
-        if (allParents.count == 1) { return self.name ?? "null" }
+        if (allParents.count == 1) { return self.layerName }
         return allParents.reduce("") { result, node in
             let comma = allParents.index(of: node)! < allParents.count - 1 ? "/" : ""
             return result + "\(node.name ?? "nil")" + comma
         }
     }
     
-    /// Returns the actual zPosition
+    /// Returns the actual zPosition as rendered by the scene.
     internal var actualZPosition: CGFloat {
         return (isTopLevel == true) ? zPosition : parents.reduce(zPosition, { result, parent in
             return result + parent.zPosition
@@ -2218,7 +2260,6 @@ extension TiledLayerObject {
         let layerSymbol = (isGrouped == true) ? "»" : ""
         let filler = (isGrouped == true) ? String(repeating: "  ", count: parentNodes.count - 1) : ""
         
-        let layerName = self.name ?? "null"
         let layerPathString = "\(filler)\(layerSymbol)\"\(layerName)\""
         let layerVisibilityString: String = (self.visible == true) ? "(x)" : "( )"
         
@@ -2301,4 +2342,24 @@ internal func SKColorWithRGB(_ r: Int, g: Int, b: Int) -> SKColor {
  */
 internal func SKColorWithRGBA(_ r: Int, g: Int, b: Int, a: Int) -> SKColor {
     return SKColor(red: CGFloat(r)/255.0, green: CGFloat(g)/255.0, blue: CGFloat(b)/255.0, alpha: CGFloat(a)/255.0)
+}
+
+
+// MARK: - Deprecated
+
+extension SKObjectGroup {
+    /**
+     Returns an object with the given name.
+     
+     - parameter named: `String` Object name.
+     - returns: `SKTileObject?`
+     */
+    @available(*, deprecated, message: "use `getObjects(named:,recursive:)` instead")
+    open func getObject(named: String) -> SKTileObject? {
+        if let objIndex = objects.index( where: { $0.name == named } ) {
+            let object = objects[objIndex]
+            return object
+        }
+        return nil
+    }
 }

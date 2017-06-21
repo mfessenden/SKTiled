@@ -342,7 +342,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     fileprivate func didBeginRendering(_ tilemap: SKTilemap, duration: TimeInterval=0.025) {
         
         // assign each layer a work item
-        for layer in tilemap.allLayers() {
+        for layer in tilemap.getLayers(recursive: true) {
             let renderItem = DispatchWorkItem() {
                 // render object groups
                 if let objectGroup = layer as? SKObjectGroup {
@@ -377,7 +377,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             self.tilesets = [:]
             self.tilemap.didFinishRendering(timeStarted: self.timer)
             
-            for layer in self.tilemap.allLayers() {
+            for layer in self.tilemap.getLayers() {
                 layer.didFinishRendering(duration: duration)
             }
         }
@@ -836,8 +836,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             }
         }
         
-        // text object
-        // <text pixelsize="9" wrap="1" color="#21ffff" bold="1" italic="1" underline="1" strikeout="1" halign="right" valign="center" italic="1" underline="1" strikeout="1">
+        // text object attributes
         if (elementName == "text") {
 
             if let objectGroup = lastElement as? SKObjectGroup {

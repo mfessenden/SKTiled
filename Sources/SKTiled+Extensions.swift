@@ -47,7 +47,7 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
  
  - parameter size:       `CGSize` size of resulting image.
  - parameter scale:      `CGFloat` scale of result, for macOS that should be 1.
- - parameter whatToDraw: function detailing what to draw the image.
+ - parameter whatToDraw: `()->()` function detailing what to draw the image.
  - returns: `CGImage` result.
  */
 public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ context: CGContext, _ bounds: CGRect, _ scale: CGFloat) -> ()) -> CGImage {
@@ -69,7 +69,7 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
 
 
 /**
- Check for tile ID flip flags. Returns the translated tile ID and the corresponding flip flags.
+ Check a tile ID for. Returns the translated tile ID and the corresponding flip flags.
  
  - parameter id: `UInt32` tile ID
  - returns: tuple of global id and flip flags.
@@ -894,20 +894,18 @@ public func normalize(_ value: CGFloat, _ minimum: CGFloat, _ maximum: CGFloat) 
 /**
  Generate a visual grid texture.
  
- - parameter layer: `TiledLayerObject` layer instance.
- - parameter scale: `CGFloat` image scale.
+ - parameter layer:      `TiledLayerObject` layer instance.
+ - parameter imageScale: `CGFloat` image scale multiplier.
+ - parameter lineScale:  `CGFloat` line scale multiplier.
  - returns: `SKTexture?` visual grid texture.
  */
-internal func drawGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8) -> CGImage {
-    
+internal func drawGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineScale: CGFloat=1) -> CGImage {
+    // get the ui scale value for the device
     let uiScale: CGFloat
-    let defaultLineWidth: CGFloat
     #if os(iOS)
     uiScale = UIScreen.main.scale
-    defaultLineWidth = 1
     #else
     uiScale = NSScreen.main()!.backingScaleFactor
-    defaultLineWidth = 3
     #endif
     let size = layer.size
     let tileWidth = layer.tileWidth * imageScale    //* scale
@@ -916,15 +914,16 @@ internal func drawGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8) -> CGIm
     let tileWidthHalf = tileWidth / 2
     let tileHeightHalf = tileHeight / 2
                 
-    var sizeInPoints = (layer.sizeInPoints * imageScale)
-    //sizeInPoints = sizeInPoints + 1
+    let sizeInPoints = (layer.sizeInPoints * imageScale)
+    let defaultLineWidth: CGFloat = (imageScale / uiScale) * lineScale
     
     return imageOfSize(sizeInPoints, scale: uiScale) { context, bounds, scale in
                 
         let innerColor = layer.gridColor
         
         // line width should be at least 1 for larger tile sizes
-        let lineWidth: CGFloat = (imageScale / 4 >= 3) ? imageScale / 4 : defaultLineWidth
+        let lineWidth: CGFloat = defaultLineWidth
+        print("# DEBUG: line width: \(lineWidth.roundTo()), line scale: \(lineScale.roundTo())")
         context.setLineWidth(lineWidth)
         //context.setLineDash(phase: 0.5, lengths: [0.5, 1.0])
         context.setShouldAntialias(true)  // layer.antialiased

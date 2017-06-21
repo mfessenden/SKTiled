@@ -44,5 +44,6 @@
 - [Linking Errors](troubleshooting.html#linking-errors)
     - [XML Parsing Errors](troubleshooting.html#xml-parsing-errors)
     - [Code Signing Errors](troubleshooting.html#code-signing-errors)
-    
+    - [Carthage Problems](troubleshooting.html#carthage-problems)
+
 [Home](index.html)

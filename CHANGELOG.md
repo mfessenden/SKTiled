@@ -6,29 +6,49 @@ Change Log
 
 #### Changes
 
-- add `SKObjectGroup.textObjects` & `SKTilemap.textObjects` methods
+API Updates:
+- add `SKObjectGroup.textObjects` & `SKTilemap.textObjects`
+- remove `SKTilemap.indexOf(layerNamed:)`
+- rename `SKTilemap.getLayer(named:)` -> `SKTilemap.getLayers(named:,recursive:)`
+- rename `SKTilemap.allLayers` -> `SKTilemap.getLayers(recursive:)`
+- rename `SKTilemap.tileLayer(named:)` -> `SKTilemap.tileLayers(named:,recursive:)`
+- rename `SKTilemap.objectGroups(named:)` -> `SKTilemap.objectGroups(named:,recursive:)`
+- rename `SKTilemap.getLayers(ofType:)` -> `SKTilemap.getLayers(ofType:,recursive:)`
+- rename `SKTilemap.tileLayers` -> `SKTilemap.tileLayers(recursive:)`
+- rename `SKTilemap.objectGroups` -> `SKTilemap.objectGroups(recursive:)`
+- rename `SKTilemap.imageLayers` -> `SKTilemap.imageLayers(recursive:)`
+- rename `SKTilemap.groupLayers` -> `SKTilemap.groupLayers(recursive:)`
+- rename `SKTilemap.getTiles(ofType:)` -> `SKTilemap.getTiles(ofType:,recursive:)`
+- rename `SKTilemap.getTiles(withID:)` -> `SKTilemap.getTiles(withID:,recursive:)`
+- rename `SKTilemap.getTilesWithProperty(_:, _:)` -> `SKTilemap.getTilesWithProperty(_:,_:,recursive:)`
+- rename `SKTilemap.getAnimatedTiles()` -> `SKTilemap.animatedTiles(recursive:)`
+- rename `SKTilemap.getObjects()` -> `SKTilemap.getObjects(recursive:)`
+- rename `SKTilemap.getObjects(ofType:)` -> `SKTilemap.getObjects(ofType:,recursive:)`
+- rename `SKTilemap.getObjects(named:)` -> `SKTilemap.getObjects(named:,recursive:)`
+- rename `SKTileLayer.getAnimatedTiles()` -> `SKTileLayer.animatedTiles()`
 
-API Updates
-`SKTilemap.getLayer(named:)` -> `SKTilemap.getLayers(named:,recursive:)`
-`SKTilemap.allLayers` -> `SKTilemap.getLayers(recursive:)`
-`SKTilemap.tileLayer(named:)` -> `SKTilemap.tileLayers(named:,recursive:)`
-`SKTilemap.objectGroups(named:)` -> `SKTilemap.objectGroups(named:,recursive:)`
-`SKTilemap.getLayers(ofType:)` -> `SKTilemap.getLayers(ofType:,recursive:)`
-`SKTilemap.tileLayers` -> `SKTilemap.tileLayers(recursive:)`
-`SKTilemap.objectGroups` -> `SKTilemap.objectGroups(recursive:)`
-`SKTilemap.imageLayers` -> `SKTilemap.imageLayers(recursive:)`
-`SKTilemap.groupLayers` -> `SKTilemap.groupLayers(recursive:)`
-`SKTilemap.getTiles(ofType:)` -> `SKTilemap.getTiles(ofType:,recursive:)`
-`SKTilemap.getTiles(withID:)` -> `SKTilemap.getTiles(withID:,recursive:)`
-`SKTilemap.getTilesWithProperty(_:, _:)` -> `SKTilemap.getTilesWithProperty(_:,_:,recursive:)`
-`SKTilemap.getAnimatedTiles()` -> `SKTilemap.animatedTiles(recursive:)`
-`SKTilemap.getObjects()` -> `SKTilemap.getObjects(recursive:)`
-`SKTilemap.getObjects(ofType:)` -> `SKTilemap.getObjects(ofType:,recursive:)`
-`SKTilemap.getObjects(named:)` -> `SKTilemap.getObjects(named:,recursive:)`
 
-removed `SKTilemap.indexOf(layerNamed:)`
+- rename `SKObjectGroup.getObject(named:)` -> `SKObjectGroup.getObjects(named:)`
+- add `SKTilemap.showGrid`
+- add `SKTilemap.showBounds`
+- add `SKObjectGroup.getObjects(withText:)`
+- add `SKTilemap.getObjects(withText:)`
+- add `SKTilemap.getObject(withID:)`
+- add `SKTileObject.isTileObject`
+- add `SKTileObject.isTextObject`
+- add `SKTileLayer.showBounds`
+- add `SKTile.showBounds`
+- add `SKTile.highlightDuration`
+- add `TiledLayerObject.highlightDuration`
 
-`SKTileLayer.getAnimatedTiles()` -> `SKTileLayer.animatedTiles()`
+
+- better grid drawing quality
+- add `SKTiled+Debug.swift`
+- add `SKTilemap.getContentLayers` function
+- add `SKTilemap.objectColor` property
+- add `TiledLayerObject.layerName` property
+- add `SKTilemap.renderQuality` property
+- add `TiledLayerObject.renderQuality` property
 
 
 1.13

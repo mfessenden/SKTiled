@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" backgroundcolor="#1e1b23" nextobjectid="51">
+<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" backgroundcolor="#1e1b23" nextobjectid="52">
  <properties>
   <property name="autoResize" type="bool" value="true"/>
   <property name="frameColor" type="color" value="#ff63a4b2"/>
@@ -224,8 +224,9 @@
  <group name="Objects">
   <objectgroup name="Text">
    <object id="47" name="level_title" x="256" y="208" width="48" height="16">
-    <text pixelsize="13" color="#493f58">Level 1</text>
+    <text fontfamily="Georgia" pixelsize="13" color="#493f58" valign="center">Level 1</text>
    </object>
+   <object id="51" name="scoreLabel" type="score" x="0" y="0" width="96" height="16"/>
   </objectgroup>
   <objectgroup name="Collisions">
    <properties>
