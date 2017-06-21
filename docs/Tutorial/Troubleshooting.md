@@ -47,7 +47,12 @@ Running the following command will clean up the extra data:
 
     xattr -c *.png
 
+This will do something.
+
 ## Carthage Problems
 
+If you are getting errors including a framework in Xcode, use the `--no-use-binaries` flag when updating SKTiled.
 
 Next: [Getting Started](getting-started.html) - [Index](Tutorial.html)
+
+[carthage-url]:https://github.com/Carthage/Carthage

@@ -93,7 +93,7 @@ Once you've run the build command frameworks are built, you'll find a **Carthage
 ![Carthage Directories](images/carthage_directories.png)
 
 
-See the [Carthage](https://github.com/Carthage/Carthage) home page for help and additional build instructions.
+See the [Carthage][carthage-url] home page for help and additional build instructions.
 
 
 ### CocoaPods Installation
@@ -136,7 +136,7 @@ As before, be sure to check the version number. In the terminal, run the followi
 CocoaPods will create an **.xcworkspace** file with the name of your project. Open that and use this to compile your targets; dependencies will be linked automatically.
 
 
-See the [CocoaPods](https://cocoapods.org) home page for help and additional instructions.
+See the [CocoaPods][cocoapods-url] home page for help and additional instructions.
 
 
 ## Adding Tiled Assets to Xcode
@@ -146,3 +146,7 @@ When adding maps (TMX files), images and tilesets (TSX files) to your Xcode proj
 
 
 Next: [Setting Up Your Scenes](scenes.html) - [Index](Tutorial.html)
+
+
+[carthage-url]:https://github.com/Carthage/Carthage
+[cocoapods-url]:https://cocoapods.org

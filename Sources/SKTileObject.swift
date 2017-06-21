@@ -301,7 +301,6 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         uiScale = NSScreen.main()!.backingScaleFactor
         #endif
         
-        print("# [SKTileObject]: drawing object...")
         // polyline objects should have no fill
         self.fillColor = (self.objectType == .polyline) ? SKColor.clear : self.fillColor
         self.isAntialiased = false //layer.antialiased
