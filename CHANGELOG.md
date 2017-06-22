@@ -6,8 +6,8 @@ Change Log
 
 #### Changes
 
-API Updates:
-- add `SKObjectGroup.textObjects` & `SKTilemap.textObjects`
+- update hexagonal coordinate conversion
+- update API for new layer & object types, more consistent naming, etc.
 - remove `SKTilemap.indexOf(layerNamed:)`
 - rename `SKTilemap.getLayer(named:)` -> `SKTilemap.getLayers(named:,recursive:)`
 - rename `SKTilemap.allLayers` -> `SKTilemap.getLayers(recursive:)`
@@ -26,29 +26,26 @@ API Updates:
 - rename `SKTilemap.getObjects(ofType:)` -> `SKTilemap.getObjects(ofType:,recursive:)`
 - rename `SKTilemap.getObjects(named:)` -> `SKTilemap.getObjects(named:,recursive:)`
 - rename `SKTileLayer.getAnimatedTiles()` -> `SKTileLayer.animatedTiles()`
-
-
 - rename `SKObjectGroup.getObject(named:)` -> `SKObjectGroup.getObjects(named:)`
-- add `SKTilemap.showGrid`
-- add `SKTilemap.showBounds`
-- add `SKObjectGroup.getObjects(withText:)`
-- add `SKTilemap.getObjects(withText:)`
-- add `SKTilemap.getObject(withID:)`
-- add `SKTileObject.isTileObject`
-- add `SKTileObject.isTextObject`
-- add `SKTileLayer.showBounds`
-- add `SKTile.showBounds`
-- add `SKTile.highlightDuration`
-- add `TiledLayerObject.highlightDuration`
-
-
+- added `SKObjectGroup.textObjects` & `SKTilemap.textObjects`
+- added `SKTilemap.showGrid`
+- added `SKTilemap.showBounds`
+- added `SKObjectGroup.getObjects(withText:)`
+- added `SKTilemap.getObjects(withText:)`
+- added `SKTilemap.getObject(withID:)`
+- added `SKTileObject.isTileObject`
+- added `SKTileObject.isTextObject`
+- added `SKTileLayer.showBounds`
+- added `SKTile.showBounds`
+- added `SKTile.highlightDuration`
+- added `TiledLayerObject.highlightDuration`
+- added `SKTiled+Debug.swift`
+- added `SKTilemap.getContentLayers` function
+- added `SKTilemap.objectColor` property
+- added `TiledLayerObject.layerName` property
+- added `SKTilemap.renderQuality` property
+- added `TiledLayerObject.renderQuality` property
 - better grid drawing quality
-- add `SKTiled+Debug.swift`
-- add `SKTilemap.getContentLayers` function
-- add `SKTilemap.objectColor` property
-- add `TiledLayerObject.layerName` property
-- add `SKTilemap.renderQuality` property
-- add `TiledLayerObject.renderQuality` property
 
 
 1.13

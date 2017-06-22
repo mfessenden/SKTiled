@@ -30,7 +30,6 @@ import Cocoa
  */
 public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ context: CGContext, _ bounds: CGRect, _ scale: CGFloat) -> ()) -> CGImage {
     // create an image of size, not opaque, not scaled
-    
     UIGraphicsBeginImageContextWithOptions(size, false, scale)
     let context = UIGraphicsGetCurrentContext()
     context!.interpolationQuality = .high
@@ -51,15 +50,14 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
  - returns: `CGImage` result.
  */
 public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ context: CGContext, _ bounds: CGRect, _ scale: CGFloat) -> ()) -> CGImage {
-    let scaledSize = size * scale
-    //print("  -> size: \(scaledSize.shortDescription), ui scale: \(scale.roundTo())")
+    let scaledSize = size
     let image = NSImage(size: scaledSize)
     image.lockFocus()
     let nsContext = NSGraphicsContext.current()!
     nsContext.imageInterpolation = .high
     let context = nsContext.cgContext
     let bounds = CGRect(origin: CGPoint.zero, size: size)
-    whatToDraw(context, bounds, scale)
+    whatToDraw(context, bounds, 1)
     image.unlockFocus()
     var imageRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
     let imageRef = image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)
@@ -895,6 +893,7 @@ public func normalize(_ value: CGFloat, _ minimum: CGFloat, _ maximum: CGFloat) 
  Generate a visual grid texture.
  
  - parameter layer:      `TiledLayerObject` layer instance.
+ - parameter uiScale:    `CGFloat` ui scale factor (for retina displays).
  - parameter imageScale: `CGFloat` image scale multiplier.
  - parameter lineScale:  `CGFloat` line scale multiplier.
  - returns: `SKTexture?` visual grid texture.
@@ -915,6 +914,7 @@ internal func drawGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineSca
     let tileHeightHalf = tileHeight / 2
                 
     let sizeInPoints = (layer.sizeInPoints * imageScale)
+    print("\n# drawGrid: \(sizeInPoints.shortDescription): (\(layer.sizeInPoints.shortDescription) * \(imageScale.roundTo()))")
     let defaultLineWidth: CGFloat = (imageScale / uiScale) * lineScale
     
     return imageOfSize(sizeInPoints, scale: uiScale) { context, bounds, scale in
@@ -923,7 +923,6 @@ internal func drawGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineSca
         
         // line width should be at least 1 for larger tile sizes
         let lineWidth: CGFloat = defaultLineWidth
-        print("# DEBUG: line width: \(lineWidth.roundTo()), line scale: \(lineScale.roundTo())")
         context.setLineWidth(lineWidth)
         //context.setLineDash(phase: 0.5, lengths: [0.5, 1.0])
         context.setShouldAntialias(true)  // layer.antialiased

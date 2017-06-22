@@ -17,6 +17,7 @@ class GameViewController: NSViewController {
     @IBOutlet weak var tileInfoLabel: NSTextField!
     @IBOutlet weak var propertiesInfoLabel: NSTextField!
     @IBOutlet weak var debugInfoLabel: NSTextField!
+    
     @IBOutlet weak var cursorTracker: NSTextField!
     
     var demoFiles: [String] = []
@@ -57,7 +58,7 @@ class GameViewController: NSViewController {
         skView.presentScene(scene)
         scene.setup(tmxFile: currentFilename)
         
-        debugInfoLabel?.isHidden = (scene.tilemap?.orientation == .hexagonal)
+        //debugInfoLabel?.isHidden = (scene.tilemap?.orientation == .hexagonal)
     }
     
     override func viewDidAppear() {
@@ -86,6 +87,7 @@ class GameViewController: NSViewController {
         mapInfoLabel.shadow = shadow
         tileInfoLabel.shadow = shadow
         propertiesInfoLabel.shadow = shadow
+        debugInfoLabel.shadow = shadow
     }
     
     @IBAction func fitButtonPressed(_ sender: Any) {
@@ -181,7 +183,7 @@ class GameViewController: NSViewController {
         updateWindowTitle(withString: nextFilename)
         nextScene.tilemap?.debugDraw = debugMode
         
-        debugInfoLabel?.isHidden = (nextScene.tilemap?.orientation == .hexagonal)
+        //debugInfoLabel?.isHidden = (nextScene.tilemap?.orientation == .hexagonal)
     }
     
     /**
@@ -230,7 +232,7 @@ class GameViewController: NSViewController {
         nextScene.cameraNode?.showOverlay = showOverlay
         nextScene.tilemap?.debugDraw = debugMode
         
-        debugInfoLabel?.isHidden = (nextScene.tilemap?.orientation == .hexagonal)
+        //debugInfoLabel?.isHidden = (nextScene.tilemap?.orientation == .hexagonal)
     }
     
     /**

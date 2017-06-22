@@ -95,6 +95,18 @@
 		4CD6D2D51D8B9DE20083DA7B /* roguelike-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16.tsx */; };
 		4CD6D2DD1D8B9EA10083DA7B /* isometric-130x66.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2D91D8B9EA10083DA7B /* isometric-130x66.tmx */; };
 		4CD6D2DE1D8B9EA10083DA7B /* isometric-130x230.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2DA1D8B9EA10083DA7B /* isometric-130x230.png */; };
+		4CE631291EFC618E004E3701 /* hexf-75x65 in Resources */ = {isa = PBXBuildFile; fileRef = 4CE631231EFC618E004E3701 /* hexf-75x65 */; };
+		4CE6312A1EFC618E004E3701 /* hexf-75x65 in Resources */ = {isa = PBXBuildFile; fileRef = 4CE631231EFC618E004E3701 /* hexf-75x65 */; };
+		4CE6312B1EFC618E004E3701 /* hexf-75x65.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CE631241EFC618E004E3701 /* hexf-75x65.tsx */; };
+		4CE6312C1EFC618E004E3701 /* hexf-75x65.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CE631241EFC618E004E3701 /* hexf-75x65.tsx */; };
+		4CE6312D1EFC618E004E3701 /* hexf-test.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CE631251EFC618E004E3701 /* hexf-test.tmx */; };
+		4CE6312E1EFC618E004E3701 /* hexf-test.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CE631251EFC618E004E3701 /* hexf-test.tmx */; };
+		4CE6312F1EFC618E004E3701 /* hexp-75x65 in Resources */ = {isa = PBXBuildFile; fileRef = 4CE631261EFC618E004E3701 /* hexp-75x65 */; };
+		4CE631301EFC618E004E3701 /* hexp-75x65 in Resources */ = {isa = PBXBuildFile; fileRef = 4CE631261EFC618E004E3701 /* hexp-75x65 */; };
+		4CE631311EFC618E004E3701 /* hexp-75x65.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CE631271EFC618E004E3701 /* hexp-75x65.tsx */; };
+		4CE631321EFC618E004E3701 /* hexp-75x65.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CE631271EFC618E004E3701 /* hexp-75x65.tsx */; };
+		4CE631331EFC618E004E3701 /* hexp-test.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CE631281EFC618E004E3701 /* hexp-test.tmx */; };
+		4CE631341EFC618E004E3701 /* hexp-test.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CE631281EFC618E004E3701 /* hexp-test.tmx */; };
 		4CFEA3581D8D02D20055C150 /* staggered-64x33.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEA3561D8D02D20055C150 /* staggered-64x33.tmx */; };
 		4CFEA3591D8D02D20055C150 /* staggered-64x192.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEA3571D8D02D20055C150 /* staggered-64x192.png */; };
 		4CFEA35C1D8D04320055C150 /* hex-65x65-65x230.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEA35A1D8D04320055C150 /* hex-65x65-65x230.png */; };
@@ -147,6 +159,12 @@
 		4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "roguelike-16x16.tsx"; sourceTree = "<group>"; };
 		4CD6D2D91D8B9EA10083DA7B /* isometric-130x66.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "isometric-130x66.tmx"; sourceTree = "<group>"; };
 		4CD6D2DA1D8B9EA10083DA7B /* isometric-130x230.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "isometric-130x230.png"; sourceTree = "<group>"; };
+		4CE631231EFC618E004E3701 /* hexf-75x65 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "hexf-75x65"; path = "test/hexf-75x65"; sourceTree = "<group>"; };
+		4CE631241EFC618E004E3701 /* hexf-75x65.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "hexf-75x65.tsx"; path = "test/hexf-75x65.tsx"; sourceTree = "<group>"; };
+		4CE631251EFC618E004E3701 /* hexf-test.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "hexf-test.tmx"; path = "test/hexf-test.tmx"; sourceTree = "<group>"; };
+		4CE631261EFC618E004E3701 /* hexp-75x65 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "hexp-75x65"; path = "test/hexp-75x65"; sourceTree = "<group>"; };
+		4CE631271EFC618E004E3701 /* hexp-75x65.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "hexp-75x65.tsx"; path = "test/hexp-75x65.tsx"; sourceTree = "<group>"; };
+		4CE631281EFC618E004E3701 /* hexp-test.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "hexp-test.tmx"; path = "test/hexp-test.tmx"; sourceTree = "<group>"; };
 		4CFEA3561D8D02D20055C150 /* staggered-64x33.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "staggered-64x33.tmx"; sourceTree = "<group>"; };
 		4CFEA3571D8D02D20055C150 /* staggered-64x192.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "staggered-64x192.png"; sourceTree = "<group>"; };
 		4CFEA35A1D8D04320055C150 /* hex-65x65-65x230.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hex-65x65-65x230.png"; sourceTree = "<group>"; };
@@ -269,6 +287,12 @@
 		4C61084D1E9C266F003E982C /* External */ = {
 			isa = PBXGroup;
 			children = (
+				4CE631231EFC618E004E3701 /* hexf-75x65 */,
+				4CE631241EFC618E004E3701 /* hexf-75x65.tsx */,
+				4CE631251EFC618E004E3701 /* hexf-test.tmx */,
+				4CE631261EFC618E004E3701 /* hexp-75x65 */,
+				4CE631271EFC618E004E3701 /* hexp-75x65.tsx */,
+				4CE631281EFC618E004E3701 /* hexp-test.tmx */,
 			);
 			name = External;
 			sourceTree = "<group>";
@@ -530,10 +554,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C8E42E11DC26FD1002C76DA /* zlib in Resources */,
+				4CE631291EFC618E004E3701 /* hexf-75x65 in Resources */,
 				4C1774AC1D90999C000C0AFD /* roguelike-16x16-anim.png in Resources */,
 				4C1774A21D90999C000C0AFD /* hex1-65x65.tmx in Resources */,
+				4CE631311EFC618E004E3701 /* hexp-75x65.tsx in Resources */,
 				4C1774A71D90999C000C0AFD /* staggered-64x33.tmx in Resources */,
 				4C1774A81D90999C000C0AFD /* hex-65x65-65x230.png in Resources */,
+				4CE6312D1EFC618E004E3701 /* hexf-test.tmx in Resources */,
 				4C440B9C1DAE911000DEC9A4 /* Assets.xcassets in Resources */,
 				4C1774A61D90999C000C0AFD /* roguelike-16x16.tmx in Resources */,
 				4C1774A51D90999C000C0AFD /* ortho4-16x16.tmx in Resources */,
@@ -542,7 +569,10 @@
 				4C1774AA1D90999C000C0AFD /* isometric-130x230.png in Resources */,
 				4C1774A11D90999C000C0AFD /* DemoFiles.plist in Resources */,
 				4C1774AB1D90999C000C0AFD /* ortho4-16x16.png in Resources */,
+				4CE631331EFC618E004E3701 /* hexp-test.tmx in Resources */,
+				4CE6312B1EFC618E004E3701 /* hexf-75x65.tsx in Resources */,
 				4C1774AE1D90999C000C0AFD /* roguelike-16x16.tsx in Resources */,
+				4CE6312F1EFC618E004E3701 /* hexp-75x65 in Resources */,
 				4C1774A41D90999C000C0AFD /* isometric-130x66.tmx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -553,6 +583,7 @@
 			files = (
 				4CFEA35D1D8D04320055C150 /* hex1-65x65.tmx in Resources */,
 				4CBA61831D8A0A4600B31FC1 /* roguelike-16x16-anim.png in Resources */,
+				4CE6312C1EFC618E004E3701 /* hexf-75x65.tsx in Resources */,
 				4C88E1AB1D8A241F00FCCFA3 /* ortho4-16x16.tmx in Resources */,
 				4C8E42E01DC26FD1002C76DA /* zlib in Resources */,
 				4C88E18C1D8A1BC400FCCFA3 /* roguelike-16x16.tmx in Resources */,
@@ -561,9 +592,14 @@
 				4C440BB51DAE913A00DEC9A4 /* Main.storyboard in Resources */,
 				4CFEA3591D8D02D20055C150 /* staggered-64x192.png in Resources */,
 				4CA3DA0E1D8AF07C001E165A /* DemoFiles.plist in Resources */,
+				4CE631301EFC618E004E3701 /* hexp-75x65 in Resources */,
+				4CE6312A1EFC618E004E3701 /* hexf-75x65 in Resources */,
 				4CD6D2DE1D8B9EA10083DA7B /* isometric-130x230.png in Resources */,
 				4CFEA35C1D8D04320055C150 /* hex-65x65-65x230.png in Resources */,
+				4CE6312E1EFC618E004E3701 /* hexf-test.tmx in Resources */,
+				4CE631341EFC618E004E3701 /* hexp-test.tmx in Resources */,
 				4CFEA3581D8D02D20055C150 /* staggered-64x33.tmx in Resources */,
+				4CE631321EFC618E004E3701 /* hexp-75x65.tsx in Resources */,
 				4C440BB41DAE913A00DEC9A4 /* LaunchScreen.storyboard in Resources */,
 				4CD6D2D51D8B9DE20083DA7B /* roguelike-16x16.tsx in Resources */,
 				4CD6D2DD1D8B9EA10083DA7B /* isometric-130x66.tmx in Resources */,

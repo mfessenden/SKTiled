@@ -21,6 +21,7 @@ public class SKTiledDemoScene: SKTiledScene {
     
     public var uiScale: CGFloat = 1
     public var debugMode: Bool = false
+    public var cursorInfo = TiledCursor()
     
     /// global information label font size.
     private let labelFontSize: CGFloat = 11
@@ -36,8 +37,10 @@ public class SKTiledDemoScene: SKTiledScene {
         // setup demo UI
         updateHud()
         
-        #if os(OSX)
+        #if os(macOS)
         updateTrackingViews()
+        addChild(cursorInfo)
+        cursorInfo.zPosition = 10000
         #endif
         
         NotificationCenter.default.addObserver(self, selector: #selector(removeCoordinate), name: NSNotification.Name(rawValue: "removeCoordinate"), object: nil)
@@ -284,13 +287,20 @@ extension SKTiledDemoScene {
         let baseLayer = tilemap.baseLayer
         
         let positionInWindow = event.locationInWindow
-        let positionInView = convertPoint(toView: positionInWindow)
-        let positionInScene = view.convert(positionInView, to: self)
+        let positionInScene = event.location(in: self)
+        let positionInView = convertPoint(toView: positionInScene)
+        let worldPosition = convert(positionInScene, to: worldNode!)
         
+        cursorInfo.position = positionInScene
+        cursorInfo.zPosition = tilemap.lastZPosition * 10
         
         // get the position relative as drawn by the
         let positionInLayer = baseLayer.mouseLocation(event: event)
         let coord = baseLayer.screenToTileCoords(positionInLayer)
+        let validCoord = baseLayer.isValid(Int(coord.x), Int(coord.y))
+        
+        cursorInfo.coord = coord
+        cursorInfo.isValid = validCoord
         
         if liveMode == true {
             if let _ = self.addTileAt(Int(coord.x), Int(coord.y), duration: 0.7) {}
@@ -309,10 +319,10 @@ extension SKTiledDemoScene {
             }
         }
         
-        var debugInfoString = ""
+        //var debugInfoString = "World: \(positionInLayer.invertedY.shortDescription)"
         
         updatePropertiesInfo(msg: propertiesInfoString)
-        updateDebugInfo(msg: debugInfoString)
+        //updateDebugInfo(msg: debugInfoString)
     }
         
     override open func mouseDragged(with event: NSEvent) {
@@ -493,3 +503,50 @@ extension SKTiledDemoScene {
 }
 #endif
 
+
+open class TiledCursor: SKNode {
+    private var label = SKLabelNode(fontNamed: "Courier")
+    private var circle = SKShapeNode()
+    public var coord: CGPoint = .zero {
+        didSet {
+            label.text = "\(Int(coord.x)), \(Int(coord.y))"
+        }
+    }
+    
+    public var fontSize: CGFloat = 12 {
+        didSet {
+            label.fontSize = fontSize
+        }
+    }
+    
+    public var isValid: Bool = false {
+        didSet {
+            circle.fillColor = (isValid == true) ? SKColor(hexString: "#5DB6FF") : SKColor(hexString: "#FE2929")
+        }
+    }
+    
+    public var radius: CGFloat = 4 {
+        didSet {
+            circle = SKShapeNode(circleOfRadius: radius)
+        }
+    }
+    
+    override public init() {
+        super.init()
+        update()
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    open func update() {
+        circle = SKShapeNode(circleOfRadius: radius)
+        addChild(circle)
+        addChild(label)
+        circle.strokeColor = .clear
+        label.fontSize = fontSize
+        label.position.y -= radius
+        label.position.x -= (radius * 8)
+    }
+}

@@ -10,7 +10,7 @@ import UIKit
 import SpriteKit
 
 
-class GameViewControllerIOS: UIViewController {
+class GameViewController: UIViewController {
 
     @IBOutlet weak var mapInfoLabel: UILabel!
     @IBOutlet weak var tileInfoLabel: UILabel!

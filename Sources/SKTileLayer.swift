@@ -244,7 +244,6 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         get {
             return showBounds && showGrid
         } set {
-            print("# debug draw: \(newValue)")
             showBounds = newValue
             showGrid = newValue
         }
@@ -530,9 +529,14 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         var pixelX = point.x
         var pixelY = point.y
         
+        var debugMsg = "px: \(pixelX.roundTo()), py: \(pixelY.roundTo()), "
+        
         switch orientation {
             
         case .orthogonal:
+            
+            
+            updateSceneDebugInfo(debugMsg)
             return CGPoint(x: floor(pixelX / tileWidth), y: floor(pixelY / tileHeight))
             
         case .isometric:
@@ -543,7 +547,11 @@ open class TiledLayerObject: SKNode, SKTiledObject {
             
         // FIXME: error here with negative values
         case .hexagonal:
-
+            // y is off by 15px
+            //updateSceneDebugInfo("px: \(pixelX.roundTo()), py: \(pixelY.roundTo())")
+            
+            
+            
             // initialize r, h, & s
             var r: CGFloat = 0
             var h: CGFloat = 0
@@ -555,16 +563,18 @@ open class TiledLayerObject: SKNode, SKTiledObject {
 
             // flat-topped
             if (tilemap.staggerX == true) {
-
+                
+                
+                
                 s = tilemap.sideLengthX
                 r = (tileWidth - tilemap.sideLengthX) / 2
                 h = tileHeight / 2
                 
-                if pixelX < 0 {
-                    pixelX += r
-                } else {
-                    pixelX -= r
-                }
+                pixelX -= r
+                
+                
+                debugMsg += "s: \(s.roundTo()), r: \(r.roundTo()), "
+
                 
                 // figure out which section of the grid we're in
                 sectionX = pixelX / (r + s)
@@ -581,24 +591,27 @@ open class TiledLayerObject: SKNode, SKTiledObject {
                 
                 // check the x coordinate for a staggered column -> y-offset
                 if tilemap.doStaggerX(Int(sectionX)){
-                    sectionY -= 0.5
+                    sectionY -= 0.5  // -= 0.5
                 }
+                
+
                 
     
             // pointy
             } else {
+                
+                
+                
                 
                 //if pixelY < 1 { pixelX -= tileWidthHalf }
                 s = tilemap.sideLengthY
                 r = tileWidth / 2
                 h = (tileHeight - tilemap.sideLengthY) / 2
                 
+                pixelY -= h
+
                 
-                if pixelY < 0 {
-                    pixelY += h
-                } else {
-                    pixelY -= h
-                }
+                debugMsg += "s: \(s.roundTo()), h: \(h.roundTo()), "
                 
                 // figure out which section of the grid we're in
                 sectionX = pixelX / (r * 2)
@@ -614,10 +627,14 @@ open class TiledLayerObject: SKNode, SKTiledObject {
                 }
                 
                 if tilemap.doStaggerY(Int(sectionY)){
-                    sectionX -= 0.5
+                    sectionX -= 0.5  // -= 0.5
                 }
+                
             }
+            
+            debugMsg += "secX: \(sectionX.roundTo()), secY: \(sectionY.roundTo())"
 
+            updateSceneDebugInfo(debugMsg)
             return floor(point: CGPoint(x: sectionX, y: sectionY))
             
             
@@ -2017,26 +2034,29 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
                 
                 // scale factor for texture
                 let uiScale: CGFloat
-                let scaleValue: CGFloat
+                let imageScale: CGFloat
                 let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1 : 0.85
+                
                 #if os(iOS)
                 uiScale = UIScreen.main.scale
-                scaleValue = 2
+                imageScale = 2
                 #else
                 uiScale = NSScreen.main()!.backingScaleFactor
-                scaleValue = 8
+                imageScale = uiScale > 1 ? 2 : 4
                 #endif
-                //print("# [SKTileLayer]: showing grid, ui scale: \(uiScale.roundTo()), scale: \(scaleValue.roundTo())")
+                
+                // final texture size = (sizeInPoints * imageScale)
                 
                 // generate the texture
                 if (gridTexture == nil) {
-                    let gridImage = drawGrid(self.layer, imageScale: scaleValue, lineScale: lineScale)
+                    let gridImage = drawGrid(self.layer, imageScale: imageScale, lineScale: lineScale)
                     gridTexture = SKTexture(cgImage: gridImage)
+                    print(" -> texture size: \(gridTexture.size().shortDescription)")
                     gridTexture.filteringMode = .linear
                 }
                 
                 // sprite scaling factor
-                let spriteScaleFactor: CGFloat = (1 / scaleValue)
+                let spriteScaleFactor: CGFloat = (1 / imageScale)
                 gridSize = gridTexture.size() / uiScale
                 
                 #if os(iOS)
@@ -2047,7 +2067,7 @@ fileprivate class TiledLayerGrid: SKSpriteNode {
                 
                 texture = gridTexture
                 alpha = gridOpacity
-                size = gridSize / scaleValue
+                size = gridSize / imageScale
                 
                 #if os(OSX)
                 yScale *= -1

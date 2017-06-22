@@ -216,3 +216,15 @@ extension SKTile {
         }
     }
 }
+
+
+public extension TiledLayerObject {
+    /**
+     Communicate with the scene.
+     */
+    public func updateSceneDebugInfo(_ msg: String) {
+        if let demoScene = self.scene as? SKTiledDemoScene {
+            demoScene.updateDebugInfo(msg: msg)
+        }
+    }
+}
