@@ -463,11 +463,10 @@ extension SKTiledDemoScene {
         
         // 'V' runs a custom test
         if eventKey == 0x9 {
-            if let scoreLabel = tilemap.getObject(withID: 51) {
-                print("setting score...")
-                scoreLabel.text = "score: 0500"
-            }
+            view.showsPhysics = !view.showsPhysics
         }
+        
+        
     }
 }
 #endif

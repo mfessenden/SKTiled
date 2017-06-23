@@ -967,7 +967,7 @@ open class SKTileLayer: TiledLayerObject {
     /// Tile highlight duration
     override open var highlightDuration: TimeInterval {
         didSet{
-            tiles.flatMap({ $0?.highlightDuration = highlightDuration})
+            _ = tiles.flatMap({ $0?.highlightDuration = highlightDuration})
         }
     }
     
@@ -1054,19 +1054,13 @@ open class SKTileLayer: TiledLayerObject {
     }
     
     /**
-     Returns tiles matching the given gid.
+     Returns tiles matching the given global id.
      
-     - parameter type: `Int` tile gid.
+     - parameter globalID: `Int` tile global id.
      - returns: `[SKTile]` array of tiles.
     */
-    open func getTiles(withID id: Int) -> [SKTile] {
-        var result: [SKTile] = []
-        for tile in tiles where tile != nil {
-            if tile!.tileData.id == id {
-                result.append(tile!)
-            }
-        }
-        return result
+    open func getTiles(globalID: Int) -> [SKTile] {
+        return tiles.flatMap { $0 }.filter { $0.tileData.id == globalID }
     }
     
     /**
@@ -1430,7 +1424,7 @@ open class SKTileLayer: TiledLayerObject {
      Visualize the layer's boundary shape.
      */
     override open func drawBounds() {
-        tiles.flatMap({ $0?.drawBounds() })
+        let _ = tiles.flatMap({ $0?.drawBounds() })
         super.drawBounds()
     }
     
@@ -1883,7 +1877,7 @@ open class SKGroupLayer: TiledLayerObject {
     /// Returns a flattened array of child layers.
     override open var layers: [TiledLayerObject] {
         var result: [TiledLayerObject] = [self]
-        for layer in _layers.sorted(by: { $0.index > $1.index }) {   // switched from `<` here
+        for layer in _layers.sorted(by: { $0.index > $1.index }) {
             result = result + layer.layers
         }
         return result

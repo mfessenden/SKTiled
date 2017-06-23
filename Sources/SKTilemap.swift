@@ -933,13 +933,13 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     /**
      Returns a tile at the given coordinate from a layer.
      
-     - parameter coord: `CGPoint` tile coordinate.
-     - parameter name:  `String?` layer name.
+     - parameter coord:    `CGPoint` tile coordinate.
+     - parameter inLayer:  `String?` layer name.
      - returns: `SKTile?` tile, or nil.
      */
     open func tileAt(coord: CGPoint, inLayer named: String?) -> SKTile? {
         if let named = named {
-            if let layer = getLayer(named: named) as? SKTileLayer {
+            if let layer = getLayers(named: named).first as? SKTileLayer {
                 return layer.tileAt(coord: coord)
             }
         }
@@ -970,14 +970,14 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     }
     
     /**
-     Returns tiles with the given gid. If recursive is false, only returns tiles from top-level layers.
+     Returns tiles with the given global id. If recursive is false, only returns tiles from top-level layers.
      
-     - parameter type: `Int` tile gid.
+     - parameter globalID:  `Int` tile globla id.
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTile]` array of tiles.
      */
-    open func getTiles(withID gid: Int, recursive: Bool=true) -> [SKTile] {
-        return tileLayers(recursive: recursive).flatMap { $0.getTiles(withID: gid) }
+    open func getTiles(globalID: Int, recursive: Bool=true) -> [SKTile] {
+        return tileLayers(recursive: recursive).flatMap { $0.getTiles(globalID: globalID) }
     }
     
     /**

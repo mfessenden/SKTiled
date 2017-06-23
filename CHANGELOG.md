@@ -19,7 +19,7 @@ Change Log
 - rename `SKTilemap.imageLayers` -> `SKTilemap.imageLayers(recursive:)`
 - rename `SKTilemap.groupLayers` -> `SKTilemap.groupLayers(recursive:)`
 - rename `SKTilemap.getTiles(ofType:)` -> `SKTilemap.getTiles(ofType:,recursive:)`
-- rename `SKTilemap.getTiles(withID:)` -> `SKTilemap.getTiles(withID:,recursive:)`
+- rename `SKTilemap.getTiles(withID:)` -> `SKTilemap.getTiles(globalID:,recursive:)`
 - rename `SKTilemap.getTilesWithProperty(_:, _:)` -> `SKTilemap.getTilesWithProperty(_:,_:,recursive:)`
 - rename `SKTilemap.getAnimatedTiles()` -> `SKTilemap.animatedTiles(recursive:)`
 - rename `SKTilemap.getObjects()` -> `SKTilemap.getObjects(recursive:)`

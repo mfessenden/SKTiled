@@ -392,7 +392,7 @@ extension SKTiledSceneCamera {
     }
     
     open func scenePositionChanged(_ event: NSEvent) {
-        guard let scene = self.scene as? SKTiledScene else { return }
+        guard let _ = self.scene as? SKTiledScene else { return }
         let location = event.location(in: self)
         
         if lastLocation == nil { lastLocation = location }

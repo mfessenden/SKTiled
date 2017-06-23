@@ -74,7 +74,7 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
             if let sceneDelegate = scene as? SKTiledSceneDelegate {
                 scene.isPaused = isManuallyPaused
                 
-                if let tilemap = sceneDelegate.tilemap {
+                if (sceneDelegate.tilemap != nil) {
                     // if the tilemap is set to autosize, fit the map in the view
                     if let camera = sceneDelegate.cameraNode {
                         camera.fitToView(newSize: scene.size)

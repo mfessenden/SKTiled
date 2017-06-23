@@ -312,12 +312,13 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         
         // flip the vertex values on the y-value for our coordinate transform.
         // for some odd reason tile objects are flipped in the y-axis already, so ignore the translated
-        var translatedVertices: [CGPoint] = (gid == nil) ? vertices.map { $0.invertedY } : vertices
+        var translatedVertices: [CGPoint] = vertices.map { $0.invertedY }
             
         switch objectType {
                 
         case .ellipse:
             var bezPoints: [CGPoint] = []
+                
             for (index, point) in translatedVertices.enumerated() {
                 let nextIndex = (index < translatedVertices.count - 1) ? index + 1 : 0
                 bezPoints.append(lerp(start: point, end: translatedVertices[nextIndex], t: 0.5))
@@ -443,7 +444,6 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
      - returns: `CGImage` rendered text image.
      */
     open func drawTextObject(withScale: CGFloat=8) -> CGImage {
-        // TODO: Need to catch font errors here
         let uiScale: CGFloat
         #if os(iOS)
         uiScale = UIScreen.main.scale
@@ -516,7 +516,6 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         for point in points {
             var offset = layer.pixelToScreenCoords(point)
             offset.x -= layer.origin.x
-            // TODO: y-offset?
             vertices.append(offset)
         }
 

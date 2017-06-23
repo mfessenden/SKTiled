@@ -1137,7 +1137,7 @@ public func polygonPath(_ points: [CGPoint], closed: Bool=true) -> CGPath {
     for p in mpoints {
         path.addLine(to: p)
     }
-    if (closed == true) {path.closeSubpath()}
+    if (closed == true) { path.closeSubpath() }
     return path
 }
 

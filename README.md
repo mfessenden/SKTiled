@@ -30,7 +30,7 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 - [x] pre-loading of tilesets
 - [x] group nodes
 - [x] tile objects
-- [ ] text objects
+- [x] text objects
 - [x] custom tile classes (iOS10, macOS 10.11+)
 - [ ] generate GKGridGraph graphs from custom attributes (iOS10, macOS 10.11+)
 - [ ] user-definable cost properties for GKGridGraph nodes (iOS10, macOS 10.11+)
@@ -125,7 +125,7 @@ if let fireTiles = tilemap.getTiles(ofType: "fire") {
     // do something fiery here...
 }
 
-// query tiles from all layers
+// query tiles at a specific coordinate
 let tiles = tilemap.tilesAt(2, 4)
 ```
 
@@ -165,7 +165,6 @@ and the parent `SKTilemap`:
 ```swift
 let tileData = tilemap.getTileData(globalID: 177)
 ```
-
 
 ## Adding Nodes
 

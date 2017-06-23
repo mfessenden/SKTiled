@@ -586,14 +586,12 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 if let currentID = currentID {
                     
                     let tileID = tileset.firstGID + currentID
-                    // TODO: check global status
-                    if let tileData = tileset.getTileData(globalID: tileID) {
-                        
+                    if tileset.getTileData(globalID: tileID) != nil {
                         // add to object group
-                        
                     }
                 }
             } else {
+                
                 guard let objectsGroup = SKObjectGroup(tilemap: self.tilemap!, attributes: attributeDict)
                     else {
                         parser.abortParsing()
@@ -601,6 +599,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 }
                 
                 let parentElement = elementPath.last!
+                
                 if let group = parentElement as? SKGroupLayer {
                     group.addLayer(objectsGroup)
                 }
@@ -622,7 +621,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     parser.abortParsing()
                     return
             }
-            
             
             let parentElement = elementPath.last!
             if let group = parentElement as? SKGroupLayer {
@@ -655,6 +653,8 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 tilemap.addLayer(groupLayer)
             }
             
+            // delegate callback
+            mapDelegate?.didAddLayer(groupLayer)
             
             elementPath.append(groupLayer)
             lastElement = groupLayer
@@ -733,7 +733,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         if (elementName == "object") {
             
             // adding a group to tileset tile
-            if let tileset = lastElement as? SKTileset {
+            if let _ = lastElement as? SKTileset {
                 
             }
             
@@ -749,7 +749,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 let _ = objectGroup.addObject(tileObject)
                 currentID = tileObject.id
             }
-            
         }
         
         // special case - look for last element to be a object
@@ -820,11 +819,15 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             guard let currentID = currentID else {
                 print("[SKTilemapParser]: \(parsingMode) parser: cannot assign frame animation information without tile id")
                 parser.abortParsing()
-                return}
+                return
+            }
             
-            guard let id = attributeDict["tileid"] else { parser.abortParsing(); return }
-            guard let duration = attributeDict["duration"] else { parser.abortParsing(); return }
-            guard let tileset = lastElement as? SKTileset else { parser.abortParsing(); return }
+            guard let id = attributeDict["tileid"],
+                let duration = attributeDict["duration"],
+                let tileset = lastElement as? SKTileset else {
+                    parser.abortParsing()
+                    return
+            }
             
             
             // get duration in seconds
@@ -1054,7 +1057,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             }
             
             // if we're dealing with a tile collision object...
-            if let tileset = lastElement as? SKTileset {
+            if (lastElement as? SKTileset) != nil {
                 
             }
             
