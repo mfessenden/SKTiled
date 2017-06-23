@@ -61,7 +61,7 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="File" id="bib-Uj-vzu">
                                     <items>
-                                        <menuItem title="Load tilemap..." keyEquivalent="o" id="IAo-SY-fd9">
+                                        <menuItem title="Load Map..." keyEquivalent="o" id="IAo-SY-fd9">
                                             <connections>
                                                 <action selector="loadTilemap:" target="Voe-Tx-rLC" id="yvh-gN-fnF"/>
                                             </connections>

@@ -11,52 +11,152 @@ import SpriteKit
 
 
 
+/// Sprite object for visualizaing grid & graph.
+internal class TiledLayerGrid: SKSpriteNode {
+    
+    private var layer: TiledLayerObject
+    private var gridTexture: SKTexture! = nil
+    private var graphTexture: SKTexture! = nil
+    private var frameColor: SKColor = .black
+    private var gridOpacity: CGFloat { return layer.gridOpacity }
+    
+    init(tileLayer: TiledLayerObject){
+        layer = tileLayer
+        frameColor = layer.frameColor
+        super.init(texture: SKTexture(), color: SKColor.clear, size: tileLayer.sizeInPoints)
+        setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    /**
+     Align with the parent layer.
+     */
+    func setup() {
+        // set the anchorpoint to 0,0 to match the frame
+        anchorPoint = CGPoint.zero
+        isHidden = true
+        
+        #if os(iOS)
+        position.y = -layer.sizeInPoints.height
+        #endif
+    }
+    
+    /// Display the current tile grid.
+    var showGrid: Bool = false {
+        didSet {
+            guard oldValue != showGrid else { return }
+            
+            texture = nil
+            isHidden = true
+            
+            if (showGrid == true){
+                
+                // get the last z-position
+                zPosition = layer.tilemap.lastZPosition + layer.tilemap.zDeltaForLayers
+                isHidden = false
+                var gridSize = CGSize.zero
+                
+                // scale factor for texture
+                let uiScale: CGFloat
+                
+                #if os(iOS)
+                uiScale = UIScreen.main.scale
+                #else
+                uiScale = NSScreen.main()!.backingScaleFactor
+                #endif
+                
+                // multipliers used to generate smooth lines
+                let imageScale: CGFloat = uiScale > 1 ? 2 : 4
+                let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1 : 0.85
+
+                
+                // generate the texture
+                if (gridTexture == nil) {
+                    let gridImage = drawGrid(self.layer, imageScale: imageScale, lineScale: lineScale)
+                    gridTexture = SKTexture(cgImage: gridImage)
+                    gridTexture.filteringMode = .linear
+                }
+                
+                // sprite scaling factor
+                let spriteScaleFactor: CGFloat = (1 / imageScale)
+                gridSize = gridTexture.size() / uiScale
+                setScale(spriteScaleFactor)
+
+                
+                texture = gridTexture
+                alpha = gridOpacity
+                size = gridSize / imageScale
+                
+                #if os(OSX)
+                yScale *= -1
+                #endif
+                
+            }
+        }
+    }
+}
+
+
 /// Shape node used for highlighting and placing tiles.
-internal class DebugTileShape: SKShapeNode {
+internal class TileShape: SKShapeNode {
     
-    open var tileSize: CGSize
-    open var orientation: TilemapOrientation = .orthogonal
-    open var color: SKColor
-    open var layer: TiledLayerObject
-    open var coord: CGPoint
+    var tileSize: CGSize
+    var orientation: TilemapOrientation = .orthogonal
+    var color: SKColor
+    var layer: TiledLayerObject
+    var coord: CGPoint
+    var useLabel: Bool = false
+    var renderQuality: CGFloat = 4
     
-    public init(layer: TiledLayerObject, coord: CGPoint, tileColor: SKColor){
+    
+    init(layer: TiledLayerObject, coord: CGPoint, tileColor: SKColor, withLabel: Bool=false){
         self.layer = layer
         self.coord = coord
         self.tileSize = layer.tileSize
         self.color = tileColor
+        self.useLabel = withLabel
         super.init()
         self.orientation = layer.orientation
-        drawObject(withLabel: true)
+        drawObject()
     }
     
-    public init(layer: TiledLayerObject, tileColor: SKColor){
+    init(layer: TiledLayerObject, tileColor: SKColor, withLabel: Bool=false){
         self.layer = layer
         self.coord = CGPoint.zero
         self.tileSize = layer.tileSize
         self.color = tileColor
+        self.useLabel = withLabel
         super.init()
         self.orientation = layer.orientation
-        drawObject(withLabel: true)
+        drawObject()
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     /**
      Draw the object.
      */
-    fileprivate func drawObject(withLabel: Bool=false) {
+    private func drawObject() {
         // draw the path
         var points: [CGPoint] = []
         
-        let tileSizeHalved = CGSize(width: tileSize.halfWidth, height: tileSize.halfHeight)
+        let scaledTilesize: CGSize = (tileSize * renderQuality)
+        let halfWidth: CGFloat = (tileSize.width / 2) * renderQuality
+        let halfHeight: CGFloat = (tileSize.height / 2) * renderQuality
+        let tileWidth: CGFloat = (tileSize.width * renderQuality)
+        let tileHeight: CGFloat = (tileSize.height * renderQuality)
+        
+        let tileSizeHalved = CGSize(width: halfWidth, height: halfHeight)
         
         switch orientation {
         case .orthogonal:
-            let origin = CGPoint(x: -tileSize.halfWidth, y: tileSize.halfHeight)
-            points = rectPointArray(tileSize, origin: origin)
+            let origin = CGPoint(x: -halfWidth, y: halfHeight)
+            points = rectPointArray(scaledTilesize, origin: origin)
             
         case .isometric, .staggered:
             points = polygonPointArray(4, radius: tileSizeHalved)
@@ -64,11 +164,8 @@ internal class DebugTileShape: SKShapeNode {
         case .hexagonal:
             var hexPoints = Array(repeating: CGPoint.zero, count: 6)
             let staggerX = layer.tilemap.staggerX
-            let tileWidth = layer.tilemap.tileWidth
-            let tileHeight = layer.tilemap.tileHeight
-            
-            let sideLengthX = layer.tilemap.sideLengthX
-            let sideLengthY = layer.tilemap.sideLengthY
+            let sideLengthX = layer.tilemap.sideLengthX * renderQuality
+            let sideLengthY = layer.tilemap.sideLengthY * renderQuality
             var variableSize: CGFloat = 0
             
             // flat (broken)
@@ -99,43 +196,49 @@ internal class DebugTileShape: SKShapeNode {
         
         // draw the path
         self.path = polygonPath(points)
-        self.isAntialiased = false
+        self.isAntialiased = true
         self.lineJoin = .miter
         self.miterLimit = 0
-        self.lineWidth = 0.5
+        self.lineWidth = 1
         
-        self.strokeColor = SKColor.clear
-        self.fillColor = self.color.withAlphaComponent(0.35)
+        self.strokeColor = self.color.withAlphaComponent(0.75)
+        self.fillColor = self.color.withAlphaComponent(0.18)
         
         // anchor
-        childNode(withName: "Anchor")?.removeFromParent()
-        let anchorRadius: CGFloat = tileSize.width / 24 > 1.0 ? tileSize.width / 18 > 4.0 ? 4 : tileSize.width / 18 : 1.0
+        childNode(withName: "ANCHOR")?.removeFromParent()
+        let anchorRadius: CGFloat = (tileSize.halfHeight / 8) * renderQuality
         let anchor = SKShapeNode(circleOfRadius: anchorRadius)
-        anchor.name = "Anchor"
+        anchor.name = "ANCHOR"
         addChild(anchor)
-        anchor.fillColor = self.color.withAlphaComponent(0.2)
+        anchor.fillColor = self.color.withAlphaComponent(0.05)
         anchor.strokeColor = SKColor.clear
         anchor.zPosition = zPosition + 10
         anchor.isAntialiased = true
         
-        childNode(withName: "CoordinateLabel")?.removeFromParent()
-        // draw the coordinate label
-        if (withLabel == true) {
+        
+        
+        // coordinate label
+        childNode(withName: "COORDINATE")?.removeFromParent()
+        if (useLabel == true) {
             let label = SKLabelNode(fontNamed: "Courier")
-            label.name = "CoordinateLabel"
-            label.fontSize = anchorRadius * 24   // was 6
+            label.name = "COORDINATE"
+            label.fontSize = anchorRadius * renderQuality
             label.text = "\(Int(coord.x)),\(Int(coord.y))"
             addChild(label)
-            label.setScale(0.2)
+            label.zPosition = anchor.zPosition + 10
         }
+        
+        setScale(1 / renderQuality)
     }
 }
 
 
-internal func == (lhs: DebugTileShape, rhs: DebugTileShape) -> Bool {
+internal func == (lhs: TileShape, rhs: TileShape) -> Bool {
     return lhs.coord == rhs.coord
 }
 
+
+extension SKTilemap {}
 
 
 extension SKTile {
@@ -228,3 +331,143 @@ public extension TiledLayerObject {
         }
     }
 }
+
+#if os(OSX)
+extension SKTiledDemoScene {
+    
+    /**
+     Run demo keyboard events (macOS).
+     
+     - parameter eventKey: `UInt16` event key.
+     
+     */
+    public func keyboardEvent(eventKey: UInt16) {
+        guard let view = view,
+            let cameraNode = cameraNode,
+            let tilemap = tilemap,
+            let worldNode = worldNode else {
+                return
+        }
+        
+        // 'D' shows/hides debug view
+        if eventKey == 0x02 {
+            tilemap.debugDraw = !tilemap.debugDraw
+        }
+        
+        // 'O' shows/hides object layers
+        if eventKey == 0x1f {
+            tilemap.showObjects = !tilemap.showObjects
+        }
+        
+        // 'P' pauses the map
+        if eventKey == 0x23 {
+            self.isPaused = !self.isPaused
+        }
+        
+        // 'Q' print layer stats
+        if eventKey == 0xc {
+            tilemap.layerStatistics()
+        }
+        
+        
+        // 'H' hides the HUD
+        if eventKey == 0x04 {
+            if let view = self.view {
+                let debugState = !view.showsFPS
+                view.showsFPS = debugState
+                view.showsNodeCount = debugState
+                view.showsDrawCount = debugState
+            }
+        }
+        
+        // '←' advances to the next scene
+        if eventKey == 0x7B {
+            self.loadPreviousScene()
+        }
+        
+        // 'E' toggles edit mode
+        if eventKey == 0x0E {
+            editMode = !editMode
+        }
+        
+        // 'L' toggles live mode
+        if eventKey == 0x25 {
+            liveMode = !liveMode
+        }
+        
+        // '1' zooms to 100%
+        if eventKey == 0x12 || eventKey == 0x53 {
+            cameraNode.resetCamera()
+        }
+        
+        // 'A' or 'F' fits the map to the current view
+        if eventKey == 0x0 || eventKey == 0x3 {
+            cameraNode.fitToView(newSize: view.bounds.size)
+        }
+        
+        
+        
+        // 'J' fades the layers in succession
+        if eventKey == 0x26 {
+            var fadeTime: TimeInterval = 3
+            let additionalTime: TimeInterval = (tilemap.layerCount > 6) ? 1.25 : 2.25
+            for layer in tilemap.getContentLayers() {
+                let fadeAction = SKAction.fadeAfter(wait: fadeTime, alpha: 0)
+                layer.run(fadeAction)
+                fadeTime += additionalTime
+            }
+        }
+        
+        // 'K' updates the render quality
+        if eventKey == 0x28 {
+            if tilemap.renderQuality < 16 {
+                tilemap.renderQuality *= 2
+            }
+        }
+        
+        // MARK: - Debugging Tests
+        
+        // 'Z' queries the debug draw state
+        if eventKey == 0x6 {
+            print("tilemap debug draw: \(tilemap.debugDraw), (show bounds: \(tilemap.showBounds), show grid: \(tilemap.showGrid))")
+        }
+        
+        
+        // 'I' runs a custom event
+        if eventKey == 0x22 {
+            var fadeTime: TimeInterval = 3
+            let shapeRadius = (tilemap.tileHeightHalf / 4) - 0.5
+            for x in 0..<Int(tilemap.size.width) {
+                for y in 0..<Int(tilemap.size.height) {
+                    
+                    let shape = SKShapeNode(circleOfRadius: shapeRadius)
+                    shape.alpha = 0.7
+                    shape.fillColor = SKColor(hexString: "#FD4444")
+                    shape.strokeColor = .clear
+                    worldNode.addChild(shape)
+                    
+                    let shapePos = tilemap.baseLayer.pointForCoordinate(x, y)
+                    shape.position = worldNode.convert(shapePos, from: tilemap.baseLayer)
+                    shape.zPosition = tilemap.lastZPosition + tilemap.zDeltaForLayers
+                    
+                    let fadeAction = SKAction.fadeAfter(wait: fadeTime, alpha: 0)
+                    shape.run(fadeAction, completion: {
+                        shape.removeFromParent()
+                    })
+                    fadeTime += 0.003
+                    
+                }
+                //fadeTime += 0.02
+            }
+        }
+        
+        // 'V' runs a custom test
+        if eventKey == 0x9 {
+            if let scoreLabel = tilemap.getObject(withID: 51) {
+                print("setting score...")
+                scoreLabel.text = "score: 0500"
+            }
+        }
+    }
+}
+#endif

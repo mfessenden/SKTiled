@@ -438,7 +438,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
      Returns a point for a given coordinate in the layer.
      
      - parameter coord: `CGPoint` tile coordinate.
-     - returns: `CGPoint` point in layer.
+     - returns: `CGPoint` point in layer (spritekit space).
      */
     open func pointForCoordinate(coord: CGPoint, offsetX: CGFloat=0, offsetY: CGFloat=0) -> CGPoint {
         var screenPoint = tileToScreenCoords(coord)
@@ -469,12 +469,12 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     /**
      Returns a tile coordinate for a given point in the layer.
      
-     - parameter point: `CGPoint` point in layer.
+     - parameter point: `CGPoint` point in layer (spritekit space).
      - returns: `CGPoint` tile coordinate.
      */
     open func coordinateForPoint(_ point: CGPoint) -> CGPoint {
-        let coordinate = screenToTileCoords(point.invertedY)
-        return floor(point: coordinate)
+        return screenToTileCoords(point.invertedY)
+        //return floor(point: coordinate)
     }
         
     /**
@@ -529,14 +529,10 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         var pixelX = point.x
         var pixelY = point.y
         
-        var debugMsg = "px: \(pixelX.roundTo()), py: \(pixelY.roundTo()), "
         
         switch orientation {
             
         case .orthogonal:
-            
-            
-            updateSceneDebugInfo(debugMsg)
             return CGPoint(x: floor(pixelX / tileWidth), y: floor(pixelY / tileHeight))
             
         case .isometric:
@@ -544,100 +540,96 @@ open class TiledLayerObject: SKNode, SKTiledObject {
             let tileY = pixelY / tileHeight
             let tileX = pixelX / tileWidth
             return CGPoint(x: floor(tileY + tileX), y: floor(tileY - tileX))
+        
             
-        // FIXME: error here with negative values
         case .hexagonal:
-            // y is off by 15px
-            //updateSceneDebugInfo("px: \(pixelX.roundTo()), py: \(pixelY.roundTo())")
             
-            
-            
-            // initialize r, h, & s
-            var r: CGFloat = 0
-            var h: CGFloat = 0
-            var s: CGFloat = 0
-            
-            // variables for grid divisions
-            var sectionX: CGFloat = 0
-            var sectionY: CGFloat = 0
-
-            // flat-topped
+            // initial offset
             if (tilemap.staggerX == true) {
-                
-                
-                
-                s = tilemap.sideLengthX
-                r = (tileWidth - tilemap.sideLengthX) / 2
-                h = tileHeight / 2
-                
-                pixelX -= r
-                
-                
-                debugMsg += "s: \(s.roundTo()), r: \(r.roundTo()), "
-
-                
-                // figure out which section of the grid we're in
-                sectionX = pixelX / (r + s)
-                sectionY = pixelY / (h * 2)
-                
-                // get floor values for negatives
-                if sectionX < 0 {
-                    sectionX = floor(sectionX)
-                }
-                
-                if sectionY < 0 {
-                    sectionY = floor(sectionY)
-                }
-                
-                // check the x coordinate for a staggered column -> y-offset
-                if tilemap.doStaggerX(Int(sectionX)){
-                    sectionY -= 0.5  // -= 0.5
-                }
-                
-
-                
-    
-            // pointy
+                pixelX -= (tilemap.staggerEven) ? tilemap.tileWidth : tilemap.sideOffsetX
             } else {
-                
-                
-                
-                
-                //if pixelY < 1 { pixelX -= tileWidthHalf }
-                s = tilemap.sideLengthY
-                r = tileWidth / 2
-                h = (tileHeight - tilemap.sideLengthY) / 2
-                
-                pixelY -= h
-
-                
-                debugMsg += "s: \(s.roundTo()), h: \(h.roundTo()), "
-                
-                // figure out which section of the grid we're in
-                sectionX = pixelX / (r * 2)
-                sectionY = pixelY / (h + s)
-                
-                // get floor values for negatives
-                if sectionX < 0 {
-                    sectionX = floor(sectionX)
-                }
-                
-                if sectionY < 0 {
-                    sectionY = floor(sectionY)
-                }
-                
-                if tilemap.doStaggerY(Int(sectionY)){
-                    sectionX -= 0.5  // -= 0.5
-                }
-                
+                pixelY -= (tilemap.staggerEven) ? tilemap.tileHeight : tilemap.sideOffsetY
             }
             
-            debugMsg += "secX: \(sectionX.roundTo()), secY: \(sectionY.roundTo())"
+            // reference coordinates on a grid aligned tile
+            var referencePoint = CGPoint(x: floor(pixelX / (tilemap.columnWidth * 2)),
+                                         y: floor(pixelY / (tilemap.rowHeight * 2)))
+            
+            
+            // relative distance between hex centers
+            let relative = CGVector(dx: pixelX - referencePoint.x * (tilemap.columnWidth * 2),
+                                    dy: pixelY - referencePoint.y * (tilemap.rowHeight * 2))
+            
+            // reference point adjustment
+            let indexOffset: CGFloat = (tilemap.staggerEven == true) ? 1 : 0
+            if (tilemap.staggerX == true) {
+                referencePoint.x *= 2
+                referencePoint.x += indexOffset
+                
+            } else {
+                referencePoint.y *= 2
+                referencePoint.y += indexOffset
+            }
+            
+            // get nearest hexagon
+            var centers: [CGVector]
+            
+            // flat
+            if (tilemap.staggerX == true) {
+                let left: Int = Int(tilemap.sideLengthX / 2)
+                let centerX: Int = left + Int(tilemap.columnWidth)
+                let centerY: Int = Int(tilemap.tileHeight / 2)
+                centers = [CGVector(dx: left, dy: centerY),
+                           CGVector(dx: centerX, dy: centerY - Int(tilemap.rowHeight)),
+                           CGVector(dx: centerX, dy: centerY + Int(tilemap.rowHeight)),
+                           CGVector(dx: centerX + Int(tilemap.columnWidth), dy: centerY)
+                        ]
+            // pointy
+            } else {
+                let top: Int = Int(tilemap.sideLengthY / 2)
+                let centerX: Int = Int(tilemap.tileWidth / 2)
+                let centerY: Int = top + Int(tilemap.rowHeight)
+                
+                centers = [CGVector(dx: centerX, dy: top),
+                           CGVector(dx: centerX - Int(tilemap.columnWidth), dy: centerY),
+                           CGVector(dx: centerX + Int(tilemap.columnWidth), dy: centerY),
+                           CGVector(dx: centerX, dy: centerY + Int(tilemap.rowHeight))
+                        ]
+            }
+            
+            var nearest: Int = 0
+            var minDist = CGFloat.greatestFiniteMagnitude
+            
+            // get the nearest center
+            for i in 0..<4 {
+                let center = centers[i]
+                let dc = (center - relative).lengthSquared()
+                if (dc < minDist) {
+                    minDist = dc
+                    nearest = i
+                }
+            }
+            
+            // flat
+            let offsetsStaggerX: [CGPoint] = [
+                CGPoint(x: 0, y: 0),
+                CGPoint(x: 1, y: -1),
+                CGPoint(x: 1, y: 0),
+                CGPoint(x: 2, y: 0),
+            ]
+            
+            //pointy
+            let offsetsStaggerY: [CGPoint] = [
+                CGPoint(x: 0, y: 0),
+                CGPoint(x: -1, y: 1),
+                CGPoint(x: 0, y: 1),
+                CGPoint(x: 0, y: 2),
+                ]
+            
+            let offsets: [CGPoint] = (tilemap.staggerX == true) ? offsetsStaggerX : offsetsStaggerY
+            return referencePoint + offsets[nearest]
 
-            updateSceneDebugInfo(debugMsg)
-            return floor(point: CGPoint(x: sectionX, y: sectionY))
-            
-            
+        
         case .staggered:
             
             if tilemap.staggerX {
@@ -1325,7 +1317,6 @@ open class SKTileLayer: TiledLayerObject {
                 tile.layer = self
                 tile.highlightDuration = highlightDuration
                 
-                // TODO: pointForCoorinate error?
                 // get the position in the layer (plus tileset offset)
                 let tilePosition = pointForCoordinate(coord: coord, offsetX: tileData.tileset.tileOffset.x, offsetY: tileData.tileset.tileOffset.y)
                 
@@ -1978,103 +1969,6 @@ open class SKGroupLayer: TiledLayerObject {
      */
     open func removeLayer(_ layer: TiledLayerObject) -> TiledLayerObject? {
         return _layers.remove(layer)
-    }
-}
-
-
-// MARK: - Debugging
-
-// Sprite object for visualizaing grid & graph.
-fileprivate class TiledLayerGrid: SKSpriteNode {
-    
-    private var layer: TiledLayerObject
-    private var gridTexture: SKTexture! = nil
-    private var graphTexture: SKTexture! = nil
-    private var frameColor: SKColor = .black
-
-    private var gridOpacity: CGFloat { return layer.gridOpacity }
-
-    init(tileLayer: TiledLayerObject){
-        layer = tileLayer
-        frameColor = layer.frameColor
-        super.init(texture: SKTexture(), color: SKColor.clear, size: tileLayer.sizeInPoints)
-        positionLayer()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    /**
-     Align the sprite with the layer.
-     */
-    func positionLayer() {
-        // set the anchorpoint to 0,0 to match the frame
-        anchorPoint = CGPoint.zero
-        isHidden = true
-        
-        #if os(iOS)
-        position.y = -layer.sizeInPoints.height
-        #endif
-    }
-    
-    /// Display the current tile grid.
-    var showGrid: Bool = false {
-        didSet {
-            guard oldValue != showGrid else { return }
-            texture = nil
-            isHidden = true
-            
-            if (showGrid == true){
-                
-                // get the last z-position
-                zPosition = layer.tilemap.lastZPosition + layer.tilemap.zDeltaForLayers
-                isHidden = false
-                var gridSize = CGSize.zero
-                
-                // scale factor for texture
-                let uiScale: CGFloat
-                let imageScale: CGFloat
-                let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1 : 0.85
-                
-                #if os(iOS)
-                uiScale = UIScreen.main.scale
-                imageScale = 2
-                #else
-                uiScale = NSScreen.main()!.backingScaleFactor
-                imageScale = uiScale > 1 ? 2 : 4
-                #endif
-                
-                // final texture size = (sizeInPoints * imageScale)
-                
-                // generate the texture
-                if (gridTexture == nil) {
-                    let gridImage = drawGrid(self.layer, imageScale: imageScale, lineScale: lineScale)
-                    gridTexture = SKTexture(cgImage: gridImage)
-                    print(" -> texture size: \(gridTexture.size().shortDescription)")
-                    gridTexture.filteringMode = .linear
-                }
-                
-                // sprite scaling factor
-                let spriteScaleFactor: CGFloat = (1 / imageScale)
-                gridSize = gridTexture.size() / uiScale
-                
-                #if os(iOS)
-                setScale(spriteScaleFactor)
-                #else
-                setScale(spriteScaleFactor)
-                #endif
-                
-                texture = gridTexture
-                alpha = gridOpacity
-                size = gridSize / imageScale
-                
-                #if os(OSX)
-                yScale *= -1
-                #endif
-
-            }
-        }
     }
 }
 

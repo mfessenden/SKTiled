@@ -197,6 +197,40 @@ internal extension CGFloat {
 }
 
 
+/**
+ Sine function that accepts angle for trig operations.
+ 
+ - parameter degrees: `CGFloat` angle.
+ - returns `CGFloat` sine result.
+ */
+internal func sin(degrees: CGFloat) -> CGFloat {
+    return CGFloat(sin(degrees: degrees.native))
+}
+
+
+/**
+ Sine function that accepts angle for trig operations.
+ 
+ - parameter degrees: `Double` angle.
+ - returns `Double` sine result.
+ */
+internal func sin(degrees: Double) -> Double {
+    return __sinpi(degrees/180.0)
+}
+
+
+/**
+ Sine function that accepts degrees for trig operations.
+ 
+ - parameter degrees: `Float` angle.
+ - returns `Float` sine result.
+ */
+internal func sin(degrees: Float) -> Float {
+    return __sinpif(degrees/180.0)
+}
+
+
+
 public extension CGPoint {
     
     /// Returns an point inverted in the Y-coordinate.
@@ -914,7 +948,6 @@ internal func drawGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineSca
     let tileHeightHalf = tileHeight / 2
                 
     let sizeInPoints = (layer.sizeInPoints * imageScale)
-    print("\n# drawGrid: \(sizeInPoints.shortDescription): (\(layer.sizeInPoints.shortDescription) * \(imageScale.roundTo()))")
     let defaultLineWidth: CGFloat = (imageScale / uiScale) * lineScale
     
     return imageOfSize(sizeInPoints, scale: uiScale) { context, bounds, scale in

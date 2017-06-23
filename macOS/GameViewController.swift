@@ -45,7 +45,6 @@ class GameViewController: NSViewController {
         
         /* create the game scene */
         let scene = SKTiledDemoScene(size: self.view.bounds.size)
-        //let scene = SKTiledDemoScene(size: self.view.bounds.size, tmxFile: currentFilename)
         
         /* set the scale mode to scale to fit the window */
         scene.scaleMode = .aspectFill
@@ -57,8 +56,7 @@ class GameViewController: NSViewController {
         
         skView.presentScene(scene)
         scene.setup(tmxFile: currentFilename)
-        
-        //debugInfoLabel?.isHidden = (scene.tilemap?.orientation == .hexagonal)
+        debugInfoLabel?.isHidden = true
     }
     
     override func viewDidAppear() {
@@ -73,23 +71,30 @@ class GameViewController: NSViewController {
     }
     
     /**
-     Set up the debugging labels.
+     Set up the debugging labels. (Mimics the text style in iOS controller).
      */
     func setupDebuggingLabels() {
         mapInfoLabel.stringValue = "Map: "
         tileInfoLabel.stringValue = "Tile: "
         propertiesInfoLabel.stringValue = "Properties:"
         
+        // text shadow
         let shadow = NSShadow()
         shadow.shadowOffset = NSSize(width: 2, height: 1)
         shadow.shadowColor = NSColor(calibratedWhite: 0.1, alpha: 0.75)
         shadow.shadowBlurRadius = 0.5
+        
         mapInfoLabel.shadow = shadow
         tileInfoLabel.shadow = shadow
         propertiesInfoLabel.shadow = shadow
         debugInfoLabel.shadow = shadow
     }
     
+    /**
+     Action called when `fit to view` button is pressed.
+     
+     - parameter sender: `Any` ui button.
+     */
     @IBAction func fitButtonPressed(_ sender: Any) {
         guard let view = self.view as? SKView,
             let scene = view.scene as? SKTiledScene else { return }
@@ -99,6 +104,11 @@ class GameViewController: NSViewController {
         }
     }
     
+    /**
+     Action called when `show grid` button is pressed.
+     
+     - parameter sender: `Any` ui button.
+     */
     @IBAction func gridButtonPressed(_ sender: Any) {
         guard let view = self.view as? SKView,
             let scene = view.scene as? SKTiledScene else { return }
@@ -108,6 +118,11 @@ class GameViewController: NSViewController {
         }
     }
     
+    /**
+     Action called when `show objects` button is pressed.
+     
+     - parameter sender: `Any` ui button.
+     */
     @IBAction func objectsButtonPressed(_ sender: Any) {
         guard let view = self.view as? SKView,
             let scene = view.scene as? SKTiledScene else { return }
@@ -118,6 +133,11 @@ class GameViewController: NSViewController {
         }
     }
     
+    /**
+     Action called when `next` button is pressed.
+     
+     - parameter sender: `Any` ui button.
+     */
     @IBAction func nextButtonPressed(_ sender: Any) {
         loadNextScene()
     }
@@ -153,7 +173,6 @@ class GameViewController: NSViewController {
                 showOverlay = cameraNode.showOverlay
             }
             
-            debugMode = currentScene.debugMode
             liveMode = currentScene.liveMode
             if let tilemap = currentScene.tilemap {
                 debugMode = tilemap.debugDraw
@@ -174,7 +193,6 @@ class GameViewController: NSViewController {
         let nextScene = SKTiledDemoScene(size: view.bounds.size)
         nextScene.scaleMode = .aspectFill
         let transition = SKTransition.fade(withDuration: interval)
-        nextScene.debugMode = debugMode
         view.presentScene(nextScene, transition: transition)
         
         nextScene.setup(tmxFile: nextFilename)
@@ -182,8 +200,6 @@ class GameViewController: NSViewController {
         nextScene.cameraNode?.showOverlay = showOverlay
         updateWindowTitle(withString: nextFilename)
         nextScene.tilemap?.debugDraw = debugMode
-        
-        //debugInfoLabel?.isHidden = (nextScene.tilemap?.orientation == .hexagonal)
     }
     
     /**
@@ -204,7 +220,7 @@ class GameViewController: NSViewController {
                 showOverlay = cameraNode.showOverlay
             }
             
-            debugMode = currentScene.debugMode
+            
             liveMode = currentScene.liveMode
             if let tilemap = currentScene.tilemap {
                 debugMode = tilemap.debugDraw
@@ -231,8 +247,6 @@ class GameViewController: NSViewController {
         nextScene.liveMode = liveMode
         nextScene.cameraNode?.showOverlay = showOverlay
         nextScene.tilemap?.debugDraw = debugMode
-        
-        //debugInfoLabel?.isHidden = (nextScene.tilemap?.orientation == .hexagonal)
     }
     
     /**

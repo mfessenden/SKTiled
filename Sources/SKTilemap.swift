@@ -1012,7 +1012,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      - returns: `SKTile?` first tile in layers.
      */
     open func firstTileAt(coord: CGPoint) -> SKTile? {
-        for layer in tileLayers(recursive: false).reversed().filter({ $0.visible == true }) {
+        for layer in tileLayers(recursive: true).reversed().filter({ $0.visible == true }) {
             if let tile = layer.tileAt(coord: coord) {
                 return tile
             }
@@ -1246,7 +1246,24 @@ extension LayerPosition: CustomStringConvertible {
 }
 
 
+extension StaggerAxis {
+    internal var hextype: String {
+        switch self {
+        case .x:
+            return "flat"
+        default:
+            return "pointy"
+        }
+    }
+}
+
+
 extension SKTilemap {
+    
+    /// Return a string representing the map name.
+    public var mapName: String {
+        return self.name ?? "null"
+    }
     
     /// convenience properties
     public var width: CGFloat { return size.width }
@@ -1379,10 +1396,11 @@ extension SKTilemap {
     }
     
     override open var description: String {
-        let renderSizeDesc = "\(sizeInPoints.width.roundTo(1)) x \(sizeInPoints.height.roundTo(1))"
-        let sizeDesc = "\(Int(size.width)) x \(Int(size.height))"
-        let tileSizeDesc = "\(Int(tileSize.width)) x \(Int(tileSize.height))"
-        return "Map: \(name ?? "(None)"), \(renderSizeDesc): (\(sizeDesc) @ \(tileSizeDesc)): \(tileCount) tiles"
+        var sizedesc = "\(sizeInPoints.shortDescription): (\(size.shortDescription) @ \(tileSize.shortDescription))"
+        if (orientation == .hexagonal) {
+            sizedesc += " hex: \(staggeraxis.hextype), axis: \(staggeraxis), index: \(staggerindex)"
+        }
+        return "Map: \(mapName), \(sizedesc), \(tileCount) tiles"
     }
     
     override open var debugDescription: String { return description }

@@ -59,7 +59,12 @@ class GameViewController: UIViewController {
         tileInfoLabel.text = "Tile: "
         propertiesInfoLabel.text = "Properties:"
     }
-
+    
+    /**
+     Action called when `fit to view` button is pressed.
+     
+     - parameter sender: `Any` ui button.
+     */
     @IBAction func fitButtonPressed(_ sender: Any) {
         guard let view = self.view as? SKView,
                 let scene = view.scene as? SKTiledScene else { return }
@@ -68,7 +73,12 @@ class GameViewController: UIViewController {
             cameraNode.fitToView(newSize: view.bounds.size)
         }
     }
-
+    
+    /**
+     Action called when `show grid` button is pressed.
+     
+     - parameter sender: `Any` ui button.
+     */
     @IBAction func gridButtonPressed(_ sender: Any) {
         guard let view = self.view as? SKView,
             let scene = view.scene as? SKTiledScene else { return }
@@ -78,6 +88,11 @@ class GameViewController: UIViewController {
         }
     }
 
+    /**
+     Action called when `show objects` button is pressed.
+     
+     - parameter sender: `Any` ui button.
+     */
     @IBAction func objectsButtonPressed(_ sender: Any) {
         guard let view = self.view as? SKView,
             let scene = view.scene as? SKTiledScene else { return }
@@ -87,7 +102,12 @@ class GameViewController: UIViewController {
             tilemap.showObjects = debugState
         }
     }
-
+    
+    /**
+     Action called when `next` button is pressed.
+     
+     - parameter sender: `Any` ui button.
+     */
     @IBAction func nextButtonPressed(_ sender: Any) {
         loadNextScene()
     }
@@ -109,7 +129,6 @@ class GameViewController: UIViewController {
                 showOverlay = cameraNode.showOverlay
             }
 
-            debugMode = currentScene.debugMode
             if let tilemap = currentScene.tilemap {
                 debugMode = tilemap.debugDraw
                 currentFilename = tilemap.name!
@@ -130,7 +149,6 @@ class GameViewController: UIViewController {
         nextScene.scaleMode = .aspectFill
         let transition = SKTransition.fade(withDuration: interval)
         
-        nextScene.debugMode = debugMode
         view.presentScene(nextScene, transition: transition)
         nextScene.setup(tmxFile: nextFilename)
         nextScene.cameraNode?.showOverlay = showOverlay
@@ -154,7 +172,6 @@ class GameViewController: UIViewController {
                 showOverlay = cameraNode.showOverlay
             }
             
-            debugMode = currentScene.debugMode
             if let tilemap = currentScene.tilemap {
                 debugMode = tilemap.debugDraw
                 currentFilename = tilemap.filename!
@@ -184,11 +201,15 @@ class GameViewController: UIViewController {
     override var shouldAutorotate: Bool {
         return true
     }
-
+    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .landscape
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return .allButUpsideDown
+        } else {
+            return .all
+        }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.

@@ -43,6 +43,7 @@ Change Log
 - added `SKTilemap.getContentLayers` function
 - added `SKTilemap.objectColor` property
 - added `TiledLayerObject.layerName` property
+- added `SKTilemap.mapName` property
 - added `SKTilemap.renderQuality` property
 - added `TiledLayerObject.renderQuality` property
 - better grid drawing quality
