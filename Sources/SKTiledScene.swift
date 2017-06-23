@@ -14,19 +14,19 @@ import SpriteKit
  
  In this configuration, the tile map is a child of the world node and reference the custom `SKTiledSceneCamera` camera.
  
- - parameter worldNode:  `SKNode!` world container node.
+ - parameter worldNode:  `SKNode?` world container node.
  - parameter cameraNode: `SKTiledSceneCamera!` scene camera node.
- - parameter tilemap:    `SKTilemap!` tile map node.
- */
-public protocol SKTiledSceneDelegate {
-    /** 
-     World container node. All Tiled assets are parented to this node.
+ - parameter tilemap:    `SKTilemap?` tile map node.
     */
+public protocol SKTiledSceneDelegate: class {
+    /// World container node. Tiled assets are parented to this node.
     var worldNode: SKNode! { get set }
     /// Custom scene camera.
     var cameraNode: SKTiledSceneCamera! { get set }
     /// Tile map node.
     var tilemap: SKTilemap! { get set }
+    /// Load a tilemap from disk, with optional tilesets
+    func load(fromFile filename: String, withTilesets tilesets: [SKTileset]) -> SKTilemap?
 }
 
 
@@ -41,12 +41,10 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     
     /// World container node.
     open var worldNode: SKNode!
-    /// Custom scene camera.
-    open var cameraNode: SKTiledSceneCamera!
     /// Tile map node.
     open var tilemap: SKTilemap!
-    /// Current TMX file name.
-    open var tmxFilename: String!
+    /// Custom scene camera.
+    open var cameraNode: SKTiledSceneCamera!
     
     // MARK: - Init
     /**
@@ -55,20 +53,8 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
      - parameter size:  `CGSize` scene size.
      - returns:         `SKTiledScene` scene.
      */
-    override public init(size: CGSize) {
+    required public override init(size: CGSize) {
         super.init(size: size)
-        setupWorld()
-    }
-    
-    /**
-     Initialize with a tiled file name.
-     
-     - parameter size:    `CGSize` scene size.
-     - parameter tmxFile: `String` tiled file name.
-     */
-    public init(size: CGSize, tmxFile: String) {
-        super.init(size: size)
-        tmxFilename = tmxFile
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -80,80 +66,70 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
         removeAllChildren()
     }
     
-    override open func sceneDidLoad() {
-        setupWorld()
-    }
+    // MARK: - View
     
-    override open func didMove(to view: SKView) {
-        guard let worldNode = worldNode else { return }
+    override open func didChangeSize(_ oldSize: CGSize) {
+        updateCamera()
+    }
         
+    override open func didMove(to view: SKView) {
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
         
+        // set up world node
+        worldNode = SKNode()
+        addChild(worldNode)
+        
         // setup the camera
-        setupCamera()
+        cameraNode = SKTiledSceneCamera(world: worldNode, view: view)
+        addChild(cameraNode)
+        camera = cameraNode
+    }
         
-        // load the current tmx file name
-        guard let tmxFilename = tmxFilename else { return }
+    // MARK: - Setup
         
-        if let tilemap = load(fromFile: tmxFilename ) {
+    /**
+     Load a named TMX file, with optional tilesets.
+     
+     - parameter fileNamed:  `String` TMX file name.
+     - parameter tilesets:   `[SKTileset]` pre-loaded tilesets.
+     */
+    open func setup(fileNamed: String, tilesets: [SKTileset]=[], _ completion: (() -> ())? = nil) {
+        guard let worldNode = worldNode else { return }
+        
+        self.tilemap?.removeAllActions()
+        self.tilemap?.removeAllChildren()
+        self.tilemap?.removeFromParent()
+        
+        self.tilemap = nil
+        
+        if let tilemap = load(fromFile: fileNamed, withTilesets: tilesets) {
+            
+            backgroundColor = tilemap.backgroundColor ?? SKColor.clear
+            
             // add the tilemap to the world container node.
             worldNode.addChild(tilemap)
             self.tilemap = tilemap
             
             // apply gravity from the tile map
-            physicsWorld.gravity = self.tilemap.gravity
+            physicsWorld.gravity = tilemap.gravity
             
-            // cmera properties inherited from tilemap
-            cameraNode.allowMovement = self.tilemap.allowMovement
-            cameraNode.allowZoom = self.tilemap.allowZoom
+            // camera properties inherited from tilemap
+            cameraNode.allowMovement = tilemap.allowMovement
+            cameraNode.allowZoom = tilemap.allowZoom
             
             // initial zoom level
-            if (self.tilemap.autoResize == true) {
-                cameraNode.fitToView()
+            if (tilemap.autoResize == true) {
+                if let view = view {
+                    cameraNode.fitToView(newSize: view.bounds.size)   /// was size
+                }
             } else {
-                cameraNode.setCameraZoom(self.tilemap.worldScale)
+                cameraNode.setCameraZoom(tilemap.worldScale)
             }
+    
+            // run completion handler
+            completion?()
         }
-    }
-    
-    // MARK: - Setup
-    
-    /**
-     Setup the world container node.
-     */
-    open func setupWorld(){
-        if (worldNode != nil){
-            worldNode.removeFromParent()
-        }
-        // set up world node
-        worldNode = SKNode()
-        worldNode.name = "World"
-        addChild(worldNode)
-    }
-    
-    /**
-     Setup the scene camera, referencing the world container node.
-     */
-    open func setupCamera(){
-        guard let view = self.view else { return }
-        cameraNode = SKTiledSceneCamera(view: view, world: worldNode)
-        addChild(cameraNode)
-        camera = cameraNode
-    }
-    
-    /**
-     Load a named TMX file.
-     
-     - parameter filename:  `String` TMX file name.
-     - returns: `SKTilemap?` tile map node.
-     */
-    open func load(fromFile filename: String) -> SKTilemap? {
-        if let tilemap = SKTilemap.load(fromFile: filename, delegate: self) {
-            backgroundColor = tilemap.backgroundColor ?? SKColor.clear
-            return tilemap
-        }
-        return nil
     }
     
     // MARK: - Delegate Callbacks
@@ -176,4 +152,55 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     open func didRenderMap(_ tilemap: SKTilemap) {
         // Called after layers are rendered. Perform any post-processing here.
     }
+    
+    // MARK: - Updates
+    override open func update(_ currentTime: TimeInterval) {
+        super.update(currentTime)
+    }
+    
+    open func updateCamera() {
+        guard let view = view else { return }
+        let viewSize = view.bounds.size
+        if let cameraNode = cameraNode {
+            cameraNode.bounds = CGRect(x: -(viewSize.width / 2), y: -(viewSize.height / 2),
+                                       width: viewSize.width, height: viewSize.height)
+        }
+    }
 }
+
+
+// default methods
+extension SKTiledSceneDelegate {
+    public func cameraPositionChanged(_ oldPosition: CGPoint) {}
+    public func cameraZoomChanged(_ oldZoom: CGFloat) {}
+    public func sceneDoubleTapped() {}
+}
+
+
+// setup methods
+extension SKTiledSceneDelegate where Self: SKScene {
+    
+    /**
+     Load a named TMX file, with optional tilesets.
+     
+     - parameter fromFile:      `String` TMX file name.
+     - parameter withTilesets:  `[SKTileset]`
+     - returns: `SKTilemap?` tile map node.
+     */
+    public func load(fromFile filename: String, withTilesets tilesets: [SKTileset]=[]) -> SKTilemap? {
+        if let tilemap = SKTilemap.load(fromFile: filename, delegate: self as? SKTilemapDelegate, withTilesets: tilesets) {
+            
+            if let cameraNode = cameraNode {
+                // camera properties inherited from tilemap
+                cameraNode.allowMovement = tilemap.allowMovement
+                cameraNode.allowZoom = tilemap.allowZoom
+                cameraNode.setCameraZoom(tilemap.worldScale)
+                cameraNode.setZoomConstraints(minimum: 0.2, maximum: tilemap.maxZoom)
+            }
+            
+            return tilemap
+        }
+        return nil
+    }
+}
+

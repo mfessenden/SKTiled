@@ -12,6 +12,14 @@ import SpriteKit
 
 class GameViewController: NSViewController {
     
+    // debugging labels
+    @IBOutlet weak var mapInfoLabel: NSTextField!
+    @IBOutlet weak var tileInfoLabel: NSTextField!
+    @IBOutlet weak var propertiesInfoLabel: NSTextField!
+    @IBOutlet weak var debugInfoLabel: NSTextField!
+    
+    @IBOutlet weak var cursorTracker: NSTextField!
+    
     var demoFiles: [String] = []
 
     override func viewDidLoad() {
@@ -32,17 +40,23 @@ class GameViewController: NSViewController {
         
         /* Sprite Kit applies additional optimizations to improve rendering performance */
         skView.ignoresSiblingOrder = true
+        setupDebuggingLabels()
+        
         
         /* create the game scene */
-        let scene = SKTiledDemoScene(size: self.view.bounds.size, tmxFile: currentFilename)
+        let scene = SKTiledDemoScene(size: self.view.bounds.size)
         
-        /* Set the scale mode to scale to fit the window */
+        /* set the scale mode to scale to fit the window */
         scene.scaleMode = .aspectFill
         
         //set up notification for scene to load the next file
         NotificationCenter.default.addObserver(self, selector: #selector(loadNextScene), name: NSNotification.Name(rawValue: "loadNextScene"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadPreviousScene), name: NSNotification.Name(rawValue: "loadPreviousScene"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateDebugLabels), name: NSNotification.Name(rawValue: "updateDebugLabels"), object: nil)
+        
         skView.presentScene(scene)
+        scene.setup(fileNamed: currentFilename)
+        debugInfoLabel?.isHidden = true
     }
     
     override func viewDidAppear() {
@@ -51,9 +65,81 @@ class GameViewController: NSViewController {
         
         if let currentScene = view.scene as? SKTiledScene {
             if let tmxName = currentScene.tmxFilename {
-                updateWindowTitle(withFile: tmxName)
+                updateWindowTitle(withString: tmxName)
             }
         }
+    }
+    
+    /**
+     Set up the debugging labels. (Mimics the text style in iOS controller).
+     */
+    func setupDebuggingLabels() {
+        mapInfoLabel.stringValue = "Map: "
+        tileInfoLabel.stringValue = "Tile: "
+        propertiesInfoLabel.stringValue = "Properties:"
+        
+        // text shadow
+        let shadow = NSShadow()
+        shadow.shadowOffset = NSSize(width: 2, height: 1)
+        shadow.shadowColor = NSColor(calibratedWhite: 0.1, alpha: 0.75)
+        shadow.shadowBlurRadius = 0.5
+        
+        mapInfoLabel.shadow = shadow
+        tileInfoLabel.shadow = shadow
+        propertiesInfoLabel.shadow = shadow
+        debugInfoLabel.shadow = shadow
+    }
+    
+    /**
+     Action called when `fit to view` button is pressed.
+     
+     - parameter sender: `Any` ui button.
+     */
+    @IBAction func fitButtonPressed(_ sender: Any) {
+        guard let view = self.view as? SKView,
+            let scene = view.scene as? SKTiledScene else { return }
+        
+        if let cameraNode = scene.cameraNode {
+            cameraNode.fitToView(newSize: view.bounds.size)
+        }
+    }
+    
+    /**
+     Action called when `show grid` button is pressed.
+     
+     - parameter sender: `Any` ui button.
+     */
+    @IBAction func gridButtonPressed(_ sender: Any) {
+        guard let view = self.view as? SKView,
+            let scene = view.scene as? SKTiledScene else { return }
+        
+        if let tilemap = scene.tilemap {
+            tilemap.debugDraw = !tilemap.debugDraw
+        }
+    }
+    
+    /**
+     Action called when `show objects` button is pressed.
+     
+     - parameter sender: `Any` ui button.
+     */
+    @IBAction func objectsButtonPressed(_ sender: Any) {
+        guard let view = self.view as? SKView,
+            let scene = view.scene as? SKTiledScene else { return }
+        
+        if let tilemap = scene.tilemap {
+            let debugState = !tilemap.showObjects
+            tilemap.showObjects = debugState
+        }
+    }
+    
+    /**
+     Action called when `next` button is pressed.
+     
+     - parameter sender: `Any` ui button.
+     */
+    @IBAction func nextButtonPressed(_ sender: Any) {
+        loadNextScene()
     }
     
     /**
@@ -63,13 +149,10 @@ class GameViewController: NSViewController {
      */
     override func scrollWheel(with event: NSEvent) {
         guard let view = self.view as? SKView else { return }
+        
         if let currentScene = view.scene as? SKTiledDemoScene {
             currentScene.scrollWheel(with: event)
         }
-    }
-    
-    override func mouseEntered(with event: NSEvent) {
-        
     }
     
     /**
@@ -79,16 +162,21 @@ class GameViewController: NSViewController {
      */
     func loadNextScene(_ interval: TimeInterval=0.4) {
         guard let view = self.view as? SKView else { return }
+        
         var debugMode = false
+        var liveMode = false
+        var showOverlay = true
+        
         var currentFilename = demoFiles.first!
-        var showOverlay: Bool = true
         if let currentScene = view.scene as? SKTiledDemoScene {
             if let cameraNode = currentScene.cameraNode {
                 showOverlay = cameraNode.showOverlay
             }
-            debugMode = currentScene.debugMode
+            
+            liveMode = currentScene.liveMode
             if let tilemap = currentScene.tilemap {
-                currentFilename = tilemap.name!
+                debugMode = tilemap.debugDraw
+                currentFilename = tilemap.filename!
             }
             
             currentScene.removeFromParent()
@@ -101,14 +189,17 @@ class GameViewController: NSViewController {
         if let index = demoFiles.index(of: currentFilename) , index + 1 < demoFiles.count {
             nextFilename = demoFiles[index + 1]
         }
-        let nextScene = SKTiledDemoScene(size: view.bounds.size, tmxFile: nextFilename)
+        
+        let nextScene = SKTiledDemoScene(size: view.bounds.size)
         nextScene.scaleMode = .aspectFill
         let transition = SKTransition.fade(withDuration: interval)
-        nextScene.debugMode = debugMode
         view.presentScene(nextScene, transition: transition)
         
+        nextScene.setup(fileNamed: nextFilename)
+        nextScene.liveMode = liveMode
         nextScene.cameraNode?.showOverlay = showOverlay
-        updateWindowTitle(withFile: nextFilename)
+        updateWindowTitle(withString: nextFilename)
+        nextScene.tilemap?.debugDraw = debugMode
     }
     
     /**
@@ -119,14 +210,21 @@ class GameViewController: NSViewController {
     func loadPreviousScene(_ interval: TimeInterval=0.4) {
         guard let view = self.view as? SKView else { return }
         
+        var debugMode = false
+        var liveMode = false
+        var showOverlay = true
+        
         var currentFilename = demoFiles.first!
-        var showOverlay: Bool = true
         if let currentScene = view.scene as? SKTiledDemoScene {
             if let cameraNode = currentScene.cameraNode {
                 showOverlay = cameraNode.showOverlay
             }
+            
+            
+            liveMode = currentScene.liveMode
             if let tilemap = currentScene.tilemap {
-                currentFilename = tilemap.name!
+                debugMode = tilemap.debugDraw
+                currentFilename = tilemap.filename!
             }
             
             currentScene.removeFromParent()
@@ -140,11 +238,15 @@ class GameViewController: NSViewController {
             nextFilename = demoFiles[index - 1]
         }
         
-        let nextScene = SKTiledDemoScene(size: view.bounds.size, tmxFile: nextFilename)
+        let nextScene = SKTiledDemoScene(size: view.bounds.size)
         nextScene.scaleMode = .aspectFill
         let transition = SKTransition.fade(withDuration: interval)
         view.presentScene(nextScene, transition: transition)
+        
+        nextScene.setup(fileNamed: nextFilename)
+        nextScene.liveMode = liveMode
         nextScene.cameraNode?.showOverlay = showOverlay
+        nextScene.tilemap?.debugDraw = debugMode
     }
     
     /**
@@ -152,7 +254,7 @@ class GameViewController: NSViewController {
      
      - parameter withFile: `String` currently loaded scene name.
      */
-    fileprivate func updateWindowTitle(withFile named: String) {
+    func updateWindowTitle(withString named: String) {
         // Update the application window title with the current scene
         if let infoDictionary = Bundle.main.infoDictionary {
             if let bundleName = infoDictionary[kCFBundleNameKey as String] as? String {
@@ -165,8 +267,8 @@ class GameViewController: NSViewController {
      Load TMX files from the property list.
      
      - returns: `[String]` array of tiled file names.
-    */
-    fileprivate func loadDemoFiles(_ filename: String) -> [String] {
+     */
+    func loadDemoFiles(_ filename: String) -> [String] {
         var result: [String] = []
         if let fileList = Bundle.main.path(forResource: filename, ofType: "plist"){
             if let data = NSArray(contentsOfFile: fileList) as? [String] {
@@ -174,5 +276,28 @@ class GameViewController: NSViewController {
             }
         }
         return result
+    }
+    
+    /**
+     Update the debugging labels with scene information.
+     
+     - parameter notification: `Notification` notification.
+     */
+    func updateDebugLabels(notification: Notification) {
+        if let mapInfo = notification.userInfo!["mapInfo"] {
+            mapInfoLabel.stringValue = mapInfo as! String
+        }
+        
+        if let tileInfo = notification.userInfo!["tileInfo"] {
+            tileInfoLabel.stringValue = tileInfo as! String
+        }
+        
+        if let propertiesInfo = notification.userInfo!["propertiesInfo"] {
+            propertiesInfoLabel.stringValue = propertiesInfo as! String
+        }
+        
+        if let debugInfo = notification.userInfo!["debugInfo"] {
+            debugInfoLabel.stringValue = debugInfo as! String
+        }
     }
 }

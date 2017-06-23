@@ -24,7 +24,7 @@
 
 #### **Swift 2 Note**
 
-Check out the [Swift 2](https://github.com/mfessenden/SKTiled/tree/swift2) branch for Swift 2.3. As Apple is moving forward so quickly to Swift 3, the Swift 2.3 branch is now considered legacy and won't be updated. 
+Check out the [Swift 2](https://github.com/mfessenden/SKTiled/tree/swift2) branch for Swift 2.3. As Apple is moving forward so quickly to Swift 3, the Swift 2.3 branch is now considered legacy and won't be updated.
 
 If you're using one of the older toolchains, you'll need to enable the **Use Legacy Swift Language Version** option in the project **Build Settings.**
 
@@ -33,7 +33,7 @@ If you're using one of the older toolchains, you'll need to enable the **Use Leg
 
 ## Installation
 
-When you clone the **SKTiled** project, you'll see that there are four targets included. Two are demo applications, one for iOS and one for macOS. These are included to let you quickly test your own content, or simple play around with the included demo files. 
+When you clone the **SKTiled** project, you'll see that there are four targets included. Two are demo applications, one for iOS and one for macOS. These are included to let you quickly test your own content, or simple play around with the included demo files.
 
 ![Project Targets](images/project_targets.png)
 
@@ -56,7 +56,7 @@ After building the framework(s), you'll need to add them to your project. Select
 
 ### **Source Code Installation**
 
-It is also possible to integrate the source code directly into your project. To do this, you'll need to copy the `Sources` and `zlib` directories to your project. Make sure the swift files are added to your target(s). 
+It is also possible to integrate the source code directly into your project. To do this, you'll need to copy the `Sources` and `zlib` directories to your project. Make sure the swift files are added to your target(s).
 
 ![Xcode installation](images/installation.png)
 
@@ -77,17 +77,15 @@ To install with [Carthage](https://github.com/Carthage/Carthage), browse to the 
 
 
 Open the Cartfile with a text editor and add a reference to **SKTiled** (be sure to check the current version number):
- 
+
     github "mfessenden/SKTiled" == 1.10
-    
-    
-Close the file and run Carthage from the terminal to build the framework(s) for the platform you want: 
+
+
+Close the file and run Carthage from the terminal to build the framework(s) for the platform you want:
 
     carthage update --platform iOS
 
-Updating is just as simple. Simply change the version number in the Cartfile to the one you want, and carthage can update the frameworks for you:
-
-    carthage update --platform iOS
+Updating is just as simple. Simply change the version number in the Cartfile to the one you want, and carthage can update the frameworks with the same command. If you are having a version conflict error in Xcode, try adding the `--no-use-binaries` flag to the carthage command.
 
 Once you've run the build command frameworks are built, you'll find a **Carthage** directory in the root of your project. The frameworks are located in the **Carthage/Build/$PLATFORM_NAME** directories, simply install them as described in the [framework installation](#framework-installation) section above.
 
@@ -95,7 +93,7 @@ Once you've run the build command frameworks are built, you'll find a **Carthage
 ![Carthage Directories](images/carthage_directories.png)
 
 
-See the [Carthage](https://github.com/Carthage/Carthage) home page for help and additional build instructions. 
+See the [Carthage][carthage-url] home page for help and additional build instructions.
 
 
 ### CocoaPods Installation
@@ -113,7 +111,7 @@ This will create a file called **Podfile** in the directory. Open it up and add 
     target 'iOS' do
       # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
       use_frameworks!
-      
+
       # Pods for iOS
       pod 'SKTiled', '1.10'
 
@@ -125,7 +123,7 @@ This will create a file called **Podfile** in the directory. Open it up and add 
 
       # Pods for macOS
       pod 'SKTiled', '1.10'
-      
+
     end
 
 
@@ -133,12 +131,12 @@ This will create a file called **Podfile** in the directory. Open it up and add 
 As before, be sure to check the version number. In the terminal, run the following command:
 
     pod install
-    
-
-CocoaPods will create an **.xcworkspace** file with the name of your project. Open that and use this to compile your targets; dependencies will be linked automatically. 
 
 
-See the [CocoaPods](https://cocoapods.org) home page for help and additional instructions.
+CocoaPods will create an **.xcworkspace** file with the name of your project. Open that and use this to compile your targets; dependencies will be linked automatically.
+
+
+See the [CocoaPods][cocoapods-url] home page for help and additional instructions.
 
 
 ## Adding Tiled Assets to Xcode
@@ -148,3 +146,7 @@ When adding maps (TMX files), images and tilesets (TSX files) to your Xcode proj
 
 
 Next: [Setting Up Your Scenes](scenes.html) - [Index](Tutorial.html)
+
+
+[carthage-url]:https://github.com/Carthage/Carthage
+[cocoapods-url]:https://cocoapods.org
