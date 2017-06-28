@@ -662,9 +662,12 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         
         // look for last element to be a tileset or imagelayer
         if (elementName == "image") {
-            guard attributeDict["width"] != nil else { parser.abortParsing(); return }
-            guard attributeDict["height"] != nil else { parser.abortParsing(); return }
-            guard let imageSource = attributeDict["source"] else { parser.abortParsing(); return }
+            guard attributeDict["width"] != nil,
+                attributeDict["height"] != nil,
+                let imageSource = attributeDict["source"] else {
+                        parser.abortParsing()
+                        return
+            }
             
             // update an image layer
             if let imageLayer = lastElement as? SKImageLayer {
@@ -687,7 +690,8 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     }
                 } else {
                     // add the tileset spritesheet image
-                    tileset.addTextures(fromSpriteSheet: imageSource)
+                    // transparent color here
+                    tileset.addTextures(fromSpriteSheet: imageSource, replace: false, transparent: attributeDict["trans"])
                 }
             }
         }

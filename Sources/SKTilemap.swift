@@ -1406,7 +1406,9 @@ extension SKTilemap {
     override open var debugDescription: String { return description }
     
     open var showGrid: Bool {
-        get { return baseLayer.showGrid }
+        get {
+            return baseLayer.showGrid
+        }
         set {
             guard newValue != baseLayer.showGrid else { return }
             baseLayer.showGrid = newValue
@@ -1414,7 +1416,9 @@ extension SKTilemap {
     }
     
     open var showBounds: Bool {
-        get { return baseLayer.showBounds }
+        get {
+            return baseLayer.showBounds
+        }
         set {
             guard newValue != baseLayer.showBounds else { return }
             baseLayer.showBounds = newValue
@@ -1430,25 +1434,25 @@ extension SKTilemap {
             baseLayer.debugDraw = newValue
             // show bounding box for renderable objects
             for objectLayer in objectGroups(recursive: true) {
-                (objectLayer.getObjects().filter { $0.isRenderableType == true }.map { $0.drawObject(debug: newValue) })
+                (objectLayer.getObjects().filter { $0.isRenderableType == true }.forEach { $0.drawObject(debug: newValue) })
             }
         }
     }
     
     /**
-     Output a summary of the current scenes layer data.
+     Dump a summary of the current scenes layer data.
      */
     open func layerStatistics() {
         guard (layerCount > 0) else {
-            print("# Tilemap \"\(name != nil ? name! : "null")\": 0 Layers")
+            print("# Tilemap \"\(mapName)\": 0 Layers")
             return
         }
         
         
         // format the header
-        let tilemapHeaderString = "# Tilemap \"\(name != nil ? name! : "null")\": \(tileCount) Tiles: \(layerCount) Layers"
-        let titleUnderline = String(repeating: "-", count: tilemapHeaderString.characters.count)
-        var outputString = "\n\(tilemapHeaderString)\n\(titleUnderline)"
+        let headerString = "# Tilemap \"\(mapName)\": \(tileCount) Tiles: \(layerCount) Layers"
+        let titleUnderline = String(repeating: "-", count: headerString.characters.count)
+        var outputString = "\n\(headerString)\n\(titleUnderline)"
         
         var allLayers = self.layers
         allLayers.insert(self.baseLayer, at: 0)
@@ -1479,10 +1483,8 @@ extension SKTilemap {
         
         
         
-        for (idx, stats) in allLayerStats.enumerated() {
+        for (_, stats) in allLayerStats.enumerated() {
             var layerOutputString = ""
-
-            
             for (sidx, stat) in stats.enumerated() {
                 
                 let columnSize = columnSizes[sidx]
@@ -1518,8 +1520,7 @@ extension SKTilemap {
             
             outputString += "\n\(layerOutputString)"
         }
-        
-        
+
         print("\n" + outputString + "\n")
     }
 }

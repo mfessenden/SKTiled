@@ -39,6 +39,41 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
     let result = UIGraphicsGetImageFromCurrentImageContext()
     return result!.cgImage!
 }
+
+    
+/**
+ Load an image and use masking values as an alpha mask. On iOS, masking values should be 0-1.
+ 
+ - parameter imageNamed: `String` image name.
+ - parameter masking:    `[CGFloat]` color float values for mask.
+ - returns: `CGImage?` image result.
+ */
+public func transparentImage(imageNamed: String, masking: [CGFloat]) -> CGImage? {
+
+    if let image = UIImage(named: imageNamed) {
+        let imageSize = image.size
+        if let rawImageRef = image.cgImage {
+            UIGraphicsBeginImageContextWithOptions(imageSize, true, 1)
+            if let maskedImageRef = rawImageRef.copy(maskingColorComponents: masking) {
+                let context: CGContext = UIGraphicsGetCurrentContext()!
+                context.translateBy(x: 0.0, y: imageSize.height)
+                context.scaleBy(x: 1.0, y: -1.0)
+                context.draw(maskedImageRef, in: CGRect(x:0, y:0, width: imageSize.width,
+                                                        height: imageSize.height))
+                let result = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                if let uiResult = result {
+                    if let cgResult = uiResult.cgImage {
+                        return cgResult
+                    }
+                }
+            }
+        }
+
+    }
+    return nil
+}
+
     
 #else
 /**
@@ -62,6 +97,29 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
     var imageRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
     let imageRef = image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)
     return imageRef!
+}
+
+    
+/**
+ Load an image and use masking values as an alpha mask. On macOS, masking values should be 0-1.
+     
+ - parameter imageNamed: `String` image name.
+ - parameter masking:    `[CGFloat]` color float values for mask.
+ - returns: `CGImage?` image result.
+ */
+public func transparentImage(imageNamed: String, masking: [CGFloat]) -> CGImage? {
+    if let image = NSImage(named: imageNamed) {
+        let data = image.tiffRepresentation!
+        let bitmap = NSBitmapImageRep(data: data)
+        
+        var imageRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
+        let imageRef = image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)!
+        
+        if let imgRefCopy = imageRef.copy(maskingColorComponents: masking) {
+            return imgRefCopy
+        }
+    }
+    return nil
 }
 #endif
 
@@ -551,6 +609,14 @@ public extension SKColor {
         let b = Int(comps[2] * 255)
         let a = Int(comps[3] * 255)
         return "SKColor(r: \(r), g: \(g), b: \(b), a: \(a))"
+    }
+    
+    public var componentDescription: String {
+        var result: [String] = []
+        for compDesc in components.map({ "\($0.roundTo(1))" }) {
+            result.append(compDesc)
+        }
+        return "SKColor: " + result.joined(separator: ",")
     }
 }
 

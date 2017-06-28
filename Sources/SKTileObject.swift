@@ -118,7 +118,9 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     open var renderQuality: CGFloat = 8 {                   // text object render quality
         didSet {
             guard (renderQuality != oldValue),
-                renderQuality <= 16 else  { return }
+                renderQuality <= 16 else {
+                return
+            }
             textAttributes?.renderQuality = renderQuality
             drawObject()
         }
@@ -165,6 +167,11 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     /// Signifies that this object is a text or tile object.
     open var isRenderableType: Bool {
         return (gid != nil) || (textAttributes != nil)
+    }
+    
+    /// Signifies that this object is a polygonal type.
+    open var isPolyType: Bool {
+        return (objectType == .polygon) || (objectType == .polyline)
     }
     
     // MARK: - Init
@@ -312,7 +319,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         
         // flip the vertex values on the y-value for our coordinate transform.
         // for some odd reason tile objects are flipped in the y-axis already, so ignore the translated
-        var translatedVertices: [CGPoint] = vertices.map { $0.invertedY }
+        var translatedVertices: [CGPoint] = (isPolyType == true) ? vertices.map { $0.invertedY } : vertices
             
         switch objectType {
                 
@@ -509,7 +516,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
      */
     public func getVertices() -> [CGPoint]? {
         guard let layer = layer,
-                (points.count > 1) else { return nil}
+                (points.count > 1) else { return nil }
                 
         var vertices: [CGPoint] = []
         
@@ -518,7 +525,15 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             offset.x -= layer.origin.x
             vertices.append(offset)
         }
+        
 
+        // flip the vertices for objects that aren't poly & without gids...
+        if (isPolyType == false) {
+            if (isTileObject == false) {
+                vertices = vertices.map { $0.invertedY }
+            }
+        }
+        
         return vertices
     }
     

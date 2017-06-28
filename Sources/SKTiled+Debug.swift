@@ -191,7 +191,7 @@ internal class TileShape: SKShapeNode {
                 hexPoints[5] = CGPoint(x: position.x - (tileWidth / 2), y: position.y + (variableSize / 2))
             }
             
-            points = hexPoints.map{$0.invertedY}
+            points = hexPoints.map{ $0.invertedY }
         }
         
         // draw the path
