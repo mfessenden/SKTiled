@@ -36,9 +36,9 @@ open class SKTiledSceneCamera: SKCameraNode {
     open var allowRotation: Bool = false
     
     // zoom constraints
-    private var minZoom: CGFloat = 0.2
-    private var maxZoom: CGFloat = 5.0
-    public var isAtMaxZoom: Bool { return zoom == maxZoom }
+    open var minZoom: CGFloat = 0.2
+    open var maxZoom: CGFloat = 5.0
+    open var isAtMaxZoom: Bool { return zoom == maxZoom }
     
     // gestures
     #if os(iOS)

@@ -65,16 +65,16 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     
     open var fileNames: [String] = []                               // list of resource files
     open var currentFileName: String!                               // the current filename being parsed
+    
     internal var parsingMode: ParsingMode = .none                   // current parsing mode
     weak var mapDelegate: SKTilemapDelegate?
     open var tilemap: SKTilemap!
     
-    fileprivate var encoding: TilemapEncoding = .xml                // encoding
+    fileprivate var encoding: TilemapEncoding = .xml                // xml encoding
     fileprivate var tilesets: [String: SKTileset] = [:]             // stash external tilesets by FILE name (ie: ["kong-50x32.tsx": <SKTileset>])
-    fileprivate var tilesetImagesAdded: Int = 0                     // for reporting the number of images added to a tileset
+    fileprivate var tilesetImagesAdded: Int = 0                     // for reporting the number of images added to a collections tileset
     
     fileprivate var loggingLevel: LoggingLevel = .warning
-    // stash current elements
     fileprivate var activeElement: String?                          // current object
     
     fileprivate var lastElement: AnyObject?                         // last element created
@@ -156,7 +156,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             for tileset in withTilesets {
                 
                 guard let filename = tileset.filename else {
-                    print("Error: tileset \"\(tileset.name)\" has no filename property.")
+                    print("ERROR: tileset \"\(tileset.name)\" has no filename property.")
                     continue
                 }
                 
@@ -172,7 +172,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 
                 
                 guard let path: String = Bundle.main.path(forResource: currentFileName! , ofType: nil) else {
-                    print("Error: no path for: \"\(currentFileName!)\"")
+                    print("ERROR: no path for: \"\(currentFileName!)\"")
                     return nil
                 }
                 
@@ -274,7 +274,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 defer { fileNames.remove(at: 0) }
                 
                 guard let path: String = Bundle.main.path(forResource: currentFileName!, ofType: nil) else {
-                    print("Error: no path for: \"\(currentFileName!)\"")
+                    print("ERROR: no path for: \"\(currentFileName!)\"")
                     continue
                 }
                 
@@ -428,7 +428,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             if let source = attributeDict["source"] {
                 // get the first gid attribute
                 guard let firstgid = attributeDict["firstgid"] else {
-                    print("Error: external tileset reference \"\(source)\" with no firstgid.")
+                    print("ERROR: external tileset reference \"\(source)\" with no firstgid.")
                     parser.abortParsing();
                     return
                 }
@@ -699,7 +699,8 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         // `tile` is used to flag properties in a tileset, as well as store tile layer data in an XML-formatted map.
         if elementName == "tile" {
             
-            // XML data is stored with a `tile` tag and `gid` atribute. No other attributes will be present.
+            // XML layer data is stored with a `tile` tag and `gid` atribute. No other attributes will be present.
+            // <tile gid="0"/>
             if let gid = attributeDict["gid"] {
                 let intValue = Int(gid)!
                 // just append this to the tileData property
@@ -708,7 +709,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 }
             }
                 
-                // otherwise, we're adding data to a tileset. Attributes can be `type` and `probability`.
+            // otherwise, we're adding data to a tileset. Attributes can be `type` and `probability`.
             else if let id = attributeDict["id"] {
                 
                 let intValue = Int(id)!
@@ -851,7 +852,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     if let currentObject = objectGroup.getObject(withID: currentID!) {
                         // basic text attributes
                         let fontName: String = (attributeDict["fontfamily"] != nil) ? attributeDict["fontfamily"]! : "system"
-                        let fontSize: CGFloat = (attributeDict["pixelsize"] != nil) ? CGFloat(Int(attributeDict["pixelsize"]!)!) : 12
+                        let fontSize: CGFloat = (attributeDict["pixelsize"] != nil) ? CGFloat(Int(attributeDict["pixelsize"]!)!) : 16  // was 12
                         let fontColor: SKColor = (attributeDict["color"] != nil) ? SKColor(hexString: attributeDict["color"]!) : .black
  
                         // create text attributes
@@ -1016,18 +1017,22 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             // parse properties
             if let tileset = lastElement as? SKTileset {
                 if (currentID != nil){
+                    
                     let tileID = tileset.firstGID + currentID!
                     if let currentTileData = tileset.getTileData(globalID: tileID) {
+                        
                         for (key, value) in properties {
                             currentTileData.properties[key] = value
                         }
+                        
                         properties = [:]
                         
-                        
+                        // set the type attribute for the tile data
                         if let currentType = currentType {
                             currentTileData.type = currentType
                         }
                         
+                        // set the probability attribute for the tile data
                         if let currentProbability = currentProbability {
                             currentTileData.probability = currentProbability
                         }
@@ -1048,7 +1053,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             if let objectsgroup = lastElement as? SKObjectGroup {
                 if (currentID != nil) {
                     if let lastObject = objectsgroup.getObject(withID: currentID!) {
-                        //lastObject.properties = properties
+
                         for (key, value) in properties {
                             lastObject.properties[key] = value
                         }
@@ -1062,7 +1067,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             
             // if we're dealing with a tile collision object...
             if (lastElement as? SKTileset) != nil {
-                
+                // TODO: Tile collision object here...
             }
             
             //currentID = nil
@@ -1133,9 +1138,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         characterData = ""
     }
     
-    
-    
-    
     // foundCharacters happens whenever parser enters a key poop
     public func parser(_ parser: XMLParser, foundCharacters string: String) {
         // append data attribute
@@ -1171,7 +1173,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
      */
     fileprivate func decode(base64String data: String, compression: CompressionType = .uncompressed) -> [UInt32]? {
         guard let decodedData = Data(base64Encoded: data, options: .ignoreUnknownCharacters) else {
-            print("Error: data is not base64 encoded.")
+            print("ERROR: data is not base64 encoded.")
             return nil
         }
         

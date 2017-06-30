@@ -28,6 +28,7 @@ Change Log
 - rename `SKTileLayer.getAnimatedTiles()` -> `SKTileLayer.animatedTiles()`
 - rename `SKObjectGroup.getObject(named:)` -> `SKObjectGroup.getObjects(named:)`
 - added `SKObjectGroup.textObjects` & `SKTilemap.textObjects`
+- added `SKTilemap.tiledversion`
 - added `SKTilemap.showGrid`
 - added `SKTilemap.showBounds`
 - added `SKObjectGroup.getObjects(withText:)`
@@ -46,8 +47,11 @@ Change Log
 - added `SKTilemap.mapName` property
 - added `SKTilemap.renderQuality` property
 - added `TiledLayerObject.renderQuality` property
+- added `SKTileObject.renderQuality` property
 - better grid drawing quality
 
+- added `SKTilemap.tilesAt(point:)`
+- added `SKTilemap.objectsAt(point:)`
 
 1.13
 -----

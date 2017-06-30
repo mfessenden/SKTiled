@@ -203,8 +203,17 @@ internal extension CGFloat {
      - returns: `CGFloat`
      */
     internal func radians() -> CGFloat {
-        let b = CGFloat(Double.pi) * (self/180)
+        let b = CGFloat(Double.pi) * (self / 180)
         return b
+    }
+    
+    /**
+     Convert a float to degrees.
+     
+     - returns: `CGFloat`
+     */
+    internal func degrees() -> CGFloat {
+        return self * 180.0 / CGFloat(Double.pi)
     }
     
     /**
@@ -311,11 +320,38 @@ public extension CGPoint {
         return int2(Int32(x), Int32(y))
     }
     
+    /**
+     Returns the distance to the given point.
+     
+     - parameter point: `CGPoint` decimals to round to.
+     - returns: `Float` distance to other point.
+     */
+    public func distance(_ point: CGPoint) -> Float {
+        let dx = Float(x - point.x)
+        let dy = Float(y - point.y)
+        return sqrt((dx * dx) + (dy * dy))
+    }
+    
+    /// Return an integer value for x-coordinate.
     public var xCoord: Int { return Int(x) }
+    /// Return an integer value for y-coordinate.
     public var yCoord: Int { return Int(y) }
     
     public var description: String { return "x: \(x.roundTo()), y: \(y.roundTo())" }
     public var shortDescription: String { return "\(Int(x)),\(Int(y))" }
+}
+
+
+extension CGPoint: Hashable {
+
+    public var hashValue: Int {
+        return x.hashValue << 32 ^ y.hashValue
+    }
+}
+
+
+public func ==(lhs: CGPoint, rhs: CGPoint) -> Bool {
+    return lhs.distance(rhs) < 0.000001
 }
 
 
@@ -376,6 +412,16 @@ public extension CGRect {
     /// Return the four corner points.
     public var points: [CGPoint] {
         return [topLeft, topRight, bottomRight, bottomLeft]
+    }
+    
+    /**
+     Returns a display string rounded.
+     
+     - parameter decimals: `Int` decimals to round to.
+     - returns: `String` display string.
+     */
+    public func roundTo(_ decimals: Int=1) -> String {
+        return "origin: \(origin.x.roundTo()), \(origin.y.roundTo()), size: \(size.width.roundTo())x\(size.height.roundTo())"
     }
 }
 
@@ -742,6 +788,27 @@ public extension SKAction {
      */
     public class func fadeAfter(wait duration: TimeInterval, alpha: CGFloat) -> SKAction {
         return SKAction.sequence([SKAction.wait(forDuration: duration), SKAction.fadeAlpha(to: alpha, duration: 0.5)])
+    }
+    
+    /**
+     * Performs an action after the specified delay.
+     */
+    public class func afterDelay(_ delay: TimeInterval, performAction action: SKAction) -> SKAction {
+        return SKAction.sequence([SKAction.wait(forDuration: delay), action])
+    }
+    
+    /**
+     * Performs a block after the specified delay.
+     */
+    public class func afterDelay(_ delay: TimeInterval, runBlock block: @escaping () -> Void) -> SKAction {
+        return SKAction.afterDelay(delay, performAction: SKAction.run(block))
+    }
+    
+    /**
+     * Removes the node from its parent after the specified delay.
+     */
+    public class func removeFromParentAfterDelay(_ delay: TimeInterval) -> SKAction {
+        return SKAction.afterDelay(delay, performAction: SKAction.removeFromParent())
     }
 }
 
@@ -1138,11 +1205,11 @@ internal func drawGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineSca
  */
 public func rectPointArray(_ width: CGFloat, height: CGFloat, origin: CGPoint = .zero) -> [CGPoint] {
     let points: [CGPoint] = [
-        origin,
-        CGPoint(x: origin.x + width, y: origin.y),
-        CGPoint(x: origin.x + width, y: origin.y - height),
-        CGPoint(x: origin.x, y: origin.y - height)
-    ]
+                origin,
+                CGPoint(x: origin.x + width, y: origin.y),
+                CGPoint(x: origin.x + width, y: origin.y - height),
+                CGPoint(x: origin.x, y: origin.y - height)
+        ]
     return points
 }
 

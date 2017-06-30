@@ -1,251 +1,458 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="42" height="30" tilewidth="8" tileheight="8" nextobjectid="62">
+<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="42" height="30" tilewidth="8" tileheight="8" nextobjectid="102">
  <properties>
   <property name="gridColor" type="color" value="#ffdede97"/>
-  <property name="yGravity" type="float" value="-1.8"/>
+  <property name="yGravity" type="float" value="-9.8"/>
  </properties>
  <tileset firstgid="1" source="tetris-tshape-24x16.tsx"/>
  <tileset firstgid="10" source="tetris-square-16x16.tsx"/>
  <tileset firstgid="19" source="tetris-bar-32x8.tsx"/>
  <tileset firstgid="28" source="tetris-lshape-24x16.tsx"/>
+ <tileset firstgid="46" source="tetris-square-8x8.tsx"/>
  <imagelayer name="Background">
   <image source="tetris-layer1-336x240.png" width="336" height="240"/>
  </imagelayer>
- <objectgroup name="Collisions">
-  <object id="43" name="collision3" x="96" y="208" width="16" height="8">
+ <objectgroup name="Collisions" visible="0">
+  <object id="43" name="right-floor" x="96" y="200" width="16" height="8">
    <properties>
     <property name="isCollider" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="44" name="left-side" x="24" y="72" width="8" height="120">
+  <object id="44" name="left-side" x="24" y="32" width="8" height="168">
    <properties>
     <property name="isCollider" type="bool" value="true"/>
+    <property name="isDynamic" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="45" name="right-side" x="112" y="72" width="8" height="120">
+  <object id="45" name="right-side" x="112" y="40" width="8" height="160">
    <properties>
     <property name="isCollider" type="bool" value="true"/>
+    <property name="isDynamic" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="51" name="collision3" x="32" y="208" width="16" height="8">
+  <object id="51" name="left-floor" x="32" y="200" width="16" height="8">
    <properties>
     <property name="isCollider" type="bool" value="false"/>
    </properties>
   </object>
  </objectgroup>
  <group name="Shapes">
-  <objectgroup name="square-shaped">
+  <objectgroup name="shapes-gids">
    <properties>
     <property name="color" type="color" value="#ff8fff0b"/>
    </properties>
-   <object id="29" name="sqr-01" type="square" gid="10" x="48" y="-88" width="16" height="16">
+   <object id="29" name="sqr-01" type="square" gid="10" x="25" y="-45" width="16" height="16">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
    </object>
-   <object id="30" name="sqr-02" type="square" gid="11" x="64" y="-88" width="16" height="16">
+   <object id="30" name="sqr-02" type="square" gid="11" x="91" y="-113" width="16" height="16">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
    </object>
-   <object id="31" name="sqr-03" type="square" gid="12" x="80" y="-88" width="16" height="16">
+   <object id="31" name="sqr-03" type="square" gid="12" x="52" y="-92" width="16" height="16">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
    </object>
-   <object id="32" name="sqr-04" type="square" gid="13" x="48" y="-72" width="16" height="16">
+   <object id="32" name="sqr-04" type="square" gid="13" x="47" y="-37" width="16" height="16">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
    </object>
-   <object id="33" name="sqr-05" type="square" gid="14" x="64" y="-72" width="16" height="16">
+   <object id="33" name="sqr-05" type="square" gid="14" x="48" y="-96" width="16" height="16" rotation="270">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
    </object>
-   <object id="34" name="sqr-06" type="square" gid="15" x="80" y="-72" width="16" height="16">
+   <object id="34" name="sqr-06" type="square" gid="15" x="109" y="-76" width="16" height="16" rotation="270">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
    </object>
-   <object id="35" name="sqr-07" type="square" gid="16" x="48" y="-56" width="16" height="16">
+   <object id="35" name="sqr-07" type="square" gid="16" x="48" y="192" width="16" height="16">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
    </object>
-   <object id="36" name="sqr-08" type="square" gid="17" x="64" y="-56" width="16" height="16">
+   <object id="36" name="sqr-08" type="square" gid="17" x="84" y="-40" width="16" height="16" rotation="90">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
    </object>
-   <object id="37" name="sqr-09" type="square" gid="18" x="80" y="-56" width="16" height="16">
+   <object id="37" name="sqr-09" type="square" gid="18" x="96" y="200" width="16" height="16">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
    </object>
-  </objectgroup>
-  <objectgroup name="t-shaped">
-   <properties>
-    <property name="color" type="color" value="#ff8fff0b"/>
-   </properties>
-   <object id="23" name="tshape09" gid="9" x="88" y="16" width="24" height="16">
+   <object id="23" name="tshape09" gid="9" x="40" y="160" width="24" height="16" rotation="-270">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
     <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
    </object>
    <object id="22" name="tshape08" gid="8" x="64" y="16" width="24" height="16">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
     <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
    </object>
-   <object id="21" name="tshape07" gid="7" x="40" y="16" width="24" height="16">
+   <object id="21" name="tshape07" gid="7" x="32" y="200" width="24" height="16">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
     <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
    </object>
-   <object id="19" name="tshape06" gid="6" x="88" y="0" width="24" height="16">
+   <object id="19" name="tshape06" gid="6" x="80" y="184" width="24" height="16">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
     <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
    </object>
    <object id="18" name="tshape05" gid="5" x="64" y="0" width="24" height="16">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
     <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
    </object>
-   <object id="20" name="tshape04" gid="4" x="40" y="0" width="24" height="16">
+   <object id="20" name="tshape04" gid="4" x="40" y="48" width="24" height="16" rotation="90">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
     <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
    </object>
-   <object id="15" name="tshape03" gid="3" x="112" y="-136" width="24" height="16" rotation="180">
+   <object id="15" name="tshape03" gid="3" x="112" y="184" width="24" height="16" rotation="270">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
     <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
    </object>
-   <object id="16" name="tshape02" gid="2" x="64" y="-16" width="24" height="16">
+   <object id="16" name="tshape02" gid="2" x="104" y="56" width="24" height="16" rotation="-90">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="gid" type="int" value="2"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
     <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
    </object>
    <object id="17" name="tshape01" gid="1" x="32" y="-152" width="24" height="16" rotation="90">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
     <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
    </object>
-   <object id="50" name="tshape10" x="72" y="24" width="24" height="16">
+   <object id="50" name="tshape10" gid="3" x="72" y="-48" width="24" height="16">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="gid" type="int" value="7"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
     <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
    </object>
-  </objectgroup>
-  <objectgroup name="bar-shaped">
-   <properties>
-    <property name="color" type="color" value="#ff8fff0b"/>
-   </properties>
    <object id="42" name="bar-07" gid="25" x="72" y="-152" width="32" height="8" rotation="90">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
    </object>
-   <object id="41" name="bar-06" gid="24" x="56" y="-144" width="32" height="8" rotation="90">
+   <object id="41" name="bar-06" gid="24" x="32" y="160" width="32" height="8" rotation="90">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
    </object>
    <object id="40" name="bar-05" gid="23" x="72" y="-160" width="32" height="8">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
    </object>
    <object id="39" name="bar-04" gid="22" x="32" y="-176" width="32" height="8">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
    </object>
    <object id="39" name="bar-03" gid="21" x="80" y="-240" width="32" height="8" rotation="90">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
    </object>
    <object id="38" name="bar-02" gid="20" x="64" y="-184" width="32" height="8">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
    </object>
    <object id="40" name="bar-01" gid="19" x="56" y="-240" width="32" height="8" rotation="90">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
    </object>
-   <object id="52" name="lshape1" gid="37" x="24" y="-288" width="24" height="16">
+   <object id="52" name="lshape1" gid="37" x="112" y="-224" width="24" height="16" rotation="-270">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
-    </properties>
-    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
-   </object>
-   <object id="54" name="lshape2" gid="38" x="48" y="-288" width="24" height="16">
-    <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
     <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
    </object>
-   <object id="55" name="lshape3" gid="39" x="72" y="-288" width="24" height="16">
+   <object id="54" name="lshape2" gid="38" x="72" y="88" width="24" height="16">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
     <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
    </object>
-   <object id="56" name="lshape4" gid="40" x="24" y="-272" width="24" height="16">
+   <object id="56" name="lshape4" gid="40" x="48" y="-256" width="24" height="16">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
     <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
    </object>
-   <object id="57" name="lshape5" gid="41" x="48" y="-272" width="24" height="16">
+   <object id="57" name="lshape5" gid="41" x="48" y="-214" width="24" height="16" rotation="180">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
     <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
    </object>
    <object id="58" name="lshape6" gid="42" x="72" y="-272" width="24" height="16">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
     <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
    </object>
-   <object id="59" name="lshape7" gid="43" x="24" y="-256" width="24" height="16">
+   <object id="59" name="lshape7" gid="43" x="24" y="-256" width="24" height="16" rotation="-90">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
     <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
    </object>
-   <object id="60" name="lshape9" gid="44" x="72" y="-256" width="24" height="16">
+   <object id="61" name="lshape8" gid="45" x="-2" y="-81" width="24" height="16">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
     <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
    </object>
-   <object id="61" name="lshape8" gid="45" x="48" y="-256" width="24" height="16">
+   <object id="62" name="lshape6" gid="42" x="88" y="144" width="24" height="16" rotation="-270">
     <properties>
-     <property name="isDynamic" type="bool" value="true"/>
+     <property name="isDynamic" type="bool" value="false"/>
     </properties>
     <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="63" name="lshape5" gid="41" x="32" y="168" width="24" height="16">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="64" name="bar-04" gid="22" x="104" y="128" width="32" height="8" rotation="90">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+   </object>
+  </objectgroup>
+  <objectgroup name="shapes-no-gids">
+   <properties>
+    <property name="color" type="color" value="#ff8fff0b"/>
+    <property name="type" value="DEBUG"/>
+   </properties>
+   <object id="66" name="sqr-01" type="square" x="25" y="-45" width="16" height="16">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+   </object>
+   <object id="67" name="sqr-02" type="square" x="91" y="-113" width="16" height="16">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+   </object>
+   <object id="68" name="sqr-03" type="square" x="52" y="-92" width="16" height="16">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+   </object>
+   <object id="69" name="sqr-04" type="square" x="47" y="-37" width="16" height="16">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+   </object>
+   <object id="70" name="sqr-05" type="square" x="48" y="-96" width="16" height="16" rotation="270">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+   </object>
+   <object id="71" name="sqr-06" type="square" x="109" y="-76" width="16" height="16" rotation="270">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+   </object>
+   <object id="72" name="sqr-07" type="square" x="48" y="192" width="16" height="16">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+   </object>
+   <object id="73" name="sqr-08" type="square" x="84" y="-40" width="16" height="16" rotation="90">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+   </object>
+   <object id="74" name="sqr-09" type="square" x="96" y="200" width="16" height="16">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+   </object>
+   <object id="75" name="tshape09" x="40" y="160" width="24" height="16" rotation="-270">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+    <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
+   </object>
+   <object id="76" name="tshape08" x="64" y="16" width="24" height="16">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+    <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
+   </object>
+   <object id="77" name="tshape07" x="32" y="200" width="24" height="16">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+    <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
+   </object>
+   <object id="78" name="tshape06" x="80" y="184" width="24" height="16">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+    <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
+   </object>
+   <object id="79" name="tshape05" x="64" y="0" width="24" height="16">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+    <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
+   </object>
+   <object id="80" name="tshape04" x="40" y="48" width="24" height="16" rotation="90">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+    <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
+   </object>
+   <object id="81" name="tshape03" x="112" y="184" width="24" height="16" rotation="270">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+    <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
+   </object>
+   <object id="82" name="tshape02" x="104" y="56" width="24" height="16" rotation="-90">
+    <properties>
+     <property name="gid" type="int" value="2"/>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+    <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
+   </object>
+   <object id="83" name="tshape01" x="32" y="-152" width="24" height="16" rotation="90">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+    <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
+   </object>
+   <object id="84" name="tshape10" x="72" y="-48" width="24" height="16">
+    <properties>
+     <property name="gid" type="int" value="7"/>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+    <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
+   </object>
+   <object id="85" name="bar-07" x="72" y="-152" width="32" height="8" rotation="90">
+    <properties>
+     <property name="gid" type="int" value="25"/>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+   </object>
+   <object id="86" name="bar-06" x="32" y="160" width="32" height="8" rotation="90">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+   </object>
+   <object id="87" name="bar-05" x="72" y="-160" width="32" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+   </object>
+   <object id="88" name="bar-04" x="32" y="-176" width="32" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+   </object>
+   <object id="89" name="bar-03" x="80" y="-240" width="32" height="8" rotation="90">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+   </object>
+   <object id="90" name="bar-02" x="64" y="-184" width="32" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+   </object>
+   <object id="91" name="bar-01" x="56" y="-240" width="32" height="8" rotation="90">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+   </object>
+   <object id="92" name="lshape1" x="112" y="-224" width="24" height="16" rotation="-270">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="93" name="lshape2" x="72" y="88" width="24" height="16">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="94" name="lshape4" x="48" y="-256" width="24" height="16">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="95" name="lshape5" x="48" y="-214" width="24" height="16" rotation="180">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="96" name="lshape6" x="72" y="-272" width="24" height="16">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="97" name="lshape7" x="24" y="-256" width="24" height="16" rotation="-90">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="98" name="lshape8" x="-2" y="-81" width="24" height="16">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="99" name="lshape6" x="88" y="144" width="24" height="16" rotation="-270">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="100" name="lshape5" x="32" y="168" width="24" height="16">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="101" name="bar-04" x="104" y="128" width="32" height="8" rotation="90">
+    <properties>
+     <property name="isDynamic" type="bool" value="false"/>
+    </properties>
    </object>
   </objectgroup>
  </group>
- <objectgroup name="Right-Side"/>
- <group name="Image-Layers">
+ <group name="ImageLayers" visible="0">
   <imagelayer name="Floor">
    <image source="tetris-layer4-336x240.png" width="336" height="240"/>
   </imagelayer>

@@ -178,6 +178,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     
     open func didRenderMap(_ tilemap: SKTilemap) {
         // Called after layers are rendered. Perform any post-processing here.
+        self.physicsWorld.speed = 0
     }
     
     // MARK: - Updates
@@ -216,6 +217,14 @@ extension SKTiledSceneDelegate where Self: SKScene {
     public func load(fromFile filename: String, withTilesets tilesets: [SKTileset]=[]) -> SKTilemap? {
         if let tilemap = SKTilemap.load(fromFile: filename, delegate: self as? SKTilemapDelegate, withTilesets: tilesets) {
             
+            if let cameraNode = cameraNode {
+                // camera properties inherited from tilemap
+                cameraNode.allowMovement = tilemap.allowMovement
+                cameraNode.allowZoom = tilemap.allowZoom
+                cameraNode.setCameraZoom(tilemap.worldScale)
+                cameraNode.maxZoom = tilemap.maxZoom
+            }
+            
             return tilemap
         }
         return nil
@@ -238,13 +247,10 @@ extension SKTiledSceneDelegate where Self: SKScene {
             //print("# [SKTiledSceneDelegate]: running completion...")
             completion?()
         }
-        print("    ❗️about to dealloc scene...")
         view?.presentScene(nextScene, transition: transition)
         
         if let sceneDelegate = nextScene as? SKTiledSceneDelegate {
             if tmxFile != nil {
-    
-                print("\n❗️1.  SKTiledSceneDelegate.presentScene")
                 if let newTilemap = sceneDelegate.load(fromFile: tmxFile!, withTilesets: []) {
                     
                     sceneDelegate.tilemap = newTilemap
@@ -255,6 +261,7 @@ extension SKTiledSceneDelegate where Self: SKScene {
                         cameraNode.allowMovement = newTilemap.allowMovement
                         cameraNode.allowZoom = newTilemap.allowZoom
                         cameraNode.setCameraZoom(newTilemap.worldScale)
+                        cameraNode.maxZoom = newTilemap.maxZoom
                     }
                 }
             }

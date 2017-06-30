@@ -69,8 +69,9 @@ internal class TiledLayerGrid: SKSpriteNode {
                 #endif
                 
                 // multipliers used to generate smooth lines
-                let imageScale: CGFloat = uiScale > 1 ? 2 : 4
-                let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1 : 0.85
+                let defaultImageScale: CGFloat = (layer.tilemap.tileHeight < 16) ? 8 : 4
+                let imageScale: CGFloat = (uiScale > 1) ? (defaultImageScale / 2) : defaultImageScale
+                let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 0.5 : 0.25    // 1 : 0.85
 
                 
                 // generate the texture
@@ -233,12 +234,38 @@ internal class TileShape: SKShapeNode {
 }
 
 
-internal func == (lhs: TileShape, rhs: TileShape) -> Bool {
-    return lhs.coord == rhs.coord
+
+extension TileShape {
+    override public var description: String {
+        return "Tile Shape: \(coord.shortDescription)"
+    }
+    
+    override public var debugDescription: String {
+        return description
+    }
 }
 
 
-extension SKTilemap {}
+
+internal func == (lhs: TileShape, rhs: TileShape) -> Bool {
+    return lhs.coord.hashValue == rhs.coord.hashValue
+}
+
+
+extension SKTilemap {
+    
+    /**
+     Return tiles & objects at the given point in the map.
+     
+     - parameter point: `CGPoint` position in tilemap.
+     - returns: `[SKNode]` array of tiles.
+     */
+    open func renderableObjectsAt(point: CGPoint) -> [SKNode] {
+        return nodes(at: point).filter { node in
+            (node as? SKTile != nil) || (node as? SKTileObject != nil)
+        }
+    }
+}
 
 
 extension SKTile {
@@ -257,7 +284,7 @@ extension SKTile {
         let orientation = tileData.tileset.tilemap.orientation
         
         if orientation == .orthogonal || orientation == .hexagonal {
-            childNode(withName: "Highlight")?.removeFromParent()
+            childNode(withName: "HIGHLIGHT")?.removeFromParent()
             
             var highlightNode: SKShapeNode? = nil
             if orientation == .orthogonal {
@@ -272,35 +299,35 @@ extension SKTile {
             if let highlightNode = highlightNode {
                 highlightNode.strokeColor = SKColor.clear
                 highlightNode.fillColor = highlight.withAlphaComponent(0.35)
-                highlightNode.name = "Highlight"
+                highlightNode.name = "HIGHLIGHT"
                 
                 highlightNode.isAntialiased = antialiasing
                 addChild(highlightNode)
-                highlightNode.zPosition = zPosition + 10
+                highlightNode.zPosition = zPosition + 50
                 
                 // fade out highlight
-                removeAction(forKey: "Highlight_Fade")
+                removeAction(forKey: "HIGHLIGHT_FADE")
                 let fadeAction = SKAction.sequence([
                     SKAction.wait(forDuration: duration * 1.5),
                     SKAction.fadeAlpha(to: 0, duration: duration/4.0)
                     ])
                 
-                highlightNode.run(fadeAction, withKey: "Highlight_Fade", optionalCompletion: {
+                highlightNode.run(fadeAction, withKey: "HIGHLIGHT_FADE", optionalCompletion: {
                     highlightNode.removeFromParent()
                 })
             }
         }
         
         if orientation == .isometric || orientation == .staggered {
-            removeAction(forKey: "Highlight_Fade")
+            removeAction(forKey: "HIGHLIGHT_FADE")
             let fadeOutAction = SKAction.colorize(with: SKColor.clear, colorBlendFactor: 1, duration: duration)
-            run(fadeOutAction, withKey: "Highlight_Fade", optionalCompletion: {
+            run(fadeOutAction, withKey: "HIGHLIGHT_FADE", optionalCompletion: {
                 let fadeInAction = SKAction.sequence([
                     SKAction.wait(forDuration: duration * 2.5),
                     //fadeOutAction.reversedAction()
                     SKAction.colorize(with: SKColor.clear, colorBlendFactor: 0, duration: duration/4.0)
                     ])
-                self.run(fadeInAction, withKey: "Highlight_Fade")
+                self.run(fadeInAction, withKey: "HIGHLIGHT_FADE")
             })
         }
     }
@@ -349,28 +376,28 @@ extension SKTiledDemoScene {
                 return
         }
         
-        // 'D' shows/hides debug view
+        // 'd' shows/hides debug view
         if eventKey == 0x02 {
             tilemap.debugDraw = !tilemap.debugDraw
         }
         
-        // 'O' shows/hides object layers
+        // 'o' shows/hides object layers
         if eventKey == 0x1f {
             tilemap.showObjects = !tilemap.showObjects
         }
         
-        // 'P' pauses the map
+        // 'p' pauses the map
         if eventKey == 0x23 {
             self.isPaused = !self.isPaused
         }
         
-        // 'Q' print layer stats
+        // 'q' print layer stats
         if eventKey == 0xc {
             tilemap.layerStatistics()
         }
         
         
-        // 'H' hides the HUD
+        // 'h' hides the HUD
         if eventKey == 0x04 {
             if let view = self.view {
                 let debugState = !view.showsFPS
@@ -385,12 +412,12 @@ extension SKTiledDemoScene {
             self.loadPreviousScene()
         }
         
-        // 'E' toggles edit mode
+        // 'e' toggles edit mode
         if eventKey == 0x0E {
             editMode = !editMode
         }
         
-        // 'L' toggles live mode
+        // 'l' toggles live mode
         if eventKey == 0x25 {
             liveMode = !liveMode
         }
@@ -400,14 +427,14 @@ extension SKTiledDemoScene {
             cameraNode.resetCamera()
         }
         
-        // 'A' or 'F' fits the map to the current view
+        // 'a' or 'f' fits the map to the current view
         if eventKey == 0x0 || eventKey == 0x3 {
             cameraNode.fitToView(newSize: view.bounds.size)
         }
         
         
         
-        // 'J' fades the layers in succession
+        // 'j' fades the layers in succession
         if eventKey == 0x26 {
             var fadeTime: TimeInterval = 3
             let additionalTime: TimeInterval = (tilemap.layerCount > 6) ? 1.25 : 2.25
@@ -418,7 +445,7 @@ extension SKTiledDemoScene {
             }
         }
         
-        // 'K' updates the render quality
+        // 'k' updates the render quality
         if eventKey == 0x28 {
             if tilemap.renderQuality < 16 {
                 tilemap.renderQuality *= 2
@@ -427,13 +454,23 @@ extension SKTiledDemoScene {
         
         // MARK: - Debugging Tests
         
-        // 'Z' queries the debug draw state
+        // 'z' queries the debug draw state
         if eventKey == 0x6 {
             print("tilemap debug draw: \(tilemap.debugDraw), (show bounds: \(tilemap.showBounds), show grid: \(tilemap.showGrid))")
         }
         
+        // 'r' reloads the scene
+        if eventKey == 0xf {
+            guard let currenFilename = tilemap.filename else { return }
+            self.reloadScene()
+        }
         
-        // 'I' runs a custom event
+        // 'g' highlights all tiles
+        if eventKey == 0x5 {
+            tilemap.tileLayers(recursive: true).forEach({ $0.validTiles().forEach({ $0.drawBounds() }) })
+        }
+        
+        // 'i' runs a custom event
         if eventKey == 0x22 {
             var fadeTime: TimeInterval = 3
             let shapeRadius = (tilemap.tileHeightHalf / 4) - 0.5
@@ -461,12 +498,49 @@ extension SKTiledDemoScene {
             }
         }
         
-        // 'V' runs a custom test
+        // 'v' runs a custom test
         if eventKey == 0x9 {
             view.showsPhysics = !view.showsPhysics
         }
         
+        // 'w' toggles debug layer visibility
+        if eventKey == 0xd {
+            tilemap.getLayers(ofType: "DEBUG").forEach{ $0.isHidden = !$0.isHidden}
+        }
         
     }
 }
 #endif
+
+
+
+public func flipFlagsDebug(hflip: Bool, vflip: Bool, dflip: Bool) -> String {
+    var result: String = "none"
+    if (dflip == true) {
+        if (hflip && !vflip) {
+            result = "rotate 90"   // rotate 90deg
+        }
+        
+        if (hflip && vflip) {
+            result = "rotate 90, xScale * -1"
+        }
+        
+        if (!hflip && vflip) {
+            result = "rotate -90"    // rotate -90deg
+        }
+        
+        if (!hflip && !vflip) {
+            result = "rotate -90, xScale * -1"
+        }
+    } else {
+        if (hflip == true) {
+            result = "xScale * -1"
+        }
+        
+        if (vflip == true) {
+            result = "yScale * -1"
+        }
+    }
+    return result
+    
+}

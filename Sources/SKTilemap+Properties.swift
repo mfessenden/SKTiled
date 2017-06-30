@@ -15,21 +15,14 @@ public extension SKTilemap {
      Parse properties from the Tiled TMX file.
      */
     public func parseProperties(completion: (() -> ())?) {
-
         if (ignoreProperties == true) { return }
+        
+         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
         
         for (attr, value) in properties {
             
             let lattr = attr.lowercased()
-            
-            if (lattr == "name") {
-                name = value
-            }
-            
-            if (lattr == "type") {
-                type = value
-            }
-            
+
             if ["zdelta", "zdeltaforlayers", "layerdelta"].contains(lattr){
                 zDeltaForLayers = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : zDeltaForLayers
             }
@@ -42,6 +35,7 @@ public extension SKTilemap {
             if (lattr == "gridcolor") {
                 gridColor = SKColor(hexString: value)
                 getLayers().forEach {$0.gridColor = gridColor}
+                frameColor = gridColor
             }
             
             if (lattr == "gridopacity") {
@@ -122,7 +116,11 @@ public extension SKTilemap {
             }
             
             if (lattr == "showgrid") {
-                baseLayer.showGrid = boolForKey(attr)
+                showGrid = boolForKey(attr)
+            }
+            
+            if (lattr == "showbounds") {
+                showBounds = boolForKey(attr)
             }
             
             if (lattr == "cropatboundary") {
@@ -151,11 +149,7 @@ public extension SKTileset {
      */
     public func parseProperties(completion: (() -> ())?) {
         if (ignoreProperties == true) { return }
-        for (attr, value) in properties {
-            if (attr == "type") {
-                type = value
-            }
-        }
+         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
         if completion != nil { completion!() }
     }
 }
@@ -169,13 +163,12 @@ public extension TiledLayerObject {
      */
     public func parseProperties(completion: (() -> ())?) {
         if (ignoreProperties == true) { return }
+        
+         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
+        
         for (attr, value) in properties {
             
             let lattr = attr.lowercased()
-            
-            if (lattr == "type") {
-                type = value
-            }
             
             if (lattr == "zposition") {
                 guard let zpos = Double(value) else { return }
@@ -221,7 +214,7 @@ public extension TiledLayerObject {
      - returns: `String?` the property value, or nil if it does not exist.
      */
     public func getValue(forProperty name: String) -> String? {
-        return properties[name]
+        return stringForKey(name)
     }
     
     /**
@@ -287,6 +280,9 @@ public extension SKTileObject {
      */
     public func parseProperties(completion: (() -> ())?) {
         if (ignoreProperties == true) { return }
+        
+         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
+        
         for (attr, value) in properties {
             
             let lattr = attr.lowercased()
@@ -320,8 +316,9 @@ public extension SKTilesetData {
     /**
      Parse the tile data's properties value.
      */
-    public func parseProperties(completion: (() -> ())?) {        
+    public func parseProperties(completion: (() -> ())?) {
         if (ignoreProperties == true) { return }
+         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
         if completion != nil { completion!() }
     }
 }

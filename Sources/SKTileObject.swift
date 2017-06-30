@@ -55,7 +55,7 @@ internal enum LabelPosition {
  */
 public struct TextObjectAttributes {
     public var fontName: String = "Arial"
-    public var fontSize: CGFloat = 12
+    public var fontSize: CGFloat = 16
     public var fontColor: SKColor = .black
     public var alignment: TextAlignment = TextAlignment()
     
@@ -136,14 +136,22 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     
     /// Object opacity
     open var opacity: CGFloat {
-        get { return self.alpha }
-        set { self.alpha = newValue }
+        get {
+            return self.alpha
+        }
+        set {
+            self.alpha = newValue
+        }
     }
     
     /// Object visibility
     open var visible: Bool {
-        get { return !self.isHidden }
-        set { self.isHidden = !newValue }
+        get {
+            return !self.isHidden
+        }
+        set {
+            self.isHidden = !newValue
+        }
     }
     
     /// Returns the bounding box of the shape.
@@ -245,6 +253,16 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         }
         
         self.size = CGSize(width: width, height: height)
+        
+        
+        if let rotation = attributes["rotation"] {
+            
+            if let doubleVal = Double(rotation) {
+                let radianValue = CGFloat(doubleVal).radians()
+                self.zRotation = radianValue
+                print("  -> object rotation: \(rotation) -> \(radianValue.roundTo())")
+            }
+        }
     }
     
     /**
@@ -319,8 +337,8 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         
         // flip the vertex values on the y-value for our coordinate transform.
         // for some odd reason tile objects are flipped in the y-axis already, so ignore the translated
-        var translatedVertices: [CGPoint] = (isPolyType == true) ? vertices.map { $0.invertedY } : vertices
-            
+        var translatedVertices: [CGPoint] = (isPolyType == true) ? (gid == nil) ? vertices.map { $0.invertedY } : vertices : (gid == nil) ? vertices.map { $0.invertedY } : vertices
+
         switch objectType {
                 
         case .ellipse:
@@ -350,15 +368,15 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         }
         
         // draw the first point of poly objects
-        if (self.objectType == .polyline) || (self.objectType == .polygon) {
+        if (isPolyType == true) {
                 
             if (self.gid == nil) {
-                childNode(withName: "FirstPoint")?.removeFromParent()
+                childNode(withName: "FIRST_POINT")?.removeFromParent()
                 
                 // the first-point radius should be larger for thinner (>1.0) line widths
                 let anchorRadius = (self.lineWidth > 1) ? self.lineWidth * 2 : self.lineWidth * 3.5
                 let anchor = SKShapeNode(circleOfRadius: anchorRadius)
-                anchor.name = "FirstPoint"
+                anchor.name = "FIRST_POINT"
                 addChild(anchor)
                 anchor.position = vertices[0].invertedY
                 anchor.strokeColor = SKColor.clear
@@ -370,7 +388,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         // if the object has a gid property, render it as a tile
         if let gid = gid {
             guard let tileData = layer.tilemap.getTileData(globalID: gid) else {
-                print("Error: Tile object \"\(name ?? "null")\" cannot access tile data for id: \(gid)")
+                print("ERROR: Tile object \"\(name ?? "null")\" cannot access tile data for id: \(gid)")
                 return
             }
             
@@ -391,13 +409,13 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
 
             if (tileData.texture != nil) {
                 
-                childNode(withName: "TileObject")?.removeFromParent()
+                childNode(withName: "TILE_OBJECT")?.removeFromParent()
                 if let tileSprite = SKTile(data: tileData) {
                     
                     let boundingBox = polygonPath(translatedVertices)
                     let rect = boundingBox.boundingBox
                     
-                    tileSprite.name = "TileObject"
+                    tileSprite.name = "TILE_OBJECT"
                     tileSprite.size.width = rect.size.width
                     tileSprite.size.height = rect.size.height
                     addChild(tileSprite)
@@ -516,25 +534,15 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
      */
     public func getVertices() -> [CGPoint]? {
         guard let layer = layer,
-                (points.count > 1) else { return nil }
-                
-        var vertices: [CGPoint] = []
-        
-        for point in points {
+            (points.count > 1) else {
+            return nil
+        }
+
+        return points.map { point in
             var offset = layer.pixelToScreenCoords(point)
             offset.x -= layer.origin.x
-            vertices.append(offset)
+            return offset
         }
-        
-
-        // flip the vertices for objects that aren't poly & without gids...
-        if (isPolyType == false) {
-            if (isTileObject == false) {
-                vertices = vertices.map { $0.invertedY }
-            }
-        }
-        
-        return vertices
     }
     
     // MARK: - Callbacks
@@ -552,12 +560,13 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
      Setup physics for the object based on properties set up in Tiled.
      */
     open func setupPhysics() {
+        guard let layer = layer else { return }
         guard let objectPath = path else {
             print("Warning: object path not set: \"\(self.name != nil ? self.name! : "null")\"")
             return
         }
         
-        guard let layer = layer else { return }
+        
         let tileSizeHalved = layer.tilemap.tileSizeHalved
         
         if let collisionShape = intForKey("collisionShape") {
@@ -571,7 +580,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         }
         
         } else {
-        physicsBody = SKPhysicsBody(polygonFrom: objectPath)
+            physicsBody = SKPhysicsBody(polygonFrom: objectPath)
         }
 
         physicsBody?.isDynamic = (physicsType == .dynamic)
@@ -589,10 +598,14 @@ extension SKTileObject {
     /// Tile data description.
     override open var description: String {
         let comma = propertiesString.characters.count > 0 ? ", " : ""
-        return "<Object: \(id), \"\(name ?? "null")\"\(comma)\(propertiesString)>"
+        let objectName = name ?? "null"
+        let typeString = (type != nil) ? ", type: \"\(type!)\"" : ""
+        return "Object ID: \(id), \"\(objectName)\"\(typeString)\(comma)\(propertiesString)"
     }
     
-    override open var debugDescription: String { return description }
+    override open var debugDescription: String {
+        return "<\(description)>"
+    }
 }
 
 

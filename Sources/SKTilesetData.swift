@@ -34,12 +34,15 @@ open class SKTilesetData: SKTiledObject  {
     open var uuid: String = UUID().uuidString     // unique id
     open var type: String!                        // object type.
     open var id: Int = 0                          // tile id
+    
     open var texture: SKTexture!                  // initial tile texture
     open var source: String! = nil                // source image name (part of a collections tileset)
     open var probability: CGFloat = 1.0           // used in Tiled application, might not be useful here.
     open var properties: [String: String] = [:]
     open var ignoreProperties: Bool = false       // ignore custom properties
     open var tileOffset: CGPoint = .zero          // tile offset
+    open var renderQuality: CGFloat = 8           // render quality
+    
     
     // animation frames
     internal var frames: [AnimationFrame] = []    // animation frames
@@ -112,7 +115,7 @@ open class SKTilesetData: SKTiledObject  {
         // if the tileset firstGID is already set, subtract it to get the internal id
         if let tileset = tileset, tileset.firstGID > 0 {
             id = withID - tileset.firstGID
-    }
+        }
         frames.append(AnimationFrame(gid: id, duration: interval, texture: tileTexture))
     }
     
@@ -172,11 +175,13 @@ extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
     
     /// Tile data description.
     public var description: String {
-        guard let tileset = tileset else { return "<Tile ID: \(id) (no tileset)>" }
-        let tileSizeString = "\(Int(tileset.tileSize.width))x\(Int(tileset.tileSize.height))"
-        let dataString = properties.count > 0 ? "Tile ID: \(id) @ \(tileSizeString), " : "Tile ID: \(id) @ \(tileSizeString)"
-        return "<\(dataString)\(propertiesString)>"
+        guard let tileset = tileset else { return "Tile ID: \(id) (no tileset)" }
+        let typeString = (type != nil) ? ", type: \"\(type!)\"" : ""
+        let dataString = properties.count > 0 ? "Tile ID: \(id)\(typeString) @ \(tileset.tileSize.shortDescription), " : "Tile ID: \(id)\(typeString) @ \(tileset.tileSize.shortDescription)"
+        return "\(dataString)\(propertiesString)"
     }
     
-    public var debugDescription: String { return description }
+    public var debugDescription: String {
+        return "<\(description)>"
+    }
 }

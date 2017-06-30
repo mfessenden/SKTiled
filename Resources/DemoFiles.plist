@@ -2,6 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <array>
+	<!--<string>object-rendering</string>-->
 	<string>tetris-dynamics</string>
 	<string>ortho4-16x16</string>
 	<string>isometric-130x66</string>

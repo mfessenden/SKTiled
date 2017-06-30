@@ -59,10 +59,20 @@ open class SKTileset: SKTiledObject {
     /// Returns the last GID in the tileset
     open var lastGID: Int { return tileData.map { $0.id }.max() ?? firstGID }
     
-    /// Returns the difference in tile size
+    
+    /// Returns the difference in tile size vs. map tile size.
     open var mapOffset: CGPoint {
         guard let tilemap = tilemap else { return .zero }
+        // 24 - 8, 16 - 8
         return CGPoint(x: tileSize.width - tilemap.tileSize.width, y: tileSize.height - tilemap.tileSize.height)
+    }
+    
+    /// Scaling value for text objects, etc.
+    open var renderQuality: CGFloat = 8 {
+        didSet {
+            guard renderQuality != oldValue else { return }
+            tileData.forEach { $0.renderQuality = renderQuality }
+        }
     }
     
     /**
@@ -113,10 +123,12 @@ open class SKTileset: SKTiledObject {
      */
     public init?(attributes: [String: String], offset: CGPoint=CGPoint.zero){
         // name, width and height are required
-        guard let setName = attributes["name"] else { return nil }
-        guard let width = attributes["tilewidth"] else { return nil }
-        guard let height = attributes["tileheight"] else { return nil }
-        guard let columns = attributes["columns"] else { return nil }
+        guard let setName = attributes["name"],
+            let width = attributes["tilewidth"],
+            let height = attributes["tileheight"],
+            let columns = attributes["columns"] else {
+                return nil
+        }
         
         // first gid won't be in an external tileset
         if let firstgid = attributes["firstgid"] {
@@ -191,8 +203,10 @@ open class SKTileset: SKTiledObject {
             print("# [SKTileset]: setting transparent color: \(transparentColor!.componentDescription)")
             if let maskedImage = transparentImage(imageNamed: self.source!, masking: transparentColor!.components) {
                 sourceTexture = SKTexture(cgImage: maskedImage)
+                print("# [SKTileset]: using masked image...")
             } else {
                 sourceTexture = SKTexture(imageNamed: self.source!)
+                print("# [SKTileset]: WARNING: cannot render image mask for \"\(sourceFilename)\"")
             }
         } else {
             sourceTexture = SKTexture(imageNamed: self.source!)

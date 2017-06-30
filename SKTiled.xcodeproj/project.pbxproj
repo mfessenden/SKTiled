@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C0F8A621F03414D00D713B9 /* tetris-square-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0F8A611F03414D00D713B9 /* tetris-square-8x8.tsx */; };
+		4C0F8A631F03414D00D713B9 /* tetris-square-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0F8A611F03414D00D713B9 /* tetris-square-8x8.tsx */; };
+		4C0F8A651F03415900D713B9 /* square-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0F8A641F03415900D713B9 /* square-8x8.png */; };
+		4C0F8A661F03415900D713B9 /* square-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0F8A641F03415900D713B9 /* square-8x8.png */; };
+		4C0F8A681F03422900D713B9 /* object-rendering.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0F8A671F03422900D713B9 /* object-rendering.tmx */; };
+		4C0F8A691F03422900D713B9 /* object-rendering.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0F8A671F03422900D713B9 /* object-rendering.tmx */; };
 		4C1774A11D90999C000C0AFD /* DemoFiles.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CA3DA0D1D8AF07C001E165A /* DemoFiles.plist */; };
 		4C1774A21D90999C000C0AFD /* hex1-65x65.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEA35B1D8D04320055C150 /* hex1-65x65.tmx */; };
 		4C1774A41D90999C000C0AFD /* isometric-130x66.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2D91D8B9EA10083DA7B /* isometric-130x66.tmx */; };
@@ -72,6 +78,8 @@
 		4C440BB41DAE913A00DEC9A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C440BAD1DAE913A00DEC9A4 /* LaunchScreen.storyboard */; };
 		4C440BB51DAE913A00DEC9A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C440BAF1DAE913A00DEC9A4 /* Main.storyboard */; };
 		4C440BB61DAE913A00DEC9A4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440BB11DAE913A00DEC9A4 /* GameViewController.swift */; };
+		4C4CA5361F045EC300480359 /* object-rendering-template.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C4CA5351F045EC300480359 /* object-rendering-template.png */; };
+		4C4CA5371F045EC300480359 /* object-rendering-template.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C4CA5351F045EC300480359 /* object-rendering-template.png */; };
 		4C5479FE1DC15AF6008B3473 /* GameWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5479FD1DC15AF6008B3473 /* GameWindowController.swift */; };
 		4C58126A1E255E7300E80BFC /* SKTiled.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5812681E255E7300E80BFC /* SKTiled.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C58126B1E255FAA00E80BFC /* SKTiled.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5812631E255E6400E80BFC /* SKTiled.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -89,6 +97,12 @@
 		4C88E1EA1D8A4EBE00FCCFA3 /* SKTilesetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */; };
 		4C8E42E01DC26FD1002C76DA /* zlib in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E42DF1DC26FD1002C76DA /* zlib */; };
 		4C8E42E11DC26FD1002C76DA /* zlib in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E42DF1DC26FD1002C76DA /* zlib */; };
+		4CA22C7D1F040FF600CD0A72 /* Nintendo-Arcade.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4CA22C7C1F040FF600CD0A72 /* Nintendo-Arcade.ttf */; };
+		4CA22C7E1F040FF600CD0A72 /* Nintendo-Arcade.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4CA22C7C1F040FF600CD0A72 /* Nintendo-Arcade.ttf */; };
+		4CA22C801F042B7600CD0A72 /* test-objects-24x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CA22C7F1F042B7600CD0A72 /* test-objects-24x16.png */; };
+		4CA22C811F042B7600CD0A72 /* test-objects-24x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CA22C7F1F042B7600CD0A72 /* test-objects-24x16.png */; };
+		4CA22C831F042BB200CD0A72 /* test-objects-24x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA22C821F042BB200CD0A72 /* test-objects-24x16.tsx */; };
+		4CA22C841F042BB200CD0A72 /* test-objects-24x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA22C821F042BB200CD0A72 /* test-objects-24x16.tsx */; };
 		4CA3DA0E1D8AF07C001E165A /* DemoFiles.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CA3DA0D1D8AF07C001E165A /* DemoFiles.plist */; };
 		4CAFDA4D1E20326D006F2D83 /* SKTiled+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D71D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift */; };
 		4CAFDA4E1E20326E006F2D83 /* SKTiled+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D71D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift */; };
@@ -131,6 +145,9 @@
 		4C0E59501DC046E700921F75 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		4C0EE1E51DC116DB00A052E4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		4C0EE1E71DC116E300A052E4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
+		4C0F8A611F03414D00D713B9 /* tetris-square-8x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "tetris-square-8x8.tsx"; sourceTree = "<group>"; };
+		4C0F8A641F03415900D713B9 /* square-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "square-8x8.png"; sourceTree = "<group>"; };
+		4C0F8A671F03422900D713B9 /* object-rendering.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "object-rendering.tmx"; sourceTree = "<group>"; };
 		4C17747F1D909740000C0AFD /* SKTiledDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKTiledDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKTiled+Debug.swift"; sourceTree = "<group>"; };
 		4C374A841EFEAD4500AFBE40 /* tetris-layer1-336x240.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tetris-layer1-336x240.png"; sourceTree = "<group>"; };
@@ -157,6 +174,7 @@
 		4C440BB01DAE913A00DEC9A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4C440BB11DAE913A00DEC9A4 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		4C440BB21DAE913A00DEC9A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4C4CA5351F045EC300480359 /* object-rendering-template.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "object-rendering-template.png"; sourceTree = "<group>"; };
 		4C5479FD1DC15AF6008B3473 /* GameWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameWindowController.swift; sourceTree = "<group>"; };
 		4C5812621E255E6400E80BFC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C5812631E255E6400E80BFC /* SKTiled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTiled.h; sourceTree = "<group>"; };
@@ -175,6 +193,9 @@
 		4C88E1DA1D8A4EBE00FCCFA3 /* SKTileset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTileset.swift; sourceTree = "<group>"; };
 		4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTilesetData.swift; sourceTree = "<group>"; };
 		4C8E42DF1DC26FD1002C76DA /* zlib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = zlib; sourceTree = SOURCE_ROOT; };
+		4CA22C7C1F040FF600CD0A72 /* Nintendo-Arcade.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nintendo-Arcade.ttf"; sourceTree = "<group>"; };
+		4CA22C7F1F042B7600CD0A72 /* test-objects-24x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "test-objects-24x16.png"; sourceTree = "<group>"; };
+		4CA22C821F042BB200CD0A72 /* test-objects-24x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "test-objects-24x16.tsx"; sourceTree = "<group>"; };
 		4CA3DA0D1D8AF07C001E165A /* DemoFiles.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DemoFiles.plist; sourceTree = "<group>"; };
 		4CBA61651D8A048200B31FC1 /* SKTiledDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKTiledDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CBA617E1D8A0A3900B31FC1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -308,6 +329,10 @@
 		4C61084D1E9C266F003E982C /* External */ = {
 			isa = PBXGroup;
 			children = (
+				4C4CA5351F045EC300480359 /* object-rendering-template.png */,
+				4C0F8A671F03422900D713B9 /* object-rendering.tmx */,
+				4CA22C821F042BB200CD0A72 /* test-objects-24x16.tsx */,
+				4CA22C7F1F042B7600CD0A72 /* test-objects-24x16.png */,
 			);
 			name = External;
 			sourceTree = "<group>";
@@ -330,6 +355,14 @@
 				4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		4CA22C7B1F040FE700CD0A72 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				4CA22C7C1F040FF600CD0A72 /* Nintendo-Arcade.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 		4CBA615C1D8A048200B31FC1 = {
@@ -361,6 +394,7 @@
 		4CBA617F1D8A0A4600B31FC1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4CA22C7B1F040FE700CD0A72 /* Fonts */,
 				4C61084D1E9C266F003E982C /* External */,
 				4CD5229E1DA624C400D78D81 /* CREDITS */,
 				4CA3DA0D1D8AF07C001E165A /* DemoFiles.plist */,
@@ -399,6 +433,7 @@
 			children = (
 				4C41D2411EFDCEF3000451AC /* tetris-lshape-24x16.tsx */,
 				4C41D2301EFDCCF7000451AC /* tetris-bar-32x8.tsx */,
+				4C0F8A611F03414D00D713B9 /* tetris-square-8x8.tsx */,
 				4C41D2311EFDCCF7000451AC /* tetris-square-16x16.tsx */,
 				4C41D2321EFDCCF7000451AC /* tetris-tshape-24x16.tsx */,
 				4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16.tsx */,
@@ -414,6 +449,7 @@
 				4C374A861EFEAD4500AFBE40 /* tetris-layer3-336x240.png */,
 				4C374A871EFEAD4500AFBE40 /* tetris-layer4-336x240.png */,
 				4C41D22E1EFDCCF7000451AC /* bar-32x8.png */,
+				4C0F8A641F03415900D713B9 /* square-8x8.png */,
 				4C41D22F1EFDCCF7000451AC /* square-16x16.png */,
 				4C41D2401EFDCEF3000451AC /* lshape-24x16.png */,
 				4C41D2331EFDCCF7000451AC /* tshape-24x16.png */,
@@ -592,23 +628,30 @@
 				4C41D2361EFDCCF7000451AC /* square-16x16.png in Resources */,
 				4C374A8C1EFEAD4500AFBE40 /* tetris-layer3-336x240.png in Resources */,
 				4C374A881EFEAD4500AFBE40 /* tetris-layer1-336x240.png in Resources */,
+				4C0F8A651F03415900D713B9 /* square-8x8.png in Resources */,
 				4C440B9C1DAE911000DEC9A4 /* Assets.xcassets in Resources */,
 				4C1774A61D90999C000C0AFD /* roguelike-16x16.tmx in Resources */,
+				4C4CA5361F045EC300480359 /* object-rendering-template.png in Resources */,
 				4C1774A51D90999C000C0AFD /* ortho4-16x16.tmx in Resources */,
 				4C440BA81DAE913000DEC9A4 /* Main.storyboard in Resources */,
+				4C0F8A681F03422900D713B9 /* object-rendering.tmx in Resources */,
 				4C374A8A1EFEAD4500AFBE40 /* tetris-layer2-336x240.png in Resources */,
 				4C374A8E1EFEAD4500AFBE40 /* tetris-layer4-336x240.png in Resources */,
 				4C41D2381EFDCCF7000451AC /* tetris-bar-32x8.tsx in Resources */,
 				4C1774AD1D90999C000C0AFD /* staggered-64x192.png in Resources */,
+				4CA22C801F042B7600CD0A72 /* test-objects-24x16.png in Resources */,
 				4C41D22C1EFDBB91000451AC /* tetris-dynamics.tmx in Resources */,
 				4C1774AA1D90999C000C0AFD /* isometric-130x230.png in Resources */,
+				4CA22C831F042BB200CD0A72 /* test-objects-24x16.tsx in Resources */,
 				4C1774A11D90999C000C0AFD /* DemoFiles.plist in Resources */,
 				4C41D2421EFDCEF3000451AC /* lshape-24x16.png in Resources */,
 				4C41D2341EFDCCF7000451AC /* bar-32x8.png in Resources */,
 				4C41D23E1EFDCCF7000451AC /* tshape-24x16.png in Resources */,
+				4CA22C7D1F040FF600CD0A72 /* Nintendo-Arcade.ttf in Resources */,
 				4C1774AB1D90999C000C0AFD /* ortho4-16x16.png in Resources */,
 				4C1774AE1D90999C000C0AFD /* roguelike-16x16.tsx in Resources */,
 				4C1774A41D90999C000C0AFD /* isometric-130x66.tmx in Resources */,
+				4C0F8A621F03414D00D713B9 /* tetris-square-8x8.tsx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -616,8 +659,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CA22C811F042B7600CD0A72 /* test-objects-24x16.png in Resources */,
 				4C41D2431EFDCEF3000451AC /* lshape-24x16.png in Resources */,
 				4C41D23D1EFDCCF7000451AC /* tetris-tshape-24x16.tsx in Resources */,
+				4C4CA5371F045EC300480359 /* object-rendering-template.png in Resources */,
 				4CFEA35D1D8D04320055C150 /* hex1-65x65.tmx in Resources */,
 				4C41D23F1EFDCCF7000451AC /* tshape-24x16.png in Resources */,
 				4C374A8B1EFEAD4500AFBE40 /* tetris-layer2-336x240.png in Resources */,
@@ -626,12 +671,16 @@
 				4C374A8D1EFEAD4500AFBE40 /* tetris-layer3-336x240.png in Resources */,
 				4C41D2451EFDCEF3000451AC /* tetris-lshape-24x16.tsx in Resources */,
 				4C374A8F1EFEAD4500AFBE40 /* tetris-layer4-336x240.png in Resources */,
+				4C0F8A631F03414D00D713B9 /* tetris-square-8x8.tsx in Resources */,
 				4C374A891EFEAD4500AFBE40 /* tetris-layer1-336x240.png in Resources */,
 				4C8E42E01DC26FD1002C76DA /* zlib in Resources */,
+				4CA22C7E1F040FF600CD0A72 /* Nintendo-Arcade.ttf in Resources */,
 				4C88E18C1D8A1BC400FCCFA3 /* roguelike-16x16.tmx in Resources */,
 				4C440B9B1DAE911000DEC9A4 /* Assets.xcassets in Resources */,
+				4C0F8A661F03415900D713B9 /* square-8x8.png in Resources */,
 				4C41D2391EFDCCF7000451AC /* tetris-bar-32x8.tsx in Resources */,
 				4C41D23B1EFDCCF7000451AC /* tetris-square-16x16.tsx in Resources */,
+				4CA22C841F042BB200CD0A72 /* test-objects-24x16.tsx in Resources */,
 				4C88E1AD1D8A242F00FCCFA3 /* ortho4-16x16.png in Resources */,
 				4C440BB51DAE913A00DEC9A4 /* Main.storyboard in Resources */,
 				4CFEA3591D8D02D20055C150 /* staggered-64x192.png in Resources */,
@@ -643,6 +692,7 @@
 				4CD6D2D51D8B9DE20083DA7B /* roguelike-16x16.tsx in Resources */,
 				4C41D22D1EFDBB91000451AC /* tetris-dynamics.tmx in Resources */,
 				4CD6D2DD1D8B9EA10083DA7B /* isometric-130x66.tmx in Resources */,
+				4C0F8A691F03422900D713B9 /* object-rendering.tmx in Resources */,
 				4C41D2351EFDCCF7000451AC /* bar-32x8.png in Resources */,
 				4C41D2371EFDCCF7000451AC /* square-16x16.png in Resources */,
 			);

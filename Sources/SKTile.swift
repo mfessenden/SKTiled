@@ -26,14 +26,6 @@ public enum PhysicsShape {
 }
 
 
-public protocol TileType: class {
-    var tileSize: CGSize { get }
-    weak var layer: SKTileLayer! { get }
-    var tileOverlap: CGFloat { get set }
-    var maxOverlap: CGFloat { get set }
-    var tileData: SKTilesetData { get }
-}
-
 /**
  Custom sprite type for rendering tile objects. Tile data (including texture) stored in `SKTilesetData` property.
  */
@@ -56,31 +48,50 @@ public class SKTile: SKSpriteNode {
     // dynamics
     open var physicsShape: PhysicsShape = .rectangle    // physics type
     
+    /// Returns the bounding box of the shape.
+    open var boundingRect: CGRect {
+        return CGRect(x: 0, y: 0, width: tileSize.width, height: -tileSize.height)
+    }
+    
     /// Opacity value of the tile
     open var opacity: CGFloat {
-        get { return self.alpha }
-        set { self.alpha = newValue }
+        get {
+            return self.alpha
+        }
+        set {
+            self.alpha = newValue
+        }
     }
     
     /// Visibility value of the tile
     open var visible: Bool {
-        get { return !self.isHidden }
-        set { self.isHidden = !newValue }
+        get {
+            return !self.isHidden
+        }
+        set {
+            self.isHidden = !newValue
+        }
     }
     
     /// Boolean flag to enable/disable texture filtering.
     open var smoothing: Bool {
-        get { return texture?.filteringMode != .nearest }
-        set { texture?.filteringMode = newValue ? SKTextureFilteringMode.linear : SKTextureFilteringMode.nearest }
+        get {
+            return texture?.filteringMode != .nearest
+        }
+        set {
+            texture?.filteringMode = newValue ? SKTextureFilteringMode.linear : SKTextureFilteringMode.nearest
+        }
     }
     
     /// Show/hide the tile's bounding shape.
     open var showBounds: Bool {
-        get { return childNode(withName: "Bounds") != nil ? childNode(withName: "Bounds")!.isHidden : false }
+        get {
+            return childNode(withName: "BOUNDS") != nil ? childNode(withName: "BOUNDS")!.isHidden : false
+        }
         set {
             // draw the tile boundardy shape
             drawBounds()
-            guard let frameShape = childNode(withName: "Bounds") else { return }
+            guard let frameShape = childNode(withName: "BOUNDS") else { return }
             if (highlightDuration > 0) {
                 let fadeAction = SKAction.fadeOut(withDuration: highlightDuration)
                 frameShape.run(fadeAction, completion: {
@@ -116,10 +127,10 @@ public class SKTile: SKSpriteNode {
         guard let tileset = data.tileset else { return nil }
         self.tileData = data
         
-        // TODO: need get acess to get tilemap tilesize here
         self.tileSize = tileset.tileSize
         super.init(texture: data.texture, color: SKColor.clear, size: data.texture.size())
-        orientTile()
+        //orientTile()
+        
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -251,7 +262,7 @@ public class SKTile: SKSpriteNode {
         var framesData: [(texture: SKTexture, duration: TimeInterval)] = []
         for frame in tileData.frames {
             guard let frameTexture = tileset.getTileData(localID: frame.gid)?.texture else {
-                print("Error: Cannot access texture for id: \(frame.gid)")
+                print("ERROR: Cannot access texture for id: \(frame.gid)")
                 return
             }
             frameTexture.filteringMode = .nearest
@@ -311,10 +322,20 @@ public class SKTile: SKSpriteNode {
     /**
      Orient the tile based on the current flip flags.
      */
-    private func orientTile() {
+    // TODO: this was private
+    public func orientTile() {
         // reset orientation
         zRotation = 0
         setScale(1)
+        
+        // 24 - 8, 16 - 8
+        let mapOffset = tileData.tileset.mapOffset
+        let mapTileSize = CGSize(width: tileSize.width - mapOffset.x, height: tileSize.height - mapOffset.y)
+        
+        print(" -> map offset:    \(mapOffset.shortDescription)")
+        print(" -> map tile size: \(mapTileSize.shortDescription)")
+        var offsetX: CGFloat = 0
+        var offsetY: CGFloat = 0
         
         if (tileData.flipDiag) {
             if (tileData.flipHoriz && !tileData.flipVert) {
@@ -324,6 +345,7 @@ public class SKTile: SKSpriteNode {
             if (tileData.flipHoriz && tileData.flipVert) {
                 zRotation = CGFloat(-Double.pi / 2)   // rotate 90deg
                 xScale *= -1                          // flip horizontally
+
             }
 
             if (!tileData.flipHoriz && tileData.flipVert) {
@@ -333,16 +355,23 @@ public class SKTile: SKSpriteNode {
             if (!tileData.flipHoriz && !tileData.flipVert) {
                 zRotation = CGFloat(Double.pi / 2)    // rotate -90deg
                 xScale *= -1                          // flip horizontally
+
             }
         } else {
             if (tileData.flipHoriz) {
                 xScale *= -1
+
             }
             
             if (tileData.flipVert) {
                 yScale *= -1
+
             }
         }
+        
+        let frameSize = frame.size  // 16, 24
+        
+        
     }
 
     /**
@@ -352,10 +381,13 @@ public class SKTile: SKSpriteNode {
      */
     public func getVertices() -> [CGPoint] {
         var vertices: [CGPoint] = []
-        guard let layer = layer else { return vertices }
+        guard let layer = layer else {
+            print("ERROR: tile \(tileData.id) does not have a layer reference.")
+            return vertices
+        }
         
         let tileSizeHalved = CGSize(width: layer.tileSize.halfWidth, height: layer.tileSize.halfHeight)
-        
+
         switch layer.orientation {
         case .orthogonal:
             var origin = CGPoint(x: -tileSizeHalved.width, y: tileSizeHalved.height)
@@ -399,7 +431,7 @@ public class SKTile: SKSpriteNode {
                 
             // pointy
             } else {
-                let r = tileWidth / 2
+                let r = (tileWidth / 2)
                 let h = (tileHeight - sideLengthY) / 2
                 variableSize = tileHeight - (h * 2)
                 hexPoints[0] = CGPoint(x: 0, y: (tileHeight / 2))
@@ -412,7 +444,6 @@ public class SKTile: SKSpriteNode {
             
             vertices = hexPoints.map{ $0.invertedY }
         }
-        
         return vertices
     }
 
@@ -421,13 +452,16 @@ public class SKTile: SKSpriteNode {
      */
     public func drawBounds() {
         
-        childNode(withName: "Anchor")?.removeFromParent()
-        childNode(withName: "Bounds")?.removeFromParent()
+        childNode(withName: "ANCHOR")?.removeFromParent()
+        childNode(withName: "BOUNDS")?.removeFromParent()
         
         let vertices = getVertices()
-        let path = polygonPath(vertices)
+        guard vertices.count > 0 else { return }
+        
+        let renderQuality = tileData.renderQuality
+        let path = polygonPath(vertices.map { $0 * renderQuality })
         let shape = SKShapeNode(path: path)
-        shape.name = "Bounds"
+        shape.name = "BOUNDS"
         let shapeZPos = zPosition + 10
         
         // draw the path
@@ -435,22 +469,29 @@ public class SKTile: SKSpriteNode {
         shape.lineCap = .round
         shape.lineJoin = .miter
         shape.miterLimit = 0
-        shape.lineWidth = 0.5
+        shape.lineWidth = 0.5 * (renderQuality / 2)
         
         shape.strokeColor = highlightColor.withAlphaComponent(0.4)
-        shape.fillColor = highlightColor.withAlphaComponent(0.35)
+        //shape.fillColor = SKColor(hexString: "85d8ff")
+        shape.fillColor = highlightColor.withAlphaComponent(0.15)  // 0.35
         shape.zPosition = shapeZPos
         addChild(shape)
         
-        // anchor
-        let anchorRadius: CGFloat = tileSize.width / 24 > 1.0 ? tileSize.width / 18 > 4.0 ? 4 : tileSize.width / 22 : 1.0
-        let anchor = SKShapeNode(circleOfRadius: (anchorRadius > 8) ? 8 : anchorRadius )
-        anchor.name = "Anchor"
+        // anchor point
+        let tileHeight = (layer != nil) ? layer.tilemap.tileHeight : tileSize.height
+        let tileHeightDivisor = (tileHeight <= 16) ? 8 : 16
+        let anchorRadius: CGFloat = ((tileHeight / 2) / tileHeightDivisor) * renderQuality
+        let anchor = SKShapeNode(circleOfRadius: anchorRadius)
+        
+        anchor.name = "ANCHOR"
         shape.addChild(anchor)
         anchor.fillColor = highlightColor.withAlphaComponent(0.2)
         anchor.strokeColor = SKColor.clear
         anchor.zPosition = shapeZPos + 10
         anchor.isAntialiased = layer.antialiased
+        
+        
+        shape.setScale(1 / renderQuality)
 
     }
 }
@@ -461,20 +502,12 @@ extension SKTile {
     
     /// Tile description.
     override public var description: String {
-        let descString = "\(tileData.description)"
-        let descGroup = descString.components(separatedBy: ",")
-        var resultString = descGroup.first!
-        if let layer = layer {resultString += ", Layer: \"\(layer.name!)\"" }
-        
-        // add the properties
-        if descGroup.count > 1 {
-            for i in 1..<descGroup.count {
-                resultString += ", \(descGroup[i])"
-            }
-        }
-        return resultString
+        let layerDescription = (layer != nil) ? ", Layer: \"\(layer.layerName)\"" : ""
+        return "\(tileData.description)\(layerDescription)"
     }
     
-    override public var debugDescription: String { return description }
+    override public var debugDescription: String {
+        return description
+    }
 }
 
