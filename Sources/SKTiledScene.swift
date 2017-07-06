@@ -199,8 +199,15 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
 
 // default methods
 extension SKTiledSceneDelegate {
-    public func cameraPositionChanged(_ oldPosition: CGPoint) {}
-    public func cameraZoomChanged(_ oldZoom: CGFloat) {}
+    public func cameraPositionChanged(_ oldPosition: CGPoint) {
+        guard let cameraNode = cameraNode else { return }
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": cameraNode.description])
+    }
+    
+    public func cameraZoomChanged(_ oldZoom: CGFloat) {
+        guard let cameraNode = cameraNode else { return }
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": cameraNode.description])
+    }
     public func sceneDoubleTapped() {}
 }
 

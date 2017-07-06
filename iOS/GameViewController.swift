@@ -150,7 +150,6 @@ class GameViewController: UIViewController {
         nextScene.setup(tmxFile: currentFilename)
         nextScene.liveMode = liveMode
         nextScene.cameraNode?.showOverlay = showOverlay
-        updateWindowTitle(withString: currentFilename)
         nextScene.tilemap?.debugDraw = debugMode
     }
     

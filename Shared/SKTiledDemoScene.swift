@@ -10,7 +10,7 @@
 import SpriteKit
 import Foundation
 
-#if os(iOS)
+#if os(iOS) || os(tvOS)
 import UIKit
 #else
 import Cocoa
@@ -154,6 +154,10 @@ public class SKTiledDemoScene: SKTiledScene {
     public func updateDebugInfo(msg: String) {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["debugInfo": msg])
     }
+    
+    public func updateCameraInfo(msg: String) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": msg])
+    }
 
     /**
      Callback to remove coordinates.
@@ -204,6 +208,7 @@ public class SKTiledDemoScene: SKTiledScene {
     
     // MARK: - Callbacks
     override open func didReadMap(_ tilemap: SKTilemap) {
+        // TODO: turn this on for master
         self.physicsWorld.speed = 0
     }
     
@@ -266,17 +271,32 @@ extension SKTiledDemoScene {
             let cameraNode = cameraNode else { return }
         
         cameraNode.mouseDown(with: event)
-    
+        
+        let positionInScene = event.location(in: self)
         let baseLayer = tilemap.baseLayer
         
         // get the position in the baseLayer
         let positionInLayer = baseLayer.mouseLocation(event: event)
         // get the coordinate at that position
         let coord = baseLayer.coordinateAtMouseEvent(event: event)
+        let nodesUnderCursor = nodes(at: positionInScene).filter( { $0 as? TileShape != nil }) as! [TileShape]
+        let currentClicked = nodesUnderCursor.filter( { $0.useLabel == true } )
 
         if (tilemap.isPaused == false) {
             // highlight the current coordinate
-            addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y))
+            if currentClicked.count == 0 {
+                addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y))
+            } else {
+                for tile in currentClicked {
+                    // remove the node asyncronously
+                    self.cleanupQueue.async {
+                        let fadeAction = SKAction.fadeAlpha(to: 0, duration: 0.1)
+                        tile.run(fadeAction, completion: {
+                            tile.removeFromParent()
+                        })
+                    }
+                }
+            }
         }
 
         // update the tile information label
@@ -390,6 +410,11 @@ extension SKTiledDemoScene {
             
             let trackingArea = NSTrackingArea(rect: view.frame, options: options, owner: self, userInfo: nil)
             view.addTrackingArea(trackingArea)
+            
+            
+            if let cameraNode = cameraNode {
+                updateCameraInfo(msg: cameraNode.description)
+            }
         }
     }
 }

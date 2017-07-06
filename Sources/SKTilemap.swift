@@ -1190,7 +1190,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      - parameter point: `CGPoint` scene point.
      - returns: `CGPoint` converted point in layer coordinate system.
      */
-    #if os(iOS)
+    #if os(iOS) || os(tvOS)
     open func touchLocation(_ touch: UITouch) -> CGPoint {
         return baseLayer.touchLocation(touch)
     }

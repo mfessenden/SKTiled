@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 import GameplayKit
-#if os(iOS)
+#if os(iOS) || os(tvOS)
 import UIKit
 #else
 import Cocoa
@@ -171,7 +171,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         let sprite = SKSpriteNode(color: SKColor.clear, size: self.tilemap.sizeInPoints)
         sprite.anchorPoint = CGPoint.zero
         
-        #if os(iOS)
+        #if os(iOS) || os(tvOS)
         sprite.position.y = -self.tilemap.sizeInPoints.height
         #else
         sprite.yScale *= -1
@@ -375,7 +375,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     
     // MARK: - Event Handling
     
-    #if os(iOS)
+    #if os(iOS) || os(tvOS)
     /**
      Returns a converted touch location.
      
@@ -1139,7 +1139,7 @@ open class SKTileLayer: TiledLayerObject {
      - parameter data: `[Int]` tile data.
      - returns: `Bool` data was successfully added.
      */
-    open func setLayerData(_ data: [UInt32]) -> Bool {
+    open func setLayerData(_ data: [UInt32], debug: Bool=false) -> Bool {
         if !(data.count == size.count) {
             print("ERROR: invalid data size for layer \"\(self.layerName)\": \(data.count), expected: \(size.count)")
             return false
@@ -1156,7 +1156,7 @@ open class SKTileLayer: TiledLayerObject {
             let y: Int = index / Int(self.size.width)
             
             let coord = CGPoint(x: CGFloat(x), y: CGFloat(y))
-            let tile = self.buildTileAt(coord: coord, id: gid)
+            let tile = self.buildTileAt(coord: coord, id: gid, debug: debug)
             
             if (tile == nil) {
                 errorCount += 1
@@ -1303,7 +1303,7 @@ open class SKTileLayer: TiledLayerObject {
      - parameter gid: `Int` tile id.
      - returns: `SKTile?` tile.
      */
-    fileprivate func buildTileAt(coord: CGPoint, id: UInt32, tileType: String? = nil) -> SKTile? {
+    fileprivate func buildTileAt(coord: CGPoint, id: UInt32, tileType: String? = nil, debug: Bool=false) -> SKTile? {
         
         // get tile attributes from the current id
         let tileAttrs = flippedTileFlags(id: id)
@@ -1342,13 +1342,14 @@ open class SKTileLayer: TiledLayerObject {
                 // set the position
                 tile.position = tilePosition
                 
-                tile.orientTile()
+                tile.orientTile(debug: debug)
                 
 
                 addChild(tile)
                 let frameSize = tile.frame.size
                 
-                print("\n  -> flip: \(flipDesc) ~ \(tileAttrs)")
+                
+
                 
                 // get the y-anchor point (half tile height / tileset height) to align the sprite properly to the grid
                 //var tileAlignmentX = tileWidthHalf / tileData.tileset.tileSize.width    // 4 / 24 = 0.166
@@ -1364,13 +1365,22 @@ open class SKTileLayer: TiledLayerObject {
                 tile.anchorPoint.x = tileAlignmentX
                 tile.anchorPoint.y = tileAlignmentY
                 
-                print("  -> frame:   \(frameSize)")
-                print("  -> align:   \(tileAlignmentX), \(tileAlignmentY)")
                 
-                // rot  90 = -1.57079637050629
-                // rot -90 =  1.57079637050629
-                print("  -> anchor:   \(tile.anchorPoint), \(tile.zRotation)")
-                print("  -> position: \(tilePosition)")
+                if (debug == true) {
+                    
+                    
+                    print("\n  -> flip: \(flipDesc) ~ \(tileAttrs)")
+                    print("  -> frame:   \(frameSize)")
+                    print("  -> align:   \(tileAlignmentX), \(tileAlignmentY)")
+                    
+                    // rot  90 = -1.57079637050629
+                    // rot -90 =  1.57079637050629
+                    print("  -> anchor:   \(tile.anchorPoint), \(tile.zRotation)")
+                    print("  -> position: \(tilePosition)")
+                    
+                    
+                }
+
 
                 
                 // DEBUG

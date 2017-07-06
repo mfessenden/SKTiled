@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 import zlib
-#if os(iOS)
+#if os(iOS) || os(tvOS)
 import UIKit
 #else
 import Cocoa
@@ -19,7 +19,7 @@ import Cocoa
 // MARK: - Functions
 
 
-#if os(iOS)
+#if os(iOS) || os(tvOS)
 /**
  Returns an image of the given size.
  
@@ -421,7 +421,11 @@ public extension CGRect {
      - returns: `String` display string.
      */
     public func roundTo(_ decimals: Int=1) -> String {
-        return "origin: \(origin.x.roundTo()), \(origin.y.roundTo()), size: \(size.width.roundTo())x\(size.height.roundTo())"
+        return "origin: \(Int(origin.x)), \(Int(origin.y)), size: \(Int(size.width)) x \(Int(size.height))"
+    }
+    
+    public var shortDescription: String {
+        return "x: \(Int(minX)), y: \(Int(minY)), w: \(width.roundTo()), h: \(height.roundTo())"
     }
 }
 
@@ -1040,6 +1044,27 @@ public func lerp(start: CGVector, end: CGVector, t: CGFloat) -> CGVector {
     return start + (end - start) * t
 }
 
+// MARK: CGRect
+
+public func + (lhs: CGRect, rhs: CGFloat) -> CGRect {
+    return CGRect(x: lhs.minX, y: lhs.minY, width: lhs.width + rhs, height: lhs.height + rhs)
+}
+
+
+public func - (lhs: CGRect, rhs: CGFloat) -> CGRect {
+    return CGRect(x: lhs.minX, y: lhs.minY, width: lhs.width - rhs, height: lhs.height - rhs)
+}
+
+
+public func * (lhs: CGRect, rhs: CGFloat) -> CGRect {
+    return CGRect(x: lhs.minX, y: lhs.minY, width: lhs.width * rhs, height: lhs.height * rhs)
+}
+
+
+public func / (lhs: CGRect, rhs: CGFloat) -> CGRect {
+    return CGRect(x: lhs.minX, y: lhs.minY, width: lhs.width / rhs, height: lhs.height / rhs)
+}
+
 
 // MARK: - Helper Functions
 
@@ -1068,7 +1093,7 @@ public func normalize(_ value: CGFloat, _ minimum: CGFloat, _ maximum: CGFloat) 
 internal func drawGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineScale: CGFloat=1) -> CGImage {
     // get the ui scale value for the device
     let uiScale: CGFloat
-    #if os(iOS)
+    #if os(iOS) || os(tvOS)
     uiScale = UIScreen.main.scale
     #else
     uiScale = NSScreen.main()!.backingScaleFactor

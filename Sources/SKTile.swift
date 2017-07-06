@@ -130,7 +130,6 @@ public class SKTile: SKSpriteNode {
         self.tileSize = tileset.tileSize
         super.init(texture: data.texture, color: SKColor.clear, size: data.texture.size())
         //orientTile()
-        
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -323,7 +322,7 @@ public class SKTile: SKSpriteNode {
      Orient the tile based on the current flip flags.
      */
     // TODO: this was private
-    public func orientTile() {
+    public func orientTile(debug: Bool=false) {
         // reset orientation
         zRotation = 0
         setScale(1)
@@ -332,8 +331,12 @@ public class SKTile: SKSpriteNode {
         let mapOffset = tileData.tileset.mapOffset
         let mapTileSize = CGSize(width: tileSize.width - mapOffset.x, height: tileSize.height - mapOffset.y)
         
-        print(" -> map offset:    \(mapOffset.shortDescription)")
-        print(" -> map tile size: \(mapTileSize.shortDescription)")
+        
+        if (debug == true) {
+            print(" -> map offset:    \(mapOffset.shortDescription)")
+            print(" -> map tile size: \(mapTileSize.shortDescription)")
+        }
+        
         var offsetX: CGFloat = 0
         var offsetY: CGFloat = 0
         

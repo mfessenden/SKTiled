@@ -924,8 +924,9 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         // look for last element to add properties to
         if elementName == "properties" {
             
-            /* TILEMAP */
+            // tilemap properties
             if let tilemap = lastElement as? SKTilemap {
+                //print("     ↳ tilemap")
                 for (key, value) in properties {
                     tilemap.properties[key] = value
                 }
@@ -933,7 +934,9 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 tilemap.parseProperties(completion: nil)
             }
             
+            // layer properties
             if let layer = lastElement as? TiledLayerObject {
+                //print("     ↳ layer: \"\(layer.layerName)\"")
                 if (currentID == nil){
                     for (key, value) in properties {
                         layer.properties[key] = value
@@ -943,7 +946,9 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 layer.parseProperties(completion: nil)
             }
             
+            // tileset properties
             if let tileset = lastElement as? SKTileset {
+                //print("     ↳ tileset: \"\(tileset.name)\"")
                 if (currentID == nil){
                     tileset.properties = properties
                     tileset.parseProperties(completion: nil)
@@ -953,6 +958,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     let tileID = tileset.firstGID + currentID!
                     // TODO: check global
                     if let tileData = tileset.getTileData(globalID: tileID) {
+                        //print("     ↳ data: \"\(tileData.id)\"")
                         for (key, value) in properties {
                             tileData.properties[key] = value
                         }
@@ -1053,7 +1059,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             if let objectsgroup = lastElement as? SKObjectGroup {
                 if (currentID != nil) {
                     if let lastObject = objectsgroup.getObject(withID: currentID!) {
-
+                        
                         for (key, value) in properties {
                             lastObject.properties[key] = value
                         }

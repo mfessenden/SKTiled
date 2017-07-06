@@ -39,7 +39,7 @@ internal class TiledLayerGrid: SKSpriteNode {
         anchorPoint = CGPoint.zero
         isHidden = true
         
-        #if os(iOS)
+        #if os(iOS) || os(tvOS)
         position.y = -layer.sizeInPoints.height
         #endif
     }
@@ -62,7 +62,7 @@ internal class TiledLayerGrid: SKSpriteNode {
                 // scale factor for texture
                 let uiScale: CGFloat
                 
-                #if os(iOS)
+                #if os(iOS) || os(tvOS)
                 uiScale = UIScreen.main.scale
                 #else
                 uiScale = NSScreen.main()!.backingScaleFactor
@@ -376,6 +376,20 @@ extension SKTiledDemoScene {
                 return
         }
         
+        // 'clear' clears TileShapes
+        if eventKey == 0x47 {
+            
+            var tiles: [TileShape] = []
+            self.enumerateChildNodes(withName: "//*") {
+                node, stop in
+                
+                if let tile = node as? TileShape {
+                    tile.removeFromParent()
+                }
+            }
+        }
+        
+        
         // 'd' shows/hides debug view
         if eventKey == 0x02 {
             tilemap.debugDraw = !tilemap.debugDraw
@@ -412,16 +426,6 @@ extension SKTiledDemoScene {
             self.loadPreviousScene()
         }
         
-        // 'e' toggles edit mode
-        if eventKey == 0x0E {
-            editMode = !editMode
-        }
-        
-        // 'l' toggles live mode
-        if eventKey == 0x25 {
-            liveMode = !liveMode
-        }
-        
         // '1' zooms to 100%
         if eventKey == 0x12 || eventKey == 0x53 {
             cameraNode.resetCamera()
@@ -431,8 +435,7 @@ extension SKTiledDemoScene {
         if eventKey == 0x0 || eventKey == 0x3 {
             cameraNode.fitToView(newSize: view.bounds.size)
         }
-        
-        
+    
         
         // 'j' fades the layers in succession
         if eventKey == 0x26 {
@@ -544,3 +547,41 @@ public func flipFlagsDebug(hflip: Bool, vflip: Bool, dflip: Bool) -> String {
     return result
     
 }
+
+
+public extension SignedInteger {
+    public var hexString: String { return "0x" + String(self, radix: 16) }
+    public var binaryString: String { return "0b" + String(self, radix: 2) }
+}
+
+
+public extension UnsignedInteger {
+    public var hexString: String { return "0x" + String(self, radix: 16) }
+    public var binaryString: String { return "0b" + String(self, radix: 2) }
+}
+
+
+#if os(iOS) || os(tvOS)
+public extension UIFont {
+    // print all fonts
+    public static func allFontNames() {
+        for family: String in UIFont.familyNames {
+            print("\(family)")
+            for names: String in UIFont.fontNames(forFamilyName: family){
+                print("== \(names)")
+            }
+        }
+    }
+}
+#else
+public extension NSFont {
+    public static func allFontNames() {
+        let fm = NSFontManager.shared()
+        for family in fm.availableFonts {
+            print("\(family)")
+        }
+    }
+}
+#endif
+
+

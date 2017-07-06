@@ -17,6 +17,7 @@ class GameViewController: NSViewController {
     @IBOutlet weak var tileInfoLabel: NSTextField!
     @IBOutlet weak var propertiesInfoLabel: NSTextField!
     @IBOutlet weak var debugInfoLabel: NSTextField!
+    @IBOutlet weak var cameraInfoLabel: NSTextField!
     
     @IBOutlet weak var cursorTracker: NSTextField!
     
@@ -79,6 +80,7 @@ class GameViewController: NSViewController {
         mapInfoLabel.stringValue = "Map: "
         tileInfoLabel.stringValue = "Tile: "
         propertiesInfoLabel.stringValue = "Properties:"
+        cameraInfoLabel.stringValue = "~"
         
         // text shadow
         let shadow = NSShadow()
@@ -90,6 +92,7 @@ class GameViewController: NSViewController {
         tileInfoLabel.shadow = shadow
         propertiesInfoLabel.shadow = shadow
         debugInfoLabel.shadow = shadow
+        cameraInfoLabel.shadow = shadow
     }
     
     /**
@@ -346,6 +349,10 @@ class GameViewController: NSViewController {
         
         if let debugInfo = notification.userInfo!["debugInfo"] {
             debugInfoLabel.stringValue = debugInfo as! String
+        }
+        
+        if let cameraInfo = notification.userInfo!["cameraInfo"] {
+            cameraInfoLabel.stringValue = cameraInfo as! String
         }
     }
 }
