@@ -50,6 +50,7 @@ internal enum LabelPosition {
 }
 
 
+
 /**
  Text object attributes.
  */
@@ -105,9 +106,11 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     open var gid: Int!                                      // tile gid
     open var type: String!                                  // object type
     
+    internal var alignment: Alignment = .bottomLeft         // object alignment
     internal var objectType: SKObjectType = .rectangle      // shape type
     internal var points: [CGPoint] = []                     // points that describe the object's shape
     internal var tile: SKTile? = nil                        // optional tile
+    
     
     open var size: CGSize = CGSize.zero
     open var properties: [String: String] = [:]             // custom properties
@@ -121,6 +124,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                 renderQuality <= 16 else {
                 return
             }
+            
             textAttributes?.renderQuality = renderQuality
             drawObject()
         }
@@ -170,7 +174,6 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         }
         return boundingRect.center
     }
-
     
     /// Signifies that this object is a text or tile object.
     open var isRenderableType: Bool {
@@ -369,12 +372,13 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         
         // draw the first point of poly objects
         if (isPolyType == true) {
-                
+            
+            childNode(withName: "FIRST_POINT")?.removeFromParent()
+            
             if (self.gid == nil) {
-                childNode(withName: "FIRST_POINT")?.removeFromParent()
-                
+ 
                 // the first-point radius should be larger for thinner (>1.0) line widths
-                let anchorRadius = (self.lineWidth > 1) ? self.lineWidth * 2 : self.lineWidth * 3.5
+                let anchorRadius = self.lineWidth * 1.2
                 let anchor = SKShapeNode(circleOfRadius: anchorRadius)
                 anchor.name = "FIRST_POINT"
                 addChild(anchor)

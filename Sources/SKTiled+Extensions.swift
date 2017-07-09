@@ -499,6 +499,23 @@ internal extension SKNode {
             run(action, withKey: withKey)
         }
     }
+    
+    internal var drawAnchor: Bool {
+        get {
+            return childNode(withName: "DRAW_ANCHOR") != nil
+        } set {
+            // remove the current node
+            childNode(withName: "DRAW_ANCHOR")?.removeFromParent()
+            if (newValue == true) {
+                let anchor = SKShapeNode(circleOfRadius: 0.75)
+                anchor.name = "DRAW_ANCHOR"
+                anchor.strokeColor = .clear
+                anchor.fillColor = .red
+                anchor.zPosition = zPosition * 4
+                addChild(anchor)
+            }
+        }
+    }
 }
 
 
@@ -1111,7 +1128,6 @@ internal func drawGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineSca
     return imageOfSize(sizeInPoints, scale: uiScale) { context, bounds, scale in
                 
         let innerColor = layer.gridColor
-        
         // line width should be at least 1 for larger tile sizes
         let lineWidth: CGFloat = defaultLineWidth
         context.setLineWidth(lineWidth)

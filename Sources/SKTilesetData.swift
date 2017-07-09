@@ -33,7 +33,7 @@ open class SKTilesetData: SKTiledObject  {
     weak open var tileset: SKTileset!             // reference to parent tileset
     open var uuid: String = UUID().uuidString     // unique id
     open var type: String!                        // object type.
-    open var id: Int = 0                          // tile id
+    open var id: Int = 0                          // tile id (local)
     
     open var texture: SKTexture!                  // initial tile texture
     open var source: String! = nil                // source image name (part of a collections tileset)
@@ -60,9 +60,16 @@ open class SKTilesetData: SKTiledObject  {
     // collision objects
     open var collisions: [SKTileObject] = []
     
+    
     open var localID: Int {                       // return the local id for this tile
         guard let tileset = tileset else { return id }
         return tileset.getLocalID(forGlobalID: id)
+    }
+    
+    // return the global id for this tile
+    open var globalID: Int {
+        guard let tileset = tileset else { return id }
+        return (localID == id) ? (tileset.firstGID + id) : id
     }
     
     // MARK: - Init
@@ -126,7 +133,7 @@ open class SKTilesetData: SKTiledObject  {
      - returns: `AnimationFrame?` animation frame (if it exists).
      */
     func removeFrame(at index: Int) -> AnimationFrame? {
-            return frames.remove(at: index)
+        return frames.remove(at: index)
     }
     
     /**
@@ -177,7 +184,7 @@ extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
     public var description: String {
         guard let tileset = tileset else { return "Tile ID: \(id) (no tileset)" }
         let typeString = (type != nil) ? ", type: \"\(type!)\"" : ""
-        let dataString = properties.count > 0 ? "Tile ID: \(id)\(typeString) @ \(tileset.tileSize.shortDescription), " : "Tile ID: \(id)\(typeString) @ \(tileset.tileSize.shortDescription)"
+        let dataString = properties.count > 0 ? "Tile ID: \(globalID)\(typeString) @ \(tileset.tileSize.shortDescription), " : "Tile ID: \(globalID)\(typeString) @ \(tileset.tileSize.shortDescription)"
         return "\(dataString)\(propertiesString)"
     }
     

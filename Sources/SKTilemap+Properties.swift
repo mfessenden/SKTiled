@@ -15,9 +15,9 @@ public extension SKTilemap {
      Parse properties from the Tiled TMX file.
      */
     public func parseProperties(completion: (() -> ())?) {
-        if (ignoreProperties == true) { return }
         
-         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
+        if (ignoreProperties == true) { return }
+        if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
         
         for (attr, value) in properties {
             
@@ -34,8 +34,13 @@ public extension SKTilemap {
             
             if (lattr == "gridcolor") {
                 gridColor = SKColor(hexString: value)
-                getLayers().forEach {$0.gridColor = gridColor}
+                getLayers().forEach { $0.gridColor = gridColor }
+                
                 frameColor = gridColor
+                
+                // set base layer colors
+                baseLayer.gridColor = gridColor
+                baseLayer.frameColor = frameColor
             }
             
             if (lattr == "gridopacity") {
@@ -162,11 +167,13 @@ public extension TiledLayerObject {
      Parse the layer's properties value.
      */
     public func parseProperties(completion: (() -> ())?) {
+
         if (ignoreProperties == true) { return }
-        
-         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
+        if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
         
         for (attr, value) in properties {
+            
+            print(" -> setting property: \"\(attr)\" for layer: \"\(layerName)\"")
             
             let lattr = attr.lowercased()
             
@@ -280,8 +287,7 @@ public extension SKTileObject {
      */
     public func parseProperties(completion: (() -> ())?) {
         if (ignoreProperties == true) { return }
-        
-         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
+        if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
         
         for (attr, value) in properties {
             
@@ -318,7 +324,7 @@ public extension SKTilesetData {
      */
     public func parseProperties(completion: (() -> ())?) {
         if (ignoreProperties == true) { return }
-         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
+        if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
         if completion != nil { completion!() }
     }
 }

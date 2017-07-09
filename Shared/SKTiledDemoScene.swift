@@ -26,12 +26,30 @@ public class SKTiledDemoScene: SKTiledScene {
     private let labelFontSize: CGFloat = 11
     
     internal var selected: [TiledLayerObject] = []
-    internal var coordinate: CGPoint? = nil
+    
     internal var editMode: Bool = false
     internal var liveMode: Bool = true                     // highlight tiles under the mouse
     
-    internal var blocked: Bool = true
+    internal var blocked: Bool = true                      // lock the scene for cleanup
     internal let cleanupQueue = DispatchQueue(label: "com.sktiled.cleanup", qos: .userInteractive)
+    
+    internal var coordinate: CGPoint = .zero {
+        didSet {
+            guard oldValue != coordinate else { return }
+            
+            
+            self.enumerateChildNodes(withName: "//*") {
+                node, stop in
+                
+                if let tile = node as? TileShape {
+                    if (tile.coord == self.coordinate) && (tile.useLabel == true) {
+                        tile.detonate()
+                    }
+                }
+            }
+            
+        }
+    }
     
     override public func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -45,7 +63,7 @@ public class SKTiledDemoScene: SKTiledScene {
         mouseTracker.zPosition = 10000
         #endif
         
-        NotificationCenter.default.addObserver(self, selector: #selector(removeCoordinate), name: NSNotification.Name(rawValue: "removeCoordinate"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateCoordinate), name: NSNotification.Name(rawValue: "updateCoordinate"), object: nil)
     }
 
     /**
@@ -75,7 +93,7 @@ public class SKTiledDemoScene: SKTiledScene {
     }
     
     /**
-     Add a tile shape to the world at the given coordinate.
+     Add a temporary tile shape to the world at the given coordinate.
      
      - parameter x:         `Int` x-coordinate.
      - parameter y:         `Int` y-coordinate.
@@ -102,7 +120,7 @@ public class SKTiledDemoScene: SKTiledScene {
             let tilePosition = layer.pointForCoordinate(x, y)
             tile.position = worldNode.convert(tilePosition, from: layer)
             worldNode.addChild(tile)
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "removeCoordinate"), object: nil, userInfo: ["x": x, "y": y])
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "updateCoordinate"), object: nil, userInfo: ["x": x, "y": y])
         }
     }
     
@@ -113,7 +131,7 @@ public class SKTiledDemoScene: SKTiledScene {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "loadNextScene"), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "loadPreviousScene"), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "updateDebugLabels"), object: nil)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "removeCoordinate"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "updateCoordinate"), object: nil)
         removeAllActions()
         removeAllChildren()
     }
@@ -162,11 +180,13 @@ public class SKTiledDemoScene: SKTiledScene {
     /**
      Callback to remove coordinates.
      */
-    public func removeCoordinate(notification: Notification) {
+    public func updateCoordinate(notification: Notification) {
+        let tempCoord = CGPoint(x: notification.userInfo!["x"] as! Int,
+                                y: notification.userInfo!["y"] as! Int)
         
+        guard tempCoord != coordinate else { return }
         // get the current coordinate
-        coordinate = CGPoint(x: notification.userInfo!["x"] as! Int,
-                            y: notification.userInfo!["y"] as! Int)
+        coordinate = tempCoord
     }
     
     override public func didChangeSize(_ oldSize: CGSize) {
@@ -323,14 +343,7 @@ extension SKTiledDemoScene {
         guard let tilemap = tilemap else { return }
 
         let baseLayer = tilemap.baseLayer
-        
-        // TODO: Cleanup Here
-        //let positionInWindow = event.locationInWindow
-        //let positionInView = convertPoint(toView: positionInScene)
-        //let worldPosition = convert(positionInScene, to: worldNode!)
-        
 
-        
         // get the position relative as drawn by the
         let positionInScene = event.location(in: self)
         let positionInLayer = baseLayer.mouseLocation(event: event)
@@ -361,19 +374,12 @@ extension SKTiledDemoScene {
         let coordDescription = "\(Int(coord.x)), \(Int(coord.y))"
         updateTileInfo(msg: "Coord: \(coordDescription), \(positionInLayer.roundTo())")
         updatePropertiesInfo(msg: propertiesInfoString)
-        /*
-        if let tileshapes = nodes(at: positionInScene).filter( { $0 as? TileShape != nil }) as? [TileShape] {
-            if (coord != coordinate) {
-                // remove any blocks that are perm
-                tileshapes.forEach { tile in
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                        if tile.useLabel == true {
-                            tile.useLabel = false
-                        }
-                    }
-                }
-            }
-        }*/
+        
+        
+        let nodesUnderCursor = nodes(at: positionInScene).filter( { $0 as? TileShape != nil }) as! [TileShape]
+        let currentClicked = nodesUnderCursor.filter( { $0.clickCount == 0 } )
+        //print(currentClicked)
+        //currentClicked.forEach{ $0.clickCount += 1}
     }
 
     override open func mouseDragged(with event: NSEvent) {

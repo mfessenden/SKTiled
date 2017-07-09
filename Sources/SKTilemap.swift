@@ -82,6 +82,23 @@ internal enum LayerPosition {
     case topRight
 }
 
+
+/**
+ Object alignment.
+ */
+public enum Alignment: Int {
+    case topLeft
+    case top
+    case topRight
+    case left
+    case center
+    case right
+    case bottomLeft
+    case bottom
+    case bottomRight
+}
+
+
 /**
  Hexagonal stagger axis.
  
@@ -1292,18 +1309,6 @@ extension LayerPosition: CustomStringConvertible {
 }
 
 
-extension StaggerAxis {
-    internal var hextype: String {
-        switch self {
-        case .x:
-            return "flat"
-        default:
-            return "pointy"
-        }
-    }
-}
-
-
 extension SKTilemap {
     
     /// Return a string representing the map name.
@@ -1443,9 +1448,6 @@ extension SKTilemap {
     
     override open var description: String {
         var sizedesc = "\(sizeInPoints.shortDescription): (\(size.shortDescription) @ \(tileSize.shortDescription))"
-        if (orientation == .hexagonal) {
-            sizedesc += " hex: \(staggeraxis.hextype), axis: \(staggeraxis), index: \(staggerindex)"
-        }
         return "Map: \(mapName), \(sizedesc), \(tileCount) tiles"
     }
     
@@ -1480,11 +1482,30 @@ extension SKTilemap {
         } set {
             guard newValue != baseLayer.debugDraw else { return }
             baseLayer.debugDraw = newValue
+            
             // show bounding box for renderable objects
             for objectLayer in objectGroups(recursive: true) {
                 (objectLayer.getObjects().filter { $0.isRenderableType == true }.forEach { $0.drawObject(debug: newValue) })
+                (objectLayer.getObjects().forEach { $0.drawAnchor = newValue})
+            }
+            
+            // show bounding box for renderable objects
+            for tileLayer in tileLayers(recursive: true) {
+                (tileLayer.getTiles().forEach { $0.drawAnchor = true })
             }
         }
+    }
+    
+    /// Returns an array of tile and objects.
+    open func renderableObjects() -> [SKNode] {
+        var result: [SKNode] = []
+        enumerateChildNodes(withName: "//*") {
+            node, stop in
+            if (node as? SKTile != nil) || (node as? SKTileObject != nil) {
+                result.append(node)
+            }
+        }
+        return result
     }
     
     /**

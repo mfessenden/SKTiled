@@ -74,7 +74,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     fileprivate var tilesets: [String: SKTileset] = [:]             // stash external tilesets by FILE name (ie: ["kong-50x32.tsx": <SKTileset>])
     fileprivate var tilesetImagesAdded: Int = 0                     // for reporting the number of images added to a collections tileset
     
-    fileprivate var loggingLevel: LoggingLevel = .warning
+    fileprivate var loggingLevel: LoggingLevel = .debug             // normally warning
     fileprivate var activeElement: String?                          // current object
     
     fileprivate var lastElement: AnyObject?                         // last element created
@@ -140,7 +140,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         parsingMode = .tmx
         
         guard let targetFile = getBundledFile(named: filename) else {
-            print("[SKTilemapParser]: \(parsingMode) parser unable to locate file: \"\(filename)\"")
+            print("# [SKTilemapParser]: \(parsingMode) parser unable to locate file: \"\(filename)\"")
             return nil
         }
         
@@ -197,7 +197,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 }
                 
                 if loggingLevel.rawValue <= 1 {
-                    print("[SKTilemapParser]: \(parsingMode) parser: reading \(filetype): \"\(currentFileName!)\"")
+                    print("# [SKTilemapParser]: \(parsingMode) parser: reading \(filetype): \"\(currentFileName!)\"")
                 }
                 
                 
@@ -216,7 +216,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     let errorCol = parser.columnNumber
                     
                     let errorDescription = parseError!.localizedDescription
-                    print("[SKTilemapParser]: \(parsingMode) parser: \(errorDescription) at line:\(errorLine), column: \(errorCol)")
+                    print("# [SKTilemapParser]: \(parsingMode) parser: \(errorDescription) at line:\(errorLine), column: \(errorCol)")
                 }
             }
         }
@@ -296,7 +296,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     filetype = ftype.description
                 }
                 if loggingLevel.rawValue <= 1 {
-                    print("[SKTilemapParser]: \(parsingMode) parser: reading \(filetype): \"\(currentFileName!)\"")
+                    print("# [SKTilemapParser]: \(parsingMode) parser: reading \(filetype): \"\(currentFileName!)\"")
                 }
                 
                 let data: Data = try! Data(contentsOf: URL(fileURLWithPath: path))
@@ -314,7 +314,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     let errorCol = parser.columnNumber
                     
                     let errorDescription = parseError!.localizedDescription
-                    print("[SKTilemapParser]: \(parsingMode) parser: \(errorDescription) at line:\(errorLine), column: \(errorCol)")
+                    print("# [SKTilemapParser]: \(parsingMode) parser: \(errorDescription) at line:\(errorLine), column: \(errorCol)")
                 }
             }
         }
@@ -341,6 +341,8 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
      */
     fileprivate func didBeginRendering(_ tilemap: SKTilemap, duration: TimeInterval=0.025) {
         
+        let debugLevel: Bool = (loggingLevel.rawValue < 1) ? true : false
+        
         // assign each layer a work item
         for layer in tilemap.getLayers(recursive: true) {
             let renderItem = DispatchWorkItem() {
@@ -356,13 +358,13 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 if let tileLayer = layer as? SKTileLayer {
                     if let tileData = self.data[tileLayer.uuid] {
                         // add the layer data
-                        let _ = tileLayer.setLayerData(tileData)
+                        let _ = tileLayer.setLayerData(tileData, debug: debugLevel)
                     }
                     
                     // report errors
                     if tileLayer.gidErrors.count > 0 {
                         let gidErrorString : String = tileLayer.gidErrors.reduce("", { "\($0)" == "" ? "\($1)" : "\($0)" + ", " + "\($1)" })
-                        print("[SKTilemapParser]: WARNING: layer \"\(tileLayer.name!)\": the following gids could not be found: \(gidErrorString)")
+                        print("# [SKTilemapParser]: WARNING: layer \"\(tileLayer.name!)\": the following gids could not be found: \(gidErrorString)")
                     }
                 }
             }
@@ -686,7 +688,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     let tileData = tileset.addTilesetTile(currentID, source: imageSource)
                     tilesetImagesAdded += 1
                     if (tileData == nil) {
-                        print("[SKTilemapParser]: \(parsingMode) parser: Warning: tile id \(currentID) is invalid.")
+                        print("# [SKTilemapParser]: \(parsingMode) parser: Warning: tile id \(currentID) is invalid.")
                     }
                 } else {
                     // add the tileset spritesheet image
@@ -745,7 +747,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             // adding a group to object layer
             if let objectGroup = lastElement as? SKObjectGroup {
                 guard let tileObject = SKTileObject(attributes: attributeDict) else {
-                    print("[SKTilemapParser]: \(parsingMode) parser: Error creating object.")
+                    print("# [SKTilemapParser]: \(parsingMode) parser: Error creating object.")
                     parser.abortParsing()
                     return
                 }
@@ -822,7 +824,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         // animated tiles
         if (elementName == "frame") {
             guard let currentID = currentID else {
-                print("[SKTilemapParser]: \(parsingMode) parser: cannot assign frame animation information without tile id")
+                print("# [SKTilemapParser]: \(parsingMode) parser: cannot assign frame animation information without tile id")
                 parser.abortParsing()
                 return
             }
@@ -978,7 +980,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         // look for last element to be a layer
         if (elementName == "data") {
             guard let tileLayer = lastElement as? SKTileLayer else {
-                print("[SKTilemapParser]: \(parsingMode) parser: cannot find layer to add data.")
+                print("# [SKTilemapParser]: \(parsingMode) parser: cannot find layer to add data.")
                 parser.abortParsing()
                 return
             }

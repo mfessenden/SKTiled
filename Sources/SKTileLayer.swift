@@ -119,7 +119,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     /// Layer highlight color (for highlighting tiles)
     open var highlightColor: SKColor = SKColor.white
     /// Layer highlight duration
-    open var highlightDuration: TimeInterval = 0.25
+    open var highlightDuration: TimeInterval = 0  //0.25
     
     /// Layer offset value.
     open var offset: CGPoint = CGPoint.zero
@@ -1307,23 +1307,16 @@ open class SKTileLayer: TiledLayerObject {
         
         // get tile attributes from the current id
         let tileAttrs = flippedTileFlags(id: id)
-        
-        let flipDesc = flipFlagsDebug(hflip: tileAttrs.hflip, vflip: tileAttrs.vflip, dflip: tileAttrs.dflip)
-        
+    
         if let tileData = tilemap.getTileData(globalID: Int(tileAttrs.gid)) {
-            
-            let mapOffset = tileData.tileset.mapOffset
             
             // set the tile data flip flags
             tileData.flipHoriz = tileAttrs.hflip
             tileData.flipVert  = tileAttrs.vflip
             tileData.flipDiag  = tileAttrs.dflip
             
-            //let tileAlignmentX = tilemap.tileWidthHalf
-            //let tileAlignmentY = tilemap.tileHeightHalf
-            
-            
-            let Tile = tilemap.delegate != nil ? tilemap.delegate!.objectForTile(className: tileType) : SKTile.self
+            // get tile object from delegate
+            let Tile = (tilemap.delegate != nil) ? tilemap.delegate!.objectForTile(className: tileType) : SKTile.self
 
             if let tile = Tile.init(data: tileData) {
                 
@@ -1336,64 +1329,21 @@ open class SKTileLayer: TiledLayerObject {
                 tile.highlightDuration = highlightDuration
                 
                 // get the position in the layer (plus tileset offset)
-                var tilePosition = pointForCoordinate(coord: coord, offsetX: tileData.tileset.tileOffset.x, offsetY: tileData.tileset.tileOffset.y)
+                let tilePosition = pointForCoordinate(coord: coord, offsetX: tileData.tileset.tileOffset.x, offsetY: tileData.tileset.tileOffset.y)
                 
+                // add to the layer
+                addChild(tile)
                 
-                // set the position
+                // set orientation & position
+                tile.orientTile()
                 tile.position = tilePosition
                 
-                tile.orientTile(debug: debug)
-                
-
-                addChild(tile)
-                let frameSize = tile.frame.size
-                
-                
-
-                
-                // get the y-anchor point (half tile height / tileset height) to align the sprite properly to the grid
-                //var tileAlignmentX = tileWidthHalf / tileData.tileset.tileSize.width    // 4 / 24 = 0.166
-                //var tileAlignmentY = tileHeightHalf / tileData.tileset.tileSize.height  // 4 / 16  = 0.25
-                let tileAlignmentX = tileWidthHalf / frameSize.width
-                let tileAlignmentY = tileHeightHalf / frameSize.height   // 4 / 24
-                
+                // add to the tiles array
                 self.tiles[Int(coord.x), Int(coord.y)] = tile
 
-                
-
-                // set the anchorpoint (in the event the tile texture is larger than the tilesize)
-                tile.anchorPoint.x = tileAlignmentX
-                tile.anchorPoint.y = tileAlignmentY
-                
-                
-                if (debug == true) {
-                    
-                    
-                    print("\n  -> flip: \(flipDesc) ~ \(tileAttrs)")
-                    print("  -> frame:   \(frameSize)")
-                    print("  -> align:   \(tileAlignmentX), \(tileAlignmentY)")
-                    
-                    // rot  90 = -1.57079637050629
-                    // rot -90 =  1.57079637050629
-                    print("  -> anchor:   \(tile.anchorPoint), \(tile.zRotation)")
-                    print("  -> position: \(tilePosition)")
-                    
-                    
-                }
-
-
-                
-                // DEBUG
-                
-                
                 // set the tile zPosition to the current y-coordinate
                 tile.zPosition = coord.y
 
-                
-                //tile.drawBounds()
-                
-
-                
                 // run animation for tiles with multiple frames
                 tile.runAnimation()
 
@@ -2199,6 +2149,18 @@ extension TiledLayerObject {
             node, stop in
             
             if let node = node as? TiledLayerObject {
+                result.append(node)
+            }
+        }
+        return result
+    }
+    
+    /// Returns an array of tile and objects.
+    open func renderableObjects() -> [SKNode] {
+        var result: [SKNode] = []
+        enumerateChildNodes(withName: "//*") {
+            node, stop in
+            if (node as? SKTile != nil) || (node as? SKTileObject != nil) {
                 result.append(node)
             }
         }

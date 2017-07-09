@@ -96,8 +96,9 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     /**
      Load a named TMX file, with optional tilesets.
      
-     - parameter fileNamed:  `String` TMX file name.
+     - parameter tmxFile:    `String` TMX file name.
      - parameter tilesets:   `[SKTileset]` pre-loaded tilesets.
+     - parameter completion: `(() -> ())?` optional completion handler.
      */
     open func setup(tmxFile: String, tilesets: [SKTileset]=[], _ completion: (() -> ())? = nil) {
         guard let worldNode = worldNode else { return }

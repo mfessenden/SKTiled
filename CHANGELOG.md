@@ -53,6 +53,12 @@ Change Log
 - added `SKTilemap.tilesAt(point:)`
 - added `SKTilemap.objectsAt(point:)`
 
+
+- add `alignment` to geometry types
+- add `TiledLayerObject.renderableObjects`
+- add `SKTilemap.renderableObjects`
+- add `SKTilesetData.globalID`
+
 1.13
 -----
 

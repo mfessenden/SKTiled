@@ -48,6 +48,9 @@ public class SKTile: SKSpriteNode {
     // dynamics
     open var physicsShape: PhysicsShape = .rectangle    // physics type
     
+    // tile alignment
+    open var alignment: Alignment = .bottomLeft
+    
     /// Returns the bounding box of the shape.
     open var boundingRect: CGRect {
         return CGRect(x: 0, y: 0, width: tileSize.width, height: -tileSize.height)
@@ -86,18 +89,24 @@ public class SKTile: SKSpriteNode {
     /// Show/hide the tile's bounding shape.
     open var showBounds: Bool {
         get {
-            return childNode(withName: "BOUNDS") != nil ? childNode(withName: "BOUNDS")!.isHidden : false
+            return (childNode(withName: "BOUNDS") != nil) ? childNode(withName: "BOUNDS")!.isHidden : false
         }
         set {
-            // draw the tile boundardy shape
-            drawBounds()
-            guard let frameShape = childNode(withName: "BOUNDS") else { return }
-            if (highlightDuration > 0) {
-                let fadeAction = SKAction.fadeOut(withDuration: highlightDuration)
-                frameShape.run(fadeAction, completion: {
-                    frameShape.removeFromParent()
-                    
-                })
+            childNode(withName: "BOUNDS")?.removeFromParent()
+            
+            if (newValue == true) {
+                // draw the tile boundardy shape
+                drawBounds()
+                
+                guard let frameShape = childNode(withName: "BOUNDS") else { return }
+                
+                if (highlightDuration > 0) {
+                    let fadeAction = SKAction.fadeOut(withDuration: highlightDuration)
+                    frameShape.run(fadeAction, completion: {
+                        frameShape.removeFromParent()
+                        
+                    })
+                }
             }
         }
     }
@@ -321,60 +330,109 @@ public class SKTile: SKSpriteNode {
     /**
      Orient the tile based on the current flip flags.
      */
-    // TODO: this was private
-    public func orientTile(debug: Bool=false) {
-        // reset orientation
+    internal func orientTile() {
+        // reset orientation & scale
         zRotation = 0
         setScale(1)
         
         // 24 - 8, 16 - 8
         let mapOffset = tileData.tileset.mapOffset
+        
+        // map tile size
         let mapTileSize = CGSize(width: tileSize.width - mapOffset.x, height: tileSize.height - mapOffset.y)
+        let mapTileSizeHalfWidth:  CGFloat = mapTileSize.width / 2
+        let mapTileSizeHalfHeight: CGFloat = mapTileSize.height / 2
         
+        // tileset tile size
+        let tilesetTileSize: CGSize = tileData.tileset.tileSize
+        let tilesetTileWidth: CGFloat = tilesetTileSize.width
+        let tilesetTileHeight: CGFloat = tilesetTileSize.height
         
-        if (debug == true) {
-            print(" -> map offset:    \(mapOffset.shortDescription)")
-            print(" -> map tile size: \(mapTileSize.shortDescription)")
-        }
-        
-        var offsetX: CGFloat = 0
-        var offsetY: CGFloat = 0
+        // new values
+        var newZRotation: CGFloat = 0
+        var newXScale: CGFloat = xScale
+        var newYScale: CGFloat = yScale
         
         if (tileData.flipDiag) {
+            
+            // rotate 90 (d, h)
             if (tileData.flipHoriz && !tileData.flipVert) {
-                zRotation = CGFloat(-Double.pi / 2)   // rotate 90deg
+                newZRotation = CGFloat(-Double.pi / 2)    // rotate 90deg
+                alignment = .bottomRight
             }
             
+            // rotate right, flip vertically  (d, h, v)
             if (tileData.flipHoriz && tileData.flipVert) {
-                zRotation = CGFloat(-Double.pi / 2)   // rotate 90deg
-                xScale *= -1                          // flip horizontally
-
-            }
-
-            if (!tileData.flipHoriz && tileData.flipVert) {
-                zRotation = CGFloat(Double.pi / 2)    // rotate -90deg
-            }
-
-            if (!tileData.flipHoriz && !tileData.flipVert) {
-                zRotation = CGFloat(Double.pi / 2)    // rotate -90deg
-                xScale *= -1                          // flip horizontally
-
-            }
-        } else {
-            if (tileData.flipHoriz) {
-                xScale *= -1
-
+                newZRotation = CGFloat(-Double.pi / 2)   // rotate 90deg
+                newXScale *= -1                          // flip horizontally
+                alignment = .bottomLeft
             }
             
-            if (tileData.flipVert) {
-                yScale *= -1
+            // rotate -90 (d, v)
+            if (!tileData.flipHoriz && tileData.flipVert) {
+                newZRotation = CGFloat(Double.pi / 2)   // rotate -90deg
+                alignment = .topLeft
+            }
 
+            // rotate right, flip horiz (d)
+            if (!tileData.flipHoriz && !tileData.flipVert) {
+                
+                newZRotation = CGFloat(Double.pi / 2)   // rotate -90deg
+                newXScale *= -1                         // flip horizontally
+                alignment = .topRight
+            }
+        
+            
+        } else {
+            if (tileData.flipHoriz == true) {
+                newXScale *= -1
+                alignment = (tileData.flipVert == true) ? .topRight : .bottomRight
+            }
+            
+            
+            if (tileData.flipVert == true) {
+                newYScale *= -1
+                alignment = (tileData.flipHoriz == true) ? .topRight : .topLeft
             }
         }
+
+        // anchor point translation
+        let xAnchor: CGFloat
+        let yAnchor: CGFloat
         
-        let frameSize = frame.size  // 16, 24
+        switch alignment {
+        case .bottomLeft:
+            xAnchor = mapTileSizeHalfWidth / tilesetTileWidth
+            yAnchor = mapTileSizeHalfHeight / tilesetTileHeight
+            
+        case .bottomRight:
+            xAnchor = 1 - (mapTileSizeHalfWidth / tilesetTileWidth)
+            yAnchor = mapTileSizeHalfHeight / tilesetTileHeight
+            
+        case .topLeft:
+            xAnchor = mapTileSizeHalfWidth / tilesetTileWidth
+            yAnchor = 1 - (mapTileSizeHalfHeight / tilesetTileHeight)
+            
+        case .topRight:
+            xAnchor = 1 - (mapTileSizeHalfWidth / tilesetTileWidth)
+            yAnchor = 1 - (mapTileSizeHalfHeight / tilesetTileHeight)
+            
+        default:
+            xAnchor = mapTileSizeHalfWidth / tilesetTileWidth
+            yAnchor = mapTileSizeHalfHeight / tilesetTileHeight
+        }
         
+        // set the anchor point
+        anchorPoint.x = xAnchor
+        anchorPoint.y = yAnchor
         
+        // rotate the sprite
+        zRotation = newZRotation
+        
+        xScale = newXScale
+        yScale = newYScale
+        
+        //print(" -> tile: \(tileData.id) anchor: (\(xAnchor.roundTo(1)), \(yAnchor.roundTo(1))), rot: \(zRotation.degrees().roundTo())")
     }
 
     /**
@@ -392,7 +450,10 @@ public class SKTile: SKSpriteNode {
         let tileSizeHalved = CGSize(width: layer.tileSize.halfWidth, height: layer.tileSize.halfHeight)
 
         switch layer.orientation {
+        
         case .orthogonal:
+            
+            
             var origin = CGPoint(x: -tileSizeHalved.width, y: tileSizeHalved.height)
             
             // adjust for tileset.tileOffset here
@@ -453,32 +514,34 @@ public class SKTile: SKSpriteNode {
     /**
      Draw the tile's boundary shape.
      */
-    public func drawBounds() {
+    internal func drawBounds() {
         
-        childNode(withName: "ANCHOR")?.removeFromParent()
         childNode(withName: "BOUNDS")?.removeFromParent()
         
         let vertices = getVertices()
         guard vertices.count > 0 else { return }
         
+        
         let renderQuality = tileData.renderQuality
-        let path = polygonPath(vertices.map { $0 * renderQuality })
-        let shape = SKShapeNode(path: path)
-        shape.name = "BOUNDS"
+        
+        // scale vertices
+        let scaledVertices = vertices.map { $0 * renderQuality }
+        let path = polygonPath(scaledVertices)
+        let bounds = SKShapeNode(path: path)
+        bounds.name = "BOUNDS"
         let shapeZPos = zPosition + 10
         
         // draw the path
-        shape.isAntialiased = layer.antialiased
-        shape.lineCap = .round
-        shape.lineJoin = .miter
-        shape.miterLimit = 0
-        shape.lineWidth = 0.5 * (renderQuality / 2)
+        bounds.isAntialiased = layer.antialiased
+        bounds.lineCap = .round
+        bounds.lineJoin = .miter
+        bounds.miterLimit = 0
+        bounds.lineWidth = 0.5 * (renderQuality / 2)
         
-        shape.strokeColor = highlightColor.withAlphaComponent(0.4)
-        //shape.fillColor = SKColor(hexString: "85d8ff")
-        shape.fillColor = highlightColor.withAlphaComponent(0.15)  // 0.35
-        shape.zPosition = shapeZPos
-        addChild(shape)
+        bounds.strokeColor = highlightColor.withAlphaComponent(0.4)
+        bounds.fillColor = highlightColor.withAlphaComponent(0.15)  // 0.35
+        bounds.zPosition = shapeZPos
+        addChild(bounds)
         
         // anchor point
         let tileHeight = (layer != nil) ? layer.tilemap.tileHeight : tileSize.height
@@ -487,14 +550,26 @@ public class SKTile: SKSpriteNode {
         let anchor = SKShapeNode(circleOfRadius: anchorRadius)
         
         anchor.name = "ANCHOR"
-        shape.addChild(anchor)
+        bounds.addChild(anchor)
         anchor.fillColor = highlightColor.withAlphaComponent(0.2)
         anchor.strokeColor = SKColor.clear
         anchor.zPosition = shapeZPos + 10
         anchor.isAntialiased = layer.antialiased
         
         
-        shape.setScale(1 / renderQuality)
+        // first point
+        let firstPoint = scaledVertices[0]
+        let pointShape = SKShapeNode(circleOfRadius: anchorRadius)
+        
+        pointShape.name = "FIRST_POINT"
+        bounds.addChild(pointShape)
+        pointShape.fillColor = .orange //highlightColor
+        pointShape.strokeColor = SKColor.clear
+        pointShape.zPosition = shapeZPos * 15
+        pointShape.isAntialiased = layer.antialiased
+        
+        pointShape.position = firstPoint
+        bounds.setScale(1 / renderQuality)
 
     }
 }

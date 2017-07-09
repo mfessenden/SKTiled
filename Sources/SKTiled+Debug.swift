@@ -81,6 +81,7 @@ internal class TiledLayerGrid: SKSpriteNode {
                     gridTexture.filteringMode = .linear
                 }
                 
+                
                 // sprite scaling factor
                 let spriteScaleFactor: CGFloat = (1 / imageScale)
                 gridSize = gridTexture.size() / uiScale
@@ -111,8 +112,16 @@ internal class TileShape: SKShapeNode {
     var coord: CGPoint
     var useLabel: Bool = false
     var renderQuality: CGFloat = 4
-    
-    
+    public var clickCount: Int = 0 {
+        didSet {
+            guard oldValue != clickCount else { return }
+            
+            if clickCount > 0 {
+                //detonate()
+            }
+        }
+    }
+
     init(layer: TiledLayerObject, coord: CGPoint, tileColor: SKColor, withLabel: Bool=false){
         self.layer = layer
         self.coord = coord
@@ -133,10 +142,16 @@ internal class TileShape: SKShapeNode {
         super.init()
         self.orientation = layer.orientation
         drawObject()
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    public func detonate() {
+        let fadeAction = SKAction.fadeAlpha(to: 0, duration: 0.1)
+        run(fadeAction, completion: { self.removeFromParent()})
     }
     
     /**
@@ -169,7 +184,7 @@ internal class TileShape: SKShapeNode {
             let sideLengthY = layer.tilemap.sideLengthY * renderQuality
             var variableSize: CGFloat = 0
             
-            // flat (broken)
+            // flat
             if (staggerX == true) {
                 let r = (tileWidth - sideLengthX) / 2
                 let h = tileHeight / 2
@@ -376,39 +391,28 @@ extension SKTiledDemoScene {
                 return
         }
         
-        // 'clear' clears TileShapes
-        if eventKey == 0x47 {
-            
-            var tiles: [TileShape] = []
-            self.enumerateChildNodes(withName: "//*") {
-                node, stop in
-                
-                if let tile = node as? TileShape {
-                    tile.removeFromParent()
-                }
-            }
+        // 'a' or 'f' fits the map to the current view
+        if eventKey == 0x0 || eventKey == 0x3 {
+            cameraNode.fitToView(newSize: view.bounds.size)
         }
+        
+
         
         
         // 'd' shows/hides debug view
         if eventKey == 0x02 {
-            tilemap.debugDraw = !tilemap.debugDraw
+            
+            let newValue = !tilemap.debugDraw
+            tilemap.debugDraw = newValue
+            let renderables = tilemap.renderableObjects()
+            renderables.forEach { $0.drawAnchor = newValue }
+            
+            let tiles = renderables.filter({ $0 as? SKTile != nil }) as! [SKTile]
+            tiles.forEach { $0.showBounds = newValue }
+
         }
         
-        // 'o' shows/hides object layers
-        if eventKey == 0x1f {
-            tilemap.showObjects = !tilemap.showObjects
-        }
-        
-        // 'p' pauses the map
-        if eventKey == 0x23 {
-            self.isPaused = !self.isPaused
-        }
-        
-        // 'q' print layer stats
-        if eventKey == 0xc {
-            tilemap.layerStatistics()
-        }
+
         
         
         // 'h' hides the HUD
@@ -421,20 +425,9 @@ extension SKTiledDemoScene {
             }
         }
         
-        // '←' advances to the next scene
-        if eventKey == 0x7B {
-            self.loadPreviousScene()
-        }
+
         
-        // '1' zooms to 100%
-        if eventKey == 0x12 || eventKey == 0x53 {
-            cameraNode.resetCamera()
-        }
-        
-        // 'a' or 'f' fits the map to the current view
-        if eventKey == 0x0 || eventKey == 0x3 {
-            cameraNode.fitToView(newSize: view.bounds.size)
-        }
+
     
         
         // 'j' fades the layers in succession
@@ -455,18 +448,47 @@ extension SKTiledDemoScene {
             }
         }
         
+        
+        // 'o' shows/hides object layers
+        if eventKey == 0x1f {
+            tilemap.showObjects = !tilemap.showObjects
+        }
+        
+        // 'p' pauses the map
+        if eventKey == 0x23 {
+            self.isPaused = !self.isPaused
+        }
+        
+        // 'q' print layer stats
+        if eventKey == 0xc {
+            tilemap.layerStatistics()
+        }
+        
+        // '←' advances to the next scene
+        if eventKey == 0x7B {
+            self.loadPreviousScene()
+        }
+        
+        // '1' zooms to 100%
+        if eventKey == 0x12 || eventKey == 0x53 {
+            cameraNode.resetCamera()
+        }
+        
+        // 'clear' clears TileShapes
+        if eventKey == 0x47 {
+            
+            var tiles: [TileShape] = []
+            self.enumerateChildNodes(withName: "//*") {
+                node, stop in
+                
+                if let tile = node as? TileShape {
+                    tile.removeFromParent()
+                }
+            }
+        }
+        
         // MARK: - Debugging Tests
         
-        // 'z' queries the debug draw state
-        if eventKey == 0x6 {
-            print("tilemap debug draw: \(tilemap.debugDraw), (show bounds: \(tilemap.showBounds), show grid: \(tilemap.showGrid))")
-        }
-        
-        // 'r' reloads the scene
-        if eventKey == 0xf {
-            guard let currenFilename = tilemap.filename else { return }
-            self.reloadScene()
-        }
         
         // 'g' highlights all tiles
         if eventKey == 0x5 {
@@ -501,6 +523,13 @@ extension SKTiledDemoScene {
             }
         }
         
+        // 'r' reloads the scene
+        if eventKey == 0xf {
+            guard let currenFilename = tilemap.filename else { return }
+            self.reloadScene()
+        }
+        
+        
         // 'v' runs a custom test
         if eventKey == 0x9 {
             view.showsPhysics = !view.showsPhysics
@@ -511,11 +540,22 @@ extension SKTiledDemoScene {
             tilemap.getLayers(ofType: "DEBUG").forEach{ $0.isHidden = !$0.isHidden}
         }
         
+        // 'y' runs a custom test
+        if eventKey == 0x10 {
+            tilemap.getLayers(ofType: "DEBUG").forEach{ $0.isHidden = !$0.isHidden}
+        }
+        
+        // 'z' queries the debug draw state
+        if eventKey == 0x6 {
+            print("tilemap debug draw: \(tilemap.debugDraw), (show bounds: \(tilemap.showBounds), show grid: \(tilemap.showGrid))")
+        }
+        
     }
 }
 #endif
 
 
+// TODO: Temporary
 
 public func flipFlagsDebug(hflip: Bool, vflip: Bool, dflip: Bool) -> String {
     var result: String = "none"
@@ -545,7 +585,6 @@ public func flipFlagsDebug(hflip: Bool, vflip: Bool, dflip: Bool) -> String {
         }
     }
     return result
-    
 }
 
 

@@ -204,13 +204,8 @@ open class SKTileset: SKTiledObject {
             
             // alpha info is 0
             if let maskedImage = transparentImage(imageNamed: self.source!, masking: transparentColor!.components) {
-                let imageComponents = maskedImage.bitsPerComponent
+                //let imageComponents = maskedImage.bitsPerComponent
                 sourceTexture = SKTexture(cgImage: maskedImage)
-                
-                
-                
-                
-                print("# [SKTileset]: output image: \(maskedImage.alphaInfo.rawValue)")
             } else {
                 sourceTexture = SKTexture(imageNamed: self.source!)
                 print("# [SKTileset]: WARNING: cannot render image mask for \"\(sourceFilename)\"")
