@@ -119,7 +119,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     /// Layer highlight color (for highlighting tiles)
     open var highlightColor: SKColor = SKColor.white
     /// Layer highlight duration
-    open var highlightDuration: TimeInterval = 0  //0.25
+    open var highlightDuration: TimeInterval = 0
     
     /// Layer offset value.
     open var offset: CGPoint = CGPoint.zero
@@ -148,7 +148,6 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     
     // debug visualizations
     open var gridOpacity: CGFloat = 0.20
-    
     fileprivate var grid: TiledLayerGrid!
     
     internal var isRendered: Bool = false
@@ -1156,7 +1155,7 @@ open class SKTileLayer: TiledLayerObject {
             let y: Int = index / Int(self.size.width)
             
             let coord = CGPoint(x: CGFloat(x), y: CGFloat(y))
-            let tile = self.buildTileAt(coord: coord, id: gid, debug: debug)
+            let tile = self.buildTileAt(coord: coord, id: gid)
             
             if (tile == nil) {
                 errorCount += 1
@@ -1298,12 +1297,12 @@ open class SKTileLayer: TiledLayerObject {
     /**
      Build a tile at the given coordinate with the given id. Returns nil if the id cannot be resolved.
      
-     - parameter x:   `Int` x-coordinate
-     - parameter y:   `Int` y-coordinate
-     - parameter gid: `Int` tile id.
-     - returns: `SKTile?` tile.
+     - parameter coord:    `CGPoint` x&y coordinate.
+     - parameter id:       `UInt32` tile id.
+     - parameter tileType: `String?` optional tile type string.
+     - returns: `SKTile?`  tile object.
      */
-    fileprivate func buildTileAt(coord: CGPoint, id: UInt32, tileType: String? = nil, debug: Bool=false) -> SKTile? {
+    fileprivate func buildTileAt(coord: CGPoint, id: UInt32, tileType: String? = nil) -> SKTile? {
         
         // get tile attributes from the current id
         let tileAttrs = flippedTileFlags(id: id)
@@ -1357,7 +1356,6 @@ open class SKTileLayer: TiledLayerObject {
                 print("ERROR: invalid tileset data (id: \(id))")
             }
         } else {
-            
             // check for bad gid calls
             if !gidErrors.contains(tileAttrs.gid) {
                 gidErrors.append(tileAttrs.gid)
@@ -2204,7 +2202,7 @@ extension TiledLayerObject {
         let layerPathString = "\(filler)\(layerSymbol) \"\(layerName)\""
         let layerVisibilityString: String = (self.visible == true) ? "(x)" : "( )"
         
-        // layer position string
+        // layer position string, filters out child layers with no offset
         var positionString = self.position.shortDescription
         if (self.position.x == 0) && (self.position.y == 0) {
             positionString = ""
@@ -2255,6 +2253,36 @@ extension Array2D: Sequence {
                 return nil
             }
         }
+    }
+}
+
+
+extension Array2D: CustomReflectable {
+    
+    public var customMirror: Mirror {
+        var rowdata: [String] = []
+        for r in 0..<rows {
+            var rowResult: String = ""
+            
+            for c in 0..<columns {
+                let comma: String = (c < columns - 1) ? ", " : ""
+                if let value = self[c, r] {
+                    if let tile = value as? SKTile {
+                        rowResult += "\(tile.tileData.id)\(comma)"
+                    } else {
+                        rowResult += "\(value)\(comma)"
+                    }
+                } else {
+                    rowResult += "-\(comma)"
+                }
+            }
+            rowdata.append(rowResult)
+        }
+        
+        let children = DictionaryLiteral<String, Any>(dictionaryLiteral:
+            ("columns", columns),
+            ("rows", rowdata))
+        return Mirror(self, children: children)
     }
 }
 

@@ -43,7 +43,7 @@ public class SKTile: SKSpriteNode {
     
     // MARK: Highlighting
     open var highlightColor: SKColor = SKColor.white    // tile highlight color
-    open var highlightDuration: TimeInterval = 0.25     // tile highlight duration
+    open var highlightDuration: TimeInterval = 0        // tile highlight duration
     
     // dynamics
     open var physicsShape: PhysicsShape = .rectangle    // physics type
@@ -89,13 +89,14 @@ public class SKTile: SKSpriteNode {
     /// Show/hide the tile's bounding shape.
     open var showBounds: Bool {
         get {
-            return (childNode(withName: "BOUNDS") != nil) ? childNode(withName: "BOUNDS")!.isHidden : false
+            return (childNode(withName: "BOUNDS") != nil) ? childNode(withName: "BOUNDS")!.isHidden == false : false
         }
         set {
             childNode(withName: "BOUNDS")?.removeFromParent()
             
             if (newValue == true) {
-                // draw the tile boundardy shape
+                
+                // draw the tile boundary shape
                 drawBounds()
                 
                 guard let frameShape = childNode(withName: "BOUNDS") else { return }
@@ -303,7 +304,9 @@ public class SKTile: SKSpriteNode {
             texture = tileData.texture
         }
     }
-
+    
+    // MARK: - Misc
+    
     /**
      Set the tile overlap amount.
      
@@ -335,7 +338,7 @@ public class SKTile: SKSpriteNode {
         zRotation = 0
         setScale(1)
         
-        // 24 - 8, 16 - 8
+        // get the map offset
         let mapOffset = tileData.tileset.mapOffset
         
         // map tile size
@@ -389,7 +392,7 @@ public class SKTile: SKSpriteNode {
                 alignment = (tileData.flipVert == true) ? .topRight : .bottomRight
             }
             
-            
+            // (v)
             if (tileData.flipVert == true) {
                 newYScale *= -1
                 alignment = (tileData.flipHoriz == true) ? .topRight : .topLeft
@@ -440,7 +443,7 @@ public class SKTile: SKSpriteNode {
      
      - returns: `[CGPoint]?` array of points.
      */
-    public func getVertices() -> [CGPoint] {
+    public func getVertices(offset: CGPoint = .zero) -> [CGPoint] {
         var vertices: [CGPoint] = []
         guard let layer = layer else {
             print("ERROR: tile \(tileData.id) does not have a layer reference.")
@@ -452,8 +455,7 @@ public class SKTile: SKSpriteNode {
         switch layer.orientation {
         
         case .orthogonal:
-            
-            
+
             var origin = CGPoint(x: -tileSizeHalved.width, y: tileSizeHalved.height)
             
             // adjust for tileset.tileOffset here
@@ -508,20 +510,49 @@ public class SKTile: SKSpriteNode {
             
             vertices = hexPoints.map{ $0.invertedY }
         }
-        return vertices
+        
+        return vertices.map { $0 + offset }
     }
 
     /**
      Draw the tile's boundary shape.
      */
-    internal func drawBounds() {
-        
+    internal func drawBounds(_ withOffset: Bool=true) {
         childNode(withName: "BOUNDS")?.removeFromParent()
+    
+        let mapOffset = tileData.tileset.mapOffset
         
-        let vertices = getVertices()
+        // map tile size
+        let mapTileSize = CGSize(width: tileSize.width - mapOffset.x, height: tileSize.height - mapOffset.y)
+        let mapTileSizeHalfWidth:  CGFloat = mapTileSize.width / 2
+        let mapTileSizeHalfHeight: CGFloat = mapTileSize.height / 2
+        
+        // tileset tile size
+        let tilesetTileSize: CGSize = tileData.tileset.tileSize
+        let tilesetTileWidth: CGFloat = tilesetTileSize.width
+        let tilesetTileHeight: CGFloat = tilesetTileSize.height
+
+        
+        var xOffset: CGFloat = 0
+        var yOffset: CGFloat = 0
+
+        if alignment == .bottomRight || alignment == .topRight {
+            xOffset = -(tilesetTileHeight - mapTileSize.height)
+            
+            if alignment == .topRight {
+                yOffset = -(tilesetTileHeight - mapTileSize.height)
+            }
+        }
+        
+        if alignment == .topLeft {
+            yOffset = -(tilesetTileHeight - mapTileSize.height)
+        }
+
+        let alignmentOffset = CGPoint(x: xOffset, y: yOffset)
+        let vertices = getVertices(offset: alignmentOffset)
+
         guard vertices.count > 0 else { return }
-        
-        
+
         let renderQuality = tileData.renderQuality
         
         // scale vertices
@@ -541,6 +572,7 @@ public class SKTile: SKSpriteNode {
         bounds.strokeColor = highlightColor.withAlphaComponent(0.4)
         bounds.fillColor = highlightColor.withAlphaComponent(0.15)  // 0.35
         bounds.zPosition = shapeZPos
+
         addChild(bounds)
         
         // anchor point

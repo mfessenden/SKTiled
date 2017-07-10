@@ -10,6 +10,10 @@ import Foundation
 import SpriteKit
 
 
+/// globals
+var TILE_BOUNDS_USE_OFFSET: Bool = false
+
+
 
 /// Sprite object for visualizaing grid & graph.
 internal class TiledLayerGrid: SKSpriteNode {
@@ -396,25 +400,12 @@ extension SKTiledDemoScene {
             cameraNode.fitToView(newSize: view.bounds.size)
         }
         
-
-        
-        
         // 'd' shows/hides debug view
         if eventKey == 0x02 {
-            
             let newValue = !tilemap.debugDraw
             tilemap.debugDraw = newValue
-            let renderables = tilemap.renderableObjects()
-            renderables.forEach { $0.drawAnchor = newValue }
-            
-            let tiles = renderables.filter({ $0 as? SKTile != nil }) as! [SKTile]
-            tiles.forEach { $0.showBounds = newValue }
-
         }
-        
 
-        
-        
         // 'h' hides the HUD
         if eventKey == 0x04 {
             if let view = self.view {
@@ -424,11 +415,7 @@ extension SKTiledDemoScene {
                 view.showsDrawCount = debugState
             }
         }
-        
 
-        
-
-    
         
         // 'j' fades the layers in succession
         if eventKey == 0x26 {
@@ -448,7 +435,17 @@ extension SKTiledDemoScene {
             }
         }
         
-        
+        // 'l' toggles object bounds drawing
+        if eventKey == 0x25 {
+            let renderables = tilemap.renderableObjects()
+            renderables.forEach { node in
+                if let obj = node as? SKTileObject {
+                    let newValue = !obj.showBounds
+                    obj.showBounds = newValue
+                }
+            }
+        }
+
         // 'o' shows/hides object layers
         if eventKey == 0x1f {
             tilemap.showObjects = !tilemap.showObjects
@@ -461,7 +458,7 @@ extension SKTiledDemoScene {
         
         // 'q' print layer stats
         if eventKey == 0xc {
-            tilemap.layerStatistics()
+            tilemap.mapStatistics()
         }
         
         // '←' advances to the next scene
@@ -488,11 +485,22 @@ extension SKTiledDemoScene {
         }
         
         // MARK: - Debugging Tests
-        
+        // 'm' toggles tile bounds drawing
+        if eventKey == 0x2e {
+            
+            let renderables = tilemap.renderableObjects()
+            renderables.forEach { node in
+                if let tile = node as? SKTile {
+                    let newValue = !tile.showBounds
+                    tile.showBounds = newValue
+                    
+                }
+            }
+        }
         
         // 'g' highlights all tiles
         if eventKey == 0x5 {
-            tilemap.tileLayers(recursive: true).forEach({ $0.validTiles().forEach({ $0.drawBounds() }) })
+            tilemap.tileLayers(recursive: true).forEach({ $0.validTiles().forEach({ $0.showBounds = !$0.showBounds }) })
         }
         
         // 'i' runs a custom event

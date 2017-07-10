@@ -1486,17 +1486,21 @@ extension SKTilemap {
             // show bounding box for renderable objects
             for objectLayer in objectGroups(recursive: true) {
                 (objectLayer.getObjects().filter { $0.isRenderableType == true }.forEach { $0.drawObject(debug: newValue) })
-                (objectLayer.getObjects().forEach { $0.drawAnchor = newValue})
             }
             
             // show bounding box for renderable objects
             for tileLayer in tileLayers(recursive: true) {
-                (tileLayer.getTiles().forEach { $0.drawAnchor = true })
+                // draw the anchor
+                //(tileLayer.getTiles().forEach { $0.drawAnchor = true })
             }
         }
     }
     
-    /// Returns an array of tile and objects.
+    /** 
+     Returns an array of tiles/objects.
+     
+     - returns: `[SKNode]` array of child objects.
+     */
     open func renderableObjects() -> [SKNode] {
         var result: [SKNode] = []
         enumerateChildNodes(withName: "//*") {
@@ -1511,7 +1515,7 @@ extension SKTilemap {
     /**
      Dump a summary of the current scenes layer data.
      */
-    open func layerStatistics() {
+    open func mapStatistics() {
         guard (layerCount > 0) else {
             print("# Tilemap \"\(mapName)\": 0 Layers")
             return
@@ -1535,6 +1539,7 @@ extension SKTilemap {
         
         
         for (_, stats) in allLayerStats.enumerated() {
+            
             for stat in stats {
                 let colIndex = Int(stats.index(of: stat)!)
                 
@@ -1592,7 +1597,7 @@ extension SKTilemap {
             outputString += "\n\(layerOutputString)"
         }
 
-        print("\n" + outputString + "\n")
+        print("\n\n" + outputString + "\n\n")
     }
 }
 
@@ -1640,6 +1645,14 @@ extension SKTilemapDelegate {
     public func objectForTile(className: String? = nil) -> SKTile.Type { return SKTile.self }
 }
 
+/*
+extension SKTilemap: CustomReflectable {
+    
+    public var customMirror: Mirror {
+        return Mirror(self, children: [])
+    }
+}
+*/
 
 // MARK: - Deprecated
 
@@ -1703,9 +1716,9 @@ extension SKTilemap {
     /**
      Output a summary of the current scenes layer data.
      */
-    @available(*, deprecated, message: "use `layerStatistics()` instead")
+    @available(*, deprecated, message: "use `mapStatistics()` instead")
     open func debugLayers(reverse: Bool=false) {
-        layerStatistics()
+        mapStatistics()
     }
 }
 

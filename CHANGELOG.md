@@ -38,6 +38,7 @@ Change Log
 - added `SKTileObject.isTextObject`
 - added `SKTileLayer.showBounds`
 - added `SKTile.showBounds`
+- add `SKTileObject.showBounds`
 - added `SKTile.highlightDuration`
 - added `TiledLayerObject.highlightDuration`
 - added `SKTiled+Debug.swift`
@@ -58,6 +59,9 @@ Change Log
 - add `TiledLayerObject.renderableObjects`
 - add `SKTilemap.renderableObjects`
 - add `SKTilesetData.globalID`
+
+- add `SKTileObject.showBounds`
+- rename `SKTile.getVertices()` -> `SKTile.getVertices(offset:)`
 
 1.13
 -----

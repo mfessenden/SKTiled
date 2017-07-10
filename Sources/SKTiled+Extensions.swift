@@ -510,7 +510,6 @@ internal extension SKNode {
                 let anchor = SKShapeNode(circleOfRadius: 0.75)
                 anchor.name = "DRAW_ANCHOR"
                 anchor.strokeColor = .clear
-                anchor.fillColor = .red
                 anchor.zPosition = zPosition * 4
                 addChild(anchor)
             }
@@ -1102,7 +1101,6 @@ public func normalize(_ value: CGFloat, _ minimum: CGFloat, _ maximum: CGFloat) 
  Generate a visual grid texture.
  
  - parameter layer:      `TiledLayerObject` layer instance.
- - parameter uiScale:    `CGFloat` ui scale factor (for retina displays).
  - parameter imageScale: `CGFloat` image scale multiplier.
  - parameter lineScale:  `CGFloat` line scale multiplier.
  - returns: `SKTexture?` visual grid texture.
@@ -1116,8 +1114,8 @@ internal func drawGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineSca
     uiScale = NSScreen.main()!.backingScaleFactor
     #endif
     let size = layer.size
-    let tileWidth = layer.tileWidth * imageScale    //* scale
-    let tileHeight = layer.tileHeight * imageScale  //* scale
+    let tileWidth = layer.tileWidth * imageScale
+    let tileHeight = layer.tileHeight * imageScale
                 
     let tileWidthHalf = tileWidth / 2
     let tileHeightHalf = tileHeight / 2
@@ -1237,7 +1235,7 @@ internal func drawGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineSca
 // MARK: - Polygon Drawing
 
 /**
- Returns an array of points for the given dimensions.
+ Returns an array of points for the given dimensions. ** In Use **
  
  - parameter width:   `CGFloat` rect width.
  - parameter height:  `CGFloat` rect height.
@@ -1277,9 +1275,9 @@ public func rectPointArray(_ size: CGSize, origin: CGPoint = .zero) -> [CGPoint]
  */
 public func polygonPointArray(_ sides: Int, radius: CGSize, offset: CGFloat=0, origin: CGPoint = .zero) -> [CGPoint] {
     let angle = (360 / CGFloat(sides)).radians()
-    let cx = origin.x // x origin
-    let cy = origin.y // y origin
-    let rx = radius.width // radius of circle
+    let cx = origin.x       // x origin
+    let cy = origin.y       // y origin
+    let rx = radius.width   // radius of circle
     let ry = radius.height
     var i = 0
     var points: [CGPoint] = []

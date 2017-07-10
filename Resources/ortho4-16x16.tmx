@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" backgroundcolor="#1e1b23" nextobjectid="57">
+<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" backgroundcolor="#1e1b23" nextobjectid="58">
  <properties>
   <property name="autoResize" type="bool" value="true"/>
   <property name="frameColor" type="color" value="#ff63a4b2"/>
@@ -528,6 +528,13 @@
    <object id="24" name="hitbox1" type="Hitbox" x="177" y="16.6667">
     <polygon points="-1,-0.666667 -1,15.3333 15,15.3333 15,31.3333 -1,31.3333 -1,47.3333 31,47.3333 31,-0.666667"/>
    </object>
+   <object id="57" name="fire13" type="Emitter" x="102" y="48" width="6" height="6">
+    <properties>
+     <property name="color" type="color" value="#ffdb4d08"/>
+     <property name="type" value="fire"/>
+    </properties>
+    <ellipse/>
+   </object>
   </objectgroup>
   <objectgroup name="Tile Objects">
    <object id="48" name="chest1" type="Chest" gid="103" x="112" y="160" width="16" height="16"/>
@@ -541,7 +548,7 @@
     </properties>
     <text fontfamily="Nintendo-Arcade" pixelsize="8" wrap="1" color="#496365" valign="center">Level 1</text>
    </object>
-   <object id="56" name="poly-obj2" x="144" y="176" width="16" height="16">
+   <object id="56" name="poly-obj2" x="12" y="218" width="16" height="16" rotation="45">
     <polygon points="0,0 16,0 16,16 0,16"/>
    </object>
   </objectgroup>

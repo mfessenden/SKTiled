@@ -179,7 +179,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     
     open func didRenderMap(_ tilemap: SKTilemap) {
         // Called after layers are rendered. Perform any post-processing here.
-        self.physicsWorld.speed = 0
+        self.physicsWorld.speed = 1
     }
     
     // MARK: - Updates
@@ -252,7 +252,7 @@ extension SKTiledSceneDelegate where Self: SKScene {
         nextScene.scaleMode = scaleMode
         
         defer {
-            //print("# [SKTiledSceneDelegate]: running completion...")
+            //print("[SKTiledSceneDelegate]: running completion...")
             completion?()
         }
         view?.presentScene(nextScene, transition: transition)

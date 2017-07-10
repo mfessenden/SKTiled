@@ -42,7 +42,7 @@ open class SKTilesetData: SKTiledObject  {
     open var ignoreProperties: Bool = false       // ignore custom properties
     open var tileOffset: CGPoint = .zero          // tile offset
     open var renderQuality: CGFloat = 8           // render quality
-    
+    open var alignment: Alignment = .bottomLeft   // tile alignment
     
     // animation frames
     internal var frames: [AnimationFrame] = []    // animation frames
@@ -184,7 +184,9 @@ extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
     public var description: String {
         guard let tileset = tileset else { return "Tile ID: \(id) (no tileset)" }
         let typeString = (type != nil) ? ", type: \"\(type!)\"" : ""
-        let dataString = properties.count > 0 ? "Tile ID: \(globalID)\(typeString) @ \(tileset.tileSize.shortDescription), " : "Tile ID: \(globalID)\(typeString) @ \(tileset.tileSize.shortDescription)"
+        let framesString = (isAnimated == true) ? ", \(frames.count) frames" : ""
+        let dataString = properties.count > 0 ? "Tile ID: \(globalID)\(typeString) @ \(tileset.tileSize.shortDescription)\(framesString), " : "Tile ID: \(globalID)\(typeString) @ \(tileset.tileSize.shortDescription)\(framesString)"
+        
         return "\(dataString)\(propertiesString)"
     }
     

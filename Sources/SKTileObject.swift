@@ -257,13 +257,12 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         
         self.size = CGSize(width: width, height: height)
         
-        
-        if let rotation = attributes["rotation"] {
+        // object rotation
+        if let degreesValue = attributes["rotation"] {
             
-            if let doubleVal = Double(rotation) {
-                let radianValue = CGFloat(doubleVal).radians()
-                self.zRotation = radianValue
-                print("  -> object rotation: \(rotation) -> \(radianValue.roundTo())")
+            if let doubleVal = Double(degreesValue) {
+                let radiansValue = CGFloat(doubleVal).radians()
+                self.zRotation = -radiansValue
             }
         }
     }
@@ -597,6 +596,99 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         }
     }
     
+    /**
+     Draw the tile's boundary shape.
+     */
+    internal func drawBounds() {
+        childNode(withName: "BOUNDS")?.removeFromParent()
+        
+        guard let vertices = getVertices() else { return }
+        
+        let flippedVertices = (gid == nil) ? vertices.map { $0.invertedY } : vertices
+        let renderQuality = (layer != nil) ? layer!.renderQuality : 8
+        let highlightColor = (layer != nil) ? layer!.highlightColor : SKColor(hexString: "#ff8fff")
+        
+        //let vertices = frame.points
+        
+        // scale vertices
+        let scaledVertices = flippedVertices.map { $0 * renderQuality }
+        let path = polygonPath(scaledVertices)
+        let bounds = SKShapeNode(path: path)
+        bounds.name = "BOUNDS"
+        let shapeZPos = zPosition + 10
+        
+        // draw the path
+        bounds.isAntialiased = layer.antialiased
+        bounds.lineCap = .round
+        bounds.lineJoin = .miter
+        bounds.miterLimit = 0
+        bounds.lineWidth = 0.5 * (renderQuality / 2)
+        
+        bounds.strokeColor = highlightColor.withAlphaComponent(0.4)
+        bounds.fillColor = highlightColor.withAlphaComponent(0.15)  // 0.35
+        bounds.zPosition = shapeZPos
+        
+        
+        // anchor point
+        let tileHeight = (layer != nil) ? layer.tilemap.tileHeight : 8
+        let tileHeightDivisor = (tileHeight <= 16) ? 8 : 16
+        let anchorRadius: CGFloat = ((tileHeight / 2) / tileHeightDivisor) * renderQuality
+        let anchor = SKShapeNode(circleOfRadius: anchorRadius)
+        
+        anchor.name = "ANCHOR"
+        bounds.addChild(anchor)
+        anchor.fillColor = highlightColor.withAlphaComponent(0.2)
+        anchor.strokeColor = SKColor.clear
+        anchor.zPosition = shapeZPos + 10
+        anchor.isAntialiased = layer.antialiased
+        
+        
+        // first point
+        let firstPoint = scaledVertices[0]
+        let pointShape = SKShapeNode(circleOfRadius: anchorRadius)
+        
+        pointShape.name = "FIRST_POINT"
+        bounds.addChild(pointShape)
+        pointShape.fillColor = .orange //highlightColor
+        pointShape.strokeColor = SKColor.clear
+        pointShape.zPosition = shapeZPos * 15
+        pointShape.isAntialiased = layer.antialiased
+        
+        pointShape.position = firstPoint
+        
+        addChild(bounds)
+        bounds.setScale(1 / renderQuality)
+    }
+    
+    // MARK: - Debugging
+
+    open var showBounds: Bool {
+        get {
+            return (childNode(withName: "BOUNDS") != nil) ? childNode(withName: "BOUNDS")!.isHidden == false : false
+        }
+        set {
+            childNode(withName: "BOUNDS")?.removeFromParent()
+            
+            if (newValue == true) {
+                
+                // draw the tile boundary shape
+                drawBounds()
+                
+                guard let frameShape = childNode(withName: "BOUNDS") else { return }
+                
+                let highlightDuration: TimeInterval = (layer != nil) ? layer!.highlightDuration : 0
+                
+                if (highlightDuration > 0) {
+                    let fadeAction = SKAction.fadeOut(withDuration: highlightDuration)
+                    frameShape.run(fadeAction, completion: {
+                        frameShape.removeFromParent()
+                        
+                    })
+                }
+            }
+        }
+    }
+
     // MARK: - Callbacks
     open func didBeginRendering(completion: (() -> ())? = nil) {
         if completion != nil { completion!() }
@@ -652,7 +744,8 @@ extension SKTileObject {
         let comma = propertiesString.characters.count > 0 ? ", " : ""
         let objectName = name ?? "null"
         let typeString = (type != nil) ? ", type: \"\(type!)\"" : ""
-        return "Object ID: \(id), \"\(objectName)\"\(typeString)\(comma)\(propertiesString)"
+        let layerDescription = (layer != nil) ? ", Layer: \"\(layer.layerName)\"" : ""
+        return "Object ID: \(id), \"\(objectName)\"\(typeString)\(comma)\(propertiesString)\(layerDescription)"
     }
     
     override open var debugDescription: String {

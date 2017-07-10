@@ -173,8 +173,6 @@ public extension TiledLayerObject {
         
         for (attr, value) in properties {
             
-            print(" -> setting property: \"\(attr)\" for layer: \"\(layerName)\"")
-            
             let lattr = attr.lowercased()
             
             if (lattr == "zposition") {

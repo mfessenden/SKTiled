@@ -229,14 +229,16 @@ public class SKTiledDemoScene: SKTiledScene {
     // MARK: - Callbacks
     override open func didReadMap(_ tilemap: SKTilemap) {
         // TODO: turn this on for master
-        self.physicsWorld.speed = 0
+        //self.physicsWorld.speed = 0
     }
     
     override open func didRenderMap(_ tilemap: SKTilemap) {
         // update the HUD to reflect the number of tiles created
         updateHud()
-        tilemap.layerStatistics()
+        tilemap.mapStatistics()
         self.blocked = false
+        
+        //dump(tilemap)
     }
 }
 
@@ -341,7 +343,23 @@ extension SKTiledDemoScene {
     override open func mouseMoved(with event: NSEvent) {
         super.mouseMoved(with: event)
         guard let tilemap = tilemap else { return }
+        
+        if let view = view {
+            let viewSize = view.bounds.size
+            
+            let positionInWindow = event.locationInWindow
+            let xpos = positionInWindow.x
+            let ypos = positionInWindow.y
+            
+            let xDistanceToCenter = (xpos / viewSize.width) - 0.5
+            let yDistanceToCenter = (ypos / viewSize.height) - 0.5
 
+            mouseTracker.xpos = xDistanceToCenter
+            mouseTracker.ypos = yDistanceToCenter
+        }
+
+        
+        
         let baseLayer = tilemap.baseLayer
 
         // get the position relative as drawn by the
@@ -367,7 +385,7 @@ extension SKTiledDemoScene {
         mouseTracker.coord = coord
         mouseTracker.isValid = validCoord
         
-        if liveMode == true {
+        if liveMode == true && isPaused == false {
             self.addTileToWorld(Int(coord.x), Int(coord.y))
         }
         
@@ -428,20 +446,39 @@ extension SKTiledDemoScene {
 
 
 open class MouseTracker: SKNode {
+    
     private var label = SKLabelNode(fontNamed: "Courier")
+    private var shadow = SKLabelNode(fontNamed: "Courier")
+    private var shadowOffset: CGFloat = 1
     private var circle = SKShapeNode()
     private let scaleAction = SKAction.scale(by: 1.55, duration: 0.025)
     private let scaleSequence: SKAction
     
+    private let tileWidth: CGFloat = 8
+    
     public var coord: CGPoint = .zero {
         didSet {
-            label.text = "\(Int(coord.x)), \(Int(coord.y))"
+            label.text = "(\(Int(coord.x)), \(Int(coord.y)))"
+            shadow.text = label.text
+        }
+    }
+    
+    public var xpos: CGFloat = 0 {
+        didSet {
+            label.position.x = (tileWidth * 12) * -xpos
+        }
+    }
+    
+    public var ypos: CGFloat = 0 {
+        didSet {
+            label.position.y = (tileWidth * 6) * -ypos
         }
     }
     
     public var fontSize: CGFloat = 12 {
         didSet {
             label.fontSize = fontSize
+            shadow.fontSize = label.fontSize
         }
     }
     
@@ -472,10 +509,20 @@ open class MouseTracker: SKNode {
     open func update() {
         circle = SKShapeNode(circleOfRadius: radius)
         addChild(circle)
+        
         addChild(label)
+        label.addChild(shadow)
+        shadow.zPosition = label.zPosition - 1
+        
+        fontSize = tileWidth * 1.5
+        
         circle.strokeColor = .clear
         label.fontSize = fontSize
-        label.position.y -= radius
-        label.position.x -= (radius * 8)
+        shadow.fontSize = fontSize
+        shadow.fontColor = SKColor.black.withAlphaComponent(0.7)
+        
+        shadow.position.x += shadowOffset
+        shadow.position.y -= shadowOffset
+        
     }
 }
