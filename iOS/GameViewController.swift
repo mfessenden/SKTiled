@@ -84,7 +84,7 @@ class GameViewController: UIViewController {
             let scene = view.scene as? SKTiledScene else { return }
 
         if let tilemap = scene.tilemap {
-            tilemap.debugDraw = !tilemap.debugDraw
+            tilemap.baseLayer.debugDrawOptions = (tilemap.baseLayer.debugDrawOptions != []) ? [] : [.demo]
         }
     }
 
@@ -98,8 +98,10 @@ class GameViewController: UIViewController {
             let scene = view.scene as? SKTiledScene else { return }
 
         if let tilemap = scene.tilemap {
-            let debugState = !tilemap.showObjects
-            tilemap.showObjects = debugState
+            // if objects are shown...
+            if let tilemap = scene.tilemap {
+                tilemap.showObjects = !tilemap.showObjects
+            }
         }
     }
     
@@ -111,7 +113,48 @@ class GameViewController: UIViewController {
     @IBAction func nextButtonPressed(_ sender: Any) {
         loadNextScene()
     }
-
+    
+    /**
+     Reload the current scene.
+     
+     - parameter interval: `TimeInterval` transition duration.
+     */
+    func reloadScene(_ interval: TimeInterval=0.4) {
+        guard let view = self.view as? SKView else { return }
+        
+        var debugOptions: DebugDrawOptions = []
+        var liveMode = false
+        var showOverlay = true
+        
+        var currentFilename: String! = nil
+        if let currentScene = view.scene as? SKTiledDemoScene {
+            if let cameraNode = currentScene.cameraNode {
+                showOverlay = cameraNode.showOverlay
+            }
+            
+            liveMode = currentScene.liveMode
+            if let tilemap = currentScene.tilemap {
+                debugOptions = tilemap.debugDrawOptions
+                currentFilename = tilemap.filename!
+            }
+            
+            currentScene.removeFromParent()
+            currentScene.removeAllActions()
+        }
+        
+        view.presentScene(nil)
+        
+        let nextScene = SKTiledDemoScene(size: view.bounds.size)
+        nextScene.scaleMode = .aspectFill
+        let transition = SKTransition.fade(withDuration: interval)
+        view.presentScene(nextScene, transition: transition)
+        
+        nextScene.setup(tmxFile: currentFilename)
+        nextScene.liveMode = liveMode
+        nextScene.cameraNode?.showOverlay = showOverlay
+        nextScene.tilemap?.debugDrawOptions = debugOptions
+    }
+    
     /**
      Load the next tilemap scene.
 
@@ -120,7 +163,7 @@ class GameViewController: UIViewController {
     func loadNextScene(_ interval: TimeInterval=0.4) {
         guard let view = self.view as? SKView else { return }
         
-        var debugMode = false
+        var debugDrawOptions: DebugDrawOptions = []
         var showOverlay = true
         
         var currentFilename = demoFiles.first!
@@ -130,7 +173,7 @@ class GameViewController: UIViewController {
             }
 
             if let tilemap = currentScene.tilemap {
-                debugMode = tilemap.debugDraw
+                debugDrawOptions = tilemap.debugDrawOptions
                 currentFilename = tilemap.name!
             }
 
@@ -152,7 +195,7 @@ class GameViewController: UIViewController {
         view.presentScene(nextScene, transition: transition)
         nextScene.setup(tmxFile: nextFilename)
         nextScene.cameraNode?.showOverlay = showOverlay
-        nextScene.tilemap?.debugDraw = debugMode
+        nextScene.tilemap?.debugDrawOptions = debugDrawOptions
     }
 
     /**
@@ -163,7 +206,7 @@ class GameViewController: UIViewController {
     func loadPreviousScene(_ interval: TimeInterval=0.4) {
         guard let view = self.view as? SKView else { return }
 
-        var debugMode = false
+        var debugDrawOptions: DebugDrawOptions = []
         var showOverlay = true
         
         var currentFilename = demoFiles.first!
@@ -173,7 +216,7 @@ class GameViewController: UIViewController {
             }
             
             if let tilemap = currentScene.tilemap {
-                debugMode = tilemap.debugDraw
+                debugDrawOptions = tilemap.debugDrawOptions
                 currentFilename = tilemap.filename!
             }
             
@@ -195,7 +238,7 @@ class GameViewController: UIViewController {
         
         nextScene.setup(tmxFile: nextFilename)
         nextScene.cameraNode?.showOverlay = showOverlay
-        nextScene.tilemap?.debugDraw = debugMode
+        nextScene.tilemap?.debugDrawOptions = debugDrawOptions
     }
 
     override var shouldAutorotate: Bool {

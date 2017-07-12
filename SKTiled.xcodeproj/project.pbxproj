@@ -7,6 +7,48 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C0924B91F0EE538009CA37E /* objects-test-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924B71F0EE538009CA37E /* objects-test-16x16.png */; };
+		4C0924BA1F0EE538009CA37E /* objects-test-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924B71F0EE538009CA37E /* objects-test-16x16.png */; };
+		4C0924BB1F0EE538009CA37E /* object-rotation.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924B81F0EE538009CA37E /* object-rotation.tmx */; };
+		4C0924BC1F0EE538009CA37E /* object-rotation.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924B81F0EE538009CA37E /* object-rotation.tmx */; };
+		4C0924C11F118927009CA37E /* test-objects-24x24.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924BF1F118927009CA37E /* test-objects-24x24.tsx */; };
+		4C0924C21F118927009CA37E /* test-objects-24x24.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924BF1F118927009CA37E /* test-objects-24x24.tsx */; };
+		4C0924C31F118927009CA37E /* test-objects-24x24.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924C01F118927009CA37E /* test-objects-24x24.png */; };
+		4C0924C41F118927009CA37E /* test-objects-24x24.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924C01F118927009CA37E /* test-objects-24x24.png */; };
+		4C0924D71F127DC0009CA37E /* tetris-bar-32x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924C81F127DC0009CA37E /* tetris-bar-32x8.tsx */; };
+		4C0924D81F127DC0009CA37E /* tetris-bar-32x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924C81F127DC0009CA37E /* tetris-bar-32x8.tsx */; };
+		4C0924D91F127DC0009CA37E /* tetris-lshape-24x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924C91F127DC0009CA37E /* tetris-lshape-24x16.tsx */; };
+		4C0924DA1F127DC0009CA37E /* tetris-lshape-24x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924C91F127DC0009CA37E /* tetris-lshape-24x16.tsx */; };
+		4C0924DB1F127DC0009CA37E /* tetris-square-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924CA1F127DC0009CA37E /* tetris-square-8x8.tsx */; };
+		4C0924DC1F127DC0009CA37E /* tetris-square-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924CA1F127DC0009CA37E /* tetris-square-8x8.tsx */; };
+		4C0924DD1F127DC0009CA37E /* tetris-square-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924CB1F127DC0009CA37E /* tetris-square-16x16.tsx */; };
+		4C0924DE1F127DC0009CA37E /* tetris-square-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924CB1F127DC0009CA37E /* tetris-square-16x16.tsx */; };
+		4C0924DF1F127DC0009CA37E /* tetris-tshape-24x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924CC1F127DC0009CA37E /* tetris-tshape-24x16.tsx */; };
+		4C0924E01F127DC0009CA37E /* tetris-tshape-24x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924CC1F127DC0009CA37E /* tetris-tshape-24x16.tsx */; };
+		4C0924E11F127DC0009CA37E /* bar-32x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924CD1F127DC0009CA37E /* bar-32x8.png */; };
+		4C0924E21F127DC0009CA37E /* bar-32x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924CD1F127DC0009CA37E /* bar-32x8.png */; };
+		4C0924E31F127DC0009CA37E /* lshape-24x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924CE1F127DC0009CA37E /* lshape-24x16.png */; };
+		4C0924E41F127DC0009CA37E /* lshape-24x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924CE1F127DC0009CA37E /* lshape-24x16.png */; };
+		4C0924E51F127DC0009CA37E /* square-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924CF1F127DC0009CA37E /* square-8x8.png */; };
+		4C0924E61F127DC0009CA37E /* square-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924CF1F127DC0009CA37E /* square-8x8.png */; };
+		4C0924E71F127DC0009CA37E /* square-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924D01F127DC0009CA37E /* square-16x16.png */; };
+		4C0924E81F127DC0009CA37E /* square-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924D01F127DC0009CA37E /* square-16x16.png */; };
+		4C0924EB1F127DC0009CA37E /* tetris-layer1-336x240.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924D21F127DC0009CA37E /* tetris-layer1-336x240.png */; };
+		4C0924EC1F127DC0009CA37E /* tetris-layer1-336x240.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924D21F127DC0009CA37E /* tetris-layer1-336x240.png */; };
+		4C0924ED1F127DC0009CA37E /* tetris-layer2-336x240.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924D31F127DC0009CA37E /* tetris-layer2-336x240.png */; };
+		4C0924EE1F127DC0009CA37E /* tetris-layer2-336x240.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924D31F127DC0009CA37E /* tetris-layer2-336x240.png */; };
+		4C0924EF1F127DC0009CA37E /* tetris-layer3-336x240.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924D41F127DC0009CA37E /* tetris-layer3-336x240.png */; };
+		4C0924F01F127DC0009CA37E /* tetris-layer3-336x240.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924D41F127DC0009CA37E /* tetris-layer3-336x240.png */; };
+		4C0924F11F127DC0009CA37E /* tetris-layer4-336x240.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924D51F127DC0009CA37E /* tetris-layer4-336x240.png */; };
+		4C0924F21F127DC0009CA37E /* tetris-layer4-336x240.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924D51F127DC0009CA37E /* tetris-layer4-336x240.png */; };
+		4C0924F31F127DC0009CA37E /* tshape-24x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924D61F127DC0009CA37E /* tshape-24x16.png */; };
+		4C0924F41F127DC0009CA37E /* tshape-24x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924D61F127DC0009CA37E /* tshape-24x16.png */; };
+		4C0924F61F127E00009CA37E /* tetris-dynamics.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924F51F127E00009CA37E /* tetris-dynamics.tmx */; };
+		4C0924F71F127E00009CA37E /* tetris-dynamics.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924F51F127E00009CA37E /* tetris-dynamics.tmx */; };
+		4C0924F91F12A261009CA37E /* test-objects-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924F81F12A261009CA37E /* test-objects-8x8.png */; };
+		4C0924FA1F12A261009CA37E /* test-objects-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924F81F12A261009CA37E /* test-objects-8x8.png */; };
+		4C0924FC1F12A34E009CA37E /* test-objects-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924FB1F12A34E009CA37E /* test-objects-8x8.tsx */; };
+		4C0924FD1F12A34E009CA37E /* test-objects-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924FB1F12A34E009CA37E /* test-objects-8x8.tsx */; };
 		4C1774A11D90999C000C0AFD /* DemoFiles.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CA3DA0D1D8AF07C001E165A /* DemoFiles.plist */; };
 		4C1774A21D90999C000C0AFD /* hex1-65x65.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEA35B1D8D04320055C150 /* hex1-65x65.tmx */; };
 		4C1774A41D90999C000C0AFD /* isometric-130x66.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2D91D8B9EA10083DA7B /* isometric-130x66.tmx */; };
@@ -35,26 +77,6 @@
 		4C3117DA1EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
 		4C3117DB1EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
 		4C3117DC1EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
-		4C41D22A1EFDBB91000451AC /* tetris-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C41D2281EFDBB91000451AC /* tetris-bg.png */; };
-		4C41D22B1EFDBB91000451AC /* tetris-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C41D2281EFDBB91000451AC /* tetris-bg.png */; };
-		4C41D22C1EFDBB91000451AC /* tetris-dynamics.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C41D2291EFDBB91000451AC /* tetris-dynamics.tmx */; };
-		4C41D22D1EFDBB91000451AC /* tetris-dynamics.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C41D2291EFDBB91000451AC /* tetris-dynamics.tmx */; };
-		4C41D2341EFDCCF7000451AC /* bar-32x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C41D22E1EFDCCF7000451AC /* bar-32x8.png */; };
-		4C41D2351EFDCCF7000451AC /* bar-32x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C41D22E1EFDCCF7000451AC /* bar-32x8.png */; };
-		4C41D2361EFDCCF7000451AC /* square-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C41D22F1EFDCCF7000451AC /* square-16x16.png */; };
-		4C41D2371EFDCCF7000451AC /* square-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C41D22F1EFDCCF7000451AC /* square-16x16.png */; };
-		4C41D2381EFDCCF7000451AC /* tetris-bar-32x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C41D2301EFDCCF7000451AC /* tetris-bar-32x8.tsx */; };
-		4C41D2391EFDCCF7000451AC /* tetris-bar-32x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C41D2301EFDCCF7000451AC /* tetris-bar-32x8.tsx */; };
-		4C41D23A1EFDCCF7000451AC /* tetris-square-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C41D2311EFDCCF7000451AC /* tetris-square-16x16.tsx */; };
-		4C41D23B1EFDCCF7000451AC /* tetris-square-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C41D2311EFDCCF7000451AC /* tetris-square-16x16.tsx */; };
-		4C41D23C1EFDCCF7000451AC /* tetris-tshape-24x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C41D2321EFDCCF7000451AC /* tetris-tshape-24x16.tsx */; };
-		4C41D23D1EFDCCF7000451AC /* tetris-tshape-24x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C41D2321EFDCCF7000451AC /* tetris-tshape-24x16.tsx */; };
-		4C41D23E1EFDCCF7000451AC /* tshape-24x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C41D2331EFDCCF7000451AC /* tshape-24x16.png */; };
-		4C41D23F1EFDCCF7000451AC /* tshape-24x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C41D2331EFDCCF7000451AC /* tshape-24x16.png */; };
-		4C41D2421EFDCEF3000451AC /* lshape-24x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C41D2401EFDCEF3000451AC /* lshape-24x16.png */; };
-		4C41D2431EFDCEF3000451AC /* lshape-24x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C41D2401EFDCEF3000451AC /* lshape-24x16.png */; };
-		4C41D2441EFDCEF3000451AC /* tetris-lshape-24x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C41D2411EFDCEF3000451AC /* tetris-lshape-24x16.tsx */; };
-		4C41D2451EFDCEF3000451AC /* tetris-lshape-24x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C41D2411EFDCEF3000451AC /* tetris-lshape-24x16.tsx */; };
 		4C440B9B1DAE911000DEC9A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C440B981DAE911000DEC9A4 /* Assets.xcassets */; };
 		4C440B9C1DAE911000DEC9A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C440B981DAE911000DEC9A4 /* Assets.xcassets */; };
 		4C440B9F1DAE911000DEC9A4 /* SKTiledDemoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */; };
@@ -83,6 +105,10 @@
 		4C88E1EA1D8A4EBE00FCCFA3 /* SKTilesetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */; };
 		4C8E42E01DC26FD1002C76DA /* zlib in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E42DF1DC26FD1002C76DA /* zlib */; };
 		4C8E42E11DC26FD1002C76DA /* zlib in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E42DF1DC26FD1002C76DA /* zlib */; };
+		4CA22C7D1F040FF600CD0A72 /* Nintendo-Arcade.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4CA22C7C1F040FF600CD0A72 /* Nintendo-Arcade.ttf */; };
+		4CA22C7E1F040FF600CD0A72 /* Nintendo-Arcade.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4CA22C7C1F040FF600CD0A72 /* Nintendo-Arcade.ttf */; };
+		4CA22C831F042BB200CD0A72 /* test-objects-24x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA22C821F042BB200CD0A72 /* test-objects-24x16.tsx */; };
+		4CA22C841F042BB200CD0A72 /* test-objects-24x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA22C821F042BB200CD0A72 /* test-objects-24x16.tsx */; };
 		4CA3DA0E1D8AF07C001E165A /* DemoFiles.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CA3DA0D1D8AF07C001E165A /* DemoFiles.plist */; };
 		4CAFDA4D1E20326D006F2D83 /* SKTiled+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D71D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift */; };
 		4CAFDA4E1E20326E006F2D83 /* SKTiled+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D71D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift */; };
@@ -122,21 +148,34 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C0924B71F0EE538009CA37E /* objects-test-16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "objects-test-16x16.png"; path = "test/objects-test-16x16.png"; sourceTree = "<group>"; };
+		4C0924B81F0EE538009CA37E /* object-rotation.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "object-rotation.tmx"; path = "test/object-rotation.tmx"; sourceTree = "<group>"; };
+		4C0924BD1F11755A009CA37E /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
+		4C0924BE1F117574009CA37E /* NOTES.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = NOTES.md; sourceTree = "<group>"; };
+		4C0924BF1F118927009CA37E /* test-objects-24x24.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "test-objects-24x24.tsx"; path = "test/test-objects-24x24.tsx"; sourceTree = "<group>"; };
+		4C0924C01F118927009CA37E /* test-objects-24x24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "test-objects-24x24.png"; path = "test/test-objects-24x24.png"; sourceTree = "<group>"; };
+		4C0924C81F127DC0009CA37E /* tetris-bar-32x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "tetris-bar-32x8.tsx"; sourceTree = "<group>"; };
+		4C0924C91F127DC0009CA37E /* tetris-lshape-24x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "tetris-lshape-24x16.tsx"; sourceTree = "<group>"; };
+		4C0924CA1F127DC0009CA37E /* tetris-square-8x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "tetris-square-8x8.tsx"; sourceTree = "<group>"; };
+		4C0924CB1F127DC0009CA37E /* tetris-square-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "tetris-square-16x16.tsx"; sourceTree = "<group>"; };
+		4C0924CC1F127DC0009CA37E /* tetris-tshape-24x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "tetris-tshape-24x16.tsx"; sourceTree = "<group>"; };
+		4C0924CD1F127DC0009CA37E /* bar-32x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bar-32x8.png"; sourceTree = "<group>"; };
+		4C0924CE1F127DC0009CA37E /* lshape-24x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lshape-24x16.png"; sourceTree = "<group>"; };
+		4C0924CF1F127DC0009CA37E /* square-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "square-8x8.png"; sourceTree = "<group>"; };
+		4C0924D01F127DC0009CA37E /* square-16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "square-16x16.png"; sourceTree = "<group>"; };
+		4C0924D21F127DC0009CA37E /* tetris-layer1-336x240.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tetris-layer1-336x240.png"; sourceTree = "<group>"; };
+		4C0924D31F127DC0009CA37E /* tetris-layer2-336x240.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tetris-layer2-336x240.png"; sourceTree = "<group>"; };
+		4C0924D41F127DC0009CA37E /* tetris-layer3-336x240.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tetris-layer3-336x240.png"; sourceTree = "<group>"; };
+		4C0924D51F127DC0009CA37E /* tetris-layer4-336x240.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tetris-layer4-336x240.png"; sourceTree = "<group>"; };
+		4C0924D61F127DC0009CA37E /* tshape-24x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tshape-24x16.png"; sourceTree = "<group>"; };
+		4C0924F51F127E00009CA37E /* tetris-dynamics.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "tetris-dynamics.tmx"; sourceTree = "<group>"; };
+		4C0924F81F12A261009CA37E /* test-objects-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "test-objects-8x8.png"; path = "test/test-objects-8x8.png"; sourceTree = "<group>"; };
+		4C0924FB1F12A34E009CA37E /* test-objects-8x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "test-objects-8x8.tsx"; path = "test/test-objects-8x8.tsx"; sourceTree = "<group>"; };
 		4C0E59501DC046E700921F75 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		4C0EE1E51DC116DB00A052E4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		4C0EE1E71DC116E300A052E4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
 		4C17747F1D909740000C0AFD /* SKTiledDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKTiledDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKTiled+Debug.swift"; sourceTree = "<group>"; };
-		4C41D2281EFDBB91000451AC /* tetris-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tetris-bg.png"; sourceTree = "<group>"; };
-		4C41D2291EFDBB91000451AC /* tetris-dynamics.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "tetris-dynamics.tmx"; sourceTree = "<group>"; };
-		4C41D22E1EFDCCF7000451AC /* bar-32x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bar-32x8.png"; sourceTree = "<group>"; };
-		4C41D22F1EFDCCF7000451AC /* square-16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "square-16x16.png"; sourceTree = "<group>"; };
-		4C41D2301EFDCCF7000451AC /* tetris-bar-32x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "tetris-bar-32x8.tsx"; sourceTree = "<group>"; };
-		4C41D2311EFDCCF7000451AC /* tetris-square-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "tetris-square-16x16.tsx"; sourceTree = "<group>"; };
-		4C41D2321EFDCCF7000451AC /* tetris-tshape-24x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "tetris-tshape-24x16.tsx"; sourceTree = "<group>"; };
-		4C41D2331EFDCCF7000451AC /* tshape-24x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tshape-24x16.png"; sourceTree = "<group>"; };
-		4C41D2401EFDCEF3000451AC /* lshape-24x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lshape-24x16.png"; sourceTree = "<group>"; };
-		4C41D2411EFDCEF3000451AC /* tetris-lshape-24x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "tetris-lshape-24x16.tsx"; sourceTree = "<group>"; };
 		4C440B981DAE911000DEC9A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTiledDemoScene.swift; sourceTree = "<group>"; };
 		4C440BA21DAE913000DEC9A4 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -166,6 +205,8 @@
 		4C88E1DA1D8A4EBE00FCCFA3 /* SKTileset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTileset.swift; sourceTree = "<group>"; };
 		4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTilesetData.swift; sourceTree = "<group>"; };
 		4C8E42DF1DC26FD1002C76DA /* zlib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = zlib; sourceTree = SOURCE_ROOT; };
+		4CA22C7C1F040FF600CD0A72 /* Nintendo-Arcade.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nintendo-Arcade.ttf"; sourceTree = "<group>"; };
+		4CA22C821F042BB200CD0A72 /* test-objects-24x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "test-objects-24x16.tsx"; path = "test/test-objects-24x16.tsx"; sourceTree = "<group>"; };
 		4CA3DA0D1D8AF07C001E165A /* DemoFiles.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DemoFiles.plist; sourceTree = "<group>"; };
 		4CBA61651D8A048200B31FC1 /* SKTiledDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKTiledDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CBA617E1D8A0A3900B31FC1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -299,6 +340,13 @@
 		4C61084D1E9C266F003E982C /* External */ = {
 			isa = PBXGroup;
 			children = (
+				4C0924B81F0EE538009CA37E /* object-rotation.tmx */,
+				4C0924FB1F12A34E009CA37E /* test-objects-8x8.tsx */,
+				4CA22C821F042BB200CD0A72 /* test-objects-24x16.tsx */,
+				4C0924BF1F118927009CA37E /* test-objects-24x24.tsx */,
+				4C0924B71F0EE538009CA37E /* objects-test-16x16.png */,
+				4C0924F81F12A261009CA37E /* test-objects-8x8.png */,
+				4C0924C01F118927009CA37E /* test-objects-24x24.png */,
 			);
 			name = External;
 			sourceTree = "<group>";
@@ -323,11 +371,21 @@
 			name = Extensions;
 			sourceTree = "<group>";
 		};
+		4CA22C7B1F040FE700CD0A72 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				4CA22C7C1F040FF600CD0A72 /* Nintendo-Arcade.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		4CBA615C1D8A048200B31FC1 = {
 			isa = PBXGroup;
 			children = (
 				4CBA617E1D8A0A3900B31FC1 /* README.md */,
 				4C0E59501DC046E700921F75 /* CHANGELOG.md */,
+				4C0924BD1F11755A009CA37E /* TODO.md */,
+				4C0924BE1F117574009CA37E /* NOTES.md */,
 				4C6480BE1DC1231C006F4CB3 /* Modules */,
 				4CBA61931D8A0A6C00B31FC1 /* Sources */,
 				4CBA617F1D8A0A4600B31FC1 /* Resources */,
@@ -352,6 +410,7 @@
 		4CBA617F1D8A0A4600B31FC1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4CA22C7B1F040FE700CD0A72 /* Fonts */,
 				4C61084D1E9C266F003E982C /* External */,
 				4CD5229E1DA624C400D78D81 /* CREDITS */,
 				4CA3DA0D1D8AF07C001E165A /* DemoFiles.plist */,
@@ -359,16 +418,8 @@
 				4CD6D2D91D8B9EA10083DA7B /* isometric-130x66.tmx */,
 				4C88E1AA1D8A241F00FCCFA3 /* ortho4-16x16.tmx */,
 				4C88E18B1D8A1BC400FCCFA3 /* roguelike-16x16.tmx */,
-				4C41D22E1EFDCCF7000451AC /* bar-32x8.png */,
-				4C41D22F1EFDCCF7000451AC /* square-16x16.png */,
-				4C41D2401EFDCEF3000451AC /* lshape-24x16.png */,
-				4C41D2411EFDCEF3000451AC /* tetris-lshape-24x16.tsx */,
-				4C41D2301EFDCCF7000451AC /* tetris-bar-32x8.tsx */,
-				4C41D2311EFDCCF7000451AC /* tetris-square-16x16.tsx */,
-				4C41D2321EFDCCF7000451AC /* tetris-tshape-24x16.tsx */,
-				4C41D2331EFDCCF7000451AC /* tshape-24x16.png */,
 				4CFEA3561D8D02D20055C150 /* staggered-64x33.tmx */,
-				4C41D2291EFDBB91000451AC /* tetris-dynamics.tmx */,
+				4C0924F51F127E00009CA37E /* tetris-dynamics.tmx */,
 				4CDF67CC1D8AE84300589457 /* png */,
 				4CD6D2D61D8B9DE50083DA7B /* tsx */,
 			);
@@ -396,6 +447,11 @@
 		4CD6D2D61D8B9DE50083DA7B /* tsx */ = {
 			isa = PBXGroup;
 			children = (
+				4C0924C81F127DC0009CA37E /* tetris-bar-32x8.tsx */,
+				4C0924C91F127DC0009CA37E /* tetris-lshape-24x16.tsx */,
+				4C0924CA1F127DC0009CA37E /* tetris-square-8x8.tsx */,
+				4C0924CB1F127DC0009CA37E /* tetris-square-16x16.tsx */,
+				4C0924CC1F127DC0009CA37E /* tetris-tshape-24x16.tsx */,
 				4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16.tsx */,
 			);
 			name = tsx;
@@ -404,12 +460,20 @@
 		4CDF67CC1D8AE84300589457 /* png */ = {
 			isa = PBXGroup;
 			children = (
+				4C0924CD1F127DC0009CA37E /* bar-32x8.png */,
+				4C0924CE1F127DC0009CA37E /* lshape-24x16.png */,
+				4C0924CF1F127DC0009CA37E /* square-8x8.png */,
+				4C0924D01F127DC0009CA37E /* square-16x16.png */,
+				4C0924D21F127DC0009CA37E /* tetris-layer1-336x240.png */,
+				4C0924D31F127DC0009CA37E /* tetris-layer2-336x240.png */,
+				4C0924D41F127DC0009CA37E /* tetris-layer3-336x240.png */,
+				4C0924D51F127DC0009CA37E /* tetris-layer4-336x240.png */,
+				4C0924D61F127DC0009CA37E /* tshape-24x16.png */,
 				4CFEA35A1D8D04320055C150 /* hex-65x65-65x230.png */,
 				4CD6D2DA1D8B9EA10083DA7B /* isometric-130x230.png */,
 				4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */,
 				4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */,
 				4CFEA3571D8D02D20055C150 /* staggered-64x192.png */,
-				4C41D2281EFDBB91000451AC /* tetris-bg.png */,
 			);
 			name = png;
 			sourceTree = "<group>";
@@ -570,27 +634,40 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C8E42E11DC26FD1002C76DA /* zlib in Resources */,
-				4C41D22A1EFDBB91000451AC /* tetris-bg.png in Resources */,
+				4C0924F91F12A261009CA37E /* test-objects-8x8.png in Resources */,
+				4C0924D91F127DC0009CA37E /* tetris-lshape-24x16.tsx in Resources */,
 				4C1774AC1D90999C000C0AFD /* roguelike-16x16-anim.png in Resources */,
+				4C0924F61F127E00009CA37E /* tetris-dynamics.tmx in Resources */,
+				4C0924F31F127DC0009CA37E /* tshape-24x16.png in Resources */,
+				4C0924FC1F12A34E009CA37E /* test-objects-8x8.tsx in Resources */,
 				4C1774A21D90999C000C0AFD /* hex1-65x65.tmx in Resources */,
-				4C41D2441EFDCEF3000451AC /* tetris-lshape-24x16.tsx in Resources */,
+				4C0924DB1F127DC0009CA37E /* tetris-square-8x8.tsx in Resources */,
+				4C0924C11F118927009CA37E /* test-objects-24x24.tsx in Resources */,
+				4C0924E31F127DC0009CA37E /* lshape-24x16.png in Resources */,
+				4C0924BB1F0EE538009CA37E /* object-rotation.tmx in Resources */,
+				4C0924DD1F127DC0009CA37E /* tetris-square-16x16.tsx in Resources */,
+				4C0924E11F127DC0009CA37E /* bar-32x8.png in Resources */,
 				4C1774A71D90999C000C0AFD /* staggered-64x33.tmx in Resources */,
-				4C41D23C1EFDCCF7000451AC /* tetris-tshape-24x16.tsx in Resources */,
+				4C0924ED1F127DC0009CA37E /* tetris-layer2-336x240.png in Resources */,
 				4C1774A81D90999C000C0AFD /* hex-65x65-65x230.png in Resources */,
-				4C41D23A1EFDCCF7000451AC /* tetris-square-16x16.tsx in Resources */,
-				4C41D2361EFDCCF7000451AC /* square-16x16.png in Resources */,
+				4C0924F11F127DC0009CA37E /* tetris-layer4-336x240.png in Resources */,
+				4C0924D71F127DC0009CA37E /* tetris-bar-32x8.tsx in Resources */,
 				4C440B9C1DAE911000DEC9A4 /* Assets.xcassets in Resources */,
 				4C1774A61D90999C000C0AFD /* roguelike-16x16.tmx in Resources */,
+				4C0924E51F127DC0009CA37E /* square-8x8.png in Resources */,
 				4C1774A51D90999C000C0AFD /* ortho4-16x16.tmx in Resources */,
 				4C440BA81DAE913000DEC9A4 /* Main.storyboard in Resources */,
-				4C41D2381EFDCCF7000451AC /* tetris-bar-32x8.tsx in Resources */,
+				4C0924EB1F127DC0009CA37E /* tetris-layer1-336x240.png in Resources */,
+				4C0924E71F127DC0009CA37E /* square-16x16.png in Resources */,
 				4C1774AD1D90999C000C0AFD /* staggered-64x192.png in Resources */,
-				4C41D22C1EFDBB91000451AC /* tetris-dynamics.tmx in Resources */,
+				4C0924C31F118927009CA37E /* test-objects-24x24.png in Resources */,
+				4C0924EF1F127DC0009CA37E /* tetris-layer3-336x240.png in Resources */,
+				4C0924DF1F127DC0009CA37E /* tetris-tshape-24x16.tsx in Resources */,
 				4C1774AA1D90999C000C0AFD /* isometric-130x230.png in Resources */,
+				4CA22C831F042BB200CD0A72 /* test-objects-24x16.tsx in Resources */,
 				4C1774A11D90999C000C0AFD /* DemoFiles.plist in Resources */,
-				4C41D2421EFDCEF3000451AC /* lshape-24x16.png in Resources */,
-				4C41D2341EFDCCF7000451AC /* bar-32x8.png in Resources */,
-				4C41D23E1EFDCCF7000451AC /* tshape-24x16.png in Resources */,
+				4CA22C7D1F040FF600CD0A72 /* Nintendo-Arcade.ttf in Resources */,
+				4C0924B91F0EE538009CA37E /* objects-test-16x16.png in Resources */,
 				4C1774AB1D90999C000C0AFD /* ortho4-16x16.png in Resources */,
 				4C1774AE1D90999C000C0AFD /* roguelike-16x16.tsx in Resources */,
 				4C1774A41D90999C000C0AFD /* isometric-130x66.tmx in Resources */,
@@ -601,32 +678,45 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C41D2431EFDCEF3000451AC /* lshape-24x16.png in Resources */,
-				4C41D23D1EFDCCF7000451AC /* tetris-tshape-24x16.tsx in Resources */,
 				4CFEA35D1D8D04320055C150 /* hex1-65x65.tmx in Resources */,
-				4C41D23F1EFDCCF7000451AC /* tshape-24x16.png in Resources */,
+				4C0924E21F127DC0009CA37E /* bar-32x8.png in Resources */,
+				4C0924F01F127DC0009CA37E /* tetris-layer3-336x240.png in Resources */,
+				4C0924D81F127DC0009CA37E /* tetris-bar-32x8.tsx in Resources */,
 				4CBA61831D8A0A4600B31FC1 /* roguelike-16x16-anim.png in Resources */,
-				4C41D22B1EFDBB91000451AC /* tetris-bg.png in Resources */,
 				4C88E1AB1D8A241F00FCCFA3 /* ortho4-16x16.tmx in Resources */,
-				4C41D2451EFDCEF3000451AC /* tetris-lshape-24x16.tsx in Resources */,
+				4C0924F21F127DC0009CA37E /* tetris-layer4-336x240.png in Resources */,
 				4C8E42E01DC26FD1002C76DA /* zlib in Resources */,
+				4C0924DC1F127DC0009CA37E /* tetris-square-8x8.tsx in Resources */,
+				4C0924E41F127DC0009CA37E /* lshape-24x16.png in Resources */,
+				4CA22C7E1F040FF600CD0A72 /* Nintendo-Arcade.ttf in Resources */,
 				4C88E18C1D8A1BC400FCCFA3 /* roguelike-16x16.tmx in Resources */,
 				4C440B9B1DAE911000DEC9A4 /* Assets.xcassets in Resources */,
-				4C41D2391EFDCCF7000451AC /* tetris-bar-32x8.tsx in Resources */,
-				4C41D23B1EFDCCF7000451AC /* tetris-square-16x16.tsx in Resources */,
+				4C0924DA1F127DC0009CA37E /* tetris-lshape-24x16.tsx in Resources */,
+				4C0924FD1F12A34E009CA37E /* test-objects-8x8.tsx in Resources */,
+				4C0924E01F127DC0009CA37E /* tetris-tshape-24x16.tsx in Resources */,
+				4CA22C841F042BB200CD0A72 /* test-objects-24x16.tsx in Resources */,
 				4C88E1AD1D8A242F00FCCFA3 /* ortho4-16x16.png in Resources */,
 				4C440BB51DAE913A00DEC9A4 /* Main.storyboard in Resources */,
+				4C0924EE1F127DC0009CA37E /* tetris-layer2-336x240.png in Resources */,
 				4CFEA3591D8D02D20055C150 /* staggered-64x192.png in Resources */,
+				4C0924EC1F127DC0009CA37E /* tetris-layer1-336x240.png in Resources */,
+				4C0924C41F118927009CA37E /* test-objects-24x24.png in Resources */,
 				4CA3DA0E1D8AF07C001E165A /* DemoFiles.plist in Resources */,
+				4C0924C21F118927009CA37E /* test-objects-24x24.tsx in Resources */,
 				4CD6D2DE1D8B9EA10083DA7B /* isometric-130x230.png in Resources */,
 				4CFEA35C1D8D04320055C150 /* hex-65x65-65x230.png in Resources */,
+				4C0924F71F127E00009CA37E /* tetris-dynamics.tmx in Resources */,
+				4C0924F41F127DC0009CA37E /* tshape-24x16.png in Resources */,
+				4C0924E61F127DC0009CA37E /* square-8x8.png in Resources */,
+				4C0924BC1F0EE538009CA37E /* object-rotation.tmx in Resources */,
 				4CFEA3581D8D02D20055C150 /* staggered-64x33.tmx in Resources */,
+				4C0924BA1F0EE538009CA37E /* objects-test-16x16.png in Resources */,
 				4C440BB41DAE913A00DEC9A4 /* LaunchScreen.storyboard in Resources */,
 				4CD6D2D51D8B9DE20083DA7B /* roguelike-16x16.tsx in Resources */,
-				4C41D22D1EFDBB91000451AC /* tetris-dynamics.tmx in Resources */,
+				4C0924DE1F127DC0009CA37E /* tetris-square-16x16.tsx in Resources */,
 				4CD6D2DD1D8B9EA10083DA7B /* isometric-130x66.tmx in Resources */,
-				4C41D2351EFDCCF7000451AC /* bar-32x8.png in Resources */,
-				4C41D2371EFDCCF7000451AC /* square-16x16.png in Resources */,
+				4C0924E81F127DC0009CA37E /* square-16x16.png in Resources */,
+				4C0924FA1F12A261009CA37E /* test-objects-8x8.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

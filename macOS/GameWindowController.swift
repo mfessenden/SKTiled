@@ -37,7 +37,7 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
             
             if let sceneDelegate = scene as? SKTiledSceneDelegate {
                 if let cameraNode = sceneDelegate.cameraNode {
-                    cameraNode.bounds = view.bounds
+                    ///cameraNode.bounds = view.bounds
                 }
             }
         }
@@ -51,10 +51,12 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
             scene.size = view.bounds.size
             
             if let sceneDelegate = scene as? SKTiledSceneDelegate {
+                
+                // update tracking view?
+                
+                
                 if let tilemap = sceneDelegate.tilemap {
-                    
-                    //print(tilemap.calculateAccumulatedFrame().size)
-                    
+
                     var renderSize = tilemap.renderSize
                     renderSize.width = renderSize.width * sceneDelegate.cameraNode.zoom
                     renderSize.height = renderSize.height * sceneDelegate.cameraNode.zoom

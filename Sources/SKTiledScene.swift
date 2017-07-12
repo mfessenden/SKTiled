@@ -96,8 +96,9 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     /**
      Load a named TMX file, with optional tilesets.
      
-     - parameter fileNamed:  `String` TMX file name.
+     - parameter tmxFile:    `String` TMX file name.
      - parameter tilesets:   `[SKTileset]` pre-loaded tilesets.
+     - parameter completion: `(() -> ())?` optional completion handler.
      */
     open func setup(tmxFile: String, tilesets: [SKTileset]=[], _ completion: (() -> ())? = nil) {
         guard let worldNode = worldNode else { return }
@@ -178,6 +179,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     
     open func didRenderMap(_ tilemap: SKTilemap) {
         // Called after layers are rendered. Perform any post-processing here.
+        self.physicsWorld.speed = 1
     }
     
     // MARK: - Updates
@@ -198,8 +200,15 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
 
 // default methods
 extension SKTiledSceneDelegate {
-    public func cameraPositionChanged(_ oldPosition: CGPoint) {}
-    public func cameraZoomChanged(_ oldZoom: CGFloat) {}
+    public func cameraPositionChanged(_ oldPosition: CGPoint) {
+        guard let cameraNode = cameraNode else { return }
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": cameraNode.description])
+    }
+    
+    public func cameraZoomChanged(_ oldZoom: CGFloat) {
+        guard let cameraNode = cameraNode else { return }
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": cameraNode.description])
+    }
     public func sceneDoubleTapped() {}
 }
 
@@ -215,6 +224,14 @@ extension SKTiledSceneDelegate where Self: SKScene {
      */
     public func load(fromFile filename: String, withTilesets tilesets: [SKTileset]=[]) -> SKTilemap? {
         if let tilemap = SKTilemap.load(fromFile: filename, delegate: self as? SKTilemapDelegate, withTilesets: tilesets) {
+            
+            if let cameraNode = cameraNode {
+                // camera properties inherited from tilemap
+                cameraNode.allowMovement = tilemap.allowMovement
+                cameraNode.allowZoom = tilemap.allowZoom
+                cameraNode.setCameraZoom(tilemap.worldScale)
+                cameraNode.maxZoom = tilemap.maxZoom
+            }
             
             return tilemap
         }
@@ -235,16 +252,13 @@ extension SKTiledSceneDelegate where Self: SKScene {
         nextScene.scaleMode = scaleMode
         
         defer {
-            //print("# [SKTiledSceneDelegate]: running completion...")
+            //print("[SKTiledSceneDelegate]: running completion...")
             completion?()
         }
-        print("    ❗️about to dealloc scene...")
         view?.presentScene(nextScene, transition: transition)
         
         if let sceneDelegate = nextScene as? SKTiledSceneDelegate {
             if tmxFile != nil {
-    
-                print("\n❗️1.  SKTiledSceneDelegate.presentScene")
                 if let newTilemap = sceneDelegate.load(fromFile: tmxFile!, withTilesets: []) {
                     
                     sceneDelegate.tilemap = newTilemap
@@ -255,6 +269,7 @@ extension SKTiledSceneDelegate where Self: SKScene {
                         cameraNode.allowMovement = newTilemap.allowMovement
                         cameraNode.allowZoom = newTilemap.allowZoom
                         cameraNode.setCameraZoom(newTilemap.worldScale)
+                        cameraNode.maxZoom = newTilemap.maxZoom
                     }
                 }
             }

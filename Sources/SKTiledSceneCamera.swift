@@ -7,7 +7,7 @@
 //
 
 import SpriteKit
-#if os(iOS)
+#if os(iOS) || os(tvOS)
 import UIKit
 #else
 import Cocoa
@@ -36,12 +36,12 @@ open class SKTiledSceneCamera: SKCameraNode {
     open var allowRotation: Bool = false
     
     // zoom constraints
-    private var minZoom: CGFloat = 0.2
-    private var maxZoom: CGFloat = 5.0
-    public var isAtMaxZoom: Bool { return zoom == maxZoom }
+    open var minZoom: CGFloat = 0.2
+    open var maxZoom: CGFloat = 5.0
+    open var isAtMaxZoom: Bool { return zoom == maxZoom }
     
     // gestures
-    #if os(iOS)
+    #if os(iOS) || os(tvOS)
     /// Gesture recognizer to recognize camera panning
     open var cameraPanned: UIPanGestureRecognizer!
     /// Gesture recognizer to recognize double taps
@@ -80,7 +80,7 @@ open class SKTiledSceneCamera: SKCameraNode {
         addChild(overlay)
         overlay.isHidden = true
         
-        #if os(iOS)
+        #if os(iOS) || os(tvOS)
         // setup pan recognizer
         cameraPanned = UIPanGestureRecognizer(target: self, action: #selector(cameraPanned(_:)))
         cameraPanned.minimumNumberOfTouches = 1
@@ -232,6 +232,7 @@ open class SKTiledSceneCamera: SKCameraNode {
     open func resetCamera(toScale scale: CGFloat) {
         centerOn(scenePoint: CGPoint(x: 0, y: 0))
         setCameraZoom(scale)
+        
     }
     
     /**
@@ -260,11 +261,26 @@ open class SKTiledSceneCamera: SKCameraNode {
         centerOn(scenePoint: CGPoint(x: 0, y: 0))
         setCameraZoom(scaleFactor)
         tilemap.autoResize = !tilemap.autoResize
+        
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": self.description])
     }
 }
 
 
-#if os(iOS)
+extension SKTiledSceneCamera {
+    override open var description: String {
+        return "Camera: \(bounds.roundTo()), zoom: \(zoom.roundTo())"
+    }
+    
+    override open var debugDescription: String {
+        return "Camera: \(bounds.roundTo()), zoom: \(zoom.roundTo())"
+    }
+}
+
+
+
+
+#if os(iOS) || os(tvOS)
 extension SKTiledSceneCamera {
     // MARK: - Gesture Handlers    
     

@@ -10,7 +10,7 @@
 import SpriteKit
 import Foundation
 
-#if os(iOS)
+#if os(iOS) || os(tvOS)
 import UIKit
 #else
 import Cocoa
@@ -26,9 +26,30 @@ public class SKTiledDemoScene: SKTiledScene {
     private let labelFontSize: CGFloat = 11
     
     internal var selected: [TiledLayerObject] = []
-    internal var coordinates: [CGPoint] = []
+    
     internal var editMode: Bool = false
-    internal var liveMode: Bool = false                     // highlight tiles under the mouse
+    internal var liveMode: Bool = true                     // highlight tiles under the mouse
+    
+    internal var blocked: Bool = true                      // lock the scene for cleanup
+    internal let cleanupQueue = DispatchQueue(label: "com.sktiled.cleanup", qos: .userInteractive)
+    
+    internal var coordinate: CGPoint = .zero {
+        didSet {
+            guard oldValue != coordinate else { return }
+            
+            
+            self.enumerateChildNodes(withName: "//*") {
+                node, stop in
+                
+                if let tile = node as? TileShape {
+                    if (tile.coord == self.coordinate) && (tile.useLabel == true) {
+                        tile.detonate()
+                    }
+                }
+            }
+            
+        }
+    }
     
     override public func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -42,7 +63,7 @@ public class SKTiledDemoScene: SKTiledScene {
         mouseTracker.zPosition = 10000
         #endif
         
-        NotificationCenter.default.addObserver(self, selector: #selector(removeCoordinate), name: NSNotification.Name(rawValue: "removeCoordinate"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateCoordinate), name: NSNotification.Name(rawValue: "updateCoordinate"), object: nil)
     }
 
     /**
@@ -53,88 +74,85 @@ public class SKTiledDemoScene: SKTiledScene {
      - parameter y:         `Int` y-coordinate.
      - parameter duration:  `TimeInterval` tile life.
      */
-    func addTileAt(layer: TiledLayerObject, _ x: Int, _ y: Int, duration: TimeInterval=0, useLabel: Bool=false) -> TileShape? {
-        guard let tilemap = tilemap else { return nil }
+    func addTileAt(layer: TiledLayerObject, _ x: Int, _ y: Int, useLabel: Bool=true)  {
+        guard let tilemap = tilemap else { return  }
+        
         // validate the coordinate
         let validCoord = layer.isValid(x, y)
+        
+        let coord = CGPoint(x: x, y: y)
+        
         let tileColor: SKColor = (validCoord == true) ? tilemap.highlightColor : TiledColors.red.color
-        
         let lastZosition = tilemap.lastZPosition + (tilemap.zDeltaForLayers * 2)
-        
         // add debug tile shape
-        let tile = TileShape(layer: layer, coord: CGPoint(x: x, y: y), tileColor: tileColor, withLabel: useLabel)
+        let tile = TileShape(layer: layer, coord: coord, tileColor: tileColor, withLabel: useLabel)
+            
         tile.zPosition = lastZosition
         tile.position = layer.pointForCoordinate(x, y)
         layer.addChild(tile)
-        if (duration > 0) {
-            let fadeAction = SKAction.fadeAlpha(to: 0, duration: duration)
-            tile.run(fadeAction, completion: {
-                tile.removeFromParent()
-            })
-        }
-        return tile
     }
     
     /**
-     Add a tile shape to the world at the given coordinate.
+     Add a temporary tile shape to the world at the given coordinate.
      
      - parameter x:         `Int` x-coordinate.
      - parameter y:         `Int` y-coordinate.
      - parameter duration:  `TimeInterval` tile life.
      */
-    func addTileToWorld(_ x: Int, _ y: Int, duration: TimeInterval=0, useLabel: Bool=false) -> TileShape? {
+    func addTileToWorld(_ x: Int, _ y: Int, useLabel: Bool=false) {
         guard let tilemap = tilemap,
-                let worldNode = worldNode else { return nil }
+                let worldNode = worldNode else { return }
         
         // validate the coordinate
         let layer = tilemap.baseLayer
         let validCoord = layer.isValid(x, y)
         
         let coord = CGPoint(x: x, y: y)
-        
-        
-        if !coordinates.contains(coord) {
-            coordinates.append(coord)
-            
+
+        if coord != coordinate {
             let tileColor: SKColor = (validCoord == true) ? tilemap.highlightColor : TiledColors.red.color
             let lastZosition = tilemap.lastZPosition + (tilemap.zDeltaForLayers * 2)
             
             // add debug tile shape
-            let tile = TileShape(layer: layer, coord: CGPoint(x: x, y: y), tileColor: tileColor, withLabel: useLabel)
+
+            let tile = TileShape(layer: layer, coord: coord, tileColor: tileColor, withLabel: useLabel)
             tile.zPosition = lastZosition
             let tilePosition = layer.pointForCoordinate(x, y)
             tile.position = worldNode.convert(tilePosition, from: layer)
             worldNode.addChild(tile)
-            if (duration > 0) {
-                let fadeAction = SKAction.fadeAlpha(to: 0, duration: duration)
-                tile.run(fadeAction, completion: {
-                    tile.removeFromParent()
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: "removeCoordinate"), object: nil, userInfo: ["x": x, "y": y])
-                })
-            }
-            return tile
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "updateCoordinate"), object: nil, userInfo: ["x": x, "y": y])
         }
-        return nil
     }
     
     // MARK: - Deinitialization
     deinit {
         // Deregister for scene updates
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "reloadScene"), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "loadNextScene"), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "loadPreviousScene"), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "updateDebugLabels"), object: nil)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "removeCoordinate"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "updateCoordinate"), object: nil)
         removeAllActions()
         removeAllChildren()
     }
     
     /**
-     Call back to the GameViewController to load the next scene.
+     Callback to the GameViewController to reload the current scene.
+     */
+    public func reloadScene() {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadScene"), object: nil)
+    }
+    
+    /**
+     Callback to the GameViewController to load the next scene.
      */
     public func loadNextScene() {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "loadNextScene"), object: nil)
     }
     
+    /**
+     Callback to the GameViewController to reload the previous scene.
+     */
     public func loadPreviousScene() {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "loadPreviousScene"), object: nil)
     }
@@ -154,16 +172,21 @@ public class SKTiledDemoScene: SKTiledScene {
     public func updateDebugInfo(msg: String) {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["debugInfo": msg])
     }
+    
+    public func updateCameraInfo(msg: String) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": msg])
+    }
 
     /**
-     Call back to remove coordinates.
+     Callback to remove coordinates.
      */
-    public func removeCoordinate(notification: Notification) {
-        let coord = CGPoint(x: notification.userInfo!["x"] as! Int,
-                            y: notification.userInfo!["y"] as! Int)
+    public func updateCoordinate(notification: Notification) {
+        let tempCoord = CGPoint(x: notification.userInfo!["x"] as! Int,
+                                y: notification.userInfo!["y"] as! Int)
         
-        guard coordinates.contains(coord) else { return }
-        coordinates.remove(at: coordinates.index(of: coord)!)
+        guard tempCoord != coordinate else { return }
+        // get the current coordinate
+        coordinate = tempCoord
     }
     
     override public func didChangeSize(_ oldSize: CGSize) {
@@ -182,11 +205,40 @@ public class SKTiledDemoScene: SKTiledScene {
         updateMapInfo(msg: tilemap.description)
     }
     
+    override open func update(_ currentTime: TimeInterval) {
+        guard self.blocked == false else { return }
+
+        self.enumerateChildNodes(withName: "//*") {
+            node, stop in
+            
+            if let tile = node as? TileShape {
+                if (tile.coord != self.coordinate) && (tile.useLabel == false) {
+                    
+                    // remove the node asyncronously
+                    self.cleanupQueue.async {
+                        let fadeAction = SKAction.fadeAlpha(to: 0, duration: 0.1)
+                        tile.run(fadeAction, completion: {
+                            tile.removeFromParent()
+                        })
+                    }
+                }
+            }
+        }
+    }
+    
     // MARK: - Callbacks
+    override open func didReadMap(_ tilemap: SKTilemap) {
+        // TODO: turn this on for master
+        //self.physicsWorld.speed = 0
+    }
+    
     override open func didRenderMap(_ tilemap: SKTilemap) {
         // update the HUD to reflect the number of tiles created
         updateHud()
-        tilemap.layerStatistics()
+        tilemap.mapStatistics()
+        self.blocked = false
+        
+        //dump(tilemap)
     }
 }
 
@@ -212,7 +264,7 @@ extension SKTiledDemoScene {
             // add a tile shape to the base layer where the user has clicked
             
             // highlight the current coordinate
-            let _ = addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y), duration: 6)
+            addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y))
             
             // update the tile information label
             let coordStr = "Coord: \(coord.shortDescription), \(positionInLayer.roundTo())"
@@ -222,10 +274,7 @@ extension SKTiledDemoScene {
             // tile properties output
             var propertiesInfoString = ""
             if let tile = tilemap.firstTileAt(coord: coord) {
-                propertiesInfoString = "Tile ID: \(tile.tileData.id)"
-                if tile.tileData.propertiesString != "" {
-                    propertiesInfoString += "; \(tile.tileData.propertiesString)"
-                }
+                propertiesInfoString = tile.tileData.description
             }
             
             updatePropertiesInfo(msg: propertiesInfoString)
@@ -244,17 +293,32 @@ extension SKTiledDemoScene {
             let cameraNode = cameraNode else { return }
         
         cameraNode.mouseDown(with: event)
-    
+        
+        let positionInScene = event.location(in: self)
         let baseLayer = tilemap.baseLayer
         
         // get the position in the baseLayer
         let positionInLayer = baseLayer.mouseLocation(event: event)
         // get the coordinate at that position
         let coord = baseLayer.coordinateAtMouseEvent(event: event)
+        let nodesUnderCursor = nodes(at: positionInScene).filter( { $0 as? TileShape != nil }) as! [TileShape]
+        let currentClicked = nodesUnderCursor.filter( { $0.useLabel == true } )
 
         if (tilemap.isPaused == false) {
             // highlight the current coordinate
-            let _ = addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y), duration: 6)
+            if currentClicked.count == 0 {
+                addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y))
+            } else {
+                for tile in currentClicked {
+                    // remove the node asyncronously
+                    self.cleanupQueue.async {
+                        let fadeAction = SKAction.fadeAlpha(to: 0, duration: 0.1)
+                        tile.run(fadeAction, completion: {
+                            tile.removeFromParent()
+                        })
+                    }
+                }
+            }
         }
 
         // update the tile information label
@@ -265,11 +329,8 @@ extension SKTiledDemoScene {
         // tile properties output
         var propertiesInfoString = ""
         if let tile = tilemap.firstTileAt(coord: coord) {
-            propertiesInfoString = "Tile ID: \(tile.tileData.id)"
-            if tile.tileData.propertiesString != "" {
-                propertiesInfoString += "; \(tile.tileData.propertiesString)"
-            }
-            
+            propertiesInfoString = tile.tileData.description
+
             if let layer = tile.layer {
                 if !selected.contains(layer) {
                     selected.append(layer)
@@ -282,22 +343,42 @@ extension SKTiledDemoScene {
     override open func mouseMoved(with event: NSEvent) {
         super.mouseMoved(with: event)
         guard let tilemap = tilemap else { return }
+        
+        if let view = view {
+            let viewSize = view.bounds.size
+            
+            let positionInWindow = event.locationInWindow
+            let xpos = positionInWindow.x
+            let ypos = positionInWindow.y
+            
+            let xDistanceToCenter = (xpos / viewSize.width) - 0.5
+            let yDistanceToCenter = (ypos / viewSize.height) - 0.5
+            
+            
+            mouseTracker.xpos = xDistanceToCenter
+            mouseTracker.ypos = yDistanceToCenter
+        }
 
+        
+        
         let baseLayer = tilemap.baseLayer
-        
-        // CLEANME: Here
-        //let positionInWindow = event.locationInWindow
-        //let positionInView = convertPoint(toView: positionInScene)
-        //let worldPosition = convert(positionInScene, to: worldNode!)
-        
 
-        
         // get the position relative as drawn by the
         let positionInScene = event.location(in: self)
         let positionInLayer = baseLayer.mouseLocation(event: event)
         let coord = baseLayer.coordinateAtMouseEvent(event: event)
         let validCoord = baseLayer.isValid(Int(coord.x), Int(coord.y))
-
+        
+        
+        // query nodes under the cursor
+        var propertiesInfoString = ""
+        let positionInMap = event.location(in: tilemap)
+        let tiledObjectsUnderCursor = tilemap.renderableObjectsAt(point: positionInMap)
+        
+        if (tiledObjectsUnderCursor.count) > 0 {
+            propertiesInfoString = tiledObjectsUnderCursor.first!.description
+        }
+        
         
         // update the mouse tracking node
         mouseTracker.position = positionInScene
@@ -305,25 +386,15 @@ extension SKTiledDemoScene {
         mouseTracker.coord = coord
         mouseTracker.isValid = validCoord
         
-        if liveMode == true {
-            let _ = self.addTileToWorld(Int(coord.x), Int(coord.y), duration: 0.7)
+        if liveMode == true && isPaused == false {
+            self.addTileToWorld(Int(coord.x), Int(coord.y))
         }
         
         let coordDescription = "\(Int(coord.x)), \(Int(coord.y))"
         updateTileInfo(msg: "Coord: \(coordDescription), \(positionInLayer.roundTo())")
-        
-        // tile properties output
-        var propertiesInfoString = ""
-        if let tile = tilemap.firstTileAt(coord: coord) {
-            //tile.highlightWithColor(tilemap.highlightColor)
-            propertiesInfoString = "Tile ID: \(tile.tileData.id)"
-            if tile.tileData.propertiesString != "" {
-                propertiesInfoString += "; \(tile.tileData.propertiesString)"
-            }
-        }
         updatePropertiesInfo(msg: propertiesInfoString)
     }
-        
+
     override open func mouseDragged(with event: NSEvent) {
         guard let cameraNode = cameraNode else { return }
         cameraNode.scenePositionChanged(event)
@@ -358,6 +429,11 @@ extension SKTiledDemoScene {
             
             let trackingArea = NSTrackingArea(rect: view.frame, options: options, owner: self, userInfo: nil)
             view.addTrackingArea(trackingArea)
+            
+            
+            if let cameraNode = cameraNode {
+                updateCameraInfo(msg: cameraNode.description)
+            }
         }
     }
 }
@@ -365,20 +441,40 @@ extension SKTiledDemoScene {
 
 
 open class MouseTracker: SKNode {
+    
     private var label = SKLabelNode(fontNamed: "Courier")
+    private var shadow = SKLabelNode(fontNamed: "Courier")
+    private var shadowOffset: CGFloat = 1
     private var circle = SKShapeNode()
     private let scaleAction = SKAction.scale(by: 1.55, duration: 0.025)
     private let scaleSequence: SKAction
     
+    private let tileWidth: CGFloat = 8
+    
     public var coord: CGPoint = .zero {
         didSet {
-            label.text = "\(Int(coord.x)), \(Int(coord.y))"
+            label.text = "(\(Int(coord.x)), \(Int(coord.y)))"
+            shadow.text = label.text
+        }
+    }
+    
+    public var xpos: CGFloat = 0 {
+        didSet {
+            label.position.x = (tileWidth * 12) * -xpos
+        }
+    }
+    
+    public var ypos: CGFloat = 0 {
+        didSet {
+            //let newYPos = lerp(start: 0.25, end: 1.0, t: ypos)
+            label.position.y = (tileWidth * 6) * -ypos
         }
     }
     
     public var fontSize: CGFloat = 12 {
         didSet {
             label.fontSize = fontSize
+            shadow.fontSize = label.fontSize
         }
     }
     
@@ -409,10 +505,20 @@ open class MouseTracker: SKNode {
     open func update() {
         circle = SKShapeNode(circleOfRadius: radius)
         addChild(circle)
+        
         addChild(label)
+        label.addChild(shadow)
+        shadow.zPosition = label.zPosition - 1
+        
+        fontSize = tileWidth * 1.5
+        
         circle.strokeColor = .clear
         label.fontSize = fontSize
-        label.position.y -= radius
-        label.position.x -= (radius * 8)
+        shadow.fontSize = fontSize
+        shadow.fontColor = SKColor.black.withAlphaComponent(0.7)
+        
+        shadow.position.x += shadowOffset
+        shadow.position.y -= shadowOffset
+        
     }
 }

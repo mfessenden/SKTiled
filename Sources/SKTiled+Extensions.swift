@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 import zlib
-#if os(iOS)
+#if os(iOS) || os(tvOS)
 import UIKit
 #else
 import Cocoa
@@ -19,7 +19,7 @@ import Cocoa
 // MARK: - Functions
 
 
-#if os(iOS)
+#if os(iOS) || os(tvOS)
 /**
  Returns an image of the given size.
  
@@ -39,6 +39,41 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
     let result = UIGraphicsGetImageFromCurrentImageContext()
     return result!.cgImage!
 }
+
+    
+/**
+ Load an image and use masking values as an alpha mask. On iOS, masking values should be 0-1.
+ 
+ - parameter imageNamed: `String` image name.
+ - parameter masking:    `[CGFloat]` color float values for mask.
+ - returns: `CGImage?` image result.
+ */
+public func transparentImage(imageNamed: String, masking: [CGFloat]) -> CGImage? {
+
+    if let image = UIImage(named: imageNamed) {
+        let imageSize = image.size
+        if let rawImageRef = image.cgImage {
+            UIGraphicsBeginImageContextWithOptions(imageSize, true, 1)
+            if let maskedImageRef = rawImageRef.copy(maskingColorComponents: masking) {
+                let context: CGContext = UIGraphicsGetCurrentContext()!
+                context.translateBy(x: 0.0, y: imageSize.height)
+                context.scaleBy(x: 1.0, y: -1.0)
+                context.draw(maskedImageRef, in: CGRect(x:0, y:0, width: imageSize.width,
+                                                        height: imageSize.height))
+                let result = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                if let uiResult = result {
+                    if let cgResult = uiResult.cgImage {
+                        return cgResult
+                    }
+                }
+            }
+        }
+
+    }
+    return nil
+}
+
     
 #else
 /**
@@ -62,6 +97,29 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
     var imageRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
     let imageRef = image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)
     return imageRef!
+}
+
+    
+/**
+ Load an image and use masking values as an alpha mask. On macOS, masking values should be 0-1.
+     
+ - parameter imageNamed: `String` image name.
+ - parameter masking:    `[CGFloat]` color float values for mask.
+ - returns: `CGImage?` image result.
+ */
+public func transparentImage(imageNamed: String, masking: [CGFloat]) -> CGImage? {
+    if let image = NSImage(named: imageNamed) {
+        let data = image.tiffRepresentation!
+        let bitmap = NSBitmapImageRep(data: data)
+        
+        var imageRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
+        let imageRef = image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)!
+        
+        if let imgRefCopy = imageRef.copy(maskingColorComponents: masking) {
+            return imgRefCopy
+        }
+    }
+    return nil
 }
 #endif
 
@@ -145,8 +203,17 @@ internal extension CGFloat {
      - returns: `CGFloat`
      */
     internal func radians() -> CGFloat {
-        let b = CGFloat(Double.pi) * (self/180)
+        let b = CGFloat(Double.pi) * (self / 180)
         return b
+    }
+    
+    /**
+     Convert a float to degrees.
+     
+     - returns: `CGFloat`
+     */
+    internal func degrees() -> CGFloat {
+        return self * 180.0 / CGFloat(Double.pi)
     }
     
     /**
@@ -253,11 +320,38 @@ public extension CGPoint {
         return int2(Int32(x), Int32(y))
     }
     
+    /**
+     Returns the distance to the given point.
+     
+     - parameter point: `CGPoint` decimals to round to.
+     - returns: `Float` distance to other point.
+     */
+    public func distance(_ point: CGPoint) -> Float {
+        let dx = Float(x - point.x)
+        let dy = Float(y - point.y)
+        return sqrt((dx * dx) + (dy * dy))
+    }
+    
+    /// Return an integer value for x-coordinate.
     public var xCoord: Int { return Int(x) }
+    /// Return an integer value for y-coordinate.
     public var yCoord: Int { return Int(y) }
     
     public var description: String { return "x: \(x.roundTo()), y: \(y.roundTo())" }
     public var shortDescription: String { return "\(Int(x)),\(Int(y))" }
+}
+
+
+extension CGPoint: Hashable {
+
+    public var hashValue: Int {
+        return x.hashValue << 32 ^ y.hashValue
+    }
+}
+
+
+public func ==(lhs: CGPoint, rhs: CGPoint) -> Bool {
+    return lhs.distance(rhs) < 0.000001
 }
 
 
@@ -318,6 +412,20 @@ public extension CGRect {
     /// Return the four corner points.
     public var points: [CGPoint] {
         return [topLeft, topRight, bottomRight, bottomLeft]
+    }
+    
+    /**
+     Returns a display string rounded.
+     
+     - parameter decimals: `Int` decimals to round to.
+     - returns: `String` display string.
+     */
+    public func roundTo(_ decimals: Int=1) -> String {
+        return "origin: \(Int(origin.x)), \(Int(origin.y)), size: \(Int(size.width)) x \(Int(size.height))"
+    }
+    
+    public var shortDescription: String {
+        return "x: \(Int(minX)), y: \(Int(minY)), w: \(width.roundTo()), h: \(height.roundTo())"
     }
 }
 
@@ -389,6 +497,22 @@ internal extension SKNode {
             run(compositeAction, withKey: withKey)
         } else {
             run(action, withKey: withKey)
+        }
+    }
+    
+    internal var drawAnchor: Bool {
+        get {
+            return childNode(withName: "DRAW_ANCHOR") != nil
+        } set {
+            // remove the current node
+            childNode(withName: "DRAW_ANCHOR")?.removeFromParent()
+            if (newValue == true) {
+                let anchor = SKShapeNode(circleOfRadius: 0.75)
+                anchor.name = "DRAW_ANCHOR"
+                anchor.strokeColor = .clear
+                anchor.zPosition = zPosition * 4
+                addChild(anchor)
+            }
         }
     }
 }
@@ -552,6 +676,14 @@ public extension SKColor {
         let a = Int(comps[3] * 255)
         return "SKColor(r: \(r), g: \(g), b: \(b), a: \(a))"
     }
+    
+    public var componentDescription: String {
+        var result: [String] = []
+        for compDesc in components.map({ "\($0.roundTo(1))" }) {
+            result.append(compDesc)
+        }
+        return "SKColor: " + result.joined(separator: ",")
+    }
 }
 
 
@@ -677,6 +809,27 @@ public extension SKAction {
     public class func fadeAfter(wait duration: TimeInterval, alpha: CGFloat) -> SKAction {
         return SKAction.sequence([SKAction.wait(forDuration: duration), SKAction.fadeAlpha(to: alpha, duration: 0.5)])
     }
+    
+    /**
+     * Performs an action after the specified delay.
+     */
+    public class func afterDelay(_ delay: TimeInterval, performAction action: SKAction) -> SKAction {
+        return SKAction.sequence([SKAction.wait(forDuration: delay), action])
+    }
+    
+    /**
+     * Performs a block after the specified delay.
+     */
+    public class func afterDelay(_ delay: TimeInterval, runBlock block: @escaping () -> Void) -> SKAction {
+        return SKAction.afterDelay(delay, performAction: SKAction.run(block))
+    }
+    
+    /**
+     * Removes the node from its parent after the specified delay.
+     */
+    public class func removeFromParentAfterDelay(_ delay: TimeInterval) -> SKAction {
+        return SKAction.afterDelay(delay, performAction: SKAction.removeFromParent())
+    }
 }
 
 
@@ -754,6 +907,17 @@ public func / (lhs: Int, rhs: CGFloat) -> CGFloat {
 public func / (lhs: CGFloat, rhs: Int) -> CGFloat {
     return lhs / CGFloat(rhs)
 }
+
+
+public func lerp(start: CGFloat, end: CGFloat, t: CGFloat) -> CGFloat {
+    return start + (t * (end - start))
+}
+
+
+public func ilerp(start: CGFloat, end: CGFloat, t: CGFloat) -> CGFloat {
+    return (t - start) / (end - start)
+}
+
 
 // MARK: CGPoint
 
@@ -907,6 +1071,27 @@ public func lerp(start: CGVector, end: CGVector, t: CGFloat) -> CGVector {
     return start + (end - start) * t
 }
 
+// MARK: CGRect
+
+public func + (lhs: CGRect, rhs: CGFloat) -> CGRect {
+    return CGRect(x: lhs.minX, y: lhs.minY, width: lhs.width + rhs, height: lhs.height + rhs)
+}
+
+
+public func - (lhs: CGRect, rhs: CGFloat) -> CGRect {
+    return CGRect(x: lhs.minX, y: lhs.minY, width: lhs.width - rhs, height: lhs.height - rhs)
+}
+
+
+public func * (lhs: CGRect, rhs: CGFloat) -> CGRect {
+    return CGRect(x: lhs.minX, y: lhs.minY, width: lhs.width * rhs, height: lhs.height * rhs)
+}
+
+
+public func / (lhs: CGRect, rhs: CGFloat) -> CGRect {
+    return CGRect(x: lhs.minX, y: lhs.minY, width: lhs.width / rhs, height: lhs.height / rhs)
+}
+
 
 // MARK: - Helper Functions
 
@@ -924,25 +1109,24 @@ public func normalize(_ value: CGFloat, _ minimum: CGFloat, _ maximum: CGFloat) 
 
 
 /**
- Generate a visual grid texture.
+ Visualize a layer as a texture.
  
  - parameter layer:      `TiledLayerObject` layer instance.
- - parameter uiScale:    `CGFloat` ui scale factor (for retina displays).
  - parameter imageScale: `CGFloat` image scale multiplier.
  - parameter lineScale:  `CGFloat` line scale multiplier.
  - returns: `SKTexture?` visual grid texture.
  */
-internal func drawGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineScale: CGFloat=1) -> CGImage {
+internal func drawLayerGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineScale: CGFloat=1) -> CGImage {
     // get the ui scale value for the device
     let uiScale: CGFloat
-    #if os(iOS)
+    #if os(iOS) || os(tvOS)
     uiScale = UIScreen.main.scale
     #else
     uiScale = NSScreen.main()!.backingScaleFactor
     #endif
     let size = layer.size
-    let tileWidth = layer.tileWidth * imageScale    //* scale
-    let tileHeight = layer.tileHeight * imageScale  //* scale
+    let tileWidth = layer.tileWidth * imageScale
+    let tileHeight = layer.tileHeight * imageScale
                 
     let tileWidthHalf = tileWidth / 2
     let tileHeightHalf = tileHeight / 2
@@ -953,7 +1137,6 @@ internal func drawGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineSca
     return imageOfSize(sizeInPoints, scale: uiScale) { context, bounds, scale in
                 
         let innerColor = layer.gridColor
-        
         // line width should be at least 1 for larger tile sizes
         let lineWidth: CGFloat = defaultLineWidth
         context.setLineWidth(lineWidth)
@@ -1060,10 +1243,25 @@ internal func drawGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineSca
 }
 
 
+/**
+ Visualize a `GKGridGraph` node as a texture.
+ 
+ - parameter layer:      `TiledLayerObject` layer instance.
+ - parameter graph:      `String` graph name.
+ - parameter imageScale: `CGFloat` image scale multiplier.
+ - parameter lineScale:  `CGFloat` line scale multiplier.
+ - returns: `SKTexture?` visual grid texture.
+ */
+internal func drawGraph(_ layer: TiledLayerObject, graph: String, imageScale: CGFloat=8, lineScale: CGFloat=1) -> CGImage {
+    let sizeInPoints = (layer.sizeInPoints * imageScale)
+    return imageOfSize(sizeInPoints, scale: 1) { context, bounds, scale in }
+}
+
+
 // MARK: - Polygon Drawing
 
 /**
- Returns an array of points for the given dimensions.
+ Returns an array of points for the given dimensions. ** In Use **
  
  - parameter width:   `CGFloat` rect width.
  - parameter height:  `CGFloat` rect height.
@@ -1072,11 +1270,11 @@ internal func drawGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineSca
  */
 public func rectPointArray(_ width: CGFloat, height: CGFloat, origin: CGPoint = .zero) -> [CGPoint] {
     let points: [CGPoint] = [
-        origin,
-        CGPoint(x: origin.x + width, y: origin.y),
-        CGPoint(x: origin.x + width, y: origin.y - height),
-        CGPoint(x: origin.x, y: origin.y - height)
-    ]
+                origin,
+                CGPoint(x: origin.x + width, y: origin.y),
+                CGPoint(x: origin.x + width, y: origin.y - height),
+                CGPoint(x: origin.x, y: origin.y - height)
+        ]
     return points
 }
 
@@ -1103,9 +1301,9 @@ public func rectPointArray(_ size: CGSize, origin: CGPoint = .zero) -> [CGPoint]
  */
 public func polygonPointArray(_ sides: Int, radius: CGSize, offset: CGFloat=0, origin: CGPoint = .zero) -> [CGPoint] {
     let angle = (360 / CGFloat(sides)).radians()
-    let cx = origin.x // x origin
-    let cy = origin.y // y origin
-    let rx = radius.width // radius of circle
+    let cx = origin.x       // x origin
+    let cy = origin.y       // y origin
+    let rx = radius.width   // radius of circle
     let ry = radius.height
     var i = 0
     var points: [CGPoint] = []
@@ -1232,12 +1430,13 @@ public func bezierPath(_ points: [CGPoint], closed: Bool=true, alpha: CGFloat=0.
  Compression level with constants based on the zlib's constants.
  */
 public typealias CompressionLevel = Int32
+
 public extension CompressionLevel {
     
-    public static let noCompression = Z_NO_COMPRESSION
-    public static let bestSpeed = Z_BEST_SPEED
-    public static let bestCompression = Z_BEST_COMPRESSION    
-    public static let defaultCompression = Z_DEFAULT_COMPRESSION
+    static public let noCompression      = Z_NO_COMPRESSION
+    static public let bestSpeed          = Z_BEST_SPEED
+    static public let bestCompression    = Z_BEST_COMPRESSION
+    static public let defaultCompression = Z_DEFAULT_COMPRESSION
 }
 
 

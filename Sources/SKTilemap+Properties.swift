@@ -15,33 +15,31 @@ public extension SKTilemap {
      Parse properties from the Tiled TMX file.
      */
     public func parseProperties(completion: (() -> ())?) {
-
+        
         if (ignoreProperties == true) { return }
+        if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
         
         for (attr, value) in properties {
             
             let lattr = attr.lowercased()
-            
-            if (lattr == "name") {
-                name = value
-            }
-            
-            if (lattr == "type") {
-                type = value
-            }
-            
+
             if ["zdelta", "zdeltaforlayers", "layerdelta"].contains(lattr){
                 zDeltaForLayers = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : zDeltaForLayers
             }
             
             if ["debug", "debugmode", "debugdraw"].contains(lattr){
-                debugDraw = boolForKey(value)
-                debugMode = boolForKey(value)
+                debugDrawOptions = [.demo]
             }
             
             if (lattr == "gridcolor") {
                 gridColor = SKColor(hexString: value)
-                getLayers().forEach {$0.gridColor = gridColor}
+                getLayers().forEach { $0.gridColor = gridColor }
+                
+                frameColor = gridColor
+                
+                // set base layer colors
+                baseLayer.gridColor = gridColor
+                baseLayer.frameColor = frameColor
             }
             
             if (lattr == "gridopacity") {
@@ -52,11 +50,17 @@ public extension SKTilemap {
             if (lattr == "framecolor") {
                 frameColor = SKColor(hexString: value)
                 getLayers().forEach {$0.frameColor = frameColor}
+                
+                // set base layer colors
+                baseLayer.frameColor = frameColor
             }
             
             if (lattr == "highlightcolor") {
                 highlightColor = SKColor(hexString: value)
                 getLayers().forEach {$0.highlightColor = highlightColor}
+                
+                // set base layer colors
+                baseLayer.highlightColor = highlightColor
             }
             
             // initial world scale.
@@ -110,7 +114,9 @@ public extension SKTilemap {
             }
             
             if (lattr == "showobjects") {
-                showObjects = boolForKey(attr)
+                if (boolForKey(attr) == true) {
+                    debugDrawOptions.insert(.drawObjectBounds)
+                }
             }
             
             if (lattr == "xgravity") {
@@ -122,7 +128,15 @@ public extension SKTilemap {
             }
             
             if (lattr == "showgrid") {
-                baseLayer.showGrid = boolForKey(attr)
+                if (boolForKey(attr) == true) {
+                    debugDrawOptions.insert(.drawGrid)
+                }
+            }
+            
+            if (lattr == "showbounds") {
+                if (boolForKey(attr) == true) {
+                    debugDrawOptions.insert(.drawBounds)
+                }
             }
             
             if (lattr == "cropatboundary") {
@@ -151,11 +165,7 @@ public extension SKTileset {
      */
     public func parseProperties(completion: (() -> ())?) {
         if (ignoreProperties == true) { return }
-        for (attr, value) in properties {
-            if (attr == "type") {
-                type = value
-            }
-        }
+         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
         if completion != nil { completion!() }
     }
 }
@@ -168,14 +178,13 @@ public extension TiledLayerObject {
      Parse the layer's properties value.
      */
     public func parseProperties(completion: (() -> ())?) {
+
         if (ignoreProperties == true) { return }
+        if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
+        
         for (attr, value) in properties {
             
             let lattr = attr.lowercased()
-            
-            if (lattr == "type") {
-                type = value
-            }
             
             if (lattr == "zposition") {
                 guard let zpos = Double(value) else { return }
@@ -221,7 +230,7 @@ public extension TiledLayerObject {
      - returns: `String?` the property value, or nil if it does not exist.
      */
     public func getValue(forProperty name: String) -> String? {
-        return properties[name]
+        return stringForKey(name)
     }
     
     /**
@@ -287,6 +296,8 @@ public extension SKTileObject {
      */
     public func parseProperties(completion: (() -> ())?) {
         if (ignoreProperties == true) { return }
+        if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
+        
         for (attr, value) in properties {
             
             let lattr = attr.lowercased()
@@ -320,8 +331,9 @@ public extension SKTilesetData {
     /**
      Parse the tile data's properties value.
      */
-    public func parseProperties(completion: (() -> ())?) {        
+    public func parseProperties(completion: (() -> ())?) {
         if (ignoreProperties == true) { return }
+        if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
         if completion != nil { completion!() }
     }
 }

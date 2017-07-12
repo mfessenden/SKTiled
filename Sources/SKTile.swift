@@ -26,14 +26,6 @@ public enum PhysicsShape {
 }
 
 
-public protocol TileType: class {
-    var tileSize: CGSize { get }
-    weak var layer: SKTileLayer! { get }
-    var tileOverlap: CGFloat { get set }
-    var maxOverlap: CGFloat { get set }
-    var tileData: SKTilesetData { get }
-}
-
 /**
  Custom sprite type for rendering tile objects. Tile data (including texture) stored in `SKTilesetData` property.
  */
@@ -51,42 +43,71 @@ public class SKTile: SKSpriteNode {
     
     // MARK: Highlighting
     open var highlightColor: SKColor = SKColor.white    // tile highlight color
-    open var highlightDuration: TimeInterval = 0.25     // tile highlight duration
+    open var highlightDuration: TimeInterval = 0        // tile highlight duration
     
     // dynamics
     open var physicsShape: PhysicsShape = .rectangle    // physics type
     
+    // tile alignment
+    open var alignment: Alignment = .bottomLeft
+    
+    /// Returns the bounding box of the shape.
+    open var boundingRect: CGRect {
+        return CGRect(x: 0, y: 0, width: tileSize.width, height: -tileSize.height)
+    }
+    
     /// Opacity value of the tile
     open var opacity: CGFloat {
-        get { return self.alpha }
-        set { self.alpha = newValue }
+        get {
+            return self.alpha
+        }
+        set {
+            self.alpha = newValue
+        }
     }
     
     /// Visibility value of the tile
     open var visible: Bool {
-        get { return !self.isHidden }
-        set { self.isHidden = !newValue }
+        get {
+            return !self.isHidden
+        }
+        set {
+            self.isHidden = !newValue
+        }
     }
     
     /// Boolean flag to enable/disable texture filtering.
     open var smoothing: Bool {
-        get { return texture?.filteringMode != .nearest }
-        set { texture?.filteringMode = newValue ? SKTextureFilteringMode.linear : SKTextureFilteringMode.nearest }
+        get {
+            return texture?.filteringMode != .nearest
+        }
+        set {
+            texture?.filteringMode = newValue ? SKTextureFilteringMode.linear : SKTextureFilteringMode.nearest
+        }
     }
     
     /// Show/hide the tile's bounding shape.
     open var showBounds: Bool {
-        get { return childNode(withName: "Bounds") != nil ? childNode(withName: "Bounds")!.isHidden : false }
+        get {
+            return (childNode(withName: "BOUNDS") != nil) ? childNode(withName: "BOUNDS")!.isHidden == false : false
+        }
         set {
-            // draw the tile boundardy shape
-            drawBounds()
-            guard let frameShape = childNode(withName: "Bounds") else { return }
-            if (highlightDuration > 0) {
-                let fadeAction = SKAction.fadeOut(withDuration: highlightDuration)
-                frameShape.run(fadeAction, completion: {
-                    frameShape.removeFromParent()
-                    
-                })
+            childNode(withName: "BOUNDS")?.removeFromParent()
+            
+            if (newValue == true) {
+                
+                // draw the tile boundary shape
+                drawBounds()
+                
+                guard let frameShape = childNode(withName: "BOUNDS") else { return }
+                
+                if (highlightDuration > 0) {
+                    let fadeAction = SKAction.fadeOut(withDuration: highlightDuration)
+                    frameShape.run(fadeAction, completion: {
+                        frameShape.removeFromParent()
+                        
+                    })
+                }
             }
         }
     }
@@ -116,10 +137,9 @@ public class SKTile: SKSpriteNode {
         guard let tileset = data.tileset else { return nil }
         self.tileData = data
         
-        // TODO: need get acess to get tilemap tilesize here
         self.tileSize = tileset.tileSize
         super.init(texture: data.texture, color: SKColor.clear, size: data.texture.size())
-        orientTile()
+        //orientTile()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -251,7 +271,7 @@ public class SKTile: SKSpriteNode {
         var framesData: [(texture: SKTexture, duration: TimeInterval)] = []
         for frame in tileData.frames {
             guard let frameTexture = tileset.getTileData(localID: frame.gid)?.texture else {
-                print("Error: Cannot access texture for id: \(frame.gid)")
+                print("ERROR: Cannot access texture for id: \(frame.gid)")
                 return
             }
             frameTexture.filteringMode = .nearest
@@ -284,7 +304,9 @@ public class SKTile: SKSpriteNode {
             texture = tileData.texture
         }
     }
-
+    
+    // MARK: - Misc
+    
     /**
      Set the tile overlap amount.
      
@@ -311,38 +333,109 @@ public class SKTile: SKSpriteNode {
     /**
      Orient the tile based on the current flip flags.
      */
-    private func orientTile() {
-        // reset orientation
+    internal func orientTile() {
+        // reset orientation & scale
         zRotation = 0
         setScale(1)
         
+        // get the map offset
+        let mapOffset = tileData.tileset.mapOffset
+        
+        // map tile size
+        let mapTileSize = CGSize(width: tileSize.width - mapOffset.x, height: tileSize.height - mapOffset.y)
+        let mapTileSizeHalfWidth:  CGFloat = mapTileSize.width / 2
+        let mapTileSizeHalfHeight: CGFloat = mapTileSize.height / 2
+        
+        // tileset tile size
+        let tilesetTileSize: CGSize = tileData.tileset.tileSize
+        let tilesetTileWidth: CGFloat = tilesetTileSize.width
+        let tilesetTileHeight: CGFloat = tilesetTileSize.height
+        
+        // new values
+        var newZRotation: CGFloat = 0
+        var newXScale: CGFloat = xScale
+        var newYScale: CGFloat = yScale
+        
         if (tileData.flipDiag) {
+            
+            // rotate 90 (d, h)
             if (tileData.flipHoriz && !tileData.flipVert) {
-                zRotation = CGFloat(-Double.pi / 2)   // rotate 90deg
+                newZRotation = CGFloat(-Double.pi / 2)    // rotate 90deg
+                alignment = .bottomRight
             }
             
+            // rotate right, flip vertically  (d, h, v)
             if (tileData.flipHoriz && tileData.flipVert) {
-                zRotation = CGFloat(-Double.pi / 2)   // rotate 90deg
-                xScale *= -1                          // flip horizontally
-            }
-
-            if (!tileData.flipHoriz && tileData.flipVert) {
-                zRotation = CGFloat(Double.pi / 2)    // rotate -90deg
-            }
-
-            if (!tileData.flipHoriz && !tileData.flipVert) {
-                zRotation = CGFloat(Double.pi / 2)    // rotate -90deg
-                xScale *= -1                          // flip horizontally
-            }
-        } else {
-            if (tileData.flipHoriz) {
-                xScale *= -1
+                newZRotation = CGFloat(-Double.pi / 2)   // rotate 90deg
+                newXScale *= -1                          // flip horizontally
+                alignment = .bottomLeft
             }
             
-            if (tileData.flipVert) {
-                yScale *= -1
+            // rotate -90 (d, v)
+            if (!tileData.flipHoriz && tileData.flipVert) {
+                newZRotation = CGFloat(Double.pi / 2)   // rotate -90deg
+                alignment = .topLeft
+            }
+
+            // rotate right, flip horiz (d)
+            if (!tileData.flipHoriz && !tileData.flipVert) {
+                
+                newZRotation = CGFloat(Double.pi / 2)   // rotate -90deg
+                newXScale *= -1                         // flip horizontally
+                alignment = .topRight
+            }
+        
+            
+        } else {
+            if (tileData.flipHoriz == true) {
+                newXScale *= -1
+                alignment = (tileData.flipVert == true) ? .topRight : .bottomRight
+            }
+            
+            // (v)
+            if (tileData.flipVert == true) {
+                newYScale *= -1
+                alignment = (tileData.flipHoriz == true) ? .topRight : .topLeft
             }
         }
+
+        // anchor point translation
+        let xAnchor: CGFloat
+        let yAnchor: CGFloat
+        
+        switch alignment {
+        case .bottomLeft:
+            xAnchor = mapTileSizeHalfWidth / tilesetTileWidth
+            yAnchor = mapTileSizeHalfHeight / tilesetTileHeight
+            
+        case .bottomRight:
+            xAnchor = 1 - (mapTileSizeHalfWidth / tilesetTileWidth)
+            yAnchor = mapTileSizeHalfHeight / tilesetTileHeight
+            
+        case .topLeft:
+            xAnchor = mapTileSizeHalfWidth / tilesetTileWidth
+            yAnchor = 1 - (mapTileSizeHalfHeight / tilesetTileHeight)
+            
+        case .topRight:
+            xAnchor = 1 - (mapTileSizeHalfWidth / tilesetTileWidth)
+            yAnchor = 1 - (mapTileSizeHalfHeight / tilesetTileHeight)
+            
+        default:
+            xAnchor = mapTileSizeHalfWidth / tilesetTileWidth
+            yAnchor = mapTileSizeHalfHeight / tilesetTileHeight
+        }
+        
+        // set the anchor point
+        anchorPoint.x = xAnchor
+        anchorPoint.y = yAnchor
+        
+        // rotate the sprite
+        zRotation = newZRotation
+        
+        xScale = newXScale
+        yScale = newYScale
+        
+        //print(" -> tile: \(tileData.id) anchor: (\(xAnchor.roundTo(1)), \(yAnchor.roundTo(1))), rot: \(zRotation.degrees().roundTo())")
     }
 
     /**
@@ -350,14 +443,19 @@ public class SKTile: SKSpriteNode {
      
      - returns: `[CGPoint]?` array of points.
      */
-    public func getVertices() -> [CGPoint] {
+    public func getVertices(offset: CGPoint = .zero) -> [CGPoint] {
         var vertices: [CGPoint] = []
-        guard let layer = layer else { return vertices }
+        guard let layer = layer else {
+            print("ERROR: tile \(tileData.id) does not have a layer reference.")
+            return vertices
+        }
         
         let tileSizeHalved = CGSize(width: layer.tileSize.halfWidth, height: layer.tileSize.halfHeight)
-        
+
         switch layer.orientation {
+        
         case .orthogonal:
+
             var origin = CGPoint(x: -tileSizeHalved.width, y: tileSizeHalved.height)
             
             // adjust for tileset.tileOffset here
@@ -399,7 +497,7 @@ public class SKTile: SKSpriteNode {
                 
             // pointy
             } else {
-                let r = tileWidth / 2
+                let r = (tileWidth / 2)
                 let h = (tileHeight - sideLengthY) / 2
                 variableSize = tileHeight - (h * 2)
                 hexPoints[0] = CGPoint(x: 0, y: (tileHeight / 2))
@@ -413,44 +511,95 @@ public class SKTile: SKSpriteNode {
             vertices = hexPoints.map{ $0.invertedY }
         }
         
-        return vertices
+        return vertices.map { $0 + offset }
     }
 
     /**
      Draw the tile's boundary shape.
      */
-    public func drawBounds() {
+    internal func drawBounds(_ withOffset: Bool=true) {
+        childNode(withName: "BOUNDS")?.removeFromParent()
+    
+        let mapOffset = tileData.tileset.mapOffset
         
-        childNode(withName: "Anchor")?.removeFromParent()
-        childNode(withName: "Bounds")?.removeFromParent()
+        // map tile size
+        let mapTileSize = CGSize(width: tileSize.width - mapOffset.x, height: tileSize.height - mapOffset.y)
         
-        let vertices = getVertices()
-        let path = polygonPath(vertices)
-        let shape = SKShapeNode(path: path)
-        shape.name = "Bounds"
+        // tileset tile size
+        let tilesetTileSize: CGSize = tileData.tileset.tileSize
+        let tilesetTileHeight: CGFloat = tilesetTileSize.height
+
+        
+        var xOffset: CGFloat = 0
+        var yOffset: CGFloat = 0
+        
+        // calculate the offset amount based on the current tile orientation
+        if alignment == .bottomRight || alignment == .topRight {
+            xOffset = -(tilesetTileHeight - mapTileSize.height)
+            
+            if alignment == .topRight {
+                yOffset = -(tilesetTileHeight - mapTileSize.height)
+            }
+        }
+        
+        if alignment == .topLeft {
+            yOffset = -(tilesetTileHeight - mapTileSize.height)
+        }
+
+        let alignmentOffset = CGPoint(x: xOffset, y: yOffset)
+        let vertices = getVertices(offset: alignmentOffset)
+
+        guard vertices.count > 0 else { return }
+
+        let renderQuality = tileData.renderQuality
+        
+        // scale vertices
+        let scaledVertices = vertices.map { $0 * renderQuality }
+        let path = polygonPath(scaledVertices)
+        let bounds = SKShapeNode(path: path)
+        bounds.name = "BOUNDS"
         let shapeZPos = zPosition + 10
         
         // draw the path
-        shape.isAntialiased = layer.antialiased
-        shape.lineCap = .round
-        shape.lineJoin = .miter
-        shape.miterLimit = 0
-        shape.lineWidth = 0.5
+        bounds.isAntialiased = layer.antialiased
+        bounds.lineCap = .round
+        bounds.lineJoin = .miter
+        bounds.miterLimit = 0
+        bounds.lineWidth = 0.5 * (renderQuality / 2)
         
-        shape.strokeColor = highlightColor.withAlphaComponent(0.4)
-        shape.fillColor = highlightColor.withAlphaComponent(0.35)
-        shape.zPosition = shapeZPos
-        addChild(shape)
+        bounds.strokeColor = highlightColor.withAlphaComponent(0.4)
+        bounds.fillColor = highlightColor.withAlphaComponent(0.15)  // 0.35
+        bounds.zPosition = shapeZPos
+
+        addChild(bounds)
         
-        // anchor
-        let anchorRadius: CGFloat = tileSize.width / 24 > 1.0 ? tileSize.width / 18 > 4.0 ? 4 : tileSize.width / 22 : 1.0
-        let anchor = SKShapeNode(circleOfRadius: (anchorRadius > 8) ? 8 : anchorRadius )
-        anchor.name = "Anchor"
-        shape.addChild(anchor)
+        // anchor point
+        let tileHeight = (layer != nil) ? layer.tilemap.tileHeight : tileSize.height
+        let tileHeightDivisor = (tileHeight <= 16) ? 8 : 16
+        let anchorRadius: CGFloat = ((tileHeight / 2) / tileHeightDivisor) * renderQuality
+        let anchor = SKShapeNode(circleOfRadius: anchorRadius)
+        
+        anchor.name = "ANCHOR"
+        bounds.addChild(anchor)
         anchor.fillColor = highlightColor.withAlphaComponent(0.2)
         anchor.strokeColor = SKColor.clear
         anchor.zPosition = shapeZPos + 10
         anchor.isAntialiased = layer.antialiased
+        
+        
+        // first point
+        let firstPoint = scaledVertices[0]
+        let pointShape = SKShapeNode(circleOfRadius: anchorRadius)
+        
+        pointShape.name = "FIRST_POINT"
+        bounds.addChild(pointShape)
+        pointShape.fillColor = .orange //highlightColor
+        pointShape.strokeColor = SKColor.clear
+        pointShape.zPosition = shapeZPos * 15
+        pointShape.isAntialiased = layer.antialiased
+        
+        pointShape.position = firstPoint
+        bounds.setScale(1 / renderQuality)
 
     }
 }
@@ -461,20 +610,12 @@ extension SKTile {
     
     /// Tile description.
     override public var description: String {
-        let descString = "\(tileData.description)"
-        let descGroup = descString.components(separatedBy: ",")
-        var resultString = descGroup.first!
-        if let layer = layer {resultString += ", Layer: \"\(layer.name!)\"" }
-        
-        // add the properties
-        if descGroup.count > 1 {
-            for i in 1..<descGroup.count {
-                resultString += ", \(descGroup[i])"
-            }
-        }
-        return resultString
+        let layerDescription = (layer != nil) ? ", Layer: \"\(layer.layerName)\"" : ""
+        return "\(tileData.description)\(layerDescription)"
     }
     
-    override public var debugDescription: String { return description }
+    override public var debugDescription: String {
+        return description
+    }
 }
 

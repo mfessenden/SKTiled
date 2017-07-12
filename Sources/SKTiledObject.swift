@@ -29,6 +29,8 @@ public protocol SKTiledObject: class {
     var ignoreProperties: Bool { get set }
     /// Parse function (with optional completion block).
     func parseProperties(completion: (() -> ())?)
+    /// Render Quality.
+    var renderQuality: CGFloat { get }
 }
 
 
@@ -47,13 +49,38 @@ public extension SKTiledObject {
     }
     
     /**
-     Returns true if the node has the given property.
+     Returns true if the node has the given property (not case sensitive).
      
      - parameter key: `String` key to query.
      - returns: `Bool` properties has a value for the key.
      */
     public func hasKey(_ key: String) -> Bool {
-        return properties[key] != nil
+        let pnames = properties.keys.map { $0.lowercased() }
+        return pnames.contains(key.lowercased())
+    }
+    
+    internal func keyValuePair(key: String) -> (key: String, value: String)? {
+        for k in properties.keys {
+            if k.lowercased() == key.lowercased() {
+                return (key: k, value: properties[k]!)
+            }
+        }
+        return nil
+    }
+    
+    /**
+     Returns a string for the given key.
+     
+     - parameter key: `String` properties key.
+     - returns: `String` value for properties key.
+     */
+    public func stringForKey(_ key: String) -> String? {
+        for k in properties.keys {
+            if k.lowercased() == key.lowercased() {
+                return properties[k]
+            }
+        }
+        return properties[key]
     }
     
     /**
@@ -63,6 +90,10 @@ public extension SKTiledObject {
      - parameter value: `String` property value.
      */
     public func setValue(forKey key: String, _ value: String) {
+        if let existingPair = keyValuePair(key: key) {
+            properties[existingPair.key] = value
+            return
+        }
         properties[key] = value
     }
 
@@ -73,9 +104,8 @@ public extension SKTiledObject {
      - returns:       `String?` property value (if it exists).
      */
     public func removeProperty(forKey key: String) -> String? {
-        if let value = properties[key] {
-            properties.removeValue(forKey: key)
-            return value
+        if let existingPair = keyValuePair(key: key) {
+            return properties.removeValue(forKey: existingPair.key)!
         }
         return nil
     }
@@ -97,26 +127,12 @@ public extension SKTiledObject {
      - returns: `Bool` value is a numeric type.
      */
     internal func hasNumericKey(_ key: String) -> Bool {
-        guard let value = properties[key] else { return false }
-        return Int(value) != nil || Double(value) != nil
+        if let existingPair = keyValuePair(key: key) {
+            return Int(existingPair.value) != nil || Double(existingPair.value) != nil
+        }
+        return false
     }
 
-    
-    /**
-     Returns a string for the given key.
-     
-     - parameter key: `String` properties key.
-     - returns: `String` value for properties key.
-     */
-    public func stringForKey(_ key: String) -> String? {
-        for k in properties.keys {
-            if k.lowercased() == key.lowercased() {
-                return properties[k]
-            }
-        }
-        return properties[key]
-    }
-    
     /**
      Returns a string array for the given key.
      
@@ -125,8 +141,8 @@ public extension SKTiledObject {
      - returns: `[String]` value for properties key.
      */
     internal func stringArrayForKey(_ key: String, separatedBy: String=",") -> [String] {
-        if let value = properties[key] {
-            return value.components(separatedBy: separatedBy)
+        if let existingPair = keyValuePair(key: key) {
+            return existingPair.value.components(separatedBy: separatedBy)
         }
         return [String]()
     }
@@ -138,8 +154,10 @@ public extension SKTiledObject {
      - returns: `Int?` value for properties key.
      */
     internal func intForKey(_ key: String) -> Int? {
-        guard (hasKey(key) == true) else { return nil }
-        return Int(properties[key]!)
+        if let existingPair = keyValuePair(key: key) {
+            return Int(existingPair.value)
+        }
+        return nil
     }
     
     /**
@@ -150,8 +168,8 @@ public extension SKTiledObject {
      - returns: `[Int]` array of integers for properties key.
      */
     internal func integerArrayForKey(_ key: String, separatedBy: String=",") -> [Int] {
-        if let value = properties[key] {
-            return  value.components(separatedBy: separatedBy).flatMap { Int($0) }
+        if let existingPair = keyValuePair(key: key) {
+            return existingPair.value.components(separatedBy: separatedBy).flatMap { Int($0) }
         }
         return [Int]()
     }
@@ -163,8 +181,10 @@ public extension SKTiledObject {
      - returns: `Double?` value for properties key.
      */
     internal func doubleForKey(_ key: String) -> Double? {
-        guard (hasKey(key) == true) else { return nil }
-        return Double(properties[key]!)
+        if let existingPair = keyValuePair(key: key) {
+            return Double(existingPair.value)
+        }
+        return nil
     }
     
     /**
@@ -175,8 +195,8 @@ public extension SKTiledObject {
      - returns: `[Double]` array of doubles for properties key.
      */
     internal func doubleArrayForKey(_ key: String, separatedBy: String=",") -> [Double] {
-        if let value = properties[key] {
-            return value.components(separatedBy: separatedBy).flatMap { Double($0) }
+        if let existingPair = keyValuePair(key: key) {
+            return existingPair.value.components(separatedBy: separatedBy).flatMap { Double($0) }
         }
         return [Double]()
     }
@@ -188,24 +208,10 @@ public extension SKTiledObject {
      - returns: `Bool` value for properties key.
      */
     internal func boolForKey(_ key: String) -> Bool {
-        guard let value = properties[key]?.lowercased() else { return false }
-        return Bool(value) ?? false || Int(value) == 1
-    }
-
-    // MARK: - Key/Value Parsing
-    /**
-     Parses a key/value string (separated by '=') and returns a tuple.
-     
-     - parameter string: `String` key/value string.
-     - returns: `(String:Any)?` value for properties key.
-     */
-    public func keyValuePair(_ string: String) -> (key: String, value: Any)? {
-        var result: (key: String, value: Any)? = nil
-        let values = string.components(separatedBy: "=")
-        if values.count == 2 {
-            result = (key: values[0], value: values[1])
+        if let existingPair = keyValuePair(key: key) {
+            return Bool(existingPair.value) ?? false || Int(existingPair.value) == 1
         }
-        return result
+        return false
     }
 }
 

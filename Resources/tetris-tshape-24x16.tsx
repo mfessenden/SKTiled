@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="tshape-24x16" tilewidth="24" tileheight="16" tilecount="9" columns="3">
+<tileset name="T-Shapes (24x16)" tilewidth="24" tileheight="16" tilecount="9" columns="3">
  <image source="tshape-24x16.png" trans="800080" width="72" height="48"/>
  <tile id="8">
   <objectgroup draworder="index">

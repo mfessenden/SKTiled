@@ -53,16 +53,26 @@ open class SKTileset: SKTiledObject {
     // tileset properties
     open var isImageCollection: Bool = false                     // image collection tileset
     open var isExternalTileset: Bool { return filename != nil }  // tileset is an external file
-    open var transparentColor: SKColor = SKColor.clear           // sprite transparency color
+    open var transparentColor: SKColor? = nil                    // sprite transparency color
     open var isRendered: Bool = false                            // indicates the tileset is rendered
     
     /// Returns the last GID in the tileset
     open var lastGID: Int { return tileData.map { $0.id }.max() ?? firstGID }
     
-    /// Returns the difference in tile size
+    
+    /// Returns the difference in tile size vs. map tile size.
     open var mapOffset: CGPoint {
         guard let tilemap = tilemap else { return .zero }
+        // 24 - 8, 16 - 8
         return CGPoint(x: tileSize.width - tilemap.tileSize.width, y: tileSize.height - tilemap.tileSize.height)
+    }
+    
+    /// Scaling value for text objects, etc.
+    open var renderQuality: CGFloat = 8 {
+        didSet {
+            guard renderQuality != oldValue else { return }
+            tileData.forEach { $0.renderQuality = renderQuality }
+        }
     }
     
     /**
@@ -113,10 +123,12 @@ open class SKTileset: SKTiledObject {
      */
     public init?(attributes: [String: String], offset: CGPoint=CGPoint.zero){
         // name, width and height are required
-        guard let setName = attributes["name"] else { return nil }
-        guard let width = attributes["tilewidth"] else { return nil }
-        guard let height = attributes["tileheight"] else { return nil }
-        guard let columns = attributes["columns"] else { return nil }
+        guard let setName = attributes["name"],
+            let width = attributes["tilewidth"],
+            let height = attributes["tileheight"],
+            let columns = attributes["columns"] else {
+                return nil
+        }
         
         // first gid won't be in an external tileset
         if let firstgid = attributes["firstgid"] {
@@ -176,15 +188,35 @@ open class SKTileset: SKTiledObject {
      - parameter source:  `String` image named referenced in the tileset.
      - parameter replace: `Bool` replace the current texture.
      */
-    open func addTextures(fromSpriteSheet source: String, replace: Bool = false) {
+    open func addTextures(fromSpriteSheet source: String, replace: Bool=false, transparent: String?=nil) {
         // images are stored in separate directories in the project will render incorrectly unless we use just the filename
         let sourceFilename = source.components(separatedBy: "/").last!
         let timer = Date()
         self.source = sourceFilename
         
-        let sourceTexture = SKTexture(imageNamed: self.source!)
-        let textureSize = sourceTexture.size()
+        
+        let sourceTexture: SKTexture
+        
+        // parse the transparent color
+        if let transparent = transparent {
+            transparentColor = SKColor(hexString: transparent)
+            print("[SKTileset]: setting transparent color: \(transparentColor!.componentDescription)")
+            
+            // alpha info is 0
+            if let maskedImage = transparentImage(imageNamed: self.source!, masking: transparentColor!.components) {
+                //let imageComponents = maskedImage.bitsPerComponent
+                sourceTexture = SKTexture(cgImage: maskedImage)
+            } else {
+                sourceTexture = SKTexture(imageNamed: self.source!)
+                print("[SKTileset]: WARNING: cannot render image mask for \"\(sourceFilename)\"")
+            }
+        } else {
+            sourceTexture = SKTexture(imageNamed: self.source!)
+        }
+
         sourceTexture.filteringMode = .nearest
+        let textureSize = sourceTexture.size()
+        
         
         if loggingLevel.rawValue <= 1 {
         let actionName: String = (replace == false) ? "adding" : "replacing"

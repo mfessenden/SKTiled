@@ -28,6 +28,7 @@ Change Log
 - rename `SKTileLayer.getAnimatedTiles()` -> `SKTileLayer.animatedTiles()`
 - rename `SKObjectGroup.getObject(named:)` -> `SKObjectGroup.getObjects(named:)`
 - added `SKObjectGroup.textObjects` & `SKTilemap.textObjects`
+- added `SKTilemap.tiledversion`
 - added `SKTilemap.showGrid`
 - added `SKTilemap.showBounds`
 - added `SKObjectGroup.getObjects(withText:)`
@@ -37,6 +38,7 @@ Change Log
 - added `SKTileObject.isTextObject`
 - added `SKTileLayer.showBounds`
 - added `SKTile.showBounds`
+- add `SKTileObject.showBounds`
 - added `SKTile.highlightDuration`
 - added `TiledLayerObject.highlightDuration`
 - added `SKTiled+Debug.swift`
@@ -46,8 +48,24 @@ Change Log
 - added `SKTilemap.mapName` property
 - added `SKTilemap.renderQuality` property
 - added `TiledLayerObject.renderQuality` property
+- added `SKTileObject.renderQuality` property
 - better grid drawing quality
 
+- added `SKTilemap.tilesAt(point:)`
+- added `SKTilemap.objectsAt(point:)`
+
+
+- add `alignment` to geometry types
+- add `TiledLayerObject.renderableObjects`
+- add `SKTilemap.renderableObjects`
+- add `SKTilesetData.globalID`
+
+- add `SKTileObject.showBounds`
+- rename `SKTile.getVertices()` -> `SKTile.getVertices(offset:)`
+
+- rename `TiledLayerGrid` -> `TiledDebugDrawNode`
+- add `BackgroundLayer` layer type
+- add `SKTilemapDelegate.zDeltaForLayers`
 
 1.13
 -----
