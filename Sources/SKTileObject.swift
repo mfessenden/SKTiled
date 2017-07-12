@@ -447,13 +447,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             
             // create an image to use as a texture
             let image = drawTextObject(withScale: renderQuality)
-            
-            
-            let textImageSize = CGSize(width: image.width / renderQuality, height: image.height / renderQuality)
-            
-            //print("❗️ text image: \(textImageSize.shortDescription)")
-            //print("❗️ frame size:  \(frame.size.shortDescription)")
-            
+
             strokeColor = (debug == false) ? SKColor.clear : layer.gridColor.withAlphaComponent(0.75)
             fillColor = SKColor.clear
             
@@ -468,10 +462,6 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             textSprite.zPosition = zPosition - 1
             textSprite.setScale(finalScaleValue)
             textSprite.position = self.boundingRect.center
-            
-            
-            // vertical alignment
-            textImageSize.height - textAttributes.fontSize
             
         }
     }
@@ -521,25 +511,22 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             fontHeight = self.text!.boundingRect(with: CGSize(width: bounds.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: textFontAttributes).height
             #endif
             
+            // vertical alignment
             // center aligned...
             if (textAttributes.alignment.vertical == .center) {
-                
                 let adjustedRect: CGRect = CGRect(x: scaledRect.minX, y: scaledRect.minY + (scaledRect.height - fontHeight) / 2, width: scaledRect.width, height: fontHeight)
-            
                 #if os(macOS)
                 NSRectClip(textRect)
                 #endif
-                
                 self.text!.draw(in: adjustedRect.offsetBy(dx: 0, dy: 2 * withScale), withAttributes: textFontAttributes)
                 
             // top aligned...
             } else if (textAttributes.alignment.vertical == .top) {
                 self.text!.draw(in: bounds, withAttributes: textFontAttributes)
             
-            // bottom
+            // bottom aligned
             } else {
                 let adjustedRect: CGRect = CGRect(x: scaledRect.minX, y: scaledRect.minY, width: scaledRect.width, height: fontHeight)
-                
                 #if os(macOS)
                 NSRectClip(textRect)
                 #endif
@@ -670,6 +657,8 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             childNode(withName: "BOUNDS")?.removeFromParent()
             
             if (newValue == true) {
+                
+                isHidden = false
                 
                 // draw the tile boundary shape
                 drawBounds()

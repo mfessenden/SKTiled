@@ -524,18 +524,16 @@ public class SKTile: SKSpriteNode {
         
         // map tile size
         let mapTileSize = CGSize(width: tileSize.width - mapOffset.x, height: tileSize.height - mapOffset.y)
-        let mapTileSizeHalfWidth:  CGFloat = mapTileSize.width / 2
-        let mapTileSizeHalfHeight: CGFloat = mapTileSize.height / 2
         
         // tileset tile size
         let tilesetTileSize: CGSize = tileData.tileset.tileSize
-        let tilesetTileWidth: CGFloat = tilesetTileSize.width
         let tilesetTileHeight: CGFloat = tilesetTileSize.height
 
         
         var xOffset: CGFloat = 0
         var yOffset: CGFloat = 0
-
+        
+        // calculate the offset amount based on the current tile orientation
         if alignment == .bottomRight || alignment == .topRight {
             xOffset = -(tilesetTileHeight - mapTileSize.height)
             

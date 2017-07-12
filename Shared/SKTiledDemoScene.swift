@@ -353,7 +353,8 @@ extension SKTiledDemoScene {
             
             let xDistanceToCenter = (xpos / viewSize.width) - 0.5
             let yDistanceToCenter = (ypos / viewSize.height) - 0.5
-
+            
+            
             mouseTracker.xpos = xDistanceToCenter
             mouseTracker.ypos = yDistanceToCenter
         }
@@ -392,12 +393,6 @@ extension SKTiledDemoScene {
         let coordDescription = "\(Int(coord.x)), \(Int(coord.y))"
         updateTileInfo(msg: "Coord: \(coordDescription), \(positionInLayer.roundTo())")
         updatePropertiesInfo(msg: propertiesInfoString)
-        
-        
-        let nodesUnderCursor = nodes(at: positionInScene).filter( { $0 as? TileShape != nil }) as! [TileShape]
-        let currentClicked = nodesUnderCursor.filter( { $0.clickCount == 0 } )
-        //print(currentClicked)
-        //currentClicked.forEach{ $0.clickCount += 1}
     }
 
     override open func mouseDragged(with event: NSEvent) {
@@ -471,6 +466,7 @@ open class MouseTracker: SKNode {
     
     public var ypos: CGFloat = 0 {
         didSet {
+            //let newYPos = lerp(start: 0.25, end: 1.0, t: ypos)
             label.position.y = (tileWidth * 6) * -ypos
         }
     }

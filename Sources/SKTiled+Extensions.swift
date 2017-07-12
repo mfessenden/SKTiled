@@ -908,6 +908,17 @@ public func / (lhs: CGFloat, rhs: Int) -> CGFloat {
     return lhs / CGFloat(rhs)
 }
 
+
+public func lerp(start: CGFloat, end: CGFloat, t: CGFloat) -> CGFloat {
+    return start + (t * (end - start))
+}
+
+
+public func ilerp(start: CGFloat, end: CGFloat, t: CGFloat) -> CGFloat {
+    return (t - start) / (end - start)
+}
+
+
 // MARK: CGPoint
 
 public func + (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
@@ -1098,14 +1109,14 @@ public func normalize(_ value: CGFloat, _ minimum: CGFloat, _ maximum: CGFloat) 
 
 
 /**
- Generate a visual grid texture.
+ Visualize a layer as a texture.
  
  - parameter layer:      `TiledLayerObject` layer instance.
  - parameter imageScale: `CGFloat` image scale multiplier.
  - parameter lineScale:  `CGFloat` line scale multiplier.
  - returns: `SKTexture?` visual grid texture.
  */
-internal func drawGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineScale: CGFloat=1) -> CGImage {
+internal func drawLayerGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineScale: CGFloat=1) -> CGImage {
     // get the ui scale value for the device
     let uiScale: CGFloat
     #if os(iOS) || os(tvOS)
@@ -1229,6 +1240,21 @@ internal func drawGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineSca
             }
         }
     }
+}
+
+
+/**
+ Visualize a `GKGridGraph` node as a texture.
+ 
+ - parameter layer:      `TiledLayerObject` layer instance.
+ - parameter graph:      `String` graph name.
+ - parameter imageScale: `CGFloat` image scale multiplier.
+ - parameter lineScale:  `CGFloat` line scale multiplier.
+ - returns: `SKTexture?` visual grid texture.
+ */
+internal func drawGraph(_ layer: TiledLayerObject, graph: String, imageScale: CGFloat=8, lineScale: CGFloat=1) -> CGImage {
+    let sizeInPoints = (layer.sizeInPoints * imageScale)
+    return imageOfSize(sizeInPoints, scale: 1) { context, bounds, scale in }
 }
 
 
@@ -1404,12 +1430,13 @@ public func bezierPath(_ points: [CGPoint], closed: Bool=true, alpha: CGFloat=0.
  Compression level with constants based on the zlib's constants.
  */
 public typealias CompressionLevel = Int32
+
 public extension CompressionLevel {
     
-    public static let noCompression = Z_NO_COMPRESSION
-    public static let bestSpeed = Z_BEST_SPEED
-    public static let bestCompression = Z_BEST_COMPRESSION    
-    public static let defaultCompression = Z_DEFAULT_COMPRESSION
+    static public let noCompression      = Z_NO_COMPRESSION
+    static public let bestSpeed          = Z_BEST_SPEED
+    static public let bestCompression    = Z_BEST_COMPRESSION
+    static public let defaultCompression = Z_DEFAULT_COMPRESSION
 }
 
 

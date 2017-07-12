@@ -26,7 +26,7 @@ import Cocoa
  - group:   Group layer.
  */
 public enum SKTiledLayerType: Int {
-    case invalid    = -1
+    case none     = -1
     case tile
     case object
     case image
@@ -96,8 +96,9 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
     
     
-    internal var layerType: SKTiledLayerType = .invalid
+    internal var layerType: SKTiledLayerType = .none
     open var tilemap: SKTilemap
+    
     /// Unique object id.
     open var uuid: String = UUID().uuidString
     /// Object type
@@ -148,7 +149,14 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     
     // debug visualizations
     open var gridOpacity: CGFloat = 0.20
-    fileprivate var grid: TiledLayerGrid!
+    internal var debugNode: TiledDebugDrawNode!
+    
+    open var debugDrawOptions: DebugDrawOptions = [] {
+        didSet {
+            guard oldValue != debugDrawOptions else { return }
+            debugNode?.update()
+        }
+    }
     
     internal var isRendered: Bool = false
     open var antialiased: Bool = false
@@ -177,15 +185,6 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         #endif
         self.addChild(sprite)
         return sprite
-    }()
-    
-    /**
-     Layer boundary shape.
-     */
-    lazy open var frameShape: SKShapeNode = {
-        let shape = SKShapeNode()
-        self.addChild(shape)
-        return shape
     }()
     
     /// Returns the position of layer origin point (used to place tiles).
@@ -231,37 +230,6 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         }
     }
     
-    /// Show the layer's grid.
-    open var showGrid: Bool {
-        get {
-            return grid.showGrid
-        }
-        set {
-            grid.showGrid = newValue
-        }
-    }
-    
-    /// Show/hide the layer's bounding shape.
-    open var showBounds: Bool {
-        get {
-            return !frameShape.isHidden
-        }
-        set {
-            frameShape.isHidden = !newValue
-            drawBounds()
-        }
-    }
-    
-    /// Visualize the layer's bounds & tile grid.
-    open var debugDraw: Bool {
-        get {
-            return showBounds && showGrid
-        } set {
-            showBounds = newValue
-            showGrid = newValue
-        }
-    }
-    
     /// Returns the render statisics
     open var renderStatistics: renderInfo {
         return (index, path, Double(zPosition), Int(tilemap.size.width), Int(tilemap.size.height), Int(tileSize.width), Int(tileSize.height),  Int(offset.x), Int(offset.y), Int(anchorPoint.x), Int(anchorPoint.y), 0, 0, (isHidden == true) ? 0 : 1)
@@ -284,7 +252,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         self.tilemap = tilemap
         self.ignoreProperties = tilemap.ignoreProperties
         super.init()
-        self.grid = TiledLayerGrid(tileLayer: self)
+        self.debugNode = TiledDebugDrawNode(tileLayer: self)
         self.name = layerName
         
         // layer offset
@@ -314,7 +282,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         
         // set the layer's antialiasing based on tile size
         self.antialiased = self.tilemap.tileSize.width > 16 ? true : false
-        addChild(grid)
+        addChild(debugNode)
         
         // TODO: Cleanup
         //self.frameShape.isHidden = true
@@ -332,12 +300,12 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         self.tilemap = tilemap
         self.ignoreProperties = tilemap.ignoreProperties
         super.init()
-        self.grid = TiledLayerGrid(tileLayer: self)
+        self.debugNode = TiledDebugDrawNode(tileLayer: self)
         self.name = layerName
         
         // set the layer's antialiasing based on tile size
         self.antialiased = self.tilemap.tileSize.width > 16 ? true : false
-        addChild(grid)
+        addChild(debugNode)
         
         // TODO: Cleanup
         //self.frameShape.isHidden = true
@@ -832,48 +800,8 @@ open class TiledLayerObject: SKNode, SKTiledObject {
      Visualize the layer's boundary shape.
      */
     public func drawBounds() {
-        
-        let objectPath: CGPath!
-        
-        switch orientation {
-        case .orthogonal:
-            objectPath = polygonPath(self.boundingRect.points)
-            
-        case .isometric:
-            let topPoint = CGPoint(x: 0, y: 0)
-            let rightPoint = CGPoint(x: (width - 1) * tileHeight + tileHeight, y: 0)
-            let bottomPoint = CGPoint(x: (width - 1) * tileHeight + tileHeight, y: (height - 1) * tileHeight + tileHeight)
-            let leftPoint = CGPoint(x: 0, y: (height - 1) * tileHeight + tileHeight)
-            
-            let points: [CGPoint] = [
-                // point order is top, right, bottom, left
-                pixelToScreenCoords(topPoint),
-                pixelToScreenCoords(rightPoint),
-                pixelToScreenCoords(bottomPoint),
-                pixelToScreenCoords(leftPoint)
-            ]
-            
-            let invertedPoints = points.map{ $0.invertedY }
-            objectPath = polygonPath(invertedPoints)
-            
-        case .hexagonal, .staggered:            
-            objectPath = polygonPath(self.boundingRect.points)
-        }
-        
-        if let objectPath = objectPath {
-            frameShape.path = objectPath
-            frameShape.isAntialiased = false
-            frameShape.lineWidth = (tileSize.halfHeight) < 8 ? 0.5 : 1
-            frameShape.lineJoin = .miter
-            
-            // don't draw bounds of hexagonal maps
-            frameShape.strokeColor = frameColor
-            if (orientation == .hexagonal){
-                frameShape.strokeColor = SKColor.clear
-            }
-            
-            frameShape.fillColor = SKColor.clear
-        }
+        guard let debugNode = debugNode else  { return }
+        debugNode.drawBounds()
     }
     
     /**
@@ -980,6 +908,16 @@ open class SKTileLayer: TiledLayerObject {
         return current
     }
     
+    override open var debugDrawOptions: DebugDrawOptions {
+        didSet {
+            guard oldValue != debugDrawOptions else { return }
+            debugNode?.update()
+            
+            let doShowTileBounds = debugDrawOptions.contains(.drawTileBounds)
+            tiles.forEach { $0?.showBounds = doShowTileBounds }
+        }
+    }
+        
     /// Tile highlight duration
     override open var highlightDuration: TimeInterval {
         didSet{
@@ -1538,6 +1476,17 @@ open class SKObjectGroup: TiledLayerObject {
         }
     }
     
+    override open var debugDrawOptions: DebugDrawOptions {
+        didSet {
+            guard oldValue != debugDrawOptions else { return }
+            debugNode?.update()
+            
+            let doShowObjects = debugDrawOptions.contains(.drawObjectBounds)
+            objects.forEach { $0.showBounds = doShowObjects }
+        }
+    }
+    
+    
     // MARK: - Init
     /**
      Initialize with layer name and parent `SKTilemap`.
@@ -1852,6 +1801,67 @@ open class SKImageLayer: TiledLayerObject {
 
 
 /**
+ The `BackgroundLayer` object represents the default background for a tilemap.
+ 
+ Set the layer image with:
+ 
+ ```swift
+ imageLayer.setLayerImage("clouds-background")
+ ```
+ */
+open class BackgroundLayer: TiledLayerObject {
+    
+    private var sprite: SKSpriteNode!
+    private var _debugColor: SKColor? = nil
+    
+    override open var color: SKColor {
+        didSet {
+            guard let sprite = sprite else { return }
+            sprite.color = (_debugColor == nil) ? color : _debugColor!
+        }
+    }
+    
+    override open var colorBlendFactor: CGFloat {
+        didSet {
+            guard let sprite = sprite else { return }
+            sprite.colorBlendFactor = colorBlendFactor
+        }
+    }
+    
+    // MARK: - Init
+    /**
+     Initialize with the parent `SKTilemap` node.
+     
+     - parameter tilemap:   `SKTilemap` parent map.
+     */
+    public init(tilemap: SKTilemap) {
+        super.init(layerName: "DEFAULT", tilemap: tilemap)
+        layerType = .none
+        index = -1
+        sprite = SKSpriteNode(texture: nil, color: tilemap.backgroundColor ?? SKColor.clear, size: tilemap.sizeInPoints)
+        addChild(self.sprite!)
+        
+        // position sprite
+        sprite!.position.x += tilemap.sizeInPoints.width / 2
+        sprite!.position.y -= tilemap.sizeInPoints.height / 2
+    }
+    
+    /**
+     Set the color of the background node.
+     
+     - parameter tilemap:   `SKTilemap` parent map.
+     */
+    public func setBackground(color: SKColor) {
+        self.sprite?.color = color
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+
+/**
  The `SKGroupLayer` object is a container for grouping other layers.
  
  Add layers to the group with:
@@ -1956,9 +1966,9 @@ open class SKGroupLayer: TiledLayerObject {
         layer.zPosition = nextZPosition
         
         // override debugging colors
-        layer.gridColor = self.gridColor
-        layer.frameColor = self.frameColor
-        layer.highlightColor = self.highlightColor
+        layer.gridColor = gridColor
+        layer.frameColor = frameColor
+        layer.highlightColor = highlightColor
     }
     
     /**

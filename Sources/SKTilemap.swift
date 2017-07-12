@@ -134,21 +134,23 @@ internal let TileSize32x32 = CGSize(width: 32, height: 32)
  The `SKTilemapDelegate` protocol is used to implement a delegate that allows your application to interact with a tile map as it is being created.
  
  ### **Symbols**
- 
+ - `zDeltaForLayers`
+    - Determines the z-zposition difference between layers.
  - `didBeginParsing(_ tilemap: SKTilemap)`
-    - called when the tilemap is initialized.
+    - Called when the tilemap is initialized.
  - `didAddTileset(_ tileset: SKTileset)`
-    - called when a tileset is added to the map.
+    - Called when a tileset is added to the map.
  - `didAddLayer(_ layer: TiledLayerObject)`
-    - called when a layer is added to the map.
+    - Called when a layer is added to the map.
  - `didReadMap(_ tilemap: SKTilemap)`
-    - called when the map is finished parsing (before rendering).
+    - Called when the map is finished parsing (before rendering).
  - `didRenderMap(_ tilemap: SKTilemap)`
-    - called when the map is finished rendering.
+    - Called when the map is finished rendering.
  - `objectForTile: SKTile.Type`
-    - return a `SKTile` object for use building tiles.
+    - Return a `SKTile` object for use building tiles.
 */
 public protocol SKTilemapDelegate: class {
+    var zDeltaForLayers: CGFloat { get }
     func didBeginParsing(_ tilemap: SKTilemap)
     func didAddTileset(_ tileset: SKTileset)
     func didAddLayer(_ layer: TiledLayerObject)
@@ -232,6 +234,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     
     /// Overlay color.
     open var overlayColor: SKColor = SKColor(hexString: "#40000000")
+    
     /// Object color.
     open var objectColor: SKColor = SKColor.gray
     
@@ -247,8 +250,8 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     /// Optional background color (read from the Tiled file)
     open var backgroundColor: SKColor? = nil {
         didSet {
-            self.backgroundSprite.color = (backgroundColor != nil) ? backgroundColor! : SKColor.clear
-            self.backgroundSprite.colorBlendFactor = (backgroundColor != nil) ? 1.0 : 0
+            self.baseLayer.color = (backgroundColor != nil) ? backgroundColor! : SKColor.clear
+            self.baseLayer.colorBlendFactor = (backgroundColor != nil) ? 1.0 : 0
         }
     }
     
@@ -265,20 +268,11 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     /** 
     The tile map default base layer, used for displaying the current grid, getting coordinates, etc.
     */
-    lazy open var baseLayer: SKTileLayer = {
-        let layer = SKTileLayer(layerName: "Base", tilemap: self)
+    lazy open var baseLayer: BackgroundLayer = {
+        let layer = BackgroundLayer(tilemap: self)
         self.addLayer(layer, base: true)
         layer.didFinishRendering()
         return layer
-    }()
-    
-    /**
-     Sprite background (if different than scene).
-     */
-    lazy var backgroundSprite: SKSpriteNode = {
-        let background = SKSpriteNode(color: self.backgroundColor ?? SKColor.clear, size: self.sizeInPoints)
-        self.addChild(background)
-        return background
     }()
     
     /**
@@ -292,9 +286,16 @@ open class SKTilemap: SKCropNode, SKTiledObject {
         return overlayNode
     }()
     
-    /// debugging
+    /// Debug options.
+    open var debugDrawOptions: DebugDrawOptions = [] {
+        didSet {
+            getLayers().forEach { $0.debugDrawOptions = debugDrawOptions }
+        }
+    }
+    
     internal var loggingLevel: LoggingLevel = .warning
-    open var debugMode: Bool = false
+
+    
     open var color: SKColor = SKColor.clear                            // used for pausing
     open var gridColor: SKColor = SKColor.black                        // color used to visualize the tile grid
     open var frameColor: SKColor = SKColor.black                       // bounding box color
@@ -701,9 +702,9 @@ open class SKTilemap: SKCropNode, SKTiledObject {
         layer.zPosition = nextZPosition
         
         // override debugging colors
-        layer.gridColor = self.gridColor
-        layer.frameColor = self.frameColor
-        layer.highlightColor = self.highlightColor
+        layer.gridColor = gridColor
+        layer.frameColor = frameColor
+        layer.highlightColor = highlightColor
     }
     
     /**
@@ -1244,8 +1245,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     open func didFinishRendering(timeStarted: Date) {
         
         // set the z-depth of the baseLayer & background sprite
-        baseLayer.zPosition = lastZPosition + (zDeltaForLayers * 0.5)
-        backgroundSprite.zPosition = -zDeltaForLayers
+        baseLayer.zPosition = -zDeltaForLayers
         
         // time results
         let timeInterval = Date().timeIntervalSince(timeStarted)
@@ -1453,49 +1453,6 @@ extension SKTilemap {
     
     override open var debugDescription: String { return description }
     
-    /// Visualize the map's grid.
-    open var showGrid: Bool {
-        get {
-            return baseLayer.showGrid
-        }
-        set {
-            guard newValue != baseLayer.showGrid else { return }
-            baseLayer.showGrid = newValue
-        }
-    }
-    
-    /// Visualize the map's bounding box.
-    open var showBounds: Bool {
-        get {
-            return baseLayer.showBounds
-        }
-        set {
-            guard newValue != baseLayer.showBounds else { return }
-            baseLayer.showBounds = newValue
-        }
-    }
-    
-    /// Visualize the current grid & bounds.
-    open var debugDraw: Bool {
-        get {
-            return baseLayer.debugDraw
-        } set {
-            guard newValue != baseLayer.debugDraw else { return }
-            baseLayer.debugDraw = newValue
-            
-            // show bounding box for renderable objects
-            for objectLayer in objectGroups(recursive: true) {
-                (objectLayer.getObjects().filter { $0.isRenderableType == true }.forEach { $0.drawObject(debug: newValue) })
-            }
-            
-            // show bounding box for renderable objects
-            for tileLayer in tileLayers(recursive: true) {
-                // draw the anchor
-                //(tileLayer.getTiles().forEach { $0.drawAnchor = true })
-            }
-        }
-    }
-    
     /** 
      Returns an array of tiles/objects.
      
@@ -1606,6 +1563,12 @@ extension SKTilemap {
  Default implementations of callbacks.
  */
 extension SKTilemapDelegate {
+    
+    /// Determines the z-zposition difference between layers.
+    public var zDeltaForLayers: CGFloat {
+        return 50
+    }
+    
     /**
      Called when the tilemap is instantiated.
 

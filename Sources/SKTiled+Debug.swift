@@ -13,21 +13,43 @@ import SpriteKit
 /// globals
 var TILE_BOUNDS_USE_OFFSET: Bool = false
 
+/// Options for debugging the map
+public struct DebugDrawOptions: OptionSet {
+    public let rawValue: Int
+    
+    public init(rawValue: Int = 0) {
+        self.rawValue = rawValue
+    }
+    
+    static public let drawGrid             = DebugDrawOptions(rawValue: 1 << 0)
+    static public let drawBounds           = DebugDrawOptions(rawValue: 1 << 1)
+    static public let drawGraph            = DebugDrawOptions(rawValue: 1 << 2)
+    static public let drawObjectBounds     = DebugDrawOptions(rawValue: 1 << 3)
+    static public let drawTileBounds       = DebugDrawOptions(rawValue: 1 << 4)
+    static public let drawMouseOverObject  = DebugDrawOptions(rawValue: 1 << 5)
+    static public let drawBackground       = DebugDrawOptions(rawValue: 1 << 6)
+    
+    static public let demo: DebugDrawOptions = [.drawGrid, .drawBounds]
+    static public let all: DebugDrawOptions  = [.demo, .drawGraph, .drawObjectBounds, .drawTileBounds, .drawMouseOverObject, .drawBackground]
+}
 
 
 /// Sprite object for visualizaing grid & graph.
-internal class TiledLayerGrid: SKSpriteNode {
+// TODO: at some point the grid & graph textures should be a shader.
+internal class TiledDebugDrawNode: SKNode {
     
-    private var layer: TiledLayerObject
-    private var gridTexture: SKTexture! = nil
-    private var graphTexture: SKTexture! = nil
-    private var frameColor: SKColor = .black
-    private var gridOpacity: CGFloat { return layer.gridOpacity }
+    private var layer: TiledLayerObject                     // parent layer
+    
+    private var gridSprite: SKSpriteNode!
+    private var graphSprite: SKSpriteNode!
+    private var frameShape: SKShapeNode!
+    
+    private var gridTexture: SKTexture! = nil               // grid texture
+    private var graphTexture: SKTexture! = nil              // GKGridGraph texture
     
     init(tileLayer: TiledLayerObject){
         layer = tileLayer
-        frameColor = layer.frameColor
-        super.init(texture: SKTexture(), color: SKColor.clear, size: tileLayer.sizeInPoints)
+        super.init()
         setup()
     }
     
@@ -35,73 +57,179 @@ internal class TiledLayerGrid: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
+    var debugDrawOptions: DebugDrawOptions {
+        return layer.debugDrawOptions
+    }
+    
+    var showGrid: Bool {
+        get {
+            return (gridSprite != nil) ? (gridSprite!.isHidden == false) : false
+        } set {
+            if (gridTexture == nil) {
+                drawGrid()
+            }
+        }
+    }
+    
+    var showBounds: Bool {
+        get {
+            return (frameShape != nil) ? (frameShape!.isHidden == false) : false
+        } set {
+            drawBounds()
+        }
+    }
+    
+    var showGraph: Bool {
+        return (graphSprite != nil) ? (graphSprite!.isHidden == false) : false
+    }
+    
     /**
      Align with the parent layer.
      */
     func setup() {
-        // set the anchorpoint to 0,0 to match the frame
-        anchorPoint = CGPoint.zero
-        isHidden = true
+        // set the anchorpoints to 0,0 to match the frame
+        gridSprite = SKSpriteNode(texture: nil, color: .clear, size: layer.sizeInPoints)
+        gridSprite.anchorPoint = .zero
+        addChild(gridSprite!)
+
+        graphSprite = SKSpriteNode(texture: nil, color: .clear, size: layer.sizeInPoints)
+        graphSprite.anchorPoint = .zero
+        addChild(graphSprite!)
         
-        #if os(iOS) || os(tvOS)
-        position.y = -layer.sizeInPoints.height
-        #endif
+        frameShape = SKShapeNode()
+        addChild(frameShape!)
+    
+        //isHidden = true
+        
+        // z-position values
+        graphSprite!.zPosition = layer.zPosition + layer.tilemap.zDeltaForLayers
+        gridSprite!.zPosition = layer.zPosition + (layer.tilemap.zDeltaForLayers + 10)
+        frameShape!.zPosition = layer.zPosition + (layer.tilemap.zDeltaForLayers + 20)
+    }
+    
+    func update() {
+        print("[TiledDebugDrawNode] updating: \(debugDrawOptions), hidden: \(isHidden)")
+        if debugDrawOptions.contains(.drawGrid) {
+            drawGrid()
+        } else {
+            gridSprite?.isHidden = true
+        }
+        
+        if debugDrawOptions.contains(.drawBounds) {
+            drawBounds()
+        } else {
+            frameShape?.isHidden = true
+        }
+    }
+    
+    /**
+     Visualize the layer's boundary shape.
+     */
+    func drawBounds() {
+        
+        let objectPath: CGPath!
+        
+        // grab dimensions from the layer
+        let width = layer.width
+        let height = layer.height
+        let tileSize = layer.tileSize
+        
+        switch layer.orientation {
+        case .orthogonal:
+            objectPath = polygonPath(layer.boundingRect.points)
+            
+        case .isometric:
+            let topPoint = CGPoint(x: 0, y: 0)
+            let rightPoint = CGPoint(x: (width - 1) * tileSize.height + tileSize.height, y: 0)
+            let bottomPoint = CGPoint(x: (width - 1) * tileSize.height + tileSize.height, y: (height - 1) * tileSize.height + tileSize.height)
+            let leftPoint = CGPoint(x: 0, y: (height - 1) * tileSize.height + tileSize.height)
+            
+            let points: [CGPoint] = [
+                // point order is top, right, bottom, left
+                layer.pixelToScreenCoords(topPoint),
+                layer.pixelToScreenCoords(rightPoint),
+                layer.pixelToScreenCoords(bottomPoint),
+                layer.pixelToScreenCoords(leftPoint)
+            ]
+            
+            let invertedPoints = points.map{ $0.invertedY }
+            objectPath = polygonPath(invertedPoints)
+            
+        case .hexagonal, .staggered:
+            objectPath = polygonPath(layer.boundingRect.points)
+        }
+        
+        if let objectPath = objectPath {
+            frameShape.path = objectPath
+            frameShape.isAntialiased = false
+            frameShape.lineWidth = (layer.tileSize.halfHeight) < 8 ? 0.5 : 1
+            frameShape.lineJoin = .miter
+            
+            // don't draw bounds of hexagonal maps
+            frameShape.strokeColor = layer.frameColor
+            if (layer.orientation == .hexagonal){
+                frameShape.strokeColor = SKColor.clear
+            }
+            
+            frameShape.fillColor = SKColor.clear
+        }
+        
+        isHidden = false
+        frameShape.isHidden = false
     }
     
     /// Display the current tile grid.
-    var showGrid: Bool = false {
-        didSet {
-            guard oldValue != showGrid else { return }
-            
-            texture = nil
-            isHidden = true
-            
-            if (showGrid == true){
-                
-                // get the last z-position
-                zPosition = layer.tilemap.lastZPosition + layer.tilemap.zDeltaForLayers
-                isHidden = false
-                var gridSize = CGSize.zero
-                
-                // scale factor for texture
-                let uiScale: CGFloat
-                
-                #if os(iOS) || os(tvOS)
-                uiScale = UIScreen.main.scale
-                #else
-                uiScale = NSScreen.main()!.backingScaleFactor
-                #endif
-                
-                // multipliers used to generate smooth lines
-                let defaultImageScale: CGFloat = (layer.tilemap.tileHeight < 16) ? 8 : 4
-                let imageScale: CGFloat = (uiScale > 1) ? (defaultImageScale / 2) : defaultImageScale
-                let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 0.5 : 0.25    // 1 : 0.85
+    func drawGrid() {
+        
+        gridTexture = nil
+        gridSprite.isHidden = true
+        
+        // get the last z-position
+        zPosition = layer.tilemap.lastZPosition + layer.tilemap.zDeltaForLayers
+        isHidden = false
+        var gridSize = CGSize.zero
+        
+        // scale factor for texture
+        let uiScale: CGFloat
+        
+        #if os(iOS) || os(tvOS)
+        uiScale = UIScreen.main.scale
+        #else
+        uiScale = NSScreen.main()!.backingScaleFactor
+        #endif
+        
+        // multipliers used to generate smooth lines
+        let defaultImageScale: CGFloat = (layer.tilemap.tileHeight < 16) ? 8 : 4
+        let imageScale: CGFloat = (uiScale > 1) ? (defaultImageScale / 2) : defaultImageScale
+        let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1 : 0.85 //0.5 : 0.25    // 1 : 0.85
 
-                
-                // generate the texture
-                if (gridTexture == nil) {
-                    let gridImage = drawGrid(self.layer, imageScale: imageScale, lineScale: lineScale)
-                    gridTexture = SKTexture(cgImage: gridImage)
-                    gridTexture.filteringMode = .linear
-                }
-                
-                
-                // sprite scaling factor
-                let spriteScaleFactor: CGFloat = (1 / imageScale)
-                gridSize = gridTexture.size() / uiScale
-                setScale(spriteScaleFactor)
-
-                
-                texture = gridTexture
-                alpha = gridOpacity
-                size = gridSize / imageScale
-                
-                #if os(OSX)
-                yScale *= -1
-                #endif
-                
-            }
+        
+        // generate the texture
+        if (gridTexture == nil) {
+            let gridImage = drawLayerGrid(self.layer, imageScale: imageScale, lineScale: lineScale)
+            gridTexture = SKTexture(cgImage: gridImage)
+            gridTexture.filteringMode = .linear
         }
+        
+        // sprite scaling factor
+        let spriteScaleFactor: CGFloat = (1 / imageScale)
+        gridSize = gridTexture.size() / uiScale
+        gridSprite.setScale(spriteScaleFactor)
+
+        
+        gridSprite.texture = gridTexture
+        gridSprite.alpha = layer.gridOpacity
+        gridSprite.size = gridSize / imageScale
+        
+        // need to flip the grid texture in y
+        // currently not doing this to the parent node so that objects will draw correctly.
+        #if os(iOS) || os(tvOS)
+        gridSprite.position.y = -layer.sizeInPoints.height
+        #else
+        gridSprite.yScale *= -1
+        #endif
+        
+        gridSprite.isHidden = false
     }
 }
 
@@ -402,8 +530,8 @@ extension SKTiledDemoScene {
         
         // 'd' shows/hides debug view
         if eventKey == 0x02 {
-            let newValue = !tilemap.debugDraw
-            tilemap.debugDraw = newValue
+            print("[SKTiledDemoScene]: no debug drawing options available.")
+
         }
 
         // 'h' hides the HUD
@@ -437,12 +565,11 @@ extension SKTiledDemoScene {
         
         // 'l' toggles object bounds drawing
         if eventKey == 0x25 {
-            let renderables = tilemap.renderableObjects()
-            renderables.forEach { node in
-                if let obj = node as? SKTileObject {
-                    let newValue = !obj.showBounds
-                    obj.showBounds = newValue
-                }
+            // if objects are shown...
+            if tilemap.debugDrawOptions.contains(.drawObjectBounds) {
+                tilemap.debugDrawOptions.remove(.drawObjectBounds)
+            } else {
+                tilemap.debugDrawOptions.insert(.drawObjectBounds)
             }
         }
 
@@ -473,8 +600,6 @@ extension SKTiledDemoScene {
         
         // 'clear' clears TileShapes
         if eventKey == 0x47 {
-            
-            var tiles: [TileShape] = []
             self.enumerateChildNodes(withName: "//*") {
                 node, stop in
                 
@@ -484,23 +609,23 @@ extension SKTiledDemoScene {
             }
         }
         
-        // MARK: - Debugging Tests
+        // MARK: - DEBUGGING TESTS
+        // TODO: get rid of these in master
+        
+        
         // 'm' toggles tile bounds drawing
         if eventKey == 0x2e {
-            
-            let renderables = tilemap.renderableObjects()
-            renderables.forEach { node in
-                if let tile = node as? SKTile {
-                    let newValue = !tile.showBounds
-                    tile.showBounds = newValue
-                    
-                }
+            // if objects are shown...
+            if tilemap.debugDrawOptions.contains(.drawTileBounds) {
+                tilemap.debugDrawOptions.remove(.drawTileBounds)
+            } else {
+                tilemap.debugDrawOptions.insert(.drawTileBounds)
             }
         }
         
-        // 'g' highlights all tiles
+        // 'g' shows the grid for the map default layer.
         if eventKey == 0x5 {
-            tilemap.tileLayers(recursive: true).forEach({ $0.validTiles().forEach({ $0.showBounds = !$0.showBounds }) })
+            tilemap.baseLayer.debugDrawOptions = (tilemap.baseLayer.debugDrawOptions != []) ? [] : [.demo]
         }
         
         // 'i' runs a custom event
@@ -531,6 +656,17 @@ extension SKTiledDemoScene {
             }
         }
         
+        // 'n' changes the background color
+        if eventKey == 0x2d {
+            //tilemap.backgroundColor = SKColor(hexString: "#ea32fa")
+            // if objects are shown...
+            if tilemap.baseLayer.debugDrawOptions.contains(.drawBackground) {
+                tilemap.baseLayer.debugDrawOptions.remove(.drawBackground)
+            } else {
+                tilemap.baseLayer.debugDrawOptions.insert(.drawBackground)
+            }
+        }
+        
         // 'r' reloads the scene
         if eventKey == 0xf {
             guard let currenFilename = tilemap.filename else { return }
@@ -551,11 +687,6 @@ extension SKTiledDemoScene {
         // 'y' runs a custom test
         if eventKey == 0x10 {
             tilemap.getLayers(ofType: "DEBUG").forEach{ $0.isHidden = !$0.isHidden}
-        }
-        
-        // 'z' queries the debug draw state
-        if eventKey == 0x6 {
-            print("tilemap debug draw: \(tilemap.debugDraw), (show bounds: \(tilemap.showBounds), show grid: \(tilemap.showGrid))")
         }
         
     }

@@ -28,8 +28,7 @@ public extension SKTilemap {
             }
             
             if ["debug", "debugmode", "debugdraw"].contains(lattr){
-                debugDraw = boolForKey(value)
-                debugMode = boolForKey(value)
+                debugDrawOptions = [.demo]
             }
             
             if (lattr == "gridcolor") {
@@ -51,11 +50,17 @@ public extension SKTilemap {
             if (lattr == "framecolor") {
                 frameColor = SKColor(hexString: value)
                 getLayers().forEach {$0.frameColor = frameColor}
+                
+                // set base layer colors
+                baseLayer.frameColor = frameColor
             }
             
             if (lattr == "highlightcolor") {
                 highlightColor = SKColor(hexString: value)
                 getLayers().forEach {$0.highlightColor = highlightColor}
+                
+                // set base layer colors
+                baseLayer.highlightColor = highlightColor
             }
             
             // initial world scale.
@@ -109,7 +114,9 @@ public extension SKTilemap {
             }
             
             if (lattr == "showobjects") {
-                showObjects = boolForKey(attr)
+                if (boolForKey(attr) == true) {
+                    debugDrawOptions.insert(.drawObjectBounds)
+                }
             }
             
             if (lattr == "xgravity") {
@@ -121,11 +128,15 @@ public extension SKTilemap {
             }
             
             if (lattr == "showgrid") {
-                showGrid = boolForKey(attr)
+                if (boolForKey(attr) == true) {
+                    debugDrawOptions.insert(.drawGrid)
+                }
             }
             
             if (lattr == "showbounds") {
-                showBounds = boolForKey(attr)
+                if (boolForKey(attr) == true) {
+                    debugDrawOptions.insert(.drawBounds)
+                }
             }
             
             if (lattr == "cropatboundary") {

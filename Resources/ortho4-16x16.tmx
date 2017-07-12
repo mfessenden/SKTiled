@@ -2,6 +2,7 @@
 <map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" backgroundcolor="#1e1b23" nextobjectid="58">
  <properties>
   <property name="autoResize" type="bool" value="true"/>
+  <property name="fileBackground" type="color" value="#ff1e1b23"/>
   <property name="frameColor" type="color" value="#ff63a4b2"/>
   <property name="gridColor" type="color" value="#ff80d1e2"/>
   <property name="maxZoom" type="float" value="3.25"/>
@@ -385,10 +386,11 @@
  </tileset>
  <layer name="Background" width="20" height="15">
   <properties>
+   <property name="backgroundColor" value="#211e27"/>
    <property name="gridColor" value="#e42020"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJx7z8DA8H4Uj+JRPIqHAAYAykYYJA==
+   eJxjYBgFo2AUjIKhAQAEsAAB
   </data>
  </layer>
  <group name="Maze">

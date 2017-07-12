@@ -253,7 +253,7 @@
     </properties>
    </object>
   </objectgroup>
-  <objectgroup name="OUTLINES">
+  <objectgroup name="OUTLINES" visible="0">
    <properties>
     <property name="color" type="color" value="#ff8fff0b"/>
    </properties>

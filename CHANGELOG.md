@@ -63,6 +63,10 @@ Change Log
 - add `SKTileObject.showBounds`
 - rename `SKTile.getVertices()` -> `SKTile.getVertices(offset:)`
 
+- rename `TiledLayerGrid` -> `TiledDebugDrawNode`
+- add `BackgroundLayer` layer type
+- add `SKTilemapDelegate.zDeltaForLayers`
+
 1.13
 -----
 

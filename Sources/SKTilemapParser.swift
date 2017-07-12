@@ -405,6 +405,10 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             self.tilemap.ignoreProperties = self.ignoreProperties
             self.tilemap.delegate = self.mapDelegate
             
+            if (self.mapDelegate != nil) {
+                self.tilemap.zDeltaForLayers = self.mapDelegate!.zDeltaForLayers
+            }
+            
             let currentBasename = currentFileName.components(separatedBy: ".").first!
             
             // `SKTilemap.filename` represents the tmx filename (minus .tmx extension)
@@ -415,7 +419,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             self.mapDelegate?.didBeginParsing(tilemap)
             
             lastElement = tilemap
-            
             elementPath.append(tilemap)
         }
         
