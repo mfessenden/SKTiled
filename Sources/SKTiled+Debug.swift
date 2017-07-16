@@ -21,9 +21,9 @@ public struct DebugDrawOptions: OptionSet {
         self.rawValue = rawValue
     }
     
-    static public let drawGrid             = DebugDrawOptions(rawValue: 1 << 0)
-    static public let drawBounds           = DebugDrawOptions(rawValue: 1 << 1)
-    static public let drawGraph            = DebugDrawOptions(rawValue: 1 << 2)
+    static public let drawGrid             = DebugDrawOptions(rawValue: 1 << 0)  // 2
+    static public let drawBounds           = DebugDrawOptions(rawValue: 1 << 1)  // 2
+    static public let drawGraph            = DebugDrawOptions(rawValue: 1 << 2)  // 4
     static public let drawObjectBounds     = DebugDrawOptions(rawValue: 1 << 3)
     static public let drawTileBounds       = DebugDrawOptions(rawValue: 1 << 4)
     static public let drawMouseOverObject  = DebugDrawOptions(rawValue: 1 << 5)

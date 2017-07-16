@@ -14,6 +14,16 @@ import Cocoa
 #endif
 
 
+public protocol TiledSceneCameraDelegate: class {
+    func cameraPositionChanged(oldPosition: CGPoint, newPosition: CGPoint)
+    func cameraZoomChanged(oldZoom: CGFloat, newZoom: CGFloat)
+    func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat)
+    #if os(iOS) || os(tvOS)
+    func sceneDoubleTapped()
+    #endif
+}
+
+
 /**
   Custom scene camera that responds to finger/mouse gestures.
  
@@ -24,9 +34,10 @@ import Cocoa
 @available(OSX 10.11, *)
 open class SKTiledSceneCamera: SKCameraNode {
     
-    weak var delegate: SKTiledSceneDelegate? 
     unowned let world: SKNode
     internal var bounds: CGRect
+    private var delegates: [TiledSceneCameraDelegate] = []
+    
     open var zoom: CGFloat = 1.0
     open var initialZoom: CGFloat = 1.0
     
@@ -67,13 +78,12 @@ open class SKTiledSceneCamera: SKCameraNode {
     /**
      Initialize the camera with SKView and world node reference.
      
+     - parameter view:     `SKView?` optional view.
      - parameter world:    `SKNode` world container node.
-     - parameter delegate: `SKTiledSceneDelegate?` optional scene delegate.
      */
-    public init(world node: SKNode, delegate: SKTiledSceneDelegate?=nil, view: SKView?) {
+    public init(view: SKView, world node: SKNode) {
         world = node
-        bounds = CGRect.zero  //view.bounds
-        self.delegate = delegate
+        bounds = view.bounds
         super.init()
         
         // add the overlay
@@ -102,6 +112,31 @@ open class SKTiledSceneCamera: SKCameraNode {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Delegates
+    
+    /**
+     Add a camera delegate.
+     
+     - parameter delegate:  `TiledSceneCameraDelegate` camera delegate.
+     */
+    public func addDelegate(_ delegate: TiledSceneCameraDelegate) {
+        if let _ = delegates.index(where: { $0 === delegate}) {
+            return
+        }
+        delegates.append(delegate)
+    }
+    
+    /**
+     Remove a camera delegate.
+     
+     - parameter delegate:  `TiledSceneCameraDelegate` camera delegate.
+     */
+    public func removeDelegate(_ delegate: TiledSceneCameraDelegate) {
+        if let idx = delegates.index(where: { $0 === delegate}) {
+            delegates.remove(at: idx)
+        }
+    }
+    
     // MARK: - Overlay
     /**
      Add an overlay node.
@@ -122,16 +157,19 @@ open class SKTiledSceneCamera: SKCameraNode {
         let oldZoom = self.zoom
         
         // clamp scaling
-        var realScale = scale <= minZoom ? minZoom : scale
-        realScale = realScale >= maxZoom ? maxZoom : realScale
-        self.zoom = realScale
-        world.setScale(realScale)
+        let zoomClamped = scale.clamped(minZoom, maxZoom)
+        
+        self.zoom = zoomClamped
+        world.setScale(zoomClamped)
         
         if let tilemap = (scene as? SKTiledScene)?.tilemap {
             tilemap.autoResize = false
         }
         
-        self.delegate?.cameraZoomChanged(oldZoom)
+        // notify delegates
+        for delegate in delegates {
+            delegate.cameraZoomChanged(oldZoom: oldZoom, newZoom: zoomClamped)
+        }
     }
     
     /**
@@ -422,3 +460,12 @@ extension SKTiledSceneCamera {
 }
 #endif
 
+/// Default methods.
+extension TiledSceneCameraDelegate {
+    public func cameraPositionChanged(oldPosition: CGPoint, newPosition: CGPoint) {}
+    public func cameraZoomChanged(oldZoom: CGFloat, newZoom: CGFloat) {}
+    public func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {}
+    #if os(iOS) || os(tvOS)
+    public func sceneDoubleTapped() {}
+    #endif
+}

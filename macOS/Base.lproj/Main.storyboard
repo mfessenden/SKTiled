@@ -158,14 +158,14 @@
                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iiF-QO-DZ0" userLabel="Buttons View">
                                 <rect key="frame" x="224" y="108" width="352" height="16"/>
                                 <subviews>
-                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="vU3-Eb-5vb" userLabel="Fit Button">
+                                    <button springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vU3-Eb-5vb" userLabel="Fit Button">
                                         <rect key="frame" x="0.0" y="0.0" width="82" height="16"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="82" id="FPT-Ts-rvE"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="82" id="QoC-Vv-D1Q"/>
                                             <constraint firstAttribute="height" constant="16" id="Zc9-vc-ZhT"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="scale-button-norm" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="L79-MA-hik">
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="scale-button-norm" imagePosition="overlaps" alignment="center" alternateImage="scale-button-pressed" imageScaling="proportionallyUpOrDown" inset="2" id="L79-MA-hik">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                             <string key="keyEquivalent">a</string>
@@ -326,5 +326,6 @@
         <image name="next-button-norm" width="82" height="16"/>
         <image name="objects-button-norm" width="82" height="16"/>
         <image name="scale-button-norm" width="82" height="16"/>
+        <image name="scale-button-pressed" width="82" height="16"/>
     </resources>
 </document>

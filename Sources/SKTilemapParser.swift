@@ -1173,11 +1173,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     /**
      Decode Base64-formatted data.
      
-     Data is saved in tiled:
-     - data array is compressed (zlib, gzip)
-     - compressed data is encoded in base64
-     - data is saved
-     
      - parameter data:        `String` Base64 formatted data to decode
      - parameter compression: `CompressionType` compression type.
      - returns: `[UInt32]?` parsed data.

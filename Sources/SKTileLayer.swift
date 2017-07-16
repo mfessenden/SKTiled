@@ -158,7 +158,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         }
     }
     
-    internal var isRendered: Bool = false
+    internal private(set) var isRendered: Bool = false
     open var antialiased: Bool = false
     open var colorBlendFactor: CGFloat = 1.0
     open var renderQuality: CGFloat = 8
@@ -829,6 +829,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     open func didFinishRendering(duration: TimeInterval=0) {
         let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: duration)
         
+        // FIXME: might be causing crash
         run(fadeIn, completion: {
             self.isRendered = true
             self.parseProperties(completion: nil)
@@ -870,6 +871,11 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         /* override in subclass */
         let comma = propertiesString.characters.count > 0 ? ", " : ""
         print("Layer: \(name != nil ? "\"\(name!)\"" : "null")\(comma)\(propertiesString)")
+    }
+    
+    // MARK: - Updates
+    open func update(_ currentTime: TimeInterval) {
+        guard (isRendered == true) else { return }
     }
 }
 
@@ -1377,6 +1383,10 @@ open class SKTileLayer: TiledLayerObject {
         for tile in validTiles() {
             print(tile.debugDescription)
         }
+    }
+    
+    override open func update(_ currentTime: TimeInterval) {
+        super.update(currentTime)
     }
 }
 

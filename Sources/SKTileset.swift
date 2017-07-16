@@ -193,27 +193,13 @@ open class SKTileset: SKTiledObject {
         let sourceFilename = source.components(separatedBy: "/").last!
         let timer = Date()
         self.source = sourceFilename
-        
-        
-        let sourceTexture: SKTexture
-        
-        // parse the transparent color
+
+        // parse the transparent color (NYI)
         if let transparent = transparent {
             transparentColor = SKColor(hexString: transparent)
-            print("[SKTileset]: setting transparent color: \(transparentColor!.componentDescription)")
-            
-            // alpha info is 0
-            if let maskedImage = transparentImage(imageNamed: self.source!, masking: transparentColor!.components) {
-                //let imageComponents = maskedImage.bitsPerComponent
-                sourceTexture = SKTexture(cgImage: maskedImage)
-            } else {
-                sourceTexture = SKTexture(imageNamed: self.source!)
-                print("[SKTileset]: WARNING: cannot render image mask for \"\(sourceFilename)\"")
-            }
-        } else {
-            sourceTexture = SKTexture(imageNamed: self.source!)
         }
-
+            
+        let sourceTexture = SKTexture(imageNamed: self.source!)
         sourceTexture.filteringMode = .nearest
         let textureSize = sourceTexture.size()
         

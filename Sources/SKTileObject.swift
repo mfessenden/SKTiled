@@ -314,7 +314,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     /**
      Render the object.
      */
-    open func drawObject(debug: Bool=false) {
+    open func drawObject(debug: Bool = false) {
         
         guard let layer = layer,
             let vertices = getVertices(),
@@ -350,8 +350,11 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                 let nextIndex = (index < translatedVertices.count - 1) ? index + 1 : 0
                 bezPoints.append(lerp(start: point, end: translatedVertices[nextIndex], t: 0.5))
             }
+
+            let bezierData = bezierPath(bezPoints, closed: true, alpha: 0.75)
+            self.path = bezierData.path
             
-            self.path = bezierPath(bezPoints, closed: true, alpha: 0.75)
+            let controlPoints = bezierData.points
                 
             // draw a cage around the curve
             if (layer.orientation == .isometric) {
@@ -363,6 +366,17 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                 controlShape.isAntialiased = true
                 controlShape.lineWidth = self.lineWidth / 2
             }
+            
+            // TODO: take out in master
+            for cp in controlPoints {
+                let pshape = SKShapeNode(circleOfRadius: layer.tileHeightHalf / 12)
+                pshape.strokeColor = SKColor.clear
+                pshape.fillColor = .green
+                addChild(pshape)
+                pshape.position = cp
+                pshape.alpha = 0.6
+            }
+            
             
         default:
             let closedPath: Bool = (self.objectType == .polyline) ? false : true
@@ -408,7 +422,9 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             tileData.flipDiag  = tileAttrs.dflip
             
             // remove existing tile
-            self.tile?.removeFromParent()
+            defer {
+                self.tile?.removeFromParent()
+            }
 
             if (tileData.texture != nil) {
                 
@@ -445,13 +461,17 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                 textAttributes = TextObjectAttributes()
             }
             
+            defer {
+                childNode(withName: "TEXT_OBJECT")?.removeFromParent()
+            }
+            
             // create an image to use as a texture
             let image = drawTextObject(withScale: renderQuality)
 
             strokeColor = (debug == false) ? SKColor.clear : layer.gridColor.withAlphaComponent(0.75)
             fillColor = SKColor.clear
             
-            childNode(withName: "TEXT_OBJECT")?.removeFromParent()
+
             let textTexture = SKTexture(cgImage: image)
             let textSprite = SKSpriteNode(texture: textTexture)
             textSprite.name = "TEXT_OBJECT"

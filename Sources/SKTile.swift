@@ -434,8 +434,6 @@ public class SKTile: SKSpriteNode {
         
         xScale = newXScale
         yScale = newYScale
-        
-        //print(" -> tile: \(tileData.id) anchor: (\(xAnchor.roundTo(1)), \(yAnchor.roundTo(1))), rot: \(zRotation.degrees().roundTo())")
     }
 
     /**

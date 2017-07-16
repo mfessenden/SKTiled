@@ -41,40 +41,6 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
 }
 
     
-/**
- Load an image and use masking values as an alpha mask. On iOS, masking values should be 0-1.
- 
- - parameter imageNamed: `String` image name.
- - parameter masking:    `[CGFloat]` color float values for mask.
- - returns: `CGImage?` image result.
- */
-public func transparentImage(imageNamed: String, masking: [CGFloat]) -> CGImage? {
-
-    if let image = UIImage(named: imageNamed) {
-        let imageSize = image.size
-        if let rawImageRef = image.cgImage {
-            UIGraphicsBeginImageContextWithOptions(imageSize, true, 1)
-            if let maskedImageRef = rawImageRef.copy(maskingColorComponents: masking) {
-                let context: CGContext = UIGraphicsGetCurrentContext()!
-                context.translateBy(x: 0.0, y: imageSize.height)
-                context.scaleBy(x: 1.0, y: -1.0)
-                context.draw(maskedImageRef, in: CGRect(x:0, y:0, width: imageSize.width,
-                                                        height: imageSize.height))
-                let result = UIGraphicsGetImageFromCurrentImageContext()
-                UIGraphicsEndImageContext()
-                if let uiResult = result {
-                    if let cgResult = uiResult.cgImage {
-                        return cgResult
-                    }
-                }
-            }
-        }
-
-    }
-    return nil
-}
-
-    
 #else
 /**
  Returns an image of the given size.
@@ -99,28 +65,6 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
     return imageRef!
 }
 
-    
-/**
- Load an image and use masking values as an alpha mask. On macOS, masking values should be 0-1.
-     
- - parameter imageNamed: `String` image name.
- - parameter masking:    `[CGFloat]` color float values for mask.
- - returns: `CGImage?` image result.
- */
-public func transparentImage(imageNamed: String, masking: [CGFloat]) -> CGImage? {
-    if let image = NSImage(named: imageNamed) {
-        let data = image.tiffRepresentation!
-        let bitmap = NSBitmapImageRep(data: data)
-        
-        var imageRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
-        let imageRef = image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)!
-        
-        if let imgRefCopy = imageRef.copy(maskingColorComponents: masking) {
-            return imgRefCopy
-        }
-    }
-    return nil
-}
 #endif
 
 
@@ -1369,8 +1313,8 @@ public func polygonPath(_ sides: Int, radius: CGSize, offset: CGFloat=0, origin:
  - parameter alpha:   `CGFloat` curvature.
  - returns: `CGPath`   path from the given points.
  */
-public func bezierPath(_ points: [CGPoint], closed: Bool=true, alpha: CGFloat=0.75) -> CGPath {
-    guard points.count > 1 else { return CGMutablePath() }
+public func bezierPath(_ points: [CGPoint], closed: Bool = true, alpha: CGFloat = 1) -> (path: CGPath, points: [CGPoint]) {
+    guard points.count > 1 else { return (CGMutablePath(), [CGPoint]()) }
     assert(alpha >= 0 && alpha <= 1.0, "Alpha must be between 0 and 1")
 
     let numberOfCurves = closed ? points.count : points.count - 1
@@ -1382,6 +1326,11 @@ public func bezierPath(_ points: [CGPoint], closed: Bool=true, alpha: CGFloat=0.
     let path = CGMutablePath()
     path.move(to: currentPoint)
     
+    var cpoints: [CGPoint] = []
+    
+    
+    let tension: CGFloat = 2.7
+    
     for index in 0 ..< numberOfCurves {
         let endPt = nextPoint!
         
@@ -1389,14 +1338,14 @@ public func bezierPath(_ points: [CGPoint], closed: Bool=true, alpha: CGFloat=0.
         var my: CGFloat
         
         if previousPoint != nil {
-            mx = (nextPoint!.x - currentPoint.x) * alpha + (currentPoint.x - previousPoint!.x)*alpha
-            my = (nextPoint!.y - currentPoint.y) * alpha + (currentPoint.y - previousPoint!.y)*alpha
+            mx = (nextPoint!.x - currentPoint.x) * alpha + (currentPoint.x - previousPoint!.x) * alpha
+            my = (nextPoint!.y - currentPoint.y) * alpha + (currentPoint.y - previousPoint!.y) * alpha
         } else {
             mx = (nextPoint!.x - currentPoint.x) * alpha
             my = (nextPoint!.y - currentPoint.y) * alpha
         }
         
-        let ctrlPt1 = CGPoint(x: currentPoint.x + mx / 3.0, y: currentPoint.y + my / 3.0)
+        let ctrlPt1 = CGPoint(x: currentPoint.x + mx / tension, y: currentPoint.y + my / tension)
         
         previousPoint = currentPoint
         currentPoint = nextPoint!
@@ -1416,11 +1365,21 @@ public func bezierPath(_ points: [CGPoint], closed: Bool=true, alpha: CGFloat=0.
             my = (currentPoint.y - previousPoint!.y) * alpha
         }
         
-        let ctrlPt2 = CGPoint(x: currentPoint.x - mx / 3.0, y: currentPoint.y - my / 3.0)
+        let ctrlPt2 = CGPoint(x: currentPoint.x - mx / tension, y: currentPoint.y - my / tension)
+        
+        // TODO: remove this in master
+        let pr: CGFloat = 1.5
+        let r1 = CGRect(x: ctrlPt1.x - pr, y: ctrlPt1.y - pr, width: pr, height: pr)
+        let r2 = CGRect(x: ctrlPt2.x - pr, y: ctrlPt2.y - pr, width: pr, height: pr)
+
+        cpoints.append(ctrlPt1)
+        cpoints.append(ctrlPt2)
+        
         path.addCurve(to: endPt, control1: ctrlPt1, control2: ctrlPt2)
     }
-    if (closed == true) {path.closeSubpath()}
-    return path
+
+    if (closed == true) { path.closeSubpath() }
+    return (path, cpoints)
 }
 
 

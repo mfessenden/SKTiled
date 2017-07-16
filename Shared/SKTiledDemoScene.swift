@@ -30,7 +30,6 @@ public class SKTiledDemoScene: SKTiledScene {
     internal var editMode: Bool = false
     internal var liveMode: Bool = true                     // highlight tiles under the mouse
     
-    internal var blocked: Bool = true                      // lock the scene for cleanup
     internal let cleanupQueue = DispatchQueue(label: "com.sktiled.cleanup", qos: .userInteractive)
     
     internal var coordinate: CGPoint = .zero {
@@ -206,8 +205,9 @@ public class SKTiledDemoScene: SKTiledScene {
     }
     
     override open func update(_ currentTime: TimeInterval) {
-        guard self.blocked == false else { return }
-
+        guard (self.blocked == false) else { return }
+        super.update(currentTime)
+        
         self.enumerateChildNodes(withName: "//*") {
             node, stop in
             

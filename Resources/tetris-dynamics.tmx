@@ -11,44 +11,6 @@
  <imagelayer name="Background" visible="0">
   <image source="tetris-layer1-336x240.png" width="336" height="240"/>
  </imagelayer>
- <objectgroup name="Collisions">
-  <object id="43" name="right-floor" x="96" y="200" width="16" height="8">
-   <properties>
-    <property name="isCollider" type="bool" value="false"/>
-    <property name="isDynamic" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="44" name="left-side" x="24" y="32" width="8" height="168">
-   <properties>
-    <property name="isCollider" type="bool" value="true"/>
-    <property name="isDynamic" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="45" name="right-side" x="112" y="40" width="8" height="160">
-   <properties>
-    <property name="isCollider" type="bool" value="true"/>
-    <property name="isDynamic" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="51" name="left-floor" x="32" y="200" width="16" height="8">
-   <properties>
-    <property name="isCollider" type="bool" value="false"/>
-    <property name="isDynamic" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="138" name="right-side" x="304" y="40" width="8" height="160">
-   <properties>
-    <property name="isCollider" type="bool" value="true"/>
-    <property name="isDynamic" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="139" name="left-side" x="216" y="40" width="8" height="168">
-   <properties>
-    <property name="isCollider" type="bool" value="true"/>
-    <property name="isDynamic" type="bool" value="true"/>
-   </properties>
-  </object>
- </objectgroup>
  <group name="Shapes">
   <objectgroup name="shapes-gids">
    <object id="29" name="sqr-01" type="square" gid="10" x="25" y="-45" width="16" height="16">
@@ -471,6 +433,44 @@
    <image source="tetris-layer3-336x240.png" width="336" height="240"/>
   </imagelayer>
  </group>
+ <objectgroup name="Collisions">
+  <object id="43" name="right-floor" x="96" y="200" width="16" height="8">
+   <properties>
+    <property name="isCollider" type="bool" value="true"/>
+    <property name="isDynamic" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="44" name="left-side" x="24" y="32" width="8" height="168">
+   <properties>
+    <property name="isCollider" type="bool" value="true"/>
+    <property name="isDynamic" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="45" name="right-side" x="112" y="40" width="8" height="160">
+   <properties>
+    <property name="isCollider" type="bool" value="true"/>
+    <property name="isDynamic" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="51" name="left-floor" x="32" y="200" width="16" height="8">
+   <properties>
+    <property name="isCollider" type="bool" value="true"/>
+    <property name="isDynamic" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="138" name="right-side" x="304" y="40" width="8" height="160">
+   <properties>
+    <property name="isCollider" type="bool" value="true"/>
+    <property name="isDynamic" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="139" name="left-side" x="216" y="40" width="8" height="168">
+   <properties>
+    <property name="isCollider" type="bool" value="true"/>
+    <property name="isDynamic" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
  <group name="Tile_layers">
   <layer name="Tiles1" width="42" height="30">
    <data encoding="csv">

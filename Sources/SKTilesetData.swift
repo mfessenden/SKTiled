@@ -9,7 +9,7 @@ import SpriteKit
 
 
 /**
- A simple data structure representing an animated tile frame.
+ A structure representing frame of animation.
  
  - parameter gid:       `Int` unique tile id.
  - parameter duration:  `TimeInterval` frame duration.

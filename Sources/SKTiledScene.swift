@@ -20,17 +20,13 @@ import SpriteKit
     */
 public protocol SKTiledSceneDelegate: class {
     /// World container node. Tiled assets are parented to this node.
-    var worldNode: SKNode? { get set }
+    var worldNode: SKNode! { get set }
     /// Custom scene camera.
     var cameraNode: SKTiledSceneCamera! { get set }
     /// Tile map node.
-    var tilemap: SKTilemap? { get set }
+    var tilemap: SKTilemap! { get set }
     /// Load a tilemap from disk, with optional tilesets
     func load(fromFile filename: String, withTilesets tilesets: [SKTileset]) -> SKTilemap?
-
-    func cameraPositionChanged(_ oldPosition: CGPoint)
-    func cameraZoomChanged(_ oldZoom: CGFloat)
-    func sceneDoubleTapped()
 }
 
 
@@ -44,12 +40,13 @@ public protocol SKTiledSceneDelegate: class {
 open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate, SKTilemapDelegate {
     
     /// World container node.
-    open var worldNode: SKNode?
+    open var worldNode: SKNode!
     /// Tile map node.
-    open var tilemap: SKTilemap?
+    open var tilemap: SKTilemap!
     /// Custom scene camera.
     open var cameraNode: SKTiledSceneCamera!
     
+    internal var blocked: Bool = true           // lock the scene for cleanup
     // MARK: - Init
     /**
      Initialize without a tiled map.
@@ -59,7 +56,6 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
      */
     required public override init(size: CGSize) {
         super.init(size: size)
-        setupWorld()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -69,12 +65,6 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     deinit {
         removeAllActions()
         removeAllChildren()
-    }
-    
-    // MARK: - View
-    
-    override open func sceneDidLoad() {
-        setupWorld()
     }
     
     override open func didChangeSize(_ oldSize: CGSize) {
@@ -87,12 +77,19 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
         
+        // set up world node
+        worldNode = SKNode()
+        addChild(worldNode)
+        
         // setup the camera
-        setupCamera(view: view)
+        cameraNode = SKTiledSceneCamera(view: view, world: worldNode)
+        cameraNode.addDelegate(self)
+        addChild(cameraNode)
+        camera = cameraNode
     }
-        
+    
     // MARK: - Setup
-        
+    
     /**
      Load a named TMX file, with optional tilesets.
      
@@ -138,28 +135,6 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
         }
     }
     
-    /**
-     Transition the scene with a new tilemap.
-     
-     - parameter tmxFile:   `String` TMX file name.
-     - parameter duration:  `TimeInterval` transition length.
-     - parameter tilesets:  `[SKTileset]?` optional pre-loaded tilesets.
-     */
-    open func transitionTo<Scene: SKTiledScene>(tmxFile: String, duration: TimeInterval=0.5) -> Scene? {
-        guard let view = self.view else { return nil }
-    
-        // clear the current scene
-        view.presentScene(nil)
-        let reveal = SKTransition.fade(with: SKColor.black, duration: duration)
-     
-        let nextScene = Scene(size: view.bounds.size)
-        nextScene.scaleMode = self.scaleMode
-        view.presentScene(nextScene, transition: reveal)
-        // setup next tilemap
-        nextScene.setup(tmxFile: tmxFile)
-        return nextScene
-    }
-    
     // MARK: - Delegate Callbacks
     open func didBeginParsing(_ tilemap: SKTilemap) {
         // Called when tilemap is instantiated.
@@ -179,14 +154,24 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     
     open func didRenderMap(_ tilemap: SKTilemap) {
         // Called after layers are rendered. Perform any post-processing here.
+        // TODO: remove this in master
         self.physicsWorld.speed = 1
     }
     
     // MARK: - Updates
     override open func update(_ currentTime: TimeInterval) {
-        super.update(currentTime)
+        guard self.blocked == false else { return }
+        
+        super.update(currentTime)        
+        
+        print("# [SKTiledScene] updating...")
+        // update the tilemap
+        if let tilemap = tilemap {
+            tilemap.update(currentTime)
+        }
     }
     
+    // TODO: update this
     open func updateCamera() {
         guard let view = view else { return }
         let viewSize = view.bounds.size
@@ -198,28 +183,14 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
 }
 
 
-// default methods
-extension SKTiledSceneDelegate {
-    public func cameraPositionChanged(_ oldPosition: CGPoint) {
-        guard let cameraNode = cameraNode else { return }
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": cameraNode.description])
-    }
-    
-    public func cameraZoomChanged(_ oldZoom: CGFloat) {
-        guard let cameraNode = cameraNode else { return }
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": cameraNode.description])
-    }
-    public func sceneDoubleTapped() {}
-}
-
-
 // setup methods
 extension SKTiledSceneDelegate where Self: SKScene {
     
     /**
-     Load a named TMX file.
+     Load a named TMX file, with optional tilesets.
      
-     - parameter filename:  `String` TMX file name.
+     - parameter fromFile:      `String` TMX file name.
+     - parameter withTilesets:  `[SKTileset]`
      - returns: `SKTilemap?` tile map node.
      */
     public func load(fromFile filename: String, withTilesets tilesets: [SKTileset]=[]) -> SKTilemap? {
@@ -237,68 +208,34 @@ extension SKTiledSceneDelegate where Self: SKScene {
         }
         return nil
     }
-    
-    /**
-     Present a new scene with a TMX filename.
-     
-     - parameter nextScene:  `SKScene` SpriteKit scene.
-     - parameter tmxFile:    `String?` optional TMX file name.
-     - parameter duration:   `TimeInterval` transition duration.
-     - parameter completion: `(() -> ())?` optional completion method.
-     - returns: `SKTilemap?` tile map node.
-     */
-    public func presentScene(_ nextScene: SKScene, tmxFile: String? = nil, duration: TimeInterval = 0.5, _ completion: (() -> ())? = nil) {
-        let transition = SKTransition.fade(withDuration: duration)
-        nextScene.scaleMode = scaleMode
-        
-        defer {
-            //print("[SKTiledSceneDelegate]: running completion...")
-            completion?()
-        }
-        view?.presentScene(nextScene, transition: transition)
-        
-        if let sceneDelegate = nextScene as? SKTiledSceneDelegate {
-            if tmxFile != nil {
-                if let newTilemap = sceneDelegate.load(fromFile: tmxFile!, withTilesets: []) {
-                    
-                    sceneDelegate.tilemap = newTilemap
-                    sceneDelegate.worldNode?.addChild(newTilemap)
-                    
-                    if let cameraNode = sceneDelegate.cameraNode {
-                        // camera properties inherited from tilemap
-                        cameraNode.allowMovement = newTilemap.allowMovement
-                        cameraNode.allowZoom = newTilemap.allowZoom
-                        cameraNode.setCameraZoom(newTilemap.worldScale)
-                        cameraNode.maxZoom = newTilemap.maxZoom
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     Setup a world node.
-     */
-    public func setupWorld(){
-        // remove current node
-        worldNode?.removeFromParent()
-        // set up world node
-        let world = SKNode()
-        world.name = "World"
-        addChild(world)
-        worldNode = world
-    }
-    
-    /**
-     Setup the scene camera, referencing the world container node.
-     */
-    public func setupCamera(view: SKView?){
-        guard let worldNode = worldNode else { return }
-        cameraNode = SKTiledSceneCamera(world: worldNode, delegate: self, view: view)
-        addChild(cameraNode)
-        camera = cameraNode
-    }
 }
+
+
+// default methods
+extension SKTiledScene: TiledSceneCameraDelegate {
+    
+    public func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {
+        // override in subclass
+    }
+    
+    // TODO: remove this notification callback in master
+    public func cameraPositionChanged(oldPosition: CGPoint, newPosition: CGPoint) {
+        guard let cameraNode = cameraNode else { return }
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": cameraNode.description])
+    }
+    
+    // TODO: remove this notification callback in master
+    public func cameraZoomChanged(oldZoom: CGFloat, newZoom: CGFloat) {
+        guard let cameraNode = cameraNode else { return }
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": cameraNode.description])
+    }
+    
+    #if os(iOS) || os(tvOS)
+    public func sceneDoubleTapped() {}
+    #endif
+}
+
+
 
 
 

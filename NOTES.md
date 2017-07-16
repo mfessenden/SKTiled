@@ -49,3 +49,7 @@ y-anchor point = (map half tile height / tileset tile height)
 | Tile Width   | Tile Height  | Tileset Width  | Tileset Height |
 | ------------ | ------------ | -------------- | -------------- |
 | 8            | 8            | 24             | 16             |
+
+
+### Image Framework (Cocoa <-> iOS)
+https://github.com/C4Labs/C4iOS/tree/master/C4/Core

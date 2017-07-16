@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" backgroundcolor="#1e1b23" nextobjectid="58">
+<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" backgroundcolor="#1e1b23" nextobjectid="59">
  <properties>
   <property name="autoResize" type="bool" value="true"/>
   <property name="fileBackground" type="color" value="#ff1e1b23"/>
   <property name="frameColor" type="color" value="#ff63a4b2"/>
   <property name="gridColor" type="color" value="#ff80d1e2"/>
-  <property name="maxZoom" type="float" value="3.25"/>
-  <property name="minZoom" type="float" value="0.3"/>
+  <property name="maxZoom" type="float" value="4"/>
+  <property name="minZoom" type="float" value="0.1"/>
   <property name="tileOverlap" type="float" value="3"/>
  </properties>
  <tileset firstgid="1" name="ortho4-16x16" tilewidth="16" tileheight="16" tilecount="552" columns="23">
@@ -535,6 +535,9 @@
      <property name="color" type="color" value="#ffdb4d08"/>
      <property name="type" value="fire"/>
     </properties>
+    <ellipse/>
+   </object>
+   <object id="58" x="256" y="112" width="48" height="48">
     <ellipse/>
    </object>
   </objectgroup>

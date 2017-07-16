@@ -131,7 +131,7 @@ internal let TileSize32x32 = CGSize(width: 32, height: 32)
 
 
 /**
- The `SKTilemapDelegate` protocol is used to implement a delegate that allows your application to interact with a tile map as it is being created.
+ The `SKTilemapDelegate` protocol defines a delegate that allows the user to interact with a tile map as it is being created, and customize its properties.
  
  ### **Symbols**
  - `zDeltaForLayers`
@@ -173,7 +173,9 @@ public protocol SKTilemapDelegate: class {
 open class SKTilemap: SKCropNode, SKTiledObject {
     
     open var filename: String!                                    // tiled tmx filename
+    internal var url: URL!                                        // file url
     open var uuid: String = UUID().uuidString                     // unique id
+    
     open var type: String!                                        // map type
     open var size: CGSize                                         // map size (in tiles)
     open var tileSize: CGSize                                     // tile size (in pixels)
@@ -185,7 +187,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     open var renderQuality: CGFloat = 8 {                         // object render quality.
         didSet {
             guard renderQuality != oldValue else { return }
-            layers.forEach { $0.renderQuality = (renderQuality > maxRenderQuality) ? maxRenderQuality : renderQuality }
+            layers.forEach { $0.renderQuality = renderQuality.clamped(1, maxRenderQuality) }
         }
     }
     
@@ -198,7 +200,8 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     internal var staggeraxis: StaggerAxis = .y                    // stagger axis
     internal var staggerindex: StaggerIndex = .odd                // stagger index.
     
-    // camera overrides
+    // camera/scene
+    open var bounds: CGRect = .zero                               // current bounds
     open var worldScale: CGFloat = 1.0                            // initial world scale
     open var currentZoom: CGFloat = 1.0
     open var allowZoom: Bool = true                               // allow camera zoom
@@ -221,7 +224,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     public var ignoreProperties: Bool = false                     // ignore custom properties
     
     /// Returns true if all of the child layers are rendered.
-    open var isRendered: Bool {
+    internal var isRendered: Bool {
         // make sure the map is finished rendering
         self.renderQueue.sync {}
         return layers.filter { $0.isRendered == false }.count == 0
@@ -259,7 +262,6 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     open var cropAtBoundary: Bool = false {
         didSet {
             if let currentMask = maskNode { currentMask.removeFromParent() }
-    
             maskNode = (cropAtBoundary == true) ? SKSpriteNode(color: SKColor.black, size: self.sizeInPoints) : nil
             (maskNode as? SKSpriteNode)?.texture?.filteringMode = .nearest
         }
@@ -1262,6 +1264,12 @@ open class SKTilemap: SKCropNode, SKTiledObject {
             self.delegate?.didRenderMap(self)
         }
     }
+    
+    // MARK: - Updates
+    open func update(_ currentTime: TimeInterval) {
+        guard (isRendered == true) else { return }
+        _layers.forEach( { $0.update(currentTime)})
+    }
 }
 
 
@@ -1447,7 +1455,7 @@ extension SKTilemap {
     }
     
     override open var description: String {
-        var sizedesc = "\(sizeInPoints.shortDescription): (\(size.shortDescription) @ \(tileSize.shortDescription))"
+        let sizedesc = "\(sizeInPoints.shortDescription): (\(size.shortDescription) @ \(tileSize.shortDescription))"
         return "Map: \(mapName), \(sizedesc), \(tileCount) tiles"
     }
     
@@ -1477,7 +1485,6 @@ extension SKTilemap {
             print("# Tilemap \"\(mapName)\": 0 Layers")
             return
         }
-        
         
         // format the header
         let headerString = "# Tilemap \"\(mapName)\": \(tileCount) Tiles: \(layerCount) Layers"
@@ -1608,14 +1615,13 @@ extension SKTilemapDelegate {
     public func objectForTile(className: String? = nil) -> SKTile.Type { return SKTile.self }
 }
 
-/*
-extension SKTilemap: CustomReflectable {
-    
-    public var customMirror: Mirror {
-        return Mirror(self, children: [])
-    }
+// default methods
+extension SKTilemap: TiledSceneCameraDelegate {
+    public func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {}
+    public func cameraPositionChanged(oldPosition: CGPoint, newPosition: CGPoint) {}
+    public func cameraZoomChanged(oldZoom: CGFloat, newZoom: CGFloat) {}
 }
-*/
+
 
 // MARK: - Deprecated
 

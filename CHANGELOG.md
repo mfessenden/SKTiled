@@ -67,6 +67,12 @@ Change Log
 - add `BackgroundLayer` layer type
 - add `SKTilemapDelegate.zDeltaForLayers`
 
+- add `SKTilemap.bounds`
+- add `SKTilemap.url`
+- add `SKTilemap.update(_:)`
+- add `TiledLayerObject.update(_:)`
+
+
 1.13
 -----
 
