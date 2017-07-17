@@ -73,6 +73,8 @@ Change Log
 - add `TiledLayerObject.update(_:)`
 
 
+- add `SKTilemap.clampPositionForMap`
+
 1.13
 -----
 

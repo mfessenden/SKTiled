@@ -67,10 +67,8 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
         removeAllChildren()
     }
     
-    override open func didChangeSize(_ oldSize: CGSize) {
-        super.didChangeSize(oldSize)
+    open func didChange(_ oldSize: CGSize) {
         updateCamera()
-        cameraNode?.fitToView(newSize: size)
     }
         
     override open func didMove(to view: SKView) {
@@ -113,6 +111,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
             // add the tilemap to the world container node.
             worldNode.addChild(tilemap)
             self.tilemap = tilemap
+            cameraNode.addDelegate(self.tilemap)
             
             // apply gravity from the tile map
             physicsWorld.gravity = tilemap.gravity
@@ -129,7 +128,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
             } else {
                 cameraNode.setCameraZoom(tilemap.worldScale)
             }
-    
+            
             // run completion handler
             completion?()
         }
@@ -159,21 +158,22 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     }
     
     // MARK: - Updates
+    override open func didFinishUpdate() {
+        tilemap?.clampPositionForMap()
+    }
+    
+    
     override open func update(_ currentTime: TimeInterval) {
         guard self.blocked == false else { return }
-        
-        super.update(currentTime)        
-        
-        print("# [SKTiledScene] updating...")
+        super.update(currentTime)
         // update the tilemap
-        if let tilemap = tilemap {
-            tilemap.update(currentTime)
-        }
+        tilemap?.update(currentTime)
     }
     
     // TODO: update this
     open func updateCamera() {
         guard let view = view else { return }
+        
         let viewSize = view.bounds.size
         if let cameraNode = cameraNode {
             cameraNode.bounds = CGRect(x: -(viewSize.width / 2), y: -(viewSize.height / 2),
@@ -216,18 +216,17 @@ extension SKTiledScene: TiledSceneCameraDelegate {
     
     public func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {
         // override in subclass
+        print("-> camera bounds updated: \(bounds.roundTo()), pos: \(position.roundTo()), zoom: \(zoom.roundTo())")
     }
     
     // TODO: remove this notification callback in master
-    public func cameraPositionChanged(oldPosition: CGPoint, newPosition: CGPoint) {
-        guard let cameraNode = cameraNode else { return }
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": cameraNode.description])
+    public func cameraPositionChanged(newPosition: CGPoint) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": cameraNode?.description ?? "nil"])
     }
     
     // TODO: remove this notification callback in master
-    public func cameraZoomChanged(oldZoom: CGFloat, newZoom: CGFloat) {
-        guard let cameraNode = cameraNode else { return }
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": cameraNode.description])
+    public func cameraZoomChanged(newZoom: CGFloat) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": cameraNode?.description ?? "nil"])
     }
     
     #if os(iOS) || os(tvOS)

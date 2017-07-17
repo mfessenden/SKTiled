@@ -908,7 +908,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      
      - parameter layer: `TiledLayerObject` layer.
      */
-    internal func positionLayer(_ layer: TiledLayerObject) {
+    internal func positionLayer(_ layer: TiledLayerObject, clamped: Bool = false) {
         var layerPos = CGPoint.zero
         switch orientation {
             
@@ -934,6 +934,12 @@ open class SKTilemap: SKCropNode, SKTiledObject {
             // layer offset
             layerPos.x += layer.offset.x
             layerPos.y -= layer.offset.y
+        }
+        
+        // clamp the layer position
+        if (clamped == true) {
+            let scaleFactor = getContentScaleFactor()
+            layerPos = clampedPosition(point: layerPos, scale: scaleFactor)
         }
         
         layer.position = layerPos
@@ -1269,6 +1275,22 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     open func update(_ currentTime: TimeInterval) {
         guard (isRendered == true) else { return }
         _layers.forEach( { $0.update(currentTime)})
+    }
+    
+    /**
+     Clamp the position of the map and child layers in order to alleviate tearing.
+     */
+    open func clampPositionForMap() {
+        guard (isRendered == true) else { return }
+
+        let scaleFactor = getContentScaleFactor()
+        
+        _layers.forEach{ layer in
+            layer.position = clampedPosition(point: layer.position, scale: scaleFactor)
+            
+        }
+        
+        clampPositionWithNode(node: self, scale: scaleFactor)
     }
 }
 
@@ -1615,11 +1637,11 @@ extension SKTilemapDelegate {
     public func objectForTile(className: String? = nil) -> SKTile.Type { return SKTile.self }
 }
 
-// default methods
+// TODO: - Expand these
 extension SKTilemap: TiledSceneCameraDelegate {
     public func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {}
-    public func cameraPositionChanged(oldPosition: CGPoint, newPosition: CGPoint) {}
-    public func cameraZoomChanged(oldZoom: CGFloat, newZoom: CGFloat) {}
+    public func cameraPositionChanged(newPosition: CGPoint) {}
+    public func cameraZoomChanged(newZoom: CGFloat) {}
 }
 
 

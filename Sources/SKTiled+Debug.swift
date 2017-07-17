@@ -190,13 +190,7 @@ internal class TiledDebugDrawNode: SKNode {
         var gridSize = CGSize.zero
         
         // scale factor for texture
-        let uiScale: CGFloat
-        
-        #if os(iOS) || os(tvOS)
-        uiScale = UIScreen.main.scale
-        #else
-        uiScale = NSScreen.main()!.backingScaleFactor
-        #endif
+        let uiScale: CGFloat = getContentScaleFactor()
         
         // multipliers used to generate smooth lines
         let defaultImageScale: CGFloat = (layer.tilemap.tileHeight < 16) ? 8 : 4
@@ -669,10 +663,22 @@ extension SKTiledDemoScene {
         
         // 'r' reloads the scene
         if eventKey == 0xf {
-            guard let currenFilename = tilemap.filename else { return }
             self.reloadScene()
         }
         
+        // 's' runs a custom command
+        if eventKey == 0x1 {
+        }
+        
+        // 't' runs a custom command
+        if eventKey == 0x11 {
+            
+        }
+        
+        // 'u' runs a custom command
+        if eventKey == 0x20 {
+            
+        }
         
         // 'v' runs a custom test
         if eventKey == 0x9 {
@@ -681,14 +687,34 @@ extension SKTiledDemoScene {
         
         // 'w' toggles debug layer visibility
         if eventKey == 0xd {
-            tilemap.getLayers(ofType: "DEBUG").forEach{ $0.isHidden = !$0.isHidden}
+            tilemap.getLayers(ofType: "DEBUG").forEach{ $0.isHidden = !$0.isHidden }
         }
         
         // 'y' runs a custom test
         if eventKey == 0x10 {
-            tilemap.getLayers(ofType: "DEBUG").forEach{ $0.isHidden = !$0.isHidden}
+            tilemap.getLayers(ofType: "DEBUG").forEach{ $0.isHidden = !$0.isHidden }
         }
         
+        
+        // '↑' runs a custom test
+        if eventKey == 0x7e {
+            let scaleFactor =  getContentScaleFactor()
+            var nodesUpdated = 0
+            tilemap.enumerateChildNodes(withName: "//*") {
+                node, stop in
+                
+                
+                let className = String(describing: type(of: node))
+                
+                let oldPos = node.position
+                node.position = clampedPosition(point: node.position, scale: scaleFactor)
+                print("- \(className): \(node.position), \(oldPos)")
+                nodesUpdated += 1
+            }
+            
+            
+            print("[SKTiledDemoScene]: \(nodesUpdated) nodes updated.")
+        }
     }
 }
 #endif

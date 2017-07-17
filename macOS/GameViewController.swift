@@ -22,13 +22,14 @@ class GameViewController: NSViewController {
     @IBOutlet weak var cursorTracker: NSTextField!
     
     var demoFiles: [String] = []
+    var currentFilename: String? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // load demo files from a propertly list
         demoFiles = loadDemoFiles("DemoFiles")
-        let currentFilename = demoFiles.first!
+        currentFilename = demoFiles.first!
 
         
         // Configure the view.
@@ -58,7 +59,7 @@ class GameViewController: NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(updateDebugLabels), name: NSNotification.Name(rawValue: "updateDebugLabels"), object: nil)
         
         skView.presentScene(scene)
-        scene.setup(tmxFile: currentFilename)
+        scene.setup(tmxFile: currentFilename!)
         debugInfoLabel?.isHidden = true
     }
     
@@ -165,40 +166,8 @@ class GameViewController: NSViewController {
      - parameter interval: `TimeInterval` transition duration.
      */
     func reloadScene(_ interval: TimeInterval=0.4) {
-        guard let view = self.view as? SKView else { return }
-        
-        var debugDrawOptions: DebugDrawOptions = []
-        var liveMode = false
-        var showOverlay = true
-        
-        var currentFilename: String! = nil
-        if let currentScene = view.scene as? SKTiledDemoScene {
-            currentScene.blocked = true
-            if let cameraNode = currentScene.cameraNode {
-                showOverlay = cameraNode.showOverlay
-            }
-            
-            liveMode = currentScene.liveMode
-            if let tilemap = currentScene.tilemap {
-                debugDrawOptions = tilemap.debugDrawOptions
-                currentFilename = tilemap.filename!
-            }
-        }
-        
-        DispatchQueue.main.async {
-            view.presentScene(nil)
-            
-            let nextScene = SKTiledDemoScene(size: view.bounds.size)
-            nextScene.scaleMode = .aspectFill
-            let transition = SKTransition.fade(withDuration: interval)
-            view.presentScene(nextScene, transition: transition)
-            
-            nextScene.setup(tmxFile: currentFilename)
-            nextScene.liveMode = liveMode
-            nextScene.cameraNode?.showOverlay = showOverlay
-            self.updateWindowTitle(withString: currentFilename)
-            nextScene.tilemap?.debugDrawOptions = debugDrawOptions
-        }
+        guard let currentFilename = currentFilename else { return }
+        loadScene(withMap: currentFilename, usePreviouCamera: true, interval: interval)
     }
     
     /**
@@ -207,45 +176,12 @@ class GameViewController: NSViewController {
      - parameter interval: `TimeInterval` transition duration.
      */
     func loadNextScene(_ interval: TimeInterval=0.4) {
-        guard let view = self.view as? SKView else { return }
-        
-        var debugDrawOptions: DebugDrawOptions = []
-        var liveMode = false
-        var showOverlay = true
-        
-        var currentFilename = demoFiles.first!
-        if let currentScene = view.scene as? SKTiledDemoScene {
-            currentScene.blocked = true
-            if let cameraNode = currentScene.cameraNode {
-                showOverlay = cameraNode.showOverlay
-            }
-            
-            liveMode = currentScene.liveMode
-            if let tilemap = currentScene.tilemap {
-                debugDrawOptions = tilemap.debugDrawOptions
-                currentFilename = tilemap.filename!
-            }
-        }
-
+        guard let currentFilename = currentFilename else { return }
         var nextFilename = demoFiles.first!
         if let index = demoFiles.index(of: currentFilename) , index + 1 < demoFiles.count {
             nextFilename = demoFiles[index + 1]
         }
-        
-        DispatchQueue.main.async {
-            
-            view.presentScene(nil)
-            let nextScene = SKTiledDemoScene(size: view.bounds.size)
-            nextScene.scaleMode = .aspectFill
-            let transition = SKTransition.fade(withDuration: interval)
-            view.presentScene(nextScene, transition: transition)
-            
-            nextScene.setup(tmxFile: nextFilename)
-            nextScene.liveMode = liveMode
-            nextScene.cameraNode?.showOverlay = showOverlay
-            self.updateWindowTitle(withString: nextFilename)
-            nextScene.tilemap?.debugDrawOptions = debugDrawOptions
-        }
+        loadScene(withMap: nextFilename, usePreviouCamera: false, interval: interval)
     }
     
     /**
@@ -254,32 +190,44 @@ class GameViewController: NSViewController {
      - parameter interval: `TimeInterval` transition duration.
      */
     func loadPreviousScene(_ interval: TimeInterval=0.4) {
+        guard let currentFilename = currentFilename else { return }
+        var nextFilename = demoFiles.last!
+        if let index = demoFiles.index(of: currentFilename), index > 0, index - 1 < demoFiles.count {
+            nextFilename = demoFiles[index - 1]
+        }
+        
+        loadScene(withMap: nextFilename, usePreviouCamera: false, interval: interval)
+    }
+    
+    /**
+     Loads a named scene.
+     
+     - parameter interval: `TimeInterval` transition duration.
+     */
+    func loadScene(withMap: String, usePreviouCamera: Bool, interval: TimeInterval=0.4) {
         guard let view = self.view as? SKView else { return }
         
         var debugDrawOptions: DebugDrawOptions = []
         var liveMode = false
         var showOverlay = true
-        var zoomLevel: CGFloat = 0
+        var cameraPosition = CGPoint.zero
+        var cameraZoom: CGFloat = 1
         
-        var currentFilename = demoFiles.first!
         if let currentScene = view.scene as? SKTiledDemoScene {
+            // block the scene
             currentScene.blocked = true
             if let cameraNode = currentScene.cameraNode {
                 showOverlay = cameraNode.showOverlay
-                zoomLevel = cameraNode.zoom
+                cameraPosition = cameraNode.position
+                cameraZoom = cameraNode.zoom
+                
             }
-            
             
             liveMode = currentScene.liveMode
             if let tilemap = currentScene.tilemap {
                 debugDrawOptions = tilemap.debugDrawOptions
-                currentFilename = tilemap.filename!
+                //currentFilename = tilemap.filename!
             }
-        }
-
-        var nextFilename = demoFiles.last!
-        if let index = demoFiles.index(of: currentFilename), index > 0, index - 1 < demoFiles.count {
-            nextFilename = demoFiles[index - 1]
         }
         
         DispatchQueue.main.async {
@@ -290,12 +238,15 @@ class GameViewController: NSViewController {
             let transition = SKTransition.fade(withDuration: interval)
             view.presentScene(nextScene, transition: transition)
             
-            nextScene.setup(tmxFile: nextFilename)
+            nextScene.setup(tmxFile: withMap)
             nextScene.liveMode = liveMode
-            nextScene.cameraNode?.showOverlay = showOverlay
-            nextScene.cameraNode?.zoom = zoomLevel
-            self.updateWindowTitle(withString: nextFilename)
+            if (usePreviouCamera == true) {
+                nextScene.cameraNode?.showOverlay = showOverlay
+                nextScene.cameraNode?.position = cameraPosition
+                nextScene.cameraNode?.setCameraZoom(cameraZoom)
+            }
             nextScene.tilemap?.debugDrawOptions = debugDrawOptions
+            self.currentFilename = withMap
         }
     }
     

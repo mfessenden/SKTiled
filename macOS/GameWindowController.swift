@@ -60,7 +60,7 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
                     var renderSize = tilemap.renderSize
                     renderSize.width = renderSize.width * sceneDelegate.cameraNode.zoom
                     renderSize.height = renderSize.height * sceneDelegate.cameraNode.zoom
-                    sceneDelegate.cameraNode.fitToView(newSize: view.bounds.size)
+                    //sceneDelegate.cameraNode.fitToView(newSize: view.bounds.size)
                 }
             }
             
@@ -79,7 +79,7 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
                 if (sceneDelegate.tilemap != nil) {
                     // if the tilemap is set to autosize, fit the map in the view
                     if let camera = sceneDelegate.cameraNode {
-                        camera.fitToView(newSize: scene.size)
+                        //camera.fitToView(newSize: scene.size)
                     }
                 }
             }

@@ -1385,8 +1385,19 @@ open class SKTileLayer: TiledLayerObject {
         }
     }
     
+    // MARK: - Updates
     override open func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
+    }
+    
+    open func clampTilePositions(scale: CGFloat) {
+        
+        getTiles().forEach { tile in
+            //let clampedX = Int((tile.position.x * scale) / scale)
+            //let clampedY = Int((tile.position.y * scale) / scale)
+            tile.position = clampedPosition(point: tile.position, scale: scale)
+        }
+        print(" -> clamped \(getTiles().count) tiles")
     }
 }
 

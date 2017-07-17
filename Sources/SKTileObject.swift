@@ -321,12 +321,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             points.count > 1 else { return }
         
         
-        let uiScale: CGFloat
-        #if os(iOS) || os(tvOS)
-        uiScale = UIScreen.main.scale
-        #else
-        uiScale = NSScreen.main()!.backingScaleFactor
-        #endif
+        let uiScale: CGFloat = getContentScaleFactor()
         
         // polyline objects should have no fill
         self.fillColor = (self.objectType == .polyline) ? SKColor.clear : self.fillColor
@@ -366,17 +361,6 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                 controlShape.isAntialiased = true
                 controlShape.lineWidth = self.lineWidth / 2
             }
-            
-            // TODO: take out in master
-            for cp in controlPoints {
-                let pshape = SKShapeNode(circleOfRadius: layer.tileHeightHalf / 12)
-                pshape.strokeColor = SKColor.clear
-                pshape.fillColor = .green
-                addChild(pshape)
-                pshape.position = cp
-                pshape.alpha = 0.6
-            }
-            
             
         default:
             let closedPath: Bool = (self.objectType == .polyline) ? false : true
@@ -422,9 +406,8 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             tileData.flipDiag  = tileAttrs.dflip
             
             // remove existing tile
-            defer {
-                self.tile?.removeFromParent()
-            }
+            self.tile?.removeFromParent()
+
 
             if (tileData.texture != nil) {
                 
@@ -461,9 +444,8 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                 textAttributes = TextObjectAttributes()
             }
             
-            defer {
-                childNode(withName: "TEXT_OBJECT")?.removeFromParent()
-            }
+            // remove the current text object
+            childNode(withName: "TEXT_OBJECT")?.removeFromParent()
             
             // create an image to use as a texture
             let image = drawTextObject(withScale: renderQuality)
@@ -494,12 +476,8 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
      - returns: `CGImage` rendered text image.
      */
     open func drawTextObject(withScale: CGFloat=8) -> CGImage {
-        let uiScale: CGFloat
-        #if os(iOS) || os(tvOS)
-        uiScale = UIScreen.main.scale
-        #else
-        uiScale = NSScreen.main()!.backingScaleFactor
-        #endif
+        
+        let uiScale: CGFloat = getContentScaleFactor()
         
         // the object's bounding rect
         let textRect = self.boundingRect
