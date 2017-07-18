@@ -10,50 +10,46 @@
  </terraintypes>
  <tile id="0" probability="0.5">
   <properties>
-   <property name="waterLevel" value="1.0"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="1" probability="0.5">
   <properties>
-   <property name="waterLevel" value="1.0"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
- <tile id="2" terrain=",,,0">
-  <properties>
-   <property name="waterLevel" value="0.5"/>
-  </properties>
- </tile>
+ <tile id="2" terrain=",,,0"/>
  <tile id="3" terrain=",,0,0">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="4" terrain=",,0,">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="5" probability="0.5">
   <properties>
-   <property name="groundType" value="grass"/>
+   <property name="type" value="grass"/>
   </properties>
  </tile>
  <tile id="6" probability="0.5">
   <properties>
-   <property name="groundType" value="dirt"/>
+   <property name="type" value="dirt"/>
   </properties>
  </tile>
  <tile id="7">
   <properties>
-   <property name="groundType" value="gravel"/>
+   <property name="type" value="gravel"/>
   </properties>
  </tile>
  <tile id="8">
   <properties>
-   <property name="groundType" value="dirt"/>
+   <property name="type" value="dirt"/>
   </properties>
  </tile>
- <tile id="13">
+ <tile id="13" type="fire">
   <animation>
    <frame tileid="13" duration="100"/>
    <frame tileid="14" duration="100"/>
@@ -61,140 +57,140 @@
  </tile>
  <tile id="57" terrain="0,0,0,">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="58" terrain="0,0,,0">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="59" terrain=",0,,0">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="60" terrain="0,0,0,0">
   <properties>
-   <property name="waterLevel" value="1.0"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="61" terrain="0,,0,">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="62" probability="0.5">
   <properties>
-   <property name="groundType" value="grass"/>
+   <property name="type" value="grass"/>
   </properties>
  </tile>
  <tile id="63" probability="0.5">
   <properties>
-   <property name="groundType" value="dirt"/>
+   <property name="type" value="dirt"/>
   </properties>
  </tile>
  <tile id="64">
   <properties>
-   <property name="groundType" value="gravel"/>
+   <property name="type" value="gravel"/>
   </properties>
  </tile>
  <tile id="65">
   <properties>
-   <property name="groundType" value="dirt"/>
+   <property name="type" value="dirt"/>
   </properties>
  </tile>
  <tile id="114" terrain="0,,0,0">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="115" terrain=",0,0,0">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="116" terrain=",0,,">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="117" terrain="0,0,,">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="118" terrain="0,,,">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="171">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="172">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="173">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="174">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="175">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="228">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="229">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="230">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="231" probability="0.5">
   <properties>
-   <property name="waterLevel" value="1.0"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="232">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="287">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="288">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="289">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
- <tile id="396">
+ <tile id="396" type="fire">
   <animation>
    <frame tileid="396" duration="100"/>
    <frame tileid="397" duration="100"/>
@@ -212,7 +208,7 @@
    <frame tileid="454" duration="100"/>
   </animation>
  </tile>
- <tile id="470">
+ <tile id="470" type="fire">
   <animation>
    <frame tileid="470" duration="200"/>
    <frame tileid="471" duration="200"/>
@@ -224,7 +220,7 @@
    <frame tileid="474" duration="100"/>
   </animation>
  </tile>
- <tile id="510">
+ <tile id="510" type="fire">
   <animation>
    <frame tileid="510" duration="100"/>
    <frame tileid="511" duration="100"/>
@@ -265,28 +261,28 @@
    <property name="tree" value="true"/>
   </properties>
  </tile>
- <tile id="541">
+ <tile id="541" type="flower">
   <animation>
    <frame tileid="1795" duration="350"/>
    <frame tileid="541" duration="350"/>
    <frame tileid="1852" duration="350"/>
   </animation>
  </tile>
- <tile id="542">
+ <tile id="542" type="flower">
   <animation>
    <frame tileid="1796" duration="350"/>
    <frame tileid="542" duration="350"/>
    <frame tileid="1853" duration="350"/>
   </animation>
  </tile>
- <tile id="543">
+ <tile id="543" type="flower">
   <animation>
    <frame tileid="1797" duration="350"/>
    <frame tileid="543" duration="350"/>
    <frame tileid="1854" duration="350"/>
   </animation>
  </tile>
- <tile id="544">
+ <tile id="544" type="flower">
   <animation>
    <frame tileid="1798" duration="350"/>
    <frame tileid="544" duration="350"/>
@@ -304,7 +300,7 @@
  <tile id="577" terrain=",1,,1"/>
  <tile id="578" terrain="1,1,1,1"/>
  <tile id="579" terrain="1,,1,"/>
- <tile id="624">
+ <tile id="624" type="fire">
   <animation>
    <frame tileid="510" duration="100"/>
    <frame tileid="511" duration="100"/>
@@ -474,32 +470,32 @@
  <tile id="1320" terrain="2,,,"/>
  <tile id="1365">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="1366">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="1367">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="1422">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="1423">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
  <tile id="1424">
   <properties>
-   <property name="waterLevel" value="0.5"/>
+   <property name="type" value="water"/>
   </properties>
  </tile>
 </tileset>

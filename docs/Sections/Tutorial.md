@@ -1,20 +1,49 @@
 
 
 - [Getting Started](getting-started.html)
-
+    - [Requirements](getting-started.html#requirements)
+        - [Swift 2 Note](getting-started.html#swift-2-note)
+    - [Installation](getting-started.html#installation)
+    - [Adding Tiled Assets to Xcode](getting-started.html#adding-tiled-assets)
+- [Setting Up Your Scenes](scenes.html)
+    - [`SKTilemapDelegate` Protocol](scenes.html#sktilemapdelegate-protocol)
+    - [`SKTiledScene`](scenes.html#sktiledscene)
+- [Working with Layers](layers.html)
+    - [Default Layer](layers.html#default-layer)
+    - [Group Layers](layers.html#group-layers)
+    - [Isolating Layers](layers.html#isolating-layers)
 - [Working with Tiles](tiles.html)
-
+    - [Getting Tiles with Tile ID](tiles.html#getting-tiles-with-tile-id)
+    - [Getting Tiles of Type](tiles.html#getting-tiles-of-type)
+    - [Getting Tiles with Property](tiles.html#getting-tiles-with-property)
+    - [Adding Tiles](tiles.html#adding-tiles)
+    - [Removing Tiles](tiles.html#removing-tiles)
+    - [Animated Tiles](tiles.html#animated-tiles)
+    - [Physics](tiles.html#physics)
+    - [Tile Overlap](tiles.html#tile-overlap)
 - [Coordinates](coordinates.html)
-
+    - [Coordinate Conversion](coordinates.html#coordinate-conversion)
+    - [User Interaction](coordinates.html#user-interaction)
+    - [Coordinate Offsets & Hints](coordinates.html#coordinate-offsets-amp-hints)
 - [Working with Objects](objects.html)
-
+    - [Object Types](objects.html#object-types)
+    - [Dynamics](objects.html#dynamics)
 - [Properties](properties.html)
 
-- [GameplayKit Integration](gameplaykit.html)
+<!--- - [GameplayKit Integration](gameplaykit.html) --->
 
 - [Debugging](debugging.html)
-
+    - [Visualizing Objects](debugging.html#visualizing-objects)
+    - [Visualizing the Tile Grid](debugging.html#visualizing-the-tile-grid)
+    - [Highlighting Tiles](debugging.html#highlighting-tiles)
+    - [Layer Boundary](debugging.html#layer-boundary)
+    - [Debugging Layers](debugging.html#debugging-layers)
+    - [Debugging Colors](debugging.html#debugging-colors)
+    - [Properties](debugging.html#properties)
 - [Troubleshooting](troubleshooting.html)
-
+- [Linking Errors](troubleshooting.html#linking-errors)
+    - [XML Parsing Errors](troubleshooting.html#xml-parsing-errors)
+    - [Code Signing Errors](troubleshooting.html#code-signing-errors)
+    - [Carthage Problems](troubleshooting.html#carthage-problems)
 
 [Home](index.html)

@@ -54,7 +54,8 @@ extension SKTilemap {
         
         var walkableIDs: [Int] = []
         for walkableType in walkableTypes {
-            for walkableData in getTileData("type", walkableType as AnyObject) {
+            //for walkableData in getTile
+            for walkableData in getTileData(withProperty: "type", walkableType as AnyObject) {
                 if !walkableIDs.contains(walkableData.id) {
                     walkableIDs.append(walkableData.id)
                 }
@@ -79,6 +80,27 @@ extension SKTilemap {
             if let layer = tileLayer(named: layerName) {
                 if let layerGraph = layer.initializeGraph(walkableIDs: walkableIDs, diagonalsAllowed: diagonalsAllowed) {
                     print("[SKTilemap]: created graph for layer \"\(layerName)\"")
+                }
+            }
+        }
+    }
+    
+    /**
+     Post-process to build all pathfinding graphs.
+     */
+    public func buildGraphs(){
+        
+        for tileLayer in tileLayers() {
+            if (tileLayer.buildGraph == true) {
+                print("[SKTilemap]: building graph for layer \"\(tileLayer.layerName)\"...")
+                // check for walkable IDs
+                if tileLayer.walkableIDs.count > 0 {
+                    tileLayer.initializeGraph(walkableIDs: tileLayer.walkableIDs, diagonalsAllowed: false)
+                }
+                
+                // check for walkable types
+                if tileLayer.walkableTypes.count > 0 {
+                    tileLayer.initializeGraph(walkableTypes: tileLayer.walkableTypes, diagonalsAllowed: false)
                 }
             }
         }
@@ -112,8 +134,10 @@ public extension SKTileLayer {
                 let coord = int2(Int32(col), Int32(row))
                 
                 if let node = graph.node(atGridPosition: coord) {
+                    
                     if let tile = tileAt(col, row) {
                         let gid = tile.tileData.id
+                        
                         
                         // set custom weight parameter
                         if tile.tileData.hasKey("weight"){
@@ -138,20 +162,21 @@ public extension SKTileLayer {
         let nodeCount = (graph.nodes != nil) ? graph.nodes!.count : 0
         
         if nodeCount > 0 {
-            print("[SKTileLayer]: pathfinding graph for layer \"\(name!)\" created with \(nodeCount) nodes.")
+            print("[SKTileLayer]: pathfinding graph for layer \"\(layerName)\" created with \(nodeCount) nodes.")
         } else {
-            print("[SKTileLayer]: WARNING: layer \"\(name!)\" wasn't able to build pathfinding graph.")
+            print("[SKTileLayer]: WARNING: could not build a pathfinding graph for layer \"\(layerName)\".")
         }
         
         // add the graph to the scene graphs
         if let scene = self.tilemap.scene as? SKTiledScene {
             if !scene.addGraph(named: name!, graph: graph) {
-                print("[SKTileLayer]: WARNING: cannot add graph \"\(name!)\" to scene.")
+                print("[SKTileLayer]: WARNING: cannot add graph \"\(layerName)\" to scene.")
             }
         }
         
         // unhide the layer
         isHidden = false
+        // TODO: should we kill the texture?
         getTiles().map {$0.texture = nil}
         return graph
     }
@@ -207,15 +232,15 @@ public extension SKTileLayer {
         graph.remove(nodesToRemove)
         let nodeCount = (graph.nodes != nil) ? graph.nodes!.count : 0
         if nodeCount > 0 {
-            print("[SKTileLayer]: pathfinding graph for layer \"\(name!)\" created with \(nodeCount) nodes.")
+            print("[SKTileLayer]: pathfinding graph for layer \"\(layerName)\" created with \(nodeCount) nodes.")
         } else {
-            print("[SKTileLayer]: WARNING: layer \"\(name!)\" wasn't able to build pathfinding graph.")
+            print("[SKTileLayer]: WARNING: could not build a pathfinding graph for layer \"\(layerName)\".")
         }
         
         // add the graph to the scene graphs
         if let scene = self.tilemap.scene as? SKTiledScene {
             if !scene.addGraph(named: name!, graph: graph) {
-                print("[SKTileLayer]: WARNING: cannot add graph \"\(name!)\" to scene.")
+                print("[SKTileLayer]: WARNING: cannot add graph \"\(layerName)\" to scene.")
             }
         }
         
@@ -269,15 +294,15 @@ public extension SKTileLayer {
         
         let nodeCount = (graph.nodes != nil) ? graph.nodes!.count : 0
         if nodeCount > 0 {
-            print("[SKTileLayer]: pathfinding graph for layer \"\(name!)\" created with \(nodeCount) nodes.")
+            print("[SKTileLayer]: pathfinding graph for layer \"\(layerName)\" created with \(nodeCount) nodes.")
         } else {
-            print("[SKTileLayer]: WARNING: layer \"\(name!)\" wasn't able to build pathfinding graph.")
+            print("[SKTileLayer]: WARNING: could not build a pathfinding graph for layer \"\(layerName)\".")
         }
         
         // add the graph to the scene graphs
         if let scene = self.tilemap.scene as? SKTiledScene {
             if !scene.addGraph(named: name!, graph: graph) {
-                print("[SKTileLayer]: WARNING: cannot add graph \"\(name!)\" to scene.")
+                print("[SKTileLayer]: WARNING: cannot add graph \"\(layerName)\" to scene.")
             }
         }
         
@@ -308,7 +333,7 @@ public extension SKTileLayer {
  ```
  // query a node in the graph and increase the weight property
  if let node = graph.node(atGridPosition: coord) {
- node.weight = 25.0
+    node.weight = 25.0
  }
  ```
  */

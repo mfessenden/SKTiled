@@ -1,116 +1,152 @@
-#Getting Started
+# Getting Started
 
-**SKTiled** was designed to be flexible and easy to use. Installation is very straightforward. If you have any problems or requests, please open an issue at the [Github page](https://github.com/mfessenden/SKTiled/issues).
+- [Requirements](#requirements)
+    - [Swift 2 Note](#swift-2-note)
+- [SKTiled Project](#sktiled-project)
+- [Installation](#installation)
+    - [Framework Installation](#framework-installation)
+    - [Source Code Installation](#source-code-installation)
+        - [Linking zlib](#linking-zlib)
+    - [Carthage Installation](#carthage-installation)
+    - [CocoaPods Installation](#cocoapods-installation)
+- [Adding Tiled Assets to Xcode](#adding-tiled-assets-to-xcode)
 
 
-##Requirements
+**SKTiled** was designed to be flexible and easy to use. To get started, simply drop the source files into your project and link the **zlib** library (see below). If you have any problems or requests, please open an issue at the [Github page](https://github.com/mfessenden/SKTiled/issues).
+
+
+## Requirements
 
 - iOS9+ / macOS 10.11+
 - Xcode 8
-- Swift 2.3+
+- Swift 3
 
-Check out the [master](https://github.com/mfessenden/SKTiled/tree/master) branch for Swift 2.3, or the [iOS10](https://github.com/mfessenden/SKTiled/tree/iOS10) branch for Swift 3. Going forward, the minimum requirements will be pushed up to Swift 3/iOS10/macOS 10.11 as some features will require newer versions of Apple's tools.
 
-**SKTiled** should work with tvOS, though it has not yet been extensively tested.
+#### **Swift 2 Note**
 
-##Swift 2.3 Note
+Check out the [Swift 2](https://github.com/mfessenden/SKTiled/tree/swift2) branch for Swift 2.3. As Apple is moving forward so quickly to Swift 3, the Swift 2.3 branch is now considered legacy and won't be updated.
 
 If you're using one of the older toolchains, you'll need to enable the **Use Legacy Swift Language Version** option in the project **Build Settings.**
 
-![Legacy Swift Version](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/swift_legacy.png)
+![Legacy Swift Version](images/swift_legacy.png)
 
 
-##Installation
+## Installation
 
-- Copy the *Sources* directory to your project (or drag the individual files).
-- Set the appropriate Swift language target.
+When you clone the **SKTiled** project, you'll see that there are four targets included. Two are demo applications, one for iOS and one for macOS. These are included to let you quickly test your own content, or simple play around with the included demo files.
 
-![Xcode installation](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/installation.png)
+![Project Targets](images/project_targets.png)
 
-That's it!
- 
-
-##Adding Tiled Assets
-
-When adding maps (TMX files), images and tilesets (TSX files) to your Xcode project, you'll need to make sure to add the files as *groups* and not folder references as the assets are stored in the root of the app bundle when compiled.
+The frameworks are bundles that can be linked in your SpriteKit projects. To use them, build one or both of the targets and add them to your project. Make sure the *Minimum Deployment Target* is set correctly for your project (iOS 9+/macOS 10.11+).
 
 
-##Setting up your Scenes
+![adding framework](images/framework.png)
 
-Using tiled maps in your own projects is very easy. The included [`SKTiledScene`](Classes/SKTiledScene.html) class conforms to the [`SKTiledSceneDelegate`](Protocols/SKTiledSceneDelegate.html) protocol and could serve as a template for your scenes, though you are free to implement your own setups.
-
-If you choose to create your own scene type, a simple setup could be as simple as:
+### **Framework Installation**
 
 
-```swift
-import SpriteKit
+![adding framework](images/framework.png)
 
-public class GameScene: SKScene {
-    override public func didMoveToView(view: SKView) {
-        if let tilemap = SKTilemap.load(fromFile: "myTiledFile") {
-            addChild(tilemap)
-            // center the tilemap in the scene
-            tilemap.position.x = (view.bounds.size.width / 2.0)
-            tilemap.position.y = (view.bounds.size.height / 2.0)
-        }
-    }
-}
-```
+After building the framework(s), you'll need to add them to your project. Select your target, and add the framework to the *Embedded Binaries* and *Linked Frameworks and Libraries* sections of the *General* tab. You'll also need to make sure it is linked in the *Build Phases > Embed Frameworks* section.
 
-Calling the class method [`SKTilemap.load(fromFile:)`](Classes/SKTilemap.html#/s:ZFC7SKTiled9SKTilemap4loadFT8fromFileSS_GSqS0__) will initialize a parser to read the file name you give it. **SKTiled** can load internal & external tilesets, though there is a slight speed penalty for loading an external tileset with larger scenes.
- 
-If you do use the included [`SKTiledScene`](Classes/SKTiledScene.html), you'll notice that Tiled assets are parented to the `SKTiledScene.worldNode`. This world container node interacts with the included [`SKTiledSceneCamera`](Classes/SKTiledSceneCamera.html) class and allows you to easily move the scene around with mouse & touch events. The world node is set to 0,0 in the scene by default. 
+![framework linking](images/link_binary.png)
+
+![framework embed](images/links.png)
 
 
-##Working with Layers
+### **Source Code Installation**
 
-Once the map is loaded, you can begin working with the layers. There are several ways to access layers from the [`SKTilemap`](Classes/SKTilemap.html) object:
+It is also possible to integrate the source code directly into your project. To do this, you'll need to copy the `Sources` and `zlib` directories to your project. Make sure the swift files are added to your target(s).
 
-```swift
-// returns a tile layer with a given name
-let backgoundLayer = tilemap.getLayer(named: "Background") as! SKTileLayer
-```
+![Xcode installation](images/installation.png)
 
-Once you have a layer, you can add child nodes to it (any `SKNode` type is allowed):
+#### Linking zlib
 
-```swift
-// add a child node
-playerLayer.addChild(player)
+Add the `zlib` directory to your project's include paths:
+    - *Project > Build Settings > Swift Compiler - Search Paths > Import Paths*
 
-// set the player position based on coordinate x & y values
-player.position = playerLayer.pointForCoordinate(4, 12)
-```
-
-It is also possible to provide an offset value in x/y for more precise positioning:
-
-```swift
-player.position = playerLayer.pointForCoordinate(4, 12, offsetX: 8.0, offsetY: 4.0)
-```
-
-All [`TiledLayerObject`](Classes/TiledLayerObject.html) objects have convenience methods for adding children with coordinate values & optional offset and even zPosition values:
-
-```swift
-playerLayer.addChild(player, 4, 12, zpos: 25.0)
-```
-
-See the [Coordinates](coordinates.html) page for more information.
-
-###Default Layer
-
-By default, the [`SKTilemap`](Classes/SKTilemap.html) class uses a default tile layer accessible via `SKTilemap.baseLayer`. The base layer is automatically created is used for coordinate transforms and for visualizing the grid (the base layer's z-position is always higher than the other layers).
+![zlib compression](images/zlib_linking.png)
 
 
+### Carthage Installation
 
-###Isolating Layers
+To install with [Carthage](https://github.com/Carthage/Carthage), browse to the root of the project that you want to build the SKTiled framework with and create an empty Cartfile:
 
-You can isolate layers easily (just as you can in Tiled):
 
-```swift
-// isolate the layer named 'Background'
-tilemap.isolateLayer("Background")
+    touch Cartfile
 
-// show all layers
-tilemap.isolateLayer(nil)
-```
 
-Next: [Working with Tiles](tiles.html) - [Index](Tutorial.html)
+Open the Cartfile with a text editor and add a reference to **SKTiled** (be sure to check the current version number):
+
+    github "mfessenden/SKTiled" == 1.10
+
+
+Close the file and run Carthage from the terminal to build the framework(s) for the platform you want:
+
+    carthage update --platform iOS
+
+Updating is just as simple. Simply change the version number in the Cartfile to the one you want, and carthage can update the frameworks with the same command. If you are having a version conflict error in Xcode, try adding the `--no-use-binaries` flag to the carthage command.
+
+Once you've run the build command frameworks are built, you'll find a **Carthage** directory in the root of your project. The frameworks are located in the **Carthage/Build/$PLATFORM_NAME** directories, simply install them as described in the [framework installation](#framework-installation) section above.
+
+
+![Carthage Directories](images/carthage_directories.png)
+
+
+See the [Carthage][carthage-url] home page for help and additional build instructions.
+
+
+### CocoaPods Installation
+
+Installation with [CocoaPods](https://cocoapods.org) is similar to Carthage. To use it, browse to your project root directory in the terminal and run the command:
+
+    pod init
+
+This will create a file called **Podfile** in the directory. Open it up and add references to **SKTiled** in each of your targets:
+
+
+    # Uncomment the next line to define a global platform for your project
+    # platform :ios, '9.0'
+
+    target 'iOS' do
+      # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+      use_frameworks!
+
+      # Pods for iOS
+      pod 'SKTiled', '1.10'
+
+    end
+
+    target 'macOS' do
+      # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+      use_frameworks!
+
+      # Pods for macOS
+      pod 'SKTiled', '1.10'
+
+    end
+
+
+
+As before, be sure to check the version number. In the terminal, run the following command:
+
+    pod install
+
+
+CocoaPods will create an **.xcworkspace** file with the name of your project. Open that and use this to compile your targets; dependencies will be linked automatically.
+
+
+See the [CocoaPods][cocoapods-url] home page for help and additional instructions.
+
+
+## Adding Tiled Assets to Xcode
+
+When adding maps (TMX files), images and tilesets (TSX files) to your Xcode project, you'll need to make sure to add the files as **groups** and not folder references as the assets are stored in the root of the app bundle when compiled. Relative file references in your Tiled files will break when the are added to your app's bundle.
+
+
+
+Next: [Setting Up Your Scenes](scenes.html) - [Index](Tutorial.html)
+
+
+[carthage-url]:https://github.com/Carthage/Carthage
+[cocoapods-url]:https://cocoapods.org

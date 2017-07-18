@@ -1,4 +1,9 @@
-# GameplayKit Integration
+# GameplayKit Integration (WIP)
+
+- [Custom Node Weights](#)
+- [Debugging the Graph](#debugging-the-graph)
+- [Querying Neighbor Nodes](#querying-neighbor-nodes)
+
 
 **SKTiled** supports Apple's GameplayKit by allowing users to build pathfinding graphs in tile layers (currently only orthogonal tile layers are supported). Every `SKTileLayer` instance has an optional `GKGridGraph` attribute accessible via the `SKTileLayer.graph` attribute:
   
@@ -28,7 +33,7 @@ Passing custom properties in the Tiled scene can be used to create pathfinding g
 To automatically create a graph in one of your tile layers, you can simply add the *buildGraph* and *walkableIDs* properties on a tile layer in Tiled.
 
 
-![Walkable IDs](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/walkable-ids.png)
+![Walkable IDs](images/walkable-ids.png)
       
 
 You can also initialize a layer's graph manually in your code:
@@ -52,14 +57,14 @@ node.weight = 10.0
 You can also pass the value through a property in Tiled with a float attribute *weight*:
 
 
-![Walkable IDs](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/node-weight-property.png)
+![Walkable IDs](images/node-weight-property.png)
 
 
 ##Debugging the Graph
 
 To see a visual representation of any layer's pathfinding graph, use the `SKTileLayer.showGraph` property. Node weights will be represented by a heat map from gray to red:
 
-![Show Graph](https://raw.githubusercontent.com/mfessenden/SKTiled/master/docs/Images/showGraph.gif)
+![Show Graph](images/showGraph.gif)
 
 
 ##Querying Neighbor Nodes*

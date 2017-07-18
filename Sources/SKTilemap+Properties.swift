@@ -14,125 +14,212 @@ public extension SKTilemap {
     /**
      Parse properties from the Tiled TMX file.
      */
-    public func parseProperties() {
+    public func parseProperties(completion: (() -> ())?) {
+        
+        if (ignoreProperties == true) { return }
+        if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
+        
         for (attr, value) in properties {
             
-            if (attr == "name") {
-                name = value
+            let lattr = attr.lowercased()
+            
+            if ["zdelta", "zdeltaforlayers", "layerdelta"].contains(lattr){
+                zDeltaForLayers = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : zDeltaForLayers
             }
             
-            if ["debug", "debugMode"].contains(attr){
-                debugDraw = boolForKey(value)
-                debugMode = boolForKey(value)
+            if ["debug", "debugmode", "debugdraw"].contains(lattr){
+                debugDrawOptions = [.demo]
             }
             
-            if (attr == "gridColor") {
+            if (lattr == "gridcolor") {
                 gridColor = SKColor(hexString: value)
-                allLayers().forEach {$0.gridColor = gridColor}
+                getLayers().forEach { $0.gridColor = gridColor }
+                
+                frameColor = gridColor
+                
+                // set base layer colors
+                baseLayer.gridColor = gridColor
+                baseLayer.frameColor = frameColor
             }
             
-            if (attr == "gridOpacity") {
+            if (lattr == "gridopacity") {
                 baseLayer.gridOpacity = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : 0.10
-                allLayers().forEach {$0.gridOpacity = self.baseLayer.gridOpacity}
+                getLayers().forEach {$0.gridOpacity = self.baseLayer.gridOpacity}
             }
             
-            if (attr == "frameColor") {
+            if (lattr == "framecolor") {
                 frameColor = SKColor(hexString: value)
-                allLayers().forEach {$0.frameColor = frameColor}
+                getLayers().forEach {$0.frameColor = frameColor}
+                
+                // set base layer colors
+                baseLayer.frameColor = frameColor
             }
             
-            if (attr == "highlightColor") {
+            if (lattr == "highlightcolor") {
                 highlightColor = SKColor(hexString: value)
-                allLayers().forEach {$0.highlightColor = highlightColor}
+                getLayers().forEach {$0.highlightColor = highlightColor}
+                
+                // set base layer colors
+                baseLayer.highlightColor = highlightColor
             }
             
             // initial world scale.
-            if (attr == "worldScale") {
+            if (lattr == "worldscale") {
                 worldScale = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : worldScale
             }
             
-            if (attr == "allowZoom") {
+            if (lattr == "allowzoom") {
                 allowZoom = boolForKey(attr)
             }
             
-            if (attr == "allowMovement") {
+            if (lattr == "allowmovement") {
                 allowMovement = boolForKey(attr)
             }
             
-            if (attr == "zPosition") {
+            if (lattr == "zposition") {
                 zPosition = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : zPosition
             }
             
             // aspect scaling
-            if (attr == "aspect") {
+            if (lattr == "aspect") {
                 yScale *= (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : 1
             }
             
-            if (attr == "lineWidth") {
+            if (lattr == "linewidth") {
                 //lineWidth = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : lineWidth
             }
             
-            if (attr == "tileOverlap") {
+            if (lattr == "tileoverlap") {
                 tileOverlap = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : tileOverlap
             }
             
-            if (attr == "minZoom") {
+            if (lattr == "minzoom") {
                 minZoom = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : minZoom
             }
             
-            if (attr == "maxZoom") {
+            if (lattr == "maxzoom") {
                 maxZoom = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : maxZoom
             }
             
-            if (attr == "ignoreBackground") {
+            if (lattr == "ignorebackground") {
                 ignoreBackground = boolForKey(attr)
             }
             
-            if (attr == "antialiasLines") {
+            if (lattr == "antialiasLines") {
                 antialiasLines = boolForKey(attr)
             }
+            
+            if (lattr == "autoresize") {
+                autoResize = boolForKey(attr)
+            }
+            
+            if (lattr == "showobjects") {
+                if (boolForKey(attr) == true) {
+                    debugDrawOptions.insert(.drawObjectBounds)
+                }
+            }
+            
+            if (lattr == "xgravity") {
+                gravity.dx = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : 0
+            }
+            
+            if (lattr == "ygravity") {
+                gravity.dy = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : 0
+            }
+
+            if (lattr == "showgrid") {
+                if (boolForKey(attr) == true) {
+                    debugDrawOptions.insert(.drawGrid)
+                }
+            }
+
+            if (lattr == "showbounds") {
+                if (boolForKey(attr) == true) {
+                    debugDrawOptions.insert(.drawBounds)
+                }
+            }
+            
+            if (lattr == "cropatboundary") {
+                cropAtBoundary = boolForKey(attr)
+            }
+            
+            if (lattr == "overlaycolor") {
+                overlayColor = SKColor(hexString: value)
+            }
+            
+            if (lattr == "objectcolor") {
+                objectColor = SKColor(hexString: value)
+            }
         }
+        
+        if completion != nil { completion!() }
     }
 }
 
 
 public extension SKTileset {
+    // MARK: - Properties
+    
     /**
      Parse the tileset's properties value.
      */
-    public func parseProperties() {}
+    public func parseProperties(completion: (() -> ())?) {
+        if (ignoreProperties == true) { return }
+         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
+        if completion != nil { completion!() }
+    }
 }
 
 
 public extension TiledLayerObject {
+    // MARK: - Properties
     
     /**
      Parse the layer's properties value.
      */
-    public func parseProperties() {
+    public func parseProperties(completion: (() -> ())?) {
+
+        if (ignoreProperties == true) { return }
+        if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
         
         for (attr, value) in properties {
             
-            if (attr == "zPosition") {
+            let lattr = attr.lowercased()
+            
+            if (lattr == "zposition") {
                 guard let zpos = Double(value) else { return }
                 zPosition = CGFloat(zpos)
             }
             
-            if (attr == "color") {
+            if (lattr == "color") {
                 setColor(color: SKColor(hexString: value))
             }
             
-            if (attr == "hidden") {
+            if (lattr == "backgroundcolor") {
+                background.color = SKColor(hexString: value)
+                background.colorBlendFactor = 1.0
+            }
+            
+            if (lattr == "hidden") {
                 isHidden = boolForKey(attr)
             }
             
-            if (attr == "visible") {
+            if (lattr == "visible") {
                 visible = boolForKey(attr)
             }
             
-            if (attr == "antialiasing") {
+            if (lattr == "antialiasing") {
                 antialiased = boolForKey(attr)
             }
+            
+            
+            if (lattr == "drawbounds") {
+                if boolForKey(attr) == true {
+                    drawBounds()
+                }
+            }
+            
+            if completion != nil { completion!() }
         }
     }
     
@@ -143,7 +230,7 @@ public extension TiledLayerObject {
      - returns: `String?` the property value, or nil if it does not exist.
      */
     public func getValue(forProperty name: String) -> String? {
-        return properties[name]
+        return stringForKey(name)
     }
     
     /**
@@ -159,82 +246,116 @@ public extension TiledLayerObject {
 
 
 public extension SKTileLayer {
+    // MARK: - Properties
+    
     /**
      Parse the tile layer's properties.
      */
-    override public func parseProperties() {
-        super.parseProperties()
+    override public func parseProperties(completion: (() -> ())?) {
+        super.parseProperties(completion: completion)
         
-        // pathfinding
-        for (attr, _) in properties {
-            if (attr == "buildGraph") {
-                if (boolForKey(attr) == true) || (intForKey(attr) == 1) {
+        
+        for (attr, value) in properties {
+            
+            let lattr = attr.lowercased()
+        
+            if (lattr == "buildgraph") {
+                if boolForKey(attr) == true {
                     buildGraph = true
                 }
             }
+            
             // walkable ids
-            if (attr == "walkableIDs") {
+            if (lattr == "walkableids") {
                 walkableIDs = integerArrayForKey("walkableIDs", separatedBy: ",")
             }
             
             // walkable types
-            if (attr == "walkableTypes") {
+            if (lattr == "walkabletypes") {
                 walkableTypes = stringArrayForKey("walkableTypes", separatedBy: ",")
             }
         }
     }
 }
 
+
 public extension SKObjectGroup {
+    // MARK: - Properties
+    
     /**
-     Parse the object groups properties.
+     Parse the object group's properties.
     */
-    override public func parseProperties() {
-        super.parseProperties()
+    override public func parseProperties(completion: (() -> ())?) {
+        if (ignoreProperties == true) { return }
         for (attr, _ ) in properties {
-            if (attr == "lineWidth") {
+            let lattr = attr.lowercased()
+            
+            if (lattr == "linewidth") {
                 lineWidth = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : lineWidth
             }
         }
+        
+        super.parseProperties(completion: completion)
     }
 }
 
 
 public extension SKImageLayer {
+    // MARK: - Properties
     /**
      Parse the image layer's properties.
     */
-    override public func parseProperties() {
-        super.parseProperties()
+    override public func parseProperties(completion: (() -> ())?) {
+        super.parseProperties(completion: completion)
     }
 }
 
 
 public extension SKTileObject {
+    // MARK: - Properties
     /**
      Parse the object's properties value.
      */
-    public func parseProperties() {
+    public func parseProperties(completion: (() -> ())?) {
+        if (ignoreProperties == true) { return }
+        if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
+        
         for (attr, value) in properties {
-            if (attr == "color") {
+            
+            let lattr = attr.lowercased()
+            
+            if (lattr == "color") {
                 setColor(hexString: value)
             }
             
-            if (attr == "lineWidth") {
+            if (lattr == "linewidth") {
                 lineWidth = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : lineWidth
             }
+            
+            if (lattr == "zposition") {
+                zPosition = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : zPosition
+            }
         }
+        
+        // Physics
+        let isDynamic:  Bool = boolForKey("isDynamic")
+        let isCollider: Bool = boolForKey("isCollider")
+
+        physicsType = Int(isDynamic) ^ Int(isCollider) == 0 ? .none : (isDynamic == true) ? .dynamic : .collision
+
+        if completion != nil { completion!() }
     }
 }
 
 
 public extension SKTilesetData {
+    // MARK: - Properties
     /**
      Parse the tile data's properties value.
      */
-    public func parseProperties() {
-        for (attr, value) in properties {
-            //print("\(id): \(attr) = \(value)")
-        }
+    public func parseProperties(completion: (() -> ())?) {
+        if (ignoreProperties == true) { return }
+        if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
+        if completion != nil { completion!() }
     }
 }

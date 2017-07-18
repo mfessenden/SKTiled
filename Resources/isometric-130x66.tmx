@@ -1,12 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="isometric" renderorder="right-down" width="10" height="10" tilewidth="130" tileheight="66" backgroundcolor="#634930" nextobjectid="14">
+<map version="1.0" tiledversion="1.0.2" orientation="isometric" renderorder="right-down" width="10" height="10" tilewidth="130" tileheight="66" backgroundcolor="#634930" nextobjectid="19">
  <properties>
   <property name="allowMovement" type="bool" value="true"/>
   <property name="allowZoom" type="bool" value="true"/>
+  <property name="autoResize" type="bool" value="true"/>
   <property name="worldScale" type="float" value="0.4"/>
  </properties>
  <tileset firstgid="1" name="isometric-130x230" tilewidth="130" tileheight="230" tilecount="72" columns="12">
   <image source="isometric-130x230.png" width="1560" height="1380"/>
+  <tile id="2">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="15">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="19">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="20">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="type" value="road"/>
+   </properties>
+  </tile>
+  <tile id="58">
+   <properties>
+    <property name="type" value="building"/>
+   </properties>
+  </tile>
+  <tile id="59">
+   <properties>
+    <property name="type" value="building"/>
+   </properties>
+  </tile>
+  <tile id="60">
+   <properties>
+    <property name="type" value="building"/>
+   </properties>
+  </tile>
+  <tile id="61">
+   <properties>
+    <property name="type" value="building"/>
+   </properties>
+  </tile>
+  <tile id="62">
+   <properties>
+    <property name="type" value="building"/>
+   </properties>
+  </tile>
+  <tile id="63">
+   <properties>
+    <property name="type" value="building"/>
+   </properties>
+  </tile>
+  <tile id="64">
+   <properties>
+    <property name="type" value="building"/>
+   </properties>
+  </tile>
+  <tile id="65">
+   <properties>
+    <property name="type" value="building"/>
+   </properties>
+  </tile>
   <tile id="66">
    <properties>
     <property name="type" value="car"/>
@@ -39,30 +190,26 @@
   </tile>
  </tileset>
  <layer name="Ground" width="10" height="10">
-  <data encoding="base64">
-   OwAAADIAAAArAAAAKwAAAC4AAABCAAAAAgAAADQAAAA1AAAANQAAADAAAAAyAAAALwAAABgAAAADAAAAJgAAABQAAAA4AAAAAQAAAEIAAAA3AAAAMgAAADgAAAAZAAAAQAAAACUAAAAKAAAAAwAAAAMAAAADAAAALAAAADIAAAAtAAAAGQAAAAIAAAA9AAAABAAAAD4AAAAEAAAAQAAAACwAAAAyAAAAQgAAABsAAAAaAAAAGgAAABYAAAAqAAAAFQAAACAAAABAAAAAMQAAACsAAAACAAAAQAAAADcAAAAEAAAAOAAAAAQAAAA7AAAAOAAAAEEAAAA0AAAANQAAADUAAAA2AAAABAAAAD8AAAAEAAAAPAAAAAMAAAADAAAAGAAAAAMAAAAZAAAAAwAAAAkAAAADAAAACQAAAAMAAABCAAAAQAAAABkAAABAAAAAGQAAADsAAAAEAAAAPgAAAAQAAAArAAAAQQAAADgAAAAbAAAAGgAAAB4AAAA3AAAABAAAADgAAAAEAAAAKgAAAA==
-  </data>
- </layer>
- <layer name="Decoration" width="10" height="10">
-  <data encoding="base64">
-   AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARwAAAAAAAAAAAAAAAAAAAA==
+  <data encoding="base64" compression="zlib">
+   eJxtz8kOgjAUheEKbnQtxmpi2MgCcIxKkzog7/9QnCY/SdO4+HIYTofrjTE3aXCSQTK5ywMXemfZSC6VrMTJjHUdvfDNSi8HWbJm0tI70gvnvWUuH7KPemHvnWyxlloKKelemSHjvWMfR3qef8lsT/5/yVd0z2lWSy6SHDjLRumTORrOdNEM+z/3C/OMgtEN9g==
   </data>
  </layer>
  <layer name="Objects" width="10" height="10">
-  <data encoding="base64">
-   AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  <data encoding="base64" compression="zlib">
+   eJxjYBh44D7QDiATOFPBDHS/AwBmUADS
   </data>
  </layer>
- <objectgroup color="#e10000" name="Locations">
+ <objectgroup color="#e10000" name="Collision">
   <properties>
    <property name="lineWidth" type="float" value="4"/>
   </properties>
-  <object id="8" name="center" x="66" y="66" width="132" height="132"/>
+  <object id="8" name="river01" type="River" x="48" y="-36" width="28" height="376"/>
   <object id="9" name="road01" type="Road" x="354.75" y="-33">
    <polygon points="57.75,82.5 24.75,82.5 24.75,511.5 272.25,511.5 272.25,478.5 156.75,478.5 57.75,478.5 57.75,231"/>
   </object>
-  <object id="12" name="circle1" x="198" y="528" width="132" height="132">
+  <object id="12" name="circle1" type="Drop" x="132" y="462" width="132" height="132">
    <ellipse/>
   </object>
+  <object id="16" name="river02" type="River" x="118" y="372" width="188" height="32"/>
  </objectgroup>
 </map>

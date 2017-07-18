@@ -2,11 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <array>
+    <string>pacman-8x8</string>
     <string>graphtest-8x8</string>
 	<string>ortho4-16x16</string>
 	<string>isometric-130x66</string>
 	<string>staggered-64x33</string>
 	<string>hex1-65x65</string>
 	<string>roguelike-16x16</string>
+    <string>tetris-dynamics</string>
 </array>
 </plist>
