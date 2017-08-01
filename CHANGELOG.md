@@ -1,10 +1,106 @@
 Change Log
 ==========
 
+1.15
+-----
+
+#### Changes
+
+- add `AssetManager`
+
+1.14
+-----
+
+#### Changes
+
+- hexagonal coordinate conversion updated to match Tiled's
+- update API for new layer & object types, more consistent naming, etc.
+- improved grid drawing quality
+- debug functions moved to `SKTiled+Debug.swift`
+- remove `SKTilemap.indexOf(layerNamed:)`
+- rename `SKTilemap.getLayer(named:)` -> `SKTilemap.getLayers(named:,recursive:)`
+- rename `SKTilemap.allLayers` -> `SKTilemap.getLayers(recursive:)`
+- rename `SKTilemap.tileLayer(named:)` -> `SKTilemap.tileLayers(named:,recursive:)`
+- rename `SKTilemap.objectGroups(named:)` -> `SKTilemap.objectGroups(named:,recursive:)`
+- rename `SKTilemap.getLayers(ofType:)` -> `SKTilemap.getLayers(ofType:,recursive:)`
+- rename `SKTilemap.tileLayers` -> `SKTilemap.tileLayers(recursive:)`
+- rename `SKTilemap.objectGroups` -> `SKTilemap.objectGroups(recursive:)`
+- rename `SKTilemap.imageLayers` -> `SKTilemap.imageLayers(recursive:)`
+- rename `SKTilemap.groupLayers` -> `SKTilemap.groupLayers(recursive:)`
+- rename `SKTilemap.getTiles(ofType:)` -> `SKTilemap.getTiles(ofType:,recursive:)`
+- rename `SKTilemap.getTiles(withID:)` -> `SKTilemap.getTiles(globalID:,recursive:)`
+- rename `SKTilemap.getTilesWithProperty(_:, _:)` -> `SKTilemap.getTilesWithProperty(_:,_:,recursive:)`
+- rename `SKTilemap.getAnimatedTiles()` -> `SKTilemap.animatedTiles(recursive:)`
+- rename `SKTilemap.getObjects()` -> `SKTilemap.getObjects(recursive:)`
+- rename `SKTilemap.getObjects(ofType:)` -> `SKTilemap.getObjects(ofType:,recursive:)`
+- rename `SKTilemap.getObjects(named:)` -> `SKTilemap.getObjects(named:,recursive:)`
+- rename `SKTileLayer.getAnimatedTiles()` -> `SKTileLayer.animatedTiles()`
+- rename `SKObjectGroup.getObject(named:)` -> `SKObjectGroup.getObjects(named:)`
+- add `SKObjectGroup.textObjects`
+- add `SKTilemap.textObjects`
+- add `SKTilemap.showGrid`
+- add `SKTilemap.showBounds`
+- add `SKObjectGroup.getObjects(withText:)`
+- add `SKTilemap.getObjects(withText:)`
+- add `SKTilemap.getObject(withID:)`
+- add `SKTileObject.isTileObject`
+- add `SKTileObject.isTextObject`
+- add `SKTileLayer.showBounds`
+- add `SKTile.showBounds`
+- add `SKTileObject.showBounds`
+- add `SKTile.highlightDuration`
+- add `TiledLayerObject.highlightDuration`
+- add `SKTiled+Debug.swift`
+- add `SKTilemap.getContentLayers`
+- add `SKTilemap.objectColor`
+- add `TiledLayerObject.layerName`
+- add `SKTilemap.mapName`
+- add `SKTilemap.renderQuality`
+- add `TiledLayerObject.renderQuality`
+- add `SKTileObject.renderQuality`
+
+
+- add `SKTilemap.tilesAt(point:)`
+- add `SKTilemap.objectsAt(point:)`
+
+
+- add `alignment` to geometry types
+- add `TiledLayerObject.renderableObjects`
+- add `SKTilemap.renderableObjects`
+- add `SKTilesetData.globalID`
+
+- add `SKTileObject.showBounds`
+- rename `SKTile.getVertices()` -> `SKTile.getVertices(offset:)`
+
+- rename `TiledLayerGrid` -> `TiledDebugDrawNode`
+- add `BackgroundLayer` layer type
+- add `SKTilemapDelegate.zDeltaForLayers`
+
+- add `SKTilemap.bounds`
+- add `SKTilemap.url`
+- add `SKTilemap.update(_:)`
+- add `TiledLayerObject.update(_:)`
+
+
+- add `SKTilemap.clampPositionForMap`
+- add `SKTilemap.graphs`
+
 1.13
 -----
 
 #### Changes
+
+- support for tile objects
+- background color for layers
+- flag to ignore properties
+- fix hexagonal tiles not having the correct z-position
+- better `SKTiledSceneCamera` zooming
+- `SKTiledDemoScene` draws debug shapes with coordinate as mouse moves (macOS)
+- fix `SKTileLayer.getTiles(ofType:)`
+- add `SKTiledObject.type` property
+- add `SKObjectGroup.tileObjects` & `SKTilemap.tileObjects` methods
+- add `SKTileset.load(fromFiles:)` method for pre-loading tilesets
+- removed `SKTilemap.positionInMap` method
 
 
 1.12

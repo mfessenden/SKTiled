@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 import zlib
-#if os(iOS)
+#if os(iOS) || os(tvOS)
 import UIKit
 #else
 import Cocoa
@@ -18,7 +18,8 @@ import Cocoa
 
 // MARK: - Functions
 
-#if os(iOS)
+
+#if os(iOS) || os(tvOS)
 /**
  Returns an image of the given size.
  
@@ -31,32 +32,45 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
     // create an image of size, not opaque, not scaled
     UIGraphicsBeginImageContextWithOptions(size, false, scale)
     let context = UIGraphicsGetCurrentContext()
+    context!.interpolationQuality = .high
     let bounds = CGRect(origin: CGPoint.zero, size: size)
+    //print("  -> size: \(size.shortDescription), bounds: \(bounds.size.shortDescription), ui scale: \(scale.roundTo())")
     whatToDraw(context!, bounds, scale)
     let result = UIGraphicsGetImageFromCurrentImageContext()
     return result!.cgImage!
 }
+
     
 #else
+/**
+ Returns an image of the given size.
+
+ - parameter size:       `CGSize` size of resulting image.
+ - parameter scale:      `CGFloat` scale of result, for macOS that should be 1.
+ - parameter whatToDraw: `()->()` function detailing what to draw the image.
+ - returns: `CGImage` result.
+ */
 public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ context: CGContext, _ bounds: CGRect, _ scale: CGFloat) -> ()) -> CGImage {
-    let scaledSize = size * scale
+    let scaledSize = size
     let image = NSImage(size: scaledSize)
     image.lockFocus()
     let nsContext = NSGraphicsContext.current()!
+    nsContext.imageInterpolation = .high
     let context = nsContext.cgContext
     let bounds = CGRect(origin: CGPoint.zero, size: size)
-    whatToDraw(context, bounds, scale)
+    whatToDraw(context, bounds, 1)
     image.unlockFocus()
     var imageRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
     let imageRef = image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)
     return imageRef!
 }
+
 #endif
 
 
 /**
- Check for tile ID flip flags. Returns the translated tile ID and the corresponding flip flags.
- 
+ Check a tile ID for. Returns the translated tile ID and the corresponding flip flags.
+
  - parameter id: `UInt32` tile ID
  - returns: tuple of global id and flip flags.
  */
@@ -65,17 +79,26 @@ public func flippedTileFlags(id: UInt32) -> (gid: UInt32, hflip: Bool, vflip: Bo
     let flippedDiagonalFlag: UInt32   = 0x20000000
     let flippedVerticalFlag: UInt32   = 0x40000000
     let flippedHorizontalFlag: UInt32 = 0x80000000
-    
+
     let flippedAll = (flippedHorizontalFlag | flippedVerticalFlag | flippedDiagonalFlag)
     let flippedMask = ~(flippedAll)
-    
+
     let flipHoriz: Bool = (id & flippedHorizontalFlag) != 0
     let flipVert:  Bool = (id & flippedVerticalFlag) != 0
     let flipDiag:  Bool = (id & flippedDiagonalFlag) != 0
-    
+
     // get the actual gid from the mask
     let gid = id & flippedMask
     return (gid, flipHoriz, flipVert, flipDiag)
+}
+
+
+// MARK:  - Timers
+
+public func duration(_ block: () -> ()) -> TimeInterval {
+    let startTime = Date()
+    block()
+    return Date().timeIntervalSince(startTime)
 }
 
 
@@ -95,6 +118,27 @@ extension Integer {
 }
 
 
+
+
+public extension Int {
+    /// returns number of digits in Int number
+    public var digitCount: Int {
+        get {
+            return numberOfDigits(in: self)
+        }
+    }
+
+    // private recursive method for counting digits
+    private func numberOfDigits(in number: Int) -> Int {
+        if abs(number) < 10 {
+            return 1
+        } else {
+            return 1 + numberOfDigits(in: number/10)
+        }
+    }
+}
+
+
 internal extension CGFloat {
     
     /**
@@ -103,8 +147,17 @@ internal extension CGFloat {
      - returns: `CGFloat`
      */
     internal func radians() -> CGFloat {
-        let b = CGFloat(Double.pi) * (self/180)
+        let b = CGFloat(Double.pi) * (self / 180)
         return b
+    }
+
+    /**
+     Convert a float to degrees.
+
+     - returns: `CGFloat`
+     */
+    internal func degrees() -> CGFloat {
+        return self * 180.0 / CGFloat(Double.pi)
     }
     
     /**
@@ -155,6 +208,40 @@ internal extension CGFloat {
 }
 
 
+/**
+ Sine function that accepts angle for trig operations.
+
+ - parameter degrees: `CGFloat` angle.
+ - returns `CGFloat` sine result.
+ */
+internal func sin(degrees: CGFloat) -> CGFloat {
+    return CGFloat(sin(degrees: degrees.native))
+}
+
+
+/**
+ Sine function that accepts angle for trig operations.
+
+ - parameter degrees: `Double` angle.
+ - returns `Double` sine result.
+ */
+internal func sin(degrees: Double) -> Double {
+    return __sinpi(degrees/180.0)
+}
+
+
+/**
+ Sine function that accepts degrees for trig operations.
+    
+ - parameter degrees: `Float` angle.
+ - returns `Float` sine result.
+ */
+internal func sin(degrees: Float) -> Float {
+    return __sinpif(degrees/180.0)
+}
+
+
+
 public extension CGPoint {
     
     /// Returns an point inverted in the Y-coordinate.
@@ -176,12 +263,39 @@ public extension CGPoint {
     public var toVec2: int2 {
         return int2(Int32(x), Int32(y))
     }
+
+    /**
+     Returns the distance to the given point.
     
+     - parameter point: `CGPoint` decimals to round to.
+     - returns: `Float` distance to other point.
+     */
+    public func distance(_ point: CGPoint) -> Float {
+        let dx = Float(x - point.x)
+        let dy = Float(y - point.y)
+        return sqrt((dx * dx) + (dy * dy))
+    }
+
+    /// Return an integer value for x-coordinate.
     public var xCoord: Int { return Int(x) }
+    /// Return an integer value for y-coordinate.
     public var yCoord: Int { return Int(y) }
     
     public var description: String { return "x: \(x.roundTo()), y: \(y.roundTo())" }
-    public var coordDescription: String { return "x: \(Int(x)), y: \(Int(y))" }
+    public var shortDescription: String { return "\(Int(x)),\(Int(y))" }
+}
+
+
+extension CGPoint: Hashable {
+
+    public var hashValue: Int {
+        return x.hashValue << 32 ^ y.hashValue
+    }
+}
+
+
+public func ==(lhs: CGPoint, rhs: CGPoint) -> Bool {
+    return lhs.distance(rhs) < 0.000001
 }
 
 
@@ -195,6 +309,14 @@ public extension CGSize {
     public func roundTo(_ decimals: Int=1) -> String {
         return "w: \(self.width.roundTo(decimals)), h: \(self.height.roundTo(decimals))"
     }
+
+    public var shortDescription: String {
+        return "\(self.width.roundTo(0))x\(self.height.roundTo(0))"
+    }
+
+    public var toVec2: vector_float2 {
+        return vector_float2(Float(width), Float(height))
+    }
 }
 
 
@@ -206,33 +328,62 @@ public extension CGRect {
         self.size = size
     }
     
+    /// Returns the center point of the rectangle.
     public var center: CGPoint {
         return CGPoint(x: self.midX, y: self.midY)
     }
     
+    /// Returns the top-left corner point.
     public var topLeft: CGPoint {
         return origin
     }
     
+    /// Returns the top-right corner point.
     public var topRight: CGPoint {
         return CGPoint(x: origin.x + size.width, y: origin.y)
     }
     
+    /// Returns the bottom-left corner point.
     public var bottomLeft: CGPoint {
         return CGPoint(x: origin.x, y: origin.y + size.height)
     }
     
+    /// Returns the bottom-left corner point.
     public var bottomRight: CGPoint {
         return CGPoint(x: origin.x + size.width, y: origin.y + size.height)
     }
     
-    /// Returns the points of the four corners.
+    /// Return the four corner points.
     public var points: [CGPoint] {
         return [topLeft, topRight, bottomRight, bottomLeft]
     }
-}
 
+    /**
+     Returns a rect by the bounds by a given amount.
+
+     - parameter amount: `CGFloat` decimals to round to.
+     - returns: `CGRect` rectangle with inset value.
+     */
+    public func insetBy(_ amount: CGFloat) -> CGRect {
+        return self.insetBy(dx: amount, dy: amount)
+    }
+
+    /**
+     Returns a display string rounded.
+
+     - parameter decimals: `Int` decimals to round to.
+     - returns: `String` display string.
+     */
+    public func roundTo(_ decimals: Int=1) -> String {
+        return "origin: \(Int(origin.x)), \(Int(origin.y)), size: \(Int(size.width)) x \(Int(size.height))"
+    }
+
+    public var shortDescription: String {
+        return "x: \(Int(minX)), y: \(Int(minY)), w: \(width.roundTo()), h: \(height.roundTo())"
+    }
+}
     
+
 public extension CGVector {
     /**
      * Returns the squared length of the vector described by the CGVector.
@@ -258,6 +409,19 @@ public extension SKScene {
         let dx = (pos.x - center.x)
         let dy = (pos.y - center.y)
         return CGVector(dx: dx, dy: dy)
+    }
+
+    /// Returns a tilemap file name.
+    public var tmxFilename: String? {
+        var filename: String? = nil
+        enumerateChildNodes(withName: "*") {  // was //*
+            node, stop in
+            if node as? SKTilemap != nil {
+                filename = (node as? SKTilemap)?.filename
+                stop.pointee = true
+            }
+        }
+        return filename
     }
 }
 
@@ -288,6 +452,36 @@ internal extension SKNode {
         } else {
             run(action, withKey: withKey)
         }
+    }
+
+    internal var drawAnchor: Bool {
+        get {
+            return childNode(withName: "DRAW_ANCHOR") != nil
+        } set {
+            // remove the current node
+            childNode(withName: "DRAW_ANCHOR")?.removeFromParent()
+            if (newValue == true) {
+                let anchor = SKShapeNode(circleOfRadius: 0.75)
+                anchor.name = "DRAW_ANCHOR"
+                anchor.strokeColor = .clear
+                anchor.zPosition = zPosition * 4
+                addChild(anchor)
+            }
+        }
+    }
+}
+
+
+internal extension SKSpriteNode {
+
+    /**
+     Convenience initalizer to set texture filtering to nearest neighbor.
+
+     - parameter pixelImage: `String` texture image named.
+     */
+    convenience init(pixelImage named: String) {
+        self.init(imageNamed: named)
+        self.texture?.filteringMode = .nearest
     }
 }
 
@@ -356,15 +550,18 @@ public extension SKColor {
         self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
     }
     
-    
     /// Returns the individual color components.
     internal var components: [CGFloat] {
-        return cgColor.components!
+        guard let comps = cgColor.components else { return [0,0,0,0] }
+        if comps.count < 4 {
+            return [comps.first!,comps.first!,comps.first!,comps.last!]
+        }
+        return comps
     }
-    
+
     /**
       Returns a hexadecimal string representation of the color.
-     
+
      - returns: `String` hexadecimal string.
      */
     public func hexString() -> String {
@@ -373,7 +570,7 @@ public extension SKColor {
         let g = Int(comps[1] * 255)
         let b = Int(comps[2] * 255)
         let a = Int(comps[3] * 255)
-        
+
         var rgbHex = "#\(String(format: "%02X%02X%02X", r, g, b))"
         rgbHex += (a == 255) ? "" : String(format: "%02X", a)
         return rgbHex
@@ -402,14 +599,44 @@ public extension SKColor {
         
         return SKColor(red: r, green: g, blue: b, alpha: 1.0)
     }
-    
-    func vec4() -> GLKVector4 {
+
+    /**
+     Return the color as a vector4.
+
+     - returns: `GLKVector4` color as a vector4.
+     */
+    internal func vec4() -> GLKVector4 {
         var r: CGFloat = 0.0
         var g: CGFloat = 0.0
         var b: CGFloat = 0.0
         var a: CGFloat = 0.0
         getRed(&r, green: &g, blue: &b, alpha: &a)
         return GLKVector4(v: (Float(r), Float(g), Float(b), Float(a)))
+    }
+
+    public var toVec4: vector_float4 {
+        return vector_float4(components.map {Float($0)})
+    }
+
+    public var hexDescription: String {
+        return "SKColor(hexString:  \"\(self.hexString())\")"
+    }
+
+    public var rgbDescription: String {
+        let comps = components
+        let r = Int(comps[0] * 255)
+        let g = Int(comps[1] * 255)
+        let b = Int(comps[2] * 255)
+        let a = Int(comps[3] * 255)
+        return "SKColor(r: \(r), g: \(g), b: \(b), a: \(a))"
+    }
+
+    public var componentDescription: String {
+        var result: [String] = []
+        for compDesc in components.map({ "\($0.roundTo(1))" }) {
+            result.append(compDesc)
+        }
+        return "SKColor: " + result.joined(separator: ",")
     }
 }
 
@@ -527,6 +754,36 @@ public extension SKAction {
         }
         return SKAction.sequence(actions)
     }
+
+    /**
+     Custom action to fade a node's alpha after a pause.
+
+     - returns: `SKAction` custom fade action.
+     */
+    public class func fadeAfter(wait duration: TimeInterval, alpha: CGFloat) -> SKAction {
+        return SKAction.sequence([SKAction.wait(forDuration: duration), SKAction.fadeAlpha(to: alpha, duration: 0.5)])
+    }
+
+    /**
+     * Performs an action after the specified delay.
+     */
+    public class func afterDelay(_ delay: TimeInterval, performAction action: SKAction) -> SKAction {
+        return SKAction.sequence([SKAction.wait(forDuration: delay), action])
+    }
+
+    /**
+     * Performs a block after the specified delay.
+     */
+    public class func afterDelay(_ delay: TimeInterval, runBlock block: @escaping () -> Void) -> SKAction {
+        return SKAction.afterDelay(delay, performAction: SKAction.run(block))
+    }
+
+    /**
+     * Removes the node from its parent after the specified delay.
+     */
+    public class func removeFromParentAfterDelay(_ delay: TimeInterval) -> SKAction {
+        return SKAction.afterDelay(delay, performAction: SKAction.removeFromParent())
+    }
 }
 
 
@@ -536,18 +793,18 @@ public extension Data {
         var value = value
         self.init(buffer: UnsafeBufferPointer(start: &value, count: 1))
     }
-    
+
     // export back as value
     public func to<T>(type: T.Type) -> T {
         return self.withUnsafeBytes { $0.pointee }
     }
-    
+
     // init with array
     public init<T>(fromArray values: [T]) {
         var values = values
         self.init(buffer: UnsafeBufferPointer(start: &values, count: values.count))
     }
-    
+
     // output to array
     public func toArray<T>(type: T.Type) -> [T] {
         return self.withUnsafeBytes {
@@ -560,11 +817,6 @@ public extension Data {
 // MARK: - Operators
 
 // MARK: CGFloat
-
-public func floor(_ flt: CGFloat) -> CGFloat {
-    return CGFloat(floor(Double(flt)))
-}
-
 
 public func + (lhs: Int, rhs: CGFloat) -> CGFloat {
     return CGFloat(lhs) + rhs
@@ -588,7 +840,7 @@ public func - (lhs: CGFloat, rhs: Int) -> CGFloat {
 
 public func * (lhs: Int, rhs: CGFloat) -> CGFloat {
     return CGFloat(lhs) * rhs
-        }
+}
 
 
 public func * (lhs: Int32, rhs: CGFloat) -> CGFloat {
@@ -603,12 +855,23 @@ public func * (lhs: CGFloat, rhs: Int) -> CGFloat {
 
 public func / (lhs: Int, rhs: CGFloat) -> CGFloat {
     return CGFloat(lhs) / rhs
-    }
+}
 
 
 public func / (lhs: CGFloat, rhs: Int) -> CGFloat {
     return lhs / CGFloat(rhs)
 }
+
+
+public func lerp(start: CGFloat, end: CGFloat, t: CGFloat) -> CGFloat {
+    return start + (t * (end - start))
+}
+
+
+public func ilerp(start: CGFloat, end: CGFloat, t: CGFloat) -> CGFloat {
+    return (t - start) / (end - start)
+}
+
 
 // MARK: CGPoint
 
@@ -691,6 +954,12 @@ public func / (lhs: CGSize, rhs: CGFloat) -> CGSize {
     return CGSize(width: lhs.width / rhs, height: lhs.height / rhs)
 }
 
+
+public func fabs(_ size: CGSize) -> CGSize {
+    return CGSize(width: fabs(size.width), height: fabs(size.height))
+}
+
+
 // MARK: CGVector
 public func + (lhs: CGVector, rhs: CGVector) -> CGVector {
     return CGVector(dx: lhs.dx + rhs.dx, dy: lhs.dy + rhs.dy)
@@ -756,6 +1025,27 @@ public func lerp(start: CGVector, end: CGVector, t: CGFloat) -> CGVector {
     return start + (end - start) * t
 }
 
+// MARK: CGRect
+
+public func + (lhs: CGRect, rhs: CGFloat) -> CGRect {
+    return CGRect(x: lhs.minX, y: lhs.minY, width: lhs.width + rhs, height: lhs.height + rhs)
+}
+
+
+public func - (lhs: CGRect, rhs: CGFloat) -> CGRect {
+    return CGRect(x: lhs.minX, y: lhs.minY, width: lhs.width - rhs, height: lhs.height - rhs)
+}
+
+
+public func * (lhs: CGRect, rhs: CGFloat) -> CGRect {
+    return CGRect(x: lhs.minX, y: lhs.minY, width: lhs.width * rhs, height: lhs.height * rhs)
+}
+
+
+public func / (lhs: CGRect, rhs: CGFloat) -> CGRect {
+    return CGRect(x: lhs.minX, y: lhs.minY, width: lhs.width / rhs, height: lhs.height / rhs)
+}
+
 
 // MARK: - Helper Functions
 
@@ -773,40 +1063,35 @@ public func normalize(_ value: CGFloat, _ minimum: CGFloat, _ maximum: CGFloat) 
 
 
 /**
- Generate a visual grid texture.
+ Visualize a layer grid as a texture.
  
- - parameter layer: `TiledLayerObject` layer instance.
- - parameter scale: `CGFloat` image scale.
- - returns: `SKTexture?` visual grid texture.
+ - parameter layer:      `TiledLayerObject` layer instance.
+ - parameter imageScale: `CGFloat` image scale multiplier.
+ - parameter lineScale:  `CGFloat` line scale multiplier.
+ - returns: `CGImage` visual grid texture.
  */
-internal func drawGrid(_ layer: TiledLayerObject) -> CGImage {
-    
-    let uiScale: CGFloat
-    #if os(iOS)
-    uiScale = UIScreen.main.scale
-    #endif
-    #if os(OSX)
-    uiScale = NSScreen.main()!.backingScaleFactor
-    #endif
+internal func drawLayerGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineScale: CGFloat=1) -> CGImage {
+    // get the ui scale value for the device
+    let uiScale: CGFloat = getContentScaleFactor()
+        
     let size = layer.size
-    let tileWidth = layer.tileWidth    //* scale
-    let tileHeight = layer.tileHeight  //* scale
+    let tileWidth = layer.tileWidth * imageScale
+    let tileHeight = layer.tileHeight * imageScale
                 
     let tileWidthHalf = tileWidth / 2
     let tileHeightHalf = tileHeight / 2
                 
-    var sizeInPoints = layer.sizeInPoints
-    sizeInPoints = sizeInPoints + 1
+    let sizeInPoints = (layer.sizeInPoints * imageScale)
+    let defaultLineWidth: CGFloat = (imageScale / uiScale) * lineScale
     
     return imageOfSize(sizeInPoints, scale: uiScale) { context, bounds, scale in
                 
         let innerColor = layer.gridColor
         // line width should be at least 1 for larger tile sizes
-        let lineWidth: CGFloat = (tileHeight <= 16) ? 1 / scale : 1
-                
+        let lineWidth: CGFloat = defaultLineWidth
         context.setLineWidth(lineWidth)
         //context.setLineDash(phase: 0.5, lengths: [0.5, 1.0])
-        context.setShouldAntialias(layer.antialiased)
+        context.setShouldAntialias(true)  // layer.antialiased
                 
         for col in 0 ..< Int(size.width) {
             for row in (0 ..< Int(size.height)) {
@@ -816,8 +1101,8 @@ internal func drawGrid(_ layer: TiledLayerObject) -> CGImage {
                 
                 let screenPosition = layer.tileToScreenCoords(CGPoint(x: col, y: row))
                 
-                var xpos: CGFloat = screenPosition.x
-                var ypos: CGFloat = screenPosition.y
+                var xpos: CGFloat = screenPosition.x * imageScale
+                var ypos: CGFloat = screenPosition.y * imageScale
                 
                 switch layer.orientation {
                 case .orthogonal:
@@ -857,7 +1142,8 @@ internal func drawGrid(_ layer: TiledLayerObject) -> CGImage {
                     
                         // flat - currently not working
                         if (staggerX == true) {
-                            r = (tileWidth - layer.tilemap.sideLengthX) / 2
+                            let sizeLengthX = (layer.tilemap.sideLengthX * imageScale)
+                            r = (tileWidth - sizeLengthX) / 2
                             h = tileHeight / 2
                             variableSize = tileWidth - (r * 2)
                             hexPoints[0] = CGPoint(x: xpos - (variableSize / 2), y: ypos + h)
@@ -870,7 +1156,8 @@ internal func drawGrid(_ layer: TiledLayerObject) -> CGImage {
 
                         } else {
                             r = tileWidth / 2
-                            h = (tileHeight - layer.tilemap.sideLengthY) / 2
+                            let sizeLengthY = (layer.tilemap.sideLengthY * imageScale)
+                            h = (tileHeight - sizeLengthY) / 2
                             variableSize = tileHeight - (h * 2)
                             hexPoints[0] = CGPoint(x: xpos, y: ypos + (tileHeight / 2))
                             hexPoints[1] = CGPoint(x: xpos + (tileWidth / 2), y: ypos + (variableSize / 2))
@@ -898,8 +1185,86 @@ internal func drawGrid(_ layer: TiledLayerObject) -> CGImage {
                         context.addPath(shapePath)
                     }
                 }
-                        
+                
                 context.strokePath()
+            }
+        }
+    }
+}
+
+
+/**
+ Generate a visual pathfinding graph texture.
+ 
+ - parameter layer:      `TiledLayerObject` layer instance.
+ - parameter imageScale: `CGFloat` image scale multiplier.
+ - parameter lineScale:  `CGFloat` line scale multiplier.
+ 
+ - returns: `CGImage` visual graph texture.
+ */
+internal func drawLayerGraph(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineScale: CGFloat=1) -> CGImage {
+    
+    let uiScale: CGFloat = getContentScaleFactor()
+    
+    let size = layer.size
+    let tileWidth = layer.tileWidth * imageScale
+    let tileHeight = layer.tileHeight * imageScale
+    
+    let sizeInPoints = (layer.sizeInPoints * imageScale)  // + 1
+    let defaultLineWidth: CGFloat = (imageScale / uiScale) * lineScale
+
+    
+    return imageOfSize(sizeInPoints, scale: uiScale) { context, bounds, scale in
+        
+        // line width should be at least 1 for larger tile sizes
+        let lineWidth: CGFloat = defaultLineWidth
+        context.setLineWidth(lineWidth)
+        context.setShouldAntialias(true)  // layer.antialiased
+
+        
+        for col in 0 ..< Int(size.width) {
+            for row in (0 ..< Int(size.height)) {
+                
+                let strokeColor = SKColor.black
+                var fillColor = SKColor.clear
+                
+                let screenPosition = layer.tileToScreenCoords(CGPoint(x: col, y: row))
+                
+                let xpos: CGFloat = screenPosition.x * imageScale
+                let ypos: CGFloat = screenPosition.y * imageScale
+                
+                switch layer.orientation {
+                case .orthogonal:
+
+                    // rectangle shape
+                    let points = rectPointArray(tileWidth, height: tileHeight, origin: CGPoint(x: xpos, y: ypos + tileHeight))
+                    
+                    if let node = layer.graph?.node(atGridPosition: int2(Int32(col), Int32(row))) {
+                        fillColor = SKColor.gray
+                        
+                        if node.weight > 1 {
+                            fillColor = SKColor.red
+                        }
+                        
+                        if node.weight < 1 {
+                            fillColor = SKColor.yellow
+                        }
+                        
+                        let fillPath = polygonPath(points)
+                        context.addPath(fillPath)
+                        context.setFillColor(fillColor.cgColor)
+                        context.fillPath()
+                        
+                        context.setStrokeColor(strokeColor.cgColor)
+                        
+                        let shapePath = polygonPath(points)
+                        context.addPath(shapePath)
+                        context.strokePath()
+                    }
+                    
+                default:
+                    continue
+                }
             }
         }
     }
@@ -909,7 +1274,7 @@ internal func drawGrid(_ layer: TiledLayerObject) -> CGImage {
 // MARK: - Polygon Drawing
 
 /**
- Returns an array of points for the given dimensions.
+ Returns an array of points for the given dimensions. ** In Use **
  
  - parameter width:   `CGFloat` rect width.
  - parameter height:  `CGFloat` rect height.
@@ -949,9 +1314,9 @@ public func rectPointArray(_ size: CGSize, origin: CGPoint = .zero) -> [CGPoint]
  */
 public func polygonPointArray(_ sides: Int, radius: CGSize, offset: CGFloat=0, origin: CGPoint = .zero) -> [CGPoint] {
     let angle = (360 / CGFloat(sides)).radians()
-    let cx = origin.x // x origin
-    let cy = origin.y // y origin
-    let rx = radius.width // radius of circle
+    let cx = origin.x       // x origin
+    let cy = origin.y       // y origin
+    let rx = radius.width   // radius of circle
     let ry = radius.height
     var i = 0
     var points: [CGPoint] = []
@@ -983,14 +1348,14 @@ public func polygonPath(_ points: [CGPoint], closed: Bool=true) -> CGPath {
     for p in mpoints {
         path.addLine(to: p)
     }
-    if (closed == true) {path.closeSubpath()}
+    if (closed == true) { path.closeSubpath() }
     return path
 }
 
 
 /**
  Draw a polygon shape based on an aribitrary number of sides.
- 
+
  - parameter sides:    `Int` number of sides.
  - parameter radius:   `CGSize` w/h radius.
  - parameter offset:   `CGFloat` rotation offset (45 to return a rectangle).
@@ -1017,8 +1382,8 @@ public func polygonPath(_ sides: Int, radius: CGSize, offset: CGFloat=0, origin:
  - parameter alpha:   `CGFloat` curvature.
  - returns: `CGPath`   path from the given points.
  */
-public func bezierPath(_ points: [CGPoint], closed: Bool=true, alpha: CGFloat=0.75) -> CGPath {
-    guard points.count > 1 else { return CGMutablePath() }
+public func bezierPath(_ points: [CGPoint], closed: Bool = true, alpha: CGFloat = 1) -> (path: CGPath, points: [CGPoint]) {
+    guard points.count > 1 else { return (CGMutablePath(), [CGPoint]()) }
     assert(alpha >= 0 && alpha <= 1.0, "Alpha must be between 0 and 1")
 
     let numberOfCurves = closed ? points.count : points.count - 1
@@ -1030,6 +1395,9 @@ public func bezierPath(_ points: [CGPoint], closed: Bool=true, alpha: CGFloat=0.
     let path = CGMutablePath()
     path.move(to: currentPoint)
     
+    var cpoints: [CGPoint] = []
+    let tension: CGFloat = 2.7
+
     for index in 0 ..< numberOfCurves {
         let endPt = nextPoint!
         
@@ -1037,14 +1405,14 @@ public func bezierPath(_ points: [CGPoint], closed: Bool=true, alpha: CGFloat=0.
         var my: CGFloat
         
         if previousPoint != nil {
-            mx = (nextPoint!.x - currentPoint.x) * alpha + (currentPoint.x - previousPoint!.x)*alpha
-            my = (nextPoint!.y - currentPoint.y) * alpha + (currentPoint.y - previousPoint!.y)*alpha
+            mx = (nextPoint!.x - currentPoint.x) * alpha + (currentPoint.x - previousPoint!.x) * alpha
+            my = (nextPoint!.y - currentPoint.y) * alpha + (currentPoint.y - previousPoint!.y) * alpha
         } else {
             mx = (nextPoint!.x - currentPoint.x) * alpha
             my = (nextPoint!.y - currentPoint.y) * alpha
         }
         
-        let ctrlPt1 = CGPoint(x: currentPoint.x + mx / 3.0, y: currentPoint.y + my / 3.0)
+        let ctrlPt1 = CGPoint(x: currentPoint.x + mx / tension, y: currentPoint.y + my / tension)
         
         previousPoint = currentPoint
         currentPoint = nextPoint!
@@ -1063,14 +1431,66 @@ public func bezierPath(_ points: [CGPoint], closed: Bool=true, alpha: CGFloat=0.
             mx = (currentPoint.x - previousPoint!.x) * alpha
             my = (currentPoint.y - previousPoint!.y) * alpha
         }
+
+        let ctrlPt2 = CGPoint(x: currentPoint.x - mx / tension, y: currentPoint.y - my / tension)
+
+        // TODO: remove this in master
+        let pr: CGFloat = 1.5
+        let r1 = CGRect(x: ctrlPt1.x - pr, y: ctrlPt1.y - pr, width: pr, height: pr)
+        let r2 = CGRect(x: ctrlPt2.x - pr, y: ctrlPt2.y - pr, width: pr, height: pr)
         
-        let ctrlPt2 = CGPoint(x: currentPoint.x - mx / 3.0, y: currentPoint.y - my / 3.0)
+        cpoints.append(ctrlPt1)
+        cpoints.append(ctrlPt2)
+
         path.addCurve(to: endPt, control1: ctrlPt1, control2: ctrlPt2)
     }
-    if (closed == true) {path.closeSubpath()}
-    return path
+
+    if (closed == true) { path.closeSubpath() }
+    return (path, cpoints)
 }
 
+/**
+ Returns the device scale factor.
+
+ - returns: `CGFloat` device scale.
+ */
+public func getContentScaleFactor() -> CGFloat {
+    #if os(iOS) || os(tvOS)
+    return UIScreen.main.scale
+    #else
+    return NSScreen.main()!.backingScaleFactor
+    #endif
+}
+
+
+/**
+ Clamp the position to a given scale.
+
+ - parameter point:  `CGPoint` point to clamp.
+ - parameter scale:  `CGFloat` device scale.
+ - returns: `CGPoint` clamped point.
+ */
+public func clampedPosition(point: CGPoint, scale: CGFloat) -> CGPoint {
+    let clampedX = Int(point.x * scale) / scale
+    let clampedY = Int(point.y * scale) / scale
+    return CGPoint(x: clampedX, y: clampedY)
+}
+
+
+/**
+ Clamp the position of a given node (and parent).
+ 
+ - parameter node:  `SKNode` node to re-position.
+ - parameter scale:  `CGFloat` device scale.
+ */
+public func clampPositionWithNode(node: SKNode, scale: CGFloat) {
+    node.position = clampedPosition(point: node.position, scale: getContentScaleFactor())
+    if let parentNode = node.parent {
+        if parentNode != node.scene {
+            clampPositionWithNode(node: parentNode, scale: scale)
+        }
+    }
+}
 
 // MARK: - Compression
 
@@ -1078,12 +1498,13 @@ public func bezierPath(_ points: [CGPoint], closed: Bool=true, alpha: CGFloat=0.
  Compression level with constants based on the zlib's constants.
  */
 public typealias CompressionLevel = Int32
+
 public extension CompressionLevel {
-    
-    public static let noCompression = Z_NO_COMPRESSION
-    public static let bestSpeed = Z_BEST_SPEED
-    public static let bestCompression = Z_BEST_COMPRESSION    
-    public static let defaultCompression = Z_DEFAULT_COMPRESSION
+
+    static public let noCompression      = Z_NO_COMPRESSION
+    static public let bestSpeed          = Z_BEST_SPEED
+    static public let bestCompression    = Z_BEST_COMPRESSION
+    static public let defaultCompression = Z_DEFAULT_COMPRESSION
 }
 
 
@@ -1092,91 +1513,91 @@ public extension CompressionLevel {
  */
 public enum GzipError: Error {
     // cf. http://www.zlib.net/manual.html
-    
+
     /**
      The stream structure was inconsistent.
-     
+
      - underlying zlib error: `Z_STREAM_ERROR` (-2)
      - parameter message: returned message by zlib
      */
     case stream(message: String)
-    
+
     /**
      The input data was corrupted (input stream not conforming to the zlib format or incorrect check value).
-     
+
      - underlying zlib error: `Z_DATA_ERROR` (-3)
      - parameter message: returned message by zlib
      */
     case data(message: String)
-    
+
     /**
      There was not enough memory.
-     
+
      - underlying zlib error: `Z_MEM_ERROR` (-4)
      - parameter message: returned message by zlib
      */
     case memory(message: String)
-    
+
     /**
      No progress is possible or there was not enough room in the output buffer.
-     
+
      - underlying zlib error: `Z_BUF_ERROR` (-5)
      - parameter message: returned message by zlib
      */
     case buffer(message: String)
-    
+
     /**
      The zlib library version is incompatible with the version assumed by the caller.
-     
+
      - underlying zlib error: `Z_VERSION_ERROR` (-6)
      - parameter message: returned message by zlib
      */
     case version(message: String)
-    
+
     /**
      An unknown error occurred.
-     
+
      - parameter message: returned message by zlib
      - parameter code: return error by zlib
      */
     case unknown(message: String, code: Int)
-    
-    
+
+
     internal init(code: Int32, msg: UnsafePointer<CChar>?) {
-        
+
         let message: String = {
             guard let msg = msg, let message = String(validatingUTF8: msg) else {
                 return "Unknown gzip error"
             }
             return message
         }()
-        
+
         self = {
             switch code {
             case Z_STREAM_ERROR:
                 return .stream(message: message)
-                
+
             case Z_DATA_ERROR:
                 return .data(message: message)
-                
+
             case Z_MEM_ERROR:
                 return .memory(message: message)
-                
+
             case Z_BUF_ERROR:
                 return .buffer(message: message)
-                
+
             case Z_VERSION_ERROR:
                 return .version(message: message)
-                
+
             default:
                 return .unknown(message: message, code: Int(code))
             }
         }()
     }
-    
-    
+
+
     public var localizedDescription: String {
-        
+
         let description: String = {
             switch self {
             case .stream(let message):
@@ -1193,157 +1614,156 @@ public enum GzipError: Error {
                 return message
             }
         }()
-        
+
         return NSLocalizedString(description, comment: "error message")
     }
-    
+
 }
 
 
 public extension Data {
-    
+
     /**
      Check if the reciever is already gzipped.
-     
+
      - returns: Whether the data is compressed.
      */
     public var isGzipped: Bool {
         return self.starts(with: [0x1f, 0x8b])
     }
-    
+
     /**
      Check if the reciever is already zlib compressed.
-     
+
      - returns: Whether the data is compressed.
      */
     public var isZlibCompressed: Bool {
         return self.starts(with: [0x78, 0x9C])
     }
-    
+
     /**
      Create a new `Data` object by compressing the receiver using zlib.
      Throws an error if compression failed.
-     
+
      - parameters:
      - level: Compression level in the range of `0` (no compression) to `9` (maximum compression).
-     
+
      - throws: `GzipError`
      - returns: Gzip-compressed `Data` object.
      */
     public func gzipped(level: CompressionLevel = .defaultCompression) throws -> Data {
-        
+
         guard self.count > 0 else {
             return Data()
         }
-        
+
         var stream = self.createZStream()
         var status: Int32
-        
+
         status = deflateInit2_(&stream, level, Z_DEFLATED, MAX_WBITS + 16, MAX_MEM_LEVEL, Z_DEFAULT_STRATEGY, ZLIB_VERSION, STREAM_SIZE)
-        
+
         guard status == Z_OK else {
             // deflateInit2 returns:
             // Z_VERSION_ERROR  The zlib library version is incompatible with the version assumed by the caller.
             // Z_MEM_ERROR      There was not enough memory.
             // Z_STREAM_ERROR   A parameter is invalid.
-            
+
             throw GzipError(code: status, msg: stream.msg)
         }
-        
+
         var data = Data(capacity: CHUNK_SIZE)
         while stream.avail_out == 0 {
             if Int(stream.total_out) >= data.count {
                 data.count += CHUNK_SIZE
             }
-            
+
             data.withUnsafeMutableBytes { (bytes: UnsafeMutablePointer<Bytef>) in
                 stream.next_out = bytes.advanced(by: Int(stream.total_out))
             }
             stream.avail_out = uInt(data.count) - uInt(stream.total_out)
-            
+
             deflate(&stream, Z_FINISH)
         }
-        
+
         deflateEnd(&stream)
         data.count = Int(stream.total_out)
-        
+
         return data
     }
-    
-    
+
+
     /**
      Create a new `Data` object by decompressing the receiver using zlib.
      Throws an error if decompression failed.
-     
+
      - throws: `GzipError`
      - returns: Gzip-decompressed `Data` object.
      */
     public func gunzipped() throws -> Data {
-        
+
         guard self.count > 0 else {
             return Data()
         }
-        
+
         var stream = self.createZStream()
         var status: Int32
-        
+
         status = inflateInit2_(&stream, MAX_WBITS + 32, ZLIB_VERSION, STREAM_SIZE)
-        
+
         guard status == Z_OK else {
             // inflateInit2 returns:
             // Z_VERSION_ERROR   The zlib library version is incompatible with the version assumed by the caller.
             // Z_MEM_ERROR       There was not enough memory.
             // Z_STREAM_ERROR    A parameters are invalid.
-            
+
             throw GzipError(code: status, msg: stream.msg)
         }
-        
+
         var data = Data(capacity: self.count * 2)
-        
+
         repeat {
             if Int(stream.total_out) >= data.count {
                 data.count += self.count / 2;
             }
-            
+
             data.withUnsafeMutableBytes { (bytes: UnsafeMutablePointer<Bytef>) in
                 stream.next_out = bytes.advanced(by: Int(stream.total_out))
             }
             stream.avail_out = uInt(data.count) - uInt(stream.total_out)
-            
+
             status = inflate(&stream, Z_SYNC_FLUSH)
-            
+
         } while status == Z_OK
-        
+
         guard inflateEnd(&stream) == Z_OK && status == Z_STREAM_END else {
             // inflate returns:
             // Z_DATA_ERROR   The input data was corrupted (input stream not conforming to the zlib format or incorrect check value).
             // Z_STREAM_ERROR The stream structure was inconsistent (for example if next_in or next_out was NULL).
             // Z_MEM_ERROR    There was not enough memory.
             // Z_BUF_ERROR    No progress is possible or there was not enough room in the output buffer when Z_FINISH is used.
-            
+
             throw GzipError(code: status, msg: stream.msg)
         }
-        
+
         data.count = Int(stream.total_out)
-        
+
         return data
     }
-    
+
     private func createZStream() -> z_stream {
-        
+
         var stream = z_stream()
-        
+
         self.withUnsafeBytes { (bytes: UnsafePointer<Bytef>) in
             stream.next_in = UnsafeMutablePointer<Bytef>(mutating: bytes)
         }
         stream.avail_in = uint(self.count)
-        
+
         return stream
     }
-    
+
 }
 
 
 private let CHUNK_SIZE: Int = 2 ^ 14
 private let STREAM_SIZE: Int32 = Int32(MemoryLayout<z_stream>.size)
-

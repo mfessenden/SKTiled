@@ -9,7 +9,7 @@ import SpriteKit
 
 
 /**
- A simple data structure representing an animated tile frame.
+ A structure representing frame of animation.
  
  - parameter gid:       `Int` unique tile id.
  - parameter duration:  `TimeInterval` frame duration.
@@ -32,11 +32,17 @@ open class SKTilesetData: SKTiledObject  {
     
     weak open var tileset: SKTileset!             // reference to parent tileset
     open var uuid: String = UUID().uuidString     // unique id
-    open var id: Int = 0                          // tile id
+    open var type: String!                        // object type.
+    open var id: Int = 0                          // tile id (local)
+    
     open var texture: SKTexture!                  // initial tile texture
     open var source: String! = nil                // source image name (part of a collections tileset)
     open var probability: CGFloat = 1.0           // used in Tiled application, might not be useful here.
     open var properties: [String: String] = [:]
+    open var ignoreProperties: Bool = false       // ignore custom properties
+    open var tileOffset: CGPoint = .zero          // tile offset
+    open var renderQuality: CGFloat = 8           // render quality
+    open var alignment: Alignment = .bottomLeft   // tile alignment
     
     // animation frames
     internal var frames: [AnimationFrame] = []    // animation frames
@@ -51,9 +57,19 @@ open class SKTilesetData: SKTiledObject  {
     open var walkable: Bool = false               // tile is walkable.
     open var weight: CGFloat = 1                  // tile weight.
     
+    // collision objects
+    open var collisions: [SKTileObject] = []
+    
+    
     open var localID: Int {                       // return the local id for this tile
         guard let tileset = tileset else { return id }
         return tileset.getLocalID(forGlobalID: id)
+    }
+    
+    // return the global id for this tile
+    open var globalID: Int {
+        guard let tileset = tileset else { return id }
+        return (localID == id) ? (tileset.firstGID + id) : id
     }
     
     // MARK: - Init
@@ -70,6 +86,8 @@ open class SKTilesetData: SKTiledObject  {
         self.id = id
         self.tileset = tileSet
         self.parseTileID(id: id)
+        self.tileOffset = tileSet.tileOffset
+        self.ignoreProperties = tileSet.ignoreProperties
     }
     
     /**
@@ -86,6 +104,8 @@ open class SKTilesetData: SKTiledObject  {
         self.texture.filteringMode = .nearest
         self.tileset = tileSet
         self.parseTileID(id: id)
+        self.tileOffset = tileSet.tileOffset
+        self.ignoreProperties = tileSet.ignoreProperties
     }
     
     // MARK: - Animation
@@ -98,20 +118,22 @@ open class SKTilesetData: SKTiledObject  {
      - parameter tileTexture: `SKTexture?` frame texture.
      */
     open func addFrame(withID: Int, interval: TimeInterval, tileTexture: SKTexture? = nil) {
-        frames.append(AnimationFrame(gid: withID, duration: interval, texture: tileTexture))
+        var id = withID
+        // if the tileset firstGID is already set, subtract it to get the internal id
+        if let tileset = tileset, tileset.firstGID > 0 {
+            id = withID - tileset.firstGID
+        }
+        frames.append(AnimationFrame(gid: id, duration: interval, texture: tileTexture))
     }
     
     /**
-     Remove a tile animation frame.
+     Remove a tile animation frame at a given index.
      
-     - parameter gid: `Int` id for frame.
+     - parameter at: `Int` frame index.
      - returns: `AnimationFrame?` animation frame (if it exists).
      */
-    func removeFrame(_ gid: Int) -> AnimationFrame? {
-        if let index = frames.index( where: { $0.gid == gid } ) {
-            return frames.remove(at: index)
-        }
-        return nil
+    func removeFrame(at index: Int) -> AnimationFrame? {
+        return frames.remove(at: index)
     }
     
     /**
@@ -151,7 +173,7 @@ extension SKTilesetData: Hashable {
 
 
 extension AnimationFrame: CustomStringConvertible, CustomDebugStringConvertible {
-    var description: String { return "\(gid): \(duration)" }
+    var description: String { return "Frame: \(gid): \(duration * 1000)" }
     var debugDescription: String { return description }
 }
 
@@ -161,10 +183,14 @@ extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
     /// Tile data description.
     public var description: String {
         guard let tileset = tileset else { return "Tile ID: \(id) (no tileset)" }
-        let tileSizeString = "\(Int(tileset.tileSize.width))x\(Int(tileset.tileSize.height))"
-        let dataString = properties.count > 0 ? "Tile ID: \(id) @ \(tileSizeString), " : "Tile ID: \(id) @ \(tileSizeString)"
+        let typeString = (type != nil) ? ", type: \"\(type!)\"" : ""
+        let framesString = (isAnimated == true) ? ", \(frames.count) frames" : ""
+        let dataString = properties.count > 0 ? "Tile ID: \(globalID)\(typeString) @ \(tileset.tileSize.shortDescription)\(framesString), " : "Tile ID: \(globalID)\(typeString) @ \(tileset.tileSize.shortDescription)\(framesString)"
+        
         return "\(dataString)\(propertiesString)"
     }
     
-    public var debugDescription: String { return description }
+    public var debugDescription: String {
+        return "<\(description)>"
+    }
 }

@@ -51,13 +51,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     gameController.assetManager.addRoot(parent)
                 }
                 
-                let path = result!.path
-                gameController.demoFiles.append(path)
+                let currentFilename = result!.path
+                gameController.demoFiles.append(currentFilename)
                 
                 let skView = gameController.view as! SKView
-                let scene = SKTiledDemoScene(size: skView.bounds.size, tmxFile: path)
+                let scene = SKTiledDemoScene(size: skView.bounds.size)
+
                 scene.scaleMode = .aspectFill
                 skView.presentScene(scene)
+                scene.setup(tmxFile: currentFilename, verbosity: gameController.loggingLevel)
+                
             }
         } else {
             print("Load cancelled.")

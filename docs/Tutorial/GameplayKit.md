@@ -27,11 +27,11 @@ Passing custom properties in the Tiled scene can be used to create pathfinding g
       walkableIDs         (String)    - list of comma-separated tile gids.
       walkableTypes       (String)    - list of comma-separated tile types.
 
-
+      
 
       
 To automatically create a graph in one of your tile layers, you can simply add the *buildGraph* and *walkableIDs* properties on a tile layer in Tiled.
-      
+
 
 ![Walkable IDs](images/walkable-ids.png)
       
@@ -73,4 +73,4 @@ To see a visual representation of any layer's pathfinding graph, use the `SKTile
  
  
 Next: [Debugging](debugging.html) - [Index](Tutorial.html)
- 
+  
