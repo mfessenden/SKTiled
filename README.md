@@ -48,12 +48,12 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 
 For Carthage installation, create a Cartfile in the root of your project:
 
-    github "mfessenden/SKTiled" ~> 1.14
+    github "mfessenden/SKTiled" ~> 1.15
 
 
 For CocoaPods, install via a reference in your podfile:
 
-    pod 'SKTiled', '~> 1.14'
+    pod 'SKTiled', '~> 1.15'
 
 
 ## Usage

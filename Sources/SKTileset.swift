@@ -192,13 +192,13 @@ open class SKTileset: SKTiledObject {
         // images are stored in separate directories in the project will render incorrectly unless we use just the filename
         let sourceFilename = source.components(separatedBy: "/").last!
         let timer = Date()
-        self.source = sourceFilename
+        self.source = source
 
         // parse the transparent color (NYI)
         if let transparent = transparent {
             transparentColor = SKColor(hexString: transparent)
         }
-        
+
         let sourceTexture = SKTexture(imageNamed: self.source!)
         sourceTexture.filteringMode = .nearest
         let textureSize = sourceTexture.size()

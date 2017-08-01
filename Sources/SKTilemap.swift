@@ -9,6 +9,11 @@
 import SpriteKit
 import GameplayKit
 
+/**
+ Tiled application version.
+ */
+public var TiledApplicationVersion: String = "0"
+
 
 internal enum TiledColors: String {
     case white  =  "#f7f5ef"
@@ -176,6 +181,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     open var filename: String!                                    // tiled tmx filename
     internal var url: URL!                                        // file url
     open var uuid: String = UUID().uuidString                     // unique id
+    open var tiledversion: String!                                // Tiled application version
     
     open var type: String!                                        // map type
     open var size: CGSize                                         // map size (in tiles)
@@ -234,7 +240,6 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     // dispatch queues & groups
     internal let renderQueue = DispatchQueue(label: "com.sktiled.renderqueue", qos: .userInteractive)  // serial queue
     internal let renderGroup = DispatchGroup()
-    internal var tiledversion: Float = 1.0
     
     /// Overlay color.
     open var overlayColor: SKColor = SKColor(hexString: "#40000000")
@@ -551,6 +556,12 @@ open class SKTilemap: SKCropNode, SKTiledObject {
                 fatalError("stagger index \"\(hexIndex)\" not supported.")
             }
             self.staggerindex = hexindex
+        }
+        
+        // Tiled application version
+        if let tiledVersion = attributes["tiledversion"] {
+            self.tiledversion = tiledVersion
+            TiledApplicationVersion = tiledVersion
         }
         
         // global antialiasing
@@ -1517,7 +1528,9 @@ extension SKTilemap {
     }
     
     /**
-     Dump a summary of the current scenes layer data.
+     Dump a summary of the current tilemap's layer statistics.
+     
+     - parameter base: `Bool` include the map's default layer.
      */
     open func mapStatistics(base: Bool = false) {
         guard (layerCount > 0) else {
@@ -1606,7 +1619,7 @@ extension SKTilemap {
 
         print("\n\n" + outputString + "\n\n")
     }
-        }
+}
 
 
 /**
@@ -1730,7 +1743,7 @@ extension SKTilemap {
     /**
      Output a summary of the current scenes layer data.
      */
-    @available(*, deprecated, message: "use `mapStatistics()` instead")
+    @available(*, deprecated, message: "use `mapStatistics(base:)` instead")
     open func debugLayers(reverse: Bool=false) {
         mapStatistics()
     }
