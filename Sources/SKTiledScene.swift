@@ -27,7 +27,7 @@ public protocol SKTiledSceneDelegate: class {
     /// Tile map node.
     var tilemap: SKTilemap! { get set }
     /// Load a tilemap from disk, with optional tilesets
-    func load(fromFile filename: String, verbosity: LoggingLevel, withTilesets tilesets: [SKTileset]) -> SKTilemap?
+    func load(tmxFile: String, inDirectory: String?, withTilesets tilesets: [SKTileset], verbosity: LoggingLevel) -> SKTilemap?
 }
 
 
@@ -94,24 +94,46 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     }    
     
     // MARK: - Setup
-
     /**
-     Load a named TMX file, with optional tilesets.
+     Load and setup a named TMX file, with optional tilesets.
      
-     - parameter tmxFile:    `String` TMX file name.
-     - parameter tilesets:   `[SKTileset]` pre-loaded tilesets.
-     - parameter completion: `(() -> ())?` optional completion handler.
+     - parameter tmxURL:      `URL` TMX path.
+     - parameter tilesets:    `[SKTileset]` pre-loaded tilesets.
+     - parameter completion:  `(() -> ())?` optional completion handler.
      */
-    open func setup(tmxFile: String, verbosity: LoggingLevel = .info, tilesets: [SKTileset]=[], _ completion: (() -> ())? = nil) {
+    open func setup(tmxURL: URL,
+                    tilesets: [SKTileset]=[],
+                    verbosity: LoggingLevel = .info,
+                    _ completion: (() -> ())? = nil) {
+        
+        
+    }
+    /**
+     Load and setup a named TMX file, with optional tilesets.
+     
+     - parameter tmxFile:     `String` TMX file name.
+     - parameter inDirectory: `String?` optional path for file.
+     - parameter tilesets:    `[SKTileset]` pre-loaded tilesets.
+     - parameter completion:  `(() -> ())?` optional completion handler.
+     */
+    open func setup(tmxFile: String,
+                    inDirectory: String? = nil,
+                    tilesets: [SKTileset]=[],
+                    verbosity: LoggingLevel = .info,
+                    _ completion: (() -> ())? = nil) {
+        
         guard let worldNode = worldNode else { return }
         
-        self.tilemap?.removeAllActions()
-        self.tilemap?.removeAllChildren()
-        self.tilemap?.removeFromParent()
+        // TODO: Concurrency
+        //self.tilemap?.removeAllActions()
+        //self.tilemap?.removeAllChildren()
+        //self.tilemap?.removeFromParent()
         
         self.tilemap = nil
         
-        if let tilemap = load(fromFile: tmxFile, verbosity: verbosity, withTilesets: tilesets) {
+        print(" ❗️tiled scene loading: \"\(tmxFile)\", \(inDirectory ?? "")")
+        
+        if let tilemap = load(tmxFile: tmxFile, inDirectory: inDirectory, withTilesets: tilesets, verbosity: verbosity) {
         
             backgroundColor = tilemap.backgroundColor ?? SKColor.clear
         
@@ -148,7 +170,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
             
     open func didAddTileset(_ tileset: SKTileset) {
         // Called when a tileset has been added.
-        }
+    }
     
     open func didAddLayer(_ layer: TiledLayerObject) {
         // Called when a layer has been added.
@@ -171,7 +193,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     
     
     override open func update(_ currentTime: TimeInterval) {
-        guard self.blocked == false else { return }
+        //guard self.blocked == false else { return }
         super.update(currentTime)
         // update the tilemap
         tilemap?.update(currentTime)
@@ -196,12 +218,24 @@ extension SKTiledSceneDelegate where Self: SKScene {
     /**
      Load a named TMX file, with optional tilesets.
      
-     - parameter fromFile:      `String` TMX file name.
+     - parameter tmxFile:      `String` TMX file name.
      - parameter withTilesets:  `[SKTileset]`
      - returns: `SKTilemap?` tile map node.
      */
-    public func load(fromFile filename: String, verbosity: LoggingLevel = .info, withTilesets tilesets: [SKTileset]=[]) -> SKTilemap? {
-        if let tilemap = SKTilemap.load(fromFile: filename, delegate: self as? SKTilemapDelegate, withTilesets: tilesets, ignoreProperties: false, verbosity: verbosity) {
+    public func load(tmxFile: String,
+                     inDirectory: String? = nil,
+                     withTilesets tilesets: [SKTileset]=[],
+                     verbosity: LoggingLevel = .info) -> SKTilemap? {
+        
+        
+        print(" ❗️skscene loading: \"\(tmxFile)\", \(inDirectory ?? "")")
+        
+        if let tilemap = SKTilemap.load(tmxFile: tmxFile,
+                                        inDirectory: inDirectory,
+                                        delegate: self as? SKTilemapDelegate,
+                                        withTilesets: tilesets,
+                                        ignoreProperties: false,
+                                        verbosity: verbosity) {
             
             if let cameraNode = cameraNode {
                 // camera properties inherited from tilemap

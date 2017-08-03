@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="pacman-8x8" tilewidth="8" tileheight="8" spacing="1" tilecount="176" columns="22">
- <properties>
-  <property name="atlas" value="Mazes-8x8"/>
- </properties>
- <image source="pacman-8x8.png" trans="800080" width="197" height="71"/>
+<tileset name="maze-8x8" tilewidth="8" tileheight="8" spacing="1" tilecount="176" columns="22">
+ <image source="pm-maze-8x8.png" trans="800080" width="197" height="71"/>
  <tile id="12">
   <properties>
    <property name="speed" value="0"/>

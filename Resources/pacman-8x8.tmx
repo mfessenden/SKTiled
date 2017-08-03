@@ -6,78 +6,11 @@
   <property name="gridColor" type="color" value="#ffb4b8ff"/>
   <property name="name" value="Maze - Pacman"/>
  </properties>
- <tileset firstgid="1" name="pacman-8x8" tilewidth="8" tileheight="8" spacing="1" tilecount="440" columns="22">
-  <properties>
-   <property name="atlas" value="Mazes-8x8"/>
-  </properties>
-  <image source="pacman-8x8.png" trans="800080" width="197" height="179"/>
-  <tile id="12">
-   <properties>
-    <property name="speed" value="0"/>
-    <property name="weight" value="0"/>
-   </properties>
-  </tile>
-  <tile id="15">
-   <properties>
-    <property name="speed" value="0"/>
-    <property name="weight" value="0"/>
-   </properties>
-  </tile>
-  <tile id="34">
-   <properties>
-    <property name="speed" value="1"/>
-    <property name="weight" value="10"/>
-   </properties>
-  </tile>
-  <tile id="37">
-   <properties>
-    <property name="speed" value="1"/>
-    <property name="weight" value="100"/>
-   </properties>
-  </tile>
-  <tile id="53">
-   <properties>
-    <property name="collisionSize" type="float" value="4"/>
-    <property name="nodeClass" value="Pellet"/>
-    <property name="type" value="pellet"/>
-   </properties>
-   <animation>
-    <frame tileid="53" duration="250"/>
-    <frame tileid="54" duration="250"/>
-   </animation>
-  </tile>
-  <tile id="56">
-   <properties>
-    <property name="speed" value="1"/>
-    <property name="weight" value="-10"/>
-   </properties>
-  </tile>
-  <tile id="59">
-   <properties>
-    <property name="speed" value="0.4"/>
-    <property name="weight" value="1"/>
-   </properties>
-  </tile>
-  <tile id="75">
-   <properties>
-    <property name="collisionSize" type="float" value="2"/>
-    <property name="nodeClass" value="Dot"/>
-    <property name="type" value="dot"/>
-   </properties>
-  </tile>
-  <tile id="78">
-   <properties>
-    <property name="speed" value="1"/>
-    <property name="weight" value="1"/>
-   </properties>
-  </tile>
-  <tile id="81">
-   <properties>
-    <property name="speed" value="1"/>
-    <property name="weight" value="25"/>
-   </properties>
-  </tile>
- </tileset>
+ <tileset firstgid="1" source="pm-maze-8x8.tsx"/>
+ <tileset firstgid="441" source="blinky-16x16.tsx"/>
+ <tileset firstgid="482" source="inky-16x16.tsx"/>
+ <tileset firstgid="523" source="pinky-16x16.tsx"/>
+ <tileset firstgid="564" source="clyde-16x16.tsx"/>
  <layer name="Maze" width="28" height="36">
   <data encoding="base64" compression="zlib">
    eJzdVk1LA0EMjYq2guvVr1bBu1+gCF5VsHrpvRT1pCje/P+YxVl8G5JspmMV+uDBkp2Z7L55yQzRDz6ZH8xXauOJ+cx8TM813pkT5gvzjTklG5vOu0XDEnMnk6fMsxnmLTNXjO+onG+8Y46c99bcW8jXZ24krisxjGM+a4y2Huar17hMHCkxGY+MkTHMt888TDxQYjIeGSNjTT5N7+qXnjEW2T9rL609i+6f9v+4T/i+x1zLGC/11FCR7fuuuFcPW8wTQfT9gOL1MBRxue628R1YI5pulj971PZ+FJjP6yMSOL403xF9a7LHXE3cTbHjjHxaX9V0874XPY5ztbUtyPrtytdV7w2kh9CfWL+R/5P1rq3tzcf9uCb7XLtRxpf4xdOngewPpf6M9M9IPu0+EanrSB/IuU8gpJ5aH4ho/p/3iUYv7IEl5zv2Xu880jwZ9Sc+a5rX+c7J12rW813T/IJ5T7ZWpee71PyB2npGfJgbxzUtf+J5nXu+D5R1uu5LFiP+9OZ59yULub5FWPeledG6L80TV3+Ya8z8AgGHSP0=
@@ -86,6 +19,11 @@
  <layer name="Dots" width="28" height="36">
   <data encoding="base64" compression="zlib">
    eJxjYBgFQx34kIipoQ+bG3C5jRQ12MTM6GCfGQF5WvqP1HggF5PiHkKAUvNobR8p6Z5UcXR5Qu4lFZCjd9S+UftG7Ru1jxp6h3t7YiDaL6SEFTlqCLWRqFXf4tNLL/voXb+TkteGqj564FFAfQAABnJIGQ==
+  </data>
+ </layer>
+ <layer name="Actors" width="28" height="36">
+  <data encoding="base64" compression="zlib">
+   eJzt0LEJACAQBMHXJmzJzu3I2EBLEF5kJrl0uQgAuGOU7II/zPNjq3t7zWsBAN6xAGhoAiM=
   </data>
  </layer>
  <layer name="Graph" width="28" height="36" visible="0">

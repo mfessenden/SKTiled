@@ -72,7 +72,7 @@ public class SKTiledDemoScene: SKTiledScene {
      - parameter y:         `Int` y-coordinate.
      - parameter duration:  `TimeInterval` tile life.
      */
-    func addTileAt(layer: TiledLayerObject, _ x: Int, _ y: Int, useLabel: Bool=true)  {
+    func addTileToLayer(_ layer: TiledLayerObject, _ x: Int, _ y: Int, useLabel: Bool=true)  {
         guard let tilemap = tilemap else { return  }
         
         // validate the coordinate
@@ -204,7 +204,6 @@ public class SKTiledDemoScene: SKTiledScene {
     }
     
     override open func update(_ currentTime: TimeInterval) {
-        guard (self.blocked == false) else { return }
         super.update(currentTime)
         
         self.enumerateChildNodes(withName: "//*") { 
@@ -228,13 +227,13 @@ public class SKTiledDemoScene: SKTiledScene {
     // MARK: - Callbacks
     override open func didReadMap(_ tilemap: SKTilemap) {
         // TODO: turn this on for master
-        //self.physicsWorld.speed = 0
+        self.physicsWorld.speed = 0
     }
     
     override open func didRenderMap(_ tilemap: SKTilemap) {
         // update the HUD to reflect the number of tiles created
         updateHud()
-        tilemap.mapStatistics()
+        //tilemap.mapStatistics()
         self.blocked = false
         
         //dump(tilemap)
@@ -306,7 +305,8 @@ extension SKTiledDemoScene {
         if (tilemap.isPaused == false) {
             // highlight the current coordinate
             if currentClicked.count == 0 {
-                addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y))
+                //addTileToLayer(baseLayer, Int(coord.x), Int(coord.y))
+                addTileToWorld(Int(coord.x), Int(coord.y), useLabel: true)
             } else {
                 for tile in currentClicked {
                     // remove the node asyncronously
@@ -357,8 +357,6 @@ extension SKTiledDemoScene {
             mouseTracker.xpos = xDistanceToCenter
             mouseTracker.ypos = yDistanceToCenter
         }
-
-        
         
         let baseLayer = tilemap.baseLayer
 
@@ -367,7 +365,6 @@ extension SKTiledDemoScene {
         let positionInLayer = baseLayer.mouseLocation(event: event)
         let coord = baseLayer.coordinateAtMouseEvent(event: event)
         let validCoord = baseLayer.isValid(Int(coord.x), Int(coord.y))
-        
         
         // query nodes under the cursor
         var propertiesInfoString = ""
@@ -378,14 +375,13 @@ extension SKTiledDemoScene {
             propertiesInfoString = tiledObjectsUnderCursor.first!.description
         }
         
-        
         // update the mouse tracking node
         mouseTracker.position = positionInScene
         mouseTracker.zPosition = tilemap.lastZPosition * 10
         mouseTracker.coord = coord
         mouseTracker.isValid = validCoord
         
-        if liveMode == true && isPaused == false {
+        if (liveMode == true) && (isPaused == false) {
             self.addTileToWorld(Int(coord.x), Int(coord.y))
         }
         
@@ -555,7 +551,7 @@ extension SKTiledDemoScene {
             tilemap.baseLayer.debugDrawOptions = (tilemap.baseLayer.debugDrawOptions != []) ? [] : [.demo]
         }
         
-        // 'i' runs a custom event
+        // 'i' shows the center point of each tile
         if eventKey == 0x22 {
             var fadeTime: TimeInterval = 3
             let shapeRadius = (tilemap.tileHeightHalf / 4) - 0.5
@@ -628,6 +624,19 @@ extension SKTiledDemoScene {
             tilemap.getLayers(ofType: "DEBUG").forEach{ $0.isHidden = !$0.isHidden }
         }
         
+        // 'z' lists the delegate files
+        if eventKey == 0x06 {
+            if let gameController = view.window!.contentViewController! as? GameViewController {
+                
+                let demourls = gameController.demourls
+                //print(gameController.currentFilename)
+                for url in demourls {
+                    print("\(url.path)")
+                }
+                
+                //print(" -> files: \(gameController.demourls)")
+            }
+        }
         
         // '↑' clamps layer positions
         if eventKey == 0x7e {

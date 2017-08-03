@@ -178,8 +178,8 @@ public protocol SKTilemapDelegate: class {
  */
 open class SKTilemap: SKCropNode, SKTiledObject {
     
-    open var filename: String!                                    // tiled tmx filename
-    internal var url: URL!                                        // file url
+    /// file properties
+    open var url: URL!                                            // tmx file path
     open var uuid: String = UUID().uuidString                     // unique id
     open var tiledversion: String!                                // Tiled application version
     
@@ -334,8 +334,8 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     
     /// dynamics
     open var gravity: CGVector = CGVector.zero
-    /// Weak reference to `SKTilemapDelegate` delegate.
-
+    
+    /// Weak reference to `SKTilemapDelegate` delegate
     weak open var delegate: SKTilemapDelegate?
     
     /// Size of the map in points.
@@ -497,13 +497,21 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      - parameter verbosity:          `LoggingLevel` logging verbosity.
      - returns: `SKTilemap?` tilemap object (if file read succeeds).
      */
-    open class func load(fromFile filename: String,
+    open class func load(tmxFile: String,
+                         inDirectory: String? = nil,
                          delegate: SKTilemapDelegate? = nil,
                          withTilesets: [SKTileset]? = nil,
                          ignoreProperties noparse: Bool = false,
                          verbosity: LoggingLevel = .info) -> SKTilemap? {
         
-        if let tilemap = SKTilemapParser().load(fromFile: filename, delegate: delegate, withTilesets: withTilesets, ignoreProperties: noparse, verbosity: verbosity) {
+        
+        
+        let loadMsg = "\n ❗️tilemap: loading file: \(tmxFile),  \(inDirectory ?? "")\n"
+        print(loadMsg)
+        
+        if let tilemap = SKTilemapParser().load(tmxFile: tmxFile, inDirectory: inDirectory,
+                                                delegate: delegate, withTilesets: withTilesets,
+                                                ignoreProperties: noparse, verbosity: verbosity) {
             return tilemap
         }
         return nil
@@ -620,6 +628,8 @@ open class SKTilemap: SKCropNode, SKTiledObject {
         tileset.tilemap = self
         tileset.ignoreProperties = ignoreProperties
         tileset.parseProperties(completion: nil)
+        
+        print("    🎈 adding tileset: \(tileset.name)")
     }
     
     /**
@@ -1288,7 +1298,8 @@ open class SKTilemap: SKCropNode, SKTiledObject {
         let timeInterval = Date().timeIntervalSince(timeStarted)
         let timeStamp = String(format: "%.\(String(3))f", timeInterval)        
         if loggingLevel.rawValue <= 1 {
-            print("\n ✽ Success! tilemap \"\(mapName)\" rendered in: \(timeStamp)s ✽\n")
+            // TODO: uncomment
+            //print("\n ✽ Success! tilemap \"\(mapName)\" rendered in: \(timeStamp)s ✽\n")
         }
         
         // transfer attributes
@@ -1622,6 +1633,13 @@ extension SKTilemap {
             
             outputString += "\n\(layerOutputString)"
         }
+        
+        outputString += "\n"
+        
+        for tileset in self.tilesets {
+            outputString += "\n\(tileset.debugDescription)"
+        }
+        
 
         print("\n\n" + outputString + "\n\n")
     }

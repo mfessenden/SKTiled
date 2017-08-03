@@ -173,7 +173,7 @@ internal class TiledDebugDrawNode: SKNode {
         if let objectPath = objectPath {
             frameShape.path = objectPath
             frameShape.isAntialiased = false
-            frameShape.lineWidth = (layer.tileSize.halfHeight) < 8 ? 0.5 : 1
+            frameShape.lineWidth = (layer.tileSize.halfHeight) < 8 ? 0.25 : 1
             frameShape.lineJoin = .miter
 
             // don't draw bounds of hexagonal maps
@@ -207,7 +207,7 @@ internal class TiledDebugDrawNode: SKNode {
         // multipliers used to generate smooth lines
         let defaultImageScale: CGFloat = (layer.tilemap.tileHeight < 16) ? 8 : 8   // was 4
         let imageScale: CGFloat = (uiScale > 1) ? (defaultImageScale / 2) : defaultImageScale
-        let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1 : 0.85 //0.5 : 0.25    // 1 : 0.85
+        let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1 : 0.25 // 0.85 //0.5 : 0.25    // 1 : 0.85
 
         // generate the texture
         if (gridTexture == nil) {

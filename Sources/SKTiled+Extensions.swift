@@ -417,8 +417,10 @@ public extension SKScene {
         enumerateChildNodes(withName: "*") {  // was //*
             node, stop in
             if node as? SKTilemap != nil {
-                filename = (node as? SKTilemap)?.filename
-                stop.pointee = true
+                if let mapURL = (node as? SKTilemap)?.url {
+                    filename = mapURL.fullPath
+                    stop.pointee = true
+                }
             }
         }
         return filename

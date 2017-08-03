@@ -16,21 +16,23 @@ class GameViewController: UIViewController {
     @IBOutlet weak var tileInfoLabel: UILabel!
     @IBOutlet weak var propertiesInfoLabel: UILabel!
     
-    
     var loggingLevel: LoggingLevel = .debug
-    var assetManager: AssetManager = AssetManager.default
-    var demoFiles: [String] = []
-    var currentFilename: String? = nil
-
+    let assetManager: AssetManager = AssetManager.default
+    var demourls: [URL] = []
+    var currentURL: URL? = nil    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // TODO: remove debugging for master
-        print("[GameViewController]: logging level: \(loggingLevel.rawValue)")
-        
         // load demo files from the bundle
-        demoFiles = assetManager.tilemaps
-        currentFilename = demoFiles.first!
+        demourls = assetManager.tilemaps
+        
+        guard demourls.count > 0 else {
+            print("[GameViewController]: ERROR: no resources found.")
+            return
+        }
+        
+        currentURL = demourls.first!
 
         // Configure the view.
         let skView = self.view as! SKView
@@ -54,7 +56,7 @@ class GameViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(updateDebugLabels), name: NSNotification.Name(rawValue: "updateDebugLabels"), object: nil)
         
         skView.presentScene(scene)
-        scene.setup(tmxFile: currentFilename!, verbosity: loggingLevel)
+        scene.setup(tmxFile:currentURL!, tilesets: [], verbosity: loggingLevel)
     }
     
     func setupDebuggingLabels() {
@@ -195,8 +197,8 @@ class GameViewController: UIViewController {
      - parameter interval: `TimeInterval` transition duration.
      */
     func reloadScene(_ interval: TimeInterval=0.4) {
-        guard let currentFilename = currentFilename else { return }
-        loadScene(withMap: currentFilename, usePreviouCamera: true, interval: interval)
+        guard let currentURL = currentURL else { return }
+        loadScene(withMap:currentURL, usePreviousCamera: true, interval: interval)
     }
     
     /**
@@ -205,12 +207,12 @@ class GameViewController: UIViewController {
      - parameter interval: `TimeInterval` transition duration.
      */
     func loadNextScene(_ interval: TimeInterval=0.4) {
-        guard let currentFilename = currentFilename else { return }
-        var nextFilename = demoFiles.first!
-        if let index = demoFiles.index(of: currentFilename) , index + 1 < demoFiles.count {
-            nextFilename = demoFiles[index + 1]
+        guard let currentURL = currentURL else { return }
+        var nextFilename = demourls.first!
+        if let index = demourls.index(of:currentURL) , index + 1 < demourls.count {
+            nextFilename = demourls[index + 1]
         }
-        loadScene(withMap: nextFilename, usePreviouCamera: false, interval: interval)
+        loadScene(withMap: nextFilename, usePreviousCamera: false, interval: interval)
     }
 
     /**
@@ -219,13 +221,13 @@ class GameViewController: UIViewController {
      - parameter interval: `TimeInterval` transition duration.
      */
     func loadPreviousScene(_ interval: TimeInterval=0.4) {
-        guard let currentFilename = currentFilename else { return }
-        var nextFilename = demoFiles.last!
-        if let index = demoFiles.index(of: currentFilename), index > 0, index - 1 < demoFiles.count {
-            nextFilename = demoFiles[index - 1]
+        guard let currentURL = currentURL else { return }
+        var nextFilename = demourls.last!
+        if let index = demourls.index(of:currentURL), index > 0, index - 1 < demourls.count {
+            nextFilename = demourls[index - 1]
         }
         
-        loadScene(withMap: nextFilename, usePreviouCamera: false, interval: interval)
+        loadScene(withMap: nextFilename, usePreviousCamera: false, interval: interval)
     }
     
     /**
@@ -233,7 +235,7 @@ class GameViewController: UIViewController {
      
      - parameter interval: `TimeInterval` transition duration.
      */
-    func loadScene(withMap: String, usePreviouCamera: Bool, interval: TimeInterval = 0.4) {
+    func loadScene(withMap: String, usePreviousCamera: Bool, interval: TimeInterval = 0.4) {
         guard let view = self.view as? SKView else { return }
         
         var debugDrawOptions: DebugDrawOptions = []
@@ -259,7 +261,8 @@ class GameViewController: UIViewController {
             }
         }
         
-        DispatchQueue.main.async {
+        DispatchQueue.global().async {
+        
             view.presentScene(nil)
             
             let nextScene = SKTiledDemoScene(size: view.bounds.size)
@@ -267,16 +270,26 @@ class GameViewController: UIViewController {
             let transition = SKTransition.fade(withDuration: interval)
             view.presentScene(nextScene, transition: transition)
             
-            nextScene.setup(tmxFile: withMap, verbosity: self.loggingLevel)
+            
+            nextScene.setup(tmxFile: withMap, tilesets: [], verbosity: self.loggingLevel)
             nextScene.liveMode = liveMode
             
-            if (usePreviouCamera == true) {
+            if (usePreviousCamera == true) {
                 nextScene.cameraNode?.showOverlay = showOverlay
                 nextScene.cameraNode?.position = cameraPosition
                 nextScene.cameraNode?.setCameraZoom(cameraZoom)
             }
-            nextScene.tilemap?.debugDrawOptions = debugDrawOptions
-            self.currentFilename = withMap
+            
+            guard let nextTilemap = nextScene.tilemap else {
+                print(" -> new tilemap not yet loaded...")
+                return
+            }
+            
+            
+            DispatchQueue.main.async {
+                nextScene.tilemap?.debugDrawOptions = debugDrawOptions
+                self.currentFilename = withMap
+            }
         }
     }
     

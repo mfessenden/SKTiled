@@ -27,43 +27,48 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     var viewController: GameViewController? {
         if let window = NSApplication.shared().mainWindow {
-            if let controller = window.contentViewController as? GameViewController {
-                return controller
-            }
+            let splitController = window.contentViewController as! NSSplitViewController
+            return splitController.splitViewItems.last!.viewController as! GameViewController
         }
         return nil
     }
     
     @IBAction func loadTilemap(_ sender: Any) {
-        guard let window = NSApplication.shared().mainWindow else { return }
-        guard let gameController = window.contentViewController as? GameViewController else { return }
         
+        guard let gameController = viewController else { return }
+        
+        // open a file dialog
         let dialog = NSOpenPanel()
         dialog.title = "Choose a Tiled resource."
         dialog.allowedFileTypes = ["tmx"]
         
         if (dialog.runModal() == NSModalResponseOK) {
+            
+            // tmx file path
             let result = dialog.url
             
-            if (result != nil) {
-                // scan the root directory
-                if let parent = result!.parent {
-                    gameController.assetManager.addRoot(parent)
+            if let tmxURL = result {
+                
+                let dirname = tmxURL.deletingLastPathComponent()
+                let filename = tmxURL.lastPathComponent
+                
+                let relativeURL = URL(fileURLWithPath: filename, relativeTo: dirname)
+                
+                let baseURLString = (relativeURL.baseURL == nil) ? "~" : relativeURL.baseURL!.path
+                print(" ❗️app: loading: \(relativeURL.relativePath), \(baseURLString)")
+                
+                var currentMapIndex = gameController.demourls.count - 1
+                if let mapIndex = gameController.demourls.index(of: gameController.currentURL!) {
+                    currentMapIndex = Int(mapIndex) + 1
                 }
-                
-                let currentFilename = result!.path
-                gameController.demoFiles.append(currentFilename)
-                
-                let skView = gameController.view as! SKView
-                let scene = SKTiledDemoScene(size: skView.bounds.size)
 
-                scene.scaleMode = .aspectFill
-                skView.presentScene(scene)
-                scene.setup(tmxFile: currentFilename, verbosity: gameController.loggingLevel)
                 
+                gameController.demourls.insert(relativeURL, at: currentMapIndex)
+                gameController.loadScene(url: relativeURL, usePreviousCamera: true)
             }
+            
         } else {
-            print("Load cancelled.")
+            print("[AppDelegate]: Load cancelled.")
         }
     }
     

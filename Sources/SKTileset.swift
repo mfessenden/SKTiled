@@ -22,10 +22,13 @@ import SpriteKit
  */
 open class SKTileset: SKTiledObject {
     
-    open var name: String                                        // tileset name
+    open var filename: String! = nil                             // Tiled tsx filename (external tileset)
+    open var url: URL!                                           // tileset url (external tileset)
     open var uuid: String = UUID().uuidString                    // unique id
+    open var name: String                                        // tileset name (without file extension)
+    
     open var type: String!                                       // object type
-    open var filename: String! = nil                             // source filename (external tileset)
+    
     open var tilemap: SKTilemap!
     open var tileSize: CGSize                                    // tile size
     
@@ -191,6 +194,9 @@ open class SKTileset: SKTiledObject {
     open func addTextures(fromSpriteSheet source: String, replace: Bool=false, transparent: String?=nil) {
         // images are stored in separate directories in the project will render incorrectly unless we use just the filename
         let sourceFilename = source.components(separatedBy: "/").last!
+        
+        //print("  🔸 adding spritesheet: \"\(source)\"")
+        
         let timer = Date()
         self.source = source
 
@@ -198,11 +204,14 @@ open class SKTileset: SKTiledObject {
         if let transparent = transparent {
             transparentColor = SKColor(hexString: transparent)
         }
-
+        
+        /*
+        // TODO: uncomment
         if loggingLevel.rawValue <= 1 {
             let actionName: String = (replace == false) ? "adding" : "replacing"
-            print("[SKTileset]: \(actionName) sprite sheet source: \"\(self.source!)\"")
-        }
+            let sourceFilename = source.filename
+            print("[SKTileset]: \(actionName) sprite sheet source: \"\(sourceFilename)\"")
+        }*/
         
         let sourceTexture = SKTexture(imageNamed: self.source!)
         sourceTexture.filteringMode = .nearest
@@ -261,8 +270,8 @@ open class SKTileset: SKTiledObject {
         
         // time results
         if replace == false {
-        let timeInterval = Date().timeIntervalSince(timer)
-        let timeStamp = String(format: "%.\(String(3))f", timeInterval)
+            let timeInterval = Date().timeIntervalSince(timer)
+            let timeStamp = String(format: "%.\(String(3))f", timeInterval)
             if loggingLevel.rawValue <= 1 {
                 print(" → tileset \"\(name)\" built in: \(timeStamp)s (\(tilesAdded) tiles)\n")
             }
@@ -303,6 +312,9 @@ open class SKTileset: SKTiledObject {
             print("[SKTileset]: tile data exists at id: \(tileID)")
             return nil
         }
+        
+        //print("🔸 adding sprite: \"\(source)\"")
+        
         // bundled images shouldn't have file paths
         //let imageName = source.componentsSeparatedByString("/").last!
         

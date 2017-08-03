@@ -20,6 +20,15 @@ git-commit -a 6/23/2017 16:07:13
 - add `SKTilemap.tiledversion`
 - add `TiledApplicationVersion`
 
+## Filename Conventions
+
+`SKTilemapParser.rootPath` : resource path (defaults to bundled resource)
+
+    `SKTilemap.filename` represents the tmx filename (minus .tmx extension)
+    `SKTilemap.name` represents the tmx filename (minus .tmx extension)
+
+`SKTilemap.url` represents the full path to the tmx file
+
 ## Drawing & Coordinates
 
 #### SpriteKit

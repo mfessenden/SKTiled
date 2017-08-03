@@ -61,7 +61,7 @@ For CocoaPods, install via a reference in your podfile:
 Loading a tilemap is very straightforward:
 
 ```swift
-if let tilemap = SKTilemap.load(fromFile: "sample-map") {
+if let tilemap = SKTilemap.load(tmxFile: "sample-map") {
 scene.addChild(tilemap)
 }
 ```

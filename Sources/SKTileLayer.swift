@@ -1109,6 +1109,7 @@ open class SKTileLayer: TiledLayerObject {
             let y: Int = index / Int(self.size.width)
 
             let coord = CGPoint(x: CGFloat(x), y: CGFloat(y))
+            // TODO: failing here
             let tile = self.buildTileAt(coord: coord, id: gid)
 
             if (tile == nil) {
