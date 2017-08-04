@@ -6,6 +6,13 @@ Change Log
 
 #### Changes
 
+- invert layer y-offsets properly
+
+- add `SKTilemap.getLayers(withPrefix:recursive:)`
+- add `SKTilemap.tileLayers(withPrefix:recursive)`
+- add `SKTilemap.objectGroups(withPrefix:recursive:)`
+- add `SKTilemap.imageLayers(withPrefix:recursive:)`
+- add `SKTilemap.groupLayers(withPrefix:recursive:)`
 - add `AssetManager`
 
 1.14

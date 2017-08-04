@@ -9,8 +9,8 @@
 
 - remove references to `SKTiledDemoScene` in `SKTiled+Debug.swift`
 - enable `CLANG_WARN_DOCUMENTATION_COMMENTS` for documentation in framework targets
+- remove test resources
 
-git-commit -a 6/23/2017 16:07:13
 
 
 ### Added in master ~ 1.14

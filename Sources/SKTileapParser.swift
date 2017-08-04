@@ -581,12 +581,9 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         if (elementName == "objectgroup") {
             
             // TODO: need exception for tile collision objects
-            //guard let _ = attributeDict["name"] else { parser.abortParsing(); return }
-            
             // if tileset is last element and currentID exists....
             if let tileset = lastElement as? SKTileset {
                 
-                //print(" -> object group: \(attributeDict)")
                 
                 if let currentID = currentID {
                     
@@ -941,7 +938,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             
             // layer properties
             if let layer = lastElement as? TiledLayerObject {
-                //print("     ↳ layer: \"\(layer.layerName)\"")
                 if (currentID == nil){
                     for (key, value) in properties {
                         layer.properties[key] = value
@@ -953,7 +949,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             
             // tileset properties
             if let tileset = lastElement as? SKTileset {
-                //print("     ↳ tileset: \"\(tileset.name)\"")
                 if (currentID == nil){
                     tileset.properties = properties
                     tileset.parseProperties(completion: nil)
@@ -961,9 +956,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 } else {
                     
                     let tileID = tileset.firstGID + currentID!
-                    // TODO: check global
                     if let tileData = tileset.getTileData(globalID: tileID) {
-                        //print("     ↳ data: \"\(tileData.id)\"")
                         for (key, value) in properties {
                             tileData.properties[key] = value
                         }

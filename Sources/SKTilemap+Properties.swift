@@ -255,7 +255,7 @@ public extension SKTileLayer {
         super.parseProperties(completion: completion)
         
         
-        for (attr, value) in properties {
+        for (attr, _) in properties {
             
             let lattr = attr.lowercased()
         

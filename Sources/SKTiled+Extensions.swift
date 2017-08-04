@@ -418,7 +418,7 @@ public extension SKScene {
             node, stop in
             if node as? SKTilemap != nil {
                 if let mapURL = (node as? SKTilemap)?.url {
-                    filename = mapURL.fullPath
+                    filename = mapURL.path
                     stop.pointee = true
                 }
             }
@@ -729,6 +729,14 @@ public extension String {
         scrubbed = scrubbed.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         return scrubbed.replacingOccurrences(of: " ", with: "")
     }
+    
+    // MARK: URL
+    
+    /// Returns a url for the string.
+    public var url: URL { return URL(fileURLWithPath: self.expanded) }
+    
+    /// Expand the users home path.
+    public var expanded: String { return NSString(string: self).expandingTildeInPath }
 }
 
 
@@ -1436,11 +1444,6 @@ public func bezierPath(_ points: [CGPoint], closed: Bool = true, alpha: CGFloat 
 
         let ctrlPt2 = CGPoint(x: currentPoint.x - mx / tension, y: currentPoint.y - my / tension)
 
-        // TODO: remove this in master
-        let pr: CGFloat = 1.5
-        let r1 = CGRect(x: ctrlPt1.x - pr, y: ctrlPt1.y - pr, width: pr, height: pr)
-        let r2 = CGRect(x: ctrlPt2.x - pr, y: ctrlPt2.y - pr, width: pr, height: pr)
-        
         cpoints.append(ctrlPt1)
         cpoints.append(ctrlPt2)
 
@@ -1493,6 +1496,7 @@ public func clampPositionWithNode(node: SKNode, scale: CGFloat) {
         }
     }
 }
+
 
 // MARK: - Compression
 

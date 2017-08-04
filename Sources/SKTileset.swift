@@ -192,11 +192,6 @@ open class SKTileset: SKTiledObject {
      - parameter replace: `Bool` replace the current texture.
      */
     open func addTextures(fromSpriteSheet source: String, replace: Bool=false, transparent: String?=nil) {
-        // images are stored in separate directories in the project will render incorrectly unless we use just the filename
-        let sourceFilename = source.components(separatedBy: "/").last!
-        
-        //print("  🔸 adding spritesheet: \"\(source)\"")
-        
         let timer = Date()
         self.source = source
 
@@ -204,14 +199,6 @@ open class SKTileset: SKTiledObject {
         if let transparent = transparent {
             transparentColor = SKColor(hexString: transparent)
         }
-        
-        /*
-        // TODO: uncomment
-        if loggingLevel.rawValue <= 1 {
-            let actionName: String = (replace == false) ? "adding" : "replacing"
-            let sourceFilename = source.filename
-            print("[SKTileset]: \(actionName) sprite sheet source: \"\(sourceFilename)\"")
-        }*/
         
         let sourceTexture = SKTexture(imageNamed: self.source!)
         sourceTexture.filteringMode = .nearest

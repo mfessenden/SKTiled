@@ -16,23 +16,9 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
     // if this value is true, the tilemap was already paused when the window resize began
     var isManuallyPaused: Bool = false
     
-    var gameViewController: GameViewController {
-        let splitController = window!.contentViewController as! NSSplitViewController
-        return splitController.splitViewItems.last!.viewController as! GameViewController
-    }
-    
-    var fileListController: NSViewController {
-        let splitController = window!.contentViewController as! NSSplitViewController
-        return splitController.splitViewItems.first!.viewController as! NSViewController
-    }
-    
     var view: SKView {
+        let gameViewController = window!.contentViewController as! GameViewController
         return gameViewController.view as! SKView
-    }
-    
-    
-    func populateList() {
-        let fileListView = fileListController.view  // NSView
     }
     
     override func awakeFromNib() {
@@ -51,7 +37,7 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
             
             if let sceneDelegate = scene as? SKTiledSceneDelegate {
                 if let cameraNode = sceneDelegate.cameraNode {
-                    ///cameraNode.bounds = view.bounds
+                    cameraNode.bounds = view.bounds
                 }
             }
         }
@@ -67,53 +53,25 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
             if let sceneDelegate = scene as? SKTiledSceneDelegate {
                 
                 // update tracking view?
-                
-                
                 if let tilemap = sceneDelegate.tilemap {
-
                     var renderSize = tilemap.renderSize
                     renderSize.width = renderSize.width * sceneDelegate.cameraNode.zoom
                     renderSize.height = renderSize.height * sceneDelegate.cameraNode.zoom
                     //sceneDelegate.cameraNode.fitToView(newSize: view.bounds.size)
-                    
-                    
-                    if let controller = window!.contentViewController as? GameViewController {
-                        
-                        if let infoDictionary = Bundle.main.infoDictionary {
-                            if let bundleName = infoDictionary[kCFBundleNameKey as String] as? String {
-                                
-                                let mapURL = tilemap.url ?? URL(fileURLWithPath: "")
-                                let wintitle = "\(mapURL.fullPath) "
-                                
-                                
-                                
-                                controller.updateWindowTitle(withString: wintitle)
-                            }
-                        }
-                    }
-                    
+ 
                 }
             }
-
         }
     }
     
     func windowDidEndLiveResize(_ notification: Notification) {
         // Un-pause the scene when the window stops resizing if the game is active.
         if let scene = view.scene {
-            if let sceneDelegate = scene as? SKTiledSceneDelegate {
+            if let _ = scene as? SKTiledSceneDelegate {
                 scene.isPaused = isManuallyPaused
-                
-                if (sceneDelegate.tilemap != nil) {
-                    // if the tilemap is set to autosize, fit the map in the view
-                    if let camera = sceneDelegate.cameraNode {
-                        //camera.fitToView(newSize: scene.size)
-                    }
-                }
             }
         }
     }
-    
     
     // OS X games that use a single window for the entire game should quit when that window is closed.
     func applicationShouldTerminateAfterLastWindowClosed(sender: NSApplication) -> Bool {

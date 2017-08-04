@@ -15,10 +15,10 @@ extension SKTilemap {
     /**
      Initialize the grid graph with an array layer names.
      
-     - parameter layers:           `[String]` array of layer names.
+     - parameter layers:           `[SKTileLayer]` array of tile layers.
      - parameter diagonalsAllowed: `Bool` allow diagonal movement in the grid.
      */
-    public func gridGraphForLayers(_ layers: [String],
+    public func gridGraphForLayers(_ layers: [SKTileLayer],
                                    diagonalsAllowed: Bool=false) {
         
         gridGraphForLayers(layers, walkableIDs: [Int](), diagonalsAllowed: diagonalsAllowed)
@@ -27,11 +27,11 @@ extension SKTilemap {
     /**
      Initialize the grid graph with an array of walkable tiles.
      
-     - parameter layers:           `[String]` array of layer names.
+     - parameter layers:           `[SKTileLayer]` array of tile layers.
      - parameter walkable:         `[SKTile]` array of walkable tiles.
      - parameter diagonalsAllowed: `Bool` allow diagonal movement in the grid.
      */
-    public func gridGraphForLayers(_ layers: [String],
+    public func gridGraphForLayers(_ layers: [SKTileLayer],
                                    walkable: [SKTile],
                                    diagonalsAllowed: Bool=false) {
         
@@ -44,11 +44,11 @@ extension SKTilemap {
     /**
      Initialize the grid graph with an array of walkable tile types.
      
-     - parameter layers:           `[String]` array of layer names.
+     - parameter layers:           `[SKTileLayer]` array of tile layers.
      - parameter walkableTypes:    `[String]` array of walkable types.
      - parameter diagonalsAllowed: `Bool` allow diagonal movement in the grid.
      */
-    public func gridGraphForLayers(_ layers: [String],
+    public func gridGraphForLayers(_ layers: [SKTileLayer],
                                    walkableTypes: [String],
                                    diagonalsAllowed: Bool=false) {
         
@@ -68,19 +68,17 @@ extension SKTilemap {
     /**
      Initialize the grid graph with an array of walkable tiles.
      
-     - parameter layers:           `[String]` array of layer names.
+     - parameter layers:           `[SKTileLayer]` array of tile layers.
      - parameter walkableIDs:      `[Int]` array of walkable GIDs.
      - parameter diagonalsAllowed: `Bool` allow diagonal movement in the grid.
      */
-    public func gridGraphForLayers(_ layers: [String],
+    public func gridGraphForLayers(_ layers: [SKTileLayer],
                                    walkableIDs: [Int],
                                    diagonalsAllowed: Bool=false) {
         
-        for layerName in layers {
-            if let layer = tileLayer(named: layerName) {
-                if let layerGraph = layer.initializeGraph(walkableIDs: walkableIDs, diagonalsAllowed: diagonalsAllowed) {
-                    print("[SKTilemap]: created graph for layer \"\(layerName)\"")
-                }
+        for layer in layers {
+            if let _ = layer.initializeGraph(walkableIDs: walkableIDs, diagonalsAllowed: diagonalsAllowed) {
+                print("[SKTilemap]: created graph for layer \"\(layer.layerName)\"")
             }
         }
     }
@@ -90,20 +88,33 @@ extension SKTilemap {
      */
     public func buildGraphs(){
         
+        var pathFindingGraphs: [GKGridGraph<SKTiledGraphNode>] = []
+        
         for tileLayer in tileLayers() {
-            if (tileLayer.buildGraph == true) {
-                print("[SKTilemap]: building graph for layer \"\(tileLayer.layerName)\"...")
+            
+            if (tileLayer.walkableIDs.count > 0) || (tileLayer.walkableTypes.count > 0) {
                 // check for walkable IDs
                 if tileLayer.walkableIDs.count > 0 {
-                    tileLayer.initializeGraph(walkableIDs: tileLayer.walkableIDs, diagonalsAllowed: false)
+                    if let g = tileLayer.initializeGraph(walkableIDs: tileLayer.walkableIDs, diagonalsAllowed: false) {
+                        pathFindingGraphs.append(g)
+                        continue
+
+                    }
                 }
                 
                 // check for walkable types
                 if tileLayer.walkableTypes.count > 0 {
-                    tileLayer.initializeGraph(walkableTypes: tileLayer.walkableTypes, diagonalsAllowed: false)
+                    if let g = tileLayer.initializeGraph(walkableTypes: tileLayer.walkableTypes, diagonalsAllowed: false) {
+                        pathFindingGraphs.append(g)
+                        continue
+                    }
                 }
             }
         }
+        
+        let gcount = pathFindingGraphs.count
+        let resultMsg = (gcount > 0) ? (gcount == 1) ? "Success! \(gcount) graph built" : "success: \(gcount) graphs built" : "WARNING: no graphs built"
+        print("[SKTilemap]: \(resultMsg).")
     }
 }
 
@@ -147,7 +158,6 @@ public extension SKTileLayer {
                         }
                         
                         if walkableIDs.contains(gid) {
-                            //tile.drawBounds()
                             tile.texture = nil
                             continue
                         }
@@ -176,8 +186,7 @@ public extension SKTileLayer {
         
         // unhide the layer
         isHidden = false
-        // TODO: should we kill the texture?
-        getTiles().map {$0.texture = nil}
+        //getTiles().forEach( {$0.texture = nil} )
         return graph
     }
     
@@ -246,7 +255,7 @@ public extension SKTileLayer {
         
         // unhide the layer
         isHidden = false
-        getTiles().map {$0.texture = nil}
+        //getTiles().forEach({$0.texture = nil})
         return graph
     }
     
@@ -308,7 +317,7 @@ public extension SKTileLayer {
         
         // unhide the layer
         isHidden = false
-        getTiles().map {$0.texture = nil}
+        //getTiles().forEach( {$0.texture = nil})
         return graph
     }
     

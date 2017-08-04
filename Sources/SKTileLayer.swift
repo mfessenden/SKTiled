@@ -104,9 +104,9 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     internal var layerType: SKTiledLayerType = .none
     open var tilemap: SKTilemap
 
-    /// Unique object id.
+    /// Unique layer id.
     open var uuid: String = UUID().uuidString
-    /// Object type
+    /// Layer type
     open var type: String!
 
     /// Layer index. Matches the index of the layer in the source TMX file.
@@ -138,7 +138,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     internal var orientation: TilemapOrientation { return tilemap.orientation }
     /// Layer anchor point, used to position layers.
     open var anchorPoint: CGPoint { return tilemap.layerAlignment.anchorPoint }
-
+    
     internal var gidErrors: [UInt32] = []
 
     // convenience properties
@@ -159,7 +159,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     open var walkableTypes: [String] = []
 
     // debug visualizations
-    open var gridOpacity: CGFloat = 0.20
+    open var gridOpacity: CGFloat = 0.40
     internal var debugNode: TiledDebugDrawNode!
 
     open var debugDrawOptions: DebugDrawOptions = [] {
@@ -287,17 +287,12 @@ open class TiledLayerObject: SKNode, SKTiledObject {
 
         // set layer opacity
         if let layerOpacity = attributes["opacity"] {
-            print("setting layer opacity: \(layerOpacity)")
             self.opacity = CGFloat(Double(layerOpacity)!)
         }
 
         // set the layer's antialiasing based on tile size
         self.antialiased = self.tilemap.tileSize.width > 16 ? true : false
         addChild(debugNode)
-
-        // TODO: Cleanup
-        //self.frameShape.isHidden = true
-        //addChild(frameShape)
     }
 
     /**
@@ -317,10 +312,6 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         // set the layer's antialiasing based on tile size
         self.antialiased = self.tilemap.tileSize.width > 16 ? true : false
         addChild(debugNode)
-
-        // TODO: Cleanup
-        //self.frameShape.isHidden = true
-        //addChild(frameShape)
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -838,15 +829,8 @@ open class TiledLayerObject: SKNode, SKTiledObject {
      - parameter duration: `TimeInterval` fade-in duration.
      */
     open func didFinishRendering(duration: TimeInterval=0) {
-        let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: duration)
 
-        // FIXME: might be causing crash
-        run(fadeIn, completion: {
-            self.isRendered = true
-            self.parseProperties(completion: nil)
-        })
-
-        //self.parseProperties(completion: nil)
+        self.parseProperties(completion: nil)
         // setup physics for the layer boundary
         if hasKey("isDynamic") && boolForKey("isDynamic") == true || hasKey("isCollider") && boolForKey("isCollider") == true {
             setupLayerPhysicsBoundary()
@@ -1595,9 +1579,9 @@ open class SKObjectGroup: TiledLayerObject {
         object.layer = self
         object.ignoreProperties = ignoreProperties
         addChild(object)
-
+        
         // hide the object if the tilemap `showObjects` property is set to false
-        object.visible = (object.isRenderableType == true) ? true : tilemap.showObjects
+        object.visible = (object.isRenderableType == true) ? object.visible : tilemap.showObjects
         return object
     }
 
@@ -2228,7 +2212,7 @@ extension TiledLayerObject {
         })
     }
 
-    /// Returns a string representing the current layer name & index.
+    /// Returns a string array representing the current layer name & index.
     public var layerStatsDescription: [String] {
         let digitCount: Int = self.tilemap.lastIndex.digitCount + 1
 

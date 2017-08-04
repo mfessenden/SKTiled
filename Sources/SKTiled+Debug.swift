@@ -13,6 +13,7 @@ import SpriteKit
 /// globals
 var TILE_BOUNDS_USE_OFFSET: Bool = false
 
+
 /// Options for debugging the map
 public struct DebugDrawOptions: OptionSet {
     public let rawValue: Int
@@ -30,7 +31,7 @@ public struct DebugDrawOptions: OptionSet {
     static public let drawBackground       = DebugDrawOptions(rawValue: 1 << 6)
 
     static public let demo:  DebugDrawOptions  = [.drawGrid, .drawBounds]
-    static public let graph: DebugDrawOptions  = [.demo, .drawGraph]
+    static public let graph: DebugDrawOptions  = [.drawGraph]
     static public let all:   DebugDrawOptions  = [.demo, .drawGraph, .drawObjectBounds, .drawTileBounds, .drawMouseOverObject, .drawBackground]
 }
 
@@ -112,8 +113,10 @@ internal class TiledDebugDrawNode: SKNode {
         frameShape!.zPosition = layer.zPosition + (layer.tilemap.zDeltaForLayers + 20)
     }
 
-    func update() {
-        print("[TiledDebugDrawNode]: debug options: \(debugDrawOptions.rawValue), hidden: \(isHidden)")
+    func update(verbose: Bool = false) {
+        if (verbose == true){
+            print("[TiledDebugDrawNode]: debug options: \(debugDrawOptions.rawValue), hidden: \(isHidden)")
+        }
         if debugDrawOptions.contains(.drawGrid) {
             drawGrid()
         } else {
@@ -173,7 +176,7 @@ internal class TiledDebugDrawNode: SKNode {
         if let objectPath = objectPath {
             frameShape.path = objectPath
             frameShape.isAntialiased = false
-            frameShape.lineWidth = (layer.tileSize.halfHeight) < 8 ? 0.25 : 1
+            frameShape.lineWidth = (layer.tileSize.halfHeight) < 8 ? 0.5 : 1.5
             frameShape.lineJoin = .miter
 
             // don't draw bounds of hexagonal maps
@@ -197,7 +200,7 @@ internal class TiledDebugDrawNode: SKNode {
         gridSprite.isHidden = true
 
         // get the last z-position
-        zPosition = layer.tilemap.lastZPosition + layer.tilemap.zDeltaForLayers
+        //zPosition = layer.tilemap.lastZPosition + layer.tilemap.zDeltaForLayers
         isHidden = false
         var gridSize = CGSize.zero
 
@@ -205,9 +208,9 @@ internal class TiledDebugDrawNode: SKNode {
         let uiScale: CGFloat = getContentScaleFactor()
 
         // multipliers used to generate smooth lines
-        let defaultImageScale: CGFloat = (layer.tilemap.tileHeight < 16) ? 8 : 8   // was 4
+        let defaultImageScale: CGFloat = (layer.tilemap.tileHeight < 16) ? 8 : 8
         let imageScale: CGFloat = (uiScale > 1) ? (defaultImageScale / 2) : defaultImageScale
-        let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1 : 0.25 // 0.85 //0.5 : 0.25    // 1 : 0.85
+        let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1.25 : 0.75
 
         // generate the texture
         if (gridTexture == nil) {
@@ -243,7 +246,7 @@ internal class TiledDebugDrawNode: SKNode {
         graphSprite.isHidden = true
         
         // get the last z-position
-        zPosition = layer.tilemap.lastZPosition + layer.tilemap.zDeltaForLayers
+        //zPosition = layer.tilemap.lastZPosition + layer.tilemap.zDeltaForLayers
         isHidden = false
         var gridSize = CGSize.zero
         
@@ -270,7 +273,7 @@ internal class TiledDebugDrawNode: SKNode {
         
         
         graphSprite.texture = graphTexture
-        graphSprite.alpha = layer.gridOpacity
+        graphSprite.alpha = layer.gridOpacity * 2.5
         graphSprite.size = gridSize / imageScale
         
         // need to flip the grid texture in y
@@ -300,7 +303,7 @@ internal class TileShape: SKShapeNode {
             guard oldValue != clickCount else { return }
 
             if clickCount > 0 {
-                //detonate()
+                //cleanup()
             }
         }
     }
@@ -332,7 +335,7 @@ internal class TileShape: SKShapeNode {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public func detonate() {
+    public func cleanup() {
         let fadeAction = SKAction.fadeAlpha(to: 0, duration: 0.1)
         run(fadeAction, completion: { self.removeFromParent()})
     }

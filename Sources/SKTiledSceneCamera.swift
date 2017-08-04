@@ -13,7 +13,9 @@ import UIKit
 import Cocoa
 #endif
 
-
+/**
+ Delegate for managing `SKTiledSceneCamera`.
+ */
 public protocol TiledSceneCameraDelegate: class {
     func cameraPositionChanged(newPosition: CGPoint)
     func cameraZoomChanged(newZoom: CGFloat)
@@ -428,12 +430,12 @@ extension SKTiledSceneCamera {
      - parameter recognizer: `UITapGestureRecognizer` tap gesture recognizer.
      */
     open func sceneDoubleClicked(_ event: NSEvent) {
-        guard let scene = self.scene as? SKTiledScene else { return }
+        guard let _ = self.scene as? SKTiledScene else { return }
         let _ = event.location(in: self)
     }
     
     override open func mouseDown(with event: NSEvent) {
-        guard let scene = self.scene as? SKTiledScene else { return }
+        guard let _ = self.scene as? SKTiledScene else { return }
         let location = event.location(in: self)
         lastLocation = location
     }
@@ -450,7 +452,7 @@ extension SKTiledSceneCamera {
     }
     
     override open func mouseUp(with event: NSEvent) {
-        guard let scene = self.scene as? SKTiledScene else { return }
+        guard let _ = self.scene as? SKTiledScene else { return }
         let location = event.location(in: self)
         lastLocation = location
         focusLocation = location
@@ -480,7 +482,7 @@ extension SKTiledSceneCamera {
     }
     
     open func scenePositionChanged(_ event: NSEvent) {
-        guard let scene = self.scene as? SKTiledScene else { return }
+        guard let _ = self.scene as? SKTiledScene else { return }
         let location = event.location(in: self)
         
         if lastLocation == nil { lastLocation = location }

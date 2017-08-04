@@ -42,7 +42,7 @@ public class SKTiledDemoScene: SKTiledScene {
                 
                 if let tile = node as? TileShape {
                     if (tile.coord == self.coordinate) && (tile.useLabel == true) {
-                        tile.detonate()
+                        tile.cleanup()
                     }
                 }
             }
@@ -58,7 +58,7 @@ public class SKTiledDemoScene: SKTiledScene {
         #if os(macOS)
         updateTrackingViews()
         addChild(mouseTracker)
-        mouseTracker.zPosition = 10000
+        mouseTracker.zPosition = 1000
         #endif
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateCoordinate), name: NSNotification.Name(rawValue: "updateCoordinate"), object: nil)
@@ -130,6 +130,7 @@ public class SKTiledDemoScene: SKTiledScene {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "loadPreviousScene"), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "updateDebugLabels"), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "updateCoordinate"), object: nil)
+        
         removeAllActions()
         removeAllChildren()
     }
@@ -138,6 +139,7 @@ public class SKTiledDemoScene: SKTiledScene {
      Callback to the GameViewController to reload the current scene.
      */
     public func reloadScene() {
+        print("scene: reloading...")
         NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadScene"), object: nil)
     }
     
@@ -201,6 +203,8 @@ public class SKTiledDemoScene: SKTiledScene {
     fileprivate func updateHud(){
         guard let tilemap = tilemap else { return }
         updateMapInfo(msg: tilemap.description)
+                
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateWindowTitle"), object: nil, userInfo: ["wintitle": tilemap.url.lastPathComponent])
     }
     
     override open func update(_ currentTime: TimeInterval) {
@@ -226,17 +230,13 @@ public class SKTiledDemoScene: SKTiledScene {
     
     // MARK: - Callbacks
     override open func didReadMap(_ tilemap: SKTilemap) {
-        // TODO: turn this on for master
         self.physicsWorld.speed = 0
     }
     
     override open func didRenderMap(_ tilemap: SKTilemap) {
         // update the HUD to reflect the number of tiles created
         updateHud()
-        //tilemap.mapStatistics()
-        self.blocked = false
-        
-        //dump(tilemap)
+        tilemap.mapStatistics()
     }
 }
 
@@ -262,7 +262,7 @@ extension SKTiledDemoScene {
             // add a tile shape to the base layer where the user has clicked
             
             // highlight the current coordinate
-            addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y))
+            addTileToWorld(Int(coord.x), Int(coord.y), useLabel: true)
             
             // update the tile information label
             let coordStr = "Coord: \(coord.shortDescription), \(positionInLayer.roundTo())"
@@ -353,9 +353,10 @@ extension SKTiledDemoScene {
             let xDistanceToCenter = (xpos / viewSize.width) - 0.5
             let yDistanceToCenter = (ypos / viewSize.height) - 0.5
             
+            mouseTracker.position = positionInWindow
             
-            mouseTracker.xpos = xDistanceToCenter
-            mouseTracker.ypos = yDistanceToCenter
+            
+            mouseTracker.offset = CGPoint(x: xDistanceToCenter, y: yDistanceToCenter)
         }
         
         let baseLayer = tilemap.baseLayer
@@ -474,7 +475,9 @@ extension SKTiledDemoScene {
             let additionalTime: TimeInterval = (tilemap.layerCount > 6) ? 1.25 : 2.25
             for layer in tilemap.getContentLayers() {
                 let fadeAction = SKAction.fadeAfter(wait: fadeTime, alpha: 0)
-                layer.run(fadeAction)
+                layer.run(fadeAction, completion: {
+                    print("layer: \"\(layer.layerName)\"")
+                })
                 fadeTime += additionalTime
             }
         }
@@ -533,9 +536,7 @@ extension SKTiledDemoScene {
         }
         
         // MARK: - DEBUGGING TESTS
-        // TODO: get rid of these in master
-        
-        
+        // TODO: get rid of these in master       
         // 'm' toggles tile bounds drawing
         if eventKey == 0x2e {
             // if objects are shown...
@@ -624,17 +625,11 @@ extension SKTiledDemoScene {
             tilemap.getLayers(ofType: "DEBUG").forEach{ $0.isHidden = !$0.isHidden }
         }
         
-        // 'z' lists the delegate files
+        // 'z' is a custom test
         if eventKey == 0x06 {
-            if let gameController = view.window!.contentViewController! as? GameViewController {
-                
-                let demourls = gameController.demourls
-                //print(gameController.currentFilename)
-                for url in demourls {
-                    print("\(url.path)")
-                }
-                
-                //print(" -> files: \(gameController.demourls)")
+            let groups = tilemap.groupLayers()
+            for grp in groups {
+                print("\(grp.path), \(grp.index)")
             }
         }
         
@@ -671,25 +666,12 @@ open class MouseTracker: SKNode {
     private let scaleAction = SKAction.scale(by: 1.55, duration: 0.025)
     private let scaleSequence: SKAction
     
-    private let tileWidth: CGFloat = 8
+    private let scaleSize: CGFloat = 8
     
     public var coord: CGPoint = .zero {
         didSet {
             label.text = "(\(Int(coord.x)), \(Int(coord.y)))"
             shadow.text = label.text
-        }
-    }
-    
-    public var xpos: CGFloat = 0 {
-        didSet {
-            label.position.x = (tileWidth * 12) * -xpos
-        }
-    }
-    
-    public var ypos: CGFloat = 0 {
-        didSet {
-            //let newYPos = lerp(start: 0.25, end: 1.0, t: ypos)
-            label.position.y = (tileWidth * 6) * -ypos
         }
     }
     
@@ -714,6 +696,22 @@ open class MouseTracker: SKNode {
         }
     }
     
+    public var offset: CGPoint = .zero {
+        didSet {
+            let ox = lerp(start: 0, end: 48, t: -offset.x)
+            let oy = lerp(start: 0, end: 48, t: -offset.y)
+            
+            //label.position.x = offset.x * -48
+            //label.position.y = offset.y * -48
+            
+            label.position.x = ox * 1.5
+            label.position.y = oy
+            
+            //print("offset: \(label.position.roundTo())")
+        }
+    }
+    
+    
     override public init() {
         scaleSequence = SKAction.sequence([scaleAction, scaleAction.reversed()])
         super.init()
@@ -731,7 +729,7 @@ open class MouseTracker: SKNode {
         addChild(label)
         label.addChild(shadow)
         shadow.zPosition = label.zPosition - 1        
-        fontSize = tileWidth * 1.5
+        fontSize = scaleSize * 1.5
         
         circle.strokeColor = .clear
         label.fontSize = fontSize

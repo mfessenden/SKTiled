@@ -299,8 +299,8 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      Pause overlay.
      */
     lazy var overlay: SKSpriteNode = {
-        let pauseOverlayColor = self.backgroundColor ?? SKColor.clear
-        let overlayNode = SKSpriteNode(color: pauseOverlayColor.withAlphaComponent(0.5), size: self.sizeInPoints)
+        let pauseOverlayColor = SKColor.clear // self.backgroundColor ?? SKColor.clear
+        let overlayNode = SKSpriteNode(color: pauseOverlayColor, size: self.sizeInPoints)
         self.addChild(overlayNode)
         overlayNode.zPosition = self.lastZPosition * self.zDeltaForLayers
         return overlayNode
@@ -506,9 +506,6 @@ open class SKTilemap: SKCropNode, SKTiledObject {
         
         
         
-        let loadMsg = "\n ❗️tilemap: loading file: \(tmxFile),  \(inDirectory ?? "")\n"
-        print(loadMsg)
-        
         if let tilemap = SKTilemapParser().load(tmxFile: tmxFile, inDirectory: inDirectory,
                                                 delegate: delegate, withTilesets: withTilesets,
                                                 ignoreProperties: noparse, verbosity: verbosity) {
@@ -627,9 +624,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
         tilesets.insert(tileset)
         tileset.tilemap = self
         tileset.ignoreProperties = ignoreProperties
-        tileset.parseProperties(completion: nil)
-        
-        print("    🎈 adding tileset: \(tileset.name)")
+        tileset.parseProperties(completion: nil)        
     }
     
     /**
@@ -746,7 +741,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
         layer.gridColor = gridColor
         layer.frameColor = frameColor
         layer.highlightColor = highlightColor
-        }
+    }
     
     /**
      Remove a layer from the current layers set.
@@ -781,6 +776,22 @@ open class SKTilemap: SKCropNode, SKTiledObject {
         var result: [TiledLayerObject] = []
         let layersToCheck = self.getLayers(recursive: recursive)
         if let index = layersToCheck.index( where: { $0.name == layerName } ) {
+            result.append(layersToCheck[index])
+        }
+        return result
+    }
+    
+    /**
+     Return layers with names matching the given prefix.
+     
+     - parameter withPrefix: `String` prefix to match.
+     - parameter recursive: `Bool` include nested layers.
+     - returns: `[TiledLayerObject]` layer objects.
+     */
+    open func getLayers(withPrefix: String, recursive: Bool=true) -> [TiledLayerObject] {
+        var result: [TiledLayerObject] = []
+        let layersToCheck = self.getLayers(recursive: recursive)
+        if let index = layersToCheck.index( where: { $0.layerName.hasPrefix(withPrefix) } ) {
             result.append(layersToCheck[index])
         }
         return result
@@ -851,7 +862,18 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      */
     open func tileLayers(named layerName: String, recursive: Bool=true) -> [SKTileLayer] {
         return getLayers(recursive: recursive).filter { $0 as? SKTileLayer != nil }.filter { $0.name == layerName } as! [SKTileLayer]
-        }
+    }
+    
+    /**
+     Return tile layers with names matching the given prefix. If recursive is false, only returns top-level layers.
+     
+     - parameter withPrefix: `String` prefix to match.
+     - parameter recursive:  `Bool` include nested layers.
+     - returns: `[SKTileLayer]` array of tile layers.
+     */
+    open func tileLayers(withPrefix: String, recursive: Bool=true) -> [SKTileLayer] {
+        return getLayers(recursive: recursive).filter { $0 as? SKTileLayer != nil }.filter { $0.layerName.hasPrefix(withPrefix) } as! [SKTileLayer]
+    }
     
     /**
      Returns a tile layer at the given index, otherwise, nil.
@@ -876,6 +898,17 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      */
     open func objectGroups(named layerName: String, recursive: Bool=true) -> [SKObjectGroup] {
         return getLayers(recursive: recursive).filter { $0 as? SKObjectGroup != nil }.filter { $0.name == layerName } as! [SKObjectGroup]
+    }
+    
+    /**
+     Return object groups with names matching the given prefix. If recursive is false, only returns top-level layers.
+     
+     - parameter withPrefix: `String` prefix to match.
+     - parameter recursive:  `Bool` include nested layers.
+     - returns: `[SKObjectGroup]` array of object groups.
+     */
+    open func objectGroups(withPrefix: String, recursive: Bool=true) -> [SKObjectGroup] {
+        return getLayers(recursive: recursive).filter { $0 as? SKObjectGroup != nil }.filter { $0.layerName.hasPrefix(withPrefix) } as! [SKObjectGroup]
     }
     
     /**
@@ -904,6 +937,17 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     }
     
     /**
+     Return image layers with names matching the given prefix. If recursive is false, only returns top-level layers.
+     
+     - parameter withPrefix: `String` prefix to match.
+     - parameter recursive:  `Bool` include nested layers.
+     - returns: `[SKImageLayer]` array of image layers.
+     */
+    open func imageLayers(withPrefix: String, recursive: Bool=true) -> [SKImageLayer] {
+        return getLayers(recursive: recursive).filter { $0 as? SKImageLayer != nil }.filter { $0.layerName.hasPrefix(withPrefix) } as! [SKImageLayer]
+    }
+    
+    /**
      Returns an image layer at the given index, otherwise, nil.
      
      - parameter atIndex: `Int` layer index.
@@ -926,6 +970,17 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      */
     open func groupLayers(named layerName: String, recursive: Bool=true) -> [SKGroupLayer] {
         return getLayers(recursive: recursive).filter { $0 as? SKGroupLayer != nil }.filter { $0.name == layerName } as! [SKGroupLayer]
+    }
+    
+    /**
+     Return group layers with names matching the given prefix. If recursive is false, only returns top-level layers.
+     
+     - parameter withPrefix:  `String` prefix to match.
+     - parameter recursive:   `Bool` include nested layers.
+     - returns: `[SKGroupLayer]` array of group layers.
+     */
+    open func groupLayers(withPrefix: String, recursive: Bool=true) -> [SKGroupLayer] {
+        return getLayers(recursive: recursive).filter { $0 as? SKGroupLayer != nil }.filter { $0.layerName.hasPrefix(withPrefix) } as! [SKGroupLayer]
     }
     
     /**
@@ -1066,7 +1121,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      */
     open func getTiles(ofType type: String, recursive: Bool=true) -> [SKTile] {
         return tileLayers(recursive: recursive).flatMap { $0.getTiles(ofType: type) }
-        }
+    }
     
     /**
      Returns tiles with the given global id. If recursive is false, only returns tiles from top-level layers.
@@ -1179,7 +1234,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      */
     open func getObjects(recursive: Bool=true) -> [SKTileObject] {
         return objectGroups(recursive: recursive).flatMap { $0.getObjects() }
-                }
+    }
     
     /**
      Return objects matching a given type. If recursive is false, only returns tiles from top-level layers.
@@ -1190,7 +1245,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      */
     open func getObjects(ofType type: String, recursive: Bool=true) -> [SKTileObject] {
         return objectGroups(recursive: recursive).flatMap { $0.getObjects(ofType: type) }
-            }
+    }
     
     /**
      Return objects matching a given name. If recursive is false, only returns tiles from top-level layers.
@@ -1201,7 +1256,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      */
     open func getObjects(named: String, recursive: Bool=true) -> [SKTileObject] {
         return objectGroups(recursive: recursive).flatMap { $0.getObjects(named: named) }
-        }
+    }
     
     /**
      Return objects with the given text value. If recursive is false, only returns tiles from top-level layers.
@@ -1222,7 +1277,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      */
     open func getObject(withID id: Int) -> SKTileObject? {
         return objectGroups(recursive: true).flatMap { $0.getObject(withID: id) }.first
-                    }
+    }
     
     /**
      Return objects with a tile id. If recursive is false, only returns tiles from top-level layers.
@@ -1232,7 +1287,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      */
     open func tileObjects(recursive: Bool=true) -> [SKTileObject] {
         return objectGroups(recursive: recursive).flatMap { $0.tileObjects() }
-            }
+    }
     
     /**
      Return text objects. If recursive is false, only returns tiles from top-level layers.
@@ -1242,7 +1297,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      */
     open func textObjects(recursive: Bool=true) -> [SKTileObject] {
         return objectGroups(recursive: recursive).flatMap { $0.textObjects() }
-            }
+    }
     
     // MARK: - Coordinates
     
@@ -1298,8 +1353,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
         let timeInterval = Date().timeIntervalSince(timeStarted)
         let timeStamp = String(format: "%.\(String(3))f", timeInterval)        
         if loggingLevel.rawValue <= 1 {
-            // TODO: uncomment
-            //print("\n ✽ Success! tilemap \"\(mapName)\" rendered in: \(timeStamp)s ✽\n")
+            print("\n ✽ Success! tilemap \"\(mapName)\" rendered in: \(timeStamp)s ✽\n")
         }
         
         // transfer attributes
@@ -1634,11 +1688,12 @@ extension SKTilemap {
             outputString += "\n\(layerOutputString)"
         }
         
+        /*
+        // Tilesets
         outputString += "\n"
-        
         for tileset in self.tilesets {
             outputString += "\n\(tileset.debugDescription)"
-        }
+        }*/
         
 
         print("\n\n" + outputString + "\n\n")
@@ -1663,11 +1718,12 @@ extension SKTilemapDelegate {
      */
     public func didBeginParsing(_ tilemap: SKTilemap) {}
     /**
-     Called when a tileset is instantiated.
+     Called when a tileset is added to a map.
 
      - parameter tileset:  `SKTileset` tileset instance.
      */
     public func didAddTileset(_ tileset: SKTileset) {}
+
     /**
      Called when a layer is added to a tilemap.
 
@@ -1689,22 +1745,21 @@ extension SKTilemapDelegate {
     /**
      Returns a tile object for use in tile layers.
     
-     - parameter className:  `String` optional class name.
-    internal var debugDraw: Bool {
-        get {
+     - parameter className:    `String` optional class name.
      - returns `SKTile.self`:  `SKTile` subclass.
      */
     public func objectForTile(className: String? = nil) -> SKTile.Type { return SKTile.self }
-        }
+}
+
 
 // TODO: - Expand these
 extension SKTilemap: TiledSceneCameraDelegate {
     public func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {}
     public func cameraPositionChanged(newPosition: CGPoint) {}
     public func cameraZoomChanged(newZoom: CGFloat) {}
-    }
+}
 
-    
+
 // MARK: - Deprecated
 
 extension SKTilemap {
@@ -1747,8 +1802,8 @@ extension SKTilemap {
             return layer
         }
         return nil
-        }
-        
+    }
+    
     /**
      Returns a named object group if it exists, otherwise, nil.
                 
@@ -1762,7 +1817,7 @@ extension SKTilemap {
             return layer
             }
         return nil
-        }
+    }
     
     /**
      Output a summary of the current scenes layer data.
@@ -1772,4 +1827,3 @@ extension SKTilemap {
         mapStatistics()
     }
 }
-

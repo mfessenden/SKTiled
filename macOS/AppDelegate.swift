@@ -27,8 +27,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     var viewController: GameViewController? {
         if let window = NSApplication.shared().mainWindow {
-            let splitController = window.contentViewController as! NSSplitViewController
-            return splitController.splitViewItems.last!.viewController as! GameViewController
+            if let controller = window.contentViewController as? GameViewController {
+                return controller
+            }
         }
         return nil
     }
@@ -52,19 +53,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 let dirname = tmxURL.deletingLastPathComponent()
                 let filename = tmxURL.lastPathComponent
                 
-                let relativeURL = URL(fileURLWithPath: filename, relativeTo: dirname)
-                
-                let baseURLString = (relativeURL.baseURL == nil) ? "~" : relativeURL.baseURL!.path
-                print(" ❗️app: loading: \(relativeURL.relativePath), \(baseURLString)")
-                
-                var currentMapIndex = gameController.demourls.count - 1
-                if let mapIndex = gameController.demourls.index(of: gameController.currentURL!) {
-                    currentMapIndex = Int(mapIndex) + 1
-                }
-
-                
-                gameController.demourls.insert(relativeURL, at: currentMapIndex)
-                gameController.loadScene(url: relativeURL, usePreviousCamera: true)
+                let relativeURL = URL(fileURLWithPath: filename, relativeTo: dirname)                
+                let demoController = gameController.demoController
+                let currentMapIndex = demoController.currentIndex
+                demoController.addTilemap(url: relativeURL, at: currentMapIndex)
             }
             
         } else {

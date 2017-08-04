@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="28" height="36" tilewidth="8" tileheight="8" backgroundcolor="#000000" nextobjectid="110">
+<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="28" height="36" tilewidth="8" tileheight="8" backgroundcolor="#000000" nextobjectid="118">
  <properties>
-  <property name="allowMovement" type="bool" value="false"/>
-  <property name="allowZoom" type="bool" value="false"/>
+  <property name="allowMovement" type="bool" value="true"/>
+  <property name="allowZoom" type="bool" value="true"/>
   <property name="gridColor" type="color" value="#ffb4b8ff"/>
   <property name="name" value="Maze - Pacman"/>
  </properties>
@@ -11,33 +11,65 @@
  <tileset firstgid="482" source="inky-16x16.tsx"/>
  <tileset firstgid="523" source="pinky-16x16.tsx"/>
  <tileset firstgid="564" source="clyde-16x16.tsx"/>
- <layer name="Maze" width="28" height="36">
-  <data encoding="base64" compression="zlib">
-   eJzdVk1LA0EMjYq2guvVr1bBu1+gCF5VsHrpvRT1pCje/P+YxVl8G5JspmMV+uDBkp2Z7L55yQzRDz6ZH8xXauOJ+cx8TM813pkT5gvzjTklG5vOu0XDEnMnk6fMsxnmLTNXjO+onG+8Y46c99bcW8jXZ24krisxjGM+a4y2Huar17hMHCkxGY+MkTHMt888TDxQYjIeGSNjTT5N7+qXnjEW2T9rL609i+6f9v+4T/i+x1zLGC/11FCR7fuuuFcPW8wTQfT9gOL1MBRxue628R1YI5pulj971PZ+FJjP6yMSOL403xF9a7LHXE3cTbHjjHxaX9V0874XPY5ztbUtyPrtytdV7w2kh9CfWL+R/5P1rq3tzcf9uCb7XLtRxpf4xdOngewPpf6M9M9IPu0+EanrSB/IuU8gpJ5aH4ho/p/3iUYv7IEl5zv2Xu880jwZ9Sc+a5rX+c7J12rW813T/IJ5T7ZWpee71PyB2npGfJgbxzUtf+J5nXu+D5R1uu5LFiP+9OZ59yULub5FWPeledG6L80TV3+Ya8z8AgGHSP0=
+ <tileset firstgid="605" source="pacman-16x16.tsx"/>
+ <tileset firstgid="628" source="mspacman-16x16.tsx"/>
+ <tileset firstgid="651" source="fruit-16x16.tsx"/>
+ <group name="MAZE1">
+  <layer name="Maze" width="28" height="36">
+   <data encoding="base64" compression="zlib">
+   eJzNVtFKA0EMjApWwfO1VU8F39UWKoKvKlh98f+/xhTvYBomuWy3Vw0MHLns5m52kqzI+Ha+hxz/xQ4UF4WYKxZbrDtUHDnf0QTf+KFYBe+9te+Q70Rx1uGU+NCP+bwYth/mW+/x3GFFfNafibE+zHejuOtwS3zWn4mxvj4f47vZ0TP6MufnnaV3ZtnzY/+P54TvJ4rjgnjLJ7NGfN0P+aN6mCoeDVD3reTr4dr47b4z5zuwRhhvnj4nsqn9rGG+qI9Yw/jafPfyy8kVxF12voeCfKyvMt6i70WN41q2t2e2fofyDdV7b1ZDqE+s38z/2Xpne0fr8TxexZ9rbyS+Ri8RP73Z/lCrz0z/zORj94lMXWf6QMl9As3yyfpAhvO/vE/0fGEPrJnv2HujecQ0mdUnPjPO1/mWEnO17XxnnD8pPsXnqna+W86/ZJPPjA5L/binp0+c16XzvSX7DN2XPGT0Ga2L7kueleoWzbsvjQXvvjSmvewx17fiB9LGRDY=
   </data>
- </layer>
- <layer name="Dots" width="28" height="36">
-  <data encoding="base64" compression="zlib">
+  </layer>
+  <layer name="Dots" width="28" height="36">
+   <data encoding="base64" compression="zlib">
    eJxjYBgFQx34kIipoQ+bG3C5jRQ12MTM6GCfGQF5WvqP1HggF5PiHkKAUvNobR8p6Z5UcXR5Qu4lFZCjd9S+UftG7Ru1jxp6h3t7YiDaL6SEFTlqCLWRqFXf4tNLL/voXb+TkteGqj564FFAfQAABnJIGQ==
   </data>
- </layer>
- <layer name="Actors" width="28" height="36">
-  <data encoding="base64" compression="zlib">
-   eJzt0LEJACAQBMHXJmzJzu3I2EBLEF5kJrl0uQgAuGOU7II/zPNjq3t7zWsBAN6xAGhoAiM=
-  </data>
- </layer>
+  </layer>
+ </group>
  <layer name="Graph" width="28" height="36" visible="0">
   <properties>
-   <property name="buildGraph" type="bool" value="true"/>
    <property name="walkableIDs" value="34,56,59,78"/>
   </properties>
   <data encoding="base64" compression="zlib">
    eJzlVcENxCAMY4MOcVMg3Q7df5vT/RCyY9O0hes9LEUpiWOj0K2Usv0R9kV7ZefoUUl+F3VRbaSbeaHqnH5P50N+15PiNpfRn/FrBp/S30Ll1T64d+7qdvxYia/15EXi0fs+oiNz/i6+N8D3fL+/ig/tO+r9dD+d+uhfiDz/NX1n8pXAHxT3fZ3zqC6ad1SH6jeDr9fM/GHvJ3sfUG81e3T/mdq7+JAnzO/RfCXf1fxHda9S58LZawZ3titwJf9MbR846IMA
   </data>
  </layer>
- <layer name="HUD" width="28" height="36">
-  <data encoding="base64" compression="zlib">
-   eJztwTEBAAAAwqD1T20ND6AAAACAdwMPwAAB
+ <group name="ACTORS">
+  <layer name="Actors" width="28" height="36">
+   <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMAqoA44zDrQLhgf4Bg1HcSYI7cE0cG4ZBaNgFNAHZI3m81EwCkYBEQAAKxQCjw==
   </data>
- </layer>
+  </layer>
+  <layer name="Maze2" width="28" height="36">
+   <data encoding="base64" compression="zlib">
+   eJztwzENAAAIA7A9+LfMMxOENmkCADdNAwB8sGmEAAs=
+  </data>
+  </layer>
+  <objectgroup name="Objects">
+   <object id="111" name="apple" gid="651" x="104" y="172" width="16" height="16" visible="0"/>
+   <object id="115" name="ready-label" x="88" y="160" width="48" height="8">
+    <text fontfamily="Nintendo-Arcade" pixelsize="7" wrap="1" color="#fc0006">ready!</text>
+   </object>
+  </objectgroup>
+ </group>
+ <group name="HUD">
+  <layer name="Scores" width="28" height="36">
+   <data encoding="base64" compression="zlib">
+   eJztycEJgDAUBNFfQRoUiZ4UJTf7JyMEQg6aBubBwMJGdA8VOmO00U657ddNCx100Rrf0s8nSZIkSZLmKru2BMw=
+  </data>
+  </layer>
+  <layer name="Fruit" width="28" height="36">
+   <data encoding="base64" compression="zlib">
+   eJztzDEKACAMBMHg9wUbEb9rkyoIgvVMs81xEQAAAMCv1e596bmbpTs7ys8BFU8Epg==
+  </data>
+  </layer>
+  <objectgroup name="Score-HUD" visible="0">
+   <object id="116" name="high-score-label" x="72" y="0" width="80" height="8">
+    <text fontfamily="Nintendo-Arcade" pixelsize="7" wrap="1" color="#fff76f">high score</text>
+   </object>
+   <object id="117" name="1up-label" x="24" y="0" width="24" height="8">
+    <text fontfamily="Nintendo-Arcade" pixelsize="7" wrap="1" color="#fffb52">1up</text>
+   </object>
+  </objectgroup>
+ </group>
 </map>

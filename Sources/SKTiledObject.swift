@@ -17,6 +17,7 @@ The `SKTiledObject` protocol describes a generic Tiled object containing a dicti
  - parameter type:             `String!` object type.
  - parameter properties:       `[String: String]` dictionary of object properties.
  - parameter ignoreProperties: `Bool` ignore custom properties.
+ - parameter renderQuality     `CGFloat` resolution multiplier value.
  */
 public protocol SKTiledObject: class {
     /// Unique id (layer & object names may not be unique).
@@ -29,7 +30,7 @@ public protocol SKTiledObject: class {
     var ignoreProperties: Bool { get set }
     /// Parse function (with optional completion block).
     func parseProperties(completion: (() -> ())?)
-    /// Render Quality.
+    /// Render quality property.
     var renderQuality: CGFloat { get }
 }
 

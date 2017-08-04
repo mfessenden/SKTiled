@@ -318,7 +318,6 @@
  </layer>
  <layer name="Graph" width="10" height="10">
   <properties>
-   <property name="buildGraph" type="bool" value="true"/>
    <property name="walkableIDs" value="8,9,10,23,24"/>
   </properties>
   <data encoding="base64" compression="zlib">
