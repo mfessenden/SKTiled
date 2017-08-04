@@ -171,16 +171,16 @@ open class SKTileset: SKTiledObject {
     /**
      Loads Tiled tsx files and returns an array of `SKTileset` objects.
      
-     - parameter filenames:         `[String]` Tiled tileset filenames.
+     - parameter tsxFiles:         `[String]` Tiled tileset filenames.
      - parameter delegate:          `SKTilemapDelegate?` optional [`SKTilemapDelegate`](Protocols/SKTilemapDelegate.html) instance.
      - parameter ignoreProperties:  `Bool` ignore custom properties from Tiled.
      - returns: `[SKTileset]` tileset objects.
      */
-    open class func load(fromFiles filenames: [String],
+    open class func load(tsxFiles: [String],
                          delegate: SKTilemapDelegate? = nil,
                          ignoreProperties noparse: Bool = false) -> [SKTileset] {
         
-        return SKTilemapParser().load(tilesets: filenames, delegate: delegate, ignoreProperties: noparse)
+        return SKTilemapParser().load(tsxFiles: tsxFiles, delegate: delegate, ignoreProperties: noparse)
     }
     
     // MARK: - Textures
@@ -299,9 +299,7 @@ open class SKTileset: SKTiledObject {
             print("[SKTileset]: tile data exists at id: \(tileID)")
             return nil
         }
-        
-        //print("🔸 adding sprite: \"\(source)\"")
-        
+                
         // bundled images shouldn't have file paths
         //let imageName = source.componentsSeparatedByString("/").last!
         

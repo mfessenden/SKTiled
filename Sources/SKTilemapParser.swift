@@ -148,6 +148,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     print("ERROR: tileset \"\(tileset.name)\" has no filename property.")
                     continue
                 }
+                
                 tilesets[filename] = tileset
             }
         }
@@ -242,7 +243,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
      - parameter ignoreProperties:  `Bool` ignore custom properties from Tiled.
      - returns: `[SKTileset]` tilesets.
      */
-    open func load(tilesets filenames: [String],
+    open func load(tsxFiles: [String],
                    inDirectory: String? = nil,
                    delegate: SKTilemapDelegate? = nil,
                    ignoreProperties noparse: Bool = false) -> [SKTileset] {
@@ -252,12 +253,20 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         
         parsingMode = .tsx
         
-        // determine the root path of the files
-        rootPath = (inDirectory == nil) ? Bundle.main.resourceURL! : URL(fileURLWithPath: inDirectory!)
+        if let resourceURL = Bundle.main.resourceURL {
+            rootPath = resourceURL
+        }
         
-        for filename in filenames {
-            let fileURL = URL(fileURLWithPath: filename, isDirectory: false, relativeTo: rootPath)
-            if fileManager.fileExists(atPath: fileURL.relativePath) {
+        if let rootDirectory = inDirectory {
+            rootPath = URL(fileURLWithPath: rootDirectory)
+        }
+
+        
+        for tsxfile in tsxFiles {
+            
+            // create a url relative to the current root
+            let fileURL = URL(fileURLWithPath: tsxfile, relativeTo: rootPath)
+            if fileManager.fileExists(atPath: fileURL.path) {
                 fileNames.append(fileURL.path)
             }
         }
@@ -274,6 +283,10 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             if let firstFileName = fileNames.first {
 
                 currentFilename = firstFileName
+                let currentFile = firstFileName.url.lastPathComponent
+                
+                
+                
                 defer { fileNames.remove(at: 0) }
                 
 
@@ -296,7 +309,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 }
                 
                 if loggingLevel.rawValue <= 1 {
-                    print("[SKTilemapParser]: \(parsingMode) parser: reading \(filetype): \"\(currentFilename!)\"")
+                    print("[SKTilemapParser]: \(parsingMode) parser: reading \(filetype): \"\(currentFile)\"")
                 }
                 
                 // absolute url
@@ -304,7 +317,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 
                 // check that file exists
                 guard fileManager.fileExists(atPath: currentURL.path) else {
-                    print("[SKTilemapParser]: file: \"\(currentURL.path)\" does not exist.")
+                    print("[SKTilemapParser]: file: \"\(currentFile)\" does not exist.")
                     return []
                 }
                 
@@ -329,7 +342,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             }
         }
 
-        for filename in filenames {
+        for filename in tsxFiles {
             for (tsxfile, tileset) in tilesets {
                 let basename = tsxfile.components(separatedBy: ".").first!
                 if basename == filename || tsxfile == filename {
@@ -458,7 +471,10 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 let firstGID = Int(firstgid)!
 
                 // check to see if tileset already exists (either an empty new tileset, or we've passed a pre-loaded tileset).
-                if let existingTileset = tilesets[source] {
+                
+                let externalTileset = URL(fileURLWithPath: source, relativeTo: rootPath)
+                
+                if let existingTileset = tilesets[externalTileset.path]  {
                     self.tilemap?.addTileset(existingTileset)
 
                     // set the first gid parameter
@@ -473,10 +489,10 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 } else {
 
                     // new tileset reference, in tmx file
-                    if !(fileNames.contains(source)) {
+                    if !(fileNames.contains(externalTileset.path)) {
 
                         // append the source path to parse queue
-                        let tilesetFileURL = URL(fileURLWithPath: source, isDirectory: false, relativeTo: rootPath)
+                        let tilesetFileURL = URL(fileURLWithPath: source, relativeTo: rootPath)
                         
                         // check that file exists
                         guard fileManager.fileExists(atPath: tilesetFileURL.path) else {
@@ -493,7 +509,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                         tileset.loggingLevel = self.loggingLevel
 
                         // add tileset to external file list (full file name)
-                        tilesets[source] = tileset
+                        tilesets[externalTileset.path] = tileset
 
                         // add the tileset to the tilemap
                         self.tilemap?.addTileset(tileset)
@@ -511,8 +527,8 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             if let name = attributeDict["name"] {
 
                 // update an existing tileset ( to set properties like `name`)
-                if let existingTileset = tilesets[currentFilename.url.lastPathComponent] {
-
+                if let existingTileset = tilesets[currentFilename] {
+                    
                     guard let width = attributeDict["tilewidth"] else { parser.abortParsing(); return }
                     guard let height = attributeDict["tileheight"] else { parser.abortParsing(); return }
                     guard let columns = attributeDict["columns"] else { parser.abortParsing(); return }

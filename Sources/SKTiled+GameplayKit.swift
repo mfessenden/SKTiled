@@ -113,8 +113,10 @@ extension SKTilemap {
         }
         
         let gcount = pathFindingGraphs.count
-        let resultMsg = (gcount > 0) ? (gcount == 1) ? "Success! \(gcount) graph built" : "success: \(gcount) graphs built" : "WARNING: no graphs built"
-        print("[SKTilemap]: \(resultMsg).")
+        if (gcount > 0) {
+            let resultMsg = (gcount == 1) ? "Success! \(gcount) graph built" : "success: \(gcount) graphs built"
+            print("[SKTilemap]: \(resultMsg).")
+        }
     }
 }
 

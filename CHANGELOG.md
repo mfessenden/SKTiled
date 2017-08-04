@@ -13,7 +13,7 @@ Change Log
 - add `SKTilemap.objectGroups(withPrefix:recursive:)`
 - add `SKTilemap.imageLayers(withPrefix:recursive:)`
 - add `SKTilemap.groupLayers(withPrefix:recursive:)`
-- add `AssetManager`
+- add `DemoController` to manage scenes in iOS/macOS
 
 1.14
 -----

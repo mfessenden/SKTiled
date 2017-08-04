@@ -59,7 +59,7 @@ class GameViewController: NSViewController {
         let scene = SKTiledDemoScene(size: self.view.bounds.size)
         scene.scaleMode = .aspectFill
         skView.presentScene(scene)
-        scene.setup(tmxFile: currentURL.relativePath, inDirectory: currentURL.baseURL?.relativePath, tilesets: [], verbosity: loggingLevel)
+        scene.setup(tmxFile: currentURL.relativePath, inDirectory: nil, tilesets: [], verbosity: loggingLevel)
         
     }
     

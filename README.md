@@ -33,8 +33,9 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 - [x] tile objects
 - [x] text objects
 - [x] custom tile classes (iOS10, macOS 10.11+)
-- [ ] generate GKGridGraph graphs from custom attributes (iOS10, macOS 10.11+)
-- [ ] user-definable cost properties for GKGridGraph nodes (iOS10, macOS 10.11+)
+- [x] generate GKGridGraph graphs from custom attributes (iOS10, macOS 10.11+)
+- [x] user-definable cost properties for GKGridGraph nodes (iOS10, macOS 10.11+)
+
 
 ## Requirements
 
