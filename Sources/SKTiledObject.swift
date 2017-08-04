@@ -9,14 +9,15 @@
 import SpriteKit
 
 /**
- The `SKTiledObject` protocol describes a generic Tiled object containing a dictionary of properties parsed from the TMX file.
+The `SKTiledObject` protocol describes a generic Tiled object containing a dictionary of properties parsed from the TMX file.
  
  Objects conforming to this protocol support custom properties that can be parsed via the `SKTilemapParser` parser.
- 
+
  - parameter uuid:             `String` unique object id.
  - parameter type:             `String!` object type.
  - parameter properties:       `[String: String]` dictionary of object properties.
  - parameter ignoreProperties: `Bool` ignore custom properties.
+ - parameter renderQuality     `CGFloat` resolution multiplier value.
  */
 public protocol SKTiledObject: class {
     /// Unique id (layer & object names may not be unique).
@@ -29,7 +30,7 @@ public protocol SKTiledObject: class {
     var ignoreProperties: Bool { get set }
     /// Parse function (with optional completion block).
     func parseProperties(completion: (() -> ())?)
-    /// Render Quality.
+    /// Render quality property.
     var renderQuality: CGFloat { get }
 }
 
@@ -132,7 +133,7 @@ public extension SKTiledObject {
         }
         return false
     }
-
+    
     /**
      Returns a string array for the given key.
      
@@ -210,7 +211,7 @@ public extension SKTiledObject {
     internal func boolForKey(_ key: String) -> Bool {
         if let existingPair = keyValuePair(key: key) {
             return Bool(existingPair.value) ?? false || Int(existingPair.value) == 1
-        }
+    }
         return false
     }
 }

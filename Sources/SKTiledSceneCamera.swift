@@ -13,7 +13,9 @@ import UIKit
 import Cocoa
 #endif
 
-
+/**
+ Delegate for managing `SKTiledSceneCamera`.
+ */
 public protocol TiledSceneCameraDelegate: class {
     func cameraPositionChanged(newPosition: CGPoint)
     func cameraZoomChanged(newZoom: CGFloat)
@@ -27,7 +29,7 @@ public protocol TiledSceneCameraDelegate: class {
 /**
   Custom scene camera that responds to finger/mouse gestures.
  
- The `SKTiledSceneCamera` is a custom camera meant to be used with a `SKTiledSceneDelegate` scene. The camera defines a position in the scene to render the scene from, with a reference to the `SKTiledSceneDelegate.worldNode` to interact with tile maps. 
+ The `SKTiledSceneCamera` is a custom camera meant to be used with a scene conforming to the `SKTiledSceneDelegate` protocol. The camera defines a position in the scene to render the scene from, with a reference to the `SKTiledSceneDelegate.worldNode` to interact with tile maps. 
  
  The `SKTiledSceneCamera` implements custom `UIGestureRecognizer` (iOS) and `NSEvent` mouse events (macOS) to aid in navigating your scenes.
  */
@@ -45,6 +47,7 @@ open class SKTiledSceneCamera: SKCameraNode {
     open var allowMovement: Bool = true
     open var allowZoom: Bool = true
     open var allowRotation: Bool = false
+    open var allowPause: Bool = true
     
     // zoom constraints
     open var minZoom: CGFloat = 0.2
@@ -157,6 +160,7 @@ open class SKTiledSceneCamera: SKCameraNode {
         // clamp scaling
         let zoomClamped = scale.clamped(minZoom, maxZoom)
         
+        self.zoom = zoomClamped
         world.setScale(zoomClamped)
         
         if let tilemap = (scene as? SKTiledScene)?.tilemap {
@@ -381,7 +385,7 @@ extension SKTiledSceneCamera {
      - parameter recognizer: `UITapGestureRecognizer` tap gesture recognizer.
      */
     open func sceneDoubleTapped(_ recognizer: UITapGestureRecognizer) {
-        if (recognizer.state == UIGestureRecognizerState.ended) {
+        if (recognizer.state == UIGestureRecognizerState.ended && allowPause) {
             //focusLocation = recognizer.location(in: recognizer.view)
             guard let _ = self.scene as? SKTiledScene else { return }
             // get the current point
@@ -426,11 +430,12 @@ extension SKTiledSceneCamera {
      - parameter recognizer: `UITapGestureRecognizer` tap gesture recognizer.
      */
     open func sceneDoubleClicked(_ event: NSEvent) {
-        guard let scene = self.scene as? SKTiledScene else { return }
-        let _ = event.location(in: scene)
+        guard let _ = self.scene as? SKTiledScene else { return }
+        let _ = event.location(in: self)
     }
     
     override open func mouseDown(with event: NSEvent) {
+        guard let _ = self.scene as? SKTiledScene else { return }
         let location = event.location(in: self)
         lastLocation = location
     }
@@ -447,6 +452,7 @@ extension SKTiledSceneCamera {
     }
     
     override open func mouseUp(with event: NSEvent) {
+        guard let _ = self.scene as? SKTiledScene else { return }
         let location = event.location(in: self)
         lastLocation = location
         focusLocation = location

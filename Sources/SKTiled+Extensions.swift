@@ -22,10 +22,10 @@ import Cocoa
 #if os(iOS) || os(tvOS)
 /**
  Returns an image of the given size.
-
+ 
  - parameter size:       `CGSize` size of resulting image.
  - parameter scale:      `CGFloat` scale of result (0 seems to scale 2x, using 1 seems best)
- - parameter whatToDraw: function detailing what to draw the image.
+ - parameter whatToDraw: function detailing what to draw the image. 
  - returns: `CGImage` result.
  */
 public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ context: CGContext, _ bounds: CGRect, _ scale: CGFloat) -> ()) -> CGImage {
@@ -40,7 +40,7 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
     return result!.cgImage!
 }
 
-
+    
 #else
 /**
  Returns an image of the given size.
@@ -140,10 +140,10 @@ public extension Int {
 
 
 internal extension CGFloat {
-
+    
     /**
      Convert a float to radians.
-
+     
      - returns: `CGFloat`
      */
     internal func radians() -> CGFloat {
@@ -159,10 +159,10 @@ internal extension CGFloat {
     internal func degrees() -> CGFloat {
         return self * 180.0 / CGFloat(Double.pi)
     }
-
+    
     /**
      Clamp the CGFloat between two values. Returns a new value.
-
+     
      - parameter v1: `CGFloat` min value.
      - parameter v2: `CGFloat` min value.
      - returns: `CGFloat` clamped result.
@@ -172,10 +172,10 @@ internal extension CGFloat {
         let max = minv > maxv ? minv : maxv
         return self < min ? min : (self > max ? max : self)
     }
-
+    
     /**
      Clamp the current value between min & max values.
-
+     
      - parameter v1: `CGFloat` min value.
      - parameter v2: `CGFloat` min value.
      - returns: `CGFloat` clamped result.
@@ -184,20 +184,20 @@ internal extension CGFloat {
         self = clamped(minv, maxv)
         return self
     }
-
+    
     /**
      Returns a string representation of the value rounded to the current decimals.
-
+     
      - parameter decimals: `Int` number of decimals to round to.
      - returns: `String` rounded display string.
      */
     internal func roundTo(_ decimals: Int=2) -> String {
         return String(format: "%.\(String(decimals))f", self)
     }
-
+    
     /**
      Returns the value rounded to the nearest .5 increment.
-
+     
      - returns: `CGFloat` rounded value.
      */
     internal func roundToHalf() -> CGFloat {
@@ -232,7 +232,7 @@ internal func sin(degrees: Double) -> Double {
 
 /**
  Sine function that accepts degrees for trig operations.
-
+    
  - parameter degrees: `Float` angle.
  - returns `Float` sine result.
  */
@@ -243,22 +243,22 @@ internal func sin(degrees: Float) -> Float {
 
 
 public extension CGPoint {
-
+    
     /// Returns an point inverted in the Y-coordinate.
     public var invertedY: CGPoint {
         return CGPoint(x: self.x, y: self.y * -1)
     }
-
+    
     /**
      Returns a display string rounded.
-
+    
      - parameter decimals: `Int` decimals to round to.
      - returns: `String` display string.
      */
     public func roundTo(_ decimals: Int=1) -> String {
         return "x: \(self.x.roundTo(decimals)), y: \(self.y.roundTo(decimals))"
     }
-
+    
     /// Return a vector int (for GameplayKit)
     public var toVec2: int2 {
         return int2(Int32(x), Int32(y))
@@ -266,7 +266,7 @@ public extension CGPoint {
 
     /**
      Returns the distance to the given point.
-
+    
      - parameter point: `CGPoint` decimals to round to.
      - returns: `Float` distance to other point.
      */
@@ -280,7 +280,7 @@ public extension CGPoint {
     public var xCoord: Int { return Int(x) }
     /// Return an integer value for y-coordinate.
     public var yCoord: Int { return Int(y) }
-
+    
     public var description: String { return "x: \(x.roundTo()), y: \(y.roundTo())" }
     public var shortDescription: String { return "\(Int(x)),\(Int(y))" }
 }
@@ -300,12 +300,12 @@ public func ==(lhs: CGPoint, rhs: CGPoint) -> Bool {
 
 
 public extension CGSize {
-
-    public var count: Int { return Int(width) * Int(height) }
+    
+    public var count: Int { return Int(width) * Int(height) }    
     public var halfSize: CGSize { return CGSize(width: width / 2, height: height / 2) }
     public var halfWidth: CGFloat { return width / 2.0 }
     public var halfHeight: CGFloat { return height / 2.0 }
-
+    
     public func roundTo(_ decimals: Int=1) -> String {
         return "w: \(self.width.roundTo(decimals)), h: \(self.height.roundTo(decimals))"
     }
@@ -321,38 +321,38 @@ public extension CGSize {
 
 
 public extension CGRect {
-
+    
     /// Initialize with a center point and size.
     public init(center: CGPoint, size: CGSize) {
         self.origin = CGPoint(x: center.x - size.width / 2.0, y: center.y - size.height / 2.0)
         self.size = size
     }
-
+    
     /// Returns the center point of the rectangle.
     public var center: CGPoint {
         return CGPoint(x: self.midX, y: self.midY)
     }
-
+    
     /// Returns the top-left corner point.
     public var topLeft: CGPoint {
         return origin
     }
-
+    
     /// Returns the top-right corner point.
     public var topRight: CGPoint {
         return CGPoint(x: origin.x + size.width, y: origin.y)
     }
-
+    
     /// Returns the bottom-left corner point.
     public var bottomLeft: CGPoint {
         return CGPoint(x: origin.x, y: origin.y + size.height)
     }
-
+    
     /// Returns the bottom-left corner point.
     public var bottomRight: CGPoint {
         return CGPoint(x: origin.x + size.width, y: origin.y + size.height)
     }
-
+    
     /// Return the four corner points.
     public var points: [CGPoint] {
         return [topLeft, topRight, bottomRight, bottomLeft]
@@ -382,7 +382,7 @@ public extension CGRect {
         return "x: \(Int(minX)), y: \(Int(minY)), w: \(width.roundTo()), h: \(height.roundTo())"
     }
 }
-
+    
 
 public extension CGVector {
     /**
@@ -401,7 +401,7 @@ public extension SKScene {
     public var center: CGPoint {
         return CGPoint(x: (size.width / 2) - (size.width * anchorPoint.x), y: (size.height / 2) - (size.height * anchorPoint.y))
     }
-
+    
     /**
      Calculate the distance from the scene's origin
      */
@@ -414,11 +414,13 @@ public extension SKScene {
     /// Returns a tilemap file name.
     public var tmxFilename: String? {
         var filename: String? = nil
-        enumerateChildNodes(withName: "//*") {
+        enumerateChildNodes(withName: "*") {  // was //*
             node, stop in
             if node as? SKTilemap != nil {
-                filename = (node as? SKTilemap)?.filename
-                stop.pointee = true
+                if let mapURL = (node as? SKTilemap)?.url {
+                    filename = mapURL.path
+                    stop.pointee = true
+                }
             }
         }
         return filename
@@ -427,7 +429,7 @@ public extension SKScene {
 
 
 internal extension SKNode {
-
+    
     /**
      Position the node by a percentage of the view size.
      */
@@ -436,10 +438,10 @@ internal extension SKNode {
         guard let view = scene.view else { return }
         self.position = scene.convertPoint(fromView: (CGPoint(x: CGFloat(view.bounds.size.width * x), y: CGFloat(view.bounds.size.height * (1.0 - y)))))
     }
-
+    
     /**
      Run an action with key & optional completion function.
-
+     
      - parameter action:             `SKAction!` SpriteKit action.
      - parameter withKey:            `String!` action key.
      - parameter optionalCompletion: `() -> ()` optional completion function.
@@ -487,37 +489,37 @@ internal extension SKSpriteNode {
 
 
 public extension SKColor {
-
+    
     /// Returns the hue, saturation, brightess & alpha components of the color
     internal var hsba: (h: CGFloat, s: CGFloat, b: CGFloat, a: CGFloat) {
         var hsba: (h: CGFloat, s: CGFloat, b: CGFloat, a: CGFloat) = (0, 0, 0, 0)
         self.getHue(&(hsba.h), saturation: &(hsba.s), brightness: &(hsba.b), alpha: &(hsba.a))
         return hsba
     }
-
+    
     /**
      Lightens the color by the given percentage.
-
+     
      - parameter percent: `CGFloat`
      - returns: `SKColor` lightened color.
      */
     internal func lighten(by percent: CGFloat) -> SKColor {
         return colorWithBrightness(factor: 1.0 + percent)
     }
-
+    
     /**
      Darkens the color by the given percentage.
-
+     
      - parameter percent: `CGFloat`
      - returns: `SKColor` darkened color.
      */
     internal func darken(by percent: CGFloat) -> SKColor {
         return colorWithBrightness(factor: 1.0 - percent)
     }
-
+    
     /**
      Return a modified color using the brightness factor provided
-
+     
      - parameter factor: brightness factor
      - returns: `SKColor` modified color
      */
@@ -525,10 +527,10 @@ public extension SKColor {
         let components = self.hsba
         return SKColor(hue: components.h, saturation: components.s, brightness: components.b * factor, alpha: components.a)
     }
-
+    
     /**
      Initialize an SKColor with a hexidecimal string.
-
+     
      - parameter hexString:  `String` hexidecimal code.
      - returns: `SKColor`
      */
@@ -549,7 +551,7 @@ public extension SKColor {
         }
         self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
     }
-
+    
     /// Returns the individual color components.
     internal var components: [CGFloat] {
         guard let comps = cgColor.components else { return [0,0,0,0] }
@@ -575,28 +577,28 @@ public extension SKColor {
         rgbHex += (a == 255) ? "" : String(format: "%02X", a)
         return rgbHex
     }
-
+    
     /*
      Blend current color with another `SKColor`.
-
+     
      - parameter color:   `SKColor` color to blend.
      - parameter factor:  `CGFloat` blend factor.
      - returns: `SKColor` blended color.
      */
     internal func blend(with color: SKColor, factor s: CGFloat = 0.5) -> SKColor {
-
+        
         let r1 = components[0]
         let g1 = components[1]
         let b1 = components[2]
-
+        
         let r2 = color.components[0]
         let g2 = color.components[1]
         let b2 = color.components[2]
-
+        
         let r = (r1 * s) + (1 - s) * r2
         let g = (g1 * s) + (1 - s) * g2
         let b = (b1 * s) + (1 - s) * b2
-
+        
         return SKColor(red: r, green: g, blue: b, alpha: 1.0)
     }
 
@@ -642,25 +644,25 @@ public extension SKColor {
 
 
 public extension String {
-
+        
     /// Returns `Int` length of the string.
     public var length: Int {
         return self.characters.count
     }
-
+    
     /**
      Simple function to split a string with the given pattern.
-
+     
      - parameter pattern: `String` pattern to split string with.
      - returns: `[String]` groups of split strings.
      */
     public func split(_ pattern: String) -> [String] {
         return self.components(separatedBy: pattern)
     }
-
+    
     /**
      Pads string on the with a pattern to fill width.
-
+     
      - parameter length:  `Int` length to fill.
      - parameter value:   `String` pattern.
      - parameter padLeft: `Bool` toggle this to pad the right.
@@ -675,10 +677,10 @@ public extension String {
         }
         return (padLeft == true) ? filler + self : self + filler
     }
-
+    
     /**
      Pad a string with spaces.
-
+     
      - parameter toSize: `Int` size of resulting string.
      - returns: `String` padded string.
      */
@@ -693,10 +695,10 @@ public extension String {
         }
         return padded
     }
-
+    
     /**
      Substitute a pattern in the string
-
+     
      - parameter pattern:     `String` pattern to replace.
      - parameter replaceWith: replacement `String`.
      - returns: `String` result.
@@ -704,10 +706,10 @@ public extension String {
     public func substitute(_ pattern: String, replaceWith: String) -> String {
         return self.replacingOccurrences(of: pattern, with: replaceWith)
     }
-
+    
     /**
      Initialize with array of bytes.
-
+     
      - parameter bytes: `[UInt8]` byte array.
      */
     public init(_ bytes: [UInt8]) {
@@ -716,10 +718,10 @@ public extension String {
             self.append(String(UnicodeScalar(b)))
         }
     }
-
+    
     /**
      Clean up whitespace & carriage returns.
-
+     
      - returns: `String` scrubbed string.
      */
     public func scrub() -> String {
@@ -727,6 +729,14 @@ public extension String {
         scrubbed = scrubbed.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         return scrubbed.replacingOccurrences(of: " ", with: "")
     }
+    
+    // MARK: URL
+    
+    /// Returns a url for the string.
+    public var url: URL { return URL(fileURLWithPath: self.expanded) }
+    
+    /// Expand the users home path.
+    public var expanded: String { return NSString(string: self).expandingTildeInPath }
 }
 
 
@@ -734,7 +744,7 @@ public extension SKAction {
 
     /**
      Custom action to animate sprite textures with varying frame durations.
-
+     
      - parameter frames: `[(texture: SKTexture, duration: TimeInterval)]` array of tuples containing texture & duration.
      - returns: `SKAction` custom animation action.
      */
@@ -747,7 +757,7 @@ public extension SKAction {
                 ])
             )
         }
-
+        
         // add the repeating action
         if (repeatForever == true) {
             return SKAction.repeatForever(SKAction.sequence(actions))
@@ -840,7 +850,7 @@ public func - (lhs: CGFloat, rhs: Int) -> CGFloat {
 
 public func * (lhs: Int, rhs: CGFloat) -> CGFloat {
     return CGFloat(lhs) * rhs
-        }
+}
 
 
 public func * (lhs: Int32, rhs: CGFloat) -> CGFloat {
@@ -855,7 +865,7 @@ public func * (lhs: CGFloat, rhs: Int) -> CGFloat {
 
 public func / (lhs: Int, rhs: CGFloat) -> CGFloat {
     return CGFloat(lhs) / rhs
-    }
+}
 
 
 public func / (lhs: CGFloat, rhs: Int) -> CGFloat {
@@ -1063,55 +1073,55 @@ public func normalize(_ value: CGFloat, _ minimum: CGFloat, _ maximum: CGFloat) 
 
 
 /**
- Visualize a layer as a texture.
-
+ Visualize a layer grid as a texture.
+ 
  - parameter layer:      `TiledLayerObject` layer instance.
  - parameter imageScale: `CGFloat` image scale multiplier.
  - parameter lineScale:  `CGFloat` line scale multiplier.
- - returns: `SKTexture?` visual grid texture.
+ - returns: `CGImage` visual grid texture.
  */
 internal func drawLayerGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineScale: CGFloat=1) -> CGImage {
     // get the ui scale value for the device
     let uiScale: CGFloat = getContentScaleFactor()
-    
+        
     let size = layer.size
     let tileWidth = layer.tileWidth * imageScale
     let tileHeight = layer.tileHeight * imageScale
-
+                
     let tileWidthHalf = tileWidth / 2
     let tileHeightHalf = tileHeight / 2
-
+                
     let sizeInPoints = (layer.sizeInPoints * imageScale)
     let defaultLineWidth: CGFloat = (imageScale / uiScale) * lineScale
-
+    
     return imageOfSize(sizeInPoints, scale: uiScale) { context, bounds, scale in
-
+                
         let innerColor = layer.gridColor
         // line width should be at least 1 for larger tile sizes
         let lineWidth: CGFloat = defaultLineWidth
         context.setLineWidth(lineWidth)
         //context.setLineDash(phase: 0.5, lengths: [0.5, 1.0])
         context.setShouldAntialias(true)  // layer.antialiased
-
+                
         for col in 0 ..< Int(size.width) {
             for row in (0 ..< Int(size.height)) {
-
+                
                 context.setStrokeColor(innerColor.cgColor)
                 context.setFillColor(SKColor.clear.cgColor)
-
+                
                 let screenPosition = layer.tileToScreenCoords(CGPoint(x: col, y: row))
-
+                
                 var xpos: CGFloat = screenPosition.x * imageScale
                 var ypos: CGFloat = screenPosition.y * imageScale
-
+                
                 switch layer.orientation {
                 case .orthogonal:
-
+                    
                     // rectangle shape
                     let points = rectPointArray(tileWidth, height: tileHeight, origin: CGPoint(x: xpos, y: ypos + tileHeight))
                     let shapePath = polygonPath(points)
                     context.addPath(shapePath)
-
+                    
                 case .isometric:
                     // xpos, ypos is the top point of the diamond
                     let points: [CGPoint] = [
@@ -1121,25 +1131,25 @@ internal func drawLayerGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, li
                         CGPoint(x: xpos + tileWidthHalf, y: ypos + tileHeightHalf),
                         CGPoint(x: xpos, y: ypos)
                     ]
-
+                    
                     let shapePath = polygonPath(points)
                     context.addPath(shapePath)
-
+                    
                 case .hexagonal, .staggered:
                     let staggerX = layer.tilemap.staggerX
-
+                    
                     // mirrored in pointForCoordinate
                     xpos += tileWidthHalf
-
+                    
                     if layer.orientation == .hexagonal {
-
+                        
                         ypos += tileHeightHalf
-
+                        
                         var hexPoints = Array(repeating: CGPoint.zero, count: 6)
                         var variableSize: CGFloat = 0
                         var r: CGFloat = 0
                         var h: CGFloat = 0
-
+                    
                         // flat - currently not working
                         if (staggerX == true) {
                             let sizeLengthX = (layer.tilemap.sideLengthX * imageScale)
@@ -1152,7 +1162,7 @@ internal func drawLayerGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, li
                             hexPoints[3] = CGPoint(x: xpos + (variableSize / 2), y: ypos - h)
                             hexPoints[4] = CGPoint(x: xpos - (variableSize / 2), y: ypos - h)
                             hexPoints[5] = CGPoint(x: xpos - (tileWidth / 2), y: ypos)
-
+                    
 
                         } else {
                             r = tileWidth / 2
@@ -1166,13 +1176,13 @@ internal func drawLayerGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, li
                             hexPoints[4] = CGPoint(x: xpos - (tileWidth / 2), y: ypos - (variableSize / 2))
                             hexPoints[5] = CGPoint(x: xpos - (tileWidth / 2), y: ypos + (variableSize / 2))
                         }
-
+                    
                         let shapePath = polygonPath(hexPoints)
                         context.addPath(shapePath)
                     }
-
+                
                     if layer.orientation == .staggered {
-
+                        
                         let points: [CGPoint] = [
                             CGPoint(x: xpos, y: ypos),
                             CGPoint(x: xpos - tileWidthHalf, y: ypos + tileHeightHalf),
@@ -1180,12 +1190,12 @@ internal func drawLayerGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, li
                             CGPoint(x: xpos + tileWidthHalf, y: ypos + tileHeightHalf),
                             CGPoint(x: xpos, y: ypos)
                         ]
-
+                        
                         let shapePath = polygonPath(points)
                         context.addPath(shapePath)
                     }
                 }
-
+                
                 context.strokePath()
             }
         }
@@ -1194,17 +1204,80 @@ internal func drawLayerGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, li
 
 
 /**
- Visualize a `GKGridGraph` node as a texture.
-
+ Generate a visual pathfinding graph texture.
+ 
  - parameter layer:      `TiledLayerObject` layer instance.
- - parameter graph:      `String` graph name.
  - parameter imageScale: `CGFloat` image scale multiplier.
  - parameter lineScale:  `CGFloat` line scale multiplier.
- - returns: `SKTexture?` visual grid texture.
+ 
+ - returns: `CGImage` visual graph texture.
  */
-internal func drawGraph(_ layer: TiledLayerObject, graph: String, imageScale: CGFloat=8, lineScale: CGFloat=1) -> CGImage {
-    let sizeInPoints = (layer.sizeInPoints * imageScale)
-    return imageOfSize(sizeInPoints, scale: 1) { context, bounds, scale in }
+internal func drawLayerGraph(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineScale: CGFloat=1) -> CGImage {
+    
+    let uiScale: CGFloat = getContentScaleFactor()
+    
+    let size = layer.size
+    let tileWidth = layer.tileWidth * imageScale
+    let tileHeight = layer.tileHeight * imageScale
+    
+    let sizeInPoints = (layer.sizeInPoints * imageScale)  // + 1
+    let defaultLineWidth: CGFloat = (imageScale / uiScale) * lineScale
+
+    
+    return imageOfSize(sizeInPoints, scale: uiScale) { context, bounds, scale in
+        
+        // line width should be at least 1 for larger tile sizes
+        let lineWidth: CGFloat = defaultLineWidth
+        context.setLineWidth(lineWidth)
+        context.setShouldAntialias(true)  // layer.antialiased
+
+        
+        for col in 0 ..< Int(size.width) {
+            for row in (0 ..< Int(size.height)) {
+                
+                let strokeColor = SKColor.black
+                var fillColor = SKColor.clear
+                
+                let screenPosition = layer.tileToScreenCoords(CGPoint(x: col, y: row))
+                
+                let xpos: CGFloat = screenPosition.x * imageScale
+                let ypos: CGFloat = screenPosition.y * imageScale
+                
+                switch layer.orientation {
+                case .orthogonal:
+
+                    // rectangle shape
+                    let points = rectPointArray(tileWidth, height: tileHeight, origin: CGPoint(x: xpos, y: ypos + tileHeight))
+                    
+                    if let node = layer.graph?.node(atGridPosition: int2(Int32(col), Int32(row))) {
+                        fillColor = SKColor.gray
+                        
+                        if node.weight > 1 {
+                            fillColor = SKColor.red
+                        }
+                        
+                        if node.weight < 1 {
+                            fillColor = SKColor.yellow
+                        }
+                        
+                        let fillPath = polygonPath(points)
+                        context.addPath(fillPath)
+                        context.setFillColor(fillColor.cgColor)
+                        context.fillPath()
+                        
+                        context.setStrokeColor(strokeColor.cgColor)
+                        
+                        let shapePath = polygonPath(points)
+                        context.addPath(shapePath)
+                        context.strokePath()
+                    }
+                    
+                default:
+                    continue
+                }
+            }
+        }
+    }
 }
 
 
@@ -1212,7 +1285,7 @@ internal func drawGraph(_ layer: TiledLayerObject, graph: String, imageScale: CG
 
 /**
  Returns an array of points for the given dimensions. ** In Use **
-
+ 
  - parameter width:   `CGFloat` rect width.
  - parameter height:  `CGFloat` rect height.
  - parameter origin: `CGPoint` rectangle origin.
@@ -1220,11 +1293,11 @@ internal func drawGraph(_ layer: TiledLayerObject, graph: String, imageScale: CG
  */
 public func rectPointArray(_ width: CGFloat, height: CGFloat, origin: CGPoint = .zero) -> [CGPoint] {
     let points: [CGPoint] = [
-                origin,
-                CGPoint(x: origin.x + width, y: origin.y),
-                CGPoint(x: origin.x + width, y: origin.y - height),
-                CGPoint(x: origin.x, y: origin.y - height)
-        ]
+        origin,
+        CGPoint(x: origin.x + width, y: origin.y),
+        CGPoint(x: origin.x + width, y: origin.y - height),
+        CGPoint(x: origin.x, y: origin.y - height)
+    ]
     return points
 }
 
@@ -1242,7 +1315,7 @@ public func rectPointArray(_ size: CGSize, origin: CGPoint = .zero) -> [CGPoint]
 
 /**
  Returns an array of points describing a polygon shape.
-
+ 
  - parameter sides:  `Int` number of sides.
  - parameter radius: `CGSize` radius of circle.
  - parameter offset: `CGFloat` rotation offset (45 to return a rectangle).
@@ -1281,7 +1354,7 @@ public func polygonPath(_ points: [CGPoint], closed: Bool=true) -> CGPath {
     var mpoints = points
     let first = mpoints.remove(at: 0)
     path.move(to: first)
-
+    
     for p in mpoints {
         path.addLine(to: p)
     }
@@ -1313,7 +1386,7 @@ public func polygonPath(_ sides: Int, radius: CGSize, offset: CGFloat=0, origin:
 
 /**
  Takes an array of points and returns a bezier path.
-
+ 
  - parameter points:  `[CGPoint]` polygon points.
  - parameter closed:  `Bool` path should be closed.
  - parameter alpha:   `CGFloat` curvature.
@@ -1328,19 +1401,19 @@ public func bezierPath(_ points: [CGPoint], closed: Bool = true, alpha: CGFloat 
     var previousPoint: CGPoint? = closed ? points.last : nil
     var currentPoint:  CGPoint  = points[0]
     var nextPoint:     CGPoint? = points[1]
-
+    
     let path = CGMutablePath()
     path.move(to: currentPoint)
-
+    
     var cpoints: [CGPoint] = []
     let tension: CGFloat = 2.7
 
     for index in 0 ..< numberOfCurves {
         let endPt = nextPoint!
-
+        
         var mx: CGFloat
         var my: CGFloat
-
+        
         if previousPoint != nil {
             mx = (nextPoint!.x - currentPoint.x) * alpha + (currentPoint.x - previousPoint!.x) * alpha
             my = (nextPoint!.y - currentPoint.y) * alpha + (currentPoint.y - previousPoint!.y) * alpha
@@ -1348,9 +1421,9 @@ public func bezierPath(_ points: [CGPoint], closed: Bool = true, alpha: CGFloat 
             mx = (nextPoint!.x - currentPoint.x) * alpha
             my = (nextPoint!.y - currentPoint.y) * alpha
         }
-
+        
         let ctrlPt1 = CGPoint(x: currentPoint.x + mx / tension, y: currentPoint.y + my / tension)
-
+        
         previousPoint = currentPoint
         currentPoint = nextPoint!
         let nextIndex = index + 2
@@ -1359,7 +1432,7 @@ public func bezierPath(_ points: [CGPoint], closed: Bool = true, alpha: CGFloat 
         } else {
             nextPoint = nextIndex < points.count ? points[nextIndex % points.count] : nil
         }
-
+        
         if nextPoint != nil {
             mx = (nextPoint!.x - currentPoint.x) * alpha + (currentPoint.x - previousPoint!.x) * alpha
             my = (nextPoint!.y - currentPoint.y) * alpha + (currentPoint.y - previousPoint!.y) * alpha
@@ -1370,11 +1443,6 @@ public func bezierPath(_ points: [CGPoint], closed: Bool = true, alpha: CGFloat 
         }
 
         let ctrlPt2 = CGPoint(x: currentPoint.x - mx / tension, y: currentPoint.y - my / tension)
-
-        // TODO: remove this in master
-        let pr: CGFloat = 1.5
-        let r1 = CGRect(x: ctrlPt1.x - pr, y: ctrlPt1.y - pr, width: pr, height: pr)
-        let r2 = CGRect(x: ctrlPt2.x - pr, y: ctrlPt2.y - pr, width: pr, height: pr)
 
         cpoints.append(ctrlPt1)
         cpoints.append(ctrlPt2)
@@ -1422,13 +1490,13 @@ public func clampedPosition(point: CGPoint, scale: CGFloat) -> CGPoint {
  */
 public func clampPositionWithNode(node: SKNode, scale: CGFloat) {
     node.position = clampedPosition(point: node.position, scale: getContentScaleFactor())
-    let className = String(describing: type(of: node))
     if let parentNode = node.parent {
         if parentNode != node.scene {
             clampPositionWithNode(node: parentNode, scale: scale)
         }
     }
 }
+
 
 // MARK: - Compression
 

@@ -7,14 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C0924B91F0EE538009CA37E /* objects-test-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924B71F0EE538009CA37E /* objects-test-16x16.png */; };
-		4C0924BA1F0EE538009CA37E /* objects-test-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924B71F0EE538009CA37E /* objects-test-16x16.png */; };
-		4C0924BB1F0EE538009CA37E /* object-rotation.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924B81F0EE538009CA37E /* object-rotation.tmx */; };
-		4C0924BC1F0EE538009CA37E /* object-rotation.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924B81F0EE538009CA37E /* object-rotation.tmx */; };
-		4C0924C11F118927009CA37E /* test-objects-24x24.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924BF1F118927009CA37E /* test-objects-24x24.tsx */; };
-		4C0924C21F118927009CA37E /* test-objects-24x24.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924BF1F118927009CA37E /* test-objects-24x24.tsx */; };
-		4C0924C31F118927009CA37E /* test-objects-24x24.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924C01F118927009CA37E /* test-objects-24x24.png */; };
-		4C0924C41F118927009CA37E /* test-objects-24x24.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924C01F118927009CA37E /* test-objects-24x24.png */; };
+		4C01D3A71F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C01D3A61F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift */; };
+		4C01D3A81F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C01D3A61F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift */; };
+		4C01D3A91F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C01D3A61F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift */; };
+		4C01D3AA1F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C01D3A61F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift */; };
 		4C0924D71F127DC0009CA37E /* tetris-bar-32x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924C81F127DC0009CA37E /* tetris-bar-32x8.tsx */; };
 		4C0924D81F127DC0009CA37E /* tetris-bar-32x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924C81F127DC0009CA37E /* tetris-bar-32x8.tsx */; };
 		4C0924D91F127DC0009CA37E /* tetris-lshape-24x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924C91F127DC0009CA37E /* tetris-lshape-24x16.tsx */; };
@@ -43,24 +39,13 @@
 		4C0924F21F127DC0009CA37E /* tetris-layer4-336x240.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924D51F127DC0009CA37E /* tetris-layer4-336x240.png */; };
 		4C0924F31F127DC0009CA37E /* tshape-24x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924D61F127DC0009CA37E /* tshape-24x16.png */; };
 		4C0924F41F127DC0009CA37E /* tshape-24x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924D61F127DC0009CA37E /* tshape-24x16.png */; };
-		4C0924F61F127E00009CA37E /* tetris-dynamics.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924F51F127E00009CA37E /* tetris-dynamics.tmx */; };
-		4C0924F71F127E00009CA37E /* tetris-dynamics.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924F51F127E00009CA37E /* tetris-dynamics.tmx */; };
-		4C0924F91F12A261009CA37E /* test-objects-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924F81F12A261009CA37E /* test-objects-8x8.png */; };
-		4C0924FA1F12A261009CA37E /* test-objects-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924F81F12A261009CA37E /* test-objects-8x8.png */; };
-		4C0924FC1F12A34E009CA37E /* test-objects-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924FB1F12A34E009CA37E /* test-objects-8x8.tsx */; };
-		4C0924FD1F12A34E009CA37E /* test-objects-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924FB1F12A34E009CA37E /* test-objects-8x8.tsx */; };
-		4C1774A11D90999C000C0AFD /* DemoFiles.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CA3DA0D1D8AF07C001E165A /* DemoFiles.plist */; };
 		4C1774A21D90999C000C0AFD /* hex1-65x65.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEA35B1D8D04320055C150 /* hex1-65x65.tmx */; };
-		4C1774A41D90999C000C0AFD /* isometric-130x66.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2D91D8B9EA10083DA7B /* isometric-130x66.tmx */; };
 		4C1774A51D90999C000C0AFD /* ortho4-16x16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E1AA1D8A241F00FCCFA3 /* ortho4-16x16.tmx */; };
 		4C1774A61D90999C000C0AFD /* roguelike-16x16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E18B1D8A1BC400FCCFA3 /* roguelike-16x16.tmx */; };
 		4C1774A71D90999C000C0AFD /* staggered-64x33.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEA3561D8D02D20055C150 /* staggered-64x33.tmx */; };
 		4C1774A81D90999C000C0AFD /* hex-65x65-65x230.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEA35A1D8D04320055C150 /* hex-65x65-65x230.png */; };
 		4C1774AA1D90999C000C0AFD /* isometric-130x230.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2DA1D8B9EA10083DA7B /* isometric-130x230.png */; };
 		4C1774AB1D90999C000C0AFD /* ortho4-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */; };
-		4C1774AC1D90999C000C0AFD /* roguelike-16x16-anim.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */; };
-		4C1774AD1D90999C000C0AFD /* staggered-64x192.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEA3571D8D02D20055C150 /* staggered-64x192.png */; };
-		4C1774AE1D90999C000C0AFD /* roguelike-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16.tsx */; };
 		4C1774AF1D9099A3000C0AFD /* SKTiled+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D71D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift */; };
 		4C1774B01D9099A3000C0AFD /* SKTilemap+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */; };
 		4C1774B11D9099A3000C0AFD /* SKTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D01D8A4EBE00FCCFA3 /* SKTile.swift */; };
@@ -77,20 +62,45 @@
 		4C3117DA1EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
 		4C3117DB1EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
 		4C3117DC1EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
+		4C4184911F3411DE004E392A /* mspacman-16x16 in Resources */ = {isa = PBXBuildFile; fileRef = 4C41848F1F3411DE004E392A /* mspacman-16x16 */; };
+		4C4184921F3411DE004E392A /* mspacman-16x16 in Resources */ = {isa = PBXBuildFile; fileRef = 4C41848F1F3411DE004E392A /* mspacman-16x16 */; };
+		4C4184931F3411DE004E392A /* pacman-16x16 in Resources */ = {isa = PBXBuildFile; fileRef = 4C4184901F3411DE004E392A /* pacman-16x16 */; };
+		4C4184941F3411DE004E392A /* pacman-16x16 in Resources */ = {isa = PBXBuildFile; fileRef = 4C4184901F3411DE004E392A /* pacman-16x16 */; };
+		4C4184961F341241004E392A /* pacman-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C4184951F341241004E392A /* pacman-16x16.tsx */; };
+		4C4184971F341241004E392A /* pacman-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C4184951F341241004E392A /* pacman-16x16.tsx */; };
+		4C4184991F34126C004E392A /* mspacman-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C4184981F34126C004E392A /* mspacman-16x16.tsx */; };
+		4C41849A1F34126C004E392A /* mspacman-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C4184981F34126C004E392A /* mspacman-16x16.tsx */; };
+		4C41849F1F34198F004E392A /* fruit-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C41849E1F34198F004E392A /* fruit-16x16.tsx */; };
+		4C4184A01F34198F004E392A /* fruit-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C41849E1F34198F004E392A /* fruit-16x16.tsx */; };
+		4C4184A21F34201E004E392A /* fruit-16x16 in Resources */ = {isa = PBXBuildFile; fileRef = 4C4184A11F34201E004E392A /* fruit-16x16 */; };
+		4C4184A31F34201E004E392A /* fruit-16x16 in Resources */ = {isa = PBXBuildFile; fileRef = 4C4184A11F34201E004E392A /* fruit-16x16 */; };
+		4C4184A51F34B51D004E392A /* DemoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4184A41F34B51D004E392A /* DemoController.swift */; };
+		4C4184A61F34B51D004E392A /* DemoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4184A41F34B51D004E392A /* DemoController.swift */; };
 		4C440B9B1DAE911000DEC9A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C440B981DAE911000DEC9A4 /* Assets.xcassets */; };
-		4C440B9C1DAE911000DEC9A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C440B981DAE911000DEC9A4 /* Assets.xcassets */; };
 		4C440B9F1DAE911000DEC9A4 /* SKTiledDemoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */; };
 		4C440BA01DAE911000DEC9A4 /* SKTiledDemoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */; };
 		4C440BA71DAE913000DEC9A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440BA21DAE913000DEC9A4 /* AppDelegate.swift */; };
-		4C440BA81DAE913000DEC9A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C440BA31DAE913000DEC9A4 /* Main.storyboard */; };
 		4C440BA91DAE913000DEC9A4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440BA51DAE913000DEC9A4 /* GameViewController.swift */; };
 		4C440BB31DAE913A00DEC9A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440BAC1DAE913A00DEC9A4 /* AppDelegate.swift */; };
-		4C440BB41DAE913A00DEC9A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C440BAD1DAE913A00DEC9A4 /* LaunchScreen.storyboard */; };
 		4C440BB51DAE913A00DEC9A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C440BAF1DAE913A00DEC9A4 /* Main.storyboard */; };
 		4C440BB61DAE913A00DEC9A4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440BB11DAE913A00DEC9A4 /* GameViewController.swift */; };
 		4C5479FE1DC15AF6008B3473 /* GameWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5479FD1DC15AF6008B3473 /* GameWindowController.swift */; };
 		4C58126A1E255E7300E80BFC /* SKTiled.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5812681E255E7300E80BFC /* SKTiled.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C58126B1E255FAA00E80BFC /* SKTiled.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5812631E255E6400E80BFC /* SKTiled.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C6FB8A21F1E45AB00A57964 /* tetris-dynamics.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6FB8A11F1E45AB00A57964 /* tetris-dynamics.tmx */; };
+		4C6FB8A31F1E45AB00A57964 /* tetris-dynamics.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6FB8A11F1E45AB00A57964 /* tetris-dynamics.tmx */; };
+		4C6FB8A71F1E5D2800A57964 /* pacman-8x8.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6FB8A41F1E5D2800A57964 /* pacman-8x8.tmx */; };
+		4C6FB8A81F1E5D2800A57964 /* pacman-8x8.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6FB8A41F1E5D2800A57964 /* pacman-8x8.tmx */; };
+		4C6FB8A91F1E5D2800A57964 /* pm-maze-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6FB8A51F1E5D2800A57964 /* pm-maze-8x8.tsx */; };
+		4C6FB8AA1F1E5D2800A57964 /* pm-maze-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6FB8A51F1E5D2800A57964 /* pm-maze-8x8.tsx */; };
+		4C6FB8AB1F1E5D2800A57964 /* pm-maze-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C6FB8A61F1E5D2800A57964 /* pm-maze-8x8.png */; };
+		4C6FB8AC1F1E5D2800A57964 /* pm-maze-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C6FB8A61F1E5D2800A57964 /* pm-maze-8x8.png */; };
+		4C7AD30F1F1E3D7500474722 /* graphtest-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7AD30E1F1E3D7500474722 /* graphtest-8x8.png */; };
+		4C7AD3101F1E3D7500474722 /* graphtest-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7AD30E1F1E3D7500474722 /* graphtest-8x8.png */; };
+		4C7AD3111F1E3D8100474722 /* graphtest-8x8.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6A1E1A1DAC19B1001F2E92 /* graphtest-8x8.tmx */; };
+		4C7AD3121F1E3D8200474722 /* graphtest-8x8.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6A1E1A1DAC19B1001F2E92 /* graphtest-8x8.tmx */; };
+		4C7AD3131F1E3D9400474722 /* graphtest-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6A1E1B1DAC19B1001F2E92 /* graphtest-8x8.tsx */; };
+		4C7AD3141F1E3D9500474722 /* graphtest-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6A1E1B1DAC19B1001F2E92 /* graphtest-8x8.tsx */; };
 		4C88E18C1D8A1BC400FCCFA3 /* roguelike-16x16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E18B1D8A1BC400FCCFA3 /* roguelike-16x16.tmx */; };
 		4C88E1AB1D8A241F00FCCFA3 /* ortho4-16x16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E1AA1D8A241F00FCCFA3 /* ortho4-16x16.tmx */; };
 		4C88E1AD1D8A242F00FCCFA3 /* ortho4-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */; };
@@ -105,11 +115,7 @@
 		4C88E1EA1D8A4EBE00FCCFA3 /* SKTilesetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */; };
 		4C8E42E01DC26FD1002C76DA /* zlib in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E42DF1DC26FD1002C76DA /* zlib */; };
 		4C8E42E11DC26FD1002C76DA /* zlib in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E42DF1DC26FD1002C76DA /* zlib */; };
-		4CA22C7D1F040FF600CD0A72 /* Nintendo-Arcade.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4CA22C7C1F040FF600CD0A72 /* Nintendo-Arcade.ttf */; };
 		4CA22C7E1F040FF600CD0A72 /* Nintendo-Arcade.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4CA22C7C1F040FF600CD0A72 /* Nintendo-Arcade.ttf */; };
-		4CA22C831F042BB200CD0A72 /* test-objects-24x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA22C821F042BB200CD0A72 /* test-objects-24x16.tsx */; };
-		4CA22C841F042BB200CD0A72 /* test-objects-24x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA22C821F042BB200CD0A72 /* test-objects-24x16.tsx */; };
-		4CA3DA0E1D8AF07C001E165A /* DemoFiles.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CA3DA0D1D8AF07C001E165A /* DemoFiles.plist */; };
 		4CAFDA4D1E20326D006F2D83 /* SKTiled+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D71D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift */; };
 		4CAFDA4E1E20326E006F2D83 /* SKTiled+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D71D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift */; };
 		4CAFDA4F1E203270006F2D83 /* SKTilemap+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */; };
@@ -141,6 +147,22 @@
 		4CD6D2D51D8B9DE20083DA7B /* roguelike-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16.tsx */; };
 		4CD6D2DD1D8B9EA10083DA7B /* isometric-130x66.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2D91D8B9EA10083DA7B /* isometric-130x66.tmx */; };
 		4CD6D2DE1D8B9EA10083DA7B /* isometric-130x230.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2DA1D8B9EA10083DA7B /* isometric-130x230.png */; };
+		4CF040C31F3112AD00D8AFFC /* isometric-130x66.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2D91D8B9EA10083DA7B /* isometric-130x66.tmx */; };
+		4CF040C41F3112C700D8AFFC /* roguelike-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16.tsx */; };
+		4CF040C61F32279600D8AFFC /* inky-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CF040C51F32279600D8AFFC /* inky-16x16.tsx */; };
+		4CF040C71F32279600D8AFFC /* inky-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CF040C51F32279600D8AFFC /* inky-16x16.tsx */; };
+		4CF040CA1F3228D600D8AFFC /* clyde-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CF040C81F3228D600D8AFFC /* clyde-16x16.tsx */; };
+		4CF040CB1F3228D600D8AFFC /* clyde-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CF040C81F3228D600D8AFFC /* clyde-16x16.tsx */; };
+		4CF040CC1F3228D600D8AFFC /* pinky-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CF040C91F3228D600D8AFFC /* pinky-16x16.tsx */; };
+		4CF040CD1F3228D600D8AFFC /* pinky-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CF040C91F3228D600D8AFFC /* pinky-16x16.tsx */; };
+		4CF040CF1F3228E600D8AFFC /* ghosts-16x16 in Resources */ = {isa = PBXBuildFile; fileRef = 4CF040CE1F3228E600D8AFFC /* ghosts-16x16 */; };
+		4CF040D01F3228E600D8AFFC /* ghosts-16x16 in Resources */ = {isa = PBXBuildFile; fileRef = 4CF040CE1F3228E600D8AFFC /* ghosts-16x16 */; };
+		4CF040D21F32305900D8AFFC /* blinky-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CF040D11F32305900D8AFFC /* blinky-16x16.tsx */; };
+		4CF040D31F32305900D8AFFC /* blinky-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CF040D11F32305900D8AFFC /* blinky-16x16.tsx */; };
+		4CF0FEA11F34EF27000AADEF /* roguelike-16x16-anim.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */; };
+		4CF0FEA21F34EF27000AADEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C440B981DAE911000DEC9A4 /* Assets.xcassets */; };
+		4CF0FEA31F34EF27000AADEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C440BA31DAE913000DEC9A4 /* Main.storyboard */; };
+		4CF0FEA41F34EF27000AADEF /* staggered-64x192.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEA3571D8D02D20055C150 /* staggered-64x192.png */; };
 		4CFEA3581D8D02D20055C150 /* staggered-64x33.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEA3561D8D02D20055C150 /* staggered-64x33.tmx */; };
 		4CFEA3591D8D02D20055C150 /* staggered-64x192.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEA3571D8D02D20055C150 /* staggered-64x192.png */; };
 		4CFEA35C1D8D04320055C150 /* hex-65x65-65x230.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEA35A1D8D04320055C150 /* hex-65x65-65x230.png */; };
@@ -148,12 +170,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4C0924B71F0EE538009CA37E /* objects-test-16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "objects-test-16x16.png"; path = "test/objects-test-16x16.png"; sourceTree = "<group>"; };
-		4C0924B81F0EE538009CA37E /* object-rotation.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "object-rotation.tmx"; path = "test/object-rotation.tmx"; sourceTree = "<group>"; };
+		4C01D3A61F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKTiled+GameplayKit.swift"; sourceTree = "<group>"; };
 		4C0924BD1F11755A009CA37E /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		4C0924BE1F117574009CA37E /* NOTES.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = NOTES.md; sourceTree = "<group>"; };
-		4C0924BF1F118927009CA37E /* test-objects-24x24.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "test-objects-24x24.tsx"; path = "test/test-objects-24x24.tsx"; sourceTree = "<group>"; };
-		4C0924C01F118927009CA37E /* test-objects-24x24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "test-objects-24x24.png"; path = "test/test-objects-24x24.png"; sourceTree = "<group>"; };
 		4C0924C81F127DC0009CA37E /* tetris-bar-32x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "tetris-bar-32x8.tsx"; sourceTree = "<group>"; };
 		4C0924C91F127DC0009CA37E /* tetris-lshape-24x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "tetris-lshape-24x16.tsx"; sourceTree = "<group>"; };
 		4C0924CA1F127DC0009CA37E /* tetris-square-8x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "tetris-square-8x8.tsx"; sourceTree = "<group>"; };
@@ -168,14 +187,18 @@
 		4C0924D41F127DC0009CA37E /* tetris-layer3-336x240.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tetris-layer3-336x240.png"; sourceTree = "<group>"; };
 		4C0924D51F127DC0009CA37E /* tetris-layer4-336x240.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tetris-layer4-336x240.png"; sourceTree = "<group>"; };
 		4C0924D61F127DC0009CA37E /* tshape-24x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tshape-24x16.png"; sourceTree = "<group>"; };
-		4C0924F51F127E00009CA37E /* tetris-dynamics.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "tetris-dynamics.tmx"; sourceTree = "<group>"; };
-		4C0924F81F12A261009CA37E /* test-objects-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "test-objects-8x8.png"; path = "test/test-objects-8x8.png"; sourceTree = "<group>"; };
-		4C0924FB1F12A34E009CA37E /* test-objects-8x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "test-objects-8x8.tsx"; path = "test/test-objects-8x8.tsx"; sourceTree = "<group>"; };
 		4C0E59501DC046E700921F75 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		4C0EE1E51DC116DB00A052E4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		4C0EE1E71DC116E300A052E4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
 		4C17747F1D909740000C0AFD /* SKTiledDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKTiledDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKTiled+Debug.swift"; sourceTree = "<group>"; };
+		4C41848F1F3411DE004E392A /* mspacman-16x16 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "mspacman-16x16"; path = "../../../../Dropbox/assets/tiled/pacman/png/src/mspacman-16x16"; sourceTree = "<group>"; };
+		4C4184901F3411DE004E392A /* pacman-16x16 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "pacman-16x16"; path = "../../../../Dropbox/assets/tiled/pacman/png/src/pacman-16x16"; sourceTree = "<group>"; };
+		4C4184951F341241004E392A /* pacman-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "pacman-16x16.tsx"; sourceTree = "<group>"; };
+		4C4184981F34126C004E392A /* mspacman-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "mspacman-16x16.tsx"; sourceTree = "<group>"; };
+		4C41849E1F34198F004E392A /* fruit-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "fruit-16x16.tsx"; sourceTree = "<group>"; };
+		4C4184A11F34201E004E392A /* fruit-16x16 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "fruit-16x16"; sourceTree = "<group>"; };
+		4C4184A41F34B51D004E392A /* DemoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoController.swift; sourceTree = "<group>"; };
 		4C440B981DAE911000DEC9A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTiledDemoScene.swift; sourceTree = "<group>"; };
 		4C440BA21DAE913000DEC9A4 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -192,6 +215,13 @@
 		4C5812631E255E6400E80BFC /* SKTiled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTiled.h; sourceTree = "<group>"; };
 		4C5812671E255E7300E80BFC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C5812681E255E7300E80BFC /* SKTiled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTiled.h; sourceTree = "<group>"; };
+		4C6A1E1A1DAC19B1001F2E92 /* graphtest-8x8.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "graphtest-8x8.tmx"; path = "Resources/graphtest-8x8.tmx"; sourceTree = SOURCE_ROOT; };
+		4C6A1E1B1DAC19B1001F2E92 /* graphtest-8x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "graphtest-8x8.tsx"; path = "Resources/graphtest-8x8.tsx"; sourceTree = SOURCE_ROOT; };
+		4C6FB8A11F1E45AB00A57964 /* tetris-dynamics.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "tetris-dynamics.tmx"; sourceTree = "<group>"; };
+		4C6FB8A41F1E5D2800A57964 /* pacman-8x8.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "pacman-8x8.tmx"; sourceTree = "<group>"; };
+		4C6FB8A51F1E5D2800A57964 /* pm-maze-8x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "pm-maze-8x8.tsx"; sourceTree = "<group>"; };
+		4C6FB8A61F1E5D2800A57964 /* pm-maze-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pm-maze-8x8.png"; sourceTree = "<group>"; };
+		4C7AD30E1F1E3D7500474722 /* graphtest-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "graphtest-8x8.png"; sourceTree = "<group>"; };
 		4C88E18B1D8A1BC400FCCFA3 /* roguelike-16x16.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "roguelike-16x16.tmx"; sourceTree = "<group>"; };
 		4C88E1AA1D8A241F00FCCFA3 /* ortho4-16x16.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "ortho4-16x16.tmx"; sourceTree = "<group>"; };
 		4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ortho4-16x16.png"; sourceTree = "<group>"; };
@@ -206,8 +236,6 @@
 		4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTilesetData.swift; sourceTree = "<group>"; };
 		4C8E42DF1DC26FD1002C76DA /* zlib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = zlib; sourceTree = SOURCE_ROOT; };
 		4CA22C7C1F040FF600CD0A72 /* Nintendo-Arcade.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nintendo-Arcade.ttf"; sourceTree = "<group>"; };
-		4CA22C821F042BB200CD0A72 /* test-objects-24x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "test-objects-24x16.tsx"; path = "test/test-objects-24x16.tsx"; sourceTree = "<group>"; };
-		4CA3DA0D1D8AF07C001E165A /* DemoFiles.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DemoFiles.plist; sourceTree = "<group>"; };
 		4CBA61651D8A048200B31FC1 /* SKTiledDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKTiledDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CBA617E1D8A0A3900B31FC1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "roguelike-16x16-anim.png"; sourceTree = "<group>"; };
@@ -218,6 +246,11 @@
 		4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "roguelike-16x16.tsx"; sourceTree = "<group>"; };
 		4CD6D2D91D8B9EA10083DA7B /* isometric-130x66.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "isometric-130x66.tmx"; sourceTree = "<group>"; };
 		4CD6D2DA1D8B9EA10083DA7B /* isometric-130x230.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "isometric-130x230.png"; sourceTree = "<group>"; };
+		4CF040C51F32279600D8AFFC /* inky-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "inky-16x16.tsx"; sourceTree = "<group>"; };
+		4CF040C81F3228D600D8AFFC /* clyde-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "clyde-16x16.tsx"; sourceTree = "<group>"; };
+		4CF040C91F3228D600D8AFFC /* pinky-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "pinky-16x16.tsx"; sourceTree = "<group>"; };
+		4CF040CE1F3228E600D8AFFC /* ghosts-16x16 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "ghosts-16x16"; sourceTree = "<group>"; };
+		4CF040D11F32305900D8AFFC /* blinky-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "blinky-16x16.tsx"; sourceTree = "<group>"; };
 		4CFEA3561D8D02D20055C150 /* staggered-64x33.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "staggered-64x33.tmx"; sourceTree = "<group>"; };
 		4CFEA3571D8D02D20055C150 /* staggered-64x192.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "staggered-64x192.png"; sourceTree = "<group>"; };
 		4CFEA35A1D8D04320055C150 /* hex-65x65-65x230.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hex-65x65-65x230.png"; sourceTree = "<group>"; };
@@ -287,8 +320,9 @@
 		4C440B971DAE911000DEC9A4 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				4C440B981DAE911000DEC9A4 /* Assets.xcassets */,
+				4C4184A41F34B51D004E392A /* DemoController.swift */,
 				4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */,
+				4C440B981DAE911000DEC9A4 /* Assets.xcassets */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -340,13 +374,6 @@
 		4C61084D1E9C266F003E982C /* External */ = {
 			isa = PBXGroup;
 			children = (
-				4C0924B81F0EE538009CA37E /* object-rotation.tmx */,
-				4C0924FB1F12A34E009CA37E /* test-objects-8x8.tsx */,
-				4CA22C821F042BB200CD0A72 /* test-objects-24x16.tsx */,
-				4C0924BF1F118927009CA37E /* test-objects-24x24.tsx */,
-				4C0924B71F0EE538009CA37E /* objects-test-16x16.png */,
-				4C0924F81F12A261009CA37E /* test-objects-8x8.png */,
-				4C0924C01F118927009CA37E /* test-objects-24x24.png */,
 			);
 			name = External;
 			sourceTree = "<group>";
@@ -366,6 +393,7 @@
 			children = (
 				4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */,
 				4C88E1D71D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift */,
+				4C01D3A61F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift */,
 				4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */,
 			);
 			name = Extensions;
@@ -413,13 +441,14 @@
 				4CA22C7B1F040FE700CD0A72 /* Fonts */,
 				4C61084D1E9C266F003E982C /* External */,
 				4CD5229E1DA624C400D78D81 /* CREDITS */,
-				4CA3DA0D1D8AF07C001E165A /* DemoFiles.plist */,
+				4C6A1E1A1DAC19B1001F2E92 /* graphtest-8x8.tmx */,
+				4C6FB8A41F1E5D2800A57964 /* pacman-8x8.tmx */,
 				4CFEA35B1D8D04320055C150 /* hex1-65x65.tmx */,
 				4CD6D2D91D8B9EA10083DA7B /* isometric-130x66.tmx */,
 				4C88E1AA1D8A241F00FCCFA3 /* ortho4-16x16.tmx */,
 				4C88E18B1D8A1BC400FCCFA3 /* roguelike-16x16.tmx */,
 				4CFEA3561D8D02D20055C150 /* staggered-64x33.tmx */,
-				4C0924F51F127E00009CA37E /* tetris-dynamics.tmx */,
+				4C6FB8A11F1E45AB00A57964 /* tetris-dynamics.tmx */,
 				4CDF67CC1D8AE84300589457 /* png */,
 				4CD6D2D61D8B9DE50083DA7B /* tsx */,
 			);
@@ -447,12 +476,21 @@
 		4CD6D2D61D8B9DE50083DA7B /* tsx */ = {
 			isa = PBXGroup;
 			children = (
+				4C41849E1F34198F004E392A /* fruit-16x16.tsx */,
+				4C6A1E1B1DAC19B1001F2E92 /* graphtest-8x8.tsx */,
+				4C6FB8A51F1E5D2800A57964 /* pm-maze-8x8.tsx */,
+				4CF040D11F32305900D8AFFC /* blinky-16x16.tsx */,
+				4CF040C81F3228D600D8AFFC /* clyde-16x16.tsx */,
+				4CF040C91F3228D600D8AFFC /* pinky-16x16.tsx */,
+				4CF040C51F32279600D8AFFC /* inky-16x16.tsx */,
+				4C4184981F34126C004E392A /* mspacman-16x16.tsx */,
+				4C4184951F341241004E392A /* pacman-16x16.tsx */,
+				4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16.tsx */,
 				4C0924C81F127DC0009CA37E /* tetris-bar-32x8.tsx */,
 				4C0924C91F127DC0009CA37E /* tetris-lshape-24x16.tsx */,
 				4C0924CA1F127DC0009CA37E /* tetris-square-8x8.tsx */,
 				4C0924CB1F127DC0009CA37E /* tetris-square-16x16.tsx */,
 				4C0924CC1F127DC0009CA37E /* tetris-tshape-24x16.tsx */,
-				4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16.tsx */,
 			);
 			name = tsx;
 			sourceTree = "<group>";
@@ -460,8 +498,19 @@
 		4CDF67CC1D8AE84300589457 /* png */ = {
 			isa = PBXGroup;
 			children = (
+				4C4184A11F34201E004E392A /* fruit-16x16 */,
+				4C41848F1F3411DE004E392A /* mspacman-16x16 */,
+				4C4184901F3411DE004E392A /* pacman-16x16 */,
+				4CF040CE1F3228E600D8AFFC /* ghosts-16x16 */,
 				4C0924CD1F127DC0009CA37E /* bar-32x8.png */,
+				4C7AD30E1F1E3D7500474722 /* graphtest-8x8.png */,
+				4CFEA35A1D8D04320055C150 /* hex-65x65-65x230.png */,
+				4CD6D2DA1D8B9EA10083DA7B /* isometric-130x230.png */,
 				4C0924CE1F127DC0009CA37E /* lshape-24x16.png */,
+				4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */,
+				4C6FB8A61F1E5D2800A57964 /* pm-maze-8x8.png */,
+				4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */,
+				4CFEA3571D8D02D20055C150 /* staggered-64x192.png */,
 				4C0924CF1F127DC0009CA37E /* square-8x8.png */,
 				4C0924D01F127DC0009CA37E /* square-16x16.png */,
 				4C0924D21F127DC0009CA37E /* tetris-layer1-336x240.png */,
@@ -469,11 +518,6 @@
 				4C0924D41F127DC0009CA37E /* tetris-layer3-336x240.png */,
 				4C0924D51F127DC0009CA37E /* tetris-layer4-336x240.png */,
 				4C0924D61F127DC0009CA37E /* tshape-24x16.png */,
-				4CFEA35A1D8D04320055C150 /* hex-65x65-65x230.png */,
-				4CD6D2DA1D8B9EA10083DA7B /* isometric-130x230.png */,
-				4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */,
-				4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */,
-				4CFEA3571D8D02D20055C150 /* staggered-64x192.png */,
 			);
 			name = png;
 			sourceTree = "<group>";
@@ -505,6 +549,7 @@
 			buildConfigurationList = 4C1774911D909740000C0AFD /* Build configuration list for PBXNativeTarget "Demo - macOS" */;
 			buildPhases = (
 				4CABC4D71DAEE1F900ACA1A4 /* ShellScript */,
+				4C4184A71F34D57B004E392A /* ShellScript */,
 				4C17747B1D909740000C0AFD /* Sources */,
 				4C17747C1D909740000C0AFD /* Frameworks */,
 				4C17747D1D909740000C0AFD /* Resources */,
@@ -522,9 +567,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4CBA617B1D8A048300B31FC1 /* Build configuration list for PBXNativeTarget "Demo - iOS" */;
 			buildPhases = (
+				4C3496881EA513D9003900C8 /* ShellScript */,
+				4C4184A81F34D592004E392A /* ShellScript */,
 				4CBA61611D8A048200B31FC1 /* Sources */,
 				4CBA61621D8A048200B31FC1 /* Frameworks */,
-				4C3496881EA513D9003900C8 /* ShellScript */,
 				4CBA61631D8A048200B31FC1 /* Resources */,
 			);
 			buildRules = (
@@ -581,7 +627,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Michael Fessenden";
 				TargetAttributes = {
 					4C17747E1D909740000C0AFD = {
@@ -634,43 +680,51 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C8E42E11DC26FD1002C76DA /* zlib in Resources */,
-				4C0924F91F12A261009CA37E /* test-objects-8x8.png in Resources */,
+				4C6FB8A91F1E5D2800A57964 /* pm-maze-8x8.tsx in Resources */,
+				4C6FB8AB1F1E5D2800A57964 /* pm-maze-8x8.png in Resources */,
 				4C0924D91F127DC0009CA37E /* tetris-lshape-24x16.tsx in Resources */,
-				4C1774AC1D90999C000C0AFD /* roguelike-16x16-anim.png in Resources */,
-				4C0924F61F127E00009CA37E /* tetris-dynamics.tmx in Resources */,
+				4C7AD30F1F1E3D7500474722 /* graphtest-8x8.png in Resources */,
+				4CF0FEA11F34EF27000AADEF /* roguelike-16x16-anim.png in Resources */,
 				4C0924F31F127DC0009CA37E /* tshape-24x16.png in Resources */,
-				4C0924FC1F12A34E009CA37E /* test-objects-8x8.tsx in Resources */,
 				4C1774A21D90999C000C0AFD /* hex1-65x65.tmx in Resources */,
 				4C0924DB1F127DC0009CA37E /* tetris-square-8x8.tsx in Resources */,
-				4C0924C11F118927009CA37E /* test-objects-24x24.tsx in Resources */,
+				4C6FB8A21F1E45AB00A57964 /* tetris-dynamics.tmx in Resources */,
 				4C0924E31F127DC0009CA37E /* lshape-24x16.png in Resources */,
-				4C0924BB1F0EE538009CA37E /* object-rotation.tmx in Resources */,
+				4C7AD3131F1E3D9400474722 /* graphtest-8x8.tsx in Resources */,
 				4C0924DD1F127DC0009CA37E /* tetris-square-16x16.tsx in Resources */,
+				4CF040C31F3112AD00D8AFFC /* isometric-130x66.tmx in Resources */,
 				4C0924E11F127DC0009CA37E /* bar-32x8.png in Resources */,
+				4CF040CA1F3228D600D8AFFC /* clyde-16x16.tsx in Resources */,
 				4C1774A71D90999C000C0AFD /* staggered-64x33.tmx in Resources */,
+				4CF040D21F32305900D8AFFC /* blinky-16x16.tsx in Resources */,
+				4C4184991F34126C004E392A /* mspacman-16x16.tsx in Resources */,
 				4C0924ED1F127DC0009CA37E /* tetris-layer2-336x240.png in Resources */,
+				4CF040C61F32279600D8AFFC /* inky-16x16.tsx in Resources */,
+				4C4184A21F34201E004E392A /* fruit-16x16 in Resources */,
 				4C1774A81D90999C000C0AFD /* hex-65x65-65x230.png in Resources */,
 				4C0924F11F127DC0009CA37E /* tetris-layer4-336x240.png in Resources */,
 				4C0924D71F127DC0009CA37E /* tetris-bar-32x8.tsx in Resources */,
-				4C440B9C1DAE911000DEC9A4 /* Assets.xcassets in Resources */,
+				4CF0FEA21F34EF27000AADEF /* Assets.xcassets in Resources */,
+				4C4184961F341241004E392A /* pacman-16x16.tsx in Resources */,
+				4C7AD3111F1E3D8100474722 /* graphtest-8x8.tmx in Resources */,
+				4CF040C41F3112C700D8AFFC /* roguelike-16x16.tsx in Resources */,
+				4C6FB8A71F1E5D2800A57964 /* pacman-8x8.tmx in Resources */,
 				4C1774A61D90999C000C0AFD /* roguelike-16x16.tmx in Resources */,
 				4C0924E51F127DC0009CA37E /* square-8x8.png in Resources */,
 				4C1774A51D90999C000C0AFD /* ortho4-16x16.tmx in Resources */,
-				4C440BA81DAE913000DEC9A4 /* Main.storyboard in Resources */,
+				4CF040CF1F3228E600D8AFFC /* ghosts-16x16 in Resources */,
+				4CF0FEA31F34EF27000AADEF /* Main.storyboard in Resources */,
 				4C0924EB1F127DC0009CA37E /* tetris-layer1-336x240.png in Resources */,
 				4C0924E71F127DC0009CA37E /* square-16x16.png in Resources */,
-				4C1774AD1D90999C000C0AFD /* staggered-64x192.png in Resources */,
-				4C0924C31F118927009CA37E /* test-objects-24x24.png in Resources */,
+				4CF0FEA41F34EF27000AADEF /* staggered-64x192.png in Resources */,
+				4C4184911F3411DE004E392A /* mspacman-16x16 in Resources */,
 				4C0924EF1F127DC0009CA37E /* tetris-layer3-336x240.png in Resources */,
+				4CF040CC1F3228D600D8AFFC /* pinky-16x16.tsx in Resources */,
 				4C0924DF1F127DC0009CA37E /* tetris-tshape-24x16.tsx in Resources */,
+				4C4184931F3411DE004E392A /* pacman-16x16 in Resources */,
+				4C41849F1F34198F004E392A /* fruit-16x16.tsx in Resources */,
 				4C1774AA1D90999C000C0AFD /* isometric-130x230.png in Resources */,
-				4CA22C831F042BB200CD0A72 /* test-objects-24x16.tsx in Resources */,
-				4C1774A11D90999C000C0AFD /* DemoFiles.plist in Resources */,
-				4CA22C7D1F040FF600CD0A72 /* Nintendo-Arcade.ttf in Resources */,
-				4C0924B91F0EE538009CA37E /* objects-test-16x16.png in Resources */,
 				4C1774AB1D90999C000C0AFD /* ortho4-16x16.png in Resources */,
-				4C1774AE1D90999C000C0AFD /* roguelike-16x16.tsx in Resources */,
-				4C1774A41D90999C000C0AFD /* isometric-130x66.tmx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -681,6 +735,8 @@
 				4CFEA35D1D8D04320055C150 /* hex1-65x65.tmx in Resources */,
 				4C0924E21F127DC0009CA37E /* bar-32x8.png in Resources */,
 				4C0924F01F127DC0009CA37E /* tetris-layer3-336x240.png in Resources */,
+				4C7AD3101F1E3D7500474722 /* graphtest-8x8.png in Resources */,
+				4C4184A01F34198F004E392A /* fruit-16x16.tsx in Resources */,
 				4C0924D81F127DC0009CA37E /* tetris-bar-32x8.tsx in Resources */,
 				4CBA61831D8A0A4600B31FC1 /* roguelike-16x16-anim.png in Resources */,
 				4C88E1AB1D8A241F00FCCFA3 /* ortho4-16x16.tmx in Resources */,
@@ -688,35 +744,41 @@
 				4C8E42E01DC26FD1002C76DA /* zlib in Resources */,
 				4C0924DC1F127DC0009CA37E /* tetris-square-8x8.tsx in Resources */,
 				4C0924E41F127DC0009CA37E /* lshape-24x16.png in Resources */,
+				4C6FB8A81F1E5D2800A57964 /* pacman-8x8.tmx in Resources */,
+				4CF040D31F32305900D8AFFC /* blinky-16x16.tsx in Resources */,
 				4CA22C7E1F040FF600CD0A72 /* Nintendo-Arcade.ttf in Resources */,
 				4C88E18C1D8A1BC400FCCFA3 /* roguelike-16x16.tmx in Resources */,
+				4C6FB8AC1F1E5D2800A57964 /* pm-maze-8x8.png in Resources */,
+				4CF040D01F3228E600D8AFFC /* ghosts-16x16 in Resources */,
+				4C7AD3141F1E3D9500474722 /* graphtest-8x8.tsx in Resources */,
 				4C440B9B1DAE911000DEC9A4 /* Assets.xcassets in Resources */,
 				4C0924DA1F127DC0009CA37E /* tetris-lshape-24x16.tsx in Resources */,
-				4C0924FD1F12A34E009CA37E /* test-objects-8x8.tsx in Resources */,
 				4C0924E01F127DC0009CA37E /* tetris-tshape-24x16.tsx in Resources */,
-				4CA22C841F042BB200CD0A72 /* test-objects-24x16.tsx in Resources */,
 				4C88E1AD1D8A242F00FCCFA3 /* ortho4-16x16.png in Resources */,
+				4C4184A31F34201E004E392A /* fruit-16x16 in Resources */,
 				4C440BB51DAE913A00DEC9A4 /* Main.storyboard in Resources */,
 				4C0924EE1F127DC0009CA37E /* tetris-layer2-336x240.png in Resources */,
+				4C4184971F341241004E392A /* pacman-16x16.tsx in Resources */,
+				4C7AD3121F1E3D8200474722 /* graphtest-8x8.tmx in Resources */,
 				4CFEA3591D8D02D20055C150 /* staggered-64x192.png in Resources */,
 				4C0924EC1F127DC0009CA37E /* tetris-layer1-336x240.png in Resources */,
-				4C0924C41F118927009CA37E /* test-objects-24x24.png in Resources */,
-				4CA3DA0E1D8AF07C001E165A /* DemoFiles.plist in Resources */,
-				4C0924C21F118927009CA37E /* test-objects-24x24.tsx in Resources */,
 				4CD6D2DE1D8B9EA10083DA7B /* isometric-130x230.png in Resources */,
 				4CFEA35C1D8D04320055C150 /* hex-65x65-65x230.png in Resources */,
-				4C0924F71F127E00009CA37E /* tetris-dynamics.tmx in Resources */,
 				4C0924F41F127DC0009CA37E /* tshape-24x16.png in Resources */,
+				4CF040CD1F3228D600D8AFFC /* pinky-16x16.tsx in Resources */,
+				4C6FB8AA1F1E5D2800A57964 /* pm-maze-8x8.tsx in Resources */,
 				4C0924E61F127DC0009CA37E /* square-8x8.png in Resources */,
-				4C0924BC1F0EE538009CA37E /* object-rotation.tmx in Resources */,
+				4C6FB8A31F1E45AB00A57964 /* tetris-dynamics.tmx in Resources */,
+				4C4184941F3411DE004E392A /* pacman-16x16 in Resources */,
 				4CFEA3581D8D02D20055C150 /* staggered-64x33.tmx in Resources */,
-				4C0924BA1F0EE538009CA37E /* objects-test-16x16.png in Resources */,
-				4C440BB41DAE913A00DEC9A4 /* LaunchScreen.storyboard in Resources */,
+				4C4184921F3411DE004E392A /* mspacman-16x16 in Resources */,
 				4CD6D2D51D8B9DE20083DA7B /* roguelike-16x16.tsx in Resources */,
+				4C41849A1F34126C004E392A /* mspacman-16x16.tsx in Resources */,
 				4C0924DE1F127DC0009CA37E /* tetris-square-16x16.tsx in Resources */,
+				4CF040CB1F3228D600D8AFFC /* clyde-16x16.tsx in Resources */,
 				4CD6D2DD1D8B9EA10083DA7B /* isometric-130x66.tmx in Resources */,
+				4CF040C71F32279600D8AFFC /* inky-16x16.tsx in Resources */,
 				4C0924E81F127DC0009CA37E /* square-16x16.png in Resources */,
-				4C0924FA1F12A261009CA37E /* test-objects-8x8.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -749,6 +811,32 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "xattr -rc $PROJECT_DIR";
+		};
+		4C4184A71F34D57B004E392A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:|FIXME:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
+		};
+		4C4184A81F34D592004E392A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:|FIXME:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
 		};
 		4CABC4D71DAEE1F900ACA1A4 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -800,6 +888,7 @@
 				4C1774B71D9099A3000C0AFD /* SKTileObject.swift in Sources */,
 				4C1774B11D9099A3000C0AFD /* SKTile.swift in Sources */,
 				4C440BA71DAE913000DEC9A4 /* AppDelegate.swift in Sources */,
+				4C4184A51F34B51D004E392A /* DemoController.swift in Sources */,
 				4C1774B81D9099A3000C0AFD /* SKTileset.swift in Sources */,
 				4C1774B21D9099A3000C0AFD /* SKTiledSceneCamera.swift in Sources */,
 				4C1774BA1D9099A3000C0AFD /* SKTiledObject.swift in Sources */,
@@ -809,6 +898,7 @@
 				4C1774B01D9099A3000C0AFD /* SKTilemap+Properties.swift in Sources */,
 				4C1774AF1D9099A3000C0AFD /* SKTiled+Extensions.swift in Sources */,
 				4C1774B41D9099A3000C0AFD /* SKTileLayer.swift in Sources */,
+				4C01D3A91F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift in Sources */,
 				4C440BA91DAE913000DEC9A4 /* GameViewController.swift in Sources */,
 				4C1774B91D9099A3000C0AFD /* SKTilesetData.swift in Sources */,
 				4C1774B51D9099A3000C0AFD /* SKTilemap.swift in Sources */,
@@ -826,6 +916,8 @@
 				4C88E1EA1D8A4EBE00FCCFA3 /* SKTilesetData.swift in Sources */,
 				4C440BB31DAE913A00DEC9A4 /* AppDelegate.swift in Sources */,
 				4C88E1E71D8A4EBE00FCCFA3 /* SKTileObject.swift in Sources */,
+				4C4184A61F34B51D004E392A /* DemoController.swift in Sources */,
+				4C01D3AA1F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift in Sources */,
 				4C88E1E81D8A4EBE00FCCFA3 /* SKTileset.swift in Sources */,
 				4C88E1E31D8A4EBE00FCCFA3 /* SKTilemap.swift in Sources */,
 				4CBB6AA31D8CC2C100DB56F1 /* SKTiledObject.swift in Sources */,
@@ -850,6 +942,7 @@
 				4CAFDA5A1E20327D006F2D83 /* SKTilemapParser.swift in Sources */,
 				4CAFDA5B1E20327D006F2D83 /* SKTileObject.swift in Sources */,
 				4CAFDA531E203276006F2D83 /* SKTiledObject.swift in Sources */,
+				4C01D3A71F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift in Sources */,
 				4C3117D91EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */,
 				4CAFDA591E20327D006F2D83 /* SKTilemap.swift in Sources */,
 				4CAFDA4F1E203270006F2D83 /* SKTilemap+Properties.swift in Sources */,
@@ -870,6 +963,7 @@
 				4CAFDA611E20327E006F2D83 /* SKTilemapParser.swift in Sources */,
 				4CAFDA621E20327E006F2D83 /* SKTileObject.swift in Sources */,
 				4CAFDA541E203277006F2D83 /* SKTiledObject.swift in Sources */,
+				4C01D3A81F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift in Sources */,
 				4C3117DA1EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */,
 				4CAFDA601E20327E006F2D83 /* SKTilemap.swift in Sources */,
 				4CAFDA501E203271006F2D83 /* SKTilemap+Properties.swift in Sources */,
@@ -1049,7 +1143,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 747QKN4G7U;
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
 				PRODUCT_NAME = SKTiledDemo;
@@ -1065,7 +1159,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 747QKN4G7U;
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
 				PRODUCT_NAME = SKTiledDemo;
@@ -1077,13 +1171,12 @@
 		4CFFD28A1E2016DF0023C0F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.14;
+				CURRENT_PROJECT_VERSION = 1.15;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEPLOYMENT_LOCATION = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DEVELOPMENT_TEAM = 747QKN4G7U;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1107,13 +1200,12 @@
 		4CFFD28B1E2016DF0023C0F7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.14;
+				CURRENT_PROJECT_VERSION = 1.15;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEPLOYMENT_LOCATION = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DEVELOPMENT_TEAM = 747QKN4G7U;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1136,11 +1228,10 @@
 		4CFFD2991E2019510023C0F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 1.14;
+				CURRENT_PROJECT_VERSION = 1.15;
 				DEFINES_MODULE = YES;
-				DEPLOYMENT_LOCATION = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DEVELOPMENT_TEAM = 747QKN4G7U;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1162,11 +1253,10 @@
 		4CFFD29A1E2019510023C0F7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 1.14;
+				CURRENT_PROJECT_VERSION = 1.15;
 				DEFINES_MODULE = YES;
-				DEPLOYMENT_LOCATION = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DEVELOPMENT_TEAM = 747QKN4G7U;
 				DYLIB_COMPATIBILITY_VERSION = 1;

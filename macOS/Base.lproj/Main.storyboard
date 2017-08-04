@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12121"/>
@@ -61,7 +61,7 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="File" id="bib-Uj-vzu">
                                     <items>
-                                        <menuItem title="Load Map..." keyEquivalent="o" id="IAo-SY-fd9">
+                                        <menuItem title="Load map..." keyEquivalent="o" id="IAo-SY-fd9">
                                             <connections>
                                                 <action selector="loadTilemap:" target="Voe-Tx-rLC" id="yvh-gN-fnF"/>
                                             </connections>
@@ -133,7 +133,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" customClass="GameWindowController" customModule="SKTiledDemo" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="SKTiled" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="SKTiled" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
@@ -145,7 +145,7 @@
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="250"/>
+            <point key="canvasLocation" x="-558" y="275"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="hIz-AP-VOD">
@@ -156,7 +156,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iiF-QO-DZ0" userLabel="Buttons View">
-                                <rect key="frame" x="224" y="108" width="352" height="16"/>
+                                <rect key="frame" x="179" y="108" width="442" height="16"/>
                                 <subviews>
                                     <button springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vU3-Eb-5vb" userLabel="Fit Button">
                                         <rect key="frame" x="0.0" y="0.0" width="82" height="16"/>
@@ -190,8 +190,24 @@
                                             <action selector="gridButtonPressed:" target="XfG-lQ-9wD" id="lTV-bI-Zx0"/>
                                         </connections>
                                     </button>
-                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="1wS-E3-azf" userLabel="Objects Button">
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="Hej-45-q5k" userLabel="Graph Button">
                                         <rect key="frame" x="180" y="0.0" width="82" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="82" id="DkQ-Dh-WfY"/>
+                                            <constraint firstAttribute="height" constant="16" id="OIX-Q6-oud"/>
+                                            <constraint firstAttribute="width" constant="82" id="XFu-lv-0BD"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="graph-button-norm" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="QiP-62-GYs">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <string key="keyEquivalent">g</string>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="graphButtonPressed:" target="XfG-lQ-9wD" id="qtl-z0-bAy"/>
+                                        </connections>
+                                    </button>
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="1wS-E3-azf" userLabel="Objects Button">
+                                        <rect key="frame" x="270" y="0.0" width="82" height="16"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="82" id="bl5-NR-rTd"/>
                                             <constraint firstAttribute="width" constant="82" id="jWc-i0-4J4"/>
@@ -207,7 +223,7 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="kMD-1U-8sj" userLabel="Next Button">
-                                        <rect key="frame" x="270" y="0.0" width="82" height="16"/>
+                                        <rect key="frame" x="360" y="0.0" width="82" height="16"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="82" id="CTe-ji-qdW"/>
                                             <constraint firstAttribute="width" constant="82" id="Mwn-lA-iUo"/>
@@ -228,8 +244,10 @@
                                     <integer value="1000"/>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
+                                    <integer value="1000"/>
                                 </visibilityPriorities>
                                 <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
@@ -322,6 +340,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="graph-button-norm" width="82" height="16"/>
         <image name="grid-button-norm" width="82" height="16"/>
         <image name="next-button-norm" width="82" height="16"/>
         <image name="objects-button-norm" width="82" height="16"/>

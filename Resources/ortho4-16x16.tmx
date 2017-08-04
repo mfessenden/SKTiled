@@ -547,11 +547,11 @@
    <object id="52" name="poly-obj" gid="2147483800" x="144" y="176" width="16" height="16">
     <polygon points="0,0 16,0 16,16 0,16"/>
    </object>
-   <object id="53" name="level-overlay" type="hud" x="192" y="208" width="112" height="16">
+   <object id="53" name="level-overlay" type="hud" x="224" y="208" width="80" height="16">
     <properties>
      <property name="type" value="poopy"/>
     </properties>
-    <text fontfamily="Nintendo-Arcade" pixelsize="8" wrap="1" color="#496365" valign="center">Level 1</text>
+    <text fontfamily="Nintendo-Arcade" pixelsize="8" wrap="1" color="#496365" valign="center">Level 01</text>
    </object>
    <object id="56" name="poly-obj2" x="12" y="218" width="16" height="16" rotation="45">
     <polygon points="0,0 16,0 16,16 0,16"/>

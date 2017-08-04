@@ -22,7 +22,7 @@ public extension SKTilemap {
         for (attr, value) in properties {
             
             let lattr = attr.lowercased()
-
+            
             if ["zdelta", "zdeltaforlayers", "layerdelta"].contains(lattr){
                 zDeltaForLayers = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : zDeltaForLayers
             }
@@ -126,13 +126,13 @@ public extension SKTilemap {
             if (lattr == "ygravity") {
                 gravity.dy = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : 0
             }
-            
+
             if (lattr == "showgrid") {
                 if (boolForKey(attr) == true) {
                     debugDrawOptions.insert(.drawGrid)
                 }
             }
-            
+
             if (lattr == "showbounds") {
                 if (boolForKey(attr) == true) {
                     debugDrawOptions.insert(.drawBounds)
@@ -250,9 +250,31 @@ public extension SKTileLayer {
     
     /**
      Parse the tile layer's properties.
-    */
+     */
     override public func parseProperties(completion: (() -> ())?) {
         super.parseProperties(completion: completion)
+        
+        
+        for (attr, _) in properties {
+            
+            let lattr = attr.lowercased()
+        
+            if (lattr == "buildgraph") {
+                if boolForKey(attr) == true {
+                    buildGraph = true
+                }
+            }
+            
+            // walkable ids
+            if (lattr == "walkableids") {
+                walkableIDs = integerArrayForKey("walkableIDs", separatedBy: ",")
+            }
+            
+            // walkable types
+            if (lattr == "walkabletypes") {
+                walkableTypes = stringArrayForKey("walkableTypes", separatedBy: ",")
+            }
+        }
     }
 }
 

@@ -90,7 +90,7 @@ public class SKTile: SKSpriteNode {
     open var showBounds: Bool {
         get {
             return (childNode(withName: "BOUNDS") != nil) ? childNode(withName: "BOUNDS")!.isHidden == false : false
-        }
+    }
         set {
             childNode(withName: "BOUNDS")?.removeFromParent()
             
@@ -105,7 +105,7 @@ public class SKTile: SKSpriteNode {
                     let fadeAction = SKAction.fadeOut(withDuration: highlightDuration)
                     frameShape.run(fadeAction, completion: {
                         frameShape.removeFromParent()
-                        
+    
                     })
                 }
             }
@@ -225,8 +225,8 @@ public class SKTile: SKSpriteNode {
         physicsBody = SKPhysicsBody(rectangleOf: rectSize)
         physicsBody?.isDynamic = isDynamic
     }
-    
     /**
+     
      Set up the tile's dynamics body with a rectanglular shape.
      
      - parameter withSize:  `CGFloat` rectangle size.
@@ -259,7 +259,7 @@ public class SKTile: SKSpriteNode {
         physicsBody = nil
         physicsBody?.isDynamic = false
     }
-    
+
     // MARK: - Animation
     
     /**
@@ -304,7 +304,7 @@ public class SKTile: SKSpriteNode {
             texture = tileData.texture
         }
     }
-    
+
     // MARK: - Misc
     
     /**
@@ -370,7 +370,7 @@ public class SKTile: SKSpriteNode {
                 newXScale *= -1                          // flip horizontally
                 alignment = .bottomLeft
             }
-            
+
             // rotate -90 (d, v)
             if (!tileData.flipHoriz && tileData.flipVert) {
                 newZRotation = CGFloat(Double.pi / 2)   // rotate -90deg
@@ -423,8 +423,8 @@ public class SKTile: SKSpriteNode {
         default:
             xAnchor = mapTileSizeHalfWidth / tilesetTileWidth
             yAnchor = mapTileSizeHalfHeight / tilesetTileHeight
-        }
-        
+    }
+
         // set the anchor point
         anchorPoint.x = xAnchor
         anchorPoint.y = yAnchor
@@ -449,7 +449,7 @@ public class SKTile: SKSpriteNode {
         }
         
         let tileSizeHalved = CGSize(width: layer.tileSize.halfWidth, height: layer.tileSize.halfHeight)
-
+        
         switch layer.orientation {
         
         case .orthogonal:
@@ -517,7 +517,7 @@ public class SKTile: SKSpriteNode {
      */
     internal func drawBounds(_ withOffset: Bool=true) {
         childNode(withName: "BOUNDS")?.removeFromParent()
-    
+        
         let mapOffset = tileData.tileset.mapOffset
         
         // map tile size
@@ -526,29 +526,29 @@ public class SKTile: SKSpriteNode {
         // tileset tile size
         let tilesetTileSize: CGSize = tileData.tileset.tileSize
         let tilesetTileHeight: CGFloat = tilesetTileSize.height
-
+        
         
         var xOffset: CGFloat = 0
         var yOffset: CGFloat = 0
-        
+                
         // calculate the offset amount based on the current tile orientation
         if alignment == .bottomRight || alignment == .topRight {
             xOffset = -(tilesetTileHeight - mapTileSize.height)
-            
+    
             if alignment == .topRight {
                 yOffset = -(tilesetTileHeight - mapTileSize.height)
-            }
-        }
-        
+    }
+}
         if alignment == .topLeft {
+    
             yOffset = -(tilesetTileHeight - mapTileSize.height)
-        }
-
+    }
+    
         let alignmentOffset = CGPoint(x: xOffset, y: yOffset)
         let vertices = getVertices(offset: alignmentOffset)
-
+    
         guard vertices.count > 0 else { return }
-
+     
         let renderQuality = tileData.renderQuality
         
         // scale vertices
@@ -568,15 +568,15 @@ public class SKTile: SKSpriteNode {
         bounds.strokeColor = highlightColor.withAlphaComponent(0.4)
         bounds.fillColor = highlightColor.withAlphaComponent(0.15)  // 0.35
         bounds.zPosition = shapeZPos
-
+            
         addChild(bounds)
-        
+            
         // anchor point
         let tileHeight = (layer != nil) ? layer.tilemap.tileHeight : tileSize.height
         let tileHeightDivisor = (tileHeight <= 16) ? 8 : 16
         let anchorRadius: CGFloat = ((tileHeight / 2) / tileHeightDivisor) * renderQuality
         let anchor = SKShapeNode(circleOfRadius: anchorRadius)
-        
+            
         anchor.name = "ANCHOR"
         bounds.addChild(anchor)
         anchor.fillColor = highlightColor.withAlphaComponent(0.2)
@@ -584,7 +584,7 @@ public class SKTile: SKSpriteNode {
         anchor.zPosition = shapeZPos + 10
         anchor.isAntialiased = layer.antialiased
         
-        
+    
         // first point
         let firstPoint = scaledVertices[0]
         let pointShape = SKShapeNode(circleOfRadius: anchorRadius)
@@ -595,25 +595,25 @@ public class SKTile: SKSpriteNode {
         pointShape.strokeColor = SKColor.clear
         pointShape.zPosition = shapeZPos * 15
         pointShape.isAntialiased = layer.antialiased
-        
+
         pointShape.position = firstPoint
         bounds.setScale(1 / renderQuality)
-
+    
     }
-}
+    }
     
-
-
+    
+        
 extension SKTile {
-    
+        
     /// Tile description.
     override public var description: String {
         let layerDescription = (layer != nil) ? ", Layer: \"\(layer.layerName)\"" : ""
         return "\(tileData.description)\(layerDescription)"
-    }
-    
+            }
+            
     override public var debugDescription: String {
         return description
+        }
     }
-}
 

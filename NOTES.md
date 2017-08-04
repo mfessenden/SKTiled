@@ -1,46 +1,75 @@
+# Notes
+
+## Release Checklist
+
+- remove debug methods for `SKTiledDemoScene`
+- update SKTiled versions
+- update podfile with current version
+    - `pod trunk push SKTiled.podspec`
+
+- remove references to `SKTiledDemoScene` in `SKTiled+Debug.swift`
+- enable `CLANG_WARN_DOCUMENTATION_COMMENTS` for documentation in framework targets
+- remove test resources
+
+
+
+### Added in master ~ 1.14
+
+- remove `SKTilemap.isolateLayer`
+    - do it in the layer
+- add `SKTilemap.tiledversion`
+- add `TiledApplicationVersion`
+
+## Filename Conventions
+
+`SKTilemapParser.rootPath` : resource path (defaults to bundled resource)
+
+    `SKTilemap.filename` represents the tmx filename (minus .tmx extension)
+    `SKTilemap.name` represents the tmx filename (minus .tmx extension)
+
+`SKTilemap.url` represents the full path to the tmx file
+
 ## Drawing & Coordinates
 
-### SpriteKit
+#### SpriteKit
 
 (0,0) is lower-left, y increases upward
 
-### Tiled
+#### Tiled
 
 (0,0) is top-left, y increases downward
 
 
 ## Tileset ID & Global ID
 
-
+n/a
 
 ## Math
 
+n/a
 
 ### Alignment
 
-// 33 / 230 = 0.14
-//  8 /  16 = 0.50
-//  8 /  24 = 0.33
-//  4 /   8 = 0.5
+**Bottom Left**
 
-
-
-// Bottom Left
 x-anchor point = (map half tile width / tileset tile width)
 y-anchor point = 1 - (map half tile height / tileset tile height)
 
 
-// Bottom Right
+**Bottom Right**
+
 x-anchor point = 1 - (map half tile width / tileset tile width)
 y-anchor point = 1 - (map half tile height / tileset tile height)
 
 
-// Top Left
+**Top Left**
+
 x-anchor point = (map half tile width / tileset tile width)
 y-anchor point = (map half tile height / tileset tile height)
 
 
-// Top Right
+**Top Right**
+
 x-anchor point = 1 - (map half tile width / tileset tile width)
 y-anchor point = (map half tile height / tileset tile height)
 

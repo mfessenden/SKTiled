@@ -48,12 +48,12 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 
 For Carthage installation, create a Cartfile in the root of your project:
 
-    github "mfessenden/SKTiled" ~> 1.14
+    github "mfessenden/SKTiled" ~> 1.15
 
 
 For CocoaPods, install via a reference in your podfile:
 
-    pod 'SKTiled', '~> 1.14'
+    pod 'SKTiled', '~> 1.15'
 
 
 ## Usage
@@ -61,8 +61,8 @@ For CocoaPods, install via a reference in your podfile:
 Loading a tilemap is very straightforward:
 
 ```swift
-if let tilemap = SKTilemap.load(fromFile: "sample-map") {
-    scene.addChild(tilemap)
+if let tilemap = SKTilemap.load(tmxFile: "sample-map") {
+scene.addChild(tilemap)
 }
 ```
 Once loaded, the rendered [`SKTilemap`][sktilemap-url] node reflects the various properties defined in the originating scene:
@@ -76,7 +76,7 @@ The [`SKTilemap`][sktilemap-url] node also allows access to child layers, tilese
 
 ### Working with Layers
 
-Layers represent containers that house various types of data:
+Layers represent containers that house various types of data: 
 
 - tile layers hold an array of tile sprites and associated tileset data
 - object groups contain vector shape objects
@@ -123,7 +123,7 @@ Tiles assigned custom properties in **Tiled** can be accessed in **SKTiled**:
 ```swift
 // query tiles of a certain type
 if let fireTiles = tilemap.getTiles(ofType: "fire") {
-    // do something fiery here...
+// do something fiery here...
 }
 
 // query tiles at a specific coordinate (all layers)
@@ -207,8 +207,8 @@ Tiles with animation will animate automatically; animated tiles can be accesssed
 let allAnimated = tilemap.animatedTiles(recursive: true)
 
 for tile in allAnimated {
-    // pause the current animation
-    tile.pauseAnimation = true
+// pause the current animation
+tile.pauseAnimation = true
 }
 
 // get animated tiles from individual layers

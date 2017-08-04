@@ -7,6 +7,12 @@
 //
 
 import SpriteKit
+import GameplayKit
+
+/**
+ Tiled application version.
+ */
+public var TiledApplicationVersion: String = "0"
 
 
 internal enum TiledColors: String {
@@ -159,11 +165,11 @@ public protocol SKTilemapDelegate: class {
     func objectForTile(className: String?) -> SKTile.Type
 }
 
-
+    
 /**
  The `SKTilemap` class represents a container which manages layers, tiles (sprites), vector objects & images.
  
-
+ 
  - `size`:          `CGSize` tile map size in tiles.
  - `tileSize`:      `CGSize` tile map tile size in pixels.
  - `sizeInPoints`:  `CGSize` tile map size in points.
@@ -172,9 +178,10 @@ public protocol SKTilemapDelegate: class {
  */
 open class SKTilemap: SKCropNode, SKTiledObject {
     
-    open var filename: String!                                    // tiled tmx filename
-    internal var url: URL!                                        // file url
+    /// file properties
+    open var url: URL!                                            // tmx file path
     open var uuid: String = UUID().uuidString                     // unique id
+    open var tiledversion: String!                                // Tiled application version
     
     open var type: String!                                        // map type
     open var size: CGSize                                         // map size (in tiles)
@@ -233,7 +240,6 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     // dispatch queues & groups
     internal let renderQueue = DispatchQueue(label: "com.sktiled.renderqueue", qos: .userInteractive)  // serial queue
     internal let renderGroup = DispatchGroup()
-    internal var tiledversion: Float = 1.0
     
     /// Overlay color.
     open var overlayColor: SKColor = SKColor(hexString: "#40000000")
@@ -249,6 +255,18 @@ open class SKTilemap: SKCropNode, SKTiledObject {
         }
         return result
     }
+    
+    /// Returns an array of pathfinding graphs.
+    open var graphs: [GKGridGraph<GKGridGraphNode>] {
+        var result: [GKGridGraph<GKGridGraphNode>] = []
+        for tileLayer in tileLayers() {
+            if let graph = tileLayer.graph {
+                result.append(graph as! GKGridGraph<GKGridGraphNode>)
+            }
+        }
+        return result
+    }
+    
     
     /// Optional background color (read from the Tiled file)
     open var backgroundColor: SKColor? = nil {
@@ -266,7 +284,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
             (maskNode as? SKSpriteNode)?.texture?.filteringMode = .nearest
         }
     }
-
+    
     /** 
     The tile map default base layer, used for displaying the current grid, getting coordinates, etc.
     */
@@ -281,8 +299,8 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      Pause overlay.
      */
     lazy var overlay: SKSpriteNode = {
-        let pauseOverlayColor = self.backgroundColor ?? SKColor.clear
-        let overlayNode = SKSpriteNode(color: pauseOverlayColor.withAlphaComponent(0.5), size: self.sizeInPoints)
+        let pauseOverlayColor = SKColor.clear // self.backgroundColor ?? SKColor.clear
+        let overlayNode = SKSpriteNode(color: pauseOverlayColor, size: self.sizeInPoints)
         self.addChild(overlayNode)
         overlayNode.zPosition = self.lastZPosition * self.zDeltaForLayers
         return overlayNode
@@ -296,7 +314,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     }
     
     internal var loggingLevel: LoggingLevel = .warning
-
+    
     
     open var color: SKColor = SKColor.clear                            // used for pausing
     open var gridColor: SKColor = SKColor.black                        // color used to visualize the tile grid
@@ -317,7 +335,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     /// dynamics
     open var gravity: CGVector = CGVector.zero
     
-    /// Weak reference to `SKTilemapDelegate` delegate.
+    /// Weak reference to `SKTilemapDelegate` delegate
     weak open var delegate: SKTilemapDelegate?
     
     /// Size of the map in points.
@@ -438,13 +456,18 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     }
 
     
+    /// Convenience property to return all group layers.
+    open var groupLayers: [SKGroupLayer] {
+        return layers.sorted(by: {$0.index < $1.index}).filter({$0 as? SKGroupLayer != nil}) as! [SKGroupLayer]
+    }
+    
     /// Global antialiasing of lines
     open var antialiasLines: Bool = false {
         didSet {
             layers.forEach { $0.antialiased = antialiasLines }
         }
     }
-    
+
     /// Global tile count
     open var tileCount: Int {
         return tileLayers(recursive: true).reduce(0) { (result: Int, layer: SKTileLayer) in
@@ -474,13 +497,18 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      - parameter verbosity:          `LoggingLevel` logging verbosity.
      - returns: `SKTilemap?` tilemap object (if file read succeeds).
      */
-    open class func load(fromFile filename: String,
+    open class func load(tmxFile: String,
+                         inDirectory: String? = nil,
                          delegate: SKTilemapDelegate? = nil,
                          withTilesets: [SKTileset]? = nil,
                          ignoreProperties noparse: Bool = false,
                          verbosity: LoggingLevel = .info) -> SKTilemap? {
         
-        if let tilemap = SKTilemapParser().load(fromFile: filename, delegate: delegate, withTilesets: withTilesets, ignoreProperties: noparse, verbosity: verbosity) {
+        
+        
+        if let tilemap = SKTilemapParser().load(tmxFile: tmxFile, inDirectory: inDirectory,
+                                                delegate: delegate, withTilesets: withTilesets,
+                                                ignoreProperties: noparse, verbosity: verbosity) {
             return tilemap
         }
         return nil
@@ -540,6 +568,12 @@ open class SKTilemap: SKCropNode, SKTiledObject {
             self.staggerindex = hexindex
         }
         
+        // Tiled application version
+        if let tiledVersion = attributes["tiledversion"] {
+            self.tiledversion = tiledVersion
+            TiledApplicationVersion = tiledVersion
+        }
+        
         // global antialiasing
         antialiasLines = tileSize.width > 16 ? true : false
         super.init()
@@ -590,7 +624,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
         tilesets.insert(tileset)
         tileset.tilemap = self
         tileset.ignoreProperties = ignoreProperties
-        tileset.parseProperties(completion: nil)
+        tileset.parseProperties(completion: nil)        
     }
     
     /**
@@ -640,10 +674,10 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     open func pointForCoordinate(coord: CGPoint, offsetX: CGFloat=0, offsetY: CGFloat=0) -> CGPoint {
         return baseLayer.pointForCoordinate(coord: coord, offsetX: offsetX, offsetY: offsetY)
     }
-    
+
     /**
      Returns a tile coordinate for a given point in the layer.
-     
+    
      - parameter point: `CGPoint` point in layer.
      - returns: `CGPoint` tile coordinate.
      */
@@ -748,6 +782,22 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     }
     
     /**
+     Return layers with names matching the given prefix.
+     
+     - parameter withPrefix: `String` prefix to match.
+     - parameter recursive: `Bool` include nested layers.
+     - returns: `[TiledLayerObject]` layer objects.
+     */
+    open func getLayers(withPrefix: String, recursive: Bool=true) -> [TiledLayerObject] {
+        var result: [TiledLayerObject] = []
+        let layersToCheck = self.getLayers(recursive: recursive)
+        if let index = layersToCheck.index( where: { $0.layerName.hasPrefix(withPrefix) } ) {
+            result.append(layersToCheck[index])
+        }
+        return result
+    }
+    
+    /**
      Returns a layer matching the given UUID.
      
      - parameter uuid: `String` tile layer UUID.
@@ -815,6 +865,17 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     }
     
     /**
+     Return tile layers with names matching the given prefix. If recursive is false, only returns top-level layers.
+     
+     - parameter withPrefix: `String` prefix to match.
+     - parameter recursive:  `Bool` include nested layers.
+     - returns: `[SKTileLayer]` array of tile layers.
+     */
+    open func tileLayers(withPrefix: String, recursive: Bool=true) -> [SKTileLayer] {
+        return getLayers(recursive: recursive).filter { $0 as? SKTileLayer != nil }.filter { $0.layerName.hasPrefix(withPrefix) } as! [SKTileLayer]
+    }
+    
+    /**
      Returns a tile layer at the given index, otherwise, nil.
      
      - parameter atIndex: `Int` layer index.
@@ -837,6 +898,17 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      */
     open func objectGroups(named layerName: String, recursive: Bool=true) -> [SKObjectGroup] {
         return getLayers(recursive: recursive).filter { $0 as? SKObjectGroup != nil }.filter { $0.name == layerName } as! [SKObjectGroup]
+    }
+    
+    /**
+     Return object groups with names matching the given prefix. If recursive is false, only returns top-level layers.
+     
+     - parameter withPrefix: `String` prefix to match.
+     - parameter recursive:  `Bool` include nested layers.
+     - returns: `[SKObjectGroup]` array of object groups.
+     */
+    open func objectGroups(withPrefix: String, recursive: Bool=true) -> [SKObjectGroup] {
+        return getLayers(recursive: recursive).filter { $0 as? SKObjectGroup != nil }.filter { $0.layerName.hasPrefix(withPrefix) } as! [SKObjectGroup]
     }
     
     /**
@@ -865,6 +937,17 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     }
     
     /**
+     Return image layers with names matching the given prefix. If recursive is false, only returns top-level layers.
+     
+     - parameter withPrefix: `String` prefix to match.
+     - parameter recursive:  `Bool` include nested layers.
+     - returns: `[SKImageLayer]` array of image layers.
+     */
+    open func imageLayers(withPrefix: String, recursive: Bool=true) -> [SKImageLayer] {
+        return getLayers(recursive: recursive).filter { $0 as? SKImageLayer != nil }.filter { $0.layerName.hasPrefix(withPrefix) } as! [SKImageLayer]
+    }
+    
+    /**
      Returns an image layer at the given index, otherwise, nil.
      
      - parameter atIndex: `Int` layer index.
@@ -877,7 +960,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
         }
         return nil
     }
-    
+
     /**
      Return group layers matching the given name. If recursive is false, only returns top-level layers.
      
@@ -887,6 +970,17 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      */
     open func groupLayers(named layerName: String, recursive: Bool=true) -> [SKGroupLayer] {
         return getLayers(recursive: recursive).filter { $0 as? SKGroupLayer != nil }.filter { $0.name == layerName } as! [SKGroupLayer]
+    }
+    
+    /**
+     Return group layers with names matching the given prefix. If recursive is false, only returns top-level layers.
+     
+     - parameter withPrefix:  `String` prefix to match.
+     - parameter recursive:   `Bool` include nested layers.
+     - returns: `[SKGroupLayer]` array of group layers.
+     */
+    open func groupLayers(withPrefix: String, recursive: Bool=true) -> [SKGroupLayer] {
+        return getLayers(recursive: recursive).filter { $0 as? SKGroupLayer != nil }.filter { $0.layerName.hasPrefix(withPrefix) } as! [SKGroupLayer]
     }
     
     /**
@@ -977,7 +1071,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      */
     open func tilesAt(coord: CGPoint) -> [SKTile] {
         return tileLayers(recursive: true).flatMap { $0.tileAt(coord: coord) }
-    }
+            }
 
     /**
      Return tiles at the given coordinate (all tile layers).
@@ -1177,7 +1271,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     
     /**
      Returns an object with the given id.
-     
+                
      - parameter id: `Int` Object id.
      - returns: `SKTileObject?`
      */
@@ -1259,7 +1353,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
         let timeInterval = Date().timeIntervalSince(timeStarted)
         let timeStamp = String(format: "%.\(String(3))f", timeInterval)        
         if loggingLevel.rawValue <= 1 {
-            print("\n ✽ Success! tilemap \"\(name != nil ? name! : "null")\" rendered in: \(timeStamp)s ✽\n")
+            print("\n ✽ Success! tilemap \"\(mapName)\" rendered in: \(timeStamp)s ✽\n")
         }
         
         // transfer attributes
@@ -1269,12 +1363,18 @@ open class SKTilemap: SKCropNode, SKTiledObject {
         defer {
             self.delegate?.didRenderMap(self)
         }
+        
+        // build any pathfinding graphs
+        // TODO: callback to scene?
+        buildGraphs()
     }
     
     // MARK: - Updates
     open func update(_ currentTime: TimeInterval) {
         guard (isRendered == true) else { return }
         _layers.forEach( { $0.update(currentTime)})
+        
+        //clampPositionForMap()
     }
     
     /**
@@ -1284,12 +1384,11 @@ open class SKTilemap: SKCropNode, SKTiledObject {
         guard (isRendered == true) else { return }
 
         let scaleFactor = getContentScaleFactor()
-        
+    
         _layers.forEach{ layer in
-            layer.position = clampedPosition(point: layer.position, scale: scaleFactor)
-            
+            //layer.position = clampedPosition(point: layer.position, scale: scaleFactor)
+            clampPositionWithNode(node: layer, scale: scaleFactor)
         }
-        
         clampPositionWithNode(node: self, scale: scaleFactor)
     }
 }
@@ -1409,7 +1508,7 @@ extension SKTilemap {
     internal func doStaggerY(_ y: Int) -> Bool {
         return !staggerX && Bool((y & 1) ^ staggerEven.hashValue)
     }
-        
+    
     internal func topLeft(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
         // if the value of y is odd & stagger index is odd
         if (staggerX == false) {
@@ -1490,7 +1589,7 @@ extension SKTilemap {
      */
     open func renderableObjects() -> [SKNode] {
         var result: [SKNode] = []
-        enumerateChildNodes(withName: "//*") {
+        enumerateChildNodes(withName: "*") {   // was //*
             node, stop in
             if (node as? SKTile != nil) || (node as? SKTileObject != nil) {
                 result.append(node)
@@ -1500,24 +1599,30 @@ extension SKTilemap {
     }
     
     /**
-     Dump a summary of the current scenes layer data.
+     Dump a summary of the current tilemap's layer statistics.
+     
+     - parameter base: `Bool` include the map's default layer.
      */
-    open func mapStatistics() {
+    open func mapStatistics(base: Bool = false) {
         guard (layerCount > 0) else {
             print("# Tilemap \"\(mapName)\": 0 Layers")
             return
         }
         
         // format the header
-        let headerString = "# Tilemap \"\(mapName)\": \(tileCount) Tiles: \(layerCount) Layers"
+        let graphsString = (graphs.count > 0) ? (graphs.count > 1) ? " : \(graphs.count) Graphs" : " : \(graphs.count) Graph" : ""
+        let headerString = "# Tilemap \"\(mapName)\": \(tileCount) Tiles: \(layerCount) Layers\(graphsString)"
         let titleUnderline = String(repeating: "-", count: headerString.characters.count)
         var outputString = "\n\(headerString)\n\(titleUnderline)"
         
         var allLayers = self.layers
-        allLayers.insert(self.baseLayer, at: 0)
+        
+        if (base == true) {
+            allLayers.insert(self.baseLayer, at: 0)
+        }
+        
         // grab the stats from each layer
         let allLayerStats = allLayers.map { $0.layerStatsDescription }
-        
         
         var prefixes: [String] = ["", "", "", "", "pos", "size", "offset", "anc", "zpos", "opac"]
         var buffers: [Int] = [1, 2, 0, 0, 1, 1, 1, 1, 1, 1]
@@ -1544,7 +1649,7 @@ extension SKTilemap {
         }
         
         
-        
+
         for (_, stats) in allLayerStats.enumerated() {
             var layerOutputString = ""
             for (sidx, stat) in stats.enumerated() {
@@ -1582,6 +1687,14 @@ extension SKTilemap {
             
             outputString += "\n\(layerOutputString)"
         }
+        
+        /*
+        // Tilesets
+        outputString += "\n"
+        for tileset in self.tilesets {
+            outputString += "\n\(tileset.debugDescription)"
+        }*/
+        
 
         print("\n\n" + outputString + "\n\n")
     }
@@ -1592,7 +1705,7 @@ extension SKTilemap {
  Default implementations of callbacks.
  */
 extension SKTilemapDelegate {
-    
+        
     /// Determines the z-zposition difference between layers.
     public var zDeltaForLayers: CGFloat {
         return 50
@@ -1600,16 +1713,17 @@ extension SKTilemapDelegate {
     
     /**
      Called when the tilemap is instantiated.
-
+    
      - parameter tilemap:  `SKTilemap` tilemap instance.
      */
     public func didBeginParsing(_ tilemap: SKTilemap) {}
     /**
-     Called when a tileset is instantiated.
+     Called when a tileset is added to a map.
 
      - parameter tileset:  `SKTileset` tileset instance.
      */
     public func didAddTileset(_ tileset: SKTileset) {}
+
     /**
      Called when a layer is added to a tilemap.
 
@@ -1630,12 +1744,13 @@ extension SKTilemapDelegate {
     public func didRenderMap(_ tilemap: SKTilemap, _ completion: (()->())? = nil) {}
     /**
      Returns a tile object for use in tile layers.
-
-     - parameter className:  `String` optional class name.
+    
+     - parameter className:    `String` optional class name.
      - returns `SKTile.self`:  `SKTile` subclass.
      */
     public func objectForTile(className: String? = nil) -> SKTile.Type { return SKTile.self }
 }
+
 
 // TODO: - Expand these
 extension SKTilemap: TiledSceneCameraDelegate {
@@ -1676,7 +1791,7 @@ extension SKTilemap {
     
     /**
      Returns a named tile layer if it exists, otherwise, nil.
-     
+        
      - parameter named: `String` tile layer name.
      - returns: `SKTileLayer?`
      */
@@ -1691,7 +1806,7 @@ extension SKTilemap {
     
     /**
      Returns a named object group if it exists, otherwise, nil.
-     
+                
      - parameter named: `String` tile layer name.
      - returns: `SKObjectGroup?`
      */
@@ -1700,16 +1815,15 @@ extension SKTilemap {
         if let layerIndex = objectGroups().index( where: { $0.name == name } ) {
             let layer = objectGroups()[layerIndex]
             return layer
-        }
+            }
         return nil
     }
     
     /**
      Output a summary of the current scenes layer data.
      */
-    @available(*, deprecated, message: "use `mapStatistics()` instead")
+    @available(*, deprecated, message: "use `mapStatistics(base:)` instead")
     open func debugLayers(reverse: Bool=false) {
         mapStatistics()
     }
 }
-

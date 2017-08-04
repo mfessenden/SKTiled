@@ -2,6 +2,7 @@
 <map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="42" height="30" tilewidth="8" tileheight="8" nextobjectid="140">
  <properties>
   <property name="gridColor" type="color" value="#ffdede97"/>
+  <property name="yGravity" type="float" value="-4"/>
  </properties>
  <tileset firstgid="1" source="tetris-tshape-24x16.tsx"/>
  <tileset firstgid="10" source="tetris-square-16x16.tsx"/>

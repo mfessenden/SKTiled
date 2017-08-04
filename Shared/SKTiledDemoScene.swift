@@ -37,16 +37,15 @@ public class SKTiledDemoScene: SKTiledScene {
             guard oldValue != coordinate else { return }
             
             
-            self.enumerateChildNodes(withName: "//*") {
+            self.enumerateChildNodes(withName: "*") {  // was //*
                 node, stop in
                 
                 if let tile = node as? TileShape {
                     if (tile.coord == self.coordinate) && (tile.useLabel == true) {
-                        tile.detonate()
+                        tile.cleanup()
                     }
                 }
             }
-            
         }
     }
     
@@ -59,7 +58,7 @@ public class SKTiledDemoScene: SKTiledScene {
         #if os(macOS)
         updateTrackingViews()
         addChild(mouseTracker)
-        mouseTracker.zPosition = 10000
+        mouseTracker.zPosition = 1000
         #endif
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateCoordinate), name: NSNotification.Name(rawValue: "updateCoordinate"), object: nil)
@@ -73,7 +72,7 @@ public class SKTiledDemoScene: SKTiledScene {
      - parameter y:         `Int` y-coordinate.
      - parameter duration:  `TimeInterval` tile life.
      */
-    func addTileAt(layer: TiledLayerObject, _ x: Int, _ y: Int, useLabel: Bool=true)  {
+    func addTileToLayer(_ layer: TiledLayerObject, _ x: Int, _ y: Int, useLabel: Bool=true)  {
         guard let tilemap = tilemap else { return  }
         
         // validate the coordinate
@@ -131,6 +130,7 @@ public class SKTiledDemoScene: SKTiledScene {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "loadPreviousScene"), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "updateDebugLabels"), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "updateCoordinate"), object: nil)
+        
         removeAllActions()
         removeAllChildren()
     }
@@ -139,6 +139,7 @@ public class SKTiledDemoScene: SKTiledScene {
      Callback to the GameViewController to reload the current scene.
      */
     public func reloadScene() {
+        print("scene: reloading...")
         NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadScene"), object: nil)
     }
     
@@ -202,13 +203,14 @@ public class SKTiledDemoScene: SKTiledScene {
     fileprivate func updateHud(){
         guard let tilemap = tilemap else { return }
         updateMapInfo(msg: tilemap.description)
+                
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateWindowTitle"), object: nil, userInfo: ["wintitle": tilemap.url.lastPathComponent])
     }
     
     override open func update(_ currentTime: TimeInterval) {
-        guard (self.blocked == false) else { return }
         super.update(currentTime)
         
-        self.enumerateChildNodes(withName: "//*") {
+        self.enumerateChildNodes(withName: "//*") { 
             node, stop in
             
             if let tile = node as? TileShape {
@@ -228,17 +230,13 @@ public class SKTiledDemoScene: SKTiledScene {
     
     // MARK: - Callbacks
     override open func didReadMap(_ tilemap: SKTilemap) {
-        // TODO: turn this on for master
-        //self.physicsWorld.speed = 0
+        self.physicsWorld.speed = 0
     }
     
     override open func didRenderMap(_ tilemap: SKTilemap) {
         // update the HUD to reflect the number of tiles created
         updateHud()
         tilemap.mapStatistics()
-        self.blocked = false
-        
-        //dump(tilemap)
     }
 }
 
@@ -264,7 +262,7 @@ extension SKTiledDemoScene {
             // add a tile shape to the base layer where the user has clicked
             
             // highlight the current coordinate
-            addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y))
+            addTileToWorld(Int(coord.x), Int(coord.y), useLabel: true)
             
             // update the tile information label
             let coordStr = "Coord: \(coord.shortDescription), \(positionInLayer.roundTo())"
@@ -307,7 +305,8 @@ extension SKTiledDemoScene {
         if (tilemap.isPaused == false) {
             // highlight the current coordinate
             if currentClicked.count == 0 {
-                addTileAt(layer: baseLayer, Int(coord.x), Int(coord.y))
+                //addTileToLayer(baseLayer, Int(coord.x), Int(coord.y))
+                addTileToWorld(Int(coord.x), Int(coord.y), useLabel: true)
             } else {
                 for tile in currentClicked {
                     // remove the node asyncronously
@@ -354,12 +353,11 @@ extension SKTiledDemoScene {
             let xDistanceToCenter = (xpos / viewSize.width) - 0.5
             let yDistanceToCenter = (ypos / viewSize.height) - 0.5
             
+            mouseTracker.position = positionInWindow
             
-            mouseTracker.xpos = xDistanceToCenter
-            mouseTracker.ypos = yDistanceToCenter
+            
+            mouseTracker.offset = CGPoint(x: xDistanceToCenter, y: yDistanceToCenter)
         }
-
-        
         
         let baseLayer = tilemap.baseLayer
 
@@ -368,7 +366,6 @@ extension SKTiledDemoScene {
         let positionInLayer = baseLayer.mouseLocation(event: event)
         let coord = baseLayer.coordinateAtMouseEvent(event: event)
         let validCoord = baseLayer.isValid(Int(coord.x), Int(coord.y))
-        
         
         // query nodes under the cursor
         var propertiesInfoString = ""
@@ -379,14 +376,13 @@ extension SKTiledDemoScene {
             propertiesInfoString = tiledObjectsUnderCursor.first!.description
         }
         
-        
         // update the mouse tracking node
         mouseTracker.position = positionInScene
         mouseTracker.zPosition = tilemap.lastZPosition * 10
         mouseTracker.coord = coord
         mouseTracker.isValid = validCoord
         
-        if liveMode == true && isPaused == false {
+        if (liveMode == true) && (isPaused == false) {
             self.addTileToWorld(Int(coord.x), Int(coord.y))
         }
         
@@ -436,6 +432,227 @@ extension SKTiledDemoScene {
             }
         }
     }
+    
+    /**
+     Run demo keyboard events (macOS).
+     
+     - parameter eventKey: `UInt16` event key.
+     
+     */
+    public func keyboardEvent(eventKey: UInt16) {
+        guard let view = view,
+            let cameraNode = cameraNode,
+            let tilemap = tilemap,
+            let worldNode = worldNode else {
+                return
+        }
+        
+        // 'a' or 'f' fits the map to the current view
+        if eventKey == 0x0 || eventKey == 0x3 {
+            cameraNode.fitToView(newSize: view.bounds.size)
+        }
+        
+        // 'd' shows/hides debug view
+        if eventKey == 0x02 {
+            print("[SKTiledDemoScene]: no debug drawing options available.")
+            
+        }
+        
+        // 'h' hides the HUD
+        if eventKey == 0x04 {
+            if let view = self.view {
+                let debugState = !view.showsFPS
+                view.showsFPS = debugState
+                view.showsNodeCount = debugState
+                view.showsDrawCount = debugState
+            }
+        }
+        
+        
+        // 'j' fades the layers in succession
+        if eventKey == 0x26 {
+            var fadeTime: TimeInterval = 3
+            let additionalTime: TimeInterval = (tilemap.layerCount > 6) ? 1.25 : 2.25
+            for layer in tilemap.getContentLayers() {
+                let fadeAction = SKAction.fadeAfter(wait: fadeTime, alpha: 0)
+                layer.run(fadeAction, completion: {
+                    print("layer: \"\(layer.layerName)\"")
+                })
+                fadeTime += additionalTime
+            }
+        }
+        
+        // 'k' updates the render quality
+        if eventKey == 0x28 {
+            if tilemap.renderQuality < 16 {
+                tilemap.renderQuality *= 2
+            }
+        }
+        
+        // 'l' toggles object bounds drawing
+        if eventKey == 0x25 {
+            // if objects are shown...
+            if tilemap.debugDrawOptions.contains(.drawObjectBounds) {
+                tilemap.debugDrawOptions.remove(.drawObjectBounds)
+            } else {
+                tilemap.debugDrawOptions.insert(.drawObjectBounds)
+            }
+        }
+        
+        // 'o' shows/hides object layers
+        if eventKey == 0x1f {
+            tilemap.showObjects = !tilemap.showObjects
+        }
+        
+        // 'p' pauses the map
+        if eventKey == 0x23 {
+            self.isPaused = !self.isPaused
+        }
+        
+        // 'q' print layer stats
+        if eventKey == 0xc {
+            tilemap.mapStatistics()
+        }
+        
+        // '←' advances to the next scene
+        if eventKey == 0x7B {
+            self.loadPreviousScene()
+        }
+        
+        // '1' zooms to 100%
+        if eventKey == 0x12 || eventKey == 0x53 {
+            cameraNode.resetCamera()
+        }
+        
+        // 'clear' clears TileShapes
+        if eventKey == 0x47 {
+            self.enumerateChildNodes(withName: "*") {   // was //*
+                node, stop in
+                
+                if let tile = node as? TileShape {
+                    tile.removeFromParent()
+                }
+            }
+        }
+        
+        // MARK: - DEBUGGING TESTS
+        // TODO: get rid of these in master       
+        // 'm' toggles tile bounds drawing
+        if eventKey == 0x2e {
+            // if objects are shown...
+            if tilemap.debugDrawOptions.contains(.drawTileBounds) {
+                tilemap.debugDrawOptions.remove(.drawTileBounds)
+            } else {
+                tilemap.debugDrawOptions.insert(.drawTileBounds)
+            }
+        }
+        
+        // 'g' shows the grid for the map default layer.
+        if eventKey == 0x5 {
+            tilemap.baseLayer.debugDrawOptions = (tilemap.baseLayer.debugDrawOptions != []) ? [] : [.demo]
+        }
+        
+        // 'i' shows the center point of each tile
+        if eventKey == 0x22 {
+            var fadeTime: TimeInterval = 3
+            let shapeRadius = (tilemap.tileHeightHalf / 4) - 0.5
+            for x in 0..<Int(tilemap.size.width) {
+                for y in 0..<Int(tilemap.size.height) {
+                    
+                    let shape = SKShapeNode(circleOfRadius: shapeRadius)
+                    shape.alpha = 0.7
+                    shape.fillColor = SKColor(hexString: "#FD4444")
+                    shape.strokeColor = .clear
+                    worldNode.addChild(shape)
+                    
+                    let shapePos = tilemap.baseLayer.pointForCoordinate(x, y)
+                    shape.position = worldNode.convert(shapePos, from: tilemap.baseLayer)
+                    shape.zPosition = tilemap.lastZPosition + tilemap.zDeltaForLayers
+                    
+                    let fadeAction = SKAction.fadeAfter(wait: fadeTime, alpha: 0)
+                    shape.run(fadeAction, completion: {
+                        shape.removeFromParent()
+                    })
+                    fadeTime += 0.003
+                    
+                }
+                //fadeTime += 0.02
+            }
+        }
+        
+        // 'n' changes the background color
+        if eventKey == 0x2d {
+            //tilemap.backgroundColor = SKColor(hexString: "#ea32fa")
+            // if objects are shown...
+            if tilemap.baseLayer.debugDrawOptions.contains(.drawBackground) {
+                tilemap.baseLayer.debugDrawOptions.remove(.drawBackground)
+            } else {
+                tilemap.baseLayer.debugDrawOptions.insert(.drawBackground)
+            }
+        }
+        
+        // 'r' reloads the scene
+        if eventKey == 0xf {
+            self.reloadScene()
+        }
+        
+        // 's' runs a custom command
+        if eventKey == 0x1 {
+        }
+        
+        // 't' runs a custom command
+        if eventKey == 0x11 {
+            
+        }
+        
+        // 'u' runs a custom command
+        if eventKey == 0x20 {
+            
+        }
+        
+        // 'v' runs a custom test
+        if eventKey == 0x9 {
+            view.showsPhysics = !view.showsPhysics
+        }
+        
+        // 'w' toggles debug layer visibility
+        if eventKey == 0xd {
+            tilemap.getLayers(ofType: "DEBUG").forEach{ $0.isHidden = !$0.isHidden }
+        }
+        
+        // 'y' runs a custom test
+        if eventKey == 0x10 {
+            tilemap.getLayers(ofType: "DEBUG").forEach{ $0.isHidden = !$0.isHidden }
+        }
+        
+        // 'z' is a custom test
+        if eventKey == 0x06 {
+            let groups = tilemap.groupLayers()
+            for grp in groups {
+                print("\(grp.path), \(grp.index)")
+            }
+        }
+        
+        // '↑' clamps layer positions
+        if eventKey == 0x7e {
+            let scaleFactor =  getContentScaleFactor()
+            var nodesUpdated = 0
+            tilemap.enumerateChildNodes(withName: "*") {
+                node, stop in
+                
+                
+                let className = String(describing: type(of: node))
+                
+                let oldPos = node.position
+                node.position = clampedPosition(point: node.position, scale: scaleFactor)
+                print("- \(className): \(node.position), \(oldPos)")
+                nodesUpdated += 1
+            }
+            
+            
+            print("[SKTiledDemoScene]: \(nodesUpdated) nodes updated.")
+        }
+    }
 }
 #endif
 
@@ -449,25 +666,12 @@ open class MouseTracker: SKNode {
     private let scaleAction = SKAction.scale(by: 1.55, duration: 0.025)
     private let scaleSequence: SKAction
     
-    private let tileWidth: CGFloat = 8
+    private let scaleSize: CGFloat = 8
     
     public var coord: CGPoint = .zero {
         didSet {
             label.text = "(\(Int(coord.x)), \(Int(coord.y)))"
             shadow.text = label.text
-        }
-    }
-    
-    public var xpos: CGFloat = 0 {
-        didSet {
-            label.position.x = (tileWidth * 12) * -xpos
-        }
-    }
-    
-    public var ypos: CGFloat = 0 {
-        didSet {
-            //let newYPos = lerp(start: 0.25, end: 1.0, t: ypos)
-            label.position.y = (tileWidth * 6) * -ypos
         }
     }
     
@@ -492,6 +696,22 @@ open class MouseTracker: SKNode {
         }
     }
     
+    public var offset: CGPoint = .zero {
+        didSet {
+            let ox = lerp(start: 0, end: 48, t: -offset.x)
+            let oy = lerp(start: 0, end: 48, t: -offset.y)
+            
+            //label.position.x = offset.x * -48
+            //label.position.y = offset.y * -48
+            
+            label.position.x = ox * 1.5
+            label.position.y = oy
+            
+            //print("offset: \(label.position.roundTo())")
+        }
+    }
+    
+    
     override public init() {
         scaleSequence = SKAction.sequence([scaleAction, scaleAction.reversed()])
         super.init()
@@ -508,9 +728,8 @@ open class MouseTracker: SKNode {
         
         addChild(label)
         label.addChild(shadow)
-        shadow.zPosition = label.zPosition - 1
-        
-        fontSize = tileWidth * 1.5
+        shadow.zPosition = label.zPosition - 1        
+        fontSize = scaleSize * 1.5
         
         circle.strokeColor = .clear
         label.fontSize = fontSize
@@ -519,6 +738,5 @@ open class MouseTracker: SKNode {
         
         shadow.position.x += shadowOffset
         shadow.position.y -= shadowOffset
-        
     }
 }

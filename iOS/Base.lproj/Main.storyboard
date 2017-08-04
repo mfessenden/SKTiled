@@ -73,7 +73,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QyX-Za-Z1p" userLabel="Buttons View">
-                                <rect key="frame" x="169" y="289" width="328" height="22"/>
+                                <rect key="frame" x="128" y="289" width="410" height="22"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lBL-VH-9cm" userLabel="Fit Button">
                                         <rect key="frame" x="0.0" y="0.0" width="82" height="22"/>
@@ -89,15 +89,22 @@
                                             <action selector="gridButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="9B4-YA-0Tf"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V85-ZE-tfI" userLabel="Objects Button">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iuB-yT-JZE" userLabel="Graph Button">
                                         <rect key="frame" x="164" y="0.0" width="82" height="22"/>
+                                        <state key="normal" image="graph-button-norm"/>
+                                        <connections>
+                                            <action selector="graphButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="tH1-od-3fj"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V85-ZE-tfI" userLabel="Objects Button">
+                                        <rect key="frame" x="246" y="0.0" width="82" height="22"/>
                                         <state key="normal" image="objects-button-norm"/>
                                         <connections>
                                             <action selector="objectsButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="cUQ-jC-jZh"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UUl-ua-DKk" userLabel="Next Button">
-                                        <rect key="frame" x="246" y="0.0" width="82" height="22"/>
+                                        <rect key="frame" x="328" y="0.0" width="82" height="22"/>
                                         <state key="normal" image="next-button-norm"/>
                                         <connections>
                                             <action selector="nextButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="uUZ-LA-rbL"/>
@@ -130,6 +137,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="graph-button-norm" width="82" height="16"/>
         <image name="grid-button-norm" width="82" height="16"/>
         <image name="next-button-norm" width="82" height="16"/>
         <image name="objects-button-norm" width="82" height="16"/>

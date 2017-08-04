@@ -37,7 +37,7 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
             
             if let sceneDelegate = scene as? SKTiledSceneDelegate {
                 if let cameraNode = sceneDelegate.cameraNode {
-                    ///cameraNode.bounds = view.bounds
+                    cameraNode.bounds = view.bounds
                 }
             }
         }
@@ -53,19 +53,13 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
             if let sceneDelegate = scene as? SKTiledSceneDelegate {
                 
                 // update tracking view?
-                
-                
                 if let tilemap = sceneDelegate.tilemap {
-
                     var renderSize = tilemap.renderSize
                     renderSize.width = renderSize.width * sceneDelegate.cameraNode.zoom
                     renderSize.height = renderSize.height * sceneDelegate.cameraNode.zoom
                     //sceneDelegate.cameraNode.fitToView(newSize: view.bounds.size)
+ 
                 }
-            }
-            
-            if let _ = window!.contentViewController as? GameViewController {
-                //controller.updateWindowTitle(withString: wintitle)
             }
         }
     }
@@ -73,19 +67,11 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
     func windowDidEndLiveResize(_ notification: Notification) {
         // Un-pause the scene when the window stops resizing if the game is active.
         if let scene = view.scene {
-            if let sceneDelegate = scene as? SKTiledSceneDelegate {
+            if let _ = scene as? SKTiledSceneDelegate {
                 scene.isPaused = isManuallyPaused
-                
-                if (sceneDelegate.tilemap != nil) {
-                    // if the tilemap is set to autosize, fit the map in the view
-                    if let camera = sceneDelegate.cameraNode {
-                        //camera.fitToView(newSize: scene.size)
-                    }
-                }
             }
         }
     }
-    
     
     // OS X games that use a single window for the entire game should quit when that window is closed.
     func applicationShouldTerminateAfterLastWindowClosed(sender: NSApplication) -> Bool {

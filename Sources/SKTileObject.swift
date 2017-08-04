@@ -50,14 +50,26 @@ internal enum LabelPosition {
 }
 
 
-
 /**
- Text object attributes.
+ Text object font rendering attributes.
+ 
+ - parameter fontName:      `String` font name.
+ - parameter fontSize:      `CGFloat` font size.
+ - parameter fontColor:     `SKColor` font color.
+ - parameter alignment:     `TextAlignment` horizontal/vertical alignment.
+ - parameter wrap:          `Bool` wrap text.
+ - parameter isBold:        `Bool`
+ - parameter isItalic:      `Bool`
+ - parameter isUnderline:   `Bool`
+ - parameter renderQuality: `CGFloat` font resolution.
  */
 public struct TextObjectAttributes {
+    
     public var fontName: String = "Arial"
     public var fontSize: CGFloat = 16
     public var fontColor: SKColor = .black
+    
+    /// Text alignment
     public var alignment: TextAlignment = TextAlignment()
     
     public var wrap: Bool = true
@@ -75,17 +87,21 @@ public struct TextObjectAttributes {
         fontColor = color
     }
     
+    /**
+     Data structure representing text horizontal & vertical alignment.
+     */
     public struct TextAlignment {
-        var horizontal: HoriztonalAlignment = .left
-        var vertical: VerticalAlignment = .top
         
-        enum HoriztonalAlignment: String {
+        public var horizontal: HoriztonalAlignment = .left
+        public var vertical: VerticalAlignment = .top
+        
+        public enum HoriztonalAlignment: String {
             case left
             case center
             case right
         }
         
-        enum VerticalAlignment: String {
+        public enum VerticalAlignment: String {
             case top
             case center
             case bottom
@@ -117,8 +133,11 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     open var ignoreProperties: Bool = false                 // ignore custom properties
     internal var physicsType: CollisionType = .none         // physics collision type
     
+    /// Text formatting attributes.
     open var textAttributes: TextObjectAttributes!          // text object attributes
-    open var renderQuality: CGFloat = 8 {                   // text object render quality
+    
+    ///Text object render quality.
+    open var renderQuality: CGFloat = 8 {
         didSet {
             guard (renderQuality != oldValue),
                 renderQuality <= 16 else {
@@ -246,6 +265,10 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             gid = Int(objGID)!
         }
         
+        if let objVis = attributes["visible"] {
+            visible = (Int(objVis) == 1) ? true : false
+        }
+        
         // Rectangular and ellipse objects need initial points.
         if (width > 0) && (height > 0) {
             points = [CGPoint(x: 0, y: 0),
@@ -349,7 +372,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             let bezierData = bezierPath(bezPoints, closed: true, alpha: 0.75)
             self.path = bezierData.path
             
-            let controlPoints = bezierData.points
+            //let controlPoints = bezierData.points
                 
             // draw a cage around the curve
             if (layer.orientation == .isometric) {
@@ -372,6 +395,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             
             childNode(withName: "FIRST_POINT")?.removeFromParent()
             
+            // MARK: - Tile object drawing
             if (self.gid == nil) {
  
                 // the first-point radius should be larger for thinner (>1.0) line widths
@@ -500,7 +524,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                     NSParagraphStyleAttributeName: textStyle,
                     ]
             
-            
+            // TODO: vertical alignment is slightly off from Tiled, NSStringDrawingContext needs 10.11
             // setup vertical alignment
             let fontHeight: CGFloat
             #if os(iOS) || os(tvOS)
@@ -508,7 +532,6 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             #else
             fontHeight = self.text!.boundingRect(with: CGSize(width: bounds.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: textFontAttributes).height
             #endif
-            
             // vertical alignment
             // center aligned...
             if (textAttributes.alignment.vertical == .center) {
@@ -521,6 +544,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             // top aligned...
             } else if (textAttributes.alignment.vertical == .top) {
                 self.text!.draw(in: bounds, withAttributes: textFontAttributes)
+                //self.text!.draw(in: bounds.offsetBy(dx: 0, dy: 1.25 * withScale), withAttributes: textFontAttributes)
             
             // bottom aligned
             } else {
@@ -564,7 +588,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     }
     
     /**
-     Returns the internal `SKTileObject.points` translated into the current map projection.
+     Returns the internal `SKTileObject.points` array, translated into the current map's projection.
      
      - returns: `[CGPoint]?` array of points.
      */
@@ -582,7 +606,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     }
     
     /**
-     Draw the tile's boundary shape.
+     Draw the object's boundary shape.
      */
     internal func drawBounds() {
         childNode(withName: "BOUNDS")?.removeFromParent()
@@ -646,7 +670,8 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     }
     
     // MARK: - Debugging
-
+    
+    /// Show/hide the object's boundary shape.
     open var showBounds: Bool {
         get {
             return (childNode(withName: "BOUNDS") != nil) ? childNode(withName: "BOUNDS")!.isHidden == false : false
@@ -669,7 +694,6 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                     let fadeAction = SKAction.fadeOut(withDuration: highlightDuration)
                     frameShape.run(fadeAction, completion: {
                         frameShape.removeFromParent()
-                        
                     })
                 }
             }
