@@ -160,24 +160,27 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     // MARK: - Delegate Callbacks
     open func didBeginParsing(_ tilemap: SKTilemap) {
         // Called when tilemap is instantiated.
+        print(" ❊ `SKTiledScene.didBeginParsing`...")
+        
     }
             
     open func didAddTileset(_ tileset: SKTileset) {
         // Called when a tileset has been added.
+        print(" ❊ `SKTiledScene.didAddTileset`: \"\(tileset.name)\"")
     }
     
     open func didAddLayer(_ layer: TiledLayerObject) {
         // Called when a layer has been added.
+        print(" ❊ `SKTiledScene.didAddLayer`: \"\(layer.layerName)\"")
     }
     
     open func didReadMap(_ tilemap: SKTilemap) {
         // Called before layers are rendered.
+        print(" ❊ `SKTiledScene.didReadMap`: \"\(tilemap.mapName)\"")
     }
     
     open func didRenderMap(_ tilemap: SKTilemap) {
         // Called after layers are rendered. Perform any post-processing here.
-        // TODO: remove this in master
-        self.physicsWorld.speed = 1
     }
     
     // MARK: - Updates
@@ -187,7 +190,6 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     
     
     override open func update(_ currentTime: TimeInterval) {
-        //guard self.blocked == false else { return }
         super.update(currentTime)
         // update the tilemap
         tilemap?.update(currentTime)

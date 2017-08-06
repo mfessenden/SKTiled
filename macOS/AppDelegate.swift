@@ -63,5 +63,4 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             print("[AppDelegate]: Load cancelled.")
         }
     }
-    
 }

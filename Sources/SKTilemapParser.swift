@@ -118,7 +118,8 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                    delegate: SKTilemapDelegate? = nil,
                    withTilesets: [SKTileset]? = nil,
                    ignoreProperties noparse: Bool = false,
-                   verbosity: LoggingLevel = .info) -> SKTilemap? {
+                   verbosity: LoggingLevel = .info,
+                   renderQueue: DispatchQueue) -> SKTilemap? {
         
         parsingMode = .tmx
         
@@ -129,6 +130,8 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         if let rootDirectory = inDirectory {
             rootPath = URL(fileURLWithPath: rootDirectory)
         }
+        
+        
         
         // create a url relative to the current root
         let fileURL = URL(fileURLWithPath: tmxFile, relativeTo: rootPath)
@@ -222,16 +225,14 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         tilesets = [:]
 
         // pre-processing callback
-        DispatchQueue.main.async(group: self.parsingGroup) {
-            if self.mapDelegate != nil { self.mapDelegate!.didReadMap(currentMap) }
+        renderQueue.sync {
+            self.mapDelegate?.didReadMap(currentMap)
+            
+            // start rendering layers when queue is complete.
+            DispatchQueue.main.async {
+                self.didBeginRendering(currentMap, queue: renderQueue)
+            }
         }
-
-
-        // start rendering layers when queue is complete.
-        self.parsingGroup.notify(queue: DispatchQueue.main) {
-            self.didBeginRendering(currentMap)
-        }
-
         return currentMap
     }
 
@@ -363,12 +364,14 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
      - parameter tilemap:  `SKTilemap`    tile map node.
      - parameter duration: `TimeInterval` fade-in time for each layer.
      */
-    fileprivate func didBeginRendering(_ tilemap: SKTilemap, duration: TimeInterval=0.025) {
+    fileprivate func didBeginRendering(_ tilemap: SKTilemap, queue: DispatchQueue, duration: TimeInterval=0.025) {
 
         let debugLevel: Bool = (loggingLevel.rawValue < 1) ? true : false
 
-        // assign each layer a work item
+        // loop through the layers
         for layer in tilemap.getLayers(recursive: true) {
+            
+            // assign each layer a work item
             let renderItem = DispatchWorkItem() {
                 // render object groups
                 if let objectGroup = layer as? SKObjectGroup {
@@ -380,6 +383,9 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
 
                 // render tile layers
                 if let tileLayer = layer as? SKTileLayer {
+                    
+                    // TODO: guard here for tileData
+                    
                     if let tileData = self.data[tileLayer.uuid] {
                         // add the layer data
                         let _ = tileLayer.setLayerData(tileData, debug: debugLevel)
@@ -393,19 +399,24 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 }
             }
 
-            tilemap.renderQueue.async(group: tilemap.renderGroup, execute: renderItem)
+            queue.async(group: parsingGroup, execute: renderItem)  // was tilemap.parsingGroup
         }
 
 
         // run callbacks when the group is finished
-        tilemap.renderGroup.notify(queue: DispatchQueue.main) {
+        parsingGroup.notify(queue: DispatchQueue.main) {
+            
             self.data = [:]
             self.tilesets = [:]
-            self.tilemap.didFinishRendering(timeStarted: self.timer)
-
+            
             for layer in self.tilemap.getLayers() {
                 layer.didFinishRendering(duration: duration)
             }
+        }
+        
+        // sync the tilemap's queue here
+        queue.sync {
+            self.tilemap.didFinishRendering(timeStarted: self.timer)
         }
     }
 

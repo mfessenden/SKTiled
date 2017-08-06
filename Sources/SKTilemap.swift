@@ -228,7 +228,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     
     /// ignore Tiled background color
     open var ignoreBackground: Bool = false
-    public var ignoreProperties: Bool = false                     // ignore custom properties
+    open var ignoreProperties: Bool = false                     // ignore custom properties
     
     /// Returns true if all of the child layers are rendered.
     internal var isRendered: Bool {
@@ -505,11 +505,18 @@ open class SKTilemap: SKCropNode, SKTiledObject {
                          verbosity: LoggingLevel = .info) -> SKTilemap? {
         
         
-        
-        if let tilemap = SKTilemapParser().load(tmxFile: tmxFile, inDirectory: inDirectory,
-                                                delegate: delegate, withTilesets: withTilesets,
-                                                ignoreProperties: noparse, verbosity: verbosity) {
+        let queue = DispatchQueue(label: "com.sktiled.renderqueue", qos: .userInteractive)
+        if let tilemap = SKTilemapParser().load(tmxFile: tmxFile,
+                                                inDirectory: inDirectory,
+                                                delegate: delegate,
+                                                withTilesets: withTilesets,
+                                                ignoreProperties: noparse,
+                                                verbosity: verbosity,
+                                                renderQueue: queue) {
+            //queue.sync {}
+            print(" ❊ Returning...")
             return tilemap
+            
         }
         return nil
     }

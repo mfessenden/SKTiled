@@ -231,10 +231,12 @@ public class SKTiledDemoScene: SKTiledScene {
     // MARK: - Callbacks
     override open func didReadMap(_ tilemap: SKTilemap) {
         self.physicsWorld.speed = 0
+        print(" ❊ `SKTiledDemoScene.didReadMap`...")
     }
     
     override open func didRenderMap(_ tilemap: SKTilemap) {
         // update the HUD to reflect the number of tiles created
+        print(" ❊ `SKTiledDemoScene.didRenderMap`...")
         updateHud()
         tilemap.mapStatistics()
     }
