@@ -258,12 +258,6 @@ public extension SKTileLayer {
         for (attr, _) in properties {
             
             let lattr = attr.lowercased()
-        
-            if (lattr == "buildgraph") {
-                if boolForKey(attr) == true {
-                    buildGraph = true
-                }
-            }
             
             // walkable ids
             if (lattr == "walkableids") {

@@ -22,7 +22,7 @@ public struct DebugDrawOptions: OptionSet {
         self.rawValue = rawValue
     }
 
-    static public let drawGrid             = DebugDrawOptions(rawValue: 1 << 0)  // 2
+    static public let drawGrid             = DebugDrawOptions(rawValue: 1 << 0)  // 1
     static public let drawBounds           = DebugDrawOptions(rawValue: 1 << 1)  // 2
     static public let drawGraph            = DebugDrawOptions(rawValue: 1 << 2)  // 4
     static public let drawObjectBounds     = DebugDrawOptions(rawValue: 1 << 3)
@@ -67,9 +67,7 @@ internal class TiledDebugDrawNode: SKNode {
         get {
             return (gridSprite != nil) ? (gridSprite!.isHidden == false) : false
         } set {
-            if (gridTexture == nil) {
-                drawGrid()
-            }
+            drawGrid()
         }
     }
 
@@ -113,7 +111,7 @@ internal class TiledDebugDrawNode: SKNode {
         frameShape!.zPosition = layer.zPosition + (layer.tilemap.zDeltaForLayers + 20)
     }
 
-    func update(verbose: Bool = false) {
+    func update(verbose: Bool = true) {
         if (verbose == true){
             print("[TiledDebugDrawNode]: debug options: \(debugDrawOptions.rawValue), hidden: \(isHidden)")
         }
@@ -196,51 +194,54 @@ internal class TiledDebugDrawNode: SKNode {
     /// Display the current tile grid.
     func drawGrid() {
 
-        gridTexture = nil
-        gridSprite.isHidden = true
-
-        // get the last z-position
-        //zPosition = layer.tilemap.lastZPosition + layer.tilemap.zDeltaForLayers
-        isHidden = false
-        var gridSize = CGSize.zero
-
-        // scale factor for texture
-        let uiScale: CGFloat = getContentScaleFactor()
-
-        // multipliers used to generate smooth lines
-        let defaultImageScale: CGFloat = (layer.tilemap.tileHeight < 16) ? 8 : 8
-        let imageScale: CGFloat = (uiScale > 1) ? (defaultImageScale / 2) : defaultImageScale
-        let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1.25 : 0.75
-
-        // generate the texture
         if (gridTexture == nil) {
-            let gridImage = drawLayerGrid(self.layer, imageScale: imageScale, lineScale: lineScale)
-            gridTexture = SKTexture(cgImage: gridImage)
-            gridTexture.filteringMode = .linear
+            gridSprite.isHidden = true
+
+            // get the last z-position
+            zPosition = layer.tilemap.lastZPosition + layer.tilemap.zDeltaForLayers
+            isHidden = false
+            var gridSize = CGSize.zero
+
+            // scale factor for texture
+            let uiScale: CGFloat = getContentScaleFactor()
+
+            // multipliers used to generate smooth lines
+            let defaultImageScale: CGFloat = (layer.tilemap.tileHeight < 16) ? 8 : 8
+            let imageScale: CGFloat = (uiScale > 1) ? (defaultImageScale / 2) : defaultImageScale
+            let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1.25 : 0.75
+
+            // generate the texture
+            if (gridTexture == nil) {
+                let gridImage = drawLayerGrid(self.layer, imageScale: imageScale, lineScale: lineScale)
+                gridTexture = SKTexture(cgImage: gridImage)
+                gridTexture.filteringMode = .linear
+            }
+
+            // sprite scaling factor
+            let spriteScaleFactor: CGFloat = (1 / imageScale)
+            gridSize = gridTexture.size() / uiScale
+            gridSprite.setScale(spriteScaleFactor)
+
+
+            gridSprite.texture = gridTexture
+            gridSprite.alpha = layer.gridOpacity
+            gridSprite.size = gridSize / imageScale
+
+            // need to flip the grid texture in y
+            // currently not doing this to the parent node so that objects will draw correctly.
+            #if os(iOS) || os(tvOS)
+            gridSprite.position.y = -layer.sizeInPoints.height
+            #else
+            gridSprite.yScale *= -1
+            #endif
+            
         }
-
-        // sprite scaling factor
-        let spriteScaleFactor: CGFloat = (1 / imageScale)
-        gridSize = gridTexture.size() / uiScale
-        gridSprite.setScale(spriteScaleFactor)
-
-
-        gridSprite.texture = gridTexture
-        gridSprite.alpha = layer.gridOpacity
-        gridSprite.size = gridSize / imageScale
-
-        // need to flip the grid texture in y
-        // currently not doing this to the parent node so that objects will draw correctly.
-        #if os(iOS) || os(tvOS)
-        gridSprite.position.y = -layer.sizeInPoints.height
-        #else
-        gridSprite.yScale *= -1
-        #endif
         gridSprite.isHidden = false
     }
     
     /// Display the current tile graph (if it exists).
     func drawGraph() {
+        
         // drawLayerGrid
         graphTexture = nil
         graphSprite.isHidden = true
@@ -544,18 +545,6 @@ extension SKTile {
         }
         if orientation == .isometric {
             removeAction(forKey: "Highlight_Fade")
-        }
-    }
-}
-
-
-public extension TiledLayerObject {
-    /**
-     Communicate with the scene.
-     */
-    public func updateSceneDebugInfo(_ msg: String) {
-        if let demoScene = self.scene as? SKTiledDemoScene {
-            demoScene.updateDebugInfo(msg: msg)
         }
     }
 }

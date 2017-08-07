@@ -45,9 +45,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     
     open var loggingLevel: LoggingLevel = .info
     
-    internal var blocked: Bool = true           // lock the scene for cleanup
-    
-    /// pathfinding graphs
+    /// Reference to pathfinding graphs.
     open var graphs: [String : GKGridGraph<SKTiledGraphNode>] = [:]
     
     // MARK: - Init
@@ -102,8 +100,9 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
                     verbosity: LoggingLevel = .info,
                     _ completion: (() -> ())? = nil) {
         
-        
+        // TODO: finish me
     }
+    
     /**
      Load and setup a named TMX file, with optional tilesets.
      

@@ -12,6 +12,43 @@ import GameplayKit
 
 extension SKTilemap {
     
+    
+    /**
+     Post-process to automatically build all pathfinding graphs.
+     */
+    public func buildPathfindingGraphs(){
+        
+        var pathFindingGraphs: [GKGridGraph<SKTiledGraphNode>] = []
+        
+        for tileLayer in tileLayers() {
+            
+            if (tileLayer.walkableIDs.count > 0) || (tileLayer.walkableTypes.count > 0) {
+                // check for walkable IDs
+                if tileLayer.walkableIDs.count > 0 {
+                    if let g = tileLayer.initializeGraph(walkableIDs: tileLayer.walkableIDs, diagonalsAllowed: false) {
+                        pathFindingGraphs.append(g)
+                        continue
+                    }
+                }
+                
+                // check for walkable types
+                if tileLayer.walkableTypes.count > 0 {
+                    if let g = tileLayer.initializeGraph(walkableTypes: tileLayer.walkableTypes, diagonalsAllowed: false) {
+                        pathFindingGraphs.append(g)
+                        continue
+                    }
+                }
+            }
+        }
+        
+        let gcount = pathFindingGraphs.count
+        
+        if (gcount > 0) {
+            let resultMsg = (gcount == 1) ? "Success! \(gcount) graph built" : "success: \(gcount) graphs built"
+            print("[SKTilemap]: \(resultMsg).")
+        }
+    }
+    
     /**
      Initialize the grid graph with an array layer names.
      
@@ -82,42 +119,6 @@ extension SKTilemap {
             }
         }
     }
-    
-    /**
-     Post-process to build all pathfinding graphs.
-     */
-    public func buildGraphs(){
-        
-        var pathFindingGraphs: [GKGridGraph<SKTiledGraphNode>] = []
-        
-        for tileLayer in tileLayers() {
-            
-            if (tileLayer.walkableIDs.count > 0) || (tileLayer.walkableTypes.count > 0) {
-                // check for walkable IDs
-                if tileLayer.walkableIDs.count > 0 {
-                    if let g = tileLayer.initializeGraph(walkableIDs: tileLayer.walkableIDs, diagonalsAllowed: false) {
-                        pathFindingGraphs.append(g)
-                        continue
-
-                    }
-                }
-                
-                // check for walkable types
-                if tileLayer.walkableTypes.count > 0 {
-                    if let g = tileLayer.initializeGraph(walkableTypes: tileLayer.walkableTypes, diagonalsAllowed: false) {
-                        pathFindingGraphs.append(g)
-                        continue
-                    }
-                }
-            }
-        }
-        
-        let gcount = pathFindingGraphs.count
-        if (gcount > 0) {
-            let resultMsg = (gcount == 1) ? "Success! \(gcount) graph built" : "success: \(gcount) graphs built"
-            print("[SKTilemap]: \(resultMsg).")
-        }
-    }
 }
 
 
@@ -149,8 +150,8 @@ public extension SKTileLayer {
                 if let node = graph.node(atGridPosition: coord) {
                     
                     if let tile = tileAt(col, row) {
-                        let gid = tile.tileData.id
                         
+                        let gid = tile.tileData.id
                         
                         // set custom weight parameter
                         if tile.tileData.hasKey("weight"){

@@ -176,8 +176,7 @@ open class DemoController: NSObject {
         var cameraZoom: CGFloat = 1
         
         if let currentScene = view.scene as? SKTiledDemoScene {
-            // block the scene
-            //currentScene.blocked = true
+
             if let cameraNode = currentScene.cameraNode {
                 showOverlay = cameraNode.showOverlay
                 cameraPosition = cameraNode.position

@@ -3,6 +3,12 @@ Change Log
 
 1.15
 -----
+- add `SKTilemap.getLayer(atPath: String)`
+- add `SKTilemapDelegate.didAddPathfindingGraph(_:)`
+- add `SKTilemap.newTileLayer(named:group:)`
+- add `SKTilemap.newObjectGroup(named:group:)`
+- add `SKTilemap.newImageLayer(named:group:)`
+- add `SKTilemap.newGroupLayer(named:group:)`
 
 #### Changes
 
@@ -25,17 +31,17 @@ Change Log
 - improved grid drawing quality
 - debug functions moved to `SKTiled+Debug.swift`
 - remove `SKTilemap.indexOf(layerNamed:)`
-- rename `SKTilemap.getLayer(named:)` -> `SKTilemap.getLayers(named:,recursive:)`
+- rename `SKTilemap.getLayer(named:)` -> `SKTilemap.getLayers(named:recursive:)`
 - rename `SKTilemap.allLayers` -> `SKTilemap.getLayers(recursive:)`
-- rename `SKTilemap.tileLayer(named:)` -> `SKTilemap.tileLayers(named:,recursive:)`
-- rename `SKTilemap.objectGroups(named:)` -> `SKTilemap.objectGroups(named:,recursive:)`
-- rename `SKTilemap.getLayers(ofType:)` -> `SKTilemap.getLayers(ofType:,recursive:)`
+- rename `SKTilemap.tileLayer(named:)` -> `SKTilemap.tileLayers(named:recursive:)`
+- rename `SKTilemap.objectGroups(named:)` -> `SKTilemap.objectGroups(named:recursive:)`
+- rename `SKTilemap.getLayers(ofType:)` -> `SKTilemap.getLayers(ofType:recursive:)`
 - rename `SKTilemap.tileLayers` -> `SKTilemap.tileLayers(recursive:)`
 - rename `SKTilemap.objectGroups` -> `SKTilemap.objectGroups(recursive:)`
 - rename `SKTilemap.imageLayers` -> `SKTilemap.imageLayers(recursive:)`
 - rename `SKTilemap.groupLayers` -> `SKTilemap.groupLayers(recursive:)`
-- rename `SKTilemap.getTiles(ofType:)` -> `SKTilemap.getTiles(ofType:,recursive:)`
-- rename `SKTilemap.getTiles(withID:)` -> `SKTilemap.getTiles(globalID:,recursive:)`
+- rename `SKTilemap.getTiles(ofType:)` -> `SKTilemap.getTiles(ofType:recursive:)`
+- rename `SKTilemap.getTiles(withID:)` -> `SKTilemap.getTiles(globalID:recursive:)`
 - rename `SKTilemap.getTilesWithProperty(_:, _:)` -> `SKTilemap.getTilesWithProperty(_:,_:,recursive:)`
 - rename `SKTilemap.getAnimatedTiles()` -> `SKTilemap.animatedTiles(recursive:)`
 - rename `SKTilemap.getObjects()` -> `SKTilemap.getObjects(recursive:)`

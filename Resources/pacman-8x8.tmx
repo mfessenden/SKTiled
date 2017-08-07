@@ -28,6 +28,7 @@
  </group>
  <layer name="Graph" width="28" height="36" visible="0">
   <properties>
+   <property name="border" type="color" value="#e2e2e2"/>
    <property name="walkableIDs" value="34,56,59,78"/>
   </properties>
   <data encoding="base64" compression="zlib">
@@ -61,6 +62,11 @@
   <layer name="Fruit" width="28" height="36">
    <data encoding="base64" compression="zlib">
    eJztzDEKACAMBMHg9wUbEb9rkyoIgvVMs81xEQAAAMCv1e596bmbpTs7ys8BFU8Epg==
+  </data>
+  </layer>
+  <layer name="Fruit" width="28" height="36">
+   <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20ND6AAAACAdwMPwAAB
   </data>
   </layer>
   <objectgroup name="Score-HUD" visible="0">

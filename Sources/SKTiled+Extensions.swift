@@ -619,6 +619,10 @@ public extension SKColor {
     public var toVec4: vector_float4 {
         return vector_float4(components.map {Float($0)})
     }
+    
+    public var toVec3: vector_float3 {
+        return vector_float3(components.dropLast().map {Float($0)})
+    }
 
     public var hexDescription: String {
         return "SKColor(hexString:  \"\(self.hexString())\")"
@@ -1253,11 +1257,18 @@ internal func drawLayerGraph(_ layer: TiledLayerObject, imageScale: CGFloat=8, l
                         fillColor = SKColor.gray
                         
                         if node.weight > 1 {
-                            fillColor = SKColor.red
+                            fillColor = SKColor.yellow
+                            if node.weight >= 100 {
+                                fillColor = SKColor.orange
+                                
+                                if node.weight >= 250 {
+                                    fillColor = SKColor.red
+                                }
+                            }
                         }
                         
                         if node.weight < 1 {
-                            fillColor = SKColor.yellow
+                            fillColor = SKColor.blue
                         }
                         
                         let fillPath = polygonPath(points)

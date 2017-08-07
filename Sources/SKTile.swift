@@ -90,7 +90,7 @@ public class SKTile: SKSpriteNode {
     open var showBounds: Bool {
         get {
             return (childNode(withName: "BOUNDS") != nil) ? childNode(withName: "BOUNDS")!.isHidden == false : false
-    }
+        }
         set {
             childNode(withName: "BOUNDS")?.removeFromParent()
             
@@ -139,7 +139,11 @@ public class SKTile: SKSpriteNode {
         
         self.tileSize = tileset.tileSize
         super.init(texture: data.texture, color: SKColor.clear, size: data.texture.size())
-        //orientTile()
+        
+        // set the transparent color for the tile
+        if let transparentColor = data.transparentColor {
+            setTransparentColor(transparentColor)
+        }
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -423,7 +427,7 @@ public class SKTile: SKSpriteNode {
         default:
             xAnchor = mapTileSizeHalfWidth / tilesetTileWidth
             yAnchor = mapTileSizeHalfHeight / tilesetTileHeight
-    }
+        }
 
         // set the anchor point
         anchorPoint.x = xAnchor
@@ -537,12 +541,12 @@ public class SKTile: SKSpriteNode {
     
             if alignment == .topRight {
                 yOffset = -(tilesetTileHeight - mapTileSize.height)
-    }
-}
+            }
+        }
+        
         if alignment == .topLeft {
-    
             yOffset = -(tilesetTileHeight - mapTileSize.height)
-    }
+        }
     
         let alignmentOffset = CGPoint(x: xOffset, y: yOffset)
         let vertices = getVertices(offset: alignmentOffset)
@@ -600,8 +604,24 @@ public class SKTile: SKSpriteNode {
         bounds.setScale(1 / renderQuality)
     
     }
-    }
     
+    private func setTransparentColor(_ color: SKColor) {
+        /*
+        let colorShader = SKShader(fileNamed: "replaceColor.fsh")
+        
+        colorShader.attributes = [
+            SKAttribute(name: "transparentColor", type: .vectorFloat4)
+        ]
+        
+        let transColor = color.toVec4
+        
+        setValue(SKAttributeValue(vectorFloat4: transColor), forAttribute: "transparentColor")
+        
+        self.shader = colorShader
+        */
+    }
+}
+
     
         
 extension SKTile {
@@ -610,10 +630,8 @@ extension SKTile {
     override public var description: String {
         let layerDescription = (layer != nil) ? ", Layer: \"\(layer.layerName)\"" : ""
         return "\(tileData.description)\(layerDescription)"
-            }
-            
-    override public var debugDescription: String {
-        return description
-        }
     }
+    
+    override public var debugDescription: String { return description }
+}
 

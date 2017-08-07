@@ -153,7 +153,6 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     open var sizeInPoints: CGSize { return tilemap.sizeInPoints }
 
     /// Pathfinding graph
-    open var buildGraph: Bool = false
     open var graph: GKGridGraph<SKTiledGraphNode>!
     open var walkableIDs: [Int] = []
     open var walkableTypes: [String] = []

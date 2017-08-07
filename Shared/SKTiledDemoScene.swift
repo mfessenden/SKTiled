@@ -36,7 +36,7 @@ public class SKTiledDemoScene: SKTiledScene {
         didSet {
             guard oldValue != coordinate else { return }
             
-            
+            //print(" -> coord: \(coordinate.shortDescription)")
             self.enumerateChildNodes(withName: "*") {  // was //*
                 node, stop in
                 
@@ -107,7 +107,7 @@ public class SKTiledDemoScene: SKTiledScene {
         
         let coord = CGPoint(x: x, y: y)
 
-        if coord != coordinate {
+        if (coord != coordinate) || (useLabel == true) {
             let tileColor: SKColor = (validCoord == true) ? tilemap.highlightColor : TiledColors.red.color
             let lastZosition = tilemap.lastZPosition + (tilemap.zDeltaForLayers * 2)
             
@@ -118,7 +118,10 @@ public class SKTiledDemoScene: SKTiledScene {
             let tilePosition = layer.pointForCoordinate(x, y)
             tile.position = worldNode.convert(tilePosition, from: layer)
             worldNode.addChild(tile)
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "updateCoordinate"), object: nil, userInfo: ["x": x, "y": y])
+            
+            if (useLabel == false) {
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "updateCoordinate"), object: nil, userInfo: ["x": x, "y": y])
+            }
         }
     }
     
@@ -186,7 +189,9 @@ public class SKTiledDemoScene: SKTiledScene {
         
         guard tempCoord != coordinate else { return }
         // get the current coordinate
-        coordinate = tempCoord
+        if (coordinate != tempCoord) {
+            coordinate = tempCoord
+        }
     }
     
     override public func didChangeSize(_ oldSize: CGSize) {
@@ -307,18 +312,7 @@ extension SKTiledDemoScene {
         if (tilemap.isPaused == false) {
             // highlight the current coordinate
             if currentClicked.count == 0 {
-                //addTileToLayer(baseLayer, Int(coord.x), Int(coord.y))
                 addTileToWorld(Int(coord.x), Int(coord.y), useLabel: true)
-            } else {
-                for tile in currentClicked {
-                    // remove the node asyncronously
-                    self.cleanupQueue.async {
-                        let fadeAction = SKAction.fadeAlpha(to: 0, duration: 0.1)
-                        tile.run(fadeAction, completion: {
-                            tile.removeFromParent()
-                        })
-                    }
-                }
             }
         }
 
@@ -456,7 +450,10 @@ extension SKTiledDemoScene {
         
         // 'd' shows/hides debug view
         if eventKey == 0x02 {
-            print("[SKTiledDemoScene]: no debug drawing options available.")
+            print(tilemap.baseLayer.debugDrawOptions)
+            //print("[SKTiledDemoScene]: no debug drawing options available.")
+            tilemap.baseLayer.debugDrawOptions = .drawGrid
+            print("default layer visible: \(tilemap.baseLayer.visible)")
             
         }
         

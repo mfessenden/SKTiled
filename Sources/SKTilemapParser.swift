@@ -233,6 +233,8 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 self.didBeginRendering(currentMap, queue: renderQueue)
             }
         }
+        
+        
         return currentMap
     }
 
@@ -412,6 +414,9 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             for layer in self.tilemap.getLayers() {
                 layer.didFinishRendering(duration: duration)
             }
+            
+            // build any pathfinding graphs
+            self.tilemap.buildPathfindingGraphs()
         }
         
         // sync the tilemap's queue here
@@ -624,7 +629,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             }
 
             if let tilemap = parentElement as? SKTilemap {
-                tilemap.addLayer(layer)
+                tilemap.addLayer(layer, base: false)
             }
 
 
@@ -662,7 +667,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 }
 
                 if let tilemap = parentElement as? SKTilemap {
-                    tilemap.addLayer(objectsGroup)
+                    tilemap.addLayer(objectsGroup, base: false)
                 }
 
 
@@ -685,7 +690,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             }
 
             if let tilemap = parentElement as? SKTilemap {
-                tilemap.addLayer(imageLayer)
+                tilemap.addLayer(imageLayer, base: false)
             }
 
 
@@ -707,7 +712,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             }
 
             if let tilemap = parentElement as? SKTilemap {
-                tilemap.addLayer(groupLayer)
+                tilemap.addLayer(groupLayer, base: false)
             }
 
             // delegate callback

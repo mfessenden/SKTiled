@@ -60,6 +60,10 @@ open class SKTilesetData: SKTiledObject  {
     // collision objects
     open var collisions: [SKTileObject] = []
     
+    // transparent color
+    open var transparentColor: SKColor? {
+        return tileset?.transparentColor
+    }
     
     open var localID: Int {                       // return the local id for this tile
         guard let tileset = tileset else { return id }

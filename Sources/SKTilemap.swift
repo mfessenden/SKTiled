@@ -162,6 +162,7 @@ public protocol SKTilemapDelegate: class {
     func didAddLayer(_ layer: TiledLayerObject)
     func didReadMap(_ tilemap: SKTilemap)
     func didRenderMap(_ tilemap: SKTilemap)
+    func didAddPathfindingGraph(_ graph: GKGridGraph<GKGridGraphNode>)
     func objectForTile(className: String?) -> SKTile.Type
 }
 
@@ -322,16 +323,6 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     open var highlightColor: SKColor = SKColor.green                   // color used to highlight tiles
     open var autoResize: Bool = false                                  // indicates map should auto-resize when view changes
     
-    open var currentLayerIndex: Int = -1 {
-        didSet {
-            guard currentLayerIndex != oldValue else { return }
-            if currentLayerIndex > self.lastIndex {
-                self.isolateLayer(at: -1)
-            }
-            self.isolateLayer(at: currentLayerIndex)
-        }
-    }
-    
     /// dynamics
     open var gravity: CGVector = CGVector.zero
     
@@ -491,6 +482,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      Load a Tiled tmx file and return a new `SKTilemap` object. Returns nil if there is a parsing error.
      
      - parameter filename:           `String` Tiled file name.
+     - parameter inDirectory:        `String?` search directory (if not the current resource path).
      - parameter delegate:           `SKTilemapDelegate?` optional [`SKTilemapDelegate`](Protocols/SKTilemapDelegate.html) instance.
      - parameter withTilesets:       `[SKTileset]?` optional tilesets.
      - parameter ignoreProperties:   `Bool` ignore custom properties from Tiled.
@@ -513,7 +505,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
                                                 ignoreProperties: noparse,
                                                 verbosity: verbosity,
                                                 renderQueue: queue) {
-            //queue.sync {}
+            queue.sync {}
             print(" ❊ Returning...")
             return tilemap
             
@@ -727,7 +719,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      - parameter layer:  `TiledLayerObject` layer object.
      - parameter base:   `Bool` layer represents default layer.
      */
-    open func addLayer(_ layer: TiledLayerObject, base: Bool=false) {
+    internal func addLayer(_ layer: TiledLayerObject, base: Bool=false) {
         
         let nextZPosition = (_layers.count > 0) ? zDeltaForLayers * CGFloat(_layers.count + 1) : zDeltaForLayers
         
@@ -751,6 +743,22 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     }
     
     /**
+     Add a new layer to the map/group layer.
+     
+     - parameter layer: `TiledLayerObject` layer to add.
+     - parameter group: `SKGroupLayer?` optional group layer.
+     - returns: `TiledLayerObject` added layer.
+     */
+    internal func addLayer(_ layer: TiledLayerObject, group: SKGroupLayer? = nil) -> TiledLayerObject {
+        if (group == nil) {
+            addLayer(layer, base: false)
+        } else {
+            group!.addLayer(layer)
+        }
+        return layer
+    }
+    
+    /**
      Remove a layer from the current layers set.
      
      - parameter layer: `TiledLayerObject` layer object.
@@ -764,12 +772,48 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      Create and add a new tile layer.
      
      - parameter named: `String` layer name.
+     - parameter group: `SKGroupLayer?` optional group layer.
      - returns: `SKTileLayer` new layer.
      */
-    open func addNewTileLayer(_ named: String) -> SKTileLayer {
-        let layer = SKTileLayer(layerName: named, tilemap: self)
-        addLayer(layer)
-        return layer
+    open func newTileLayer(named: String, group: SKGroupLayer? = nil) -> SKTileLayer {
+        let tileLayer = SKTileLayer(layerName: named, tilemap: self)
+        return addLayer(tileLayer, group: group) as! SKTileLayer
+    }
+    
+    /**
+     Create and add a new object group.
+     
+     - parameter named: `String` layer name.
+     - parameter group: `SKGroupLayer?` optional group layer.
+     - returns: `SKObjectGroup` new layer.
+     */
+    open func newObjectGroup(named: String, group: SKGroupLayer? = nil) -> SKObjectGroup {
+        let groupLayer = SKObjectGroup(layerName: named, tilemap: self)
+        return addLayer(groupLayer, group: group) as! SKObjectGroup
+    }
+
+    /**
+     Create and add a new image layer.
+     
+     - parameter named: `String` layer name.
+     - parameter group: `SKGroupLayer?` optional group layer.
+     - returns: `SKImageLayer` new layer.
+     */
+    open func newImageLayer(named: String, group: SKGroupLayer? = nil) -> SKImageLayer {
+        let imageLayer = SKImageLayer(layerName: named, tilemap: self)
+        return addLayer(imageLayer, group: group) as! SKImageLayer
+    }
+    
+    /**
+     Create and add a new group layer.
+     
+     - parameter named: `String` layer name.
+     - parameter group: `SKGroupLayer?` optional group layer.
+     - returns: `SKGroupLayer` new layer.
+     */
+    open func newGroupLayer(named: String, group: SKGroupLayer? = nil) -> SKGroupLayer {
+        let groupLayer = SKGroupLayer(layerName: named, tilemap: self)
+        return addLayer(groupLayer, group: group) as! SKGroupLayer
     }
     
     /**
@@ -800,6 +844,20 @@ open class SKTilemap: SKCropNode, SKTiledObject {
         let layersToCheck = self.getLayers(recursive: recursive)
         if let index = layersToCheck.index( where: { $0.layerName.hasPrefix(withPrefix) } ) {
             result.append(layersToCheck[index])
+        }
+        return result
+    }
+    
+    /**
+     Return layers at the given path.
+     
+     - parameter atPath: `String` layer path.
+     - returns: `[TiledLayerObject]` layer objects.
+     */
+    open func getLayers(atPath: String) -> [TiledLayerObject] {
+        var result: [TiledLayerObject] = []
+        if let index = self.layers.index( where: { $0.path == atPath } ) {
+            result.append(self.layers[index])
         }
         return result
     }
@@ -841,23 +899,6 @@ open class SKTilemap: SKCropNode, SKTiledObject {
      */
     open func getLayers(ofType: String, recursive: Bool=true) -> [TiledLayerObject] {
         return getLayers(recursive: recursive).filter { $0.type != nil }.filter { $0.type! == ofType }
-    }
-    
-    /**
-     Isolate a layer at the given index.
-     
-     - parameter at: `Int` layer index.
-     */
-    open func isolateLayer(at index: Int) {
-        guard index >= 0 else {
-            let _ = _layers.map { $0.visible = true }
-            return
-        }
-        
-        _layers.forEach { layer in
-            let hideLayer = (layer.index == index) ? false : true
-            layer.isHidden = hideLayer
-        }
     }
     
     /**
@@ -1370,10 +1411,6 @@ open class SKTilemap: SKCropNode, SKTiledObject {
         defer {
             self.delegate?.didRenderMap(self)
         }
-        
-        // build any pathfinding graphs
-        // TODO: callback to scene?
-        buildGraphs()
     }
     
     // MARK: - Updates
@@ -1694,14 +1731,6 @@ extension SKTilemap {
             
             outputString += "\n\(layerOutputString)"
         }
-        
-        /*
-        // Tilesets
-        outputString += "\n"
-        for tileset in self.tilesets {
-            outputString += "\n\(tileset.debugDescription)"
-        }*/
-        
 
         print("\n\n" + outputString + "\n\n")
     }
@@ -1749,6 +1778,12 @@ extension SKTilemapDelegate {
      - parameter tilemap:  `SKTilemap` tilemap instance.
      */
     public func didRenderMap(_ tilemap: SKTilemap, _ completion: (()->())? = nil) {}
+    /**
+     Called when the a pathfinding graph is built for a layer.
+     
+     - parameter graph: `GKGridGraph<GKGridGraphNode>` graph instance.
+     */
+    public func didAddPathfindingGraph(_ graph: GKGridGraph<GKGridGraphNode>) {}
     /**
      Returns a tile object for use in tile layers.
     
