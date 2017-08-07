@@ -197,7 +197,7 @@
                                             <constraint firstAttribute="height" constant="16" id="OIX-Q6-oud"/>
                                             <constraint firstAttribute="width" constant="82" id="XFu-lv-0BD"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="graph-button-norm" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="QiP-62-GYs">
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="graph-button-norm" imagePosition="only" alignment="center" enabled="NO" imageScaling="proportionallyUpOrDown" inset="2" id="QiP-62-GYs">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                             <string key="keyEquivalent">g</string>
@@ -326,6 +326,7 @@
                         <outlet property="cameraInfoLabel" destination="Rpo-Bf-MrJ" id="RyX-41-fZZ"/>
                         <outlet property="debugInfoLabel" destination="Mhh-Pu-ydl" id="DZi-Xp-0HL"/>
                         <outlet property="fitButton" destination="vU3-Eb-5vb" id="Jls-KD-3Sp"/>
+                        <outlet property="graphButton" destination="Hej-45-q5k" id="OIb-tF-e2C"/>
                         <outlet property="gridButton" destination="p17-9c-LBM" id="ECa-og-QqL"/>
                         <outlet property="mapInfoLabel" destination="P0U-y9-0fU" id="T6u-RD-e0v"/>
                         <outlet property="nextButton" destination="kMD-1U-8sj" id="c7C-tw-UDC"/>

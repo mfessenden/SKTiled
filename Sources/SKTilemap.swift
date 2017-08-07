@@ -153,7 +153,9 @@ internal let TileSize32x32 = CGSize(width: 32, height: 32)
  - `didRenderMap(_ tilemap: SKTilemap)`
     - Called when the map is finished rendering.
  - `objectForTile: SKTile.Type`
-    - Return a `SKTile` object for use building tiles.
+    - Return an `SKTile` object for use building tiles.
+ - `objectForGraphNode: GKGridGraphNode`
+ - Return a `GKGridGraphNode` object for use building pathfinding graphs.
 */
 public protocol SKTilemapDelegate: class {
     var zDeltaForLayers: CGFloat { get }
@@ -164,6 +166,7 @@ public protocol SKTilemapDelegate: class {
     func didRenderMap(_ tilemap: SKTilemap)
     func didAddPathfindingGraph(_ graph: GKGridGraph<GKGridGraphNode>)
     func objectForTile(className: String?) -> SKTile.Type
+    func objectForGraphNode(className: String?) -> GKGridGraphNode.Type
 }
 
     
@@ -256,18 +259,6 @@ open class SKTilemap: SKCropNode, SKTiledObject {
         }
         return result
     }
-    
-    /// Returns an array of pathfinding graphs.
-    open var graphs: [GKGridGraph<GKGridGraphNode>] {
-        var result: [GKGridGraph<GKGridGraphNode>] = []
-        for tileLayer in tileLayers() {
-            if let graph = tileLayer.graph {
-                result.append(graph as! GKGridGraph<GKGridGraphNode>)
-            }
-        }
-        return result
-    }
-    
     
     /// Optional background color (read from the Tiled file)
     open var backgroundColor: SKColor? = nil {
@@ -1240,6 +1231,16 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     }
     
     /**
+     Return tile data with a property of the given type.
+     
+     - parameter ofType: `String` tile data type.
+     - returns: `[SKTilesetData]` array of tile data.
+     */
+    open func getTileData(ofType: String) -> [SKTilesetData] {
+        return tilesets.flatMap { $0.getTileData(withProperty: ofType) }
+    }
+    
+    /**
      Return tile data with a property of the given type (all tilesets).
      
      - parameter named: `String` property name.
@@ -1413,7 +1414,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
         }
     }
     
-    // MARK: - Updates
+    // MARK: - Updating
     open func update(_ currentTime: TimeInterval) {
         guard (isRendered == true) else { return }
         _layers.forEach( { $0.update(currentTime)})
@@ -1653,6 +1654,9 @@ extension SKTilemap {
             return
         }
         
+        // collect graphs for each tile layer
+        let graphs = tileLayers().flatMap { $0.graph }
+        
         // format the header
         let graphsString = (graphs.count > 0) ? (graphs.count > 1) ? " : \(graphs.count) Graphs" : " : \(graphs.count) Graph" : ""
         let headerString = "# Tilemap \"\(mapName)\": \(tileCount) Tiles: \(layerCount) Layers\(graphsString)"
@@ -1791,6 +1795,13 @@ extension SKTilemapDelegate {
      - returns `SKTile.self`:  `SKTile` subclass.
      */
     public func objectForTile(className: String? = nil) -> SKTile.Type { return SKTile.self }
+    /**
+     Returns a graph node for use in pathfinding graphs.
+     
+     - parameter className:    `String` optional class name.
+     - returns `GKGridGraphNode.Type`:  `GKGridGraphNode` node type.
+     */
+    public func objectForGraphNode(className: String?) -> GKGridGraphNode.Type { return SKTiledGraphNode.self }
 }
 
 

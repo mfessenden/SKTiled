@@ -111,7 +111,7 @@ internal class TiledDebugDrawNode: SKNode {
         frameShape!.zPosition = layer.zPosition + (layer.tilemap.zDeltaForLayers + 20)
     }
 
-    func update(verbose: Bool = true) {
+    func update(verbose: Bool = false) {
         if (verbose == true){
             print("[TiledDebugDrawNode]: debug options: \(debugDrawOptions.rawValue), hidden: \(isHidden)")
         }
@@ -299,15 +299,9 @@ internal class TileShape: SKShapeNode {
     var coord: CGPoint
     var useLabel: Bool = false
     var renderQuality: CGFloat = 4
-    public var clickCount: Int = 0 {
-        didSet {
-            guard oldValue != clickCount else { return }
-
-            if clickCount > 0 {
-                //cleanup()
-            }
-        }
-    }
+    var isReady: Bool = false
+    
+    public var clickCount: Int = 0 
 
     init(layer: TiledLayerObject, coord: CGPoint, tileColor: SKColor, withLabel: Bool=false){
         self.layer = layer
@@ -444,6 +438,10 @@ extension TileShape {
 
     override public var debugDescription: String {
         return description
+    }
+    
+    override public var hashValue: Int {
+        return coord.hashValue
     }
 }
 

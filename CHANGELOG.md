@@ -9,6 +9,8 @@ Change Log
 - add `SKTilemap.newObjectGroup(named:group:)`
 - add `SKTilemap.newImageLayer(named:group:)`
 - add `SKTilemap.newGroupLayer(named:group:)`
+- add `SKTilemap.getTileData(ofType:)`
+- add `SKTileset.getTileData(ofType:)`
 
 #### Changes
 

@@ -191,7 +191,7 @@ open class SKTileset: SKTiledObject {
      - parameter source:  `String` image named referenced in the tileset.
      - parameter replace: `Bool` replace the current texture.
      */
-    open func addTextures(fromSpriteSheet source: String, replace: Bool=false, transparent: String?=nil) {
+    open func addTextures(fromSpriteSheet source: String, replace: Bool=false, transparent: String?=nil) -> TimeInterval {
         let timer = Date()
         self.source = source
 
@@ -238,7 +238,7 @@ open class SKTileset: SKTiledObject {
             tileTexture.filteringMode = .nearest
             
             // add the tile data properties, or replace the texture
-            if replace == false {
+            if (replace == false) {
                 let _ = self.addTilesetTile(tileID, texture: tileTexture)
             } else {
                 self.setDataTexture(tileID, texture: tileTexture)
@@ -254,15 +254,18 @@ open class SKTileset: SKTiledObject {
         }
         
         self.isRendered = true
+        let tilesetBuildTime = Date().timeIntervalSince(timer)
         
         // time results
-        if replace == false {
-            let timeInterval = Date().timeIntervalSince(timer)
-            let timeStamp = String(format: "%.\(String(3))f", timeInterval)
+        if (replace == false) {
+            
+            let timeStamp = String(format: "%.\(String(3))f", tilesetBuildTime)
             if loggingLevel.rawValue <= 1 {
                 print(" → tileset \"\(name)\" built in: \(timeStamp)s (\(tilesAdded) tiles)\n")
             }
         }
+        
+        return tilesetBuildTime
     }
     
     // MARK: - Tile Data
@@ -381,6 +384,16 @@ open class SKTileset: SKTiledObject {
      */
     open func getTileData(withProperty property: String) -> [SKTilesetData] {
         return tileData.filter { $0.properties[property] != nil }
+    }
+    
+    /**
+     Returns tile data with the given type.
+     
+     - parameter ofType: `String` data type.
+     - returns: `[SKTilesetData]` array of tile data.
+     */
+    open func getTileData(ofType: String) -> [SKTilesetData] {
+        return tileData.filter { $0.type == ofType }
     }
     
     /**

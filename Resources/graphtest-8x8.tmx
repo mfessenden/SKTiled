@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="8" tileheight="8" nextobjectid="1">
+<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="8" tileheight="8" nextobjectid="1">
  <properties>
-  <property name="frameColor" type="color" value="#ff2aa119"/>
-  <property name="gridColor" type="color" value="#ff319d29"/>
-  <property name="maxZoom" type="float" value="8"/>
-  <property name="worldScale" type="float" value="6"/>
+  <property name="frameColor" type="color" value="#ff690092"/>
+  <property name="gridColor" type="color" value="#ffa000a1"/>
+  <property name="maxZoom" type="float" value="12"/>
+  <property name="testColor" type="color" value=""/>
+  <property name="worldScale" type="float" value="2"/>
  </properties>
  <tileset firstgid="1" name="graph-test-8x8" tilewidth="8" tileheight="8" spacing="1" tilecount="90" columns="15">
   <image source="graphtest-8x8.png" trans="800080" width="134" height="53"/>
@@ -20,7 +21,7 @@
     <property name="type" value="walls"/>
    </properties>
   </tile>
-  <tile id="2">
+  <tile id="2" type="light">
    <properties>
     <property name="light" type="bool" value="true"/>
     <property name="strength" type="float" value="0"/>
@@ -254,6 +255,7 @@
     <property name="type" value=""/>
    </properties>
   </tile>
+  <tile id="69" type="spawn"/>
   <tile id="75" probability="0.02">
    <properties>
     <property name="strength" type="float" value="0"/>
@@ -295,33 +297,40 @@
     <property name="type" value=""/>
    </properties>
   </tile>
-  <tile id="83">
+  <tile id="83" type="goal">
    <properties>
     <property name="type" value="goal-start"/>
+    <property name="weight" type="float" value="-1000"/>
    </properties>
   </tile>
-  <tile id="84">
+  <tile id="84" type="goal">
    <properties>
     <property name="type" value="goal-end"/>
+    <property name="weight" type="float" value="1000"/>
    </properties>
   </tile>
  </tileset>
- <layer name="Floor" width="10" height="10">
+ <layer name="Floor" width="30" height="30">
   <data encoding="base64" compression="zlib">
-   eJwTYmBgEIJiBSgtiEUMnT2YsSAaH5u7CfmFGDOo4TZ0OwDfywdn
+   eJztlNEKwCAIRf2Fxtiz//+VewpCTK8tC0YXfFhlR81JdHR09DddAzZDBeDcjc3iahwZyypuz2o8q7iP+J4h5H0z+mpXP+/iSnZPnMhl5wzSC0z+XZJr5ZLxHplcrRZFWUPiK40vk8+1ziC1QfOscybi43Fkb7Gx94U7km87xzO4rKxZ+Vq1itadDX+iWIw9oTVr70JzRLnef8TBWKP5WrOTwHM1xpl6AayEG3E=
   </data>
  </layer>
- <layer name="Walls" width="10" height="10">
+ <layer name="Walls" width="30" height="30">
   <data encoding="base64" compression="zlib">
-   eJyFUIEJwDAIM+IB+6Cv7vRVMFtw7RYoNsFEEWaG+bwqHn5mTYzSOo7Zo5w55bn90fqj5Y2WC6lY8Njof6DXZSZ9uRs1t3ee9sfm/zVXd+VtV3e/AOcJBDM=
+   eJztVVsOhCAM5HUAb8BVObqSpTqOlOBu/dnYhCDQdtoRR+dee+21f7OwDb+N2GYPe7h2sLYwLU9UzgM7fmnSm2AwDq+TEa6nZ+Qba/EdfwtcLbf0F465WOKOaniq315OLX8y7Jd7q7krr5XTp/rFXKOcT+KO7oz41PuegAfUGNabWdyRr6YXHLtM5LqDKz2KnwwNR7gbaO+eLxvUN3MPF3qf/B3VGiPV2uJOPiM8Od96KqL5okWCj9o7e7dZ25h3PGc+R7rh3bUXtAjP2V37VPRh/w/gPu9p9bV7VXr1/Pq9Y1zo7Gm1BXh3NS7Tea03H74nTpOSM3/ieF16PHGNgtX0p+vDdocz8Z3JPYPLg/8dzBPOgfQ1QYy1rePNC+0=
   </data>
  </layer>
- <layer name="Graph" width="10" height="10">
+ <layer name="Objects" width="30" height="30">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjFTANtAOGAVUBcoD7YBRMApGMACVp6N5cGiDwVgnDkY3jYLhBwBN2gBf
+  </data>
+ </layer>
+ <layer name="Graph" width="30" height="30" visible="0">
   <properties>
    <property name="walkableIDs" value="8,9,10,23,24"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYMAPQpHYXEDMDcQSQMwJFeNEwjDAjcTmxEEzEDAHWR02PjZxmH4JqBuwuRebXmzuxeYmCTzq0NVjC5cQHH5ABgD67wJ7
+   eJztVdEOgCAI5DX9AT6s/v9Xyq02RwdSiS95G6uEOOSMiCYmJv6KLSDnAozEtV7vzY3qiOTVcsq1CF55nw7LA3ilpognUl9N1xHn6kvM5O3Di/RmkeNJfd5YFJcrX7EUyFuufHJe3zor79T+tzMQ9bI1XzLwWZogPVE8i2eZy9qnZz6jWoju/fLmesqLfNZcu9bQebB6qvFqe27tDendgudfYfWigI1Yi9djqA5vT3thDcytYQe57gcF
   </data>
  </layer>
 </map>

@@ -73,6 +73,7 @@ open class DemoController: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadScene), name: NSNotification.Name(rawValue: "reloadScene"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadNextScene), name: NSNotification.Name(rawValue: "loadNextScene"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadPreviousScene), name: NSNotification.Name(rawValue: "loadPreviousScene"), object: nil)
+        
     }
     
     public init(view: SKView) {
@@ -212,6 +213,9 @@ open class DemoController: NSObject {
                 nextScene.cameraNode?.setCameraZoom(cameraZoom)
             }
             nextScene.tilemap?.debugDrawOptions = self.debugDrawOptions
+            
+            let graphInfo = ["hasGraphs": nextScene.graphs.count > 0]
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "updateGraphControls"), object: nil, userInfo: graphInfo)
         }
     }
     

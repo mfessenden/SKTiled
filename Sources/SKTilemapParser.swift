@@ -97,8 +97,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
     fileprivate var ignoreProperties: Bool = false                  // ignore custom properties
 
     // dispatch queues & groups
-    internal let parsingQueue = DispatchQueue(label: "com.sktiled.parsequeue", qos: .userInitiated, attributes: .concurrent)  // concurrent queue
-    internal let parsingGroup = DispatchGroup()
+    internal let renderGroup = DispatchGroup()
 
     // MARK: - Loading
     
@@ -266,7 +265,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
 
         
         for tsxfile in tsxFiles {
-            
             // create a url relative to the current root
             let fileURL = URL(fileURLWithPath: tsxfile, relativeTo: rootPath)
             if fileManager.fileExists(atPath: fileURL.path) {
@@ -401,12 +399,12 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                 }
             }
 
-            queue.async(group: parsingGroup, execute: renderItem)  // was tilemap.parsingGroup
+            queue.async(group: renderGroup, execute: renderItem)
         }
 
 
         // run callbacks when the group is finished
-        parsingGroup.notify(queue: DispatchQueue.main) {
+        renderGroup.notify(queue: DispatchQueue.main) {
             
             self.data = [:]
             self.tilesets = [:]
@@ -414,8 +412,11 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             for layer in self.tilemap.getLayers() {
                 layer.didFinishRendering(duration: duration)
             }
-            
+        }
+        
+        queue.sync {
             // build any pathfinding graphs
+            self.mapDelegate?.objectForGraphNode(className: nil)
             self.tilemap.buildPathfindingGraphs()
         }
         
@@ -759,7 +760,9 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     }
                 } else {
                     // add the tileset spritesheet image
-                    tileset.addTextures(fromSpriteSheet: sourceImagePath, replace: false, transparent: attributeDict["trans"])
+                    let buildTime = tileset.addTextures(fromSpriteSheet: sourceImagePath, replace: false, transparent: attributeDict["trans"])
+                    
+                    // TODO: tileset logging
                 }
             }
         }

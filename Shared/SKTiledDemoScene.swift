@@ -9,7 +9,7 @@
 
 import SpriteKit
 import Foundation
-
+import GameplayKit
 #if os(iOS) || os(tvOS)
 import UIKit
 #else
@@ -27,6 +27,8 @@ public class SKTiledDemoScene: SKTiledScene {
     
     internal var selected: [TiledLayerObject] = []
     
+    internal var tileshapes: Set<TileShape> = []
+    
     internal var editMode: Bool = false
     internal var liveMode: Bool = true                     // highlight tiles under the mouse
     
@@ -36,13 +38,14 @@ public class SKTiledDemoScene: SKTiledScene {
         didSet {
             guard oldValue != coordinate else { return }
             
-            //print(" -> coord: \(coordinate.shortDescription)")
             self.enumerateChildNodes(withName: "*") {  // was //*
                 node, stop in
                 
                 if let tile = node as? TileShape {
-                    if (tile.coord == self.coordinate) && (tile.useLabel == true) {
-                        tile.cleanup()
+                    if (tile.coord != self.coordinate) {
+                        if self.tileshapes.contains(tile) {
+                            print("tile is in tileshapes")
+                        }
                     }
                 }
             }
@@ -114,6 +117,7 @@ public class SKTiledDemoScene: SKTiledScene {
             // add debug tile shape
 
             let tile = TileShape(layer: layer, coord: coord, tileColor: tileColor, withLabel: useLabel)
+            
             tile.zPosition = lastZosition
             let tilePosition = layer.pointForCoordinate(x, y)
             tile.position = worldNode.convert(tilePosition, from: layer)
@@ -121,6 +125,8 @@ public class SKTiledDemoScene: SKTiledScene {
             
             if (useLabel == false) {
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "updateCoordinate"), object: nil, userInfo: ["x": x, "y": y])
+            } else {
+                tileshapes.insert(tile)
             }
         }
     }
@@ -142,7 +148,6 @@ public class SKTiledDemoScene: SKTiledScene {
      Callback to the GameViewController to reload the current scene.
      */
     public func reloadScene() {
-        print("scene: reloading...")
         NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadScene"), object: nil)
     }
     
@@ -245,6 +250,11 @@ public class SKTiledDemoScene: SKTiledScene {
         updateHud()
         tilemap.mapStatistics()
     }
+    
+    override open func didAddPathfindingGraph(_ graph: GKGridGraph<GKGridGraphNode>) {
+        super.didAddPathfindingGraph(graph)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateGraphControls"), object: nil, userInfo: ["hasGraphs": true])
+    }
 }
 
 
@@ -307,15 +317,15 @@ extension SKTiledDemoScene {
         // get the coordinate at that position
         let coord = baseLayer.coordinateAtMouseEvent(event: event)
         let nodesUnderCursor = nodes(at: positionInScene).filter( { $0 as? TileShape != nil }) as! [TileShape]
-        let currentClicked = nodesUnderCursor.filter( { $0.useLabel == true } )
+        let tilesUnderCursor = nodesUnderCursor.filter( { $0.useLabel == true } )
 
         if (tilemap.isPaused == false) {
             // highlight the current coordinate
-            if currentClicked.count == 0 {
+            if tilesUnderCursor.count == 0 {
                 addTileToWorld(Int(coord.x), Int(coord.y), useLabel: true)
             }
         }
-
+ 
         // update the tile information label
         let coordDescription = "\(Int(coord.x)), \(Int(coord.y))"
         let coordStr = "Coord: \(coordDescription), \(positionInLayer.roundTo())"
@@ -350,8 +360,6 @@ extension SKTiledDemoScene {
             let yDistanceToCenter = (ypos / viewSize.height) - 0.5
             
             mouseTracker.position = positionInWindow
-            
-            
             mouseTracker.offset = CGPoint(x: xDistanceToCenter, y: yDistanceToCenter)
         }
         
@@ -363,7 +371,7 @@ extension SKTiledDemoScene {
         let coord = baseLayer.coordinateAtMouseEvent(event: event)
         let validCoord = baseLayer.isValid(Int(coord.x), Int(coord.y))
         
-        // query nodes under the cursor
+        // query nodes under the cursor to update the properties label
         var propertiesInfoString = ""
         let positionInMap = event.location(in: tilemap)
         let tiledObjectsUnderCursor = tilemap.renderableObjectsAt(point: positionInMap)
@@ -385,6 +393,10 @@ extension SKTiledDemoScene {
         let coordDescription = "\(Int(coord.x)), \(Int(coord.y))"
         updateTileInfo(msg: "Coord: \(coordDescription), \(positionInLayer.roundTo())")
         updatePropertiesInfo(msg: propertiesInfoString)
+        
+        
+        //let nodesUnderCursor = nodes(at: positionInScene).filter( { $0 as? TileShape != nil }) as! [TileShape]
+        //let tilesUnderCursor = nodesUnderCursor.filter( { $0.useLabel == true } )
     }
 
     override open func mouseDragged(with event: NSEvent) {
@@ -450,11 +462,9 @@ extension SKTiledDemoScene {
         
         // 'd' shows/hides debug view
         if eventKey == 0x02 {
-            print(tilemap.baseLayer.debugDrawOptions)
-            //print("[SKTiledDemoScene]: no debug drawing options available.")
-            tilemap.baseLayer.debugDrawOptions = .drawGrid
-            print("default layer visible: \(tilemap.baseLayer.visible)")
-            
+            tilemap.layers.forEach { layer in
+                print("layer: \(layer.path)")
+            }
         }
         
         // 'h' hides the HUD

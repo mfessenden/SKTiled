@@ -106,9 +106,8 @@ open class TiledLayerObject: SKNode, SKTiledObject {
 
     /// Unique layer id.
     open var uuid: String = UUID().uuidString
-    /// Layer type
+    /// Layer type.
     open var type: String!
-
     /// Layer index. Matches the index of the layer in the source TMX file.
     open var index: Int = 0
 
@@ -153,7 +152,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     open var sizeInPoints: CGSize { return tilemap.sizeInPoints }
 
     /// Pathfinding graph
-    open var graph: GKGridGraph<SKTiledGraphNode>!
+    open var graph: GKGridGraph<GKGridGraphNode>!
     open var walkableIDs: [Int] = []
     open var walkableTypes: [String] = []
 
@@ -896,10 +895,13 @@ open class SKTileLayer: TiledLayerObject {
 
     fileprivate typealias TilesArray = Array2D<SKTile>
 
-    // container for the tile sprites
+    /// Container for the tile sprites.
     fileprivate var tiles: TilesArray                   // array of tiles
     open var render: Bool = false                       // render tile layer as a single image
-
+    
+    /// Name used to access pathfinding graph.
+    open var graphName: String
+    
     /// Tuple of layer render statistics.
     override open var renderStatistics: renderInfo {
         var current = super.renderStatistics
@@ -933,6 +935,7 @@ open class SKTileLayer: TiledLayerObject {
      */
     override public init(layerName: String, tilemap: SKTilemap) {
         self.tiles = TilesArray(columns: Int(tilemap.size.width), rows: Int(tilemap.size.height))
+        self.graphName = layerName
         super.init(layerName: layerName, tilemap: tilemap)
         self.layerType = .tile
     }
@@ -948,6 +951,7 @@ open class SKTileLayer: TiledLayerObject {
     public init?(tilemap: SKTilemap, attributes: [String: String]) {
         // name, width and height are required
         guard let layerName = attributes["name"] else { return nil }
+        self.graphName = layerName
         self.tiles = TilesArray(columns: Int(tilemap.size.width), rows: Int(tilemap.size.height))
         super.init(layerName: layerName, tilemap: tilemap, attributes: attributes)
         self.layerType = .tile

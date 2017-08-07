@@ -46,7 +46,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     open var loggingLevel: LoggingLevel = .info
     
     /// Reference to pathfinding graphs.
-    open var graphs: [String : GKGridGraph<SKTiledGraphNode>] = [:]
+    open var graphs: [String : GKGridGraph<GKGridGraphNode>] = [:]
     
     // MARK: - Init
     /**
@@ -181,19 +181,22 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     open func didRenderMap(_ tilemap: SKTilemap) {
         // Called after layers are rendered. Perform any post-processing here.
     }
-    
-    // MARK: - Updates
-    override open func didFinishUpdate() {
-        tilemap?.clampPositionForMap()
+
+     open func didAddPathfindingGraph(_ graph: GKGridGraph<GKGridGraphNode>) {
+        // Called when a graph is added to the scene.
     }
     
-    
+    // MARK: - Updating
     override open func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
         // update the tilemap
         tilemap?.update(currentTime)
     }
     
+    override open func didFinishUpdate() {
+        tilemap?.clampPositionForMap()
+    }
+
     // TODO: update this
     open func updateCamera() {
         guard let view = view else { return }

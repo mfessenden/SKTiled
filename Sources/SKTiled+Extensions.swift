@@ -1061,6 +1061,15 @@ public func / (lhs: CGRect, rhs: CGFloat) -> CGRect {
 }
 
 
+// MARK: SKColor
+
+public func lerp(start: SKColor, end: SKColor, t: CGFloat) -> SKColor {
+    let newRed   = (1.0 - t) * start.components[0]   + t * end.components[0]
+    let newGreen = (1.0 - t) * start.components[1] + t * end.components[1]
+    let newBlue  = (1.0 - t) * start.components[2]  + t * end.components[2]
+    return SKColor(red: newRed, green: newGreen, blue: newBlue, alpha: 1)
+}
+
 // MARK: - Helper Functions
 
 public func floor(point: CGPoint) -> CGPoint {
@@ -1256,19 +1265,24 @@ internal func drawLayerGraph(_ layer: TiledLayerObject, imageScale: CGFloat=8, l
                     if let node = layer.graph?.node(atGridPosition: int2(Int32(col), Int32(row))) {
                         fillColor = SKColor.gray
                         
-                        if node.weight > 1 {
-                            fillColor = SKColor.yellow
-                            if node.weight >= 100 {
-                                fillColor = SKColor.orange
-                                
-                                if node.weight >= 250 {
-                                    fillColor = SKColor.red
+                        if let tiledNode = node as? SKTiledGraphNode {
+                            // TODO: use switch here
+                            if tiledNode.weight > 1 {
+                                fillColor = SKColor.yellow
+                                if tiledNode.weight >= 100 {
+                                    fillColor = SKColor.orange
+                                    
+                                    if tiledNode.weight >= 250 {
+                                        fillColor = SKColor.red
+                                    }
                                 }
+                                
                             }
-                        }
                         
-                        if node.weight < 1 {
-                            fillColor = SKColor.blue
+                        
+                            if tiledNode.weight < 1 {
+                                fillColor = SKColor.blue
+                            }
                         }
                         
                         let fillPath = polygonPath(points)
