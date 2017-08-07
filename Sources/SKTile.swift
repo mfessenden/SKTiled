@@ -605,18 +605,22 @@ public class SKTile: SKSpriteNode {
     
     }
     
+    /**
+     Set the tile transparent color.
+     
+     - parameter color: `SKColor` transparent color.
+     */
     private func setTransparentColor(_ color: SKColor) {
         /*
         let colorShader = SKShader(fileNamed: "replaceColor.fsh")
         
+         // shader attributes
         colorShader.attributes = [
             SKAttribute(name: "transparentColor", type: .vectorFloat4)
         ]
         
         let transColor = color.toVec4
-        
         setValue(SKAttributeValue(vectorFloat4: transColor), forAttribute: "transparentColor")
-        
         self.shader = colorShader
         */
     }

@@ -619,10 +619,6 @@ public extension SKColor {
     public var toVec4: vector_float4 {
         return vector_float4(components.map {Float($0)})
     }
-    
-    public var toVec3: vector_float3 {
-        return vector_float3(components.dropLast().map {Float($0)})
-    }
 
     public var hexDescription: String {
         return "SKColor(hexString:  \"\(self.hexString())\")"
