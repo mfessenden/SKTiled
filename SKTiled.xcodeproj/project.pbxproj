@@ -246,6 +246,8 @@
 		4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "roguelike-16x16.tsx"; sourceTree = "<group>"; };
 		4CD6D2D91D8B9EA10083DA7B /* isometric-130x66.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "isometric-130x66.tmx"; sourceTree = "<group>"; };
 		4CD6D2DA1D8B9EA10083DA7B /* isometric-130x230.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "isometric-130x230.png"; sourceTree = "<group>"; };
+		4CE2B3A01F39030900A301AC /* SKTiled.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = SKTiled.modulemap; sourceTree = "<group>"; };
+		4CE2B3A11F39031400A301AC /* SKTiled.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = SKTiled.modulemap; sourceTree = "<group>"; };
 		4CF040C51F32279600D8AFFC /* inky-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "inky-16x16.tsx"; sourceTree = "<group>"; };
 		4CF040C81F3228D600D8AFFC /* clyde-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "clyde-16x16.tsx"; sourceTree = "<group>"; };
 		4CF040C91F3228D600D8AFFC /* pinky-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "pinky-16x16.tsx"; sourceTree = "<group>"; };
@@ -356,6 +358,7 @@
 		4C5812611E255E6400E80BFC /* framework */ = {
 			isa = PBXGroup;
 			children = (
+				4CE2B3A01F39030900A301AC /* SKTiled.modulemap */,
 				4C5812621E255E6400E80BFC /* Info.plist */,
 				4C5812631E255E6400E80BFC /* SKTiled.h */,
 			);
@@ -365,6 +368,7 @@
 		4C5812661E255E7300E80BFC /* framework */ = {
 			isa = PBXGroup;
 			children = (
+				4CE2B3A11F39031400A301AC /* SKTiled.modulemap */,
 				4C5812671E255E7300E80BFC /* Info.plist */,
 				4C5812681E255E7300E80BFC /* SKTiled.h */,
 			);
@@ -1196,6 +1200,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/macOS/framework/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MODULEMAP_FILE = macOS/framework/SKTiled.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
 				PRODUCT_NAME = SKTiled;
 				SDKROOT = macosx;
@@ -1225,6 +1230,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/macOS/framework/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MODULEMAP_FILE = macOS/framework/SKTiled.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
 				PRODUCT_NAME = SKTiled;
 				SDKROOT = macosx;
@@ -1250,6 +1256,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/framework/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = iOS/framework/SKTiled.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
 				PRODUCT_NAME = SKTiled;
 				SKIP_INSTALL = YES;
@@ -1275,6 +1282,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/framework/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = iOS/framework/SKTiled.modulemap;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
 				PRODUCT_NAME = SKTiled;
