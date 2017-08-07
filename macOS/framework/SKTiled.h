@@ -11,3 +11,6 @@
 //! Project version number for SKTiled.
 FOUNDATION_EXPORT double SKTiledVersionNumber;
 FOUNDATION_EXPORT const unsigned char SKTiledVersionString[];
+
+
+#import "SKTiled"
