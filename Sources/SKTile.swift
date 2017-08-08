@@ -41,14 +41,13 @@ public class SKTile: SKSpriteNode {
     fileprivate var tileOverlap: CGFloat = 1.5          // tile overlap amount
     fileprivate var maxOverlap: CGFloat = 3.0           // maximum tile overlap
     
-    // MARK: Highlighting
     open var highlightColor: SKColor = SKColor.white    // tile highlight color
     open var highlightDuration: TimeInterval = 0        // tile highlight duration
     
     // dynamics
     open var physicsShape: PhysicsShape = .rectangle    // physics type
     
-    // tile alignment
+    /// Tile alignment.
     open var alignment: Alignment = .bottomLeft
     
     /// Returns the bounding box of the shape.
@@ -136,9 +135,9 @@ public class SKTile: SKSpriteNode {
     required public init?(data: SKTilesetData) {
         guard let tileset = data.tileset else { return nil }
         self.tileData = data
-        
         self.tileSize = tileset.tileSize
-        super.init(texture: data.texture, color: SKColor.clear, size: data.texture.size())
+        // TODO: double check that fabs isn't causing cracking
+        super.init(texture: data.texture, color: SKColor.clear, size: fabs(tileset.tileSize))
         
         // set the transparent color for the tile
         if let transparentColor = data.transparentColor {
@@ -428,7 +427,7 @@ public class SKTile: SKSpriteNode {
             xAnchor = mapTileSizeHalfWidth / tilesetTileWidth
             yAnchor = mapTileSizeHalfHeight / tilesetTileHeight
         }
-
+        
         // set the anchor point
         anchorPoint.x = xAnchor
         anchorPoint.y = yAnchor

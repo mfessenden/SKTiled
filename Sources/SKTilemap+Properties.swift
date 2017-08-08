@@ -80,11 +80,6 @@ public extension SKTilemap {
                 zPosition = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : zPosition
             }
             
-            // aspect scaling
-            if (lattr == "aspect") {
-                yScale *= (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : 1
-            }
-            
             if (lattr == "linewidth") {
                 //lineWidth = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : lineWidth
             }
@@ -267,6 +262,7 @@ public extension SKTileLayer {
             // walkable types
             if (lattr == "walkabletypes") {
                 walkableTypes = stringArrayForKey("walkableTypes", separatedBy: ",")
+                //print("❊ walkable types: \(walkableTypes)")
             }
         }
     }
@@ -350,6 +346,19 @@ public extension SKTilesetData {
     public func parseProperties(completion: (() -> ())?) {
         if (ignoreProperties == true) { return }
         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
+        
+        for (attr, _) in properties {
+            let lattr = attr.lowercased()
+            
+            if (lattr == "weight") {
+                weight = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : weight
+            }
+            
+            if (lattr == "walkable") {
+                walkable = boolForKey(attr)
+            }
+        }
+        
         if completion != nil { completion!() }
     }
 }

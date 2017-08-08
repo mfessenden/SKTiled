@@ -241,12 +241,12 @@ public class SKTiledDemoScene: SKTiledScene {
     // MARK: - Callbacks
     override open func didReadMap(_ tilemap: SKTilemap) {
         self.physicsWorld.speed = 0
-        print(" ❊ `SKTiledDemoScene.didReadMap`...")
+        //print(" ❊ `SKTiledDemoScene.didReadMap`...")
     }
     
     override open func didRenderMap(_ tilemap: SKTilemap) {
         // update the HUD to reflect the number of tiles created
-        print(" ❊ `SKTiledDemoScene.didRenderMap`...")
+        //print(" ❊ `SKTiledDemoScene.didRenderMap`...")
         updateHud()
         tilemap.mapStatistics()
     }
@@ -585,7 +585,7 @@ extension SKTiledDemoScene {
                     fadeTime += 0.003
                     
                 }
-                //fadeTime += 0.02
+                fadeTime += 0.02
             }
         }
         
@@ -611,6 +611,7 @@ extension SKTiledDemoScene {
         
         // 't' runs a custom command
         if eventKey == 0x11 {
+            tilemap.tileObjects().forEach( { $0.strokeColor = .clear})
             
         }
         
@@ -636,10 +637,7 @@ extension SKTiledDemoScene {
         
         // 'z' is a custom test
         if eventKey == 0x06 {
-            let groups = tilemap.groupLayers()
-            for grp in groups {
-                print("\(grp.path), \(grp.index)")
-            }
+
         }
         
         // '↑' clamps layer positions

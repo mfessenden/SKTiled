@@ -416,7 +416,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
         
         queue.sync {
             // build any pathfinding graphs
-            self.mapDelegate?.objectForGraphNode(className: nil)
+            let nodeClass = self.mapDelegate?.objectForGraphNode(className: nil) ?? SKTiledGraphNode.self
             self.tilemap.buildPathfindingGraphs()
         }
         
@@ -998,7 +998,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
 
             // tilemap properties
             if let tilemap = lastElement as? SKTilemap {
-                //print("     ↳ tilemap")
                 for (key, value) in properties {
                     tilemap.properties[key] = value
                 }
@@ -1008,7 +1007,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
 
             // layer properties
             if let layer = lastElement as? TiledLayerObject {
-                //print("     ↳ layer: \"\(layer.layerName)\"")
                 if (currentID == nil){
                     for (key, value) in properties {
                         layer.properties[key] = value
@@ -1020,7 +1018,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
 
             // tileset properties
             if let tileset = lastElement as? SKTileset {
-                //print("     ↳ tileset: \"\(tileset.name)\"")
                 if (currentID == nil){
                     tileset.properties = properties
                     tileset.parseProperties(completion: nil)
@@ -1030,7 +1027,6 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     let tileID = tileset.firstGID + currentID!
                     // TODO: check global
                     if let tileData = tileset.getTileData(globalID: tileID) {
-                        //print("     ↳ data: \"\(tileData.id)\"")
                         for (key, value) in properties {
                             tileData.properties[key] = value
                         }

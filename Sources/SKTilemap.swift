@@ -180,7 +180,7 @@ public protocol SKTilemapDelegate: class {
  
  Tile data is stored in `SKTileset` tile sets.
  */
-open class SKTilemap: SKCropNode, SKTiledObject {
+open class SKTilemap: SKNode, SKTiledObject {
     
     /// file properties
     open var url: URL!                                            // tmx file path
@@ -271,16 +271,16 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     /// Crop the tilemap at the map edges.
     open var cropAtBoundary: Bool = false {
         didSet {
-            if let currentMask = maskNode { currentMask.removeFromParent() }
-            maskNode = (cropAtBoundary == true) ? SKSpriteNode(color: SKColor.black, size: self.sizeInPoints) : nil
-            (maskNode as? SKSpriteNode)?.texture?.filteringMode = .nearest
+            //if let currentMask = maskNode { currentMask.removeFromParent() }
+            //maskNode = (cropAtBoundary == true) ? SKSpriteNode(color: SKColor.black, size: self.sizeInPoints) : nil
+            //(maskNode as? SKSpriteNode)?.texture?.filteringMode = .nearest
         }
     }
     
     /** 
     The tile map default base layer, used for displaying the current grid, getting coordinates, etc.
     */
-    lazy open var baseLayer: BackgroundLayer = {
+    lazy var baseLayer: BackgroundLayer = {
         let layer = BackgroundLayer(tilemap: self)
         self.addLayer(layer, base: true)
         layer.didFinishRendering()
@@ -1276,7 +1276,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     }
     
     /**
-     Return all of the current tile objects. If recursive is false, only returns tiles from top-level layers.
+     Return all of the current tile objects. If recursive is false, only returns objects from top-level layers.
      
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTileObject]` array of objects.
@@ -1286,7 +1286,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     }
     
     /**
-     Return objects matching a given type. If recursive is false, only returns tiles from top-level layers.
+     Return objects matching a given type. If recursive is false, only returns objects from top-level layers.
      
      - parameter type:      `String` object type to query.
      - parameter recursive: `Bool` include nested layers.
@@ -1297,7 +1297,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     }
     
     /**
-     Return objects matching a given name. If recursive is false, only returns tiles from top-level layers.
+     Return objects matching a given name. If recursive is false, only returns objects from top-level layers.
      
      - parameter named:     `String` object name to query.
      - parameter recursive: `Bool` include nested layers.
@@ -1308,7 +1308,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     }
     
     /**
-     Return objects with the given text value. If recursive is false, only returns tiles from top-level layers.
+     Return objects with the given text value. If recursive is false, only returns objects from top-level layers.
      
      - parameter withText:   `String` text value.
      - parameter recursive: `Bool` include nested layers.
@@ -1329,7 +1329,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     }
     
     /**
-     Return objects with a tile id. If recursive is false, only returns tiles from top-level layers.
+     Return objects with a tile id. If recursive is false, only returns objects from top-level layers.
      
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTileObject]` objects with a tile gid.
@@ -1339,7 +1339,7 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     }
     
     /**
-     Return text objects. If recursive is false, only returns tiles from top-level layers.
+     Return text objects. If recursive is false, only returns objects from top-level layers.
      
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTileObject]` text objects.
@@ -1349,8 +1349,6 @@ open class SKTilemap: SKCropNode, SKTiledObject {
     }
     
     // MARK: - Coordinates
-    
-    
     /**
      Returns a touch location in negative-y space.
      

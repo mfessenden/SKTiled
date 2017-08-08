@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "42E5665CAE7E2CEF5F838F0E097094C1154E437D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "2800E01979C8B1B3BEBA41352C8F662F2C7A1EAC" : 9223372036854775807,
+    "42E5665CAE7E2CEF5F838F0E097094C1154E437D" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "81E6D8A7-D186-4313-B9E4-9CEDF53FC92F",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "2800E01979C8B1B3BEBA41352C8F662F2C7A1EAC" : "test\/",
+    "42E5665CAE7E2CEF5F838F0E097094C1154E437D" : "master\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "SKTiled",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "SKTiled.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:mfessenden\/SKTiled-Tests.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2800E01979C8B1B3BEBA41352C8F662F2C7A1EAC"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Users\/michael\/Dropbox\/git\/SKTiled.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "42E5665CAE7E2CEF5F838F0E097094C1154E437D"
+    }
+  ]
+}

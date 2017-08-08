@@ -116,6 +116,34 @@
 		4C8E42E01DC26FD1002C76DA /* zlib in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E42DF1DC26FD1002C76DA /* zlib */; };
 		4C8E42E11DC26FD1002C76DA /* zlib in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E42DF1DC26FD1002C76DA /* zlib */; };
 		4CA22C7E1F040FF600CD0A72 /* Nintendo-Arcade.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4CA22C7C1F040FF600CD0A72 /* Nintendo-Arcade.ttf */; };
+		4CA6E5341F393F6D00612A1C /* barrels-12x10 in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E52F1F393F6D00612A1C /* barrels-12x10 */; };
+		4CA6E5351F393F6D00612A1C /* barrels-12x10 in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E52F1F393F6D00612A1C /* barrels-12x10 */; };
+		4CA6E5361F393F6D00612A1C /* characters-16x16 in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5301F393F6D00612A1C /* characters-16x16 */; };
+		4CA6E5371F393F6D00612A1C /* characters-16x16 in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5301F393F6D00612A1C /* characters-16x16 */; };
+		4CA6E5381F393F6D00612A1C /* characters-16x32 in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5311F393F6D00612A1C /* characters-16x32 */; };
+		4CA6E5391F393F6D00612A1C /* characters-16x32 in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5311F393F6D00612A1C /* characters-16x32 */; };
+		4CA6E53A1F393F6D00612A1C /* kong-50x32 in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5321F393F6D00612A1C /* kong-50x32 */; };
+		4CA6E53B1F393F6D00612A1C /* kong-50x32 in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5321F393F6D00612A1C /* kong-50x32 */; };
+		4CA6E53C1F393F6D00612A1C /* spritesheets in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5331F393F6D00612A1C /* spritesheets */; };
+		4CA6E53D1F393F6D00612A1C /* spritesheets in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5331F393F6D00612A1C /* spritesheets */; };
+		4CA6E5471F393F7700612A1C /* barrels-12x10.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E53E1F393F7700612A1C /* barrels-12x10.tsx */; };
+		4CA6E5481F393F7700612A1C /* barrels-12x10.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E53E1F393F7700612A1C /* barrels-12x10.tsx */; };
+		4CA6E5491F393F7700612A1C /* characters-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E53F1F393F7700612A1C /* characters-16x16.tsx */; };
+		4CA6E54A1F393F7700612A1C /* characters-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E53F1F393F7700612A1C /* characters-16x16.tsx */; };
+		4CA6E54B1F393F7700612A1C /* dk-fonts-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5401F393F7700612A1C /* dk-fonts-8x8.tsx */; };
+		4CA6E54C1F393F7700612A1C /* dk-fonts-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5401F393F7700612A1C /* dk-fonts-8x8.tsx */; };
+		4CA6E54D1F393F7700612A1C /* dk-sprites-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5411F393F7700612A1C /* dk-sprites-8x8.tsx */; };
+		4CA6E54E1F393F7700612A1C /* dk-sprites-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5411F393F7700612A1C /* dk-sprites-8x8.tsx */; };
+		4CA6E54F1F393F7700612A1C /* kong-50x32.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5421F393F7700612A1C /* kong-50x32.tsx */; };
+		4CA6E5501F393F7700612A1C /* kong-50x32.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5421F393F7700612A1C /* kong-50x32.tsx */; };
+		4CA6E5511F393F7700612A1C /* other-16x32.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5431F393F7700612A1C /* other-16x32.tsx */; };
+		4CA6E5521F393F7700612A1C /* other-16x32.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5431F393F7700612A1C /* other-16x32.tsx */; };
+		4CA6E5531F393F7700612A1C /* dk-fonts-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5441F393F7700612A1C /* dk-fonts-8x8.png */; };
+		4CA6E5541F393F7700612A1C /* dk-fonts-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5441F393F7700612A1C /* dk-fonts-8x8.png */; };
+		4CA6E5551F393F7700612A1C /* level-ramps.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5451F393F7700612A1C /* level-ramps.tmx */; };
+		4CA6E5561F393F7700612A1C /* level-ramps.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5451F393F7700612A1C /* level-ramps.tmx */; };
+		4CA6E5571F393F7700612A1C /* level-rivets.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5461F393F7700612A1C /* level-rivets.tmx */; };
+		4CA6E5581F393F7700612A1C /* level-rivets.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5461F393F7700612A1C /* level-rivets.tmx */; };
 		4CAFDA4D1E20326D006F2D83 /* SKTiled+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D71D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift */; };
 		4CAFDA4E1E20326E006F2D83 /* SKTiled+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D71D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift */; };
 		4CAFDA4F1E203270006F2D83 /* SKTilemap+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */; };
@@ -236,6 +264,20 @@
 		4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTilesetData.swift; sourceTree = "<group>"; };
 		4C8E42DF1DC26FD1002C76DA /* zlib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = zlib; sourceTree = SOURCE_ROOT; };
 		4CA22C7C1F040FF600CD0A72 /* Nintendo-Arcade.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nintendo-Arcade.ttf"; sourceTree = "<group>"; };
+		4CA6E52F1F393F6D00612A1C /* barrels-12x10 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "barrels-12x10"; path = "../../test/Assets/barrels-12x10"; sourceTree = "<group>"; };
+		4CA6E5301F393F6D00612A1C /* characters-16x16 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "characters-16x16"; path = "../../test/Assets/characters-16x16"; sourceTree = "<group>"; };
+		4CA6E5311F393F6D00612A1C /* characters-16x32 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "characters-16x32"; path = "../../test/Assets/characters-16x32"; sourceTree = "<group>"; };
+		4CA6E5321F393F6D00612A1C /* kong-50x32 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "kong-50x32"; path = "../../test/Assets/kong-50x32"; sourceTree = "<group>"; };
+		4CA6E5331F393F6D00612A1C /* spritesheets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = spritesheets; path = ../../test/Assets/spritesheets; sourceTree = "<group>"; };
+		4CA6E53E1F393F7700612A1C /* barrels-12x10.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "barrels-12x10.tsx"; path = "../../test/Assets/barrels-12x10.tsx"; sourceTree = "<group>"; };
+		4CA6E53F1F393F7700612A1C /* characters-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "characters-16x16.tsx"; path = "../../test/Assets/characters-16x16.tsx"; sourceTree = "<group>"; };
+		4CA6E5401F393F7700612A1C /* dk-fonts-8x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "dk-fonts-8x8.tsx"; path = "../../test/Assets/dk-fonts-8x8.tsx"; sourceTree = "<group>"; };
+		4CA6E5411F393F7700612A1C /* dk-sprites-8x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "dk-sprites-8x8.tsx"; path = "../../test/Assets/dk-sprites-8x8.tsx"; sourceTree = "<group>"; };
+		4CA6E5421F393F7700612A1C /* kong-50x32.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "kong-50x32.tsx"; path = "../../test/Assets/kong-50x32.tsx"; sourceTree = "<group>"; };
+		4CA6E5431F393F7700612A1C /* other-16x32.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "other-16x32.tsx"; path = "../../test/Assets/other-16x32.tsx"; sourceTree = "<group>"; };
+		4CA6E5441F393F7700612A1C /* dk-fonts-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dk-fonts-8x8.png"; path = "../../test/Assets/dk-fonts-8x8.png"; sourceTree = "<group>"; };
+		4CA6E5451F393F7700612A1C /* level-ramps.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; name = "level-ramps.tmx"; path = "../../test/Assets/level-ramps.tmx"; sourceTree = "<group>"; };
+		4CA6E5461F393F7700612A1C /* level-rivets.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; name = "level-rivets.tmx"; path = "../../test/Assets/level-rivets.tmx"; sourceTree = "<group>"; };
 		4CBA61651D8A048200B31FC1 /* SKTiledDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKTiledDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CBA617E1D8A0A3900B31FC1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "roguelike-16x16-anim.png"; sourceTree = "<group>"; };
@@ -454,6 +496,8 @@
 				4C88E18B1D8A1BC400FCCFA3 /* roguelike-16x16.tmx */,
 				4CFEA3561D8D02D20055C150 /* staggered-64x33.tmx */,
 				4C6FB8A11F1E45AB00A57964 /* tetris-dynamics.tmx */,
+				4CA6E5451F393F7700612A1C /* level-ramps.tmx */,
+				4CA6E5461F393F7700612A1C /* level-rivets.tmx */,
 				4CDF67CC1D8AE84300589457 /* png */,
 				4CD6D2D61D8B9DE50083DA7B /* tsx */,
 			);
@@ -488,6 +532,12 @@
 		4CD6D2D61D8B9DE50083DA7B /* tsx */ = {
 			isa = PBXGroup;
 			children = (
+				4CA6E53E1F393F7700612A1C /* barrels-12x10.tsx */,
+				4CA6E53F1F393F7700612A1C /* characters-16x16.tsx */,
+				4CA6E5401F393F7700612A1C /* dk-fonts-8x8.tsx */,
+				4CA6E5411F393F7700612A1C /* dk-sprites-8x8.tsx */,
+				4CA6E5421F393F7700612A1C /* kong-50x32.tsx */,
+				4CA6E5431F393F7700612A1C /* other-16x32.tsx */,
 				4C41849E1F34198F004E392A /* fruit-16x16.tsx */,
 				4C6A1E1B1DAC19B1001F2E92 /* graphtest-8x8.tsx */,
 				4C6FB8A51F1E5D2800A57964 /* pm-maze-8x8.tsx */,
@@ -510,6 +560,11 @@
 		4CDF67CC1D8AE84300589457 /* png */ = {
 			isa = PBXGroup;
 			children = (
+				4CA6E52F1F393F6D00612A1C /* barrels-12x10 */,
+				4CA6E5301F393F6D00612A1C /* characters-16x16 */,
+				4CA6E5311F393F6D00612A1C /* characters-16x32 */,
+				4CA6E5321F393F6D00612A1C /* kong-50x32 */,
+				4CA6E5331F393F6D00612A1C /* spritesheets */,
 				4C4184A11F34201E004E392A /* fruit-16x16 */,
 				4C41848F1F3411DE004E392A /* mspacman-16x16 */,
 				4C4184901F3411DE004E392A /* pacman-16x16 */,
@@ -521,6 +576,7 @@
 				4C0924CE1F127DC0009CA37E /* lshape-24x16.png */,
 				4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */,
 				4C6FB8A61F1E5D2800A57964 /* pm-maze-8x8.png */,
+				4CA6E5441F393F7700612A1C /* dk-fonts-8x8.png */,
 				4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */,
 				4CFEA3571D8D02D20055C150 /* staggered-64x192.png */,
 				4C0924CF1F127DC0009CA37E /* square-8x8.png */,
@@ -694,32 +750,46 @@
 				4C8E42E11DC26FD1002C76DA /* zlib in Resources */,
 				4C6FB8A91F1E5D2800A57964 /* pm-maze-8x8.tsx in Resources */,
 				4C6FB8AB1F1E5D2800A57964 /* pm-maze-8x8.png in Resources */,
+				4CA6E5361F393F6D00612A1C /* characters-16x16 in Resources */,
 				4C0924D91F127DC0009CA37E /* tetris-lshape-24x16.tsx in Resources */,
 				4C7AD30F1F1E3D7500474722 /* graphtest-8x8.png in Resources */,
 				4CF0FEA11F34EF27000AADEF /* roguelike-16x16-anim.png in Resources */,
+				4CA6E5551F393F7700612A1C /* level-ramps.tmx in Resources */,
 				4C0924F31F127DC0009CA37E /* tshape-24x16.png in Resources */,
+				4CA6E5571F393F7700612A1C /* level-rivets.tmx in Resources */,
 				4C1774A21D90999C000C0AFD /* hex1-65x65.tmx in Resources */,
+				4CA6E53C1F393F6D00612A1C /* spritesheets in Resources */,
 				4C0924DB1F127DC0009CA37E /* tetris-square-8x8.tsx in Resources */,
 				4C6FB8A21F1E45AB00A57964 /* tetris-dynamics.tmx in Resources */,
 				4C0924E31F127DC0009CA37E /* lshape-24x16.png in Resources */,
+				4CA6E53A1F393F6D00612A1C /* kong-50x32 in Resources */,
+				4CA6E5471F393F7700612A1C /* barrels-12x10.tsx in Resources */,
 				4C7AD3131F1E3D9400474722 /* graphtest-8x8.tsx in Resources */,
 				4C0924DD1F127DC0009CA37E /* tetris-square-16x16.tsx in Resources */,
+				4CA6E54F1F393F7700612A1C /* kong-50x32.tsx in Resources */,
 				4CF040C31F3112AD00D8AFFC /* isometric-130x66.tmx in Resources */,
 				4C0924E11F127DC0009CA37E /* bar-32x8.png in Resources */,
 				4CF040CA1F3228D600D8AFFC /* clyde-16x16.tsx in Resources */,
 				4C1774A71D90999C000C0AFD /* staggered-64x33.tmx in Resources */,
+				4CA6E5511F393F7700612A1C /* other-16x32.tsx in Resources */,
+				4CA6E5381F393F6D00612A1C /* characters-16x32 in Resources */,
+				4CA6E5491F393F7700612A1C /* characters-16x16.tsx in Resources */,
 				4CF040D21F32305900D8AFFC /* blinky-16x16.tsx in Resources */,
 				4C4184991F34126C004E392A /* mspacman-16x16.tsx in Resources */,
 				4C0924ED1F127DC0009CA37E /* tetris-layer2-336x240.png in Resources */,
 				4CF040C61F32279600D8AFFC /* inky-16x16.tsx in Resources */,
 				4C4184A21F34201E004E392A /* fruit-16x16 in Resources */,
+				4CA6E54D1F393F7700612A1C /* dk-sprites-8x8.tsx in Resources */,
+				4CA6E54B1F393F7700612A1C /* dk-fonts-8x8.tsx in Resources */,
 				4C1774A81D90999C000C0AFD /* hex-65x65-65x230.png in Resources */,
 				4C0924F11F127DC0009CA37E /* tetris-layer4-336x240.png in Resources */,
+				4CA6E5341F393F6D00612A1C /* barrels-12x10 in Resources */,
 				4C0924D71F127DC0009CA37E /* tetris-bar-32x8.tsx in Resources */,
 				4CF0FEA21F34EF27000AADEF /* Assets.xcassets in Resources */,
 				4C4184961F341241004E392A /* pacman-16x16.tsx in Resources */,
 				4C7AD3111F1E3D8100474722 /* graphtest-8x8.tmx in Resources */,
 				4CF040C41F3112C700D8AFFC /* roguelike-16x16.tsx in Resources */,
+				4CA6E5531F393F7700612A1C /* dk-fonts-8x8.png in Resources */,
 				4C6FB8A71F1E5D2800A57964 /* pacman-8x8.tmx in Resources */,
 				4C1774A61D90999C000C0AFD /* roguelike-16x16.tmx in Resources */,
 				4C0924E51F127DC0009CA37E /* square-8x8.png in Resources */,
@@ -744,9 +814,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CA6E5501F393F7700612A1C /* kong-50x32.tsx in Resources */,
 				4CFEA35D1D8D04320055C150 /* hex1-65x65.tmx in Resources */,
+				4CA6E5351F393F6D00612A1C /* barrels-12x10 in Resources */,
 				4C0924E21F127DC0009CA37E /* bar-32x8.png in Resources */,
 				4C0924F01F127DC0009CA37E /* tetris-layer3-336x240.png in Resources */,
+				4CA6E5541F393F7700612A1C /* dk-fonts-8x8.png in Resources */,
 				4C7AD3101F1E3D7500474722 /* graphtest-8x8.png in Resources */,
 				4C4184A01F34198F004E392A /* fruit-16x16.tsx in Resources */,
 				4C0924D81F127DC0009CA37E /* tetris-bar-32x8.tsx in Resources */,
@@ -758,6 +831,7 @@
 				4C0924E41F127DC0009CA37E /* lshape-24x16.png in Resources */,
 				4C6FB8A81F1E5D2800A57964 /* pacman-8x8.tmx in Resources */,
 				4CF040D31F32305900D8AFFC /* blinky-16x16.tsx in Resources */,
+				4CA6E53D1F393F6D00612A1C /* spritesheets in Resources */,
 				4CA22C7E1F040FF600CD0A72 /* Nintendo-Arcade.ttf in Resources */,
 				4C88E18C1D8A1BC400FCCFA3 /* roguelike-16x16.tmx in Resources */,
 				4C6FB8AC1F1E5D2800A57964 /* pm-maze-8x8.png in Resources */,
@@ -766,25 +840,35 @@
 				4C440B9B1DAE911000DEC9A4 /* Assets.xcassets in Resources */,
 				4C0924DA1F127DC0009CA37E /* tetris-lshape-24x16.tsx in Resources */,
 				4C0924E01F127DC0009CA37E /* tetris-tshape-24x16.tsx in Resources */,
+				4CA6E5581F393F7700612A1C /* level-rivets.tmx in Resources */,
 				4C88E1AD1D8A242F00FCCFA3 /* ortho4-16x16.png in Resources */,
 				4C4184A31F34201E004E392A /* fruit-16x16 in Resources */,
 				4C440BB51DAE913A00DEC9A4 /* Main.storyboard in Resources */,
 				4C0924EE1F127DC0009CA37E /* tetris-layer2-336x240.png in Resources */,
 				4C4184971F341241004E392A /* pacman-16x16.tsx in Resources */,
+				4CA6E5371F393F6D00612A1C /* characters-16x16 in Resources */,
 				4C7AD3121F1E3D8200474722 /* graphtest-8x8.tmx in Resources */,
 				4CFEA3591D8D02D20055C150 /* staggered-64x192.png in Resources */,
 				4C0924EC1F127DC0009CA37E /* tetris-layer1-336x240.png in Resources */,
 				4CD6D2DE1D8B9EA10083DA7B /* isometric-130x230.png in Resources */,
+				4CA6E54E1F393F7700612A1C /* dk-sprites-8x8.tsx in Resources */,
 				4CFEA35C1D8D04320055C150 /* hex-65x65-65x230.png in Resources */,
+				4CA6E5561F393F7700612A1C /* level-ramps.tmx in Resources */,
 				4C0924F41F127DC0009CA37E /* tshape-24x16.png in Resources */,
 				4CF040CD1F3228D600D8AFFC /* pinky-16x16.tsx in Resources */,
+				4CA6E5521F393F7700612A1C /* other-16x32.tsx in Resources */,
+				4CA6E5481F393F7700612A1C /* barrels-12x10.tsx in Resources */,
+				4CA6E54A1F393F7700612A1C /* characters-16x16.tsx in Resources */,
 				4C6FB8AA1F1E5D2800A57964 /* pm-maze-8x8.tsx in Resources */,
+				4CA6E53B1F393F6D00612A1C /* kong-50x32 in Resources */,
 				4C0924E61F127DC0009CA37E /* square-8x8.png in Resources */,
 				4C6FB8A31F1E45AB00A57964 /* tetris-dynamics.tmx in Resources */,
+				4CA6E54C1F393F7700612A1C /* dk-fonts-8x8.tsx in Resources */,
 				4C4184941F3411DE004E392A /* pacman-16x16 in Resources */,
 				4CFEA3581D8D02D20055C150 /* staggered-64x33.tmx in Resources */,
 				4C4184921F3411DE004E392A /* mspacman-16x16 in Resources */,
 				4CD6D2D51D8B9DE20083DA7B /* roguelike-16x16.tsx in Resources */,
+				4CA6E5391F393F6D00612A1C /* characters-16x32 in Resources */,
 				4C41849A1F34126C004E392A /* mspacman-16x16.tsx in Resources */,
 				4C0924DE1F127DC0009CA37E /* tetris-square-16x16.tsx in Resources */,
 				4CF040CB1F3228D600D8AFFC /* clyde-16x16.tsx in Resources */,

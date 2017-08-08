@@ -324,7 +324,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         if !(self.objectType == .polyline) && (self.gid == nil) {
             self.fillColor = color.withAlphaComponent(alpha)
         }
-        //if redraw == true { drawObject() }
+        if redraw == true { drawObject() }
     }
 
     /**
@@ -437,24 +437,25 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             // remove existing tile
             self.tile?.removeFromParent()
 
-
             if (tileData.texture != nil) {
 
                 childNode(withName: "TILE_OBJECT")?.removeFromParent()
+                // TODO: need delegate tile class
                 if let tileSprite = SKTile(data: tileData) {
-
+                    
                     let boundingBox = polygonPath(translatedVertices)
                     let rect = boundingBox.boundingBox
 
                     tileSprite.name = "TILE_OBJECT"
                     tileSprite.size.width = rect.size.width
                     tileSprite.size.height = rect.size.height
+                    
                     addChild(tileSprite)
 
                     tileSprite.zPosition = zPosition - 1
                     tileSprite.position = rect.center
 
-                    // debug stroke color
+                    // TODO: remove debug stroke color
                     isAntialiased = false
                     lineWidth = 0.75
                     strokeColor = (debug == false) ? SKColor.clear : layer.gridColor.withAlphaComponent(0.75)
@@ -462,6 +463,10 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                     tileSprite.runAnimation()
 
                     self.tile = tileSprite
+                    
+                    // flipped tile flags
+                    tileSprite.xScale = (tileData.flipHoriz == true) ? -1 : 1
+                    tileSprite.yScale = (tileData.flipVert == true) ? -1 : 1
                 }
             }
         }
@@ -493,7 +498,6 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             textSprite.zPosition = zPosition - 1
             textSprite.setScale(finalScaleValue)
             textSprite.position = self.boundingRect.center
-
         }
     }
 

@@ -15,10 +15,13 @@ extension SKTilemap {
     // MARK: - Main Pathfinding Methods
     /**
      Post-process to automatically build all pathfinding graphs.
+    
+     - parameter nodeType:  `String?` graph node class name.
+     - parameter nodeClass: `GKGridGraphNode.Type` graph node type.
      */
-    public func buildPathfindingGraphs(nodeClass: GKGridGraphNode.Type = SKTiledGraphNode.self){
+    public func buildPathfindingGraphs(nodeType: String? = nil) {  // nodeClass: GKGridGraphNode.Type = SKTiledGraphNode.self
         
-        //let Node = (self.delegate != nil) ? self.delegate!.objectForGraphNode(className: nodeType) : SKTiledGraphNode.self
+        let NodeClass = (self.delegate != nil) ? self.delegate!.objectForGraphNode(className: nodeType) : SKTiledGraphNode.self
         
         var pathFindingGraphs: [GKGridGraph<GKGridGraphNode>] = []
         
@@ -27,9 +30,10 @@ extension SKTilemap {
             if (tileLayer.walkableIDs.count > 0) || (tileLayer.walkableTypes.count > 0) {
                 // check for walkable IDs
                 if tileLayer.walkableIDs.count > 0 {
+                    //print(" ❊ building graph with walkable IDs...")
                     if let g = tileLayer.initializeGraph(walkableIDs: tileLayer.walkableIDs,
                                                          diagonalsAllowed: false,
-                                                         nodeClass: nodeClass) {
+                                                         nodeClass: NodeClass) {
                         pathFindingGraphs.append(g)
                         continue
                     }
@@ -37,9 +41,10 @@ extension SKTilemap {
                 
                 // check for walkable types
                 if tileLayer.walkableTypes.count > 0 {
+                    //print(" ❊ building graph with walkable types...")
                     if let g = tileLayer.initializeGraph(walkableTypes: tileLayer.walkableTypes,
                                                          diagonalsAllowed: false,
-                                                         nodeClass: nodeClass) {
+                                                         nodeClass: NodeClass) {
                         pathFindingGraphs.append(g)
                         continue
                     }
@@ -123,8 +128,7 @@ extension SKTilemap {
         
         var walkableIDs: [Int] = []
         for walkableType in walkableTypes {
-            //for walkableData in getTile
-            for walkableData in getTileData(withProperty: "type", walkableType as AnyObject) {
+            for walkableData in getTileData(ofType: walkableType) {
                 if !walkableIDs.contains(walkableData.id) {
                     walkableIDs.append(walkableData.id)
                 }
@@ -252,14 +256,12 @@ public extension SKTileLayer {
                                 }
                             }
                         }
-                        
-                        if tile.tileData.hasKey("type") {
-                            let tileType = tile.tileData.stringForKey("type")
-                            if walkableTypes.contains(tileType!) {
+
+                        if let tileType = tile.tileData.type {
+                            if walkableTypes.contains(tileType) {
                                 continue
                             }
                         }
-                        
                     }
                     
                     nodesToRemove.append(node)

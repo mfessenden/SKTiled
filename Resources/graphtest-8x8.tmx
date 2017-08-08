@@ -54,19 +54,19 @@
     <property name="type" value=""/>
    </properties>
   </tile>
-  <tile id="8">
+  <tile id="8" type="path">
    <properties>
     <property name="walkable" type="bool" value="true"/>
     <property name="weight" type="float" value="1"/>
    </properties>
   </tile>
-  <tile id="9">
+  <tile id="9" type="hotspot">
    <properties>
     <property name="walkable" type="bool" value="true"/>
     <property name="weight" type="float" value="500"/>
    </properties>
   </tile>
-  <tile id="10">
+  <tile id="10" type="hiding">
    <properties>
     <property name="walkable" type="bool" value="true"/>
     <property name="weight" type="float" value="200"/>
@@ -114,7 +114,7 @@
     <property name="type" value=""/>
    </properties>
   </tile>
-  <tile id="23">
+  <tile id="23" type="doorway">
    <properties>
     <property name="walkable" type="bool" value="true"/>
     <property name="weight" type="float" value="25"/>
@@ -325,9 +325,9 @@
    eJxjYBgFo2AUjFTANtAOGAVUBcoD7YBRMApGMACVp6N5cGiDwVgnDkY3jYLhBwBN2gBf
   </data>
  </layer>
- <layer name="Graph" width="30" height="30" visible="0">
+ <layer name="Graph2" width="30" height="30" visible="0">
   <properties>
-   <property name="walkableIDs" value="8,9,10,23,24"/>
+   <property name="walkableTypes" value="doorway,hiding,hotspot,path"/>
   </properties>
   <data encoding="base64" compression="zlib">
    eJztVdEOgCAI5DX9AT6s/v9Xyq02RwdSiS95G6uEOOSMiCYmJv6KLSDnAozEtV7vzY3qiOTVcsq1CF55nw7LA3ilpognUl9N1xHn6kvM5O3Di/RmkeNJfd5YFJcrX7EUyFuufHJe3zor79T+tzMQ9bI1XzLwWZogPVE8i2eZy9qnZz6jWoju/fLmesqLfNZcu9bQebB6qvFqe27tDendgudfYfWigI1Yi9djqA5vT3thDcytYQe57gcF

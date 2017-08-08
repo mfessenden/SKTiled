@@ -1822,26 +1822,20 @@ open class SKImageLayer: TiledLayerObject {
 
 /**
  The `BackgroundLayer` object represents the default background for a tilemap.
-
- Set the layer image with:
-
- ```swift
- imageLayer.setLayerImage("clouds-background")
- ```
  */
-open class BackgroundLayer: TiledLayerObject {
+internal class BackgroundLayer: TiledLayerObject {
 
     private var sprite: SKSpriteNode!
     private var _debugColor: SKColor? = nil
 
-    override open var color: SKColor {
+    override var color: SKColor {
         didSet {
             guard let sprite = sprite else { return }
             sprite.color = (_debugColor == nil) ? color : _debugColor!
         }
     }
 
-    override open var colorBlendFactor: CGFloat {
+    override var colorBlendFactor: CGFloat {
         didSet {
             guard let sprite = sprite else { return }
             sprite.colorBlendFactor = colorBlendFactor

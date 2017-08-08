@@ -1,5 +1,11 @@
 # Notes
 
+## SKTileObject tile object flipping
+
+- see commit 8368c23d & 1848ad25
+- SKTile.orientTile -> e868dc2
+
+walkableIDs: 8,9,10,23,24
 ## Release Checklist
 
 - remove debug methods for `SKTiledDemoScene`

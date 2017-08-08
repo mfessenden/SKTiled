@@ -159,23 +159,23 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     // MARK: - Delegate Callbacks
     open func didBeginParsing(_ tilemap: SKTilemap) {
         // Called when tilemap is instantiated.
-        print(" ❊ `SKTiledScene.didBeginParsing`...")
+        //print(" ❊ `SKTiledScene.didBeginParsing`...")
         
     }
             
     open func didAddTileset(_ tileset: SKTileset) {
         // Called when a tileset has been added.
-        print(" ❊ `SKTiledScene.didAddTileset`: \"\(tileset.name)\"")
+        //print(" ❊ `SKTiledScene.didAddTileset`: \"\(tileset.name)\"")
     }
     
     open func didAddLayer(_ layer: TiledLayerObject) {
         // Called when a layer has been added.
-        print(" ❊ `SKTiledScene.didAddLayer`: \"\(layer.layerName)\"")
+        //print(" ❊ `SKTiledScene.didAddLayer`: \"\(layer.layerName)\"")
     }
     
     open func didReadMap(_ tilemap: SKTilemap) {
         // Called before layers are rendered.
-        print(" ❊ `SKTiledScene.didReadMap`: \"\(tilemap.mapName)\"")
+        //print(" ❊ `SKTiledScene.didReadMap`: \"\(tilemap.mapName)\"")
     }
     
     open func didRenderMap(_ tilemap: SKTilemap) {
