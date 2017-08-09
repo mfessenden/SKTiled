@@ -355,7 +355,8 @@ public extension CGRect {
     
     /// Return the four corner points.
     public var points: [CGPoint] {
-        return [topLeft, topRight, bottomRight, bottomLeft]
+        //return [topLeft, topRight, bottomRight, bottomLeft]
+        return [bottomLeft, topLeft, topRight, bottomRight]
     }
 
     /**
@@ -390,6 +391,11 @@ public extension CGVector {
      */
     public func lengthSquared() -> CGFloat {
         return dx*dx + dy*dy
+    }
+    
+    /// Return a vector int (for GameplayKit)
+    public var toVec2: int2 {
+        return int2(Int32(dx), Int32(dy))
     }
 }
 
@@ -1035,6 +1041,8 @@ public func lerp(start: CGVector, end: CGVector, t: CGFloat) -> CGVector {
     return start + (end - start) * t
 }
 
+
+
 // MARK: CGRect
 
 public func + (lhs: CGRect, rhs: CGFloat) -> CGRect {
@@ -1064,6 +1072,50 @@ public func lerp(start: SKColor, end: SKColor, t: CGFloat) -> SKColor {
     let newGreen = (1.0 - t) * start.components[1] + t * end.components[1]
     let newBlue  = (1.0 - t) * start.components[2]  + t * end.components[2]
     return SKColor(red: newRed, green: newGreen, blue: newBlue, alpha: 1)
+}
+
+
+// MARK: vector_int2
+
+public func + (lhs: int2, rhs: int2) -> int2 {
+    return int2(lhs.x + rhs.x, lhs.y + rhs.y)
+}
+
+public func += (lhs: inout int2, rhs: int2) {
+    lhs = lhs + rhs
+}
+
+
+public func - (lhs: int2, rhs: int2) -> int2 {
+    return int2(lhs.x - rhs.x, lhs.y - rhs.y)
+}
+
+
+public func -= (lhs: inout int2, rhs: int2) {
+    lhs = lhs - rhs
+}
+
+
+public func * (lhs: int2, rhs: int2) -> int2 {
+    return int2(lhs.x * rhs.x, lhs.y * rhs.y)
+}
+
+public func *= (lhs: inout int2, rhs: int2) {
+    lhs = lhs * rhs
+}
+
+
+public func / (lhs: int2, rhs: int2) -> int2 {
+    return int2(lhs.x / rhs.x, lhs.y / rhs.y)
+}
+
+
+public func /= (lhs: inout int2, rhs: int2) {
+    lhs = lhs / rhs
+}
+
+public func == (lhs: int2, rhs: int2) -> Bool {
+    return (lhs.x == rhs.x) && (lhs.y == rhs.y)
 }
 
 // MARK: - Helper Functions

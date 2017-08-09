@@ -9,6 +9,10 @@
 import SpriteKit
 
 
+public extension SKTiledObject {
+}
+
+
 public extension SKTilemap {
     // MARK: - Properties
     /**
@@ -161,6 +165,23 @@ public extension SKTileset {
     public func parseProperties(completion: (() -> ())?) {
         if (ignoreProperties == true) { return }
          if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
+        
+        
+        for (attr, value) in properties {
+            
+            let lattr = attr.lowercased()
+        
+            // walkable ids
+            if (lattr == "walkableids") {
+                //walkableIDs = integerArrayForKey("walkableIDs", separatedBy: ",")
+            }
+            
+            // walkable types
+            if (lattr == "walkabletypes") {
+                //walkableTypes = stringArrayForKey("walkableTypes", separatedBy: ",")
+            }
+        }
+        
         if completion != nil { completion!() }
     }
 }
@@ -356,6 +377,12 @@ public extension SKTilesetData {
             
             if (lattr == "walkable") {
                 walkable = boolForKey(attr)
+                print(" ✽ walkable: \(self.globalID)")
+            }
+            
+            if (lattr == "obstacle") {
+                obstacle = boolForKey(attr)
+                print(" ✽ walkable: \(self.globalID)")
             }
         }
         

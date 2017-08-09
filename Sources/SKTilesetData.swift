@@ -55,6 +55,7 @@ open class SKTilesetData: SKTiledObject  {
     
     // pathfinding
     open var walkable: Bool = false               // tile is walkable.
+    open var obstacle: Bool = false               // tile is an obstacle.
     open var weight: CGFloat = 1                  // tile weight.
     
     // collision objects

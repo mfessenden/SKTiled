@@ -311,15 +311,25 @@
                                     <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qaU-aN-dXC" userLabel="Paused Label">
+                                <rect key="frame" x="379" y="544" width="42" height="14"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="8mb-3y-U6G">
+                                    <font key="font" size="11" name="Courier"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="bpV-ih-FVj" secondAttribute="bottom" constant="20" id="0sk-mt-NoX"/>
                             <constraint firstItem="bpV-ih-FVj" firstAttribute="top" secondItem="iiF-QO-DZ0" secondAttribute="bottom" constant="8" id="5u6-ud-mDw"/>
                             <constraint firstItem="Rpo-Bf-MrJ" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="ETp-0D-sRu"/>
+                            <constraint firstItem="qaU-aN-dXC" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="FKh-iJ-b0h"/>
                             <constraint firstItem="iiF-QO-DZ0" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="KyT-Qz-C79"/>
                             <constraint firstItem="Rpo-Bf-MrJ" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="NQF-GK-tLq"/>
                             <constraint firstItem="bpV-ih-FVj" firstAttribute="top" secondItem="iiF-QO-DZ0" secondAttribute="bottom" constant="8" symbolic="YES" id="TUH-35-NKU"/>
                             <constraint firstItem="bpV-ih-FVj" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="YWm-oh-SbK"/>
+                            <constraint firstItem="qaU-aN-dXC" firstAttribute="top" secondItem="Rpo-Bf-MrJ" secondAttribute="bottom" constant="8" id="hL1-qO-1lh"/>
                         </constraints>
                     </view>
                     <connections>
@@ -331,6 +341,7 @@
                         <outlet property="mapInfoLabel" destination="P0U-y9-0fU" id="T6u-RD-e0v"/>
                         <outlet property="nextButton" destination="kMD-1U-8sj" id="c7C-tw-UDC"/>
                         <outlet property="objectsButton" destination="1wS-E3-azf" id="FFv-1O-tmY"/>
+                        <outlet property="pauseInfoLabel" destination="qaU-aN-dXC" id="OHo-cQ-UJv"/>
                         <outlet property="propertiesInfoLabel" destination="3AA-Cl-qmn" id="Kqk-Q6-bCh"/>
                         <outlet property="tileInfoLabel" destination="oa4-I2-u1i" id="4iy-KG-um6"/>
                     </connections>

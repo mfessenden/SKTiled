@@ -14,7 +14,9 @@ import SpriteKit
 var TILE_BOUNDS_USE_OFFSET: Bool = false
 
 
-/// Options for debugging the map
+/**
+ A structure representing debug drawing options for **SKTiled** objects.
+ */
 public struct DebugDrawOptions: OptionSet {
     public let rawValue: Int
 
@@ -58,7 +60,15 @@ internal class TiledDebugDrawNode: SKNode {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
+    var blendMode: SKBlendMode = .alpha {
+        didSet {
+            guard oldValue != blendMode else { return }
+            reset()
+            update()
+        }
+    }
+    
     var debugDrawOptions: DebugDrawOptions {
         return layer.debugDrawOptions
     }
@@ -132,6 +142,11 @@ internal class TiledDebugDrawNode: SKNode {
         } else {
             graphSprite?.isHidden = true
         }
+    }
+    
+    func reset() {
+        gridSprite.texture = nil
+        graphSprite.texture = nil
     }
 
     /**
@@ -237,6 +252,7 @@ internal class TiledDebugDrawNode: SKNode {
             
         }
         gridSprite.isHidden = false
+        gridSprite.blendMode = self.blendMode
     }
     
     /// Display the current tile graph (if it exists).
@@ -274,7 +290,7 @@ internal class TiledDebugDrawNode: SKNode {
         
         
         graphSprite.texture = graphTexture
-        graphSprite.alpha = layer.gridOpacity * 2.5
+        graphSprite.alpha = layer.gridOpacity * 1.6
         graphSprite.size = gridSize / imageScale
         
         // need to flip the grid texture in y
@@ -285,6 +301,7 @@ internal class TiledDebugDrawNode: SKNode {
         graphSprite.yScale *= -1
         #endif
         graphSprite.isHidden = false
+        graphSprite.blendMode = self.blendMode
     }
 }
 
@@ -452,6 +469,7 @@ internal func == (lhs: TileShape, rhs: TileShape) -> Bool {
 }
 
 
+// MARK: - SKTilemap
 extension SKTilemap {
 
     /**
@@ -465,9 +483,47 @@ extension SKTilemap {
             (node as? SKTile != nil) || (node as? SKTileObject != nil)
         }
     }
+    
+    open func drawBounds() {
+        print(" ➜ tilemap frame: \(self.frame.shortDescription)")
+        // remove old nodes
+        self.childNode(withName: "MAP_BOUNDS")?.removeFromParent()
+        self.childNode(withName: "MAP_ANCHOR")?.removeFromParent()
+        
+        let debugColor = SKColor(hexString: "#ff3203")
+        let debugZPos = lastZPosition * 50
+        
+        let blendMode = SKBlendMode.screen
+        let tilemapSize = self.sizeInPoints
+        
+        let tilemapBounds = CGRect(center: self.position, size: tilemapSize)
+        let tilemapCenter = tilemapBounds.center
+        
+        
+        let boundsShape = SKShapeNode(rect: self.frame)
+        boundsShape.name = "MAP_BOUNDS"
+        boundsShape.fillColor = debugColor.withAlphaComponent(0.2)
+        boundsShape.strokeColor = debugColor
+        boundsShape.blendMode = blendMode
+        self.addChild(boundsShape)
+        
+        
+        //boundsShape.position.y += (render == true) ? (heightOffset / 2) : 0
+        
+        let scaleFactor: CGFloat = (self.tileHeightHalf > 16) ? 4 : 2
+        let anchorShape = SKShapeNode(circleOfRadius: self.tileHeightHalf / scaleFactor)
+        anchorShape.name = "MAP_ANCHOR"
+        anchorShape.fillColor = debugColor
+        anchorShape.strokeColor = .clear
+        //anchorShape.position.y -= (render == true) ? (heightOffset / 2) : 0
+        
+        boundsShape.addChild(anchorShape)
+        boundsShape.zPosition = debugZPos
+    }
 }
 
 
+// MARK: - SKTile
 extension SKTile {
     /**
      Highlight the tile with a given color.

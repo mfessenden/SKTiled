@@ -11,6 +11,8 @@ Change Log
 - add `SKTilemap.newGroupLayer(named:group:)`
 - add `SKTilemap.getTileData(ofType:)`
 - add `SKTileset.getTileData(ofType:)`
+- add `SKTilemap.getVertices()`
+- add `SKTilemap.heightOffset`
 
 #### Changes
 

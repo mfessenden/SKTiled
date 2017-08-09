@@ -9,26 +9,26 @@
  </properties>
  <tileset firstgid="1" name="graph-test-8x8" tilewidth="8" tileheight="8" spacing="1" tilecount="90" columns="15">
   <image source="graphtest-8x8.png" trans="800080" width="134" height="53"/>
-  <tile id="0">
+  <tile id="0" probability="0.8">
    <properties>
     <property name="strength" type="float" value="0"/>
     <property name="type" value="walls"/>
    </properties>
   </tile>
-  <tile id="1" probability="0.05">
+  <tile id="1" probability="0.1">
    <properties>
     <property name="strength" type="float" value="0"/>
     <property name="type" value="walls"/>
    </properties>
   </tile>
-  <tile id="2" type="light">
+  <tile id="2" type="light" probability="0.01">
    <properties>
     <property name="light" type="bool" value="true"/>
     <property name="strength" type="float" value="0"/>
     <property name="type" value="walls"/>
    </properties>
   </tile>
-  <tile id="3" probability="0.04">
+  <tile id="3" probability="0.02">
    <properties>
     <property name="strength" type="float" value="0.5"/>
     <property name="type" value="walls"/>
@@ -312,25 +312,30 @@
  </tileset>
  <layer name="Floor" width="30" height="30">
   <data encoding="base64" compression="zlib">
-   eJztlNEKwCAIRf2Fxtiz//+VewpCTK8tC0YXfFhlR81JdHR09DddAzZDBeDcjc3iahwZyypuz2o8q7iP+J4h5H0z+mpXP+/iSnZPnMhl5wzSC0z+XZJr5ZLxHplcrRZFWUPiK40vk8+1ziC1QfOscybi43Fkb7Gx94U7km87xzO4rKxZ+Vq1itadDX+iWIw9oTVr70JzRLnef8TBWKP5WrOTwHM1xpl6AayEG3E=
+   eJzVlEEOBCEIBPmCm82c+f8r92RiCDaNA5OdTjyoSAEqIu/QJxiDsOngMqOKqwHH7ldxs3Hc5Ub+u7keH8V0otVfpN3bRqqo30m+zD/s4Hr2Xizrmufja0ZlnSf7Ke5l5qwPpIr7PdFT/eBfuJa9kzZyNbBh3oJK7MtyUS4d99HJ9WoxnDUmvrGcVYm5yIapDZvn7DOZMxHHvi0Fe3e4J/mufbyDq84ayhfVKlt3BedFcjHuxNZs9cXmyHKjf6TJWLP5ot4ppN2MsVI/E+IlzA==
   </data>
  </layer>
  <layer name="Walls" width="30" height="30">
   <data encoding="base64" compression="zlib">
-   eJztVVsOhCAM5HUAb8BVObqSpTqOlOBu/dnYhCDQdtoRR+dee+21f7OwDb+N2GYPe7h2sLYwLU9UzgM7fmnSm2AwDq+TEa6nZ+Qba/EdfwtcLbf0F465WOKOaniq315OLX8y7Jd7q7krr5XTp/rFXKOcT+KO7oz41PuegAfUGNabWdyRr6YXHLtM5LqDKz2KnwwNR7gbaO+eLxvUN3MPF3qf/B3VGiPV2uJOPiM8Od96KqL5okWCj9o7e7dZ25h3PGc+R7rh3bUXtAjP2V37VPRh/w/gPu9p9bV7VXr1/Pq9Y1zo7Gm1BXh3NS7Tea03H74nTpOSM3/ieF16PHGNgtX0p+vDdocz8Z3JPYPLg/8dzBPOgfQ1QYy1rePNC+0=
+   eJzVVlGywyAINNYD5AZe1aO/l6lM9+1bCI3pR5lxMhrYBUS0lO+Q7eKoc7QF3mjO/rGep5/lxS+PQx6Bzgrvg9ZrgLuB/lVe2x+zr4Gu4ugXeQ2rFb9+cI5x3pHnjD3qdLGmxPy2+sBYCszxv4fh+XLmK4pXH2qfVR1n40X7SFQ/8Go7Ej7znM9MHCu8HrbFV1/foTB47EneyId39i0rHqaH30S8d/BuE3veK+NT8SJWhPlJXlUzrHPUe4M8YL/k3pnljXS9e4Ftd5qv8lqMpsfnRfS1gbqciwp4Z3dXtg7O6nCn/eRzZPcB3/U76UR89v83pmE933qR8WPvzdY29zbOu7ojFY6H7dUovoN6+R+n0x/ku4zXPP9mXQ3lz+p5R7sq1jzfKuzdYcfvkMPf/tL9k9NWNGZ/2vF8qDyxj8Y1+4/UYXknZ6abwc7w8uC7g/OE30r9Fd+qd8sP4BkMpw==
   </data>
  </layer>
  <layer name="Objects" width="30" height="30">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUjFTANtAOGAVUBcoD7YBRMApGMACVp6N5cGiDwVgnDkY3jYLhBwBN2gBf
+   eJxjYBgFo2AUjCTANtAOGAV4ATsFepWp5opRMApGAakAVLaO5sGhDQZj/TgY3TQKhh8AAImGAGY=
   </data>
  </layer>
- <layer name="Graph2" width="30" height="30" visible="0">
+ <layer name="Graph2" width="30" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztlUkOhEAIRdlqXYCDef+zGJMmIfiZUvTOn7iwoXkMJUX0KdOhHvuufyfgt8uN4ljulFCd1u7VPsVFnGgGO+Km/1SvV5M5da7Opr+wq33yZraAvaJun2we7OTj/f/4MatcLyb6bjyxYlbng769k955T+4GiYfOYqfeHTbKYXIfRNxdn487w0XzZmWvxupwPT+71zr7tcuVfSZ7YpG/l7U9u9MrXFG2XxawRTPJ7nkRm3cbK6qzsp9RLkTvflVjdbnIFu01fb/Z8xD11ON6NWe1oXlnqtwVUS8eceAbcSsPyqPa0yldf4zt6QY+9Aj0
+  </data>
+ </layer>
+ <layer name="Spawn" width="30" height="30">
   <properties>
-   <property name="walkableTypes" value="doorway,hiding,hotspot,path"/>
+   <property name="type" value="debug"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztVdEOgCAI5DX9AT6s/v9Xyq02RwdSiS95G6uEOOSMiCYmJv6KLSDnAozEtV7vzY3qiOTVcsq1CF55nw7LA3ilpognUl9N1xHn6kvM5O3Di/RmkeNJfd5YFJcrX7EUyFuufHJe3zor79T+tzMQ9bI1XzLwWZogPVE8i2eZy9qnZz6jWoju/fLmesqLfNZcu9bQebB6qvFqe27tDendgudfYfWigI1Yi9djqA5vT3thDcytYQe57gcF
+   eJxjYBgFtABuA+2AUTAKRjgYzYOjYBSMglEwCkbBKCAWjOR2AwBR2gDT
   </data>
  </layer>
 </map>

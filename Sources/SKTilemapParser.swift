@@ -51,26 +51,26 @@ public enum LoggingLevel: Int {
     case error
 }
 
-/**
- The `SKTilemapParser` is a custom [`XMLParserDelegate`](https://developer.apple.com/reference/foundation/xmlparserdelegate) parser for reading Tiled TMX and tileset TSX files.
- To read a tile map, used the `SKTilemapParser.load` method:
 
- ```swift
- if let tilemap = SKTilemapParser().load(tmxFile: "sample-file") {
-    scene.worldNode.addChild(tilemap)
- }
- ```
+/**
+ 
+ ## Overview: ##
+ 
+ The `SKTilemapParser` class is a custom [`XMLParserDelegate`](https://developer.apple.com/reference/foundation/xmlparserdelegate) parser for reading Tiled TMX and tileset TSX files. 
+ 
+ It is not meant to be called directly, but rather invoked via `SKTilemap.load` class function.
  */
-open class SKTilemapParser: NSObject, XMLParserDelegate {
+internal class SKTilemapParser: NSObject, XMLParserDelegate {
     
     private var fileManager = FileManager.default
-    open var rootPath: URL = Bundle.main.bundleURL
-    open var fileNames: [String] = []                               // list of resource files (for non-optional, see Bundle.main.bundleURL)
-    open var currentFilename: String!                               // the current filename being parsed
+    /// Root path of the current file (defaults to `Bundle.main.bundleURL`)
+    internal var rootPath: URL = Bundle.main.bundleURL
+    internal var fileNames: [String] = []
+    internal var currentFilename: String!                           // the current filename being parsed
 
     internal var parsingMode: ParsingMode = .none                   // current parsing mode
     weak var mapDelegate: SKTilemapDelegate?
-    open var tilemap: SKTilemap!
+    internal var tilemap: SKTilemap!
 
     fileprivate var encoding: TilemapEncoding = .xml                // xml encoding
     fileprivate var tilesets: [String: SKTileset] = [:]             // stash external tilesets by FILE name (ie: ["kong-50x32.tsx": <SKTileset>])
@@ -112,7 +112,7 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
      - parameter verbosity:        `LoggingLevel` logging verbosity.
      - returns: `SKTilemap?` tiled map node.
      */
-    open func load(tmxFile: String,
+    internal func load(tmxFile: String,
                    inDirectory: String? = nil,
                    delegate: SKTilemapDelegate? = nil,
                    withTilesets: [SKTileset]? = nil,
@@ -233,7 +233,9 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             }
         }
         
-        
+        renderQueue.sync {
+            print(" ❊ about to return...")
+        }
         return currentMap
     }
 
@@ -411,14 +413,13 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             
             for layer in self.tilemap.getLayers() {
                 layer.didFinishRendering(duration: duration)
+                
+                if let tileLayer = layer as? SKTileLayer {
+                    tileLayer.gatherWalkableTiles()
+                }
             }
         }
-        
-        queue.sync {
-            // build any pathfinding graphs
-            let nodeClass = self.mapDelegate?.objectForGraphNode(className: nil) ?? SKTiledGraphNode.self
-            self.tilemap.buildPathfindingGraphs()
-        }
+
         
         // sync the tilemap's queue here
         queue.sync {
@@ -533,7 +534,10 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                         lastElement = tileset
 
                         // delegate callback
-                        if mapDelegate != nil { mapDelegate!.didAddTileset(tileset) }
+                        DispatchQueue.main.async {
+                            self.mapDelegate?.didAddTileset(tileset)
+                        }
+                        
                         // set this to nil, just in case we're looking for a collections tileset.
                         currentID = nil
                     }
@@ -576,7 +580,9 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
                     lastElement = tileset
 
                     // delegate callback
-                    if mapDelegate != nil { mapDelegate!.didAddTileset(tileset) }
+                    DispatchQueue.main.async {
+                        self.mapDelegate?.didAddTileset(tileset)
+                    }
 
                     // set this to nil, just in case we're looking for a collections tileset.
                     currentID = nil
@@ -717,7 +723,9 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
             }
 
             // delegate callback
-            mapDelegate?.didAddLayer(groupLayer)
+            DispatchQueue.main.async {
+                self.mapDelegate?.didAddLayer(groupLayer)
+            }
 
             elementPath.append(groupLayer)
             lastElement = groupLayer
@@ -1149,31 +1157,40 @@ open class SKTilemapParser: NSObject, XMLParserDelegate {
 
 
         if (elementName == "layer") {
-            // delegate callback
+            
             if let tileLayer = lastElement as? SKTileLayer {
-                if mapDelegate != nil { mapDelegate!.didAddLayer(tileLayer) }
+                
+                // delegate callback
+                DispatchQueue.main.async {
+                    self.mapDelegate?.didAddLayer(tileLayer)
+                }
             }
         }
 
         if (elementName == "objectgroup") {
-            // delegate callback
             if let objectGroup = lastElement as? SKObjectGroup {
-                if mapDelegate != nil { mapDelegate!.didAddLayer(objectGroup) }
+                // delegate callback
+                DispatchQueue.main.async {
+                    self.mapDelegate?.didAddLayer(objectGroup)
+                }
             }
         }
 
         if (elementName == "imagelayer") {
-            // delegate callback
             if let imageLayer = lastElement as? SKImageLayer {
-                if mapDelegate != nil { mapDelegate!.didAddLayer(imageLayer) }
+                // delegate callback
+                DispatchQueue.main.async {
+                    self.mapDelegate?.didAddLayer(imageLayer)
+                }
             }
         }
 
         if (elementName == "group") {
-
-            // delegate callback
             if let groupLayer = lastElement as? SKGroupLayer {
-                if mapDelegate != nil { mapDelegate!.didAddLayer(groupLayer) }
+                // delegate callback
+                DispatchQueue.main.async {
+                    self.mapDelegate?.didAddLayer(groupLayer)
+                }
             }
 
             // if we're closing a group layer, pop it from the element path

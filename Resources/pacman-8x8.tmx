@@ -26,9 +26,9 @@
   </data>
   </layer>
  </group>
- <layer name="Graph" width="28" height="36" visible="0">
+ <layer name="Graph" width="28" height="36">
   <properties>
-   <property name="border" type="color" value="#e2e2e2"/>
+   <property name="border" type="color" value="#ffe2e2e2"/>
    <property name="walkableIDs" value="34,56,59,78"/>
   </properties>
   <data encoding="base64" compression="zlib">

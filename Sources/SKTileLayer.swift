@@ -43,7 +43,7 @@ internal enum SKObjectGroupColors: String {
 
 
 /// index, zpos, size w, size h, tile size w, tile size h, offset x, offset y, anchor x, anchor y, tile count, object count
-public typealias renderInfo = (idx: Int, path: String, zpos: Double, sw: Int, sh: Int, tsw: Int, tsh: Int, offx: Int, offy: Int, ancx: Int, ancy: Int, tc: Int, obj: Int, vis: Int)
+public typealias renderInfo = (idx: Int, path: String, zpos: Double, sw: Int, sh: Int, tsw: Int, tsh: Int, offx: Int, offy: Int, ancx: Int, ancy: Int, tc: Int, obj: Int, vis: Int, gn: Int)
 
 
 /**
@@ -239,9 +239,9 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         }
     }
 
-    /// Returns the render statisics
+    /// Returns layer render statisics
     open var renderStatistics: renderInfo {
-        return (index, path, Double(zPosition), Int(tilemap.size.width), Int(tilemap.size.height), Int(tileSize.width), Int(tileSize.height),  Int(offset.x), Int(offset.y), Int(anchorPoint.x), Int(anchorPoint.y), 0, 0, (isHidden == true) ? 0 : 1)
+        return (index, path, Double(zPosition), Int(tilemap.size.width), Int(tilemap.size.height), Int(tileSize.width), Int(tileSize.height),  Int(offset.x), Int(offset.y), Int(anchorPoint.x), Int(anchorPoint.y), 0, 0, (isHidden == true) ? 0 : 1, 0)
     }
 
     // MARK: - Init
@@ -865,6 +865,15 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         let comma = propertiesString.characters.count > 0 ? ", " : ""
         print("Layer: \(name != nil ? "\"\(layerName)\"" : "null")\(comma)\(propertiesString)")
     }
+    
+    /**
+     Set the debug color blend mode.
+     
+     - parameter mode: `SKBlendMode` color blend mode.
+     */
+    open func setDebugBlendMode(mode: SKBlendMode) {
+        debugNode.blendMode = mode
+    }
 
     // MARK: - Updates
     open func update(_ currentTime: TimeInterval) {
@@ -906,6 +915,9 @@ open class SKTileLayer: TiledLayerObject {
     override open var renderStatistics: renderInfo {
         var current = super.renderStatistics
         current.tc = tileCount
+        if let graph = graph {
+            current.gn = graph.nodes?.count ?? 0
+        }
         return current
     }
 
@@ -2234,7 +2246,7 @@ extension TiledLayerObject {
 
         return [indexString, typeString, layerVisibilityString, layerPathString, positionString,
                 self.sizeInPoints.shortDescription, self.offset.shortDescription,
-                self.anchorPoint.shortDescription, "\(Int(self.zPosition))", self.opacity.roundTo(2)]
+                self.anchorPoint.shortDescription, "\(Int(self.zPosition))", self.opacity.roundTo(2), "\(renderStatistics.gn)"]
     }
 }
 

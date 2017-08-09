@@ -396,7 +396,7 @@
  <group name="Maze">
   <layer name="base-geo" width="20" height="15">
    <data encoding="base64" compression="zlib">
-   eJy1kskOAVEQRcsU/IEp9B/QBBtrU7C0a0NssTLFFj+Bj3UrdLpS76Et3OQkr6uq332p3CwR5UAeFMiUY6l9UgW4oApqln4dpATpL/d1QBf0QN/SH4CSQL63ZZmfgCmYgbmoJ9W7Gi+aYqZouW8LdmAPDmqW3zYEI3X25e/i2w7eeWv5u3BCzC7EeRx5osWlKIiBOEiIuvxmHUPclwFLsAJrCvLGdZ0/7a39WG1wAmdwoSAfZTLzxx5ZCrLukpl3nrmCG7iLPvvo/LGHzLpLZt49sufNIzN/7CGz7pKZ9w3Z87YhM3/ae6L8fpXN+/Dxj//oAbriI7k=
+   eJy1kssOAUEQRcsr+AOvMH/AEGysvYI/MIgtVuMRW/wEPtatxGQq1W2MhZuchO6avp3OKRJRCZRBhcw4lrWoNIALmqBl2W+DnCD/5bwBGIIRGFv2J6AmkPftWeY9sABLsBLrWXWvzpuumKlaztuDAziCk5rlu03BTP0OErzFtzf41K0TvIUTY3YdYyYBkiAF0iAj1uV/zjnGeQWwAVuwo9A3Xtf+6W7dx+mDC7iCG4V+1Mn0jzuKFLrukuk7z9zBAzzFPvdo/7hDuu6S6fuc7L7NyfSPO6TrLpm++2T3zSfTP93tqb5fY+s+RX7xn7wAUgEiXQ==
   </data>
   </layer>
   <group name="UpperLevel">
@@ -415,6 +415,11 @@
  <layer name="Bridges" width="20" height="15">
   <data encoding="base64" compression="zlib">
    eJxjYBiZYA2VzTs8xMyj1P+3CJhPKUA3nxZgChBPRcLT6GAnLvtHAXEAABIgCsA=
+  </data>
+ </layer>
+ <layer name="Graph" width="20" height="15" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJxjYECAUEYGDIBNjBCA6cFlHjqmxDxcaom1H5+7sKkhxl5S3IorDMgxD59acs3D5UZK/YtsJrb4JSZtoJuBzsYWd/jSHjnuw2Y/LjPx2YPPXnIAobQ8VAEAlfIe6Q==
   </data>
  </layer>
  <group name="Props">

@@ -111,22 +111,58 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o8A-1P-WNU" userLabel="Camera Info Label">
+                                <rect key="frame" x="313" y="20" width="41" height="12"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Camera:">
+                                        <attributes>
+                                            <color key="NSColor" red="0.99019607843137258" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="11" name="Courier"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="shadowColor" red="0.51032221499999997" green="0.51032221499999997" blue="0.51032221499999997" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                <size key="shadowOffset" width="1" height="1"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aWk-BV-bvy" userLabel="Pause Info Label">
+                                <rect key="frame" x="313" y="40" width="41" height="12"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="">
+                                        <attributes>
+                                            <color key="NSColor" red="0.99019607843137258" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="11" name="Courier"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="shadowColor" red="0.51032221499999997" green="0.51032221499999997" blue="0.51032221499999997" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                <size key="shadowOffset" width="1" height="1"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="v8l-N1-lID" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leadingMargin" constant="8" id="4k8-M9-V0X"/>
+                            <constraint firstItem="aWk-BV-bvy" firstAttribute="top" secondItem="o8A-1P-WNU" secondAttribute="bottom" constant="8" id="5gg-Xk-b6N"/>
+                            <constraint firstItem="aWk-BV-bvy" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="Jfc-Tu-OXx"/>
                             <constraint firstItem="v8l-N1-lID" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="Juu-IQ-AOI"/>
+                            <constraint firstItem="o8A-1P-WNU" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="K4k-XW-JaL"/>
                             <constraint firstItem="QyX-Za-Z1p" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="QY8-Nt-hS4"/>
                             <constraint firstItem="v8l-N1-lID" firstAttribute="top" secondItem="QyX-Za-Z1p" secondAttribute="bottom" constant="8" id="TO7-vY-DSA"/>
                             <constraint firstAttribute="trailingMargin" secondItem="v8l-N1-lID" secondAttribute="trailing" constant="8" id="TWI-lV-1Y5"/>
                             <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="v8l-N1-lID" secondAttribute="bottom" constant="20" id="Y7j-r6-uOk"/>
                             <constraint firstItem="v8l-N1-lID" firstAttribute="top" secondItem="QyX-Za-Z1p" secondAttribute="bottom" constant="8" id="gp0-Jb-kPT"/>
+                            <constraint firstItem="o8A-1P-WNU" firstAttribute="top" secondItem="8aa-yV-Osq" secondAttribute="bottom" id="iWA-a2-t9O"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="cameraInfoLabel" destination="o8A-1P-WNU" id="dR5-rb-ynq"/>
                         <outlet property="graphButton" destination="iuB-yT-JZE" id="347-l9-n7u"/>
                         <outlet property="mapInfoLabel" destination="Tr1-Rb-3Hz" id="5gd-ji-SGm"/>
+                        <outlet property="pauseInfoLabel" destination="aWk-BV-bvy" id="da9-WC-LEC"/>
                         <outlet property="propertiesInfoLabel" destination="cmn-aw-alp" id="Fg1-SO-Kwb"/>
                         <outlet property="tileInfoLabel" destination="Ezb-0z-1AU" id="oHe-6Z-aJl"/>
                     </connections>

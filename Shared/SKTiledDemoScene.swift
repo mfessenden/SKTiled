@@ -52,6 +52,13 @@ public class SKTiledDemoScene: SKTiledScene {
         }
     }
     
+    override public var isPaused: Bool {
+        willSet {
+            let pauseMessage = (newValue == true) ? "Paused" : ""
+            updatePauseInfo(msg: pauseMessage)
+        }
+    }
+    
     override public func didMove(to view: SKView) {
         super.didMove(to: view)
         
@@ -184,6 +191,10 @@ public class SKTiledDemoScene: SKTiledScene {
     public func updateCameraInfo(msg: String) {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": msg])
     }
+    
+    public func updatePauseInfo(msg: String) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["pauseInfo": msg])
+    }
 
     /**
      Callback to remove coordinates.
@@ -246,7 +257,7 @@ public class SKTiledDemoScene: SKTiledScene {
     
     override open func didRenderMap(_ tilemap: SKTilemap) {
         // update the HUD to reflect the number of tiles created
-        //print(" ❊ `SKTiledDemoScene.didRenderMap`...")
+        print(" ❊ `SKTiledDemoScene.didRenderMap`...")
         updateHud()
         tilemap.mapStatistics()
     }
@@ -268,9 +279,6 @@ extension SKTiledDemoScene {
         let baseLayer = tilemap.baseLayer
         
         for touch in touches {
-            
-            // make sure there are no UI objects under the mouse
-            let scenePosition = touch.location(in: self)
             
             // get the position in the baseLayer
             let positionInLayer = baseLayer.touchLocation(touch)
@@ -513,9 +521,10 @@ extension SKTiledDemoScene {
             tilemap.showObjects = !tilemap.showObjects
         }
         
-        // 'p' pauses the map
+        // 'p' pauses the scene
         if eventKey == 0x23 {
             self.isPaused = !self.isPaused
+            print(" → paused: \(self.isPaused)")
         }
         
         // 'q' print layer stats
@@ -607,17 +616,20 @@ extension SKTiledDemoScene {
         
         // 's' runs a custom command
         if eventKey == 0x1 {
+            print("➜ drawing map bounds: \(tilemap.frame.shortDescription)")
+            tilemap.drawBounds()
         }
         
         // 't' runs a custom command
         if eventKey == 0x11 {
-            tilemap.tileObjects().forEach( { $0.strokeColor = .clear})
-            
+            print(" ○ clearing tile textures...")
+            tilemap.tileLayers().filter( { $0.graph != nil } ).forEach { $0.getTiles().forEach { $0.texture = nil }}
         }
         
         // 'u' runs a custom command
         if eventKey == 0x20 {
-            
+            print(" ○ updating tile textures...")
+            tilemap.tileLayers().filter( { $0.graph != nil } ).forEach { $0.getTiles().forEach { $0.update() }}
         }
         
         // 'v' runs a custom test

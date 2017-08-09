@@ -14,7 +14,7 @@ import Cocoa
 #endif
 
 /**
- Delegate for managing `SKTiledSceneCamera`.
+ Delegate for managing `SKTiledSceneCamera`. Delegates are alerted when camera position & zoom are changed.
  */
 public protocol TiledSceneCameraDelegate: class {
     func cameraPositionChanged(newPosition: CGPoint)
@@ -22,6 +22,7 @@ public protocol TiledSceneCameraDelegate: class {
     func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat)
     #if os(iOS) || os(tvOS)
     func sceneDoubleTapped()
+    func sceneSwiped()
     #endif
 }
 
@@ -156,12 +157,14 @@ open class SKTiledSceneCamera: SKCameraNode {
      
      - parameter scale: `CGFloat` zoom amount.
      */
-    open func setCameraZoom(_ scale: CGFloat) {
+    open func setCameraZoom(_ scale: CGFloat, interval: TimeInterval=0) {
         // clamp scaling
         let zoomClamped = scale.clamped(minZoom, maxZoom)
         
         self.zoom = zoomClamped
-        world.setScale(zoomClamped)
+        let zoomAction = SKAction.scale(to: zoomClamped, duration: interval)
+        //world.setScale(zoomClamped)
+        world.run(zoomAction)
         
         if let tilemap = (scene as? SKTiledScene)?.tilemap {
             tilemap.autoResize = false
@@ -302,27 +305,35 @@ open class SKTiledSceneCamera: SKCameraNode {
      
      - parameter newSize: `CGSize` updated scene size.
      */
-    open func fitToView(newSize: CGSize) {
+    open func fitToView(newSize: CGSize, transition: TimeInterval=0) {
         
         guard let scene = scene,
             let tiledScene = scene as? SKTiledSceneDelegate,
             let tilemap = tiledScene.tilemap else { return }
         
         
-        let tilemapSize = tilemap.renderSize //* zoom        
+        
+
+        let tilemapSize = tilemap.sizeInPoints
+        let tilemapCenter = scene.convert(tilemap.position, from: tilemap)
+        
         let isPortrait: Bool = newSize.height > newSize.width
         
-        let screenScaleWidth: CGFloat = isPortrait ? 0.9 : 0.9
-        let screenScaleHeight: CGFloat = isPortrait ? 0.9 : 0.95   // was 0.8 & 0.7
+        let screenScaleWidth: CGFloat = isPortrait ? 0.7 : 0.7
+        let screenScaleHeight: CGFloat = isPortrait ? 0.7 : 0.7   // was 0.8 & 0.7
         
         // get the usable height/width
         let usableWidth: CGFloat = newSize.width * screenScaleWidth
         let usableHeight: CGFloat = newSize.height * screenScaleHeight
         let scaleFactor = (tilemap.isPortrait == true) ? usableHeight / tilemapSize.height : usableWidth / tilemapSize.width
         
-        centerOn(scenePoint: CGPoint(x: 0, y: 0))
-        setCameraZoom(scaleFactor)
-        tilemap.autoResize = !tilemap.autoResize
+        
+        
+        centerOn(scenePoint: tilemapCenter) //CGPoint(x: 0, y: 0))
+        setCameraZoom(scaleFactor, interval: transition)
+        //tilemap.autoResize = !tilemap.autoResize
+        let absoluteSize = tilemapSize * scaleFactor
+        print("[SKTiledSceneCamera]: fitting: \(newSize.shortDescription), \(absoluteSize.shortDescription), scale: \(scaleFactor.roundTo())")
         
         NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": self.description])
     }
@@ -385,10 +396,10 @@ extension SKTiledSceneCamera {
      - parameter recognizer: `UITapGestureRecognizer` tap gesture recognizer.
      */
     open func sceneDoubleTapped(_ recognizer: UITapGestureRecognizer) {
-        if (recognizer.state == UIGestureRecognizerState.ended && allowPause) {
-            //focusLocation = recognizer.location(in: recognizer.view)
-            guard let _ = self.scene as? SKTiledScene else { return }
-            // get the current point
+        if (recognizer.state == UIGestureRecognizerState.ended) {
+            for delegate in self.delegates {
+                delegate.sceneDoubleTapped()
+            }
         }
     }
     
@@ -507,5 +518,6 @@ extension TiledSceneCameraDelegate {
     public func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {}
     #if os(iOS) || os(tvOS)
     public func sceneDoubleTapped() {}
+    public func sceneSwiped() {}
     #endif
 }

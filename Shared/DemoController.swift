@@ -126,7 +126,7 @@ open class DemoController: NSObject {
      
      - parameter interval: `TimeInterval` transition duration.
      */
-    open func reloadScene(_ interval: TimeInterval=0.4) {
+    open func reloadScene(_ interval: TimeInterval=0) {
         guard let currentURL = currentURL else { return }
         loadScene(url: currentURL, usePreviousCamera: true, interval: interval)
     }
@@ -136,13 +136,13 @@ open class DemoController: NSObject {
      
      - parameter interval: `TimeInterval` transition duration.
      */
-    open func loadNextScene(_ interval: TimeInterval=0.4) {
+    open func loadNextScene(_ interval: TimeInterval=0) {
         guard let currentURL = currentURL else { return }
         var nextFilename = demourls.first!
         if let index = demourls.index(of: currentURL), index + 1 < demourls.count {
             nextFilename = demourls[index + 1]
         }
-        loadScene(url: nextFilename, usePreviousCamera: false, interval: interval)
+        loadScene(url: nextFilename, usePreviousCamera: true, interval: interval)
     }
     
     /**
@@ -150,13 +150,13 @@ open class DemoController: NSObject {
      
      - parameter interval: `TimeInterval` transition duration.
      */
-    open func loadPreviousScene(_ interval: TimeInterval=0.4) {
+    open func loadPreviousScene(_ interval: TimeInterval=0) {
         guard let currentURL = currentURL else { return }
         var nextFilename = demourls.last!
         if let index = demourls.index(of:currentURL), index > 0, index - 1 < demourls.count {
             nextFilename = demourls[index - 1]
         }
-        loadScene(url: nextFilename, usePreviousCamera: false, interval: interval)
+        loadScene(url: nextFilename, usePreviousCamera: true, interval: interval)
     }
     
     /**
@@ -165,7 +165,7 @@ open class DemoController: NSObject {
      - parameter usePreviousCamera: `Bool` transfer camera information.
      - parameter interval:          `TimeInterval` transition duration.
      */
-    internal func loadScene(url: URL, usePreviousCamera: Bool, interval: TimeInterval=0.4) {
+    internal func loadScene(url: URL, usePreviousCamera: Bool, interval: TimeInterval=0) {
         guard let view = self.view else {
             print("[DemoController]: ❗️ERROR: view is not set.")
             return
@@ -175,6 +175,7 @@ open class DemoController: NSObject {
         var showOverlay = true
         var cameraPosition = CGPoint.zero
         var cameraZoom: CGFloat = 1
+        var isPaused: Bool = false
         
         if let currentScene = view.scene as? SKTiledDemoScene {
 
@@ -189,6 +190,8 @@ open class DemoController: NSObject {
                 debugDrawOptions = tilemap.debugDrawOptions
                 currentURL = url
             }
+            
+            isPaused = currentScene.isPaused
         }
         
         
@@ -199,19 +202,23 @@ open class DemoController: NSObject {
             nextScene.scaleMode = .aspectFill
             let transition = SKTransition.fade(withDuration: interval)
             view.presentScene(nextScene, transition: transition)
-            
+            nextScene.isPaused = isPaused
             
             nextScene.setup(tmxFile: url.lastPathComponent,
                             inDirectory: (url.baseURL == nil) ? nil : url.baseURL!.path,
-                            tilesets: [],
+                            withTilesets: [],
+                            ignoreProperties: false,
+                            buildGraphs: true,
                             verbosity: self.loggingLevel, nil)
             
             nextScene.liveMode = liveMode
             if (usePreviousCamera == true) {
                 nextScene.cameraNode?.showOverlay = showOverlay
                 nextScene.cameraNode?.position = cameraPosition
-                nextScene.cameraNode?.setCameraZoom(cameraZoom)
+                nextScene.cameraNode?.setCameraZoom(cameraZoom, interval: interval)
+                nextScene.cameraNode.fitToView(newSize: view.bounds.size, transition: 0.4)
             }
+            
             nextScene.tilemap?.debugDrawOptions = self.debugDrawOptions
             
             let graphInfo = ["hasGraphs": nextScene.graphs.count > 0]

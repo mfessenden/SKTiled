@@ -11,9 +11,13 @@ import GameplayKit
 
 
 /**
- Delegate for managing `SKTilemap` nodes in an [`SKScene`](https://developer.apple.com/reference/spritekit/skscene). This protocol and the `SKTiledScene` objects are included as a suggested way to use the `SKTilemap` class, but are not required.
+ ## Overview: ##
+ 
+ Delegate for managing `SKTilemap` nodes in an SpriteKit [`SKScene`][skscene-url] scene. This protocol and the `SKTiledScene` objects are included as a suggested way to use the `SKTilemap` class, but are not required.
  
  In this configuration, the tile map is a child of the world node and reference the custom `SKTiledSceneCamera` camera.
+ 
+ [skscene-url]:https://developer.apple.com/reference/spritekit/skscene
  */
 public protocol SKTiledSceneDelegate: class {
     /// World container node. Tiled assets are parented to this node.
@@ -23,16 +27,30 @@ public protocol SKTiledSceneDelegate: class {
     /// Tile map node.
     var tilemap: SKTilemap! { get set }
     /// Load a tilemap from disk, with optional tilesets
-    func load(tmxFile: String, inDirectory: String?, withTilesets tilesets: [SKTileset], verbosity: LoggingLevel) -> SKTilemap?
+    func load(tmxFile: String,
+              inDirectory: String?,
+              withTilesets tilesets: [SKTileset],
+              ignoreProperties: Bool,
+              buildGraphs: Bool,
+              verbosity: LoggingLevel) -> SKTilemap?
 }
 
 
 /**
- Custom scene type for managing `SKTilemap` nodes.
  
- - parameter worldNode:  `SKNode!` world container node.
- - parameter cameraNode: `SKTiledSceneCamera!` scene camera node.
- - parameter tilemap:    `SKTilemap!` tile map node.
+ ## Overview: ##
+ 
+ Custom scene type for managing `SKTilemap` nodes. 
+ 
+ Conforms to the `SKTiledSceneDelegate` & `SKTilemapDelegate` protocols.
+ 
+ ### Properties: ###
+ 
+ ```
+ SKTiledScene.worldNode:    `SKNode!` world container node.
+ SKTiledScene.tilemap:      `SKTilemap!` tile map object.
+ SKTiledScene.cameraNode:   `SKTiledSceneCamera!` custom scene camera.
+ ```
  */
 open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate, SKTilemapDelegate {
     
@@ -102,31 +120,39 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
         
         // TODO: finish me
     }
+
+    
     
     /**
-     Load and setup a named TMX file, with optional tilesets.
+     Load and setup a named TMX file, with optional tilesets. Allows for an optional completion handler.
      
-     - parameter tmxFile:     `String` TMX file name.
-     - parameter inDirectory: `String?` optional path for file.
-     - parameter tilesets:    `[SKTileset]` pre-loaded tilesets.
+     - parameter tmxFile:          `String` TMX file name.
+     - parameter inDirectory:      `String?` search directory (if not bundled)
+     - parameter withTilesets:     `[SKTileset]` optional pre-loaded tilesets.
+     - parameter ignoreProperties: `Bool` don't parse custom properties.
+     - parameter buildGraphs:      `Bool` automatically build pathfinding graphs.
+     - parameter verbosity:        `LoggingLevel` verbosity level.
      - parameter completion:  `(() -> ())?` optional completion handler.
      */
     open func setup(tmxFile: String,
                     inDirectory: String? = nil,
-                    tilesets: [SKTileset]=[],
+                    withTilesets tilesets: [SKTileset]=[],
+                    ignoreProperties: Bool = false,
+                    buildGraphs: Bool = true,
                     verbosity: LoggingLevel = .info,
                     _ completion: (() -> ())? = nil) {
         
         guard let worldNode = worldNode else { return }
-        
-        // TODO: Concurrency
-        //self.tilemap?.removeAllActions()
-        //self.tilemap?.removeAllChildren()
-        //self.tilemap?.removeFromParent()
+
         
         self.tilemap = nil
         
-        if let tilemap = load(tmxFile: tmxFile, inDirectory: inDirectory, withTilesets: tilesets, verbosity: verbosity) {
+        if let tilemap = load(tmxFile: tmxFile,
+                              inDirectory: inDirectory,
+                              withTilesets: tilesets,
+                              ignoreProperties: ignoreProperties,
+                              buildGraphs: buildGraphs,
+                              verbosity: verbosity) {
         
             backgroundColor = tilemap.backgroundColor ?? SKColor.clear
         
@@ -214,15 +240,20 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
 extension SKTiledSceneDelegate where Self: SKScene {
     
     /**
-     Load a named TMX file, with optional tilesets.
+     Load a named TMX file, with optional tilesets. 
      
-     - parameter tmxFile:      `String` TMX file name.
-     - parameter withTilesets:  `[SKTileset]`
+     - parameter inDirectory:      `String?` search directory (if not bundled)
+     - parameter withTilesets:     `[SKTileset]` optional pre-loaded tilesets.
+     - parameter ignoreProperties: `Bool` don't parse custom properties.
+     - parameter buildGraphs:      `Bool` automatically build pathfinding graphs.
+     - parameter verbosity:        `LoggingLevel` verbosity level.
      - returns: `SKTilemap?` tile map node.
      */
     public func load(tmxFile: String,
                      inDirectory: String? = nil,
                      withTilesets tilesets: [SKTileset]=[],
+                     ignoreProperties: Bool = false,
+                     buildGraphs: Bool = true,
                      verbosity: LoggingLevel = .info) -> SKTilemap? {
         
                 
@@ -230,7 +261,8 @@ extension SKTiledSceneDelegate where Self: SKScene {
                                         inDirectory: inDirectory,
                                         delegate: self as? SKTilemapDelegate,
                                         withTilesets: tilesets,
-                                        ignoreProperties: false,
+                                        ignoreProperties: ignoreProperties,
+                                        buildGraphs: buildGraphs,
                                         verbosity: verbosity) {
             
             if let cameraNode = cameraNode {
@@ -267,7 +299,12 @@ extension SKTiledScene: TiledSceneCameraDelegate {
     }
     
     #if os(iOS) || os(tvOS)
-    public func sceneDoubleTapped() {}
+    public func sceneDoubleTapped() {
+    print("[SKTiledScene]: scene was double tapped.")
+        self.isPaused = !self.isPaused
+    }
+    
+    public func sceneSwiped() {}
     #endif
 }
 

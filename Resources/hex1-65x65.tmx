@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.1" orientation="hexagonal" renderorder="right-down" width="10" height="10" tilewidth="65" tileheight="65" hexsidelength="31" staggeraxis="y" staggerindex="odd" backgroundcolor="#90a1a2" nextobjectid="42">
+<map version="1.0" tiledversion="1.0.2" orientation="hexagonal" renderorder="right-down" width="10" height="10" tilewidth="65" tileheight="65" hexsidelength="31" staggeraxis="y" staggerindex="odd" backgroundcolor="#90a1a2" nextobjectid="42">
  <properties>
   <property name="autoResize" type="bool" value="true"/>
   <property name="cropAtBoundary" type="bool" value="false"/>

@@ -16,6 +16,8 @@ class GameViewController: UIViewController {
     @IBOutlet weak var tileInfoLabel: UILabel!
     @IBOutlet weak var propertiesInfoLabel: UILabel!
     @IBOutlet weak var graphButton: UIButton!
+    @IBOutlet weak var cameraInfoLabel: UILabel!
+    @IBOutlet weak var pauseInfoLabel: UILabel!
 
     let demoController = DemoController.default
     var loggingLevel: LoggingLevel = .debug
@@ -54,6 +56,7 @@ class GameViewController: UIViewController {
         scene.setup(tmxFile: currentURL.relativePath, inDirectory: currentURL.baseURL?.relativePath, tilesets: [], verbosity: loggingLevel)
 
         NotificationCenter.default.addObserver(self, selector: #selector(updateGraphControls), name: NSNotification.Name(rawValue: "updateGraphControls"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateDebugLabels), name: NSNotification.Name(rawValue: "updateDebugLabels"), object: nil)
     }
 
     func setupDebuggingLabels() {
@@ -158,6 +161,14 @@ class GameViewController: UIViewController {
 
         if let propertiesInfo = notification.userInfo!["propertiesInfo"] {
             propertiesInfoLabel.text = propertiesInfo as? String
+        }
+        
+        if let cameraInfo = notification.userInfo!["cameraInfo"] {
+            cameraInfoLabel.text = cameraInfo as? String
+        }
+        
+        if let pauseInfo = notification.userInfo!["pauseInfo"] {
+            pauseInfoLabel.text = pauseInfo as? String
         }
     }
 

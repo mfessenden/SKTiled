@@ -9,15 +9,19 @@
 import SpriteKit
 
 /**
-The `SKTiledObject` protocol describes a generic Tiled object containing a dictionary of properties parsed from the TMX file.
  
- Objects conforming to this protocol support custom properties that can be parsed via the `SKTilemapParser` parser.
-
- - parameter uuid:             `String` unique object id.
- - parameter type:             `String!` object type.
- - parameter properties:       `[String: String]` dictionary of object properties.
- - parameter ignoreProperties: `Bool` ignore custom properties.
- - parameter renderQuality     `CGFloat` resolution multiplier value.
+ ## Overview: ##
+ 
+ The `SKTiledObject` protocol defines a basic data structure for holding & parsing custom **Tiled** properties. Objects conforming to this protocol support custom properties that can be parsed automatically with the `SKTilemapParser` parser.
+ 
+ ### Properties: ###
+ ```
+ SKTiledObject.uuid:             `String` unique object id.
+ SKTiledObject.type:             `String!` object type.
+ SKTiledObject.properties:       `[String: String]` dictionary of object properties.
+ SKTiledObject.ignoreProperties: `Bool` ignore custom properties.
+ SKTiledObject.renderQuality     `CGFloat` resolution multiplier value.
+ ```
  */
 public protocol SKTiledObject: class {
     /// Unique id (layer & object names may not be unique).
@@ -36,6 +40,7 @@ public protocol SKTiledObject: class {
 
 
 public extension SKTiledObject {
+    
     
     public var hashValue: Int { return uuid.hashValue }
     

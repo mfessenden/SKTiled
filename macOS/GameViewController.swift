@@ -20,7 +20,8 @@ class GameViewController: NSViewController {
     @IBOutlet weak var cameraInfoLabel: NSTextField!
     @IBOutlet weak var cursorTracker: NSTextField!
     @IBOutlet weak var graphButton: NSButton!
-
+    @IBOutlet weak var pauseInfoLabel: NSTextField!
+    
     let demoController = DemoController.default
     var loggingLevel: LoggingLevel = .debug
 
@@ -44,8 +45,10 @@ class GameViewController: NSViewController {
         skView.showsDrawCount = true
         skView.showsPhysics = true
         #endif
-
-        /* Sprite Kit applies additional optimizations to improve rendering performance */
+        
+        skView.showsFields = true
+        /* SpriteKit optimizations */
+        skView.shouldCullNonVisibleNodes = true
         skView.ignoresSiblingOrder = true
         skView.showsPhysics = false
         setupDebuggingLabels()
@@ -56,12 +59,18 @@ class GameViewController: NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(updateGraphControls), name: NSNotification.Name(rawValue: "updateGraphControls"), object: nil)
         debugInfoLabel?.isHidden = true
 
-
+        let preloadedTilesets: [SKTileset] = []
+        
         /* create the game scene */
         let scene = SKTiledDemoScene(size: self.view.bounds.size)
         scene.scaleMode = .aspectFill
         skView.presentScene(scene)
-        scene.setup(tmxFile: currentURL.relativePath, inDirectory: nil, tilesets: [], verbosity: loggingLevel)
+        scene.setup(tmxFile: currentURL.relativePath,
+                    inDirectory: nil,
+                    withTilesets: preloadedTilesets,
+                    ignoreProperties: false,
+                    buildGraphs: true,
+                    verbosity: loggingLevel)
 
     }
 
@@ -189,6 +198,10 @@ class GameViewController: NSViewController {
 
         if let cameraInfo = notification.userInfo!["cameraInfo"] {
             cameraInfoLabel.stringValue = cameraInfo as! String
+        }
+        
+        if let pauseInfo = notification.userInfo!["pauseInfo"] {
+            pauseInfoLabel.stringValue = pauseInfo as! String
         }
     }
 
