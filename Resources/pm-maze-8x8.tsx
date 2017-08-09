@@ -54,7 +54,7 @@
  <tile id="75">
   <properties>
    <property name="collisionSize" type="float" value="2"/>
-   <property name="type" value="dot"/>
+   <property name="nodeClass" value="dot"/>
   </properties>
  </tile>
  <tile id="78">

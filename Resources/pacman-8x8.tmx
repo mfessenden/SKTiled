@@ -3,6 +3,7 @@
  <properties>
   <property name="allowMovement" type="bool" value="true"/>
   <property name="allowZoom" type="bool" value="true"/>
+  <property name="aspect" type="float" value="1.13"/>
   <property name="gridColor" type="color" value="#ffb4b8ff"/>
   <property name="name" value="Maze - Pacman"/>
  </properties>

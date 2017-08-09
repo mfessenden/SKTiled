@@ -163,9 +163,12 @@ open class SKTiledSceneCamera: SKCameraNode {
         
         self.zoom = zoomClamped
         let zoomAction = SKAction.scale(to: zoomClamped, duration: interval)
-        //world.setScale(zoomClamped)
-        world.run(zoomAction)
         
+        if (interval == 0) {
+            world.setScale(zoomClamped)
+        } else {
+            world.run(zoomAction)
+        }
         if let tilemap = (scene as? SKTiledScene)?.tilemap {
             tilemap.autoResize = false
         }
@@ -310,9 +313,7 @@ open class SKTiledSceneCamera: SKCameraNode {
         guard let scene = scene,
             let tiledScene = scene as? SKTiledSceneDelegate,
             let tilemap = tiledScene.tilemap else { return }
-        
-        
-        
+
 
         let tilemapSize = tilemap.sizeInPoints
         let tilemapCenter = scene.convert(tilemap.position, from: tilemap)
@@ -325,15 +326,10 @@ open class SKTiledSceneCamera: SKCameraNode {
         // get the usable height/width
         let usableWidth: CGFloat = newSize.width * screenScaleWidth
         let usableHeight: CGFloat = newSize.height * screenScaleHeight
-        let scaleFactor = (tilemap.isPortrait == true) ? usableHeight / tilemapSize.height : usableWidth / tilemapSize.width
+        let scaleFactor = (isPortrait == true) ? usableWidth / tilemapSize.width : usableHeight / tilemapSize.height
         
-        
-        
-        centerOn(scenePoint: tilemapCenter) //CGPoint(x: 0, y: 0))
+        centerOn(scenePoint: tilemapCenter)
         setCameraZoom(scaleFactor, interval: transition)
-        //tilemap.autoResize = !tilemap.autoResize
-        let absoluteSize = tilemapSize * scaleFactor
-        print("[SKTiledSceneCamera]: fitting: \(newSize.shortDescription), \(absoluteSize.shortDescription), scale: \(scaleFactor.roundTo())")
         
         NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": self.description])
     }
@@ -352,7 +348,9 @@ open class SKTiledSceneCamera: SKCameraNode {
 
 extension SKTiledSceneCamera {
     override open var description: String {
-        return "Camera: \(bounds.roundTo()), zoom: \(zoom.roundTo())"
+        guard let scene = scene else { return "Camera: "}
+        let boundingRect = CGRect(origin: scene.convert(position, from: self), size: bounds.size)
+        return "Camera: \(boundingRect.roundTo()), zoom: \(zoom.roundTo())"
     }
     
     override open var debugDescription: String {

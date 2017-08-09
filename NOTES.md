@@ -88,3 +88,7 @@ y-anchor point = (map half tile height / tileset tile height)
 
 ### Image Framework (Cocoa <-> iOS)
 https://github.com/C4Labs/C4iOS/tree/master/C4/Core
+
+## Xcode Settings
+
+DEFINES_MODULE - should default to yes (leave as yes)

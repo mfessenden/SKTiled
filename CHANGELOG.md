@@ -13,6 +13,7 @@ Change Log
 - add `SKTileset.getTileData(ofType:)`
 - add `SKTilemap.getVertices()`
 - add `SKTilemap.heightOffset`
+- add `SKTilemap.showObjects(forLayers:)`
 
 #### Changes
 

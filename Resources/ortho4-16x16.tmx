@@ -353,13 +353,13 @@
   <tile id="341">
    <properties>
     <property name="walkable" type="bool" value="true"/>
-    <property name="weight" type="float" value="20"/>
+    <property name="weight" type="float" value="500"/>
    </properties>
   </tile>
   <tile id="342">
    <properties>
     <property name="walkable" type="bool" value="true"/>
-    <property name="weight" type="float" value="-20"/>
+    <property name="weight" type="float" value="250"/>
    </properties>
   </tile>
   <tile id="345" type="walkable"/>
@@ -371,6 +371,12 @@
   <tile id="354" type="walkable"/>
   <tile id="356" type="enemy"/>
   <tile id="357" type="enemy"/>
+  <tile id="363">
+   <properties>
+    <property name="walkable" type="bool" value="true"/>
+    <property name="weight" type="float" value="-1000"/>
+   </properties>
+  </tile>
   <tile id="368" type="walkable"/>
   <tile id="369" type="walkable"/>
   <tile id="370" type="walkable"/>
@@ -419,7 +425,7 @@
  </layer>
  <layer name="Graph" width="20" height="15" visible="0">
   <data encoding="base64" compression="zlib">
-   eJxjYECAUEYGDIBNjBCA6cFlHjqmxDxcaom1H5+7sKkhxl5S3IorDMgxD59acs3D5UZK/YtsJrb4JSZtoJuBzsYWd/jSHjnuw2Y/LjPx2YPPXnIAobQ8VAEAlfIe6Q==
+   eJzVkkkOgDAMA9NHAv//CUckY0+CONVSpS6JM2lb9ehY9ZLb63Qu9tOheaoL/Jy/5lF94nIxk7pfWLXGHz+KJb/EQIxpne7Onbkcx9Sxpbl7O3pn4lOO1ENinP61Sd8TdX95V90ezCL3
   </data>
  </layer>
  <group name="Props">

@@ -640,12 +640,12 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         bounds.lineCap = .round
         bounds.lineJoin = .miter
         bounds.miterLimit = 0
-        bounds.lineWidth = 0.5 * (renderQuality / 2)
+        bounds.lineWidth = 1 * (renderQuality / 2)
 
         bounds.strokeColor = highlightColor.withAlphaComponent(0.4)
         bounds.fillColor = highlightColor.withAlphaComponent(0.15)  // 0.35
         bounds.zPosition = shapeZPos
-
+        bounds.isAntialiased = layer.antialiased
 
         // anchor point
         let tileHeight = (layer != nil) ? layer.tilemap.tileHeight : 8
@@ -667,7 +667,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
 
         pointShape.name = "FIRST_POINT"
         bounds.addChild(pointShape)
-        pointShape.fillColor = .orange //highlightColor
+        pointShape.fillColor = bounds.fillColor //highlightColor
         pointShape.strokeColor = SKColor.clear
         pointShape.zPosition = shapeZPos * 15
         pointShape.isAntialiased = layer.antialiased
@@ -686,8 +686,6 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             return (childNode(withName: "BOUNDS") != nil) ? childNode(withName: "BOUNDS")!.isHidden == false : false
         }
         set {
-            childNode(withName: "BOUNDS")?.removeFromParent()
-
             if (newValue == true) {
 
                 isHidden = false

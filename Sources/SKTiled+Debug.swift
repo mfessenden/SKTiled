@@ -77,7 +77,9 @@ internal class TiledDebugDrawNode: SKNode {
         get {
             return (gridSprite != nil) ? (gridSprite!.isHidden == false) : false
         } set {
-            drawGrid()
+            DispatchQueue.main.async {
+                self.drawGrid()
+            }
         }
     }
 
@@ -93,7 +95,9 @@ internal class TiledDebugDrawNode: SKNode {
         get {
             return (graphSprite != nil) ? (graphSprite!.isHidden == false) : false
         } set {
-            drawGraph()
+            DispatchQueue.main.async {
+                self.drawGraph()
+            }
         }
     }
 
@@ -125,22 +129,24 @@ internal class TiledDebugDrawNode: SKNode {
         if (verbose == true){
             print("[TiledDebugDrawNode]: debug options: \(debugDrawOptions.rawValue), hidden: \(isHidden)")
         }
-        if debugDrawOptions.contains(.drawGrid) {
-            drawGrid()
+        
+        
+        if self.debugDrawOptions.contains(.drawGrid) {
+            self.drawGrid()
         } else {
-            gridSprite?.isHidden = true
+            self.gridSprite?.isHidden = true
         }
 
-        if debugDrawOptions.contains(.drawBounds) {
-            drawBounds()
+        if self.debugDrawOptions.contains(.drawBounds) {
+            self.drawBounds()
         } else {
-            frameShape?.isHidden = true
+            self.frameShape?.isHidden = true
         }
         
-        if debugDrawOptions.contains(.drawGraph) {
-            drawGraph()
+        if self.debugDrawOptions.contains(.drawGraph) {
+            self.drawGraph()
         } else {
-            graphSprite?.isHidden = true
+            self.graphSprite?.isHidden = true
         }
     }
     

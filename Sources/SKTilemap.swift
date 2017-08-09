@@ -219,7 +219,7 @@ open class SKTilemap: SKNode, SKTiledObject {
     }
 
     open var isPortrait: Bool {
-        return size.height > size.width
+        return sizeInPoints.height > sizeInPoints.width
     }
 
     // hexagonal
@@ -407,6 +407,16 @@ open class SKTilemap: SKNode, SKTiledObject {
                 objectGroup.showObjects = showObjects
             }
         }
+    }
+    
+    /**
+     Show objects for the given layers.
+     
+     - parameter forLayers: `[TiledLayerObject]` include nested layers.
+     - returns: `[SKTileLayer]` array of tile layers.
+     */
+    open func showObjects(forLayers: [TiledLayerObject]) {
+        
     }
 
     /**

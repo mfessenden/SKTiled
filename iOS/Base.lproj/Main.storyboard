@@ -129,7 +129,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aWk-BV-bvy" userLabel="Pause Info Label">
                                 <rect key="frame" x="313" y="40" width="41" height="12"/>
                                 <attributedString key="attributedText">
-                                    <fragment content="">
+                                    <fragment content="Paused">
                                         <attributes>
                                             <color key="NSColor" red="0.99019607843137258" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" size="11" name="Courier"/>

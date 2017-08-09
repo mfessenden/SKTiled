@@ -58,6 +58,16 @@
 		4C1774B81D9099A3000C0AFD /* SKTileset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DA1D8A4EBE00FCCFA3 /* SKTileset.swift */; };
 		4C1774B91D9099A3000C0AFD /* SKTilesetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */; };
 		4C1774BA1D9099A3000C0AFD /* SKTiledObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA21D8CC2C100DB56F1 /* SKTiledObject.swift */; };
+		4C1A7BE01F3AC97600BDCA72 /* mspacman-maze1-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1A7BDB1F3AC97600BDCA72 /* mspacman-maze1-8x8.png */; };
+		4C1A7BE11F3AC97600BDCA72 /* mspacman-maze1-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1A7BDB1F3AC97600BDCA72 /* mspacman-maze1-8x8.png */; };
+		4C1A7BE21F3AC97600BDCA72 /* mspacman-maze2-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1A7BDC1F3AC97600BDCA72 /* mspacman-maze2-8x8.png */; };
+		4C1A7BE31F3AC97600BDCA72 /* mspacman-maze2-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1A7BDC1F3AC97600BDCA72 /* mspacman-maze2-8x8.png */; };
+		4C1A7BE41F3AC97600BDCA72 /* mspacman-maze3-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1A7BDD1F3AC97600BDCA72 /* mspacman-maze3-8x8.png */; };
+		4C1A7BE51F3AC97600BDCA72 /* mspacman-maze3-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1A7BDD1F3AC97600BDCA72 /* mspacman-maze3-8x8.png */; };
+		4C1A7BE61F3AC97600BDCA72 /* mspacman-maze4-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1A7BDE1F3AC97600BDCA72 /* mspacman-maze4-8x8.png */; };
+		4C1A7BE71F3AC97600BDCA72 /* mspacman-maze4-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1A7BDE1F3AC97600BDCA72 /* mspacman-maze4-8x8.png */; };
+		4C1A7BE81F3AC97600BDCA72 /* pm-maze-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1A7BDF1F3AC97600BDCA72 /* pm-maze-8x8.png */; };
+		4C1A7BE91F3AC97600BDCA72 /* pm-maze-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1A7BDF1F3AC97600BDCA72 /* pm-maze-8x8.png */; };
 		4C3117D91EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
 		4C3117DA1EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
 		4C3117DB1EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
@@ -93,8 +103,6 @@
 		4C6FB8A81F1E5D2800A57964 /* pacman-8x8.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6FB8A41F1E5D2800A57964 /* pacman-8x8.tmx */; };
 		4C6FB8A91F1E5D2800A57964 /* pm-maze-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6FB8A51F1E5D2800A57964 /* pm-maze-8x8.tsx */; };
 		4C6FB8AA1F1E5D2800A57964 /* pm-maze-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6FB8A51F1E5D2800A57964 /* pm-maze-8x8.tsx */; };
-		4C6FB8AB1F1E5D2800A57964 /* pm-maze-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C6FB8A61F1E5D2800A57964 /* pm-maze-8x8.png */; };
-		4C6FB8AC1F1E5D2800A57964 /* pm-maze-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C6FB8A61F1E5D2800A57964 /* pm-maze-8x8.png */; };
 		4C7AD30F1F1E3D7500474722 /* graphtest-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7AD30E1F1E3D7500474722 /* graphtest-8x8.png */; };
 		4C7AD3101F1E3D7500474722 /* graphtest-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7AD30E1F1E3D7500474722 /* graphtest-8x8.png */; };
 		4C7AD3111F1E3D8100474722 /* graphtest-8x8.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6A1E1A1DAC19B1001F2E92 /* graphtest-8x8.tmx */; };
@@ -219,6 +227,11 @@
 		4C0EE1E51DC116DB00A052E4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		4C0EE1E71DC116E300A052E4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
 		4C17747F1D909740000C0AFD /* SKTiledDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKTiledDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C1A7BDB1F3AC97600BDCA72 /* mspacman-maze1-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mspacman-maze1-8x8.png"; sourceTree = "<group>"; };
+		4C1A7BDC1F3AC97600BDCA72 /* mspacman-maze2-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mspacman-maze2-8x8.png"; sourceTree = "<group>"; };
+		4C1A7BDD1F3AC97600BDCA72 /* mspacman-maze3-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mspacman-maze3-8x8.png"; sourceTree = "<group>"; };
+		4C1A7BDE1F3AC97600BDCA72 /* mspacman-maze4-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mspacman-maze4-8x8.png"; sourceTree = "<group>"; };
+		4C1A7BDF1F3AC97600BDCA72 /* pm-maze-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pm-maze-8x8.png"; sourceTree = "<group>"; };
 		4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKTiled+Debug.swift"; sourceTree = "<group>"; };
 		4C41848F1F3411DE004E392A /* mspacman-16x16 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "mspacman-16x16"; path = "../../../../Dropbox/assets/tiled/pacman/png/src/mspacman-16x16"; sourceTree = "<group>"; };
 		4C4184901F3411DE004E392A /* pacman-16x16 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "pacman-16x16"; path = "../../../../Dropbox/assets/tiled/pacman/png/src/pacman-16x16"; sourceTree = "<group>"; };
@@ -248,7 +261,6 @@
 		4C6FB8A11F1E45AB00A57964 /* tetris-dynamics.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "tetris-dynamics.tmx"; sourceTree = "<group>"; };
 		4C6FB8A41F1E5D2800A57964 /* pacman-8x8.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "pacman-8x8.tmx"; sourceTree = "<group>"; };
 		4C6FB8A51F1E5D2800A57964 /* pm-maze-8x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "pm-maze-8x8.tsx"; sourceTree = "<group>"; };
-		4C6FB8A61F1E5D2800A57964 /* pm-maze-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pm-maze-8x8.png"; sourceTree = "<group>"; };
 		4C7AD30E1F1E3D7500474722 /* graphtest-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "graphtest-8x8.png"; sourceTree = "<group>"; };
 		4C88E18B1D8A1BC400FCCFA3 /* roguelike-16x16.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "roguelike-16x16.tmx"; sourceTree = "<group>"; };
 		4C88E1AA1D8A241F00FCCFA3 /* ortho4-16x16.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "ortho4-16x16.tmx"; sourceTree = "<group>"; };
@@ -288,8 +300,6 @@
 		4CD6D2D41D8B9DE20083DA7B /* roguelike-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "roguelike-16x16.tsx"; sourceTree = "<group>"; };
 		4CD6D2D91D8B9EA10083DA7B /* isometric-130x66.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "isometric-130x66.tmx"; sourceTree = "<group>"; };
 		4CD6D2DA1D8B9EA10083DA7B /* isometric-130x230.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "isometric-130x230.png"; sourceTree = "<group>"; };
-		4CE2B3A01F39030900A301AC /* SKTiled.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = SKTiled.modulemap; sourceTree = "<group>"; };
-		4CE2B3A11F39031400A301AC /* SKTiled.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = SKTiled.modulemap; sourceTree = "<group>"; };
 		4CF040C51F32279600D8AFFC /* inky-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "inky-16x16.tsx"; sourceTree = "<group>"; };
 		4CF040C81F3228D600D8AFFC /* clyde-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "clyde-16x16.tsx"; sourceTree = "<group>"; };
 		4CF040C91F3228D600D8AFFC /* pinky-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "pinky-16x16.tsx"; sourceTree = "<group>"; };
@@ -400,7 +410,6 @@
 		4C5812611E255E6400E80BFC /* framework */ = {
 			isa = PBXGroup;
 			children = (
-				4CE2B3A01F39030900A301AC /* SKTiled.modulemap */,
 				4C5812621E255E6400E80BFC /* Info.plist */,
 				4C5812631E255E6400E80BFC /* SKTiled.h */,
 			);
@@ -410,7 +419,6 @@
 		4C5812661E255E7300E80BFC /* framework */ = {
 			isa = PBXGroup;
 			children = (
-				4CE2B3A11F39031400A301AC /* SKTiled.modulemap */,
 				4C5812671E255E7300E80BFC /* Info.plist */,
 				4C5812681E255E7300E80BFC /* SKTiled.h */,
 			);
@@ -575,12 +583,16 @@
 				4CD6D2DA1D8B9EA10083DA7B /* isometric-130x230.png */,
 				4C0924CE1F127DC0009CA37E /* lshape-24x16.png */,
 				4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */,
-				4C6FB8A61F1E5D2800A57964 /* pm-maze-8x8.png */,
 				4CA6E5441F393F7700612A1C /* dk-fonts-8x8.png */,
 				4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */,
 				4CFEA3571D8D02D20055C150 /* staggered-64x192.png */,
 				4C0924CF1F127DC0009CA37E /* square-8x8.png */,
 				4C0924D01F127DC0009CA37E /* square-16x16.png */,
+				4C1A7BDB1F3AC97600BDCA72 /* mspacman-maze1-8x8.png */,
+				4C1A7BDC1F3AC97600BDCA72 /* mspacman-maze2-8x8.png */,
+				4C1A7BDD1F3AC97600BDCA72 /* mspacman-maze3-8x8.png */,
+				4C1A7BDE1F3AC97600BDCA72 /* mspacman-maze4-8x8.png */,
+				4C1A7BDF1F3AC97600BDCA72 /* pm-maze-8x8.png */,
 				4C0924D21F127DC0009CA37E /* tetris-layer1-336x240.png */,
 				4C0924D31F127DC0009CA37E /* tetris-layer2-336x240.png */,
 				4C0924D41F127DC0009CA37E /* tetris-layer3-336x240.png */,
@@ -749,7 +761,6 @@
 			files = (
 				4C8E42E11DC26FD1002C76DA /* zlib in Resources */,
 				4C6FB8A91F1E5D2800A57964 /* pm-maze-8x8.tsx in Resources */,
-				4C6FB8AB1F1E5D2800A57964 /* pm-maze-8x8.png in Resources */,
 				4CA6E5361F393F6D00612A1C /* characters-16x16 in Resources */,
 				4C0924D91F127DC0009CA37E /* tetris-lshape-24x16.tsx in Resources */,
 				4C7AD30F1F1E3D7500474722 /* graphtest-8x8.png in Resources */,
@@ -766,6 +777,7 @@
 				4CA6E5471F393F7700612A1C /* barrels-12x10.tsx in Resources */,
 				4C7AD3131F1E3D9400474722 /* graphtest-8x8.tsx in Resources */,
 				4C0924DD1F127DC0009CA37E /* tetris-square-16x16.tsx in Resources */,
+				4C1A7BE21F3AC97600BDCA72 /* mspacman-maze2-8x8.png in Resources */,
 				4CA6E54F1F393F7700612A1C /* kong-50x32.tsx in Resources */,
 				4CF040C31F3112AD00D8AFFC /* isometric-130x66.tmx in Resources */,
 				4C0924E11F127DC0009CA37E /* bar-32x8.png in Resources */,
@@ -777,7 +789,9 @@
 				4CF040D21F32305900D8AFFC /* blinky-16x16.tsx in Resources */,
 				4C4184991F34126C004E392A /* mspacman-16x16.tsx in Resources */,
 				4C0924ED1F127DC0009CA37E /* tetris-layer2-336x240.png in Resources */,
+				4C1A7BE01F3AC97600BDCA72 /* mspacman-maze1-8x8.png in Resources */,
 				4CF040C61F32279600D8AFFC /* inky-16x16.tsx in Resources */,
+				4C1A7BE61F3AC97600BDCA72 /* mspacman-maze4-8x8.png in Resources */,
 				4C4184A21F34201E004E392A /* fruit-16x16 in Resources */,
 				4CA6E54D1F393F7700612A1C /* dk-sprites-8x8.tsx in Resources */,
 				4CA6E54B1F393F7700612A1C /* dk-fonts-8x8.tsx in Resources */,
@@ -795,6 +809,7 @@
 				4C0924E51F127DC0009CA37E /* square-8x8.png in Resources */,
 				4C1774A51D90999C000C0AFD /* ortho4-16x16.tmx in Resources */,
 				4CF040CF1F3228E600D8AFFC /* ghosts-16x16 in Resources */,
+				4C1A7BE81F3AC97600BDCA72 /* pm-maze-8x8.png in Resources */,
 				4CF0FEA31F34EF27000AADEF /* Main.storyboard in Resources */,
 				4C0924EB1F127DC0009CA37E /* tetris-layer1-336x240.png in Resources */,
 				4C0924E71F127DC0009CA37E /* square-16x16.png in Resources */,
@@ -803,6 +818,7 @@
 				4C0924EF1F127DC0009CA37E /* tetris-layer3-336x240.png in Resources */,
 				4CF040CC1F3228D600D8AFFC /* pinky-16x16.tsx in Resources */,
 				4C0924DF1F127DC0009CA37E /* tetris-tshape-24x16.tsx in Resources */,
+				4C1A7BE41F3AC97600BDCA72 /* mspacman-maze3-8x8.png in Resources */,
 				4C4184931F3411DE004E392A /* pacman-16x16 in Resources */,
 				4C41849F1F34198F004E392A /* fruit-16x16.tsx in Resources */,
 				4C1774AA1D90999C000C0AFD /* isometric-130x230.png in Resources */,
@@ -818,9 +834,13 @@
 				4CFEA35D1D8D04320055C150 /* hex1-65x65.tmx in Resources */,
 				4CA6E5351F393F6D00612A1C /* barrels-12x10 in Resources */,
 				4C0924E21F127DC0009CA37E /* bar-32x8.png in Resources */,
+				4C1A7BE71F3AC97600BDCA72 /* mspacman-maze4-8x8.png in Resources */,
 				4C0924F01F127DC0009CA37E /* tetris-layer3-336x240.png in Resources */,
 				4CA6E5541F393F7700612A1C /* dk-fonts-8x8.png in Resources */,
+				4C1A7BE91F3AC97600BDCA72 /* pm-maze-8x8.png in Resources */,
+				4C1A7BE51F3AC97600BDCA72 /* mspacman-maze3-8x8.png in Resources */,
 				4C7AD3101F1E3D7500474722 /* graphtest-8x8.png in Resources */,
+				4C1A7BE11F3AC97600BDCA72 /* mspacman-maze1-8x8.png in Resources */,
 				4C4184A01F34198F004E392A /* fruit-16x16.tsx in Resources */,
 				4C0924D81F127DC0009CA37E /* tetris-bar-32x8.tsx in Resources */,
 				4CBA61831D8A0A4600B31FC1 /* roguelike-16x16-anim.png in Resources */,
@@ -834,7 +854,6 @@
 				4CA6E53D1F393F6D00612A1C /* spritesheets in Resources */,
 				4CA22C7E1F040FF600CD0A72 /* Nintendo-Arcade.ttf in Resources */,
 				4C88E18C1D8A1BC400FCCFA3 /* roguelike-16x16.tmx in Resources */,
-				4C6FB8AC1F1E5D2800A57964 /* pm-maze-8x8.png in Resources */,
 				4CF040D01F3228E600D8AFFC /* ghosts-16x16 in Resources */,
 				4C7AD3141F1E3D9500474722 /* graphtest-8x8.tsx in Resources */,
 				4C440B9B1DAE911000DEC9A4 /* Assets.xcassets in Resources */,
@@ -870,6 +889,7 @@
 				4CD6D2D51D8B9DE20083DA7B /* roguelike-16x16.tsx in Resources */,
 				4CA6E5391F393F6D00612A1C /* characters-16x32 in Resources */,
 				4C41849A1F34126C004E392A /* mspacman-16x16.tsx in Resources */,
+				4C1A7BE31F3AC97600BDCA72 /* mspacman-maze2-8x8.png in Resources */,
 				4C0924DE1F127DC0009CA37E /* tetris-square-16x16.tsx in Resources */,
 				4CF040CB1F3228D600D8AFFC /* clyde-16x16.tsx in Resources */,
 				4CD6D2DD1D8B9EA10083DA7B /* isometric-130x66.tmx in Resources */,
@@ -1284,7 +1304,6 @@
 				INFOPLIST_FILE = "$(SRCROOT)/macOS/framework/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				MODULEMAP_FILE = macOS/framework/SKTiled.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
 				PRODUCT_NAME = SKTiled;
 				SDKROOT = macosx;
@@ -1314,7 +1333,6 @@
 				INFOPLIST_FILE = "$(SRCROOT)/macOS/framework/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				MODULEMAP_FILE = macOS/framework/SKTiled.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
 				PRODUCT_NAME = SKTiled;
 				SDKROOT = macosx;
@@ -1340,7 +1358,6 @@
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/framework/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = iOS/framework/SKTiled.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
 				PRODUCT_NAME = SKTiled;
 				SKIP_INSTALL = YES;
@@ -1357,7 +1374,6 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1.15;
-				DEFINES_MODULE = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DEVELOPMENT_TEAM = 747QKN4G7U;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1366,7 +1382,6 @@
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/framework/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = iOS/framework/SKTiled.modulemap;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
 				PRODUCT_NAME = SKTiled;

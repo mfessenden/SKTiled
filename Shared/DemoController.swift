@@ -69,6 +69,7 @@ open class DemoController: NSObject {
             currentURL = demourls.first
         }
         
+        
         //set up notification for scene to load the next file
         NotificationCenter.default.addObserver(self, selector: #selector(reloadScene), name: NSNotification.Name(rawValue: "reloadScene"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadNextScene), name: NSNotification.Name(rawValue: "loadNextScene"), object: nil)
@@ -100,7 +101,7 @@ open class DemoController: NSObject {
      */
     public func addTilemap(url: URL, at index: Int) {
         demourls.insert(url, at: index)
-        loadScene(url: url, usePreviousCamera: true)
+        loadScene(url: url, usePreviousCamera: false)
     }
     
     /**
@@ -128,7 +129,7 @@ open class DemoController: NSObject {
      */
     open func reloadScene(_ interval: TimeInterval=0) {
         guard let currentURL = currentURL else { return }
-        loadScene(url: currentURL, usePreviousCamera: true, interval: interval)
+        loadScene(url: currentURL, usePreviousCamera: false, interval: interval)
     }
     
     /**
@@ -142,7 +143,7 @@ open class DemoController: NSObject {
         if let index = demourls.index(of: currentURL), index + 1 < demourls.count {
             nextFilename = demourls[index + 1]
         }
-        loadScene(url: nextFilename, usePreviousCamera: true, interval: interval)
+        loadScene(url: nextFilename, usePreviousCamera: false, interval: interval)
     }
     
     /**
@@ -156,7 +157,7 @@ open class DemoController: NSObject {
         if let index = demourls.index(of:currentURL), index > 0, index - 1 < demourls.count {
             nextFilename = demourls[index - 1]
         }
-        loadScene(url: nextFilename, usePreviousCamera: true, interval: interval)
+        loadScene(url: nextFilename, usePreviousCamera: false, interval: interval)
     }
     
     /**
@@ -216,7 +217,7 @@ open class DemoController: NSObject {
                 nextScene.cameraNode?.showOverlay = showOverlay
                 nextScene.cameraNode?.position = cameraPosition
                 nextScene.cameraNode?.setCameraZoom(cameraZoom, interval: interval)
-                nextScene.cameraNode.fitToView(newSize: view.bounds.size, transition: 0.4)
+                nextScene.cameraNode.fitToView(newSize: view.bounds.size, transition: interval)
             }
             
             nextScene.tilemap?.debugDrawOptions = self.debugDrawOptions

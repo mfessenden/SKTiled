@@ -57,6 +57,7 @@ class GameViewController: NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(updateDebugLabels), name: NSNotification.Name(rawValue: "updateDebugLabels"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateWindowTitle), name: NSNotification.Name(rawValue: "updateWindowTitle"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateGraphControls), name: NSNotification.Name(rawValue: "updateGraphControls"), object: nil)
+        
         debugInfoLabel?.isHidden = true
 
         let preloadedTilesets: [SKTileset] = []
@@ -99,6 +100,7 @@ class GameViewController: NSViewController {
         propertiesInfoLabel.shadow = shadow
         debugInfoLabel.shadow = shadow
         cameraInfoLabel.shadow = shadow
+        pauseInfoLabel.shadow = shadow
     }
 
     /**

@@ -29,6 +29,7 @@ class GameViewController: UIViewController {
         let skView = self.view as! SKView
         // set the controller view
         demoController.view = skView
+        demoController.viewController = self
 
 
         guard let currentURL = demoController.currentURL else {
@@ -53,7 +54,12 @@ class GameViewController: UIViewController {
         let scene = SKTiledDemoScene(size: self.view.bounds.size)
         scene.scaleMode = .aspectFill
         skView.presentScene(scene)
-        scene.setup(tmxFile: currentURL.relativePath, inDirectory: currentURL.baseURL?.relativePath, tilesets: [], verbosity: loggingLevel)
+        scene.setup(tmxFile: currentURL.relativePath,
+                    inDirectory: nil,
+                    withTilesets: [],
+                    ignoreProperties: false,
+                    buildGraphs: true,
+                    verbosity: loggingLevel)
 
         NotificationCenter.default.addObserver(self, selector: #selector(updateGraphControls), name: NSNotification.Name(rawValue: "updateGraphControls"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateDebugLabels), name: NSNotification.Name(rawValue: "updateDebugLabels"), object: nil)
@@ -63,6 +69,8 @@ class GameViewController: UIViewController {
         mapInfoLabel.text = "Map: "
         tileInfoLabel.text = "Tile: "
         propertiesInfoLabel.text = "Properties:"
+        cameraInfoLabel.text = "Camera:"
+        pauseInfoLabel.text = "-"
 
         let shadowColor = SKColor(white: 0.1, alpha: 0.65)
         let shadowOffset = CGSize(width: 1, height: 1)
@@ -75,6 +83,12 @@ class GameViewController: UIViewController {
 
         propertiesInfoLabel.shadowColor = shadowColor
         propertiesInfoLabel.shadowOffset = shadowOffset
+        
+        cameraInfoLabel.shadowColor = shadowColor
+        cameraInfoLabel.shadowOffset = shadowOffset
+        
+        pauseInfoLabel.shadowColor = shadowColor
+        pauseInfoLabel.shadowOffset = shadowOffset
 
     }
 

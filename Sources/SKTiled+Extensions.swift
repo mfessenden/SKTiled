@@ -1291,7 +1291,9 @@ internal func drawLayerGraph(_ layer: TiledLayerObject, imageScale: CGFloat=8, l
         let lineWidth: CGFloat = defaultLineWidth
         context.setLineWidth(lineWidth)
         context.setShouldAntialias(true)  // layer.antialiased
-
+        
+        guard let graph = layer.graph else { return }
+        
         
         for col in 0 ..< Int(size.width) {
             for row in (0 ..< Int(size.height)) {
@@ -1310,7 +1312,11 @@ internal func drawLayerGraph(_ layer: TiledLayerObject, imageScale: CGFloat=8, l
                     // rectangle shape
                     let points = rectPointArray(tileWidth, height: tileHeight, origin: CGPoint(x: xpos, y: ypos + tileHeight))
                     
-                    if let node = layer.graph?.node(atGridPosition: int2(Int32(col), Int32(row))) {
+                    if let node = graph.node(atGridPosition: int2(Int32(col), Int32(row))) {
+                        
+                        
+                        
+                        
                         fillColor = SKColor.gray
                         
                         if let tiledNode = node as? SKTiledGraphNode {

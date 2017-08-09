@@ -127,8 +127,8 @@ public class SKTiledDemoScene: SKTiledScene {
             
             tile.zPosition = lastZosition
             let tilePosition = layer.pointForCoordinate(x, y)
-            tile.position = worldNode.convert(tilePosition, from: layer)
-            worldNode.addChild(tile)
+            tile.position = tilemap.convert(tilePosition, from: layer)
+            tilemap.addChild(tile)
             
             if (useLabel == false) {
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "updateCoordinate"), object: nil, userInfo: ["x": x, "y": y])
@@ -252,7 +252,7 @@ public class SKTiledDemoScene: SKTiledScene {
     // MARK: - Callbacks
     override open func didReadMap(_ tilemap: SKTilemap) {
         self.physicsWorld.speed = 0
-        //print(" ❊ `SKTiledDemoScene.didReadMap`...")
+        print(" ❊ `SKTiledDemoScene.didReadMap`...")
     }
     
     override open func didRenderMap(_ tilemap: SKTilemap) {
@@ -260,11 +260,42 @@ public class SKTiledDemoScene: SKTiledScene {
         print(" ❊ `SKTiledDemoScene.didRenderMap`...")
         updateHud()
         tilemap.mapStatistics()
+        
+        if let tileset = tilemap.getTileset(named: "maze-8x8") {
+            
+            let spritesheets = ["mspacman-maze1-8x8",
+                                "mspacman-maze2-8x8",
+                                "mspacman-maze3-8x8",
+                                "mspacman-maze4-8x8",
+                                "pm-maze-8x8",
+                                "mspacman-maze1-8x8",
+                                "mspacman-maze2-8x8",
+                                "mspacman-maze3-8x8",
+                                "mspacman-maze4-8x8",
+                                "pm-maze-8x8.png"]
+            
+            DispatchQueue.main.async {
+                for spritesheet in spritesheets {
+                    tileset.addTextures(fromSpriteSheet: spritesheet, replace: true, transparent: nil)
+                    //sleep(1)
+                }
+            }
+            
+
+        }
     }
     
     override open func didAddPathfindingGraph(_ graph: GKGridGraph<GKGridGraphNode>) {
         super.didAddPathfindingGraph(graph)
         NotificationCenter.default.post(name: Notification.Name(rawValue: "updateGraphControls"), object: nil, userInfo: ["hasGraphs": true])
+    }
+    
+    override open func didAddTileset(_ tileset: SKTileset) {
+        // Called when a tileset has been added.
+        print(" ❊ `SKTiledScene.didAddTileset`: \"\(tileset.name)\", \(tileset.url)")
+
+        //mspacman-maze1-8x8
+        //sleep(5)
     }
 }
 

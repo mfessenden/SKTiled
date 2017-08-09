@@ -1425,7 +1425,6 @@ internal enum SKObjectGroupDrawOrder: String {
 }
 
 
-
 /**
  The `SKObjectGroup` class  child objects that are drawn in the current coordinate space.
 

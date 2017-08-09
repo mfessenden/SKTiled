@@ -68,6 +68,11 @@ public extension SKTilemap {
             }
             
             // initial world scale.
+            if (lattr == "aspect") {
+                yScale *= (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : 1
+            }
+            
+            // initial world scale.
             if (lattr == "worldscale") {
                 worldScale = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : worldScale
             }
