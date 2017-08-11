@@ -9,22 +9,6 @@
 import SpriteKit
 
 
-/**
- Describes a tile's physics body shape.
- 
- - `none`:       tile has no physics body.
- - `rectangle`:  tile physics shape is a rectangle.
- - `texture`:    tile physics shape is based on texture.
- - `path`:       tile physics shape is derived from a path.
- */
-public enum PhysicsShape {
-    case none
-    case rectangle
-    case ellipse
-    case texture
-    case path
-}
-
 
 /**
  Custom sprite type for rendering tile objects. Tile data (including texture) stored in `SKTilesetData` property.
@@ -44,14 +28,22 @@ public class SKTile: SKSpriteNode {
     open var highlightColor: SKColor = SKColor.white    // tile highlight color
     open var highlightDuration: TimeInterval = 0        // tile highlight duration
     
-    // dynamics
-    open var physicsShape: PhysicsShape = .rectangle    // physics type
+    public enum PhysicsShape {
+        case none
+        case rectangle
+        case ellipse
+        case texture
+        case path
+    }
+    
+    // Physics body shape.
+    open var physicsShape: PhysicsShape = .none
     
     /// Tile alignment.
     open var alignment: Alignment = .bottomLeft
     
     /// Returns the bounding box of the shape.
-    open var boundingRect: CGRect {
+    open var bounds: CGRect {
         return CGRect(x: 0, y: 0, width: tileSize.width, height: -tileSize.height)
     }
     
@@ -138,11 +130,6 @@ public class SKTile: SKSpriteNode {
         self.tileSize = tileset.tileSize
         // TODO: double check that fabs isn't causing cracking
         super.init(texture: data.texture, color: SKColor.clear, size: fabs(tileset.tileSize))
-        
-        // set the transparent color for the tile
-        if let transparentColor = data.transparentColor {
-            setTransparentColor(transparentColor)
-        }
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -602,26 +589,6 @@ public class SKTile: SKSpriteNode {
         pointShape.position = firstPoint
         bounds.setScale(1 / renderQuality)
     
-    }
-    
-    /**
-     Set the tile transparent color.
-     
-     - parameter color: `SKColor` transparent color.
-     */
-    private func setTransparentColor(_ color: SKColor) {
-        /*
-        let colorShader = SKShader(fileNamed: "replaceColor.fsh")
-        
-         // shader attributes
-        colorShader.attributes = [
-            SKAttribute(name: "transparentColor", type: .vectorFloat4)
-        ]
-        
-        let transColor = color.toVec4
-        setValue(SKAttributeValue(vectorFloat4: transColor), forAttribute: "transparentColor")
-        self.shader = colorShader
-        */
     }
 }
 

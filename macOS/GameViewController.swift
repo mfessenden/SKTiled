@@ -12,6 +12,7 @@ import SpriteKit
 
 class GameViewController: NSViewController {
 
+
     // debugging labels
     @IBOutlet weak var mapInfoLabel: NSTextField!
     @IBOutlet weak var tileInfoLabel: NSTextField!
@@ -19,18 +20,24 @@ class GameViewController: NSViewController {
     @IBOutlet weak var debugInfoLabel: NSTextField!
     @IBOutlet weak var cameraInfoLabel: NSTextField!
     @IBOutlet weak var cursorTracker: NSTextField!
-    @IBOutlet weak var graphButton: NSButton!
     @IBOutlet weak var pauseInfoLabel: NSTextField!
-    
+
+    @IBOutlet weak var graphButton: NSButton!
+    @IBOutlet weak var objectsButton: NSButton!
+
+    @IBOutlet var demoFileAttributes: NSArrayController!
+
     let demoController = DemoController.default
-    var loggingLevel: LoggingLevel = .debug
+    var loggingLevel: LoggingLevel = SKTiledLoggingLevel
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Configure the view.
         let skView = self.view as! SKView
-        // set the controller view
+
+        // setup the controller
+        demoController.loggingLevel = loggingLevel
         demoController.view = skView
 
 
@@ -44,24 +51,24 @@ class GameViewController: NSViewController {
         skView.showsNodeCount = true
         skView.showsDrawCount = true
         skView.showsPhysics = true
+        skView.showsPhysics = true
         #endif
-        
+
         skView.showsFields = true
         /* SpriteKit optimizations */
         skView.shouldCullNonVisibleNodes = true
         skView.ignoresSiblingOrder = true
-        skView.showsPhysics = false
         setupDebuggingLabels()
 
         //set up notifications
         NotificationCenter.default.addObserver(self, selector: #selector(updateDebugLabels), name: NSNotification.Name(rawValue: "updateDebugLabels"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateWindowTitle), name: NSNotification.Name(rawValue: "updateWindowTitle"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateGraphControls), name: NSNotification.Name(rawValue: "updateGraphControls"), object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateUIControls), name: NSNotification.Name(rawValue: "updateUIControls"), object: nil)
+
         debugInfoLabel?.isHidden = true
 
         let preloadedTilesets: [SKTileset] = []
-        
+
         /* create the game scene */
         let scene = SKTiledDemoScene(size: self.view.bounds.size)
         scene.scaleMode = .aspectFill
@@ -71,7 +78,7 @@ class GameViewController: NSViewController {
                     withTilesets: preloadedTilesets,
                     ignoreProperties: false,
                     buildGraphs: true,
-                    verbosity: loggingLevel)
+                    loggingLevel: loggingLevel)
 
     }
 
@@ -201,15 +208,19 @@ class GameViewController: NSViewController {
         if let cameraInfo = notification.userInfo!["cameraInfo"] {
             cameraInfoLabel.stringValue = cameraInfo as! String
         }
-        
+
         if let pauseInfo = notification.userInfo!["pauseInfo"] {
             pauseInfoLabel.stringValue = pauseInfo as! String
         }
     }
 
-    func updateGraphControls(notification: Notification) {
+    func updateUIControls(notification: Notification) {
         if let hasGraphs = notification.userInfo!["hasGraphs"] {
-            graphButton.isEnabled = (hasGraphs as? Bool) == true
+            graphButton.isHidden = (hasGraphs as? Bool) == false
+        }
+
+        if let hasObjects = notification.userInfo!["hasObjects"] {
+            objectsButton.isHidden = (hasObjects as? Bool) == false
         }
     }
 }

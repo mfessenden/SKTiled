@@ -14,6 +14,9 @@ import Cocoa
 #endif
 
 /**
+ 
+ ## Overview ##
+ 
  Delegate for managing `SKTiledSceneCamera`. Delegates are alerted when camera position & zoom are changed.
  */
 public protocol TiledSceneCameraDelegate: class {
@@ -28,11 +31,12 @@ public protocol TiledSceneCameraDelegate: class {
 
 
 /**
-  Custom scene camera that responds to finger/mouse gestures.
+ ## Overview ##
+ 
+ Custom scene camera that responds to finger gestures and mouse events.
  
  The `SKTiledSceneCamera` is a custom camera meant to be used with a scene conforming to the `SKTiledSceneDelegate` protocol. The camera defines a position in the scene to render the scene from, with a reference to the `SKTiledSceneDelegate.worldNode` to interact with tile maps. 
  
- The `SKTiledSceneCamera` implements custom `UIGestureRecognizer` (iOS) and `NSEvent` mouse events (macOS) to aid in navigating your scenes.
  */
 @available(OSX 10.11, *)
 open class SKTiledSceneCamera: SKCameraNode {
@@ -349,8 +353,8 @@ open class SKTiledSceneCamera: SKCameraNode {
 extension SKTiledSceneCamera {
     override open var description: String {
         guard let scene = scene else { return "Camera: "}
-        let boundingRect = CGRect(origin: scene.convert(position, from: self), size: bounds.size)
-        return "Camera: \(boundingRect.roundTo()), zoom: \(zoom.roundTo())"
+        let rect = CGRect(origin: scene.convert(position, from: self), size: bounds.size)
+        return "Camera: \(rect.roundTo()), zoom: \(zoom.roundTo())"
     }
     
     override open var debugDescription: String {
@@ -361,8 +365,9 @@ extension SKTiledSceneCamera {
 
 
 
-#if os(iOS) || os(tvOS)
+
 extension SKTiledSceneCamera {
+    #if os(iOS) || os(tvOS)
     // MARK: - Gesture Handlers    
     
     /**
@@ -424,13 +429,9 @@ extension SKTiledSceneCamera {
             recognizer.scale = 1
         }
     }
-}
-#endif
 
+    #else
 
-#if os(OSX)
-// need to make sure that lastLocation is a location in *this* node
-extension SKTiledSceneCamera {
     // MARK: - Mouse Events
     
     /**
@@ -468,7 +469,7 @@ extension SKTiledSceneCamera {
     }
     
     /**
-     Manage mouse wheel zooming.
+     Manage mouse wheel zooming. Need to make sure that lastLocation is a location in *this* node.
      */
     override open func scrollWheel(with event: NSEvent) {
         guard let scene = self.scene as? SKTiledScene else { return }
@@ -484,7 +485,7 @@ extension SKTiledSceneCamera {
         let translationOfAnchorInScene = (x: anchorPoint.x - anchorPointInScene.x, y: anchorPoint.y - anchorPointInScene.y)
         position = CGPoint(x: position.x - translationOfAnchorInScene.x, y: position.y - translationOfAnchorInScene.y)
         
-        // TODO: debug these
+        // TODO: tighten this up
         focusLocation = position
         lastLocation = position
         //setCameraZoomAtLocation(scale: zoom, location: position)
@@ -506,8 +507,9 @@ extension SKTiledSceneCamera {
             }
         }
     }
+    #endif
 }
-#endif
+
 
 /// Default methods.
 extension TiledSceneCameraDelegate {

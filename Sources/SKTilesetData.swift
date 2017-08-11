@@ -23,8 +23,28 @@ internal struct AnimationFrame {
 
 
 /**
- The `SKTilesetData` object stores data for a single tileset tile, referencing the
- tile texture, animation frames (for animated tiles) as well as tile flip flags.
+ A structure representing a tile collision shape.
+ 
+ - parameter points:  `[CGPoint]` frame duration.
+ */
+internal class TileCollisionShape: SKTiledObject {
+    
+    var uuid: String = UUID().uuidString
+    var type: String!
+    var properties: [String: String] = [:]
+    var ignoreProperties: Bool = false
+    var renderQuality: CGFloat = 1
+    
+    public var id: Int = 0
+    public var points: [CGPoint] = []
+}
+
+
+/**
+ 
+ ## Overview ##
+ 
+ The `SKTilesetData` object stores data for a single tileset tile, referencing the tile texture, animation frames (for animated tiles) as well as tile flip flags.
  
  Also includes pathfinding properties for tile accessability, and graph node weight.
 */
@@ -44,27 +64,22 @@ open class SKTilesetData: SKTiledObject  {
     open var renderQuality: CGFloat = 8           // render quality
     open var alignment: Alignment = .bottomLeft   // tile alignment
     
-    // animation frames
-    internal var frames: [AnimationFrame] = []    // animation frames
+    /// Animated frames
+    internal var frames: [AnimationFrame] = []
     open var isAnimated: Bool { return frames.count > 0 }
     
-    // flipped flags
+    /// flipped flags
     open var flipHoriz: Bool = false              // tile is flipped horizontally
     open var flipVert:  Bool = false              // tile is flipped vertically
     open var flipDiag:  Bool = false              // tile is flipped diagonally
     
-    // pathfinding
+    /// Pathfinding attributes.
     open var walkable: Bool = false               // tile is walkable.
     open var obstacle: Bool = false               // tile is an obstacle.
     open var weight: CGFloat = 1                  // tile weight.
     
-    // collision objects
+    /// Collision objects.
     open var collisions: [SKTileObject] = []
-    
-    // transparent color
-    open var transparentColor: SKColor? {
-        return tileset?.transparentColor
-    }
     
     open var localID: Int {                       // return the local id for this tile
         guard let tileset = tileset else { return id }

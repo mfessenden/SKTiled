@@ -357,9 +357,22 @@ public extension SKTileObject {
         let isDynamic:  Bool = boolForKey("isDynamic")
         let isCollider: Bool = boolForKey("isCollider")
 
-        physicsType = Int(isDynamic) ^ Int(isCollider) == 0 ? .none : (isDynamic == true) ? .dynamic : .collision
+        physicsType = Int(isDynamic) ^ Int(isCollider) == 0 ? .none : (isDynamic == true) ? .dynamic : (isCollider == true) ? .collision : .none
 
         if completion != nil { completion!() }
+    }
+}
+
+
+extension TileCollisionShape {
+    // MARK: - Properties
+    
+    /**
+     Parse the collision shape's properties.
+     */
+    func parseProperties(completion: (() -> ())?) {
+        if (ignoreProperties == true) { return }
+        if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
     }
 }
 
@@ -382,12 +395,10 @@ public extension SKTilesetData {
             
             if (lattr == "walkable") {
                 walkable = boolForKey(attr)
-                print(" ✽ walkable: \(self.globalID)")
             }
             
             if (lattr == "obstacle") {
                 obstacle = boolForKey(attr)
-                print(" ✽ walkable: \(self.globalID)")
             }
         }
         

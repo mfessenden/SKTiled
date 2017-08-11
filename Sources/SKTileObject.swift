@@ -8,60 +8,30 @@
 
 import SpriteKit
 
-/**
- Describes the `SKTileObject` shape type.
-
- - rectangle:  rectangular shape
- - ellipse:    circular shape
- - polygon:    closed polygon
- - polyline:   open polygon
- */
-public enum SKObjectType: String {
-    case rectangle
-    case ellipse
-    case polygon
-    case polyline
-}
-
 
 /**
- Represents the object's physics body type.
+ 
+ ## Overview ##
+ 
+ Structure for managing basic font rendering attributes for [text objects][text-objects].
+ 
+ 
+ ### Properties ###
 
- - `none`:      object has no physics properties.
- - `dynamic`:   object is an active physics body.
- - `collision`: object is a passive physics body.
- */
-public enum CollisionType {
-    case none
-    case dynamic
-    case collision
-}
-
-
-/**
- Label description orientation.
-
- - `above`: labels are rendered above the object.
- - `below`: labels are rendered below the object.
- */
-internal enum LabelPosition {
-    case above
-    case below
-}
-
-
-/**
- Text object font rendering attributes.
-
- - parameter fontName:      `String` font name.
- - parameter fontSize:      `CGFloat` font size.
- - parameter fontColor:     `SKColor` font color.
- - parameter alignment:     `TextAlignment` horizontal/vertical alignment.
- - parameter wrap:          `Bool` wrap text.
- - parameter isBold:        `Bool`
- - parameter isItalic:      `Bool`
- - parameter isUnderline:   `Bool`
- - parameter renderQuality: `CGFloat` font resolution.
+ 
+ ```swift
+ TextObjectAttributes.fontName        // font name.
+ TextObjectAttributes.fontSize        // font size.
+ TextObjectAttributes.fontColor       // font color.
+ TextObjectAttributes.alignment       // horizontal/vertical alignment.
+ TextObjectAttributes.wrap            // wrap text.
+ TextObjectAttributes.isBold          // font is bold.
+ TextObjectAttributes.isItalic        // font is italicized.
+ TextObjectAttributes.isUnderline     // font is underlined.
+ TextObjectAttributes.renderQuality   // font resolution.
+ ```
+ 
+ [text-objects]:../objects.html#text-objects
  */
 public struct TextObjectAttributes {
 
@@ -69,7 +39,25 @@ public struct TextObjectAttributes {
     public var fontSize: CGFloat = 16
     public var fontColor: SKColor = .black
 
-    /// Text alignment
+    public struct TextAlignment {
+        var horizontal: HoriztonalAlignment = .left
+        var vertical: VerticalAlignment = .top
+        
+        enum HoriztonalAlignment: String {
+            case left
+            case center
+            case right
+        }
+        
+        enum VerticalAlignment: String {
+            case top
+            case center
+            case bottom
+        }
+    }
+    
+    
+    // Text alignment.
     public var alignment: TextAlignment = TextAlignment()
 
     public var wrap: Bool = true
@@ -86,39 +74,28 @@ public struct TextObjectAttributes {
         fontSize = size
         fontColor = color
     }
-
-    /**
-     Data structure representing text horizontal & vertical alignment.
-     */
-    public struct TextAlignment {
-
-        public var horizontal: HoriztonalAlignment = .left
-        public var vertical: VerticalAlignment = .top
-
-        public enum HoriztonalAlignment: String {
-            case left
-            case center
-            case right
-        }
-
-        public enum VerticalAlignment: String {
-            case top
-            case center
-            case bottom
-        }
-    }
 }
 
 /**
- The `SKTileObject` object represents a Tiled object type (rectangle, ellipse, polygon & polyline).
-
- When the object is created, points can be added either with an array of `CGPoint` objects, or a string. In order to render the object, the `SKTileObject.getVertices()` method is called, which returns the points that make up the shape.
+ ## Overview ##
+ 
+ The `SKTileObject` class represents a Tiled vector object type (rectangle, ellipse, polygon & polyline). When the object is created, points can be added either with an array of `CGPoint` objects, or a string. In order to render the object, the `SKTileObject.getVertices()` method is called, which returns the points needed to draw the path.
+ 
  */
 open class SKTileObject: SKShapeNode, SKTiledObject {
+    
+    // Describes the object shape.
+    public enum ObjectType: String {
+        case rectangle
+        case ellipse
+        case polygon
+        case polyline
+    }
+    
     /// Object parent layer
     weak open var layer: SKObjectGroup!
     /// Object unique id
-    open var uuid: String = UUID().uuidString               // unique id
+    open var uuid: String = UUID().uuidString
     /// Tiled object id
     open var id: Int = 0
     /// Tiled global id (for tile objects)
@@ -127,16 +104,22 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     open var type: String!
 
     internal var alignment: Alignment = .bottomLeft         // object alignment
-    internal var objectType: SKObjectType = .rectangle      // shape type
+    internal var objectType: ObjectType = .rectangle        // shape type
     internal var points: [CGPoint] = []                     // points that describe the object's shape
     internal var tile: SKTile? = nil                        // optional tile
-
-
     open var size: CGSize = CGSize.zero
+    
+    // TODO: this could be an optionset
+    public enum CollisionType {
+        case none
+        case dynamic
+        case collision
+    }
+    
     /// Custom object properties
     open var properties: [String: String] = [:]
     open var ignoreProperties: Bool = false                 // ignore custom properties
-    internal var physicsType: CollisionType = .none         // physics collision type
+    open var physicsType: CollisionType = .none             // physics collision type
 
     /// Text formatting attributes (for text objects)
     open var textAttributes: TextObjectAttributes!
@@ -153,7 +136,13 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             drawObject()
         }
     }
-
+    
+    /// Object label.
+    internal enum LabelPosition {
+        case above
+        case below
+    }
+    
     /// Text string (for text objects)
     open var text: String! {
         didSet {
@@ -183,7 +172,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     }
 
     /// Returns the bounding box of the shape.
-    open var boundingRect: CGRect {
+    open var bounds: CGRect {
         return CGRect(x: 0, y: 0, width: size.width, height: -size.height)
     }
 
@@ -196,7 +185,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             let tileAlignmentY = layer.tilemap.tileHeightHalf
             return CGPoint(x: tileAlignmentX, y: tileAlignmentY)
         }
-        return boundingRect.center
+        return bounds.center
     }
 
     /// Signifies that this object is a text or tile object.
@@ -213,11 +202,11 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     /**
      Initialize the object with width & height attributes.
 
-     - parameter width:  `CGFloat` object size width.
-     - parameter height: `CGFloat` object size height.
-     - parameter type:   `SKObjectType` object shape type.
+     - parameter width:  `CGFloat`      object size width.
+     - parameter height: `CGFloat`      object size height.
+     - parameter type:   `ObjectType`   object shape type.
      */
-    public init(width: CGFloat, height: CGFloat, type: SKObjectType = .rectangle){
+    public init(width: CGFloat, height: CGFloat, type: ObjectType = .rectangle){
         super.init()
 
         // Rectangular and ellipse objects get initial points.
@@ -349,7 +338,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             points.count > 1 else { return }
 
 
-        let uiScale: CGFloat = getContentScaleFactor()
+        let uiScale: CGFloat = SKTiledContentScaleFactor
 
         // polyline objects should have no fill
         self.fillColor = (self.objectType == .polyline) ? SKColor.clear : self.fillColor
@@ -497,7 +486,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             let finalScaleValue: CGFloat = (1 / renderQuality) / uiScale
             textSprite.zPosition = zPosition - 1
             textSprite.setScale(finalScaleValue)
-            textSprite.position = self.boundingRect.center
+            textSprite.position = self.bounds.center
         }
     }
 
@@ -510,10 +499,10 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
      */
     open func drawTextObject(withScale: CGFloat=8) -> CGImage {
 
-        let uiScale: CGFloat = getContentScaleFactor()
+        let uiScale: CGFloat = SKTiledContentScaleFactor
 
         // the object's bounding rect
-        let textRect = self.boundingRect
+        let textRect = self.bounds
         let scaledRect = textRect * withScale
 
         // need absolute size
@@ -575,8 +564,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
      - parameter closed: `Bool` close the object path.
      */
     internal func addPoints(_ coordinates: [[CGFloat]], closed: Bool=true) {
-        self.objectType = (closed == true) ? SKObjectType.polygon : SKObjectType.polyline
-
+        self.objectType = (closed == true) ? ObjectType.polygon : ObjectType.polyline
         // create an array of points from the given coordinates
         points = coordinates.map { CGPoint(x: $0[0], y: $0[1]) }
     }
@@ -686,8 +674,9 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             return (childNode(withName: "BOUNDS") != nil) ? childNode(withName: "BOUNDS")!.isHidden == false : false
         }
         set {
+            childNode(withName: "BOUNDS")?.removeFromParent()
+            
             if (newValue == true) {
-
                 isHidden = false
 
                 // draw the tile boundary shape
@@ -744,12 +733,13 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         } else {
             physicsBody = SKPhysicsBody(polygonFrom: objectPath)
         }
-
+        
+        
         physicsBody?.isDynamic = (physicsType == .dynamic)
         physicsBody?.affectedByGravity = (physicsType == .dynamic)
         physicsBody?.mass = (doubleForKey("mass") != nil) ? CGFloat(doubleForKey("mass")!) : 1.0
         physicsBody?.friction = (doubleForKey("friction") != nil) ? CGFloat(doubleForKey("friction")!) : 0.2
-        physicsBody?.restitution = (doubleForKey("restitution") != nil) ? CGFloat(doubleForKey("restitution")!) : 0.2  // bounciness
+        physicsBody?.restitution = (doubleForKey("restitution") != nil) ? CGFloat(doubleForKey("restitution")!) : 0.4  // bounciness
     }
 }
 

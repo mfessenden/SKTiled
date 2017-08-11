@@ -200,8 +200,17 @@ open class SKTileset: SKTiledObject {
             transparentColor = SKColor(hexString: transparent)
         }
         
-        let sourceTexture = SKTexture(imageNamed: self.source!)
+        var sourceTexture = SKTexture(imageNamed: self.source!)
         sourceTexture.filteringMode = .nearest
+        
+        
+        if (transparentColor != nil) {
+            if #available(iOS 10.0, *) {
+            if let processedTexture = replaceColor(texture: sourceTexture, color: transparentColor!) {
+                sourceTexture = processedTexture
+            }}
+        }
+        
 
         let textureWidth = Int(sourceTexture.size().width)
         let textureHeight = Int(sourceTexture.size().height)
@@ -325,7 +334,9 @@ open class SKTileset: SKTiledObject {
      */
     open func setDataTexture(_ id: Int, texture: SKTexture) {
         guard let data = getTileData(localID: id) else {
-            print("[SKTileset]: tile data not found for id: \(id)")
+            if loggingLevel.rawValue <= 1 {
+                print("[SKTileset]: tile data not found for id: \(id)")
+            }
             return
         }
         texture.filteringMode = .nearest

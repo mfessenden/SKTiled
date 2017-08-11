@@ -11,7 +11,7 @@ import SpriteKit
 
 
 /// globals
-var TILE_BOUNDS_USE_OFFSET: Bool = false
+public var TILE_BOUNDS_USE_OFFSET: Bool = false
 
 
 /**
@@ -169,7 +169,7 @@ internal class TiledDebugDrawNode: SKNode {
 
         switch layer.orientation {
         case .orthogonal:
-            objectPath = polygonPath(layer.boundingRect.points)
+            objectPath = polygonPath(layer.bounds.points)
 
         case .isometric:
             let topPoint = CGPoint(x: 0, y: 0)
@@ -189,7 +189,7 @@ internal class TiledDebugDrawNode: SKNode {
             objectPath = polygonPath(invertedPoints)
 
         case .hexagonal, .staggered:
-            objectPath = polygonPath(layer.boundingRect.points)
+            objectPath = polygonPath(layer.bounds.points)
         }
 
         if let objectPath = objectPath {
@@ -224,7 +224,7 @@ internal class TiledDebugDrawNode: SKNode {
             var gridSize = CGSize.zero
 
             // scale factor for texture
-            let uiScale: CGFloat = getContentScaleFactor()
+            let uiScale: CGFloat = SKTiledContentScaleFactor
 
             // multipliers used to generate smooth lines
             let defaultImageScale: CGFloat = (layer.tilemap.tileHeight < 16) ? 8 : 8
@@ -274,7 +274,7 @@ internal class TiledDebugDrawNode: SKNode {
         var gridSize = CGSize.zero
         
         // scale factor for texture
-        let uiScale: CGFloat = getContentScaleFactor()
+        let uiScale: CGFloat = SKTiledContentScaleFactor
         
         // multipliers used to generate smooth lines
         let defaultImageScale: CGFloat = (layer.tilemap.tileHeight < 16) ? 8 : 8
@@ -316,7 +316,7 @@ internal class TiledDebugDrawNode: SKNode {
 internal class TileShape: SKShapeNode {
 
     var tileSize: CGSize
-    var orientation: TilemapOrientation = .orthogonal
+    var orientation: SKTilemap.TilemapOrientation = .orthogonal
     var color: SKColor
     var layer: TiledLayerObject
     var coord: CGPoint
@@ -490,39 +490,42 @@ extension SKTilemap {
         }
     }
     
+    /**
+     Draw the map bounds.
+     */
     open func drawBounds() {
-        print(" ➜ tilemap frame: \(self.frame.shortDescription)")
         // remove old nodes
         self.childNode(withName: "MAP_BOUNDS")?.removeFromParent()
         self.childNode(withName: "MAP_ANCHOR")?.removeFromParent()
         
-        let debugColor = SKColor(hexString: "#ff3203")
         let debugZPos = lastZPosition * 50
         
         let blendMode = SKBlendMode.screen
-        let tilemapSize = self.sizeInPoints
+        let scaledVertices = getVertices().map { $0 * renderQuality }
+        let tilemapPath = polygonPath(scaledVertices)
+
         
-        let tilemapBounds = CGRect(center: self.position, size: tilemapSize)
-        let tilemapCenter = tilemapBounds.center
-        
-        
-        let boundsShape = SKShapeNode(rect: self.frame)
+        let boundsShape = SKShapeNode(path: tilemapPath) // , centered: <#T##Bool#>)
         boundsShape.name = "MAP_BOUNDS"
-        boundsShape.fillColor = debugColor.withAlphaComponent(0.2)
-        boundsShape.strokeColor = debugColor
+        boundsShape.fillColor = frameColor.withAlphaComponent(0.2)
+        boundsShape.strokeColor = frameColor
         boundsShape.blendMode = blendMode
         self.addChild(boundsShape)
         
         
-        //boundsShape.position.y += (render == true) ? (heightOffset / 2) : 0
+        boundsShape.isAntialiased = true
+        boundsShape.lineCap = .round
+        boundsShape.lineJoin = .miter
+        boundsShape.miterLimit = 0
+        boundsShape.lineWidth = 1 * (renderQuality / 2)
+
+        boundsShape.setScale(1 / renderQuality)
         
-        let scaleFactor: CGFloat = (self.tileHeightHalf > 16) ? 4 : 2
-        let anchorShape = SKShapeNode(circleOfRadius: self.tileHeightHalf / scaleFactor)
+        let anchorRadius = self.tileHeightHalf / 4
+        let anchorShape = SKShapeNode(circleOfRadius: anchorRadius * renderQuality)
         anchorShape.name = "MAP_ANCHOR"
-        anchorShape.fillColor = debugColor
+        anchorShape.fillColor = frameColor.withAlphaComponent(0.25)
         anchorShape.strokeColor = .clear
-        //anchorShape.position.y -= (render == true) ? (heightOffset / 2) : 0
-        
         boundsShape.addChild(anchorShape)
         boundsShape.zPosition = debugZPos
     }

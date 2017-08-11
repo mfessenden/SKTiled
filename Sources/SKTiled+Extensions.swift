@@ -68,6 +68,39 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
 #endif
 
 
+@available(iOS 10.0, *)
+public func replaceColor(texture: SKTexture, color: SKColor) -> SKTexture? {
+    texture.filteringMode = .nearest
+    let sprite = SKSpriteNode(texture: texture)
+
+    let colorShader = SKShader(fileNamed: "replaceColor.fsh")
+    
+    // shader attributes
+    colorShader.attributes = [
+        SKAttribute(name: "transColor", type: .vectorFloat4),
+        SKAttribute(name: "u_sprite_size", type: .vectorFloat2)
+    ]
+    
+    sprite.shader = colorShader
+    
+    let spriteSize = vector_float2(Float(sprite.frame.size.width),
+                                   Float(sprite.frame.size.height))
+    
+    let transColor = color
+    let transVec4 = transColor.toVec4
+    
+    sprite.setValue(SKAttributeValue(vectorFloat4: transVec4), forAttribute: "transColor")
+    sprite.setValue(SKAttributeValue(vectorFloat2: spriteSize), forAttribute: "u_sprite_size")
+    
+    let view = SKView()
+    if let newTexture = view.texture(from: sprite) {
+        newTexture.filteringMode = .nearest
+        return newTexture
+    }
+    return nil
+}
+
+
 /**
  Check a tile ID for. Returns the translated tile ID and the corresponding flip flags.
 
@@ -1130,7 +1163,7 @@ public func normalize(_ value: CGFloat, _ minimum: CGFloat, _ maximum: CGFloat) 
 }
 
 
-// MARK: - Operators
+// MARK: - Visualization Functions
 
 
 /**
@@ -1143,7 +1176,7 @@ public func normalize(_ value: CGFloat, _ minimum: CGFloat, _ maximum: CGFloat) 
  */
 internal func drawLayerGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineScale: CGFloat=1) -> CGImage {
     // get the ui scale value for the device
-    let uiScale: CGFloat = getContentScaleFactor()
+    let uiScale: CGFloat = SKTiledContentScaleFactor
         
     let size = layer.size
     let tileWidth = layer.tileWidth * imageScale
@@ -1275,7 +1308,7 @@ internal func drawLayerGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, li
  */
 internal func drawLayerGraph(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineScale: CGFloat=1) -> CGImage {
     
-    let uiScale: CGFloat = getContentScaleFactor()
+    let uiScale: CGFloat = SKTiledContentScaleFactor
     
     let size = layer.size
     let tileWidth = layer.tileWidth * imageScale
@@ -1533,6 +1566,7 @@ public func bezierPath(_ points: [CGPoint], closed: Bool = true, alpha: CGFloat 
     return (path, cpoints)
 }
 
+
 /**
  Returns the device scale factor.
 
@@ -1568,7 +1602,7 @@ public func clampedPosition(point: CGPoint, scale: CGFloat) -> CGPoint {
  - parameter scale:  `CGFloat` device scale.
  */
 public func clampPositionWithNode(node: SKNode, scale: CGFloat) {
-    node.position = clampedPosition(point: node.position, scale: getContentScaleFactor())
+    node.position = clampedPosition(point: node.position, scale: SKTiledContentScaleFactor)
     if let parentNode = node.parent {
         if parentNode != node.scene {
             clampPositionWithNode(node: parentNode, scale: scale)

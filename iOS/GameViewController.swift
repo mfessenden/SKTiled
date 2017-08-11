@@ -12,25 +12,33 @@ import SpriteKit
 
 class GameViewController: UIViewController {
 
+    @IBOutlet var demoFileAttributes: NSArrayController!
+    
     @IBOutlet weak var mapInfoLabel: UILabel!
     @IBOutlet weak var tileInfoLabel: UILabel!
     @IBOutlet weak var propertiesInfoLabel: UILabel!
-    @IBOutlet weak var graphButton: UIButton!
     @IBOutlet weak var cameraInfoLabel: UILabel!
     @IBOutlet weak var pauseInfoLabel: UILabel!
+    
+    @IBOutlet weak var objectsButton: UIButton!
+    @IBOutlet weak var graphButton: UIButton!
 
+    
+    @IBOutlet var demoFileAttributes: NSObject!
+    @IBOutlet weak var buttonsView: UIStackView!
+    
     let demoController = DemoController.default
-    var loggingLevel: LoggingLevel = .debug
+    var loggingLevel: LoggingLevel = SKTiledLoggingLevel
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Configure the view.
         let skView = self.view as! SKView
-        // set the controller view
+        
+        // setup the controller
+        demoController.loggingLevel = loggingLevel
         demoController.view = skView
-        demoController.viewController = self
-
 
         guard let currentURL = demoController.currentURL else {
             print("[GameViewController]: WARNING: no tilemap to load.")
@@ -42,27 +50,32 @@ class GameViewController: UIViewController {
         skView.showsNodeCount = true
         skView.showsDrawCount = true
         skView.showsPhysics = true
+        skView.showsPhysics = true
         #endif
 
         /* Sprite Kit applies additional optimizations to improve rendering performance */
         skView.ignoresSiblingOrder = true
-        skView.showsPhysics = false
         setupDebuggingLabels()
-
 
         /* create the game scene */
         let scene = SKTiledDemoScene(size: self.view.bounds.size)
         scene.scaleMode = .aspectFill
         skView.presentScene(scene)
+        
+        /* setup the initial scene with the first tmx filename. */
         scene.setup(tmxFile: currentURL.relativePath,
                     inDirectory: nil,
                     withTilesets: [],
                     ignoreProperties: false,
                     buildGraphs: true,
-                    verbosity: loggingLevel)
+                    loggingLevel: loggingLevel)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(updateGraphControls), name: NSNotification.Name(rawValue: "updateGraphControls"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateUIControls), name: NSNotification.Name(rawValue: "updateUIControls"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateDebugLabels), name: NSNotification.Name(rawValue: "updateDebugLabels"), object: nil)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        
     }
 
     func setupDebuggingLabels() {
@@ -144,7 +157,8 @@ class GameViewController: UIViewController {
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
-            return .landscapeRight
+            //return .landscape
+            return .all
         } else {
             return .all
         }
@@ -172,9 +186,14 @@ class GameViewController: UIViewController {
         if let tileInfo = notification.userInfo!["tileInfo"] {
             tileInfoLabel.text = tileInfo as? String
         }
-
+        
+        var propertiesDefaultText = "~"
         if let propertiesInfo = notification.userInfo!["propertiesInfo"] {
-            propertiesInfoLabel.text = propertiesInfo as? String
+            if let pinfo = propertiesInfo as? String {
+                if pinfo.characters.count > 0 {
+                    propertiesDefaultText = pinfo
+                }
+            }
         }
         
         if let cameraInfo = notification.userInfo!["cameraInfo"] {
@@ -184,11 +203,17 @@ class GameViewController: UIViewController {
         if let pauseInfo = notification.userInfo!["pauseInfo"] {
             pauseInfoLabel.text = pauseInfo as? String
         }
+        
+        propertiesInfoLabel.text = propertiesDefaultText
     }
 
-    func updateGraphControls(notification: Notification) {
+    func updateUIControls(notification: Notification) {
         if let hasGraphs = notification.userInfo!["hasGraphs"] {
-            graphButton.isEnabled = (hasGraphs as? Bool) == true
+            graphButton.isHidden = (hasGraphs as? Bool) == false
+        }
+        
+        if let hasObjects = notification.userInfo!["hasObjects"] {
+            objectsButton.isHidden = (hasObjects as? Bool) == false
         }
     }
 }

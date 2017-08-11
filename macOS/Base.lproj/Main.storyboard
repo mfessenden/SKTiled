@@ -61,9 +61,15 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="File" id="bib-Uj-vzu">
                                     <items>
-                                        <menuItem title="Load map..." keyEquivalent="o" id="IAo-SY-fd9">
+                                        <menuItem title="Load tile map..." keyEquivalent="o" id="IAo-SY-fd9">
                                             <connections>
                                                 <action selector="loadTilemap:" target="Voe-Tx-rLC" id="yvh-gN-fnF"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Reload scene" id="f06-eB-0wr">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="reloadScene:" target="Voe-Tx-rLC" id="ucu-iz-d62"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
@@ -197,7 +203,7 @@
                                             <constraint firstAttribute="height" constant="16" id="OIX-Q6-oud"/>
                                             <constraint firstAttribute="width" constant="82" id="XFu-lv-0BD"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="graph-button-norm" imagePosition="only" alignment="center" enabled="NO" imageScaling="proportionallyUpOrDown" inset="2" id="QiP-62-GYs">
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="graph-button-norm" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="QiP-62-GYs">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                             <string key="keyEquivalent">g</string>
@@ -312,7 +318,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qaU-aN-dXC" userLabel="Paused Label">
-                                <rect key="frame" x="379" y="544" width="42" height="14"/>
+                                <rect key="frame" x="373" y="541" width="55" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Camera" id="8mb-3y-U6G">
                                     <font key="font" size="13" name="Courier"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -335,20 +341,22 @@
                     <connections>
                         <outlet property="cameraInfoLabel" destination="Rpo-Bf-MrJ" id="RyX-41-fZZ"/>
                         <outlet property="debugInfoLabel" destination="Mhh-Pu-ydl" id="DZi-Xp-0HL"/>
+                        <outlet property="demoFileAttributes" destination="roh-5A-x7m" id="IIt-Ds-dF2"/>
                         <outlet property="fitButton" destination="vU3-Eb-5vb" id="Jls-KD-3Sp"/>
                         <outlet property="graphButton" destination="Hej-45-q5k" id="OIb-tF-e2C"/>
                         <outlet property="gridButton" destination="p17-9c-LBM" id="ECa-og-QqL"/>
                         <outlet property="mapInfoLabel" destination="P0U-y9-0fU" id="T6u-RD-e0v"/>
                         <outlet property="nextButton" destination="kMD-1U-8sj" id="c7C-tw-UDC"/>
-                        <outlet property="objectsButton" destination="1wS-E3-azf" id="FFv-1O-tmY"/>
+                        <outlet property="objectsButton" destination="1wS-E3-azf" id="U4L-tK-6Nb"/>
                         <outlet property="pauseInfoLabel" destination="qaU-aN-dXC" id="OHo-cQ-UJv"/>
                         <outlet property="propertiesInfoLabel" destination="3AA-Cl-qmn" id="Kqk-Q6-bCh"/>
                         <outlet property="tileInfoLabel" destination="oa4-I2-u1i" id="4iy-KG-um6"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <arrayController id="roh-5A-x7m"/>
             </objects>
-            <point key="canvasLocation" x="173" y="939"/>
+            <point key="canvasLocation" x="-738" y="969"/>
         </scene>
     </scenes>
     <resources>

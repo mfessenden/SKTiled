@@ -34,8 +34,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return nil
     }
     
+    /**
+     Action to launch a file dialog and load map.
+     */
     @IBAction func loadTilemap(_ sender: Any) {
-        
         guard let gameController = viewController else { return }
         
         // open a file dialog
@@ -62,5 +64,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             print("[AppDelegate]: Load cancelled.")
         }
+    }
+    
+    /**
+     Action to reload the current scene.
+     */
+    @IBAction func reloadScene(_ sender: Any) {
+        guard let gameController = viewController else { return }
+        
+        let demoController = gameController.demoController
+        demoController.reloadScene(2)
     }
 }

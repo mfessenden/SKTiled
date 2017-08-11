@@ -6,6 +6,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -71,38 +72,38 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QyX-Za-Z1p" userLabel="Buttons View">
-                                <rect key="frame" x="128" y="289" width="410" height="22"/>
+                            <stackView opaque="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="QyX-Za-Z1p" userLabel="Buttons View">
+                                <rect key="frame" x="128.5" y="289" width="410" height="22"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lBL-VH-9cm" userLabel="Fit Button">
+                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lBL-VH-9cm" userLabel="Fit Button">
                                         <rect key="frame" x="0.0" y="0.0" width="82" height="22"/>
                                         <state key="normal" image="scale-button-norm"/>
                                         <connections>
                                             <action selector="fitButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="yDT-ZG-pLa"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wdR-Kf-ySK" userLabel="Grid Button">
+                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wdR-Kf-ySK" userLabel="Grid Button">
                                         <rect key="frame" x="82" y="0.0" width="82" height="22"/>
                                         <state key="normal" image="grid-button-norm"/>
                                         <connections>
                                             <action selector="gridButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="9B4-YA-0Tf"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iuB-yT-JZE" userLabel="Graph Button">
+                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iuB-yT-JZE" userLabel="Graph Button">
                                         <rect key="frame" x="164" y="0.0" width="82" height="22"/>
                                         <state key="normal" image="graph-button-norm"/>
                                         <connections>
                                             <action selector="graphButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="tH1-od-3fj"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V85-ZE-tfI" userLabel="Objects Button">
+                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V85-ZE-tfI" userLabel="Objects Button">
                                         <rect key="frame" x="246" y="0.0" width="82" height="22"/>
                                         <state key="normal" image="objects-button-norm"/>
                                         <connections>
                                             <action selector="objectsButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="cUQ-jC-jZh"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UUl-ua-DKk" userLabel="Next Button">
+                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UUl-ua-DKk" userLabel="Next Button">
                                         <rect key="frame" x="328" y="0.0" width="82" height="22"/>
                                         <state key="normal" image="next-button-norm"/>
                                         <connections>
@@ -110,9 +111,16 @@
                                         </connections>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="iuB-yT-JZE" firstAttribute="width" secondItem="QyX-Za-Z1p" secondAttribute="width" multiplier="0.2" id="68s-W3-hdS"/>
+                                    <constraint firstItem="lBL-VH-9cm" firstAttribute="width" secondItem="QyX-Za-Z1p" secondAttribute="width" multiplier="0.2" id="LuD-ny-lF4"/>
+                                    <constraint firstItem="V85-ZE-tfI" firstAttribute="width" secondItem="QyX-Za-Z1p" secondAttribute="width" multiplier="0.2" id="krK-DO-mFE"/>
+                                    <constraint firstItem="UUl-ua-DKk" firstAttribute="width" secondItem="QyX-Za-Z1p" secondAttribute="width" multiplier="0.2" id="n4c-0a-WLR"/>
+                                    <constraint firstItem="wdR-Kf-ySK" firstAttribute="width" secondItem="QyX-Za-Z1p" secondAttribute="width" multiplier="0.2" id="x8k-2z-qeH"/>
+                                </constraints>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o8A-1P-WNU" userLabel="Camera Info Label">
-                                <rect key="frame" x="313" y="20" width="41" height="12"/>
+                                <rect key="frame" x="310" y="20" width="47.5" height="12"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Camera:">
                                         <attributes>
@@ -159,15 +167,19 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="buttonsView" destination="QyX-Za-Z1p" id="lye-pg-y57"/>
                         <outlet property="cameraInfoLabel" destination="o8A-1P-WNU" id="dR5-rb-ynq"/>
+                        <outlet property="demoFileAttributes" destination="HDW-rS-MqN" id="cV0-3C-cQ1"/>
                         <outlet property="graphButton" destination="iuB-yT-JZE" id="347-l9-n7u"/>
                         <outlet property="mapInfoLabel" destination="Tr1-Rb-3Hz" id="5gd-ji-SGm"/>
+                        <outlet property="objectsButton" destination="V85-ZE-tfI" id="3GT-At-cE8"/>
                         <outlet property="pauseInfoLabel" destination="aWk-BV-bvy" id="da9-WC-LEC"/>
                         <outlet property="propertiesInfoLabel" destination="cmn-aw-alp" id="Fg1-SO-Kwb"/>
                         <outlet property="tileInfoLabel" destination="Ezb-0z-1AU" id="oHe-6Z-aJl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+                <customObject id="HDW-rS-MqN"/>
             </objects>
             <point key="canvasLocation" x="117.39130434782609" y="124"/>
         </scene>

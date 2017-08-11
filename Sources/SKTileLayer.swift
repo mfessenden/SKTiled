@@ -16,23 +16,6 @@ import Cocoa
 #endif
 
 
-/**
- Describes the layer type.
-
- - invalid: Layer is invalid.
- - tile:    Tile-based layers.
- - object:  Object group.
- - image:   Image layer.
- - group:   Group layer.
- */
-public enum SKTiledLayerType: Int {
-    case none     = -1
-    case tile
-    case object
-    case image
-    case group
-}
-
 
 internal enum SKObjectGroupColors: String {
     case pink     = "#c8a0a4"
@@ -47,13 +30,19 @@ public typealias renderInfo = (idx: Int, path: String, zpos: Double, sw: Int, sh
 
 
 /**
- The `TiledLayerObject` is the base class for all **SKTiled** layer types.  This class
+ 
+ ## Overview ##
+ 
+ The `TiledLayerObject` is the base class for all layer types.  This class
  doesn't define any object or child types, but manages several important aspects of your scene:
 
  - validating coordinates
  - positioning and alignment
  - coordinate transformations
 
+ 
+ ## Usage ##
+ 
  Layer properties are accessed via properties shared with the parent tilemap:
 
  ```
@@ -73,21 +62,16 @@ public typealias renderInfo = (idx: Int, path: String, zpos: Double, sw: Int, sh
  */
 open class TiledLayerObject: SKNode, SKTiledObject {
 
-    /**
-     Tile offset hint for coordinate conversion.
+    /// Layer type.
+    public enum TiledLayerType: Int {
+        case none     = -1
+        case tile
+        case object
+        case image
+        case group
+    }
 
-     ```
-     center:        returns the center of the tile.
-     top:           returns the top of the tile.
-     topLeft:       returns the top left of the tile.
-     topRight:      returns the top left of the tile.
-     bottom:        returns the bottom of the tile.
-     bottomLeft:    returns the bottom left of the tile.
-     bottomRight:   returns the bottom right of the tile.
-     left:          returns the left side of the tile.
-     right:         returns the right side of the tile.
-     ```
-     */
+    /// Tile offset hint for coordinate conversion.
     public enum TileOffset: Int {
         case center
         case top
@@ -101,7 +85,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
 
 
-    internal var layerType: SKTiledLayerType = .none
+    internal var layerType: TiledLayerType = .none
     open var tilemap: SKTilemap
 
     /// Unique layer id.
@@ -111,6 +95,10 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     /// Layer index. Matches the index of the layer in the source TMX file.
     open var index: Int = 0
 
+    /// Logging verbosity.
+    internal var loggingLevel: LoggingLevel = SKTiledLoggingLevel
+    
+    
     /// Custom layer properties.
     open var properties: [String: String] = [:]
     open var ignoreProperties: Bool = false
@@ -134,7 +122,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     /// Layer tile size (in pixels).
     open var tileSize: CGSize { return tilemap.tileSize }
     /// Tile map orientation.
-    internal var orientation: TilemapOrientation { return tilemap.orientation }
+    internal var orientation: SKTilemap.TilemapOrientation { return tilemap.orientation }
     /// Layer anchor point, used to position layers.
     open var anchorPoint: CGPoint { return tilemap.layerAlignment.anchorPoint }
     
@@ -195,7 +183,9 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         self.addChild(sprite)
         return sprite
     }()
-
+    
+    // MARK: - Geometry
+    
     /// Returns the position of layer origin point (used to place tiles).
     open var origin: CGPoint {
         switch orientation {
@@ -213,9 +203,9 @@ open class TiledLayerObject: SKNode, SKTiledObject {
             return CGPoint.zero
         }
     }
-
+    
     /// Returns the frame rectangle of the layer (used to draw bounds).
-    open var boundingRect: CGRect {
+    open var bounds: CGRect {
         return CGRect(x: 0, y: 0, width: sizeInPoints.width, height: -sizeInPoints.height)
     }
 
@@ -238,6 +228,16 @@ open class TiledLayerObject: SKNode, SKTiledObject {
             self.isHidden = !newValue
         }
     }
+
+    /**
+     Returns the points of the layer's bounding shape.
+     
+     - returns: `[CGPoint]` array of points.
+     */
+    open func getVertices() -> [CGPoint] {
+        return self.bounds.points
+    }
+    
 
     /// Returns layer render statisics
     open var renderStatistics: renderInfo {
@@ -797,14 +797,6 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
 
     /**
-     Visualize the layer's boundary shape.
-     */
-    public func drawBounds() {
-        guard let debugNode = debugNode else  { return }
-        debugNode.drawBounds()
-    }
-
-    /**
      Prune tiles out of the camera bounds.
 
      - parameter outsideOf: `CGRect` camera bounds.
@@ -816,7 +808,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     /**
      Flatten (render) the layer.
      */
-    fileprivate func flattenLayer() {
+    internal func flattenLayer(view: SKView) {
         /* override in subclass */
     }
 
@@ -827,7 +819,6 @@ open class TiledLayerObject: SKNode, SKTiledObject {
      - parameter duration: `TimeInterval` fade-in duration.
      */
     open func didFinishRendering(duration: TimeInterval=0) {
-
         self.parseProperties(completion: nil)
         // setup physics for the layer boundary
         if hasKey("isDynamic") && boolForKey("isDynamic") == true || hasKey("isCollider") && boolForKey("isCollider") == true {
@@ -843,7 +834,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
      - parameter isDynamic: `Bool` layer is dynamic.
      */
     open func setupLayerPhysicsBoundary(isDynamic: Bool=false){
-        physicsBody = SKPhysicsBody(edgeLoopFrom: self.boundingRect)
+        physicsBody = SKPhysicsBody(edgeLoopFrom: self.bounds)
         physicsBody?.isDynamic = isDynamic
     }
 
@@ -860,6 +851,14 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
 
     // MARK: - Debugging
+    /**
+     Visualize the layer's boundary shape.
+     */
+    public func drawBounds() {
+        guard let debugNode = debugNode else  { return }
+        debugNode.drawBounds()
+    }
+    
     open func debugLayer() {
         /* override in subclass */
         let comma = propertiesString.characters.count > 0 ? ", " : ""
@@ -882,13 +881,15 @@ open class TiledLayerObject: SKNode, SKTiledObject {
 }
 
 
-
 /**
- The `SKTileLayer` class  manages an array of tiles (sprites) that it renders as a single image.
+ 
+ ## Overview ##
+ 
+ The `SKTileLayer` class is a container for an array of tiles (sprites). Tiles maintain a link to the map's tileset via their `SKTilesetData` property.
+ 
+ ## Usage ##
 
- This class manages setting and querying tile data.
-
- Accessing a tile:
+ Accessing a tile at a given coordinate:
 
  ```swift
  let tile = tileLayer.tileAt(2, 6)!
@@ -1108,7 +1109,6 @@ open class SKTileLayer: TiledLayerObject {
             let y: Int = index / Int(self.size.width)
 
             let coord = CGPoint(x: CGFloat(x), y: CGFloat(y))
-            // TODO: failing here
             let tile = self.buildTileAt(coord: coord, id: gid)
 
             if (tile == nil) {
@@ -1399,7 +1399,7 @@ open class SKTileLayer: TiledLayerObject {
     override open func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
         
-        clampTilePositions(scale: getContentScaleFactor())
+        clampTilePositions(scale: SKTiledContentScaleFactor)
     }
 
     open func clampTilePositions(scale: CGFloat) {
@@ -1408,6 +1408,36 @@ open class SKTileLayer: TiledLayerObject {
             //let clampedX = Int((tile.position.x * scale) / scale)
             //let clampedY = Int((tile.position.y * scale) / scale)
             tile.position = clampedPosition(point: tile.position, scale: scale)
+        }
+    }
+    
+    /**
+     Flatten (render) the layer.
+     */
+    override internal func flattenLayer(view: SKView) {
+        /* override in subclass */
+        
+        
+        //let vertices = getVertices()
+        //let viewRect = view.convert(<#T##point: NSPoint##NSPoint#>, to: <#T##NSView?#>)
+        if let viewTexture = view.texture(from: self) { //, crop: self.bounds) {
+            getTiles().forEach({
+                $0.texture = nil
+            })
+            
+            
+            let texRect = viewTexture.textureRect()
+            
+            print(" → flattened texture for layer: \"\(layerName)\": \(texRect)")
+            print("   ↳ layer rect: \(bounds)")
+            viewTexture.filteringMode = .nearest
+            let sprite = SKSpriteNode(texture: viewTexture)
+            addChild(sprite)
+            
+            let desktop = getDesktopDirectory()
+            let dirname = desktop.appendingPathComponent("pacman-layers")
+            let url = dirname.appendingPathComponent("\(layerName)-flattened.png")
+            let imageData = writeToFile(viewTexture.cgImage(), url: url)
         }
     }
 }
@@ -1426,10 +1456,13 @@ internal enum SKObjectGroupDrawOrder: String {
 
 
 /**
- The `SKObjectGroup` class  child objects that are drawn in the current coordinate space.
+ ## Overview ##
+ 
+ The `SKObjectGroup` class is a container for vector object types. Most object properties can be set on the parent `SKObjectGroup` which is then applied to all child objects.
 
- Most object properties can be set on the parent `SKObjectGroup` which is then applied to all child objects.
-
+ 
+ ## Usage ##
+ 
  Adding a child object with optional color override:
 
  ```swift
@@ -1513,6 +1546,7 @@ open class SKObjectGroup: TiledLayerObject {
             debugNode?.update()
 
             let doShowObjects = debugDrawOptions.contains(.drawObjectBounds)
+            print("object bounds: \(doShowObjects)")
             objects.forEach { $0.showBounds = doShowObjects }
         }
     }
@@ -1763,8 +1797,13 @@ open class SKObjectGroup: TiledLayerObject {
 
 
 /**
+ 
+ ## Overview ##
+ 
  The `SKImageLayer` object is really nothing more than a sprite with positioning attributes.
-
+ 
+ ## Usage ##
+ 
  Set the layer image with:
 
  ```swift
@@ -1774,7 +1813,8 @@ open class SKObjectGroup: TiledLayerObject {
 open class SKImageLayer: TiledLayerObject {
 
     open var image: String!                       // image name for layer
-    fileprivate var sprite: SKSpriteNode?         // sprite
+    private var textures: [SKTexture] = []        // texture values
+    private var sprite: SKSpriteNode?             // sprite
 
     open var wrapX: Bool = false                  // wrap horizontally
     open var wrapY: Bool = false                  // wrap vertically
@@ -1812,17 +1852,22 @@ open class SKImageLayer: TiledLayerObject {
      */
     open func setLayerImage(_ named: String) {
         self.image = named
-
-        let texture = SKTexture(imageNamed: named)
+        
+        let texture = addTexture(forFile: named)
         let textureSize = texture.size()
-        texture.filteringMode = .nearest
 
         self.sprite = SKSpriteNode(texture: texture)
         addChild(self.sprite!)
 
         self.sprite!.position.x += textureSize.width / 2
-        // if we're going to flip coordinates, this should be +=
         self.sprite!.position.y -= textureSize.height / 2.0
+    }
+    
+    private func addTexture(forFile: String) -> SKTexture {
+        let texture = SKTexture(imageNamed: forFile)
+        texture.filteringMode = .nearest
+        textures.append(texture)
+        return texture
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -1887,8 +1932,13 @@ internal class BackgroundLayer: TiledLayerObject {
 
 
 /**
- The `SKGroupLayer` object is a container for grouping other layers.
+ 
+ ## Overview ##
+ 
+ The `SKGroupLayer` object is a container for managing groups of layers.
 
+ ## Usage ##
+ 
  Add layers to the group with:
 
  ```swift
@@ -1978,15 +2028,19 @@ open class SKGroupLayer: TiledLayerObject {
      Add a layer to the layers set. Automatically sets zPosition based on the tilemap zDeltaForLayers attributes.
 
      - parameter layer:  `TiledLayerObject` layer object.
-     - parameter base:   `Bool` layer represents default layer.
      */
     open func addLayer(_ layer: TiledLayerObject) {
         let nextZPosition = (_layers.count > 0) ? (tilemap.zDeltaForLayers / 2) * CGFloat(_layers.count) : 0
 
         // set the layer index
         layer.index = lastIndex + 1
-
-        _layers.insert(layer)
+        
+        let (success, inserted) = _layers.insert(layer)
+        if (success == false) {
+            print("[SKGroupLayer]: ERROR adding layer: \"\(inserted.layerName)\"")
+            return
+        }
+        
         addChild(layer)
         layer.zPosition = nextZPosition
 
@@ -1994,6 +2048,7 @@ open class SKGroupLayer: TiledLayerObject {
         layer.gridColor = gridColor
         layer.frameColor = frameColor
         layer.highlightColor = highlightColor
+        layer.loggingLevel = loggingLevel
     }
 
     /**
@@ -2008,9 +2063,8 @@ open class SKGroupLayer: TiledLayerObject {
 }
 
 
-/**
- Two-dimensional array structure.
- */
+
+// Two-dimensional array structure.
 internal struct Array2D<T> {
     public let columns: Int
     public let rows: Int
@@ -2094,7 +2148,7 @@ extension TiledLayerObject {
      - parameter offset: `TileOffset` tile offset hint.
      - returns: `CGPoint` point in layer.
      */
-    public func pointForCoordinate(coord: CGPoint, tileOffset: TileOffset = .center) -> CGPoint {
+    public func pointForCoordinate(coord: CGPoint, tileOffset: TiledLayerObject.TileOffset = .center) -> CGPoint {
         var offset = CGPoint(x: 0, y: 0)
         switch tileOffset {
         case .top:
@@ -2250,7 +2304,7 @@ extension TiledLayerObject {
 }
 
 
-extension SKTiledLayerType {
+extension TiledLayerObject.TiledLayerType {
     /// Returns a string representation of the layer type.
     internal var stringValue: String { return "\(self)".lowercased() }
 }

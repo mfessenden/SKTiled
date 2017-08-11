@@ -11,7 +11,7 @@ import GameplayKit
 
 
 /**
- ## Overview: ##
+ ## Overview ##
  
  Delegate for managing `SKTilemap` nodes in an SpriteKit [`SKScene`][skscene-url] scene. This protocol and the `SKTiledScene` objects are included as a suggested way to use the `SKTilemap` class, but are not required.
  
@@ -26,19 +26,14 @@ public protocol SKTiledSceneDelegate: class {
     var cameraNode: SKTiledSceneCamera! { get set }
     /// Tile map node.
     var tilemap: SKTilemap! { get set }
-    /// Load a tilemap from disk, with optional tilesets
-    func load(tmxFile: String,
-              inDirectory: String?,
-              withTilesets tilesets: [SKTileset],
-              ignoreProperties: Bool,
-              buildGraphs: Bool,
-              verbosity: LoggingLevel) -> SKTilemap?
+    /// Load a tilemap from disk, with optional tilesets.
+    func load(tmxFile: String, inDirectory: String?, withTilesets tilesets: [SKTileset], ignoreProperties: Bool, buildGraphs: Bool, loggingLevel: LoggingLevel) -> SKTilemap?
 }
 
 
 /**
  
- ## Overview: ##
+ ## Overview ##
  
  Custom scene type for managing `SKTilemap` nodes. 
  
@@ -60,7 +55,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     open var tilemap: SKTilemap!
     /// Custom scene camera.
     open var cameraNode: SKTiledSceneCamera!
-    
+    /// Logging verbosity level.
     open var loggingLevel: LoggingLevel = .info
     
     /// Reference to pathfinding graphs.
@@ -115,7 +110,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
      */
     open func setup(tmxURL: URL,
                     tilesets: [SKTileset]=[],
-                    verbosity: LoggingLevel = .info,
+                    loggingLevel: LoggingLevel = .info,
                     _ completion: (() -> ())? = nil) {
         
         // TODO: finish me
@@ -131,7 +126,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
      - parameter withTilesets:     `[SKTileset]` optional pre-loaded tilesets.
      - parameter ignoreProperties: `Bool` don't parse custom properties.
      - parameter buildGraphs:      `Bool` automatically build pathfinding graphs.
-     - parameter verbosity:        `LoggingLevel` verbosity level.
+     - parameter loggingLevel:     `LoggingLevel` logging verbosity.
      - parameter completion:  `(() -> ())?` optional completion handler.
      */
     open func setup(tmxFile: String,
@@ -139,12 +134,12 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
                     withTilesets tilesets: [SKTileset]=[],
                     ignoreProperties: Bool = false,
                     buildGraphs: Bool = true,
-                    verbosity: LoggingLevel = .info,
+                    loggingLevel: LoggingLevel = .info,
                     _ completion: (() -> ())? = nil) {
         
         guard let worldNode = worldNode else { return }
 
-        
+        self.loggingLevel = loggingLevel
         self.tilemap = nil
         
         if let tilemap = load(tmxFile: tmxFile,
@@ -152,7 +147,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
                               withTilesets: tilesets,
                               ignoreProperties: ignoreProperties,
                               buildGraphs: buildGraphs,
-                              verbosity: verbosity) {
+                              loggingLevel: loggingLevel) {
         
             backgroundColor = tilemap.backgroundColor ?? SKColor.clear
         
@@ -246,7 +241,7 @@ extension SKTiledSceneDelegate where Self: SKScene {
      - parameter withTilesets:     `[SKTileset]` optional pre-loaded tilesets.
      - parameter ignoreProperties: `Bool` don't parse custom properties.
      - parameter buildGraphs:      `Bool` automatically build pathfinding graphs.
-     - parameter verbosity:        `LoggingLevel` verbosity level.
+     - parameter verbosity:        `LoggingLevel` logging verbosity.
      - returns: `SKTilemap?` tile map node.
      */
     public func load(tmxFile: String,
@@ -254,7 +249,7 @@ extension SKTiledSceneDelegate where Self: SKScene {
                      withTilesets tilesets: [SKTileset]=[],
                      ignoreProperties: Bool = false,
                      buildGraphs: Bool = true,
-                     verbosity: LoggingLevel = .info) -> SKTilemap? {
+                     loggingLevel: LoggingLevel = .info) -> SKTilemap? {
         
                 
         if let tilemap = SKTilemap.load(tmxFile: tmxFile,
@@ -263,7 +258,7 @@ extension SKTiledSceneDelegate where Self: SKScene {
                                         withTilesets: tilesets,
                                         ignoreProperties: ignoreProperties,
                                         buildGraphs: buildGraphs,
-                                        verbosity: verbosity) {
+                                        loggingLevel: loggingLevel) {
             
             if let cameraNode = cameraNode {
                 // camera properties inherited from tilemap

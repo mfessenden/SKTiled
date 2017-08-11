@@ -17,12 +17,13 @@ import Cocoa
 
 open class DemoController: NSObject {
     
+    private let fm = FileManager.default
     static let `default` = DemoController()
     
     weak open var view: SKView?
     
     /// debug visualizations
-    open var loggingLevel: LoggingLevel = .debug
+    open var loggingLevel: LoggingLevel = SKTiledLoggingLevel
     open var debugDrawOptions: DebugDrawOptions = []
     
     /// tiled resources
@@ -63,6 +64,7 @@ open class DemoController: NSObject {
         }
         
         scanForResourceTypes()
+        listBundledResources()
         
         if tilemaps.count > 0 {
             demourls = tilemaps
@@ -74,7 +76,6 @@ open class DemoController: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadScene), name: NSNotification.Name(rawValue: "reloadScene"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadNextScene), name: NSNotification.Name(rawValue: "loadNextScene"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadPreviousScene), name: NSNotification.Name(rawValue: "loadPreviousScene"), object: nil)
-        
     }
     
     public init(view: SKView) {
@@ -111,7 +112,7 @@ open class DemoController: NSObject {
         var resourcesAdded = 0
         
         for root in roots {
-            let urls = FileManager.default.listFiles(path: root.path, withExtensions: resourceTypes)
+            let urls = fm.listFiles(path: root.path, withExtensions: resourceTypes)
             resources.append(contentsOf: urls)
             resourcesAdded += urls.count
         }
@@ -129,7 +130,7 @@ open class DemoController: NSObject {
      */
     open func reloadScene(_ interval: TimeInterval=0) {
         guard let currentURL = currentURL else { return }
-        loadScene(url: currentURL, usePreviousCamera: false, interval: interval)
+        loadScene(url: currentURL, usePreviousCamera: true, interval: interval)
     }
     
     /**
@@ -201,6 +202,8 @@ open class DemoController: NSObject {
             
             let nextScene = SKTiledDemoScene(size: view.bounds.size)
             nextScene.scaleMode = .aspectFill
+            
+            // create the transition
             let transition = SKTransition.fade(withDuration: interval)
             view.presentScene(nextScene, transition: transition)
             nextScene.isPaused = isPaused
@@ -210,23 +213,29 @@ open class DemoController: NSObject {
                             withTilesets: [],
                             ignoreProperties: false,
                             buildGraphs: true,
-                            verbosity: self.loggingLevel, nil)
+                            loggingLevel: self.loggingLevel, nil)
             
             nextScene.liveMode = liveMode
+            
             if (usePreviousCamera == true) {
                 nextScene.cameraNode?.showOverlay = showOverlay
                 nextScene.cameraNode?.position = cameraPosition
                 nextScene.cameraNode?.setCameraZoom(cameraZoom, interval: interval)
-                nextScene.cameraNode.fitToView(newSize: view.bounds.size, transition: interval)
+                //nextScene.cameraNode.fitToView(newSize: view.bounds.size, transition: interval)
             }
             
             nextScene.tilemap?.debugDrawOptions = self.debugDrawOptions
             
-            let graphInfo = ["hasGraphs": nextScene.graphs.count > 0]
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "updateGraphControls"), object: nil, userInfo: graphInfo)
+            let sceneInfo = ["hasGraphs": nextScene.graphs.count > 0, "hasObjects": nextScene.tilemap.getObjects().count > 0]
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "updateUIControls"), object: nil, userInfo: sceneInfo)
         }
     }
     
+    // MARK: - Demo Control
+    
+    /**
+     Fit the current scene to the view.
+     */
     open func fitSceneToView() {
         guard let view = self.view else { return }
         guard let scene = view.scene as? SKTiledScene else { return }
@@ -236,6 +245,9 @@ open class DemoController: NSObject {
         }
     }
     
+    /**
+     Show/hide the grid & map bounds.
+     */
     open func toggleMapDemoDraw() {
         guard let view = self.view,
             let scene = view.scene as? SKTiledScene else { return }
@@ -245,6 +257,9 @@ open class DemoController: NSObject {
         }
     }
     
+    /**
+     Show/hide pathfinding graph visualizations.
+     */
     open func toggleMapGraphVisualization() {
         guard let view = self.view,
             let scene = view.scene as? SKTiledScene else { return }
@@ -258,6 +273,9 @@ open class DemoController: NSObject {
         }
     }
     
+    /**
+     Show/hide current scene objects.
+     */
     open func toggleMapObjectDrawing() {
         guard let view = self.view,
             let scene = view.scene as? SKTiledScene else { return }
@@ -266,12 +284,27 @@ open class DemoController: NSObject {
             tilemap.showObjects = !tilemap.showObjects
         }
     }
+    
+    // MARK: - Experimental
+    open func listBundledResources() {
+        let bundleURL = Bundle.main.bundleURL  // SKTiledDemo.app
+        let assetname = "pm-maze-8x8"
+        print(" ❊ Querying asset: ")
+        
+        if let asset = NSDataAsset(name: assetname) {
+            print("   ➜ found asset \"\(assetname)\"")
+            let texture = SKTexture(data: asset.data, size: .zero)
+            print("    ↳ created texture: \"\(assetname)\"")
+            print(texture)
+            
+        }
+    }
 }
 
 
 extension FileManager {
     
-    func listFiles(path: String, withExtensions: [String]=[]) -> [URL] {
+    func listFiles(path: String, withExtensions: [String]=[], loggingLevel: LoggingLevel = .info) -> [URL] {
         let baseurl: URL = URL(fileURLWithPath: path)
         var urls: [URL] = []
         enumerator(atPath: path)?.forEach({ (e) in
@@ -279,6 +312,10 @@ extension FileManager {
             let url = URL(fileURLWithPath: s, relativeTo: baseurl)
             
             if withExtensions.contains(url.pathExtension.lowercased()) || (withExtensions.count == 0) {
+                
+                if loggingLevel.rawValue < 1 {
+                    print("[FileManager]: adding resource: \"\(url.relativePath)\"")
+                }
                 urls.append(url)
             }
         })

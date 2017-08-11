@@ -10,11 +10,18 @@ import SpriteKit
 import GameplayKit
 
 
-/// *Tiled* application version.
-public var TiledApplicationVersion: String = "0"
+/// Tiled application version.
+public var SKTiledTiledApplicationVersion: String = "0"
+
+/// Global logging level.
+public var SKTiledLoggingLevel: LoggingLevel = .info
+
+/// Global device scaling factor for retina displays.
+public var SKTiledContentScaleFactor: CGFloat = getContentScaleFactor()
 
 
-internal enum TiledColors: String {
+internal enum TiledObjectColors: String {
+    case none   =  "#00000000"
     case white  =  "#f7f5ef"
     case grey   =  "#969696"
     case red    =  "#990000"
@@ -30,6 +37,9 @@ internal enum TiledColors: String {
 
 
 /**
+ 
+ ## Overview ##
+ 
  Describes the map's tile orientation (shape).
 
  - `orthogonal`:   map is orthogonal type.
@@ -48,12 +58,6 @@ internal enum TiledColors: String {
 
     ![Staggered Map](../Images/staggered_mapping.png "Staggered Isometric Map")
  */
-public enum TilemapOrientation: String {
-    case orthogonal   = "orthogonal"
-    case isometric    = "isometric"
-    case hexagonal    = "hexagonal"
-    case staggered    = "staggered"
-}
 
 
 internal enum RenderOrder: String {
@@ -136,16 +140,16 @@ internal let TileSize32x32 = CGSize(width: 32, height: 32)
 
 
 /**
- ## Overview: ##
+ ## Overview ##
 
- The `SKTilemapDelegate` protocol defines a delegate that allows the user to interact with a tile map as it is being created, and customize its properties.
+ The `SKTilemapDelegate` protocol defines a delegate that allows the user to interact with a tile map as it is being created and customize its properties.
 
 
- ## Callbacks: ##
+ ## Callbacks ##
 
  Delegate callbacks are called asynchronously as the map is being read from disk and rendered.
 
- ```
+ ```swift
  SKTilemapDelegate.didBeginParsing(_ tilemap: SKTilemap)
  SKTilemapDelegate.didAddTileset(_ tileset: SKTileset)
  SKTilemapDelegate.didAddLayer(_ layer: TiledLayerObject)
@@ -153,14 +157,19 @@ internal let TileSize32x32 = CGSize(width: 32, height: 32)
  SKTilemapDelegate.didRenderMap(_ tilemap: SKTilemap)
  ```
 
- ## Custom Objects: ##
+ ## Custom Objects ##
 
- Custom object properties are used to allow users to define custom objects for their projects.
+ Custom object methods can be used to substitute your own objects for tiles:
 
+ ```swift
+ func objectForTile(className: String? = nil) -> SKTile.Type {
+    if className == "MyTile" {
+        return MyTile.self
+    }
+    return SKTile.self
+ }
  ```
- SKTilemapDelegate.objectForTile:      SKTile.Type
- SKTilemapDelegate.objectForGraphNode: SKTile.GKGridGraphNode
- ```
+
 */
 public protocol SKTilemapDelegate: class {
     var zDeltaForLayers: CGFloat { get }
@@ -176,21 +185,21 @@ public protocol SKTilemapDelegate: class {
 
 
 /**
- ## Overview:
+ ## Overview
 
  The `SKTilemap` class represents a container which manages layers, tiles (sprites), vector objects & images. Tile data is stored in `SKTileset` tile sets.
 
- ### Usage:
+ ### Usage
 
- ```
+ ```swift
  let mapSize    = tilemap.size          // returns the size of the map (tiles).
  let renderSize = tilemap.sizeInPoints  // returns the size of the map (pixels).
  let tileSize   = tilemap.tileSize      // returns the map tile size (pixels).
  ```
 
- ### Loading:
+ ### Loading
 
- ```
+ ```swift
  if let tilemap = SKTilemap.load(tmxFile: "myfile.tmx") {
     scene.addChild(tilemap)
  }
@@ -198,6 +207,13 @@ public protocol SKTilemapDelegate: class {
  */
 open class SKTilemap: SKNode, SKTiledObject {
 
+    public enum TilemapOrientation: String {
+        case orthogonal   = "orthogonal"
+        case isometric    = "isometric"
+        case hexagonal    = "hexagonal"
+        case staggered    = "staggered"
+    }
+    
     /// file properties
     open var url: URL!                                            // tmx file path
     open var uuid: String = UUID().uuidString                     // unique id
@@ -209,6 +225,10 @@ open class SKTilemap: SKNode, SKTiledObject {
     open var orientation: TilemapOrientation                      // map orientation
     internal var renderOrder: RenderOrder = .rightDown            // render order
 
+    /// Logging verbosity.
+    internal var loggingLevel: LoggingLevel = SKTiledLoggingLevel
+    
+    
     internal var maxRenderQuality: CGFloat = 16                   // max render quality
     /// Scaling value for text objects, etc.
     open var renderQuality: CGFloat = 8 {                         // object render quality.
@@ -255,12 +275,6 @@ open class SKTilemap: SKNode, SKTiledObject {
         return layers.filter { $0.isRendered == false }.count == 0
     }
 
-    /// Overlay color.
-    open var overlayColor: SKColor = SKColor(hexString: "#40000000")
-
-    /// Object color.
-    open var objectColor: SKColor = SKColor.gray
-
     /// Returns a flattened array of child layers.
     open var layers: [TiledLayerObject] {
         var result: [TiledLayerObject] = []
@@ -292,7 +306,7 @@ open class SKTilemap: SKNode, SKTiledObject {
     */
     lazy var baseLayer: BackgroundLayer = {
         let layer = BackgroundLayer(tilemap: self)
-        self.addLayer(layer, base: true)
+        self.addLayer(layer)
         layer.didFinishRendering()
         return layer
     }()
@@ -315,12 +329,14 @@ open class SKTilemap: SKNode, SKTiledObject {
         }
     }
 
-    internal var loggingLevel: LoggingLevel = .warning
-
-
+    /// Overlay color.
+    open var overlayColor: SKColor = SKColor(hexString: "#40000000")
+    
+    /// Object color.
+    open var objectColor: SKColor = SKColor.gray
     open var color: SKColor = SKColor.clear                            // used for pausing
     open var gridColor: SKColor = SKColor.black                        // color used to visualize the tile grid
-    open var frameColor: SKColor = SKColor.black                       // bounding box color
+    open var frameColor: SKColor = SKColor.blue                        // bounding box color
     open var highlightColor: SKColor = SKColor.green                   // color used to highlight tiles
     open var autoResize: Bool = false                                  // indicates map should auto-resize when view changes
 
@@ -496,7 +512,7 @@ open class SKTilemap: SKNode, SKTiledObject {
      - parameter delegate:           `SKTilemapDelegate?` optional [`SKTilemapDelegate`](Protocols/SKTilemapDelegate.html) instance.
      - parameter withTilesets:       `[SKTileset]?` optional tilesets.
      - parameter ignoreProperties:   `Bool` ignore custom properties from Tiled.
-     - parameter verbosity:          `LoggingLevel` logging verbosity.
+     - parameter loggingLevel:       `LoggingLevel` logging verbosity level.
      - returns: `SKTilemap?` tilemap object (if file read succeeds).
      */
     open class func load(tmxFile: String,
@@ -505,7 +521,7 @@ open class SKTilemap: SKNode, SKTiledObject {
                          withTilesets: [SKTileset]? = nil,
                          ignoreProperties noparse: Bool = false,
                          buildGraphs: Bool = true,
-                         verbosity: LoggingLevel = .info) -> SKTilemap? {
+                         loggingLevel: LoggingLevel = .info) -> SKTilemap? {
 
 
         let queue = DispatchQueue(label: "com.sktiled.renderqueue", qos: .userInteractive)
@@ -514,7 +530,7 @@ open class SKTilemap: SKNode, SKTiledObject {
                                                 delegate: delegate,
                                                 withTilesets: withTilesets,
                                                 ignoreProperties: noparse,
-                                                verbosity: verbosity,
+                                                loggingLevel: loggingLevel,
                                                 renderQueue: queue) {
 
             // build any pathfinding graphs
@@ -588,7 +604,7 @@ open class SKTilemap: SKNode, SKTiledObject {
         // Tiled application version
         if let tiledVersion = attributes["tiledversion"] {
             self.tiledversion = tiledVersion
-            TiledApplicationVersion = tiledVersion
+            SKTiledTiledApplicationVersion = tiledVersion
         }
 
         // global antialiasing
@@ -619,6 +635,7 @@ open class SKTilemap: SKNode, SKTiledObject {
     public init(_ sizeX: Int, _ sizeY: Int,
                 _ tileSizeX: Int, _ tileSizeY: Int,
                   orientation: TilemapOrientation = .orthogonal) {
+        
         self.size = CGSize(width: CGFloat(sizeX), height: CGFloat(sizeY))
         self.tileSize = CGSize(width: CGFloat(tileSizeX), height: CGFloat(tileSizeY))
         self.orientation = orientation
@@ -733,32 +750,38 @@ open class SKTilemap: SKNode, SKTiledObject {
     }
 
     /**
-     Add a layer to the layers set. Automatically sets zPosition based on the zDeltaForLayers attributes.
+     Add a layer to the current layers set. Automatically sets zPosition based on the zDeltaForLayers attributes.
 
      - parameter layer:  `TiledLayerObject` layer object.
-     - parameter base:   `Bool` layer represents default layer.
      */
-    internal func addLayer(_ layer: TiledLayerObject, base: Bool=false) {
+    open func addLayer(_ layer: TiledLayerObject) {
 
         let nextZPosition = (_layers.count > 0) ? zDeltaForLayers * CGFloat(_layers.count + 1) : zDeltaForLayers
 
         // set the layer index
         layer.index = layers.count > 0 ? lastIndex + 1 : 0
 
-        // don't add the default layer
-        if base == false { _layers.insert(layer) }
-
+        
+        let (success, inserted) = _layers.insert(layer)
+        if (success == false) {
+            print("[SKGroupLayer]: ERROR adding layer: \"\(inserted.layerName)\"")
+            return
+        }
+        
         // add the layer as a child
         addChild(layer)
 
-        // align the layer to the anchorpoint
+        // align the layer with the anchorpoint
         positionLayer(layer)
+        
+        // set layer zposition
         layer.zPosition = nextZPosition
 
         // override debugging colors
         layer.gridColor = gridColor
         layer.frameColor = frameColor
         layer.highlightColor = highlightColor
+        layer.loggingLevel = loggingLevel
     }
 
     /**
@@ -768,9 +791,9 @@ open class SKTilemap: SKNode, SKTiledObject {
      - parameter group: `SKGroupLayer?` optional group layer.
      - returns: `TiledLayerObject` added layer.
      */
-    internal func addLayer(_ layer: TiledLayerObject, group: SKGroupLayer? = nil) -> TiledLayerObject {
+    open func addLayer(_ layer: TiledLayerObject, group: SKGroupLayer? = nil) -> TiledLayerObject {
         if (group == nil) {
-            addLayer(layer, base: false)
+            addLayer(layer)
         } else {
             group!.addLayer(layer)
         }
@@ -1099,7 +1122,7 @@ open class SKTilemap: SKNode, SKTiledObject {
 
         // clamp the layer position
         if (clamped == true) {
-            let scaleFactor = getContentScaleFactor()
+            let scaleFactor = SKTiledContentScaleFactor
             layerPos = clampedPosition(point: layerPos, scale: scaleFactor)
         }
 
@@ -1454,7 +1477,7 @@ open class SKTilemap: SKNode, SKTiledObject {
     open func clampPositionForMap() {
         guard (isRendered == true) else { return }
 
-        let scaleFactor = getContentScaleFactor()
+        let scaleFactor = SKTiledContentScaleFactor
 
         _layers.forEach{ layer in
             //layer.position = clampedPosition(point: layer.position, scale: scaleFactor)
@@ -1467,7 +1490,7 @@ open class SKTilemap: SKNode, SKTiledObject {
 
 // MARK: - Extensions
 
-extension TilemapOrientation {
+extension SKTilemap.TilemapOrientation {
 
     /// Hint for aligning tiles within each layer.
     public var alignmentHint: CGPoint {
@@ -1558,7 +1581,7 @@ extension SKTilemap {
     // coordinate grid values for hex/staggered
     public var columnWidth: CGFloat { return sideOffsetX + sideLengthX }
     public var rowHeight: CGFloat { return sideOffsetY + sideLengthY }
-
+    
     // MARK: - Hexagonal / Staggered methods
     /**
      Returns true if the given x-coordinate represents a staggered (offset) column.
@@ -1767,7 +1790,7 @@ extension SKTilemap {
 
 
 /**
- Default implementations of callbacks.
+ Default callback methods.
  */
 extension SKTilemapDelegate {
 

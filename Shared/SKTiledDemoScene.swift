@@ -90,7 +90,7 @@ public class SKTiledDemoScene: SKTiledScene {
         
         let coord = CGPoint(x: x, y: y)
         
-        let tileColor: SKColor = (validCoord == true) ? tilemap.highlightColor : TiledColors.red.color
+        let tileColor: SKColor = (validCoord == true) ? tilemap.highlightColor : TiledObjectColors.red.color
         let lastZosition = tilemap.lastZPosition + (tilemap.zDeltaForLayers * 2)
         // add debug tile shape
         let tile = TileShape(layer: layer, coord: coord, tileColor: tileColor, withLabel: useLabel)
@@ -118,7 +118,7 @@ public class SKTiledDemoScene: SKTiledScene {
         let coord = CGPoint(x: x, y: y)
 
         if (coord != coordinate) || (useLabel == true) {
-            let tileColor: SKColor = (validCoord == true) ? tilemap.highlightColor : TiledColors.red.color
+            let tileColor: SKColor = (validCoord == true) ? tilemap.highlightColor : TiledObjectColors.red.color
             let lastZosition = tilemap.lastZPosition + (tilemap.zDeltaForLayers * 2)
             
             // add debug tile shape
@@ -251,43 +251,22 @@ public class SKTiledDemoScene: SKTiledScene {
     
     // MARK: - Callbacks
     override open func didReadMap(_ tilemap: SKTilemap) {
-        self.physicsWorld.speed = 0
-        print(" ❊ `SKTiledDemoScene.didReadMap`...")
+        self.physicsWorld.speed = 1
     }
     
     override open func didRenderMap(_ tilemap: SKTilemap) {
         // update the HUD to reflect the number of tiles created
-        print(" ❊ `SKTiledDemoScene.didRenderMap`...")
         updateHud()
         tilemap.mapStatistics()
         
         if let tileset = tilemap.getTileset(named: "maze-8x8") {
-            
-            let spritesheets = ["mspacman-maze1-8x8",
-                                "mspacman-maze2-8x8",
-                                "mspacman-maze3-8x8",
-                                "mspacman-maze4-8x8",
-                                "pm-maze-8x8",
-                                "mspacman-maze1-8x8",
-                                "mspacman-maze2-8x8",
-                                "mspacman-maze3-8x8",
-                                "mspacman-maze4-8x8",
-                                "pm-maze-8x8.png"]
-            
-            DispatchQueue.main.async {
-                for spritesheet in spritesheets {
-                    tileset.addTextures(fromSpriteSheet: spritesheet, replace: true, transparent: nil)
-                    //sleep(1)
-                }
-            }
-            
-
+            tileset.addTextures(fromSpriteSheet: "mspacman-maze2-8x8", replace: true, transparent: nil)
         }
     }
     
     override open func didAddPathfindingGraph(_ graph: GKGridGraph<GKGridGraphNode>) {
         super.didAddPathfindingGraph(graph)
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateGraphControls"), object: nil, userInfo: ["hasGraphs": true])
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateUIControls"), object: nil, userInfo: ["hasGraphs": true])
     }
     
     override open func didAddTileset(_ tileset: SKTileset) {
@@ -506,13 +485,15 @@ extension SKTiledDemoScene {
             }
         }
         
-        // 'h' hides the HUD
+        // 'h' shows/hides the HUD
         if eventKey == 0x04 {
             if let view = self.view {
                 let debugState = !view.showsFPS
                 view.showsFPS = debugState
                 view.showsNodeCount = debugState
                 view.showsDrawCount = debugState
+                view.showsPhysics = debugState
+                view.showsFields = debugState
             }
         }
         
@@ -545,6 +526,8 @@ extension SKTiledDemoScene {
             } else {
                 tilemap.debugDrawOptions.insert(.drawObjectBounds)
             }
+            
+            print(tilemap.debugDrawOptions)
         }
         
         // 'o' shows/hides object layers
@@ -555,12 +538,6 @@ extension SKTiledDemoScene {
         // 'p' pauses the scene
         if eventKey == 0x23 {
             self.isPaused = !self.isPaused
-            print(" → paused: \(self.isPaused)")
-        }
-        
-        // 'q' print layer stats
-        if eventKey == 0xc {
-            tilemap.mapStatistics()
         }
         
         // '←' advances to the next scene
@@ -640,12 +617,60 @@ extension SKTiledDemoScene {
             }
         }
         
+        // 'q' tries to show all object bounds
+        if eventKey == 0xc {
+            worldNode.childNode(withName: "ROOT")?.removeFromParent()
+            
+            let root = SKNode()
+            root.name = "ROOT"
+            
+            let renderQuality: CGFloat = 16
+
+            enumerateChildNodes(withName: "//*") {  // was //*
+                node, stop in
+                
+
+                
+                if let shape = node as? SKTileObject {
+                    
+                    if let vertices = shape.getVertices() {
+                        
+                        let flippedVertices = (shape.gid == nil) ? vertices.map { $0.invertedY } : vertices
+                        let worldVertices = flippedVertices.map { self.worldNode.convert($0, from: shape) }
+                        
+                        let scaledVertices = worldVertices.map { $0 * renderQuality }
+                        
+                        
+                        let translatedPath = polygonPath(scaledVertices)
+                        let bounds = SKShapeNode(path: translatedPath)
+
+                        
+                        // draw the path
+                        bounds.isAntialiased = true
+                        bounds.lineCap = .round
+                        bounds.lineJoin = .miter
+                        bounds.miterLimit = 0
+                        bounds.lineWidth = 1 * (renderQuality / 2)
+
+                        bounds.fillColor = .clear
+                        bounds.strokeColor = .green
+                        root.addChild(bounds)
+                        bounds.setScale(1 / renderQuality)
+                    }
+                }
+            }
+            
+            
+            worldNode.addChild(root)
+        }
+        
+        
         // 'r' reloads the scene
         if eventKey == 0xf {
             self.reloadScene()
         }
         
-        // 's' runs a custom command
+        // 's' draws the tilemap bounds
         if eventKey == 0x1 {
             print("➜ drawing map bounds: \(tilemap.frame.shortDescription)")
             tilemap.drawBounds()
@@ -673,6 +698,15 @@ extension SKTiledDemoScene {
             tilemap.getLayers(ofType: "DEBUG").forEach{ $0.isHidden = !$0.isHidden }
         }
         
+        
+        // 'x' flattens layers
+        if eventKey == 0x7 {
+            tilemap.tileLayers().forEach( {
+                $0.flattenLayer(view: view)
+            })
+        }
+        
+        
         // 'y' runs a custom test
         if eventKey == 0x10 {
             tilemap.getLayers(ofType: "DEBUG").forEach{ $0.isHidden = !$0.isHidden }
@@ -685,7 +719,7 @@ extension SKTiledDemoScene {
         
         // '↑' clamps layer positions
         if eventKey == 0x7e {
-            let scaleFactor =  getContentScaleFactor()
+            let scaleFactor =  SKTiledContentScaleFactor
             var nodesUpdated = 0
             tilemap.enumerateChildNodes(withName: "*") {
                 node, stop in
@@ -790,3 +824,32 @@ open class MouseTracker: SKNode {
         shadow.position.y -= shadowOffset
     }
 }
+
+
+// MARK - Remove
+
+public func getDesktopDirectory() -> URL {
+    let urls = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask)
+    return urls[0]
+}
+
+
+public func getHomeDirectory() -> URL {
+    let urls = FileManager.default.urls(for: .userDirectory, in: .userDomainMask)
+    return urls[0]
+}
+
+
+public func writeToFile(_ image: CGImage, url: URL) -> Data {
+    let bitmapRep: NSBitmapImageRep = NSBitmapImageRep(cgImage: image)
+    let properties = Dictionary<String, AnyObject>()
+    let data: Data = bitmapRep.representation(using: NSBitmapImageFileType.PNG, properties: properties)!
+    if !((try? data.write(to: URL(fileURLWithPath: url.path), options: [])) != nil) {
+        print("Error: write to file failed")
+    }
+    print(" → writing to file: \(url.absoluteString)")
+    return data
+}
+
+
+

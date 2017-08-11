@@ -14,6 +14,9 @@ Change Log
 - add `SKTilemap.getVertices()`
 - add `SKTilemap.heightOffset`
 - add `SKTilemap.showObjects(forLayers:)`
+- add `TileCollisionShape`
+- rename `TiledLayerObject.boundingRect` -> `TiledLayerObject.bounds`
+- rename `SKTiledSceneCamera.boundingRect` -> `SKTiledSceneCamera.bounds`
 
 #### Changes
 

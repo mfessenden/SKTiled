@@ -96,10 +96,12 @@ public extension SKTileLayer {
         let walkable  = getTiles().filter { $0.tileData.walkable == true }
         let obstacles = getTiles().filter { $0.tileData.obstacle == true }
         
-        print("[SKTileLayer]: \"\(layerName)\": walkable: \(walkable.count), obstacles: \(obstacles.count)")
+        if (loggingLevel.rawValue < 1) {
+            print("[SKTileLayer]: \"\(layerName)\": walkable: \(walkable.count), obstacles: \(obstacles.count)")
+        }
         
         if (walkable.count > 0) {
-            if let layerGraph = initializeGraph(walkable: walkable, obstacles: obstacles, diagonalsAllowed: false) {
+            if let _ = initializeGraph(walkable: walkable, obstacles: obstacles, diagonalsAllowed: false) {
                 
             }
         }
@@ -186,23 +188,28 @@ public extension SKTileLayer {
 
 
 /**
- Custom `GKGridGraphNode` object that adds a weight parameter for used with Tiled scene properties. Can be used with
- normal `GKGridGraphNode` instances.
  
- The `SKTiledGraphNode.weight` property is used to affect the estimated cost to a connected node. (Increasing the weight makes
- it less likely to be travelled to, decreasing more likely).
+ ## Overview ##
  
- ```
+ Custom [`GKGridGraphNode`][gkgridgraphnode-url] object that adds a weight parameter for used with Tiled scene properties. Can be used with normal [`GKGridGraphNode`][gkgridgraphnode-url] instances. The `SKTiledGraphNode.weight` property is used to affect the estimated cost to a connected node. (Increasing the weight makes it less likely to be travelled to, decreasing more likely).
+ 
+ ## Usage ##
+ 
+ ```swift
  // query a node in the graph and increase the weight property
- if let node = graph.node(atGridPosition: coord) {
+ if let node = graph.node(atGridPosition: coord) as? SKTiledGraphNode {
     node.weight = 25.0
  }
  ```
+ 
+ [gkgridgraphnode-url]:https://developer.apple.com/documentation/gameplaykit/gkgridgraphnode
  */
 public class SKTiledGraphNode: GKGridGraphNode {
     
-    // less weight == more likely travel through
+    /// Weight property.
     public var weight: Float = 1.0
+    
+    // MARK: - Init
     
     /**
      Initialize the node with a weight parameter.
@@ -224,8 +231,10 @@ public class SKTiledGraphNode: GKGridGraphNode {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Pathfinding
+    
     /**
-     The costToNode method is used in the GridGraphNode.findPathToNode method.
+     The `GKGridGraphNode.cost` method is used in the `GKGridGraphNode.findPathToNode` method.
      Returns the cost (lower is better) for each node in the possible nodes.
      
      TODO: if the node is not connected, return FLT_MAX?
