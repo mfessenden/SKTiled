@@ -62,7 +62,7 @@ open class SKTilesetData: SKTiledObject  {
     open var ignoreProperties: Bool = false       // ignore custom properties
     open var tileOffset: CGPoint = .zero          // tile offset
     open var renderQuality: CGFloat = 8           // render quality
-    open var alignment: Alignment = .bottomLeft   // tile alignment
+    open var alignment: TileAlignmentHint = .bottomLeft
     
     /// Animated frames
     internal var frames: [AnimationFrame] = []

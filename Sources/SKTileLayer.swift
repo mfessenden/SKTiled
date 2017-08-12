@@ -16,7 +16,6 @@ import Cocoa
 #endif
 
 
-
 internal enum SKObjectGroupColors: String {
     case pink     = "#c8a0a4"
     case blue     = "#6fc0f3"
@@ -25,43 +24,68 @@ internal enum SKObjectGroupColors: String {
 }
 
 
-/// index, zpos, size w, size h, tile size w, tile size h, offset x, offset y, anchor x, anchor y, tile count, object count
-public typealias renderInfo = (idx: Int, path: String, zpos: Double, sw: Int, sh: Int, tsw: Int, tsh: Int, offx: Int, offy: Int, ancx: Int, ancy: Int, tc: Int, obj: Int, vis: Int, gn: Int)
+// index, zpos, size w, size h, tile size w, tile size h, offset x, offset y, anchor x, anchor y, tile count, object count
+typealias renderInfo = (idx: Int, path: String, zpos: Double, sw: Int, sh: Int, tsw: Int, tsh: Int, offx: Int, offy: Int, ancx: Int, ancy: Int, tc: Int, obj: Int, vis: Int, gn: Int)
 
 
 /**
  
  ## Overview ##
  
- The `TiledLayerObject` is the base class for all layer types.  This class
- doesn't define any object or child types, but manages several important aspects of your scene:
-
+ The `TiledLayerObject` is the base class for all layer types.  This class doesn't define any object or child types, but provides base behaviors for layered content:
+ 
+ - coordinate transformations
  - validating coordinates
  - positioning and alignment
- - coordinate transformations
-
  
  ## Usage ##
  
- Layer properties are accessed via properties shared with the parent tilemap:
+ Layer properties are accessed via the parent tilemap:
 
- ```
+ ```swift
  layer.size            // size (in tiles)
  layer.tileSize        // tile size (in pixels)
  ```
- Coordinate transformation functions return coordinates in the current tilemap projection:
+ Coordinate transformation functions return points in the current tilemap projection:
 
- ```
+ ```swift
  node.position = tileLayer.pointForCoordinate(2, 1)
  ```
- Coordinate transformation functions return coordinates in the current tilemap projection:
+ Coordinate transformation functions translate points to map coordinates:
 
+ ```swift
+  coord = coordinateForPoint(touchPosition)
  ```
-  node.position = tileLayer.pointForCoordinate(2, 1)
+ 
+ Return the tile coordinate at a mouse event (iOS):
+ 
+ ```swift
+ coord = imageLayer.coordinateAtTouchLocation(touchPosition)
+ ```
+ 
+ Return the tile coordinate at a mouse event (macOS):
+ 
+ ```swift
+ coord = groupLayer.coordinateAtMouseEvent(event: mouseClicked)
  ```
  */
 open class TiledLayerObject: SKNode, SKTiledObject {
-
+    
+    /// Reference to the parent tilemap.
+    open var tilemap: SKTilemap
+    /// Unique layer id.
+    open var uuid: String = UUID().uuidString
+    /// Layer type.
+    open var type: String!
+    /// Layer index. Matches the index of the layer in the source TMX file.
+    open var index: Int = 0
+    /// Logging verbosity.
+    internal var loggingLevel: LoggingLevel = SKTiledLoggingLevel
+    
+    /// Custom layer properties.
+    open var properties: [String: String] = [:]
+    open var ignoreProperties: Bool = false
+    
     /// Layer type.
     public enum TiledLayerType: Int {
         case none     = -1
@@ -84,24 +108,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         case right
     }
 
-
     internal var layerType: TiledLayerType = .none
-    open var tilemap: SKTilemap
-
-    /// Unique layer id.
-    open var uuid: String = UUID().uuidString
-    /// Layer type.
-    open var type: String!
-    /// Layer index. Matches the index of the layer in the source TMX file.
-    open var index: Int = 0
-
-    /// Logging verbosity.
-    internal var loggingLevel: LoggingLevel = SKTiledLoggingLevel
-    
-    
-    /// Custom layer properties.
-    open var properties: [String: String] = [:]
-    open var ignoreProperties: Bool = false
 
     /// Layer color.
     open var color: SKColor = SKColor.gray
@@ -139,7 +146,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     open var tileHeightHalf: CGFloat { return tilemap.tileHeightHalf }
     open var sizeInPoints: CGSize { return tilemap.sizeInPoints }
 
-    /// Pathfinding graph
+    /// Pathfinding graph.
     open var graph: GKGridGraph<GKGridGraphNode>!
     open var walkableIDs: [Int] = []
     open var walkableTypes: [String] = []
@@ -147,7 +154,8 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     // debug visualizations
     open var gridOpacity: CGFloat = 0.40
     internal var debugNode: TiledDebugDrawNode!
-
+    
+    /// Debug visualization options.
     open var debugDrawOptions: DebugDrawOptions = [] {
         didSet {
             guard oldValue != debugDrawOptions else { return }
@@ -168,9 +176,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
         }
     }
 
-    /**
-     Layer background sprite.
-     */
+    /// Layer background sprite.
     lazy open var background: SKSpriteNode = {
         let sprite = SKSpriteNode(color: SKColor.clear, size: self.tilemap.sizeInPoints)
         sprite.anchorPoint = CGPoint.zero
@@ -240,8 +246,11 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     
 
     /// Returns layer render statisics
-    open var renderStatistics: renderInfo {
-        return (index, path, Double(zPosition), Int(tilemap.size.width), Int(tilemap.size.height), Int(tileSize.width), Int(tileSize.height),  Int(offset.x), Int(offset.y), Int(anchorPoint.x), Int(anchorPoint.y), 0, 0, (isHidden == true) ? 0 : 1, 0)
+    internal var renderStatistics: renderInfo {
+        return (index, path, Double(zPosition), Int(tilemap.size.width),
+                Int(tilemap.size.height), Int(tileSize.width),
+                Int(tileSize.height),  Int(offset.x), Int(offset.y),
+                Int(anchorPoint.x), Int(anchorPoint.y), 0, 0, (isHidden == true) ? 0 : 1, 0)
     }
 
     // MARK: - Init
@@ -336,13 +345,15 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
 
     // MARK: - Children
+    
     open var layers: [TiledLayerObject] {
         return [self]
     }
 
-    // MARK: - Event Handling
-
     #if os(iOS) || os(tvOS)
+    
+    // MARK: - Touch Events
+    
     /**
      Returns a converted touch location.
 
@@ -350,11 +361,11 @@ open class TiledLayerObject: SKNode, SKTiledObject {
      - returns: `CGPoint` converted point in layer coordinate system.
      */
     open func touchLocation(_ touch: UITouch) -> CGPoint {
-    return convertPoint(touch.location(in: self))
+        return convertPoint(touch.location(in: self))
     }
 
     /**
-     Returns the tile coordinate for a touch location.
+     Returns the tile coordinate at a touch location.
 
      - parameter touch: `UITouch` touch location.
      - returns: `CGPoint` converted point in layer coordinate system.
@@ -365,8 +376,11 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     #endif
 
     #if os(OSX)
+    
+    // MARK: - Mouse Events
+    
     /**
-     Returns a mouse event location.
+     Returns a mouse event location in the current layer.
 
      - parameter event: `NSEvent` mouse event location.
      - returns: `CGPoint` converted point in layer coordinate system.
@@ -376,7 +390,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
 
     /**
-     Returns the tile coordinate for a touch location.
+     Returns the tile coordinate at a mouse event location.
 
      - parameter event: `NSEvent` mouse event location.
      - returns: `CGPoint` converted point in layer coordinate system.
@@ -446,7 +460,6 @@ open class TiledLayerObject: SKNode, SKTiledObject {
 
         screenPoint.x += tileOffsetX
         screenPoint.y += tileOffsetY
-
         return floor(point: screenPoint.invertedY)
     }
 
@@ -458,7 +471,6 @@ open class TiledLayerObject: SKNode, SKTiledObject {
      */
     open func coordinateForPoint(_ point: CGPoint) -> CGPoint {
         return screenToTileCoords(point.invertedY)
-        //return floor(point: coordinate)
     }
 
     /**
@@ -885,7 +897,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
  
  ## Overview ##
  
- The `SKTileLayer` class is a container for an array of tiles (sprites). Tiles maintain a link to the map's tileset via their `SKTilesetData` property.
+ Subclass of `TiledLayerObject`, the tile layer is a container for an array of tiles (sprites). Tiles maintain a link to the map's tileset via their `SKTilesetData` property.
  
  ## Usage ##
 
@@ -913,7 +925,7 @@ open class SKTileLayer: TiledLayerObject {
     open var graphName: String
     
     /// Tuple of layer render statistics.
-    override open var renderStatistics: renderInfo {
+    override internal var renderStatistics: renderInfo {
         var current = super.renderStatistics
         current.tc = tileCount
         if let graph = graph {
@@ -921,7 +933,8 @@ open class SKTileLayer: TiledLayerObject {
         }
         return current
     }
-
+    
+    /// Debug visualization options.
     override open var debugDrawOptions: DebugDrawOptions {
         didSet {
             guard oldValue != debugDrawOptions else { return }
@@ -1520,7 +1533,7 @@ open class SKObjectGroup: TiledLayerObject {
     /**
      Returns a tuple of render stats used for debugging.
      */
-    override open var renderStatistics: renderInfo {
+    override internal var renderStatistics: renderInfo {
         var current = super.renderStatistics
         current.obj = count
         return current
@@ -1539,7 +1552,8 @@ open class SKObjectGroup: TiledLayerObject {
             }
         }
     }
-
+    
+    /// Debug visualization options.
     override open var debugDrawOptions: DebugDrawOptions {
         didSet {
             guard oldValue != debugDrawOptions else { return }
@@ -1935,9 +1949,17 @@ internal class BackgroundLayer: TiledLayerObject {
  
  ## Overview ##
  
- The `SKGroupLayer` object is a container for managing groups of layers.
+ Subclass of `TiledLayerObject`, the group layer is a container for managing groups of layers.
 
  ## Usage ##
+ 
+ Query child layers:
+ 
+ ```swift
+ for child in group.layers {
+    child.showGrid = true
+ }
+ ```
  
  Add layers to the group with:
 
@@ -2028,8 +2050,9 @@ open class SKGroupLayer: TiledLayerObject {
      Add a layer to the layers set. Automatically sets zPosition based on the tilemap zDeltaForLayers attributes.
 
      - parameter layer:  `TiledLayerObject` layer object.
+     - returns: `(success: Bool, layer: TiledLayerObject)` tuple of boolean value/layer object.
      */
-    open func addLayer(_ layer: TiledLayerObject) {
+    open func addLayer(_ layer: TiledLayerObject) -> (success: Bool, layer: TiledLayerObject) {
         let nextZPosition = (_layers.count > 0) ? (tilemap.zDeltaForLayers / 2) * CGFloat(_layers.count) : 0
 
         // set the layer index
@@ -2038,7 +2061,6 @@ open class SKGroupLayer: TiledLayerObject {
         let (success, inserted) = _layers.insert(layer)
         if (success == false) {
             print("[SKGroupLayer]: ERROR adding layer: \"\(inserted.layerName)\"")
-            return
         }
         
         addChild(layer)
@@ -2049,6 +2071,9 @@ open class SKGroupLayer: TiledLayerObject {
         layer.frameColor = frameColor
         layer.highlightColor = highlightColor
         layer.loggingLevel = loggingLevel
+        layer.ignoreProperties = ignoreProperties
+        
+        return (success, inserted)
     }
 
     /**
@@ -2129,7 +2154,7 @@ extension TiledLayerObject {
     public func pointForCoordinate(_ x: Int, _ y: Int, offsetX: CGFloat=0, offsetY: CGFloat=0) -> CGPoint {
         return self.pointForCoordinate(coord: CGPoint(x: CGFloat(x), y: CGFloat(y)), offsetX: offsetX, offsetY: offsetY)
     }
-
+    
     /**
      Returns a point for a given coordinate in the layer.
 
@@ -2242,10 +2267,14 @@ extension TiledLayerObject {
         return result
     }
 
-    /// Returns an array of tile and objects.
+    /**
+     Returns an array of tiles/objects.
+     
+     - returns: `[SKNode]` array of child objects.
+     */
     open func renderableObjects() -> [SKNode] {
         var result: [SKNode] = []
-        enumerateChildNodes(withName: "*") { // was //*
+        enumerateChildNodes(withName: "*") {
             node, stop in
             if (node as? SKTile != nil) || (node as? SKTileObject != nil) {
                 result.append(node)

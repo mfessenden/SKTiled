@@ -95,6 +95,8 @@
 		4C628F091F3E347A00FCF929 /* replaceColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4C628F071F3E347A00FCF929 /* replaceColor.fsh */; };
 		4C628F0A1F3E347A00FCF929 /* replaceColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4C628F071F3E347A00FCF929 /* replaceColor.fsh */; };
 		4C628F0B1F3E347A00FCF929 /* replaceColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4C628F071F3E347A00FCF929 /* replaceColor.fsh */; };
+		4C628F161F3EFA7400FCF929 /* User in Resources */ = {isa = PBXBuildFile; fileRef = 4C628F151F3EFA7400FCF929 /* User */; };
+		4C628F171F3EFA7400FCF929 /* User in Resources */ = {isa = PBXBuildFile; fileRef = 4C628F151F3EFA7400FCF929 /* User */; };
 		4C6FB8A71F1E5D2800A57964 /* pacman-8x8.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6FB8A41F1E5D2800A57964 /* pacman-8x8.tmx */; };
 		4C6FB8A81F1E5D2800A57964 /* pacman-8x8.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6FB8A41F1E5D2800A57964 /* pacman-8x8.tmx */; };
 		4C6FB8A91F1E5D2800A57964 /* pm-maze-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6FB8A51F1E5D2800A57964 /* pm-maze-8x8.tsx */; };
@@ -244,6 +246,7 @@
 		4C5812671E255E7300E80BFC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C5812681E255E7300E80BFC /* SKTiled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTiled.h; sourceTree = "<group>"; };
 		4C628F071F3E347A00FCF929 /* replaceColor.fsh */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = sourcecode.glsl; path = replaceColor.fsh; sourceTree = "<group>"; };
+		4C628F151F3EFA7400FCF929 /* User */ = {isa = PBXFileReference; lastKnownFileType = folder; path = User; sourceTree = "<group>"; };
 		4C6A1E1B1DAC19B1001F2E92 /* graphtest-8x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "graphtest-8x8.tsx"; path = "Resources/graphtest-8x8.tsx"; sourceTree = SOURCE_ROOT; };
 		4C6FB8A41F1E5D2800A57964 /* pacman-8x8.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "pacman-8x8.tmx"; sourceTree = "<group>"; };
 		4C6FB8A51F1E5D2800A57964 /* pm-maze-8x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "pm-maze-8x8.tsx"; sourceTree = "<group>"; };
@@ -474,6 +477,7 @@
 		4CBA617F1D8A0A4600B31FC1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4C628F151F3EFA7400FCF929 /* User */,
 				4CD5229E1DA624C400D78D81 /* CREDITS */,
 				4C6FB8A41F1E5D2800A57964 /* pacman-8x8.tmx */,
 				4CF452021F3D1287008BA678 /* tetris-dynamics.tmx */,
@@ -808,6 +812,7 @@
 				4C0924F11F127DC0009CA37E /* tetris-layer4-336x240.png in Resources */,
 				4CA6E5341F393F6D00612A1C /* barrels-12x10 in Resources */,
 				4C0924D71F127DC0009CA37E /* tetris-bar-32x8.tsx in Resources */,
+				4C628F161F3EFA7400FCF929 /* User in Resources */,
 				4CF0FEA21F34EF27000AADEF /* Assets.xcassets in Resources */,
 				4C4184961F341241004E392A /* pacman-16x16.tsx in Resources */,
 				4CF040C41F3112C700D8AFFC /* roguelike-16x16.tsx in Resources */,
@@ -884,6 +889,7 @@
 				4C0924E61F127DC0009CA37E /* square-8x8.png in Resources */,
 				4CF452041F3D1287008BA678 /* tetris-dynamics.tmx in Resources */,
 				4C628F0B1F3E347A00FCF929 /* replaceColor.fsh in Resources */,
+				4C628F171F3EFA7400FCF929 /* User in Resources */,
 				4CA6E54C1F393F7700612A1C /* dk-fonts-8x8.tsx in Resources */,
 				4C4184941F3411DE004E392A /* pacman-16x16 in Resources */,
 				4C4184921F3411DE004E392A /* mspacman-16x16 in Resources */,

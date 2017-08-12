@@ -12,38 +12,43 @@ import SpriteKit
  
  ## Overview ##
  
- The `SKTiledObject` protocol defines a basic data structure for holding & parsing custom Tiled properties. Objects conforming to this protocol support custom properties that are parsed automatically from the Tiled scene.
+ The `SKTiledObject` protocol defines a basic data structure for mapping custom Tiled properties to SpriteKit objects. Objects conforming to this protocol will automatically receive properties from the Tiled scene, unless supressed by setting the object's `ignoreProperties` property.
  
  ## Usage ##
  
  ```swift
+ // query a Tiled string property
  if let name = obj.stringForKey("name") {
     obj.name = name
  }
+ 
+ // query a boolean property
+ let isDynamic = object.boolForKey("isDynamic") == true
  ```
  
  ### Properties ###
 
+ ```swift
   SKTiledObject.uuid              // unique object id.
   SKTiledObject.type              // object type.
   SKTiledObject.properties        // dictionary of object properties.
   SKTiledObject.ignoreProperties  // ignore custom properties.
   SKTiledObject.renderQuality     // resolution multiplier value.
-
+ ```
  */
 public protocol SKTiledObject: class {
     /// Unique id (layer & object names may not be unique).
     var uuid: String { get set }
-    /// Object type
+    /// Object type.
     var type: String! { get set }
-    /// Properties shared by most objects.
+    /// Storage for custom Tiled properties.
     var properties: [String: String] { get set }
-    /// Ignore properties
+    /// Ignore custom properties.
     var ignoreProperties: Bool { get set }
     /// Parse function (with optional completion block).
     func parseProperties(completion: (() -> ())?)
     /// Render quality property.
-    var renderQuality: CGFloat { get }
+    var renderQuality: CGFloat { get }   // TODO: this is really a geometry property
 }
 
 

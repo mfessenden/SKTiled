@@ -67,15 +67,13 @@ class GameViewController: NSViewController {
 
         debugInfoLabel?.isHidden = true
 
-        let preloadedTilesets: [SKTileset] = []
-
         /* create the game scene */
         let scene = SKTiledDemoScene(size: self.view.bounds.size)
         scene.scaleMode = .aspectFill
         skView.presentScene(scene)
         scene.setup(tmxFile: currentURL.relativePath,
                     inDirectory: nil,
-                    withTilesets: preloadedTilesets,
+                    withTilesets: [],
                     ignoreProperties: false,
                     buildGraphs: true,
                     loggingLevel: loggingLevel)

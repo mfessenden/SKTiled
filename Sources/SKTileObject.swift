@@ -103,7 +103,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     /// Object type
     open var type: String!
 
-    internal var alignment: Alignment = .bottomLeft         // object alignment
+    internal var alignment: TileAlignmentHint = .bottomLeft // object alignment
     internal var objectType: ObjectType = .rectangle        // shape type
     internal var points: [CGPoint] = []                     // points that describe the object's shape
     internal var tile: SKTile? = nil                        // optional tile
@@ -206,7 +206,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
      - parameter height: `CGFloat`      object size height.
      - parameter type:   `ObjectType`   object shape type.
      */
-    public init(width: CGFloat, height: CGFloat, type: ObjectType = .rectangle){
+    required public init(width: CGFloat, height: CGFloat, type: ObjectType = .rectangle){
         super.init()
 
         // Rectangular and ellipse objects get initial points.
@@ -223,7 +223,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         drawObject()
     }
 
-    public init?(attributes: [String: String]) {
+    required public init?(attributes: [String: String]) {
         // required attributes
         guard let objectID = attributes["id"],
                 let xcoord = attributes["x"],
@@ -290,7 +290,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
      - parameter tileID: `Int` tile id.
      - parameter layer:  `SKObjectGroup` object group.
      */
-    public init(gid: Int, layer: SKObjectGroup){
+    required public init(gid: Int, layer: SKObjectGroup){
         super.init()
         self.gid = gid
         self.layer = layer

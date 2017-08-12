@@ -11,7 +11,10 @@ import SpriteKit
 
 
 /**
- The `SKTileset` class manages a set of `SKTilesetData` objects, which store tile data including global id and texture.
+ 
+ ## Overview ##
+ 
+ The tileset class manages a set of `SKTilesetData` objects, which store tile data including global id and texture.
  
  Tile data is accessed via the local id:
  
@@ -62,13 +65,11 @@ open class SKTileset: SKTiledObject {
     /// Returns the last GID in the tileset
     open var lastGID: Int { return tileData.map { $0.id }.max() ?? firstGID }
     
-    
     /// Returns the difference in tile size vs. map tile size.
-    open var mapOffset: CGPoint {
+    internal var mapOffset: CGPoint {
         guard let tilemap = tilemap else { return .zero }
-        // 24 - 8, 16 - 8
         return CGPoint(x: tileSize.width - tilemap.tileSize.width, y: tileSize.height - tilemap.tileSize.height)
-            }
+    }
     
     /// Scaling value for text objects, etc.
     open var renderQuality: CGFloat = 8 {
@@ -294,6 +295,7 @@ open class SKTileset: SKTiledObject {
         
         texture.filteringMode = .nearest
         let data = SKTilesetData(id: tileID, texture: texture, tileSet: self)
+        data.ignoreProperties = ignoreProperties
         self.tileData.insert(data)
         data.parseProperties(completion: nil)
         return data
@@ -319,6 +321,7 @@ open class SKTileset: SKTiledObject {
         let texture = SKTexture(imageNamed: source)
         texture.filteringMode = .nearest
         let data = SKTilesetData(id: tileID, texture: texture, tileSet: self)
+        data.ignoreProperties = ignoreProperties
         // add the image name to the source attribute
         data.source = source
         self.tileData.insert(data)

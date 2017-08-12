@@ -8,19 +8,22 @@
 
 import SpriteKit
 
-
-
 /**
- Custom sprite type for rendering tile objects. Tile data (including texture) stored in `SKTilesetData` property.
+ 
+ ## Overview ##
+ 
+ The `SKTile` class is a custom SpriteKit sprite that references data from a tileset.
+ 
+ Tile data (including texture) is stored in `SKTilesetData` property.
  */
 public class SKTile: SKSpriteNode {
     /// Tile size.
     open var tileSize: CGSize
-    /// Reference to the parent layer.
-    weak public var layer: SKTileLayer!
-    /// Tile data reference.
+    /// Tileset tile data.
     open var tileData: SKTilesetData
-    
+    /// Weak reference to the parent layer.
+    weak public var layer: SKTileLayer!
+
     // MARK: Overlap
     fileprivate var tileOverlap: CGFloat = 1.5          // tile overlap amount
     fileprivate var maxOverlap: CGFloat = 3.0           // maximum tile overlap
@@ -40,67 +43,11 @@ public class SKTile: SKSpriteNode {
     open var physicsShape: PhysicsShape = .none
     
     /// Tile alignment.
-    open var alignment: Alignment = .bottomLeft
+    open var alignment: TileAlignmentHint = .bottomLeft
     
     /// Returns the bounding box of the shape.
     open var bounds: CGRect {
         return CGRect(x: 0, y: 0, width: tileSize.width, height: -tileSize.height)
-    }
-    
-    /// Opacity value of the tile
-    open var opacity: CGFloat {
-        get {
-            return self.alpha
-        }
-        set {
-            self.alpha = newValue
-        }
-    }
-    
-    /// Visibility value of the tile
-    open var visible: Bool {
-        get {
-            return !self.isHidden
-        }
-        set {
-            self.isHidden = !newValue
-        }
-    }
-    
-    /// Boolean flag to enable/disable texture filtering.
-    open var smoothing: Bool {
-        get {
-            return texture?.filteringMode != .nearest
-        }
-        set {
-            texture?.filteringMode = newValue ? SKTextureFilteringMode.linear : SKTextureFilteringMode.nearest
-        }
-    }
-    
-    /// Show/hide the tile's bounding shape.
-    open var showBounds: Bool {
-        get {
-            return (childNode(withName: "BOUNDS") != nil) ? childNode(withName: "BOUNDS")!.isHidden == false : false
-        }
-        set {
-            childNode(withName: "BOUNDS")?.removeFromParent()
-            
-            if (newValue == true) {
-                
-                // draw the tile boundary shape
-                drawBounds()
-                
-                guard let frameShape = childNode(withName: "BOUNDS") else { return }
-                
-                if (highlightDuration > 0) {
-                    let fadeAction = SKAction.fadeOut(withDuration: highlightDuration)
-                    frameShape.run(fadeAction, completion: {
-                        frameShape.removeFromParent()
-    
-                    })
-                }
-            }
-        }
     }
     
     // MARK: - Init
@@ -425,7 +372,9 @@ public class SKTile: SKSpriteNode {
         xScale = newXScale
         yScale = newYScale
     }
-
+    
+    //MARK: - Geometry
+    
     /**
      Returns the points of the tile's shape.
      
@@ -595,7 +544,53 @@ public class SKTile: SKSpriteNode {
     
         
 extension SKTile {
-        
+    
+    /// Opacity value of the tile
+    open var opacity: CGFloat {
+        get {
+            return self.alpha
+        }
+        set {
+            self.alpha = newValue
+        }
+    }
+    
+    /// Visibility value of the tile
+    open var visible: Bool {
+        get {
+            return !self.isHidden
+        }
+        set {
+            self.isHidden = !newValue
+        }
+    }
+    
+    /// Show/hide the tile's bounding shape.
+    open var showBounds: Bool {
+        get {
+            return (childNode(withName: "BOUNDS") != nil) ? childNode(withName: "BOUNDS")!.isHidden == false : false
+        }
+        set {
+            childNode(withName: "BOUNDS")?.removeFromParent()
+            
+            if (newValue == true) {
+                
+                // draw the tile boundary shape
+                drawBounds()
+                
+                guard let frameShape = childNode(withName: "BOUNDS") else { return }
+                
+                if (highlightDuration > 0) {
+                    let fadeAction = SKAction.fadeOut(withDuration: highlightDuration)
+                    frameShape.run(fadeAction, completion: {
+                        frameShape.removeFromParent()
+                        
+                    })
+                }
+            }
+        }
+    }
+    
     /// Tile description.
     override public var description: String {
         let layerDescription = (layer != nil) ? ", Layer: \"\(layer.layerName)\"" : ""

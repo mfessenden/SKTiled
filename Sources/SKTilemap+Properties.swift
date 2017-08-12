@@ -143,10 +143,6 @@ public extension SKTilemap {
                 }
             }
             
-            if (lattr == "cropatboundary") {
-                cropAtBoundary = boolForKey(attr)
-            }
-            
             if (lattr == "overlaycolor") {
                 overlayColor = SKColor(hexString: value)
             }
@@ -288,7 +284,6 @@ public extension SKTileLayer {
             // walkable types
             if (lattr == "walkabletypes") {
                 walkableTypes = stringArrayForKey("walkableTypes", separatedBy: ",")
-                //print("❊ walkable types: \(walkableTypes)")
             }
         }
     }
@@ -339,6 +334,10 @@ public extension SKTileObject {
         for (attr, value) in properties {
             
             let lattr = attr.lowercased()
+            
+            if (lattr == "nodeclass") {
+                print(" ❊ object node class: \"\(value)\"")
+            }
             
             if (lattr == "color") {
                 setColor(hexString: value)

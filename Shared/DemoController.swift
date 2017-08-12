@@ -22,8 +22,9 @@ open class DemoController: NSObject {
     
     weak open var view: SKView?
     
-    /// debug visualizations
+    /// Logging verbosity.
     open var loggingLevel: LoggingLevel = SKTiledLoggingLevel
+    /// Debug visualization options.
     open var debugDrawOptions: DebugDrawOptions = []
     
     /// tiled resources
@@ -60,7 +61,7 @@ open class DemoController: NSObject {
         
         // scan for resources
         if let rpath = Bundle.main.resourceURL {
-            roots.append(rpath)
+            self.addRoot(url: rpath)
         }
         
         scanForResourceTypes()
@@ -112,7 +113,7 @@ open class DemoController: NSObject {
         var resourcesAdded = 0
         
         for root in roots {
-            let urls = fm.listFiles(path: root.path, withExtensions: resourceTypes)
+            let urls = fm.listFiles(path: root.path, withExtensions: resourceTypes, loggingLevel: loggingLevel)
             resources.append(contentsOf: urls)
             resourcesAdded += urls.count
         }
@@ -208,7 +209,7 @@ open class DemoController: NSObject {
             view.presentScene(nextScene, transition: transition)
             nextScene.isPaused = isPaused
             
-            nextScene.setup(tmxFile: url.lastPathComponent,
+            nextScene.setup(tmxFile: url.relativePath,
                             inDirectory: (url.baseURL == nil) ? nil : url.baseURL!.path,
                             withTilesets: [],
                             ignoreProperties: false,
@@ -228,6 +229,19 @@ open class DemoController: NSObject {
             
             let sceneInfo = ["hasGraphs": nextScene.graphs.count > 0, "hasObjects": nextScene.tilemap.getObjects().count > 0]
             NotificationCenter.default.post(name: Notification.Name(rawValue: "updateUIControls"), object: nil, userInfo: sceneInfo)
+            
+            
+
+                
+            guard let tilemap = nextScene.tilemap else { return }
+            
+            let topLevelLayers = tilemap.getLayers(recursive: false)
+            print(topLevelLayers.map { $0.layerName })
+            
+            let allLayers = tilemap.getLayers(recursive: true)
+            print(allLayers.map { $0.layerName })
+            
+            
         }
     }
     

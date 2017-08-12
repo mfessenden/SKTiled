@@ -130,7 +130,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
         self.loggingLevel = loggingLevel
         
         
-        print("[SKTilemapParser]: logging level: \(loggingLevel)")
+        print("[SKTilemapParser]: DEBUG: file name: \"\(tmxFile)\"")
 
         // if a directory is passed, use that as the root path, otherwise default to bundle's resource
         if let resourceURL = Bundle.main.resourceURL {
@@ -262,6 +262,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
         self.mapDelegate = delegate
         self.timer = Date()
         self.loggingLevel = loggingLevel
+        self.ignoreProperties = noparse
         
         // if a directory is passed, use that as the root path, otherwise default to bundle's resource
         if let resourceURL = Bundle.main.resourceURL {
@@ -584,6 +585,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
                         // create a new tileset
                         let tileset = SKTileset(source: source, firstgid: firstGID, tilemap: self.tilemap)
                         tileset.loggingLevel = self.loggingLevel
+                        tileset.ignoreProperties = self.ignoreProperties
 
                         // add tileset to external file list (full file name)
                         tilesets[externalTileset.path] = tileset
@@ -632,6 +634,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
                     // create inline tileset
                     guard let tileset = SKTileset(attributes: attributeDict) else { parser.abortParsing(); return }
                     tileset.loggingLevel = self.loggingLevel
+                    tileset.ignoreProperties = self.ignoreProperties
 
                     // add the tileset to the tilemap (if it exists)
                     self.tilemap?.addTileset(tileset)
@@ -892,7 +895,10 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
 
             // adding a group to object layer
             if let objectGroup = lastElement as? SKObjectGroup {
-                guard let tileObject = SKTileObject(attributes: attributeDict) else {
+                
+                let Object = tilemap.delegate != nil ? tilemap.delegate!.objectForTileObject(className: nil) : SKTileObject.self
+                
+                guard let tileObject = Object.init(attributes: attributeDict) else {
                     print("[SKTilemapParser]: \(parsingMode) parser: Error creating object.")
                     parser.abortParsing()
                     return

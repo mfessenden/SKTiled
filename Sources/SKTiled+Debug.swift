@@ -69,6 +69,7 @@ internal class TiledDebugDrawNode: SKNode {
         }
     }
     
+    /// Debug visualization options.
     var debugDrawOptions: DebugDrawOptions {
         return layer.debugDrawOptions
     }
@@ -129,7 +130,6 @@ internal class TiledDebugDrawNode: SKNode {
         if (verbose == true){
             print("[TiledDebugDrawNode]: debug options: \(debugDrawOptions.rawValue), hidden: \(isHidden)")
         }
-        
         
         if self.debugDrawOptions.contains(.drawGrid) {
             self.drawGrid()

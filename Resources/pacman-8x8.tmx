@@ -50,6 +50,9 @@
   <objectgroup name="Objects">
    <object id="111" name="apple" gid="651" x="104" y="172" width="16" height="16" visible="0"/>
    <object id="115" name="ready-label" x="88" y="160" width="48" height="8">
+    <properties>
+     <property name="nodeClass" value="FruitLabel"/>
+    </properties>
     <text fontfamily="Nintendo-Arcade" pixelsize="7" wrap="1" color="#fc0006">ready!</text>
    </object>
   </objectgroup>

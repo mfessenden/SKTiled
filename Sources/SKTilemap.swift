@@ -36,30 +36,7 @@ internal enum TiledObjectColors: String {
 }
 
 
-/**
- 
- ## Overview ##
- 
- Describes the map's tile orientation (shape).
-
- - `orthogonal`:   map is orthogonal type.
-
-    ![Orthogonal Map](../Images/orthogonal_mapping.png "Orthogonal Map")
-
- - `isometric`:    map is isometric type.
-
-    ![Isometric Map](../Images/isometric_mapping.png "Isometric Map")
-
- - `hexagonal`:    map is hexagonal type.
-
-    ![Hexagonal Map](../Images/hexagonal_mapping.png "Hexagonal Map")
-
- - `staggered`:    map is isometric staggered type.
-
-    ![Staggered Map](../Images/staggered_mapping.png "Staggered Isometric Map")
- */
-
-
+/// Object rendering order.
 internal enum RenderOrder: String {
     case rightDown  = "right-down"
     case rightUp    = "right-up"
@@ -68,9 +45,7 @@ internal enum RenderOrder: String {
 }
 
 
-/**
- Tilemap data encoding.
- */
+/// Tilemap data encoding.
 internal enum TilemapEncoding: String {
     case base64  = "base64"
     case csv     = "csv"
@@ -92,10 +67,8 @@ internal enum LayerPosition {
 }
 
 
-/**
- Object alignment.
- */
-public enum Alignment: Int {
+// Tile alignment hint.
+public enum TileAlignmentHint: Int {
     case topLeft
     case top
     case topRight
@@ -180,6 +153,7 @@ public protocol SKTilemapDelegate: class {
     func didRenderMap(_ tilemap: SKTilemap)
     func didAddPathfindingGraph(_ graph: GKGridGraph<GKGridGraphNode>)
     func objectForTile(className: String?) -> SKTile.Type
+    func objectForTileObject(className: String?) -> SKTileObject.Type
     func objectForGraphNode(className: String?) -> GKGridGraphNode.Type
 }
 
@@ -228,7 +202,6 @@ open class SKTilemap: SKNode, SKTiledObject {
     /// Logging verbosity.
     internal var loggingLevel: LoggingLevel = SKTiledLoggingLevel
     
-    
     internal var maxRenderQuality: CGFloat = 16                   // max render quality
     /// Scaling value for text objects, etc.
     open var renderQuality: CGFloat = 8 {                         // object render quality.
@@ -236,10 +209,6 @@ open class SKTilemap: SKNode, SKTiledObject {
             guard renderQuality != oldValue else { return }
             layers.forEach { $0.renderQuality = renderQuality.clamped(1, maxRenderQuality) }
         }
-    }
-
-    open var isPortrait: Bool {
-        return sizeInPoints.height > sizeInPoints.width
     }
 
     // hexagonal
@@ -256,7 +225,7 @@ open class SKTilemap: SKNode, SKTiledObject {
     open var minZoom: CGFloat = 0.2
     open var maxZoom: CGFloat = 5.0
 
-    // current tile sets
+    /// Current tilesets.
     open var tilesets: Set<SKTileset> = []                        // tilesets
 
     // current layers
@@ -266,9 +235,10 @@ open class SKTilemap: SKNode, SKTiledObject {
     open var zDeltaForLayers: CGFloat = 50                        // z-position range for layers
     open var bufferSize: CGFloat = 4.0
 
-    /// ignore Tiled background color
+    /// Ignore Tiled background color.
     open var ignoreBackground: Bool = false
-    open var ignoreProperties: Bool = false                     // ignore custom properties
+    /// Ignore custom properties.
+    open var ignoreProperties: Bool = false
 
     /// Returns true if all of the child layers are rendered.
     internal var isRendered: Bool {
@@ -292,28 +262,15 @@ open class SKTilemap: SKNode, SKTiledObject {
         }
     }
 
-    /// Crop the tilemap at the map edges.
-    open var cropAtBoundary: Bool = false {
-        didSet {
-            //if let currentMask = maskNode { currentMask.removeFromParent() }
-            //maskNode = (cropAtBoundary == true) ? SKSpriteNode(color: SKColor.black, size: self.sizeInPoints) : nil
-            //(maskNode as? SKSpriteNode)?.texture?.filteringMode = .nearest
-        }
-    }
-
-    /**
-    The tile map default base layer, used for displaying the current grid, getting coordinates, etc.
-    */
+    /// The tile map default layer, used for displaying the current grid, getting coordinates, etc.
     lazy var baseLayer: BackgroundLayer = {
         let layer = BackgroundLayer(tilemap: self)
         self.addLayer(layer)
         layer.didFinishRendering()
         return layer
     }()
-
-    /**
-     Pause overlay.
-     */
+    
+    /// Pause overlay.
     lazy var overlay: SKSpriteNode = {
         let pauseOverlayColor = SKColor.clear // self.backgroundColor ?? SKColor.clear
         let overlayNode = SKSpriteNode(color: pauseOverlayColor, size: self.sizeInPoints)
@@ -322,7 +279,7 @@ open class SKTilemap: SKNode, SKTiledObject {
         return overlayNode
     }()
 
-    /// Debug options.
+    /// Debug visualization options.
     open var debugDrawOptions: DebugDrawOptions = [] {
         didSet {
             getLayers().forEach { $0.debugDrawOptions = debugDrawOptions }
@@ -332,13 +289,14 @@ open class SKTilemap: SKNode, SKTiledObject {
     /// Overlay color.
     open var overlayColor: SKColor = SKColor(hexString: "#40000000")
     
-    /// Object color.
+    // MARK - Object Colors
     open var objectColor: SKColor = SKColor.gray
     open var color: SKColor = SKColor.clear                            // used for pausing
     open var gridColor: SKColor = SKColor.black                        // color used to visualize the tile grid
     open var frameColor: SKColor = SKColor.blue                        // bounding box color
     open var highlightColor: SKColor = SKColor.green                   // color used to highlight tiles
-    open var autoResize: Bool = false                                  // indicates map should auto-resize when view changes
+    
+    internal var autoResize: Bool = false                              // indicates map should auto-resize when view changes
 
     /// dynamics
     open var gravity: CGVector = CGVector.zero
@@ -753,8 +711,9 @@ open class SKTilemap: SKNode, SKTiledObject {
      Add a layer to the current layers set. Automatically sets zPosition based on the zDeltaForLayers attributes.
 
      - parameter layer:  `TiledLayerObject` layer object.
+     - returns: `(success: Bool, layer: TiledLayerObject)` tuple of boolean value/layer object.
      */
-    open func addLayer(_ layer: TiledLayerObject) {
+    open func addLayer(_ layer: TiledLayerObject) -> (success: Bool, layer: TiledLayerObject){
 
         let nextZPosition = (_layers.count > 0) ? zDeltaForLayers * CGFloat(_layers.count + 1) : zDeltaForLayers
 
@@ -765,7 +724,6 @@ open class SKTilemap: SKNode, SKTiledObject {
         let (success, inserted) = _layers.insert(layer)
         if (success == false) {
             print("[SKGroupLayer]: ERROR adding layer: \"\(inserted.layerName)\"")
-            return
         }
         
         // add the layer as a child
@@ -782,6 +740,8 @@ open class SKTilemap: SKNode, SKTiledObject {
         layer.frameColor = frameColor
         layer.highlightColor = highlightColor
         layer.loggingLevel = loggingLevel
+        layer.ignoreProperties = ignoreProperties
+        return (success, inserted)
     }
 
     /**
@@ -789,15 +749,13 @@ open class SKTilemap: SKNode, SKTiledObject {
 
      - parameter layer: `TiledLayerObject` layer to add.
      - parameter group: `SKGroupLayer?` optional group layer.
-     - returns: `TiledLayerObject` added layer.
+     - returns: `(success: Bool, layer: TiledLayerObject)` tuple of boolean value/layer object.
      */
-    open func addLayer(_ layer: TiledLayerObject, group: SKGroupLayer? = nil) -> TiledLayerObject {
+    open func addLayer(_ layer: TiledLayerObject, group: SKGroupLayer? = nil)  -> (success: Bool, layer: TiledLayerObject) {
         if (group == nil) {
-            addLayer(layer)
-        } else {
-            group!.addLayer(layer)
+            return addLayer(layer)
         }
-        return layer
+        return group!.addLayer(layer)
     }
 
     /**
@@ -1533,17 +1491,22 @@ extension LayerPosition: CustomStringConvertible {
 
 
 extension SKTilemap {
-
+    
     /// Return a string representing the map name.
     public var mapName: String {
         return self.name ?? "null"
     }
-
+    
+    /// Auto-sizing property for map orientation.
+    internal var isPortrait: Bool {
+        return sizeInPoints.height > sizeInPoints.width
+    }
+    
     /// convenience properties
     public var width: CGFloat { return size.width }
     public var height: CGFloat { return size.height }
 
-    /// Returns the current tile width
+    /// Current tile width value.
     public var tileWidth: CGFloat {
         switch orientation {
         case .staggered:
@@ -1553,7 +1516,7 @@ extension SKTilemap {
         }
     }
 
-    /// Returns the current tile height
+    /// Current tile height value.
     public var tileHeight: CGFloat {
         switch orientation {
         case .staggered:
@@ -1581,8 +1544,7 @@ extension SKTilemap {
     // coordinate grid values for hex/staggered
     public var columnWidth: CGFloat { return sideOffsetX + sideLengthX }
     public var rowHeight: CGFloat { return sideOffsetY + sideLengthY }
-    
-    // MARK: - Hexagonal / Staggered methods
+        
     /**
      Returns true if the given x-coordinate represents a staggered (offset) column.
 
@@ -1675,7 +1637,7 @@ extension SKTilemap {
     }
 
     override open var debugDescription: String { return description }
-
+    
     /**
      Returns an array of tiles/objects.
 
@@ -1683,7 +1645,7 @@ extension SKTilemap {
      */
     open func renderableObjects() -> [SKNode] {
         var result: [SKNode] = []
-        enumerateChildNodes(withName: "*") {   // was //*
+        enumerateChildNodes(withName: "*") {
             node, stop in
             if (node as? SKTile != nil) || (node as? SKTileObject != nil) {
                 result.append(node)
@@ -1805,6 +1767,7 @@ extension SKTilemapDelegate {
      - parameter tilemap:  `SKTilemap` tilemap instance.
      */
     public func didBeginParsing(_ tilemap: SKTilemap) {}
+    
     /**
      Called when a tileset is added to a map.
 
@@ -1818,33 +1781,49 @@ extension SKTilemapDelegate {
      - parameter layer:  `TiledLayerObject` tilemap instance.
      */
     public func didAddLayer(_ layer: TiledLayerObject) {}
+    
     /**
      Called when the tilemap is finished parsing.
 
      - parameter tilemap:  `SKTilemap` tilemap instance.
      */
     public func didReadMap(_ tilemap: SKTilemap) {}
+    
     /**
      Called when the tilemap layers are finished rendering.
 
      - parameter tilemap:  `SKTilemap` tilemap instance.
      */
     public func didRenderMap(_ tilemap: SKTilemap, _ completion: (()->())? = nil) {}
+    
     /**
      Called when the a pathfinding graph is built for a layer.
 
      - parameter graph: `GKGridGraph<GKGridGraphNode>` graph instance.
      */
     public func didAddPathfindingGraph(_ graph: GKGridGraph<GKGridGraphNode>) {}
+    
     /**
-     Returns a tile object for use in tile layers.
+     Specify a custom tile object for use in tile layers.
 
      - parameter className:    `String` optional class name.
      - returns `SKTile.self`:  `SKTile` subclass.
      */
     public func objectForTile(className: String? = nil) -> SKTile.Type { return SKTile.self }
+    
     /**
-     Returns a graph node for use in pathfinding graphs.
+     Specify a custom object for use in object groups.
+     
+     - parameter className:         `String` optional class name.
+     - returns `SKTileObject.self`: `SKTileObject` subclass.
+     */
+    public func objectForTileObject(className: String? = nil) -> SKTileObject.Type {
+        print(" ❊ querying custom class: \"\(className)\"")
+        return SKTileObject.self
+    }
+    
+    /**
+     Specify a custom graph node object for use in pathfinding graphs.
 
      - parameter className:    `String` optional class name.
      - returns `GKGridGraphNode.Type`:  `GKGridGraphNode` node type.
@@ -1864,6 +1843,22 @@ extension SKTilemap: TiledSceneCameraDelegate {
 // MARK: - Deprecated
 
 extension SKTilemap {
+    
+    /**
+     Load a Tiled tmx file and return a new `SKTilemap` object. Returns nil if there is a problem reading the file
+     
+     - parameter filename:    `String` Tiled file name.
+     - parameter delegate:    `SKTilemapDelegate?` optional [`SKTilemapDelegate`](Protocols/SKTilemapDelegate.html) instance.
+     - parameter withTilesets `[SKTileset]?` optional tilesets.
+     - returns: `SKTilemap?` tilemap object (if file read succeeds).
+     */
+    @available(*, deprecated, renamed: "SKTilemap.load(tmxFile:)")
+    open class func load(fromFile filename: String,
+                         delegate: SKTilemapDelegate? = nil,
+                         withTilesets: [SKTileset]? = nil) -> SKTilemap? {
+        
+        return SKTilemap.load(tmxFile: filename, inDirectory: nil, delegate: delegate, withTilesets: withTilesets)
+    }
 
     /**
      Returns an array of all child layers, sorted by index (first is lowest, last is highest).

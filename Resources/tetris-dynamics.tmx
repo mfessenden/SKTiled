@@ -277,7 +277,7 @@
    <image source="tetris-layer3-336x240.png" width="336" height="240"/>
   </imagelayer>
  </group>
- <objectgroup name="Collisions">
+ <objectgroup name="Collisions" visible="0">
   <object id="43" name="right-floor" x="104" y="200" width="16" height="8">
    <properties>
     <property name="isCollider" type="bool" value="true"/>
