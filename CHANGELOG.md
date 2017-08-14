@@ -64,6 +64,7 @@ Change Log
 - add `SKObjectGroup.getObjects(withText:)`
 - add `SKTilemap.getObjects(withText:)`
 - add `SKTilemap.getObject(withID:)`
+- add `SKTilemap.getTiles(recursive:)`
 - add `SKTileObject.isTileObject`
 - add `SKTileObject.isTextObject`
 - add `SKTileLayer.showBounds`

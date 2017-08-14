@@ -190,7 +190,7 @@ open class DemoController: NSObject {
             
             liveMode = currentScene.liveMode
             if let tilemap = currentScene.tilemap {
-                debugDrawOptions = tilemap.debugDrawOptions
+                debugDrawOptions = tilemap.defaultLayer.debugDrawOptions
                 currentURL = url
             }
             
@@ -213,7 +213,6 @@ open class DemoController: NSObject {
                             inDirectory: (url.baseURL == nil) ? nil : url.baseURL!.path,
                             withTilesets: [],
                             ignoreProperties: false,
-                            buildGraphs: true,
                             loggingLevel: self.loggingLevel, nil)
             
             nextScene.liveMode = liveMode
@@ -225,22 +224,14 @@ open class DemoController: NSObject {
                 //nextScene.cameraNode.fitToView(newSize: view.bounds.size, transition: interval)
             }
             
-            nextScene.tilemap?.debugDrawOptions = self.debugDrawOptions
+            guard let tilemap = nextScene.tilemap else { return }
+            tilemap.defaultLayer.debugDrawOptions = self.debugDrawOptions
             
             let sceneInfo = ["hasGraphs": nextScene.graphs.count > 0, "hasObjects": nextScene.tilemap.getObjects().count > 0]
             NotificationCenter.default.post(name: Notification.Name(rawValue: "updateUIControls"), object: nil, userInfo: sceneInfo)
             
             
-
-                
-            guard let tilemap = nextScene.tilemap else { return }
-            
-            let topLevelLayers = tilemap.getLayers(recursive: false)
-            print(topLevelLayers.map { $0.layerName })
-            
-            let allLayers = tilemap.getLayers(recursive: true)
-            print(allLayers.map { $0.layerName })
-            
+            nextScene.setup(fileNamed: url.relativePath)
             
         }
     }
@@ -267,7 +258,7 @@ open class DemoController: NSObject {
             let scene = view.scene as? SKTiledScene else { return }
         
         if let tilemap = scene.tilemap {
-            tilemap.baseLayer.debugDrawOptions = (tilemap.baseLayer.debugDrawOptions != []) ? [] : [.demo]
+            tilemap.defaultLayer.debugDrawOptions = (tilemap.defaultLayer.debugDrawOptions != []) ? [] : [.demo]
         }
     }
     
@@ -300,6 +291,7 @@ open class DemoController: NSObject {
     }
     
     // MARK: - Experimental
+    // TODO: experimental
     open func listBundledResources() {
         let bundleURL = Bundle.main.bundleURL  // SKTiledDemo.app
         let assetname = "pm-maze-8x8"

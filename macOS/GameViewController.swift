@@ -28,7 +28,7 @@ class GameViewController: NSViewController {
     @IBOutlet var demoFileAttributes: NSArrayController!
 
     let demoController = DemoController.default
-    var loggingLevel: LoggingLevel = SKTiledLoggingLevel
+    var loggingLevel: LoggingLevel = .gcd   // TODO: this should be SKTiledLoggingLevel in master 
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,8 +75,10 @@ class GameViewController: NSViewController {
                     inDirectory: nil,
                     withTilesets: [],
                     ignoreProperties: false,
-                    buildGraphs: true,
                     loggingLevel: loggingLevel)
+        
+        
+        scene.setup(fileNamed: currentURL.relativePath)
 
     }
 
@@ -169,13 +171,13 @@ class GameViewController: NSViewController {
     /**
      Update the window's title bar with the current scene name.
 
-     - parameter withFile: `String` currently loaded scene name.
+     - parameter notification: `Notification` callback.
      */
     func updateWindowTitle(notification: Notification) {
         if let wintitle = notification.userInfo!["wintitle"] {
             if let infoDictionary = Bundle.main.infoDictionary {
                 if let bundleName = infoDictionary[kCFBundleNameKey as String] as? String {
-                    self.view.window?.title = "\(bundleName): \"\(wintitle as! String)\""
+                    self.view.window?.title = "\(bundleName): \(wintitle as! String)"
                 }
             }
         }

@@ -27,7 +27,7 @@ public protocol SKTiledSceneDelegate: class {
     /// Tile map node.
     var tilemap: SKTilemap! { get set }
     /// Load a tilemap from disk, with optional tilesets.
-    func load(tmxFile: String, inDirectory: String?, withTilesets tilesets: [SKTileset], ignoreProperties: Bool, buildGraphs: Bool, loggingLevel: LoggingLevel) -> SKTilemap?
+    func load(tmxFile: String, inDirectory: String?, withTilesets tilesets: [SKTileset], ignoreProperties: Bool, loggingLevel: LoggingLevel) -> SKTilemap?
 }
 
 
@@ -125,7 +125,6 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
      - parameter inDirectory:      `String?` search directory (if not bundled)
      - parameter withTilesets:     `[SKTileset]` optional pre-loaded tilesets.
      - parameter ignoreProperties: `Bool` don't parse custom properties.
-     - parameter buildGraphs:      `Bool` automatically build pathfinding graphs.
      - parameter loggingLevel:     `LoggingLevel` logging verbosity.
      - parameter completion:  `(() -> ())?` optional completion handler.
      */
@@ -133,7 +132,6 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
                     inDirectory: String? = nil,
                     withTilesets tilesets: [SKTileset]=[],
                     ignoreProperties: Bool = false,
-                    buildGraphs: Bool = true,
                     loggingLevel: LoggingLevel = .info,
                     _ completion: (() -> ())? = nil) {
         
@@ -146,7 +144,6 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
                               inDirectory: inDirectory,
                               withTilesets: tilesets,
                               ignoreProperties: ignoreProperties,
-                              buildGraphs: buildGraphs,
                               loggingLevel: loggingLevel) {
         
             backgroundColor = tilemap.backgroundColor ?? SKColor.clear
@@ -180,31 +177,40 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     // MARK: - Delegate Callbacks
     open func didBeginParsing(_ tilemap: SKTilemap) {
         // Called when tilemap is instantiated.
-        //print(" ❊ `SKTiledScene.didBeginParsing`...")
-        
+        if loggingLevel.rawValue == 4 { print(" ❊ `SKTiledScene.didBeginParsing`...")}
     }
             
     open func didAddTileset(_ tileset: SKTileset) {
         // Called when a tileset has been added.
-        //print(" ❊ `SKTiledScene.didAddTileset`: \"\(tileset.name)\"")
+        if loggingLevel.rawValue == 4 { print(" ❊ `SKTiledScene.didAddTileset`: \"\(tileset.name)\"") }
     }
     
     open func didAddLayer(_ layer: TiledLayerObject) {
         // Called when a layer has been added.
-        //print(" ❊ `SKTiledScene.didAddLayer`: \"\(layer.layerName)\"")
+        if loggingLevel.rawValue == 4 { print(" ❊ `SKTiledScene.didAddLayer`: \"\(layer.layerName)\"") }
     }
     
     open func didReadMap(_ tilemap: SKTilemap) {
         // Called before layers are rendered.
-        //print(" ❊ `SKTiledScene.didReadMap`: \"\(tilemap.mapName)\"")
+        if loggingLevel.rawValue == 4 { print(" ❊ `SKTiledScene.didReadMap`: \"\(tilemap.mapName)\"") }
     }
     
     open func didRenderMap(_ tilemap: SKTilemap) {
         // Called after layers are rendered. Perform any post-processing here.
+        if loggingLevel.rawValue == 4 { print(" ❊ `SKTiledScene.didRenderMap`: \"\(tilemap.mapName)\"") }
     }
 
      open func didAddPathfindingGraph(_ graph: GKGridGraph<GKGridGraphNode>) {
         // Called when a graph is added to the scene.
+        if loggingLevel.rawValue == 4 { print(" ❊ `SKTiledScene.didAddPathfindingGraph`: \"\(graph)\"") }
+    }
+    
+    open func objectForTileType(named: String?) -> SKTile.Type {
+        return SKTile.self
+    }
+    
+    open func objectForVectorType(named: String?) -> SKTileObject.Type {
+        return SKTileObject.self
     }
     
     // MARK: - Updating
@@ -240,7 +246,6 @@ extension SKTiledSceneDelegate where Self: SKScene {
      - parameter inDirectory:      `String?` search directory (if not bundled)
      - parameter withTilesets:     `[SKTileset]` optional pre-loaded tilesets.
      - parameter ignoreProperties: `Bool` don't parse custom properties.
-     - parameter buildGraphs:      `Bool` automatically build pathfinding graphs.
      - parameter verbosity:        `LoggingLevel` logging verbosity.
      - returns: `SKTilemap?` tile map node.
      */
@@ -248,7 +253,6 @@ extension SKTiledSceneDelegate where Self: SKScene {
                      inDirectory: String? = nil,
                      withTilesets tilesets: [SKTileset]=[],
                      ignoreProperties: Bool = false,
-                     buildGraphs: Bool = true,
                      loggingLevel: LoggingLevel = .info) -> SKTilemap? {
         
                 
@@ -257,7 +261,6 @@ extension SKTiledSceneDelegate where Self: SKScene {
                                         delegate: self as? SKTilemapDelegate,
                                         withTilesets: tilesets,
                                         ignoreProperties: ignoreProperties,
-                                        buildGraphs: buildGraphs,
                                         loggingLevel: loggingLevel) {
             
             if let cameraNode = cameraNode {

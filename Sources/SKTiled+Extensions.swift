@@ -1172,7 +1172,7 @@ public func normalize(_ value: CGFloat, _ minimum: CGFloat, _ maximum: CGFloat) 
  - parameter layer:      `TiledLayerObject` layer instance.
  - parameter imageScale: `CGFloat` image scale multiplier.
  - parameter lineScale:  `CGFloat` line scale multiplier.
- - returns: `CGImage` visual grid texture.
+ - returns:              `CGImage` visual grid texture.
  */
 internal func drawLayerGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineScale: CGFloat=1) -> CGImage {
     // get the ui scale value for the device

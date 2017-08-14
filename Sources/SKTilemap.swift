@@ -117,7 +117,7 @@ internal let TileSize32x32 = CGSize(width: 32, height: 32)
 
  The `SKTilemapDelegate` protocol defines a delegate that allows the user to interact with a tile map as it is being created and customize its properties.
 
-
+ 
  ## Callbacks ##
 
  Delegate callbacks are called asynchronously as the map is being read from disk and rendered.
@@ -135,8 +135,8 @@ internal let TileSize32x32 = CGSize(width: 32, height: 32)
  Custom object methods can be used to substitute your own objects for tiles:
 
  ```swift
- func objectForTile(className: String? = nil) -> SKTile.Type {
-    if className == "MyTile" {
+ func objectForTileType(named: String? = nil) -> SKTile.Type {
+    if (named == "MyTile") {
         return MyTile.self
     }
     return SKTile.self
@@ -152,9 +152,9 @@ public protocol SKTilemapDelegate: class {
     func didReadMap(_ tilemap: SKTilemap)
     func didRenderMap(_ tilemap: SKTilemap)
     func didAddPathfindingGraph(_ graph: GKGridGraph<GKGridGraphNode>)
-    func objectForTile(className: String?) -> SKTile.Type
-    func objectForTileObject(className: String?) -> SKTileObject.Type
-    func objectForGraphNode(className: String?) -> GKGridGraphNode.Type
+    func objectForTileType(named: String?) -> SKTile.Type
+    func objectForVectorType(named: String?) -> SKTileObject.Type
+    func objectForGraphType(named: String?) -> GKGridGraphNode.Type
 }
 
 
@@ -172,11 +172,14 @@ public protocol SKTilemapDelegate: class {
  ```
 
  ### Loading
-
+ 
+ Maps can be loaded with the class function `SKTilemap.load(tmxFile:)`:
+ 
  ```swift
  if let tilemap = SKTilemap.load(tmxFile: "myfile.tmx") {
     scene.addChild(tilemap)
  }
+  
  ```
  */
 open class SKTilemap: SKNode, SKTiledObject {
@@ -257,15 +260,15 @@ open class SKTilemap: SKNode, SKTiledObject {
     /// Optional background color (read from the Tiled file)
     open var backgroundColor: SKColor? = nil {
         didSet {
-            self.baseLayer.color = (backgroundColor != nil) ? backgroundColor! : SKColor.clear
-            self.baseLayer.colorBlendFactor = (backgroundColor != nil) ? 1.0 : 0
+            self.defaultLayer.color = (backgroundColor != nil) ? backgroundColor! : SKColor.clear
+            self.defaultLayer.colorBlendFactor = (backgroundColor != nil) ? 1.0 : 0
         }
     }
 
     /// The tile map default layer, used for displaying the current grid, getting coordinates, etc.
-    lazy var baseLayer: BackgroundLayer = {
+    lazy var defaultLayer: BackgroundLayer = {
         let layer = BackgroundLayer(tilemap: self)
-        self.addLayer(layer)
+        let _ = self.addLayer(layer)
         layer.didFinishRendering()
         return layer
     }()
@@ -292,9 +295,9 @@ open class SKTilemap: SKNode, SKTiledObject {
     // MARK - Object Colors
     open var objectColor: SKColor = SKColor.gray
     open var color: SKColor = SKColor.clear                            // used for pausing
-    open var gridColor: SKColor = SKColor.black                        // color used to visualize the tile grid
-    open var frameColor: SKColor = SKColor.blue                        // bounding box color
-    open var highlightColor: SKColor = SKColor.green                   // color used to highlight tiles
+    open var gridColor: SKColor = TiledObjectColors.blue.color         // color used to visualize the tile grid
+    open var frameColor: SKColor = TiledObjectColors.blue.color        // bounding box color
+    open var highlightColor: SKColor = TiledObjectColors.green.color   // color used to highlight tiles
     
     internal var autoResize: Bool = false                              // indicates map should auto-resize when view changes
 
@@ -478,10 +481,10 @@ open class SKTilemap: SKNode, SKTiledObject {
                          delegate: SKTilemapDelegate? = nil,
                          withTilesets: [SKTileset]? = nil,
                          ignoreProperties noparse: Bool = false,
-                         buildGraphs: Bool = true,
                          loggingLevel: LoggingLevel = .info) -> SKTilemap? {
 
-
+        
+        let startTime = Date()
         let queue = DispatchQueue(label: "com.sktiled.renderqueue", qos: .userInteractive)
         if let tilemap = SKTilemapParser().load(tmxFile: tmxFile,
                                                 inDirectory: inDirectory,
@@ -490,17 +493,13 @@ open class SKTilemap: SKNode, SKTiledObject {
                                                 ignoreProperties: noparse,
                                                 loggingLevel: loggingLevel,
                                                 renderQueue: queue) {
-
-            // build any pathfinding graphs
-            if (buildGraphs == true) {
-                queue.sync {
-                    let nodeClass = delegate?.objectForGraphNode(className: nil) ?? SKTiledGraphNode.self
-                    tilemap.buildPathfindingGraphs()
-                }
-            }
-
+            
+            
+            
+            let renderTime = Date().timeIntervalSince(startTime)
+            let timeStamp = String(format: "%.\(String(3))f", renderTime)
+            print("✽ Success! tilemap \"\(tilemap.mapName)\" rendered in: \(timeStamp)s ✽\n")
             return tilemap
-
         }
         return nil
     }
@@ -665,7 +664,7 @@ open class SKTilemap: SKNode, SKTiledObject {
      - returns: `CGPoint` point in layer.
      */
     open func pointForCoordinate(coord: CGPoint, offsetX: CGFloat=0, offsetY: CGFloat=0) -> CGPoint {
-        return baseLayer.pointForCoordinate(coord: coord, offsetX: offsetX, offsetY: offsetY)
+        return defaultLayer.pointForCoordinate(coord: coord, offsetX: offsetX, offsetY: offsetY)
     }
 
     /**
@@ -675,7 +674,7 @@ open class SKTilemap: SKNode, SKTiledObject {
      - returns: `CGPoint` tile coordinate.
      */
     open func coordinateForPoint(_ point: CGPoint) -> CGPoint {
-        return baseLayer.coordinateForPoint(point)
+        return defaultLayer.coordinateForPoint(point)
     }
 
     // MARK: - Layers
@@ -777,7 +776,7 @@ open class SKTilemap: SKNode, SKTiledObject {
      */
     open func newTileLayer(named: String, group: SKGroupLayer? = nil) -> SKTileLayer {
         let tileLayer = SKTileLayer(layerName: named, tilemap: self)
-        return addLayer(tileLayer, group: group) as! SKTileLayer
+        return addLayer(tileLayer, group: group).layer as! SKTileLayer
     }
 
     /**
@@ -789,7 +788,7 @@ open class SKTilemap: SKNode, SKTiledObject {
      */
     open func newObjectGroup(named: String, group: SKGroupLayer? = nil) -> SKObjectGroup {
         let groupLayer = SKObjectGroup(layerName: named, tilemap: self)
-        return addLayer(groupLayer, group: group) as! SKObjectGroup
+        return addLayer(groupLayer, group: group).layer as! SKObjectGroup
     }
 
     /**
@@ -801,7 +800,7 @@ open class SKTilemap: SKNode, SKTiledObject {
      */
     open func newImageLayer(named: String, group: SKGroupLayer? = nil) -> SKImageLayer {
         let imageLayer = SKImageLayer(layerName: named, tilemap: self)
-        return addLayer(imageLayer, group: group) as! SKImageLayer
+        return addLayer(imageLayer, group: group).layer as! SKImageLayer
     }
 
     /**
@@ -813,7 +812,7 @@ open class SKTilemap: SKNode, SKTiledObject {
      */
     open func newGroupLayer(named: String, group: SKGroupLayer? = nil) -> SKGroupLayer {
         let groupLayer = SKGroupLayer(layerName: named, tilemap: self)
-        return addLayer(groupLayer, group: group) as! SKGroupLayer
+        return addLayer(groupLayer, group: group).layer as! SKGroupLayer
     }
 
     /**
@@ -1159,16 +1158,26 @@ open class SKTilemap: SKNode, SKTiledObject {
     open func tileAt(_ x: Int, _ y: Int, inLayer named: String?) -> SKTile? {
         return tileAt(coord: CGPoint(x: CGFloat(x), y: CGFloat(y)), inLayer: named)
     }
-
+    
     /**
-     Returns tiles with a property of the given type. If recursive is false, only returns tiles from top-level layers.
-
-     - parameter type:      `String` type.
+     Returns all tiles in the map. If recursive is false, only returns tiles from top-level layers.
+     
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTile]` array of tiles.
      */
-    open func getTiles(ofType type: String, recursive: Bool=true) -> [SKTile] {
-        return tileLayers(recursive: recursive).flatMap { $0.getTiles(ofType: type) }
+    open func getTiles(recursive: Bool=true) -> [SKTile] {
+        return tileLayers(recursive: recursive).flatMap { $0.getTiles() }
+    }
+    
+    /**
+     Returns tiles with a property of the given type. If recursive is false, only returns tiles from top-level layers.
+
+     - parameter ofType:    `String` type.
+     - parameter recursive: `Bool` include nested layers.
+     - returns: `[SKTile]` array of tiles.
+     */
+    open func getTiles(ofType: String, recursive: Bool=true) -> [SKTile] {
+        return tileLayers(recursive: recursive).flatMap { $0.getTiles(ofType: ofType) }
     }
 
     /**
@@ -1193,7 +1202,7 @@ open class SKTilemap: SKNode, SKTiledObject {
     open func getTilesWithProperty(_ named: String, _ value: Any, recursive: Bool=true) -> [SKTile] {
         var result: [SKTile] = []
         for layer in tileLayers(recursive: recursive) {
-            result += layer.getTilesWithProperty(named, value as! String as Any)
+            result += layer.getTilesWithProperty(named, value)
         }
         return result
     }
@@ -1297,12 +1306,12 @@ open class SKTilemap: SKNode, SKTiledObject {
     /**
      Return objects matching a given type. If recursive is false, only returns objects from top-level layers.
 
-     - parameter type:      `String` object type to query.
+     - parameter ofType:    `String` object type to query.
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTileObject]` array of objects.
      */
-    open func getObjects(ofType type: String, recursive: Bool=true) -> [SKTileObject] {
-        return objectGroups(recursive: recursive).flatMap { $0.getObjects(ofType: type) }
+    open func getObjects(ofType: String, recursive: Bool=true) -> [SKTileObject] {
+        return objectGroups(recursive: recursive).flatMap { $0.getObjects(ofType: ofType) }
     }
 
     /**
@@ -1368,7 +1377,7 @@ open class SKTilemap: SKNode, SKTiledObject {
      */
     #if os(iOS) || os(tvOS)
     open func touchLocation(_ touch: UITouch) -> CGPoint {
-        return baseLayer.touchLocation(touch)
+        return defaultLayer.touchLocation(touch)
     }
     #endif
 
@@ -1382,7 +1391,7 @@ open class SKTilemap: SKNode, SKTiledObject {
      */
     #if os(OSX)
     public func mouseLocation(event: NSEvent) -> CGPoint {
-        return baseLayer.mouseLocation(event: event)
+        return defaultLayer.mouseLocation(event: event)
     }
     #endif
 
@@ -1401,9 +1410,10 @@ open class SKTilemap: SKNode, SKTiledObject {
      - parameter timeStarted: `Date` render start time.
      */
     open func didFinishRendering(timeStarted: Date) {
-
-        // set the z-depth of the baseLayer & background sprite
-        baseLayer.zPosition = -zDeltaForLayers
+        if loggingLevel.rawValue == 4 { print("🔺 `SKTilemap.didFinishRendering`...") }
+        
+        // set the z-depth of the defaultLayer & background sprite
+        defaultLayer.zPosition = -zDeltaForLayers
 
         // time results
         let timeInterval = Date().timeIntervalSince(timeStarted)
@@ -1492,7 +1502,7 @@ extension LayerPosition: CustomStringConvertible {
 
 extension SKTilemap {
     
-    /// Return a string representing the map name.
+    /// String representing the map name.
     public var mapName: String {
         return self.name ?? "null"
     }
@@ -1502,7 +1512,7 @@ extension SKTilemap {
         return sizeInPoints.height > sizeInPoints.width
     }
     
-    /// convenience properties
+    // convenience properties
     public var width: CGFloat { return size.width }
     public var height: CGFloat { return size.height }
 
@@ -1657,9 +1667,9 @@ extension SKTilemap {
     /**
      Dump a summary of the current tilemap's layer statistics.
 
-     - parameter base: `Bool` include the map's default layer.
+     - parameter defaul: `Bool` include the map's default layer.
      */
-    open func mapStatistics(base: Bool = false) {
+    open func mapStatistics(default: Bool = false) {
         guard (layerCount > 0) else {
             print("# Tilemap \"\(mapName)\": 0 Layers")
             return
@@ -1676,8 +1686,8 @@ extension SKTilemap {
 
         var allLayers = self.layers
 
-        if (base == true) {
-            allLayers.insert(self.baseLayer, at: 0)
+        if (`default` == true) {
+            allLayers.insert(self.defaultLayer, at: 0)
         }
 
         // grab the stats from each layer
@@ -1809,26 +1819,23 @@ extension SKTilemapDelegate {
      - parameter className:    `String` optional class name.
      - returns `SKTile.self`:  `SKTile` subclass.
      */
-    public func objectForTile(className: String? = nil) -> SKTile.Type { return SKTile.self }
+    public func objectForTileType(named: String? = nil) -> SKTile.Type { return SKTile.self }
     
     /**
      Specify a custom object for use in object groups.
      
-     - parameter className:         `String` optional class name.
+     - parameter named:             `String` optional class name.
      - returns `SKTileObject.self`: `SKTileObject` subclass.
      */
-    public func objectForTileObject(className: String? = nil) -> SKTileObject.Type {
-        print(" ❊ querying custom class: \"\(className)\"")
-        return SKTileObject.self
-    }
+    public func objectForVectorType(named: String? = nil) -> SKTileObject.Type { return SKTileObject.self }
     
     /**
      Specify a custom graph node object for use in pathfinding graphs.
 
-     - parameter className:    `String` optional class name.
+     - parameter named:                 `String` optional class name.
      - returns `GKGridGraphNode.Type`:  `GKGridGraphNode` node type.
      */
-    public func objectForGraphNode(className: String?) -> GKGridGraphNode.Type { return SKTiledGraphNode.self }
+    public func objectForGraphType(named: String?) -> GKGridGraphNode.Type { return SKTiledGraphNode.self }
 }
 
 

@@ -42,13 +42,13 @@ public extension SKTilemap {
                 frameColor = gridColor
                 
                 // set base layer colors
-                baseLayer.gridColor = gridColor
-                baseLayer.frameColor = frameColor
+                defaultLayer.gridColor = gridColor
+                defaultLayer.frameColor = frameColor
             }
             
             if (lattr == "gridopacity") {
-                baseLayer.gridOpacity = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : 0.10
-                getLayers().forEach {$0.gridOpacity = self.baseLayer.gridOpacity}
+                defaultLayer.gridOpacity = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : 0.10
+                getLayers().forEach {$0.gridOpacity = self.defaultLayer.gridOpacity}
             }
             
             if (lattr == "framecolor") {
@@ -56,7 +56,7 @@ public extension SKTilemap {
                 getLayers().forEach {$0.frameColor = frameColor}
                 
                 // set base layer colors
-                baseLayer.frameColor = frameColor
+                defaultLayer.frameColor = frameColor
             }
             
             if (lattr == "highlightcolor") {
@@ -64,7 +64,7 @@ public extension SKTilemap {
                 getLayers().forEach {$0.highlightColor = highlightColor}
                 
                 // set base layer colors
-                baseLayer.highlightColor = highlightColor
+                defaultLayer.highlightColor = highlightColor
             }
             
             // initial world scale.
@@ -173,13 +173,8 @@ public extension SKTileset {
             let lattr = attr.lowercased()
         
             // walkable ids
-            if (lattr == "walkableids") {
-                //walkableIDs = integerArrayForKey("walkableIDs", separatedBy: ",")
-            }
-            
-            // walkable types
-            if (lattr == "walkabletypes") {
-                //walkableTypes = stringArrayForKey("walkableTypes", separatedBy: ",")
+            if (lattr == "walkable") {
+                walkableIDs = integerArrayForKey("walkable", separatedBy: ",")
             }
         }
         
@@ -335,10 +330,6 @@ public extension SKTileObject {
             
             let lattr = attr.lowercased()
             
-            if (lattr == "nodeclass") {
-                print(" ❊ object node class: \"\(value)\"")
-            }
-            
             if (lattr == "color") {
                 setColor(hexString: value)
             }
@@ -357,7 +348,6 @@ public extension SKTileObject {
         let isCollider: Bool = boolForKey("isCollider")
 
         physicsType = Int(isDynamic) ^ Int(isCollider) == 0 ? .none : (isDynamic == true) ? .dynamic : (isCollider == true) ? .collision : .none
-
         if completion != nil { completion!() }
     }
 }
@@ -394,6 +384,7 @@ public extension SKTilesetData {
             
             if (lattr == "walkable") {
                 walkable = boolForKey(attr)
+                //print("setting id \(self.id) walkable: \(walkable)")
             }
             
             if (lattr == "obstacle") {

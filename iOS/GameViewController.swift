@@ -67,7 +67,6 @@ class GameViewController: UIViewController {
                     inDirectory: nil,
                     withTilesets: [],
                     ignoreProperties: false,
-                    buildGraphs: true,
                     loggingLevel: loggingLevel)
 
         NotificationCenter.default.addObserver(self, selector: #selector(updateUIControls), name: NSNotification.Name(rawValue: "updateUIControls"), object: nil)

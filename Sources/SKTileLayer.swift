@@ -16,13 +16,6 @@ import Cocoa
 #endif
 
 
-internal enum SKObjectGroupColors: String {
-    case pink     = "#c8a0a4"
-    case blue     = "#6fc0f3"
-    case green    = "#70d583"
-    case orange   = "#f3dc8d"
-}
-
 
 // index, zpos, size w, size h, tile size w, tile size h, offset x, offset y, anchor x, anchor y, tile count, object count
 typealias renderInfo = (idx: Int, path: String, zpos: Double, sw: Int, sh: Int, tsw: Int, tsh: Int, offx: Int, offy: Int, ancx: Int, ancy: Int, tc: Int, obj: Int, vis: Int, gn: Int)
@@ -113,9 +106,9 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     /// Layer color.
     open var color: SKColor = SKColor.gray
     /// Grid visualization color.
-    open var gridColor: SKColor = SKColor.black
+    open var gridColor: SKColor = TiledObjectColors.blue.color
     /// Bounding box color.
-    open var frameColor: SKColor = SKColor.black
+    open var frameColor: SKColor = TiledObjectColors.blue.color
     /// Layer highlight color (for highlighting tiles)
     open var highlightColor: SKColor = SKColor.white
     /// Layer highlight duration
@@ -152,7 +145,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     open var walkableTypes: [String] = []
 
     // debug visualizations
-    open var gridOpacity: CGFloat = 0.40
+    open var gridOpacity: CGFloat = 0.25
     internal var debugNode: TiledDebugDrawNode!
     
     /// Debug visualization options.
@@ -777,7 +770,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
 
     // MARK: - Adding & Removing Nodes
     /**
-     Add a child node at the given x/y coordinates. By default, the zPositon
+     Add an `SKNode` child node at the given x/y coordinates. By default, the zPositon
      will be higher than all of the other nodes in the layer.
 
      - parameter node:      `SKNode` object.
@@ -792,7 +785,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
     }
 
     /**
-     Add a node at the given coordinates. By default, the zPositon
+     Add an `SKNode` child node at the given coordinates. By default, the zPositon
      will be higher than all of the other nodes in the layer.
 
      - parameter node:      `SKNode` object.
@@ -813,7 +806,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
 
      - parameter outsideOf: `CGRect` camera bounds.
      */
-    fileprivate func pruneTiles(_ outsideOf: CGRect) {
+    internal func pruneTiles(_ outsideOf: CGRect) {
         /* override in subclass */
     }
 
@@ -831,6 +824,7 @@ open class TiledLayerObject: SKNode, SKTiledObject {
      - parameter duration: `TimeInterval` fade-in duration.
      */
     open func didFinishRendering(duration: TimeInterval=0) {
+        if loggingLevel.rawValue == 4 { print("   ↳ `TiledLayerObject.didFinishRendering`: \"\(layerName)\"") }
         self.parseProperties(completion: nil)
         // setup physics for the layer boundary
         if hasKey("isDynamic") && boolForKey("isDynamic") == true || hasKey("isCollider") && boolForKey("isCollider") == true {
@@ -1029,10 +1023,10 @@ open class SKTileLayer: TiledLayerObject {
     /**
      Returns tiles with a property of the given type.
 
-     - parameter type: `String` type.
+     - parameter ofType: `String` type.
      - returns: `[SKTile]` array of tiles.
      */
-    open func getTiles(ofType type: String) -> [SKTile] {
+    open func getTiles(ofType: String) -> [SKTile] {
         return tiles.flatMap { $0 }.filter { $0.tileData.type == type }
     }
 
@@ -1055,8 +1049,10 @@ open class SKTileLayer: TiledLayerObject {
     open func getTilesWithProperty(_ named: String, _ value: Any) -> [SKTile] {
         var result: [SKTile] = []
         for tile in tiles where tile != nil {
-            if let pvalue = tile!.tileData.properties[named] , pvalue == value as! String {
-                result.append(tile!)
+            if let pairValue = tile!.tileData.keyValuePair(key: named) {
+                if pairValue.value == String(describing: value) {
+                    result.append(tile!)
+                }
             }
         }
         return result
@@ -1152,8 +1148,9 @@ open class SKTileLayer: TiledLayerObject {
 
         let tileData: SKTilesetData? = (gid != nil) ? getTileData(globalID: gid!) : nil
 
-        let Tile = tilemap.delegate != nil ? tilemap.delegate!.objectForTile(className: tileType) : SKTile.self
-        let tile = Tile.init(tileSize: tileSize)
+        let Tile = tilemap.delegate != nil ? tilemap.delegate!.objectForTileType(named: tileType) : SKTile.self
+        let tile = Tile.init()
+        tile.tileSize = tileSize
 
         if let tileData = tileData {
             tile.tileData = tileData
@@ -1187,8 +1184,10 @@ open class SKTileLayer: TiledLayerObject {
     open func addTileAt(coord: CGPoint, texture: SKTexture? = nil, tileType: String? = nil) -> SKTile? {
         guard isValid(coord: coord) else { return nil }
 
-        let Tile = tilemap.delegate != nil ? tilemap.delegate!.objectForTile(className: tileType) : SKTile.self
-        let tile = Tile.init(tileSize: tileSize)
+        let Tile = tilemap.delegate != nil ? tilemap.delegate!.objectForTileType(named: tileType) : SKTile.self
+        let tile = Tile.init()
+        
+        tile.tileSize = tileSize
         tile.texture = texture
 
         // set the tile overlap amount
@@ -1266,10 +1265,9 @@ open class SKTileLayer: TiledLayerObject {
 
      - parameter coord:    `CGPoint` x&y coordinate.
      - parameter id:       `UInt32` tile id.
-     - parameter tileType: `String?` optional tile type string.
      - returns: `SKTile?`  tile object.
      */
-    fileprivate func buildTileAt(coord: CGPoint, id: UInt32, tileType: String? = nil) -> SKTile? {
+    fileprivate func buildTileAt(coord: CGPoint, id: UInt32) -> SKTile? {
 
         // get tile attributes from the current id
         let tileAttrs = flippedTileFlags(id: id)
@@ -1282,7 +1280,7 @@ open class SKTileLayer: TiledLayerObject {
             tileData.flipDiag  = tileAttrs.dflip
 
             // get tile object from delegate
-            let Tile = (tilemap.delegate != nil) ? tilemap.delegate!.objectForTile(className: tileType) : SKTile.self
+            let Tile = (tilemap.delegate != nil) ? tilemap.delegate!.objectForTileType(named: tileData.type) : SKTile.self
 
             if let tile = Tile.init(data: tileData) {
 
@@ -1430,27 +1428,16 @@ open class SKTileLayer: TiledLayerObject {
     override internal func flattenLayer(view: SKView) {
         /* override in subclass */
         
-        
-        //let vertices = getVertices()
+                //let vertices = getVertices()
         //let viewRect = view.convert(<#T##point: NSPoint##NSPoint#>, to: <#T##NSView?#>)
         if let viewTexture = view.texture(from: self) { //, crop: self.bounds) {
             getTiles().forEach({
                 $0.texture = nil
             })
-            
-            
-            let texRect = viewTexture.textureRect()
-            
-            print(" → flattened texture for layer: \"\(layerName)\": \(texRect)")
-            print("   ↳ layer rect: \(bounds)")
+
             viewTexture.filteringMode = .nearest
             let sprite = SKSpriteNode(texture: viewTexture)
             addChild(sprite)
-            
-            let desktop = getDesktopDirectory()
-            let dirname = desktop.appendingPathComponent("pacman-layers")
-            let url = dirname.appendingPathComponent("\(layerName)-flattened.png")
-            let imageData = writeToFile(viewTexture.cgImage(), url: url)
         }
     }
 }
@@ -1700,8 +1687,7 @@ open class SKObjectGroup: TiledLayerObject {
      - returns: `[String]` object names in the layer.
      */
     open func objectNames() -> [String] {
-        // flatmap will ignore nil name values.
-        return objects.flatMap({$0.name})
+        return objects.flatMap({ $0.name })
     }
 
     /**
@@ -1752,8 +1738,8 @@ open class SKObjectGroup: TiledLayerObject {
      - parameter type: `String` object type.
      - returns: `[SKTileObject]` array of matching objects.
      */
-    open func getObjects(ofType type: String) -> [SKTileObject] {
-        return objects.filter( {$0.type == type})
+    open func getObjects(ofType: String) -> [SKTileObject] {
+        return getObjects().filter( {$0.type == ofType})
     }
 
     // MARK: - Tile Objects
@@ -1797,13 +1783,11 @@ open class SKObjectGroup: TiledLayerObject {
      */
     override open func didFinishRendering(duration: TimeInterval=0) {
         super.didFinishRendering(duration: duration)
-
+        
         // setup dynamics for objects.
-        for object in objects {
-            if object.hasKey("isDynamic") || object.hasKey("isCollider") {
-                object.setupPhysics()
-                // override object visibility
-                object.visible = true
+        objects.forEach {
+            if ($0.boolForKey("isDynamic") == true) || ($0.boolForKey("isCollider") == true) {
+                $0.setupPhysics()
             }
         }
     }

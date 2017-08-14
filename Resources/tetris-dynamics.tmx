@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="42" height="30" tilewidth="8" tileheight="8" nextobjectid="163">
+<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="42" height="30" tilewidth="8" tileheight="8" nextobjectid="302">
  <properties>
   <property name="gridColor" type="color" value="#ffdede97"/>
-  <property name="yGravity" type="float" value="-4"/>
+  <property name="yGravity" type="float" value="-9.8"/>
  </properties>
  <tileset firstgid="1" source="tetris-tshape-24x16.tsx"/>
  <tileset firstgid="10" source="tetris-square-16x16.tsx"/>
@@ -14,214 +14,216 @@
  </imagelayer>
  <group name="Shapes">
   <objectgroup name="shapes-gids">
-   <object id="29" name="sqr-01" type="square" gid="10" x="38" y="-64" width="16" height="16">
+   <object id="29" name="sqr-01" type="square" gid="10" x="21" y="-469" width="16" height="16">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="30" name="sqr-02" type="square" gid="11" x="91" y="-113" width="16" height="16">
+   <object id="30" name="sqr-02" type="square" gid="11" x="105" y="-124" width="16" height="16" rotation="-25.1397">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="31" name="sqr-03" type="square" gid="12" x="52" y="-92" width="16" height="16">
+   <object id="31" name="sqr-03" type="square" gid="12" x="35" y="-497" width="16" height="16">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="32" name="sqr-04" type="square" gid="13" x="47" y="-37" width="16" height="16">
+   <object id="32" name="sqr-04" type="square" gid="13" x="78" y="-54" width="16" height="16" rotation="-42.7053">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="33" name="sqr-05" type="square" gid="14" x="48" y="-96" width="16" height="16" rotation="270">
+   <object id="33" name="sqr-05" type="square" gid="14" x="31" y="-501" width="16" height="16" rotation="270">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="34" name="sqr-06" type="square" gid="15" x="86" y="-79" width="16" height="16" rotation="300.501">
+   <object id="34" name="sqr-06" type="square" gid="15" x="116" y="-381" width="16" height="16" rotation="300.501">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="36" name="sqr-08" type="square" gid="17" x="84" y="-40" width="16" height="16" rotation="90">
+   <object id="36" name="sqr-08" type="square" gid="17" x="76.4419" y="-386.74" width="16" height="16" rotation="116.67">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="37" name="sqr-09" type="square" gid="18" x="58" y="-67" width="16" height="16">
+   <object id="37" name="sqr-09" type="square" gid="18" x="41" y="-472" width="16" height="16">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="22" name="tshape08" gid="8" x="27" y="-319" width="24" height="16">
-    <properties>
-     <property name="isDynamic" type="bool" value="true"/>
-    </properties>
-    <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
-   </object>
-   <object id="18" name="tshape05" gid="5" x="88" y="-133" width="24" height="16">
+   <object id="22" name="tshape08" gid="1073741832" x="48.9329" y="-789.448" width="24" height="16" rotation="-76.3108">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
     <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
    </object>
-   <object id="20" name="tshape04" gid="4" x="23" y="-140" width="24" height="16" rotation="90">
+   <object id="18" name="tshape05" gid="1073741829" x="67" y="-151" width="24" height="16" rotation="71.0456">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
     <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
    </object>
-   <object id="16" name="tshape02" gid="2" x="127" y="-61" width="24" height="16" rotation="-90">
+   <object id="20" name="tshape04" gid="1073741828" x="103" y="-573" width="24" height="16" rotation="90">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
+   </object>
+   <object id="16" name="tshape02" gid="1073741826" x="94" y="-103" width="24" height="16" rotation="-96.9288">
     <properties>
      <property name="gid" type="int" value="2"/>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
     <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
    </object>
-   <object id="17" name="tshape01" gid="1" x="44" y="-142" width="24" height="16" rotation="90">
+   <object id="17" name="tshape01" gid="1073741825" x="74" y="-444" width="24" height="16" rotation="90">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
     <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
    </object>
-   <object id="50" name="tshape10" gid="3" x="72" y="-48" width="24" height="16">
+   <object id="50" name="tshape10" gid="3" x="67" y="-77" width="24" height="16" rotation="312.884">
     <properties>
      <property name="gid" type="int" value="7"/>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
     <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
    </object>
-   <object id="42" name="bar-07" gid="25" x="72" y="-152" width="32" height="8" rotation="90">
+   <object id="42" name="bar-07" gid="25" x="102" y="-454" width="32" height="8" rotation="90">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="40" name="bar-05" gid="23" x="72" y="-160" width="32" height="8">
+   <object id="40" name="bar-05" gid="23" x="102" y="-462" width="32" height="8">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="39" name="bar-04" gid="22" x="32" y="-176" width="32" height="8">
+   <object id="39" name="bar-04" gid="22" x="62" y="-478" width="32" height="8">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="39" name="bar-03" gid="21" x="80" y="-240" width="32" height="8" rotation="90">
+   <object id="39" name="bar-03" gid="21" x="34" y="-342" width="32" height="8" rotation="90">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="38" name="bar-02" gid="20" x="64" y="-184" width="32" height="8">
+   <object id="38" name="bar-02" gid="20" x="94" y="-486" width="32" height="8">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="40" name="bar-01" gid="19" x="56" y="-240" width="32" height="8" rotation="90">
+   <object id="40" name="bar-01" gid="19" x="54" y="-417" width="32" height="8" rotation="90">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="52" name="lshape1" gid="37" x="43" y="-281" width="24" height="16" rotation="-270">
-    <properties>
-     <property name="isDynamic" type="bool" value="true"/>
-    </properties>
-    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
-   </object>
-   <object id="54" name="lshape2" gid="38" x="117" y="-82" width="24" height="16">
+   <object id="52" name="lshape1" gid="1073741861" x="51" y="-761" width="24" height="16" rotation="-270">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
     <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
    </object>
-   <object id="56" name="lshape4" gid="40" x="52" y="-374" width="24" height="16">
+   <object id="54" name="lshape2" gid="1073741862" x="54.8116" y="-135.872" width="24" height="16" rotation="89.0955">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
     <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
    </object>
-   <object id="57" name="lshape5" gid="41" x="88" y="-279" width="24" height="16" rotation="180">
+   <object id="56" name="lshape4" gid="1073741864" x="60" y="-854" width="24" height="16">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
     <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
    </object>
-   <object id="58" name="lshape6" gid="42" x="61" y="-348" width="24" height="16" rotation="62.3173">
+   <object id="57" name="lshape5" gid="1073741865" x="96" y="-759" width="24" height="16" rotation="180">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
     <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
    </object>
-   <object id="59" name="lshape7" gid="43" x="70" y="-299" width="24" height="16" rotation="-90">
+   <object id="58" name="lshape6" gid="1073741866" x="69" y="-828" width="24" height="16" rotation="62.3173">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
     <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
    </object>
-   <object id="61" name="lshape8" gid="45" x="43" y="-163" width="24" height="16" rotation="48.4032">
+   <object id="59" name="lshape7" gid="1073741867" x="78" y="-779" width="24" height="16" rotation="-90">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
     <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
    </object>
-   <object id="140" gid="46" x="71" y="-442" width="8" height="8">
+   <object id="61" name="lshape8" gid="1073741869" x="73" y="-465" width="24" height="16" rotation="48.4032">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="140" name="block-sm" gid="46" x="33" y="-572" width="8" height="8">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="141" gid="47" x="79" y="-405" width="8" height="8">
+   <object id="141" name="block-sm" gid="47" x="41" y="-535" width="8" height="8">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="142" gid="49" x="48" y="-396" width="8" height="8">
+   <object id="142" name="block-sm" gid="49" x="10" y="-526" width="8" height="8">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="143" gid="53" x="65" y="-423" width="8" height="8">
+   <object id="143" name="block-sm" gid="53" x="27" y="-553" width="8" height="8">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="144" gid="51" x="62" y="-404" width="8" height="8">
+   <object id="144" name="block-sm" gid="51" x="24" y="-534" width="8" height="8">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="145" gid="46" x="58" y="-470" width="8" height="8">
+   <object id="145" name="block-sm" gid="46" x="20" y="-600" width="8" height="8">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="146" gid="47" x="73" y="-500" width="8" height="8">
+   <object id="146" name="block-sm" gid="47" x="35" y="-630" width="8" height="8">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="147" gid="51" x="61" y="-509" width="8" height="8">
+   <object id="147" name="block-sm" gid="51" x="23" y="-639" width="8" height="8">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="148" gid="49" x="56" y="-493" width="8" height="8">
+   <object id="148" name="block-sm" gid="49" x="18" y="-623" width="8" height="8">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="149" gid="53" x="62" y="-534" width="8" height="8">
+   <object id="149" name="block-sm" gid="53" x="24" y="-664" width="8" height="8">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="150" gid="46" x="65" y="-628" width="8" height="8">
+   <object id="150" name="block-sm" gid="46" x="65" y="-628" width="8" height="8">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
     </properties>
    </object>
-   <object id="151" gid="47" x="84" y="-617" width="8" height="8">
+   <object id="151" name="block-sm" gid="47" x="84" y="-617" width="8" height="8">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
     </properties>
    </object>
    <object id="152" gid="51" x="67" y="-616" width="8" height="8">
@@ -229,7 +231,7 @@
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
    </object>
-   <object id="153" gid="49" x="66" y="-579" width="8" height="8">
+   <object id="153" gid="49" x="28" y="-709" width="8" height="8">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
@@ -237,29 +239,754 @@
    <object id="154" gid="53" x="70" y="-635" width="8" height="8">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
     </properties>
    </object>
    <object id="155" gid="46" x="72" y="-673" width="8" height="8">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
     </properties>
    </object>
    <object id="156" gid="47" x="82" y="-693" width="8" height="8">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
     </properties>
    </object>
    <object id="157" gid="51" x="65" y="-692" width="8" height="8">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
     </properties>
    </object>
    <object id="158" gid="49" x="86" y="-660" width="8" height="8">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
     </properties>
    </object>
    <object id="159" gid="53" x="72" y="-719" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="165" gid="46" x="33.4928" y="-590.708" width="8" height="8" rotation="31.7926">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="166" gid="49" x="62.4912" y="-305.714" width="8" height="8" rotation="31.8625">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="167" gid="47" x="89.786" y="-323.806" width="8" height="8" rotation="22.179">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="168" gid="51" x="69" y="-319" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="169" gid="48" x="52" y="-270" width="8" height="8" rotation="42">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="171" name="block-sm1" gid="48" x="36" y="-841" width="8" height="8" rotation="42">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="173" gid="53" x="203.317" y="-654.518" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="174" name="block-sm" gid="47" x="110.649" y="-852.948" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="175" name="sqr-01" type="square" gid="10" x="55.9028" y="-1005" width="16" height="16" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="176" name="block-sm" gid="47" x="149.684" y="-742.104" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="177" name="lshape5" gid="1073741865" x="198.285" y="-608.142" width="24" height="16" rotation="335.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="178" name="tshape04" gid="1073741828" x="113.996" y="-774.095" width="24" height="16" rotation="245.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
+   </object>
+   <object id="179" name="block-sm" gid="47" x="65.3967" y="-936.693" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="180" gid="47" x="183.343" y="-673.935" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="181" name="lshape1" gid="1073741861" x="239.983" y="-625.181" width="24" height="16" rotation="-114.771">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="182" gid="53" x="169.938" y="-731.627" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="183" gid="51" x="198.36" y="-681.966" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="184" name="block-sm" gid="51" x="80.4135" y="-944.724" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="185" name="block-sm" gid="53" x="134.883" y="-826.685" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="186" name="block-sm" gid="49" x="89.7734" y="-957.854" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="187" gid="46" x="95.5544" y="-889.257" width="8" height="8" rotation="187.021">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="188" name="block-sm" gid="51" x="125.316" y="-849.804" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="189" gid="51" x="164.701" y="-750.135" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="190" name="block-sm" gid="46" x="88.1635" y="-906.449" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="191" name="block-sm" gid="46" x="111.699" y="-886.473" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="192" name="sqr-05" type="square" gid="14" x="60.2308" y="-971.754" width="16" height="16" rotation="425.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="193" gid="49" x="165.885" y="-702.223" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="194" name="block-sm" gid="46" x="171.545" y="-740.077" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="195" gid="46" x="184.043" y="-696.285" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="196" name="lshape7" gid="1073741867" x="223.009" y="-597.524" width="24" height="16" rotation="65.2288">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="197" name="block-sm" gid="53" x="85.6505" y="-926.215" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="198" name="block-sm" gid="49" x="123.152" y="-866.427" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="199" name="sqr-03" type="square" gid="12" x="54.9228" y="-973.71" width="16" height="16" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="200" name="sqr-09" type="square" gid="18" x="39" y="-993.896" width="16" height="16" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="201" gid="49" x="150.106" y="-784.15" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="202" name="block-sm" gid="51" x="112.316" y="-1313.8" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="203" name="tshape08" gid="1073741832" x="35.9329" y="-1253.45" width="24" height="16" rotation="-76.3108">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
+   </object>
+   <object id="204" gid="49" x="15" y="-1173" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="205" name="block-sm" gid="46" x="98.699" y="-1350.47" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="206" gid="49" x="152.885" y="-1166.22" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="207" name="block-sm" gid="53" x="11" y="-1128" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="208" name="lshape1" gid="1073741861" x="38" y="-1225" width="24" height="16" rotation="-270">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="209" gid="51" x="52" y="-1156" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="210" gid="51" x="54" y="-1080" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="211" name="block-sm" gid="47" x="22" y="-1094" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="212" gid="53" x="57" y="-1099" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="213" name="sqr-03" type="square" gid="12" x="41.9228" y="-1437.71" width="16" height="16" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="214" gid="46" x="171.043" y="-1160.28" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="215" name="lshape7" gid="1073741867" x="65" y="-1243" width="24" height="16" rotation="-90">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="216" name="block-sm" gid="53" x="121.883" y="-1290.68" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="217" name="block-sm" gid="46" x="158.545" y="-1204.08" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="218" gid="51" x="151.701" y="-1214.13" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="219" gid="47" x="170.343" y="-1137.93" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="220" name="block-sm" gid="46" x="7" y="-1064" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="221" name="block-sm" gid="46" x="75.1635" y="-1370.45" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="222" name="block-sm" gid="51" x="10" y="-1103" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="223" name="block-sm" gid="49" x="76.7734" y="-1421.85" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="224" gid="47" x="69" y="-1157" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="225" name="block-sm" gid="49" x="110.152" y="-1330.43" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="226" name="sqr-01" type="square" gid="10" x="42.9028" y="-1469" width="16" height="16" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="227" name="block-sm1" gid="48" x="23" y="-1305" width="8" height="8" rotation="42">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="228" gid="49" x="73" y="-1124" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="229" gid="53" x="59" y="-1183" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="230" name="lshape5" gid="1073741865" x="185.285" y="-1072.14" width="24" height="16" rotation="335.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="231" gid="46" x="59" y="-1137" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="232" name="sqr-09" type="square" gid="18" x="26" y="-1457.9" width="16" height="16" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="233" name="block-sm" gid="51" x="67.4135" y="-1408.72" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="234" gid="51" x="185.36" y="-1145.97" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="235" name="block-sm" gid="47" x="71" y="-1081" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="236" gid="49" x="137.106" y="-1248.15" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="237" name="block-sm" gid="47" x="136.684" y="-1206.1" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="238" name="block-sm" gid="47" x="97.649" y="-1316.95" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="239" name="block-sm" gid="49" x="5" y="-1087" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="240" name="lshape5" gid="1073741865" x="83" y="-1223" width="24" height="16" rotation="180">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="241" name="sqr-05" type="square" gid="14" x="47.2308" y="-1435.75" width="16" height="16" rotation="425.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="242" name="tshape04" gid="1073741828" x="100.996" y="-1238.1" width="24" height="16" rotation="245.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
+   </object>
+   <object id="243" name="lshape4" gid="1073741864" x="47" y="-1318" width="24" height="16">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="244" gid="46" x="82.5544" y="-1353.26" width="8" height="8" rotation="187.021">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="245" name="block-sm" gid="53" x="72.6505" y="-1390.22" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="246" gid="53" x="190.317" y="-1118.52" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="247" gid="53" x="156.938" y="-1195.63" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="248" name="lshape6" gid="1073741866" x="56" y="-1292" width="24" height="16" rotation="62.3173">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="249" name="block-sm" gid="46" x="52" y="-1092" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="250" name="block-sm" gid="47" x="52.3967" y="-1400.69" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="251" name="block-sm" gid="51" x="111.316" y="-1886.8" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="252" name="tshape08" gid="1073741832" x="34.9329" y="-1826.45" width="24" height="16" rotation="-76.3108">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
+   </object>
+   <object id="253" gid="49" x="14" y="-1746" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="254" name="block-sm" gid="46" x="97.699" y="-1923.47" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="255" gid="49" x="151.885" y="-1739.22" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="256" name="block-sm" gid="53" x="10" y="-1701" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="257" name="lshape1" gid="1073741861" x="37" y="-1798" width="24" height="16" rotation="-270">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="258" gid="51" x="51" y="-1729" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="259" gid="51" x="53" y="-1653" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="260" name="block-sm" gid="47" x="21" y="-1667" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="261" gid="53" x="56" y="-1672" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="262" name="sqr-03" type="square" gid="12" x="40.9228" y="-2010.71" width="16" height="16" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="263" gid="46" x="170.043" y="-1733.28" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="264" name="lshape7" gid="1073741867" x="64" y="-1816" width="24" height="16" rotation="-90">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="265" name="block-sm" gid="53" x="120.883" y="-1863.68" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="266" name="block-sm" gid="46" x="157.545" y="-1777.08" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="267" gid="51" x="150.701" y="-1787.13" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="268" gid="47" x="169.343" y="-1710.93" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="269" name="block-sm" gid="46" x="6" y="-1637" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="270" name="block-sm" gid="46" x="74.1635" y="-1943.45" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="271" name="block-sm" gid="51" x="9" y="-1676" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="272" name="block-sm" gid="49" x="75.7734" y="-1994.85" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="273" gid="47" x="68" y="-1730" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="274" name="block-sm" gid="49" x="109.152" y="-1903.43" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="275" name="sqr-01" type="square" gid="10" x="41.9028" y="-2042" width="16" height="16" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="276" name="block-sm1" gid="48" x="22" y="-1878" width="8" height="8" rotation="42">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="277" gid="49" x="72" y="-1697" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="278" gid="53" x="58" y="-1756" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="279" name="lshape5" gid="1073741865" x="184.285" y="-1645.14" width="24" height="16" rotation="335.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="280" gid="46" x="58" y="-1710" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="281" name="sqr-09" type="square" gid="18" x="25" y="-2030.9" width="16" height="16" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="282" name="block-sm" gid="51" x="66.4135" y="-1981.72" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="283" gid="51" x="184.36" y="-1718.97" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="284" name="block-sm" gid="47" x="70" y="-1654" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="285" gid="49" x="136.106" y="-1821.15" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="286" name="block-sm" gid="47" x="135.684" y="-1779.1" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="287" name="block-sm" gid="47" x="96.649" y="-1889.95" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="288" name="block-sm" gid="49" x="4" y="-1660" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="289" name="lshape5" gid="1073741865" x="82" y="-1796" width="24" height="16" rotation="180">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="290" name="sqr-05" type="square" gid="14" x="46.2308" y="-2008.75" width="16" height="16" rotation="425.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="291" name="tshape04" gid="1073741828" x="99.996" y="-1811.1" width="24" height="16" rotation="245.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 -8,8 -8,16 16,16 16,8 8,8 8,0"/>
+   </object>
+   <object id="292" name="lshape4" gid="1073741864" x="46" y="-1891" width="24" height="16">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="293" gid="46" x="81.5544" y="-1926.26" width="8" height="8" rotation="187.021">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="294" name="block-sm" gid="53" x="71.6505" y="-1963.22" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="295" gid="53" x="189.317" y="-1691.52" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+   </object>
+   <object id="296" gid="53" x="155.938" y="-1768.63" width="8" height="8" rotation="155.229">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="297" name="lshape6" gid="1073741866" x="55" y="-1865" width="24" height="16" rotation="62.3173">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+    </properties>
+    <polygon points="0,0 0,8 16,8 16,16 24,16 24,0"/>
+   </object>
+   <object id="298" name="block-sm" gid="46" x="51" y="-1665" width="8" height="8">
+    <properties>
+     <property name="isDynamic" type="bool" value="true"/>
+     <property name="resitution" type="float" value="1"/>
+    </properties>
+   </object>
+   <object id="299" name="block-sm" gid="47" x="51.3967" y="-1973.69" width="8" height="8" rotation="155.229">
     <properties>
      <property name="isDynamic" type="bool" value="true"/>
     </properties>
@@ -277,7 +1004,7 @@
    <image source="tetris-layer3-336x240.png" width="336" height="240"/>
   </imagelayer>
  </group>
- <objectgroup name="Collisions" visible="0">
+ <objectgroup name="Collisions">
   <object id="43" name="right-floor" x="104" y="200" width="16" height="8">
    <properties>
     <property name="isCollider" type="bool" value="true"/>
@@ -314,16 +1041,35 @@
     <property name="isDynamic" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="160" x="129" y="5" width="78" height="78">
+  <object id="160" name="tower-top" x="129" y="5" width="78" height="78">
    <properties>
     <property name="isCollider" type="bool" value="true"/>
    </properties>
    <ellipse/>
   </object>
-  <object id="162" name="middle-floor" x="41" y="200" width="62" height="8">
+  <object id="162" name="middle-floor" x="64" y="232" width="16" height="8">
    <properties>
-    <property name="isCollider" type="bool" value="false"/>
+    <property name="isCollider" type="bool" value="true"/>
    </properties>
+  </object>
+  <object id="163" name="tower-top-L" x="121" y="21" width="15" height="21">
+   <properties>
+    <property name="isCollider" type="bool" value="true"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="164" name="tower-top-R" x="200" y="21" width="15" height="21">
+   <properties>
+    <property name="isCollider" type="bool" value="true"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="172" x="224" y="160">
+   <properties>
+    <property name="isCollider" type="bool" value="true"/>
+    <property name="restitution" type="float" value="1.1"/>
+   </properties>
+   <polygon points="0,0 24,0 24,8 32,8 32,16 56,16 56,-8 64,-8 64,0 72,0 72,8 80,8 80,40 0,40"/>
   </object>
  </objectgroup>
  <group name="Tile_layers">
@@ -362,4 +1108,12 @@
 </data>
   </layer>
  </group>
+ <objectgroup name="Scene">
+  <object id="300" name="light1" type="Light" x="160" y="-34" width="15" height="15">
+   <properties>
+    <property name="intensity" type="float" value="0.5"/>
+   </properties>
+   <ellipse/>
+  </object>
+ </objectgroup>
 </map>

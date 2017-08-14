@@ -19,16 +19,14 @@ import Cocoa
 
 public class SKTiledDemoScene: SKTiledScene {
     
-    public var uiScale: CGFloat = 1
+    public var uiScale: CGFloat = SKTiledContentScaleFactor
     public var mouseTracker = MouseTracker()
     
     /// global information label font size.
     private let labelFontSize: CGFloat = 11
     
     internal var selected: [TiledLayerObject] = []
-    
     internal var tileshapes: Set<TileShape> = []
-    
     internal var editMode: Bool = false
     internal var liveMode: Bool = true                     // highlight tiles under the mouse
     
@@ -73,7 +71,66 @@ public class SKTiledDemoScene: SKTiledScene {
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateCoordinate), name: NSNotification.Name(rawValue: "updateCoordinate"), object: nil)
     }
-
+    
+    func setup(fileNamed: String) {
+        guard let tilemap = tilemap else { return }
+        switch fileNamed {
+        case "pacman-8x8.tmx":
+            setupPacman()
+        case "tetris-dynamics.tmx":
+            setupTetris()
+        default:
+            print("setting up default")
+        }
+    }
+    
+    func setupPacman() {
+        print("[SKTiledDemoScene]: DEBUG: setting up \"pacman-8x8.tmx\"")
+        
+        guard let graphLayer = tilemap.tileLayers(named: "Graph").first else {
+            print("[SKTiledDemoScene]: ERROR: layer \"Graph\" does not exist.")
+            return
+        }
+        
+        
+        
+        let walkable  = graphLayer.getTiles().filter { $0.tileData.walkable == true }
+        let obstacles = graphLayer.getTiles().filter { $0.tileData.obstacle == true }
+        
+        if (walkable.count > 0) {
+            print("[SKTiledDemoScene]: DEBUG: \"\(graphLayer.layerName)\": walkable: \(walkable.count), obstacles: \(obstacles.count)")
+            if let _ = graphLayer.initializeGraph(walkable: walkable, obstacles: obstacles, diagonalsAllowed: false) {}
+        }
+    }
+    
+    func setupTetris() {
+        print("[SKTiledDemoScene]: DEBUG: setting up \"textris-dynamics.tmx\"")
+        for object in tilemap.getObjects() {
+            if let objType = object.type {
+                if objType == "Light" {
+                    let light = SKLightNode()
+                    object.addChild(light)
+                    light.isEnabled = true
+                    light.lightColor = .white
+                    light.categoryBitMask = 1
+                    light.shadowColor = .black
+                    
+                }
+            }
+            
+            if let tile = object.tile {
+                tile.lightingBitMask = 1
+                tile.shadowedBitMask = 1
+            }
+        }
+        
+        
+        
+        //let lights = tilemap.getObjects().filter( { $0.type == "Light"} )
+        //print("setting up \(lights.count) lights.")
+    }
+    
+    
     /**
      Add a tile shape to a layer at the given coordinate.
      
@@ -108,11 +165,10 @@ public class SKTiledDemoScene: SKTiledScene {
      - parameter duration:  `TimeInterval` tile life.
      */
     func addTileToWorld(_ x: Int, _ y: Int, useLabel: Bool=false) {
-        guard let tilemap = tilemap,
-                let worldNode = worldNode else { return }
+        guard let tilemap = tilemap else { return }
         
         // validate the coordinate
-        let layer = tilemap.baseLayer
+        let layer = tilemap.defaultLayer
         let validCoord = layer.isValid(x, y)
         
         let coord = CGPoint(x: x, y: y)
@@ -150,6 +206,8 @@ public class SKTiledDemoScene: SKTiledScene {
         removeAllActions()
         removeAllChildren()
     }
+    
+    // MARK: - Demo
     
     /**
      Callback to the GameViewController to reload the current scene.
@@ -251,17 +309,14 @@ public class SKTiledDemoScene: SKTiledScene {
     
     // MARK: - Callbacks
     override open func didReadMap(_ tilemap: SKTilemap) {
+        if loggingLevel.rawValue == 4 { print(" 🔹 `SKTiledScene.didReadMap`: \"\(tilemap.mapName)\"") }
         self.physicsWorld.speed = 1
     }
     
     override open func didRenderMap(_ tilemap: SKTilemap) {
         // update the HUD to reflect the number of tiles created
         updateHud()
-        tilemap.mapStatistics()
-        
-        if let tileset = tilemap.getTileset(named: "maze-8x8") {
-            tileset.addTextures(fromSpriteSheet: "mspacman-maze2-8x8", replace: true, transparent: nil)
-        }
+        //tilemap.mapStatistics()
     }
     
     override open func didAddPathfindingGraph(_ graph: GKGridGraph<GKGridGraphNode>) {
@@ -269,15 +324,55 @@ public class SKTiledDemoScene: SKTiledScene {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "updateUIControls"), object: nil, userInfo: ["hasGraphs": true])
     }
     
-    override open func didAddTileset(_ tileset: SKTileset) {
-        // Called when a tileset has been added.
-        print(" ❊ `SKTiledScene.didAddTileset`: \"\(tileset.name)\", \(tileset.url)")
-
-        //mspacman-maze1-8x8
-        //sleep(5)
+    override open func objectForTileType(named: String?) -> SKTile.Type {
+        if (named == "Dot") { return Dot.self }
+        if (named == "Pellet") { return Pellet.self }
+        return SKTile.self
+    }
+    
+    override open func objectForVectorType(named: String?) -> SKTileObject.Type {
+        if (named == "Label") { return Label.self }
+        if (named == "Fruit") { return Fruit.self }
+        return SKTileObject.self
     }
 }
 
+
+public enum GhostMode {
+    case chase
+    case flee
+}
+
+
+public class Dot: SKTile {
+    public var score: Int = 10
+    public var ghostMode: GhostMode = .chase
+}
+
+
+public class Pellet: Dot {
+    
+    override required public init?(data: SKTilesetData) {
+        super.init(data: data)
+        score = 50
+        ghostMode = .flee
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    required public init() {
+        fatalError("init() has not been implemented")
+    }
+}
+
+
+public class Label: SKTileObject {}
+
+public class Fruit: SKTileObject {
+    public var score: Int = 100
+}
 
 
 #if os(iOS) || os(tvOS)
@@ -286,14 +381,14 @@ extension SKTiledDemoScene {
     
     override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let tilemap = tilemap else { return }
-        let baseLayer = tilemap.baseLayer
+        let defaultLayer = tilemap.defaultLayer
         
         for touch in touches {
             
-            // get the position in the baseLayer
-            let positionInLayer = baseLayer.touchLocation(touch)
+            // get the position in the defaultLayer
+            let positionInLayer = defaultLayer.touchLocation(touch)
             
-            let coord = baseLayer.coordinateAtTouchLocation(touch)
+            let coord = defaultLayer.coordinateAtTouchLocation(touch)
             // add a tile shape to the base layer where the user has clicked
             
             // highlight the current coordinate
@@ -327,30 +422,31 @@ extension SKTiledDemoScene {
         
         cameraNode.mouseDown(with: event)
         
-        let positionInScene = event.location(in: self)
-        let baseLayer = tilemap.baseLayer
+        let defaultLayer = tilemap.defaultLayer
         
-        // get the position in the baseLayer
-        let positionInLayer = baseLayer.mouseLocation(event: event)
-        // get the coordinate at that position
-        let coord = baseLayer.coordinateAtMouseEvent(event: event)
+        // get the position relative as drawn by the
+        let positionInScene = event.location(in: self)
+        let positionInLayer = defaultLayer.mouseLocation(event: event)
+        let coord = defaultLayer.coordinateAtMouseEvent(event: event)
+        
+        // query nodes under the cursor to update the properties label
+        var propertiesInfoString = ""
         let nodesUnderCursor = nodes(at: positionInScene).filter( { $0 as? TileShape != nil }) as! [TileShape]
         let tilesUnderCursor = nodesUnderCursor.filter( { $0.useLabel == true } )
-
+        
         if (tilemap.isPaused == false) {
             // highlight the current coordinate
             if tilesUnderCursor.count == 0 {
                 addTileToWorld(Int(coord.x), Int(coord.y), useLabel: true)
             }
         }
- 
+        
         // update the tile information label
         let coordDescription = "\(Int(coord.x)), \(Int(coord.y))"
         let coordStr = "Coord: \(coordDescription), \(positionInLayer.roundTo())"
         updateTileInfo(msg: coordStr)
         
         // tile properties output
-        var propertiesInfoString = ""
         if let tile = tilemap.firstTileAt(coord: coord) {
             propertiesInfoString = tile.tileData.description
 
@@ -381,21 +477,21 @@ extension SKTiledDemoScene {
             mouseTracker.offset = CGPoint(x: xDistanceToCenter, y: yDistanceToCenter)
         }
         
-        let baseLayer = tilemap.baseLayer
+        let defaultLayer = tilemap.defaultLayer
 
         // get the position relative as drawn by the
         let positionInScene = event.location(in: self)
-        let positionInLayer = baseLayer.mouseLocation(event: event)
-        let coord = baseLayer.coordinateAtMouseEvent(event: event)
-        let validCoord = baseLayer.isValid(Int(coord.x), Int(coord.y))
+        let positionInLayer = defaultLayer.mouseLocation(event: event)
+        let coord = defaultLayer.coordinateAtMouseEvent(event: event)
+        let validCoord = defaultLayer.isValid(Int(coord.x), Int(coord.y))
         
         // query nodes under the cursor to update the properties label
         var propertiesInfoString = ""
-        let positionInMap = event.location(in: tilemap)
-        let tiledObjectsUnderCursor = tilemap.renderableObjectsAt(point: positionInMap)
-        
-        if (tiledObjectsUnderCursor.count) > 0 {
-            propertiesInfoString = tiledObjectsUnderCursor.first!.description
+        let nodesUnderCursor = nodes(at: positionInScene).filter( { $0 as? TileShape != nil }) as! [TileShape]
+        if (nodesUnderCursor.count) > 0 {
+            if let tile = tilemap.firstTileAt(coord: coord) {
+                propertiesInfoString = tile.tileData.description
+            }
         }
         
         // update the mouse tracking node
@@ -575,7 +671,7 @@ extension SKTiledDemoScene {
         
         // 'g' shows the grid for the map default layer.
         if eventKey == 0x5 {
-            tilemap.baseLayer.debugDrawOptions = (tilemap.baseLayer.debugDrawOptions != []) ? [] : [.demo]
+            tilemap.defaultLayer.debugDrawOptions = (tilemap.defaultLayer.debugDrawOptions != []) ? [] : [.demo]
         }
         
         // 'i' shows the center point of each tile
@@ -591,8 +687,8 @@ extension SKTiledDemoScene {
                     shape.strokeColor = .clear
                     worldNode.addChild(shape)
                     
-                    let shapePos = tilemap.baseLayer.pointForCoordinate(x, y)
-                    shape.position = worldNode.convert(shapePos, from: tilemap.baseLayer)
+                    let shapePos = tilemap.defaultLayer.pointForCoordinate(x, y)
+                    shape.position = worldNode.convert(shapePos, from: tilemap.defaultLayer)
                     shape.zPosition = tilemap.lastZPosition + tilemap.zDeltaForLayers
                     
                     let fadeAction = SKAction.fadeAfter(wait: fadeTime, alpha: 0)
@@ -610,10 +706,10 @@ extension SKTiledDemoScene {
         if eventKey == 0x2d {
             //tilemap.backgroundColor = SKColor(hexString: "#ea32fa")
             // if objects are shown...
-            if tilemap.baseLayer.debugDrawOptions.contains(.drawBackground) {
-                tilemap.baseLayer.debugDrawOptions.remove(.drawBackground)
+            if tilemap.defaultLayer.debugDrawOptions.contains(.drawBackground) {
+                tilemap.defaultLayer.debugDrawOptions.remove(.drawBackground)
             } else {
-                tilemap.baseLayer.debugDrawOptions.insert(.drawBackground)
+                tilemap.defaultLayer.debugDrawOptions.insert(.drawBackground)
             }
         }
         
@@ -628,7 +724,6 @@ extension SKTiledDemoScene {
 
             enumerateChildNodes(withName: "//*") {  // was //*
                 node, stop in
-                
 
                 
                 if let shape = node as? SKTileObject {
@@ -714,7 +809,19 @@ extension SKTiledDemoScene {
         
         // 'z' is a custom test
         if eventKey == 0x06 {
+            guard let graphLayer = tilemap.tileLayers(named: "Graph").first else {
+                print("[SKTiledDemoScene]: WARNNG:  map does not have a graph layer.")
+                return 
+            }
 
+            var walkable: [SKTile] = []
+            for tile in graphLayer.getTiles() {
+                if tile.tileData.walkable == true {
+                    walkable.append(tile)
+                }
+            }
+                
+            graphLayer.initializeGraph(walkable: walkable, obstacles: [], diagonalsAllowed: false, nodeClass: SKTiledGraphNode.self)
         }
         
         // '↑' clamps layer positions

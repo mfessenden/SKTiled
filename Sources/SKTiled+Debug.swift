@@ -37,6 +37,18 @@ public struct DebugDrawOptions: OptionSet {
     static public let all:   DebugDrawOptions  = [.demo, .drawGraph, .drawObjectBounds, .drawTileBounds, .drawMouseOverObject, .drawBackground]
 }
 
+// MARK: - Logging
+
+// Parser logging level
+public enum LoggingLevel: Int {
+    case debug
+    case info
+    case warning
+    case error
+    case gcd
+}
+
+
 
 /// Sprite object for visualizaing grid & graph.
 // TODO: at some point the grid & graph textures should be a shader.
@@ -487,7 +499,7 @@ extension SKTilemap {
     open func renderableObjectsAt(point: CGPoint) -> [SKNode] {
         return nodes(at: point).filter { node in
             (node as? SKTile != nil) || (node as? SKTileObject != nil)
-        }
+            }
     }
     
     /**
@@ -655,6 +667,19 @@ public extension SignedInteger {
 public extension UnsignedInteger {
     public var hexString: String { return "0x" + String(self, radix: 16) }
     public var binaryString: String { return "0b" + String(self, radix: 2) }
+}
+
+
+
+extension LoggingLevel: Comparable {
+    
+    static public func < (lhs: LoggingLevel, rhs: LoggingLevel) -> Bool {
+        return lhs.rawValue < rhs.rawValue
+    }
+    
+    static public func == (lhs: LoggingLevel, rhs: LoggingLevel) -> Bool {
+        return lhs.rawValue == rhs.rawValue
+    }
 }
 
 

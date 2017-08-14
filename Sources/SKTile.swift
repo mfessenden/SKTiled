@@ -28,8 +28,8 @@ public class SKTile: SKSpriteNode {
     fileprivate var tileOverlap: CGFloat = 1.5          // tile overlap amount
     fileprivate var maxOverlap: CGFloat = 3.0           // maximum tile overlap
     
-    open var highlightColor: SKColor = SKColor.white    // tile highlight color
-    open var highlightDuration: TimeInterval = 0        // tile highlight duration
+    public var highlightColor: SKColor = SKColor.white    // tile highlight color
+    public var highlightDuration: TimeInterval = 0        // tile highlight duration
     
     public enum PhysicsShape {
         case none
@@ -40,13 +40,13 @@ public class SKTile: SKSpriteNode {
     }
     
     // Physics body shape.
-    open var physicsShape: PhysicsShape = .none
+    public var physicsShape: PhysicsShape = .none
     
     /// Tile alignment.
-    open var alignment: TileAlignmentHint = .bottomLeft
+    public var alignment: TileAlignmentHint = .bottomLeft
     
     /// Returns the bounding box of the shape.
-    open var bounds: CGRect {
+    public var bounds: CGRect {
         return CGRect(x: 0, y: 0, width: tileSize.width, height: -tileSize.height)
     }
     
@@ -57,7 +57,7 @@ public class SKTile: SKSpriteNode {
      - parameter tileSize: `CGSize` tile size in pixels.
      - returns: `SKTile` tile sprite.
      */
-    required public init(tileSize size: CGSize){
+    public init(tileSize size: CGSize){
         // create empty tileset data
         tileData = SKTilesetData()
         tileSize = size
@@ -86,7 +86,7 @@ public class SKTile: SKSpriteNode {
     /**
      Initialize an empty tile.
      */
-    public init(){
+    required public init(){
         // create empty tileset data
         tileData = SKTilesetData()
         tileSize = CGSize.zero
@@ -178,7 +178,7 @@ public class SKTile: SKSpriteNode {
     /**
      Set up the tile's dynamics body with a circular shape.
      
-     - parameter radius:  `CGFloat` circle radius.
+     - parameter radius:    `CGFloat` circle radius.
      - parameter isDynamic: `Bool` physics body is active.
      */
     public func setupPhysics(radius: CGFloat, isDynamic: Bool = false){
@@ -545,8 +545,8 @@ public class SKTile: SKSpriteNode {
         
 extension SKTile {
     
-    /// Opacity value of the tile
-    open var opacity: CGFloat {
+    /// Opacity value of the tile.
+    public var opacity: CGFloat {
         get {
             return self.alpha
         }
@@ -555,8 +555,8 @@ extension SKTile {
         }
     }
     
-    /// Visibility value of the tile
-    open var visible: Bool {
+    /// Visibility value of the tile.
+    public var visible: Bool {
         get {
             return !self.isHidden
         }
@@ -566,7 +566,7 @@ extension SKTile {
     }
     
     /// Show/hide the tile's bounding shape.
-    open var showBounds: Bool {
+    public var showBounds: Bool {
         get {
             return (childNode(withName: "BOUNDS") != nil) ? childNode(withName: "BOUNDS")!.isHidden == false : false
         }

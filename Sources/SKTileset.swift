@@ -16,7 +16,7 @@ import SpriteKit
  
  The tileset class manages a set of `SKTilesetData` objects, which store tile data including global id and texture.
  
- Tile data is accessed via the local id:
+ Tile data is accessed via a local id, and tiles can be instantiated with the resulting `SKTilesetData` instance 
  
  ```swift
  let data = tileset.getTileData(localID: 56)
@@ -61,6 +61,9 @@ open class SKTileset: SKTiledObject {
     open var isExternalTileset: Bool { return filename != nil }  // tileset is an external file
     open var transparentColor: SKColor? = nil                    // sprite transparency color
     open var isRendered: Bool = false                            // indicates the tileset is rendered
+    
+    
+    open var walkableIDs: [Int] = []
     
     /// Returns the last GID in the tileset
     open var lastGID: Int { return tileData.map { $0.id }.max() ?? firstGID }
@@ -271,7 +274,7 @@ open class SKTileset: SKTiledObject {
             
             let timeStamp = String(format: "%.\(String(3))f", tilesetBuildTime)
             if loggingLevel.rawValue <= 1 {
-                print(" → tileset \"\(name)\" built in: \(timeStamp)s (\(tilesAdded) tiles)\n")
+                //print(" → tileset \"\(name)\" built in: \(timeStamp)s (\(tilesAdded) tiles)\n")
             }
         }
         
