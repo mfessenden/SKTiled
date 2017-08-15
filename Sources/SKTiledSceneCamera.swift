@@ -39,6 +39,7 @@ public protocol TiledSceneCameraDelegate: class {
  
  */
 @available(OSX 10.11, *)
+@available(iOS 10.0, *)
 open class SKTiledSceneCamera: SKCameraNode {
     
     unowned let world: SKNode
