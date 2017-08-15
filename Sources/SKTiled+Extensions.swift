@@ -70,10 +70,28 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
 
 @available(iOS 10.0, *)
 public func replaceColor(texture: SKTexture, color: SKColor) -> SKTexture? {
+    
     texture.filteringMode = .nearest
     let sprite = SKSpriteNode(texture: texture)
+    
+    let replaceColorSource = "vec2 nearest(vec2 pos){" +
+"vec2 snapped = floor(pos - 0.5) + 0.5;" +
+"return (snapped + step(0.5, pos - snapped));" +
+"}" +
+"vec2 nearest_uv(vec2 uv, vec2 size){" +
+"return nearest(uv * size) / size;" +
+"}" +
+"void main() {" +
+"vec4 val = texture2D(u_texture, nearest_uv(v_tex_coord, u_sprite_size));" +
+"if (val.r == transColor.r && val.b == transColor.b && val.g == transColor.g){" +
+"gl_FragColor = vec4(0.0,0.0,0.0,0.0);" +
+"} else {" +
+"gl_FragColor = val;" +
+"}" +
+"}"
 
-    let colorShader = SKShader(fileNamed: "replaceColor.fsh")
+    let colorShader = SKShader(source: replaceColorSource)
+    print("shader: \(colorShader)")
     
     // shader attributes
     colorShader.attributes = [
@@ -97,6 +115,8 @@ public func replaceColor(texture: SKTexture, color: SKColor) -> SKTexture? {
         newTexture.filteringMode = .nearest
         return newTexture
     }
+    
+
     return nil
 }
 

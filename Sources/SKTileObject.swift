@@ -34,11 +34,14 @@ import SpriteKit
  [text-objects]:../objects.html#text-objects
  */
 public struct TextObjectAttributes {
-
+    
+    /// Font name.
     public var fontName: String = "Arial"
+    /// Font size.
     public var fontSize: CGFloat = 16
+    /// Font color.
     public var fontColor: SKColor = .black
-
+    /// Font alignment.
     public struct TextAlignment {
         var horizontal: HoriztonalAlignment = .left
         var vertical: VerticalAlignment = .top
@@ -57,7 +60,7 @@ public struct TextObjectAttributes {
     }
     
     
-    // Text alignment.
+    /// Text alignment.
     public var alignment: TextAlignment = TextAlignment()
 
     public var wrap: Bool = true
@@ -68,7 +71,10 @@ public struct TextObjectAttributes {
     public var renderQuality: CGFloat = 8
 
     public init() {}
-
+    
+    /**
+     Initialize with basic font attributes.
+     */
     public init(font: String, size: CGFloat, color: SKColor = .black) {
         fontName = font
         fontSize = size

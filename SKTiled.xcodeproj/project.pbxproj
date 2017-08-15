@@ -74,7 +74,6 @@
 		4C2FCE5A1F4378F0004AD742 /* SKTileObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D91D8A4EBE00FCCFA3 /* SKTileObject.swift */; };
 		4C2FCE5B1F4378F0004AD742 /* SKTileset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DA1D8A4EBE00FCCFA3 /* SKTileset.swift */; };
 		4C2FCE5C1F4378F0004AD742 /* SKTilesetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */; };
-		4C2FCE5D1F4378F7004AD742 /* replaceColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4C628F071F3E347A00FCF929 /* replaceColor.fsh */; };
 		4C3117DB1EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
 		4C3117DC1EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
 		4C4184911F3411DE004E392A /* mspacman-16x16 in Resources */ = {isa = PBXBuildFile; fileRef = 4C41848F1F3411DE004E392A /* mspacman-16x16 */; };
@@ -105,7 +104,6 @@
 		4C41A5F31F437180001622FF /* SKTileObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D91D8A4EBE00FCCFA3 /* SKTileObject.swift */; };
 		4C41A5F41F437180001622FF /* SKTileset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DA1D8A4EBE00FCCFA3 /* SKTileset.swift */; };
 		4C41A5F51F437180001622FF /* SKTilesetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */; };
-		4C41A5F61F437191001622FF /* replaceColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4C628F071F3E347A00FCF929 /* replaceColor.fsh */; };
 		4C41A5F71F4372D0001622FF /* SKTiled.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5812631E255E6400E80BFC /* SKTiled.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C41A6051F43746E001622FF /* SKTiled.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5812681E255E7300E80BFC /* SKTiled.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C440B9B1DAE911000DEC9A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C440B981DAE911000DEC9A4 /* Assets.xcassets */; };
@@ -117,8 +115,6 @@
 		4C440BB51DAE913A00DEC9A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C440BAF1DAE913A00DEC9A4 /* Main.storyboard */; };
 		4C440BB61DAE913A00DEC9A4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440BB11DAE913A00DEC9A4 /* GameViewController.swift */; };
 		4C5479FE1DC15AF6008B3473 /* GameWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5479FD1DC15AF6008B3473 /* GameWindowController.swift */; };
-		4C628F0A1F3E347A00FCF929 /* replaceColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4C628F071F3E347A00FCF929 /* replaceColor.fsh */; };
-		4C628F0B1F3E347A00FCF929 /* replaceColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4C628F071F3E347A00FCF929 /* replaceColor.fsh */; };
 		4C628F161F3EFA7400FCF929 /* User in Resources */ = {isa = PBXBuildFile; fileRef = 4C628F151F3EFA7400FCF929 /* User */; };
 		4C628F171F3EFA7400FCF929 /* User in Resources */ = {isa = PBXBuildFile; fileRef = 4C628F151F3EFA7400FCF929 /* User */; };
 		4C6FB8A71F1E5D2800A57964 /* pacman-8x8.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6FB8A41F1E5D2800A57964 /* pacman-8x8.tmx */; };
@@ -247,7 +243,6 @@
 		4C5812631E255E6400E80BFC /* SKTiled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTiled.h; sourceTree = "<group>"; };
 		4C5812671E255E7300E80BFC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C5812681E255E7300E80BFC /* SKTiled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTiled.h; sourceTree = "<group>"; };
-		4C628F071F3E347A00FCF929 /* replaceColor.fsh */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = sourcecode.glsl; path = replaceColor.fsh; sourceTree = "<group>"; };
 		4C628F151F3EFA7400FCF929 /* User */ = {isa = PBXFileReference; lastKnownFileType = folder; path = User; sourceTree = "<group>"; };
 		4C6A1E1B1DAC19B1001F2E92 /* graphtest-8x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "graphtest-8x8.tsx"; path = "Resources/graphtest-8x8.tsx"; sourceTree = SOURCE_ROOT; };
 		4C6FB8A41F1E5D2800A57964 /* pacman-8x8.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "pacman-8x8.tmx"; sourceTree = "<group>"; };
@@ -409,14 +404,6 @@
 			path = framework;
 			sourceTree = "<group>";
 		};
-		4C628F111F3E355C00FCF929 /* shader */ = {
-			isa = PBXGroup;
-			children = (
-				4C628F071F3E347A00FCF929 /* replaceColor.fsh */,
-			);
-			name = shader;
-			sourceTree = "<group>";
-		};
 		4C6480BE1DC1231C006F4CB3 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
@@ -481,7 +468,6 @@
 				4CD5229E1DA624C400D78D81 /* CREDITS */,
 				4C6FB8A41F1E5D2800A57964 /* pacman-8x8.tmx */,
 				4CF452021F3D1287008BA678 /* tetris-dynamics.tmx */,
-				4C628F111F3E355C00FCF929 /* shader */,
 				4CA22C7B1F040FE700CD0A72 /* font */,
 				4CDF67CC1D8AE84300589457 /* png */,
 				4CD6D2D61D8B9DE50083DA7B /* tsx */,
@@ -785,7 +771,6 @@
 				4CF0FEA11F34EF27000AADEF /* roguelike-16x16-anim.png in Resources */,
 				4C0924F31F127DC0009CA37E /* tshape-24x16.png in Resources */,
 				4CA6E53C1F393F6D00612A1C /* spritesheets in Resources */,
-				4C628F0A1F3E347A00FCF929 /* replaceColor.fsh in Resources */,
 				4C0924DB1F127DC0009CA37E /* tetris-square-8x8.tsx in Resources */,
 				4C0924E31F127DC0009CA37E /* lshape-24x16.png in Resources */,
 				4CA6E53A1F393F6D00612A1C /* kong-50x32 in Resources */,
@@ -842,7 +827,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C41A5F61F437191001622FF /* replaceColor.fsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -850,7 +834,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C2FCE5D1F4378F7004AD742 /* replaceColor.fsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -904,7 +887,6 @@
 				4CA6E53B1F393F6D00612A1C /* kong-50x32 in Resources */,
 				4C0924E61F127DC0009CA37E /* square-8x8.png in Resources */,
 				4CF452041F3D1287008BA678 /* tetris-dynamics.tmx in Resources */,
-				4C628F0B1F3E347A00FCF929 /* replaceColor.fsh in Resources */,
 				4C628F171F3EFA7400FCF929 /* User in Resources */,
 				4CA6E54C1F393F7700612A1C /* dk-fonts-8x8.tsx in Resources */,
 				4C4184941F3411DE004E392A /* pacman-16x16 in Resources */,

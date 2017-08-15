@@ -11,8 +11,6 @@ import SpriteKit
 
 
 class GameViewController: UIViewController {
-
-    @IBOutlet var demoFileAttributes: NSArrayController!
     
     @IBOutlet weak var mapInfoLabel: UILabel!
     @IBOutlet weak var tileInfoLabel: UILabel!

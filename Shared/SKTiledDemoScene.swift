@@ -20,7 +20,7 @@ import Cocoa
 public class SKTiledDemoScene: SKTiledScene {
     
     public var uiScale: CGFloat = SKTiledContentScaleFactor
-    public var mouseTracker = MouseTracker()
+    var mouseTracker = MouseTracker()
     
     /// global information label font size.
     private let labelFontSize: CGFloat = 11
@@ -930,32 +930,6 @@ internal class MouseTracker: SKNode {
         shadow.position.x += shadowOffset
         shadow.position.y -= shadowOffset
     }
-}
-
-
-// TODO: Remove these in master
-
-public func getDesktopDirectory() -> URL {
-    let urls = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask)
-    return urls[0]
-}
-
-
-public func getHomeDirectory() -> URL {
-    let urls = FileManager.default.urls(for: .userDirectory, in: .userDomainMask)
-    return urls[0]
-}
-
-
-public func writeToFile(_ image: CGImage, url: URL) -> Data {
-    let bitmapRep: NSBitmapImageRep = NSBitmapImageRep(cgImage: image)
-    let properties = Dictionary<String, AnyObject>()
-    let data: Data = bitmapRep.representation(using: NSBitmapImageFileType.PNG, properties: properties)!
-    if !((try? data.write(to: URL(fileURLWithPath: url.path), options: [])) != nil) {
-        print("Error: write to file failed")
-    }
-    print(" → writing to file: \(url.absoluteString)")
-    return data
 }
 
 
