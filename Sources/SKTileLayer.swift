@@ -1710,7 +1710,7 @@ public class SKObjectGroup: TiledLayerObject {
      - returns: `[SKTileObject]` array of matching objects.
      */
     public func getObjects(withText text: String) -> [SKTileObject] {
-        return objects.filter { $0.text == text }
+        return objects.filter { $0.text != nil }.filter { $0.text! == text }
     }
 
     /**
@@ -1720,7 +1720,7 @@ public class SKObjectGroup: TiledLayerObject {
      - returns: `[SKTileObject]` array of matching objects.
      */
     public func getObjects(named: String) -> [SKTileObject] {
-        return objects.filter { $0.name == named }
+        return objects.filter { $0.name != nil }.filter { $0.name! == named }
     }
 
     /**
@@ -1739,7 +1739,7 @@ public class SKObjectGroup: TiledLayerObject {
      - returns: `[SKTileObject]` array of matching objects.
      */
     public func getObjects(ofType: String) -> [SKTileObject] {
-        return getObjects().filter( {$0.type == ofType})
+        return objects.filter { $0.type != nil }.filter { $0.type! == ofType }
     }
 
     // MARK: - Tile Objects

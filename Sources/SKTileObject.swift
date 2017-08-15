@@ -105,7 +105,12 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     /// Tiled object id
     open var id: Int = 0
     /// Tiled global id (for tile objects)
-    open var gid: Int!
+    open var gid: Int! {
+        didSet {
+            drawObject()
+        }
+    }
+    
     /// Object type
     open var type: String!
 

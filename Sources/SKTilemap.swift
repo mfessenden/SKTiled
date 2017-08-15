@@ -498,7 +498,7 @@ public class SKTilemap: SKNode, SKTiledObject {
 
             let renderTime = Date().timeIntervalSince(startTime)
             let timeStamp = String(format: "%.\(String(3))f", renderTime)
-            print("✽ Success! tilemap \"\(tilemap.mapName)\" rendered in: \(timeStamp)s ✽\n")
+            print(" ✽ Success! tilemap \"\(tilemap.mapName)\" rendered in: \(timeStamp)s ✽\n")
             return tilemap
         }
         return nil
@@ -1419,7 +1419,7 @@ public class SKTilemap: SKNode, SKTiledObject {
         let timeInterval = Date().timeIntervalSince(timeStarted)
         let timeStamp = String(format: "%.\(String(3))f", timeInterval)
         if loggingLevel.rawValue <= 1 {
-            print("\n ✽ Success! tilemap \"\(mapName)\" rendered in: \(timeStamp)s ✽\n")
+            //print("\n ✽ Success! tilemap \"\(mapName)\" rendered in: \(timeStamp)s ✽\n")
         }
 
         // transfer attributes
