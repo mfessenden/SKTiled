@@ -38,8 +38,6 @@ public protocol TiledSceneCameraDelegate: class {
  The `SKTiledSceneCamera` is a custom camera meant to be used with a scene conforming to the `SKTiledSceneDelegate` protocol. The camera defines a position in the scene to render the scene from, with a reference to the `SKTiledSceneDelegate.worldNode` to interact with tile maps. 
  
  */
-@available(OSX 10.11, *)
-@available(iOS 10.0, *)
 open class SKTiledSceneCamera: SKCameraNode {
     
     unowned let world: SKNode

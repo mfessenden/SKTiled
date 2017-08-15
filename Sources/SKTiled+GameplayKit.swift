@@ -385,8 +385,6 @@ extension Direction {
 }
 
 
-@available(OSX 10.11, *)
-@available(iOS 10.0, *)
 extension GKGridGraphNode {
     
     public func nodeInDirection(direction: Direction) -> GKGridGraphNode? {
