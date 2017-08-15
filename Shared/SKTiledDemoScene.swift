@@ -848,7 +848,7 @@ extension SKTiledDemoScene {
 #endif
 
 
-open class MouseTracker: SKNode {
+internal class MouseTracker: SKNode {
     
     private var label = SKLabelNode(fontNamed: "Courier")
     private var shadow = SKLabelNode(fontNamed: "Courier")
@@ -859,21 +859,21 @@ open class MouseTracker: SKNode {
     
     private let scaleSize: CGFloat = 8
     
-    public var coord: CGPoint = .zero {
+    var coord: CGPoint = .zero {
         didSet {
             label.text = "(\(Int(coord.x)), \(Int(coord.y)))"
             shadow.text = label.text
         }
     }
     
-    public var fontSize: CGFloat = 12 {
+    var fontSize: CGFloat = 12 {
         didSet {
             label.fontSize = fontSize
             shadow.fontSize = label.fontSize
         }
     }
     
-    public var isValid: Bool = false {
+    var isValid: Bool = false {
         didSet {
             guard oldValue != isValid else { return }
             circle.run(scaleSequence)
@@ -881,13 +881,13 @@ open class MouseTracker: SKNode {
         }
     }
     
-    public var radius: CGFloat = 4 {
+    var radius: CGFloat = 4 {
         didSet {
             circle = SKShapeNode(circleOfRadius: radius)
         }
     }
     
-    public var offset: CGPoint = .zero {
+    var offset: CGPoint = .zero {
         didSet {
             let ox = lerp(start: 0, end: 48, t: -offset.x)
             let oy = lerp(start: 0, end: 48, t: -offset.y)
@@ -903,17 +903,17 @@ open class MouseTracker: SKNode {
     }
     
     
-    override public init() {
+    override init() {
         scaleSequence = SKAction.sequence([scaleAction, scaleAction.reversed()])
         super.init()
         update()
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    open func update() {
+    func update() {
         circle = SKShapeNode(circleOfRadius: radius)
         addChild(circle)
         
@@ -933,7 +933,7 @@ open class MouseTracker: SKNode {
 }
 
 
-// MARK - Remove
+// TODO: Remove these in master
 
 public func getDesktopDirectory() -> URL {
     let urls = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask)

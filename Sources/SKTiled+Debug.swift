@@ -496,7 +496,7 @@ extension SKTilemap {
      - parameter point: `CGPoint` position in tilemap.
      - returns: `[SKNode]` array of tiles.
      */
-    open func renderableObjectsAt(point: CGPoint) -> [SKNode] {
+    public func renderableObjectsAt(point: CGPoint) -> [SKNode] {
         return nodes(at: point).filter { node in
             (node as? SKTile != nil) || (node as? SKTileObject != nil)
             }
@@ -505,7 +505,7 @@ extension SKTilemap {
     /**
      Draw the map bounds.
      */
-    open func drawBounds() {
+    public func drawBounds() {
         // remove old nodes
         self.childNode(withName: "MAP_BOUNDS")?.removeFromParent()
         self.childNode(withName: "MAP_ANCHOR")?.removeFromParent()

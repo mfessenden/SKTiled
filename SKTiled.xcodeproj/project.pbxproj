@@ -60,6 +60,21 @@
 		4C1A7BE51F3AC97600BDCA72 /* mspacman-maze3-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1A7BDD1F3AC97600BDCA72 /* mspacman-maze3-8x8.png */; };
 		4C1A7BE61F3AC97600BDCA72 /* mspacman-maze4-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1A7BDE1F3AC97600BDCA72 /* mspacman-maze4-8x8.png */; };
 		4C1A7BE71F3AC97600BDCA72 /* mspacman-maze4-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1A7BDE1F3AC97600BDCA72 /* mspacman-maze4-8x8.png */; };
+		4C2FCE4F1F4378DA004AD742 /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
+		4C2FCE501F4378E3004AD742 /* SKTiled+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D71D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift */; };
+		4C2FCE511F4378EB004AD742 /* SKTiled+GameplayKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C01D3A61F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift */; };
+		4C2FCE521F4378F0004AD742 /* SKTilemap+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */; };
+		4C2FCE531F4378F0004AD742 /* SKTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D01D8A4EBE00FCCFA3 /* SKTile.swift */; };
+		4C2FCE541F4378F0004AD742 /* SKTiledObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA21D8CC2C100DB56F1 /* SKTiledObject.swift */; };
+		4C2FCE551F4378F0004AD742 /* SKTiledScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA01D8CBB5B00DB56F1 /* SKTiledScene.swift */; };
+		4C2FCE561F4378F0004AD742 /* SKTiledSceneCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D21D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift */; };
+		4C2FCE571F4378F0004AD742 /* SKTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D41D8A4EBE00FCCFA3 /* SKTileLayer.swift */; };
+		4C2FCE581F4378F0004AD742 /* SKTilemap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D51D8A4EBE00FCCFA3 /* SKTilemap.swift */; };
+		4C2FCE591F4378F0004AD742 /* SKTilemapParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D81D8A4EBE00FCCFA3 /* SKTilemapParser.swift */; };
+		4C2FCE5A1F4378F0004AD742 /* SKTileObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D91D8A4EBE00FCCFA3 /* SKTileObject.swift */; };
+		4C2FCE5B1F4378F0004AD742 /* SKTileset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DA1D8A4EBE00FCCFA3 /* SKTileset.swift */; };
+		4C2FCE5C1F4378F0004AD742 /* SKTilesetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */; };
+		4C2FCE5D1F4378F7004AD742 /* replaceColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4C628F071F3E347A00FCF929 /* replaceColor.fsh */; };
 		4C3117DB1EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
 		4C3117DC1EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
 		4C4184911F3411DE004E392A /* mspacman-16x16 in Resources */ = {isa = PBXBuildFile; fileRef = 4C41848F1F3411DE004E392A /* mspacman-16x16 */; };
@@ -650,6 +665,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4C41A5E71F437118001622FF /* Build configuration list for PBXNativeTarget "SKTiled-macOS" */;
 			buildPhases = (
+				4C2FCE5E1F437A39004AD742 /* ShellScript */,
 				4C41A5DB1F437118001622FF /* Sources */,
 				4C41A5DC1F437118001622FF /* Frameworks */,
 				4C41A5DD1F437118001622FF /* Headers */,
@@ -668,6 +684,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4C41A6021F43739C001622FF /* Build configuration list for PBXNativeTarget "SKTiled-iOS" */;
 			buildPhases = (
+				4C2FCE5F1F437A45004AD742 /* ShellScript */,
 				4C41A5F81F43739C001622FF /* Sources */,
 				4C41A5F91F43739C001622FF /* Frameworks */,
 				4C41A5FA1F43739C001622FF /* Headers */,
@@ -833,6 +850,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C2FCE5D1F4378F7004AD742 /* replaceColor.fsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -905,6 +923,32 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4C2FCE5E1F437A39004AD742 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:|FIXME:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
+		};
+		4C2FCE5F1F437A45004AD742 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:|FIXME:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
+		};
 		4C3496881EA513D9003900C8 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1011,6 +1055,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C2FCE581F4378F0004AD742 /* SKTilemap.swift in Sources */,
+				4C2FCE501F4378E3004AD742 /* SKTiled+Extensions.swift in Sources */,
+				4C2FCE5B1F4378F0004AD742 /* SKTileset.swift in Sources */,
+				4C2FCE551F4378F0004AD742 /* SKTiledScene.swift in Sources */,
+				4C2FCE561F4378F0004AD742 /* SKTiledSceneCamera.swift in Sources */,
+				4C2FCE5A1F4378F0004AD742 /* SKTileObject.swift in Sources */,
+				4C2FCE571F4378F0004AD742 /* SKTileLayer.swift in Sources */,
+				4C2FCE511F4378EB004AD742 /* SKTiled+GameplayKit.swift in Sources */,
+				4C2FCE4F1F4378DA004AD742 /* SKTiled+Debug.swift in Sources */,
+				4C2FCE591F4378F0004AD742 /* SKTilemapParser.swift in Sources */,
+				4C2FCE521F4378F0004AD742 /* SKTilemap+Properties.swift in Sources */,
+				4C2FCE531F4378F0004AD742 /* SKTile.swift in Sources */,
+				4C2FCE5C1F4378F0004AD742 /* SKTilesetData.swift in Sources */,
+				4C2FCE541F4378F0004AD742 /* SKTiledObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1371,6 +1429,7 @@
 				4C41A5E61F437118001622FF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4C41A6021F43739C001622FF /* Build configuration list for PBXNativeTarget "SKTiled-iOS" */ = {
 			isa = XCConfigurationList;
@@ -1379,6 +1438,7 @@
 				4C41A6041F43739C001622FF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4CBA61601D8A048200B31FC1 /* Build configuration list for PBXProject "SKTiled" */ = {
 			isa = XCConfigurationList;

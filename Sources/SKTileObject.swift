@@ -109,14 +109,14 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     internal var tile: SKTile? = nil                        // optional tile
     open var size: CGSize = CGSize.zero
     
-    // TODO: this could be an optionset
-    public enum CollisionType {
+    
+    public enum CollisionType {  // TODO: this could be an optionset
         case none
         case dynamic
         case collision
     }
     
-    /// Custom object properties
+    /// Custom object properties.
     open var properties: [String: String] = [:]
     open var ignoreProperties: Bool = false                 // ignore custom properties
     open var physicsType: CollisionType = .none             // physics collision type
@@ -556,7 +556,8 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         }
     }
 
-    // MARK: - Polygon Points
+    // MARK: - Geometry
+    
     /**
      Add polygons points.
 

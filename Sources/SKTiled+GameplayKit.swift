@@ -314,7 +314,7 @@ extension SKTiledScene {
      - parameter graph: `GKGridGraph<GKGridGraphNode>`
      - returns: `Bool` dictionary insertion was successfull.
      */
-    public func addGraph(named: String, graph: GKGridGraph<GKGridGraphNode>) -> Bool {
+    open func addGraph(named: String, graph: GKGridGraph<GKGridGraphNode>) -> Bool {
         if let _ = graphs[named] {
             return false
         }
@@ -329,7 +329,7 @@ extension SKTiledScene {
      - parameter named: `String` name of graph.
      - returns: `GKGridGraph?` removed graph instance.
      */
-    public func removeGraph(named: String) -> GKGridGraph<GKGridGraphNode>? {
+    open func removeGraph(named: String) -> GKGridGraph<GKGridGraphNode>? {
         return graphs.removeValue(forKey: named)
     }
 }

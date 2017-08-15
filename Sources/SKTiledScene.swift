@@ -286,8 +286,9 @@ extension SKTiledScene: TiledSceneCameraDelegate {
         print("-> camera bounds updated: \(bounds.roundTo()), pos: \(position.roundTo()), zoom: \(zoom.roundTo())")
     }
     
-    // TODO: remove this notification callback in master
+    
     public func cameraPositionChanged(newPosition: CGPoint) {
+        // TODO: remove this notification callback in master
         NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": cameraNode?.description ?? "nil"])
     }
     

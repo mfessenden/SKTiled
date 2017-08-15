@@ -248,7 +248,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
      - parameter loggingLevel:    `LoggingLevel` logging verbosity.
      - returns: `[SKTileset]` tilesets.
      */
-    open func load(tsxFiles: [String],
+    public func load(tsxFiles: [String],
                    inDirectory: String? = nil,
                    delegate: SKTilemapDelegate? = nil,
                    ignoreProperties noparse: Bool = false,

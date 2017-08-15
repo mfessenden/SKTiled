@@ -15,21 +15,21 @@ import Cocoa
 #endif
 
 
-open class DemoController: NSObject {
+public class DemoController: NSObject {
     
     private let fm = FileManager.default
     static let `default` = DemoController()
     
-    weak open var view: SKView?
+    weak public var view: SKView?
     
     /// Logging verbosity.
-    open var loggingLevel: LoggingLevel = SKTiledLoggingLevel
+    public var loggingLevel: LoggingLevel = SKTiledLoggingLevel
     /// Debug visualization options.
-    open var debugDrawOptions: DebugDrawOptions = []
+    public var debugDrawOptions: DebugDrawOptions = []
     
     /// tiled resources
-    open var demourls: [URL] = []
-    open var currentURL: URL!
+    public var demourls: [URL] = []
+    public var currentURL: URL!
     
     private var roots: [URL] = []
     private var resources: [URL] = []
@@ -129,7 +129,7 @@ open class DemoController: NSObject {
      
      - parameter interval: `TimeInterval` transition duration.
      */
-    open func reloadScene(_ interval: TimeInterval=0) {
+    public func reloadScene(_ interval: TimeInterval=0) {
         guard let currentURL = currentURL else { return }
         loadScene(url: currentURL, usePreviousCamera: true, interval: interval)
     }
@@ -139,7 +139,7 @@ open class DemoController: NSObject {
      
      - parameter interval: `TimeInterval` transition duration.
      */
-    open func loadNextScene(_ interval: TimeInterval=0) {
+    public func loadNextScene(_ interval: TimeInterval=0) {
         guard let currentURL = currentURL else { return }
         var nextFilename = demourls.first!
         if let index = demourls.index(of: currentURL), index + 1 < demourls.count {
@@ -153,7 +153,7 @@ open class DemoController: NSObject {
      
      - parameter interval: `TimeInterval` transition duration.
      */
-    open func loadPreviousScene(_ interval: TimeInterval=0) {
+    public func loadPreviousScene(_ interval: TimeInterval=0) {
         guard let currentURL = currentURL else { return }
         var nextFilename = demourls.last!
         if let index = demourls.index(of:currentURL), index > 0, index - 1 < demourls.count {
@@ -241,7 +241,7 @@ open class DemoController: NSObject {
     /**
      Fit the current scene to the view.
      */
-    open func fitSceneToView() {
+    public func fitSceneToView() {
         guard let view = self.view else { return }
         guard let scene = view.scene as? SKTiledScene else { return }
         
@@ -253,7 +253,7 @@ open class DemoController: NSObject {
     /**
      Show/hide the grid & map bounds.
      */
-    open func toggleMapDemoDraw() {
+    public func toggleMapDemoDraw() {
         guard let view = self.view,
             let scene = view.scene as? SKTiledScene else { return }
         
@@ -265,7 +265,7 @@ open class DemoController: NSObject {
     /**
      Show/hide pathfinding graph visualizations.
      */
-    open func toggleMapGraphVisualization() {
+    public func toggleMapGraphVisualization() {
         guard let view = self.view,
             let scene = view.scene as? SKTiledScene else { return }
         
@@ -281,7 +281,7 @@ open class DemoController: NSObject {
     /**
      Show/hide current scene objects.
      */
-    open func toggleMapObjectDrawing() {
+    public func toggleMapObjectDrawing() {
         guard let view = self.view,
             let scene = view.scene as? SKTiledScene else { return }
         
@@ -292,7 +292,7 @@ open class DemoController: NSObject {
     
     // MARK: - Experimental
     // TODO: experimental
-    open func listBundledResources() {
+    public func listBundledResources() {
         let bundleURL = Bundle.main.bundleURL  // SKTiledDemo.app
         let assetname = "pm-maze-8x8"
         print(" ❊ Querying asset: ")
