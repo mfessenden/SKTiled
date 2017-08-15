@@ -19,7 +19,7 @@
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSApplicationCategoryType</key>
-	<string></string>
+	<string>public.app-category.developer-tools</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2017 Michael Fessenden. All rights reserved.</string>
 	<key>NSPrincipalClass</key>

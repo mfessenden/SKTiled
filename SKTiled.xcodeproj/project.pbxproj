@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C01D3A71F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C01D3A61F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift */; };
-		4C01D3A81F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C01D3A61F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift */; };
 		4C01D3A91F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C01D3A61F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift */; };
 		4C01D3AA1F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C01D3A61F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift */; };
 		4C0924D71F127DC0009CA37E /* tetris-bar-32x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C0924C81F127DC0009CA37E /* tetris-bar-32x8.tsx */; };
@@ -62,8 +60,6 @@
 		4C1A7BE51F3AC97600BDCA72 /* mspacman-maze3-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1A7BDD1F3AC97600BDCA72 /* mspacman-maze3-8x8.png */; };
 		4C1A7BE61F3AC97600BDCA72 /* mspacman-maze4-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1A7BDE1F3AC97600BDCA72 /* mspacman-maze4-8x8.png */; };
 		4C1A7BE71F3AC97600BDCA72 /* mspacman-maze4-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1A7BDE1F3AC97600BDCA72 /* mspacman-maze4-8x8.png */; };
-		4C3117D91EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
-		4C3117DA1EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
 		4C3117DB1EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
 		4C3117DC1EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
 		4C4184911F3411DE004E392A /* mspacman-16x16 in Resources */ = {isa = PBXBuildFile; fileRef = 4C41848F1F3411DE004E392A /* mspacman-16x16 */; };
@@ -80,6 +76,23 @@
 		4C4184A31F34201E004E392A /* fruit-16x16 in Resources */ = {isa = PBXBuildFile; fileRef = 4C4184A11F34201E004E392A /* fruit-16x16 */; };
 		4C4184A51F34B51D004E392A /* DemoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4184A41F34B51D004E392A /* DemoController.swift */; };
 		4C4184A61F34B51D004E392A /* DemoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4184A41F34B51D004E392A /* DemoController.swift */; };
+		4C41A5E81F437180001622FF /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
+		4C41A5E91F437180001622FF /* SKTiled+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D71D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift */; };
+		4C41A5EA1F437180001622FF /* SKTiled+GameplayKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C01D3A61F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift */; };
+		4C41A5EB1F437180001622FF /* SKTilemap+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */; };
+		4C41A5EC1F437180001622FF /* SKTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D01D8A4EBE00FCCFA3 /* SKTile.swift */; };
+		4C41A5ED1F437180001622FF /* SKTiledObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA21D8CC2C100DB56F1 /* SKTiledObject.swift */; };
+		4C41A5EE1F437180001622FF /* SKTiledScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA01D8CBB5B00DB56F1 /* SKTiledScene.swift */; };
+		4C41A5EF1F437180001622FF /* SKTiledSceneCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D21D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift */; };
+		4C41A5F01F437180001622FF /* SKTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D41D8A4EBE00FCCFA3 /* SKTileLayer.swift */; };
+		4C41A5F11F437180001622FF /* SKTilemap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D51D8A4EBE00FCCFA3 /* SKTilemap.swift */; };
+		4C41A5F21F437180001622FF /* SKTilemapParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D81D8A4EBE00FCCFA3 /* SKTilemapParser.swift */; };
+		4C41A5F31F437180001622FF /* SKTileObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D91D8A4EBE00FCCFA3 /* SKTileObject.swift */; };
+		4C41A5F41F437180001622FF /* SKTileset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DA1D8A4EBE00FCCFA3 /* SKTileset.swift */; };
+		4C41A5F51F437180001622FF /* SKTilesetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */; };
+		4C41A5F61F437191001622FF /* replaceColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4C628F071F3E347A00FCF929 /* replaceColor.fsh */; };
+		4C41A5F71F4372D0001622FF /* SKTiled.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5812631E255E6400E80BFC /* SKTiled.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C41A6051F43746E001622FF /* SKTiled.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5812681E255E7300E80BFC /* SKTiled.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C440B9B1DAE911000DEC9A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C440B981DAE911000DEC9A4 /* Assets.xcassets */; };
 		4C440B9F1DAE911000DEC9A4 /* SKTiledDemoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */; };
 		4C440BA01DAE911000DEC9A4 /* SKTiledDemoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */; };
@@ -89,10 +102,6 @@
 		4C440BB51DAE913A00DEC9A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C440BAF1DAE913A00DEC9A4 /* Main.storyboard */; };
 		4C440BB61DAE913A00DEC9A4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440BB11DAE913A00DEC9A4 /* GameViewController.swift */; };
 		4C5479FE1DC15AF6008B3473 /* GameWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5479FD1DC15AF6008B3473 /* GameWindowController.swift */; };
-		4C58126A1E255E7300E80BFC /* SKTiled.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5812681E255E7300E80BFC /* SKTiled.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C58126B1E255FAA00E80BFC /* SKTiled.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5812631E255E6400E80BFC /* SKTiled.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C628F081F3E347A00FCF929 /* replaceColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4C628F071F3E347A00FCF929 /* replaceColor.fsh */; };
-		4C628F091F3E347A00FCF929 /* replaceColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4C628F071F3E347A00FCF929 /* replaceColor.fsh */; };
 		4C628F0A1F3E347A00FCF929 /* replaceColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4C628F071F3E347A00FCF929 /* replaceColor.fsh */; };
 		4C628F0B1F3E347A00FCF929 /* replaceColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4C628F071F3E347A00FCF929 /* replaceColor.fsh */; };
 		4C628F161F3EFA7400FCF929 /* User in Resources */ = {isa = PBXBuildFile; fileRef = 4C628F151F3EFA7400FCF929 /* User */; };
@@ -142,30 +151,6 @@
 		4CA6E5521F393F7700612A1C /* other-16x32.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5431F393F7700612A1C /* other-16x32.tsx */; };
 		4CA6E5531F393F7700612A1C /* dk-fonts-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5441F393F7700612A1C /* dk-fonts-8x8.png */; };
 		4CA6E5541F393F7700612A1C /* dk-fonts-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5441F393F7700612A1C /* dk-fonts-8x8.png */; };
-		4CAFDA4D1E20326D006F2D83 /* SKTiled+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D71D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift */; };
-		4CAFDA4E1E20326E006F2D83 /* SKTiled+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D71D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift */; };
-		4CAFDA4F1E203270006F2D83 /* SKTilemap+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */; };
-		4CAFDA501E203271006F2D83 /* SKTilemap+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */; };
-		4CAFDA511E203273006F2D83 /* SKTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D01D8A4EBE00FCCFA3 /* SKTile.swift */; };
-		4CAFDA521E203274006F2D83 /* SKTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D01D8A4EBE00FCCFA3 /* SKTile.swift */; };
-		4CAFDA531E203276006F2D83 /* SKTiledObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA21D8CC2C100DB56F1 /* SKTiledObject.swift */; };
-		4CAFDA541E203277006F2D83 /* SKTiledObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA21D8CC2C100DB56F1 /* SKTiledObject.swift */; };
-		4CAFDA551E203279006F2D83 /* SKTiledScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA01D8CBB5B00DB56F1 /* SKTiledScene.swift */; };
-		4CAFDA561E203279006F2D83 /* SKTiledScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA01D8CBB5B00DB56F1 /* SKTiledScene.swift */; };
-		4CAFDA571E20327D006F2D83 /* SKTiledSceneCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D21D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift */; };
-		4CAFDA581E20327D006F2D83 /* SKTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D41D8A4EBE00FCCFA3 /* SKTileLayer.swift */; };
-		4CAFDA591E20327D006F2D83 /* SKTilemap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D51D8A4EBE00FCCFA3 /* SKTilemap.swift */; };
-		4CAFDA5A1E20327D006F2D83 /* SKTilemapParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D81D8A4EBE00FCCFA3 /* SKTilemapParser.swift */; };
-		4CAFDA5B1E20327D006F2D83 /* SKTileObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D91D8A4EBE00FCCFA3 /* SKTileObject.swift */; };
-		4CAFDA5C1E20327D006F2D83 /* SKTileset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DA1D8A4EBE00FCCFA3 /* SKTileset.swift */; };
-		4CAFDA5D1E20327D006F2D83 /* SKTilesetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */; };
-		4CAFDA5E1E20327E006F2D83 /* SKTiledSceneCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D21D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift */; };
-		4CAFDA5F1E20327E006F2D83 /* SKTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D41D8A4EBE00FCCFA3 /* SKTileLayer.swift */; };
-		4CAFDA601E20327E006F2D83 /* SKTilemap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D51D8A4EBE00FCCFA3 /* SKTilemap.swift */; };
-		4CAFDA611E20327E006F2D83 /* SKTilemapParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D81D8A4EBE00FCCFA3 /* SKTilemapParser.swift */; };
-		4CAFDA621E20327E006F2D83 /* SKTileObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D91D8A4EBE00FCCFA3 /* SKTileObject.swift */; };
-		4CAFDA631E20327E006F2D83 /* SKTileset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DA1D8A4EBE00FCCFA3 /* SKTileset.swift */; };
-		4CAFDA641E20327E006F2D83 /* SKTilesetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */; };
 		4CBA61831D8A0A4600B31FC1 /* roguelike-16x16-anim.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */; };
 		4CBB6A9F1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */; };
 		4CBB6AA11D8CBB5B00DB56F1 /* SKTiledScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA01D8CBB5B00DB56F1 /* SKTiledScene.swift */; };
@@ -229,6 +214,8 @@
 		4C41849E1F34198F004E392A /* fruit-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "fruit-16x16.tsx"; sourceTree = "<group>"; };
 		4C4184A11F34201E004E392A /* fruit-16x16 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "fruit-16x16"; sourceTree = "<group>"; };
 		4C4184A41F34B51D004E392A /* DemoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoController.swift; sourceTree = "<group>"; };
+		4C41A5E01F437118001622FF /* SKTiled.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SKTiled.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C41A5FD1F43739C001622FF /* SKTiled.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SKTiled.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C440B981DAE911000DEC9A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTiledDemoScene.swift; sourceTree = "<group>"; };
 		4C440BA21DAE913000DEC9A4 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -293,8 +280,6 @@
 		4CF452021F3D1287008BA678 /* tetris-dynamics.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "tetris-dynamics.tmx"; sourceTree = "<group>"; };
 		4CFEA3571D8D02D20055C150 /* staggered-64x192.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "staggered-64x192.png"; sourceTree = "<group>"; };
 		4CFEA35A1D8D04320055C150 /* hex-65x65-65x230.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hex-65x65-65x230.png"; sourceTree = "<group>"; };
-		4CFFD2851E2016DF0023C0F7 /* SKTiled.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SKTiled.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4CFFD2931E2019510023C0F7 /* SKTiled.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SKTiled.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -305,21 +290,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4C41A5DC1F437118001622FF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4C41A5F91F43739C001622FF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4CBA61621D8A048200B31FC1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4CFFD2811E2016DF0023C0F7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4CFFD28F1E2019510023C0F7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -468,8 +453,8 @@
 			children = (
 				4CBA61651D8A048200B31FC1 /* SKTiledDemo.app */,
 				4C17747F1D909740000C0AFD /* SKTiledDemo.app */,
-				4CFFD2851E2016DF0023C0F7 /* SKTiled.framework */,
-				4CFFD2931E2019510023C0F7 /* SKTiled.framework */,
+				4C41A5E01F437118001622FF /* SKTiled.framework */,
+				4C41A5FD1F43739C001622FF /* SKTiled.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -623,19 +608,19 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		4CFFD2821E2016DF0023C0F7 /* Headers */ = {
+		4C41A5DD1F437118001622FF /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C58126B1E255FAA00E80BFC /* SKTiled.h in Headers */,
+				4C41A5F71F4372D0001622FF /* SKTiled.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4CFFD2901E2019510023C0F7 /* Headers */ = {
+		4C41A5FA1F43739C001622FF /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C58126A1E255E7300E80BFC /* SKTiled.h in Headers */,
+				4C41A6051F43746E001622FF /* SKTiled.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -661,6 +646,42 @@
 			productReference = 4C17747F1D909740000C0AFD /* SKTiledDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
+		4C41A5DF1F437118001622FF /* SKTiled-macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4C41A5E71F437118001622FF /* Build configuration list for PBXNativeTarget "SKTiled-macOS" */;
+			buildPhases = (
+				4C41A5DB1F437118001622FF /* Sources */,
+				4C41A5DC1F437118001622FF /* Frameworks */,
+				4C41A5DD1F437118001622FF /* Headers */,
+				4C41A5DE1F437118001622FF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SKTiled-macOS";
+			productName = SKTiled;
+			productReference = 4C41A5E01F437118001622FF /* SKTiled.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		4C41A5FC1F43739C001622FF /* SKTiled-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4C41A6021F43739C001622FF /* Build configuration list for PBXNativeTarget "SKTiled-iOS" */;
+			buildPhases = (
+				4C41A5F81F43739C001622FF /* Sources */,
+				4C41A5F91F43739C001622FF /* Frameworks */,
+				4C41A5FA1F43739C001622FF /* Headers */,
+				4C41A5FB1F43739C001622FF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SKTiled-iOS";
+			productName = SKTiled;
+			productReference = 4C41A5FD1F43739C001622FF /* SKTiled.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		4CBA61641D8A048200B31FC1 /* Demo - iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4CBA617B1D8A048300B31FC1 /* Build configuration list for PBXNativeTarget "Demo - iOS" */;
@@ -680,44 +701,6 @@
 			productReference = 4CBA61651D8A048200B31FC1 /* SKTiledDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		4CFFD2841E2016DF0023C0F7 /* SKTiled-macOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4CFFD28C1E2016DF0023C0F7 /* Build configuration list for PBXNativeTarget "SKTiled-macOS" */;
-			buildPhases = (
-				4CAFDA651E20391A006F2D83 /* ShellScript */,
-				4CFFD2801E2016DF0023C0F7 /* Sources */,
-				4CFFD2811E2016DF0023C0F7 /* Frameworks */,
-				4CFFD2821E2016DF0023C0F7 /* Headers */,
-				4CFFD2831E2016DF0023C0F7 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "SKTiled-macOS";
-			productName = SKTiled;
-			productReference = 4CFFD2851E2016DF0023C0F7 /* SKTiled.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		4CFFD2921E2019510023C0F7 /* SKTiled-iOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4CFFD2981E2019510023C0F7 /* Build configuration list for PBXNativeTarget "SKTiled-iOS" */;
-			buildPhases = (
-				4CC2EA941E216C460017F65F /* ShellScript */,
-				4CFFD28E1E2019510023C0F7 /* Sources */,
-				4CFFD28F1E2019510023C0F7 /* Frameworks */,
-				4CFFD2901E2019510023C0F7 /* Headers */,
-				4CFFD2911E2019510023C0F7 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "SKTiled-iOS";
-			productName = SKTiled;
-			productReference = 4CFFD2931E2019510023C0F7 /* SKTiled.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -733,20 +716,20 @@
 						DevelopmentTeam = 747QKN4G7U;
 						ProvisioningStyle = Automatic;
 					};
+					4C41A5DF1F437118001622FF = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 747QKN4G7U;
+						ProvisioningStyle = Automatic;
+					};
+					4C41A5FC1F43739C001622FF = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 747QKN4G7U;
+						ProvisioningStyle = Automatic;
+					};
 					4CBA61641D8A048200B31FC1 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = 747QKN4G7U;
 						LastSwiftMigration = 0800;
-						ProvisioningStyle = Automatic;
-					};
-					4CFFD2841E2016DF0023C0F7 = {
-						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 747QKN4G7U;
-						ProvisioningStyle = Automatic;
-					};
-					4CFFD2921E2019510023C0F7 = {
-						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 747QKN4G7U;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -764,8 +747,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4CFFD2841E2016DF0023C0F7 /* SKTiled-macOS */,
-				4CFFD2921E2019510023C0F7 /* SKTiled-iOS */,
+				4C41A5DF1F437118001622FF /* SKTiled-macOS */,
+				4C41A5FC1F43739C001622FF /* SKTiled-iOS */,
 				4C17747E1D909740000C0AFD /* Demo - macOS */,
 				4CBA61641D8A048200B31FC1 /* Demo - iOS */,
 			);
@@ -838,6 +821,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4C41A5DE1F437118001622FF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C41A5F61F437191001622FF /* replaceColor.fsh in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4C41A5FB1F43739C001622FF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4CBA61631D8A048200B31FC1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -904,22 +902,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4CFFD2831E2016DF0023C0F7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4C628F081F3E347A00FCF929 /* replaceColor.fsh in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4CFFD2911E2019510023C0F7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4C628F091F3E347A00FCF929 /* replaceColor.fsh in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -975,32 +957,6 @@
 			shellPath = /bin/bash;
 			shellScript = "xattr -rc $PROJECT_DIR";
 		};
-		4CAFDA651E20391A006F2D83 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = export;
-		};
-		4CC2EA941E216C460017F65F /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = export;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1030,6 +986,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4C41A5DB1F437118001622FF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C41A5F11F437180001622FF /* SKTilemap.swift in Sources */,
+				4C41A5E91F437180001622FF /* SKTiled+Extensions.swift in Sources */,
+				4C41A5F41F437180001622FF /* SKTileset.swift in Sources */,
+				4C41A5EE1F437180001622FF /* SKTiledScene.swift in Sources */,
+				4C41A5EF1F437180001622FF /* SKTiledSceneCamera.swift in Sources */,
+				4C41A5F31F437180001622FF /* SKTileObject.swift in Sources */,
+				4C41A5F01F437180001622FF /* SKTileLayer.swift in Sources */,
+				4C41A5EA1F437180001622FF /* SKTiled+GameplayKit.swift in Sources */,
+				4C41A5E81F437180001622FF /* SKTiled+Debug.swift in Sources */,
+				4C41A5F21F437180001622FF /* SKTilemapParser.swift in Sources */,
+				4C41A5EB1F437180001622FF /* SKTilemap+Properties.swift in Sources */,
+				4C41A5EC1F437180001622FF /* SKTile.swift in Sources */,
+				4C41A5F51F437180001622FF /* SKTilesetData.swift in Sources */,
+				4C41A5ED1F437180001622FF /* SKTiledObject.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4C41A5F81F43739C001622FF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4CBA61611D8A048200B31FC1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1052,48 +1036,6 @@
 				4C440BB61DAE913A00DEC9A4 /* GameViewController.swift in Sources */,
 				4C88E1E21D8A4EBE00FCCFA3 /* SKTileLayer.swift in Sources */,
 				4C88E1DE1D8A4EBE00FCCFA3 /* SKTile.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4CFFD2801E2016DF0023C0F7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4CAFDA5D1E20327D006F2D83 /* SKTilesetData.swift in Sources */,
-				4CAFDA571E20327D006F2D83 /* SKTiledSceneCamera.swift in Sources */,
-				4CAFDA4D1E20326D006F2D83 /* SKTiled+Extensions.swift in Sources */,
-				4CAFDA581E20327D006F2D83 /* SKTileLayer.swift in Sources */,
-				4CAFDA5A1E20327D006F2D83 /* SKTilemapParser.swift in Sources */,
-				4CAFDA5B1E20327D006F2D83 /* SKTileObject.swift in Sources */,
-				4CAFDA531E203276006F2D83 /* SKTiledObject.swift in Sources */,
-				4C01D3A71F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift in Sources */,
-				4C3117D91EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */,
-				4CAFDA591E20327D006F2D83 /* SKTilemap.swift in Sources */,
-				4CAFDA4F1E203270006F2D83 /* SKTilemap+Properties.swift in Sources */,
-				4CAFDA551E203279006F2D83 /* SKTiledScene.swift in Sources */,
-				4CAFDA511E203273006F2D83 /* SKTile.swift in Sources */,
-				4CAFDA5C1E20327D006F2D83 /* SKTileset.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4CFFD28E1E2019510023C0F7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4CAFDA641E20327E006F2D83 /* SKTilesetData.swift in Sources */,
-				4CAFDA5E1E20327E006F2D83 /* SKTiledSceneCamera.swift in Sources */,
-				4CAFDA4E1E20326E006F2D83 /* SKTiled+Extensions.swift in Sources */,
-				4CAFDA5F1E20327E006F2D83 /* SKTileLayer.swift in Sources */,
-				4CAFDA611E20327E006F2D83 /* SKTilemapParser.swift in Sources */,
-				4CAFDA621E20327E006F2D83 /* SKTileObject.swift in Sources */,
-				4CAFDA541E203277006F2D83 /* SKTiledObject.swift in Sources */,
-				4C01D3A81F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift in Sources */,
-				4C3117DA1EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */,
-				4CAFDA601E20327E006F2D83 /* SKTilemap.swift in Sources */,
-				4CAFDA501E203271006F2D83 /* SKTilemap+Properties.swift in Sources */,
-				4CAFDA561E203279006F2D83 /* SKTiledScene.swift in Sources */,
-				4CAFDA521E203274006F2D83 /* SKTile.swift in Sources */,
-				4CAFDA631E20327E006F2D83 /* SKTileset.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1166,6 +1108,126 @@
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.1;
+			};
+			name = Release;
+		};
+		4C41A5E51F437118001622FF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 747QKN4G7U;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "$(SRCROOT)/macOS/framework/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = SKTiled;
+				PRODUCT_NAME = SKTiled;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		4C41A5E61F437118001622FF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 747QKN4G7U;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "$(SRCROOT)/macOS/framework/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = SKTiled;
+				PRODUCT_NAME = SKTiled;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		4C41A6031F43739C001622FF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 747QKN4G7U;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/iOS/framework/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = SKTiled;
+				PRODUCT_MODULE_NAME = SKTiled;
+				PRODUCT_NAME = SKTiled;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		4C41A6041F43739C001622FF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 747QKN4G7U;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/iOS/framework/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = SKTiled;
+				PRODUCT_MODULE_NAME = SKTiled;
+				PRODUCT_NAME = SKTiled;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -1290,114 +1352,6 @@
 			};
 			name = Release;
 		};
-		4CFFD28A1E2016DF0023C0F7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "-";
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.15;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 747QKN4G7U;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/macOS/framework/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				PRODUCT_BUNDLE_IDENTIFIER = SKTiled;
-				PRODUCT_NAME = SKTiled;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 3.1;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		4CFFD28B1E2016DF0023C0F7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "-";
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.15;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 747QKN4G7U;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/macOS/framework/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				PRODUCT_BUNDLE_IDENTIFIER = SKTiled;
-				PRODUCT_NAME = SKTiled;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.1;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		4CFFD2991E2019510023C0F7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 1.15;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 747QKN4G7U;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/iOS/framework/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = SKTiled;
-				PRODUCT_NAME = SKTiled;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 3.1;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		4CFFD29A1E2019510023C0F7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 1.15;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 747QKN4G7U;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/iOS/framework/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = SKTiled;
-				PRODUCT_NAME = SKTiled;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.1;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1409,6 +1363,22 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		4C41A5E71F437118001622FF /* Build configuration list for PBXNativeTarget "SKTiled-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C41A5E51F437118001622FF /* Debug */,
+				4C41A5E61F437118001622FF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		4C41A6021F43739C001622FF /* Build configuration list for PBXNativeTarget "SKTiled-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C41A6031F43739C001622FF /* Debug */,
+				4C41A6041F43739C001622FF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		4CBA61601D8A048200B31FC1 /* Build configuration list for PBXProject "SKTiled" */ = {
 			isa = XCConfigurationList;
@@ -1424,24 +1394,6 @@
 			buildConfigurations = (
 				4CBA617C1D8A048300B31FC1 /* Debug */,
 				4CBA617D1D8A048300B31FC1 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4CFFD28C1E2016DF0023C0F7 /* Build configuration list for PBXNativeTarget "SKTiled-macOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4CFFD28A1E2016DF0023C0F7 /* Debug */,
-				4CFFD28B1E2016DF0023C0F7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4CFFD2981E2019510023C0F7 /* Build configuration list for PBXNativeTarget "SKTiled-iOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4CFFD2991E2019510023C0F7 /* Debug */,
-				4CFFD29A1E2019510023C0F7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

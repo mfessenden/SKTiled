@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4CFFD2921E2019510023C0F7"
+               BlueprintIdentifier = "4C41A5FC1F43739C001622FF"
                BuildableName = "SKTiled.framework"
                BlueprintName = "SKTiled-iOS"
                ReferencedContainer = "container:SKTiled.xcodeproj">
@@ -33,7 +33,7 @@
       </AdditionalOptions>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4CFFD2921E2019510023C0F7"
+            BlueprintIdentifier = "4C41A5FC1F43739C001622FF"
             BuildableName = "SKTiled.framework"
             BlueprintName = "SKTiled-iOS"
             ReferencedContainer = "container:SKTiled.xcodeproj">
@@ -63,7 +63,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4CFFD2921E2019510023C0F7"
+            BlueprintIdentifier = "4C41A5FC1F43739C001622FF"
             BuildableName = "SKTiled.framework"
             BlueprintName = "SKTiled-iOS"
             ReferencedContainer = "container:SKTiled.xcodeproj">

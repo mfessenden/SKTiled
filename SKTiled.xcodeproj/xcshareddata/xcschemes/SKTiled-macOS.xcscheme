@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4CFFD2841E2016DF0023C0F7"
+               BlueprintIdentifier = "4C41A5DF1F437118001622FF"
                BuildableName = "SKTiled.framework"
                BlueprintName = "SKTiled-macOS"
                ReferencedContainer = "container:SKTiled.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4CFFD2841E2016DF0023C0F7"
+            BlueprintIdentifier = "4C41A5DF1F437118001622FF"
             BuildableName = "SKTiled.framework"
             BlueprintName = "SKTiled-macOS"
             ReferencedContainer = "container:SKTiled.xcodeproj">
@@ -63,7 +63,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4CFFD2841E2016DF0023C0F7"
+            BlueprintIdentifier = "4C41A5DF1F437118001622FF"
             BuildableName = "SKTiled.framework"
             BlueprintName = "SKTiled-macOS"
             ReferencedContainer = "container:SKTiled.xcodeproj">
