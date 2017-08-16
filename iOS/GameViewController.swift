@@ -50,25 +50,20 @@ class GameViewController: UIViewController {
         skView.showsPhysics = true
         skView.showsPhysics = true
         #endif
-
-        /* Sprite Kit applies additional optimizations to improve rendering performance */
+        
+        
+        skView.showsFields = true
+        /* SpriteKit optimizations */
+        skView.shouldCullNonVisibleNodes = true
         skView.ignoresSiblingOrder = true
         setupDebuggingLabels()
 
-        /* create the game scene */
-        let scene = SKTiledDemoScene(size: self.view.bounds.size)
-        scene.scaleMode = .aspectFill
-        skView.presentScene(scene)
-        
-        /* setup the initial scene with the first tmx filename. */
-        scene.setup(tmxFile: currentURL.relativePath,
-                    inDirectory: nil,
-                    withTilesets: [],
-                    ignoreProperties: false,
-                    loggingLevel: loggingLevel)
 
         NotificationCenter.default.addObserver(self, selector: #selector(updateUIControls), name: NSNotification.Name(rawValue: "updateUIControls"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateDebugLabels), name: NSNotification.Name(rawValue: "updateDebugLabels"), object: nil)
+        
+        /* create the game scene */
+        demoController.loadScene(url: currentURL, usePreviousCamera: false)
     }
     
     override func viewDidLayoutSubviews() {

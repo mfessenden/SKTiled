@@ -80,7 +80,7 @@ public class TiledLayerObject: SKNode, SKTiledObject {
     public var ignoreProperties: Bool = false
 
     /// Layer type.
-    public enum TiledLayerType: Int {
+    enum TiledLayerType: Int {
         case none     = -1
         case tile
         case object
@@ -1941,7 +1941,7 @@ internal class BackgroundLayer: TiledLayerObject {
 
  ```swift
  for child in group.layers {
-    child.showGrid = true
+    child.opacity = 0.5
  }
  ```
 

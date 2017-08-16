@@ -9,9 +9,6 @@
 import SpriteKit
 
 
-public extension SKTiledObject {
-}
-
 
 public extension SKTilemap {
     // MARK: - Properties
@@ -32,7 +29,7 @@ public extension SKTilemap {
             }
             
             if ["debug", "debugmode", "debugdraw"].contains(lattr){
-                debugDrawOptions = [.demo]
+                debugDrawOptions = .grid
             }
             
             if (lattr == "gridcolor") {

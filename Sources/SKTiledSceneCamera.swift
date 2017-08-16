@@ -17,15 +17,60 @@ import Cocoa
  
  ## Overview ##
  
- Delegate for managing `SKTiledSceneCamera`. Delegates are alerted when camera position & zoom are changed.
+ Delegate for interacting with `SKTiledSceneCamera`. Classes conforming to this protocol are notified of camera position & zoom changes.
  */
 public protocol TiledSceneCameraDelegate: class {
+    
+    /**
+     Called when the camera positon changes.
+     
+     - parameter newPositon: `CGPoint` updated camera position.
+     */
     func cameraPositionChanged(newPosition: CGPoint)
+    
+    /**
+     Called when the camera zoom changes.
+     
+     - parameter newZoom: `CGFloat` camera zoom amount.
+     */
     func cameraZoomChanged(newZoom: CGFloat)
+    
+    /**
+     Called when the camera bounds updated.
+     
+     - parameter bounds:  `CGRect` camera view bounds.
+     - parameter positon: `CGPoint` camera position.
+     - parameter zoom:    `CGFloat` camera zoom amount.
+     */
     func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat)
+    
     #if os(iOS) || os(tvOS)
-    func sceneDoubleTapped()
+    /**
+     Called when the scene is double tapped. (iOS only)
+     
+     - parameter location: `CGPoint` touch location.
+     */
+    func sceneDoubleTapped(location: CGPoint)
+    
+    /**
+     Called when the scene is swiped. (iOS only)
+     */
     func sceneSwiped()
+    #else
+    
+    /**
+     Called when the scene is double-clicked. (macOS only)
+     
+     - parameter NSEvent: `NSEvent` click event.
+     */
+    func sceneDoubleClicked(event: NSEvent)
+    
+    /**
+     Called when the mouse moves in the scene. (macOS only)
+     
+     - parameter event: `NSEvent` mouse event.
+     */
+    func mousePositionChanged(event: NSEvent)
     #endif
 }
 
@@ -127,10 +172,11 @@ public class SKTiledSceneCamera: SKCameraNode {
      - parameter delegate:  `TiledSceneCameraDelegate` camera delegate.
      */
     public func addDelegate(_ delegate: TiledSceneCameraDelegate) {
-        if let _ = delegates.index(where: { $0 === delegate}) {
+        if let _ = delegates.index(where: { $0 === delegate }) {
             return
         }
         delegates.append(delegate)
+        print("[SKTiledSceneCamera]: DEBUG: adding delegate: \(delegate)")
     }
     
     /**
@@ -399,8 +445,9 @@ extension SKTiledSceneCamera {
      */
     public func sceneDoubleTapped(_ recognizer: UITapGestureRecognizer) {
         if (recognizer.state == UIGestureRecognizerState.ended) {
+            let location = recognizer.location(in: recognizer.view)
             for delegate in self.delegates {
-                delegate.sceneDoubleTapped()
+                delegate.sceneDoubleTapped(location: location)
             }
         }
     }
@@ -434,26 +481,32 @@ extension SKTiledSceneCamera {
     // MARK: - Mouse Handlers
     
     /**
-     Handler for double clicks.
+     Handler for mouse click events.
      
-     - parameter recognizer: `UITapGestureRecognizer` tap gesture recognizer.
+     - parameter event: `NSEvent` mouse event.
      */
-    public func sceneDoubleClicked(_ event: NSEvent) {
-        guard let _ = self.scene as? SKTiledScene else { return }
-        let _ = event.location(in: self)
-    }
-    
     override public func mouseDown(with event: NSEvent) {
-        guard let _ = self.scene as? SKTiledScene else { return }
-        let location = event.location(in: self)
-        lastLocation = location
+        lastLocation = event.location(in: self)
+        
+        if (event.clickCount > 1) {
+            for delegate in self.delegates {
+                delegate.sceneDoubleClicked(event: event)
+            }
+        }
     }
-    
+
     /**
      Track mouse movement in the scene. Location is in local space, so coordinate origin will be the center of the current window.
+     
+     - parameter event: `NSEvent` mouse event.
      */
     override public func mouseMoved(with event: NSEvent) {
-        let _ = event.location(in: self)
+        super.mouseMoved(with: event)
+        lastLocation = event.location(in: self)
+        print("[SKTiledSceneCamera]: mouse moved: \(lastLocation.shortDescription)")
+        for delegate in self.delegates {
+            delegate.mousePositionChanged(event: event)
+        }
     }
     
     override public func mouseEntered(with event: NSEvent) {
@@ -516,7 +569,10 @@ extension TiledSceneCameraDelegate {
     public func cameraZoomChanged(newZoom: CGFloat) {}
     public func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {}
     #if os(iOS) || os(tvOS)
-    public func sceneDoubleTapped() {}
+    public func sceneDoubleTapped(location: CGPoint) {}
     public func sceneSwiped() {}
+    #else
+    public func sceneDoubleClicked(event: NSEvent) {}
+    public func mousePositionChanged(event: NSEvent) {}
     #endif
 }

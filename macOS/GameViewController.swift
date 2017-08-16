@@ -12,14 +12,13 @@ import SpriteKit
 
 class GameViewController: NSViewController {
 
-
     // debugging labels
     @IBOutlet weak var mapInfoLabel: NSTextField!
     @IBOutlet weak var tileInfoLabel: NSTextField!
     @IBOutlet weak var propertiesInfoLabel: NSTextField!
     @IBOutlet weak var debugInfoLabel: NSTextField!
     @IBOutlet weak var cameraInfoLabel: NSTextField!
-    @IBOutlet weak var cursorTracker: NSTextField!
+    
     @IBOutlet weak var pauseInfoLabel: NSTextField!
 
     @IBOutlet weak var graphButton: NSButton!
@@ -39,7 +38,6 @@ class GameViewController: NSViewController {
         // setup the controller
         demoController.loggingLevel = loggingLevel
         demoController.view = skView
-
 
         guard let currentURL = demoController.currentURL else {
             print("[GameViewController]: WARNING: no tilemap to load.")
@@ -68,18 +66,7 @@ class GameViewController: NSViewController {
         debugInfoLabel?.isHidden = true
 
         /* create the game scene */
-        let scene = SKTiledDemoScene(size: self.view.bounds.size)
-        scene.scaleMode = .aspectFill
-        skView.presentScene(scene)
-        scene.setup(tmxFile: currentURL.relativePath,
-                    inDirectory: nil,
-                    withTilesets: [],
-                    ignoreProperties: false,
-                    loggingLevel: loggingLevel)
-        
-        
-        scene.setup(fileNamed: currentURL.relativePath)
-
+        demoController.loadScene(url: currentURL, usePreviousCamera: false)
     }
 
 
@@ -154,7 +141,11 @@ class GameViewController: NSViewController {
     @IBAction func nextButtonPressed(_ sender: Any) {
         self.demoController.loadNextScene()
     }
-
+    
+    // MARK: - Tracking
+    
+    // MARK: - Mouse Events
+    
     /**
      Mouse scroll wheel event handler.
 
@@ -167,7 +158,17 @@ class GameViewController: NSViewController {
             currentScene.scrollWheel(with: event)
         }
     }
-
+    
+    override func mouseMoved(with event: NSEvent) {
+        guard let view = self.view as? SKView else { return }
+        print("[GameViewController]: DEBUG: mouse moved...")
+        if let currentScene = view.scene as? SKTiledScene {
+            if let cameraNode = currentScene.cameraNode {
+                cameraNode.mouseMoved(with: event)
+            }
+        }
+    }
+    
     /**
      Update the window's title bar with the current scene name.
 

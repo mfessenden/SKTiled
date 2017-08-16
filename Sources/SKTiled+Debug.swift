@@ -10,31 +10,43 @@ import Foundation
 import SpriteKit
 
 
-/// globals
+// globals
 public var TILE_BOUNDS_USE_OFFSET: Bool = false
 
 
+
+
 /**
+ 
+ ## Overview ##
+ 
  A structure representing debug drawing options for **SKTiled** objects.
  */
 public struct DebugDrawOptions: OptionSet {
     public let rawValue: Int
-
+    
     public init(rawValue: Int = 0) {
         self.rawValue = rawValue
     }
-
-    static public let drawGrid             = DebugDrawOptions(rawValue: 1 << 0)  // 1
-    static public let drawBounds           = DebugDrawOptions(rawValue: 1 << 1)  // 2
-    static public let drawGraph            = DebugDrawOptions(rawValue: 1 << 2)  // 4
+    
+    /// Draw the layer's grid.
+    static public let drawGrid             = DebugDrawOptions(rawValue: 1 << 0)
+    /// Draw the layer's boundary shape.
+    static public let drawBounds           = DebugDrawOptions(rawValue: 1 << 1)
+    /// Draw the layer's pathfinding graph.
+    static public let drawGraph            = DebugDrawOptions(rawValue: 1 << 2)
+    /// Draw object bounds.
     static public let drawObjectBounds     = DebugDrawOptions(rawValue: 1 << 3)
+    /// Draw tile bounds.
     static public let drawTileBounds       = DebugDrawOptions(rawValue: 1 << 4)
     static public let drawMouseOverObject  = DebugDrawOptions(rawValue: 1 << 5)
     static public let drawBackground       = DebugDrawOptions(rawValue: 1 << 6)
 
-    static public let demo:  DebugDrawOptions  = [.drawGrid, .drawBounds]
-    static public let graph: DebugDrawOptions  = [.drawGraph]
-    static public let all:   DebugDrawOptions  = [.demo, .drawGraph, .drawObjectBounds, .drawTileBounds, .drawMouseOverObject, .drawBackground]
+    static public let grid:    DebugDrawOptions  = [.drawGrid, .drawBounds]
+    static public let graph:   DebugDrawOptions  = [.drawGraph]
+    static public let objects: DebugDrawOptions  = [.drawObjectBounds, .drawTileBounds]
+    static public let all:     DebugDrawOptions  = [.grid, .drawGraph, .drawObjectBounds,
+                                                    .drawObjectBounds, .drawMouseOverObject, .drawBackground]
 }
 
 // MARK: - Logging
@@ -142,6 +154,7 @@ internal class TiledDebugDrawNode: SKNode {
         if (verbose == true){
             print("[TiledDebugDrawNode]: debug options: \(debugDrawOptions.rawValue), hidden: \(isHidden)")
         }
+
         
         if self.debugDrawOptions.contains(.drawGrid) {
             self.drawGrid()
@@ -324,7 +337,7 @@ internal class TiledDebugDrawNode: SKNode {
 }
 
 
-/// Shape node used for highlighting and placing tiles.
+// Shape node used for highlighting and placing tiles.
 internal class TileShape: SKShapeNode {
 
     var tileSize: CGSize
@@ -333,10 +346,11 @@ internal class TileShape: SKShapeNode {
     var layer: TiledLayerObject
     var coord: CGPoint
     var useLabel: Bool = false
-    var renderQuality: CGFloat = 4
-    var isReady: Bool = false
     
-    public var clickCount: Int = 0 
+    var renderQuality: CGFloat = 4
+    var zoomFactor: CGFloat {
+        return layer.tilemap.currentZoom
+    }
 
     init(layer: TiledLayerObject, coord: CGPoint, tileColor: SKColor, withLabel: Bool=false){
         self.layer = layer
@@ -376,7 +390,7 @@ internal class TileShape: SKShapeNode {
     private func drawObject() {
         // draw the path
         var points: [CGPoint] = []
-
+        
         let scaledTilesize: CGSize = (tileSize * renderQuality)
         let halfWidth: CGFloat = (tileSize.width / 2) * renderQuality
         let halfHeight: CGFloat = (tileSize.height / 2) * renderQuality
@@ -467,15 +481,15 @@ internal class TileShape: SKShapeNode {
 
 
 extension TileShape {
-    override public var description: String {
+    override var description: String {
         return "Tile Shape: \(coord.shortDescription)"
     }
 
-    override public var debugDescription: String {
+    override var debugDescription: String {
         return description
     }
     
-    override public var hashValue: Int {
+    override var hashValue: Int {
         return coord.hashValue
     }
 }
@@ -684,9 +698,9 @@ extension LoggingLevel: Comparable {
 
 
 #if os(iOS) || os(tvOS)
-public extension UIFont {
-    // print all fonts
-    public static func allFontNames() {
+extension UIFont {
+    // Dump a list of currently loaded fonts.
+    static func allFontNames() {
         for family: String in UIFont.familyNames {
             print("\(family)")
             for names: String in UIFont.fontNames(forFamilyName: family){
@@ -696,8 +710,8 @@ public extension UIFont {
     }
 }
 #else
-public extension NSFont {
-    public static func allFontNames() {
+extension NSFont {
+    static func allFontNames() {
         let fm = NSFontManager.shared()
         for family in fm.availableFonts {
             print("\(family)")
@@ -706,4 +720,25 @@ public extension NSFont {
 }
 #endif
 
+
+extension SKTiledScene {
+    
+    open func addTemporaryShape(at location: CGPoint, radius: CGFloat = 4, duration: TimeInterval=0) {
+        guard let world = worldNode else { return }
+        let worldLocation = world.convert(location, from: self)
+        let shape = SKShapeNode(circleOfRadius: radius)
+        shape.strokeColor = .purple
+        shape.fillColor = shape.strokeColor.colorWithBrightness(factor: 1.5)
+        world.addChild(shape)
+        shape.position = worldLocation
+        shape.zPosition = 5000
+        
+        if (duration > 0) {
+            let fadeAction = SKAction.fadeAfter(wait: duration, alpha: 0)
+            shape.run(fadeAction, completion: {
+                shape.removeFromParent()
+            })
+        }
+    }
+}
 

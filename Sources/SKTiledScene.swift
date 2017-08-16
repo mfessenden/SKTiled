@@ -89,7 +89,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
     
-        // set up world node
+        // setup world node
         worldNode = SKNode()
         addChild(worldNode)
         
@@ -281,29 +281,76 @@ extension SKTiledSceneDelegate where Self: SKScene {
 // default methods
 extension SKTiledScene: TiledSceneCameraDelegate {
     
-    public func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {
-        // override in subclass
-        print("-> camera bounds updated: \(bounds.roundTo()), pos: \(position.roundTo()), zoom: \(zoom.roundTo())")
-    }
-    
-    
+    /**
+     Called when the camera positon changes.
+     
+     - parameter newPositon: `CGPoint` updated camera position.
+     */
     public func cameraPositionChanged(newPosition: CGPoint) {
         // TODO: remove this notification callback in master
         NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": cameraNode?.description ?? "nil"])
     }
     
-    // TODO: remove this notification callback in master
+    /**
+     Called when the camera zoom changes.
+     
+     - parameter newZoom: `CGFloat` camera zoom amount.
+     */
     public func cameraZoomChanged(newZoom: CGFloat) {
+        // TODO: remove this notification callback in master
         NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": cameraNode?.description ?? "nil"])
     }
     
+    /**
+     Called when the camera bounds updated.
+     
+     - parameter bounds:  `CGRect` camera view bounds.
+     - parameter positon: `CGPoint` camera position.
+     - parameter zoom:    `CGFloat` camera zoom amount.
+     */
+    public func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {
+        // override in subclass
+        print("-> camera bounds updated: \(bounds.roundTo()), pos: \(position.roundTo()), zoom: \(zoom.roundTo())")
+    }
+
     #if os(iOS) || os(tvOS)
-    public func sceneDoubleTapped() {
-    print("[SKTiledScene]: scene was double tapped.")
+    /**
+     Called when the scene is double tapped. (iOS only)
+     
+     - parameter location: `CGPoint` touch location.
+     */
+    public func sceneDoubleTapped(location: CGPoint) {
+        print("[SKTiledScene]: DEBUG: scene was double tapped.")
         self.isPaused = !self.isPaused
     }
     
+    /**
+     Called when the scene is swiped. (iOS only)
+     */
     public func sceneSwiped() {}
+    #else
+    
+    /**
+     Called when the scene is double-clicked. (macOS only)
+     
+     - parameter event: `NSEvent` mouse click event.
+     */
+    public func sceneDoubleClicked(event: NSEvent) {
+        let location = event.location(in: self)
+        print("[SKTiledScene]: scene double clicked: \(location.shortDescription)")
+        addTemporaryShape(at: location, radius: 4, duration: 1.5)
+    }
+    
+    /**
+     Called when the mouse moves in the scene. (macOS only)
+     
+     - parameter event: `NSEvent` mouse event.
+     */
+    public func mousePositionChanged(event: NSEvent) {
+        let location = event.location(in: self)
+        print("[SKTiledScene]: mouse moved: \(location.shortDescription)")
+        addTemporaryShape(at: location, radius: 4, duration: 1.5)
+    }
     #endif
 }
 

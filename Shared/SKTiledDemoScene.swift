@@ -60,9 +60,6 @@ public class SKTiledDemoScene: SKTiledScene {
     override public func didMove(to view: SKView) {
         super.didMove(to: view)
         
-        // setup demo UI
-        updateHud()
-        
         #if os(macOS)
         updateTrackingViews()
         addChild(mouseTracker)
@@ -72,62 +69,12 @@ public class SKTiledDemoScene: SKTiledScene {
         NotificationCenter.default.addObserver(self, selector: #selector(updateCoordinate), name: NSNotification.Name(rawValue: "updateCoordinate"), object: nil)
     }
     
-    func setup(fileNamed: String) {
-        guard let tilemap = tilemap else { return }
-        switch fileNamed {
-        case "pacman-8x8.tmx":
-            setupPacman()
-        case "tetris-dynamics.tmx":
-            setupTetris()
-        default:
-            print("setting up default")
-        }
-    }
-    
-    func setupPacman() {
-        print("[SKTiledDemoScene]: DEBUG: setting up \"pacman-8x8.tmx\"")
-        
-        guard let graphLayer = tilemap.tileLayers(named: "Graph").first else {
-            print("[SKTiledDemoScene]: ERROR: layer \"Graph\" does not exist.")
-            return
-        }
-        
-        
-        
-        let walkable  = graphLayer.getTiles().filter { $0.tileData.walkable == true }
-        let obstacles = graphLayer.getTiles().filter { $0.tileData.obstacle == true }
-        
-        if (walkable.count > 0) {
-            print("[SKTiledDemoScene]: DEBUG: \"\(graphLayer.layerName)\": walkable: \(walkable.count), obstacles: \(obstacles.count)")
-            if let _ = graphLayer.initializeGraph(walkable: walkable, obstacles: obstacles, diagonalsAllowed: false) {}
-        }
-    }
-    
-    func setupTetris() {
-        print("[SKTiledDemoScene]: DEBUG: setting up \"textris-dynamics.tmx\"")
-        for object in tilemap.getObjects() {
-            if let objType = object.type {
-                if objType == "Light" {
-                    let light = SKLightNode()
-                    object.addChild(light)
-                    light.isEnabled = true
-                    light.lightColor = .white
-                    light.categoryBitMask = 1
-                    light.shadowColor = .black
-                    
-                }
-            }
-            
-            if let tile = object.tile {
-                tile.lightingBitMask = 1
-                tile.shadowedBitMask = 1
-            }
-        }
-        
-        
-        
-        //let lights = tilemap.getObjects().filter( { $0.type == "Light"} )
-        //print("setting up \(lights.count) lights.")
+    override public func didChangeSize(_ oldSize: CGSize) {
+        super.didChangeSize(oldSize)
+        #if os(OSX)
+        updateTrackingViews()
+        #endif
+        updateHud(tilemap)
     }
     
     
@@ -209,6 +156,74 @@ public class SKTiledDemoScene: SKTiledScene {
     
     // MARK: - Demo
     
+    func setupDemoLevel(fileNamed: String) {
+        guard let tilemap = tilemap else { return }
+        
+        print("[SKTiledDemoScene]: DEBUG: setting up \"\(fileNamed)\"")
+        
+        switch fileNamed {
+        case "pacman-8x8.tmx":
+            setupPacman()
+        case "tetris-dynamics.tmx":
+            setupTetris()
+        default:
+            print("setting up default")
+        }
+    }
+    
+    func setupPacman() {
+        
+        
+        guard let graphLayer = tilemap.tileLayers(named: "Graph").first else {
+            print("[SKTiledDemoScene]: ERROR: layer \"Graph\" does not exist.")
+            return
+        }
+        
+        
+        
+        let walkable  = graphLayer.getTiles().filter { $0.tileData.walkable == true }
+        let obstacles = graphLayer.getTiles().filter { $0.tileData.obstacle == true }
+        
+        if (walkable.count > 0) {
+            print("[SKTiledDemoScene]: DEBUG: \"\(graphLayer.layerName)\": walkable: \(walkable.count), obstacles: \(obstacles.count)")
+            if let _ = graphLayer.initializeGraph(walkable: walkable, obstacles: obstacles, diagonalsAllowed: false) {}
+        }
+    }
+    
+    func setupTetris() {
+        let lights = tilemap.getObjects(ofType: "Light")
+        let fields = tilemap.getObjects(ofType: "Field")
+        
+        for lightObj in lights {
+            print("[SKTiledDemoScene]: adding light...")
+            let light = SKLightNode()
+            addChild(light)
+            light.position = convert(lightObj.position, from: lightObj)
+            light.isEnabled = true
+            light.lightColor = .white
+            light.categoryBitMask = 1
+            light.shadowColor = .black
+            light.falloff = 0
+        }
+        
+        for fieldObj in fields {
+            print("[SKTiledDemoScene]: adding field...")
+            let field = SKFieldNode()
+            field.categoryBitMask = 1
+            field.strength = 50
+            addChild(field)
+            field.position = convert(fieldObj.position, from: fieldObj)
+        }
+        
+        tilemap.getObjects().forEach {
+            if let tile = $0.tile {
+                tile.shadowedBitMask = 1
+                tile.shadowCastBitMask = 1
+            }
+        }
+        
+    }
+    
     /**
      Callback to the GameViewController to reload the current scene.
      */
@@ -267,23 +282,15 @@ public class SKTiledDemoScene: SKTiledScene {
             coordinate = tempCoord
         }
     }
-    
-    override public func didChangeSize(_ oldSize: CGSize) {
-        super.didChangeSize(oldSize)
-        updateHud()
-        #if os(OSX)
-        updateTrackingViews()
-        #endif
-    }
 
     /**
      Update HUD elements when the view size changes.
      */
-    fileprivate func updateHud(){
-        guard let tilemap = tilemap else { return }
-        updateMapInfo(msg: tilemap.description)
-                
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateWindowTitle"), object: nil, userInfo: ["wintitle": tilemap.url.lastPathComponent])
+    public func updateHud(_ map: SKTilemap?){
+        guard let map = map else { return }
+        print("[SKTiledDemoScene]: DEBUG: rendering HUD")
+        updateMapInfo(msg: map.description)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateWindowTitle"), object: nil, userInfo: ["wintitle": map.url.lastPathComponent])
     }
     
     override open func update(_ currentTime: TimeInterval) {
@@ -315,7 +322,8 @@ public class SKTiledDemoScene: SKTiledScene {
     
     override open func didRenderMap(_ tilemap: SKTilemap) {
         // update the HUD to reflect the number of tiles created
-        updateHud()
+        print("[SKTiledDemoScene]: DEBUG: about to render HUD")
+        updateHud(tilemap)
         //tilemap.mapStatistics()
     }
     
@@ -532,14 +540,20 @@ extension SKTiledDemoScene {
     override open func keyDown(with event: NSEvent) {
         self.keyboardEvent(eventKey: event.keyCode)
     }
-
+    
+    override open func cursorUpdate(with event: NSEvent) {
+        let scenePosition = event.location(in: self)
+        print("cursor: \(scenePosition.shortDescription)")
+    }
 
     /**
      Remove old tracking views and add the current.
+     
+     // TODO: implement `NSView.updateTrackingAreas` (should be super)
     */
     open func updateTrackingViews(){
         if let view = self.view {
-            let options = [NSTrackingAreaOptions.mouseMoved, NSTrackingAreaOptions.activeAlways] as NSTrackingAreaOptions
+            let options: NSTrackingAreaOptions = [.activeInActiveApp, .mouseEnteredAndExited, .mouseMoved, .cursorUpdate] //[.mouseMoved, .activeAlways, .cursorUpdate]
             // clear out old tracking areas
             for oldTrackingArea in view.trackingAreas {
                 view.removeTrackingArea(oldTrackingArea)
@@ -617,12 +631,7 @@ extension SKTiledDemoScene {
         // 'l' toggles object bounds drawing
         if eventKey == 0x25 {
             // if objects are shown...
-            if tilemap.debugDrawOptions.contains(.drawObjectBounds) {
-                tilemap.debugDrawOptions.remove(.drawObjectBounds)
-            } else {
-                tilemap.debugDrawOptions.insert(.drawObjectBounds)
-            }
-            
+            tilemap.debugDrawOptions = (tilemap.debugDrawOptions != []) ? [] : .objects
             print(tilemap.debugDrawOptions)
         }
         
@@ -671,7 +680,7 @@ extension SKTiledDemoScene {
         
         // 'g' shows the grid for the map default layer.
         if eventKey == 0x5 {
-            tilemap.defaultLayer.debugDrawOptions = (tilemap.defaultLayer.debugDrawOptions != []) ? [] : [.demo]
+            tilemap.defaultLayer.debugDrawOptions = (tilemap.defaultLayer.debugDrawOptions != []) ? [] : .grid
         }
         
         // 'i' shows the center point of each tile
@@ -847,7 +856,7 @@ extension SKTiledDemoScene {
 }
 #endif
 
-
+// TODO: look at `NSTrackingCursorUpdate`
 internal class MouseTracker: SKNode {
     
     private var label = SKLabelNode(fontNamed: "Courier")

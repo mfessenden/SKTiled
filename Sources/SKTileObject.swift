@@ -105,11 +105,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     /// Tiled object id
     open var id: Int = 0
     /// Tiled global id (for tile objects)
-    open var gid: Int! {
-        didSet {
-            drawObject()
-        }
-    }
+    internal var gid: Int!
     
     /// Object type
     open var type: String!
@@ -361,7 +357,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         self.lineWidth = (lwidth / layer.tileHeight < 0.075) ? lwidth : 0.5
 
         // flip the vertex values on the y-value for our coordinate transform.
-        // for some odd reason tile objects are flipped in the y-axis already, so ignore the translated
+        // for some odd reason Tiled tile objects are flipped in the y-axis already, so ignore the translated
         var translatedVertices: [CGPoint] = (isPolyType == true) ? (gid == nil) ? vertices.map { $0.invertedY } : vertices : (gid == nil) ? vertices.map { $0.invertedY } : vertices
 
         switch objectType {

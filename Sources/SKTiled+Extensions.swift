@@ -91,7 +91,6 @@ public func replaceColor(texture: SKTexture, color: SKColor) -> SKTexture? {
 "}"
 
     let colorShader = SKShader(source: replaceColorSource)
-    print("shader: \(colorShader)")
     
     // shader attributes
     colorShader.attributes = [

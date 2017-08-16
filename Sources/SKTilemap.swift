@@ -223,8 +223,10 @@ public class SKTilemap: SKNode, SKTiledObject {
     public var bounds: CGRect = .zero                               // current bounds
     public var worldScale: CGFloat = 1.0                            // initial world scale
     public var currentZoom: CGFloat = 1.0
+    
     public var allowZoom: Bool = true                               // allow camera zoom
     public var allowMovement: Bool = true                           // allow camera movement
+    
     public var minZoom: CGFloat = 0.2
     public var maxZoom: CGFloat = 5.0
 
@@ -285,7 +287,14 @@ public class SKTilemap: SKNode, SKTiledObject {
     /// Debug visualization options.
     public var debugDrawOptions: DebugDrawOptions = [] {
         didSet {
-            getLayers().forEach { $0.debugDrawOptions = debugDrawOptions }
+            
+            var layerOptions = debugDrawOptions
+            defaultLayer.debugDrawOptions = debugDrawOptions
+            print("[SKTilemap]: DEBUG: default options: \(debugDrawOptions)")
+            // don't pass along grid/bounds drawing to layers
+            layerOptions.subtract(.grid)
+            print("[SKTilemap]: DEBUG: layer options: \(layerOptions)")
+            getLayers().forEach { $0.debugDrawOptions = layerOptions }
         }
     }
 
@@ -299,7 +308,7 @@ public class SKTilemap: SKNode, SKTiledObject {
     public var frameColor: SKColor = TiledObjectColors.blue.color        // bounding box color
     public var highlightColor: SKColor = TiledObjectColors.green.color   // color used to highlight tiles
 
-    internal var autoResize: Bool = false                              // indicates map should auto-resize when view changes
+    internal var autoResize: Bool = false                                // indicates map should auto-resize when view changes
 
     /// dynamics
     public var gravity: CGVector = CGVector.zero
@@ -380,6 +389,7 @@ public class SKTilemap: SKNode, SKTiledObject {
     public var showObjects: Bool = false {
         didSet {
             guard oldValue != showObjects else { return }
+            // TODO: visualize all objects here?
             for objectGroup in objectGroups(recursive: true) {
                 objectGroup.showObjects = showObjects
             }
@@ -1415,13 +1425,6 @@ public class SKTilemap: SKNode, SKTiledObject {
         // set the z-depth of the defaultLayer & background sprite
         defaultLayer.zPosition = -zDeltaForLayers
 
-        // time results
-        let timeInterval = Date().timeIntervalSince(timeStarted)
-        let timeStamp = String(format: "%.\(String(3))f", timeInterval)
-        if loggingLevel.rawValue <= 1 {
-            //print("\n ✽ Success! tilemap \"\(mapName)\" rendered in: \(timeStamp)s ✽\n")
-        }
-
         // transfer attributes
         scene?.physicsWorld.gravity = gravity
 
@@ -1643,6 +1646,9 @@ extension SKTilemap {
 
     override public var description: String {
         let sizedesc = "\(sizeInPoints.shortDescription): (\(size.shortDescription) @ \(tileSize.shortDescription))"
+        guard isRendered == true else {
+            return "Map: \(mapName), \(sizedesc)"
+        }
         return "Map: \(mapName), \(sizedesc), \(tileCount) tiles"
     }
 
@@ -1843,7 +1849,25 @@ extension SKTilemapDelegate {
 extension SKTilemap: TiledSceneCameraDelegate {
     public func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {}
     public func cameraPositionChanged(newPosition: CGPoint) {}
-    public func cameraZoomChanged(newZoom: CGFloat) {}
+    public func cameraZoomChanged(newZoom: CGFloat) {
+        let oldZoom = currentZoom
+        currentZoom = newZoom
+        print("[SKTilemap]: DEBUG: camera zoom: \(currentZoom.roundTo())")
+    }
+    
+    #if os(iOS) || os(tvOS)
+    public func sceneDoubleTapped(location: CGPoint) {}
+    public func sceneSwiped() {}
+    #else
+    public func sceneDoubleClicked(event: NSEvent) {
+        let mapLocation = event.location(in: self)
+        print("[SKTilemap]: DEBUG: scene double-clicked: \(mapLocation.shortDescription)")
+    }
+    public func mousePositionChanged(event: NSEvent) {
+        let mapLocation = event.location(in: self)
+        print("[SKTilemap]: DEBUG: mouse position: \(mapLocation.shortDescription)")
+    }
+    #endif
 }
 
 

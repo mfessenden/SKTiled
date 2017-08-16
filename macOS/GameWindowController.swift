@@ -26,6 +26,16 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
         window?.delegate = self
     }
     
+    override func mouseMoved(with event: NSEvent) {
+        super.mouseMoved(with: event)
+        print("[GameWindowController]: nouse moved...")
+    }
+    
+    override func cursorUpdate(with event: NSEvent) {
+        super.cursorUpdate(with: event)
+        print("[GameWindowController]: cursor updated...")
+    }
+    
     // MARK: NSWindowDelegate
     
     func windowWillStartLiveResize(_ notification: Notification) {

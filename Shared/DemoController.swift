@@ -174,14 +174,16 @@ public class DemoController: NSObject {
             return
         }
         
+        var hasCurrent = false
         var liveMode = false
         var showOverlay = true
         var cameraPosition = CGPoint.zero
         var cameraZoom: CGFloat = 1
         var isPaused: Bool = false
         
+        
         if let currentScene = view.scene as? SKTiledDemoScene {
-
+            hasCurrent = true
             if let cameraNode = currentScene.cameraNode {
                 showOverlay = cameraNode.showOverlay
                 cameraPosition = cameraNode.position
@@ -199,7 +201,9 @@ public class DemoController: NSObject {
         
         
         DispatchQueue.main.async {
-            view.presentScene(nil)
+            if (hasCurrent == true) {
+                view.presentScene(nil)
+            }
             
             let nextScene = SKTiledDemoScene(size: view.bounds.size)
             nextScene.scaleMode = .aspectFill
@@ -224,14 +228,16 @@ public class DemoController: NSObject {
                 //nextScene.cameraNode.fitToView(newSize: view.bounds.size, transition: interval)
             }
             
-            guard let tilemap = nextScene.tilemap else { return }
+            guard let tilemap = nextScene.tilemap else {
+                print("[DemoController]: WARNING: tilemap not loaded.")
+                return
+            }
+            
             tilemap.defaultLayer.debugDrawOptions = self.debugDrawOptions
             
             let sceneInfo = ["hasGraphs": nextScene.graphs.count > 0, "hasObjects": nextScene.tilemap.getObjects().count > 0]
             NotificationCenter.default.post(name: Notification.Name(rawValue: "updateUIControls"), object: nil, userInfo: sceneInfo)
-            
-            
-            nextScene.setup(fileNamed: url.relativePath)
+            nextScene.setupDemoLevel(fileNamed: url.relativePath)
             
         }
     }
@@ -258,7 +264,7 @@ public class DemoController: NSObject {
             let scene = view.scene as? SKTiledScene else { return }
         
         if let tilemap = scene.tilemap {
-            tilemap.defaultLayer.debugDrawOptions = (tilemap.defaultLayer.debugDrawOptions != []) ? [] : [.demo]
+            tilemap.defaultLayer.debugDrawOptions = (tilemap.defaultLayer.debugDrawOptions != []) ? [] : .grid
         }
     }
     
