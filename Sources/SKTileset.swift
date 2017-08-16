@@ -63,8 +63,6 @@ public class SKTileset: SKTiledObject {
     public var isRendered: Bool = false                            // indicates the tileset is rendered
 
 
-    public var walkableIDs: [Int] = []
-
     /// Returns the last GID in the tileset.
     public var lastGID: Int { return tileData.map { $0.id }.max() ?? firstGID }
 

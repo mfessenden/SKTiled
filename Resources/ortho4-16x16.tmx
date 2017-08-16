@@ -552,7 +552,7 @@
     <ellipse/>
    </object>
   </objectgroup>
-  <objectgroup name="Tile Objects">
+  <objectgroup name="Tile Objects" visible="0">
    <object id="48" name="chest1" type="Chest" gid="103" x="112" y="160" width="16" height="16"/>
    <object id="49" name="barrel1" gid="2147483800" x="160" y="192" width="16" height="16"/>
    <object id="52" name="poly-obj" gid="2147483800" x="144" y="176" width="16" height="16">

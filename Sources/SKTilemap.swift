@@ -20,19 +20,21 @@ public var SKTiledLoggingLevel: LoggingLevel = .info
 public var SKTiledContentScaleFactor: CGFloat = getContentScaleFactor()
 
 
-internal enum TiledObjectColors: String {
-    case none   =  "#00000000"
-    case white  =  "#f7f5ef"
-    case grey   =  "#969696"
-    case red    =  "#990000"
-    case blue   =  "#86b9e3"
-    case green  =  "#33cc33"
-    case orange =  "#ff9933"
-    case debug  =  "#999999"
-
-    public var color: SKColor {
-        return SKColor(hexString: self.rawValue)
-    }
+internal struct TiledObjectColors {
+    static let coral: SKColor       = SKColor(hexString: "#FD4444")
+    static let crimson: SKColor     = SKColor(hexString: "#D0021B")
+    static let english: SKColor     = SKColor(hexString: "#AF3E4D")
+    static let saffron: SKColor     = SKColor(hexString: "#F28123")
+    static let tangerine: SKColor   = SKColor(hexString: "#F5A623")
+    static let dandelion: SKColor   = SKColor(hexString: "#F8E71C")
+    static let azure: SKColor       = SKColor(hexString: "#4A90E2")
+    static let turquoise: SKColor   = SKColor(hexString: "#44CFCB")
+    static let lime: SKColor        = SKColor(hexString: "#7ED321")
+    static let pear: SKColor        = SKColor(hexString: "#CEE82C")
+    static let grass: SKColor       = SKColor(hexString: "#B8E986")
+    static let indigo: SKColor      = SKColor(hexString: "#274060")
+    static let metal: SKColor       = SKColor(hexString: "#627C85")
+    static let gun: SKColor         = SKColor(hexString: "#8D99AE")
 }
 
 
@@ -303,12 +305,12 @@ public class SKTilemap: SKNode, SKTiledObject {
 
     // MARK - Object Colors
     public var objectColor: SKColor = SKColor.gray
-    public var color: SKColor = SKColor.clear                            // used for pausing
-    public var gridColor: SKColor = TiledObjectColors.blue.color         // color used to visualize the tile grid
-    public var frameColor: SKColor = TiledObjectColors.blue.color        // bounding box color
-    public var highlightColor: SKColor = TiledObjectColors.green.color   // color used to highlight tiles
+    public var color: SKColor = SKColor.clear                           // used for pausing
+    public var gridColor: SKColor = TiledObjectColors.azure             // color used to visualize the tile grid
+    public var frameColor: SKColor = TiledObjectColors.azure            // bounding box color
+    public var highlightColor: SKColor = TiledObjectColors.lime         // color used to highlight tiles
 
-    internal var autoResize: Bool = false                                // indicates map should auto-resize when view changes
+    internal var autoResize: Bool = false                               // indicates map should auto-resize when view changes
 
     /// dynamics
     public var gravity: CGVector = CGVector.zero

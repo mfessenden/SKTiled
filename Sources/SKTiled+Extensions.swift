@@ -790,11 +790,48 @@ public extension String {
     
     // MARK: URL
     
+    
+    
     /// Returns a url for the string.
     public var url: URL { return URL(fileURLWithPath: self.expanded) }
     
     /// Expand the users home path.
     public var expanded: String { return NSString(string: self).expandingTildeInPath }
+    
+    /// Returns the url parent directory.
+    public var parentURL: URL {
+        var path = URL(fileURLWithPath: self.expanded)
+        path.deleteLastPathComponent()
+        return path
+    }
+    
+    /// Returns true if the string represents a path that exists.
+    public var fileExists: Bool {
+        let fm = FileManager.default
+        return fm.fileExists(atPath: self)
+    }
+    
+    /// Returns true if the string represents a path that exists and is a directory.
+    public var isDirectory: Bool {
+        let fm = FileManager.default
+        var isDir : ObjCBool = false
+        return fm.fileExists(atPath: self, isDirectory: &isDir)
+    }
+    
+    /// Returns the filename if string is a url.
+    public var filename: String {
+        return self.url.lastPathComponent
+    }
+    
+    /// Returns the file basename.
+    public var basename: String {
+        return self.url.deletingPathExtension().lastPathComponent
+    }
+    
+    /// Returns the file extension.
+    public var fileExtension: String {
+        return self.url.pathExtension
+    }
 }
 
 
@@ -1365,29 +1402,24 @@ internal func drawLayerGraph(_ layer: TiledLayerObject, imageScale: CGFloat=8, l
                     let points = rectPointArray(tileWidth, height: tileHeight, origin: CGPoint(x: xpos, y: ypos + tileHeight))
                     
                     if let node = graph.node(atGridPosition: int2(Int32(col), Int32(row))) {
-                        
-                        
-                        
-                        
+
                         fillColor = SKColor.gray
                         
                         if let tiledNode = node as? SKTiledGraphNode {
-                            // TODO: use switch here
-                            if tiledNode.weight > 1 {
-                                fillColor = SKColor.yellow
-                                if tiledNode.weight >= 100 {
-                                    fillColor = SKColor.orange
-                                    
-                                    if tiledNode.weight >= 250 {
-                                        fillColor = SKColor.red
-                                    }
-                                }
-                                
-                            }
-                        
-                        
-                            if tiledNode.weight < 1 {
-                                fillColor = SKColor.blue
+                            
+                            switch tiledNode.weight {
+                            case (-205)...(-101):
+                                fillColor = TiledObjectColors.metal
+                            case -100...0:
+                                fillColor = TiledObjectColors.azure
+                            case 10...100:
+                                fillColor = TiledObjectColors.dandelion
+                            case 101...250:
+                                fillColor = TiledObjectColors.lime
+                            case 251...500:
+                                fillColor = TiledObjectColors.english
+                            default:
+                                break
                             }
                         }
                         
@@ -1905,3 +1937,43 @@ public extension Data {
 
 private let CHUNK_SIZE: Int = 2 ^ 14
 private let STREAM_SIZE: Int32 = Int32(MemoryLayout<z_stream>.size)
+
+
+
+
+
+
+
+
+// TODO: Remove these in master
+
+public func getDesktopDirectory() -> URL {
+    let urls = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask)
+    return urls[0]
+}
+
+
+public func getHomeDirectory() -> URL {
+    let urls = FileManager.default.urls(for: .userDirectory, in: .userDomainMask)
+    return urls[0]
+}
+
+
+public func getTempDirectory() -> URL {
+    let tmpDir = NSTemporaryDirectory() as String
+    return URL(fileURLWithPath: tmpDir, isDirectory: true)
+}
+
+
+public func writeToFile(_ image: CGImage, url: URL) -> Data {
+    let bitmapRep: NSBitmapImageRep = NSBitmapImageRep(cgImage: image)
+    let properties = Dictionary<String, AnyObject>()
+    let data: Data = bitmapRep.representation(using: NSBitmapImageFileType.PNG, properties: properties)!
+    if !((try? data.write(to: URL(fileURLWithPath: url.path), options: [])) != nil) {
+        print("Error: write to file failed")
+    }
+    print(" → writing to file: \(url.absoluteString)")
+    return data
+}
+
+

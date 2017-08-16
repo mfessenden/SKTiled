@@ -21,6 +21,19 @@ public var TILE_BOUNDS_USE_OFFSET: Bool = false
  ## Overview ##
  
  A structure representing debug drawing options for **SKTiled** objects.
+ 
+ ## Properties ##
+ 
+ ```
+ DebugDrawOptions.drawGrid               // visualize the objects's grid (tilemap & layers).
+ DebugDrawOptions.drawBounds             // visualize the objects's bounds.
+ DebugDrawOptions.drawGraph              // visualize a layer's pathfinding graph.
+ DebugDrawOptions.drawObjectBounds       // Draw an object's bounds.
+ DebugDrawOptions.drawTileBounds         // Draw a tile's bounds.
+ DebugDrawOptions.drawMouseOverObject    // Draw an empty tile shape.
+ DebugDrawOptions.drawBackground         // Draw layer background.
+ ```
+
  */
 public struct DebugDrawOptions: OptionSet {
     public let rawValue: Int
@@ -234,7 +247,6 @@ internal class TiledDebugDrawNode: SKNode {
 
         isHidden = false
         frameShape.isHidden = false
-        
     }
 
     /// Display the current tile grid.
@@ -270,7 +282,7 @@ internal class TiledDebugDrawNode: SKNode {
 
 
             gridSprite.texture = gridTexture
-            gridSprite.alpha = layer.gridOpacity
+            gridSprite.alpha = layer.gridOpacity * 0.75
             gridSprite.size = gridSize / imageScale
 
             // need to flip the grid texture in y

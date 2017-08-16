@@ -234,6 +234,41 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
                                        width: viewSize.width, height: viewSize.height)
         }
     }
+    
+    
+    open func writeMapToFiles() {
+        guard let view = self.view as? SKView else { return }
+        guard let tilemap = tilemap else { return }
+        
+        
+        let fm = FileManager.default
+        let tmpDir = getTempDirectory()
+        let mapDir = tmpDir.appendingPathComponent(tilemap.url.path.basename, isDirectory: true)
+        
+        do {
+            try fm.createDirectory(atPath: mapDir.absoluteString, withIntermediateDirectories: true, attributes: nil)
+            print(" → creating temp directory: \(mapDir.path)")
+        } catch let error as NSError {
+            print(error.localizedDescription);
+        }
+        
+        let boundsRect = tilemap.calculateAccumulatedFrame()
+        let skView = SKView()
+        for layer in tilemap.tileLayers() {
+            
+            let layerRect = layer.calculateAccumulatedFrame()
+            
+            let layerImage = imageOfSize(boundsRect.size, scale: SKTiledContentScaleFactor) { context, bounds, scale in
+                layer.flattenLayer(view: skView)
+            }
+            
+            
+            writeToFile(layerImage, url: mapDir.appendingPathComponent("\(layer.layerName).png"))
+            
+        }
+        
+    }
+    
 }
 
 

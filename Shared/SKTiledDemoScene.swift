@@ -94,7 +94,7 @@ public class SKTiledDemoScene: SKTiledScene {
         
         let coord = CGPoint(x: x, y: y)
         
-        let tileColor: SKColor = (validCoord == true) ? tilemap.highlightColor : TiledObjectColors.red.color
+        let tileColor: SKColor = (validCoord == true) ? tilemap.highlightColor : TiledObjectColors.crimson
         let lastZosition = tilemap.lastZPosition + (tilemap.zDeltaForLayers * 2)
         // add debug tile shape
         let tile = TileShape(layer: layer, coord: coord, tileColor: tileColor, withLabel: useLabel)
@@ -121,7 +121,7 @@ public class SKTiledDemoScene: SKTiledScene {
         let coord = CGPoint(x: x, y: y)
 
         if (coord != coordinate) || (useLabel == true) {
-            let tileColor: SKColor = (validCoord == true) ? tilemap.highlightColor : TiledObjectColors.red.color
+            let tileColor: SKColor = (validCoord == true) ? tilemap.highlightColor : TiledObjectColors.crimson
             let lastZosition = tilemap.lastZPosition + (tilemap.zDeltaForLayers * 2)
             
             // add debug tile shape
@@ -180,13 +180,27 @@ public class SKTiledDemoScene: SKTiledScene {
         }
         
         
+        for tileset in tilemap.tilesets {
+            if tileset.hasKey("walkable") {
+                if let data = tileset.keyValuePair(key: "walkable") {
+                    let ids = tileset.integerArrayForKey("walkable")
+                    for id in ids {
+                        if let tiledata = tileset.getTileData(localID: id) {
+                            tiledata.walkable = true
+                            print(" ➜ walkable: \(tiledata), weight: \(tiledata.weight)")
+                        }
+                    }
+                }
+            }
+        }
         
-        let walkable  = graphLayer.getTiles().filter { $0.tileData.walkable == true }
-        let obstacles = graphLayer.getTiles().filter { $0.tileData.obstacle == true }
         
+        let walkable = graphLayer.getTiles().filter( { $0.tileData.walkable == true })
+        
+
         if (walkable.count > 0) {
-            print("[SKTiledDemoScene]: DEBUG: \"\(graphLayer.layerName)\": walkable: \(walkable.count), obstacles: \(obstacles.count)")
-            if let _ = graphLayer.initializeGraph(walkable: walkable, obstacles: obstacles, diagonalsAllowed: false) {}
+            print("[SKTiledDemoScene]: DEBUG: \"\(graphLayer.layerName)\": walkable: \(walkable.count)")
+            if let _ = graphLayer.initializeGraph(walkable: walkable, obstacles: [], diagonalsAllowed: false) {}
         }
     }
     
@@ -628,10 +642,17 @@ extension SKTiledDemoScene {
             }
         }
         
-        // 'l' toggles object bounds drawing
+        // 'l' toggles object & tile bounds drawing
         if eventKey == 0x25 {
             // if objects are shown...
             tilemap.debugDrawOptions = (tilemap.debugDrawOptions != []) ? [] : .objects
+            print(tilemap.debugDrawOptions)
+        }
+        
+        // 'm' just shows the map bounds
+        if eventKey == 0x2e {
+            // if objects are shown...
+            tilemap.defaultLayer.debugDrawOptions = (tilemap.defaultLayer.debugDrawOptions != []) ? [] : .drawBounds
             print(tilemap.debugDrawOptions)
         }
         
@@ -668,16 +689,7 @@ extension SKTiledDemoScene {
         
         // MARK: - DEBUGGING TESTS
         // TODO: get rid of these in master       
-        // 'm' toggles tile bounds drawing
-        if eventKey == 0x2e {
-            // if objects are shown...
-            if tilemap.debugDrawOptions.contains(.drawTileBounds) {
-                tilemap.debugDrawOptions.remove(.drawTileBounds)
-            } else {
-                tilemap.debugDrawOptions.insert(.drawTileBounds)
-            }
-        }
-        
+
         // 'g' shows the grid for the map default layer.
         if eventKey == 0x5 {
             tilemap.defaultLayer.debugDrawOptions = (tilemap.defaultLayer.debugDrawOptions != []) ? [] : .grid
@@ -713,13 +725,7 @@ extension SKTiledDemoScene {
         
         // 'n' changes the background color
         if eventKey == 0x2d {
-            //tilemap.backgroundColor = SKColor(hexString: "#ea32fa")
-            // if objects are shown...
-            if tilemap.defaultLayer.debugDrawOptions.contains(.drawBackground) {
-                tilemap.defaultLayer.debugDrawOptions.remove(.drawBackground)
-            } else {
-                tilemap.defaultLayer.debugDrawOptions.insert(.drawBackground)
-            }
+            self.writeMapToFiles()
         }
         
         // 'q' tries to show all object bounds

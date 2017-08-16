@@ -25,11 +25,11 @@ open class SKTile: SKSpriteNode {
     weak open var layer: SKTileLayer!
 
     // MARK: Overlap
-    fileprivate var tileOverlap: CGFloat = 1.5          // tile overlap amount
-    fileprivate var maxOverlap: CGFloat = 3.0           // maximum tile overlap
+    fileprivate var tileOverlap: CGFloat = 1.5                      // tile overlap amount
+    fileprivate var maxOverlap: CGFloat = 3.0                       // maximum tile overlap
 
-    open var highlightColor: SKColor = SKColor.white    // tile highlight color
-    open var highlightDuration: TimeInterval = 0        // tile highlight duration
+    open var highlightColor: SKColor = TiledObjectColors.lime       // tile highlight color
+    open var highlightDuration: TimeInterval = 0                    // tile highlight duration
 
     public enum PhysicsShape {
         case none
@@ -530,7 +530,7 @@ open class SKTile: SKSpriteNode {
 
         pointShape.name = "FIRST_POINT"
         bounds.addChild(pointShape)
-        pointShape.fillColor = .orange //highlightColor
+        pointShape.fillColor = highlightColor
         pointShape.strokeColor = SKColor.clear
         pointShape.zPosition = shapeZPos * 15
         pointShape.isAntialiased = layer.antialiased

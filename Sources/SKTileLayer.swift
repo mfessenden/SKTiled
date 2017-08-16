@@ -104,11 +104,11 @@ public class TiledLayerObject: SKNode, SKTiledObject {
     internal var layerType: TiledLayerType = .none
 
     /// Layer color.
-    public var color: SKColor = SKColor.gray
+    public var color: SKColor = TiledObjectColors.gun
     /// Grid visualization color.
-    public var gridColor: SKColor = TiledObjectColors.blue.color
+    public var gridColor: SKColor = TiledObjectColors.azure
     /// Bounding box color.
-    public var frameColor: SKColor = TiledObjectColors.blue.color
+    public var frameColor: SKColor = TiledObjectColors.azure
     /// Layer highlight color (for highlighting tiles)
     public var highlightColor: SKColor = SKColor.white
     /// Layer highlight duration
@@ -141,11 +141,9 @@ public class TiledLayerObject: SKNode, SKTiledObject {
 
     /// Pathfinding graph.
     public var graph: GKGridGraph<GKGridGraphNode>!
-    public var walkableIDs: [Int] = []
-    public var walkableTypes: [String] = []
 
     // debug visualizations
-    public var gridOpacity: CGFloat = 0.25
+    public var gridOpacity: CGFloat = 0.40
     internal var debugNode: TiledDebugDrawNode!
 
     /// Debug visualization options.
@@ -1027,7 +1025,7 @@ public class SKTileLayer: TiledLayerObject {
      - returns: `[SKTile]` array of tiles.
      */
     public func getTiles(ofType: String) -> [SKTile] {
-        return tiles.flatMap { $0 }.filter { $0.tileData.type == type }
+        return tiles.flatMap { $0 }.filter { $0.tileData.type == ofType }
     }
 
     /**
@@ -1428,7 +1426,7 @@ public class SKTileLayer: TiledLayerObject {
     override internal func flattenLayer(view: SKView) {
         /* override in subclass */
 
-                //let vertices = getVertices()
+        //let vertices = getVertices()
         //let viewRect = view.convert(<#T##point: NSPoint##NSPoint#>, to: <#T##NSView?#>)
         if let viewTexture = view.texture(from: self) { //, crop: self.bounds) {
             getTiles().forEach({
@@ -1437,7 +1435,8 @@ public class SKTileLayer: TiledLayerObject {
 
             viewTexture.filteringMode = .nearest
             let sprite = SKSpriteNode(texture: viewTexture)
-            addChild(sprite)
+            tilemap.addChild(sprite)
+            sprite.anchorPoint = tilemap.orientation.alignmentHint
         }
     }
 }

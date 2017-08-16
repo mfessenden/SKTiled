@@ -28,10 +28,6 @@
   </layer>
  </group>
  <layer name="Graph" width="28" height="36">
-  <properties>
-   <property name="border" type="color" value="#ffe2e2e2"/>
-   <property name="walkableIDs" value="34,56,59,78"/>
-  </properties>
   <data encoding="base64" compression="zlib">
    eJzlVcENxCAMY4MOcVMg3Q7df5vT/RCyY9O0hes9LEUpiWOj0K2Usv0R9kV7ZefoUUl+F3VRbaSbeaHqnH5P50N+15PiNpfRn/FrBp/S30Ll1T64d+7qdvxYia/15EXi0fs+oiNz/i6+N8D3fL+/ig/tO+r9dD+d+uhfiDz/NX1n8pXAHxT3fZ3zqC6ad1SH6jeDr9fM/GHvJ3sfUG81e3T/mdq7+JAnzO/RfCXf1fxHda9S58LZawZ3titwJf9MbR846IMA
   </data>
@@ -70,7 +66,7 @@
    eJztwTEBAAAAwqD1T20ND6AAAACAdwMPwAAB
   </data>
   </layer>
-  <objectgroup name="Score-HUD" visible="0">
+  <objectgroup name="Score-HUD">
    <object id="116" name="high-score-label" type="Label" x="72" y="0" width="80" height="8">
     <text fontfamily="Nintendo-Arcade" pixelsize="7" wrap="1" color="#fff76f">high score</text>
    </object>

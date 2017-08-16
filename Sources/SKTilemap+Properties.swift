@@ -164,17 +164,6 @@ public extension SKTileset {
         if (ignoreProperties == true) { return }
          if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
         
-        
-        for (attr, value) in properties {
-            
-            let lattr = attr.lowercased()
-        
-            // walkable ids
-            if (lattr == "walkable") {
-                walkableIDs = integerArrayForKey("walkable", separatedBy: ",")
-            }
-        }
-        
         if completion != nil { completion!() }
     }
 }
@@ -262,22 +251,6 @@ public extension SKTileLayer {
      */
     override public func parseProperties(completion: (() -> ())?) {
         super.parseProperties(completion: completion)
-        
-        
-        for (attr, _) in properties {
-            
-            let lattr = attr.lowercased()
-            
-            // walkable ids
-            if (lattr == "walkableids") {
-                walkableIDs = integerArrayForKey("walkableIDs", separatedBy: ",")
-            }
-            
-            // walkable types
-            if (lattr == "walkabletypes") {
-                walkableTypes = stringArrayForKey("walkableTypes", separatedBy: ",")
-            }
-        }
     }
 }
 
@@ -377,15 +350,6 @@ public extension SKTilesetData {
             
             if (lattr == "weight") {
                 weight = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : weight
-            }
-            
-            if (lattr == "walkable") {
-                walkable = boolForKey(attr)
-                //print("setting id \(self.id) walkable: \(walkable)")
-            }
-            
-            if (lattr == "obstacle") {
-                obstacle = boolForKey(attr)
             }
         }
         
