@@ -181,7 +181,6 @@ public protocol SKTilemapDelegate: class {
  if let tilemap = SKTilemap.load(tmxFile: "myfile.tmx") {
     scene.addChild(tilemap)
  }
-
  ```
  */
 public class SKTilemap: SKNode, SKTiledObject {
@@ -197,17 +196,20 @@ public class SKTilemap: SKNode, SKTiledObject {
     public var url: URL!                                            // tmx file path
     public var uuid: String = UUID().uuidString                     // unique id
     public var tiledversion: String!                                // Tiled application version
-
+    public var properties: [String: String] = [:]                   // custom properties
     public var type: String!                                        // map type
-    public var size: CGSize                                         // map size (in tiles)
-    public var tileSize: CGSize                                     // tile size (in pixels)
+    
+    /// Size of map (in tiles)
+    public var size: CGSize
+    /// Tile size (in pixels)
+    public var tileSize: CGSize
     public var orientation: TilemapOrientation                      // map orientation
-    internal var renderOrder: RenderOrder = .rightDown            // render order
+    internal var renderOrder: RenderOrder = .rightDown              // render order
 
     /// Logging verbosity.
     internal var loggingLevel: LoggingLevel = SKTiledLoggingLevel
 
-    internal var maxRenderQuality: CGFloat = 16                   // max render quality
+    internal var maxRenderQuality: CGFloat = 16                     // max render quality
     /// Scaling value for text objects, etc.
     public var renderQuality: CGFloat = 8 {                         // object render quality.
         didSet {
@@ -218,34 +220,37 @@ public class SKTilemap: SKNode, SKTiledObject {
 
     // hexagonal
     public var hexsidelength: Int = 0                               // hexagonal side length
-    internal var staggeraxis: StaggerAxis = .y                    // stagger axis
-    internal var staggerindex: StaggerIndex = .odd                // stagger index.
+    internal var staggeraxis: StaggerAxis = .y                      // stagger axis
+    internal var staggerindex: StaggerIndex = .odd                  // stagger index.
 
     // camera/scene
     public var bounds: CGRect = .zero                               // current bounds
     public var worldScale: CGFloat = 1.0                            // initial world scale
     public var currentZoom: CGFloat = 1.0
-    
+
     public var allowZoom: Bool = true                               // allow camera zoom
     public var allowMovement: Bool = true                           // allow camera movement
-    
+
     public var minZoom: CGFloat = 0.2
     public var maxZoom: CGFloat = 5.0
-
-    /// Current tilesets.
-    public var tilesets: Set<SKTileset> = []                        // tilesets
-
-    // current layers
-    private var _layers: Set<TiledLayerObject> = []               // tile map layers
-    public var layerCount: Int { return self.layers.count }         // layer count attribute
-    public var properties: [String: String] = [:]                   // custom properties
-    public var zDeltaForLayers: CGFloat = 50                        // z-position range for layers
-    public var bufferSize: CGFloat = 4.0
 
     /// Ignore Tiled background color.
     public var ignoreBackground: Bool = false
     /// Ignore custom properties.
     public var ignoreProperties: Bool = false
+    
+    
+    /// Current tilesets.
+    public var tilesets: Set<SKTileset> = []                        // tilesets
+
+    // current layers
+    private var _layers: Set<TiledLayerObject> = []                 // tile map layers
+    public var layerCount: Int { return self.layers.count }         // layer count attribute
+    
+    /// Default z-position range between layers.
+    public var zDeltaForLayers: CGFloat = 50
+    public var bufferSize: CGFloat = 4.0
+
 
     /// Returns true if all of the child layers are rendered.
     internal var isRendered: Bool {
@@ -289,14 +294,13 @@ public class SKTilemap: SKNode, SKTiledObject {
     /// Debug visualization options.
     public var debugDrawOptions: DebugDrawOptions = [] {
         didSet {
-            
-            var layerOptions = debugDrawOptions
             defaultLayer.debugDrawOptions = debugDrawOptions
-            print("[SKTilemap]: DEBUG: default options: \(debugDrawOptions)")
-            // don't pass along grid/bounds drawing to layers
-            layerOptions.subtract(.grid)
-            print("[SKTilemap]: DEBUG: layer options: \(layerOptions)")
-            getLayers().forEach { $0.debugDrawOptions = layerOptions }
+            var otherLayerOptions = debugDrawOptions
+            otherLayerOptions = otherLayerOptions.subtracting(.grid)
+            log("default: \(defaultLayer.debugDrawOptions.rawValue), map: \(debugDrawOptions.rawValue), other: \(otherLayerOptions)", level: .debug)
+            
+            getLayers().filter( { $0 as? BackgroundLayer == nil }).forEach { $0.debugDrawOptions = otherLayerOptions }
+            
         }
     }
 
@@ -510,7 +514,7 @@ public class SKTilemap: SKNode, SKTiledObject {
 
             let renderTime = Date().timeIntervalSince(startTime)
             let timeStamp = String(format: "%.\(String(3))f", renderTime)
-            print(" ✽ Success! tilemap \"\(tilemap.mapName)\" rendered in: \(timeStamp)s ✽\n")
+            Logger.default.log("tilemap \"\(tilemap.mapName)\" rendered in: \(timeStamp)s", level: .success)
             return tilemap
         }
         return nil
@@ -719,29 +723,42 @@ public class SKTilemap: SKNode, SKTiledObject {
     }
 
     /**
-     Add a layer to the current layers set. Automatically sets zPosition based on the zDeltaForLayers attributes.
+     Add a layer to the current layers set. Automatically sets zPosition based on the `SKTilemap.zDeltaForLayers` property. If the `group` argument is not nil, layer will be added to the group instead.
 
-     - parameter layer:  `TiledLayerObject` layer object.
-     - returns: `(success: Bool, layer: TiledLayerObject)` tuple of boolean value/layer object.
+     - parameter layer:    `TiledLayerObject` layer object.
+     - parameter group:    `SKGroupLayer?` optional group layer.
+     - parameter clamped:  `Bool` clamp position to nearest pixel.
+     - returns: `(success: Bool, layer: TiledLayerObject)` add was successful, layer added.
      */
-    public func addLayer(_ layer: TiledLayerObject) -> (success: Bool, layer: TiledLayerObject){
+    public func addLayer(_ layer: TiledLayerObject, group: SKGroupLayer? = nil, clamped: Bool = true) -> (success: Bool, layer: TiledLayerObject) {
 
+        // if a group is indicated, add it to that instead
+        if (group != nil) {
+            return group!.addLayer(layer, clamped: clamped)
+        }
+        
+        // get the next z-position from the tilemap.
         let nextZPosition = (_layers.count > 0) ? zDeltaForLayers * CGFloat(_layers.count + 1) : zDeltaForLayers
 
         // set the layer index
         layer.index = layers.count > 0 ? lastIndex + 1 : 0
-
-
+        
+        // default layer index is -1
+        if let bgLayer = layer as? BackgroundLayer {
+            bgLayer.index = -1
+        }
+        
         let (success, inserted) = _layers.insert(layer)
+
         if (success == false) {
-            print("[SKGroupLayer]: ERROR adding layer: \"\(inserted.layerName)\"")
+            Logger.default.log("could not add layer: \"\(inserted.layerName)\"", level: .error)
         }
 
         // add the layer as a child
         addChild(layer)
-
+        
         // align the layer with the anchorpoint
-        positionLayer(layer)
+        positionLayer(layer, clamped: clamped)
 
         // set layer zposition
         layer.zPosition = nextZPosition
@@ -753,20 +770,6 @@ public class SKTilemap: SKNode, SKTiledObject {
         layer.loggingLevel = loggingLevel
         layer.ignoreProperties = ignoreProperties
         return (success, inserted)
-    }
-
-    /**
-     Add a new layer to the map/group layer.
-
-     - parameter layer: `TiledLayerObject` layer to add.
-     - parameter group: `SKGroupLayer?` optional group layer.
-     - returns: `(success: Bool, layer: TiledLayerObject)` tuple of boolean value/layer object.
-     */
-    public func addLayer(_ layer: TiledLayerObject, group: SKGroupLayer? = nil)  -> (success: Bool, layer: TiledLayerObject) {
-        if (group == nil) {
-            return addLayer(layer)
-        }
-        return group!.addLayer(layer)
     }
 
     /**
@@ -1060,11 +1063,13 @@ public class SKTilemap: SKNode, SKTiledObject {
      Position child layers in relation to the map's anchorpoint.
 
      - parameter layer: `TiledLayerObject` layer.
+     - parameter clamped: `Bool` layer.
      */
     internal func positionLayer(_ layer: TiledLayerObject, clamped: Bool = false) {
-        var layerPos = CGPoint.zero
-        switch orientation {
 
+        var layerPos = CGPoint.zero
+        
+        switch orientation {
         case .orthogonal:
             layerPos.x = -sizeInPoints.width * layerAlignment.anchorPoint.x
             layerPos.y = sizeInPoints.height * layerAlignment.anchorPoint.y
@@ -1094,8 +1099,48 @@ public class SKTilemap: SKNode, SKTiledObject {
             let scaleFactor = SKTiledContentScaleFactor
             layerPos = clampedPosition(point: layerPos, scale: scaleFactor)
         }
-
         layer.position = layerPos
+    }
+    
+    /**
+     Position a child node in relation to the map's anchorpoint.
+     
+     - parameter node:     `SKNode` SpriteKit node.
+     - parameter clamped:  `Bool` clamp position to nearest pixel.
+     - parameter offset:   `CGPoint` node offset amount.
+     */
+    internal func positionNode(_ node: SKNode, clamped: Bool = true, offset: CGPoint = .zero) {
+        
+        var nodePosition = CGPoint.zero
+        
+        switch orientation {
+        case .orthogonal:
+            nodePosition.x = -sizeInPoints.width * layerAlignment.anchorPoint.x
+            nodePosition.y = sizeInPoints.height * layerAlignment.anchorPoint.y
+            nodePosition.x += offset.x
+            nodePosition.y -= offset.y
+            
+        case .isometric:
+            nodePosition.x = -sizeInPoints.width * layerAlignment.anchorPoint.x
+            nodePosition.y = sizeInPoints.height * layerAlignment.anchorPoint.y
+            nodePosition.x += offset.x
+            nodePosition.y -= offset.y
+            
+        case .hexagonal, .staggered:
+            nodePosition.x = -sizeInPoints.width * layerAlignment.anchorPoint.x
+            nodePosition.y = sizeInPoints.height * layerAlignment.anchorPoint.y
+            
+            nodePosition.x += offset.x
+            nodePosition.y -= offset.y
+        }
+        
+        // clamp the node position
+        if (clamped == true) {
+            let scaleFactor = SKTiledContentScaleFactor
+            nodePosition = clampedPosition(point: nodePosition, scale: scaleFactor)
+        }
+        
+        node.position = nodePosition
     }
 
     /**
@@ -1422,7 +1467,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter timeStarted: `Date` render start time.
      */
     public func didFinishRendering(timeStarted: Date) {
-        if loggingLevel.rawValue == 4 { print("🔺 `SKTilemap.didFinishRendering`...") }
+        log("rendering finished!", level: .debug)
 
         // set the z-depth of the defaultLayer & background sprite
         defaultLayer.zPosition = -zDeltaForLayers
@@ -1440,8 +1485,7 @@ public class SKTilemap: SKNode, SKTiledObject {
     public func update(_ currentTime: TimeInterval) {
         guard (isRendered == true) else { return }
         _layers.forEach( { $0.update(currentTime)})
-
-        //clampPositionForMap()
+        clampPositionForMap()
     }
 
     /**
@@ -1449,7 +1493,6 @@ public class SKTilemap: SKNode, SKTiledObject {
      */
     public func clampPositionForMap() {
         guard (isRendered == true) else { return }
-
         let scaleFactor = SKTiledContentScaleFactor
 
         _layers.forEach{ layer in
@@ -1692,7 +1735,7 @@ extension SKTilemap {
         let titleUnderline = String(repeating: "-", count: headerString.characters.count)
         var outputString = "\n\(headerString)\n\(titleUnderline)"
 
-        var allLayers = self.layers
+        var allLayers = self.layers.filter { $0 as? BackgroundLayer == nil }
 
         if (`default` == true) {
             allLayers.insert(self.defaultLayer, at: 0)
@@ -1701,26 +1744,27 @@ extension SKTilemap {
         // grab the stats from each layer
         let allLayerStats = allLayers.map { $0.layerStatsDescription }
 
-        var prefixes: [String] = ["", "", "", "", "pos", "size", "offset", "anc", "zpos", "opac", "path"]
+        var prefixes: [String] = ["", "", "", "", "pos", "size", "off", "anc", "zpos", "opac", "graph"]
         var buffers: [Int] = [1, 2, 0, 0, 1, 1, 1, 1, 1, 1, 1]
         var columnSizes: [Int] = Array(repeating: 0, count: prefixes.count)
 
 
         for (_, stats) in allLayerStats.enumerated() {
-
+            
             for stat in stats {
-                let colIndex = Int(stats.index(of: stat)!)
+                let cindex = Int(stats.index(of: stat)!)
 
                 let colCharacters = stat.characters.count
-                let prefix = prefixes[colIndex]
-                let buffer = buffers[colIndex]
+                let prefix = prefixes[cindex]
+                let buffer = buffers[cindex]
 
                 if colCharacters > 0 {
 
                     let bufferSize = (prefix.characters.count > 0 ) ? prefix.characters.count + buffer : 2
                     let columnSize = colCharacters + bufferSize
-                    if columnSize > columnSizes[colIndex] {
-                         columnSizes[colIndex] = columnSize
+                    
+                    if columnSize > columnSizes[cindex] {
+                         columnSizes[cindex] = columnSize
                     }
                 }
             }
@@ -1854,20 +1898,23 @@ extension SKTilemap: TiledSceneCameraDelegate {
     public func cameraZoomChanged(newZoom: CGFloat) {
         let oldZoom = currentZoom
         currentZoom = newZoom
-        print("[SKTilemap]: DEBUG: camera zoom: \(currentZoom.roundTo())")
+        self.log("camera zoom: \(currentZoom.roundTo())", level: .debug)
+        getObjects().forEach( { $0.lineWidth = $0.lineWidth * (1 / currentZoom) })
+        
     }
-    
+
     #if os(iOS) || os(tvOS)
     public func sceneDoubleTapped(location: CGPoint) {}
     public func sceneSwiped() {}
     #else
     public func sceneDoubleClicked(event: NSEvent) {
         let mapLocation = event.location(in: self)
-        print("[SKTilemap]: DEBUG: scene double-clicked: \(mapLocation.shortDescription)")
+        self.log("scene double-clicked: \(mapLocation.shortDescription)", level: .debug)
     }
+    
     public func mousePositionChanged(event: NSEvent) {
         let mapLocation = event.location(in: self)
-        print("[SKTilemap]: DEBUG: mouse position: \(mapLocation.shortDescription)")
+        self.log("mouse position: \(mapLocation.shortDescription)", level: .debug)
     }
     #endif
 }

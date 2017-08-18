@@ -414,7 +414,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         // if the object has a gid property, render it as a tile
         if let gid = gid {
             guard let tileData = layer.tilemap.getTileData(globalID: gid) else {
-                print("ERROR: Tile object \"\(name ?? "null")\" cannot access tile data for id: \(gid)")
+                log("Tile object \"\(name ?? "null")\" cannot access tile data for id: \(gid)", level: .error)
                 return
             }
 
@@ -721,7 +721,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     open func setupPhysics() {
         guard let layer = layer else { return }
         guard let objectPath = path else {
-            print("Warning: object path not set: \"\(self.name != nil ? self.name! : "null")\"")
+            log("object path not set: \"\(self.name != nil ? self.name! : "null")\"", level: .warning)
             return
         }
 

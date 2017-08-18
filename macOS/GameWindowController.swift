@@ -26,16 +26,6 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
         window?.delegate = self
     }
     
-    override func mouseMoved(with event: NSEvent) {
-        super.mouseMoved(with: event)
-        print("[GameWindowController]: nouse moved...")
-    }
-    
-    override func cursorUpdate(with event: NSEvent) {
-        super.cursorUpdate(with: event)
-        print("[GameWindowController]: cursor updated...")
-    }
-    
     // MARK: NSWindowDelegate
     
     func windowWillStartLiveResize(_ notification: Notification) {
@@ -88,6 +78,18 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
     // OS X games that use a single window for the entire game should quit when that window is closed.
     func applicationShouldTerminateAfterLastWindowClosed(sender: NSApplication) -> Bool {
         return true
+    }
+    
+    override func mouseMoved(with event: NSEvent) {
+        Logger.default.log("mouse moved", level: .info, symbol: "Window")
+    }
+    
+    override func mouseDragged(with event: NSEvent) {
+        Logger.default.log("mouse dragged", level: .info, symbol: "Window")
+    }
+    
+    override func mouseEntered(with event: NSEvent) {
+        Logger.default.log("mouse entered", level: .info, symbol: "Window")
     }
 }
 

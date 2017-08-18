@@ -15,7 +15,6 @@ public var TILE_BOUNDS_USE_OFFSET: Bool = false
 
 
 
-
 /**
  
  ## Overview ##
@@ -32,8 +31,9 @@ public var TILE_BOUNDS_USE_OFFSET: Bool = false
  DebugDrawOptions.drawTileBounds         // Draw a tile's bounds.
  DebugDrawOptions.drawMouseOverObject    // Draw an empty tile shape.
  DebugDrawOptions.drawBackground         // Draw layer background.
+ DebugDrawOptions.drawAnchor             // Draw anchor point.
  ```
-
+ 
  */
 public struct DebugDrawOptions: OptionSet {
     public let rawValue: Int
@@ -54,25 +54,15 @@ public struct DebugDrawOptions: OptionSet {
     static public let drawTileBounds       = DebugDrawOptions(rawValue: 1 << 4)
     static public let drawMouseOverObject  = DebugDrawOptions(rawValue: 1 << 5)
     static public let drawBackground       = DebugDrawOptions(rawValue: 1 << 6)
+    static public let drawAnchor           = DebugDrawOptions(rawValue: 1 << 7)
 
     static public let grid:    DebugDrawOptions  = [.drawGrid, .drawBounds]
-    static public let graph:   DebugDrawOptions  = [.drawGraph]
+    static public let graph:   DebugDrawOptions  = [.grid, .drawGraph]
     static public let objects: DebugDrawOptions  = [.drawObjectBounds, .drawTileBounds]
-    static public let all:     DebugDrawOptions  = [.grid, .drawGraph, .drawObjectBounds,
-                                                    .drawObjectBounds, .drawMouseOverObject, .drawBackground]
+    static public let all:     DebugDrawOptions  = [.grid, .graph, .drawObjectBounds,
+                                                    .drawObjectBounds, .drawMouseOverObject,
+                                                    .drawBackground, .drawAnchor]
 }
-
-// MARK: - Logging
-
-// Parser logging level
-public enum LoggingLevel: Int {
-    case debug
-    case info
-    case warning
-    case error
-    case gcd
-}
-
 
 
 /// Sprite object for visualizaing grid & graph.
@@ -87,6 +77,7 @@ internal class TiledDebugDrawNode: SKNode {
 
     private var gridTexture: SKTexture! = nil               // grid texture
     private var graphTexture: SKTexture! = nil              // GKGridGraph texture
+    private var anchorKey: String = "LAYER_ANCHOR"
 
     init(tileLayer: TiledLayerObject){
         layer = tileLayer
@@ -96,6 +87,10 @@ internal class TiledDebugDrawNode: SKNode {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    var anchorPoint: CGPoint {
+        return convert(layer.position, from: layer)
     }
     
     var blendMode: SKBlendMode = .alpha {
@@ -162,12 +157,13 @@ internal class TiledDebugDrawNode: SKNode {
         gridSprite!.zPosition = layer.zPosition + (layer.tilemap.zDeltaForLayers + 10)
         frameShape!.zPosition = layer.zPosition + (layer.tilemap.zDeltaForLayers + 20)
     }
-
-    func update(verbose: Bool = false) {
-        if (verbose == true){
-            print("[TiledDebugDrawNode]: debug options: \(debugDrawOptions.rawValue), hidden: \(isHidden)")
-        }
-
+    
+    /**
+     Update the node with the various options.
+     */
+    func update() {
+        
+        Logger.default.log("debug options: \(debugDrawOptions.rawValue), hidden: \(isHidden)", level: .debug)
         
         if self.debugDrawOptions.contains(.drawGrid) {
             self.drawGrid()
@@ -186,11 +182,23 @@ internal class TiledDebugDrawNode: SKNode {
         } else {
             self.graphSprite?.isHidden = true
         }
+        
+        if self.debugDrawOptions.contains(.drawAnchor) {
+            self.drawAnchor()
+        } else {
+            childNode(withName: anchorKey)?.removeFromParent()
+        }
+        
+        
     }
     
+    /**
+     Reset all visualizations.
+     */
     func reset() {
         gridSprite.texture = nil
         graphSprite.texture = nil
+        childNode(withName: anchorKey)?.removeFromParent()
     }
 
     /**
@@ -256,7 +264,7 @@ internal class TiledDebugDrawNode: SKNode {
             gridSprite.isHidden = true
 
             // get the last z-position
-            zPosition = layer.tilemap.lastZPosition + layer.tilemap.zDeltaForLayers
+            zPosition = layer.tilemap.lastZPosition + (layer.tilemap.zDeltaForLayers + 10)
             isHidden = false
             var gridSize = CGSize.zero
 
@@ -306,7 +314,8 @@ internal class TiledDebugDrawNode: SKNode {
         graphSprite.isHidden = true
         
         // get the last z-position
-        //zPosition = layer.tilemap.lastZPosition + layer.tilemap.zDeltaForLayers
+        // TODO: use roles here
+        zPosition = layer.tilemap.lastZPosition + (layer.tilemap.zDeltaForLayers - 10)
         isHidden = false
         var gridSize = CGSize.zero
         
@@ -316,7 +325,8 @@ internal class TiledDebugDrawNode: SKNode {
         // multipliers used to generate smooth lines
         let defaultImageScale: CGFloat = (layer.tilemap.tileHeight < 16) ? 8 : 8
         let imageScale: CGFloat = (uiScale > 1) ? (defaultImageScale / 2) : defaultImageScale
-        let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1 : 0.85 //0.5 : 0.25    // 1 : 0.85
+        // TODO: use tilemap zoom here
+        let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1 : 0.85
         
         
         // generate the texture
@@ -345,6 +355,21 @@ internal class TiledDebugDrawNode: SKNode {
         #endif
         graphSprite.isHidden = false
         graphSprite.blendMode = self.blendMode
+    }
+    
+    /**
+     Visualize the layer's anchor point.
+     */
+    func drawAnchor() {
+        childNode(withName: anchorKey)?.removeFromParent()
+        
+        let anchor = SKShapeNode(circleOfRadius: 0.75)
+        anchor.name = anchorKey
+        anchor.strokeColor = .clear
+        anchor.zPosition = zPosition * 4
+
+        addChild(anchor)
+        anchor.position = anchorPoint
     }
 }
 
@@ -695,10 +720,171 @@ public extension UnsignedInteger {
     public var binaryString: String { return "0b" + String(self, radix: 2) }
 }
 
+// MARK: - Logging
+
+public enum LoggingLevel: Int {
+    case none
+    case fatal
+    case error
+    case warning
+    case success
+    case status
+    case info
+    case debug
+    case custom
+}
+
+
+public struct LogEvent: Hashable {
+    var message: String
+    let level: LoggingLevel
+    let uuid: String = UUID().uuidString
+    
+    var symbol: String? = nil
+    let date = Date()
+    
+    let file: String = #file
+    let method: String = #function
+    let line: UInt = #line
+    let column: UInt = #column
+    
+    public init(_ message: String, level: LoggingLevel = .info, caller: String? = nil) {
+        self.message = message
+        self.level = level
+        self.symbol = caller
+    }
+    
+    public var hashValue: Int {
+        return uuid.hashValue
+    }
+}
+
+
+
+public class Logger {
+    
+    public enum DateFormat {
+        case none
+        case short
+        case long
+    }
+    
+    public var dateFormat: DateFormat = .none
+    static public let `default` = Logger()
+    
+    private var logcache: Set<LogEvent> = []
+    private let logQueue = DispatchQueue.global(qos: .background)
+    
+    public var loggingLevel: LoggingLevel = .info {
+        didSet {
+            let objname = String(describing: type(of: self))
+            print("[\(objname)]: logging level: \(loggingLevel)")
+        }
+    }
+    
+    public func log(_ message: String, level: LoggingLevel = .info, symbol: String? = nil, file: String = #file, method: String = #function, line: UInt = #line) {
+        
+        if (self.loggingLevel.rawValue > LoggingLevel.none.rawValue) && (level.rawValue <= self.loggingLevel.rawValue) {
+            // format the message
+            let formattedMessage = formatMessage(message, level: level, symbol: symbol, file: file, method: method, line: line)
+            print(formattedMessage)
+        }
+    }
+    
+    public func cache(_ event: LogEvent) {
+        logcache.insert(event)
+    }
+    
+    public func release() {
+        for event in logcache.sorted() {
+            self.log(event.message, level: event.level)
+        }
+        logcache = []
+    }
+    
+    private var timeStamp: String {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.dateFormat = dateFormat.formatString
+        let dateStamp = formatter.string(from: Date())
+        return "[" + dateStamp + "]"
+    }
+    
+    private func formatMessage(_ message: String, level: LoggingLevel = .info, symbol: String? = nil, file: String = #file, method: String = #function, line: UInt = #line) -> String {
+        // shorten file name
+        let filename = URL(fileURLWithPath: file).lastPathComponent
+        
+        
+        if (level == .status) {
+            var formatted = "\(message)"
+            if let symbol = symbol {
+                formatted = "[\(symbol)]: \(formatted)"
+            }
+            return "▹ \(formatted)"
+        }
+        
+        
+        if (level == .success) {
+            return " ❊ Success! \(message)"
+        }
+        
+        
+        // result string
+        var result: [String] = (dateFormat == .none) ? [] : [timeStamp]
+        
+        result += (symbol == nil) ? [filename] : ["[" + symbol! + "]"]
+        result += [String(describing: level), message]
+        return result.joined(separator: ": ")
+    }
+}
+
+
+
+public protocol Loggable {
+    var logSymbol: String { get }
+    func log(_ message: String, level: LoggingLevel, file: String, method: String, line: UInt)
+}
+
+
+/// Methods for all loggable objects
+extension Loggable {
+    public var logSymbol: String {
+        return String(describing: type(of: self))
+    }
+    
+    public func log(_ message: String, level: LoggingLevel, file: String = #file, method: String = #function, line: UInt = #line) {
+        Logger.default.log(message, level: level, symbol: logSymbol, file: file, method: method, line: line)
+    }
+}
+
+
+extension Logger.DateFormat {
+    public var formatString: String {
+        switch self {
+        case .short:
+            return "HH:mm:ss"
+        case .long:
+            return "yyyy-MM-dd HH:mm:ss"
+        default:
+            return ""
+        }
+    }
+}
+
+
+extension LogEvent: Comparable {
+    static public func < (lhs: LogEvent, rhs: LogEvent) -> Bool {
+        return lhs.level.rawValue < rhs.level.rawValue
+    }
+    
+    static public func == (lhs: LogEvent, rhs: LogEvent) -> Bool {
+        return lhs.level.rawValue == rhs.level.rawValue
+    }
+}
 
 
 extension LoggingLevel: Comparable {
-    
     static public func < (lhs: LoggingLevel, rhs: LoggingLevel) -> Bool {
         return lhs.rawValue < rhs.rawValue
     }
@@ -709,30 +895,34 @@ extension LoggingLevel: Comparable {
 }
 
 
-#if os(iOS) || os(tvOS)
-extension UIFont {
-    // Dump a list of currently loaded fonts.
-    static func allFontNames() {
-        for family: String in UIFont.familyNames {
-            print("\(family)")
-            for names: String in UIFont.fontNames(forFamilyName: family){
-                print("== \(names)")
-            }
+extension LoggingLevel: CustomStringConvertible {
+    
+    /// String representation of logging level.
+    public var description: String {
+        switch self {
+        case .fatal:
+            return "FATAL"
+        case .error:
+            return "ERROR"
+        case .warning:
+            return "WARNING"
+        case .success:
+            return "Success"
+        case .info:
+            return "INFO"
+        case .debug:
+            return "DEBUG"
+        default:
+            return ""
         }
     }
+    
+    /// Array of all options.
+    public static let all: [LoggingLevel] = [.none, .fatal, .error, .warning, .success, .info, .debug, .custom]
 }
-#else
-extension NSFont {
-    static func allFontNames() {
-        let fm = NSFontManager.shared()
-        for family in fm.availableFonts {
-            print("\(family)")
-        }
-    }
-}
-#endif
 
 
+// TODO: remove below this line in master
 extension SKTiledScene {
     
     open func addTemporaryShape(at location: CGPoint, radius: CGFloat = 4, duration: TimeInterval=0) {

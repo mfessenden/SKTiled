@@ -47,7 +47,7 @@ public protocol SKTiledSceneDelegate: class {
  SKTiledScene.cameraNode:   `SKTiledSceneCamera!` custom scene camera.
  ```
  */
-open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate, SKTilemapDelegate {
+open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate, SKTilemapDelegate, Loggable {
     
     /// World container node.
     open var worldNode: SKNode!
@@ -177,32 +177,32 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     // MARK: - Delegate Callbacks
     open func didBeginParsing(_ tilemap: SKTilemap) {
         // Called when tilemap is instantiated.
-        if loggingLevel.rawValue == 4 { print(" ❊ `SKTiledScene.didBeginParsing`...")}
+        log("parsing started: \"\(tilemap.mapName)\"", level: .debug)
     }
             
     open func didAddTileset(_ tileset: SKTileset) {
         // Called when a tileset has been added.
-        if loggingLevel.rawValue == 4 { print(" ❊ `SKTiledScene.didAddTileset`: \"\(tileset.name)\"") }
+        log("`tileset added: \"\(tileset.name)\"`", level: .debug)
     }
     
     open func didAddLayer(_ layer: TiledLayerObject) {
         // Called when a layer has been added.
-        if loggingLevel.rawValue == 4 { print(" ❊ `SKTiledScene.didAddLayer`: \"\(layer.layerName)\"") }
+        log("layer added: \"\(layer.layerName)\"", level: .debug)
     }
     
     open func didReadMap(_ tilemap: SKTilemap) {
         // Called before layers are rendered.
-        if loggingLevel.rawValue == 4 { print(" ❊ `SKTiledScene.didReadMap`: \"\(tilemap.mapName)\"") }
+        log("finished reading: \"\(tilemap.mapName)\"", level: .debug)
     }
     
     open func didRenderMap(_ tilemap: SKTilemap) {
         // Called after layers are rendered. Perform any post-processing here.
-        if loggingLevel.rawValue == 4 { print(" ❊ `SKTiledScene.didRenderMap`: \"\(tilemap.mapName)\"") }
+        log("rendering finished: \"\(tilemap.mapName)\"", level: .debug)
     }
 
      open func didAddPathfindingGraph(_ graph: GKGridGraph<GKGridGraphNode>) {
         // Called when a graph is added to the scene.
-        if loggingLevel.rawValue == 4 { print(" ❊ `SKTiledScene.didAddPathfindingGraph`: \"\(graph)\"") }
+        log("graph added: \(graph.nodes?.count) nodes", level: .debug)
     }
     
     open func objectForTileType(named: String?) -> SKTile.Type {
@@ -217,11 +217,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     override open func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
         // update the tilemap
-        tilemap?.update(currentTime)
-    }
-    
-    override open func didFinishUpdate() {
-        tilemap?.clampPositionForMap()
+        //tilemap?.update(currentTime)
     }
 
     // TODO: update this
@@ -234,41 +230,6 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
                                        width: viewSize.width, height: viewSize.height)
         }
     }
-    
-    
-    open func writeMapToFiles() {
-        guard let view = self.view as? SKView else { return }
-        guard let tilemap = tilemap else { return }
-        
-        
-        let fm = FileManager.default
-        let tmpDir = getTempDirectory()
-        let mapDir = tmpDir.appendingPathComponent(tilemap.url.path.basename, isDirectory: true)
-        
-        do {
-            try fm.createDirectory(atPath: mapDir.absoluteString, withIntermediateDirectories: true, attributes: nil)
-            print(" → creating temp directory: \(mapDir.path)")
-        } catch let error as NSError {
-            print(error.localizedDescription);
-        }
-        
-        let boundsRect = tilemap.calculateAccumulatedFrame()
-        let skView = SKView()
-        for layer in tilemap.tileLayers() {
-            
-            let layerRect = layer.calculateAccumulatedFrame()
-            
-            let layerImage = imageOfSize(boundsRect.size, scale: SKTiledContentScaleFactor) { context, bounds, scale in
-                layer.flattenLayer(view: skView)
-            }
-            
-            
-            writeToFile(layerImage, url: mapDir.appendingPathComponent("\(layer.layerName).png"))
-            
-        }
-        
-    }
-    
 }
 
 
@@ -345,7 +306,8 @@ extension SKTiledScene: TiledSceneCameraDelegate {
      */
     public func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {
         // override in subclass
-        print("-> camera bounds updated: \(bounds.roundTo()), pos: \(position.roundTo()), zoom: \(zoom.roundTo())")
+        log("camera bounds updated: \(bounds.roundTo()), pos: \(position.roundTo()), zoom: \(zoom.roundTo())", level: .debug)
+        
     }
 
     #if os(iOS) || os(tvOS)
@@ -355,7 +317,7 @@ extension SKTiledScene: TiledSceneCameraDelegate {
      - parameter location: `CGPoint` touch location.
      */
     public func sceneDoubleTapped(location: CGPoint) {
-        print("[SKTiledScene]: DEBUG: scene was double tapped.")
+        log("scene was double tapped.", level: .debug)
         self.isPaused = !self.isPaused
     }
     
@@ -372,7 +334,7 @@ extension SKTiledScene: TiledSceneCameraDelegate {
      */
     public func sceneDoubleClicked(event: NSEvent) {
         let location = event.location(in: self)
-        print("[SKTiledScene]: scene double clicked: \(location.shortDescription)")
+        log("scene double clicked: \(location.shortDescription)", level: .debug)
         addTemporaryShape(at: location, radius: 4, duration: 1.5)
     }
     
@@ -383,7 +345,7 @@ extension SKTiledScene: TiledSceneCameraDelegate {
      */
     public func mousePositionChanged(event: NSEvent) {
         let location = event.location(in: self)
-        print("[SKTiledScene]: mouse moved: \(location.shortDescription)")
+        log("mouse moved: \(location.shortDescription)", level: .info)
         addTemporaryShape(at: location, radius: 4, duration: 1.5)
     }
     #endif

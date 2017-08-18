@@ -10,7 +10,7 @@ import Cocoa
 import SpriteKit
 
 
-class GameViewController: NSViewController {
+class GameViewController: NSViewController, Loggable {
 
     // debugging labels
     @IBOutlet weak var mapInfoLabel: NSTextField!
@@ -27,20 +27,21 @@ class GameViewController: NSViewController {
     @IBOutlet var demoFileAttributes: NSArrayController!
 
     let demoController = DemoController.default
-    var loggingLevel: LoggingLevel = .gcd   // TODO: this should be SKTiledLoggingLevel in master 
+    var loggingLevel: LoggingLevel = SKTiledLoggingLevel
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        
         // Configure the view.
         let skView = self.view as! SKView
 
         // setup the controller
         demoController.loggingLevel = loggingLevel
         demoController.view = skView
-
+        
         guard let currentURL = demoController.currentURL else {
-            print("[GameViewController]: WARNING: no tilemap to load.")
+            log("no tilemap to load.", level: .warning)
             return
         }
 
@@ -152,6 +153,7 @@ class GameViewController: NSViewController {
      - parameter event: `NSEvent` mouse event.
      */
     override func scrollWheel(with event: NSEvent) {
+        log("scroll wheel...", level: .info)
         guard let view = self.view as? SKView else { return }
 
         if let currentScene = view.scene as? SKTiledDemoScene {
@@ -159,9 +161,26 @@ class GameViewController: NSViewController {
         }
     }
     
+    override func mouseEntered(with event: NSEvent) {
+        log("mouse entered...", level: .info)
+    }
+    
+    override func mouseUp(with event: NSEvent) {
+        log("mouse up...", level: .info)
+    }
+    
+    override func mouseDown(with event: NSEvent) {
+        log("mouse down...", level: .info)
+    }
+    
+    override func mouseDragged(with event: NSEvent) {
+        log("mouse dragged...", level: .info)
+    }
+    
     override func mouseMoved(with event: NSEvent) {
+        log("mouse moved...", level: .info)
         guard let view = self.view as? SKView else { return }
-        print("[GameViewController]: DEBUG: mouse moved...")
+        
         if let currentScene = view.scene as? SKTiledScene {
             if let cameraNode = currentScene.cameraNode {
                 cameraNode.mouseMoved(with: event)

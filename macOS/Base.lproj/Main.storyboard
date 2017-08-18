@@ -30,6 +30,45 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="qu8-Tk-8zd"/>
+                                        <menuItem title="Logging" id="2jg-PU-w23">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Logging" id="6yZ-kP-7C4">
+                                                <items>
+                                                    <menuItem title="Custom" id="hN9-rH-5kJ">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="loggingLevelCustom:" target="Voe-Tx-rLC" id="cdh-gM-exJ"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="Qbv-Yb-teY"/>
+                                                    <menuItem title="Debug" id="9TO-D0-z4m">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="loggingLevelDebug:" target="Voe-Tx-rLC" id="shj-mY-nwA"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Info" id="lhL-4f-89R">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="loggingLevelInfo:" target="Voe-Tx-rLC" id="plk-mC-qmA"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Warning" id="H5f-rc-659">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="loggingLevelWarning:" target="Voe-Tx-rLC" id="lbv-lA-mqL"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Error" id="dMn-sj-Spp">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="loggingLevelError:" target="Voe-Tx-rLC" id="qwh-lO-ljG"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="4je-JR-u6R"/>
                                         <menuItem title="Hide SKTiledDemo" keyEquivalent="h" id="Olw-nP-bQN">
                                             <connections>
@@ -66,10 +105,16 @@
                                                 <action selector="loadTilemap:" target="Voe-Tx-rLC" id="yvh-gN-fnF"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Reload scene" id="f06-eB-0wr">
+                                        <menuItem title="Reload tile map" id="f06-eB-0wr">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="reloadScene:" target="Voe-Tx-rLC" id="ucu-iz-d62"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="Iy1-A9-TkY"/>
+                                        <menuItem title="Save layers to images..." keyEquivalent="s" id="KXe-Qu-dYF">
+                                            <connections>
+                                                <action selector="writeMapLayers:" target="Voe-Tx-rLC" id="4p5-TK-GrP"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
@@ -112,6 +157,19 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Demo" id="uVs-e1-HbL">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Demo" id="7f1-H8-tvV">
+                                    <items>
+                                        <menuItem title="Map Statistics..." id="OXT-yC-4Eg">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="mapStatisticsPressed:" target="Voe-Tx-rLC" id="1U1-ky-FUE"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="Help" id="wpr-3q-Mcd">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Help" systemMenu="help" id="F2S-fz-NVQ">
@@ -133,7 +191,7 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="SKTiledDemo" customModuleProvider="target"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="67" y="-109"/>
+            <point key="canvasLocation" x="-731" y="-60"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -151,18 +209,18 @@
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-558" y="275"/>
+            <point key="canvasLocation" x="-732" y="296"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="GameViewController" customModule="SKTiledDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl" customClass="SKView">
-                        <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="475" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iiF-QO-DZ0" userLabel="Buttons View">
-                                <rect key="frame" x="179" y="108" width="442" height="16"/>
+                                <rect key="frame" x="16.5" y="108" width="442" height="16"/>
                                 <subviews>
                                     <button springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vU3-Eb-5vb" userLabel="Fit Button">
                                         <rect key="frame" x="0.0" y="0.0" width="82" height="16"/>
@@ -261,7 +319,7 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bpV-ih-FVj" userLabel="Labels View">
-                                <rect key="frame" x="381" y="20" width="38" height="80"/>
+                                <rect key="frame" x="218.5" y="20" width="38" height="80"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P0U-y9-0fU" userLabel="Map Info Label">
                                         <rect key="frame" x="-2" y="66" width="42" height="14"/>
@@ -310,7 +368,7 @@
                                 </customSpacing>
                             </stackView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rpo-Bf-MrJ" userLabel="Camera Info Label">
-                                <rect key="frame" x="379" y="566" width="42" height="14"/>
+                                <rect key="frame" x="216.5" y="566" width="42" height="14"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="96K-OU-ekP">
                                     <font key="font" size="11" name="Courier"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -318,7 +376,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qaU-aN-dXC" userLabel="Paused Label">
-                                <rect key="frame" x="373" y="541" width="55" height="17"/>
+                                <rect key="frame" x="210" y="541" width="55" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Camera" id="8mb-3y-U6G">
                                     <font key="font" size="13" name="Courier"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -356,7 +414,7 @@
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <arrayController id="roh-5A-x7m"/>
             </objects>
-            <point key="canvasLocation" x="-738" y="969"/>
+            <point key="canvasLocation" x="-900.5" y="969"/>
         </scene>
     </scenes>
     <resources>

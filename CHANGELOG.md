@@ -17,6 +17,8 @@ Change Log
 - add `TileCollisionShape`
 - rename `TiledLayerObject.boundingRect` -> `TiledLayerObject.bounds`
 - rename `SKTiledSceneCamera.boundingRect` -> `SKTiledSceneCamera.bounds`
+- rename `SKTilemap.addLayer(_:base:)` -> `SKTilemap.addLayer(_:group:clamped:)->(success:layer:)`
+
 
 #### Changes
 
@@ -50,11 +52,11 @@ Change Log
 - rename `SKTilemap.groupLayers` -> `SKTilemap.groupLayers(recursive:)`
 - rename `SKTilemap.getTiles(ofType:)` -> `SKTilemap.getTiles(ofType:recursive:)`
 - rename `SKTilemap.getTiles(withID:)` -> `SKTilemap.getTiles(globalID:recursive:)`
-- rename `SKTilemap.getTilesWithProperty(_:, _:)` -> `SKTilemap.getTilesWithProperty(_:,_:,recursive:)`
+- rename `SKTilemap.getTilesWithProperty(_: _:)` -> `SKTilemap.getTilesWithProperty(_:_:recursive:)`
 - rename `SKTilemap.getAnimatedTiles()` -> `SKTilemap.animatedTiles(recursive:)`
 - rename `SKTilemap.getObjects()` -> `SKTilemap.getObjects(recursive:)`
-- rename `SKTilemap.getObjects(ofType:)` -> `SKTilemap.getObjects(ofType:,recursive:)`
-- rename `SKTilemap.getObjects(named:)` -> `SKTilemap.getObjects(named:,recursive:)`
+- rename `SKTilemap.getObjects(ofType:)` -> `SKTilemap.getObjects(ofType:recursive:)`
+- rename `SKTilemap.getObjects(named:)` -> `SKTilemap.getObjects(named:recursive:)`
 - rename `SKTileLayer.getAnimatedTiles()` -> `SKTileLayer.animatedTiles()`
 - rename `SKObjectGroup.getObject(named:)` -> `SKObjectGroup.getObjects(named:)`
 - add `SKObjectGroup.textObjects`

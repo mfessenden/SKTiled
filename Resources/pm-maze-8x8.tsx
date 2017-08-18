@@ -39,7 +39,7 @@
   </objectgroup>
   <animation>
    <frame tileid="53" duration="250"/>
-   <frame tileid="76" duration="250"/>
+   <frame tileid="54" duration="250"/>
   </animation>
  </tile>
  <tile id="56">

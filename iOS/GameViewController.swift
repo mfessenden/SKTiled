@@ -10,7 +10,7 @@ import UIKit
 import SpriteKit
 
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, Loggable {
     
     @IBOutlet weak var mapInfoLabel: UILabel!
     @IBOutlet weak var tileInfoLabel: UILabel!
@@ -39,7 +39,7 @@ class GameViewController: UIViewController {
         demoController.view = skView
 
         guard let currentURL = demoController.currentURL else {
-            print("[GameViewController]: WARNING: no tilemap to load.")
+            log("no tilemap to load.", level: .warning)
             return
         }
 

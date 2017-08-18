@@ -36,7 +36,7 @@ import SpriteKit
   SKTiledObject.renderQuality     // resolution multiplier value.
  ```
  */
-public protocol SKTiledObject: class {
+public protocol SKTiledObject: class, Loggable {
     /// Unique id (layer & object names may not be unique).
     var uuid: String { get set }
     /// Object type.
@@ -50,6 +50,7 @@ public protocol SKTiledObject: class {
     /// Render quality property.
     var renderQuality: CGFloat { get }   // TODO: this is really a geometry property
 }
+
 
 
 public extension SKTiledObject {

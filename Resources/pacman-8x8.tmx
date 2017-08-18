@@ -27,7 +27,7 @@
   </data>
   </layer>
  </group>
- <layer name="Graph" width="28" height="36">
+ <layer name="Graph" width="28" height="36" visible="0">
   <data encoding="base64" compression="zlib">
    eJzlVcENxCAMY4MOcVMg3Q7df5vT/RCyY9O0hes9LEUpiWOj0K2Usv0R9kV7ZefoUUl+F3VRbaSbeaHqnH5P50N+15PiNpfRn/FrBp/S30Ll1T64d+7qdvxYia/15EXi0fs+oiNz/i6+N8D3fL+/ig/tO+r9dD+d+uhfiDz/NX1n8pXAHxT3fZ3zqC6ad1SH6jeDr9fM/GHvJ3sfUG81e3T/mdq7+JAnzO/RfCXf1fxHda9S58LZawZ3titwJf9MbR846IMA
   </data>
@@ -43,7 +43,7 @@
    eJztwzENAAAIA7A9+LfMMxOENmkCADdNAwB8sGmEAAs=
   </data>
   </layer>
-  <objectgroup name="Objects">
+  <objectgroup name="Objects" visible="0">
    <object id="111" name="apple" type="Fruit" gid="651" x="104" y="172" width="16" height="16" visible="0"/>
    <object id="115" name="ready-label" type="Label" x="88" y="160" width="48" height="8">
     <text fontfamily="Nintendo-Arcade" pixelsize="7" wrap="1" color="#fc0006">ready!</text>
@@ -51,22 +51,29 @@
   </objectgroup>
  </group>
  <group name="HUD">
-  <layer name="Scores" width="28" height="36">
-   <data encoding="base64" compression="zlib">
-   eJztycEJgDAUBNFfQRoUiZ4UJTf7JyMEQg6aBubBwMJGdA8VOmO00U657ddNCx100Rrf0s8nSZIkSZLmKru2BMw=
-  </data>
-  </layer>
   <layer name="Fruit" width="28" height="36">
    <data encoding="base64" compression="zlib">
    eJztzDEKACAMBMHg9wUbEb9rkyoIgvVMs81xEQAAAMCv1e596bmbpTs7ys8BFU8Epg==
   </data>
   </layer>
-  <layer name="Fruit" width="28" height="36">
+  <layer name="Scores" width="28" height="36">
    <data encoding="base64" compression="zlib">
-   eJztwTEBAAAAwqD1T20ND6AAAACAdwMPwAAB
+   eJztycEJgDAUBNFfQRoUiZ4UJTf7JyMEQg6aBubBwMJGdA8VOmO00U657ddNCx100Rrf0s8nSZIkSZLmKru2BMw=
   </data>
   </layer>
-  <objectgroup name="Score-HUD">
+  <group name="BONUS">
+   <layer name="Bonus" width="28" height="36" offsetx="0" offsety="4">
+    <data encoding="base64" compression="zlib">
+   eJztzkEJAAAIBLDD+pY2hA9BtgRLAAD+67oeAMDOAM5HAI4=
+  </data>
+   </layer>
+  </group>
+  <layer name="Messages" width="28" height="36">
+   <data encoding="base64" compression="zlib">
+   eJztzkEJACAUBcHfv42gBbxZwTS+DF4EmYG9bxUAwL9mGqmlnlbaT48A4M4BlkoEgA==
+  </data>
+  </layer>
+  <objectgroup name="Score-HUD" visible="0">
    <object id="116" name="high-score-label" type="Label" x="72" y="0" width="80" height="8">
     <text fontfamily="Nintendo-Arcade" pixelsize="7" wrap="1" color="#fff76f">high score</text>
    </object>
