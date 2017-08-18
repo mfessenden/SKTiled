@@ -34,7 +34,7 @@ public class SKTileset: SKTiledObject {
 
     public var tilemap: SKTilemap!
     public var tileSize: CGSize                                    // tile size
-    
+
     internal var loggingLevel: LoggingLevel = .warning
 
     public var columns: Int = 0                                    // number of columns
@@ -59,7 +59,7 @@ public class SKTileset: SKTiledObject {
     // tileset properties
     public var isImageCollection: Bool = false                     // image collection tileset
     public var isExternalTileset: Bool { return filename != nil }  // tileset is an external file
-    public var transparentColor: SKColor? = nil                    // sprite transparency color
+    public var transparentColor: SKColor?                          // sprite transparency color
     public var isRendered: Bool = false                            // indicates the tileset is rendered
 
 
@@ -126,7 +126,7 @@ public class SKTileset: SKTiledObject {
      - parameter attributes: `[String: String]` attributes dictionary.
      - parameter offset:     `CGPoint` offset in x/y.
      */
-    public init?(attributes: [String: String], offset: CGPoint=CGPoint.zero){
+    public init?(attributes: [String: String], offset: CGPoint=CGPoint.zero) {
         // name, width and height are required
         guard let setName = attributes["name"],
             let width = attributes["tilewidth"],
@@ -164,7 +164,7 @@ public class SKTileset: SKTiledObject {
 
      - parameter fileNamed: `String` tileset file name.
      */
-    public init(fileNamed: String){
+    public init(fileNamed: String) {
         self.name = ""
         self.tileSize = CGSize.zero
     }
@@ -179,8 +179,8 @@ public class SKTileset: SKTiledObject {
      - returns: `[SKTileset]` tileset objects.
      */
     public class func load(tsxFiles: [String],
-                         delegate: SKTilemapDelegate? = nil,
-                         ignoreProperties noparse: Bool = false) -> [SKTileset] {
+                           delegate: SKTilemapDelegate? = nil,
+                           ignoreProperties noparse: Bool = false) -> [SKTileset] {
 
         return SKTilemapParser().load(tsxFiles: tsxFiles, delegate: delegate, ignoreProperties: noparse)
     }
@@ -250,7 +250,7 @@ public class SKTileset: SKTiledObject {
 
             // add the tile data properties, or replace the texture
             if (replace == false) {
-                let _ = self.addTilesetTile(tileID, texture: tileTexture)
+                _ = self.addTilesetTile(tileID, texture: tileTexture)
             } else {
                 self.setDataTexture(tileID, texture: tileTexture)
             }
@@ -271,7 +271,7 @@ public class SKTileset: SKTiledObject {
         if (replace == false) {
             let timeStamp = String(format: "%.\(String(3))f", tilesetBuildTime)
             Logger.default.cache(LogEvent("tileset \"\(name)\" built in: \(timeStamp)s (\(tilesAdded) tiles)", level: .debug, caller: self.logSymbol))
-            
+
         }
 
         return tilesetBuildTime
@@ -287,7 +287,7 @@ public class SKTileset: SKTiledObject {
      - returns: `SKTilesetData?` tileset data (or nil if the data exists).
      */
     public func addTilesetTile(_ tileID: Int, texture: SKTexture) -> SKTilesetData? {
-        guard !(self.tileData.contains( where: { $0.hashValue == tileID.hashValue } )) else {
+        guard !(self.tileData.contains(where: { $0.hashValue == tileID.hashValue })) else {
             log("tile data exists at id: \(tileID)", level: .error)
             return nil
         }
@@ -308,7 +308,7 @@ public class SKTileset: SKTiledObject {
      - returns: `SKTilesetData?` tileset data (or nil if the data exists).
      */
     public func addTilesetTile(_ tileID: Int, source: String) -> SKTilesetData? {
-        guard !(self.tileData.contains( where: { $0.hashValue == tileID.hashValue } )) else {
+        guard !(self.tileData.contains(where: { $0.hashValue == tileID.hashValue })) else {
             log("tile data exists at id: \(tileID)", level: .error)
             return nil
         }
@@ -369,7 +369,7 @@ public class SKTileset: SKTiledObject {
     public func getTileData(globalID gid: Int) -> SKTilesetData? {
         var id = getTileRealID(id: gid)
         id = getLocalID(forGlobalID: id)
-        if let index = tileData.index( where: { $0.id == id } ) {
+        if let index = tileData.index(where: { $0.id == id }) {
             return tileData[index]
         }
         return nil
@@ -383,7 +383,7 @@ public class SKTileset: SKTiledObject {
      */
     public func getTileData(localID id: Int) -> SKTilesetData? {
         let localID = getTileRealID(id: id)
-        if let index = tileData.index( where: { $0.id == localID } ) {
+        if let index = tileData.index(where: { $0.id == localID }) {
             return tileData[index]
         }
         return nil
@@ -465,7 +465,7 @@ public class SKTileset: SKTiledObject {
     /**
      Print out tileset data values.
      */
-    internal func debugTileset(){
+    internal func debugTileset() {
         log("# Tileset: \"\(name)\":", level: .debug)
         for data in tileData.sorted(by: {$0.id < $1.id}) {
             log("data:  \(data)", level: .debug)

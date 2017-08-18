@@ -9,23 +9,26 @@
 import SpriteKit
 
 /**
- 
+
  ## Overview ##
- 
- The `SKTiledObject` protocol defines a basic data structure for mapping custom Tiled properties to SpriteKit objects. Objects conforming to this protocol will automatically receive properties from the Tiled scene, unless supressed by setting the object's `ignoreProperties` property.
- 
+
+ The `SKTiledObject` protocol defines a basic data structure for mapping custom Tiled 
+ properties to SpriteKit objects. Objects conforming to this protocol will 
+ automatically receive properties from the Tiled scene, unless supressed 
+ by setting the object's `ignoreProperties` property.
+
  ## Usage ##
- 
+
  ```swift
  // query a Tiled string property
  if let name = obj.stringForKey("name") {
     obj.name = name
  }
- 
+
  // query a boolean property
  let isDynamic = object.boolForKey("isDynamic") == true
  ```
- 
+
  ### Properties ###
 
  ```swift
@@ -54,23 +57,23 @@ public protocol SKTiledObject: class, Loggable {
 
 
 public extension SKTiledObject {
-    
-    
+
+
     public var hashValue: Int { return uuid.hashValue }
-    
+
     // MARK: - Properties Parsing
     /**
      Returns true if the node has stored properties.
-     
+
      - returns: `Bool` properties are not empty.
      */
     public var hasProperties: Bool {
-        return properties.count > 0
+        return properties.isEmpty
     }
-    
+
     /**
      Returns true if the node has the given property (not case sensitive).
-     
+
      - parameter key: `String` key to query.
      - returns: `Bool` properties has a value for the key.
      */
@@ -78,10 +81,10 @@ public extension SKTiledObject {
         let pnames = properties.keys.map { $0.lowercased() }
         return pnames.contains(key.lowercased())
     }
-    
+
     /**
      Returns a string for the given key.
-     
+
      - parameter key: `String` properties key.
      - returns: `String` value for properties key.
      */
@@ -93,10 +96,10 @@ public extension SKTiledObject {
         }
         return properties[key]
     }
-    
+
     /**
      Sets a named property. Returns the value, or nil if it does not exist.
-     
+
      - parameter key:   `String` property key.
      - parameter value: `String` property value.
      */
@@ -110,7 +113,7 @@ public extension SKTiledObject {
 
     /**
      Remove a named property, returns the value as a string (if property exists).
-     
+
      - parameter key: `String` property key.
      - returns:       `String?` property value (if it exists).
      */
@@ -120,21 +123,21 @@ public extension SKTiledObject {
         }
         return nil
     }
-    
+
     /// Returns a string representation of the node's properties.
     public var propertiesString: String {
         return properties.reduce("", { (aggregate: String, pair) -> String in
             let comma: String = (pair.key == Array(properties.keys).last) ? "" : ","
             return "\(aggregate)\(pair.key): \(pair.value)\(comma) "
-            
+
         })
     }
-    
+
     // MARK: - Helpers
-    
+
     /**
      Returns a case-insensitive value for the given key.
-     
+
      - parameter key: `String` key to query.
      - returns: `(key: String, value: String)?` tuple of key/value pair.
      */
@@ -145,11 +148,11 @@ public extension SKTiledObject {
             }
         }
         return nil
-    }    
-    
+    }
+
     /**
      Returns true if the property is a numeric type.
-     
+
      - parameter key: `String` key to query.
      - returns: `Bool` value is a numeric type.
      */
@@ -159,10 +162,10 @@ public extension SKTiledObject {
         }
         return false
     }
-    
+
     /**
      Returns a string array for the given key.
-     
+
      - parameter key:         `String` properties key.
      - parameter separatedBy: `String` separator.
      - returns: `[String]` value for properties key.
@@ -173,10 +176,10 @@ public extension SKTiledObject {
         }
         return [String]()
     }
-    
+
     /**
      Returns a integer value for the given key.
-     
+
      - parameter key: `String` properties key.
      - returns: `Int?` value for properties key.
      */
@@ -186,10 +189,10 @@ public extension SKTiledObject {
         }
         return nil
     }
-    
+
     /**
      Returns a integer array for the given key.
-     
+
      - parameter key:         `String` properties key.
      - parameter separatedBy: `String` separator.
      - returns: `[Int]` array of integers for properties key.
@@ -200,10 +203,10 @@ public extension SKTiledObject {
         }
         return [Int]()
     }
-    
+
     /**
      Returns a float value for the given key.
-     
+
      - parameter key: `String` properties key.
      - returns: `Double?` value for properties key.
      */
@@ -213,10 +216,10 @@ public extension SKTiledObject {
         }
         return nil
     }
-    
+
     /**
      Returns a double array for the given key.
-     
+
      - parameter key:         `String` properties key.
      - parameter separatedBy: `String` separator.
      - returns: `[Double]` array of doubles for properties key.
@@ -227,10 +230,10 @@ public extension SKTiledObject {
         }
         return [Double]()
     }
-    
+
     /**
      Returns a boolean value for the given key.
-     
+
      - parameter key: `String` properties key.
      - returns: `Bool` value for properties key.
      */
@@ -241,4 +244,3 @@ public extension SKTiledObject {
         return false
     }
 }
-

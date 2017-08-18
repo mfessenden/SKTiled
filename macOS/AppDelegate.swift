@@ -13,6 +13,7 @@ import SpriteKit
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
     }
@@ -125,9 +126,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         Logger.default.loggingLevel = .success
     }
 
+    @IBAction func loggingLevelDispatch(_ sender: Any) {
+        Logger.default.loggingLevel = .gcd
+    }
+
     @IBAction func mapStatisticsPressed(_ sender: Any) {
         guard let gameController = viewController else { return }
-        
+
         let demoController = gameController.demoController
         demoController.printMapStatistics()
     }

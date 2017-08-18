@@ -353,7 +353,7 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		4C440B971DAE911000DEC9A4 /* Shared */ = {
+		4C440B971DAE911000DEC9A4 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
 				4C82FCC51F46254C00A61B84 /* Demo+Debugging.swift */,
@@ -361,7 +361,7 @@
 				4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */,
 				4C440B981DAE911000DEC9A4 /* Assets.xcassets */,
 			);
-			path = Shared;
+			path = Demo;
 			sourceTree = "<group>";
 		};
 		4C440BA11DAE913000DEC9A4 /* macOS */ = {
@@ -444,12 +444,12 @@
 				4C0E59501DC046E700921F75 /* CHANGELOG.md */,
 				4C0924BD1F11755A009CA37E /* TODO.md */,
 				4C0924BE1F117574009CA37E /* NOTES.md */,
-				4C6480BE1DC1231C006F4CB3 /* Modules */,
 				4CBA61931D8A0A6C00B31FC1 /* Sources */,
 				4CBA617F1D8A0A4600B31FC1 /* Resources */,
-				4C440B971DAE911000DEC9A4 /* Shared */,
+				4C440B971DAE911000DEC9A4 /* Demo */,
 				4C440BAB1DAE913A00DEC9A4 /* iOS */,
 				4C440BA11DAE913000DEC9A4 /* macOS */,
+				4C6480BE1DC1231C006F4CB3 /* Modules */,
 				4CBA61661D8A048200B31FC1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -636,8 +636,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4C1774911D909740000C0AFD /* Build configuration list for PBXNativeTarget "Demo - macOS" */;
 			buildPhases = (
-				4CABC4D71DAEE1F900ACA1A4 /* ShellScript */,
-				4C4184A71F34D57B004E392A /* ShellScript */,
+				4CA4006B1F4721ED0032CD21 /* Run Swiftlint */,
+				4CABC4D71DAEE1F900ACA1A4 /* Run xattr */,
+				4C4184A71F34D57B004E392A /* Todo Tags */,
 				4C17747B1D909740000C0AFD /* Sources */,
 				4C17747C1D909740000C0AFD /* Frameworks */,
 				4C17747D1D909740000C0AFD /* Resources */,
@@ -655,7 +656,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4C41A5E71F437118001622FF /* Build configuration list for PBXNativeTarget "SKTiled-macOS" */;
 			buildPhases = (
-				4C2FCE5E1F437A39004AD742 /* ShellScript */,
+				4CA400691F47214B0032CD21 /* Run Swiftlint */,
+				4C2FCE5E1F437A39004AD742 /* Todo Tags */,
 				4C41A5DB1F437118001622FF /* Sources */,
 				4C41A5DC1F437118001622FF /* Frameworks */,
 				4C41A5DD1F437118001622FF /* Headers */,
@@ -674,7 +676,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4C41A6021F43739C001622FF /* Build configuration list for PBXNativeTarget "SKTiled-iOS" */;
 			buildPhases = (
-				4C2FCE5F1F437A45004AD742 /* ShellScript */,
+				4CA4006A1F4721770032CD21 /* Run Swiftlint */,
+				4C2FCE5F1F437A45004AD742 /* Todo Tags */,
 				4C41A5F81F43739C001622FF /* Sources */,
 				4C41A5F91F43739C001622FF /* Frameworks */,
 				4C41A5FA1F43739C001622FF /* Headers */,
@@ -693,8 +696,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4CBA617B1D8A048300B31FC1 /* Build configuration list for PBXNativeTarget "Demo - iOS" */;
 			buildPhases = (
-				4C3496881EA513D9003900C8 /* ShellScript */,
-				4C4184A81F34D592004E392A /* ShellScript */,
+				4CA4006C1F4722040032CD21 /* Run Swiftlint */,
+				4C3496881EA513D9003900C8 /* Run xattr */,
+				4C4184A81F34D592004E392A /* Todo Tags */,
 				4CBA61611D8A048200B31FC1 /* Sources */,
 				4CBA61621D8A048200B31FC1 /* Frameworks */,
 				4CBA61631D8A048200B31FC1 /* Resources */,
@@ -909,78 +913,140 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4C2FCE5E1F437A39004AD742 /* ShellScript */ = {
+		4C2FCE5E1F437A39004AD742 /* Todo Tags */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Todo Tags";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "TAGS=\"TODO:|FIXME:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
+			shellScript = "TAGS=\"TODO:|FIXME:|CLEANUP:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
 		};
-		4C2FCE5F1F437A45004AD742 /* ShellScript */ = {
+		4C2FCE5F1F437A45004AD742 /* Todo Tags */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Todo Tags";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "TAGS=\"TODO:|FIXME:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
+			shellScript = "TAGS=\"TODO:|FIXME:|CLEANUP:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
 		};
-		4C3496881EA513D9003900C8 /* ShellScript */ = {
+		4C3496881EA513D9003900C8 /* Run xattr */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Run xattr";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "xattr -rc $PROJECT_DIR\n";
 		};
-		4C4184A71F34D57B004E392A /* ShellScript */ = {
+		4C4184A71F34D57B004E392A /* Todo Tags */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Todo Tags";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "TAGS=\"TODO:|FIXME:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
+			shellScript = "TAGS=\"TODO:|FIXME:|CLEANUP:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
 		};
-		4C4184A81F34D592004E392A /* ShellScript */ = {
+		4C4184A81F34D592004E392A /* Todo Tags */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Todo Tags";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "TAGS=\"TODO:|FIXME:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
+			shellScript = "TAGS=\"TODO:|FIXME:|CLEANUP:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
 		};
-		4CABC4D71DAEE1F900ACA1A4 /* ShellScript */ = {
+		4CA400691F47214B0032CD21 /* Run Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Run Swiftlint";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		4CA4006A1F4721770032CD21 /* Run Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Swiftlint";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		4CA4006B1F4721ED0032CD21 /* Run Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Swiftlint";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		4CA4006C1F4722040032CD21 /* Run Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Swiftlint";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		4CABC4D71DAEE1F900ACA1A4 /* Run xattr */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run xattr";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;

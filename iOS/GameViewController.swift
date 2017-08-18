@@ -11,20 +11,20 @@ import SpriteKit
 
 
 class GameViewController: UIViewController, Loggable {
-    
+
     @IBOutlet weak var mapInfoLabel: UILabel!
     @IBOutlet weak var tileInfoLabel: UILabel!
     @IBOutlet weak var propertiesInfoLabel: UILabel!
     @IBOutlet weak var cameraInfoLabel: UILabel!
     @IBOutlet weak var pauseInfoLabel: UILabel!
-    
+
     @IBOutlet weak var objectsButton: UIButton!
     @IBOutlet weak var graphButton: UIButton!
 
-    
+
     @IBOutlet var demoFileAttributes: NSObject!
     @IBOutlet weak var buttonsView: UIStackView!
-    
+
     let demoController = DemoController.default
     var loggingLevel: LoggingLevel = SKTiledLoggingLevel
 
@@ -33,7 +33,7 @@ class GameViewController: UIViewController, Loggable {
 
         // Configure the view.
         let skView = self.view as! SKView
-        
+
         // setup the controller
         demoController.loggingLevel = loggingLevel
         demoController.view = skView
@@ -50,8 +50,8 @@ class GameViewController: UIViewController, Loggable {
         skView.showsPhysics = true
         skView.showsPhysics = true
         #endif
-        
-        
+
+
         skView.showsFields = true
         /* SpriteKit optimizations */
         skView.shouldCullNonVisibleNodes = true
@@ -61,13 +61,13 @@ class GameViewController: UIViewController, Loggable {
 
         NotificationCenter.default.addObserver(self, selector: #selector(updateUIControls), name: NSNotification.Name(rawValue: "updateUIControls"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateDebugLabels), name: NSNotification.Name(rawValue: "updateDebugLabels"), object: nil)
-        
+
         /* create the game scene */
         demoController.loadScene(url: currentURL, usePreviousCamera: false)
     }
-    
+
     override func viewDidLayoutSubviews() {
-        
+
     }
 
     func setupDebuggingLabels() {
@@ -88,10 +88,10 @@ class GameViewController: UIViewController, Loggable {
 
         propertiesInfoLabel.shadowColor = shadowColor
         propertiesInfoLabel.shadowOffset = shadowOffset
-        
+
         cameraInfoLabel.shadowColor = shadowColor
         cameraInfoLabel.shadowOffset = shadowOffset
-        
+
         pauseInfoLabel.shadowColor = shadowColor
         pauseInfoLabel.shadowOffset = shadowOffset
 
@@ -178,24 +178,24 @@ class GameViewController: UIViewController, Loggable {
         if let tileInfo = notification.userInfo!["tileInfo"] {
             tileInfoLabel.text = tileInfo as? String
         }
-        
+
         var propertiesDefaultText = "~"
         if let propertiesInfo = notification.userInfo!["propertiesInfo"] {
             if let pinfo = propertiesInfo as? String {
-                if pinfo.characters.count > 0 {
+                if (pinfo.characters.isEmpty == false) {
                     propertiesDefaultText = pinfo
                 }
             }
         }
-        
+
         if let cameraInfo = notification.userInfo!["cameraInfo"] {
             cameraInfoLabel.text = cameraInfo as? String
         }
-        
+
         if let pauseInfo = notification.userInfo!["pauseInfo"] {
             pauseInfoLabel.text = pauseInfo as? String
         }
-        
+
         propertiesInfoLabel.text = propertiesDefaultText
     }
 
@@ -203,7 +203,7 @@ class GameViewController: UIViewController, Loggable {
         if let hasGraphs = notification.userInfo!["hasGraphs"] {
             graphButton.isHidden = (hasGraphs as? Bool) == false
         }
-        
+
         if let hasObjects = notification.userInfo!["hasObjects"] {
             objectsButton.isHidden = (hasObjects as? Bool) == false
         }

@@ -57,7 +57,7 @@ open class SKTile: SKSpriteNode, Loggable {
      - parameter tileSize: `CGSize` tile size in pixels.
      - returns: `SKTile` tile sprite.
      */
-    public init(tileSize size: CGSize){
+    public init(tileSize size: CGSize) {
         // create empty tileset data
         tileData = SKTilesetData()
         tileSize = size
@@ -86,7 +86,7 @@ open class SKTile: SKSpriteNode, Loggable {
     /**
      Initialize an empty tile.
      */
-    required public init(){
+    required public init() {
         // create empty tileset data
         tileData = SKTilesetData()
         tileSize = CGSize.zero
@@ -114,7 +114,7 @@ open class SKTile: SKSpriteNode, Loggable {
      - parameter data: `SKTilesetData` tile data.
      - returns: `SKTile` tile sprite.
      */
-    internal func update(){
+    internal func update() {
         removeAllActions()
         texture = nil
         texture = tileData.texture
@@ -129,7 +129,7 @@ open class SKTile: SKSpriteNode, Loggable {
      - parameter shapeOf:   `PhysicsShape` tile physics shape type.
      - parameter isDynamic: `Bool` physics body is active.
      */
-    open func setupPhysics(shapeOf: PhysicsShape = .rectangle, isDynamic: Bool = false){
+    open func setupPhysics(shapeOf: PhysicsShape = .rectangle, isDynamic: Bool = false) {
         physicsShape = shapeOf
 
         switch physicsShape {
@@ -157,7 +157,7 @@ open class SKTile: SKSpriteNode, Loggable {
      - parameter rectSize:  `CGSize` rectangle size.
      - parameter isDynamic: `Bool` physics body is active.
      */
-    open func setupPhysics(rectSize: CGSize, isDynamic: Bool = false){
+    open func setupPhysics(rectSize: CGSize, isDynamic: Bool = false) {
         physicsShape = .rectangle
         physicsBody = SKPhysicsBody(rectangleOf: rectSize)
         physicsBody?.isDynamic = isDynamic
@@ -169,7 +169,7 @@ open class SKTile: SKSpriteNode, Loggable {
      - parameter withSize:  `CGFloat` rectangle size.
      - parameter isDynamic: `Bool` physics body is active.
      */
-    open func setupPhysics(withSize: CGFloat, isDynamic: Bool = false){
+    open func setupPhysics(withSize: CGFloat, isDynamic: Bool = false) {
         physicsShape = .rectangle
         physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: withSize, height: withSize))
         physicsBody?.isDynamic = isDynamic
@@ -181,7 +181,7 @@ open class SKTile: SKSpriteNode, Loggable {
      - parameter radius:    `CGFloat` circle radius.
      - parameter isDynamic: `Bool` physics body is active.
      */
-    open func setupPhysics(radius: CGFloat, isDynamic: Bool = false){
+    open func setupPhysics(radius: CGFloat, isDynamic: Bool = false) {
         physicsShape = .ellipse
         physicsBody = SKPhysicsBody(circleOfRadius: radius)
         physicsBody?.isDynamic = isDynamic
@@ -192,7 +192,7 @@ open class SKTile: SKSpriteNode, Loggable {
 
      - parameter withSize: `CGFloat` dynamics body size.
      */
-    open func removePhysics(){
+    open func removePhysics() {
         physicsBody = nil
         physicsBody?.isDynamic = false
     }
@@ -202,14 +202,14 @@ open class SKTile: SKSpriteNode, Loggable {
     /**
      Checks if the tile is animated and runs an action to animate it.
      */
-    open func runAnimation(){
+    open func runAnimation() {
         guard tileData.isAnimated == true else { return }
         guard let tileset = tileData.tileset else { return }
         var framesData: [(texture: SKTexture, duration: TimeInterval)] = []
         for frame in tileData.frames {
             guard let frameTexture = tileset.getTileData(localID: frame.gid)?.texture else {
                 self.log("Cannot access texture for id: \(frame.gid)", level: .error)
-                
+
                 return
             }
             frameTexture.filteringMode = .nearest
@@ -235,10 +235,10 @@ open class SKTile: SKSpriteNode, Loggable {
 
      - parameter restore: `Bool` restore the tile's first texture.
      */
-    open func removeAnimation(restore: Bool = false){
+    open func removeAnimation(restore: Bool = false) {
         guard tileData.isAnimated == true else { return }
         removeAction(forKey: "Animation")
-        if (restore == true){
+        if (restore == true) {
             texture = tileData.texture
         }
     }
@@ -374,7 +374,7 @@ open class SKTile: SKSpriteNode, Loggable {
         yScale = newYScale
     }
 
-    //MARK: - Geometry
+    // MARK: - Geometry
 
     /**
      Returns the points of the tile's shape.
@@ -408,7 +408,7 @@ open class SKTile: SKSpriteNode, Loggable {
                 CGPoint(x: -tileSizeHalved.width, y: 0),    // left-side
                 CGPoint(x: 0, y: tileSizeHalved.height),
                 CGPoint(x: tileSizeHalved.width, y: 0),
-                CGPoint(x: 0, y: -tileSizeHalved.height),   // bottom
+                CGPoint(x: 0, y: -tileSizeHalved.height)    // bottom
             ]
 
         case .hexagonal:
@@ -446,7 +446,7 @@ open class SKTile: SKSpriteNode, Loggable {
                 hexPoints[5] = CGPoint(x: -r, y: (variableSize / 2))
             }
 
-            vertices = hexPoints.map{ $0.invertedY }
+            vertices = hexPoints.map { $0.invertedY }
         }
 
         return vertices.map { $0 + offset }
@@ -487,7 +487,7 @@ open class SKTile: SKSpriteNode, Loggable {
         let alignmentOffset = CGPoint(x: xOffset, y: yOffset)
         let vertices = getVertices(offset: alignmentOffset)
 
-        guard vertices.count > 0 else { return }
+        guard (vertices.isEmpty == false) else { return }
 
         let renderQuality = tileData.renderQuality
 

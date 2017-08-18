@@ -16,13 +16,13 @@ public var TILE_BOUNDS_USE_OFFSET: Bool = false
 
 
 /**
- 
+
  ## Overview ##
- 
+
  A structure representing debug drawing options for **SKTiled** objects.
- 
+
  ## Properties ##
- 
+
  ```
  DebugDrawOptions.drawGrid               // visualize the objects's grid (tilemap & layers).
  DebugDrawOptions.drawBounds             // visualize the objects's bounds.
@@ -33,15 +33,15 @@ public var TILE_BOUNDS_USE_OFFSET: Bool = false
  DebugDrawOptions.drawBackground         // Draw layer background.
  DebugDrawOptions.drawAnchor             // Draw anchor point.
  ```
- 
+
  */
 public struct DebugDrawOptions: OptionSet {
     public let rawValue: Int
-    
+
     public init(rawValue: Int = 0) {
         self.rawValue = rawValue
     }
-    
+
     /// Draw the layer's grid.
     static public let drawGrid             = DebugDrawOptions(rawValue: 1 << 0)
     /// Draw the layer's boundary shape.
@@ -79,7 +79,7 @@ internal class TiledDebugDrawNode: SKNode {
     private var graphTexture: SKTexture! = nil              // GKGridGraph texture
     private var anchorKey: String = "LAYER_ANCHOR"
 
-    init(tileLayer: TiledLayerObject){
+    init(tileLayer: TiledLayerObject) {
         layer = tileLayer
         super.init()
         setup()
@@ -88,11 +88,11 @@ internal class TiledDebugDrawNode: SKNode {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     var anchorPoint: CGPoint {
         return convert(layer.position, from: layer)
     }
-    
+
     var blendMode: SKBlendMode = .alpha {
         didSet {
             guard oldValue != blendMode else { return }
@@ -100,7 +100,7 @@ internal class TiledDebugDrawNode: SKNode {
             update()
         }
     }
-    
+
     /// Debug visualization options.
     var debugDrawOptions: DebugDrawOptions {
         return layer.debugDrawOptions
@@ -157,14 +157,14 @@ internal class TiledDebugDrawNode: SKNode {
         gridSprite!.zPosition = layer.zPosition + (layer.tilemap.zDeltaForLayers + 10)
         frameShape!.zPosition = layer.zPosition + (layer.tilemap.zDeltaForLayers + 20)
     }
-    
+
     /**
      Update the node with the various options.
      */
     func update() {
-        
+
         Logger.default.log("debug options: \(debugDrawOptions.rawValue), hidden: \(isHidden)", level: .debug)
-        
+
         if self.debugDrawOptions.contains(.drawGrid) {
             self.drawGrid()
         } else {
@@ -176,22 +176,22 @@ internal class TiledDebugDrawNode: SKNode {
         } else {
             self.frameShape?.isHidden = true
         }
-        
+
         if self.debugDrawOptions.contains(.drawGraph) {
             self.drawGraph()
         } else {
             self.graphSprite?.isHidden = true
         }
-        
+
         if self.debugDrawOptions.contains(.drawAnchor) {
             self.drawAnchor()
         } else {
             childNode(withName: anchorKey)?.removeFromParent()
         }
-        
-        
+
+
     }
-    
+
     /**
      Reset all visualizations.
      */
@@ -231,7 +231,7 @@ internal class TiledDebugDrawNode: SKNode {
                 layer.pixelToScreenCoords(leftPoint)
             ]
 
-            let invertedPoints = points.map{ $0.invertedY }
+            let invertedPoints = points.map { $0.invertedY }
             objectPath = polygonPath(invertedPoints)
 
         case .hexagonal, .staggered:
@@ -246,7 +246,7 @@ internal class TiledDebugDrawNode: SKNode {
 
             // don't draw bounds of hexagonal maps
             frameShape.strokeColor = layer.frameColor
-            if (layer.orientation == .hexagonal){
+            if (layer.orientation == .hexagonal) {
                 frameShape.strokeColor = SKColor.clear
             }
 
@@ -300,52 +300,52 @@ internal class TiledDebugDrawNode: SKNode {
             #else
             gridSprite.yScale *= -1
             #endif
-            
+
         }
         gridSprite.isHidden = false
         gridSprite.blendMode = self.blendMode
     }
-    
+
     /// Display the current tile graph (if it exists).
     func drawGraph() {
-        
+
         // drawLayerGrid
         graphTexture = nil
         graphSprite.isHidden = true
-        
+
         // get the last z-position
         // TODO: use roles here
         zPosition = layer.tilemap.lastZPosition + (layer.tilemap.zDeltaForLayers - 10)
         isHidden = false
         var gridSize = CGSize.zero
-        
+
         // scale factor for texture
         let uiScale: CGFloat = SKTiledContentScaleFactor
-        
+
         // multipliers used to generate smooth lines
         let defaultImageScale: CGFloat = (layer.tilemap.tileHeight < 16) ? 8 : 8
         let imageScale: CGFloat = (uiScale > 1) ? (defaultImageScale / 2) : defaultImageScale
         // TODO: use tilemap zoom here
         let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1 : 0.85
-        
-        
+
+
         // generate the texture
         if (graphTexture == nil) {
             let gridImage = drawLayerGraph(self.layer, imageScale: imageScale, lineScale: lineScale)
             graphTexture = SKTexture(cgImage: gridImage)
             graphTexture.filteringMode = .linear
         }
-        
+
         // sprite scaling factor
         let spriteScaleFactor: CGFloat = (1 / imageScale)
         gridSize = graphTexture.size() / uiScale
         graphSprite.setScale(spriteScaleFactor)
-        
-        
+
+
         graphSprite.texture = graphTexture
         graphSprite.alpha = layer.gridOpacity * 1.6
         graphSprite.size = gridSize / imageScale
-        
+
         // need to flip the grid texture in y
         // currently not doing this to the parent node so that objects will draw correctly.
         #if os(iOS) || os(tvOS)
@@ -356,13 +356,13 @@ internal class TiledDebugDrawNode: SKNode {
         graphSprite.isHidden = false
         graphSprite.blendMode = self.blendMode
     }
-    
+
     /**
      Visualize the layer's anchor point.
      */
     func drawAnchor() {
         childNode(withName: anchorKey)?.removeFromParent()
-        
+
         let anchor = SKShapeNode(circleOfRadius: 0.75)
         anchor.name = anchorKey
         anchor.strokeColor = .clear
@@ -383,13 +383,13 @@ internal class TileShape: SKShapeNode {
     var layer: TiledLayerObject
     var coord: CGPoint
     var useLabel: Bool = false
-    
+
     var renderQuality: CGFloat = 4
     var zoomFactor: CGFloat {
         return layer.tilemap.currentZoom
     }
 
-    init(layer: TiledLayerObject, coord: CGPoint, tileColor: SKColor, withLabel: Bool=false){
+    init(layer: TiledLayerObject, coord: CGPoint, tileColor: SKColor, withLabel: Bool=false) {
         self.layer = layer
         self.coord = coord
         self.tileSize = layer.tileSize
@@ -400,7 +400,7 @@ internal class TileShape: SKShapeNode {
         drawObject()
     }
 
-    init(layer: TiledLayerObject, tileColor: SKColor, withLabel: Bool=false){
+    init(layer: TiledLayerObject, tileColor: SKColor, withLabel: Bool=false) {
         self.layer = layer
         self.coord = CGPoint.zero
         self.tileSize = layer.tileSize
@@ -427,7 +427,7 @@ internal class TileShape: SKShapeNode {
     private func drawObject() {
         // draw the path
         var points: [CGPoint] = []
-        
+
         let scaledTilesize: CGSize = (tileSize * renderQuality)
         let halfWidth: CGFloat = (tileSize.width / 2) * renderQuality
         let halfHeight: CGFloat = (tileSize.height / 2) * renderQuality
@@ -474,7 +474,7 @@ internal class TileShape: SKShapeNode {
                 hexPoints[5] = CGPoint(x: position.x - (tileWidth / 2), y: position.y + (variableSize / 2))
             }
 
-            points = hexPoints.map{ $0.invertedY }
+            points = hexPoints.map { $0.invertedY }
         }
 
         // draw the path
@@ -525,7 +525,7 @@ extension TileShape {
     override var debugDescription: String {
         return description
     }
-    
+
     override var hashValue: Int {
         return coord.hashValue
     }
@@ -552,7 +552,7 @@ extension SKTilemap {
             (node as? SKTile != nil) || (node as? SKTileObject != nil)
             }
     }
-    
+
     /**
      Draw the map bounds.
      */
@@ -560,22 +560,22 @@ extension SKTilemap {
         // remove old nodes
         self.childNode(withName: "MAP_BOUNDS")?.removeFromParent()
         self.childNode(withName: "MAP_ANCHOR")?.removeFromParent()
-        
+
         let debugZPos = lastZPosition * 50
-        
+
         let blendMode = SKBlendMode.screen
         let scaledVertices = getVertices().map { $0 * renderQuality }
         let tilemapPath = polygonPath(scaledVertices)
 
-        
+
         let boundsShape = SKShapeNode(path: tilemapPath) // , centered: <#T##Bool#>)
         boundsShape.name = "MAP_BOUNDS"
         boundsShape.fillColor = frameColor.withAlphaComponent(0.2)
         boundsShape.strokeColor = frameColor
         boundsShape.blendMode = blendMode
         self.addChild(boundsShape)
-        
-        
+
+
         boundsShape.isAntialiased = true
         boundsShape.lineCap = .round
         boundsShape.lineJoin = .miter
@@ -583,7 +583,7 @@ extension SKTilemap {
         boundsShape.lineWidth = 1 * (renderQuality / 2)
 
         boundsShape.setScale(1 / renderQuality)
-        
+
         let anchorRadius = self.tileHeightHalf / 4
         let anchorShape = SKShapeNode(circleOfRadius: anchorRadius * renderQuality)
         anchorShape.name = "MAP_ANCHOR"
@@ -722,11 +722,13 @@ public extension UnsignedInteger {
 
 // MARK: - Logging
 
+// Logging level.
 public enum LoggingLevel: Int {
     case none
     case fatal
     case error
     case warning
+    case gcd
     case success
     case status
     case info
@@ -735,73 +737,81 @@ public enum LoggingLevel: Int {
 }
 
 
+// Log event
 public struct LogEvent: Hashable {
     var message: String
     let level: LoggingLevel
     let uuid: String = UUID().uuidString
-    
-    var symbol: String? = nil
+
+    var symbol: String?
     let date = Date()
-    
+
     let file: String = #file
     let method: String = #function
     let line: UInt = #line
     let column: UInt = #column
-    
+
     public init(_ message: String, level: LoggingLevel = .info, caller: String? = nil) {
         self.message = message
         self.level = level
         self.symbol = caller
     }
-    
+
     public var hashValue: Int {
         return uuid.hashValue
     }
 }
 
 
-
+// Simple logging class.
 public class Logger {
-    
+
     public enum DateFormat {
         case none
         case short
         case long
     }
-    
+
+    public var locale = Locale.current
     public var dateFormat: DateFormat = .none
     static public let `default` = Logger()
-    
+
     private var logcache: Set<LogEvent> = []
     private let logQueue = DispatchQueue.global(qos: .background)
-    
+
     public var loggingLevel: LoggingLevel = .info {
         didSet {
-            let objname = String(describing: type(of: self))
-            print("[\(objname)]: logging level: \(loggingLevel)")
+            print("[\(String(describing: type(of: self)))]: logging level changed: \(loggingLevel)")
         }
     }
-    
-    public func log(_ message: String, level: LoggingLevel = .info, symbol: String? = nil, file: String = #file, method: String = #function, line: UInt = #line) {
-        
+
+    public func log(_ message: String, level: LoggingLevel = .info,
+                    symbol: String? = nil, file: String = #file,
+                    method: String = #function, line: UInt = #line) {
+
+        // filter events at the current logging level (or higher)
         if (self.loggingLevel.rawValue > LoggingLevel.none.rawValue) && (level.rawValue <= self.loggingLevel.rawValue) {
             // format the message
-            let formattedMessage = formatMessage(message, level: level, symbol: symbol, file: file, method: method, line: line)
+            let formattedMessage = formatMessage(message, level: level,
+                                                 symbol: symbol, file: file,
+                                                 method: method, line: line)
             print(formattedMessage)
         }
     }
-    
+
     public func cache(_ event: LogEvent) {
         logcache.insert(event)
     }
-    
+
     public func release() {
         for event in logcache.sorted() {
-            self.log(event.message, level: event.level)
+            logQueue.async {
+                self.log(event.message, level: event.level)
+            }
         }
         logcache = []
     }
-    
+
     private var timeStamp: String {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
@@ -810,12 +820,23 @@ public class Logger {
         let dateStamp = formatter.string(from: Date())
         return "[" + dateStamp + "]"
     }
-    
+
+    /**
+     Format the message.
+     */
     private func formatMessage(_ message: String, level: LoggingLevel = .info, symbol: String? = nil, file: String = #file, method: String = #function, line: UInt = #line) -> String {
         // shorten file name
         let filename = URL(fileURLWithPath: file).lastPathComponent
-        
-        
+
+
+        if (level == .custom) {
+            var formatted = "\(message)"
+            if let symbol = symbol {
+                formatted = "[\(symbol)]: \(formatted)"
+            }
+            return "❗️ \(formatted)"
+        }
+
         if (level == .status) {
             var formatted = "\(message)"
             if let symbol = symbol {
@@ -823,16 +844,25 @@ public class Logger {
             }
             return "▹ \(formatted)"
         }
-        
-        
+
+
+        if (level == .gcd) {
+            var formatted = "\(message)"
+            if let symbol = symbol {
+                formatted = " ➜ [\(symbol)]: \(formatted): \(timeStamp)"
+            }
+            return formatted
+        }
+
+
         if (level == .success) {
             return " ❊ Success! \(message)"
         }
-        
-        
+
+
         // result string
         var result: [String] = (dateFormat == .none) ? [] : [timeStamp]
-        
+
         result += (symbol == nil) ? [filename] : ["[" + symbol! + "]"]
         result += [String(describing: level), message]
         return result.joined(separator: ": ")
@@ -847,14 +877,14 @@ public protocol Loggable {
 }
 
 
-/// Methods for all loggable objects
+// Methods for all loggable objects
 extension Loggable {
     public var logSymbol: String {
         return String(describing: type(of: self))
     }
-    
+
     public func log(_ message: String, level: LoggingLevel, file: String = #file, method: String = #function, line: UInt = #line) {
-        Logger.default.log(message, level: level, symbol: logSymbol, file: file, method: method, line: line)
+        Logger.default.log(message, level: level, symbol: self.logSymbol, file: file, method: method, line: line)
     }
 }
 
@@ -862,12 +892,10 @@ extension Loggable {
 extension Logger.DateFormat {
     public var formatString: String {
         switch self {
-        case .short:
-            return "HH:mm:ss"
         case .long:
             return "yyyy-MM-dd HH:mm:ss"
         default:
-            return ""
+            return "HH:mm:ss"
         }
     }
 }
@@ -877,7 +905,7 @@ extension LogEvent: Comparable {
     static public func < (lhs: LogEvent, rhs: LogEvent) -> Bool {
         return lhs.level.rawValue < rhs.level.rawValue
     }
-    
+
     static public func == (lhs: LogEvent, rhs: LogEvent) -> Bool {
         return lhs.level.rawValue == rhs.level.rawValue
     }
@@ -888,7 +916,7 @@ extension LoggingLevel: Comparable {
     static public func < (lhs: LoggingLevel, rhs: LoggingLevel) -> Bool {
         return lhs.rawValue < rhs.rawValue
     }
-    
+
     static public func == (lhs: LoggingLevel, rhs: LoggingLevel) -> Bool {
         return lhs.rawValue == rhs.rawValue
     }
@@ -896,7 +924,7 @@ extension LoggingLevel: Comparable {
 
 
 extension LoggingLevel: CustomStringConvertible {
-    
+
     /// String representation of logging level.
     public var description: String {
         switch self {
@@ -906,6 +934,8 @@ extension LoggingLevel: CustomStringConvertible {
             return "ERROR"
         case .warning:
             return "WARNING"
+        case .gcd:
+            return "dispatch"
         case .success:
             return "Success"
         case .info:
@@ -916,7 +946,7 @@ extension LoggingLevel: CustomStringConvertible {
             return ""
         }
     }
-    
+
     /// Array of all options.
     public static let all: [LoggingLevel] = [.none, .fatal, .error, .warning, .success, .info, .debug, .custom]
 }
@@ -924,7 +954,7 @@ extension LoggingLevel: CustomStringConvertible {
 
 // TODO: remove below this line in master
 extension SKTiledScene {
-    
+
     open func addTemporaryShape(at location: CGPoint, radius: CGFloat = 4, duration: TimeInterval=0) {
         guard let world = worldNode else { return }
         let worldLocation = world.convert(location, from: self)
@@ -934,7 +964,7 @@ extension SKTiledScene {
         world.addChild(shape)
         shape.position = worldLocation
         shape.zPosition = 5000
-        
+
         if (duration > 0) {
             let fadeAction = SKAction.fadeAfter(wait: duration, alpha: 0)
             shape.run(fadeAction, completion: {
@@ -943,4 +973,3 @@ extension SKTiledScene {
         }
     }
 }
-

@@ -18,7 +18,7 @@ import SpriteKit
 internal struct AnimationFrame {
     public var gid: Int = 0
     public var duration: TimeInterval = 0
-    public var texture: SKTexture? = nil
+    public var texture: SKTexture?
 }
 
 
@@ -48,7 +48,7 @@ internal class TileCollisionShape: SKTiledObject {
 
  Also includes pathfinding properties for tile accessability, and graph node weight.
 */
-public class SKTilesetData: SKTiledObject  {
+public class SKTilesetData: SKTiledObject {
 
     weak public var tileset: SKTileset!             // reference to parent tileset
     public var uuid: String = UUID().uuidString     // unique id
@@ -66,7 +66,7 @@ public class SKTilesetData: SKTiledObject  {
 
     /// Animated frames
     internal var frames: [AnimationFrame] = []
-    public var isAnimated: Bool { return frames.count > 0 }
+    public var isAnimated: Bool { return frames.isEmpty == false }
 
     /// flipped flags
     public var flipHoriz: Bool = false              // tile is flipped horizontally
@@ -93,7 +93,7 @@ public class SKTilesetData: SKTiledObject  {
     }
 
     // MARK: - Init
-    public init(){}
+    public init() {}
 
     /**
      Initialize the data with a tileset, id.
@@ -182,7 +182,7 @@ public class SKTilesetData: SKTiledObject  {
 }
 
 
-public func ==(lhs: SKTilesetData, rhs: SKTilesetData) -> Bool {
+public func == (lhs: SKTilesetData, rhs: SKTilesetData) -> Bool {
     return (lhs.hashValue == rhs.hashValue)
 }
 
@@ -205,7 +205,7 @@ extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
         guard let tileset = tileset else { return "Tile ID: \(id) (no tileset)" }
         let typeString = (type != nil) ? ", type: \"\(type!)\"" : ""
         let framesString = (isAnimated == true) ? ", \(frames.count) frames" : ""
-        let dataString = properties.count > 0 ? "Tile ID: \(globalID)\(typeString) @ \(tileset.tileSize.shortDescription)\(framesString), " : "Tile ID: \(globalID)\(typeString) @ \(tileset.tileSize.shortDescription)\(framesString)"
+        let dataString = properties.isEmpty == false ? "Tile ID: \(globalID)\(typeString) @ \(tileset.tileSize.shortDescription)\(framesString), " : "Tile ID: \(globalID)\(typeString) @ \(tileset.tileSize.shortDescription)\(framesString)"
 
         return "\(dataString)\(propertiesString)"
     }

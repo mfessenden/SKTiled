@@ -10,12 +10,12 @@ import SpriteKit
 
 
 /**
- 
+
  ## Overview ##
- 
+
  Structure for managing basic font rendering attributes for [text objects][text-objects].
- 
- 
+
+
  ### Properties ###
 
  
@@ -30,11 +30,11 @@ import SpriteKit
  TextObjectAttributes.isUnderline     // font is underlined.
  TextObjectAttributes.renderQuality   // font resolution.
  ```
- 
+
  [text-objects]:../objects.html#text-objects
  */
 public struct TextObjectAttributes {
-    
+
     /// Font name.
     public var fontName: String = "Arial"
     /// Font size.
@@ -45,21 +45,21 @@ public struct TextObjectAttributes {
     public struct TextAlignment {
         var horizontal: HoriztonalAlignment = .left
         var vertical: VerticalAlignment = .top
-        
+
         enum HoriztonalAlignment: String {
             case left
             case center
             case right
         }
-        
+
         enum VerticalAlignment: String {
             case top
             case center
             case bottom
         }
     }
-    
-    
+
+
     /// Text alignment.
     public var alignment: TextAlignment = TextAlignment()
 
@@ -71,7 +71,7 @@ public struct TextObjectAttributes {
     public var renderQuality: CGFloat = 8
 
     public init() {}
-    
+
     /**
      Initialize with basic font attributes.
      */
@@ -84,12 +84,12 @@ public struct TextObjectAttributes {
 
 /**
  ## Overview ##
- 
+
  The `SKTileObject` class represents a Tiled vector object type (rectangle, ellipse, polygon & polyline). When the object is created, points can be added either with an array of `CGPoint` objects, or a string. In order to render the object, the `SKTileObject.getVertices()` method is called, which returns the points needed to draw the path.
- 
+
  */
 open class SKTileObject: SKShapeNode, SKTiledObject {
-    
+
     // Describes the object shape.
     public enum ObjectType: String {
         case rectangle
@@ -97,7 +97,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         case polygon
         case polyline
     }
-    
+
     /// Object parent layer
     weak open var layer: SKObjectGroup!
     /// Object unique id
@@ -106,23 +106,23 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     open var id: Int = 0
     /// Tiled global id (for tile objects)
     internal var gid: Int!
-    
+
     /// Object type
     open var type: String!
 
     internal var alignment: TileAlignmentHint = .bottomLeft // object alignment
     internal var objectType: ObjectType = .rectangle        // shape type
     internal var points: [CGPoint] = []                     // points that describe the object's shape
-    internal var tile: SKTile? = nil                        // optional tile
+    internal var tile: SKTile?                              // optional tile
     open var size: CGSize = CGSize.zero
-    
-    
+
+
     public enum CollisionType {  // TODO: this could be an optionset
         case none
         case dynamic
         case collision
     }
-    
+
     /// Custom object properties.
     open var properties: [String: String] = [:]
     open var ignoreProperties: Bool = false                 // ignore custom properties
@@ -143,13 +143,13 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             drawObject()
         }
     }
-    
+
     /// Object label.
     internal enum LabelPosition {
         case above
         case below
     }
-    
+
     /// Text string (for text objects)
     open var text: String! {
         didSet {
@@ -213,7 +213,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
      - parameter height: `CGFloat`      object size height.
      - parameter type:   `ObjectType`   object shape type.
      */
-    required public init(width: CGFloat, height: CGFloat, type: ObjectType = .rectangle){
+    required public init(width: CGFloat, height: CGFloat, type: ObjectType = .rectangle) {
         super.init()
 
         // Rectangular and ellipse objects get initial points.
@@ -297,7 +297,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
      - parameter tileID: `Int` tile id.
      - parameter layer:  `SKObjectGroup` object group.
      */
-    required public init(gid: Int, layer: SKObjectGroup){
+    required public init(gid: Int, layer: SKObjectGroup) {
         super.init()
         self.gid = gid
         self.layer = layer
@@ -438,14 +438,14 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                 childNode(withName: "TILE_OBJECT")?.removeFromParent()
                 // TODO: need delegate tile class
                 if let tileSprite = SKTile(data: tileData) {
-                    
+
                     let boundingBox = polygonPath(translatedVertices)
                     let rect = boundingBox.boundingBox
 
                     tileSprite.name = "TILE_OBJECT"
                     tileSprite.size.width = rect.size.width
                     tileSprite.size.height = rect.size.height
-                    
+
                     addChild(tileSprite)
 
                     tileSprite.zPosition = zPosition - 1
@@ -459,7 +459,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                     tileSprite.runAnimation()
 
                     self.tile = tileSprite
-                    
+
                     // flipped tile flags
                     tileSprite.xScale = (tileData.flipHoriz == true) ? -1 : 1
                     tileSprite.yScale = (tileData.flipVert == true) ? -1 : 1
@@ -468,7 +468,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         }
 
         // render text object as an image and use with a sprite
-        if let _ = text {
+        if (text != nil) {
             // initialize the text attrbutes if none exist
             if (textAttributes == nil) {
                 textAttributes = TextObjectAttributes()
@@ -526,7 +526,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             let textFontAttributes: [String : Any] = [
                     NSFontAttributeName: textAttributes.font,
                     NSForegroundColorAttributeName: textAttributes.fontColor,
-                    NSParagraphStyleAttributeName: textStyle,
+                    NSParagraphStyleAttributeName: textStyle
                     ]
 
             // TODO: vertical alignment is slightly off from Tiled, NSStringDrawingContext needs 10.11
@@ -564,7 +564,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     }
 
     // MARK: - Geometry
-    
+
     /**
      Add polygons points.
 
@@ -683,7 +683,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         }
         set {
             childNode(withName: "BOUNDS")?.removeFromParent()
-            
+
             if (newValue == true) {
                 isHidden = false
 
@@ -741,8 +741,8 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         } else {
             physicsBody = SKPhysicsBody(polygonFrom: objectPath)
         }
-        
-        
+
+
         physicsBody?.isDynamic = (physicsType == .dynamic)
         physicsBody?.affectedByGravity = (physicsType == .dynamic)
         physicsBody?.mass = (doubleForKey("mass") != nil) ? CGFloat(doubleForKey("mass")!) : 1.0
@@ -757,7 +757,7 @@ extension SKTileObject {
 
     /// Tile data description.
     override open var description: String {
-        let comma = propertiesString.characters.count > 0 ? ", " : ""
+        let comma = propertiesString.characters.isEmpty == false ? ", " : ""
         let objectName = name ?? "null"
         let typeString = (type != nil) ? ", type: \"\(type!)\"" : ""
         let layerDescription = (layer != nil) ? ", Layer: \"\(layer.layerName)\"" : ""

@@ -18,7 +18,7 @@ import Cocoa
 
 
 // index, zpos, size w, size h, tile size w, tile size h, offset x, offset y, anchor x, anchor y, tile count, object count
-typealias renderInfo = (idx: Int, path: String, zpos: Double, sw: Int, sh: Int, tsw: Int, tsh: Int, offx: Int, offy: Int, ancx: Int, ancy: Int, tc: Int, obj: Int, vis: Int, gn: Int?)
+typealias RenderInfo = (idx: Int, path: String, zpos: Double, sw: Int, sh: Int, tsw: Int, tsh: Int, offx: Int, offy: Int, ancx: Int, ancy: Int, tc: Int, obj: Int, vis: Int, gn: Int?)
 
 
 /**
@@ -241,7 +241,7 @@ public class TiledLayerObject: SKNode, SKTiledObject {
 
 
     /// Returns layer render statisics
-    internal var renderStatistics: renderInfo {
+    internal var renderStatistics: RenderInfo {
         return (index, path, Double(zPosition), Int(tilemap.size.width),
                 Int(tilemap.size.height), Int(tileSize.width),
                 Int(tileSize.height),  Int(offset.x), Int(offset.y),
@@ -304,7 +304,7 @@ public class TiledLayerObject: SKNode, SKTiledObject {
      - parameter tilemap:    `SKTilemap` parent tilemap node.
      - returns: `TiledLayerObject` tiled layer object.
      */
-    public init(layerName: String, tilemap: SKTilemap){
+    public init(layerName: String, tilemap: SKTilemap) {
         self.tilemap = tilemap
         self.ignoreProperties = tilemap.ignoreProperties
         super.init()
@@ -606,7 +606,7 @@ public class TiledLayerObject: SKNode, SKTiledObject {
                 CGPoint(x: 0, y: 0),
                 CGPoint(x: 1, y: -1),
                 CGPoint(x: 1, y: 0),
-                CGPoint(x: 2, y: 0),
+                CGPoint(x: 2, y: 0)
                 ]
 
             //pointy
@@ -614,7 +614,7 @@ public class TiledLayerObject: SKNode, SKTiledObject {
                 CGPoint(x: 0, y: 0),
                 CGPoint(x: -1, y: 1),
                 CGPoint(x: 0, y: 1),
-                CGPoint(x: 0, y: 2),
+                CGPoint(x: 0, y: 2)
                 ]
 
             let offsets: [CGPoint] = (tilemap.staggerX == true) ? offsetsStaggerX : offsetsStaggerY
@@ -835,7 +835,7 @@ public class TiledLayerObject: SKNode, SKTiledObject {
 
      - parameter isDynamic: `Bool` layer is dynamic.
      */
-    public func setupLayerPhysicsBoundary(isDynamic: Bool=false){
+    public func setupLayerPhysicsBoundary(isDynamic: Bool=false) {
         physicsBody = SKPhysicsBody(edgeLoopFrom: self.bounds)
         physicsBody?.isDynamic = isDynamic
     }
@@ -843,7 +843,7 @@ public class TiledLayerObject: SKNode, SKTiledObject {
     /**
      Set up physics for child objects.
      */
-    public func setupPhysics(){
+    public func setupPhysics() {
         // override in subclass
     }
 
@@ -857,13 +857,13 @@ public class TiledLayerObject: SKNode, SKTiledObject {
      Visualize the layer's boundary shape.
      */
     public func drawBounds() {
-        guard let debugNode = debugNode else  { return }
+        guard let debugNode = debugNode else { return }
         debugNode.drawBounds()
     }
 
     public func debugLayer() {
         /* override in subclass */
-        let comma = propertiesString.characters.count > 0 ? ", " : ""
+        let comma = (propertiesString.characters.isEmpty == false) ? ", " : ""
         log("Layer: \(name != nil ? "\"\(layerName)\"" : "null")\(comma)\(propertiesString)", level: .debug)
     }
 
@@ -875,12 +875,14 @@ public class TiledLayerObject: SKNode, SKTiledObject {
     public func setDebugBlendMode(mode: SKBlendMode) {
         debugNode.blendMode = mode
     }
-    
+
     /// Render the layer to a texture
     ///
     /// - Returns: `SKTexture?` rendered texture.
     internal func render() -> SKTexture? {
-        let cropRect = CGRect(x: 0, y: -tilemap.sizeInPoints.height, width: tilemap.sizeInPoints.width, height: tilemap.sizeInPoints.height)
+        let cropRect = CGRect(x: 0, y: -tilemap.sizeInPoints.height,
+                              width: tilemap.sizeInPoints.width,
+                              height: tilemap.sizeInPoints.height)
         if let rendered = SKView().texture(from: self, crop: cropRect) {
             rendered.filteringMode = .nearest
             return rendered
@@ -928,7 +930,7 @@ public class SKTileLayer: TiledLayerObject {
     public var graphName: String
 
     /// Tuple of layer render statistics.
-    override internal var renderStatistics: renderInfo {
+    override internal var renderStatistics: RenderInfo {
         var current = super.renderStatistics
         current.tc = tileCount
         if let graph = graph {
@@ -950,8 +952,8 @@ public class SKTileLayer: TiledLayerObject {
 
     /// Tile highlight duration
     override public var highlightDuration: TimeInterval {
-        didSet{
-            _ = tiles.flatMap({ $0?.highlightDuration = highlightDuration})
+        didSet {
+            tiles.flatMap { $0 }.forEach { $0.highlightDuration = highlightDuration }
         }
     }
 
@@ -1073,7 +1075,7 @@ public class SKTileLayer: TiledLayerObject {
      - returns: `[SKTile]` array of animated tiles.
      */
     public func animatedTiles() -> [SKTile] {
-        return validTiles().filter({ $0.tileData.isAnimated == true })
+        return validTiles().filter { $0.tileData.isAnimated == true }
     }
 
     /**
@@ -1134,7 +1136,7 @@ public class SKTileLayer: TiledLayerObject {
             }
         }
 
-        if (errorCount != 0){
+        if (errorCount != 0) {
             log("layer \"\(self.layerName)\": \(errorCount) \(errorCount > 1 ? "errors" : "error") loading data.", level: .warning)
         }
         return errorCount == 0
@@ -1153,7 +1155,7 @@ public class SKTileLayer: TiledLayerObject {
         guard isValid(coord: coord) else { return nil }
 
         // remove the current tile
-        let _ = removeTileAt(coord: coord)
+        _ = removeTileAt(coord: coord)
 
         let tileData: SKTilesetData? = (gid != nil) ? getTileData(globalID: gid!) : nil
 
@@ -1512,7 +1514,7 @@ public class SKObjectGroup: TiledLayerObject {
     /**
      Returns a tuple of render stats used for debugging.
      */
-    override internal var renderStatistics: renderInfo {
+    override internal var renderStatistics: RenderInfo {
         var current = super.renderStatistics
         current.obj = count
         return current
@@ -1524,10 +1526,8 @@ public class SKObjectGroup: TiledLayerObject {
     override public var renderQuality: CGFloat {
         didSet {
             guard renderQuality != oldValue else { return }
-            for object in objects {
-                if (object.isRenderableType == true) {
-                    object.renderQuality = renderQuality
-                }
+            for object in objects where object.isRenderableType == true {
+                object.renderQuality = renderQuality
             }
         }
     }
@@ -1592,7 +1592,7 @@ public class SKObjectGroup: TiledLayerObject {
      - returns: `SKTileObject?` added object.
      */
     public func addObject(_ object: SKTileObject, withColor: SKColor? = nil) -> SKTileObject? {
-        if objects.contains( where: { $0.hashValue == object.hashValue } ) {
+        if objects.contains(where: { $0.hashValue == object.hashValue }) {
             return nil
         }
 
@@ -1688,7 +1688,7 @@ public class SKObjectGroup: TiledLayerObject {
      - returns: `SKTileObject?`
      */
     public func getObject(withID id: Int) -> SKTileObject? {
-        if let index = objects.index( where: { $0.id == id } ) {
+        if let index = objects.index(where: { $0.id == id }) {
             return objects[index]
         }
         return nil
@@ -1876,7 +1876,7 @@ public class SKImageLayer: TiledLayerObject {
 internal class BackgroundLayer: TiledLayerObject {
 
     private var sprite: SKSpriteNode!
-    private var _debugColor: SKColor? = nil
+    private var _debugColor: SKColor?
 
     override var color: SKColor {
         didSet {
@@ -1906,7 +1906,7 @@ internal class BackgroundLayer: TiledLayerObject {
         addChild(self.sprite!)
 
         log("background size: \(sprite.size.shortDescription)", level: .debug)
-        
+
         // position sprite
         sprite!.position.x += tilemap.sizeInPoints.width / 2
         sprite!.position.y -= tilemap.sizeInPoints.height / 2
@@ -1963,19 +1963,19 @@ public class SKGroupLayer: TiledLayerObject {
 
     /// Returns the last index for all layers.
     public var lastIndex: Int {
-        return layers.count > 0 ? layers.map { $0.index }.max()! : self.index
+        return layers.isEmpty == false ? layers.map { $0.index }.max()! : self.index
     }
 
     /// Returns the last (highest) z-position in the map.
     public var lastZPosition: CGFloat {
-        return layers.count > 0 ? layers.map {$0.zPosition}.max()! : 0
+        return layers.isEmpty == false ? layers.map {$0.zPosition}.max()! : 0
     }
 
     /// Returns a flattened array of child layers.
     override public var layers: [TiledLayerObject] {
         var result: [TiledLayerObject] = [self]
         for layer in _layers.sorted(by: { $0.index > $1.index }) {
-            result = result + layer.layers
+            result += layer.layers
         }
         return result
     }
@@ -2038,9 +2038,9 @@ public class SKGroupLayer: TiledLayerObject {
      - returns: `(success: Bool, layer: TiledLayerObject)` add was successful, layer added.
      */
     public func addLayer(_ layer: TiledLayerObject, clamped: Bool = true) -> (success: Bool, layer: TiledLayerObject) {
-        
+
         // get the next z-position from the tilemap.
-        let nextZPosition = (_layers.count > 0) ? (tilemap.zDeltaForLayers / 2) * CGFloat(_layers.count) : 0
+        let nextZPosition = (_layers.isEmpty == false) ? (tilemap.zDeltaForLayers / 2) * CGFloat(_layers.count) : 0
 
         // set the layer index
         layer.index = lastIndex + 1
@@ -2049,13 +2049,13 @@ public class SKGroupLayer: TiledLayerObject {
         if (success == false) {
             Logger.default.log("could not add layer: \"\(inserted.layerName)\"", level: .error)
         }
-        
-        
+
+
         // layer offset
         layer.position.x += layer.offset.x
         layer.position.y -= layer.offset.y
-        
-        
+
+
         addChild(layer)
         layer.zPosition = nextZPosition
 
@@ -2108,7 +2108,7 @@ internal struct Array2D<T> {
 
     func contains<T : Equatable>(_ obj: T) -> Bool {
         let filtered = self.array.filter {$0 as? T == obj}
-        return filtered.count > 0
+        return filtered.isEmpty == false
     }
 }
 
@@ -2239,7 +2239,7 @@ extension TiledLayerObject {
         var current = self as SKNode
         var result: [SKNode] = [current]
         while current.parent != nil {
-            if let _ = current.parent! as? TiledLayerObject {
+            if (current.parent! as? TiledLayerObject != nil) {
                 result.append(current.parent!)
             }
             current = current.parent!
@@ -2250,8 +2250,7 @@ extension TiledLayerObject {
     /// Returns an array of child layers.
     public var childLayers: [SKNode] {
         var result: [SKNode] = []
-        enumerateChildNodes(withName: "*") {
-            node, stop in
+        enumerateChildNodes(withName: "*") { node, _ in
 
             if let node = node as? TiledLayerObject {
                 result.append(node)
@@ -2267,8 +2266,7 @@ extension TiledLayerObject {
      */
     public func renderableObjects() -> [SKNode] {
         var result: [SKNode] = []
-        enumerateChildNodes(withName: "*") {
-            node, stop in
+        enumerateChildNodes(withName: "*") { node, _ in
             if (node as? SKTile != nil) || (node as? SKTileObject != nil) {
                 result.append(node)
             }
@@ -2305,7 +2303,7 @@ extension TiledLayerObject {
 
         let indexString = (isGrouped == true) ? String(repeating: " ", count: digitCount) : "\(index).".zfill(length: digitCount, pattern: " ")
         let typeString = self.layerType.stringValue.capitalized.zfill(length: 6, pattern: " ", padLeft: false)
-        let hasChildren: Bool = (childLayers.count > 0)
+        let hasChildren: Bool = (childLayers.isEmpty == false)
 
         let layerSymbol = (hasChildren == true) ? "▿" : "-"
         let filler = (isGrouped == true) ? String(repeating: "  ", count: parentNodes.count - 1) : ""
@@ -2318,9 +2316,9 @@ extension TiledLayerObject {
         if (self.position.x == 0) && (self.position.y == 0) {
             positionString = ""
         }
-        
+
         let graphStat = (renderStatistics.gn != nil) ? "\(renderStatistics.gn!)" : ""
-        
+
         return [indexString, typeString, layerVisibilityString, layerPathString, positionString,
                 self.sizeInPoints.shortDescription, self.offset.shortDescription,
                 self.anchorPoint.shortDescription, "\(Int(self.zPosition))", self.opacity.roundTo(2), graphStat]
@@ -2438,7 +2436,7 @@ extension SKObjectGroup {
      */
     @available(*, deprecated, message: "use `getObjects(named:,recursive:)` instead")
     public func getObject(named: String) -> SKTileObject? {
-        if let objIndex = objects.index( where: { $0.name == named } ) {
+        if let objIndex = objects.index(where: { $0.name == named }) {
             let object = objects[objIndex]
             return object
         }
