@@ -15,7 +15,7 @@ import Cocoa
 #endif
 
 
-public class DemoController: NSObject {
+public class DemoController: NSObject, Loggable {
     
     private let fm = FileManager.default
     static let `default` = DemoController()
@@ -59,19 +59,18 @@ public class DemoController: NSObject {
     override public init() {
         super.init()
         
+        Logger.default.loggingLevel = loggingLevel
+
         // scan for resources
         if let rpath = Bundle.main.resourceURL {
             self.addRoot(url: rpath)
         }
         
-        scanForResourceTypes()
-        listBundledResources()
         
         if tilemaps.count > 0 {
             demourls = tilemaps
             currentURL = demourls.first
         }
-        
         
         //set up notification for scene to load the next file
         NotificationCenter.default.addObserver(self, selector: #selector(reloadScene), name: NSNotification.Name(rawValue: "reloadScene"), object: nil)
@@ -92,7 +91,6 @@ public class DemoController: NSObject {
      */
     public func addRoot(url: URL) {
         if !roots.contains(url) {
-            print("[DemoController]: adding root:  \"\(url.path)\"")
             roots.append(url)
             scanForResourceTypes()
         }
@@ -111,7 +109,6 @@ public class DemoController: NSObject {
      */
     private func scanForResourceTypes() {
         var resourcesAdded = 0
-        
         for root in roots {
             let urls = fm.listFiles(path: root.path, withExtensions: resourceTypes, loggingLevel: loggingLevel)
             resources.append(contentsOf: urls)
@@ -119,7 +116,8 @@ public class DemoController: NSObject {
         }
         
         let statusMsg = (resourcesAdded > 0) ? "\(resourcesAdded) resources added." : "WARNING: no resources found."
-        print("[DemoController]: \(statusMsg)")
+        let statusLevel = (resourcesAdded > 0) ? LoggingLevel.debug : LoggingLevel.warning
+        log(statusMsg, level: statusLevel)
     }
     
     // MARK: - Scene Management
@@ -156,7 +154,7 @@ public class DemoController: NSObject {
     public func loadPreviousScene(_ interval: TimeInterval=0) {
         guard let currentURL = currentURL else { return }
         var nextFilename = demourls.last!
-        if let index = demourls.index(of:currentURL), index > 0, index - 1 < demourls.count {
+        if let index = demourls.index(of: currentURL), index > 0, index - 1 < demourls.count {
             nextFilename = demourls[index - 1]
         }
         loadScene(url: nextFilename, usePreviousCamera: false, interval: interval)
@@ -170,7 +168,7 @@ public class DemoController: NSObject {
      */
     internal func loadScene(url: URL, usePreviousCamera: Bool, interval: TimeInterval=0) {
         guard let view = self.view else {
-            print("[DemoController]: ❗️ERROR: view is not set.")
+            log("view is not set.", level: .error)
             return
         }
         
@@ -225,11 +223,10 @@ public class DemoController: NSObject {
                 nextScene.cameraNode?.showOverlay = showOverlay
                 nextScene.cameraNode?.position = cameraPosition
                 nextScene.cameraNode?.setCameraZoom(cameraZoom, interval: interval)
-                //nextScene.cameraNode.fitToView(newSize: view.bounds.size, transition: interval)
             }
             
             guard let tilemap = nextScene.tilemap else {
-                print("[DemoController]: WARNING: tilemap not loaded.")
+                self.log("tilemap not loaded.", level: .warning)
                 return
             }
             
@@ -238,6 +235,11 @@ public class DemoController: NSObject {
             let sceneInfo = ["hasGraphs": nextScene.graphs.count > 0, "hasObjects": nextScene.tilemap.getObjects().count > 0]
             NotificationCenter.default.post(name: Notification.Name(rawValue: "updateUIControls"), object: nil, userInfo: sceneInfo)
             nextScene.setupDemoLevel(fileNamed: url.relativePath)
+            
+            if (hasCurrent == false) {
+                self.log("auto-resizing the view.", level: .debug)
+                nextScene.cameraNode.fitToView(newSize: view.bounds.size)
+            }
             
         }
     }
@@ -264,7 +266,7 @@ public class DemoController: NSObject {
             let scene = view.scene as? SKTiledScene else { return }
         
         if let tilemap = scene.tilemap {
-            tilemap.defaultLayer.debugDrawOptions = (tilemap.defaultLayer.debugDrawOptions != []) ? [] : .grid
+            tilemap.debugDrawOptions = (tilemap.debugDrawOptions.contains(.grid)) ? tilemap.debugDrawOptions.subtracting(.grid) : tilemap.debugDrawOptions.insert(.grid).memberAfterInsert
         }
     }
     
@@ -278,7 +280,7 @@ public class DemoController: NSObject {
         if let tilemap = scene.tilemap {
             for tileLayer in tilemap.tileLayers() {
                 if tileLayer.graph != nil {
-                    tileLayer.debugDrawOptions = (tileLayer.debugDrawOptions != []) ? [] : [.graph]
+                    tileLayer.debugDrawOptions = (tileLayer.debugDrawOptions.contains(.graph)) ? tileLayer.debugDrawOptions.subtracting(.graph) : tileLayer.debugDrawOptions.insert(.graph).memberAfterInsert
                 }
             }
         }
@@ -292,23 +294,19 @@ public class DemoController: NSObject {
             let scene = view.scene as? SKTiledScene else { return }
         
         if let tilemap = scene.tilemap {
-            tilemap.showObjects = !tilemap.showObjects
+            tilemap.debugDrawOptions = (tilemap.debugDrawOptions.contains(.drawObjectBounds)) ? tilemap.debugDrawOptions.subtracting(.drawObjectBounds) : tilemap.debugDrawOptions.insert(.drawObjectBounds).memberAfterInsert
         }
     }
     
-    // MARK: - Experimental
-    // TODO: experimental
-    public func listBundledResources() {
-        let bundleURL = Bundle.main.bundleURL  // SKTiledDemo.app
-        let assetname = "pm-maze-8x8"
-        print(" ❊ Querying asset: ")
+    /**
+     Dump the map statistics to the console.
+     */
+    public func printMapStatistics() {
+        guard let view = self.view,
+            let scene = view.scene as? SKTiledScene else { return }
         
-        if let asset = NSDataAsset(name: assetname) {
-            print("   ➜ found asset \"\(assetname)\"")
-            let texture = SKTexture(data: asset.data, size: .zero)
-            print("    ↳ created texture: \"\(assetname)\"")
-            print(texture)
-            
+        if let tilemap = scene.tilemap {
+            tilemap.mapStatistics()
         }
     }
 }
@@ -324,10 +322,6 @@ extension FileManager {
             let url = URL(fileURLWithPath: s, relativeTo: baseurl)
             
             if withExtensions.contains(url.pathExtension.lowercased()) || (withExtensions.count == 0) {
-                
-                if loggingLevel.rawValue < 1 {
-                    print("[FileManager]: adding resource: \"\(url.relativePath)\"")
-                }
                 urls.append(url)
             }
         })

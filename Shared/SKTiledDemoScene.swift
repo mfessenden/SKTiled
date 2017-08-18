@@ -42,7 +42,6 @@ public class SKTiledDemoScene: SKTiledScene {
                 if let tile = node as? TileShape {
                     if (tile.coord != self.coordinate) {
                         if self.tileshapes.contains(tile) {
-                            print("tile is in tileshapes")
                         }
                     }
                 }
@@ -158,8 +157,7 @@ public class SKTiledDemoScene: SKTiledScene {
     
     func setupDemoLevel(fileNamed: String) {
         guard let tilemap = tilemap else { return }
-        
-        print("[SKTiledDemoScene]: DEBUG: setting up \"\(fileNamed)\"")
+    
         
         switch fileNamed {
         case "pacman-8x8.tmx":
@@ -167,7 +165,7 @@ public class SKTiledDemoScene: SKTiledScene {
         case "tetris-dynamics.tmx":
             setupTetris()
         default:
-            print("setting up default")
+            return
         }
     }
     
@@ -175,7 +173,7 @@ public class SKTiledDemoScene: SKTiledScene {
         
         
         guard let graphLayer = tilemap.tileLayers(named: "Graph").first else {
-            print("[SKTiledDemoScene]: ERROR: layer \"Graph\" does not exist.")
+            log("layer \"Graph\" does not exist.", level: .error)
             return
         }
         
@@ -187,7 +185,6 @@ public class SKTiledDemoScene: SKTiledScene {
                     for id in ids {
                         if let tiledata = tileset.getTileData(localID: id) {
                             tiledata.walkable = true
-                            print(" ➜ walkable: \(tiledata), weight: \(tiledata.weight)")
                         }
                     }
                 }
@@ -199,7 +196,7 @@ public class SKTiledDemoScene: SKTiledScene {
         
 
         if (walkable.count > 0) {
-            print("[SKTiledDemoScene]: DEBUG: \"\(graphLayer.layerName)\": walkable: \(walkable.count)")
+            log("\"\(graphLayer.layerName)\": walkable: \(walkable.count)", level: .debug)
             if let _ = graphLayer.initializeGraph(walkable: walkable, obstacles: [], diagonalsAllowed: false) {}
         }
     }
@@ -209,7 +206,6 @@ public class SKTiledDemoScene: SKTiledScene {
         let fields = tilemap.getObjects(ofType: "Field")
         
         for lightObj in lights {
-            print("[SKTiledDemoScene]: adding light...")
             let light = SKLightNode()
             addChild(light)
             light.position = convert(lightObj.position, from: lightObj)
@@ -221,7 +217,6 @@ public class SKTiledDemoScene: SKTiledScene {
         }
         
         for fieldObj in fields {
-            print("[SKTiledDemoScene]: adding field...")
             let field = SKFieldNode()
             field.categoryBitMask = 1
             field.strength = 50
@@ -302,7 +297,6 @@ public class SKTiledDemoScene: SKTiledScene {
      */
     public func updateHud(_ map: SKTilemap?){
         guard let map = map else { return }
-        print("[SKTiledDemoScene]: DEBUG: rendering HUD")
         updateMapInfo(msg: map.description)
         NotificationCenter.default.post(name: Notification.Name(rawValue: "updateWindowTitle"), object: nil, userInfo: ["wintitle": map.url.lastPathComponent])
     }
@@ -330,15 +324,13 @@ public class SKTiledDemoScene: SKTiledScene {
     
     // MARK: - Callbacks
     override open func didReadMap(_ tilemap: SKTilemap) {
-        if loggingLevel.rawValue == 4 { print(" 🔹 `SKTiledScene.didReadMap`: \"\(tilemap.mapName)\"") }
+        log("map read: \"\(tilemap.mapName)\"", level: .debug)
         self.physicsWorld.speed = 1
     }
     
     override open func didRenderMap(_ tilemap: SKTilemap) {
         // update the HUD to reflect the number of tiles created
-        print("[SKTiledDemoScene]: DEBUG: about to render HUD")
         updateHud(tilemap)
-        //tilemap.mapStatistics()
     }
     
     override open func didAddPathfindingGraph(_ graph: GKGridGraph<GKGridGraphNode>) {
@@ -483,10 +475,12 @@ extension SKTiledDemoScene {
     
     override open func mouseMoved(with event: NSEvent) {
         super.mouseMoved(with: event)
+        
         guard let tilemap = tilemap else { return }
         
         if let view = view {
             let viewSize = view.bounds.size
+
             
             let positionInWindow = event.locationInWindow
             let xpos = positionInWindow.x
@@ -538,26 +532,24 @@ extension SKTiledDemoScene {
     override open func mouseDragged(with event: NSEvent) {
         guard let cameraNode = cameraNode else { return }
         cameraNode.scenePositionChanged(event)
+        //log("mouse dragged...", level: .info)
     }
     
     override open func mouseUp(with event: NSEvent) {
         guard let cameraNode = cameraNode else { return }
         cameraNode.mouseUp(with: event)
         selected = []
+        //log("mouse up...", level: .info)
     }
     
     override open func scrollWheel(with event: NSEvent) {
         guard let cameraNode = cameraNode else { return }
         cameraNode.scrollWheel(with: event)
+        //log("scroll wheel...", level: .info)
     }
     
     override open func keyDown(with event: NSEvent) {
         self.keyboardEvent(eventKey: event.keyCode)
-    }
-    
-    override open func cursorUpdate(with event: NSEvent) {
-        let scenePosition = event.location(in: self)
-        print("cursor: \(scenePosition.shortDescription)")
     }
 
     /**
@@ -567,7 +559,7 @@ extension SKTiledDemoScene {
     */
     open func updateTrackingViews(){
         if let view = self.view {
-            let options: NSTrackingAreaOptions = [.activeInActiveApp, .mouseEnteredAndExited, .mouseMoved, .cursorUpdate] //[.mouseMoved, .activeAlways, .cursorUpdate]
+            let options: NSTrackingAreaOptions = [.mouseMoved, .activeInKeyWindow , .cursorUpdate]  // .activeAlways
             // clear out old tracking areas
             for oldTrackingArea in view.trackingAreas {
                 view.removeTrackingArea(oldTrackingArea)
@@ -576,290 +568,13 @@ extension SKTiledDemoScene {
             let trackingArea = NSTrackingArea(rect: view.frame, options: options, owner: self, userInfo: nil)
             view.addTrackingArea(trackingArea)
             
-            
             if let cameraNode = cameraNode {
                 updateCameraInfo(msg: cameraNode.description)
             }
         }
     }
-    
-    /**
-     Run demo keyboard events (macOS).
-     
-     - parameter eventKey: `UInt16` event key.
-     
-     */
-    public func keyboardEvent(eventKey: UInt16) {
-        guard let view = view,
-            let cameraNode = cameraNode,
-            let tilemap = tilemap,
-            let worldNode = worldNode else {
-                return
-        }
-        
-        // 'a' or 'f' fits the map to the current view
-        if eventKey == 0x0 || eventKey == 0x3 {
-            cameraNode.fitToView(newSize: view.bounds.size)
-        }
-        
-        // 'd' shows/hides debug view
-        if eventKey == 0x02 {
-            tilemap.layers.forEach { layer in
-                print("layer: \(layer.path)")
-            }
-        }
-        
-        // 'h' shows/hides the HUD
-        if eventKey == 0x04 {
-            if let view = self.view {
-                let debugState = !view.showsFPS
-                view.showsFPS = debugState
-                view.showsNodeCount = debugState
-                view.showsDrawCount = debugState
-                view.showsPhysics = debugState
-                view.showsFields = debugState
-            }
-        }
-        
-        
-        // 'j' fades the layers in succession
-        if eventKey == 0x26 {
-            var fadeTime: TimeInterval = 3
-            let additionalTime: TimeInterval = (tilemap.layerCount > 6) ? 1.25 : 2.25
-            for layer in tilemap.getContentLayers() {
-                let fadeAction = SKAction.fadeAfter(wait: fadeTime, alpha: 0)
-                layer.run(fadeAction, completion: {
-                    print("layer: \"\(layer.layerName)\"")
-                })
-                fadeTime += additionalTime
-            }
-        }
-        
-        // 'k' updates the render quality
-        if eventKey == 0x28 {
-            if tilemap.renderQuality < 16 {
-                tilemap.renderQuality *= 2
-            }
-        }
-        
-        // 'l' toggles object & tile bounds drawing
-        if eventKey == 0x25 {
-            // if objects are shown...
-            tilemap.debugDrawOptions = (tilemap.debugDrawOptions != []) ? [] : .objects
-            print(tilemap.debugDrawOptions)
-        }
-        
-        // 'm' just shows the map bounds
-        if eventKey == 0x2e {
-            // if objects are shown...
-            tilemap.defaultLayer.debugDrawOptions = (tilemap.defaultLayer.debugDrawOptions != []) ? [] : .drawBounds
-            print(tilemap.debugDrawOptions)
-        }
-        
-        // 'o' shows/hides object layers
-        if eventKey == 0x1f {
-            tilemap.showObjects = !tilemap.showObjects
-        }
-        
-        // 'p' pauses the scene
-        if eventKey == 0x23 {
-            self.isPaused = !self.isPaused
-        }
-        
-        // '←' advances to the next scene
-        if eventKey == 0x7B {
-            self.loadPreviousScene()
-        }
-        
-        // '1' zooms to 100%
-        if eventKey == 0x12 || eventKey == 0x53 {
-            cameraNode.resetCamera()
-        }
-        
-        // 'clear' clears TileShapes
-        if eventKey == 0x47 {
-            self.enumerateChildNodes(withName: "*") {   // was //*
-                node, stop in
-                
-                if let tile = node as? TileShape {
-                    tile.removeFromParent()
-                }
-            }
-        }
-        
-        // MARK: - DEBUGGING TESTS
-        // TODO: get rid of these in master       
-
-        // 'g' shows the grid for the map default layer.
-        if eventKey == 0x5 {
-            tilemap.defaultLayer.debugDrawOptions = (tilemap.defaultLayer.debugDrawOptions != []) ? [] : .grid
-        }
-        
-        // 'i' shows the center point of each tile
-        if eventKey == 0x22 {
-            var fadeTime: TimeInterval = 3
-            let shapeRadius = (tilemap.tileHeightHalf / 4) - 0.5
-            for x in 0..<Int(tilemap.size.width) {
-                for y in 0..<Int(tilemap.size.height) {
-                    
-                    let shape = SKShapeNode(circleOfRadius: shapeRadius)
-                    shape.alpha = 0.7
-                    shape.fillColor = SKColor(hexString: "#FD4444")
-                    shape.strokeColor = .clear
-                    worldNode.addChild(shape)
-                    
-                    let shapePos = tilemap.defaultLayer.pointForCoordinate(x, y)
-                    shape.position = worldNode.convert(shapePos, from: tilemap.defaultLayer)
-                    shape.zPosition = tilemap.lastZPosition + tilemap.zDeltaForLayers
-                    
-                    let fadeAction = SKAction.fadeAfter(wait: fadeTime, alpha: 0)
-                    shape.run(fadeAction, completion: {
-                        shape.removeFromParent()
-                    })
-                    fadeTime += 0.003
-                    
-                }
-                fadeTime += 0.02
-            }
-        }
-        
-        // 'n' changes the background color
-        if eventKey == 0x2d {
-            self.writeMapToFiles()
-        }
-        
-        // 'q' tries to show all object bounds
-        if eventKey == 0xc {
-            worldNode.childNode(withName: "ROOT")?.removeFromParent()
-            
-            let root = SKNode()
-            root.name = "ROOT"
-            
-            let renderQuality: CGFloat = 16
-
-            enumerateChildNodes(withName: "//*") {  // was //*
-                node, stop in
-
-                
-                if let shape = node as? SKTileObject {
-                    
-                    if let vertices = shape.getVertices() {
-                        
-                        let flippedVertices = (shape.gid == nil) ? vertices.map { $0.invertedY } : vertices
-                        let worldVertices = flippedVertices.map { self.worldNode.convert($0, from: shape) }
-                        
-                        let scaledVertices = worldVertices.map { $0 * renderQuality }
-                        
-                        
-                        let translatedPath = polygonPath(scaledVertices)
-                        let bounds = SKShapeNode(path: translatedPath)
-
-                        
-                        // draw the path
-                        bounds.isAntialiased = true
-                        bounds.lineCap = .round
-                        bounds.lineJoin = .miter
-                        bounds.miterLimit = 0
-                        bounds.lineWidth = 1 * (renderQuality / 2)
-
-                        bounds.fillColor = .clear
-                        bounds.strokeColor = .green
-                        root.addChild(bounds)
-                        bounds.setScale(1 / renderQuality)
-                    }
-                }
-            }
-            
-            
-            worldNode.addChild(root)
-        }
-        
-        
-        // 'r' reloads the scene
-        if eventKey == 0xf {
-            self.reloadScene()
-        }
-        
-        // 's' draws the tilemap bounds
-        if eventKey == 0x1 {
-            print("➜ drawing map bounds: \(tilemap.frame.shortDescription)")
-            tilemap.drawBounds()
-        }
-        
-        // 't' runs a custom command
-        if eventKey == 0x11 {
-            print(" ○ clearing tile textures...")
-            tilemap.tileLayers().filter( { $0.graph != nil } ).forEach { $0.getTiles().forEach { $0.texture = nil }}
-        }
-        
-        // 'u' runs a custom command
-        if eventKey == 0x20 {
-            print(" ○ updating tile textures...")
-            tilemap.tileLayers().filter( { $0.graph != nil } ).forEach { $0.getTiles().forEach { $0.update() }}
-        }
-        
-        // 'v' runs a custom test
-        if eventKey == 0x9 {
-            view.showsPhysics = !view.showsPhysics
-        }
-        
-        // 'w' toggles debug layer visibility
-        if eventKey == 0xd {
-            tilemap.getLayers(ofType: "DEBUG").forEach{ $0.isHidden = !$0.isHidden }
-        }
-        
-        
-        // 'x' flattens layers
-        if eventKey == 0x7 {
-            tilemap.tileLayers().forEach( {
-                $0.flattenLayer(view: view)
-            })
-        }
-        
-        
-        // 'y' runs a custom test
-        if eventKey == 0x10 {
-            tilemap.getLayers(ofType: "DEBUG").forEach{ $0.isHidden = !$0.isHidden }
-        }
-        
-        // 'z' is a custom test
-        if eventKey == 0x06 {
-            guard let graphLayer = tilemap.tileLayers(named: "Graph").first else {
-                print("[SKTiledDemoScene]: WARNNG:  map does not have a graph layer.")
-                return 
-            }
-
-            var walkable: [SKTile] = []
-            for tile in graphLayer.getTiles() {
-                if tile.tileData.walkable == true {
-                    walkable.append(tile)
-                }
-            }
-                
-            graphLayer.initializeGraph(walkable: walkable, obstacles: [], diagonalsAllowed: false, nodeClass: SKTiledGraphNode.self)
-        }
-        
-        // '↑' clamps layer positions
-        if eventKey == 0x7e {
-            let scaleFactor =  SKTiledContentScaleFactor
-            var nodesUpdated = 0
-            tilemap.enumerateChildNodes(withName: "*") {
-                node, stop in
-                
-                
-                let className = String(describing: type(of: node))
-                
-                let oldPos = node.position
-                node.position = clampedPosition(point: node.position, scale: scaleFactor)
-                print("- \(className): \(node.position), \(oldPos)")
-                nodesUpdated += 1
-            }
-            
-            
-            print("[SKTiledDemoScene]: \(nodesUpdated) nodes updated.")
-        }
-    }
 }
+    
 #endif
 
 // TODO: look at `NSTrackingCursorUpdate`
@@ -912,8 +627,6 @@ internal class MouseTracker: SKNode {
             
             label.position.x = ox * 1.5
             label.position.y = oy
-            
-            //print("offset: \(label.position.roundTo())")
         }
     }
     

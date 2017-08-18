@@ -125,6 +125,8 @@
 		4C7AD3101F1E3D7500474722 /* graphtest-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7AD30E1F1E3D7500474722 /* graphtest-8x8.png */; };
 		4C7AD3131F1E3D9400474722 /* graphtest-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6A1E1B1DAC19B1001F2E92 /* graphtest-8x8.tsx */; };
 		4C7AD3141F1E3D9500474722 /* graphtest-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6A1E1B1DAC19B1001F2E92 /* graphtest-8x8.tsx */; };
+		4C82FCC61F46254C00A61B84 /* Demo+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C82FCC51F46254C00A61B84 /* Demo+Debugging.swift */; };
+		4C82FCC71F46254C00A61B84 /* Demo+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C82FCC51F46254C00A61B84 /* Demo+Debugging.swift */; };
 		4C88E1AD1D8A242F00FCCFA3 /* ortho4-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */; };
 		4C88E1DE1D8A4EBE00FCCFA3 /* SKTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D01D8A4EBE00FCCFA3 /* SKTile.swift */; };
 		4C88E1E01D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D21D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift */; };
@@ -248,6 +250,7 @@
 		4C6FB8A41F1E5D2800A57964 /* pacman-8x8.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "pacman-8x8.tmx"; sourceTree = "<group>"; };
 		4C6FB8A51F1E5D2800A57964 /* pm-maze-8x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "pm-maze-8x8.tsx"; sourceTree = "<group>"; };
 		4C7AD30E1F1E3D7500474722 /* graphtest-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "graphtest-8x8.png"; sourceTree = "<group>"; };
+		4C82FCC51F46254C00A61B84 /* Demo+Debugging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Demo+Debugging.swift"; sourceTree = "<group>"; };
 		4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ortho4-16x16.png"; sourceTree = "<group>"; };
 		4C88E1D01D8A4EBE00FCCFA3 /* SKTile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTile.swift; sourceTree = "<group>"; };
 		4C88E1D21D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTiledSceneCamera.swift; sourceTree = "<group>"; };
@@ -353,6 +356,7 @@
 		4C440B971DAE911000DEC9A4 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				4C82FCC51F46254C00A61B84 /* Demo+Debugging.swift */,
 				4C4184A41F34B51D004E392A /* DemoController.swift */,
 				4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */,
 				4C440B981DAE911000DEC9A4 /* Assets.xcassets */,
@@ -993,6 +997,7 @@
 				4C440BA01DAE911000DEC9A4 /* SKTiledDemoScene.swift in Sources */,
 				4C1774B71D9099A3000C0AFD /* SKTileObject.swift in Sources */,
 				4C1774B11D9099A3000C0AFD /* SKTile.swift in Sources */,
+				4C82FCC61F46254C00A61B84 /* Demo+Debugging.swift in Sources */,
 				4C440BA71DAE913000DEC9A4 /* AppDelegate.swift in Sources */,
 				4C4184A51F34B51D004E392A /* DemoController.swift in Sources */,
 				4C1774B81D9099A3000C0AFD /* SKTileset.swift in Sources */,
@@ -1072,6 +1077,7 @@
 				4C88E1E01D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift in Sources */,
 				4C88E1E61D8A4EBE00FCCFA3 /* SKTilemapParser.swift in Sources */,
 				4CBB6A9F1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift in Sources */,
+				4C82FCC71F46254C00A61B84 /* Demo+Debugging.swift in Sources */,
 				4C88E1E51D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift in Sources */,
 				4C440BB61DAE913A00DEC9A4 /* GameViewController.swift in Sources */,
 				4C88E1E21D8A4EBE00FCCFA3 /* SKTileLayer.swift in Sources */,

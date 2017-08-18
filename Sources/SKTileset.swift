@@ -269,11 +269,9 @@ public class SKTileset: SKTiledObject {
 
         // time results
         if (replace == false) {
-
             let timeStamp = String(format: "%.\(String(3))f", tilesetBuildTime)
-            if loggingLevel.rawValue <= 1 {
-                //print(" → tileset \"\(name)\" built in: \(timeStamp)s (\(tilesAdded) tiles)\n")
-            }
+            Logger.default.cache(LogEvent("tileset \"\(name)\" built in: \(timeStamp)s (\(tilesAdded) tiles)", level: .debug, caller: self.logSymbol))
+            
         }
 
         return tilesetBuildTime
@@ -290,7 +288,7 @@ public class SKTileset: SKTiledObject {
      */
     public func addTilesetTile(_ tileID: Int, texture: SKTexture) -> SKTilesetData? {
         guard !(self.tileData.contains( where: { $0.hashValue == tileID.hashValue } )) else {
-            print("[SKTileset]: tile data exists at id: \(tileID)")
+            log("tile data exists at id: \(tileID)", level: .error)
             return nil
         }
 
@@ -311,7 +309,7 @@ public class SKTileset: SKTiledObject {
      */
     public func addTilesetTile(_ tileID: Int, source: String) -> SKTilesetData? {
         guard !(self.tileData.contains( where: { $0.hashValue == tileID.hashValue } )) else {
-            print("[SKTileset]: tile data exists at id: \(tileID)")
+            log("tile data exists at id: \(tileID)", level: .error)
             return nil
         }
 
@@ -339,7 +337,7 @@ public class SKTileset: SKTiledObject {
     public func setDataTexture(_ id: Int, texture: SKTexture) {
         guard let data = getTileData(localID: id) else {
             if loggingLevel.rawValue <= 1 {
-                print("[SKTileset]: tile data not found for id: \(id)")
+                log("tile data not found for id: \(id)", level: .error)
             }
             return
         }
@@ -468,9 +466,9 @@ public class SKTileset: SKTiledObject {
      Print out tileset data values.
      */
     internal func debugTileset(){
-        print("# Tileset: \"\(name)\":")
+        log("# Tileset: \"\(name)\":", level: .debug)
         for data in tileData.sorted(by: {$0.id < $1.id}) {
-            print("data:  \(data)")
+            log("data:  \(data)", level: .debug)
         }
     }
 }

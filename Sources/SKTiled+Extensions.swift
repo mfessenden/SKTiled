@@ -34,7 +34,6 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
     let context = UIGraphicsGetCurrentContext()
     context!.interpolationQuality = .high
     let bounds = CGRect(origin: CGPoint.zero, size: size)
-    //print("  -> size: \(size.shortDescription), bounds: \(bounds.size.shortDescription), ui scale: \(scale.roundTo())")
     whatToDraw(context!, bounds, scale)
     let result = UIGraphicsGetImageFromCurrentImageContext()
     return result!.cgImage!
@@ -55,7 +54,7 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
     let image = NSImage(size: scaledSize)
     image.lockFocus()
     let nsContext = NSGraphicsContext.current()!
-    nsContext.imageInterpolation = .high
+    nsContext.imageInterpolation = .medium
     let context = nsContext.cgContext
     let bounds = CGRect(origin: CGPoint.zero, size: size)
     whatToDraw(context, bounds, 1)
@@ -118,6 +117,25 @@ public func replaceColor(texture: SKTexture, color: SKColor) -> SKTexture? {
 
     return nil
 }
+
+#if os(macOS)
+/**
+ Output tilemap layers to images.
+ 
+ - parameter tilemap:       `SKTilemap` map to write images from.
+ - parameter url:           `URL` directory path to write to.
+ */
+public func writeMapToFiles(tilemap: SKTilemap, url: URL) {
+    var tileLayers: [TiledLayerObject] = tilemap.tileLayers().sorted(by: { $0.realIndex < $1.realIndex }) as [TiledLayerObject]
+    tileLayers.insert(tilemap.defaultLayer as TiledLayerObject, at: 0)    
+    for layer in tileLayers {
+        if let layerTexture = layer.render() {
+            let layerIndex = tilemap.layers.index(where: { $0 === layer })!
+            let _ = writeToFile(layerTexture.cgImage(), url: url.appendingPathComponent("\(String(format: "%02d", layerIndex))-\(layer.layerName).png"))
+        }
+    }
+}
+#endif
 
 
 /**
@@ -511,22 +529,6 @@ internal extension SKNode {
             run(compositeAction, withKey: withKey)
         } else {
             run(action, withKey: withKey)
-        }
-    }
-
-    internal var drawAnchor: Bool {
-        get {
-            return childNode(withName: "DRAW_ANCHOR") != nil
-        } set {
-            // remove the current node
-            childNode(withName: "DRAW_ANCHOR")?.removeFromParent()
-            if (newValue == true) {
-                let anchor = SKShapeNode(circleOfRadius: 0.75)
-                anchor.name = "DRAW_ANCHOR"
-                anchor.strokeColor = .clear
-                anchor.zPosition = zPosition * 4
-                addChild(anchor)
-            }
         }
     }
 }
@@ -1250,9 +1252,8 @@ internal func drawLayerGrid(_ layer: TiledLayerObject, imageScale: CGFloat=8, li
         // line width should be at least 1 for larger tile sizes
         let lineWidth: CGFloat = defaultLineWidth
         context.setLineWidth(lineWidth)
-        //context.setLineDash(phase: 0.5, lengths: [0.5, 1.0])
         context.setShouldAntialias(true)  // layer.antialiased
-                
+        
         for col in 0 ..< Int(size.width) {
             for row in (0 ..< Int(size.height)) {
                 
@@ -1442,6 +1443,48 @@ internal func drawLayerGraph(_ layer: TiledLayerObject, imageScale: CGFloat=8, l
         }
     }
 }
+
+
+// MARK: - File System
+
+/**
+ Create a temporary directory.
+ */
+public func createTempDirectory(named: String) -> URL? {
+    let directory = NSTemporaryDirectory()
+    guard let url = NSURL.fileURL(withPathComponents: [directory, named]) else {
+        Logger.default.log("Unable get temp directory: \(named)", level: .warning)
+        return nil
+    }
+    
+    do {
+        try FileManager.default.createDirectory(atPath: url.path, withIntermediateDirectories: true, attributes: nil)
+        Logger.default.log("Creating directory: \(url.path)", level: .info)
+        return url
+    } catch let error as NSError {
+        Logger.default.log("Unable to create directory \(error.debugDescription)", level: .error)
+    }
+    return nil
+}
+
+#if os(macOS)
+/**
+ Write the given image to PNG file.
+ */
+public func writeToFile(_ image: CGImage, url: URL) -> Data {
+    let bitmapRep: NSBitmapImageRep = NSBitmapImageRep(cgImage: image)
+    let properties = Dictionary<String, AnyObject>()
+    let data: Data = bitmapRep.representation(using: NSBitmapImageFileType.PNG, properties: properties)!
+    if !((try? data.write(to: URL(fileURLWithPath: url.path), options: [])) != nil) {
+        NSLog("Error: write to file failed")
+        Logger.default.log("Cannot write to file.", level: .error)
+    }
+    
+    Logger.default.log("writing image: \(url.path)", level: .info)
+    return data
+}
+#endif
+
 
 
 // MARK: - Polygon Drawing
@@ -1937,43 +1980,4 @@ public extension Data {
 
 private let CHUNK_SIZE: Int = 2 ^ 14
 private let STREAM_SIZE: Int32 = Int32(MemoryLayout<z_stream>.size)
-
-
-
-
-
-
-
-
-// TODO: Remove these in master
-
-public func getDesktopDirectory() -> URL {
-    let urls = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask)
-    return urls[0]
-}
-
-
-public func getHomeDirectory() -> URL {
-    let urls = FileManager.default.urls(for: .userDirectory, in: .userDomainMask)
-    return urls[0]
-}
-
-
-public func getTempDirectory() -> URL {
-    let tmpDir = NSTemporaryDirectory() as String
-    return URL(fileURLWithPath: tmpDir, isDirectory: true)
-}
-
-
-public func writeToFile(_ image: CGImage, url: URL) -> Data {
-    let bitmapRep: NSBitmapImageRep = NSBitmapImageRep(cgImage: image)
-    let properties = Dictionary<String, AnyObject>()
-    let data: Data = bitmapRep.representation(using: NSBitmapImageFileType.PNG, properties: properties)!
-    if !((try? data.write(to: URL(fileURLWithPath: url.path), options: [])) != nil) {
-        print("Error: write to file failed")
-    }
-    print(" → writing to file: \(url.absoluteString)")
-    return data
-}
-
 

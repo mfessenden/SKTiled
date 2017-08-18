@@ -16,7 +16,7 @@ import SpriteKit
 
  Tile data (including texture) is stored in `SKTilesetData` property.
  */
-open class SKTile: SKSpriteNode {
+open class SKTile: SKSpriteNode, Loggable {
     /// Tile size.
     open var tileSize: CGSize
     /// Tileset tile data.
@@ -208,7 +208,8 @@ open class SKTile: SKSpriteNode {
         var framesData: [(texture: SKTexture, duration: TimeInterval)] = []
         for frame in tileData.frames {
             guard let frameTexture = tileset.getTileData(localID: frame.gid)?.texture else {
-                print("ERROR: Cannot access texture for id: \(frame.gid)")
+                self.log("Cannot access texture for id: \(frame.gid)", level: .error)
+                
                 return
             }
             frameTexture.filteringMode = .nearest
@@ -383,7 +384,7 @@ open class SKTile: SKSpriteNode {
     open func getVertices(offset: CGPoint = .zero) -> [CGPoint] {
         var vertices: [CGPoint] = []
         guard let layer = layer else {
-            print("ERROR: tile \(tileData.id) does not have a layer reference.")
+            log("tile \(tileData.id) does not have a layer reference.", level: .error)
             return vertices
         }
 

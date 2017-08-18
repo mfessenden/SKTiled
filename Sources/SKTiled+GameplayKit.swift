@@ -91,12 +91,10 @@ extension SKTilemap {
 public extension SKTileLayer {
     
     public func gatherWalkableTiles() {
-        //print("[SKTileLayer]: setting up pathfinding graph for layer: \"\(layerName)\"...")
         let walkable  = getTiles().filter { $0.tileData.walkable == true }
         let obstacles = getTiles().filter { $0.tileData.obstacle == true }
 
         if (walkable.count > 0) {
-            print("[SKTileLayer]: \"\(layerName)\": walkable: \(walkable.count), obstacles: \(obstacles.count)")
             if let _ = initializeGraph(walkable: walkable, obstacles: obstacles, diagonalsAllowed: false) {}
         }
     }
@@ -116,7 +114,7 @@ public extension SKTileLayer {
                                 nodeClass: GKGridGraphNode.Type = SKTiledGraphNode.self) -> GKGridGraph<GKGridGraphNode>? {
         
         if (orientation != .orthogonal) {
-            print("[SKTileLayer]: pathfinding graphs can only be created with orthogonal tilemaps.")
+            log("pathfinding graphs can only be created with orthogonal tilemaps.", level: .warning)
             return nil
         }
         
@@ -161,15 +159,15 @@ public extension SKTileLayer {
         let nodeCount = (graph.nodes != nil) ? graph.nodes!.count : 0
         
         if nodeCount > 0 {
-            print("[SKTileLayer]: pathfinding graph for layer \"\(layerName)\" created with \(nodeCount) nodes.")
+            log("pathfinding graph for layer \"\(layerName)\" created with \(nodeCount) nodes.", level: .info)
         } else {
-            print("[SKTileLayer]: WARNING: could not build a pathfinding graph for layer \"\(layerName)\".")
+            log("could not build a pathfinding graph for layer \"\(layerName)\".", level: .warning)
         }
         
         // automatically add the graph to the scene graphs property.
         if let scene = self.tilemap.scene as? SKTiledScene {
             if !scene.addGraph(named: self.graphName, graph: graph) {
-                print("[SKTileLayer]: WARNING: cannot add graph \"\(self.graphName)\" to scene.")
+                log("cannot add graph \"\(self.graphName)\" to scene.", level: .warning)
             }
         }
         

@@ -83,7 +83,7 @@ public protocol TiledSceneCameraDelegate: class {
  The `SKTiledSceneCamera` is a custom camera meant to be used with a scene conforming to the `SKTiledSceneDelegate` protocol. The camera defines a position in the scene to render the scene from, with a reference to the `SKTiledSceneDelegate.worldNode` to interact with tile maps. 
  
  */
-public class SKTiledSceneCamera: SKCameraNode {
+public class SKTiledSceneCamera: SKCameraNode, Loggable {
     
     unowned let world: SKNode
     internal var bounds: CGRect
@@ -102,6 +102,9 @@ public class SKTiledSceneCamera: SKCameraNode {
     public var minZoom: CGFloat = 0.2
     public var maxZoom: CGFloat = 5.0
     public var isAtMaxZoom: Bool { return zoom == maxZoom }
+    
+    // logger
+    public var loggingLevel: LoggingLevel = .info
     
     // gestures
     #if os(iOS) || os(tvOS)
@@ -176,7 +179,6 @@ public class SKTiledSceneCamera: SKCameraNode {
             return
         }
         delegates.append(delegate)
-        print("[SKTiledSceneCamera]: DEBUG: adding delegate: \(delegate)")
     }
     
     /**
@@ -370,14 +372,16 @@ public class SKTiledSceneCamera: SKCameraNode {
         let isPortrait: Bool = newSize.height > newSize.width
         
         let screenScaleWidth: CGFloat = isPortrait ? 0.7 : 0.7
-        let screenScaleHeight: CGFloat = isPortrait ? 0.7 : 0.7   // was 0.8 & 0.7
+        let screenScaleHeight: CGFloat = isPortrait ? 0.5 : 0.5  
         
         // get the usable height/width
         let usableWidth: CGFloat = newSize.width * screenScaleWidth
         let usableHeight: CGFloat = newSize.height * screenScaleHeight
         let scaleFactor = (isPortrait == true) ? usableWidth / tilemapSize.width : usableHeight / tilemapSize.height
         
-        centerOn(scenePoint: tilemapCenter)
+        let focusPoint = CGPoint(x: tilemapCenter.x, y: tilemapCenter.y - (usableHeight / 7))
+        
+        centerOn(scenePoint: focusPoint)
         setCameraZoom(scaleFactor, interval: transition)
         
         NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["cameraInfo": self.description])
@@ -503,7 +507,7 @@ extension SKTiledSceneCamera {
     override public func mouseMoved(with event: NSEvent) {
         super.mouseMoved(with: event)
         lastLocation = event.location(in: self)
-        print("[SKTiledSceneCamera]: mouse moved: \(lastLocation.shortDescription)")
+        
         for delegate in self.delegates {
             delegate.mousePositionChanged(event: event)
         }
