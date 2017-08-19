@@ -128,7 +128,6 @@ public func replaceColor(texture: SKTexture, color: SKColor) -> SKTexture? {
 public func writeMapToFiles(tilemap: SKTilemap, url: URL) {
     var tileLayers: [TiledLayerObject] = tilemap.tileLayers().sorted(by: { $0.realIndex < $1.realIndex }) as [TiledLayerObject]
     tileLayers.insert(tilemap.defaultLayer as TiledLayerObject, at: 0)
-
     for (idx, layer) in tileLayers.enumerated() {
         if let layerTexture = layer.render() {
             writeToFile(layerTexture.cgImage(), url: url.appendingPathComponent("\(String(format: "%02d", idx))-\(layer.layerName).png"))

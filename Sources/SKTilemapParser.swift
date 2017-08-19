@@ -255,7 +255,8 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
                      inDirectory: String? = nil,
                      delegate: SKTilemapDelegate? = nil,
                      ignoreProperties noparse: Bool = false,
-                     loggingLevel: LoggingLevel = .info) -> [SKTileset] {
+                     loggingLevel: LoggingLevel = .info,
+                     renderQueue: DispatchQueue) -> [SKTileset] {
 
 
 
@@ -349,12 +350,13 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
             }
         }
 
-
-        for filename in tsxFiles {
-            for (tsxfile, tileset) in tilesets {
-                let basename = tsxfile.components(separatedBy: ".").first!
-                if basename == filename || tsxfile == filename {
-                    tilesetResults.append(tileset)
+        renderQueue.sync {
+            for filename in tsxFiles {
+                for (tsxfile, tileset) in tilesets {
+                    let basename = tsxfile.components(separatedBy: ".").first!
+                    if basename == filename || tsxfile == filename {
+                        tilesetResults.append(tileset)
+                    }
                 }
             }
         }

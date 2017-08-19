@@ -447,15 +447,18 @@ extension SKTiledDemoScene {
             let viewSize = view.bounds.size
 
 
-            let positionInWindow = event.locationInWindow
+            var positionInWindow = event.locationInWindow
             let xpos = positionInWindow.x
             let ypos = positionInWindow.y
 
-            let xDistanceToCenter = (xpos / viewSize.width) - 0.5
-            let yDistanceToCenter = (ypos / viewSize.height) - 0.5
+            let dx = (xpos / viewSize.width) - 0.5
+            let dy = (ypos / viewSize.height) - 0.5
 
-            mouseTracker.position = positionInWindow
-            mouseTracker.offset = CGPoint(x: xDistanceToCenter, y: yDistanceToCenter)
+
+
+            mouseTracker.position.x = positionInWindow.x * (3 * dx)
+            mouseTracker.position.y = positionInWindow.y * (3 * dy)
+            //mouseTracker.setOffset(dx: dx, dy: dy)
         }
 
         let defaultLayer = tilemap.defaultLayer
@@ -582,20 +585,6 @@ internal class MouseTracker: SKNode {
         }
     }
 
-    var offset: CGPoint = .zero {
-        didSet {
-            let ox = lerp(start: 0, end: 48, t: -offset.x)
-            let oy = lerp(start: 0, end: 48, t: -offset.y)
-
-            //label.position.x = offset.x * -48
-            //label.position.y = offset.y * -48
-
-            label.position.x = ox * 1.5
-            label.position.y = oy
-        }
-    }
-
-
     override init() {
         scaleSequence = SKAction.sequence([scaleAction, scaleAction.reversed()])
         super.init()
@@ -604,6 +593,11 @@ internal class MouseTracker: SKNode {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func setOffset(dx: CGFloat, dy: CGFloat) {
+        var vector = (1 / -dy) * (fabs(dy) * 2)
+        label.position.y = vector * (scaleSize * 2)
     }
 
     func update() {
@@ -622,5 +616,6 @@ internal class MouseTracker: SKNode {
 
         shadow.position.x += shadowOffset
         shadow.position.y -= shadowOffset
+        label.position.y += scaleSize * 2
     }
 }

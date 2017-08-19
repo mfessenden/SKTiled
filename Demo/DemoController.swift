@@ -173,7 +173,7 @@ public class DemoController: NSObject, Loggable {
         }
 
         var hasCurrent = false
-        var liveMode = false
+        var liveMode = true
         var showOverlay = true
         var cameraPosition = CGPoint.zero
         var cameraZoom: CGFloat = 1
@@ -234,8 +234,10 @@ public class DemoController: NSObject, Loggable {
 
             let sceneInfo = ["hasGraphs": (nextScene.graphs.isEmpty == false),
                              "hasObjects": nextScene.tilemap.getObjects().isEmpty == false]
+
             NotificationCenter.default.post(name: Notification.Name(rawValue: "updateUIControls"),
                                             object: nil, userInfo: sceneInfo)
+            
             nextScene.setupDemoLevel(fileNamed: url.relativePath)
 
             if (hasCurrent == false) {

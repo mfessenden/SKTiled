@@ -182,7 +182,9 @@ public class SKTileset: SKTiledObject {
                            delegate: SKTilemapDelegate? = nil,
                            ignoreProperties noparse: Bool = false) -> [SKTileset] {
 
-        return SKTilemapParser().load(tsxFiles: tsxFiles, delegate: delegate, ignoreProperties: noparse)
+        let startTime = Date()
+        let queue = DispatchQueue(label: "com.sktiled.renderqueue", qos: .userInteractive)
+        return SKTilemapParser().load(tsxFiles: tsxFiles, delegate: delegate, ignoreProperties: noparse, renderQueue: queue)
     }
 
     // MARK: - Textures

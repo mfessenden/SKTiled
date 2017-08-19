@@ -385,7 +385,7 @@ extension SKTiledScene: TiledSceneCameraDelegate {
      */
     public func mousePositionChanged(event: NSEvent) {
         let location = event.location(in: self)
-        log("mouse moved: \(location.shortDescription)", level: .info)
+        log("mouse fucking moved: \(location.shortDescription)", level: .info)
         addTemporaryShape(at: location, radius: 4, duration: 1.5)
     }
     #endif
