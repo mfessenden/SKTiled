@@ -25,7 +25,7 @@ typealias RenderInfo = (idx: Int, path: String, zpos: Double, sw: Int, sh: Int, 
 
  ## Overview ##
 
- The `TiledLayerObject` is the base class for all layer types.  This class doesn't define any object or child types, but provides base behaviors for layered content:
+ The `SKTiledLayerObject` is the base class for all layer types.  This class doesn't define any object or child types, but provides base behaviors for layered content:
 
  - coordinate transformations
  - validating coordinates
@@ -62,7 +62,7 @@ typealias RenderInfo = (idx: Int, path: String, zpos: Double, sw: Int, sh: Int, 
  coord = groupLayer.coordinateAtMouseEvent(event: mouseClicked)
  ```
  */
-public class TiledLayerObject: SKNode, SKTiledObject {
+public class SKTiledLayerObject: SKNode, SKTiledObject {
 
     /// Reference to the parent tilemap.
     public var tilemap: SKTilemap
@@ -148,7 +148,7 @@ public class TiledLayerObject: SKNode, SKTiledObject {
 
     // debug visualizations
     public var gridOpacity: CGFloat = 0.40
-    internal var debugNode: TiledDebugDrawNode!
+    internal var debugNode: SKTiledDebugDrawNode!
 
     /// Debug visualization options.
     public var debugDrawOptions: DebugDrawOptions = [] {
@@ -258,14 +258,14 @@ public class TiledLayerObject: SKNode, SKTiledObject {
      - parameter layerName:  `String` layer name.
      - parameter tilemap:    `SKTilemap` parent tilemap node.
      - parameter attributes: `[String: String]` dictionary of layer attributes.
-     - returns: `TiledLayerObject?` tiled layer, if initialization succeeds.
+     - returns: `SKTiledLayerObject?` tiled layer, if initialization succeeds.
      */
     public init?(layerName: String, tilemap: SKTilemap, attributes: [String: String]) {
 
         self.tilemap = tilemap
         self.ignoreProperties = tilemap.ignoreProperties
         super.init()
-        self.debugNode = TiledDebugDrawNode(tileLayer: self)
+        self.debugNode = SKTiledDebugDrawNode(tileLayer: self)
         self.name = layerName
 
         // layer offset
@@ -302,13 +302,13 @@ public class TiledLayerObject: SKNode, SKTiledObject {
 
      - parameter layerName:  `String` layer name.
      - parameter tilemap:    `SKTilemap` parent tilemap node.
-     - returns: `TiledLayerObject` tiled layer object.
+     - returns: `SKTiledLayerObject` tiled layer object.
      */
     public init(layerName: String, tilemap: SKTilemap) {
         self.tilemap = tilemap
         self.ignoreProperties = tilemap.ignoreProperties
         super.init()
-        self.debugNode = TiledDebugDrawNode(tileLayer: self)
+        self.debugNode = SKTiledDebugDrawNode(tileLayer: self)
         self.name = layerName
 
         // set the layer's antialiasing based on tile size
@@ -341,7 +341,7 @@ public class TiledLayerObject: SKNode, SKTiledObject {
 
     // MARK: - Children
 
-    public var layers: [TiledLayerObject] {
+    public var layers: [SKTiledLayerObject] {
         return [self]
     }
 
@@ -428,9 +428,11 @@ public class TiledLayerObject: SKNode, SKTiledObject {
     }
 
     /**
-     Returns a point for a given coordinate in the layer.
+     Returns a point for a given coordinate in the layer, with optional offset values for x/y.
 
-     - parameter coord: `CGPoint` tile coordinate.
+     - parameter coord:   `CGPoint` tile coordinate.
+     - parameter offsetX: `CGFloat` x-offset value.
+     - parameter offsetY: `CGFloat` y-offset value.
      - returns: `CGPoint` point in layer (spritekit space).
      */
     public func pointForCoordinate(coord: CGPoint, offsetX: CGFloat=0, offsetY: CGFloat=0) -> CGPoint {
@@ -903,7 +905,7 @@ public class TiledLayerObject: SKNode, SKTiledObject {
 
  ## Overview ##
 
- Subclass of `TiledLayerObject`, the tile layer is a container for an array of tiles (sprites). Tiles maintain a link to the map's tileset via their `SKTilesetData` property.
+ Subclass of `SKTiledLayerObject`, the tile layer is a container for an array of tiles (sprites). Tiles maintain a link to the map's tileset via their `SKTilesetData` property.
 
  ## Usage ##
 
@@ -919,7 +921,7 @@ public class TiledLayerObject: SKNode, SKTiledObject {
  let floorTiles = tileLayer.getTiles(ofType: "Floor")
  ```
  */
-public class SKTileLayer: TiledLayerObject {
+public class SKTileLayer: SKTiledLayerObject {
 
     fileprivate typealias TilesArray = Array2D<SKTile>
 
@@ -1475,7 +1477,7 @@ internal enum SKObjectGroupDrawOrder: String {
  let rockObjects = objectGroup.getObjects(ofType: "Rock")
  ```
  */
-public class SKObjectGroup: TiledLayerObject {
+public class SKObjectGroup: SKTiledLayerObject {
 
     internal var drawOrder: SKObjectGroupDrawOrder = SKObjectGroupDrawOrder.topDown
     fileprivate var objects: Set<SKTileObject> = []
@@ -1800,7 +1802,7 @@ public class SKObjectGroup: TiledLayerObject {
  imageLayer.setLayerImage("clouds-background")
  ```
  */
-public class SKImageLayer: TiledLayerObject {
+public class SKImageLayer: SKTiledLayerObject {
 
     public var image: String!                       // image name for layer
     private var textures: [SKTexture] = []        // texture values
@@ -1873,7 +1875,7 @@ public class SKImageLayer: TiledLayerObject {
 /**
  The `BackgroundLayer` object represents the default background for a tilemap.
  */
-internal class BackgroundLayer: TiledLayerObject {
+internal class BackgroundLayer: SKTiledLayerObject {
 
     private var sprite: SKSpriteNode!
     private var _debugColor: SKColor?
@@ -1933,7 +1935,7 @@ internal class BackgroundLayer: TiledLayerObject {
 
  ## Overview ##
 
- Subclass of `TiledLayerObject`, the group layer is a container for managing groups of layers.
+ Subclass of `SKTiledLayerObject`, the group layer is a container for managing groups of layers.
 
  ## Usage ##
 
@@ -1957,9 +1959,9 @@ internal class BackgroundLayer: TiledLayerObject {
  groupLayer.removeLayer(playerLayer)
  ```
  */
-public class SKGroupLayer: TiledLayerObject {
+public class SKGroupLayer: SKTiledLayerObject {
 
-    private var _layers: Set<TiledLayerObject> = []
+    private var _layers: Set<SKTiledLayerObject> = []
 
     /// Returns the last index for all layers.
     public var lastIndex: Int {
@@ -1972,8 +1974,8 @@ public class SKGroupLayer: TiledLayerObject {
     }
 
     /// Returns a flattened array of child layers.
-    override public var layers: [TiledLayerObject] {
-        var result: [TiledLayerObject] = [self]
+    override public var layers: [SKTiledLayerObject] {
+        var result: [SKTiledLayerObject] = [self]
         for layer in _layers.sorted(by: { $0.index > $1.index }) {
             result += layer.layers
         }
@@ -2015,9 +2017,9 @@ public class SKGroupLayer: TiledLayerObject {
     /**
      Returns all layers, sorted by index (first is lowest, last is highest).
 
-     - returns: `[TiledLayerObject]` array of layers.
+     - returns: `[SKTiledLayerObject]` array of layers.
      */
-    public func allLayers() -> [TiledLayerObject] {
+    public func allLayers() -> [SKTiledLayerObject] {
         return layers.sorted(by: {$0.index < $1.index})
     }
 
@@ -2033,11 +2035,11 @@ public class SKGroupLayer: TiledLayerObject {
     /**
      Add a layer to the layers set. Automatically sets zPosition based on the tilemap zDeltaForLayers attributes.
 
-     - parameter layer:    `TiledLayerObject` layer object.
+     - parameter layer:    `SKTiledLayerObject` layer object.
      - parameter clamped:  `Bool` clamp position to nearest pixel.
-     - returns: `(success: Bool, layer: TiledLayerObject)` add was successful, layer added.
+     - returns: `(success: Bool, layer: SKTiledLayerObject)` add was successful, layer added.
      */
-    public func addLayer(_ layer: TiledLayerObject, clamped: Bool = true) -> (success: Bool, layer: TiledLayerObject) {
+    public func addLayer(_ layer: SKTiledLayerObject, clamped: Bool = true) -> (success: Bool, layer: SKTiledLayerObject) {
 
         // get the next z-position from the tilemap.
         let nextZPosition = (_layers.isEmpty == false) ? (tilemap.zDeltaForLayers / 2) * CGFloat(_layers.count) : 0
@@ -2072,10 +2074,10 @@ public class SKGroupLayer: TiledLayerObject {
     /**
      Remove a layer from the current layers set.
 
-     - parameter layer: `TiledLayerObject` layer object.
-     - returns: `TiledLayerObject?` removed layer.
+     - parameter layer: `SKTiledLayerObject` layer object.
+     - returns: `SKTiledLayerObject?` removed layer.
      */
-    public func removeLayer(_ layer: TiledLayerObject) -> TiledLayerObject? {
+    public func removeLayer(_ layer: SKTiledLayerObject) -> SKTiledLayerObject? {
         return _layers.remove(layer)
     }
 }
@@ -2114,7 +2116,7 @@ internal struct Array2D<T> {
 
 
 
-extension TiledLayerObject {
+extension SKTiledLayerObject {
 
     // MARK: - Extensions
 
@@ -2136,7 +2138,7 @@ extension TiledLayerObject {
     }
 
     /**
-     Returns a point for a given coordinate in the layer.
+     Returns a point for a given coordinate in the layer, with optional offset values for x/y.
 
      - parameter x:       `Int` x-coordinate.
      - parameter y:       `Int` y-coordinate.
@@ -2149,7 +2151,7 @@ extension TiledLayerObject {
     }
 
     /**
-     Returns a point for a given coordinate in the layer.
+     Returns a point for a given coordinate in the layer, with optional offset.
 
      - parameter coord:  `CGPoint` tile coordinate.
      - parameter offset: `CGPoint` tile offset.
@@ -2160,13 +2162,13 @@ extension TiledLayerObject {
     }
 
     /**
-     Returns a point for a given coordinate in the layer.
+     Returns a point for a given coordinate in the layer, with optional offset.
 
      - parameter coord:  `CGPoint` tile coordinate.
      - parameter offset: `TileOffset` tile offset hint.
      - returns: `CGPoint` point in layer.
      */
-    public func pointForCoordinate(coord: CGPoint, tileOffset: TiledLayerObject.TileOffset = .center) -> CGPoint {
+    public func pointForCoordinate(coord: CGPoint, tileOffset: SKTiledLayerObject.TileOffset = .center) -> CGPoint {
         var offset = CGPoint(x: 0, y: 0)
         switch tileOffset {
         case .top:
@@ -2228,7 +2230,7 @@ extension TiledLayerObject {
 }
 
 
-extension TiledLayerObject {
+extension SKTiledLayerObject {
     /// Return a string representing the layer name.
     public var layerName: String {
         return self.name ?? "null"
@@ -2239,7 +2241,7 @@ extension TiledLayerObject {
         var current = self as SKNode
         var result: [SKNode] = [current]
         while current.parent != nil {
-            if (current.parent! as? TiledLayerObject != nil) {
+            if (current.parent! as? SKTiledLayerObject != nil) {
                 result.append(current.parent!)
             }
             current = current.parent!
@@ -2252,7 +2254,7 @@ extension TiledLayerObject {
         var result: [SKNode] = []
         enumerateChildNodes(withName: "*") { node, _ in
 
-            if let node = node as? TiledLayerObject {
+            if let node = node as? SKTiledLayerObject {
                 result.append(node)
             }
         }
@@ -2293,7 +2295,7 @@ extension TiledLayerObject {
             return result + parent.zPosition
         })
     }
-
+    
     /// Returns a string array representing the current layer name & index.
     public var layerStatsDescription: [String] {
         let digitCount: Int = self.tilemap.lastIndex.digitCount + 1
@@ -2303,7 +2305,7 @@ extension TiledLayerObject {
 
         let indexString = (isGrouped == true) ? String(repeating: " ", count: digitCount) : "\(index).".zfill(length: digitCount, pattern: " ")
         let typeString = self.layerType.stringValue.capitalized.zfill(length: 6, pattern: " ", padLeft: false)
-        let hasChildren: Bool = (childLayers.isEmpty == false)
+        let hasChildren: Bool = (childLayers.count > 0)
 
         let layerSymbol = (hasChildren == true) ? "▿" : "-"
         let filler = (isGrouped == true) ? String(repeating: "  ", count: parentNodes.count - 1) : ""
@@ -2326,7 +2328,7 @@ extension TiledLayerObject {
 }
 
 
-extension TiledLayerObject.TiledLayerType {
+extension SKTiledLayerObject.TiledLayerType {
     /// Returns a string representation of the layer type.
     internal var stringValue: String { return "\(self)".lowercased() }
 }

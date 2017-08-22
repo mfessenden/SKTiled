@@ -77,13 +77,13 @@ The [`SKTilemap`][sktilemap-url] node also allows access to child layers, tilese
 
 ### Working with Layers
 
-Layers represent containers that house various types of data: 
+Layers represent containers that house various types of data:
 
 - tile layers hold an array of tile sprites and associated tileset data
 - object groups contain vector shape objects
 - image layers display a single image
 
-All **SKTiled** layer types are subclasses of the [`TiledLayerObject`][tiledlayerobject-url] class and provide access to coordinate transformation and positioning information. Additionally, every layer type can have individual offset transforms and rendering flags.  
+All **SKTiled** layer types are subclasses of the [`SKTiledLayerObject`][sktiledlayerobject-url] class and provide access to coordinate transformation and positioning information. Additionally, every layer type can have individual offset transforms and rendering flags.  
 
 Layers can be accessed by type, name or index:
 
@@ -178,14 +178,14 @@ let newTile = SKTile(data: tileData)
 scene.addChild(newTile)
 ```
 
-Coordinate information is available from each layer via the `TiledLayerObject.pointForCoordinate` method:
+Coordinate information is available from each layer via the [`SKTiledLayerObject.pointForCoordinate`][sktiledlayerobject-pointforcoordinate-url] method:
 
 ```swift
 let tilePoint = groundLayer.pointForCoordinate(4, 5)
 tile.position = tilePoint
 ```
 
-New nodes (any [`SKNode`][sknode-url] type) can be added directly to any layer. All [`TiledLayerObject`][tiledlayerobject-url] layer types have expanded convenience methods for adding child nodes with coordinates and z-position.
+New nodes (any [`SKNode`][sknode-url] type) can be added directly to any layer. All [`SKTiledLayerObject`][sktiledlayerobject-url] layer types have expanded convenience methods for adding child nodes with coordinates and z-position.
 
 ```swift
 let newNode = SKNode()
@@ -272,7 +272,8 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", "1")
 [sktiledobject-url]:https://mfessenden.github.io/SKTiled/Protocols/SKTiledObject.html
 [sktile-url]:https://mfessenden.github.io/SKTiled/Classes/SKTile.html
 [skobjectgroup-url]:https://mfessenden.github.io/SKTiled/Classes/SKObjectGroup.html
-[tiledlayerobject-url]:https://mfessenden.github.io/SKTiled/Classes/TiledLayerObject.html
+[sktiledlayerobject-url]:https://mfessenden.github.io/SKTiled/Classes/SKTiledLayerObject.html
+[sktiledlayerobject-pointforcoordinate-url]:https://mfessenden.github.io/SKTiled/Classes/SKTiledLayerObject.html
 [sktilelayer-url]:https://mfessenden.github.io/SKTiled/Classes/SKTileLayer.html
 [sktileobject-url]:https://mfessenden.github.io/SKTiled/Classes/SKTileObject.html
 [sktileset-url]:https://mfessenden.github.io/SKTiled/Classes/SKTileset.html

@@ -164,6 +164,8 @@
 		4CA6E5521F393F7700612A1C /* other-16x32.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5431F393F7700612A1C /* other-16x32.tsx */; };
 		4CA6E5531F393F7700612A1C /* dk-fonts-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5441F393F7700612A1C /* dk-fonts-8x8.png */; };
 		4CA6E5541F393F7700612A1C /* dk-fonts-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6E5441F393F7700612A1C /* dk-fonts-8x8.png */; };
+		4CAD35BD1F4B9D2C0034CA6C /* ortho4-16x16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CAD35BC1F4B9D2C0034CA6C /* ortho4-16x16.tmx */; };
+		4CAD35BE1F4B9D2C0034CA6C /* ortho4-16x16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CAD35BC1F4B9D2C0034CA6C /* ortho4-16x16.tmx */; };
 		4CBA61831D8A0A4600B31FC1 /* roguelike-16x16-anim.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */; };
 		4CBB6A9F1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */; };
 		4CBB6AA11D8CBB5B00DB56F1 /* SKTiledScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA01D8CBB5B00DB56F1 /* SKTiledScene.swift */; };
@@ -275,6 +277,7 @@
 		4CA6E5421F393F7700612A1C /* kong-50x32.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "kong-50x32.tsx"; path = "../../test/Assets/kong-50x32.tsx"; sourceTree = "<group>"; };
 		4CA6E5431F393F7700612A1C /* other-16x32.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "other-16x32.tsx"; path = "../../test/Assets/other-16x32.tsx"; sourceTree = "<group>"; };
 		4CA6E5441F393F7700612A1C /* dk-fonts-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dk-fonts-8x8.png"; path = "../../test/Assets/dk-fonts-8x8.png"; sourceTree = "<group>"; };
+		4CAD35BC1F4B9D2C0034CA6C /* ortho4-16x16.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "ortho4-16x16.tmx"; sourceTree = "<group>"; };
 		4CBA61651D8A048200B31FC1 /* SKTiledDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKTiledDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CBA617E1D8A0A3900B31FC1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "roguelike-16x16-anim.png"; sourceTree = "<group>"; };
@@ -471,6 +474,7 @@
 				4C628F151F3EFA7400FCF929 /* User */,
 				4CD5229E1DA624C400D78D81 /* CREDITS */,
 				4C6FB8A41F1E5D2800A57964 /* pacman-8x8.tmx */,
+				4CAD35BC1F4B9D2C0034CA6C /* ortho4-16x16.tmx */,
 				4CF452021F3D1287008BA678 /* tetris-dynamics.tmx */,
 				4CA22C7B1F040FE700CD0A72 /* font */,
 				4CDF67CC1D8AE84300589457 /* png */,
@@ -724,22 +728,18 @@
 				TargetAttributes = {
 					4C17747E1D909740000C0AFD = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 747QKN4G7U;
 						ProvisioningStyle = Automatic;
 					};
 					4C41A5DF1F437118001622FF = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 747QKN4G7U;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					4C41A5FC1F43739C001622FF = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 747QKN4G7U;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					4CBA61641D8A048200B31FC1 = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = 747QKN4G7U;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
@@ -773,6 +773,7 @@
 			files = (
 				4C8E42E11DC26FD1002C76DA /* zlib in Resources */,
 				4C6FB8A91F1E5D2800A57964 /* pm-maze-8x8.tsx in Resources */,
+				4CAD35BD1F4B9D2C0034CA6C /* ortho4-16x16.tmx in Resources */,
 				4CA6E5361F393F6D00612A1C /* characters-16x16 in Resources */,
 				4C0924D91F127DC0009CA37E /* tetris-lshape-24x16.tsx in Resources */,
 				4C7AD30F1F1E3D7500474722 /* graphtest-8x8.png in Resources */,
@@ -902,6 +903,7 @@
 				4CD6D2D51D8B9DE20083DA7B /* roguelike-16x16.tsx in Resources */,
 				4CA6E5391F393F6D00612A1C /* characters-16x32 in Resources */,
 				4C41849A1F34126C004E392A /* mspacman-16x16.tsx in Resources */,
+				4CAD35BE1F4B9D2C0034CA6C /* ortho4-16x16.tmx in Resources */,
 				4C1A7BE31F3AC97600BDCA72 /* mspacman-maze2-8x8.png in Resources */,
 				4C0924DE1F127DC0009CA37E /* tetris-square-16x16.tsx in Resources */,
 				4CF040CB1F3228D600D8AFFC /* clyde-16x16.tsx in Resources */,
@@ -1188,9 +1190,8 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGNING_REQUIRED = NO;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 747QKN4G7U;
 				INFOPLIST_FILE = "$(SRCROOT)/macOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
@@ -1209,9 +1210,8 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGNING_REQUIRED = NO;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 747QKN4G7U;
 				INFOPLIST_FILE = "$(SRCROOT)/macOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
@@ -1229,12 +1229,11 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGNING_REQUIRED = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 747QKN4G7U;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1244,8 +1243,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = SKTiled;
+				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
 				PRODUCT_NAME = SKTiled;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -1261,12 +1261,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 747QKN4G7U;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1275,8 +1275,9 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				PRODUCT_BUNDLE_IDENTIFIER = SKTiled;
+				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
 				PRODUCT_NAME = SKTiled;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -1291,11 +1292,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGNING_REQUIRED = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 747QKN4G7U;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1304,9 +1304,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = SKTiled;
+				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
 				PRODUCT_MODULE_NAME = SKTiled;
 				PRODUCT_NAME = SKTiled;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 3.0;
@@ -1321,11 +1322,11 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 747QKN4G7U;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1333,9 +1334,10 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = SKTiled;
+				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
 				PRODUCT_MODULE_NAME = SKTiled;
 				PRODUCT_NAME = SKTiled;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1362,7 +1364,6 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1408,8 +1409,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
+				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1435,8 +1435,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 747QKN4G7U;
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1452,8 +1450,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 747QKN4G7U;
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

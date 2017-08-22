@@ -12,6 +12,7 @@ disabled_rules: # rule identifiers to exclude from running
   - type_body_length
   - large_tuple
   - line_length
+  - empty_count
 opt_in_rules: # some rules are only opt-in
   - empty_count
 

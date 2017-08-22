@@ -85,7 +85,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
         removeAllChildren()
     }
 
-    open func didChange(_ oldSize: CGSize) {
+    override open func didChangeSize(_ oldSize: CGSize) {
         updateCamera()
     }
 
@@ -190,7 +190,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
         log("`tileset added: \"\(tileset.name)\"`", level: .gcd)
     }
 
-    open func didAddLayer(_ layer: TiledLayerObject) {
+    open func didAddLayer(_ layer: SKTiledLayerObject) {
         // Called when a layer has been added.
         log("layer added: \"\(layer.layerName)\"", level: .gcd)
     }
@@ -226,10 +226,12 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
         //tilemap?.update(currentTime)
     }
 
-    // TODO: update this
+    /**
+     Update the camera bounds.
+     */
     open func updateCamera() {
         guard let view = view else { return }
-
+        print("[SKTiledScene]: updating camera bounds")
         let viewSize = view.bounds.size
         if let cameraNode = cameraNode {
             cameraNode.bounds = CGRect(x: -(viewSize.width / 2), y: -(viewSize.height / 2),
@@ -265,7 +267,6 @@ extension SKTiledSceneDelegate where Self: SKScene {
                                         ignoreProperties: ignoreProperties,
                                         loggingLevel: loggingLevel) {
 
-            print("❗️ [SKScene]: generic scene load method...")
             if let cameraNode = cameraNode {
                 // camera properties inherited from tilemap
                 cameraNode.allowMovement = tilemap.allowMovement
@@ -283,32 +284,22 @@ extension SKTiledSceneDelegate where Self: SKScene {
 #if os(macOS)
 extension SKTiledScene {
 
-    override open func mouseDown(with event: NSEvent) {
-        log("mouse down...", level: .info)
-    }
-
-    override open func mouseMoved(with event: NSEvent) {
-        log("mouse moved...", level: .info)
-    }
-
-    override open func mouseDragged(with event: NSEvent) {
-        log("mouse dragged...", level: .info)
-    }
-
-    override open func mouseUp(with event: NSEvent) {
-        log("mouse up...", level: .info)
-    }
-
+    override open func mouseDown(with event: NSEvent) {}
+    override open func mouseMoved(with event: NSEvent) {}
+    override open func mouseUp(with event: NSEvent) {}
+    override open func mouseEntered(with event: NSEvent) {}
+    override open func mouseExited(with event: NSEvent) {}
+    
     override open func scrollWheel(with event: NSEvent) {
-        log("scroll wheel...", level: .info)
+        guard let cameraNode = cameraNode else { return }
+        cameraNode.scrollWheel(with: event)
     }
-
 }
 #endif
 
 
 // default methods
-extension SKTiledScene: TiledSceneCameraDelegate {
+extension SKTiledScene: SKTiledSceneCameraDelegate {
 
     // MARK: - Delegate Methods
     /**

@@ -68,6 +68,8 @@ class GameViewController: NSViewController, Loggable {
         NotificationCenter.default.addObserver(self, selector: #selector(updateWindowTitle), name: NSNotification.Name(rawValue: "updateWindowTitle"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateUIControls), name: NSNotification.Name(rawValue: "updateUIControls"), object: nil)
 
+        NotificationCenter.default.addObserver(self, selector: #selector(loggingLevelUpdated), name: NSNotification.Name(rawValue: "loggingLevelUpdated"), object: nil)
+
         debugInfoLabel?.isHidden = true
 
         /* create the game scene */
@@ -157,7 +159,6 @@ class GameViewController: NSViewController, Loggable {
      - parameter event: `NSEvent` mouse event.
      */
     override func scrollWheel(with event: NSEvent) {
-        log("scroll wheel...", level: .info)
         guard let view = self.view as? SKView else { return }
 
         if let currentScene = view.scene as? SKTiledDemoScene {
@@ -175,6 +176,29 @@ class GameViewController: NSViewController, Loggable {
             if let infoDictionary = Bundle.main.infoDictionary {
                 if let bundleName = infoDictionary[kCFBundleNameKey as String] as? String {
                     self.view.window?.title = "\(bundleName): \(wintitle as! String)"
+                }
+            }
+        }
+    }
+
+    /**
+     Update the window's logging menu current value.
+
+     - parameter notification: `Notification` callback.
+     */
+    func loggingLevelUpdated(notification: Notification) {
+        guard let mainMenu = NSApplication.shared().mainMenu else {
+            Logger.default.log("cannot access main menu.", level: .warning, symbol: nil)
+            return
+        }
+
+        let appMenu = mainMenu.item(withTitle: "SKTiled")!
+        if let loggingMenu = appMenu.submenu?.item(withTitle: "Logging") {
+            if let currentMenuItem = loggingMenu.submenu?.item(withTag: 1024) {
+                if let loggingLevel = notification.userInfo!["loggingLevel"] as? LoggingLevel {
+                    let newMenuTitle = loggingLevel.description.capitalized
+                    currentMenuItem.title = newMenuTitle
+                    currentMenuItem.isEnabled = false
                 }
             }
         }

@@ -15,7 +15,7 @@
                         <items>
                             <menuItem title="SKTiled" id="1Xt-HY-uBw">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="SKTiled" systemMenu="apple" id="uQy-DD-JDr">
+                                <menu key="submenu" title="SKTiled" systemMenu="apple" identifier="derpy" id="uQy-DD-JDr">
                                     <items>
                                         <menuItem title="About SKTiledDemo" id="5kV-Vb-QxS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -39,13 +39,6 @@
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
                                                             <action selector="loggingLevelDispatch:" target="Voe-Tx-rLC" id="HeW-JH-MrF"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem isSeparatorItem="YES" id="1MQ-SR-jPO"/>
-                                                    <menuItem title="Custom" id="hN9-rH-5kJ">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="loggingLevelCustom:" target="Voe-Tx-rLC" id="cdh-gM-exJ"/>
                                                         </connections>
                                                     </menuItem>
                                                     <menuItem isSeparatorItem="YES" id="Qbv-Yb-teY"/>
@@ -197,6 +190,7 @@
                 </application>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="SKTiledDemo" customModuleProvider="target"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <userDefaultsController representsSharedInstance="YES" id="aIM-ST-Kfn"/>
             </objects>
             <point key="canvasLocation" x="-731" y="-60"/>
         </scene>

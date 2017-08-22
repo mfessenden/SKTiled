@@ -127,7 +127,7 @@ public class DemoController: NSObject, Loggable {
 
      - parameter interval: `TimeInterval` transition duration.
      */
-    public func reloadScene(_ interval: TimeInterval=0) {
+    public func reloadScene(_ interval: TimeInterval=0.25) {
         guard let currentURL = currentURL else { return }
         loadScene(url: currentURL, usePreviousCamera: true, interval: interval)
     }
@@ -137,7 +137,7 @@ public class DemoController: NSObject, Loggable {
 
      - parameter interval: `TimeInterval` transition duration.
      */
-    public func loadNextScene(_ interval: TimeInterval=0) {
+    public func loadNextScene(_ interval: TimeInterval=0.25) {
         guard let currentURL = currentURL else { return }
         var nextFilename = demourls.first!
         if let index = demourls.index(of: currentURL), index + 1 < demourls.count {
@@ -151,7 +151,7 @@ public class DemoController: NSObject, Loggable {
 
      - parameter interval: `TimeInterval` transition duration.
      */
-    public func loadPreviousScene(_ interval: TimeInterval=0) {
+    public func loadPreviousScene(_ interval: TimeInterval=0.25) {
         guard let currentURL = currentURL else { return }
         var nextFilename = demourls.last!
         if let index = demourls.index(of: currentURL), index > 0, index - 1 < demourls.count {
@@ -166,7 +166,7 @@ public class DemoController: NSObject, Loggable {
      - parameter usePreviousCamera: `Bool` transfer camera information.
      - parameter interval:          `TimeInterval` transition duration.
      */
-    internal func loadScene(url: URL, usePreviousCamera: Bool, interval: TimeInterval=0) {
+    internal func loadScene(url: URL, usePreviousCamera: Bool, interval: TimeInterval=0.25) {
         guard let view = self.view else {
             log("view is not set.", level: .error)
             return
@@ -199,9 +199,6 @@ public class DemoController: NSObject, Loggable {
 
 
         DispatchQueue.main.async {
-            if (hasCurrent == true) {
-                view.presentScene(nil)
-            }
 
             let nextScene = SKTiledDemoScene(size: view.bounds.size)
             nextScene.scaleMode = .aspectFill
@@ -230,14 +227,18 @@ public class DemoController: NSObject, Loggable {
                 return
             }
 
+            // create the transition
+            //let transition = SKTransition.fade(withDuration: interval)
+            //view.presentScene(nextScene, transition: transition)
+            //nextScene.isPaused = isPaused
+
+
             tilemap.defaultLayer.debugDrawOptions = self.debugDrawOptions
 
             let sceneInfo = ["hasGraphs": (nextScene.graphs.isEmpty == false),
                              "hasObjects": nextScene.tilemap.getObjects().isEmpty == false]
 
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "updateUIControls"),
-                                            object: nil, userInfo: sceneInfo)
-            
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "updateUIControls"), object: nil, userInfo: sceneInfo)
             nextScene.setupDemoLevel(fileNamed: url.relativePath)
 
             if (hasCurrent == false) {
@@ -270,7 +271,7 @@ public class DemoController: NSObject, Loggable {
             let scene = view.scene as? SKTiledScene else { return }
 
         if let tilemap = scene.tilemap {
-            tilemap.debugDrawOptions = (tilemap.debugDrawOptions.contains(.grid)) ? tilemap.debugDrawOptions.subtracting(.grid) : tilemap.debugDrawOptions.insert(.grid).memberAfterInsert
+            tilemap.debugDrawOptions = (tilemap.debugDrawOptions.contains(.drawGrid)) ? tilemap.debugDrawOptions.subtracting([.drawGrid, .drawBounds]) : tilemap.debugDrawOptions.insert([.drawGrid, .drawBounds]).memberAfterInsert
         }
     }
 
@@ -283,7 +284,7 @@ public class DemoController: NSObject, Loggable {
 
         if let tilemap = scene.tilemap {
             for tileLayer in tilemap.tileLayers() where tileLayer.graph != nil {
-                tileLayer.debugDrawOptions = (tileLayer.debugDrawOptions.contains(.graph)) ? tileLayer.debugDrawOptions.subtracting(.graph) : tileLayer.debugDrawOptions.insert(.graph).memberAfterInsert
+                tileLayer.debugDrawOptions = (tileLayer.debugDrawOptions.contains(.drawGraph)) ? tileLayer.debugDrawOptions.subtracting([.drawGrid, .drawBounds, .drawGraph]) : tileLayer.debugDrawOptions.insert([.drawGrid, .drawBounds, .drawGraph]).memberAfterInsert
             }
         }
     }
@@ -296,7 +297,9 @@ public class DemoController: NSObject, Loggable {
             let scene = view.scene as? SKTiledScene else { return }
 
         if let tilemap = scene.tilemap {
-            tilemap.debugDrawOptions = (tilemap.debugDrawOptions.contains(.drawObjectBounds)) ? tilemap.debugDrawOptions.subtracting(.drawObjectBounds) : tilemap.debugDrawOptions.insert(.drawObjectBounds).memberAfterInsert
+            for objectLayer in tilemap.objectGroups() {
+                objectLayer.debugDrawOptions = (objectLayer.debugDrawOptions.contains(.drawObjectBounds)) ? objectLayer.debugDrawOptions.subtracting(.drawObjectBounds) : objectLayer.debugDrawOptions.insert(.drawObjectBounds).memberAfterInsert
+            }
         }
     }
 

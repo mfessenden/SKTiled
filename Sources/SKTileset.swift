@@ -53,7 +53,7 @@ public class SKTileset: SKTiledObject {
     public var source: String!                                     // texture name (if created from source)
 
     // tile data
-    private var tileData: Set<SKTilesetData> = []                // tile data attributes
+    private var tileData: Set<SKTilesetData> = []                  // tile data attributes
     public var dataCount: Int { return tileData.count }
 
     // tileset properties
@@ -192,10 +192,11 @@ public class SKTileset: SKTiledObject {
     /**
      Add tile texture data from a sprite sheet image.
 
-     - parameter source:  `String` image named referenced in the tileset.
-     - parameter replace: `Bool` replace the current texture.
+     - parameter source:      `String` image named referenced in the tileset.
+     - parameter replace:     `Bool` replace the current texture.
+     - parameter transparent: `String?` optional transparent color hex value.
      */
-    public func addTextures(fromSpriteSheet source: String, replace: Bool=false, transparent: String?=nil) -> TimeInterval {
+    public func addTextures(fromSpriteSheet source: String, replace: Bool=false, transparent: String?=nil) {
         let timer = Date()
         self.source = source
 
@@ -214,7 +215,6 @@ public class SKTileset: SKTiledObject {
                 sourceTexture = processedTexture
             }}
         }
-
 
         let textureWidth = Int(sourceTexture.size().width)
         let textureHeight = Int(sourceTexture.size().height)
@@ -273,10 +273,7 @@ public class SKTileset: SKTiledObject {
         if (replace == false) {
             let timeStamp = String(format: "%.\(String(3))f", tilesetBuildTime)
             Logger.default.cache(LogEvent("tileset \"\(name)\" built in: \(timeStamp)s (\(tilesAdded) tiles)", level: .debug, caller: self.logSymbol))
-
         }
-
-        return tilesetBuildTime
     }
 
     // MARK: - Tile Data
@@ -476,7 +473,7 @@ public class SKTileset: SKTiledObject {
 }
 
 
-public func ==(lhs: SKTileset, rhs: SKTileset) -> Bool {
+public func == (lhs: SKTileset, rhs: SKTileset) -> Bool {
     return (lhs.hashValue == rhs.hashValue)
 }
 

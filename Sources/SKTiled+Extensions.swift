@@ -126,8 +126,8 @@ public func replaceColor(texture: SKTexture, color: SKColor) -> SKTexture? {
  - parameter url:           `URL` directory path to write to.
  */
 public func writeMapToFiles(tilemap: SKTilemap, url: URL) {
-    var tileLayers: [TiledLayerObject] = tilemap.tileLayers().sorted(by: { $0.realIndex < $1.realIndex }) as [TiledLayerObject]
-    tileLayers.insert(tilemap.defaultLayer as TiledLayerObject, at: 0)
+    let tileLayers: [SKTiledLayerObject] = tilemap.tileLayers().sorted(by: { $0.realIndex < $1.realIndex }) as [SKTiledLayerObject]
+    //tileLayers.insert(tilemap.defaultLayer as SKTiledLayerObject, at: 0)
     for (idx, layer) in tileLayers.enumerated() {
         if let layerTexture = layer.render() {
             writeToFile(layerTexture.cgImage(), url: url.appendingPathComponent("\(String(format: "%02d", idx))-\(layer.layerName).png"))
@@ -202,6 +202,14 @@ public extension Int {
         } else {
             return 1 + numberOfDigits(in: number/10)
         }
+    }
+
+    public init(bitComponents : [Int]) {
+        self = bitComponents.reduce(0, +)
+    }
+
+    public func bitComponents() -> [Int] {
+        return (0 ..< 8*MemoryLayout<Int>.size).map({ 1 << $0 }).filter( { self & $0 != 0 })
     }
 }
 
@@ -726,7 +734,7 @@ public extension String {
      */
     public func zfill(length: Int, pattern: String="0", padLeft: Bool=true) -> String {
         var filler = ""
-        let padamt: Int = length - (!(characters.isEmpty) ? length - characters.count : 0)
+        let padamt: Int = length - characters.count > 0 ? length - characters.count : 0
         if padamt <= 0 { return self }
         for _ in 0..<padamt {
             filler += pattern
@@ -1223,12 +1231,12 @@ public func normalize(_ value: CGFloat, _ minimum: CGFloat, _ maximum: CGFloat) 
 /**
  Visualize a layer grid as a texture.
 
- - parameter layer:      `TiledLayerObject` layer instance.
+ - parameter layer:      `SKTiledLayerObject` layer instance.
  - parameter imageScale: `CGFloat` image scale multiplier.
  - parameter lineScale:  `CGFloat` line scale multiplier.
  - returns:              `CGImage` visual grid texture.
  */
-internal func drawLayerGrid(_ layer: TiledLayerObject,
+internal func drawLayerGrid(_ layer: SKTiledLayerObject,
                             imageScale: CGFloat=8,
                             lineScale: CGFloat=1) -> CGImage {
     // get the ui scale value for the device
@@ -1355,13 +1363,13 @@ internal func drawLayerGrid(_ layer: TiledLayerObject,
 /**
  Generate a visual pathfinding graph texture.
 
- - parameter layer:      `TiledLayerObject` layer instance.
+ - parameter layer:      `SKTiledLayerObject` layer instance.
  - parameter imageScale: `CGFloat` image scale multiplier.
  - parameter lineScale:  `CGFloat` line scale multiplier.
 
  - returns: `CGImage` visual graph texture.
  */
-internal func drawLayerGraph(_ layer: TiledLayerObject, imageScale: CGFloat=8, lineScale: CGFloat=1) -> CGImage {
+internal func drawLayerGraph(_ layer: SKTiledLayerObject, imageScale: CGFloat=8, lineScale: CGFloat=1) -> CGImage {
 
     let uiScale: CGFloat = SKTiledContentScaleFactor
 

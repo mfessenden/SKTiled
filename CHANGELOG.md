@@ -15,7 +15,8 @@ Change Log
 - add `SKTilemap.heightOffset`
 - add `SKTilemap.showObjects(forLayers:)`
 - add `TileCollisionShape`
-- rename `TiledLayerObject.boundingRect` -> `TiledLayerObject.bounds`
+- rename `TiledLayerObject` -> `SKTiledLayerObject`
+- rename `TiledLayerObject.boundingRect` -> `SKTiledLayerObject.bounds`
 - rename `SKTiledSceneCamera.boundingRect` -> `SKTiledSceneCamera.bounds`
 - rename `SKTilemap.addLayer(_:base:)` -> `SKTilemap.addLayer(_:group:clamped:)->(success:layer:)`
 
@@ -96,7 +97,7 @@ Change Log
 - add `SKTileObject.showBounds`
 - rename `SKTile.getVertices()` -> `SKTile.getVertices(offset:)`
 
-- rename `TiledLayerGrid` -> `TiledDebugDrawNode`
+- rename `TiledLayerGrid` -> `SKTiledDebugDrawNode`
 - add `BackgroundLayer` layer type
 - add `SKTilemapDelegate.zDeltaForLayers`
 

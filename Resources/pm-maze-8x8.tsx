@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="maze-8x8" tilewidth="8" tileheight="8" spacing="1" tilecount="440" columns="22">
+<tileset name="maze-8x8" tilewidth="8" tileheight="8" spacing="1" tilecount="176" columns="22">
  <properties>
   <property name="walkable" value="34,37,56,59,78,81"/>
  </properties>
- <image source="pm-maze-8x8.png" trans="800080" width="197" height="179"/>
+ <image source="pm-maze-8x8.png" trans="800080" width="197" height="71"/>
  <tile id="4">
   <properties>
    <property name="isDynamic" type="bool" value="true"/>

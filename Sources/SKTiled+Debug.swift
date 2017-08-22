@@ -27,11 +27,8 @@ public var TILE_BOUNDS_USE_OFFSET: Bool = false
  DebugDrawOptions.drawGrid               // visualize the objects's grid (tilemap & layers).
  DebugDrawOptions.drawBounds             // visualize the objects's bounds.
  DebugDrawOptions.drawGraph              // visualize a layer's pathfinding graph.
- DebugDrawOptions.drawObjectBounds       // Draw an object's bounds.
- DebugDrawOptions.drawTileBounds         // Draw a tile's bounds.
- DebugDrawOptions.drawMouseOverObject    // Draw an empty tile shape.
- DebugDrawOptions.drawBackground         // Draw layer background.
- DebugDrawOptions.drawAnchor             // Draw anchor point.
+ DebugDrawOptions.drawObjectBounds       // draw an object's bounds.
+ DebugDrawOptions.drawTileBounds         // draw a tile's bounds.
  ```
 
  */
@@ -43,23 +40,20 @@ public struct DebugDrawOptions: OptionSet {
     }
 
     /// Draw the layer's grid.
-    static public let drawGrid             = DebugDrawOptions(rawValue: 1 << 0)
+    static public let drawGrid              = DebugDrawOptions(rawValue: 1 << 0)
     /// Draw the layer's boundary shape.
-    static public let drawBounds           = DebugDrawOptions(rawValue: 1 << 1)
+    static public let drawBounds            = DebugDrawOptions(rawValue: 1 << 1)
     /// Draw the layer's pathfinding graph.
-    static public let drawGraph            = DebugDrawOptions(rawValue: 1 << 2)
+    static public let drawGraph             = DebugDrawOptions(rawValue: 1 << 2)
     /// Draw object bounds.
-    static public let drawObjectBounds     = DebugDrawOptions(rawValue: 1 << 3)
+    static public let drawObjectBounds      = DebugDrawOptions(rawValue: 1 << 3)
     /// Draw tile bounds.
-    static public let drawTileBounds       = DebugDrawOptions(rawValue: 1 << 4)
-    static public let drawMouseOverObject  = DebugDrawOptions(rawValue: 1 << 5)
-    static public let drawBackground       = DebugDrawOptions(rawValue: 1 << 6)
-    static public let drawAnchor           = DebugDrawOptions(rawValue: 1 << 7)
+    static public let drawTileBounds        = DebugDrawOptions(rawValue: 1 << 4)
+    static public let drawMouseOverObject   = DebugDrawOptions(rawValue: 1 << 5)
+    static public let drawBackground        = DebugDrawOptions(rawValue: 1 << 6)
+    static public let drawAnchor            = DebugDrawOptions(rawValue: 1 << 7)
 
-    static public let grid:    DebugDrawOptions  = [.drawGrid, .drawBounds]
-    static public let graph:   DebugDrawOptions  = [.grid, .drawGraph]
-    static public let objects: DebugDrawOptions  = [.drawObjectBounds, .drawTileBounds]
-    static public let all:     DebugDrawOptions  = [.grid, .graph, .drawObjectBounds,
+    static public let all: DebugDrawOptions = [.drawGrid, .drawBounds, .drawGraph, .drawObjectBounds,
                                                     .drawObjectBounds, .drawMouseOverObject,
                                                     .drawBackground, .drawAnchor]
 }
@@ -67,9 +61,9 @@ public struct DebugDrawOptions: OptionSet {
 
 /// Sprite object for visualizaing grid & graph.
 // TODO: at some point the grid & graph textures should be a shader.
-internal class TiledDebugDrawNode: SKNode {
+internal class SKTiledDebugDrawNode: SKNode {
 
-    private var layer: TiledLayerObject                     // parent layer
+    private var layer: SKTiledLayerObject                     // parent layer
 
     private var gridSprite: SKSpriteNode!
     private var graphSprite: SKSpriteNode!
@@ -79,7 +73,7 @@ internal class TiledDebugDrawNode: SKNode {
     private var graphTexture: SKTexture! = nil              // GKGridGraph texture
     private var anchorKey: String = "LAYER_ANCHOR"
 
-    init(tileLayer: TiledLayerObject) {
+    init(tileLayer: SKTiledLayerObject) {
         layer = tileLayer
         super.init()
         setup()
@@ -162,9 +156,6 @@ internal class TiledDebugDrawNode: SKNode {
      Update the node with the various options.
      */
     func update() {
-
-        Logger.default.log("debug options: \(debugDrawOptions.rawValue), hidden: \(isHidden)", level: .debug)
-
         if self.debugDrawOptions.contains(.drawGrid) {
             self.drawGrid()
         } else {
@@ -188,8 +179,6 @@ internal class TiledDebugDrawNode: SKNode {
         } else {
             childNode(withName: anchorKey)?.removeFromParent()
         }
-
-
     }
 
     /**
@@ -331,8 +320,8 @@ internal class TiledDebugDrawNode: SKNode {
 
         // generate the texture
         if (graphTexture == nil) {
-            let gridImage = drawLayerGraph(self.layer, imageScale: imageScale, lineScale: lineScale)
-            graphTexture = SKTexture(cgImage: gridImage)
+            let graphImage = drawLayerGraph(self.layer, imageScale: imageScale, lineScale: lineScale)
+            graphTexture = SKTexture(cgImage: graphImage)
             graphTexture.filteringMode = .linear
         }
 
@@ -380,7 +369,7 @@ internal class TileShape: SKShapeNode {
     var tileSize: CGSize
     var orientation: SKTilemap.TilemapOrientation = .orthogonal
     var color: SKColor
-    var layer: TiledLayerObject
+    var layer: SKTiledLayerObject
     var coord: CGPoint
     var useLabel: Bool = false
 
@@ -389,7 +378,7 @@ internal class TileShape: SKShapeNode {
         return layer.tilemap.currentZoom
     }
 
-    init(layer: TiledLayerObject, coord: CGPoint, tileColor: SKColor, withLabel: Bool=false) {
+    init(layer: SKTiledLayerObject, coord: CGPoint, tileColor: SKColor, withLabel: Bool=false) {
         self.layer = layer
         self.coord = coord
         self.tileSize = layer.tileSize
@@ -400,7 +389,7 @@ internal class TileShape: SKShapeNode {
         drawObject()
     }
 
-    init(layer: TiledLayerObject, tileColor: SKColor, withLabel: Bool=false) {
+    init(layer: SKTiledLayerObject, tileColor: SKColor, withLabel: Bool=false) {
         self.layer = layer
         self.coord = CGPoint.zero
         self.tileSize = layer.tileSize
@@ -728,10 +717,10 @@ public enum LoggingLevel: Int {
     case fatal
     case error
     case warning
-    case gcd
     case success
     case status
     case info
+    case gcd
     case debug
     case custom
 }
@@ -785,6 +774,7 @@ public class Logger {
         }
     }
 
+    /// Print a formatted log message to output.
     public func log(_ message: String, level: LoggingLevel = .info,
                     symbol: String? = nil, file: String = #file,
                     method: String = #function, line: UInt = #line) {
@@ -796,13 +786,16 @@ public class Logger {
                                                  symbol: symbol, file: file,
                                                  method: method, line: line)
             print(formattedMessage)
+            return
         }
     }
 
+    /// Queue log events to be run later.
     public func cache(_ event: LogEvent) {
         logcache.insert(event)
     }
 
+    /// Run and release log events asyncronously.
     public func release() {
         for event in logcache.sorted() {
             logQueue.async {
@@ -812,6 +805,7 @@ public class Logger {
         logcache = []
     }
 
+    /// Formatted time stamp
     private var timeStamp: String {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
@@ -856,7 +850,7 @@ public class Logger {
 
 
         if (level == .success) {
-            return " ❊ Success! \(message)"
+            return "\n ❊ Success! \(message)"
         }
 
 
@@ -870,14 +864,14 @@ public class Logger {
 }
 
 
-
+// Loggable object protcol.
 public protocol Loggable {
     var logSymbol: String { get }
     func log(_ message: String, level: LoggingLevel, file: String, method: String, line: UInt)
 }
 
 
-// Methods for all loggable objects
+// Methods for all loggable objects.
 extension Loggable {
     public var logSymbol: String {
         return String(describing: type(of: self))

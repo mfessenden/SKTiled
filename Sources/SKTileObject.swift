@@ -500,7 +500,6 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     /**
      Draw the text object. Scale factor is to allow for text to render clearly at higher zoom levels.
 
-     - parameter textValue: `String` text string.
      - parameter withScale: `CGFloat` size scale.
      - returns: `CGImage` rendered text image.
      */

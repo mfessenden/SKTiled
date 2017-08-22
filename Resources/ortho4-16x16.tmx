@@ -423,7 +423,7 @@
    eJxjYBiZYA2VzTs8xMyj1P+3CJhPKUA3nxZgChBPRcLT6GAnLvtHAXEAABIgCsA=
   </data>
  </layer>
- <layer name="Graph" width="20" height="15" visible="0">
+ <layer name="Graph" width="20" height="15">
   <data encoding="base64" compression="zlib">
    eJzVkkkOgDAMA9NHAv//CUckY0+CONVSpS6JM2lb9ehY9ZLb63Qu9tOheaoL/Jy/5lF94nIxk7pfWLXGHz+KJb/EQIxpne7Onbkcx9Sxpbl7O3pn4lOO1ENinP61Sd8TdX95V90ezCL3
   </data>
@@ -445,7 +445,7 @@
    eJxjYCAOKDAyMCgyEqmYCGAONMuCiubRCwQA3RxIRXenA83KGOBw8APa709FN6QCzUojwbwgoNpgKtqfCTQriw5h+gmIP1PRPE6gm7mGYJ6gJwAANG0HCw==
   </data>
  </layer>
- <group name="Objects">
+ <group name="Objects" visible="0">
   <objectgroup name="Collisions">
    <properties>
     <property name="lineWidth" type="float" value="1.5"/>
@@ -569,4 +569,9 @@
    </object>
   </objectgroup>
  </group>
+ <group name="TopLevel1"/>
+ <group name="TopLevel2"/>
+ <group name="TopLevel3"/>
+ <group name="TopLevel4"/>
+ <group name="TopLevel5"/>
 </map>

@@ -8,78 +8,52 @@
   <property name="name" value="Maze - Pacman"/>
  </properties>
  <tileset firstgid="1" source="pm-maze-8x8.tsx"/>
- <tileset firstgid="441" source="blinky-16x16.tsx"/>
- <tileset firstgid="482" source="inky-16x16.tsx"/>
- <tileset firstgid="523" source="pinky-16x16.tsx"/>
- <tileset firstgid="564" source="clyde-16x16.tsx"/>
- <tileset firstgid="605" source="pacman-16x16.tsx"/>
- <tileset firstgid="628" source="mspacman-16x16.tsx"/>
- <tileset firstgid="651" source="fruit-16x16.tsx"/>
- <group name="MAZE1">
-  <layer name="Maze" width="28" height="36">
-   <data encoding="base64" compression="zlib">
-   eJzNVtFKA0EMjApWwfO1VU8F39UWKoKvKlh98f+/xhTvYBomuWy3Vw0MHLns5m52kqzI+Ha+hxz/xQ4UF4WYKxZbrDtUHDnf0QTf+KFYBe+9te+Q70Rx1uGU+NCP+bwYth/mW+/x3GFFfNafibE+zHejuOtwS3zWn4mxvj4f47vZ0TP6MufnnaV3ZtnzY/+P54TvJ4rjgnjLJ7NGfN0P+aN6mCoeDVD3reTr4dr47b4z5zuwRhhvnj4nsqn9rGG+qI9Yw/jafPfyy8kVxF12voeCfKyvMt6i70WN41q2t2e2fofyDdV7b1ZDqE+s38z/2Xpne0fr8TxexZ9rbyS+Ri8RP73Z/lCrz0z/zORj94lMXWf6QMl9As3yyfpAhvO/vE/0fGEPrJnv2HujecQ0mdUnPjPO1/mWEnO17XxnnD8pPsXnqna+W86/ZJPPjA5L/binp0+c16XzvSX7DN2XPGT0Ga2L7kueleoWzbsvjQXvvjSmvewx17fiB9LGRDY=
-  </data>
-  </layer>
+ <tileset firstgid="177" source="blinky-16x16.tsx"/>
+ <tileset firstgid="218" source="inky-16x16.tsx"/>
+ <tileset firstgid="259" source="pinky-16x16.tsx"/>
+ <tileset firstgid="300" source="clyde-16x16.tsx"/>
+ <tileset firstgid="341" source="pacman-16x16.tsx"/>
+ <tileset firstgid="364" source="mspacman-16x16.tsx"/>
+ <tileset firstgid="387" source="fruit-16x16.tsx"/>
+ <group name="Layout">
   <layer name="Dots" width="28" height="36">
    <data encoding="base64" compression="zlib">
    eJxjYBgFQx34kIipoQ+bG3C5jRQ12MTM6GCfGQF5WvqP1HggF5PiHkKAUvNobR8p6Z5UcXR5Qu4lFZCjd9S+UftG7Ru1jxp6h3t7YiDaL6SEFTlqCLWRqFXf4tNLL/voXb+TkteGqj564FFAfQAABnJIGQ==
   </data>
   </layer>
- </group>
- <layer name="Graph" width="28" height="36" visible="0">
-  <data encoding="base64" compression="zlib">
-   eJzlVcENxCAMY4MOcVMg3Q7df5vT/RCyY9O0hes9LEUpiWOj0K2Usv0R9kV7ZefoUUl+F3VRbaSbeaHqnH5P50N+15PiNpfRn/FrBp/S30Ll1T64d+7qdvxYia/15EXi0fs+oiNz/i6+N8D3fL+/ig/tO+r9dD+d+uhfiDz/NX1n8pXAHxT3fZ3zqC6ad1SH6jeDr9fM/GHvJ3sfUG81e3T/mdq7+JAnzO/RfCXf1fxHda9S58LZawZ3titwJf9MbR846IMA
-  </data>
- </layer>
- <group name="ACTORS">
-  <layer name="Actors" width="28" height="36">
+  <layer name="Maze" width="28" height="36">
    <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUjIJRMAqoA44zDrQLhgf4Bg1HcSYI7cE0cG4ZBaNgFNAHZI3m81EwCkYBEQAAKxQCjw==
+   eJzNVtFKA0EMjApWwfO1VU8F39UWKoKvKlh98f+/xhTvYBomuWy3Vw0MHLns5m52kqzI+Ha+hxz/xQ4UF4WYKxZbrDtUHDnf0QTf+KFYBe+9te+Q70Rx1uGU+NCP+bwYth/mW+/x3GFFfNafibE+zHejuOtwS3zWn4mxvj4f47vZ0TP6MufnnaV3ZtnzY/+P54TvJ4rjgnjLJ7NGfN0P+aN6mCoeDVD3reTr4dr47b4z5zuwRhhvnj4nsqn9rGG+qI9Yw/jafPfyy8kVxF12voeCfKyvMt6i70WN41q2t2e2fofyDdV7b1ZDqE+s38z/2Xpne0fr8TxexZ9rbyS+Ri8RP73Z/lCrz0z/zORj94lMXWf6QMl9As3yyfpAhvO/vE/0fGEPrJnv2HujecQ0mdUnPjPO1/mWEnO17XxnnD8pPsXnqna+W86/ZJPPjA5L/binp0+c16XzvSX7DN2XPGT0Ga2L7kueleoWzbsvjQXvvjSmvewx17fiB9LGRDY=
   </data>
   </layer>
-  <layer name="Maze2" width="28" height="36">
+ </group>
+ <group name="Graphs">
+  <layer name="Player" width="28" height="36" visible="0">
+   <data encoding="base64" compression="zlib">
+   eJzlVcENxCAMY4MOcVMg3Q7df5vT/RCyY9O0hes9LEUpiWOj0K2Usv0R9kV7ZefoUUl+F3VRbaSbeaHqnH5P50N+15PiNpfRn/FrBp/S30Ll1T64d+7qdvxYia/15EXi0fs+oiNz/i6+N8D3fL+/ig/tO+r9dD+d+uhfiDz/NX1n8pXAHxT3fZ3zqC6ad1SH6jeDr9fM/GHvJ3sfUG81e3T/mdq7+JAnzO/RfCXf1fxHda9S58LZawZ3titwJf9MbR846IMA
+  </data>
+  </layer>
+  <layer name="Ghosts" width="28" height="36" visible="0">
+   <data encoding="base64" compression="zlib">
+   eJzlV1EKhSAQ9AYd4kF3ELpD979N9BEsMuOsbZb1hAHZXGdnTMUppTT9EeZB54pgBcgkvoq8Wq7NQzWw2lrGePO+xIf8zhf1bSyiP+LXE3xKv4WKq/3gXXOvbo8fI/FZT36k37reZ3RExt/FtwDs48v9q/jQfkdzf91PT37tLkSev03flXyp4o/t22Zzj6buI1UPq7HkU1q9+nvzlZqZP+z8ZOcDmltpjvwvtdy7+JAnzO/WeCbfVf1ndY+S54VnXzN4a+uBnm+1J9+BGzepf0Y=
+  </data>
+  </layer>
+ </group>
+ <layer name="Actors" width="28" height="36">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMAqoA/YPtAOGCXgHpfkZIbQD44A5ZRSMglFAJ5A0ms9HwSgYBUQAANWvAmI=
+  </data>
+ </layer>
+ <group name="HUD">
+  <layer name="Door" width="28" height="36">
    <data encoding="base64" compression="zlib">
    eJztwzENAAAIA7A9+LfMMxOENmkCADdNAwB8sGmEAAs=
   </data>
   </layer>
-  <objectgroup name="Objects" visible="0">
-   <object id="111" name="apple" type="Fruit" gid="651" x="104" y="172" width="16" height="16" visible="0"/>
-   <object id="115" name="ready-label" type="Label" x="88" y="160" width="48" height="8">
-    <text fontfamily="Nintendo-Arcade" pixelsize="7" wrap="1" color="#fc0006">ready!</text>
-   </object>
-  </objectgroup>
- </group>
- <group name="HUD">
   <layer name="Fruit" width="28" height="36">
    <data encoding="base64" compression="zlib">
-   eJztzDEKACAMBMHg9wUbEb9rkyoIgvVMs81xEQAAAMCv1e596bmbpTs7ys8BFU8Epg==
+   eJztzEEKgCAURdHvOiOsUcNI2oHgJKIt94IPkQgtwHvg8v5ANHsVtavVviY1q+j3I6lBLWpTowEAAAAA0J8ztPdP9ndHtZdvqf65AanrCUk=
   </data>
   </layer>
-  <layer name="Scores" width="28" height="36">
-   <data encoding="base64" compression="zlib">
-   eJztycEJgDAUBNFfQRoUiZ4UJTf7JyMEQg6aBubBwMJGdA8VOmO00U657ddNCx100Rrf0s8nSZIkSZLmKru2BMw=
-  </data>
-  </layer>
-  <group name="BONUS">
-   <layer name="Bonus" width="28" height="36" offsetx="0" offsety="4">
-    <data encoding="base64" compression="zlib">
-   eJztzkEJAAAIBLDD+pY2hA9BtgRLAAD+67oeAMDOAM5HAI4=
-  </data>
-   </layer>
-  </group>
-  <layer name="Messages" width="28" height="36">
-   <data encoding="base64" compression="zlib">
-   eJztzkEJACAUBcHfv42gBbxZwTS+DF4EmYG9bxUAwL9mGqmlnlbaT48A4M4BlkoEgA==
-  </data>
-  </layer>
-  <objectgroup name="Score-HUD" visible="0">
-   <object id="116" name="high-score-label" type="Label" x="72" y="0" width="80" height="8">
-    <text fontfamily="Nintendo-Arcade" pixelsize="7" wrap="1" color="#fff76f">high score</text>
-   </object>
-   <object id="117" name="1up-label" type="Label" x="24" y="0" width="24" height="8">
-    <text fontfamily="Nintendo-Arcade" pixelsize="7" wrap="1" color="#fffb52">1up</text>
-   </object>
-  </objectgroup>
  </group>
 </map>

@@ -29,7 +29,7 @@ public extension SKTilemap {
             }
 
             if ["debug", "debugmode", "debugdraw"].contains(lattr) {
-                debugDrawOptions = .grid
+                debugDrawOptions = [.drawGrid, .drawBounds]
             }
 
             if (lattr == "gridcolor") {
@@ -163,13 +163,29 @@ public extension SKTileset {
     public func parseProperties(completion: (() -> ())?) {
         if (ignoreProperties == true) { return }
          if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
-        log("tileset \"\(name)\" parsing properties", level: .gcd)
+
+        for (attr, value) in properties {
+            let lattr = attr.lowercased()
+            if (lattr == "walkable") {
+                if (keyValuePair(key: attr) != nil) {
+                    let walkableIDs = integerArrayForKey(attr)
+                    log("walkable id: \(walkableIDs)", level: .debug)
+                    for id in walkableIDs {
+                        if let tiledata = getTileData(localID: id) {
+                            tiledata.walkable = true
+                        }
+                    }
+                }
+            }
+        }
+
+
         if completion != nil { completion!() }
     }
 }
 
 
-public extension TiledLayerObject {
+public extension SKTiledLayerObject {
     // MARK: - Properties
 
     /**
@@ -351,6 +367,11 @@ public extension SKTilesetData {
             if (lattr == "weight") {
                 weight = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : weight
             }
+
+            if (lattr == "walkable") {
+                walkable = boolForKey(attr)
+            }
+
         }
 
         if completion != nil { completion!() }

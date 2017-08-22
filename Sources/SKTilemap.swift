@@ -129,7 +129,7 @@ internal let TileSize32x32 = CGSize(width: 32, height: 32)
  ```swift
  SKTilemapDelegate.didBeginParsing(_ tilemap: SKTilemap)
  SKTilemapDelegate.didAddTileset(_ tileset: SKTileset)
- SKTilemapDelegate.didAddLayer(_ layer: TiledLayerObject)
+ SKTilemapDelegate.didAddLayer(_ layer: SKTiledLayerObject)
  SKTilemapDelegate.didReadMap(_ tilemap: SKTilemap)
  SKTilemapDelegate.didRenderMap(_ tilemap: SKTilemap)
  ```
@@ -152,7 +152,7 @@ public protocol SKTilemapDelegate: class {
     var zDeltaForLayers: CGFloat { get }
     func didBeginParsing(_ tilemap: SKTilemap)
     func didAddTileset(_ tileset: SKTileset)
-    func didAddLayer(_ layer: TiledLayerObject)
+    func didAddLayer(_ layer: SKTiledLayerObject)
     func didReadMap(_ tilemap: SKTilemap)
     func didRenderMap(_ tilemap: SKTilemap)
     func didAddPathfindingGraph(_ graph: GKGridGraph<GKGridGraphNode>)
@@ -245,7 +245,7 @@ public class SKTilemap: SKNode, SKTiledObject {
     public var tilesets: Set<SKTileset> = []                        // tilesets
 
     // current layers
-    private var _layers: Set<TiledLayerObject> = []                 // tile map layers
+    private var _layers: Set<SKTiledLayerObject> = []                 // tile map layers
     public var layerCount: Int { return self.layers.count }         // layer count attribute
 
     /// Default z-position range between layers.
@@ -259,8 +259,8 @@ public class SKTilemap: SKNode, SKTiledObject {
     }
 
     /// Returns a flattened array of child layers.
-    public var layers: [TiledLayerObject] {
-        var result: [TiledLayerObject] = []
+    public var layers: [SKTiledLayerObject] {
+        var result: [SKTiledLayerObject] = []
         for layer in _layers.sorted(by: { $0.index > $1.index }) where layer as? BackgroundLayer == nil {
             result += layer.layers
         }
@@ -301,15 +301,13 @@ public class SKTilemap: SKNode, SKTiledObject {
         }
     }
 
-
     /// Debug visualization options.
-    public var debugDrawOptions: DebugDrawOptions = [] {
-        didSet {
-            defaultLayer.debugDrawOptions = debugDrawOptions
-            var otherLayerOptions = debugDrawOptions
-            otherLayerOptions = otherLayerOptions.subtracting(.grid)
-            log("default: \(defaultLayer.debugDrawOptions.rawValue), map: \(debugDrawOptions.rawValue), other: \(otherLayerOptions)", level: .debug)
-            getLayers().filter({ $0 as? BackgroundLayer == nil }).forEach { $0.debugDrawOptions = otherLayerOptions }
+    public var debugDrawOptions: DebugDrawOptions {
+        get {
+            return defaultLayer.debugDrawOptions
+        } set {
+            defaultLayer.debugDrawOptions = newValue
+            //print("defaultLayer options: \(defaultLayer.debugDrawOptions)")
         }
     }
 
@@ -414,10 +412,10 @@ public class SKTilemap: SKNode, SKTiledObject {
     /**
      Show objects for the given layers.
 
-     - parameter forLayers: `[TiledLayerObject]` include nested layers.
+     - parameter forLayers: `[SKTiledLayerObject]` include nested layers.
      - returns: `[SKTileLayer]` array of tile layers.
      */
-    public func showObjects(forLayers: [TiledLayerObject]) {
+    public func showObjects(forLayers: [SKTiledLayerObject]) {
 
     }
 
@@ -640,7 +638,7 @@ public class SKTilemap: SKNode, SKTiledObject {
         tilesets.insert(tileset)
         tileset.tilemap = self
         tileset.ignoreProperties = ignoreProperties
-        tileset.parseProperties(completion: nil)
+        //tileset.parseProperties(completion: nil)
         tileset.loggingLevel = loggingLevel
     }
 
@@ -656,11 +654,11 @@ public class SKTilemap: SKNode, SKTiledObject {
     /**
      Returns a named tileset from the tilesets set.
 
-     - parameter name: `String` tileset to return.
+     - parameter named: `String` tileset to return.
      - returns: `SKTileset?` tileset object.
      */
-    public func getTileset(named name: String) -> SKTileset? {
-        if let index = tilesets.index(where: { $0.name == name }) {
+    public func getTileset(named: String) -> SKTileset? {
+        if let index = tilesets.index(where: { $0.name == named }) {
             let tileset = tilesets[index]
             return tileset
         }
@@ -683,9 +681,11 @@ public class SKTilemap: SKNode, SKTiledObject {
 
     // MARK: Coordinates
     /**
-     Returns a point for a given coordinate in the layer.
+     Returns a point for a given coordinate in the layer, with optional offset values for x/y.
 
-     - parameter coord: `CGPoint` tile coordinate.
+     - parameter coord:   `CGPoint` tile coordinate.
+     - parameter offsetX: `CGFloat` x-offset value.
+     - parameter offsetY: `CGFloat` y-offset value.
      - returns: `CGPoint` point in layer.
      */
     public func pointForCoordinate(coord: CGPoint, offsetX: CGFloat=0, offsetY: CGFloat=0) -> CGPoint {
@@ -707,18 +707,18 @@ public class SKTilemap: SKNode, SKTiledObject {
      Returns an array of child layers, sorted by index (first is lowest, last is highest).
 
      - parameter recursive: `Bool` include nested layers.
-     - returns: `[TiledLayerObject]` array of layers.
+     - returns: `[SKTiledLayerObject]` array of layers.
      */
-    public func getLayers(recursive: Bool=true) -> [TiledLayerObject] {
+    public func getLayers(recursive: Bool=true) -> [SKTiledLayerObject] {
         return (recursive == true) ? self.layers : Array(self._layers)
     }
 
     /**
      Returns all content layers (ie. not groups). Sorted by zPosition in scene.
 
-     - returns: `[TiledLayerObject]` array of layers.
+     - returns: `[SKTiledLayerObject]` array of layers.
      */
-    public func getContentLayers() -> [TiledLayerObject] {
+    public func getContentLayers() -> [SKTiledLayerObject] {
         return self.layers.filter { $0 as? SKGroupLayer == nil }.sorted(by: { $0.actualZPosition > $1.actualZPosition })
     }
 
@@ -734,12 +734,12 @@ public class SKTilemap: SKNode, SKTiledObject {
     /**
      Add a layer to the current layers set. Automatically sets zPosition based on the `SKTilemap.zDeltaForLayers` property. If the `group` argument is not nil, layer will be added to the group instead.
 
-     - parameter layer:    `TiledLayerObject` layer object.
+     - parameter layer:    `SKTiledLayerObject` layer object.
      - parameter group:    `SKGroupLayer?` optional group layer.
      - parameter clamped:  `Bool` clamp position to nearest pixel.
-     - returns: `(success: Bool, layer: TiledLayerObject)` add was successful, layer added.
+     - returns: `(success: Bool, layer: SKTiledLayerObject)` add was successful, layer added.
      */
-    public func addLayer(_ layer: TiledLayerObject, group: SKGroupLayer? = nil, clamped: Bool = true) -> (success: Bool, layer: TiledLayerObject) {
+    public func addLayer(_ layer: SKTiledLayerObject, group: SKGroupLayer? = nil, clamped: Bool = true) -> (success: Bool, layer: SKTiledLayerObject) {
 
         // if a group is indicated, add it to that instead
         if (group != nil) {
@@ -784,10 +784,10 @@ public class SKTilemap: SKNode, SKTiledObject {
     /**
      Remove a layer from the current layers set.
 
-     - parameter layer: `TiledLayerObject` layer object.
-     - returns: `TiledLayerObject?` removed layer.
+     - parameter layer: `SKTiledLayerObject` layer object.
+     - returns: `SKTiledLayerObject?` removed layer.
      */
-    public func removeLayer(_ layer: TiledLayerObject) -> TiledLayerObject? {
+    public func removeLayer(_ layer: SKTiledLayerObject) -> SKTiledLayerObject? {
         return _layers.remove(layer)
     }
 
@@ -844,10 +844,10 @@ public class SKTilemap: SKNode, SKTiledObject {
 
      - parameter name:      `String` tile layer name.
      - parameter recursive: `Bool` include nested layers.
-     - returns: `[TiledLayerObject]` layer objects.
+     - returns: `[SKTiledLayerObject]` layer objects.
      */
-    public func getLayers(named layerName: String, recursive: Bool=true) -> [TiledLayerObject] {
-        var result: [TiledLayerObject] = []
+    public func getLayers(named layerName: String, recursive: Bool=true) -> [SKTiledLayerObject] {
+        var result: [SKTiledLayerObject] = []
         let layersToCheck = self.getLayers(recursive: recursive)
         if let index = layersToCheck.index(where: { $0.name == layerName }) {
             result.append(layersToCheck[index])
@@ -860,10 +860,10 @@ public class SKTilemap: SKNode, SKTiledObject {
 
      - parameter withPrefix: `String` prefix to match.
      - parameter recursive: `Bool` include nested layers.
-     - returns: `[TiledLayerObject]` layer objects.
+     - returns: `[SKTiledLayerObject]` layer objects.
      */
-    public func getLayers(withPrefix: String, recursive: Bool=true) -> [TiledLayerObject] {
-        var result: [TiledLayerObject] = []
+    public func getLayers(withPrefix: String, recursive: Bool=true) -> [SKTiledLayerObject] {
+        var result: [SKTiledLayerObject] = []
         let layersToCheck = self.getLayers(recursive: recursive)
         if let index = layersToCheck.index(where: { $0.layerName.hasPrefix(withPrefix) }) {
             result.append(layersToCheck[index])
@@ -875,10 +875,10 @@ public class SKTilemap: SKNode, SKTiledObject {
      Return layers at the given path.
 
      - parameter atPath: `String` layer path.
-     - returns: `[TiledLayerObject]` layer objects.
+     - returns: `[SKTiledLayerObject]` layer objects.
      */
-    public func getLayers(atPath: String) -> [TiledLayerObject] {
-        var result: [TiledLayerObject] = []
+    public func getLayers(atPath: String) -> [SKTiledLayerObject] {
+        var result: [SKTiledLayerObject] = []
         if let index = self.layers.index(where: { $0.path == atPath } ) {
             result.append(self.layers[index])
         }
@@ -889,9 +889,9 @@ public class SKTilemap: SKNode, SKTiledObject {
      Returns a layer matching the given UUID.
 
      - parameter uuid: `String` tile layer UUID.
-     - returns: `TiledLayerObject?` layer object.
+     - returns: `SKTiledLayerObject?` layer object.
      */
-    public func getLayer(withID uuid: String) -> TiledLayerObject? {
+    public func getLayer(withID uuid: String) -> SKTiledLayerObject? {
         if let index = layers.index(where: { $0.uuid == uuid } ) {
             let layer = layers[index]
             return layer
@@ -903,9 +903,9 @@ public class SKTilemap: SKNode, SKTiledObject {
      Returns a layer given the index (0 being the lowest).
 
      - parameter index: `Int` layer index.
-     - returns: `TiledLayerObject?` layer object.
+     - returns: `SKTiledLayerObject?` layer object.
      */
-    public func getLayer(atIndex index: Int) -> TiledLayerObject? {
+    public func getLayer(atIndex index: Int) -> SKTiledLayerObject? {
         if let index = _layers.index(where: { $0.index == index } ) {
             let layer = _layers[index]
             return layer
@@ -918,9 +918,9 @@ public class SKTilemap: SKNode, SKTiledObject {
 
      - parameter ofType:    `String` layer type.
      - parameter recursive: `Bool` include nested layers.
-     - returns: `[TiledLayerObject]` array of layers.
+     - returns: `[SKTiledLayerObject]` array of layers.
      */
-    public func getLayers(ofType: String, recursive: Bool=true) -> [TiledLayerObject] {
+    public func getLayers(ofType: String, recursive: Bool=true) -> [SKTiledLayerObject] {
         return getLayers(recursive: recursive).filter { $0.type != nil }.filter { $0.type! == ofType }
     }
 
@@ -1071,10 +1071,10 @@ public class SKTilemap: SKNode, SKTiledObject {
     /**
      Position child layers in relation to the map's anchorpoint.
 
-     - parameter layer: `TiledLayerObject` layer.
+     - parameter layer: `SKTiledLayerObject` layer.
      - parameter clamped: `Bool` layer.
      */
-    internal func positionLayer(_ layer: TiledLayerObject, clamped: Bool = false) {
+    internal func positionLayer(_ layer: SKTiledLayerObject, clamped: Bool = false) {
 
         var layerPos = CGPoint.zero
 
@@ -1750,13 +1750,18 @@ extension SKTilemap {
         // grab the stats from each layer
         let allLayerStats = allLayers.map { $0.layerStatsDescription }
 
-        var prefixes: [String] = ["", "", "", "", "pos", "size", "off", "anc", "zpos", "opac", "graph"]
+        // prefix for each column
+        var prefixes: [String] = ["", "", "", "", "pos", "size", "offset", "anc", "zpos", "opac", "graph"]
+
+        // buffer for each column
         var buffers: [Int] = [1, 2, 0, 0, 1, 1, 1, 1, 1, 1, 1]
         var columnSizes: [Int] = Array(repeating: 0, count: prefixes.count)
 
 
-        for (_, stats) in allLayerStats.enumerated() {
 
+        // get the max column size for each column
+        for (_, stats) in allLayerStats.enumerated() {
+            let columns = stats.map { $0.characters.count }
             for stat in stats {
                 let cindex = Int(stats.index(of: stat)!)
 
@@ -1764,11 +1769,16 @@ extension SKTilemap {
                 let prefix = prefixes[cindex]
                 let buffer = buffers[cindex]
 
+                // if the current stat has characters
                 if colCharacters > 0 {
 
-                    let bufferSize = (prefix.characters.isEmpty == false ) ? prefix.characters.count + buffer : 2
+                    // get the prefix size + buffer
+                    let bufferSize = (prefix.characters.count > 0) ? prefix.characters.count + buffer : 2
+
+                    // this is the size of the column + prefix
                     let columnSize = colCharacters + bufferSize
 
+                    // if this is more than the max, update the column sizes
                     if columnSize > columnSizes[cindex] {
                          columnSizes[cindex] = columnSize
                     }
@@ -1778,12 +1788,22 @@ extension SKTilemap {
 
         for (_, stats) in allLayerStats.enumerated() {
             var layerOutputString = ""
+
+
             for (sidx, stat) in stats.enumerated() {
 
+                // this is the column size to fill
                 let columnSize = columnSizes[sidx]
                 let buffer = buffers[sidx]
 
-                let isLastColumn = (sidx == stats.count - 1)
+                var isLastColumn = (sidx == stats.count - 1)
+                var nextValue: String? = nil
+                let nextIndex = sidx + 1
+
+                if (isLastColumn == false) {
+                    nextValue = stats[nextIndex]
+                }
+
                 // format the prefix for each column
                 var prefix  = ""
                 var divider = ""
@@ -1793,13 +1813,14 @@ extension SKTilemap {
 
                 // for empty values, add an extra buffer
                 var emptyBuffer = 2
-                if (stat.characters.isEmpty == false) {
+                if (stat.characters.count > 0) {
                     emptyBuffer = 0
                     prefix = prefixes[sidx]
-                    if (prefix.characters.isEmpty == false) {
+                    if (prefix.characters.count > 0) {
                         divider = ": "
-                        if isLastColumn == false {
-                            comma = ", "
+                        // for all columns but the last, add a comma
+                        if (isLastColumn == false) {
+                            comma = (nextValue != nil) ? ", " : ""
                         }
                         prefix = "\(prefix)\(divider)"
                     }
@@ -1808,13 +1829,21 @@ extension SKTilemap {
                 }
 
                 let fillSize = columnSize + comma.characters.count + buffer + emptyBuffer
+                // pad each string to the right
                 layerOutputString += currentColumnValue.zfill(length: fillSize, pattern: " ", padLeft: false)
             }
-
             outputString += "\n\(layerOutputString)"
         }
 
         print("\n\n" + outputString + "\n\n")
+    }
+
+    // TODO: remove this in master
+    open func betterMapStatistics() {
+        var allLayers = self.layers.filter { $0 as? BackgroundLayer == nil }
+        let allLayerStats = allLayers.map { $0.layerStatsDescription }
+
+        print(allLayerStats)
     }
 }
 
@@ -1846,9 +1875,9 @@ extension SKTilemapDelegate {
     /**
      Called when a layer is added to a tilemap.
 
-     - parameter layer:  `TiledLayerObject` tilemap instance.
+     - parameter layer:  `SKTiledLayerObject` tilemap instance.
      */
-    public func didAddLayer(_ layer: TiledLayerObject) {}
+    public func didAddLayer(_ layer: SKTiledLayerObject) {}
 
     /**
      Called when the tilemap is finished parsing.
@@ -1898,15 +1927,18 @@ extension SKTilemapDelegate {
 
 
 // TODO: - Expand these to fascilitate clamping.
-extension SKTilemap: TiledSceneCameraDelegate {
-    public func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {}
-    public func cameraPositionChanged(newPosition: CGPoint) {}
+extension SKTilemap: SKTiledSceneCameraDelegate {
+    public func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {
+
+    }
+
+    public func cameraPositionChanged(newPosition: CGPoint) {
+
+    }
+
     public func cameraZoomChanged(newZoom: CGFloat) {
         let oldZoom = currentZoom
         currentZoom = newZoom
-        self.log("camera zoom: \(currentZoom.roundTo())", level: .debug)
-        getObjects().forEach( { $0.lineWidth = $0.lineWidth * (1 / currentZoom) })
-
     }
 
     #if os(iOS) || os(tvOS)
@@ -1940,8 +1972,8 @@ extension SKTilemap {
      */
     @available(*, deprecated, renamed: "SKTilemap.load(tmxFile:)")
     public class func load(fromFile filename: String,
-                         delegate: SKTilemapDelegate? = nil,
-                         withTilesets: [SKTileset]? = nil) -> SKTilemap? {
+                           delegate: SKTilemapDelegate? = nil,
+                           withTilesets: [SKTileset]? = nil) -> SKTilemap? {
 
         return SKTilemap.load(tmxFile: filename, inDirectory: nil, delegate: delegate, withTilesets: withTilesets)
     }
@@ -1949,10 +1981,10 @@ extension SKTilemap {
     /**
      Returns an array of all child layers, sorted by index (first is lowest, last is highest).
 
-     - returns: `[TiledLayerObject]` array of layers.
+     - returns: `[SKTiledLayerObject]` array of layers.
      */
     @available(*, deprecated, message: "use `getLayers()` instead")
-    public func allLayers() -> [TiledLayerObject] {
+    public func allLayers() -> [SKTiledLayerObject] {
         return layers.sorted(by: { $0.index < $1.index })
     }
 
@@ -1960,11 +1992,11 @@ extension SKTilemap {
      Returns a named tile layer from the layers set.
 
      - parameter name: `String` tile layer name.
-     - returns: `TiledLayerObject?` layer object.
+     - returns: `SKTiledLayerObject?` layer object.
      */
     @available(*, deprecated, message: "use `getLayers(named:)` instead")
-    public func getLayer(named layerName: String) -> TiledLayerObject? {
-        if let index = layers.index(where: { $0.name == layerName } ) {
+    public func getLayer(named layerName: String) -> SKTiledLayerObject? {
+        if let index = layers.index(where: { $0.name == layerName }) {
             let layer = layers[index]
             return layer
         }
@@ -1979,7 +2011,7 @@ extension SKTilemap {
      */
     @available(*, deprecated, message: "use `tileLayers(named:)` instead")
     public func tileLayer(named name: String) -> SKTileLayer? {
-        if let layerIndex = tileLayers().index(where: { $0.name == name } ) {
+        if let layerIndex = tileLayers().index(where: { $0.name == name }) {
             let layer = tileLayers()[layerIndex]
             return layer
         }
@@ -1994,7 +2026,7 @@ extension SKTilemap {
      */
     @available(*, deprecated, message: "use `objectGroups(named:)` instead")
     public func objectGroup(named name: String) -> SKObjectGroup? {
-        if let layerIndex = objectGroups().index(where: { $0.name == name } ) {
+        if let layerIndex = objectGroups().index(where: { $0.name == name }) {
             let layer = objectGroups()[layerIndex]
             return layer
             }
@@ -2004,7 +2036,7 @@ extension SKTilemap {
     /**
      Output a summary of the current scenes layer data.
      */
-    @available(*, deprecated, message: "use `mapStatistics(base:)` instead")
+    @available(*, deprecated, message: "use `mapStatistics(default:)` instead")
     public func debugLayers(reverse: Bool=false) {
         mapStatistics()
     }

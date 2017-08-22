@@ -614,11 +614,6 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
                         self.tilemap?.addTileset(tileset)
                         lastElement = tileset
 
-                        // delegate callback
-                        parsingQueue.sync {
-                            self.mapDelegate?.didAddTileset(tileset)
-                        }
-
                         // set this to nil, just in case we're looking for a collections tileset.
                         currentID = nil
                     }
@@ -660,11 +655,6 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
                     self.tilemap?.addTileset(tileset)
 
                     lastElement = tileset
-
-                    // delegate callback
-                    parsingQueue.sync {
-                        self.mapDelegate?.didAddTileset(tileset)
-                    }
 
                     // set this to nil, just in case we're looking for a collections tileset.
                     currentID = nil
@@ -861,9 +851,13 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
                 } else {
 
                     // add the tileset spritesheet image
-                    let buildTime = tileset.addTextures(fromSpriteSheet: sourceImagePath, replace: false, transparent: attributeDict["trans"])
+                    tileset.addTextures(fromSpriteSheet: sourceImagePath, replace: false, transparent: attributeDict["trans"])
+                    tileset.parseProperties(completion: nil)
 
-                    // TODO: tileset logging
+                    // delegate callback
+                    parsingQueue.sync {
+                        self.mapDelegate?.didAddTileset(tileset)
+                    }
                 }
             }
         }
@@ -1114,7 +1108,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
             }
 
             // layer properties
-            if let layer = lastElement as? TiledLayerObject {
+            if let layer = lastElement as? SKTiledLayerObject {
                 if (currentID == nil) {
                     for (key, value) in properties {
                         layer.properties[key] = value
@@ -1315,6 +1309,11 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
             if tilesetImagesAdded > 0 {
                 if let tileset = lastElement as? SKTileset {
                     Logger.default.cache(LogEvent("tileset \"\(tileset.name)\" finished, \(tilesetImagesAdded) images added.", level: .debug, caller: self.logSymbol))
+                    tileset.isRendered = true
+                    // delegate callback
+                    parsingQueue.sync {
+                        self.mapDelegate?.didAddTileset(tileset)
+                    }
                 }
                 tilesetImagesAdded = 0
             }

@@ -76,9 +76,6 @@ extension SKTiledDemoScene {
 
         // 'l' toggles object & tile bounds drawing
         if eventKey == 0x25 {
-            // if objects are shown...
-            tilemap.debugDrawOptions = (tilemap.debugDrawOptions != []) ? [] : .objects
-            log("tilemap debug options: \(tilemap.debugDrawOptions)", level: .debug)
         }
 
         // 'm' just shows the map bounds
@@ -129,7 +126,7 @@ extension SKTiledDemoScene {
 
         // 'g' shows the grid for the map default layer.
         if eventKey == 0x5 {
-            tilemap.debugDrawOptions = (tilemap.debugDrawOptions.contains(.grid)) ? tilemap.debugDrawOptions.subtracting(.grid) : tilemap.debugDrawOptions.insert(.grid).memberAfterInsert
+            tilemap.debugDrawOptions = (tilemap.debugDrawOptions.contains(.drawGrid)) ? tilemap.debugDrawOptions.subtracting(.drawGrid) : tilemap.debugDrawOptions.insert(.drawGrid).memberAfterInsert
         }
 
         // 'i' shows the center point of each tile
@@ -240,6 +237,26 @@ extension SKTiledDemoScene {
             Logger.default.log("refreshing tile textures.", level: .debug)
             tilemap.tileLayers().filter { $0.graph != nil }.forEach { $0.getTiles().forEach { $0.update() }}
         }
+
+        // 'v' debugs map statistics
+        if eventKey == 0x9 {
+            tilemap.mapStatistics()
+        }
+
+
+
+        // 'w' checks graph names
+        if eventKey == 0xd {
+            for graph in graphs {
+                print(graph)
+            }
+        }
+
+        // 'x' prints new map stats
+        if eventKey == 0x7 {
+            tilemap.betterMapStatistics()
+        }
+
 
         // 'z' draws anchors
         if eventKey == 0x06 {

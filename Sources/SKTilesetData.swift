@@ -81,12 +81,13 @@ public class SKTilesetData: SKTiledObject {
     /// Collision objects.
     public var collisions: [SKTileObject] = []
 
-    public var localID: Int {                       // return the local id for this tile
+    /// Local id for this tile.
+    public var localID: Int {
         guard let tileset = tileset else { return id }
         return tileset.getLocalID(forGlobalID: id)
     }
 
-    // return the global id for this tile
+    // Global id for this tile.
     public var globalID: Int {
         guard let tileset = tileset else { return id }
         return (localID == id) ? (tileset.firstGID + id) : id
@@ -113,7 +114,7 @@ public class SKTilesetData: SKTiledObject {
     /**
      Initialize the data with a tileset, id & texture.
 
-     - parameter tileId:  `Int` unique tile id.
+     - parameter id:      `Int` unique tile id.
      - parameter texture: `SKTexture` tile texture.
      - parameter tileSet: `SKTileset` tileset reference.
      - returns: `SKTilesetData` tile data.
@@ -124,6 +125,7 @@ public class SKTilesetData: SKTiledObject {
         self.texture.filteringMode = .nearest
         self.tileset = tileSet
         self.parseTileID(id: id)
+
         self.tileOffset = tileSet.tileOffset
         self.ignoreProperties = tileSet.ignoreProperties
     }

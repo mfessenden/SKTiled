@@ -25,7 +25,7 @@ public class SKTiledDemoScene: SKTiledScene {
     /// global information label font size.
     private let labelFontSize: CGFloat = 11
 
-    internal var selected: [TiledLayerObject] = []
+    internal var selected: [SKTiledLayerObject] = []
     internal var tileshapes: Set<TileShape> = []
     internal var editMode: Bool = false
     internal var liveMode: Bool = true                     // highlight tiles under the mouse
@@ -69,22 +69,22 @@ public class SKTiledDemoScene: SKTiledScene {
 
     override public func didChangeSize(_ oldSize: CGSize) {
         super.didChangeSize(oldSize)
+        print("[SKTiledDemoScene]: `SKTiledDemoScene.didChangeSize`: \(oldSize.shortDescription)")
         #if os(OSX)
         updateTrackingViews()
         #endif
         updateHud(tilemap)
     }
 
-
     /**
      Add a tile shape to a layer at the given coordinate.
 
-     - parameter layer:     `TiledLayerObject` layer object.
+     - parameter layer:     `SKTiledLayerObject` layer object.
      - parameter x:         `Int` x-coordinate.
      - parameter y:         `Int` y-coordinate.
      - parameter duration:  `TimeInterval` tile life.
      */
-    func addTileToLayer(_ layer: TiledLayerObject, _ x: Int, _ y: Int, useLabel: Bool=true)  {
+    func addTileToLayer(_ layer: SKTiledLayerObject, _ x: Int, _ y: Int, useLabel: Bool=true)  {
         guard let tilemap = tilemap else { return  }
 
         // validate the coordinate
@@ -163,6 +163,8 @@ public class SKTiledDemoScene: SKTiledScene {
             setupPacman()
         case "tetris-dynamics.tmx":
             setupTetris()
+        case "ortho4-16x16.tmx":
+            setupOrtho4()
         default:
             return
         }
@@ -171,8 +173,14 @@ public class SKTiledDemoScene: SKTiledScene {
     func setupPacman() {
 
 
-        guard let graphLayer = tilemap.tileLayers(named: "Graph").first else {
-            log("layer \"Graph\" does not exist.", level: .error)
+        guard let playerGraphLayer = tilemap.tileLayers(named: "Player").first else {
+            log("layer \"layer\" does not exist.", level: .error)
+            return
+        }
+
+
+        guard let ghostsGraphLayer = tilemap.tileLayers(named: "Ghosts").first else {
+            log("layer \"Ghosts\" does not exist.", level: .error)
             return
         }
 
@@ -191,12 +199,17 @@ public class SKTiledDemoScene: SKTiledScene {
         }
 
 
-        let walkable = graphLayer.getTiles().filter { $0.tileData.walkable == true }
+        let playerWalkable = playerGraphLayer.getTiles().filter { $0.tileData.walkable == true }
+        if (playerWalkable.isEmpty == false) {
+            log("\"\(playerGraphLayer.layerName)\": walkable: \(playerWalkable.count)", level: .debug)
+            _ = playerGraphLayer.initializeGraph(walkable: playerWalkable, obstacles: [], diagonalsAllowed: false)
+        }
 
 
-        if (walkable.isEmpty == false) {
-            log("\"\(graphLayer.layerName)\": walkable: \(walkable.count)", level: .debug)
-            _ = graphLayer.initializeGraph(walkable: walkable, obstacles: [], diagonalsAllowed: false)
+        let ghostWalkable = ghostsGraphLayer.getTiles().filter { $0.tileData.walkable == true }
+        if (ghostWalkable.isEmpty == false) {
+            log("\"\(ghostsGraphLayer.layerName)\": walkable: \(ghostWalkable.count)", level: .debug)
+            _ = ghostsGraphLayer.initializeGraph(walkable: ghostWalkable, obstacles: [], diagonalsAllowed: false)
         }
     }
 
@@ -229,6 +242,24 @@ public class SKTiledDemoScene: SKTiledScene {
                 tile.shadowCastBitMask = 1
             }
         }
+    }
+
+    func setupOrtho4() {
+        guard let graphLayer = tilemap.tileLayers(named: "Graph").first else {
+            log("layer \"Graph\" does not exist.", level: .error)
+            return
+        }
+
+        let walkable = graphLayer.getTiles().filter { $0.tileData.walkable == true }
+        log("walkable tiles: \(walkable.count)", level: .debug)
+        if (walkable.isEmpty == false) {
+            log("\"\(graphLayer.layerName)\": walkable: \(walkable.count)", level: .debug)
+            _ = graphLayer.initializeGraph(walkable: walkable, obstacles: [], diagonalsAllowed: false)
+        }
+
+        let chests = tilemap.getTiles(ofType: "chest")
+        chests.forEach { $0.showBounds = true }
+
     }
 
     /**
@@ -327,8 +358,9 @@ public class SKTiledDemoScene: SKTiledScene {
     }
 
     override open func didAddTileset(_ tileset: SKTileset) {
-        log("tileset added: \"\(tileset.name)\", rendered: \(tileset.isRendered)", level: .gcd)
-        tileset.debugTileset()
+        let imageCount = (tileset.isImageCollection == true) ? tileset.dataCount : 0
+        let statusMessage = (imageCount > 0) ? "images: \(imageCount)" : "rendered: \(tileset.isRendered)"
+        log("tileset added: \"\(tileset.name)\", \(statusMessage)", level: .debug)
     }
 
     override open func didRenderMap(_ tilemap: SKTilemap) {
@@ -340,14 +372,6 @@ public class SKTiledDemoScene: SKTiledScene {
         super.didAddPathfindingGraph(graph)
         NotificationCenter.default.post(name: Notification.Name(rawValue: "updateUIControls"),
                                         object: nil, userInfo: ["hasGraphs": true])
-    }
-
-    override open func objectForTileType(named: String?) -> SKTile.Type {
-        return SKTile.self
-    }
-
-    override open func objectForVectorType(named: String?) -> SKTileObject.Type {
-        return SKTileObject.self
     }
 }
 
@@ -394,7 +418,8 @@ extension SKTiledDemoScene {
 extension SKTiledDemoScene {
 
     override open func mouseDown(with event: NSEvent) {
-        log("mouse down...", level: .debug)
+        super.mouseDown(with: event)
+
         guard let tilemap = tilemap,
             let cameraNode = cameraNode else { return }
 
@@ -496,25 +521,20 @@ extension SKTiledDemoScene {
         //let nodesUnderCursor = nodes(at: positionInScene).filter( { $0 as? TileShape != nil }) as! [TileShape]
         //let tilesUnderCursor = nodesUnderCursor.filter( { $0.useLabel == true } )
     }
-    /*
+
+    override open func mouseEntered(with event: NSEvent) {
+        self.mouseTracker.isHidden = false
+    }
+
+    override open func mouseExited(with event: NSEvent) {
+        self.mouseTracker.isHidden = true
+    }
+
     override open func mouseDragged(with event: NSEvent) {
+        super.mouseDragged(with: event)
         guard let cameraNode = cameraNode else { return }
         cameraNode.scenePositionChanged(event)
-        log("mouse dragged...", level: .debug)
     }
-
-    override open func mouseUp(with event: NSEvent) {
-        guard let cameraNode = cameraNode else { return }
-        cameraNode.mouseUp(with: event)
-        selected = []
-        log("mouse up...", level: .debug)
-    }
-
-    override open func scrollWheel(with event: NSEvent) {
-        guard let cameraNode = cameraNode else { return }
-        cameraNode.scrollWheel(with: event)
-        log("scroll wheel...", level: .debug)
-    }*/
 
     override open func keyDown(with event: NSEvent) {
         self.keyboardEvent(eventKey: event.keyCode)
@@ -527,7 +547,7 @@ extension SKTiledDemoScene {
     */
     open func updateTrackingViews() {
         if let view = self.view {
-            let options: NSTrackingAreaOptions = [.mouseMoved, .activeAlways, .cursorUpdate]  // .activeAlways
+            let options: NSTrackingAreaOptions = [.mouseEnteredAndExited, .mouseMoved, .activeAlways, .cursorUpdate]
             // clear out old tracking areas
             for oldTrackingArea in view.trackingAreas {
                 view.removeTrackingArea(oldTrackingArea)

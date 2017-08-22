@@ -13,6 +13,7 @@ import SpriteKit
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+    @IBOutlet weak var currentLoggingLevel: NSMenuItem!
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
@@ -101,6 +102,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     // MARK: - Logging
+
+    func loggingLevelUpdated() {
+        
+    }
 
     @IBAction func loggingLevelDebug(_ sender: Any) {
         Logger.default.loggingLevel = .debug

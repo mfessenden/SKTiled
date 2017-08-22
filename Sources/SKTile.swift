@@ -23,13 +23,14 @@ open class SKTile: SKSpriteNode, Loggable {
     open var tileData: SKTilesetData
     /// Weak reference to the parent layer.
     weak open var layer: SKTileLayer!
-
-    // MARK: Overlap
+    
     fileprivate var tileOverlap: CGFloat = 1.5                      // tile overlap amount
     fileprivate var maxOverlap: CGFloat = 3.0                       // maximum tile overlap
 
-    open var highlightColor: SKColor = TiledObjectColors.lime       // tile highlight color
-    open var highlightDuration: TimeInterval = 0                    // tile highlight duration
+    /// Tile highlight color.
+    open var highlightColor: SKColor = TiledObjectColors.lime
+    /// Tile highlight duration.
+    open var highlightDuration: TimeInterval = 0
 
     public enum PhysicsShape {
         case none
@@ -538,7 +539,6 @@ open class SKTile: SKSpriteNode, Loggable {
 
         pointShape.position = firstPoint
         bounds.setScale(1 / renderQuality)
-
     }
 }
 

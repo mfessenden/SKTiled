@@ -20,7 +20,7 @@ import Cocoa
  Delegate for interacting with `SKTiledSceneCamera`. Classes conforming to this 
  protocol are notified of camera position & zoom changes.
  */
-public protocol TiledSceneCameraDelegate: class {
+public protocol SKTiledSceneCameraDelegate: class {
 
     /**
      Called when the camera positon changes.
@@ -88,7 +88,7 @@ public class SKTiledSceneCamera: SKCameraNode, Loggable {
 
     unowned let world: SKNode
     internal var bounds: CGRect
-    internal var delegates: [TiledSceneCameraDelegate] = []
+    internal var delegates: [SKTiledSceneCameraDelegate] = []
 
     public var zoom: CGFloat = 1.0
     public var initialZoom: CGFloat = 1.0
@@ -173,9 +173,9 @@ public class SKTiledSceneCamera: SKCameraNode, Loggable {
     /**
      Add a camera delegate.
 
-     - parameter delegate:  `TiledSceneCameraDelegate` camera delegate.
+     - parameter delegate:  `SKTiledSceneCameraDelegate` camera delegate.
      */
-    public func addDelegate(_ delegate: TiledSceneCameraDelegate) {
+    public func addDelegate(_ delegate: SKTiledSceneCameraDelegate) {
         if (delegates.index(where: { $0 === delegate }) != nil) {
             return
         }
@@ -185,9 +185,9 @@ public class SKTiledSceneCamera: SKCameraNode, Loggable {
     /**
      Remove a camera delegate.
 
-     - parameter delegate:  `TiledSceneCameraDelegate` camera delegate.
+     - parameter delegate:  `SKTiledSceneCameraDelegate` camera delegate.
      */
-    public func removeDelegate(_ delegate: TiledSceneCameraDelegate) {
+    public func removeDelegate(_ delegate: SKTiledSceneCameraDelegate) {
         if let idx = delegates.index(where: { $0 === delegate}) {
             delegates.remove(at: idx)
         }
@@ -532,7 +532,6 @@ extension SKTiledSceneCamera {
 
         let anchorPointInCamera = convert(anchorPoint, from: scene)
         zoom += (event.deltaY * 0.05)
-        setCameraZoom(zoom)
 
         let anchorPointInScene = scene.convert(anchorPointInCamera, from: self)
         let translationOfAnchorInScene = (x: anchorPoint.x - anchorPointInScene.x, y: anchorPoint.y - anchorPointInScene.y)
@@ -541,6 +540,8 @@ extension SKTiledSceneCamera {
         // TODO: tighten this up
         focusLocation = position
         lastLocation = position
+
+        setCameraZoom(zoom)
         //setCameraZoomAtLocation(scale: zoom, location: position)
     }
 
@@ -565,7 +566,7 @@ extension SKTiledSceneCamera {
 
 
 /// Default methods.
-extension TiledSceneCameraDelegate {
+extension SKTiledSceneCameraDelegate {
     public func cameraPositionChanged(newPosition: CGPoint) {}
     public func cameraZoomChanged(newZoom: CGFloat) {}
     public func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {}
