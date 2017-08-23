@@ -70,6 +70,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    /**
+     Write all tile layers to images on disk.
+     */
     @IBAction func writeMapLayers(_ sender: Any) {
         guard let gameController = viewController else { return }
         guard let view = gameController.view as? SKView else { return }
@@ -86,7 +89,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if (dialog.runModal() == NSModalResponseOK) {
             if let url = dialog.url {
                 writeMapToFiles(tilemap: tilemap, url: url)
-
             }
         }
     }
@@ -98,7 +100,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard let gameController = viewController else { return }
 
         let demoController = gameController.demoController
-        demoController.reloadScene(2)
+        demoController.reloadScene()
     }
 
     // MARK: - Logging

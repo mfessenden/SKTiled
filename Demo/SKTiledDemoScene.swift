@@ -165,6 +165,8 @@ public class SKTiledDemoScene: SKTiledScene {
             setupTetris()
         case "ortho4-16x16.tmx":
             setupOrtho4()
+        case "staggered-64x33.tmx":
+            setupStaggered()
         default:
             return
         }
@@ -181,6 +183,12 @@ public class SKTiledDemoScene: SKTiledScene {
 
         guard let ghostsGraphLayer = tilemap.tileLayers(named: "Ghosts").first else {
             log("layer \"Ghosts\" does not exist.", level: .error)
+            return
+        }
+
+
+        guard let fruitGraphLayer = tilemap.tileLayers(named: "Fruit").first else {
+            log("layer \"Fruit\" does not exist.", level: .error)
             return
         }
 
@@ -211,6 +219,14 @@ public class SKTiledDemoScene: SKTiledScene {
             log("\"\(ghostsGraphLayer.layerName)\": walkable: \(ghostWalkable.count)", level: .debug)
             _ = ghostsGraphLayer.initializeGraph(walkable: ghostWalkable, obstacles: [], diagonalsAllowed: false)
         }
+
+
+        let fruitWalkable = fruitGraphLayer.getTiles().filter { $0.tileData.walkable == true }
+        if (fruitWalkable.isEmpty == false) {
+            log("\"\(fruitGraphLayer.layerName)\": walkable: \(fruitWalkable.count)", level: .debug)
+            _ = fruitGraphLayer.initializeGraph(walkable: fruitWalkable, obstacles: [], diagonalsAllowed: false)
+        }
+
     }
 
     func setupTetris() {
@@ -260,6 +276,20 @@ public class SKTiledDemoScene: SKTiledScene {
         let chests = tilemap.getTiles(ofType: "chest")
         chests.forEach { $0.showBounds = true }
 
+    }
+
+    func setupStaggered() {
+        guard let graphLayer = tilemap.tileLayers(named: "Graph").first else {
+            log("layer \"Graph\" does not exist.", level: .error)
+            return
+        }
+
+        let walkable = graphLayer.getTiles().filter { $0.tileData.walkable == true }
+        log("walkable tiles: \(walkable.count)", level: .debug)
+        if (walkable.isEmpty == false) {
+            log("\"\(graphLayer.layerName)\": walkable: \(walkable.count)", level: .debug)
+            _ = graphLayer.initializeGraph(walkable: walkable, obstacles: [], diagonalsAllowed: false)
+        }
     }
 
     /**
@@ -368,8 +398,8 @@ public class SKTiledDemoScene: SKTiledScene {
         updateHud(tilemap)
     }
 
-    override open func didAddPathfindingGraph(_ graph: GKGridGraph<GKGridGraphNode>) {
-        super.didAddPathfindingGraph(graph)
+    override open func didAddNavigationGraph(_ graph: GKGridGraph<GKGridGraphNode>) {
+        super.didAddNavigationGraph(graph)
         NotificationCenter.default.post(name: Notification.Name(rawValue: "updateUIControls"),
                                         object: nil, userInfo: ["hasGraphs": true])
     }
@@ -462,8 +492,12 @@ extension SKTiledDemoScene {
         updatePropertiesInfo(msg: propertiesInfoString)
     }
 
+    /**
+     Highlight and get properties for objects at the current mouse position.
+     
+     - parameter event: `NSEvent` mouse event.
+     */
     override open func mouseMoved(with event: NSEvent) {
-        //log("mouse moved...", level: .debug)
         super.mouseMoved(with: event)
 
         guard let tilemap = tilemap else { return }

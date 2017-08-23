@@ -598,5 +598,5 @@ extension SKTile {
         return "\(tileData.description)\(layerDescription)"
     }
 
-    override open var debugDescription: String { return description }
+    override open var debugDescription: String { return "<\(description)>" }
 }

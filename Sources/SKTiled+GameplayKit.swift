@@ -12,7 +12,6 @@ import GameplayKit
 
 extension SKTilemap {
 
-    // MARK: - Primary Tilemap Method
     /**
      Initialize the grid graph with an array of walkable tiles.
 
@@ -20,58 +19,19 @@ extension SKTilemap {
      - parameter walkable:          `[SKTile]` array of walkable tiles.
      - parameter obstacles:         `[SKTile]` array of obstacle tiles.
      - parameter diagonalsAllowed:  `Bool` allow diagonal movement in the grid.
-     - parameter nodeClass:         `GKGridGraphNode.Type` graph node type.
+     - parameter nodeClass:         `String?` graph node type.
      */
     public func gridGraphForLayers(_ layers: [SKTileLayer],
                                    walkable: [SKTile],
                                    obstacle: [SKTile]=[],
                                    diagonalsAllowed: Bool=false,
-                                   nodeClass: GKGridGraphNode.Type = SKTiledGraphNode.self) {
+                                   nodeClass: String? = nil) {
 
-
-    }
-
-    // MARK: - Extension Methods
-
-    /**
-     Initialize the grid graph with an array layer names.
-
-     - parameter layers:           `[SKTileLayer]` array of tile layers.
-     - parameter diagonalsAllowed: `Bool` allow diagonal movement in the grid.
-     */
-    public func gridGraphForLayers(_ layers: [SKTileLayer],
-                                   diagonalsAllowed: Bool=false,
-                                   nodeClass: GKGridGraphNode.Type = SKTiledGraphNode.self) {
-
-    }
-
-    /**
-     Initialize the grid graph with an array of walkable tiles.
-
-     - parameter layers:           `[SKTileLayer]` array of tile layers.
-     - parameter walkable:         `[SKTile]` array of walkable tiles.
-     - parameter diagonalsAllowed: `Bool` allow diagonal movement in the grid.
-     */
-    public func gridGraphForLayers(_ layers: [SKTileLayer],
-                                   walkable: [SKTile],
-                                   diagonalsAllowed: Bool=false,
-                                   nodeClass: GKGridGraphNode.Type = SKTiledGraphNode.self) {
-
-
-    }
-
-    /**
-     Initialize the grid graph with an array of walkable tile types.
-
-     - parameter layers:            `[SKTileLayer]` array of tile layers.
-     - parameter walkableTypes:     `[String]` array of walkable types.
-     - parameter diagonalsAllowed:  `Bool` allow diagonal movement in the grid.
-     */
-    public func gridGraphForLayers(_ layers: [SKTileLayer],
-                                   walkableTypes: [String],
-                                   diagonalsAllowed: Bool=false,
-                                   nodeClass: GKGridGraphNode.Type = SKTiledGraphNode.self) {
-
+       layers.forEach {
+            _ = $0.initializeGraph(walkable: walkable, obstacles: obstacle,
+                                              diagonalsAllowed: diagonalsAllowed,
+                                              withName: nil, nodeClass: nodeClass)
+        }
     }
 }
 
@@ -86,6 +46,7 @@ public extension SKTileLayer {
      - parameter diagonalsAllowed:  `Bool` allow diagonal movement in the grid.
      - parameter withName:          `String?` optional graph name for identifying in scene.
      - parameter nodeClass:         `String?` graph node type.
+     - returns:  `GKGridGraph<GKGridGraphNode>?` navigation graph, if created.
      */
     public func initializeGraph(walkable: [SKTile],
                                 obstacles: [SKTile]=[],
@@ -94,14 +55,14 @@ public extension SKTileLayer {
                                 nodeClass: String? = nil) -> GKGridGraph<GKGridGraphNode>? {
 
         if (orientation != .orthogonal) {
-            log("pathfinding graphs can only be created with orthogonal tilemaps.", level: .warning)
+            log("navigation graphs can only be created with orthogonal tilemaps.", level: .warning)
             return nil
         }
 
+        // get the node type from the delegate
         let GraphNode = (tilemap.delegate != nil) ? tilemap.delegate!.objectForGraphType(named: nodeClass) : GKGridGraphNode.self
 
-        let nodeType = String(describing: type(of: GraphNode))
-
+        // create the navigation graph
         self.graph = GKGridGraph<GKGridGraphNode>(fromGridStartingAt: int2(0, 0),
                                                   width: Int32(size.width),
                                                   height: Int32(size.height),
@@ -142,28 +103,29 @@ public extension SKTileLayer {
         graph.remove(nodesToRemove)
         let nodeCount = (graph.nodes != nil) ? graph.nodes!.count : 0
 
-        if nodeCount > 0 {
-            log("pathfinding graph for layer \"\(layerName)\" created with \(nodeCount) nodes.", level: .success)
-        } else {
-            log("could not build a pathfinding graph for layer \"\(layerName)\".", level: .warning)
-        }
+        // logging output
+        let statusMessage = (nodeCount > 0) ? "navigation graph for layer \"\(layerName)\" created with \(nodeCount) nodes." : "could not build a navigation graph for layer \"\(layerName)\"."
+        let statusLevel: LoggingLevel = (nodeCount > 0) ? .info : .warning
+        log(statusMessage, level: statusLevel)
 
         // automatically add the graph to the scene graphs property.
-        let sceneGraphName = withName ?? self.graphName
+        let sceneGraphName = withName ?? self.navigationKey
         if let scene = self.tilemap.scene as? SKTiledScene {
-            if !scene.addGraph(named: sceneGraphName, graph: graph) {
-                log("cannot add graph \"\(sceneGraphName)\" to scene.", level: .warning)
+            if (scene.addGraph(named: sceneGraphName, graph: graph) == false) {
+                log("graph with key \"\(sceneGraphName)\" already exists, skipping.", level: .warning)
             }
         }
 
         // unhide the layer & kill textures
         isHidden = false
-        getTiles().forEach {$0.texture = nil}
+        getTiles().forEach { $0.texture = nil }
         return graph
     }
 
     /**
-     Initialize this layer's grid graph by not specifying tiles to utilize.
+     Initialize layer navigation graph by not specifying tiles to utilize.
+     
+     - returns:  `GKGridGraph<GKGridGraphNode>?` navigation graph, if created.
      */
     public func initializeGraph() -> GKGridGraph<GKGridGraphNode>? {
         let walkable = getTiles()
@@ -173,10 +135,11 @@ public extension SKTileLayer {
     /**
      Initialize this layer's grid graph with an array of walkable & obstacle tile ids.
 
-     - parameter walkable:          `[Int]` array of walkable tile ids.
-     - parameter obstacles:         `[Int]` array of obstacle tile ids.
+     - parameter walkableIDs:       `[Int]` array of walkable tile ids.
+     - parameter obstacleIDs:       `[Int]` array of obstacle tile ids.
      - parameter diagonalsAllowed:  `Bool` allow diagonal movement in the grid.
      - parameter nodeClass:         `String?` graph node type.
+     - returns:  `GKGridGraph<GKGridGraphNode>?` navigation graph, if created.
      */
     public func initializeGraph(walkableIDs: [Int],
                                 obstacleIDs: [Int]=[],
@@ -197,6 +160,23 @@ public extension SKTileLayer {
                                     diagonalsAllowed: diagonalsAllowed, nodeClass: nodeClass)
     }
 
+    /**
+     Return tiles with walkable data attributes.
+     
+     - returns: `[SKTile]` array of tiles with walkable attribute.
+     */
+    public func gatherWalkable() -> [SKTile] {
+        return self.getTiles().filter { $0.tileData.walkable == true }
+    }
+
+    /**
+     Return tiles with obstacle data attributes.
+
+     - returns: `[SKTile]` array of tiles with obstacle attribute.
+     */
+    public func gatherObstacles() -> [SKTile] {
+        return self.getTiles().filter { $0.tileData.obstacle == true }
+    }
 }
 
 
@@ -306,7 +286,7 @@ extension SKTiledScene {
         }
         graphs[named] = graph
         log("adding graph \"\(named)\" to scene.", level: .debug)
-        self.didAddPathfindingGraph(graph)
+        self.didAddNavigationGraph(graph)
         return true
     }
 
@@ -323,6 +303,7 @@ extension SKTiledScene {
 }
 
 
+// TODO: not yet implemented, take these out in master
 public struct Direction: OptionSet {
     public let rawValue: Int
 

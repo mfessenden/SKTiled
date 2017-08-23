@@ -131,6 +131,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     /// Text formatting attributes (for text objects)
     open var textAttributes: TextObjectAttributes!
 
+
     ///Text object render quality.
     open var renderQuality: CGFloat = 8 {
         didSet {
@@ -349,7 +350,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
 
         // polyline objects should have no fill
         self.fillColor = (self.objectType == .polyline) ? SKColor.clear : self.fillColor
-        self.isAntialiased = false //layer.antialiased
+        self.isAntialiased = layer.antialiased
         self.lineJoin = .miter
 
         // scale linewidth for smaller objects
@@ -382,7 +383,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                 addChild(controlShape)
                 controlShape.fillColor = SKColor.clear
                 controlShape.strokeColor = self.strokeColor.withAlphaComponent(0.2)
-                controlShape.isAntialiased = true
+                controlShape.isAntialiased = layer.antialiased
                 controlShape.lineWidth = self.lineWidth / 2
             }
 
@@ -437,6 +438,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
 
                 childNode(withName: "TILE_OBJECT")?.removeFromParent()
                 // TODO: need delegate tile class
+                //layer.tilemap.delegate?.objectForTileType(named: "")
                 if let tileSprite = SKTile(data: tileData) {
 
                     let boundingBox = polygonPath(translatedVertices)
@@ -451,13 +453,15 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                     tileSprite.zPosition = zPosition - 1
                     tileSprite.position = rect.center
 
-                    // TODO: remove debug stroke color
                     isAntialiased = false
                     lineWidth = 0.75
-                    strokeColor = (debug == false) ? SKColor.clear : layer.gridColor.withAlphaComponent(0.75)
+                    strokeColor = SKColor.clear
                     fillColor = SKColor.clear
+
+                    // run tile animation
                     tileSprite.runAnimation()
 
+                    // set tile property
                     self.tile = tileSprite
 
                     // flipped tile flags
@@ -610,10 +614,11 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     }
 
     /**
-     Draw the object's boundary shape.
+     Draw the object's bounding shape.
      */
     internal func drawBounds() {
         childNode(withName: "BOUNDS")?.removeFromParent()
+        childNode(withName: "FIRST_POINT")?.removeFromParent()
 
         guard let vertices = getVertices() else { return }
 
@@ -662,7 +667,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
 
         pointShape.name = "FIRST_POINT"
         bounds.addChild(pointShape)
-        pointShape.fillColor = bounds.fillColor //highlightColor
+        pointShape.fillColor = bounds.fillColor
         pointShape.strokeColor = SKColor.clear
         pointShape.zPosition = shapeZPos * 15
         pointShape.isAntialiased = layer.antialiased
@@ -671,6 +676,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
 
         addChild(bounds)
         bounds.setScale(1 / renderQuality)
+        bounds.blendMode = .screen
     }
 
     // MARK: - Debugging

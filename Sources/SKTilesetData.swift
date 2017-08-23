@@ -46,7 +46,7 @@ internal class TileCollisionShape: SKTiledObject {
 
  The `SKTilesetData` object stores data for a single tileset tile, referencing the tile texture, animation frames (for animated tiles) as well as tile flip flags.
 
- Also includes pathfinding properties for tile accessability, and graph node weight.
+ Also includes navigation properties for tile accessability, and graph node weight.
 */
 public class SKTilesetData: SKTiledObject {
 

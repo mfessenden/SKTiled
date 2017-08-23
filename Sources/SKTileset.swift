@@ -184,7 +184,11 @@ public class SKTileset: SKTiledObject {
 
         let startTime = Date()
         let queue = DispatchQueue(label: "com.sktiled.renderqueue", qos: .userInteractive)
-        return SKTilemapParser().load(tsxFiles: tsxFiles, delegate: delegate, ignoreProperties: noparse, renderQueue: queue)
+        let tilesets = SKTilemapParser().load(tsxFiles: tsxFiles, delegate: delegate, ignoreProperties: noparse, renderQueue: queue)
+        let renderTime = Date().timeIntervalSince(startTime)
+        let timeStamp = String(format: "%.\(String(3))f", renderTime)
+        Logger.default.log("\(tilesets.count) tilesets rendered in: \(timeStamp)s", level: .success)
+        return tilesets
     }
 
     // MARK: - Textures

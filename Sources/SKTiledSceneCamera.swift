@@ -81,7 +81,7 @@ public protocol SKTiledSceneCameraDelegate: class {
 
  Custom scene camera that responds to finger gestures and mouse events.
 
- The `SKTiledSceneCamera` is a custom camera meant to be used with a scene conforming to the `SKTiledSceneDelegate` protocol. The camera defines a position in the scene to render the scene from, with a reference to the `SKTiledSceneDelegate.worldNode` to interact with tile maps.
+ The `SKTiledSceneCamera` is a custom camera meant to be used with a scene conforming to the `SKTiledSceneDelegate` protocol. The camera defines a position in the scene to render the scene from, with a reference to the `SKTiledSceneDelegate.rootNode` to interact with tile maps.
 
  */
 public class SKTiledSceneCamera: SKCameraNode, Loggable {
@@ -372,15 +372,18 @@ public class SKTiledSceneCamera: SKCameraNode, Loggable {
 
         let isPortrait: Bool = newSize.height > newSize.width
 
+        let heightFactor: CGFloat = (tilemap.isPortrait == true) ? 0.6 : 0.75
+
         let screenScaleWidth: CGFloat = isPortrait ? 0.7 : 0.7
-        let screenScaleHeight: CGFloat = isPortrait ? 0.5 : 0.5
+        let screenScaleHeight: CGFloat = isPortrait ? heightFactor : 0.7
 
         // get the usable height/width
         let usableWidth: CGFloat = newSize.width * screenScaleWidth
         let usableHeight: CGFloat = newSize.height * screenScaleHeight
         let scaleFactor = (isPortrait == true) ? usableWidth / tilemapSize.width : usableHeight / tilemapSize.height
 
-        let focusPoint = CGPoint(x: tilemapCenter.x, y: tilemapCenter.y - (usableHeight / 7))
+        let heightOffset: CGFloat = (usableHeight / 20)
+        let focusPoint = CGPoint(x: tilemapCenter.x, y: tilemapCenter.y - 50)
 
         centerOn(scenePoint: focusPoint)
         setCameraZoom(scaleFactor, interval: transition)

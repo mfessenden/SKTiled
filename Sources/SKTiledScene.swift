@@ -17,14 +17,14 @@ import GameplayKit
  This protocol and the `SKTiledScene` objects are included as a suggested way to use the
  `SKTilemap` class, but are not required.
 
- In this configuration, the tile map is a child of the world node and reference the custom
+ In this configuration, the tile map is a child of the root node and reference the custom
  `SKTiledSceneCamera` camera.
 
  [skscene-url]:https://developer.apple.com/reference/spritekit/skscene
  */
 public protocol SKTiledSceneDelegate: class {
-    /// World container node. Tiled assets are parented to this node.
-    var worldNode: SKNode! { get set }
+    /// Root container node. Tiled assets are parented to this node.
+    var rootNode: SKNode! { get set }
     /// Custom scene camera.
     var cameraNode: SKTiledSceneCamera! { get set }
     /// Tile map node.
@@ -46,15 +46,15 @@ public protocol SKTiledSceneDelegate: class {
  ### Properties: ###
 
  ```
- SKTiledScene.worldNode:    `SKNode!` world container node.
+ SKTiledScene.rootNode:    `SKNode!` root container node.
  SKTiledScene.tilemap:      `SKTilemap!` tile map object.
  SKTiledScene.cameraNode:   `SKTiledSceneCamera!` custom scene camera.
  ```
  */
 open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate, SKTilemapDelegate, Loggable {
 
-    /// World container node.
-    open var worldNode: SKNode!
+    /// Root container node.
+    open var rootNode: SKNode!
     /// Tile map node.
     open var tilemap: SKTilemap!
     /// Custom scene camera.
@@ -62,7 +62,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     /// Logging verbosity level.
     open var loggingLevel: LoggingLevel = .info
 
-    /// Reference to pathfinding graphs.
+    /// Reference to navigation graphs.
     open var graphs: [String : GKGridGraph<GKGridGraphNode>] = [:]
 
     // MARK: - Init
@@ -94,11 +94,11 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
         physicsWorld.contactDelegate = self
 
         // setup world node
-        worldNode = SKNode()
-        addChild(worldNode)
+        rootNode = SKNode()
+        addChild(rootNode)
 
         // setup the camera
-        cameraNode = SKTiledSceneCamera(view: view, world: worldNode)
+        cameraNode = SKTiledSceneCamera(view: view, world: rootNode)
         cameraNode.addDelegate(self)
         addChild(cameraNode)
         camera = cameraNode
@@ -108,16 +108,28 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     /**
      Load and setup a named TMX file, with optional tilesets.
 
-     - parameter tmxURL:      `URL` TMX path.
-     - parameter tilesets:    `[SKTileset]` pre-loaded tilesets.
+     - parameter url:          `URL` Tiled file url.
+     - parameter withTilesets: `[SKTileset]` pre-loaded tilesets.
+     - parameter ignoreProperties: `Bool` don't parse custom properties.
+     - parameter loggingLevel:     `LoggingLevel` logging verbosity.
      - parameter completion:  `(() -> ())?` optional completion handler.
      */
-    open func setup(tmxURL: URL,
-                    tilesets: [SKTileset]=[],
+    open func setup(url: URL,
+                    withTilesets: [SKTileset]=[],
+                    ignoreProperties: Bool = false,
                     loggingLevel: LoggingLevel = .info,
                     _ completion: (() -> ())? = nil) {
 
-        // TODO: finish me
+        let dirname = url.deletingLastPathComponent()
+        let filename = url.lastPathComponent
+        let relativeURL = URL(fileURLWithPath: filename, relativeTo: dirname)
+
+        self.setup(tmxFile: relativeURL.relativePath,
+                        inDirectory: (relativeURL.baseURL == nil) ? nil : relativeURL.baseURL!.path,
+                        withTilesets: withTilesets,
+                        ignoreProperties: ignoreProperties,
+                        loggingLevel: loggingLevel,
+                        completion)
     }
 
 
@@ -139,7 +151,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
                     loggingLevel: LoggingLevel = .info,
                     _ completion: (() -> ())? = nil) {
 
-        guard let worldNode = worldNode else { return }
+        guard let rootNode = rootNode else { return }
 
         self.loggingLevel = loggingLevel
         self.tilemap = nil
@@ -153,7 +165,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
             backgroundColor = tilemap.backgroundColor ?? SKColor.clear
 
             // add the tilemap to the world container node.
-            worldNode.addChild(tilemap)
+            rootNode.addChild(tilemap)
             self.tilemap = tilemap
             cameraNode.addDelegate(self.tilemap)
 
@@ -205,7 +217,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
         log("rendering finished: \"\(tilemap.mapName)\"", level: .gcd)
     }
 
-     open func didAddPathfindingGraph(_ graph: GKGridGraph<GKGridGraphNode>) {
+     open func didAddNavigationGraph(_ graph: GKGridGraph<GKGridGraphNode>) {
         // Called when a graph is added to the scene.
         let nodeCount = (graph.nodes != nil) ? graph.nodes!.count : 0
         log("graph added: \(nodeCount) nodes", level: .gcd)
@@ -281,11 +293,16 @@ extension SKTiledSceneDelegate where Self: SKScene {
     }
 }
 
+
 #if os(macOS)
 extension SKTiledScene {
 
     override open func mouseDown(with event: NSEvent) {}
-    override open func mouseMoved(with event: NSEvent) {}
+    
+    override open func mouseMoved(with event: NSEvent) {
+        guard let cameraNode = cameraNode else { return }
+        cameraNode.mouseMoved(with: event)
+    }
     override open func mouseUp(with event: NSEvent) {}
     override open func mouseEntered(with event: NSEvent) {}
     override open func mouseExited(with event: NSEvent) {}
@@ -365,8 +382,8 @@ extension SKTiledScene: SKTiledSceneCameraDelegate {
      */
     public func sceneDoubleClicked(event: NSEvent) {
         let location = event.location(in: self)
-        log("scene double clicked: \(location.shortDescription)", level: .debug)
-        addTemporaryShape(at: location, radius: 4, duration: 1.5)
+        log("mouse double-clicked.", level: .debug)
+        addTemporaryShape(at: location, duration: 1.5, radius: 4)
     }
 
     /**
@@ -376,8 +393,31 @@ extension SKTiledScene: SKTiledSceneCameraDelegate {
      */
     public func mousePositionChanged(event: NSEvent) {
         let location = event.location(in: self)
-        log("mouse fucking moved: \(location.shortDescription)", level: .info)
-        addTemporaryShape(at: location, radius: 4, duration: 1.5)
     }
     #endif
 }
+
+
+
+// MARK: - Deprecated
+
+extension SKTiledSceneDelegate {
+
+    /// World container node.
+    @available(*, deprecated, renamed: "SKTiledSceneDelegate.rootNode")
+    public var worldNode: SKNode! {
+        return rootNode
+    }
+}
+
+
+extension SKTiledScene {
+
+    /// World container node.
+    @available(*, deprecated, renamed: "SKTiledScene.rootNode")
+    public var worldNode: SKNode! {
+        return rootNode
+    }
+}
+
+

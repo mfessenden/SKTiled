@@ -64,7 +64,7 @@ public extension SKTilemap {
                 defaultLayer.highlightColor = highlightColor
             }
 
-            // initial world scale.
+            // aspect ratio.
             if (lattr == "aspect") {
                 yScale *= (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : 1
             }
@@ -231,6 +231,10 @@ public extension SKTiledLayerObject {
                 if boolForKey(attr) == true {
                     drawBounds()
                 }
+            }
+
+            if ["navigation", "navigationkey"].contains(lattr) {
+                self.navigationKey = value
             }
 
             if completion != nil { completion!() }

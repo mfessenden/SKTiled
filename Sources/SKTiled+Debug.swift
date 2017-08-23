@@ -26,7 +26,7 @@ public var TILE_BOUNDS_USE_OFFSET: Bool = false
  ```
  DebugDrawOptions.drawGrid               // visualize the objects's grid (tilemap & layers).
  DebugDrawOptions.drawBounds             // visualize the objects's bounds.
- DebugDrawOptions.drawGraph              // visualize a layer's pathfinding graph.
+ DebugDrawOptions.drawGraph              // visualize a layer's navigation graph.
  DebugDrawOptions.drawObjectBounds       // draw an object's bounds.
  DebugDrawOptions.drawTileBounds         // draw a tile's bounds.
  ```
@@ -43,7 +43,7 @@ public struct DebugDrawOptions: OptionSet {
     static public let drawGrid              = DebugDrawOptions(rawValue: 1 << 0)
     /// Draw the layer's boundary shape.
     static public let drawBounds            = DebugDrawOptions(rawValue: 1 << 1)
-    /// Draw the layer's pathfinding graph.
+    /// Draw the layer's navigation graph.
     static public let drawGraph             = DebugDrawOptions(rawValue: 1 << 2)
     /// Draw object bounds.
     static public let drawObjectBounds      = DebugDrawOptions(rawValue: 1 << 3)
@@ -87,7 +87,7 @@ internal class SKTiledDebugDrawNode: SKNode {
         return convert(layer.position, from: layer)
     }
 
-    var blendMode: SKBlendMode = .alpha {
+    var blendMode: SKBlendMode = .add {
         didSet {
             guard oldValue != blendMode else { return }
             reset()
@@ -229,7 +229,7 @@ internal class SKTiledDebugDrawNode: SKNode {
 
         if let objectPath = objectPath {
             frameShape.path = objectPath
-            frameShape.isAntialiased = false
+            frameShape.isAntialiased = layer.antialiased
             frameShape.lineWidth = (layer.tileSize.halfHeight) < 8 ? 0.5 : 1.5
             frameShape.lineJoin = .miter
 
@@ -468,7 +468,7 @@ internal class TileShape: SKShapeNode {
 
         // draw the path
         self.path = polygonPath(points)
-        self.isAntialiased = true
+        self.isAntialiased = layer.antialiased
         self.lineJoin = .miter
         self.miterLimit = 0
         self.lineWidth = 1
@@ -485,7 +485,7 @@ internal class TileShape: SKShapeNode {
         anchor.fillColor = self.color.withAlphaComponent(0.05)
         anchor.strokeColor = SKColor.clear
         anchor.zPosition = zPosition + 10
-        anchor.isAntialiased = true
+        anchor.isAntialiased = layer.antialiased
 
 
 
@@ -510,14 +510,8 @@ extension TileShape {
     override var description: String {
         return "Tile Shape: \(coord.shortDescription)"
     }
-
-    override var debugDescription: String {
-        return description
-    }
-
-    override var hashValue: Int {
-        return coord.hashValue
-    }
+    override var debugDescription: String { return description }
+    override var hashValue: Int { return coord.hashValue }
 }
 
 
@@ -594,73 +588,40 @@ extension SKTile {
      - parameter antialiasing: `Bool` antialias edges.
      */
     public func highlightWithColor(_ color: SKColor?=nil,
-                                   duration: TimeInterval=1.0,
+                                   duration: TimeInterval=0.2,
                                    antialiasing: Bool=true) {
 
-        let highlight: SKColor = (color == nil) ? highlightColor : color!
-        let orientation = tileData.tileset.tilemap.orientation
+        let highlight: SKColor = color ?? highlightColor
+        removeAction(forKey: "HIGHLIGHT_FADE")
 
-        if orientation == .orthogonal || orientation == .hexagonal {
-            childNode(withName: "HIGHLIGHT")?.removeFromParent()
+        let sourcePositions: [vector_float2] = [
+                vector_float2(0, 0),   vector_float2(0.5, 0),   vector_float2(1, 0),  //bottom row of object
+                vector_float2(0, 0.5), vector_float2(0.5, 0.5), vector_float2(1, 0.5),  //middle row of object
+                vector_float2(0, 1),   vector_float2(0.5, 1),   vector_float2(1, 1)  //top row of object
+        ]
 
-            var highlightNode: SKShapeNode? = nil
-            if orientation == .orthogonal {
-                highlightNode = SKShapeNode(rectOf: tileSize, cornerRadius: 0)
-            }
+        let destinationPositions: [vector_float2] = [
+                vector_float2(0, 0),   vector_float2(0.5, 0),   vector_float2(1, 0),      //bottom row of object
+                vector_float2(-0.1, 0.4), vector_float2(0.5, 0.4), vector_float2(1.1, 0.4),  //middle row of object
+                vector_float2(0, 0.7), vector_float2(0.5, 0.7), vector_float2(1, 0.7)     //top row of object
+        ]
 
-            if orientation == .hexagonal {
-                let hexPath = polygonPath(self.getVertices())
-                highlightNode = SKShapeNode(path: hexPath, centered: true)
-            }
+        let warpGeometryGrid = SKWarpGeometryGrid(columns: 2, rows: 2, sourcePositions: sourcePositions, destinationPositions: destinationPositions)
+        let warpGeometryGridNoWarp = SKWarpGeometryGrid(columns: 2, rows: 2)
 
-            if let highlightNode = highlightNode {
-                highlightNode.strokeColor = SKColor.clear
-                highlightNode.fillColor = highlight.withAlphaComponent(0.35)
-                highlightNode.name = "HIGHLIGHT"
+        self.warpGeometry = warpGeometryGridNoWarp
+        if let warpAction = SKAction.animate(withWarps: [warpGeometryGridNoWarp, warpGeometryGrid, warpGeometryGridNoWarp], times: [0.25, 0.5, 0.75], restore: true) {
+            self.run(warpAction, withKey: "HIGHLIGHT_FADE")
 
-                highlightNode.isAntialiased = antialiasing
-                addChild(highlightNode)
-                highlightNode.zPosition = zPosition + 50
-
-                // fade out highlight
-                removeAction(forKey: "HIGHLIGHT_FADE")
-                let fadeAction = SKAction.sequence([
-                    SKAction.wait(forDuration: duration * 1.5),
-                    SKAction.fadeAlpha(to: 0, duration: duration/4.0)
-                    ])
-
-                highlightNode.run(fadeAction, withKey: "HIGHLIGHT_FADE", optionalCompletion: {
-                    highlightNode.removeFromParent()
-                })
-            }
         }
 
-        if orientation == .isometric || orientation == .staggered {
-            removeAction(forKey: "HIGHLIGHT_FADE")
-            let fadeOutAction = SKAction.colorize(with: SKColor.clear, colorBlendFactor: 1, duration: duration)
-            run(fadeOutAction, withKey: "HIGHLIGHT_FADE", optionalCompletion: {
-                let fadeInAction = SKAction.sequence([
-                    SKAction.wait(forDuration: duration * 2.5),
-                    //fadeOutAction.reversedAction()
-                    SKAction.colorize(with: SKColor.clear, colorBlendFactor: 0, duration: duration/4.0)
-                    ])
-                self.run(fadeInAction, withKey: "HIGHLIGHT_FADE")
-            })
-        }
     }
 
     /**
      Clear highlighting.
      */
     public func clearHighlight() {
-        let orientation = tileData.tileset.tilemap.orientation
-
-        if orientation == .orthogonal {
-            childNode(withName: "Highlight")?.removeFromParent()
-        }
-        if orientation == .isometric {
-            removeAction(forKey: "Highlight_Fade")
-        }
+        removeAction(forKey: "HIGHLIGHT_FADE")
     }
 }
 
@@ -949,21 +910,51 @@ extension LoggingLevel: CustomStringConvertible {
 // TODO: remove below this line in master
 extension SKTiledScene {
 
-    open func addTemporaryShape(at location: CGPoint, radius: CGFloat = 4, duration: TimeInterval=0) {
-        guard let world = worldNode else { return }
-        let worldLocation = world.convert(location, from: self)
+    open func addTemporaryShape(at location: CGPoint, duration: TimeInterval=0, radius: CGFloat=4) {
+        guard let world = rootNode else { return }
+        let rootLocation = world.convert(location, from: self)
         let shape = SKShapeNode(circleOfRadius: radius)
-        shape.strokeColor = .purple
+        shape.strokeColor = TiledObjectColors.random
         shape.fillColor = shape.strokeColor.colorWithBrightness(factor: 1.5)
         world.addChild(shape)
-        shape.position = worldLocation
+        shape.position = rootLocation
         shape.zPosition = 5000
 
         if (duration > 0) {
-            let fadeAction = SKAction.fadeAfter(wait: duration, alpha: 0)
-            shape.run(fadeAction, completion: {
+
+            let scaleAction = SKAction.scale(by: 5, duration: duration)
+            let fadeAction = SKAction.fadeOut(withDuration: duration)
+
+            shape.run(SKAction.group([scaleAction, fadeAction]), completion: {
                 shape.removeFromParent()
             })
         }
     }
 }
+
+
+extension SKTilemap {
+
+    open func addTemporaryShape(at location: CGPoint, duration: TimeInterval=0, radius: CGFloat=4) {
+        guard let parent = parent else { return }
+        let rootLocation = convert(location, from: parent)
+        let shape = SKShapeNode(circleOfRadius: radius)
+        shape.strokeColor = TiledObjectColors.random
+        shape.fillColor = shape.strokeColor.colorWithBrightness(factor: 1.5)
+        addChild(shape)
+        shape.position = rootLocation
+        shape.zPosition = 5000
+
+        if (duration > 0) {
+            let scaleAction = SKAction.scale(by: 5, duration: duration)
+            let fadeAction = SKAction.fadeOut(withDuration: duration)
+
+            shape.run(SKAction.group([scaleAction, fadeAction]), completion: {
+                shape.removeFromParent()
+            })
+        }
+    }
+}
+
+
+

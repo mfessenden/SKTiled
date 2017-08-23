@@ -155,7 +155,7 @@ public protocol SKTilemapDelegate: class {
     func didAddLayer(_ layer: SKTiledLayerObject)
     func didReadMap(_ tilemap: SKTilemap)
     func didRenderMap(_ tilemap: SKTilemap)
-    func didAddPathfindingGraph(_ graph: GKGridGraph<GKGridGraphNode>)
+    func didAddNavigationGraph(_ graph: GKGridGraph<GKGridGraphNode>)
     func objectForTileType(named: String?) -> SKTile.Type
     func objectForVectorType(named: String?) -> SKTileObject.Type
     func objectForGraphType(named: String?) -> GKGridGraphNode.Type
@@ -588,7 +588,7 @@ public class SKTilemap: SKNode, SKTiledObject {
         }
 
         // global antialiasing
-        antialiasLines = tileSize.width > 16 ? true : false
+        antialiasLines = (currentZoom < 1)
         super.init()
 
         // set the background color
@@ -619,7 +619,7 @@ public class SKTilemap: SKNode, SKTiledObject {
         self.size = CGSize(width: CGFloat(sizeX), height: CGFloat(sizeY))
         self.tileSize = CGSize(width: CGFloat(tileSizeX), height: CGFloat(tileSizeY))
         self.orientation = orientation
-        self.antialiasLines = tileSize.width > 16 ? true : false
+        self.antialiasLines = (currentZoom < 1)
         super.init()
     }
 
@@ -1184,7 +1184,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      */
     public func tilesAt(coord: CGPoint) -> [SKTile] {
         return tileLayers(recursive: true).flatMap { $0.tileAt(coord: coord) }
-            }
+    }
 
     /**
      Return tiles at the given coordinate (all tile layers).
@@ -1445,10 +1445,20 @@ public class SKTilemap: SKNode, SKTiledObject {
     public func touchLocation(_ touch: UITouch) -> CGPoint {
         return defaultLayer.touchLocation(touch)
     }
+
+    /**
+     Returns the tile coordinate at a touch location.
+
+     - parameter touch: `UITouch` touch location.
+     - returns: `CGPoint` converted point in layer coordinate system.
+     */
+    public func coordinateAtTouchLocation(_ touch: UITouch) -> CGPoint {
+        return defaultLayer.screenToTileCoords(touchLocation(touch))
+    }
     #endif
 
     /**
-     Returns a mouse event location in negative-y space.
+     Returns a mouse event location in the default layer. (negative-y space).
 
      *Position is in converted space*
 
@@ -1458,6 +1468,16 @@ public class SKTilemap: SKNode, SKTiledObject {
     #if os(OSX)
     public func mouseLocation(event: NSEvent) -> CGPoint {
         return defaultLayer.mouseLocation(event: event)
+    }
+
+    /**
+     Returns the tile coordinate at a mouse event location.
+
+     - parameter event: `NSEvent` mouse event location.
+     - returns: `CGPoint` converted point in layer coordinate system.
+     */
+    public func coordinateAtMouseEvent(event: NSEvent) -> CGPoint {
+        return defaultLayer.screenToTileCoords(mouseLocation(event: event))
     }
     #endif
 
@@ -1751,13 +1771,11 @@ extension SKTilemap {
         let allLayerStats = allLayers.map { $0.layerStatsDescription }
 
         // prefix for each column
-        var prefixes: [String] = ["", "", "", "", "pos", "size", "offset", "anc", "zpos", "opac", "graph"]
+        var prefixes: [String] = ["", "", "", "", "pos", "size", "offset", "anc", "zpos", "opac", "nav"]
 
         // buffer for each column
         var buffers: [Int] = [1, 2, 0, 0, 1, 1, 1, 1, 1, 1, 1]
         var columnSizes: [Int] = Array(repeating: 0, count: prefixes.count)
-
-
 
         // get the max column size for each column
         for (_, stats) in allLayerStats.enumerated() {
@@ -1786,10 +1804,9 @@ extension SKTilemap {
             }
         }
 
+
         for (_, stats) in allLayerStats.enumerated() {
             var layerOutputString = ""
-
-
             for (sidx, stat) in stats.enumerated() {
 
                 // this is the column size to fill
@@ -1820,7 +1837,7 @@ extension SKTilemap {
                         divider = ": "
                         // for all columns but the last, add a comma
                         if (isLastColumn == false) {
-                            comma = (nextValue != nil) ? ", " : ""
+                            comma = (nextValue == "") ? "" : ", "
                         }
                         prefix = "\(prefix)\(divider)"
                     }
@@ -1894,11 +1911,11 @@ extension SKTilemapDelegate {
     public func didRenderMap(_ tilemap: SKTilemap) {}
 
     /**
-     Called when the a pathfinding graph is built for a layer.
+     Called when the a navigation graph is built for a layer.
 
      - parameter graph: `GKGridGraph<GKGridGraphNode>` graph instance.
      */
-    public func didAddPathfindingGraph(_ graph: GKGridGraph<GKGridGraphNode>) {}
+    public func didAddNavigationGraph(_ graph: GKGridGraph<GKGridGraphNode>) {}
 
     /**
      Specify a custom tile object for use in tile layers.
@@ -1917,7 +1934,7 @@ extension SKTilemapDelegate {
     public func objectForVectorType(named: String? = nil) -> SKTileObject.Type { return SKTileObject.self }
 
     /**
-     Specify a custom graph node object for use in pathfinding graphs.
+     Specify a custom graph node object for use in navigation graphs.
 
      - parameter named:                 `String` optional class name.
      - returns `GKGridGraphNode.Type`:  `GKGridGraphNode` node type.
@@ -1939,26 +1956,107 @@ extension SKTilemap: SKTiledSceneCameraDelegate {
     public func cameraZoomChanged(newZoom: CGFloat) {
         let oldZoom = currentZoom
         currentZoom = newZoom
+        antialiasLines = (newZoom < 1)
     }
 
     #if os(iOS) || os(tvOS)
     public func sceneDoubleTapped(location: CGPoint) {}
     public func sceneSwiped() {}
     #else
+
     public func sceneDoubleClicked(event: NSEvent) {
-        let mapLocation = event.location(in: self)
-        self.log("scene double-clicked: \(mapLocation.shortDescription)", level: .debug)
+        let locationInMap = event.location(in: self)
+        let coord = coordinateAtMouseEvent(event: event)
+        let tiles = tilesAt(coord: coord)
+        log("\(tiles.count) tiles found at \(coord.shortDescription)", level: .info)
+        let fadeInAction = SKAction.fadeIn(withDuration: 0.2)
+        for tile in tiles {
+            //tile.run(fadeInAction)
+            if let fadedOutAction = tile.action(forKey: "FADEOUT") {
+
+                tile.run(SKAction.run {
+                            tile.texture = tile.tileData.texture
+                            tile.runAnimation()
+                        }, withKey: "FADEIN")
+            }
+        }
     }
 
     public func mousePositionChanged(event: NSEvent) {
-        let mapLocation = event.location(in: self)
-        self.log("mouse position: \(mapLocation.shortDescription)", level: .debug)
+        let coord = coordinateAtMouseEvent(event: event)
+        let locationInMap = event.location(in: self)
+        let locationInLayer = mouseLocation(event: event)
+
+
+        let effectDuration: TimeInterval = 0.2
+        let tiles = tilesAt(coord: coord)
+
+
+        tiles.forEach { tile in
+            /*
+            let scaleAction: SKAction
+
+            switch orientation {
+            case .orthogonal:
+
+                let minSpeed: CGFloat = 0.1
+                let maxSpeed: CGFloat = 2.1
+                let randomSpeed = TimeInterval(CGFloat.random(minSpeed...maxSpeed))
+
+                let fadeAction = SKAction.fadeOut(withDuration: randomSpeed)
+                let scaleByAction = SKAction.scale(to: 0.1, duration: randomSpeed)
+                let moveAction = SKAction.moveBy(x: 0, y: -tileWidthHalf, duration: randomSpeed)
+
+                let minRotation: Int = Int.random(-350...0)
+                let maxRotation: Int = Int.random(0...359)
+
+
+                let randomRotation = Int.random(minRotation...maxRotation)
+                let rotateAction = SKAction.rotate(byAngle: CGFloat(randomRotation).radians(), duration: randomSpeed)
+                scaleAction = SKAction.group([fadeAction, scaleByAction, moveAction, rotateAction])
+
+            default:
+                let scaledDuration = effectDuration * 2
+                let fadeAction = SKAction.fadeOut(withDuration: effectDuration)
+                let scaleYAction = SKAction.scaleY(to: 0.2, duration: effectDuration)
+                let scaleXAction = SKAction.scaleX(to: 0.6, duration: effectDuration * 1.5)
+                let moveAction = SKAction.moveBy(x: 0, y: -tileWidthHalf, duration: effectDuration)
+                let rotateAction = SKAction.rotate(byAngle: 2, duration: scaledDuration)
+                scaleAction = SKAction.group([scaleXAction, scaleYAction, moveAction, rotateAction, fadeAction])
+            }
+
+            if tile.action(forKey: "FADEIN") == nil {
+                tile.run(scaleAction, withKey: "FADEOUT")
+            }*/
+
+            tile.highlightWithColor(TiledObjectColors.lime, duration: 0.3, antialiasing: true)
+        }
     }
     #endif
 }
 
 
+extension TiledObjectColors {
+
+
+    static let all: [SKColor] = [coral, crimson, english, saffron,
+                                 tangerine, dandelion, azure, turquoise,
+                                 lime, pear, grass, indigo, metal, gun]
+
+    /// Returns a random color.
+    static var random: SKColor {
+        let randIndex = Int(arc4random_uniform(UInt32(TiledObjectColors.all.count)))
+        return TiledObjectColors.all[randIndex]
+    }
+}
+
+
+
 // MARK: - Deprecated
+
+@available(*, deprecated, renamed: "SKTiledLayerObject")
+typealias TiledLayerObject = SKTiledLayerObject
+
 
 extension SKTilemap {
 

@@ -23,7 +23,7 @@ extension SKTiledDemoScene {
         guard let view = view,
             let cameraNode = cameraNode,
             let tilemap = tilemap,
-            let worldNode = worldNode else {
+            let rootNode = rootNode else {
                 return
         }
 
@@ -38,9 +38,11 @@ extension SKTiledDemoScene {
         }
 
 
-        // 'd' shows/hides debug view
+        // 'd' shows bounds
         if eventKey == 0x02 {
             // no command
+            log("tilemap toggling `SKTileObject.showBounds` for every object.", level: .info)
+            tilemap.getObjects().forEach { $0.showBounds = !$0.showBounds }
         }
 
         // 'h' shows/hides the HUD
@@ -76,6 +78,8 @@ extension SKTiledDemoScene {
 
         // 'l' toggles object & tile bounds drawing
         if eventKey == 0x25 {
+            tilemap.debugDrawOptions = (tilemap.debugDrawOptions != []) ? [] : [.drawTileBounds, .drawObjectBounds]
+            log("live mode: \(tilemap.debugDrawOptions)", level: .info)
         }
 
         // 'm' just shows the map bounds
@@ -110,6 +114,11 @@ extension SKTiledDemoScene {
             cameraNode.resetCamera(toScale: 2)
         }
 
+        // '3' shows all objects
+        if eventKey == 0x14 || eventKey == 0x56 {
+            tilemap.getObjects().forEach { $0.drawBounds() }
+            log("unhiding all objects...", level: .info)
+        }
 
         // 'clear' clears TileShapes
         if eventKey == 0x47 {
@@ -126,7 +135,7 @@ extension SKTiledDemoScene {
 
         // 'g' shows the grid for the map default layer.
         if eventKey == 0x5 {
-            tilemap.debugDrawOptions = (tilemap.debugDrawOptions.contains(.drawGrid)) ? tilemap.debugDrawOptions.subtracting(.drawGrid) : tilemap.debugDrawOptions.insert(.drawGrid).memberAfterInsert
+            tilemap.debugDrawOptions = (tilemap.debugDrawOptions.contains(.drawGrid)) ? tilemap.debugDrawOptions.subtracting([.drawGrid, .drawBounds]) : tilemap.debugDrawOptions.insert([.drawGrid, .drawBounds]).memberAfterInsert
         }
 
         // 'i' shows the center point of each tile
@@ -140,10 +149,10 @@ extension SKTiledDemoScene {
                     shape.alpha = 0.7
                     shape.fillColor = SKColor(hexString: "#FD4444")
                     shape.strokeColor = .clear
-                    worldNode.addChild(shape)
+                    rootNode.addChild(shape)
 
                     let shapePos = tilemap.defaultLayer.pointForCoordinate(x, y)
-                    shape.position = worldNode.convert(shapePos, from: tilemap.defaultLayer)
+                    shape.position = rootNode.convert(shapePos, from: tilemap.defaultLayer)
                     shape.zPosition = tilemap.lastZPosition + tilemap.zDeltaForLayers
 
                     let fadeAction = SKAction.fadeAfter(wait: fadeTime, alpha: 0)
@@ -159,22 +168,24 @@ extension SKTiledDemoScene {
 
         // 'n' writes the map to image files
         if eventKey == 0x2d {
+            #if os(macOS)
             let mapname = tilemap.url.path.basename
             guard let url = createTempDirectory(named: mapname) else {
                 Logger.default.log("error creating directory.", level: .error)
                 return
             }
-            #if os(macOS)
+
             writeMapToFiles(tilemap: tilemap, url: url)
             #endif
         }
 
         // 'q' tries to show all object bounds
         if eventKey == 0xc {
-            worldNode.childNode(withName: "ROOT")?.removeFromParent()
+            log("showing all object bounds...", level: .info)
+            rootNode.childNode(withName: "OBJROOT")?.removeFromParent()
 
-            let root = SKNode()
-            root.name = "ROOT"
+            let objectsRoot = SKNode()
+            objectsRoot.name = "OBJROOT"
 
             let renderQuality: CGFloat = 16
 
@@ -186,9 +197,9 @@ extension SKTiledDemoScene {
                     if let vertices = shape.getVertices() {
 
                         let flippedVertices = (shape.gid == nil) ? vertices.map { $0.invertedY } : vertices
-                        let worldVertices = flippedVertices.map { self.worldNode.convert($0, from: shape) }
+                        let rootVertices = flippedVertices.map { self.rootNode.convert($0, from: shape) }
 
-                        let scaledVertices = worldVertices.map { $0 * renderQuality }
+                        let scaledVertices = rootVertices.map { $0 * renderQuality }
 
 
                         let translatedPath = polygonPath(scaledVertices)
@@ -203,15 +214,20 @@ extension SKTiledDemoScene {
                         bounds.lineWidth = 1 * (renderQuality / 2)
 
                         bounds.fillColor = .clear
-                        bounds.strokeColor = .green
-                        root.addChild(bounds)
+                        bounds.strokeColor = shape.layer.gridColor
+
+                        objectsRoot.addChild(bounds)
                         bounds.setScale(1 / renderQuality)
+
+                        //let follower = SKConstraint.distance(SKRange(lowerLimit: 0, upperLimit: 0), to: shape)
+                        //bounds.constraints = [follower]
                     }
                 }
             }
 
 
-            worldNode.addChild(root)
+            rootNode.addChild(objectsRoot)
+            objectsRoot.zPosition = 10000
         }
 
 

@@ -320,7 +320,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
                     filetype = ftype.description
                 }
 
-                log("\(parsingMode) parser: reading \(filetype): \"\(currentFile)\"", level: .debug)
+                log("\(parsingMode) parser: reading \(filetype): \"\(currentFile)\"", level: .info)
 
                 // absolute url
                 let currentURL = URL(fileURLWithPath: currentFilename)

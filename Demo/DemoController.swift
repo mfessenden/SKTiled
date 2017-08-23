@@ -178,7 +178,7 @@ public class DemoController: NSObject, Loggable {
         var cameraPosition = CGPoint.zero
         var cameraZoom: CGFloat = 1
         var isPaused: Bool = false
-
+        var showObjects: Bool = false
 
         if let currentScene = view.scene as? SKTiledDemoScene {
             hasCurrent = true
@@ -192,6 +192,7 @@ public class DemoController: NSObject, Loggable {
             if let tilemap = currentScene.tilemap {
                 debugDrawOptions = tilemap.defaultLayer.debugDrawOptions
                 currentURL = url
+                showObjects = tilemap.showObjects
             }
 
             isPaused = currentScene.isPaused
@@ -234,6 +235,7 @@ public class DemoController: NSObject, Loggable {
 
 
             tilemap.defaultLayer.debugDrawOptions = self.debugDrawOptions
+            tilemap.showObjects = showObjects
 
             let sceneInfo = ["hasGraphs": (nextScene.graphs.isEmpty == false),
                              "hasObjects": nextScene.tilemap.getObjects().isEmpty == false]
@@ -276,7 +278,7 @@ public class DemoController: NSObject, Loggable {
     }
 
     /**
-     Show/hide pathfinding graph visualizations.
+     Show/hide navigation graph visualizations.
      */
     public func toggleMapGraphVisualization() {
         guard let view = self.view,
@@ -297,9 +299,11 @@ public class DemoController: NSObject, Loggable {
             let scene = view.scene as? SKTiledScene else { return }
 
         if let tilemap = scene.tilemap {
+            tilemap.showObjects = !tilemap.showObjects
+            /*
             for objectLayer in tilemap.objectGroups() {
                 objectLayer.debugDrawOptions = (objectLayer.debugDrawOptions.contains(.drawObjectBounds)) ? objectLayer.debugDrawOptions.subtracting(.drawObjectBounds) : objectLayer.debugDrawOptions.insert(.drawObjectBounds).memberAfterInsert
-            }
+            }*/
         }
     }
 

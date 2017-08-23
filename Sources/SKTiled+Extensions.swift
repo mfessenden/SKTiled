@@ -211,7 +211,14 @@ public extension Int {
     public func bitComponents() -> [Int] {
         return (0 ..< 8*MemoryLayout<Int>.size).map({ 1 << $0 }).filter( { self & $0 != 0 })
     }
+
+    /// SwiftRandom extension
+    static public func random(_ range: ClosedRange<Int>) -> Int {
+        return range.lowerBound + Int(arc4random_uniform(UInt32(range.upperBound - range.lowerBound + 1)))
+    }
 }
+
+
 
 
 internal extension CGFloat {
@@ -279,6 +286,10 @@ internal extension CGFloat {
         let scaled = self * 10.0
         let result = scaled - (scaled.truncatingRemainder(dividingBy: 5))
         return result.rounded() / 10
+    }
+
+    internal static func random(_ range: ClosedRange<CGFloat>) -> CGFloat {
+        return CGFloat(Float(arc4random()) / Float(UINT32_MAX)) * (range.upperBound - range.lowerBound) + range.lowerBound
     }
 }
 
@@ -1361,35 +1372,41 @@ internal func drawLayerGrid(_ layer: SKTiledLayerObject,
 
 
 /**
- Generate a visual pathfinding graph texture.
+ Generate a visual navigation graph texture.
 
  - parameter layer:      `SKTiledLayerObject` layer instance.
  - parameter imageScale: `CGFloat` image scale multiplier.
  - parameter lineScale:  `CGFloat` line scale multiplier.
-
  - returns: `CGImage` visual graph texture.
  */
-internal func drawLayerGraph(_ layer: SKTiledLayerObject, imageScale: CGFloat=8, lineScale: CGFloat=1) -> CGImage {
+internal func drawLayerGraph(_ layer: SKTiledLayerObject,
+                             imageScale: CGFloat = 8,
+                             lineScale: CGFloat = 1) -> CGImage {
 
+
+    // get the ui scale value for the device
     let uiScale: CGFloat = SKTiledContentScaleFactor
 
     let size = layer.size
     let tileWidth = layer.tileWidth * imageScale
     let tileHeight = layer.tileHeight * imageScale
 
-    let sizeInPoints = (layer.sizeInPoints * imageScale)  // + 1
+    let tileWidthHalf = tileWidth / 2
+    let tileHeightHalf = tileHeight / 2
+
+    let sizeInPoints = (layer.sizeInPoints * imageScale)
     let defaultLineWidth: CGFloat = (imageScale / uiScale) * lineScale
 
 
     return imageOfSize(sizeInPoints, scale: uiScale) { context, bounds, scale in
 
+        guard let graph = layer.graph else { return }
+
+        let innerColor = layer.gridColor
         // line width should be at least 1 for larger tile sizes
         let lineWidth: CGFloat = defaultLineWidth
         context.setLineWidth(lineWidth)
         context.setShouldAntialias(true)  // layer.antialiased
-
-        guard let graph = layer.graph else { return }
-
 
         for col in 0 ..< Int(size.width) {
             for row in (0 ..< Int(size.height)) {
@@ -1397,39 +1414,113 @@ internal func drawLayerGraph(_ layer: SKTiledLayerObject, imageScale: CGFloat=8,
                 let strokeColor = SKColor.black
                 var fillColor = SKColor.clear
 
-                let screenPosition = layer.tileToScreenCoords(CGPoint(x: col, y: row))
+                 if let node = graph.node(atGridPosition: int2(Int32(col), Int32(row))) {
 
-                let xpos: CGFloat = screenPosition.x * imageScale
-                let ypos: CGFloat = screenPosition.y * imageScale
 
-                switch layer.orientation {
-                case .orthogonal:
+                    fillColor = SKColor.gray
 
-                    // rectangle shape
-                    let points = rectPointArray(tileWidth, height: tileHeight, origin: CGPoint(x: xpos, y: ypos + tileHeight))
+                    if let tiledNode = node as? SKTiledGraphNode {
 
-                    if let node = graph.node(atGridPosition: int2(Int32(col), Int32(row))) {
+                        switch tiledNode.weight {
+                        case (-205)...(-101):
+                            fillColor = TiledObjectColors.metal
+                        case -100...0:
+                            fillColor = TiledObjectColors.azure
+                        case 10...100:
+                            fillColor = TiledObjectColors.dandelion
+                        case 101...250:
+                            fillColor = TiledObjectColors.lime
+                        case 251...500:
+                            fillColor = TiledObjectColors.english
+                        default:
+                            break
+                        }
+                    }
 
-                        fillColor = SKColor.gray
+                    let screenPosition = layer.tileToScreenCoords(CGPoint(x: col, y: row))
 
-                        if let tiledNode = node as? SKTiledGraphNode {
+                    var xpos: CGFloat = screenPosition.x * imageScale
+                    var ypos: CGFloat = screenPosition.y * imageScale
 
-                            switch tiledNode.weight {
-                            case (-205)...(-101):
-                                fillColor = TiledObjectColors.metal
-                            case -100...0:
-                                fillColor = TiledObjectColors.azure
-                            case 10...100:
-                                fillColor = TiledObjectColors.dandelion
-                            case 101...250:
-                                fillColor = TiledObjectColors.lime
-                            case 251...500:
-                                fillColor = TiledObjectColors.english
-                            default:
-                                break
+
+                    // points for node shape
+                    var points: [CGPoint] = []
+
+                    switch layer.orientation {
+                    case .orthogonal:
+
+                        // rectangle shape
+                        points = rectPointArray(tileWidth, height: tileHeight, origin: CGPoint(x: xpos, y: ypos + tileHeight))
+
+
+                    case .isometric:
+                        // xpos, ypos is the top point of the diamond
+                        points = [
+                            CGPoint(x: xpos, y: ypos),
+                            CGPoint(x: xpos - tileWidthHalf, y: ypos + tileHeightHalf),
+                            CGPoint(x: xpos, y: ypos + tileHeight),
+                            CGPoint(x: xpos + tileWidthHalf, y: ypos + tileHeightHalf),
+                            CGPoint(x: xpos, y: ypos)
+                        ]
+
+                    case .hexagonal, .staggered:
+                        let staggerX = layer.tilemap.staggerX
+
+                        xpos += tileWidthHalf
+
+                        if layer.orientation == .hexagonal {
+
+                            ypos += tileHeightHalf
+
+                            var hexPoints = Array(repeating: CGPoint.zero, count: 6)
+                            var variableSize: CGFloat = 0
+                            var r: CGFloat = 0
+                            var h: CGFloat = 0
+
+                            // flat - currently not working
+                            if (staggerX == true) {
+                                let sizeLengthX = (layer.tilemap.sideLengthX * imageScale)
+                                r = (tileWidth - sizeLengthX) / 2
+                                h = tileHeight / 2
+                                variableSize = tileWidth - (r * 2)
+                                hexPoints[0] = CGPoint(x: xpos - (variableSize / 2), y: ypos + h)
+                                hexPoints[1] = CGPoint(x: xpos + (variableSize / 2), y: ypos + h)
+                                hexPoints[2] = CGPoint(x: xpos + (tileWidth / 2), y: ypos)
+                                hexPoints[3] = CGPoint(x: xpos + (variableSize / 2), y: ypos - h)
+                                hexPoints[4] = CGPoint(x: xpos - (variableSize / 2), y: ypos - h)
+                                hexPoints[5] = CGPoint(x: xpos - (tileWidth / 2), y: ypos)
+
+
+                            } else {
+                                r = tileWidth / 2
+                                let sizeLengthY = (layer.tilemap.sideLengthY * imageScale)
+                                h = (tileHeight - sizeLengthY) / 2
+                                variableSize = tileHeight - (h * 2)
+                                hexPoints[0] = CGPoint(x: xpos, y: ypos + (tileHeight / 2))
+                                hexPoints[1] = CGPoint(x: xpos + (tileWidth / 2), y: ypos + (variableSize / 2))
+                                hexPoints[2] = CGPoint(x: xpos + (tileWidth / 2), y: ypos - (variableSize / 2))
+                                hexPoints[3] = CGPoint(x: xpos, y: ypos - (tileHeight / 2))
+                                hexPoints[4] = CGPoint(x: xpos - (tileWidth / 2), y: ypos - (variableSize / 2))
+                                hexPoints[5] = CGPoint(x: xpos - (tileWidth / 2), y: ypos + (variableSize / 2))
                             }
+
+                            points = hexPoints
                         }
 
+                        if layer.orientation == .staggered {
+
+                            points = [
+                                CGPoint(x: xpos, y: ypos),
+                                CGPoint(x: xpos - tileWidthHalf, y: ypos + tileHeightHalf),
+                                CGPoint(x: xpos, y: ypos + tileHeight),
+                                CGPoint(x: xpos + tileWidthHalf, y: ypos + tileHeightHalf),
+                                CGPoint(x: xpos, y: ypos)
+                            ]
+                        }
+                    }
+
+                    // draw the node
+                    if (points.isEmpty == false) {
                         let fillPath = polygonPath(points)
                         context.addPath(fillPath)
                         context.setFillColor(fillColor.cgColor)
@@ -1441,18 +1532,16 @@ internal func drawLayerGraph(_ layer: SKTiledLayerObject, imageScale: CGFloat=8,
                         context.addPath(shapePath)
                         context.strokePath()
                     }
-
-                default:
-                    continue
-                }
+                 }
             }
         }
     }
 }
 
 
-// MARK: - File System
 
+// MARK: - File System
+#if os(macOS)
 /**
  Create a temporary directory.
  */
@@ -1462,7 +1551,6 @@ public func createTempDirectory(named: String) -> URL? {
         Logger.default.log("Unable get temp directory: \(named)", level: .warning)
         return nil
     }
-
     do {
         try FileManager.default.createDirectory(atPath: url.path, withIntermediateDirectories: true, attributes: nil)
         Logger.default.log("Creating directory: \(url.path)", level: .info)
@@ -1473,7 +1561,7 @@ public func createTempDirectory(named: String) -> URL? {
     return nil
 }
 
-#if os(macOS)
+
 /**
  Write the given image to PNG file.
  */

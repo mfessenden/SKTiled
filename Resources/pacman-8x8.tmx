@@ -29,11 +29,25 @@
  </group>
  <group name="Graphs">
   <layer name="Player" width="28" height="36" visible="0">
+   <properties>
+    <property name="navigationKey" value="player"/>
+   </properties>
+   <data encoding="base64" compression="zlib">
+   eJzlVcENxCAMY4MOcVMg3Q7df5vT/RCyY9O0hes9LEUpiWOj0K2Usv0R9kV7ZefoUUl+F3VRbaSbeaHqnH5P50N+15PiNpfRn/FrBp/S30Ll1T64d+7qdvxYia/15EXi0fs+oiNz/i6+N8D3fL+/ig/tO+r9dD+d+uhfiDz/NX1n8pXAHxT3fZ3zqC6ad1SH6jeDr9fM/GHvJ3sfUG81e3T/mdq7+JAnzO/RfCXf1fxHda9S58LZawZ3titwJf9MbR846IMA
+  </data>
+  </layer>
+  <layer name="Fruit" width="28" height="36" visible="0">
+   <properties>
+    <property name="navigationKey" value="fruit"/>
+   </properties>
    <data encoding="base64" compression="zlib">
    eJzlVcENxCAMY4MOcVMg3Q7df5vT/RCyY9O0hes9LEUpiWOj0K2Usv0R9kV7ZefoUUl+F3VRbaSbeaHqnH5P50N+15PiNpfRn/FrBp/S30Ll1T64d+7qdvxYia/15EXi0fs+oiNz/i6+N8D3fL+/ig/tO+r9dD+d+uhfiDz/NX1n8pXAHxT3fZ3zqC6ad1SH6jeDr9fM/GHvJ3sfUG81e3T/mdq7+JAnzO/RfCXf1fxHda9S58LZawZ3titwJf9MbR846IMA
   </data>
   </layer>
   <layer name="Ghosts" width="28" height="36" visible="0">
+   <properties>
+    <property name="navigationKey" value="ghosts"/>
+   </properties>
    <data encoding="base64" compression="zlib">
    eJzlV1EKhSAQ9AYd4kF3ELpD979N9BEsMuOsbZb1hAHZXGdnTMUppTT9EeZB54pgBcgkvoq8Wq7NQzWw2lrGePO+xIf8zhf1bSyiP+LXE3xKv4WKq/3gXXOvbo8fI/FZT36k37reZ3RExt/FtwDs48v9q/jQfkdzf91PT37tLkSev03flXyp4o/t22Zzj6buI1UPq7HkU1q9+nvzlZqZP+z8ZOcDmltpjvwvtdy7+JAnzO/WeCbfVf1ndY+S54VnXzN4a+uBnm+1J9+BGzepf0Y=
   </data>
@@ -50,9 +64,14 @@
    eJztwzENAAAIA7A9+LfMMxOENmkCADdNAwB8sGmEAAs=
   </data>
   </layer>
-  <layer name="Fruit" width="28" height="36">
+  <layer name="Scores" width="28" height="36">
    <data encoding="base64" compression="zlib">
-   eJztzEEKgCAURdHvOiOsUcNI2oHgJKIt94IPkQgtwHvg8v5ANHsVtavVviY1q+j3I6lBLWpTowEAAAAA0J8ztPdP9ndHtZdvqf65AanrCUk=
+   eJztxsEJACEAxMDtU0R9+RTFGqzbPRDEAu6XgUCka7npml7ZFZfOf4YLrrruogAAAAAAwF82tBQE7A==
+  </data>
+  </layer>
+  <layer name="Lives" width="28" height="36">
+   <data encoding="base64" compression="zlib">
+   eJztzDEKACAMBMH4dsFGxC/bpAqCYD3TbHNcBAAAAPBrtXtfeu5m6c6O8nMABZcEXg==
   </data>
   </layer>
  </group>

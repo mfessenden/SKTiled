@@ -17,6 +17,7 @@ import Cocoa
 
 
 
+
 // index, zpos, size w, size h, tile size w, tile size h, offset x, offset y, anchor x, anchor y, tile count, object count
 typealias RenderInfo = (idx: Int, path: String, zpos: Double, sw: Int, sh: Int, tsw: Int, tsh: Int, offx: Int, offy: Int, ancx: Int, ancy: Int, tc: Int, obj: Int, vis: Int, gn: Int?)
 
@@ -163,6 +164,9 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
     public var colorBlendFactor: CGFloat = 1.0
     public var renderQuality: CGFloat = 8
 
+    /// Name used to access navigation graph.
+    public var navigationKey: String
+
     /// Optional background color.
     public var backgroundColor: SKColor? = nil {
         didSet {
@@ -210,26 +214,6 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
         return CGRect(x: 0, y: 0, width: sizeInPoints.width, height: -sizeInPoints.height)
     }
 
-    /// Layer transparency.
-    public var opacity: CGFloat {
-        get {
-            return self.alpha
-        }
-        set {
-            self.alpha = newValue
-        }
-    }
-
-    /// Layer visibility.
-    public var visible: Bool {
-        get {
-            return !self.isHidden
-        }
-        set {
-            self.isHidden = !newValue
-        }
-    }
-
     /**
      Returns the points of the layer's bounding shape.
 
@@ -264,6 +248,7 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
 
         self.tilemap = tilemap
         self.ignoreProperties = tilemap.ignoreProperties
+        self.navigationKey = layerName
         super.init()
         self.debugNode = SKTiledDebugDrawNode(tileLayer: self)
         self.name = layerName
@@ -293,7 +278,7 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
         }
 
         // set the layer's antialiasing based on tile size
-        self.antialiased = self.tilemap.tileSize.width > 16 ? true : false
+        self.antialiased = (self.tilemap.currentZoom < 1)
         addChild(debugNode)
     }
 
@@ -307,12 +292,13 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
     public init(layerName: String, tilemap: SKTilemap) {
         self.tilemap = tilemap
         self.ignoreProperties = tilemap.ignoreProperties
+        self.navigationKey = layerName
         super.init()
         self.debugNode = SKTiledDebugDrawNode(tileLayer: self)
         self.name = layerName
 
         // set the layer's antialiasing based on tile size
-        self.antialiased = self.tilemap.tileSize.width > 16 ? true : false
+        self.antialiased = (self.tilemap.currentZoom < 1)
         addChild(debugNode)
     }
 
@@ -366,7 +352,7 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
      - returns: `CGPoint` converted point in layer coordinate system.
      */
     public func coordinateAtTouchLocation(_ touch: UITouch) -> CGPoint {
-    return screenToTileCoords(touchLocation(touch))
+        return screenToTileCoords(touchLocation(touch))
     }
     #endif
 
@@ -928,9 +914,6 @@ public class SKTileLayer: SKTiledLayerObject {
     /// Container for the tile sprites.
     fileprivate var tiles: TilesArray                   // array of tiles
 
-    /// Name used to access pathfinding graph.
-    public var graphName: String
-
     /// Tuple of layer render statistics.
     override internal var renderStatistics: RenderInfo {
         var current = super.renderStatistics
@@ -968,7 +951,6 @@ public class SKTileLayer: SKTiledLayerObject {
      */
     override public init(layerName: String, tilemap: SKTilemap) {
         self.tiles = TilesArray(columns: Int(tilemap.size.width), rows: Int(tilemap.size.height))
-        self.graphName = layerName
         super.init(layerName: layerName, tilemap: tilemap)
         self.layerType = .tile
     }
@@ -984,7 +966,6 @@ public class SKTileLayer: SKTiledLayerObject {
     public init?(tilemap: SKTilemap, attributes: [String: String]) {
         // name, width and height are required
         guard let layerName = attributes["name"] else { return nil }
-        self.graphName = layerName
         self.tiles = TilesArray(columns: Int(tilemap.size.width), rows: Int(tilemap.size.height))
         super.init(layerName: layerName, tilemap: tilemap, attributes: attributes)
         self.layerType = .tile
@@ -2120,6 +2101,26 @@ extension SKTiledLayerObject {
 
     // MARK: - Extensions
 
+    /// Layer transparency.
+    public var opacity: CGFloat {
+        get {
+            return self.alpha
+        }
+        set {
+            self.alpha = newValue
+        }
+    }
+
+    /// Layer visibility.
+    public var visible: Bool {
+        get {
+            return !self.isHidden
+        }
+        set {
+            self.isHidden = !newValue
+        }
+    }
+
     /**
      Add a node at the given coordinates. By default, the zPositon
      will be higher than all of the other nodes in the layer.
@@ -2236,7 +2237,7 @@ extension SKTiledLayerObject {
         return self.name ?? "null"
     }
 
-    /// Returns an array of parent layers.
+    /// Returns an array of parent layers, beginning with the current.
     public var parents: [SKNode] {
         var current = self as SKNode
         var result: [SKNode] = [current]

@@ -76,6 +76,10 @@
 		4C2FCE5C1F4378F0004AD742 /* SKTilesetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */; };
 		4C3117DB1EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
 		4C3117DC1EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
+		4C3184E91F4DCB4200950BBF /* staggered-64x33.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C3184E71F4DCB4200950BBF /* staggered-64x33.tmx */; };
+		4C3184EA1F4DCB4200950BBF /* staggered-64x33.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C3184E71F4DCB4200950BBF /* staggered-64x33.tmx */; };
+		4C3184EB1F4DCB4200950BBF /* staggered-paths-64x33.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C3184E81F4DCB4200950BBF /* staggered-paths-64x33.png */; };
+		4C3184EC1F4DCB4200950BBF /* staggered-paths-64x33.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C3184E81F4DCB4200950BBF /* staggered-paths-64x33.png */; };
 		4C4184911F3411DE004E392A /* mspacman-16x16 in Resources */ = {isa = PBXBuildFile; fileRef = 4C41848F1F3411DE004E392A /* mspacman-16x16 */; };
 		4C4184921F3411DE004E392A /* mspacman-16x16 in Resources */ = {isa = PBXBuildFile; fileRef = 4C41848F1F3411DE004E392A /* mspacman-16x16 */; };
 		4C4184931F3411DE004E392A /* pacman-16x16 in Resources */ = {isa = PBXBuildFile; fileRef = 4C4184901F3411DE004E392A /* pacman-16x16 */; };
@@ -125,6 +129,12 @@
 		4C7AD3101F1E3D7500474722 /* graphtest-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7AD30E1F1E3D7500474722 /* graphtest-8x8.png */; };
 		4C7AD3131F1E3D9400474722 /* graphtest-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6A1E1B1DAC19B1001F2E92 /* graphtest-8x8.tsx */; };
 		4C7AD3141F1E3D9500474722 /* graphtest-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C6A1E1B1DAC19B1001F2E92 /* graphtest-8x8.tsx */; };
+		4C8227E31F4E0D5E007E4556 /* isometric-130x66.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C8227E21F4E0D5E007E4556 /* isometric-130x66.tmx */; };
+		4C8227E41F4E0D5E007E4556 /* isometric-130x66.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C8227E21F4E0D5E007E4556 /* isometric-130x66.tmx */; };
+		4C8227E61F4E0E3F007E4556 /* roguelike-16x16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C8227E51F4E0E3F007E4556 /* roguelike-16x16.tmx */; };
+		4C8227E71F4E0E3F007E4556 /* roguelike-16x16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C8227E51F4E0E3F007E4556 /* roguelike-16x16.tmx */; };
+		4C8227E91F4E0E63007E4556 /* hex1-65x65.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C8227E81F4E0E63007E4556 /* hex1-65x65.tmx */; };
+		4C8227EA1F4E0E63007E4556 /* hex1-65x65.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C8227E81F4E0E63007E4556 /* hex1-65x65.tmx */; };
 		4C82FCC61F46254C00A61B84 /* Demo+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C82FCC51F46254C00A61B84 /* Demo+Debugging.swift */; };
 		4C82FCC71F46254C00A61B84 /* Demo+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C82FCC51F46254C00A61B84 /* Demo+Debugging.swift */; };
 		4C88E1AD1D8A242F00FCCFA3 /* ortho4-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */; };
@@ -222,6 +232,8 @@
 		4C1A7BDD1F3AC97600BDCA72 /* mspacman-maze3-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mspacman-maze3-8x8.png"; sourceTree = "<group>"; };
 		4C1A7BDE1F3AC97600BDCA72 /* mspacman-maze4-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mspacman-maze4-8x8.png"; sourceTree = "<group>"; };
 		4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKTiled+Debug.swift"; sourceTree = "<group>"; };
+		4C3184E71F4DCB4200950BBF /* staggered-64x33.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "staggered-64x33.tmx"; sourceTree = "<group>"; };
+		4C3184E81F4DCB4200950BBF /* staggered-paths-64x33.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "staggered-paths-64x33.png"; sourceTree = "<group>"; };
 		4C41848F1F3411DE004E392A /* mspacman-16x16 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "mspacman-16x16"; path = "../../../../Dropbox/assets/tiled/pacman/png/src/mspacman-16x16"; sourceTree = "<group>"; };
 		4C4184901F3411DE004E392A /* pacman-16x16 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "pacman-16x16"; path = "../../../../Dropbox/assets/tiled/pacman/png/src/pacman-16x16"; sourceTree = "<group>"; };
 		4C4184951F341241004E392A /* pacman-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "pacman-16x16.tsx"; sourceTree = "<group>"; };
@@ -252,6 +264,9 @@
 		4C6FB8A41F1E5D2800A57964 /* pacman-8x8.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "pacman-8x8.tmx"; sourceTree = "<group>"; };
 		4C6FB8A51F1E5D2800A57964 /* pm-maze-8x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "pm-maze-8x8.tsx"; sourceTree = "<group>"; };
 		4C7AD30E1F1E3D7500474722 /* graphtest-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "graphtest-8x8.png"; sourceTree = "<group>"; };
+		4C8227E21F4E0D5E007E4556 /* isometric-130x66.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "isometric-130x66.tmx"; sourceTree = "<group>"; };
+		4C8227E51F4E0E3F007E4556 /* roguelike-16x16.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "roguelike-16x16.tmx"; sourceTree = "<group>"; };
+		4C8227E81F4E0E63007E4556 /* hex1-65x65.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "hex1-65x65.tmx"; sourceTree = "<group>"; };
 		4C82FCC51F46254C00A61B84 /* Demo+Debugging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Demo+Debugging.swift"; sourceTree = "<group>"; };
 		4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ortho4-16x16.png"; sourceTree = "<group>"; };
 		4C88E1D01D8A4EBE00FCCFA3 /* SKTile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTile.swift; sourceTree = "<group>"; };
@@ -277,7 +292,7 @@
 		4CA6E5421F393F7700612A1C /* kong-50x32.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "kong-50x32.tsx"; path = "../../test/Assets/kong-50x32.tsx"; sourceTree = "<group>"; };
 		4CA6E5431F393F7700612A1C /* other-16x32.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "other-16x32.tsx"; path = "../../test/Assets/other-16x32.tsx"; sourceTree = "<group>"; };
 		4CA6E5441F393F7700612A1C /* dk-fonts-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dk-fonts-8x8.png"; path = "../../test/Assets/dk-fonts-8x8.png"; sourceTree = "<group>"; };
-		4CAD35BC1F4B9D2C0034CA6C /* ortho4-16x16.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "ortho4-16x16.tmx"; sourceTree = "<group>"; };
+		4CAD35BC1F4B9D2C0034CA6C /* ortho4-16x16.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "ortho4-16x16.tmx"; sourceTree = "<group>"; };
 		4CBA61651D8A048200B31FC1 /* SKTiledDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKTiledDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CBA617E1D8A0A3900B31FC1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "roguelike-16x16-anim.png"; sourceTree = "<group>"; };
@@ -447,9 +462,9 @@
 				4C0E59501DC046E700921F75 /* CHANGELOG.md */,
 				4C0924BD1F11755A009CA37E /* TODO.md */,
 				4C0924BE1F117574009CA37E /* NOTES.md */,
-				4CBA61931D8A0A6C00B31FC1 /* Sources */,
 				4CBA617F1D8A0A4600B31FC1 /* Resources */,
 				4C440B971DAE911000DEC9A4 /* Demo */,
+				4CBA61931D8A0A6C00B31FC1 /* Sources */,
 				4C440BAB1DAE913A00DEC9A4 /* iOS */,
 				4C440BA11DAE913000DEC9A4 /* macOS */,
 				4C6480BE1DC1231C006F4CB3 /* Modules */,
@@ -473,8 +488,12 @@
 			children = (
 				4C628F151F3EFA7400FCF929 /* User */,
 				4CD5229E1DA624C400D78D81 /* CREDITS */,
-				4C6FB8A41F1E5D2800A57964 /* pacman-8x8.tmx */,
+				4C8227E81F4E0E63007E4556 /* hex1-65x65.tmx */,
+				4C8227E21F4E0D5E007E4556 /* isometric-130x66.tmx */,
 				4CAD35BC1F4B9D2C0034CA6C /* ortho4-16x16.tmx */,
+				4C6FB8A41F1E5D2800A57964 /* pacman-8x8.tmx */,
+				4C8227E51F4E0E3F007E4556 /* roguelike-16x16.tmx */,
+				4C3184E71F4DCB4200950BBF /* staggered-64x33.tmx */,
 				4CF452021F3D1287008BA678 /* tetris-dynamics.tmx */,
 				4CA22C7B1F040FE700CD0A72 /* font */,
 				4CDF67CC1D8AE84300589457 /* png */,
@@ -539,6 +558,7 @@
 				4CF451ED1F3CF48C008BA678 /* pm-maze-8x8.png */,
 				4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */,
 				4CFEA3571D8D02D20055C150 /* staggered-64x192.png */,
+				4C3184E81F4DCB4200950BBF /* staggered-paths-64x33.png */,
 				4CF451EC1F3CF448008BA678 /* References */,
 				4CF451EB1F3CF42C008BA678 /* Ms Pacman */,
 				4CF4516E1F3CA2D2008BA678 /* Tetris Assets */,
@@ -783,6 +803,8 @@
 				4C0924DB1F127DC0009CA37E /* tetris-square-8x8.tsx in Resources */,
 				4C0924E31F127DC0009CA37E /* lshape-24x16.png in Resources */,
 				4CA6E53A1F393F6D00612A1C /* kong-50x32 in Resources */,
+				4C8227E61F4E0E3F007E4556 /* roguelike-16x16.tmx in Resources */,
+				4C3184E91F4DCB4200950BBF /* staggered-64x33.tmx in Resources */,
 				4CA6E5471F393F7700612A1C /* barrels-12x10.tsx in Resources */,
 				4C7AD3131F1E3D9400474722 /* graphtest-8x8.tsx in Resources */,
 				4C0924DD1F127DC0009CA37E /* tetris-square-16x16.tsx in Resources */,
@@ -800,6 +822,7 @@
 				4CF040C61F32279600D8AFFC /* inky-16x16.tsx in Resources */,
 				4C1A7BE61F3AC97600BDCA72 /* mspacman-maze4-8x8.png in Resources */,
 				4C4184A21F34201E004E392A /* fruit-16x16 in Resources */,
+				4C8227E91F4E0E63007E4556 /* hex1-65x65.tmx in Resources */,
 				4CA6E54D1F393F7700612A1C /* dk-sprites-8x8.tsx in Resources */,
 				4CA6E54B1F393F7700612A1C /* dk-fonts-8x8.tsx in Resources */,
 				4C1774A81D90999C000C0AFD /* hex-65x65-65x230.png in Resources */,
@@ -810,6 +833,7 @@
 				4CF0FEA21F34EF27000AADEF /* Assets.xcassets in Resources */,
 				4C4184961F341241004E392A /* pacman-16x16.tsx in Resources */,
 				4CF040C41F3112C700D8AFFC /* roguelike-16x16.tsx in Resources */,
+				4C3184EB1F4DCB4200950BBF /* staggered-paths-64x33.png in Resources */,
 				4CA6E5531F393F7700612A1C /* dk-fonts-8x8.png in Resources */,
 				4C6FB8A71F1E5D2800A57964 /* pacman-8x8.tmx in Resources */,
 				4C0924E51F127DC0009CA37E /* square-8x8.png in Resources */,
@@ -820,6 +844,7 @@
 				4CF0FEA41F34EF27000AADEF /* staggered-64x192.png in Resources */,
 				4C4184911F3411DE004E392A /* mspacman-16x16 in Resources */,
 				4C0924EF1F127DC0009CA37E /* tetris-layer3-336x240.png in Resources */,
+				4C8227E31F4E0D5E007E4556 /* isometric-130x66.tmx in Resources */,
 				4CF040CC1F3228D600D8AFFC /* pinky-16x16.tsx in Resources */,
 				4C0924DF1F127DC0009CA37E /* tetris-tshape-24x16.tsx in Resources */,
 				4C1A7BE41F3AC97600BDCA72 /* mspacman-maze3-8x8.png in Resources */,
@@ -851,10 +876,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CA6E5501F393F7700612A1C /* kong-50x32.tsx in Resources */,
+				4C8227E71F4E0E3F007E4556 /* roguelike-16x16.tmx in Resources */,
 				4CA6E5351F393F6D00612A1C /* barrels-12x10 in Resources */,
 				4C0924E21F127DC0009CA37E /* bar-32x8.png in Resources */,
 				4C1A7BE71F3AC97600BDCA72 /* mspacman-maze4-8x8.png in Resources */,
 				4C0924F01F127DC0009CA37E /* tetris-layer3-336x240.png in Resources */,
+				4C8227EA1F4E0E63007E4556 /* hex1-65x65.tmx in Resources */,
 				4CA6E5541F393F7700612A1C /* dk-fonts-8x8.png in Resources */,
 				4C1A7BE51F3AC97600BDCA72 /* mspacman-maze3-8x8.png in Resources */,
 				4C7AD3101F1E3D7500474722 /* graphtest-8x8.png in Resources */,
@@ -878,6 +905,7 @@
 				4C0924E01F127DC0009CA37E /* tetris-tshape-24x16.tsx in Resources */,
 				4C88E1AD1D8A242F00FCCFA3 /* ortho4-16x16.png in Resources */,
 				4C4184A31F34201E004E392A /* fruit-16x16 in Resources */,
+				4C3184EC1F4DCB4200950BBF /* staggered-paths-64x33.png in Resources */,
 				4C440BB51DAE913A00DEC9A4 /* Main.storyboard in Resources */,
 				4C0924EE1F127DC0009CA37E /* tetris-layer2-336x240.png in Resources */,
 				4C4184971F341241004E392A /* pacman-16x16.tsx in Resources */,
@@ -891,6 +919,7 @@
 				4CF040CD1F3228D600D8AFFC /* pinky-16x16.tsx in Resources */,
 				4CA6E5521F393F7700612A1C /* other-16x32.tsx in Resources */,
 				4CA6E5481F393F7700612A1C /* barrels-12x10.tsx in Resources */,
+				4C3184EA1F4DCB4200950BBF /* staggered-64x33.tmx in Resources */,
 				4CA6E54A1F393F7700612A1C /* characters-16x16.tsx in Resources */,
 				4C6FB8AA1F1E5D2800A57964 /* pm-maze-8x8.tsx in Resources */,
 				4CA6E53B1F393F6D00612A1C /* kong-50x32 in Resources */,
@@ -899,6 +928,7 @@
 				4C628F171F3EFA7400FCF929 /* User in Resources */,
 				4CA6E54C1F393F7700612A1C /* dk-fonts-8x8.tsx in Resources */,
 				4C4184941F3411DE004E392A /* pacman-16x16 in Resources */,
+				4C8227E41F4E0D5E007E4556 /* isometric-130x66.tmx in Resources */,
 				4C4184921F3411DE004E392A /* mspacman-16x16 in Resources */,
 				4CD6D2D51D8B9DE20083DA7B /* roguelike-16x16.tsx in Resources */,
 				4CA6E5391F393F6D00612A1C /* characters-16x32 in Resources */,
@@ -1262,8 +1292,8 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGNING_REQUIRED = NO;
-				COPY_PHASE_STRIP = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;

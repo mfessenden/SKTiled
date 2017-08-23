@@ -161,7 +161,7 @@ class GameViewController: NSViewController, Loggable {
     override func scrollWheel(with event: NSEvent) {
         guard let view = self.view as? SKView else { return }
 
-        if let currentScene = view.scene as? SKTiledDemoScene {
+        if let currentScene = view.scene as? SKTiledScene {
             currentScene.scrollWheel(with: event)
         }
     }
@@ -192,7 +192,7 @@ class GameViewController: NSViewController, Loggable {
             return
         }
 
-        let appMenu = mainMenu.item(withTitle: "SKTiled")!
+        let appMenu = mainMenu.item(withTitle: "Demo")!
         if let loggingMenu = appMenu.submenu?.item(withTitle: "Logging") {
             if let currentMenuItem = loggingMenu.submenu?.item(withTag: 1024) {
                 if let loggingLevel = notification.userInfo!["loggingLevel"] as? LoggingLevel {
