@@ -1719,7 +1719,7 @@ public class SKObjectGroup: SKTiledLayerObject {
     // MARK: - Tile Objects
 
     /**
-     Return objects with a tile id.
+     Return tile objects.
 
      - returns: `[SKTileObject]` objects with a tile gid.
      */
@@ -1728,13 +1728,31 @@ public class SKObjectGroup: SKTiledLayerObject {
     }
 
     /**
-     Returns an `SKTileObject` object from the objects set.
+     Return tile object(s) matching the given global id.
 
-     - parameter object:    `SKTileObject` object.
+     - parameter globalID:    `Int` global id to query.
      - returns: `SKTileObject?` removed object.
      */
     public func tileObjects(globalID: Int) -> [SKTileObject] {
         return objects.filter { $0.gid == globalID }
+    }
+
+    /**
+     Create and add a tile object with the given tile data.
+
+     - parameter data: SKTilesetData` tile data.
+     - returns: `SKTileObject` created tile object.
+     */
+    public func tileObject(data: SKTilesetData) -> SKTileObject {
+        var objectSize = tilemap.tileSize
+        if let texture = data.texture {
+            objectSize = texture.size()
+        }
+        let object = SKTileObject(width: objectSize.width, height: objectSize.height)
+        object.gid = data.globalID
+        _ = addObject(object)
+        object.drawObject()
+        return object
     }
 
     // MARK: - Text Objects

@@ -20,6 +20,8 @@ Change Log
 - add `SKTilemap.coordinateAtMouseEvent(event:)`
 - add `SKTilemap.coordinateAtTouchLocation(_:)`
 - add `SKTileCollisionShape`
+- add `SKObjectGroup.tileObject(data:)`
+- add `SKObjectGroup.tileObject(withID:)`
 - rename `TiledLayerObject` -> `SKTiledLayerObject`
 - rename `TiledLayerObject.boundingRect` -> `SKTiledLayerObject.bounds`
 - rename `SKTiledSceneCamera.boundingRect` -> `SKTiledSceneCamera.bounds`

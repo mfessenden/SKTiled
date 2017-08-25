@@ -159,26 +159,6 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         }
     }
 
-    /// Object opacity
-    open var opacity: CGFloat {
-        get {
-            return self.alpha
-        }
-        set {
-            self.alpha = newValue
-        }
-    }
-
-    /// Object visibility
-    open var visible: Bool {
-        get {
-            return !self.isHidden
-        }
-        set {
-            self.isHidden = !newValue
-        }
-    }
-
     /// Returns the bounding box of the shape.
     open var bounds: CGRect {
         return CGRect(x: 0, y: 0, width: size.width, height: -size.height)
@@ -293,15 +273,13 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     }
 
     /**
-     Initialize the object with tile gid & object group.
+     Initialize the object with an object group reference.
 
-     - parameter tileID: `Int` tile id.
      - parameter layer:  `SKObjectGroup` object group.
      */
-    required public init(gid: Int, layer: SKObjectGroup) {
+    required public init(layer: SKObjectGroup) {
         super.init()
-        self.gid = gid
-        self.layer = layer
+        layer.addObject(self)
         drawObject()
     }
 
@@ -775,8 +753,27 @@ extension SKTileObject {
 }
 
 
-// Tile animation
 extension SKTileObject {
+
+    /// Object opacity
+    open var opacity: CGFloat {
+        get {
+            return self.alpha
+        }
+        set {
+            self.alpha = newValue
+        }
+    }
+
+    /// Object visibility
+    open var visible: Bool {
+        get {
+            return !self.isHidden
+        }
+        set {
+            self.isHidden = !newValue
+        }
+    }
 
     /// Returns true if the object references an animated tile.
     open var isAnimated: Bool {
