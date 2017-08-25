@@ -343,7 +343,7 @@ public extension SKTileObject {
 }
 
 
-extension TileCollisionShape {
+extension SKTileCollisionShape {
     // MARK: - Properties
 
     /**

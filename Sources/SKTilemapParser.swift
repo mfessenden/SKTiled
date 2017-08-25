@@ -98,7 +98,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
      Load a TMX file and parse it.
 
      - parameter tmxFile:          `String` Tiled file name (does not need TMX extension).
-     - parameter inDirectory:      `String?` optional path for file.
+     - parameter inDirectory:      `String?` search path for assets.
      - parameter delegate:         `SKTilemapDelegate?` optional tilemap delegate instance.
      - parameter withTilesets:     `[SKTileset]?` use existing tilesets to create the tile map.
      - parameter ignoreProperties: `Bool` ignore custom properties from Tiled.
@@ -136,8 +136,9 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
             rootPath = resourceURL
         }
 
+        // if the user has passed a search directory...
         if let rootDirectory = inDirectory {
-            rootPath = URL(fileURLWithPath: rootDirectory)
+            rootPath = self.getAssetDirectory(path: rootDirectory)
         }
 
         // create a url relative to the current root
@@ -245,7 +246,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
      Load tilesets from external files.
 
      - parameter tsxFiles:         `[String]` array of tileset filenames.
-     - parameter inDirectory:      `String?` optional path for file.
+     - parameter inDirectory:      `String?` search path for assets.
      - parameter delegate:         `SKTilemapDelegate?` optional tilemap delegate instance.
      - parameter ignoreProperties: `Bool` ignore custom properties from Tiled.
      - parameter loggingLevel:    `LoggingLevel` logging verbosity.
@@ -274,8 +275,9 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
             rootPath = resourceURL
         }
 
+        // if the user has passed a search directory...
         if let rootDirectory = inDirectory {
-            rootPath = URL(fileURLWithPath: rootDirectory)
+            rootPath = self.getAssetDirectory(path: rootDirectory)
         }
 
         // create urls relative to root
@@ -438,6 +440,31 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
 
 
     // MARK: - Helpers
+
+    /**
+     Return the curret asset directory.
+
+     - parameter url:  `URL` file url.
+     - returns  `Bool` file exists.
+     */
+    internal func getAssetDirectory(path: String) -> URL {
+        // if the path is a directory that exists, return it.
+        if (path.isDirectory == true) {
+            return URL(fileURLWithPath: path, isDirectory: true)
+        }
+
+
+        // if the path argument respresents a directory name, append it to the resource path.
+        let relativePath = self.rootPath.appendingPathComponent(path)
+
+        if (relativePath.isDirectory == true) {
+            return relativePath
+        }
+
+        // if neither of the paths exists, just return the current root
+        return rootPath
+    }
+
     /**
      Returns true if the file exists on disk.
 
@@ -447,7 +474,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
     internal func fileExists(at url: URL) -> Bool {
         // check that file exists
         guard fileManager.fileExists(atPath: url.path) else {
-            log("file: \"\(url.path)\" does not exist.", level: .error)
+            //log("file: \"\(url.path)\" does not exist.", level: .warning)
             return false
         }
         return true

@@ -19,13 +19,11 @@ Change Log
 - add `SKTileLayer.gatherObstacles()`
 - add `SKTilemap.coordinateAtMouseEvent(event:)`
 - add `SKTilemap.coordinateAtTouchLocation(_:)`
-- add `TileCollisionShape`
+- add `SKTileCollisionShape`
 - rename `TiledLayerObject` -> `SKTiledLayerObject`
 - rename `TiledLayerObject.boundingRect` -> `SKTiledLayerObject.bounds`
 - rename `SKTiledSceneCamera.boundingRect` -> `SKTiledSceneCamera.bounds`
 - rename `SKTilemap.addLayer(_:base:)` -> `SKTilemap.addLayer(_:group:clamped:)->(success:layer:)`
-- rename `SKTiledSceneDelegate.worldNode` -> `SKTiledSceneDelegate.rootNode`
-- rename `SKTiledScene.worldNode` -> `SKTiledScene.rootNode`
 
 #### Changes
 

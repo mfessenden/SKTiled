@@ -165,18 +165,10 @@ public protocol SKTilemapDelegate: class {
 /**
  ## Overview
 
- The `SKTilemap` class represents a container which manages layers, tiles (sprites),
+ The `SKTilemap` class defines a container for managing layers, tiles (sprites),
  vector objects & images. Tile data is stored in `SKTileset` tile sets.
 
  ### Usage
-
- ```swift
- let mapSize    = tilemap.size          // returns the size of the map (tiles).
- let renderSize = tilemap.sizeInPoints  // returns the size of the map (pixels).
- let tileSize   = tilemap.tileSize      // returns the map tile size (pixels).
- ```
-
- ### Loading
 
  Maps can be loaded with the class function `SKTilemap.load(tmxFile:)`:
 
@@ -184,6 +176,16 @@ public protocol SKTilemapDelegate: class {
  if let tilemap = SKTilemap.load(tmxFile: "myfile.tmx") {
     scene.addChild(tilemap)
  }
+ ```
+
+ ### Properties
+ 
+ 
+
+ ```swift
+ let mapSize    = tilemap.size          // returns the size of the map (tiles).
+ let renderSize = tilemap.sizeInPoints  // returns the size of the map (pixels).
+ let tileSize   = tilemap.tileSize      // returns the map tile size (pixels).
  ```
  */
 public class SKTilemap: SKNode, SKTiledObject {
@@ -492,7 +494,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      Load a Tiled tmx file and return a new `SKTilemap` object. Returns nil if there is a parsing error.
 
      - parameter filename:           `String` Tiled file name.
-     - parameter inDirectory:        `String?` search directory (if not the current resource path).
+     - parameter inDirectory:        `String?` search path for assets.
      - parameter delegate:           `SKTilemapDelegate?` optional [`SKTilemapDelegate`](Protocols/SKTilemapDelegate.html) instance.
      - parameter withTilesets:       `[SKTileset]?` optional tilesets.
      - parameter ignoreProperties:   `Bool` ignore custom properties from Tiled.

@@ -70,6 +70,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    @IBAction func scanResources(_ sender: Any) {
+        Logger.default.log("scanning...", level: .info)
+    }
+
     /**
      Write all tile layers to images on disk.
      */

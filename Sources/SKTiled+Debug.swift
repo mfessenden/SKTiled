@@ -911,7 +911,7 @@ extension LoggingLevel: CustomStringConvertible {
 extension SKTiledScene {
 
     open func addTemporaryShape(at location: CGPoint, duration: TimeInterval=0, radius: CGFloat=4) {
-        guard let world = rootNode else { return }
+        guard let world = worldNode else { return }
         let rootLocation = world.convert(location, from: self)
         let shape = SKShapeNode(circleOfRadius: radius)
         shape.strokeColor = TiledObjectColors.random

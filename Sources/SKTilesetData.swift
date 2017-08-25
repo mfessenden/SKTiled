@@ -27,7 +27,7 @@ internal struct AnimationFrame {
 
  - parameter points:  `[CGPoint]` frame duration.
  */
-internal class TileCollisionShape: SKTiledObject {
+internal class SKTileCollisionShape: SKTiledObject {
 
     var uuid: String = UUID().uuidString
     var type: String!

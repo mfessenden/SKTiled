@@ -852,6 +852,45 @@ public extension String {
 }
 
 
+public extension URL {
+
+    /**
+     Returns the path file name without file extension.
+     */
+    public var basename: String {
+        return self.deletingPathExtension().lastPathComponent
+    }
+
+    /**
+     Returns the file name without the parent directory.
+     */
+    public var filename: String {
+        return self.lastPathComponent
+    }
+
+
+    /// Returns the parent path of the file.
+    public var parent: String? {
+        var mutableURL = self
+        let result = (mutableURL.deletingLastPathComponent().relativePath == ".") ? nil : mutableURL.deletingLastPathComponent().relativePath
+        return result
+    }
+
+    /// Returns true if the URL represents a path that exists.
+    public var fileExists: Bool {
+        let fm = FileManager.default
+        return fm.fileExists(atPath: self.path)
+    }
+
+    /// Returns true if the URL represents a path that exists and is a directory.
+    public var isDirectory: Bool {
+        let fm = FileManager.default
+        var isDir : ObjCBool = false
+        return fm.fileExists(atPath: self.path, isDirectory: &isDir)
+    }
+}
+
+
 public extension SKAction {
 
     /**

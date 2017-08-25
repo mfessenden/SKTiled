@@ -81,7 +81,9 @@ public protocol SKTiledSceneCameraDelegate: class {
 
  Custom scene camera that responds to finger gestures and mouse events.
 
- The `SKTiledSceneCamera` is a custom camera meant to be used with a scene conforming to the `SKTiledSceneDelegate` protocol. The camera defines a position in the scene to render the scene from, with a reference to the `SKTiledSceneDelegate.rootNode` to interact with tile maps.
+ The `SKTiledSceneCamera` is a custom camera meant to be used with a scene conforming to the `SKTiledSceneDelegate` protocol. 
+ The camera defines a position in the scene to render the scene from, with a reference to the `SKTiledSceneDelegate.worldNode` 
+ to interact with tile maps.
 
  */
 public class SKTiledSceneCamera: SKCameraNode, Loggable {

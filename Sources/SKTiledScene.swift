@@ -24,7 +24,7 @@ import GameplayKit
  */
 public protocol SKTiledSceneDelegate: class {
     /// Root container node. Tiled assets are parented to this node.
-    var rootNode: SKNode! { get set }
+    var worldNode: SKNode! { get set }
     /// Custom scene camera.
     var cameraNode: SKTiledSceneCamera! { get set }
     /// Tile map node.
@@ -46,7 +46,7 @@ public protocol SKTiledSceneDelegate: class {
  ### Properties: ###
 
  ```
- SKTiledScene.rootNode:    `SKNode!` root container node.
+ SKTiledScene.worldNode:    `SKNode!` root container node.
  SKTiledScene.tilemap:      `SKTilemap!` tile map object.
  SKTiledScene.cameraNode:   `SKTiledSceneCamera!` custom scene camera.
  ```
@@ -54,7 +54,7 @@ public protocol SKTiledSceneDelegate: class {
 open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate, SKTilemapDelegate, Loggable {
 
     /// Root container node.
-    open var rootNode: SKNode!
+    open var worldNode: SKNode!
     /// Tile map node.
     open var tilemap: SKTilemap!
     /// Custom scene camera.
@@ -94,11 +94,11 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
         physicsWorld.contactDelegate = self
 
         // setup world node
-        rootNode = SKNode()
-        addChild(rootNode)
+        worldNode = SKNode()
+        addChild(worldNode)
 
         // setup the camera
-        cameraNode = SKTiledSceneCamera(view: view, world: rootNode)
+        cameraNode = SKTiledSceneCamera(view: view, world: worldNode)
         cameraNode.addDelegate(self)
         addChild(cameraNode)
         camera = cameraNode
@@ -138,7 +138,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
      Load and setup a named TMX file, with optional tilesets. Allows for an optional completion handler.
 
      - parameter tmxFile:          `String` TMX file name.
-     - parameter inDirectory:      `String?` search directory (if not bundled)
+     - parameter inDirectory:      `String?` search path for assets.
      - parameter withTilesets:     `[SKTileset]` optional pre-loaded tilesets.
      - parameter ignoreProperties: `Bool` don't parse custom properties.
      - parameter loggingLevel:     `LoggingLevel` logging verbosity.
@@ -151,7 +151,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
                     loggingLevel: LoggingLevel = .info,
                     _ completion: (() -> ())? = nil) {
 
-        guard let rootNode = rootNode else { return }
+        guard let worldNode = worldNode else { return }
 
         self.loggingLevel = loggingLevel
         self.tilemap = nil
@@ -165,7 +165,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
             backgroundColor = tilemap.backgroundColor ?? SKColor.clear
 
             // add the tilemap to the world container node.
-            rootNode.addChild(tilemap)
+            worldNode.addChild(tilemap)
             self.tilemap = tilemap
             cameraNode.addDelegate(self.tilemap)
 
@@ -259,7 +259,7 @@ extension SKTiledSceneDelegate where Self: SKScene {
     /**
      Load a named TMX file, with optional tilesets.
 
-     - parameter inDirectory:      `String?` search directory (if not bundled)
+     - parameter inDirectory:      `String?` search path for assets.
      - parameter withTilesets:     `[SKTileset]` optional pre-loaded tilesets.
      - parameter ignoreProperties: `Bool` don't parse custom properties.
      - parameter verbosity:        `LoggingLevel` logging verbosity.
@@ -397,27 +397,5 @@ extension SKTiledScene: SKTiledSceneCameraDelegate {
     #endif
 }
 
-
-
-// MARK: - Deprecated
-
-extension SKTiledSceneDelegate {
-
-    /// World container node.
-    @available(*, deprecated, renamed: "SKTiledSceneDelegate.rootNode")
-    public var worldNode: SKNode! {
-        return rootNode
-    }
-}
-
-
-extension SKTiledScene {
-
-    /// World container node.
-    @available(*, deprecated, renamed: "SKTiledScene.rootNode")
-    public var worldNode: SKNode! {
-        return rootNode
-    }
-}
 
 

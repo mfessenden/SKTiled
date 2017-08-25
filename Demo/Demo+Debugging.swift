@@ -23,7 +23,7 @@ extension SKTiledDemoScene {
         guard let view = view,
             let cameraNode = cameraNode,
             let tilemap = tilemap,
-            let rootNode = rootNode else {
+            let worldNode = worldNode else {
                 return
         }
 
@@ -149,10 +149,10 @@ extension SKTiledDemoScene {
                     shape.alpha = 0.7
                     shape.fillColor = SKColor(hexString: "#FD4444")
                     shape.strokeColor = .clear
-                    rootNode.addChild(shape)
+                    worldNode.addChild(shape)
 
                     let shapePos = tilemap.defaultLayer.pointForCoordinate(x, y)
-                    shape.position = rootNode.convert(shapePos, from: tilemap.defaultLayer)
+                    shape.position = worldNode.convert(shapePos, from: tilemap.defaultLayer)
                     shape.zPosition = tilemap.lastZPosition + tilemap.zDeltaForLayers
 
                     let fadeAction = SKAction.fadeAfter(wait: fadeTime, alpha: 0)
@@ -182,7 +182,7 @@ extension SKTiledDemoScene {
         // 'q' tries to show all object bounds
         if eventKey == 0xc {
             log("showing all object bounds...", level: .info)
-            rootNode.childNode(withName: "OBJROOT")?.removeFromParent()
+            worldNode.childNode(withName: "OBJROOT")?.removeFromParent()
 
             let objectsRoot = SKNode()
             objectsRoot.name = "OBJROOT"
@@ -197,7 +197,7 @@ extension SKTiledDemoScene {
                     if let vertices = shape.getVertices() {
 
                         let flippedVertices = (shape.gid == nil) ? vertices.map { $0.invertedY } : vertices
-                        let rootVertices = flippedVertices.map { self.rootNode.convert($0, from: shape) }
+                        let rootVertices = flippedVertices.map { self.worldNode.convert($0, from: shape) }
 
                         let scaledVertices = rootVertices.map { $0 * renderQuality }
 
@@ -226,7 +226,7 @@ extension SKTiledDemoScene {
             }
 
 
-            rootNode.addChild(objectsRoot)
+            worldNode.addChild(objectsRoot)
             objectsRoot.zPosition = 10000
         }
 
