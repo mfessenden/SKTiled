@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="8" tileheight="8" nextobjectid="1">
+ <properties>
+  <property name="frameColor" type="color" value="#ff690092"/>
+  <property name="gridColor" type="color" value="#ffa000a1"/>
+  <property name="maxZoom" type="float" value="12"/>
+  <property name="testColor" type="color" value=""/>
+  <property name="worldScale" type="float" value="2"/>
+ </properties>
+ <tileset firstgid="1" name="graph-test-8x8" tilewidth="8" tileheight="8" spacing="1" tilecount="90" columns="15">
+  <image source="graphtest-8x8.png" trans="800080" width="134" height="53"/>
+  <tile id="0" probability="0.8">
+   <properties>
+    <property name="strength" type="float" value="0"/>
+    <property name="type" value="walls"/>
+   </properties>
+  </tile>
+  <tile id="1" probability="0.1">
+   <properties>
+    <property name="strength" type="float" value="0"/>
+    <property name="type" value="walls"/>
+   </properties>
+  </tile>
+  <tile id="2" type="light" probability="0.01">
+   <properties>
+    <property name="light" type="bool" value="true"/>
+    <property name="strength" type="float" value="0"/>
+    <property name="type" value="walls"/>
+   </properties>
+  </tile>
+  <tile id="3" probability="0.02">
+   <properties>
+    <property name="strength" type="float" value="0.5"/>
+    <property name="type" value="walls"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="type" value="floor"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="8" type="path">
+   <properties>
+    <property name="walkable" type="bool" value="true"/>
+    <property name="weight" type="float" value="1"/>
+   </properties>
+  </tile>
+  <tile id="9" type="hotspot">
+   <properties>
+    <property name="walkable" type="bool" value="true"/>
+    <property name="weight" type="float" value="500"/>
+   </properties>
+  </tile>
+  <tile id="10" type="hiding">
+   <properties>
+    <property name="walkable" type="bool" value="true"/>
+    <property name="weight" type="float" value="200"/>
+   </properties>
+  </tile>
+  <tile id="15" probability="0.02">
+   <properties>
+    <property name="strength" type="float" value="0"/>
+    <property name="type" value="walls"/>
+   </properties>
+  </tile>
+  <tile id="16" probability="0.025">
+   <properties>
+    <property name="type" value="floor"/>
+   </properties>
+  </tile>
+  <tile id="17" probability="0.5">
+   <properties>
+    <property name="type" value="floor"/>
+   </properties>
+  </tile>
+  <tile id="18" probability="0.066">
+   <properties>
+    <property name="type" value="floor"/>
+   </properties>
+  </tile>
+  <tile id="19">
+   <properties>
+    <property name="type" value="floor"/>
+   </properties>
+  </tile>
+  <tile id="20">
+   <properties>
+    <property name="name" value="HoleBlue"/>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="23" type="doorway">
+   <properties>
+    <property name="walkable" type="bool" value="true"/>
+    <property name="weight" type="float" value="25"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="walkable" type="bool" value="true"/>
+    <property name="weight" type="float" value="1"/>
+   </properties>
+  </tile>
+  <tile id="30" probability="0.025">
+   <properties>
+    <property name="strength" type="float" value="0"/>
+    <property name="type" value="walls"/>
+   </properties>
+  </tile>
+  <tile id="31" probability="0.035">
+   <properties>
+    <property name="name" value=""/>
+    <property name="type" value="floor"/>
+   </properties>
+  </tile>
+  <tile id="32">
+   <properties>
+    <property name="name" value=""/>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="33">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="34">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="35">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="36">
+   <properties>
+    <property name="type" value="floor"/>
+   </properties>
+  </tile>
+  <tile id="37">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="45">
+   <properties>
+    <property name="strength" type="float" value="0"/>
+    <property name="type" value="walls"/>
+   </properties>
+  </tile>
+  <tile id="46" probability="0.05">
+   <properties>
+    <property name="strength" type="float" value="0"/>
+    <property name="type" value="walls"/>
+   </properties>
+  </tile>
+  <tile id="47">
+   <properties>
+    <property name="light" type="bool" value="true"/>
+    <property name="strength" type="float" value="0"/>
+    <property name="type" value="walls"/>
+   </properties>
+  </tile>
+  <tile id="48" probability="0.04">
+   <properties>
+    <property name="strength" type="float" value="0.5"/>
+    <property name="type" value="walls"/>
+   </properties>
+  </tile>
+  <tile id="49">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="50">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="51">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="52">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="60" probability="0.035">
+   <properties>
+    <property name="strength" type="float" value="0"/>
+    <property name="type" value="walls"/>
+   </properties>
+  </tile>
+  <tile id="61" probability="0.035">
+   <properties>
+    <property name="type" value="floor"/>
+   </properties>
+  </tile>
+  <tile id="62" probability="0.35">
+   <properties>
+    <property name="type" value="floor"/>
+   </properties>
+  </tile>
+  <tile id="63" probability="0.025">
+   <properties>
+    <property name="type" value="floor"/>
+   </properties>
+  </tile>
+  <tile id="64">
+   <properties>
+    <property name="type" value="floor"/>
+   </properties>
+  </tile>
+  <tile id="65">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="66">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="67">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="69" type="spawn"/>
+  <tile id="75" probability="0.02">
+   <properties>
+    <property name="strength" type="float" value="0"/>
+    <property name="type" value="walls"/>
+   </properties>
+  </tile>
+  <tile id="76" probability="0.015">
+   <properties>
+    <property name="type" value="floor"/>
+   </properties>
+  </tile>
+  <tile id="77">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="78">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="79">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="80">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="81">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="82">
+   <properties>
+    <property name="type" value=""/>
+   </properties>
+  </tile>
+  <tile id="83" type="goal">
+   <properties>
+    <property name="type" value="goal-start"/>
+    <property name="weight" type="float" value="-1000"/>
+   </properties>
+  </tile>
+  <tile id="84" type="goal">
+   <properties>
+    <property name="type" value="goal-end"/>
+    <property name="weight" type="float" value="1000"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Floor" width="30" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzVlEEOBCEIBPmCm82c+f8r92RiCDaNA5OdTjyoSAEqIu/QJxiDsOngMqOKqwHH7ldxs3Hc5Ub+u7keH8V0otVfpN3bRqqo30m+zD/s4Hr2Xizrmufja0ZlnSf7Ke5l5qwPpIr7PdFT/eBfuJa9kzZyNbBh3oJK7MtyUS4d99HJ9WoxnDUmvrGcVYm5yIapDZvn7DOZMxHHvi0Fe3e4J/mufbyDq84ayhfVKlt3BedFcjHuxNZs9cXmyHKjf6TJWLP5ot4ppN2MsVI/E+IlzA==
+  </data>
+ </layer>
+ <layer name="Walls" width="30" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzVVlGywyAINNYD5AZe1aO/l6lM9+1bCI3pR5lxMhrYBUS0lO+Q7eKoc7QF3mjO/rGep5/lxS+PQx6Bzgrvg9ZrgLuB/lVe2x+zr4Gu4ugXeQ2rFb9+cI5x3pHnjD3qdLGmxPy2+sBYCszxv4fh+XLmK4pXH2qfVR1n40X7SFQ/8Go7Ej7znM9MHCu8HrbFV1/foTB47EneyId39i0rHqaH30S8d/BuE3veK+NT8SJWhPlJXlUzrHPUe4M8YL/k3pnljXS9e4Ftd5qv8lqMpsfnRfS1gbqciwp4Z3dXtg7O6nCn/eRzZPcB3/U76UR89v83pmE933qR8WPvzdY29zbOu7ojFY6H7dUovoN6+R+n0x/ku4zXPP9mXQ3lz+p5R7sq1jzfKuzdYcfvkMPf/tL9k9NWNGZ/2vF8qDyxj8Y1+4/UYXknZ6abwc7w8uC7g/OE30r9Fd+qd8sP4BkMpw==
+  </data>
+ </layer>
+ <layer name="Objects" width="30" height="30">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjCTANtAOGAV4ATsFepWp5opRMApGAakAVLaO5sGhDQZj/TgY3TQKhh8AAImGAGY=
+  </data>
+ </layer>
+ <layer name="Graph2" width="30" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztlUkOhEAIRdlqXYCDef+zGJMmIfiZUvTOn7iwoXkMJUX0KdOhHvuufyfgt8uN4ljulFCd1u7VPsVFnGgGO+Km/1SvV5M5da7Opr+wq33yZraAvaJun2we7OTj/f/4MatcLyb6bjyxYlbng769k955T+4GiYfOYqfeHTbKYXIfRNxdn487w0XzZmWvxupwPT+71zr7tcuVfSZ7YpG/l7U9u9MrXFG2XxawRTPJ7nkRm3cbK6qzsp9RLkTvflVjdbnIFu01fb/Z8xD11ON6NWe1oXlnqtwVUS8eceAbcSsPyqPa0yldf4zt6QY+9Aj0
+  </data>
+ </layer>
+ <layer name="Spawn" width="30" height="30">
+  <properties>
+   <property name="type" value="debug"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFtABuA+2AUTAKRjgYzYOjYBSMglEwCkbBKCAWjOR2AwBR2gDT
+  </data>
+ </layer>
+</map>

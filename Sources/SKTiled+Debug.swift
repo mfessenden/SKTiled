@@ -10,109 +10,362 @@ import Foundation
 import SpriteKit
 
 
+// globals
+public var TILE_BOUNDS_USE_OFFSET: Bool = false
+
+
+
+/**
+
+ ## Overview ##
+
+ A structure representing debug drawing options for **SKTiled** objects.
+
+ ## Properties ##
+
+ ```
+ DebugDrawOptions.drawGrid               // visualize the objects's grid (tilemap & layers).
+ DebugDrawOptions.drawBounds             // visualize the objects's bounds.
+ DebugDrawOptions.drawGraph              // visualize a layer's navigation graph.
+ DebugDrawOptions.drawObjectBounds       // draw an object's bounds.
+ DebugDrawOptions.drawTileBounds         // draw a tile's bounds.
+ ```
+
+ */
+public struct DebugDrawOptions: OptionSet {
+    public let rawValue: Int
+
+    public init(rawValue: Int = 0) {
+        self.rawValue = rawValue
+    }
+
+    /// Draw the layer's grid.
+    static public let drawGrid              = DebugDrawOptions(rawValue: 1 << 0)
+    /// Draw the layer's boundary shape.
+    static public let drawBounds            = DebugDrawOptions(rawValue: 1 << 1)
+    /// Draw the layer's navigation graph.
+    static public let drawGraph             = DebugDrawOptions(rawValue: 1 << 2)
+    /// Draw object bounds.
+    static public let drawObjectBounds      = DebugDrawOptions(rawValue: 1 << 3)
+    /// Draw tile bounds.
+    static public let drawTileBounds        = DebugDrawOptions(rawValue: 1 << 4)
+    static public let drawMouseOverObject   = DebugDrawOptions(rawValue: 1 << 5)
+    static public let drawBackground        = DebugDrawOptions(rawValue: 1 << 6)
+    static public let drawAnchor            = DebugDrawOptions(rawValue: 1 << 7)
+
+    static public let all: DebugDrawOptions = [.drawGrid, .drawBounds, .drawGraph, .drawObjectBounds,
+                                                    .drawObjectBounds, .drawMouseOverObject,
+                                                    .drawBackground, .drawAnchor]
+}
+
 
 /// Sprite object for visualizaing grid & graph.
-internal class TiledLayerGrid: SKSpriteNode {
-    
-    private var layer: TiledLayerObject
-    private var gridTexture: SKTexture! = nil
-    private var graphTexture: SKTexture! = nil
-    private var frameColor: SKColor = .black
-    private var gridOpacity: CGFloat { return layer.gridOpacity }
-    
-    init(tileLayer: TiledLayerObject){
+internal class SKTiledDebugDrawNode: SKNode {
+
+    private var layer: SKTiledLayerObject                     // parent layer
+
+    private var gridSprite: SKSpriteNode!
+    private var graphSprite: SKSpriteNode!
+    private var frameShape: SKShapeNode!
+
+    private var gridTexture: SKTexture! = nil               // grid texture
+    private var graphTexture: SKTexture! = nil              // GKGridGraph texture
+    private var anchorKey: String = "LAYER_ANCHOR"
+
+    init(tileLayer: SKTiledLayerObject) {
         layer = tileLayer
-        frameColor = layer.frameColor
-        super.init(texture: SKTexture(), color: SKColor.clear, size: tileLayer.sizeInPoints)
+        super.init()
         setup()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    var anchorPoint: CGPoint {
+        return convert(layer.position, from: layer)
+    }
+
+    /// Debug visualization options.
+    var debugDrawOptions: DebugDrawOptions {
+        return layer.debugDrawOptions
+    }
+
+    var showGrid: Bool {
+        get {
+            return (gridSprite != nil) ? (gridSprite!.isHidden == false) : false
+        } set {
+            DispatchQueue.main.async {
+                self.drawGrid()
+            }
+        }
+    }
+
+    var showBounds: Bool {
+        get {
+            return (frameShape != nil) ? (frameShape!.isHidden == false) : false
+        } set {
+            drawBounds()
+        }
+    }
+
+    var showGraph: Bool {
+        get {
+            return (graphSprite != nil) ? (graphSprite!.isHidden == false) : false
+        } set {
+            DispatchQueue.main.async {
+                self.drawGraph()
+            }
+        }
+    }
+
     /**
      Align with the parent layer.
      */
     func setup() {
-        // set the anchorpoint to 0,0 to match the frame
-        anchorPoint = CGPoint.zero
-        isHidden = true
-        
-        #if os(iOS) || os(tvOS)
-        position.y = -layer.sizeInPoints.height
-        #endif
+        // set the anchorpoints to 0,0 to match the frame
+        gridSprite = SKSpriteNode(texture: nil, color: .clear, size: layer.sizeInPoints)
+        gridSprite.anchorPoint = .zero
+        addChild(gridSprite!)
+
+        graphSprite = SKSpriteNode(texture: nil, color: .clear, size: layer.sizeInPoints)
+        graphSprite.anchorPoint = .zero
+        addChild(graphSprite!)
+
+        frameShape = SKShapeNode()
+        addChild(frameShape!)
+
+        //isHidden = true
+
+        // z-position values
+        graphSprite!.zPosition = layer.zPosition + layer.tilemap.zDeltaForLayers
+        gridSprite!.zPosition = layer.zPosition + (layer.tilemap.zDeltaForLayers + 10)
+        frameShape!.zPosition = layer.zPosition + (layer.tilemap.zDeltaForLayers + 20)
     }
-    
-    /// Display the current tile grid.
-    var showGrid: Bool = false {
-        didSet {
-            guard oldValue != showGrid else { return }
-            
-            texture = nil
-            isHidden = true
-            
-            if (showGrid == true){
-                
-                // get the last z-position
-                zPosition = layer.tilemap.lastZPosition + layer.tilemap.zDeltaForLayers
-                isHidden = false
-                var gridSize = CGSize.zero
-                
-                // scale factor for texture
-                let uiScale: CGFloat
-                
-                #if os(iOS) || os(tvOS)
-                uiScale = UIScreen.main.scale
-                #else
-                uiScale = NSScreen.main()!.backingScaleFactor
-                #endif
-                
-                // multipliers used to generate smooth lines
-                let imageScale: CGFloat = uiScale > 1 ? 2 : 4
-                let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1 : 0.85
 
-                
-                // generate the texture
-                if (gridTexture == nil) {
-                    let gridImage = drawGrid(self.layer, imageScale: imageScale, lineScale: lineScale)
-                    gridTexture = SKTexture(cgImage: gridImage)
-                    gridTexture.filteringMode = .linear
-                }
-                
-                // sprite scaling factor
-                let spriteScaleFactor: CGFloat = (1 / imageScale)
-                gridSize = gridTexture.size() / uiScale
-                setScale(spriteScaleFactor)
-
-                
-                texture = gridTexture
-                alpha = gridOpacity
-                size = gridSize / imageScale
-                
-                #if os(OSX)
-                yScale *= -1
-                #endif
-                
-            }
+    /**
+     Update the node with the various options.
+     */
+    func update() {
+        if self.debugDrawOptions.contains(.drawGrid) {
+            self.drawGrid()
+        } else {
+            self.gridSprite?.isHidden = true
         }
+
+        if self.debugDrawOptions.contains(.drawBounds) {
+            self.drawBounds()
+        } else {
+            self.frameShape?.isHidden = true
+        }
+
+        if self.debugDrawOptions.contains(.drawGraph) {
+            self.drawGraph()
+        } else {
+            self.graphSprite?.isHidden = true
+        }
+
+        if self.debugDrawOptions.contains(.drawAnchor) {
+            self.drawAnchor()
+        } else {
+            childNode(withName: anchorKey)?.removeFromParent()
+        }
+    }
+
+    /**
+     Reset all visualizations.
+     */
+    func reset() {
+        gridSprite.texture = nil
+        graphSprite.texture = nil
+        childNode(withName: anchorKey)?.removeFromParent()
+    }
+
+    /**
+     Visualize the layer's boundary shape.
+     */
+    func drawBounds() {
+
+        let objectPath: CGPath!
+
+        // grab dimensions from the layer
+        let width = layer.width
+        let height = layer.height
+        let tileSize = layer.tileSize
+
+        switch layer.orientation {
+        case .orthogonal:
+            objectPath = polygonPath(layer.bounds.points)
+
+        case .isometric:
+            let topPoint = CGPoint(x: 0, y: 0)
+            let rightPoint = CGPoint(x: (width - 1) * tileSize.height + tileSize.height, y: 0)
+            let bottomPoint = CGPoint(x: (width - 1) * tileSize.height + tileSize.height, y: (height - 1) * tileSize.height + tileSize.height)
+            let leftPoint = CGPoint(x: 0, y: (height - 1) * tileSize.height + tileSize.height)
+
+            let points: [CGPoint] = [
+                // point order is top, right, bottom, left
+                layer.pixelToScreenCoords(topPoint),
+                layer.pixelToScreenCoords(rightPoint),
+                layer.pixelToScreenCoords(bottomPoint),
+                layer.pixelToScreenCoords(leftPoint)
+            ]
+
+            let invertedPoints = points.map { $0.invertedY }
+            objectPath = polygonPath(invertedPoints)
+
+        case .hexagonal, .staggered:
+            objectPath = polygonPath(layer.bounds.points)
+        }
+
+        if let objectPath = objectPath {
+            frameShape.path = objectPath
+            frameShape.isAntialiased = layer.antialiased
+            frameShape.lineWidth = (layer.tileSize.halfHeight) < 8 ? 0.5 : 1.5
+            frameShape.lineJoin = .miter
+
+            // don't draw bounds of hexagonal maps
+            frameShape.strokeColor = layer.frameColor
+            if (layer.orientation == .hexagonal) {
+                frameShape.strokeColor = SKColor.clear
+            }
+
+            frameShape.fillColor = SKColor.clear
+        }
+
+        isHidden = false
+        frameShape.isHidden = false
+    }
+
+    /// Display the current tile grid.
+    func drawGrid() {
+
+        if (gridTexture == nil) {
+            gridSprite.isHidden = true
+
+            // get the last z-position
+            zPosition = layer.tilemap.lastZPosition + (layer.tilemap.zDeltaForLayers + 10)
+            isHidden = false
+            var gridSize = CGSize.zero
+
+            // scale factor for texture
+            let uiScale: CGFloat = SKTiledContentScaleFactor
+
+            // multipliers used to generate smooth lines
+            let defaultImageScale: CGFloat = (layer.tilemap.tileHeight < 16) ? 8 : 8
+            let imageScale: CGFloat = (uiScale > 1) ? (defaultImageScale / 2) : defaultImageScale
+            let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1.25 : 0.75
+
+            // generate the texture
+            if (gridTexture == nil) {
+                let gridImage = drawLayerGrid(self.layer, imageScale: imageScale, lineScale: lineScale)
+                self.gridTexture = SKTexture(cgImage: gridImage)
+                self.gridTexture.filteringMode = .linear
+            }
+
+            // sprite scaling factor
+            let spriteScaleFactor: CGFloat = (1 / imageScale)
+            gridSize = gridTexture.size() / uiScale
+            gridSprite.setScale(spriteScaleFactor)
+
+
+            gridSprite.texture = gridTexture
+            gridSprite.alpha = layer.gridOpacity
+            gridSprite.size = gridSize / imageScale
+
+            // need to flip the grid texture in y
+            // currently not doing this to the parent node so that objects will draw correctly.
+            #if os(iOS) || os(tvOS)
+            gridSprite.position.y = -layer.sizeInPoints.height
+            #else
+            gridSprite.yScale *= -1
+            #endif
+
+        }
+        gridSprite.isHidden = false
+    }
+
+    /// Display the current tile graph (if it exists).
+    func drawGraph() {
+
+        // drawLayerGrid
+        graphTexture = nil
+        graphSprite.isHidden = true
+
+        // get the last z-position
+        zPosition = layer.tilemap.lastZPosition + (layer.tilemap.zDeltaForLayers - 10)
+        isHidden = false
+        var gridSize = CGSize.zero
+
+        // scale factor for texture
+        let uiScale: CGFloat = SKTiledContentScaleFactor
+
+        // multipliers used to generate smooth lines
+        let defaultImageScale: CGFloat = (layer.tilemap.tileHeight < 16) ? 8 : 8
+        let imageScale: CGFloat = (uiScale > 1) ? (defaultImageScale / 2) : defaultImageScale
+        let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1 : 0.85
+
+
+        // generate the texture
+        if (graphTexture == nil) {
+            let graphImage = drawLayerGraph(self.layer, imageScale: imageScale, lineScale: lineScale)
+            graphTexture = SKTexture(cgImage: graphImage)
+            graphTexture.filteringMode = .linear
+        }
+
+        // sprite scaling factor
+        let spriteScaleFactor: CGFloat = (1 / imageScale)
+        gridSize = graphTexture.size() / uiScale
+        graphSprite.setScale(spriteScaleFactor)
+
+
+        graphSprite.texture = graphTexture
+        graphSprite.alpha = layer.gridOpacity * 1.6
+        graphSprite.size = gridSize / imageScale
+
+        // need to flip the grid texture in y
+        // currently not doing this to the parent node so that objects will draw correctly.
+        #if os(iOS) || os(tvOS)
+        graphSprite.position.y = -layer.sizeInPoints.height
+        #else
+        graphSprite.yScale *= -1
+        #endif
+        graphSprite.isHidden = false
+    }
+
+    /**
+     Visualize the layer's anchor point.
+     */
+    func drawAnchor() {
+        childNode(withName: anchorKey)?.removeFromParent()
+
+        let anchor = SKShapeNode(circleOfRadius: 0.75)
+        anchor.name = anchorKey
+        anchor.strokeColor = .clear
+        anchor.zPosition = zPosition * 4
+
+        addChild(anchor)
+        anchor.position = anchorPoint
     }
 }
 
 
-/// Shape node used for highlighting and placing tiles.
+// Shape node used for highlighting and placing tiles.
 internal class TileShape: SKShapeNode {
-    
+
     var tileSize: CGSize
-    var orientation: TilemapOrientation = .orthogonal
+    var orientation: SKTilemap.TilemapOrientation = .orthogonal
     var color: SKColor
-    var layer: TiledLayerObject
+    var layer: SKTiledLayerObject
     var coord: CGPoint
     var useLabel: Bool = false
+
     var renderQuality: CGFloat = 4
-    
-    
-    init(layer: TiledLayerObject, coord: CGPoint, tileColor: SKColor, withLabel: Bool=false){
+    var zoomFactor: CGFloat {
+        return layer.tilemap.currentZoom
+    }
+
+    init(layer: SKTiledLayerObject, coord: CGPoint, tileColor: SKColor, withLabel: Bool=false) {
         self.layer = layer
         self.coord = coord
         self.tileSize = layer.tileSize
@@ -122,8 +375,8 @@ internal class TileShape: SKShapeNode {
         self.orientation = layer.orientation
         drawObject()
     }
-    
-    init(layer: TiledLayerObject, tileColor: SKColor, withLabel: Bool=false){
+
+    init(layer: SKTiledLayerObject, tileColor: SKColor, withLabel: Bool=false) {
         self.layer = layer
         self.coord = CGPoint.zero
         self.tileSize = layer.tileSize
@@ -132,43 +385,49 @@ internal class TileShape: SKShapeNode {
         super.init()
         self.orientation = layer.orientation
         drawObject()
+
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    public func cleanup() {
+        let fadeAction = SKAction.fadeAlpha(to: 0, duration: 0.1)
+        run(fadeAction, completion: { self.removeFromParent()})
+    }
+
     /**
      Draw the object.
      */
     private func drawObject() {
         // draw the path
         var points: [CGPoint] = []
-        
+
         let scaledTilesize: CGSize = (tileSize * renderQuality)
         let halfWidth: CGFloat = (tileSize.width / 2) * renderQuality
         let halfHeight: CGFloat = (tileSize.height / 2) * renderQuality
         let tileWidth: CGFloat = (tileSize.width * renderQuality)
         let tileHeight: CGFloat = (tileSize.height * renderQuality)
-        
+
         let tileSizeHalved = CGSize(width: halfWidth, height: halfHeight)
-        
+
         switch orientation {
         case .orthogonal:
             let origin = CGPoint(x: -halfWidth, y: halfHeight)
             points = rectPointArray(scaledTilesize, origin: origin)
-            
+
         case .isometric, .staggered:
             points = polygonPointArray(4, radius: tileSizeHalved)
-            
+
         case .hexagonal:
             var hexPoints = Array(repeating: CGPoint.zero, count: 6)
             let staggerX = layer.tilemap.staggerX
             let sideLengthX = layer.tilemap.sideLengthX * renderQuality
             let sideLengthY = layer.tilemap.sideLengthY * renderQuality
             var variableSize: CGFloat = 0
-            
-            // flat (broken)
+
+            // flat
             if (staggerX == true) {
                 let r = (tileWidth - sideLengthX) / 2
                 let h = tileHeight / 2
@@ -190,20 +449,22 @@ internal class TileShape: SKShapeNode {
                 hexPoints[4] = CGPoint(x: position.x - (tileWidth / 2), y: position.y - (variableSize / 2))
                 hexPoints[5] = CGPoint(x: position.x - (tileWidth / 2), y: position.y + (variableSize / 2))
             }
-            
-            points = hexPoints.map{$0.invertedY}
+
+            points = hexPoints.map { $0.invertedY }
         }
-        
+
         // draw the path
         self.path = polygonPath(points)
-        self.isAntialiased = true
+        self.isAntialiased = layer.antialiased
         self.lineJoin = .miter
         self.miterLimit = 0
         self.lineWidth = 1
-        
-        self.strokeColor = self.color.withAlphaComponent(0.75)
-        self.fillColor = self.color.withAlphaComponent(0.18)
-        
+
+        let baseOpacity = layer.gridOpacity
+
+        self.strokeColor = self.color.withAlphaComponent(baseOpacity)
+        self.fillColor = self.color.withAlphaComponent(baseOpacity * 0.7)
+
         // anchor
         childNode(withName: "ANCHOR")?.removeFromParent()
         let anchorRadius: CGFloat = (tileSize.halfHeight / 8) * renderQuality
@@ -213,10 +474,10 @@ internal class TileShape: SKShapeNode {
         anchor.fillColor = self.color.withAlphaComponent(0.05)
         anchor.strokeColor = SKColor.clear
         anchor.zPosition = zPosition + 10
-        anchor.isAntialiased = true
-        
-        
-        
+        anchor.isAntialiased = layer.antialiased
+
+
+
         // coordinate label
         childNode(withName: "COORDINATE")?.removeFromParent()
         if (useLabel == true) {
@@ -227,96 +488,317 @@ internal class TileShape: SKShapeNode {
             addChild(label)
             label.zPosition = anchor.zPosition + 10
         }
-        
+
         setScale(1 / renderQuality)
     }
 }
 
 
-internal func == (lhs: TileShape, rhs: TileShape) -> Bool {
-    return lhs.coord == rhs.coord
+
+extension TileShape {
+    override var description: String {
+        return "Tile Shape: \(coord.shortDescription)"
+    }
+    override var debugDescription: String { return description }
+    override var hashValue: Int { return coord.hashValue }
 }
 
 
-extension SKTilemap {}
+
+internal func == (lhs: TileShape, rhs: TileShape) -> Bool {
+    return lhs.coord.hashValue == rhs.coord.hashValue
+}
 
 
-extension SKTile {
+// MARK: - SKTilemap
+extension SKTilemap {
+
     /**
-     Highlight the tile with a given color.
-     
-     - parameter color:        `SKColor?` optional highlight color.
-     - parameter duration:     `TimeInterval` duration of effect.
-     - parameter antialiasing: `Bool` antialias edges.
+     Return tiles & objects at the given point in the map.
+
+     - parameter point: `CGPoint` position in tilemap.
+     - returns: `[SKNode]` array of tiles.
      */
-    public func highlightWithColor(_ color: SKColor?=nil,
-                                   duration: TimeInterval=1.0,
-                                   antialiasing: Bool=true) {
-        
-        let highlight: SKColor = (color == nil) ? highlightColor : color!
-        let orientation = tileData.tileset.tilemap.orientation
-        
-        if orientation == .orthogonal || orientation == .hexagonal {
-            childNode(withName: "Highlight")?.removeFromParent()
-            
-            var highlightNode: SKShapeNode? = nil
-            if orientation == .orthogonal {
-                highlightNode = SKShapeNode(rectOf: tileSize, cornerRadius: 0)
+    public func renderableObjectsAt(point: CGPoint) -> [SKNode] {
+        return nodes(at: point).filter { node in
+            (node as? SKTile != nil) || (node as? SKTileObject != nil)
             }
-            
-            if orientation == .hexagonal {
-                let hexPath = polygonPath(self.getVertices())
-                highlightNode = SKShapeNode(path: hexPath, centered: true)
-            }
-            
-            if let highlightNode = highlightNode {
-                highlightNode.strokeColor = SKColor.clear
-                highlightNode.fillColor = highlight.withAlphaComponent(0.35)
-                highlightNode.name = "Highlight"
-                
-                highlightNode.isAntialiased = antialiasing
-                addChild(highlightNode)
-                highlightNode.zPosition = zPosition + 10
-                
-                // fade out highlight
-                removeAction(forKey: "Highlight_Fade")
-                let fadeAction = SKAction.sequence([
-                    SKAction.wait(forDuration: duration * 1.5),
-                    SKAction.fadeAlpha(to: 0, duration: duration/4.0)
-                    ])
-                
-                highlightNode.run(fadeAction, withKey: "Highlight_Fade", optionalCompletion: {
-                    highlightNode.removeFromParent()
-                })
-            }
-        }
-        
-        if orientation == .isometric || orientation == .staggered {
-            removeAction(forKey: "Highlight_Fade")
-            let fadeOutAction = SKAction.colorize(with: SKColor.clear, colorBlendFactor: 1, duration: duration)
-            run(fadeOutAction, withKey: "Highlight_Fade", optionalCompletion: {
-                let fadeInAction = SKAction.sequence([
-                    SKAction.wait(forDuration: duration * 2.5),
-                    //fadeOutAction.reversedAction()
-                    SKAction.colorize(with: SKColor.clear, colorBlendFactor: 0, duration: duration/4.0)
-                    ])
-                self.run(fadeInAction, withKey: "Highlight_Fade")
-            })
+    }
+
+    /**
+     Draw the map bounds.
+     */
+    public func drawBounds() {
+        // remove old nodes
+        self.childNode(withName: "MAP_BOUNDS")?.removeFromParent()
+        self.childNode(withName: "MAP_ANCHOR")?.removeFromParent()
+
+        let debugZPos = lastZPosition * 50
+
+        let scaledVertices = getVertices().map { $0 * renderQuality }
+        let tilemapPath = polygonPath(scaledVertices)
+
+
+        let boundsShape = SKShapeNode(path: tilemapPath) // , centered: <#T##Bool#>)
+        boundsShape.name = "MAP_BOUNDS"
+        boundsShape.fillColor = frameColor.withAlphaComponent(0.2)
+        boundsShape.strokeColor = frameColor
+        self.addChild(boundsShape)
+
+
+        boundsShape.isAntialiased = true
+        boundsShape.lineCap = .round
+        boundsShape.lineJoin = .miter
+        boundsShape.miterLimit = 0
+        boundsShape.lineWidth = 1 * (renderQuality / 2)
+
+        boundsShape.setScale(1 / renderQuality)
+
+        let anchorRadius = self.tileHeightHalf / 4
+        let anchorShape = SKShapeNode(circleOfRadius: anchorRadius * renderQuality)
+        anchorShape.name = "MAP_ANCHOR"
+        anchorShape.fillColor = frameColor.withAlphaComponent(0.25)
+        anchorShape.strokeColor = .clear
+        boundsShape.addChild(anchorShape)
+        boundsShape.zPosition = debugZPos
+    }
+}
+
+
+
+// MARK: - Logging
+
+// Logging level.
+public enum LoggingLevel: Int {
+    case none
+    case fatal
+    case error
+    case warning
+    case success
+    case status
+    case info
+    case gcd
+    case debug
+    case custom
+}
+
+
+// Log event
+public struct LogEvent: Hashable {
+    var message: String
+    let level: LoggingLevel
+    let uuid: String = UUID().uuidString
+
+    var symbol: String?
+    let date = Date()
+
+    let file: String = #file
+    let method: String = #function
+    let line: UInt = #line
+    let column: UInt = #column
+
+    public init(_ message: String, level: LoggingLevel = .info, caller: String? = nil) {
+        self.message = message
+        self.level = level
+        self.symbol = caller
+    }
+
+    public var hashValue: Int {
+        return uuid.hashValue
+    }
+}
+
+
+// Simple logging class.
+public class Logger {
+
+    public enum DateFormat {
+        case none
+        case short
+        case long
+    }
+
+    public var locale = Locale.current
+    public var dateFormat: DateFormat = .none
+    static public let `default` = Logger()
+
+    private var logcache: Set<LogEvent> = []
+    private let logQueue = DispatchQueue.global(qos: .background)
+
+    public var loggingLevel: LoggingLevel = .info {
+        didSet {
+            print("[\(String(describing: type(of: self)))]: logging level changed: \(loggingLevel)")
         }
     }
-    
-    /**
-     Clear highlighting.
-     */
-    public func clearHighlight() {
-        let orientation = tileData.tileset.tilemap.orientation
-        
-        if orientation == .orthogonal {
-            childNode(withName: "Highlight")?.removeFromParent()
-        }
-        if orientation == .isometric {
-            removeAction(forKey: "Highlight_Fade")
+
+    /// Print a formatted log message to output.
+    public func log(_ message: String, level: LoggingLevel = .info,
+                    symbol: String? = nil, file: String = #file,
+                    method: String = #function, line: UInt = #line) {
+
+        // filter events at the current logging level (or higher)
+        if (self.loggingLevel.rawValue > LoggingLevel.none.rawValue) && (level.rawValue <= self.loggingLevel.rawValue) {
+            // format the message
+            let formattedMessage = formatMessage(message, level: level,
+                                                 symbol: symbol, file: file,
+                                                 method: method, line: line)
+            print(formattedMessage)
+            return
         }
     }
+
+    /// Queue log events to be run later.
+    public func cache(_ event: LogEvent) {
+        logcache.insert(event)
+    }
+
+    /// Run and release log events asyncronously.
+    public func release() {
+        for event in logcache.sorted() {
+            logQueue.async {
+                self.log(event.message, level: event.level)
+            }
+        }
+        logcache = []
+    }
+
+    /// Formatted time stamp
+    private var timeStamp: String {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.dateFormat = dateFormat.formatString
+        let dateStamp = formatter.string(from: Date())
+        return "[" + dateStamp + "]"
+    }
+
+    /**
+     Format the message.
+     */
+    private func formatMessage(_ message: String, level: LoggingLevel = .info, symbol: String? = nil, file: String = #file, method: String = #function, line: UInt = #line) -> String {
+        // shorten file name
+        let filename = URL(fileURLWithPath: file).lastPathComponent
+
+
+        if (level == .custom) {
+            var formatted = "\(message)"
+            if let symbol = symbol {
+                formatted = "[\(symbol)]: \(formatted)"
+            }
+            return "❗️ \(formatted)"
+        }
+
+        if (level == .status) {
+            var formatted = "\(message)"
+            if let symbol = symbol {
+                formatted = "[\(symbol)]: \(formatted)"
+            }
+            return "▹ \(formatted)"
+        }
+
+
+        if (level == .gcd) {
+            var formatted = "\(message)"
+            if let symbol = symbol {
+                formatted = " ➜ [\(symbol)]: \(formatted): \(timeStamp)"
+            }
+            return formatted
+        }
+
+
+        if (level == .success) {
+            return "\n ❊ Success! \(message)"
+        }
+
+
+        // result string
+        var result: [String] = (dateFormat == .none) ? [] : [timeStamp]
+
+        result += (symbol == nil) ? [filename] : ["[" + symbol! + "]"]
+        result += [String(describing: level), message]
+        return result.joined(separator: ": ")
+    }
+}
+
+
+// Loggable object protcol.
+public protocol Loggable {
+    var logSymbol: String { get }
+    func log(_ message: String, level: LoggingLevel, file: String, method: String, line: UInt)
+}
+
+
+// Methods for all loggable objects.
+extension Loggable {
+    public var logSymbol: String {
+        return String(describing: type(of: self))
+    }
+
+    public func log(_ message: String, level: LoggingLevel, file: String = #file, method: String = #function, line: UInt = #line) {
+        Logger.default.log(message, level: level, symbol: self.logSymbol, file: file, method: method, line: line)
+    }
+}
+
+
+extension Logger.DateFormat {
+    public var formatString: String {
+        switch self {
+        case .long:
+            return "yyyy-MM-dd HH:mm:ss"
+        default:
+            return "HH:mm:ss"
+        }
+    }
+}
+
+
+extension LogEvent: Comparable {
+    static public func < (lhs: LogEvent, rhs: LogEvent) -> Bool {
+        return lhs.level.rawValue < rhs.level.rawValue
+    }
+
+    static public func == (lhs: LogEvent, rhs: LogEvent) -> Bool {
+        return lhs.level.rawValue == rhs.level.rawValue
+    }
+}
+
+
+extension LoggingLevel: Comparable {
+    static public func < (lhs: LoggingLevel, rhs: LoggingLevel) -> Bool {
+        return lhs.rawValue < rhs.rawValue
+    }
+
+    static public func == (lhs: LoggingLevel, rhs: LoggingLevel) -> Bool {
+        return lhs.rawValue == rhs.rawValue
+    }
+}
+
+
+extension LoggingLevel: CustomStringConvertible {
+
+    /// String representation of logging level.
+    public var description: String {
+        switch self {
+        case .fatal:
+            return "FATAL"
+        case .error:
+            return "ERROR"
+        case .warning:
+            return "WARNING"
+        case .gcd:
+            return "dispatch"
+        case .success:
+            return "Success"
+        case .info:
+            return "INFO"
+        case .debug:
+            return "DEBUG"
+        default:
+            return ""
+        }
+    }
+
+    /// Array of all options.
+    public static let all: [LoggingLevel] = [.none, .fatal, .error, .warning, .success, .info, .debug, .custom]
 }
 

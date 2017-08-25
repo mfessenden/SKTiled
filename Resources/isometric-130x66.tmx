@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.1" orientation="isometric" renderorder="right-down" width="10" height="10" tilewidth="130" tileheight="66" backgroundcolor="#634930" nextobjectid="18">
+<map version="1.0" tiledversion="1.0.2" orientation="isometric" renderorder="right-down" width="10" height="10" tilewidth="130" tileheight="66" backgroundcolor="#634930" nextobjectid="18">
  <properties>
-  <property name="allowMovement" type="bool" value="true"/>
-  <property name="allowZoom" type="bool" value="true"/>
   <property name="autoResize" type="bool" value="true"/>
+  <property name="gridOpacity" type="float" value="0.7"/>
+  <property name="highlightColor" type="color" value="#ffd38f1c"/>
   <property name="worldScale" type="float" value="0.4"/>
  </properties>
  <tileset firstgid="1" name="isometric-130x230" tilewidth="130" tileheight="230" tilecount="72" columns="12">

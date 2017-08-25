@@ -31,10 +31,11 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 - [x] pre-loading of tilesets
 - [x] group nodes
 - [x] tile objects
-- [ ] text objects
+- [x] text objects
 - [x] custom tile classes (iOS10, macOS 10.11+)
-- [ ] generate GKGridGraph graphs from custom attributes (iOS10, macOS 10.11+)
-- [ ] user-definable cost properties for GKGridGraph nodes (iOS10, macOS 10.11+)
+- [x] generate GKGridGraph graphs from custom attributes (iOS10, macOS 10.11+)
+- [x] user-definable cost properties for GKGridGraph nodes (iOS10, macOS 10.11+)
+
 
 ## Requirements
 
@@ -48,12 +49,12 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 
 For Carthage installation, create a Cartfile in the root of your project:
 
-    github "mfessenden/SKTiled" ~> 1.14
+    github "mfessenden/SKTiled" ~> 1.15
 
 
 For CocoaPods, install via a reference in your podfile:
 
-    pod 'SKTiled', '~> 1.14'
+    pod 'SKTiled', '~> 1.15'
 
 
 ## Usage
@@ -61,8 +62,8 @@ For CocoaPods, install via a reference in your podfile:
 Loading a tilemap is very straightforward:
 
 ```swift
-if let tilemap = SKTilemap.load(fromFile: "sample-map") {
-    scene.addChild(tilemap)
+if let tilemap = SKTilemap.load(tmxFile: "sample-map") {
+scene.addChild(tilemap)
 }
 ```
 Once loaded, the rendered [`SKTilemap`][sktilemap-url] node reflects the various properties defined in the originating scene:
@@ -82,7 +83,7 @@ Layers represent containers that house various types of data:
 - object groups contain vector shape objects
 - image layers display a single image
 
-All **SKTiled** layer types are subclasses of the [`TiledLayerObject`][tiledlayerobject-url] class and provide access to coordinate transformation and positioning information. Additionally, every layer type can have individual offset transforms and rendering flags.  
+All **SKTiled** layer types are subclasses of the [`SKTiledLayerObject`][sktiledlayerobject-url] class and provide access to coordinate transformation and positioning information. Additionally, every layer type can have individual offset transforms and rendering flags.  
 
 Layers can be accessed by type, name or index:
 
@@ -114,7 +115,7 @@ There are a number of ways to access and work with tile objects. Tiles can be qu
 let tileCoord = CGPoint(x: 7, y: 12)
 let tile = groundLayer.tileAt(coord: tileCoord)
 
-// access a tile via integer coordinates
+// access a tile with integer coordinates
 let tile = groundLayer.tileAt(7, 12)
 ```
 
@@ -123,7 +124,7 @@ Tiles assigned custom properties in **Tiled** can be accessed in **SKTiled**:
 ```swift
 // query tiles of a certain type
 if let fireTiles = tilemap.getTiles(ofType: "fire") {
-    // do something fiery here...
+// do something fiery here...
 }
 
 // query tiles at a specific coordinate (all layers)
@@ -177,14 +178,14 @@ let newTile = SKTile(data: tileData)
 scene.addChild(newTile)
 ```
 
-Coordinate information is available from each layer via the `TiledLayerObject.pointForCoordinate` method:
+Coordinate information is available from each layer via the [`SKTiledLayerObject.pointForCoordinate`][sktiledlayerobject-pointforcoordinate-url] method:
 
 ```swift
 let tilePoint = groundLayer.pointForCoordinate(4, 5)
 tile.position = tilePoint
 ```
 
-New nodes (any [`SKNode`][sknode-url] type) can be added directly to any layer. All [`TiledLayerObject`][tiledlayerobject-url] layer types have expanded convenience methods for adding child nodes with coordinates and z-position.
+New nodes (any [`SKNode`][sknode-url] type) can be added directly to any layer. All [`SKTiledLayerObject`][sktiledlayerobject-url] layer types have expanded convenience methods for adding child nodes with coordinates and z-position.
 
 ```swift
 let newNode = SKNode()
@@ -207,8 +208,8 @@ Tiles with animation will animate automatically; animated tiles can be accesssed
 let allAnimated = tilemap.animatedTiles(recursive: true)
 
 for tile in allAnimated {
-    // pause the current animation
-    tile.pauseAnimation = true
+// pause the current animation
+tile.pauseAnimation = true
 }
 
 // get animated tiles from individual layers
@@ -271,7 +272,8 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", "1")
 [sktiledobject-url]:https://mfessenden.github.io/SKTiled/Protocols/SKTiledObject.html
 [sktile-url]:https://mfessenden.github.io/SKTiled/Classes/SKTile.html
 [skobjectgroup-url]:https://mfessenden.github.io/SKTiled/Classes/SKObjectGroup.html
-[tiledlayerobject-url]:https://mfessenden.github.io/SKTiled/Classes/TiledLayerObject.html
+[sktiledlayerobject-url]:https://mfessenden.github.io/SKTiled/Classes/SKTiledLayerObject.html
+[sktiledlayerobject-pointforcoordinate-url]:https://mfessenden.github.io/SKTiled/Classes/SKTiledLayerObject.html
 [sktilelayer-url]:https://mfessenden.github.io/SKTiled/Classes/SKTileLayer.html
 [sktileobject-url]:https://mfessenden.github.io/SKTiled/Classes/SKTileObject.html
 [sktileset-url]:https://mfessenden.github.io/SKTiled/Classes/SKTileset.html

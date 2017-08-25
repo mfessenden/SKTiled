@@ -10,206 +10,151 @@ import UIKit
 import SpriteKit
 
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, Loggable {
 
     @IBOutlet weak var mapInfoLabel: UILabel!
     @IBOutlet weak var tileInfoLabel: UILabel!
     @IBOutlet weak var propertiesInfoLabel: UILabel!
-    
-    var demoFiles: [String] = []
-    
+    @IBOutlet weak var cameraInfoLabel: UILabel!
+    @IBOutlet weak var pauseInfoLabel: UILabel!
+
+    @IBOutlet weak var objectsButton: UIButton!
+    @IBOutlet weak var graphButton: UIButton!
+
+
+    @IBOutlet var demoFileAttributes: NSObject!
+    @IBOutlet weak var buttonsView: UIStackView!
+
+    let demoController = DemoController.default
+    var loggingLevel: LoggingLevel = SKTiledLoggingLevel
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // load demo files from a propertly list
-        demoFiles = loadDemoFiles("DemoFiles")
-
-        let currentFilename = demoFiles.first!
-
         // Configure the view.
         let skView = self.view as! SKView
+
+        // setup the controller
+        demoController.loggingLevel = loggingLevel
+        demoController.view = skView
+
+        guard let currentURL = demoController.currentURL else {
+            log("no tilemap to load.", level: .warning)
+            return
+        }
+
+        #if DEBUG
         skView.showsFPS = true
         skView.showsNodeCount = true
         skView.showsDrawCount = true
+        skView.showsPhysics = true
+        #endif
 
-        /* Sprite Kit applies additional optimizations to improve rendering performance */
+
+        skView.showsFields = true
+        /* SpriteKit optimizations */
+        skView.shouldCullNonVisibleNodes = true
         skView.ignoresSiblingOrder = true
         setupDebuggingLabels()
-        
-        /* create the game scene */
-        let scene = SKTiledDemoScene(size: self.view.bounds.size)
 
-        /* Set the scale mode to scale to fit the window */
-        scene.scaleMode = .aspectFill
 
-        //set up notification for scene to load the next file
-        NotificationCenter.default.addObserver(self, selector: #selector(loadNextScene), name: NSNotification.Name(rawValue: "loadNextScene"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(loadPreviousScene), name: NSNotification.Name(rawValue: "loadPreviousScene"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateUIControls), name: NSNotification.Name(rawValue: "updateUIControls"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateDebugLabels), name: NSNotification.Name(rawValue: "updateDebugLabels"), object: nil)
-        
-        skView.presentScene(scene)
-        scene.setup(fileNamed: currentFilename)
+
+        /* create the game scene */
+        demoController.loadScene(url: currentURL, usePreviousCamera: false)
     }
-    
-    /**
-     Set up the debugging labels.
-     */
+
+    override func viewDidLayoutSubviews() {
+
+    }
+
     func setupDebuggingLabels() {
         mapInfoLabel.text = "Map: "
         tileInfoLabel.text = "Tile: "
         propertiesInfoLabel.text = "Properties:"
+        cameraInfoLabel.text = "Camera:"
+        pauseInfoLabel.text = "-"
+
+        let shadowColor = SKColor(white: 0.1, alpha: 0.65)
+        let shadowOffset = CGSize(width: 1, height: 1)
+
+        mapInfoLabel.shadowColor = shadowColor
+        mapInfoLabel.shadowOffset = shadowOffset
+
+        tileInfoLabel.shadowColor = shadowColor
+        tileInfoLabel.shadowOffset = shadowOffset
+
+        propertiesInfoLabel.shadowColor = shadowColor
+        propertiesInfoLabel.shadowOffset = shadowOffset
+
+        cameraInfoLabel.shadowColor = shadowColor
+        cameraInfoLabel.shadowOffset = shadowOffset
+
+        pauseInfoLabel.shadowColor = shadowColor
+        pauseInfoLabel.shadowOffset = shadowOffset
+
     }
-    
+
     /**
      Action called when `fit to view` button is pressed.
-     
+
      - parameter sender: `Any` ui button.
      */
     @IBAction func fitButtonPressed(_ sender: Any) {
-        guard let view = self.view as? SKView,
-                let scene = view.scene as? SKTiledScene else { return }
-
-        if let cameraNode = scene.cameraNode {
-            cameraNode.fitToView(newSize: view.bounds.size)
-        }
+        self.demoController.fitSceneToView()
     }
-    
+
     /**
      Action called when `show grid` button is pressed.
-     
+
      - parameter sender: `Any` ui button.
      */
     @IBAction func gridButtonPressed(_ sender: Any) {
-        guard let view = self.view as? SKView,
-            let scene = view.scene as? SKTiledScene else { return }
+        self.demoController.toggleMapDemoDraw()
+    }
 
-        if let tilemap = scene.tilemap {
-            tilemap.debugDraw = !tilemap.debugDraw
-        }
+    /**
+     Action called when `show graph` button is pressed.
+
+     - parameter sender: `Any` ui button.
+     */
+    @IBAction func graphButtonPressed(_ sender: Any) {
+        self.demoController.toggleMapGraphVisualization()
     }
 
     /**
      Action called when `show objects` button is pressed.
-     
+
      - parameter sender: `Any` ui button.
      */
     @IBAction func objectsButtonPressed(_ sender: Any) {
-        guard let view = self.view as? SKView,
-            let scene = view.scene as? SKTiledScene else { return }
-
-        if let tilemap = scene.tilemap {
-            let debugState = !tilemap.showObjects
-            tilemap.showObjects = debugState
-        }
+        self.demoController.toggleMapObjectDrawing()
     }
-    
+
     /**
      Action called when `next` button is pressed.
-     
+
      - parameter sender: `Any` ui button.
      */
     @IBAction func nextButtonPressed(_ sender: Any) {
-        loadNextScene()
+        self.demoController.loadNextScene()
     }
 
-    /**
-     Load the next tilemap scene.
-
-     - parameter interval: `TimeInterval` transition duration.
-     */
-    func loadNextScene(_ interval: TimeInterval=0.4) {
-        guard let view = self.view as? SKView else { return }
-        
-        var debugMode = false
-        var showOverlay = true
-        
-        var currentFilename = demoFiles.first!
-        if let currentScene = view.scene as? SKTiledDemoScene {
-            if let cameraNode = currentScene.cameraNode {
-                showOverlay = cameraNode.showOverlay
-            }
-
-            if let tilemap = currentScene.tilemap {
-                debugMode = tilemap.debugDraw
-                currentFilename = tilemap.name!
-            }
-
-            currentScene.removeFromParent()
-            currentScene.removeAllActions()
-        }
-
-        view.presentScene(nil)
-
-        var nextFilename = demoFiles.first!
-        if let index = demoFiles.index(of: currentFilename) , index + 1 < demoFiles.count {
-            nextFilename = demoFiles[index + 1]
-        }
-        
-        let nextScene = SKTiledDemoScene(size: view.bounds.size)
-        nextScene.scaleMode = .aspectFill
-        let transition = SKTransition.fade(withDuration: interval)
-        
-        view.presentScene(nextScene, transition: transition)
-        nextScene.setup(fileNamed: nextFilename)
-        nextScene.cameraNode?.showOverlay = showOverlay
-        nextScene.tilemap?.debugDraw = debugMode
-    }
-
-    /**
-     Load the previous tilemap scene.
-
-     - parameter interval: `TimeInterval` transition duration.
-     */
-    func loadPreviousScene(_ interval: TimeInterval=0.4) {
-        guard let view = self.view as? SKView else { return }
-
-        var debugMode = false
-        var showOverlay = true
-        
-        var currentFilename = demoFiles.first!
-        if let currentScene = view.scene as? SKTiledDemoScene {
-            if let cameraNode = currentScene.cameraNode {
-                showOverlay = cameraNode.showOverlay
-            }
-            
-            if let tilemap = currentScene.tilemap {
-                debugMode = tilemap.debugDraw
-                currentFilename = tilemap.filename!
-            }
-            
-            currentScene.removeFromParent()
-            currentScene.removeAllActions()
-        }
-
-        view.presentScene(nil)
-
-        var nextFilename = demoFiles.last!
-        if let index = demoFiles.index(of: currentFilename), index > 0, index - 1 < demoFiles.count {
-            nextFilename = demoFiles[index - 1]
-        }
-
-        let nextScene = SKTiledDemoScene(size: view.bounds.size)
-        nextScene.scaleMode = .aspectFill
-        let transition = SKTransition.fade(withDuration: interval)
-        view.presentScene(nextScene, transition: transition)
-        
-        nextScene.setup(fileNamed: nextFilename)
-        nextScene.cameraNode?.showOverlay = showOverlay
-        nextScene.tilemap?.debugDraw = debugMode
-    }
 
     override var shouldAutorotate: Bool {
         return true
     }
-    
+
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
+            //return .landscape
+            return .all
         } else {
             return .all
         }
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
@@ -220,36 +165,46 @@ class GameViewController: UIViewController {
     }
 
     /**
-     Load TMX files from the property list.
-
-     - returns: `[String]` array of tiled file names.
-     */
-    fileprivate func loadDemoFiles(_ filename: String) -> [String] {
-        var result: [String] = []
-        if let fileList = Bundle.main.path(forResource: filename, ofType: "plist"){
-            if let data = NSArray(contentsOfFile: fileList) as? [String] {
-                result = data
-            }
-        }
-        return result
-    }
-    
-    /**
      Update the debugging labels with scene information.
-     
+
      - parameter notification: `Notification` notification.
      */
     func updateDebugLabels(notification: Notification) {
         if let mapInfo = notification.userInfo!["mapInfo"] {
             mapInfoLabel.text = mapInfo as? String
         }
-        
+
         if let tileInfo = notification.userInfo!["tileInfo"] {
             tileInfoLabel.text = tileInfo as? String
         }
-        
+
+        var propertiesDefaultText = "~"
         if let propertiesInfo = notification.userInfo!["propertiesInfo"] {
-            propertiesInfoLabel.text = propertiesInfo as? String
+            if let pinfo = propertiesInfo as? String {
+                if (pinfo.characters.isEmpty == false) {
+                    propertiesDefaultText = pinfo
+                }
+            }
+        }
+
+        if let cameraInfo = notification.userInfo!["cameraInfo"] {
+            cameraInfoLabel.text = cameraInfo as? String
+        }
+
+        if let pauseInfo = notification.userInfo!["pauseInfo"] {
+            pauseInfoLabel.text = pauseInfo as? String
+        }
+
+        propertiesInfoLabel.text = propertiesDefaultText
+    }
+
+    func updateUIControls(notification: Notification) {
+        if let hasGraphs = notification.userInfo!["hasGraphs"] {
+            graphButton.isHidden = (hasGraphs as? Bool) == false
+        }
+
+        if let hasObjects = notification.userInfo!["hasObjects"] {
+            objectsButton.isHidden = (hasObjects as? Bool) == false
         }
     }
 }

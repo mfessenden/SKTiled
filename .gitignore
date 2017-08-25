@@ -5,6 +5,6 @@ docs/jazzy_output/
 *.html
 *.js
 *.css
-#SKTiled.playground/
-#SKTiled.xcworkspace/
+SKTiled.playground/
+SKTiled.xcworkspace/
 Notes.md

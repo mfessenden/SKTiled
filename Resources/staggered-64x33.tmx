@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.1" orientation="staggered" renderorder="right-down" width="15" height="35" tilewidth="64" tileheight="33" staggeraxis="y" staggerindex="odd" backgroundcolor="#000000" nextobjectid="12">
+<map version="1.0" tiledversion="1.0.2" orientation="staggered" renderorder="right-down" width="15" height="35" tilewidth="64" tileheight="33" staggeraxis="y" staggerindex="odd" backgroundcolor="#000000" nextobjectid="15">
  <properties>
   <property name="autoResize" type="bool" value="true"/>
   <property name="frameColor" type="color" value="#ff5adc1f"/>
   <property name="gridColor" type="color" value="#ff91ff5d"/>
   <property name="objectColor" type="color" value="#ff6b81ff"/>
  </properties>
- <tileset firstgid="1" name="Iso5_64x33_64x192" tilewidth="64" tileheight="192" tilecount="72" columns="18">
-  <image source="staggered-64x192.png" trans="5e81a2" width="1152" height="768"/>
+ <tileset firstgid="1" name="staggered-64x33-64x192" tilewidth="64" tileheight="192" tilecount="72" columns="18">
+  <image source="staggered-64x192.png" width="1152" height="768"/>
   <tile id="0">
    <properties>
     <property name="type" value="carpet"/>
@@ -146,6 +146,33 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="73" name="staggered-paths-64x33" tilewidth="64" tileheight="33" tilecount="4" columns="2">
+  <image source="staggered-paths-64x33.png" width="128" height="66"/>
+  <tile id="0">
+   <properties>
+    <property name="walkable" type="bool" value="true"/>
+    <property name="weight" type="float" value="1"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="walkable" type="bool" value="true"/>
+    <property name="weight" type="float" value="50"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="walkable" type="bool" value="true"/>
+    <property name="weight" type="float" value="100"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="walkable" type="bool" value="true"/>
+    <property name="weight" type="float" value="500"/>
+   </properties>
+  </tile>
+ </tileset>
  <layer name="Floor1" width="15" height="35">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAA+3RSw6AIAwE0PpXPBDX4+jaBQlpCu2gOyVhgemzQyH619dX6KwLoA3K2fKyLojvXlvrj7qW1VyrruYiUbKyoT01/5bNedGZIrOyMnvfIzq8N+vRacd7L457kZKX7SC8dj/5z+x4b+AMSjsB1nJROMRqb87ntcOVfWcwL6+zsEhP6fcHVsmaWs7yLXsBD1XkQDQIAAA=
@@ -197,4 +224,9 @@
    <polygon points="0,0 0,84 53.3333,112 53.3333,28"/>
   </object>
  </objectgroup>
+ <layer name="Graph" width="15" height="35" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3RMQ7AMAgDQL5H1P+/p2vlYmyqqFPYGC52kogzZ7xJsSubza5cwj7NzHifNXVOfmcjuGXuEl07q94c3TT7aRbJxvPRsc7qDd1M1sNxVW83M8B9uSfed5Kp7BKu86ovc7syJw7/a3dmZV1X+WpX9u+5AVdRE540CAAA
+  </data>
+ </layer>
 </map>
