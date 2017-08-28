@@ -24,16 +24,19 @@ import SpriteKit
  ```
  */
 public class SKTileset: SKTiledObject {
-
-    public var filename: String! = nil                             // Tiled tsx filename (external tileset)
-    public var url: URL!                                           // tileset url (external tileset)
-    public var uuid: String = UUID().uuidString                    // unique id
+    /// Tileset url (external tileset).
+    public var url: URL!
+    /// Tiled tsx filename (external tileset).
+    public var filename: String! = nil
+    /// Unique object id.
+    public var uuid: String = UUID().uuidString
     public var name: String                                        // tileset name (without file extension)
-
-    public var type: String!                                       // object type
-
+    /// Object type.
+    public var type: String!
+    /// Reference to parent tilemap.
     public var tilemap: SKTilemap!
-    public var tileSize: CGSize                                    // tile size
+    /// Tile size (in pixels).
+    public var tileSize: CGSize
 
     internal var loggingLevel: LoggingLevel = .warning
 
@@ -49,19 +52,21 @@ public class SKTileset: SKTiledObject {
     public var ignoreProperties: Bool = false                      // ignore custom properties
     public var tileOffset = CGPoint.zero                           // draw offset for drawing tiles
 
-    // texture
-    public var source: String!                                     // texture name (if created from source)
+    /// Texture name (if created from source)
+    public var source: String!
 
-    // tile data
-    private var tileData: Set<SKTilesetData> = []                  // tile data attributes
+    /// Tile data set.
+    private var tileData: Set<SKTilesetData> = []
+    /// Tile data count.
     public var dataCount: Int { return tileData.count }
 
-    // tileset properties
-    public var isImageCollection: Bool = false                     // image collection tileset
-    public var isExternalTileset: Bool { return filename != nil }  // tileset is an external file
-    public var transparentColor: SKColor?                          // sprite transparency color
-    public var isRendered: Bool = false                            // indicates the tileset is rendered
-
+    /// Image collection tileset.
+    public var isImageCollection: Bool = false
+    /// Tileset is stored in an external file.
+    public var isExternalTileset: Bool { return filename != nil }
+    /// Source image transparency color.
+    public var transparentColor: SKColor?
+    public var isRendered: Bool = false
 
     /// Returns the last GID in the tileset.
     public var lastGID: Int { return tileData.map { $0.id }.max() ?? firstGID }
@@ -72,7 +77,7 @@ public class SKTileset: SKTiledObject {
         return CGPoint(x: tileSize.width - tilemap.tileSize.width, y: tileSize.height - tilemap.tileSize.height)
     }
 
-    /// Scaling value for text objects, etc.
+    /// Render scaling property.
     public var renderQuality: CGFloat = 8 {
         didSet {
             guard renderQuality != oldValue else { return }

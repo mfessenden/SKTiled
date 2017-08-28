@@ -44,7 +44,7 @@ public extension SKTilemap {
             }
 
             if (lattr == "gridopacity") {
-                defaultLayer.gridOpacity = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : 0.10
+                defaultLayer.gridOpacity = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : 0.40
                 getLayers().forEach {$0.gridOpacity = self.defaultLayer.gridOpacity}
             }
 
@@ -115,9 +115,7 @@ public extension SKTilemap {
             }
 
             if (lattr == "showobjects") {
-                if (boolForKey(attr) == true) {
-                    debugDrawOptions.insert(.drawObjectBounds)
-                }
+                showObjects = boolForKey(attr)
             }
 
             if (lattr == "xgravity") {
@@ -146,6 +144,10 @@ public extension SKTilemap {
 
             if (lattr == "objectcolor") {
                 objectColor = SKColor(hexString: value)
+            }
+
+            if ["nicename", "displayname"].contains(lattr) {
+                displayName = value
             }
         }
 

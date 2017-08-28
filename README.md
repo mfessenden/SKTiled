@@ -264,6 +264,7 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", "1")
 [carthage-url]:https://github.com/Carthage/Carthage
 [pod-image]:https://img.shields.io/cocoapods/v/SKTiled.svg
 [pod-url]:https://cocoapods.org/pods/SKTiled
+[swift4-url]:https://github.com/mfessenden/SKTiled/tree/swift4
 
 <!--- Documentation --->
 

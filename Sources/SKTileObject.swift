@@ -68,6 +68,7 @@ public struct TextObjectAttributes {
     public var isItalic: Bool = false
     public var isUnderline: Bool = false
     public var isStrikeout: Bool = false
+    /// Font scaling property.
     public var renderQuality: CGFloat = 8
 
     public init() {}
@@ -98,25 +99,29 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         case polyline
     }
 
-    /// Object parent layer
+    /// Object parent layer.
     weak open var layer: SKObjectGroup!
-    /// Object unique id
+    /// Unique id (layer & object names may not be unique).
     open var uuid: String = UUID().uuidString
-    /// Tiled object id
+    /// Tiled object id.
     open var id: Int = 0
-    /// Tiled global id (for tile objects)
+    /// Tiled global id (for tile objects).
     internal var gid: Int!
-
-    /// Object type
+    /// Object type.
     open var type: String!
-
-    internal var alignment: TileAlignmentHint = .bottomLeft // object alignment
+    
+    /// Object size.
+    open var size: CGSize = CGSize.zero
+    
     internal var objectType: ObjectType = .rectangle        // shape type
     internal var points: [CGPoint] = []                     // points that describe the object's shape
     internal var tile: SKTile?                              // optional tile
-    open var size: CGSize = CGSize.zero
 
+    /**
+     ## Overview ##
 
+     Enum defining object collision type.
+     */
     public enum CollisionType {
         case none
         case dynamic
@@ -126,7 +131,8 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     /// Custom object properties.
     open var properties: [String: String] = [:]
     open var ignoreProperties: Bool = false                 // ignore custom properties
-    open var physicsType: CollisionType = .none             // physics collision type
+    /// Physics collision type.
+    open var physicsType: CollisionType = .none
 
     /// Text formatting attributes (for text objects)
     open var textAttributes: TextObjectAttributes!

@@ -116,9 +116,6 @@ Change Log
 - add `SKTilemap.url`
 - add `SKTilemap.update(_:)`
 - add `TiledLayerObject.update(_:)`
-
-
-- add `SKTilemap.clampPositionForMap`
 - add `SKTilemap.graphs`
 
 1.13

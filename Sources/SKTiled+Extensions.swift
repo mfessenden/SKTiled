@@ -1609,8 +1609,7 @@ public func writeToFile(_ image: CGImage, url: URL) -> Data {
     let properties = Dictionary<String, AnyObject>()
     let data: Data = bitmapRep.representation(using: NSBitmapImageFileType.PNG, properties: properties)!
     if !((try? data.write(to: URL(fileURLWithPath: url.path), options: [])) != nil) {
-        NSLog("Error: write to file failed")
-        Logger.default.log("Cannot write to file.", level: .error)
+        Logger.default.log("Error: write to file failed.", level: .error)
     }
 
     Logger.default.log("writing image: \(url.path)", level: .info)
@@ -1639,6 +1638,7 @@ public func rectPointArray(_ width: CGFloat, height: CGFloat, origin: CGPoint = 
     ]
     return points
 }
+
 
 /**
  Returns an array of points for the given dimensions.

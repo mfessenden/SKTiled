@@ -44,7 +44,7 @@ internal class SKTileCollisionShape: SKTiledObject {
 
  ## Overview ##
 
- The `SKTilesetData` object stores data for a single tileset tile, referencing the tile texture, animation frames (for animated tiles) as well as tile flip flags.
+ The `SKTilesetData` object stores data for a single tileset tile, referencing the tile texture, animation frames (for animated tiles) as well as tile orientation.
 
  Also includes navigation properties for tile accessability, and graph node weight.
 */
@@ -52,33 +52,44 @@ public class SKTilesetData: SKTiledObject {
 
     weak public var tileset: SKTileset!             // reference to parent tileset
     public var uuid: String = UUID().uuidString     // unique id
-    public var type: String!                        // object type.
+    /// Object type.
+    public var type: String!
     public var id: Int = 0                          // tile id (local)
-
-    public var texture: SKTexture!                  // initial tile texture
-    public var source: String! = nil                // source image name (part of a collections tileset)
+    /// Tile texture.
+    public var texture: SKTexture!
+    /// Source image name (collections tileset)
+    public var source: String! = nil
     public var probability: CGFloat = 1.0           // used in Tiled application, might not be useful here.
     public var properties: [String: String] = [:]
     public var ignoreProperties: Bool = false       // ignore custom properties
     public var tileOffset: CGPoint = .zero          // tile offset
-    public var renderQuality: CGFloat = 8           // render quality
-    public var alignment: TileAlignmentHint = .bottomLeft
+    /// Render scaling property.
+    public var renderQuality: CGFloat = 8
 
-    /// Animated frames
+    /// Animated frames.
     internal var frames: [AnimationFrame] = []
+    /// Indicates the tile is animated.
     public var isAnimated: Bool { return frames.isEmpty == false }
 
-    /// flipped flags
-    public var flipHoriz: Bool = false              // tile is flipped horizontally
-    public var flipVert:  Bool = false              // tile is flipped vertically
-    public var flipDiag:  Bool = false              // tile is flipped diagonally
+    // MARK: Tile Orientation
 
-    /// Pathfinding attributes.
-    public var walkable: Bool = false               // tile is walkable.
-    public var obstacle: Bool = false               // tile is an obstacle.
-    public var weight: CGFloat = 1                  // tile weight.
+    /// Tile is flipped horizontally
+    public var flipHoriz: Bool = false
+    /// Tile is flipped vertically.
+    public var flipVert:  Bool = false
+    /// Tile is flipped diagonally.
+    public var flipDiag:  Bool = false
 
-    /// Collision objects.
+    // MARK: Pathfinding Attributes
+
+    /// Tile is walkable.
+    public var walkable: Bool = false
+    /// Tile is an obstacle.
+    public var obstacle: Bool = false
+    /// Pathfinding weight.
+    public var weight: CGFloat = 1
+
+    /// Collision objects (not yet implemented).
     public var collisions: [SKTileObject] = []
 
     /// Local id for this tile.
@@ -87,13 +98,17 @@ public class SKTilesetData: SKTiledObject {
         return tileset.getLocalID(forGlobalID: id)
     }
 
-    // Global id for this tile.
+    /// Global id for this tile.
     public var globalID: Int {
         guard let tileset = tileset else { return id }
         return (localID == id) ? (tileset.firstGID + id) : id
     }
 
     // MARK: - Init
+
+    /**
+     Initialize an empty data structure.
+     */
     public init() {}
 
     /**

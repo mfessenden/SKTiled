@@ -10,11 +10,6 @@ import Foundation
 import SpriteKit
 
 
-// globals
-public var TILE_BOUNDS_USE_OFFSET: Bool = false
-
-
-
 /**
 
  ## Overview ##
@@ -221,7 +216,7 @@ internal class SKTiledDebugDrawNode: SKNode {
         if let objectPath = objectPath {
             frameShape.path = objectPath
             frameShape.isAntialiased = layer.antialiased
-            frameShape.lineWidth = (layer.tileSize.halfHeight) < 8 ? 0.5 : 1.5
+            frameShape.lineWidth = (layer.tileSize.halfHeight > 8) ? 2 : 0.75
             frameShape.lineJoin = .miter
 
             // don't draw bounds of hexagonal maps
@@ -252,9 +247,8 @@ internal class SKTiledDebugDrawNode: SKNode {
             let uiScale: CGFloat = SKTiledContentScaleFactor
 
             // multipliers used to generate smooth lines
-            let defaultImageScale: CGFloat = (layer.tilemap.tileHeight < 16) ? 8 : 8
-            let imageScale: CGFloat = (uiScale > 1) ? (defaultImageScale / 2) : defaultImageScale
-            let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1.25 : 0.75
+            let imageScale: CGFloat = layer.tilemap.renderQuality
+            let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 2 : 1
 
             // generate the texture
             if (gridTexture == nil) {
@@ -301,9 +295,8 @@ internal class SKTiledDebugDrawNode: SKNode {
         let uiScale: CGFloat = SKTiledContentScaleFactor
 
         // multipliers used to generate smooth lines
-        let defaultImageScale: CGFloat = (layer.tilemap.tileHeight < 16) ? 8 : 8
-        let imageScale: CGFloat = (uiScale > 1) ? (defaultImageScale / 2) : defaultImageScale
-        let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1 : 0.85
+        let imageScale: CGFloat = layer.tilemap.renderQuality
+        let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 2 : 1
 
 
         // generate the texture
@@ -320,7 +313,7 @@ internal class SKTiledDebugDrawNode: SKNode {
 
 
         graphSprite.texture = graphTexture
-        graphSprite.alpha = layer.gridOpacity * 1.6
+        graphSprite.alpha = layer.gridOpacity * 2
         graphSprite.size = gridSize / imageScale
 
         // need to flip the grid texture in y
@@ -365,6 +358,14 @@ internal class TileShape: SKShapeNode {
         return layer.tilemap.currentZoom
     }
 
+    /**
+     Initialize with parent layer reference, and coordinate.
+     
+     - parameter layer:     `SKTiledLayerObject` parent layer.
+     - parameter coord      `CGPoint` tile coordinate.
+     - parameter tileColor: `SKColor` shape color.
+     - parameter withLabel: `Bool` render shape with label.
+     */
     init(layer: SKTiledLayerObject, coord: CGPoint, tileColor: SKColor, withLabel: Bool=false) {
         self.layer = layer
         self.coord = coord
@@ -376,6 +377,13 @@ internal class TileShape: SKShapeNode {
         drawObject()
     }
 
+    /**
+     Initialize with parent layer reference and color.
+
+     - parameter layer:     `SKTiledLayerObject` parent layer.
+     - parameter tileColor: `SKColor` shape color.
+     - parameter withLabel: `Bool` render shape with label.
+     */
     init(layer: SKTiledLayerObject, tileColor: SKColor, withLabel: Bool=false) {
         self.layer = layer
         self.coord = CGPoint.zero
@@ -385,13 +393,15 @@ internal class TileShape: SKShapeNode {
         super.init()
         self.orientation = layer.orientation
         drawObject()
-
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    /**
+     Run an action that removes the node after a set duration.
+     */
     public func cleanup() {
         let fadeAction = SKAction.fadeAlpha(to: 0, duration: 0.1)
         run(fadeAction, completion: { self.removeFromParent()})
@@ -696,16 +706,6 @@ public class Logger {
             return "▹ \(formatted)"
         }
 
-
-        if (level == .gcd) {
-            var formatted = "\(message)"
-            if let symbol = symbol {
-                formatted = " ➜ [\(symbol)]: \(formatted): \(timeStamp)"
-            }
-            return formatted
-        }
-
-
         if (level == .success) {
             return "\n ❊ Success! \(message)"
         }
@@ -785,8 +785,6 @@ extension LoggingLevel: CustomStringConvertible {
             return "ERROR"
         case .warning:
             return "WARNING"
-        case .gcd:
-            return "dispatch"
         case .success:
             return "Success"
         case .info:

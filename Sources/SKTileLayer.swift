@@ -148,7 +148,7 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
     public var graph: GKGridGraph<GKGridGraphNode>!
 
     // debug visualizations
-    public var gridOpacity: CGFloat = 0.40
+    public var gridOpacity: CGFloat = 0.25
     internal var debugNode: SKTiledDebugDrawNode!
 
     /// Debug visualization options.
@@ -160,8 +160,10 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
     }
 
     internal private(set) var isRendered: Bool = false
+    /// Antialias lines.
     public var antialiased: Bool = false
     public var colorBlendFactor: CGFloat = 1.0
+    /// Render scaling property.
     public var renderQuality: CGFloat = 8
 
     /// Name used to access navigation graph.
@@ -863,6 +865,7 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
         let cropRect = CGRect(x: 0, y: -tilemap.sizeInPoints.height,
                               width: tilemap.sizeInPoints.width,
                               height: tilemap.sizeInPoints.height)
+        
         if let rendered = SKView().texture(from: self, crop: cropRect) {
             rendered.filteringMode = .nearest
             return rendered
@@ -1455,18 +1458,16 @@ public class SKObjectGroup: SKTiledLayerObject {
     internal var drawOrder: SKObjectGroupDrawOrder = SKObjectGroupDrawOrder.topDown
     fileprivate var objects: Set<SKTileObject> = []
 
-    /**
-     Toggle visibility for all of the objects in the layer.
-     */
+
+    /// Toggle visibility for all of the objects in the layer.
     public var showObjects: Bool = false {
         didSet {
             objects.filter { $0.isRenderableType == false }.forEach { $0.visible = showObjects }
         }
     }
 
-    /**
-     Returns the number of objects in this layer.
-     */
+
+    /// Returns the number of objects in this layer.
     public var count: Int { return objects.count }
 
 
@@ -1477,27 +1478,24 @@ public class SKObjectGroup: SKTiledLayerObject {
         }
     }
 
-    /**
-     Governs object line width for each object.
-     */
+
+    /// Governs object line width for each object.
     public var lineWidth: CGFloat = 1.5 {
         didSet {
             objects.forEach {$0.lineWidth = lineWidth}
         }
     }
 
-    /**
-     Returns a tuple of render stats used for debugging.
-     */
+
+    /// Returns a tuple of render stats used for debugging.
     override internal var renderStatistics: RenderInfo {
         var current = super.renderStatistics
         current.obj = count
         return current
     }
 
-    /**
-     Set the render quality of every object.
-     */
+
+    /// Render scaling property.
     override public var renderQuality: CGFloat {
         didSet {
             guard renderQuality != oldValue else { return }
@@ -1670,7 +1668,7 @@ public class SKObjectGroup: SKTiledLayerObject {
     }
 
     /**
-     Return objects with matching text.
+     Return text objects with matching text.
 
      - parameter withText: `String` text string to match.
      - returns: `[SKTileObject]` array of matching objects.

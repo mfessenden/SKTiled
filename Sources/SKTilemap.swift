@@ -10,34 +10,32 @@ import SpriteKit
 import GameplayKit
 
 
-/// Tiled application version.
+/// String representing Tiled application version.
 public var SKTiledTiledApplicationVersion: String = "0"
 
 /// Global logging level.
 public var SKTiledLoggingLevel: LoggingLevel = .info
-
-
 
 /// Global device scaling factor for retina displays.
 public var SKTiledContentScaleFactor: CGFloat = getContentScaleFactor()
 
 
 internal struct TiledObjectColors {
+    static let azure: SKColor       = SKColor(hexString: "#4A90E2")
     static let coral: SKColor       = SKColor(hexString: "#FD4444")
     static let crimson: SKColor     = SKColor(hexString: "#D0021B")
+    static let dandelion: SKColor   = SKColor(hexString: "#F8E71C")
     static let english: SKColor     = SKColor(hexString: "#AF3E4D")
+    static let grass: SKColor       = SKColor(hexString: "#B8E986")
+    static let gun: SKColor         = SKColor(hexString: "#8D99AE")
+    static let indigo: SKColor      = SKColor(hexString: "#274060")
+    static let lime: SKColor        = SKColor(hexString: "#7ED321")
+    static let metal: SKColor       = SKColor(hexString: "#627C85")
+    static let obsidian: SKColor    = SKColor(hexString: "#464B4E")
+    static let pear: SKColor        = SKColor(hexString: "#CEE82C")
     static let saffron: SKColor     = SKColor(hexString: "#F28123")
     static let tangerine: SKColor   = SKColor(hexString: "#F5A623")
-    static let dandelion: SKColor   = SKColor(hexString: "#F8E71C")
-    static let azure: SKColor       = SKColor(hexString: "#4A90E2")
     static let turquoise: SKColor   = SKColor(hexString: "#44CFCB")
-    static let lime: SKColor        = SKColor(hexString: "#7ED321")
-    static let pear: SKColor        = SKColor(hexString: "#CEE82C")
-    static let grass: SKColor       = SKColor(hexString: "#B8E986")
-    static let indigo: SKColor      = SKColor(hexString: "#274060")
-    static let metal: SKColor       = SKColor(hexString: "#627C85")
-    static let gun: SKColor         = SKColor(hexString: "#8D99AE")
-    static let obsidian: SKColor    = SKColor(hexString: "#293134")
 }
 
 
@@ -69,20 +67,6 @@ internal enum LayerPosition {
     case bottomLeft
     case center
     case topRight
-}
-
-
-// Tile alignment hint.
-public enum TileAlignmentHint: Int {
-    case topLeft
-    case top
-    case topRight
-    case left
-    case center
-    case right
-    case bottomLeft
-    case bottom
-    case bottomRight
 }
 
 
@@ -190,7 +174,11 @@ public protocol SKTilemapDelegate: class {
  ```
  */
 public class SKTilemap: SKNode, SKTiledObject {
+    /**
+     ## Overview
 
+     Enum describing map orientation type.
+     */
     public enum TilemapOrientation: String {
         case orthogonal
         case isometric
@@ -198,17 +186,20 @@ public class SKTilemap: SKNode, SKTiledObject {
         case staggered
     }
 
-    /// file properties
-    public var url: URL!                                            // tmx file path
-    public var uuid: String = UUID().uuidString                     // unique id
-    public var tiledversion: String!                                // Tiled application version
+    /// File path.
+    public var url: URL!
+    /// Unique id.
+    public var uuid: String = UUID().uuidString
+    /// Tiled application version.
+    public var tiledversion: String!
     public var properties: [String: String] = [:]                   // custom properties
     public var type: String!                                        // map type
-
-    /// Size of map (in tiles)
+    public var displayName: String!                                 // map display name
+    /// Size of map (in tiles).
     public var size: CGSize
-    /// Tile size (in pixels)
+    /// Tile size (in pixels).
     public var tileSize: CGSize
+    /// Map orientation type.
     public var orientation: TilemapOrientation                      // map orientation
     internal var renderOrder: RenderOrder = .rightDown              // render order
 
@@ -234,22 +225,25 @@ public class SKTilemap: SKNode, SKTiledObject {
     public var worldScale: CGFloat = 1.0                            // initial world scale
     public var currentZoom: CGFloat = 1.0
 
-    public var allowZoom: Bool = true                               // allow camera zoom
-    public var allowMovement: Bool = true                           // allow camera movement
-
+    /// Allow camera zoom.
+    public var allowZoom: Bool = true
+    /// Allow camera movement.
+    public var allowMovement: Bool = true
+    /// Minimum zoom level for the map.
     public var minZoom: CGFloat = 0.2
+    /// Mximum zoom level for the map.
     public var maxZoom: CGFloat = 5.0
 
     /// Ignore custom properties.
     public var ignoreProperties: Bool = false
 
-
     /// Current tilesets.
-    public var tilesets: Set<SKTileset> = []                        // tilesets
+    public var tilesets: Set<SKTileset> = []
 
     // current layers
-    private var _layers: Set<SKTiledLayerObject> = []                 // tile map layers
-    public var layerCount: Int { return self.layers.count }         // layer count attribute
+    private var _layers: Set<SKTiledLayerObject> = []               // tile map layers
+    /// Layer count.
+    public var layerCount: Int { return self.layers.count }
 
     /// Default z-position range between layers.
     public var zDeltaForLayers: CGFloat = 50
@@ -287,7 +281,7 @@ public class SKTilemap: SKNode, SKTiledObject {
         return overlayNode
     }()
 
-    // MARK: Background Color
+    // MARK: Background Properties
 
     /// Ignore Tiled background color.
     public var ignoreBackground: Bool = false {
@@ -603,6 +597,12 @@ public class SKTilemap: SKNode, SKTiledObject {
                 }
             }
         }
+
+        // keep renderQuality within texture max size
+        let renderSize = CGSize(width: size.width * tileSize.width, height: size.height * tileSize.height)
+        let largestDimension = (renderSize.width > renderSize.height) ? renderSize.width : renderSize.height
+        maxRenderQuality = CGFloat(Int(16000 / (largestDimension * SKTiledContentScaleFactor)))
+        renderQuality = maxRenderQuality / 2
     }
 
     /**
@@ -616,7 +616,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      */
     public init(_ sizeX: Int, _ sizeY: Int,
                 _ tileSizeX: Int, _ tileSizeY: Int,
-                  orientation: TilemapOrientation = .orthogonal) {
+                orientation: TilemapOrientation = .orthogonal) {
 
         self.size = CGSize(width: CGFloat(sizeX), height: CGFloat(sizeY))
         self.tileSize = CGSize(width: CGFloat(tileSizeX), height: CGFloat(tileSizeY))
@@ -640,7 +640,6 @@ public class SKTilemap: SKNode, SKTiledObject {
         tilesets.insert(tileset)
         tileset.tilemap = self
         tileset.ignoreProperties = ignoreProperties
-        //tileset.parseProperties(completion: nil)
         tileset.loggingLevel = loggingLevel
     }
 
@@ -1512,24 +1511,7 @@ public class SKTilemap: SKNode, SKTiledObject {
         }
     }
 
-    // MARK: - Updating
-    public func update(_ currentTime: TimeInterval) {
-        guard (isRendered == true) else { return }
-        _layers.forEach { $0.update(currentTime) }
-        clampPositionForMap()
-    }
 
-    /**
-     Clamp the position of the map and child layers in order to alleviate tearing.
-     */
-    public func clampPositionForMap() {
-        guard (isRendered == true) else { return }
-        let scaleFactor = SKTiledContentScaleFactor
-        _layers.forEach { layer in
-            clampPositionWithNode(node: layer, scale: scaleFactor)
-        }
-        clampPositionWithNode(node: self, scale: scaleFactor)
-    }
 }
 
 
@@ -1581,6 +1563,9 @@ extension SKTilemap {
 
     /// String representing the map name.
     public var mapName: String {
+        if let displayName = self.displayName {
+            return displayName
+        }
         return self.name ?? "null"
     }
 
@@ -1718,6 +1703,7 @@ extension SKTilemap {
         }
     }
 
+    /// String representation of the map.
     override public var description: String {
         let sizedesc = "\(sizeInPoints.shortDescription): (\(size.shortDescription) @ \(tileSize.shortDescription))"
         guard isRendered == true else {
@@ -1726,6 +1712,7 @@ extension SKTilemap {
         return "Map: \(mapName), \(sizedesc), \(tileCount) tiles"
     }
 
+    /// Debug string representation of the map.
     override public var debugDescription: String { return description }
 
     /**
@@ -1942,7 +1929,7 @@ extension SKTilemap: SKTiledSceneCameraDelegate {
 
     public func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {}
     public func cameraPositionChanged(newPosition: CGPoint) {}
-
+    // TODO: remove this for release
     public func cameraZoomChanged(newZoom: CGFloat) {
         let oldZoom = currentZoom
         currentZoom = newZoom
@@ -1951,27 +1938,15 @@ extension SKTilemap: SKTiledSceneCameraDelegate {
 
     #if os(iOS) || os(tvOS)
     public func sceneDoubleTapped(location: CGPoint) {}
-    public func sceneSwiped() {}
     #else
-
+    // TODO: remove this for release
     public func sceneDoubleClicked(event: NSEvent) {
         let locationInMap = event.location(in: self)
         let coord = coordinateAtMouseEvent(event: event)
         let tiles = tilesAt(coord: coord)
         log("\(tiles.count) tiles found at \(coord.shortDescription)", level: .info)
-        let fadeInAction = SKAction.fadeIn(withDuration: 0.2)
-        for tile in tiles {
-            //tile.run(fadeInAction)
-            if let fadedOutAction = tile.action(forKey: "FADEOUT") {
-
-                tile.run(SKAction.run {
-                            tile.texture = tile.tileData.texture
-                            tile.runAnimation()
-                        }, withKey: "FADEIN")
-            }
-        }
     }
-
+    // TODO: remove this for release
     public func mousePositionChanged(event: NSEvent) {
         let coord = coordinateAtMouseEvent(event: event)
         let locationInMap = event.location(in: self)

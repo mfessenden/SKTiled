@@ -47,16 +47,11 @@ public protocol SKTiledSceneCameraDelegate: class {
 
     #if os(iOS) || os(tvOS)
     /**
-     Called when the scene is double tapped. (iOS only)
+     Called when the scene is double-tapped. (iOS only)
 
      - parameter location: `CGPoint` touch location.
      */
     func sceneDoubleTapped(location: CGPoint)
-
-    /**
-     Called when the scene is swiped. (iOS only)
-     */
-    func sceneSwiped()
     #else
 
     /**
@@ -375,9 +370,10 @@ public class SKTiledSceneCamera: SKCameraNode, Loggable {
 
         let isPortrait: Bool = newSize.height > newSize.width
 
+        let widthFactor: CGFloat = (tilemap.isPortrait == true) ? 0.7 : 0.6
         let heightFactor: CGFloat = (tilemap.isPortrait == true) ? 0.6 : 0.75
 
-        let screenScaleWidth: CGFloat = isPortrait ? 0.7 : 0.7
+        let screenScaleWidth: CGFloat = isPortrait ? widthFactor : 0.7
         let screenScaleHeight: CGFloat = isPortrait ? heightFactor : 0.7
 
         // get the usable height/width
@@ -507,7 +503,8 @@ extension SKTiledSceneCamera {
     }
 
     /**
-     Track mouse movement in the scene. Location is in local space, so coordinate origin will be the center of the current window.
+     Track mouse movement in the scene. Location is in local space, so 
+     coordinate origin will be the center of the current window.
 
      - parameter event: `NSEvent` mouse event.
      */
@@ -577,7 +574,6 @@ extension SKTiledSceneCameraDelegate {
     public func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {}
     #if os(iOS) || os(tvOS)
     public func sceneDoubleTapped(location: CGPoint) {}
-    public func sceneSwiped() {}
     #else
     public func sceneDoubleClicked(event: NSEvent) {}
     public func mousePositionChanged(event: NSEvent) {}

@@ -171,9 +171,5 @@
    H4sIAAAAAAAAA2NgGFxAiIGhYaDdQAkQptD9ADVzzeSQAQAA
   </data>
  </layer>
- <objectgroup name="Collisions">
-  <object id="41" name="hex1" type="water" x="129" y="236">
-   <polygon points="-1,-1 -1,-32 31,-48 63,-32 63,-1 31,15"/>
-  </object>
- </objectgroup>
+ <objectgroup name="Collisions"/>
 </map>

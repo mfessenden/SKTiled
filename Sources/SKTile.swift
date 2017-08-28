@@ -17,6 +17,25 @@ import SpriteKit
  Tile data (including texture) is stored in `SKTilesetData` property.
  */
 open class SKTile: SKSpriteNode, Loggable {
+
+    /**
+     ## Overview:
+
+     Alignment hint used to define how to handle tile positioning within layers &
+     objects (in the event the tile size is different than the parent).
+     */
+    public enum TileAlignmentHint: Int {
+        case topLeft
+        case top
+        case topRight
+        case left
+        case center
+        case right
+        case bottomLeft
+        case bottom
+        case bottomRight
+    }
+
     /// Tile size.
     open var tileSize: CGSize
     /// Tileset tile data.
@@ -32,6 +51,7 @@ open class SKTile: SKSpriteNode, Loggable {
     /// Tile highlight duration.
     open var highlightDuration: TimeInterval = 0
 
+    /// Enum describing the tile's physics shape.
     public enum PhysicsShape {
         case none
         case rectangle
@@ -40,11 +60,11 @@ open class SKTile: SKSpriteNode, Loggable {
         case path
     }
 
-    // Physics body shape.
+    /// Physics body shape.
     open var physicsShape: PhysicsShape = .none
 
-    /// Tile alignment.
-    open var alignment: TileAlignmentHint = .bottomLeft
+    /// Tile positioning hint.
+    internal var alignment: TileAlignmentHint = .bottomLeft
 
     /// Returns the bounding box of the shape.
     open var bounds: CGRect {
@@ -597,5 +617,6 @@ extension SKTile {
         return "\(tileData.description)\(layerDescription)"
     }
 
+    /// Tile debug description.
     override open var debugDescription: String { return "<\(description)>" }
 }

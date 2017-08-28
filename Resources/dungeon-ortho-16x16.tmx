@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" backgroundcolor="#211e26" nextobjectid="59">
+<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" backgroundcolor="#211e26" nextobjectid="60">
  <properties>
+  <property name="displayName" value="ortho4-16x16"/>
   <property name="frameColor" type="color" value="#ff63a4b2"/>
   <property name="gridColor" type="color" value="#ff80d1e2"/>
  </properties>
@@ -407,11 +408,6 @@
  <layer name="Bridges" width="20" height="15">
   <data encoding="base64" compression="zlib">
    eJxjYBiZYA2VzTs8xMyj1P+3CJhPKUA3nxZgChBPRcLT6GAnLvtHAXEAABIgCsA=
-  </data>
- </layer>
- <layer name="Graph" width="20" height="15" visible="0">
-  <data encoding="base64" compression="zlib">
-   eJzVkkkOgDAMA9NHAv//CUckY0+CONVSpS6JM2lb9ehY9ZLb63Qu9tOheaoL/Jy/5lF94nIxk7pfWLXGHz+KJb/EQIxpne7Onbkcx9Sxpbl7O3pn4lOO1ENinP61Sd8TdX95V90ezCL3
   </data>
  </layer>
  <group name="Props">

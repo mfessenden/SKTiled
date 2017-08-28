@@ -194,33 +194,26 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
 
     open func didBeginParsing(_ tilemap: SKTilemap) {
         // Called when tilemap is instantiated.
-        log("parsing started: \"\(tilemap.mapName)\"", level: .gcd)
     }
 
     open func didAddTileset(_ tileset: SKTileset) {
         // Called when a tileset has been added.
-        log("`tileset added: \"\(tileset.name)\"`", level: .gcd)
     }
 
     open func didAddLayer(_ layer: SKTiledLayerObject) {
         // Called when a layer has been added.
-        log("layer added: \"\(layer.layerName)\"", level: .gcd)
     }
 
     open func didReadMap(_ tilemap: SKTilemap) {
         // Called before layers are rendered.
-        log("finished reading: \"\(tilemap.mapName)\"", level: .gcd)
     }
 
     open func didRenderMap(_ tilemap: SKTilemap) {
         // Called after layers are rendered. Perform any post-processing here.
-        log("rendering finished: \"\(tilemap.mapName)\"", level: .gcd)
     }
 
      open func didAddNavigationGraph(_ graph: GKGridGraph<GKGridGraphNode>) {
         // Called when a graph is added to the scene.
-        let nodeCount = (graph.nodes != nil) ? graph.nodes!.count : 0
-        log("graph added: \(nodeCount) nodes", level: .gcd)
     }
 
     open func objectForTileType(named: String?) -> SKTile.Type {
@@ -344,7 +337,7 @@ extension SKTiledScene: SKTiledSceneCameraDelegate {
 
     #if os(iOS) || os(tvOS)
     /**
-     Called when the scene is double tapped. (iOS only)
+     Called when the scene is double-tapped. (iOS only)
 
      - parameter location: `CGPoint` touch location.
      */
@@ -352,11 +345,6 @@ extension SKTiledScene: SKTiledSceneCameraDelegate {
     public func sceneDoubleTapped(location: CGPoint) {
         self.isPaused = !self.isPaused
     }
-
-    /**
-     Called when the scene is swiped. (iOS only)
-     */
-    public func sceneSwiped() {}
     #else
 
     /**
@@ -374,6 +362,3 @@ extension SKTiledScene: SKTiledSceneCameraDelegate {
     public func mousePositionChanged(event: NSEvent) {}
     #endif
 }
-
-
-

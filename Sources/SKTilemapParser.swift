@@ -235,8 +235,6 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
             self.mapDelegate?.didReadMap(currentMap)
         }
 
-        log("rendering starting...", level: .gcd)
-
         parsingQueue.sync {
             self.didBeginRendering(currentMap, queue: renderQueue)
         }
@@ -437,8 +435,6 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
         // release logging messages
         Logger.default.release()
 
-        log("parsing finished.", level: .gcd)
-
         // sync external queue here
         queue.sync {
             self.tilemap.didFinishRendering(timeStarted: self.timer)
@@ -521,7 +517,8 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
 
             // `SKTilemap.filename` represents the tmx filename (minus .tmx extension)
             self.tilemap.name = currentBasename
-
+            self.tilemap.displayName = currentBasename
+            
             // run setup functions on tilemap
             self.mapDelegate?.didBeginParsing(tilemap)
 
@@ -1065,8 +1062,9 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
                 for (key, value) in properties {
                     tilemap.properties[key] = value
                 }
-
+                
                 tilemap.parseProperties(completion: nil)
+
             }
 
             // layer properties

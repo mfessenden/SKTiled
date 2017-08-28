@@ -69,7 +69,6 @@ public class SKTiledDemoScene: SKTiledScene {
 
     override public func didChangeSize(_ oldSize: CGSize) {
         super.didChangeSize(oldSize)
-        print("[SKTiledDemoScene]: `SKTiledDemoScene.didChangeSize`: \(oldSize.shortDescription)")
         #if os(OSX)
         updateTrackingViews()
         #endif
@@ -135,6 +134,8 @@ public class SKTiledDemoScene: SKTiledScene {
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "updateCoordinate"), object: nil, userInfo: ["x": x, "y": y])
             } else {
                 tileshapes.insert(tile)
+                let fadeAction = SKAction.fadeOut(withDuration: 0.5)
+                tile.run(fadeAction, completion: { tile.removeFromParent()})
             }
         }
     }
@@ -156,141 +157,49 @@ public class SKTiledDemoScene: SKTiledScene {
 
     func setupDemoLevel(fileNamed: String) {
         guard let tilemap = tilemap else { return }
+        log("setting up level: \"\(fileNamed)\"", level: .info)
 
 
         switch fileNamed {
-        case "pacman-8x8.tmx":
-            setupPacman()
-        case "blocks-dynamics.tmx":
-            setupBlocks()
-        case "ortho4-16x16.tmx":
-            setupOrtho4()
-        case "staggered-64x33.tmx":
-            setupStaggered()
+        case "absolute-positions.tmx":
+            let baseObjects = tilemap.getObjects(ofType: "base")
+            let rotatedObjects = tilemap.getObjects(ofType: "rotated")
+            
+            baseObjects.forEach { $0.strokeColor = TiledObjectColors.coral }
+            rotatedObjects.forEach { $0.strokeColor = TiledObjectColors.dandelion }
+        case "pacman.tmx":
+            guard let graphLayer = tilemap.tileLayers(named: "Graph").first else {
+                log("layer \"layer\" does not exist.", level: .error)
+                return
+            }
+
+            for tileset in tilemap.tilesets {
+                if tileset.hasKey("walkable") {
+                    if (tileset.keyValuePair(key: "walkable") != nil) {
+                        let ids = tileset.integerArrayForKey("walkable")
+                        for id in ids {
+                            if let tiledata = tileset.getTileData(localID: id) {
+                                tiledata.walkable = true
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            let walkable = graphLayer.getTiles().filter { $0.tileData.walkable == true }
+            if (walkable.isEmpty == false) {
+                log("\"\(graphLayer.layerName)\": walkable: \(walkable.count)", level: .debug)
+                _ = graphLayer.initializeGraph(walkable: walkable, obstacles: [], diagonalsAllowed: false)
+            }
+
+
+
         default:
             return
         }
     }
 
-    func setupPacman() {
-
-
-        guard let playerGraphLayer = tilemap.tileLayers(named: "Player").first else {
-            log("layer \"layer\" does not exist.", level: .error)
-            return
-        }
-
-
-        guard let ghostsGraphLayer = tilemap.tileLayers(named: "Ghosts").first else {
-            log("layer \"Ghosts\" does not exist.", level: .error)
-            return
-        }
-
-
-        guard let fruitGraphLayer = tilemap.tileLayers(named: "Fruit").first else {
-            log("layer \"Fruit\" does not exist.", level: .error)
-            return
-        }
-
-
-        for tileset in tilemap.tilesets {
-            if tileset.hasKey("walkable") {
-                if (tileset.keyValuePair(key: "walkable") != nil) {
-                    let ids = tileset.integerArrayForKey("walkable")
-                    for id in ids {
-                        if let tiledata = tileset.getTileData(localID: id) {
-                            tiledata.walkable = true
-                        }
-                    }
-                }
-            }
-        }
-
-
-        let playerWalkable = playerGraphLayer.getTiles().filter { $0.tileData.walkable == true }
-        if (playerWalkable.isEmpty == false) {
-            log("\"\(playerGraphLayer.layerName)\": walkable: \(playerWalkable.count)", level: .debug)
-            _ = playerGraphLayer.initializeGraph(walkable: playerWalkable, obstacles: [], diagonalsAllowed: false)
-        }
-
-
-        let ghostWalkable = ghostsGraphLayer.getTiles().filter { $0.tileData.walkable == true }
-        if (ghostWalkable.isEmpty == false) {
-            log("\"\(ghostsGraphLayer.layerName)\": walkable: \(ghostWalkable.count)", level: .debug)
-            _ = ghostsGraphLayer.initializeGraph(walkable: ghostWalkable, obstacles: [], diagonalsAllowed: false)
-        }
-
-
-        let fruitWalkable = fruitGraphLayer.getTiles().filter { $0.tileData.walkable == true }
-        if (fruitWalkable.isEmpty == false) {
-            log("\"\(fruitGraphLayer.layerName)\": walkable: \(fruitWalkable.count)", level: .debug)
-            _ = fruitGraphLayer.initializeGraph(walkable: fruitWalkable, obstacles: [], diagonalsAllowed: false)
-        }
-
-    }
-
-    func setupBlocks() {
-        let lights = tilemap.getObjects(ofType: "Light")
-        let fields = tilemap.getObjects(ofType: "Field")
-
-        for lightObj in lights {
-            let light = SKLightNode()
-            addChild(light)
-            light.position = convert(lightObj.position, from: lightObj)
-            light.isEnabled = true
-            light.lightColor = .white
-            light.categoryBitMask = 1
-            light.shadowColor = .black
-            light.falloff = 0
-        }
-
-        for fieldObj in fields {
-            let field = SKFieldNode()
-            field.categoryBitMask = 1
-            field.strength = 50
-            addChild(field)
-            field.position = convert(fieldObj.position, from: fieldObj)
-        }
-
-        tilemap.getObjects().forEach {
-            if let tile = $0.tile {
-                tile.shadowedBitMask = 1
-                tile.shadowCastBitMask = 1
-            }
-        }
-    }
-
-    func setupOrtho4() {
-        guard let graphLayer = tilemap.tileLayers(named: "Graph").first else {
-            log("layer \"Graph\" does not exist.", level: .error)
-            return
-        }
-
-        let walkable = graphLayer.getTiles().filter { $0.tileData.walkable == true }
-        log("walkable tiles: \(walkable.count)", level: .debug)
-        if (walkable.isEmpty == false) {
-            log("\"\(graphLayer.layerName)\": walkable: \(walkable.count)", level: .debug)
-            _ = graphLayer.initializeGraph(walkable: walkable, obstacles: [], diagonalsAllowed: false)
-        }
-
-        let chests = tilemap.getTiles(ofType: "chest")
-        chests.forEach { $0.showBounds = true }
-
-    }
-
-    func setupStaggered() {
-        guard let graphLayer = tilemap.tileLayers(named: "Graph").first else {
-            log("layer \"Graph\" does not exist.", level: .error)
-            return
-        }
-
-        let walkable = graphLayer.getTiles().filter { $0.tileData.walkable == true }
-        log("walkable tiles: \(walkable.count)", level: .debug)
-        if (walkable.isEmpty == false) {
-            log("\"\(graphLayer.layerName)\": walkable: \(walkable.count)", level: .debug)
-            _ = graphLayer.initializeGraph(walkable: walkable, obstacles: [], diagonalsAllowed: false)
-        }
-    }
 
     /**
      Callback to the GameViewController to reload the current scene.
@@ -469,7 +378,7 @@ extension SKTiledDemoScene {
 
 
         // highlight the current coordinate
-        if (tilesUnderCursor.isEmpty == false) {
+        if (tilesUnderCursor.isEmpty == true) {
             addTileToWorld(Int(coord.x), Int(coord.y), useLabel: true)
         }
 
@@ -544,7 +453,7 @@ extension SKTiledDemoScene {
         mouseTracker.isValid = validCoord
 
         if (liveMode == true) && (isPaused == false) {
-            self.addTileToWorld(Int(coord.x), Int(coord.y))
+            self.addTileToWorld(Int(coord.x), Int(coord.y), useLabel: true)
         }
 
         let coordDescription = "\(Int(coord.x)), \(Int(coord.y))"
@@ -611,7 +520,7 @@ internal class MouseTracker: SKNode {
 
     var coord: CGPoint = .zero {
         didSet {
-            label.text = "(\(Int(coord.x)), \(Int(coord.y)))"
+            label.text = "x: \(Int(coord.x)), y: \(Int(coord.y))"
             shadow.text = label.text
         }
     }
@@ -715,7 +624,7 @@ extension SKTiledDemoScene {
 
     #if os(iOS) || os(tvOS)
     /**
-     Called when the scene is double tapped. (iOS only)
+     Called when the scene is double-tapped. (iOS only)
 
      - parameter location: `CGPoint` touch location.
      */
@@ -723,11 +632,6 @@ extension SKTiledDemoScene {
         log("scene was double tapped.", level: .debug)
         self.isPaused = !self.isPaused
     }
-
-    /**
-     Called when the scene is swiped. (iOS only)
-     */
-    public func sceneSwiped() {}
     #else
 
     /**

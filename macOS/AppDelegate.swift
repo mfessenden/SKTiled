@@ -109,10 +109,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - Logging
 
-    func loggingLevelUpdated() {
-        
-    }
-
     @IBAction func loggingLevelDebug(_ sender: Any) {
         Logger.default.loggingLevel = .debug
     }
@@ -135,10 +131,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBAction func loggingLevelSuccess(_ sender: Any) {
         Logger.default.loggingLevel = .success
-    }
-
-    @IBAction func loggingLevelDispatch(_ sender: Any) {
-        Logger.default.loggingLevel = .gcd
     }
 
     @IBAction func mapStatisticsPressed(_ sender: Any) {

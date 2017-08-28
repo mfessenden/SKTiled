@@ -15,6 +15,7 @@ import Cocoa
 #endif
 
 
+/// Controller & Asset manager for the demos.
 public class DemoController: NSObject, Loggable {
 
     private let fm = FileManager.default
@@ -26,6 +27,7 @@ public class DemoController: NSObject, Loggable {
     public var loggingLevel: LoggingLevel = SKTiledLoggingLevel
     /// Debug visualization options.
     public var debugDrawOptions: DebugDrawOptions = []
+    private let demoQueue = DispatchQueue.global(qos: .userInteractive)
 
     /// tiled resources
     public var demourls: [URL] = []
@@ -161,8 +163,9 @@ public class DemoController: NSObject, Loggable {
     }
 
     /**
-     Loads a named scene.
-     - parameter url:               `URL` file url.
+     Loads a new demo scene with a named tilemap.
+
+     - parameter url:               `URL` tilemap file url.
      - parameter usePreviousCamera: `Bool` transfer camera information.
      - parameter interval:          `TimeInterval` transition duration.
      */
@@ -228,8 +231,9 @@ public class DemoController: NSObject, Loggable {
                 return
             }
 
-            tilemap.defaultLayer.debugDrawOptions = self.debugDrawOptions
-            tilemap.showObjects = showObjects
+            if (hasCurrent == true) {
+                tilemap.showObjects = showObjects
+            }
 
             let sceneInfo = ["hasGraphs": (nextScene.graphs.isEmpty == false),
                              "hasObjects": nextScene.tilemap.getObjects().isEmpty == false]
@@ -242,6 +246,9 @@ public class DemoController: NSObject, Loggable {
                 nextScene.cameraNode.fitToView(newSize: view.bounds.size)
             }
 
+            self.demoQueue.async {
+                tilemap.defaultLayer.debugDrawOptions = self.debugDrawOptions
+            }
         }
     }
 

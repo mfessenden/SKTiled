@@ -40,7 +40,7 @@ import SpriteKit
  ```
  */
 public protocol SKTiledObject: class, Loggable {
-    /// Unique id (layer & object names may not be unique).
+    /// Unique object id (layer & object names may not be unique).
     var uuid: String { get set }
     /// Object type.
     var type: String! { get set }
@@ -50,7 +50,7 @@ public protocol SKTiledObject: class, Loggable {
     var ignoreProperties: Bool { get set }
     /// Parse function (with optional completion block).
     func parseProperties(completion: (() -> ())?)
-    /// Render quality property.
+    /// Render scaling property.
     var renderQuality: CGFloat { get }
 }
 

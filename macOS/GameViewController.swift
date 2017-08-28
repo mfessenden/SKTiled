@@ -56,8 +56,7 @@ class GameViewController: NSViewController, Loggable {
         skView.showsPhysics = true
         #endif
 
-        //skView.showsFields = true
-        /* SpriteKit optimizations */
+        // SpriteKit optimizations
         skView.shouldCullNonVisibleNodes = true
         skView.ignoresSiblingOrder = true
         setupDebuggingLabels()
@@ -66,12 +65,11 @@ class GameViewController: NSViewController, Loggable {
         NotificationCenter.default.addObserver(self, selector: #selector(updateDebugLabels), name: NSNotification.Name(rawValue: "updateDebugLabels"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateWindowTitle), name: NSNotification.Name(rawValue: "updateWindowTitle"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateUIControls), name: NSNotification.Name(rawValue: "updateUIControls"), object: nil)
-
         NotificationCenter.default.addObserver(self, selector: #selector(loggingLevelUpdated), name: NSNotification.Name(rawValue: "loggingLevelUpdated"), object: nil)
 
         debugInfoLabel?.isHidden = true
 
-        /* create the game scene */
+        // create the game scene
         demoController.loadScene(url: currentURL, usePreviousCamera: false)
     }
 
