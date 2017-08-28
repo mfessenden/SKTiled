@@ -72,12 +72,6 @@
                                                 <action selector="reloadScene:" target="Voe-Tx-rLC" id="ucu-iz-d62"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="Iy1-A9-TkY"/>
-                                        <menuItem title="Save layers to images..." keyEquivalent="s" id="KXe-Qu-dYF">
-                                            <connections>
-                                                <action selector="writeMapLayers:" target="Voe-Tx-rLC" id="4p5-TK-GrP"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
                                         <menuItem title="Page Setup…" keyEquivalent="P" id="qIS-W8-SiK">
                                             <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
@@ -324,7 +318,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oa4-I2-u1i" userLabel="Tile Info Label">
-                                        <rect key="frame" x="18" y="44" width="42" height="14"/>
+                                        <rect key="frame" x="17.5" y="44" width="42" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Tile:" id="sRi-Cf-RZd">
                                             <font key="font" size="11" name="Courier"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -340,7 +334,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mhh-Pu-ydl" userLabel="Debug Info Label">
-                                        <rect key="frame" x="18" y="0.0" width="42" height="14"/>
+                                        <rect key="frame" x="17.5" y="0.0" width="42" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Debug" id="xTO-Hp-dbT">
                                             <font key="font" size="11" name="Courier"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -369,8 +363,16 @@
                                     <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q7f-Es-FYr" userLabel="Isolated Label">
+                                <rect key="frame" x="369.5" y="544" width="61" height="14"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Isolated" id="OfI-og-nAr">
+                                    <font key="font" size="11" name="Courier"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qaU-aN-dXC" userLabel="Paused Label">
-                                <rect key="frame" x="373" y="541" width="55" height="17"/>
+                                <rect key="frame" x="372.5" y="519" width="55" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Paused" id="8mb-3y-U6G">
                                     <font key="font" size="13" name="Courier"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -386,8 +388,12 @@
                             <constraint firstItem="iiF-QO-DZ0" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="KyT-Qz-C79"/>
                             <constraint firstItem="Rpo-Bf-MrJ" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="NQF-GK-tLq"/>
                             <constraint firstItem="bpV-ih-FVj" firstAttribute="top" secondItem="iiF-QO-DZ0" secondAttribute="bottom" constant="8" symbolic="YES" id="TUH-35-NKU"/>
+                            <constraint firstItem="qaU-aN-dXC" firstAttribute="top" secondItem="q7f-Es-FYr" secondAttribute="bottom" constant="8" id="VNI-t7-fzD"/>
                             <constraint firstItem="bpV-ih-FVj" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="YWm-oh-SbK"/>
-                            <constraint firstItem="qaU-aN-dXC" firstAttribute="top" secondItem="Rpo-Bf-MrJ" secondAttribute="bottom" constant="8" id="hL1-qO-1lh"/>
+                            <constraint firstItem="qaU-aN-dXC" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="d3x-Ec-Nwd"/>
+                            <constraint firstItem="q7f-Es-FYr" firstAttribute="top" secondItem="Rpo-Bf-MrJ" secondAttribute="bottom" constant="8" id="qsO-Wh-TER"/>
+                            <constraint firstItem="q7f-Es-FYr" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="xSN-PT-rPk"/>
+                            <constraint firstItem="q7f-Es-FYr" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="zWb-Fa-DsB"/>
                         </constraints>
                     </view>
                     <connections>
@@ -397,6 +403,7 @@
                         <outlet property="fitButton" destination="vU3-Eb-5vb" id="Jls-KD-3Sp"/>
                         <outlet property="graphButton" destination="Hej-45-q5k" id="OIb-tF-e2C"/>
                         <outlet property="gridButton" destination="p17-9c-LBM" id="ECa-og-QqL"/>
+                        <outlet property="isolatedInfoLabel" destination="q7f-Es-FYr" id="zu5-5W-cjs"/>
                         <outlet property="mapInfoLabel" destination="P0U-y9-0fU" id="T6u-RD-e0v"/>
                         <outlet property="nextButton" destination="kMD-1U-8sj" id="c7C-tw-UDC"/>
                         <outlet property="objectsButton" destination="1wS-E3-azf" id="U4L-tK-6Nb"/>

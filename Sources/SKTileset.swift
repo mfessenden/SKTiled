@@ -135,9 +135,13 @@ public class SKTileset: SKTiledObject {
         // name, width and height are required
         guard let setName = attributes["name"],
             let width = attributes["tilewidth"],
-            let height = attributes["tileheight"],
-            let columns = attributes["columns"] else {
+            let height = attributes["tileheight"] else {
                 return nil
+        }
+
+        // columns is optional in older maps
+        if let columnCount = attributes["columns"] {
+            self.columns = Int(columnCount)!
         }
 
         // first gid won't be in an external tileset
@@ -160,7 +164,6 @@ public class SKTileset: SKTiledObject {
 
         self.name = setName
         self.tileSize = CGSize(width: Int(width)!, height: Int(height)!)
-        self.columns = Int(columns)!
         self.tileOffset = offset
     }
 
@@ -232,6 +235,12 @@ public class SKTileset: SKTiledObject {
         let marginReal = margin * 2
         let rowTileCount = (textureHeight - marginReal + spacing) / (Int(tileSize.height) + spacing)  // number of tiles (height)
         let colTileCount = (textureWidth - marginReal + spacing) / (Int(tileSize.width) + spacing)    // number of tiles (width)
+
+        // set columns property
+        if columns == 0 {
+            columns = colTileCount
+        }
+
 
         // tile count
         let totalTileCount = colTileCount * rowTileCount

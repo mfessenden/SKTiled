@@ -26,7 +26,8 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Nintendo-Arcade.ttf</string>
+		<string>Arcade.ttf</string>
+		<string>ArcadeNormal.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

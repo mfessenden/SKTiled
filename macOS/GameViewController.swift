@@ -20,6 +20,7 @@ class GameViewController: NSViewController, Loggable {
     @IBOutlet weak var cameraInfoLabel: NSTextField!
 
     @IBOutlet weak var pauseInfoLabel: NSTextField!
+    @IBOutlet weak var isolatedInfoLabel: NSTextField!
 
     @IBOutlet weak var graphButton: NSButton!
     @IBOutlet weak var objectsButton: NSButton!
@@ -85,7 +86,8 @@ class GameViewController: NSViewController, Loggable {
         mapInfoLabel.stringValue = "Map: "
         tileInfoLabel.stringValue = "Tile: "
         propertiesInfoLabel.stringValue = "Properties:"
-        cameraInfoLabel.stringValue = "~"
+        cameraInfoLabel.stringValue = "---"
+        isolatedInfoLabel.stringValue = "---"
 
         // text shadow
         let shadow = NSShadow()
@@ -99,6 +101,7 @@ class GameViewController: NSViewController, Loggable {
         debugInfoLabel.shadow = shadow
         cameraInfoLabel.shadow = shadow
         pauseInfoLabel.shadow = shadow
+        isolatedInfoLabel.shadow = shadow
     }
 
     /**
@@ -229,6 +232,10 @@ class GameViewController: NSViewController, Loggable {
 
         if let pauseInfo = notification.userInfo!["pauseInfo"] {
             pauseInfoLabel.stringValue = pauseInfo as! String
+        }
+
+        if let isolatedInfo = notification.userInfo!["isolatedInfo"] {
+            isolatedInfoLabel.stringValue = isolatedInfo as! String
         }
     }
 

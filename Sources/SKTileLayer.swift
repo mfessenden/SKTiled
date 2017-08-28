@@ -26,7 +26,8 @@ typealias RenderInfo = (idx: Int, path: String, zpos: Double, sw: Int, sh: Int, 
 
  ## Overview ##
 
- The `SKTiledLayerObject` is the base class for all layer types.  This class doesn't define any object or child types, but provides base behaviors for layered content:
+ The `SKTiledLayerObject` is the generic base class for all layer types.  This class doesn't 
+ define any object or child types, but provides base behaviors for layered content, including:
 
  - coordinate transformations
  - validating coordinates
@@ -119,6 +120,8 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
     /// Layer highlight duration
     public var highlightDuration: TimeInterval = 0
 
+    public private(set) var isolated: Bool = false
+
     /// Layer offset value.
     public var offset: CGPoint = CGPoint.zero
 
@@ -130,7 +133,6 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
     internal var orientation: SKTilemap.TilemapOrientation { return tilemap.orientation }
     /// Layer anchor point, used to position layers.
     public var anchorPoint: CGPoint { return tilemap.layerAlignment.anchorPoint }
-
     internal var gidErrors: [UInt32] = []
 
     // convenience properties
@@ -855,6 +857,17 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
         /* override in subclass */
         let comma = (propertiesString.characters.isEmpty == false) ? ", " : ""
         log("Layer: \(name != nil ? "\"\(layerName)\"" : "null")\(comma)\(propertiesString)", level: .debug)
+    }
+
+    /**
+     Toggle layer isolation on/off.
+     */
+    public func isolateLayer(duration: TimeInterval = 0) {
+        let hideLayers = (self.isolated == false)
+        let layersToIgnore = self.parents
+        //layersToIgnore.forEach({$0.isHidden = false})
+        tilemap.layers.filter { layersToIgnore.contains($0) == false}.forEach({ $0.isHidden = hideLayers})
+        self.isolated = !self.isolated
     }
 
     /** Render the layer to a texture

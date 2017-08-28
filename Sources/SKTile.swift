@@ -48,8 +48,11 @@ open class SKTile: SKSpriteNode, Loggable {
 
     /// Tile highlight color.
     open var highlightColor: SKColor = TiledObjectColors.lime
+    /// Tile bounds color.
+    open var frameColor: SKColor = TiledObjectColors.magenta
     /// Tile highlight duration.
     open var highlightDuration: TimeInterval = 0
+    internal var boundsKey: String = "BOUNDS"
 
     /// Enum describing the tile's physics shape.
     public enum PhysicsShape {
@@ -476,8 +479,10 @@ open class SKTile: SKSpriteNode, Loggable {
      Draw the tile's boundary shape.
      */
     internal func drawBounds(_ withOffset: Bool=true) {
-        childNode(withName: "BOUNDS")?.removeFromParent()
+        childNode(withName: boundsKey)?.removeFromParent()
 
+        // default line width
+        let defaultLineWidth: CGFloat = 1
         let mapOffset = tileData.tileset.mapOffset
 
         // map tile size
@@ -515,18 +520,18 @@ open class SKTile: SKSpriteNode, Loggable {
         let scaledVertices = vertices.map { $0 * renderQuality }
         let path = polygonPath(scaledVertices)
         let bounds = SKShapeNode(path: path)
-        bounds.name = "BOUNDS"
-        let shapeZPos = zPosition + 10
+        bounds.name = boundsKey
+        let shapeZPos = zPosition + 50
 
         // draw the path
         bounds.isAntialiased = layer.antialiased
         bounds.lineCap = .round
         bounds.lineJoin = .miter
         bounds.miterLimit = 0
-        bounds.lineWidth = 0.5 * (renderQuality / 2)
+        bounds.lineWidth = defaultLineWidth * (renderQuality / 2)
 
-        bounds.strokeColor = highlightColor.withAlphaComponent(0.4)
-        bounds.fillColor = highlightColor.withAlphaComponent(0.15)  // 0.35
+        bounds.strokeColor = frameColor.withAlphaComponent(0.4)
+        bounds.fillColor = frameColor.withAlphaComponent(0.15)  // 0.35
         bounds.zPosition = shapeZPos
 
         addChild(bounds)
@@ -539,9 +544,9 @@ open class SKTile: SKSpriteNode, Loggable {
 
         anchor.name = "ANCHOR"
         bounds.addChild(anchor)
-        anchor.fillColor = highlightColor.withAlphaComponent(0.2)
+        anchor.fillColor = bounds.strokeColor
         anchor.strokeColor = SKColor.clear
-        anchor.zPosition = shapeZPos + 10
+        anchor.zPosition = shapeZPos
         anchor.isAntialiased = layer.antialiased
 
 
@@ -551,7 +556,7 @@ open class SKTile: SKSpriteNode, Loggable {
 
         pointShape.name = "FIRST_POINT"
         bounds.addChild(pointShape)
-        pointShape.fillColor = highlightColor
+        pointShape.fillColor = bounds.strokeColor
         pointShape.strokeColor = SKColor.clear
         pointShape.zPosition = shapeZPos * 15
         pointShape.isAntialiased = layer.antialiased
@@ -588,17 +593,17 @@ extension SKTile {
     /// Show/hide the tile's bounding shape.
     open var showBounds: Bool {
         get {
-            return (childNode(withName: "BOUNDS") != nil) ? childNode(withName: "BOUNDS")!.isHidden == false : false
+            return (childNode(withName: boundsKey) != nil) ? childNode(withName: boundsKey)!.isHidden == false : false
         }
         set {
-            childNode(withName: "BOUNDS")?.removeFromParent()
+            childNode(withName: boundsKey)?.removeFromParent()
 
             if (newValue == true) {
 
                 // draw the tile boundary shape
                 drawBounds()
 
-                guard let frameShape = childNode(withName: "BOUNDS") else { return }
+                guard let frameShape = childNode(withName: boundsKey) else { return }
 
                 if (highlightDuration > 0) {
                     let fadeAction = SKAction.fadeOut(withDuration: highlightDuration)

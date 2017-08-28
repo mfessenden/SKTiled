@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" backgroundcolor="#211e26" nextobjectid="60">
+<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="22" height="21" tilewidth="16" tileheight="16" backgroundcolor="#211e26" nextobjectid="79">
  <properties>
   <property name="displayName" value="ortho4-16x16"/>
   <property name="frameColor" type="color" value="#ff63a4b2"/>
@@ -9,8 +9,9 @@
   <image source="ortho4-16x16.png" width="368" height="384"/>
   <terraintypes>
    <terrain name="Stone" tile="39"/>
+   <terrain name="Bridge" tile="48"/>
   </terraintypes>
-  <tile id="0" type="walkable">
+  <tile id="0" type="walkable" terrain=",,,1">
    <properties>
     <property name="weight" type="float" value="0.5"/>
    </properties>
@@ -20,7 +21,7 @@
     <property name="weight" type="float" value="0.5"/>
    </properties>
   </tile>
-  <tile id="2" type="walkable">
+  <tile id="2" type="walkable" terrain=",,1,1">
    <properties>
     <property name="weight" type="float" value="0.5"/>
    </properties>
@@ -30,14 +31,14 @@
     <property name="weight" type="float" value="0.5"/>
    </properties>
   </tile>
-  <tile id="4" type="walkable" terrain=",,0,">
+  <tile id="4" type="walkable" terrain=",,1,">
    <properties>
     <property name="weight" type="float" value="0.5"/>
    </properties>
   </tile>
-  <tile id="6" type="walkable"/>
+  <tile id="6" type="walkable" terrain=",,,1"/>
   <tile id="7" type="walkable"/>
-  <tile id="8" type="walkable"/>
+  <tile id="8" type="walkable" terrain=",,1,"/>
   <tile id="11">
    <properties>
     <property name="type" value="stairs"/>
@@ -94,7 +95,7 @@
   <tile id="42" type="water"/>
   <tile id="43" type="walkable"/>
   <tile id="44" type="water"/>
-  <tile id="46" type="walkable">
+  <tile id="46" type="walkable" terrain=",1,,1">
    <properties>
     <property name="weight" type="float" value="0.5"/>
    </properties>
@@ -104,7 +105,7 @@
     <property name="weight" type="float" value="0.5"/>
    </properties>
   </tile>
-  <tile id="48" type="walkable">
+  <tile id="48" type="walkable" terrain="1,1,1,1">
    <properties>
     <property name="weight" type="float" value="0.5"/>
    </properties>
@@ -114,14 +115,14 @@
     <property name="weight" type="float" value="0.5"/>
    </properties>
   </tile>
-  <tile id="50" type="walkable">
+  <tile id="50" type="walkable" terrain="1,,1,">
    <properties>
     <property name="weight" type="float" value="0.5"/>
    </properties>
   </tile>
-  <tile id="52" type="walkable"/>
+  <tile id="52" type="walkable" terrain=",1,,"/>
   <tile id="53" type="walkable"/>
-  <tile id="54" type="walkable"/>
+  <tile id="54" type="walkable" terrain="1,,,"/>
   <tile id="57" terrain="0,,0,0"/>
   <tile id="58" terrain=",0,0,0"/>
   <tile id="59">
@@ -160,7 +161,7 @@
     <property name="weight" type="float" value="0.5"/>
    </properties>
   </tile>
-  <tile id="92" type="walkable">
+  <tile id="92" type="walkable" terrain=",1,,">
    <properties>
     <property name="weight" type="float" value="0.5"/>
    </properties>
@@ -170,7 +171,7 @@
     <property name="weight" type="float" value="0.5"/>
    </properties>
   </tile>
-  <tile id="94" type="walkable">
+  <tile id="94" type="walkable" terrain="1,1,,">
    <properties>
     <property name="weight" type="float" value="0.5"/>
    </properties>
@@ -180,7 +181,7 @@
     <property name="weight" type="float" value="0.5"/>
    </properties>
   </tile>
-  <tile id="96" type="walkable">
+  <tile id="96" type="walkable" terrain="1,,,">
    <properties>
     <property name="weight" type="float" value="0.5"/>
    </properties>
@@ -386,141 +387,151 @@
   <tile id="438" type="walkable"/>
   <tile id="440" type="walkable"/>
  </tileset>
- <group name="Maze">
-  <layer name="base-geo" width="20" height="15">
+ <group name="Maze" visible="0">
+  <layer name="base-geo" width="22" height="21">
    <data encoding="base64" compression="zlib">
-   eJy1kssOAUEQRcsr+AOvMH/AEGysvYI/MIgtVuMRW/wEPtatxGQq1W2MhZuchO6avp3OKRJRCZRBhcw4lrWoNIALmqBl2W+DnCD/5bwBGIIRGFv2J6AmkPftWeY9sABLsBLrWXWvzpuumKlaztuDAziCk5rlu03BTP0OErzFtzf41K0TvIUTY3YdYyYBkiAF0iAj1uV/zjnGeQWwAVuwo9A3Xtf+6W7dx+mDC7iCG4V+1Mn0jzuKFLrukuk7z9zBAzzFPvdo/7hDuu6S6fuc7L7NyfSPO6TrLpm++2T3zSfTP93tqb5fY+s+RX7xn7wAUgEiXQ==
+   eJztk0sOAUEQhtsruIFXmBvQBBtrr+AGBrHFyiu2uAQO6+9EJ53qmtFmYzOVfMmk/p6qvztVQsShoghKoAwqjO5FrNsAEjRBi9HbIGeQd6w7AEMwAmNGn4CagWdovZC6PliAJVgZ+Szx2fnQNc5UQ+oewBGcwJn8o7xOwYx869Bv5Po237zo0G/k/VB37XAmAZIgBdIgw+g0f3GoWwAbsAU7Yc+p0un8Ui+cnz64ghu4C3ue6sKeX9XL3BkZ4OcBnuDF6KovnV/Vy9wZKey9mYvgOdU6zate5s5I5p57ETynWqd56sVn/EQJzgv1E8f/4g1mNiJd
+  </data>
+  </layer>
+  <layer name="Tile Layer 8" width="22" height="21">
+   <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMApGAbEAAAc4AAE=
   </data>
   </layer>
   <group name="UpperLevel">
-   <layer name="upper-geo" width="20" height="15">
+   <layer name="upper-geo" width="22" height="21">
     <data encoding="base64" compression="zlib">
-   eJy7yMDAcBGILzGQDi5iEXsBxS/JMO8FGXpGGtgJxLugeDcVzJMAYncgNgJiYxxqDEkw7wJUPblpCh08B2JVBkh6IidNjYLhBQD39xBG
+   eJxjYBgFIHARii+RqRcXeAHFL8kw9wUZekYBKtgJxLugeDcVzZUAYncgNgJiYxxqDMkw9wJUH7lpERd4DsSqDJB0SE5aHAWjYBQgAABYwBBG
   </data>
    </layer>
-   <layer name="doors" width="20" height="15">
+   <layer name="doors" width="22" height="21">
     <data encoding="base64" compression="zlib">
-   eJxjYKA+kGMkT58smfpGwSgYBSMDAAAIGQA+
+   eJxjYBgFtAZyjOTpkyVT3ygYBaNgFIwC2gEAZDkAPg==
   </data>
    </layer>
   </group>
  </group>
- <layer name="Bridges" width="20" height="15">
+ <layer name="Bridges" width="22" height="21" visible="0">
   <data encoding="base64" compression="zlib">
-   eJxjYBiZYA2VzTs8xMyj1P+3CJhPKUA3nxZgChBPRcLT6GAnLvtHAXEAABIgCsA=
+   eJxjYBgFowATrKGRuYeHuLnUCpdbBOyhFkC3h5ZgChBPRcLT6Gg3NoDsnlEwCqgJAKxzCsA=
   </data>
  </layer>
- <group name="Props">
-  <layer name="Objects" width="20" height="15">
+ <group name="Props" visible="0">
+  <layer name="Objects" width="22" height="21">
    <data encoding="base64" compression="zlib">
-   eJxjYKAuWA+l71LJvGNQ+gumPQ1UsgJmD1XNGwiwHgf/Lg55QuAYDv4XHPKEwB0cfHSaVJBOpj50gJ6mkMNrOhnmoacpUsNrFGACAGsmFEQ=
+   eJxjYBgFtATrofRdKpt7DEp/wbSvgcpWweyjibkDCdYT4N/FIU4IHCPA/4JDnBC4QyQfXZxYkE6mPlwAPS1iC8fpZJiLnhZJDcdRMAooBQANAxRE
   </data>
   </layer>
-  <layer name="UpperLevel" width="20" height="15">
+  <layer name="UpperLevel" width="22" height="21">
    <data encoding="base64" compression="zlib">
-   eJxjYBgFtAbrGRga1lPPLIZjQPOAmOEuFcw7hsT+QgXzRsEooCUAAHLjBzE=
+   eJxjYBgFo2BwgPUMDA3rqW8mwzGguUDMcJeK5h5DYn+hormjYBSMgsEPAB+hBzE=
   </data>
   </layer>
  </group>
- <layer name="Enemies" width="20" height="15">
+ <layer name="Enemies" width="22" height="21" visible="0">
   <data encoding="base64" compression="zlib">
-   eJxjYCAOKDAyMCgyEqmYCGAONMuCiubRCwQA3RxIRXenA83KGOBw8APa709FN6QCzUojwbwgoNpgKtqfCTQriw5h+gmIP1PRPE6gm7mGYJ6gJwAANG0HCw==
+   eJxjYBgFpAAFRgYGRUbqm2sONNOCBubSGwQA/RBIA3+kA83MGGTh4wd0jz8N3JQKNDONDHODgHqCaeCeTKCZWXQM+09A/JkG5nIC/cA1yNLQKBiaAABKdAcL
   </data>
  </layer>
- <group name="Objects">
-  <objectgroup name="Collisions">
+ <group name="Objects" visible="0">
+  <objectgroup name="Bridges">
    <properties>
     <property name="lineWidth" type="float" value="1.5"/>
    </properties>
-   <object id="1" name="bridge4" x="192" y="144" width="48" height="16"/>
-   <object id="2" name="bridge3" x="96" y="112" width="16" height="16"/>
-   <object id="3" name="bridge2" x="64" y="176" width="32" height="16"/>
-   <object id="4" name="bridge1" x="32" y="64" width="16" height="48"/>
-   <object id="6" name="fire1" type="Emitter" x="4" y="31" width="6" height="6">
+   <object id="1" name="bridge4" x="192" y="192" width="48" height="16"/>
+   <object id="2" name="bridge3" x="96" y="160" width="16" height="16"/>
+   <object id="3" name="bridge2" x="64" y="224" width="32" height="16"/>
+   <object id="4" name="bridge1" x="32" y="112" width="16" height="48"/>
+  </objectgroup>
+  <objectgroup name="Lights">
+   <properties>
+    <property name="lineWidth" type="float" value="1.5"/>
+   </properties>
+   <object id="66" name="fire1" type="Emitter" x="4" y="79" width="6" height="6">
     <properties>
      <property name="color" type="color" value="#ffdb4d08"/>
      <property name="type" value="fire"/>
     </properties>
     <ellipse/>
    </object>
-   <object id="8" name="fire2" type="Emitter" x="37" y="32" width="6" height="6">
+   <object id="67" name="fire2" type="Emitter" x="37" y="80" width="6" height="6">
     <properties>
      <property name="color" type="color" value="#ffdb4d08"/>
      <property name="type" value="fire"/>
     </properties>
     <ellipse/>
    </object>
-   <object id="9" name="fire3" type="Emitter" x="21" y="112" width="6" height="6">
+   <object id="68" name="fire3" type="Emitter" x="21" y="160" width="6" height="6">
     <properties>
      <property name="color" type="color" value="#ffdb4d08"/>
      <property name="type" value="fire"/>
     </properties>
     <ellipse/>
    </object>
-   <object id="10" name="fire4" type="Emitter" x="53" y="112" width="6" height="6">
+   <object id="69" name="fire4" type="Emitter" x="53" y="160" width="6" height="6">
     <properties>
      <property name="color" type="color" value="#ffdb4d08"/>
      <property name="type" value="fire"/>
     </properties>
     <ellipse/>
    </object>
-   <object id="11" name="fire5" type="Emitter" x="132" y="96" width="6" height="6">
+   <object id="70" name="fire5" type="Emitter" x="132" y="144" width="6" height="6">
     <properties>
      <property name="color" type="color" value="#ffdb4d08"/>
      <property name="type" value="fire"/>
     </properties>
     <ellipse/>
    </object>
-   <object id="12" name="fire6" type="Emitter" x="149" y="80" width="6" height="6">
+   <object id="71" name="fire6" type="Emitter" x="149" y="128" width="6" height="6">
     <properties>
      <property name="color" type="color" value="#ffdb4d08"/>
      <property name="type" value="fire"/>
     </properties>
     <ellipse/>
    </object>
-   <object id="13" name="fire7" type="Emitter" x="164" y="80" width="6" height="6">
+   <object id="72" name="fire7" type="Emitter" x="164" y="128" width="6" height="6">
     <properties>
      <property name="color" type="color" value="#ffdb4d08"/>
      <property name="type" value="fire"/>
     </properties>
     <ellipse/>
    </object>
-   <object id="14" name="fire8" type="Emitter" x="181" y="95" width="6" height="6">
+   <object id="73" name="fire8" type="Emitter" x="181" y="143" width="6" height="6">
     <properties>
      <property name="color" type="color" value="#ffdb4d08"/>
      <property name="type" value="fire"/>
     </properties>
     <ellipse/>
    </object>
-   <object id="15" name="fire9" type="Emitter" x="244" y="96" width="6" height="6">
+   <object id="74" name="fire9" type="Emitter" x="244" y="144" width="6" height="6">
     <properties>
      <property name="color" type="color" value="#ffdb4d08"/>
      <property name="type" value="fire"/>
     </properties>
     <ellipse/>
    </object>
-   <object id="16" name="fire10" type="Emitter" x="309" y="96" width="6" height="6">
+   <object id="75" name="fire10" type="Emitter" x="309" y="144" width="6" height="6">
     <properties>
      <property name="color" type="color" value="#ffdb4d08"/>
      <property name="type" value="fire"/>
     </properties>
     <ellipse/>
    </object>
-   <object id="17" name="fire11" type="Emitter" x="309" y="160" width="6" height="6">
+   <object id="76" name="fire11" type="Emitter" x="309" y="208" width="6" height="6">
     <properties>
      <property name="color" type="color" value="#ffdb4d08"/>
      <property name="type" value="fire"/>
     </properties>
     <ellipse/>
    </object>
-   <object id="18" name="fire12" type="Emitter" x="245" y="159" width="6" height="6">
+   <object id="77" name="fire12" type="Emitter" x="245" y="207" width="6" height="6">
     <properties>
      <property name="color" type="color" value="#ffdb4d08"/>
      <property name="type" value="fire"/>
     </properties>
     <ellipse/>
    </object>
-   <object id="57" name="fire13" type="Emitter" x="102" y="48" width="6" height="6">
+   <object id="78" name="fire13" type="Emitter" x="102" y="96" width="6" height="6">
     <properties>
      <property name="color" type="color" value="#ffdb4d08"/>
      <property name="type" value="fire"/>
@@ -529,7 +540,37 @@
    </object>
   </objectgroup>
   <objectgroup name="Tile Objects">
-   <object id="49" name="barrel1" gid="2147483800" x="160" y="192" width="16" height="16"/>
+   <object id="49" name="barrel1" gid="2147483800" x="160" y="240" width="16" height="16"/>
   </objectgroup>
  </group>
+ <group name="New Stuff">
+  <layer name="Water" width="22" height="21">
+   <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMBiBBhCLQWkYpqbZtDAX2ezhCgAqjgGn
+  </data>
+  </layer>
+  <layer name="Level1" width="22" height="21">
+   <data encoding="base64" compression="zlib">
+   eJztk7FKA0EURd9ExE6IhagR2UJQQQgiJKAggYCV8QMEdVNY2q0arGxSWfgLIrr4C6Ii/oH5Cz/D+9z7yDjumhBLvXCY7MzsfXfeTkT+nqJ/31/57jmR8YK1qxE9VTNgA5TAWMAomgA1MFtAnh7A4wDfCLTAPjgEMeiBxRxftOrzPMp6zpqezXoZcdyh/xl4Z50eMb3xWeu3vXnt/yuzWL1IvqsCbhHgzmU1UpfNn7KuvtPx9qfghFmsXuhbBXNgHjy5bP3Zfd0TvpNyTLx64Z5t+k6KXOj3rHNez1oj9eAdzWl3x/qLfA19LvF508ur/d7l/L0UK6G331+9t/rdV0GXvyteXuOF+48GeFt/l9C7Y4xNsOzkuoxxysvro1r4Ifc5sbxrYAtMqzdYoa/qEsSuTzs0K1CVvuaNzHHD872R7A7ZHevkeORJe3Ig/f9al+OwuYqUBHnQ73jYXB/RFDXQ
+  </data>
+  </layer>
+  <layer name="Level2" width="22" height="21">
+   <data encoding="base64" compression="zlib">
+   eJxjYBgFo4AysJORNuZeoJG5QwHspZG5V4BYgQbm7makvrmiQDP3Aen9VDZXB2juVSB9jcrmjoKRAwDuMAeE
+  </data>
+  </layer>
+  <layer name="Level3" width="22" height="21">
+   <data encoding="base64" compression="zlib">
+   eJxjYKAMXADii0B8iUJz0MFzIJZlZGB4SWVzR8EoGAWjYBSMAkoAANF+BGI=
+  </data>
+  </layer>
+  <layer name="Bridges" width="22" height="21">
+   <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUDEcwBYinAvE0Kpq5hopmIYPDFOjF56ZbOMRPEWEuITeRG7643DTQgBbpZbgCAPENCpo=
+  </data>
+  </layer>
+ </group>
+ <imagelayer name="template" visible="0">
+  <image source="../../../../Desktop/ortho-template.png" width="383" height="352"/>
+ </imagelayer>
 </map>

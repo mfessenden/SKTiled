@@ -116,7 +116,10 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     internal var objectType: ObjectType = .rectangle        // shape type
     internal var points: [CGPoint] = []                     // points that describe the object's shape
     internal var tile: SKTile?                              // optional tile
-
+    /// Object bounds color.
+    open var frameColor: SKColor = TiledObjectColors.magenta
+    internal var boundsKey: String = "BOUNDS"
+    
     /**
      ## Overview ##
 
@@ -598,14 +601,15 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
      Draw the object's bounding shape.
      */
     internal func drawBounds() {
-        childNode(withName: "BOUNDS")?.removeFromParent()
+        childNode(withName: boundsKey)?.removeFromParent()
         childNode(withName: "FIRST_POINT")?.removeFromParent()
 
+        // default line width
+        let defaultLineWidth: CGFloat = 1
         guard let vertices = getVertices() else { return }
 
         let flippedVertices = (gid == nil) ? vertices.map { $0.invertedY } : vertices
         let renderQuality = (layer != nil) ? layer!.renderQuality : 8
-        let highlightColor = (layer != nil) ? layer!.highlightColor : SKColor(hexString: "#ff8fff")
 
         //let vertices = frame.points
 
@@ -613,18 +617,18 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         let scaledVertices = flippedVertices.map { $0 * renderQuality }
         let path = polygonPath(scaledVertices)
         let bounds = SKShapeNode(path: path)
-        bounds.name = "BOUNDS"
-        let shapeZPos = zPosition + 10
+        bounds.name = boundsKey
+        let shapeZPos = zPosition + 50
 
         // draw the path
         bounds.isAntialiased = layer.antialiased
         bounds.lineCap = .round
         bounds.lineJoin = .miter
         bounds.miterLimit = 0
-        bounds.lineWidth = 1 * (renderQuality / 2)
+        bounds.lineWidth = defaultLineWidth * (renderQuality / 2)
 
-        bounds.strokeColor = highlightColor.withAlphaComponent(0.4)
-        bounds.fillColor = highlightColor.withAlphaComponent(0.15)  // 0.35
+        bounds.strokeColor = frameColor.withAlphaComponent(0.4)
+        bounds.fillColor = frameColor.withAlphaComponent(0.15)  // 0.35
         bounds.zPosition = shapeZPos
         bounds.isAntialiased = layer.antialiased
 
@@ -636,9 +640,9 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
 
         anchor.name = "ANCHOR"
         bounds.addChild(anchor)
-        anchor.fillColor = highlightColor.withAlphaComponent(0.2)
+        anchor.fillColor = bounds.strokeColor
         anchor.strokeColor = SKColor.clear
-        anchor.zPosition = shapeZPos + 10
+        anchor.zPosition = shapeZPos
         anchor.isAntialiased = layer.antialiased
 
 

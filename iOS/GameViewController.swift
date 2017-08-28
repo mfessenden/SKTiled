@@ -12,6 +12,7 @@ import SpriteKit
 
 class GameViewController: UIViewController, Loggable {
 
+    
     @IBOutlet weak var mapInfoLabel: UILabel!
     @IBOutlet weak var tileInfoLabel: UILabel!
     @IBOutlet weak var propertiesInfoLabel: UILabel!

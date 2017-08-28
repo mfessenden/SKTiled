@@ -22,6 +22,8 @@ Change Log
 - add `SKTileCollisionShape`
 - add `SKObjectGroup.tileObject(data:)`
 - add `SKObjectGroup.tileObject(withID:)`
+- add `SKTile.frameColor`
+- add `SKTileObject.frameColor`
 - rename `TiledLayerObject` -> `SKTiledLayerObject`
 - rename `TiledLayerObject.boundingRect` -> `SKTiledLayerObject.bounds`
 - rename `SKTiledSceneCamera.boundingRect` -> `SKTiledSceneCamera.bounds`

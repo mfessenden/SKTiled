@@ -605,13 +605,15 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
 
                     guard let width = attributeDict["tilewidth"] else { parser.abortParsing(); return }
                     guard let height = attributeDict["tileheight"] else { parser.abortParsing(); return }
-                    guard let columns = attributeDict["columns"] else { parser.abortParsing(); return }
 
                     existingTileset.name = name
                     existingTileset.tileSize = CGSize(width: CGFloat(Int(width)!), height: CGFloat(Int(height)!))
-                    existingTileset.columns = Int(columns)!
 
                     // optionals
+                    if let columns = attributeDict["columns"] {
+                         existingTileset.columns = Int(columns)!
+                    }
+
                     if let spacing = attributeDict["spacing"] {
                         existingTileset.spacing = Int(spacing)!
                     }

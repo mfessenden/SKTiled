@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="28" height="36" tilewidth="8" tileheight="8" backgroundcolor="#000000" nextobjectid="120">
+<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="28" height="36" tilewidth="8" tileheight="8" backgroundcolor="#000000" nextobjectid="129">
  <properties>
   <property name="allowMovement" type="bool" value="true"/>
   <property name="allowZoom" type="bool" value="true"/>
@@ -9,38 +9,35 @@
  </properties>
  <tileset firstgid="1" source="pacman-8x8.tsx"/>
  <tileset firstgid="177" source="pacman-16x16.tsx"/>
- <group name="Layout">
-  <layer name="Dots" width="28" height="36">
-   <data encoding="base64" compression="zlib">
-   eJxjYBgFQx34kIipoQ+bG3C5jRQ12MTM6GCfGQF5WvqP1HggF5PiHkKAUvNobR8p6Z5UcXR5Qu4lFZCjd9S+UftG7Ru1jxp6h3t7YiDaL6SEFTlqCLWRqFXf4tNLL/voXb+TkteGqj564FFAfQAABnJIGQ==
-  </data>
-  </layer>
-  <layer name="Maze" width="28" height="36">
-   <data encoding="base64" compression="zlib">
-   eJzNVl1LA0EMjIq2guerH60KvvsFiuBrFay++P9/jSnuwTRMctmuVw0MHLnd5G52ko3I+Ha8hRz/xXYUZ5W4VzxssG9Xsed8Rxd847tiGbz39r5BvqniqOCQ+NCP+bw1LB7mW8V4LlgSn/Vn1lgf5rtUXBdcEZ/1Z9ZYX5+P8d390jP6MufnnaV3ZtnzY/+P54TvJ4qDivWWT2ad+Lof8kf1cKK4M0DdzyVfDxfGb+OeOt+BNcJ48/Q5kXXtZw3zRX3EGq5vzXcjP5zMFPsF58V3W5GP9VXGW/S9qHHcy2J7Zut3KN9QvfdmNYT6xPrN/J+tdxY72o/nsRD/Xnsl61v0EvHTm+0PrfrM9M9MPjZPZOo60wdq5gk0yyfrAxnO/3Ke6PnCHthyv2Pvje4jpsmsPvGZcb7K9ygxV5ve74zzJ8WH+Fy13u+W809Z5zOjw1o/xvT0ifd17f0+J3GG5iUPGX1G+6J5ybNa3aJ589JY8OalMe1li7m+FN8smURA
-  </data>
-  </layer>
- </group>
- <layer name="Graph" width="28" height="36">
+ <layer name="Maze" width="28" height="36">
   <data encoding="base64" compression="zlib">
-   eJzlVcENxCAMY4MOcVMg3Q7df5vT/RCyY9O0hes9LEUpiWOj0K2Usv0R9kV7ZefoUUl+F3VRbaSbeaHqnH5P50N+15PiNpfRn/FrBp/S30Ll1T64d+7qdvxYia/15EXi0fs+oiNz/i6+N8D3fL+/ig/tO+r9dD+d+uhfiDz/NX1n8pXAHxT3fZ3zqC6ad1SH6jeDr9fM/GHvJ3sfUG81e3T/mdq7+JAnzO/RfCXf1fxHda9S58LZawZ3titwJf9MbR846IMA
+   eJzNVl1LAzEQjBatgvVVrdqC736BttDXKljtQ///r3EPszAOu7m9r+rC0GOay1wmu9mkNHyc70Hjv8SB4KohngTPLd47FIwE24b4EGwKa5g4/DvonQjOMk4NDnnUs8Ywr5zqLfIcy4wNzLt0eNWzxjCvHK5vJrjLmBsc8/M8hzWGeeVQrw1wn7xn5CL75+2lt2eR/fP81H3i/8eCY8Mv3Nc2fqJepB6UL9XDheCRgHl/Y/ji1cMt8TzvpfMduuZqXss3Lz/H6XfuRwP1SucIB47vqneffjy5FhxlTDP30EDPOletui597yj/ss/W3F5s4VlrtaRXV+8anEOYn1i/kfVxvVtze+/z/q2T39fe8pi+8qXkj8akR70qIudnRM+6T9T1He/8rMvPPu8TEc//6j6B/UbPwK79Hc9e7kcLw6uSn1ZwvVueV3ovjldd+7vl+avg0/Gqj/7Onn+lYfo7Bvrs5Sf2a+7vpfzk8dH7kodIfnrvsV5TsFeR8O5LQ8G7Lw0Zqz1q7QTfl6xn/A==
   </data>
  </layer>
- <layer name="Actors" width="28" height="36">
+ <objectgroup name="Actors">
+  <object id="124" gid="182" x="120" y="220" width="16" height="16"/>
+  <object id="125" gid="220" x="104" y="220" width="16" height="16"/>
+  <object id="126" gid="204" x="92" y="256" width="16" height="16"/>
+  <object id="127" gid="193" x="198" y="148" width="16" height="16"/>
+  <object id="128" gid="211" x="68" y="147" width="16" height="16"/>
+ </objectgroup>
+ <layer name="Fruit" width="28" height="36">
   <data encoding="base64" compression="zlib">
-   eJztzrEJACEUBcHffz2CYCZcYSaGZgbPg5lk060CgDszPUD19MCPjPQAHHy7LXoBvG4B44UDqw==
+   eJztyqENACAMAMHuvw2eJaoxjIKpakJI0HfmzUcAAAAAv9alL6Oarbs6238AgucGgQ==
   </data>
  </layer>
- <group name="HUD">
-  <layer name="Fruit" width="28" height="36" offsetx="0" offsety="-4">
-   <data encoding="base64" compression="zlib">
-   eJztyqENACAMAMHuvw0GW4FhLExVE0KCvjNvPgIAAAD4tS59GdVs3dXZ/gNgNwX3
-  </data>
-  </layer>
-  <layer name="Scores" width="28" height="36">
-   <data encoding="base64" compression="zlib">
-   eJztzTEKwCAQRNG9p0i0spSIV0jAWzuCEFIKVvIffNhiYM0+r6oq219QUV3zHopyKqlbeVs3/rXZs2EHAAAAAMCpOs9kCSY=
-  </data>
-  </layer>
- </group>
+ <objectgroup name="Score">
+  <object id="120" name="Label-P1 " type="HUD" x="25" y="0" width="26" height="8">
+   <text fontfamily="Arcade Normal" pixelsize="8" color="#d6d4ff" kerning="0">1up</text>
+  </object>
+  <object id="121" name="Score-P1" type="HUD" x="25" y="8" width="56" height="8">
+   <text fontfamily="Arcade Normal" pixelsize="8" color="#d6d4ff" kerning="0">1440</text>
+  </object>
+  <object id="122" name="Label-HISCORE" type="HUD" x="73" y="0" width="83" height="8">
+   <text fontfamily="Arcade Normal" pixelsize="8" color="#d6d4ff" kerning="0">HIGH SCORE</text>
+  </object>
+  <object id="123" name="Score-HI" type="HUD" x="105" y="8" width="56" height="8">
+   <text fontfamily="Arcade Normal" pixelsize="8" color="#d6d4ff" kerning="0">1440</text>
+  </object>
+ </objectgroup>
 </map>

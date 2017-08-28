@@ -30,6 +30,7 @@ internal struct TiledObjectColors {
     static let gun: SKColor         = SKColor(hexString: "#8D99AE")
     static let indigo: SKColor      = SKColor(hexString: "#274060")
     static let lime: SKColor        = SKColor(hexString: "#7ED321")
+    static let magenta: SKColor     = SKColor(hexString: "#FF00FF")
     static let metal: SKColor       = SKColor(hexString: "#627C85")
     static let obsidian: SKColor    = SKColor(hexString: "#464B4E")
     static let pear: SKColor        = SKColor(hexString: "#CEE82C")
@@ -1929,9 +1930,9 @@ extension SKTilemap: SKTiledSceneCameraDelegate {
 
     public func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {}
     public func cameraPositionChanged(newPosition: CGPoint) {}
-    // TODO: remove this for release
+
     public func cameraZoomChanged(newZoom: CGFloat) {
-        let oldZoom = currentZoom
+        //let oldZoom = currentZoom
         currentZoom = newZoom
         antialiasLines = (newZoom < 1)
     }
@@ -1941,10 +1942,9 @@ extension SKTilemap: SKTiledSceneCameraDelegate {
     #else
     // TODO: remove this for release
     public func sceneDoubleClicked(event: NSEvent) {
-        let locationInMap = event.location(in: self)
         let coord = coordinateAtMouseEvent(event: event)
         let tiles = tilesAt(coord: coord)
-        log("\(tiles.count) tiles found at \(coord.shortDescription)", level: .info)
+        log("\(tiles.count) tiles found at \(coord.shortDescription)", level: .debug)
     }
     // TODO: remove this for release
     public func mousePositionChanged(event: NSEvent) {

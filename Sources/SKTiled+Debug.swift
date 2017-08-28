@@ -65,10 +65,11 @@ internal class SKTiledDebugDrawNode: SKNode {
 
     private var gridTexture: SKTexture! = nil               // grid texture
     private var graphTexture: SKTexture! = nil              // GKGridGraph texture
-    private var anchorKey: String = "LAYER_ANCHOR"
+    private var anchorKey: String = "ANCHOR"
 
     init(tileLayer: SKTiledLayerObject) {
         layer = tileLayer
+        anchorKey = "ANCHOR_\(layer.uuid)"
         super.init()
         setup()
     }
@@ -353,6 +354,9 @@ internal class TileShape: SKShapeNode {
     var coord: CGPoint
     var useLabel: Bool = false
 
+    var initialized: Bool = false
+    var clickCount: Int = 0
+
     var renderQuality: CGFloat = 4
     var zoomFactor: CGFloat {
         return layer.tilemap.currentZoom
@@ -410,7 +414,7 @@ internal class TileShape: SKShapeNode {
     /**
      Draw the object.
      */
-    private func drawObject() {
+    internal func drawObject() {
         // draw the path
         var points: [CGPoint] = []
 
@@ -472,8 +476,8 @@ internal class TileShape: SKShapeNode {
 
         let baseOpacity = layer.gridOpacity
 
-        self.strokeColor = self.color.withAlphaComponent(baseOpacity)
-        self.fillColor = self.color.withAlphaComponent(baseOpacity * 0.7)
+        self.strokeColor = self.color.withAlphaComponent(baseOpacity * 2)
+        self.fillColor = self.color.withAlphaComponent(baseOpacity * 1.5)
 
         // anchor
         childNode(withName: "ANCHOR")?.removeFromParent()
@@ -530,7 +534,8 @@ extension SKTilemap {
      - returns: `[SKNode]` array of tiles.
      */
     public func renderableObjectsAt(point: CGPoint) -> [SKNode] {
-        return nodes(at: point).filter { node in
+        let pixelPosition = defaultLayer.screenToPixelCoords(point)
+        return nodes(at: pixelPosition).filter { node in
             (node as? SKTile != nil) || (node as? SKTileObject != nil)
             }
     }
