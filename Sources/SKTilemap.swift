@@ -165,8 +165,8 @@ public protocol SKTilemapDelegate: class {
  ```
 
  ### Properties
- 
- 
+
+
 
  ```swift
  let mapSize    = tilemap.size          // returns the size of the map (tiles).
@@ -203,6 +203,10 @@ public class SKTilemap: SKNode, SKTiledObject {
     /// Map orientation type.
     public var orientation: TilemapOrientation                      // map orientation
     internal var renderOrder: RenderOrder = .rightDown              // render order
+
+    // Update time properties.
+    private var lastUpdateTime : TimeInterval = 0
+    private let maximumUpdateDelta: TimeInterval = 1.0 / 60.0
 
     /// Logging verbosity.
     internal var loggingLevel: LoggingLevel = SKTiledLoggingLevel
@@ -249,7 +253,6 @@ public class SKTilemap: SKNode, SKTiledObject {
     /// Default z-position range between layers.
     public var zDeltaForLayers: CGFloat = 50
     public var bufferSize: CGFloat = 4.0
-
 
     /// Returns true if all of the child layers are rendered.
     internal var isRendered: Bool {
@@ -305,7 +308,6 @@ public class SKTilemap: SKNode, SKTiledObject {
             return defaultLayer.debugDrawOptions
         } set {
             defaultLayer.debugDrawOptions = newValue
-            //print("defaultLayer options: \(defaultLayer.debugDrawOptions)")
         }
     }
 
@@ -326,7 +328,9 @@ public class SKTilemap: SKNode, SKTiledObject {
 
     /// Weak reference to `SKTilemapDelegate` delegate
     weak public var delegate: SKTilemapDelegate?
-
+    /// Objects under the mouse cursor.
+    public var focusObjects: [SKNode] = []
+    
     /// Map frame.
     override public var frame: CGRect {
         //let cy = (heightOffset == 0) ? 0 : (heightOffset / 2)
@@ -343,9 +347,11 @@ public class SKTilemap: SKNode, SKTiledObject {
         switch orientation {
         case .orthogonal:
             return CGSize(width: size.width * tileSize.width, height: size.height * tileSize.height)
+
         case .isometric:
             let side = width + height
             return CGSize(width: side * tileWidthHalf,  height: side * tileHeightHalf)
+
         case .hexagonal, .staggered:
             var result = CGSize.zero
             if staggerX == true {
@@ -599,11 +605,19 @@ public class SKTilemap: SKNode, SKTiledObject {
             }
         }
 
-        // keep renderQuality within texture max size
+        // keep renderQuality within texture size limits
         let renderSize = CGSize(width: size.width * tileSize.width, height: size.height * tileSize.height)
         let largestDimension = (renderSize.width > renderSize.height) ? renderSize.width : renderSize.height
         maxRenderQuality = CGFloat(Int(16000 / (largestDimension * SKTiledContentScaleFactor)))
+
+        // clamp max render quality
+        maxRenderQuality = (maxRenderQuality > 16) ? 16 : maxRenderQuality
+
+        #if os(iOS)
+        renderQuality = maxRenderQuality / 4
+        #else
         renderQuality = maxRenderQuality / 2
+        #endif
     }
 
     /**
@@ -780,6 +794,7 @@ public class SKTilemap: SKNode, SKTiledObject {
         layer.highlightColor = highlightColor
         layer.loggingLevel = loggingLevel
         layer.ignoreProperties = ignoreProperties
+
         return (success, inserted)
     }
 
@@ -881,7 +896,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      */
     public func getLayers(atPath: String) -> [SKTiledLayerObject] {
         var result: [SKTiledLayerObject] = []
-        if let index = self.layers.index(where: { $0.path == atPath } ) {
+        if let index = self.layers.index(where: { $0.path == atPath }) {
             result.append(self.layers[index])
         }
         return result
@@ -894,7 +909,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - returns: `SKTiledLayerObject?` layer object.
      */
     public func getLayer(withID uuid: String) -> SKTiledLayerObject? {
-        if let index = layers.index(where: { $0.uuid == uuid } ) {
+        if let index = layers.index(where: { $0.uuid == uuid }) {
             let layer = layers[index]
             return layer
         }
@@ -908,7 +923,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - returns: `SKTiledLayerObject?` layer object.
      */
     public func getLayer(atIndex index: Int) -> SKTiledLayerObject? {
-        if let index = _layers.index(where: { $0.index == index } ) {
+        if let index = _layers.index(where: { $0.index == index }) {
             let layer = _layers[index]
             return layer
         }
@@ -1512,7 +1527,37 @@ public class SKTilemap: SKNode, SKTiledObject {
         }
     }
 
+    // MARK: - Updating
 
+    /**
+     Called before each frame is rendered.
+
+     - parameter currentTime: `TimeInterval` update interval.
+     */
+    public func update(_ currentTime: TimeInterval) {
+        // Initialize lastUpdateTime
+        if (self.lastUpdateTime == 0) {
+            self.lastUpdateTime = currentTime
+        }
+
+        // Calculate time since last update
+        var dt = currentTime - self.lastUpdateTime
+        dt = dt > maximumUpdateDelta ? maximumUpdateDelta : dt
+
+        self.lastUpdateTime = currentTime
+
+        // Update layers
+        self.layers.forEach { layer in
+            layer.update(currentTime)
+        }
+
+        let baseLineWidth: CGFloat = 1
+        // size of one point
+        let pointSize = (1 * SKTiledContentScaleFactor)
+        let scaleFactor = 1 / currentZoom
+        let actualPointSize = (pointSize * scaleFactor)
+        let renderLineWidth = baseLineWidth * actualPointSize
+    }
 }
 
 
@@ -1940,17 +1985,32 @@ extension SKTilemap: SKTiledSceneCameraDelegate {
     #if os(iOS) || os(tvOS)
     public func sceneDoubleTapped(location: CGPoint) {}
     #else
-    // TODO: remove this for release
+
     public func sceneDoubleClicked(event: NSEvent) {
         let coord = coordinateAtMouseEvent(event: event)
         let tiles = tilesAt(coord: coord)
         log("\(tiles.count) tiles found at \(coord.shortDescription)", level: .debug)
     }
-    // TODO: remove this for release
+
     public func mousePositionChanged(event: NSEvent) {
         let coord = coordinateAtMouseEvent(event: event)
         let locationInMap = event.location(in: self)
-        let locationInLayer = mouseLocation(event: event)
+        //let locationInLayer = mouseLocation(event: event)
+
+        let nodesUnderCursor = nodes(at: locationInMap)
+
+        focusObjects = []
+        for node in nodesUnderCursor {
+            if let object = node as? SKTileObject {
+                focusObjects.append(node)
+            }
+
+            if let tile = node as? SKTile, (tile.texture != nil) {
+                if tilesAt(coord: coord).contains(tile) {
+                    focusObjects.append(node)
+                }
+            }
+        }
     }
     #endif
 }

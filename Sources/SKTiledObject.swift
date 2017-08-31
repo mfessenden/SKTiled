@@ -21,12 +21,12 @@ import SpriteKit
 
  ```swift
  // query a Tiled string property
- if let name = obj.stringForKey("name") {
-    obj.name = name
+ if let name = tiledObject.stringForKey("name") {
+    tiledObject.name = name
  }
 
  // query a boolean property
- let isDynamic = object.boolForKey("isDynamic") == true
+ let isDynamic = tiledObject.boolForKey("isDynamic") == true
  ```
 
  ### Properties ###
@@ -53,7 +53,6 @@ public protocol SKTiledObject: class, Loggable {
     /// Render scaling property.
     var renderQuality: CGFloat { get }
 }
-
 
 
 public extension SKTiledObject {

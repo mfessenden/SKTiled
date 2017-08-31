@@ -65,6 +65,9 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     /// Reference to navigation graphs.
     open var graphs: [String : GKGridGraph<GKGridGraphNode>] = [:]
 
+    private var lastUpdateTime: TimeInterval = 0
+    private let maximumUpdateDelta: TimeInterval = 1.0 / 60.0
+
     // MARK: - Init
     /**
      Initialize without a tiled map.
@@ -225,10 +228,26 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     }
 
     // MARK: - Updating
+
+    /**
+     Called before each frame is rendered.
+     
+     - parameter currentTime: `TimeInterval` update interval.
+     */
     override open func update(_ currentTime: TimeInterval) {
-        super.update(currentTime)
-        // update the tilemap
-        //tilemap?.update(currentTime)
+        // Initialize lastUpdateTime if it has not already been
+        if (self.lastUpdateTime == 0) {
+            self.lastUpdateTime = currentTime
+        }
+
+        // Calculate time since last update
+        var dt = currentTime - self.lastUpdateTime
+        dt = dt > maximumUpdateDelta ? maximumUpdateDelta : dt
+
+        self.lastUpdateTime = currentTime
+
+        // update tilemap
+        self.tilemap?.update(currentTime)
     }
 
     /**
@@ -236,7 +255,6 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
      */
     open func updateCamera() {
         guard let view = view else { return }
-        print("[SKTiledScene]: updating camera bounds")
         let viewSize = view.bounds.size
         if let cameraNode = cameraNode {
             cameraNode.bounds = CGRect(x: -(viewSize.width / 2), y: -(viewSize.height / 2),
@@ -341,10 +359,7 @@ extension SKTiledScene: SKTiledSceneCameraDelegate {
 
      - parameter location: `CGPoint` touch location.
      */
-    // CLEANUP: move to demo scene.
-    public func sceneDoubleTapped(location: CGPoint) {
-        self.isPaused = !self.isPaused
-    }
+    public func sceneDoubleTapped(location: CGPoint) {}
     #else
 
     /**

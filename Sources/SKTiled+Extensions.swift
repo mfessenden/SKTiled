@@ -16,7 +16,7 @@ import Cocoa
 #endif
 
 
-// MARK: - Functions
+// MARK: - Image Creation Functions
 
 
 #if os(iOS) || os(tvOS)
@@ -66,75 +66,6 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
 
 #endif
 
-
-@available(iOS 10.0, *)
-public func replaceColor(texture: SKTexture, color: SKColor) -> SKTexture? {
-
-    texture.filteringMode = .nearest
-    let sprite = SKSpriteNode(texture: texture)
-
-    let replaceColorSource = "vec2 nearest(vec2 pos) {" +
-"vec2 snapped = floor(pos - 0.5) + 0.5;" +
-"return (snapped + step(0.5, pos - snapped));" +
-"}" +
-"vec2 nearest_uv(vec2 uv, vec2 size) {" +
-"return nearest(uv * size) / size;" +
-"}" +
-"void main() {" +
-"vec4 val = texture2D(u_texture, nearest_uv(v_tex_coord, u_sprite_size));" +
-"if (val.r == transColor.r && val.b == transColor.b && val.g == transColor.g) {" +
-"gl_FragColor = vec4(0.0,0.0,0.0,0.0);" +
-"} else {" +
-"gl_FragColor = val;" +
-"}" +
-"}"
-
-    let colorShader = SKShader(source: replaceColorSource)
-
-    // shader attributes
-    colorShader.attributes = [
-        SKAttribute(name: "transColor", type: .vectorFloat4),
-        SKAttribute(name: "u_sprite_size", type: .vectorFloat2)
-    ]
-
-    sprite.shader = colorShader
-
-    let spriteSize = vector_float2(Float(sprite.frame.size.width),
-                                   Float(sprite.frame.size.height))
-
-    let transColor = color
-    let transVec4 = transColor.toVec4
-
-    sprite.setValue(SKAttributeValue(vectorFloat4: transVec4), forAttribute: "transColor")
-    sprite.setValue(SKAttributeValue(vectorFloat2: spriteSize), forAttribute: "u_sprite_size")
-
-    let view = SKView()
-    if let newTexture = view.texture(from: sprite) {
-        newTexture.filteringMode = .nearest
-        return newTexture
-    }
-
-
-    return nil
-}
-
-#if os(macOS)
-/**
- Output tilemap layers to images.
-
- - parameter tilemap:       `SKTilemap` map to write images from.
- - parameter url:           `URL` directory path to write to.
- */
-public func writeMapToFiles(tilemap: SKTilemap, url: URL) {
-    let tileLayers: [SKTiledLayerObject] = tilemap.tileLayers().sorted(by: { $0.realIndex < $1.realIndex }) as [SKTiledLayerObject]
-    //tileLayers.insert(tilemap.defaultLayer as SKTiledLayerObject, at: 0)
-    for (idx, layer) in tileLayers.enumerated() {
-        if let layerTexture = layer.render() {
-            writeToFile(layerTexture.cgImage(), url: url.appendingPathComponent("\(String(format: "%02d", idx))-\(layer.layerName).png"))
-        }
-    }
-}
-#endif
 
 
 /**
@@ -533,11 +464,11 @@ internal extension SKNode {
     /**
      Run an action with key & optional completion function.
 
-     - parameter action:             `SKAction!` SpriteKit action.
-     - parameter withKey:            `String!` action key.
-     - parameter optionalCompletion: `() -> ()` optional completion function.
+     - parameter action:     `SKAction!` SpriteKit action.
+     - parameter withKey:    `String!` action key.
+     - parameter completion: `() -> ()?` optional completion function.
      */
-    internal func run(_ action: SKAction!, withKey: String!, optionalCompletion block: (()->())?) {
+    internal func run(_ action: SKAction!, withKey: String!, completion block: (()->())?) {
         if let block = block {
             let completionAction = SKAction.run( block )
             let compositeAction = SKAction.sequence([ action, completionAction ])
@@ -807,8 +738,6 @@ public extension String {
 
     // MARK: URL
 
-
-
     /// Returns a url for the string.
     public var url: URL { return URL(fileURLWithPath: self.expanded) }
 
@@ -849,25 +778,26 @@ public extension String {
     public var fileExtension: String {
         return self.url.pathExtension
     }
+
+    /// Captialize the first letter.
+    public var uppercaseFirst: String {
+        let first = String(characters.prefix(1))
+        return first.uppercased() + String(characters.dropFirst())
+    }
 }
 
 
 public extension URL {
 
-    /**
-     Returns the path file name without file extension.
-     */
+    /// Returns the path file name without file extension.
     public var basename: String {
         return self.deletingPathExtension().lastPathComponent
     }
 
-    /**
-     Returns the file name without the parent directory.
-     */
+    /// Returns the file name without the parent directory.
     public var filename: String {
         return self.lastPathComponent
     }
-
 
     /// Returns the parent path of the file.
     public var parent: String? {
@@ -896,14 +826,15 @@ public extension SKAction {
     /**
      Custom action to animate sprite textures with varying frame durations.
 
-     - parameter frames: `[(texture: SKTexture, duration: TimeInterval)]` array of tuples containing texture & duration.
+     - parameter frames:        `[(texture: SKTexture, duration: TimeInterval)]` array of tuples containing texture & duration.
+     - parameter repeatForever: `Bool` run the animation forever.
      - returns: `SKAction` custom animation action.
      */
     public class func tileAnimation(_ frames: [(texture: SKTexture, duration: TimeInterval)], repeatForever: Bool = true) -> SKAction {
         var actions: [SKAction] = []
         for frame in frames {
             actions.append(SKAction.group([
-                SKAction.setTexture(frame.texture),
+                SKAction.setTexture(frame.texture, resize: false),
                 SKAction.wait(forDuration: frame.duration)
                 ])
             )
@@ -1288,7 +1219,7 @@ public func normalize(_ value: CGFloat, _ minimum: CGFloat, _ maximum: CGFloat) 
  */
 internal func drawLayerGrid(_ layer: SKTiledLayerObject,
                             imageScale: CGFloat=8,
-                            lineScale: CGFloat=1) -> CGImage {
+                            lineScale: CGFloat=1) -> CGImage? {
     // get the ui scale value for the device
     let uiScale: CGFloat = SKTiledContentScaleFactor
 
@@ -1303,6 +1234,9 @@ internal func drawLayerGrid(_ layer: SKTiledLayerObject,
     let defaultLineWidth: CGFloat = (imageScale / uiScale) * lineScale
 
     return imageOfSize(sizeInPoints, scale: uiScale) { context, bounds, scale in
+
+        // reference to shape path
+        var shapePath: CGPath?
 
         let innerColor = layer.gridColor
         // line width should be at least 1 for larger tile sizes
@@ -1326,8 +1260,8 @@ internal func drawLayerGrid(_ layer: SKTiledLayerObject,
 
                     // rectangle shape
                     let points = rectPointArray(tileWidth, height: tileHeight, origin: CGPoint(x: xpos, y: ypos + tileHeight))
-                    let shapePath = polygonPath(points)
-                    context.addPath(shapePath)
+                    shapePath = polygonPath(points)
+                    context.addPath(shapePath!)
 
                 case .isometric:
                     // xpos, ypos is the top point of the diamond
@@ -1339,8 +1273,8 @@ internal func drawLayerGrid(_ layer: SKTiledLayerObject,
                         CGPoint(x: xpos, y: ypos)
                     ]
 
-                    let shapePath = polygonPath(points)
-                    context.addPath(shapePath)
+                    shapePath = polygonPath(points)
+                    context.addPath(shapePath!)
 
                 case .hexagonal, .staggered:
                     let staggerX = layer.tilemap.staggerX
@@ -1384,8 +1318,8 @@ internal func drawLayerGrid(_ layer: SKTiledLayerObject,
                             hexPoints[5] = CGPoint(x: xpos - (tileWidth / 2), y: ypos + (variableSize / 2))
                         }
 
-                        let shapePath = polygonPath(hexPoints)
-                        context.addPath(shapePath)
+                        shapePath = polygonPath(hexPoints)
+                        context.addPath(shapePath!)
                     }
 
                     if layer.orientation == .staggered {
@@ -1398,12 +1332,13 @@ internal func drawLayerGrid(_ layer: SKTiledLayerObject,
                             CGPoint(x: xpos, y: ypos)
                         ]
 
-                        let shapePath = polygonPath(points)
-                        context.addPath(shapePath)
+                        shapePath = polygonPath(points)
+                        context.addPath(shapePath!)
                     }
                 }
 
                 context.strokePath()
+                shapePath = nil
             }
         }
     }
@@ -1420,7 +1355,7 @@ internal func drawLayerGrid(_ layer: SKTiledLayerObject,
  */
 internal func drawLayerGraph(_ layer: SKTiledLayerObject,
                              imageScale: CGFloat = 8,
-                             lineScale: CGFloat = 1) -> CGImage {
+                             lineScale: CGFloat = 1) -> CGImage? {
 
 
     // get the ui scale value for the device
@@ -1584,7 +1519,7 @@ internal func drawLayerGraph(_ layer: SKTiledLayerObject,
 /**
  Create a temporary directory.
  */
-public func createTempDirectory(named: String) -> URL? {
+internal func createTempDirectory(named: String) -> URL? {
     let directory = NSTemporaryDirectory()
     guard let url = NSURL.fileURL(withPathComponents: [directory, named]) else {
         Logger.default.log("Unable get temp directory: \(named)", level: .warning)
@@ -1604,7 +1539,7 @@ public func createTempDirectory(named: String) -> URL? {
 /**
  Write the given image to PNG file.
  */
-public func writeToFile(_ image: CGImage, url: URL) -> Data {
+internal func writeToFile(_ image: CGImage, url: URL) -> Data {
     let bitmapRep: NSBitmapImageRep = NSBitmapImageRep(cgImage: image)
     let properties = Dictionary<String, AnyObject>()
     let data: Data = bitmapRep.representation(using: NSBitmapImageFileType.PNG, properties: properties)!
@@ -1808,13 +1743,13 @@ public func getContentScaleFactor() -> CGFloat {
 
 
 /**
- Clamp the position to a given scale.
+ Clamp a point to the given scale.
 
  - parameter point:  `CGPoint` point to clamp.
  - parameter scale:  `CGFloat` device scale.
  - returns: `CGPoint` clamped point.
  */
-public func clampedPosition(point: CGPoint, scale: CGFloat) -> CGPoint {
+internal func clampedPosition(point: CGPoint, scale: CGFloat) -> CGPoint {
     let clampedX = Int(point.x * scale) / scale
     let clampedY = Int(point.y * scale) / scale
     return CGPoint(x: clampedX, y: clampedY)
@@ -1827,8 +1762,9 @@ public func clampedPosition(point: CGPoint, scale: CGFloat) -> CGPoint {
  - parameter node:  `SKNode` node to re-position.
  - parameter scale:  `CGFloat` device scale.
  */
-public func clampPositionWithNode(node: SKNode, scale: CGFloat) {
+internal func clampPositionWithNode(node: SKNode, scale: CGFloat) {
     node.position = clampedPosition(point: node.position, scale: SKTiledContentScaleFactor)
+    Logger.default.log("clamping position for node: \"\(String(describing: type(of: node)))\"", level: .debug)
     if let parentNode = node.parent {
         if parentNode != node.scene {
             clampPositionWithNode(node: parentNode, scale: scale)

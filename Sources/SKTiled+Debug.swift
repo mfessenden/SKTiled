@@ -63,8 +63,8 @@ internal class SKTiledDebugDrawNode: SKNode {
     private var graphSprite: SKSpriteNode!
     private var frameShape: SKShapeNode!
 
-    private var gridTexture: SKTexture! = nil               // grid texture
-    private var graphTexture: SKTexture! = nil              // GKGridGraph texture
+    private var gridTexture: SKTexture? = nil               // grid texture
+    private var graphTexture: SKTexture? = nil              // GKGridGraph texture
     private var anchorKey: String = "ANCHOR"
 
     init(tileLayer: SKTiledLayerObject) {
@@ -76,6 +76,11 @@ internal class SKTiledDebugDrawNode: SKNode {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        gridTexture = nil
+        graphTexture = nil
     }
 
     var anchorPoint: CGPoint {
@@ -249,20 +254,23 @@ internal class SKTiledDebugDrawNode: SKNode {
 
             // multipliers used to generate smooth lines
             let imageScale: CGFloat = layer.tilemap.renderQuality
-            let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 2 : 1
+            let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1 : 0.75   // 2:1
 
             // generate the texture
-            if (gridTexture == nil) {
-                let gridImage = drawLayerGrid(self.layer, imageScale: imageScale, lineScale: lineScale)
-                self.gridTexture = SKTexture(cgImage: gridImage)
-                self.gridTexture.filteringMode = .linear
+            var gridImage: CGImage? = drawLayerGrid(self.layer, imageScale: imageScale, lineScale: lineScale)
+            if (gridImage != nil) {
+                self.gridTexture = SKTexture(cgImage: gridImage!)
+                self.gridTexture?.filteringMode = .linear
             }
+            
+            gridImage = nil
 
             // sprite scaling factor
             let spriteScaleFactor: CGFloat = (1 / imageScale)
-            gridSize = gridTexture.size() / uiScale
+            gridSize = (gridTexture != nil) ? gridTexture!.size() / uiScale : .zero
             gridSprite.setScale(spriteScaleFactor)
 
+            Logger.default.log("grid texture size: \(gridSize.shortDescription)", level: .debug)
 
             gridSprite.texture = gridTexture
             gridSprite.alpha = layer.gridOpacity
@@ -302,19 +310,22 @@ internal class SKTiledDebugDrawNode: SKNode {
 
         // generate the texture
         if (graphTexture == nil) {
-            let graphImage = drawLayerGraph(self.layer, imageScale: imageScale, lineScale: lineScale)
-            graphTexture = SKTexture(cgImage: graphImage)
-            graphTexture.filteringMode = .linear
+            var graphImage = drawLayerGraph(self.layer, imageScale: imageScale, lineScale: lineScale)
+            if (graphImage != nil) {
+                graphTexture = SKTexture(cgImage: graphImage!)
+                graphTexture?.filteringMode = .linear
+            }
+            graphImage = nil
         }
 
         // sprite scaling factor
         let spriteScaleFactor: CGFloat = (1 / imageScale)
-        gridSize = graphTexture.size() / uiScale
+        gridSize = (graphTexture != nil) ? graphTexture!.size() / uiScale : .zero
         graphSprite.setScale(spriteScaleFactor)
 
 
         graphSprite.texture = graphTexture
-        graphSprite.alpha = layer.gridOpacity * 2
+        graphSprite.alpha = layer.gridOpacity * 3
         graphSprite.size = gridSize / imageScale
 
         // need to flip the grid texture in y
@@ -345,17 +356,28 @@ internal class SKTiledDebugDrawNode: SKNode {
 
 
 // Shape node used for highlighting and placing tiles.
-internal class TileShape: SKShapeNode {
+public class TileShape: SKShapeNode {
+
+    public enum DebugRole: Int {
+        case none
+        case highlight
+        case coordinate
+        case pathfinding
+    }
+
 
     var tileSize: CGSize
     var orientation: SKTilemap.TilemapOrientation = .orthogonal
     var color: SKColor
     var layer: SKTiledLayerObject
     var coord: CGPoint
+
+    var weight: Float = 1
+    var role: DebugRole = .none
     var useLabel: Bool = false
 
     var initialized: Bool = false
-    var clickCount: Int = 0
+    var interactions: Int = 0
 
     var renderQuality: CGFloat = 4
     var zoomFactor: CGFloat {
@@ -370,12 +392,14 @@ internal class TileShape: SKShapeNode {
      - parameter tileColor: `SKColor` shape color.
      - parameter withLabel: `Bool` render shape with label.
      */
-    init(layer: SKTiledLayerObject, coord: CGPoint, tileColor: SKColor, withLabel: Bool=false) {
+    init(layer: SKTiledLayerObject, coord: CGPoint, tileColor: SKColor, role: DebugRole = .none, weight: Float = 1) {
         self.layer = layer
         self.coord = coord
         self.tileSize = layer.tileSize
         self.color = tileColor
-        self.useLabel = withLabel
+        self.role = role
+        self.weight = weight
+        self.useLabel = (self.role == .coordinate)
         super.init()
         self.orientation = layer.orientation
         drawObject()
@@ -388,18 +412,19 @@ internal class TileShape: SKShapeNode {
      - parameter tileColor: `SKColor` shape color.
      - parameter withLabel: `Bool` render shape with label.
      */
-    init(layer: SKTiledLayerObject, tileColor: SKColor, withLabel: Bool=false) {
+    public init(layer: SKTiledLayerObject, tileColor: SKColor, role: DebugRole = .none) {
         self.layer = layer
         self.coord = CGPoint.zero
         self.tileSize = layer.tileSize
         self.color = tileColor
-        self.useLabel = withLabel
+        self.role = role
+        self.useLabel = (self.role == .coordinate)
         super.init()
         self.orientation = layer.orientation
         drawObject()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -474,10 +499,38 @@ internal class TileShape: SKShapeNode {
         self.miterLimit = 0
         self.lineWidth = 1
 
-        let baseOpacity = layer.gridOpacity
+        var baseOpacity = layer.gridOpacity
 
-        self.strokeColor = self.color.withAlphaComponent(baseOpacity * 2)
-        self.fillColor = self.color.withAlphaComponent(baseOpacity * 1.5)
+        switch self.role {
+        case .pathfinding:
+            var baseColor = SKColor.gray
+
+            switch weight {
+            case (-2000)...(-1):
+                baseColor = TiledObjectColors.lime
+            case 0...10:
+                baseColor = SKColor.gray
+            case 11...200:
+                baseColor = TiledObjectColors.dandelion
+            case 201...FLT_MAX:
+                baseColor = TiledObjectColors.english
+            default:
+                baseColor = SKColor.gray
+            }
+
+
+
+
+            baseOpacity = 0.8
+            self.strokeColor = baseColor.withAlphaComponent(baseOpacity * 2)
+            self.fillColor = baseColor.withAlphaComponent(baseOpacity * 1.5)
+
+
+        default:
+            self.strokeColor = SKColor.clear
+            self.fillColor = self.color.withAlphaComponent(baseOpacity * 1.5)
+        }
+
 
         // anchor
         childNode(withName: "ANCHOR")?.removeFromParent()
@@ -510,11 +563,11 @@ internal class TileShape: SKShapeNode {
 
 
 extension TileShape {
-    override var description: String {
+    override public var description: String {
         return "Tile Shape: \(coord.shortDescription)"
     }
-    override var debugDescription: String { return description }
-    override var hashValue: Int { return coord.hashValue }
+    override public var debugDescription: String { return description }
+    override public var hashValue: Int { return coord.hashValue }
 }
 
 
@@ -542,11 +595,19 @@ extension SKTilemap {
 
     /**
      Draw the map bounds.
+     
+     - parameter withColor: `SKColor?` optional highlight color.
+     - parameter zpos:      `CGFloat?` optional z-position of bounds shape.
+     - parameter duration:  `TimeInterval` effect length.
      */
-    public func drawBounds() {
+    internal func drawBounds(withColor: SKColor?=nil, zpos: CGFloat?=nil, duration: TimeInterval = 0) {
         // remove old nodes
         self.childNode(withName: "MAP_BOUNDS")?.removeFromParent()
         self.childNode(withName: "MAP_ANCHOR")?.removeFromParent()
+
+        // if a color is not passed, use the default frame color
+        let drawColor = (withColor != nil) ? withColor! : self.frameColor
+
 
         let debugZPos = lastZPosition * 50
 
@@ -554,10 +615,10 @@ extension SKTilemap {
         let tilemapPath = polygonPath(scaledVertices)
 
 
-        let boundsShape = SKShapeNode(path: tilemapPath) // , centered: <#T##Bool#>)
+        let boundsShape = SKShapeNode(path: tilemapPath) // , centered: true)
         boundsShape.name = "MAP_BOUNDS"
-        boundsShape.fillColor = frameColor.withAlphaComponent(0.2)
-        boundsShape.strokeColor = frameColor
+        boundsShape.fillColor = drawColor.withAlphaComponent(0.2)
+        boundsShape.strokeColor = drawColor
         self.addChild(boundsShape)
 
 
@@ -572,10 +633,17 @@ extension SKTilemap {
         let anchorRadius = self.tileHeightHalf / 4
         let anchorShape = SKShapeNode(circleOfRadius: anchorRadius * renderQuality)
         anchorShape.name = "MAP_ANCHOR"
-        anchorShape.fillColor = frameColor.withAlphaComponent(0.25)
+        anchorShape.fillColor = drawColor.withAlphaComponent(0.25)
         anchorShape.strokeColor = .clear
         boundsShape.addChild(anchorShape)
         boundsShape.zPosition = debugZPos
+
+        if (duration > 0) {
+            let fadeAction = SKAction.fadeAfter(wait: duration, alpha: 0)
+            boundsShape.run(fadeAction, withKey: "MAP_FADEOUT_ACTION", completion: {
+                boundsShape.removeFromParent()
+            })
+        }
     }
 }
 

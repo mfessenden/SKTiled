@@ -24,12 +24,14 @@
  <tile id="34">
   <properties>
    <property name="speed" value="1"/>
-   <property name="weight" value="50"/>
+   <property name="walkable" type="bool" value="true"/>
+   <property name="weight" value="10"/>
   </properties>
  </tile>
  <tile id="37">
   <properties>
    <property name="speed" value="1"/>
+   <property name="walkable" type="bool" value="true"/>
    <property name="weight" value="500"/>
   </properties>
  </tile>
@@ -45,12 +47,14 @@
  <tile id="56">
   <properties>
    <property name="speed" value="1"/>
-   <property name="weight" value="200"/>
+   <property name="walkable" type="bool" value="true"/>
+   <property name="weight" value="-5"/>
   </properties>
  </tile>
  <tile id="59">
   <properties>
    <property name="speed" value="0.4"/>
+   <property name="walkable" type="bool" value="true"/>
    <property name="weight" value="1"/>
   </properties>
  </tile>
@@ -62,13 +66,15 @@
  <tile id="78">
   <properties>
    <property name="speed" value="1"/>
+   <property name="walkable" type="bool" value="true"/>
    <property name="weight" value="1"/>
   </properties>
  </tile>
  <tile id="81">
   <properties>
    <property name="speed" value="1"/>
-   <property name="weight" value="250"/>
+   <property name="walkable" type="bool" value="true"/>
+   <property name="weight" value="-50"/>
   </properties>
  </tile>
 </tileset>

@@ -87,6 +87,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
     fileprivate var timer: Date = Date()                               // timer
     fileprivate var finishedParsing: Bool = false
     fileprivate var ignoreProperties: Bool = false                     // ignore custom properties
+    fileprivate var layerIndex: Int = 0
 
     // dispatch queues & groups
     internal let parsingQueue = DispatchQueue.global(qos: .userInteractive)
@@ -683,10 +684,14 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
             let parentElement = elementPath.last!
             if let group = parentElement as? SKGroupLayer {
                 let _ = group.addLayer(layer)
+                layer.rawIndex = layerIndex
+                layerIndex += 1
             }
 
             if let tilemap = parentElement as? SKTilemap {
                 let _ = tilemap.addLayer(layer)
+                layer.rawIndex = layerIndex
+                layerIndex += 1
             }
 
 
@@ -718,10 +723,14 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
 
                 if let group = parentElement as? SKGroupLayer {
                     let _ = group.addLayer(objectsGroup)
+                    objectsGroup.rawIndex = layerIndex
+                    layerIndex += 1
                 }
 
                 if let tilemap = parentElement as? SKTilemap {
                     let _ = tilemap.addLayer(objectsGroup)
+                    objectsGroup.rawIndex = layerIndex
+                    layerIndex += 1
                 }
 
 
@@ -741,10 +750,14 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
             let parentElement = elementPath.last!
             if let group = parentElement as? SKGroupLayer {
                 let _ = group.addLayer(imageLayer)
+                imageLayer.rawIndex = layerIndex
+                layerIndex += 1
             }
 
             if let tilemap = parentElement as? SKTilemap {
                 let _ = tilemap.addLayer(imageLayer)
+                imageLayer.rawIndex = layerIndex
+                layerIndex += 1
             }
 
 
@@ -764,10 +777,14 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
             let parentElement = elementPath.last!
             if let group = parentElement as? SKGroupLayer {
                 let _ = group.addLayer(groupLayer)
+                groupLayer.rawIndex = layerIndex
+                layerIndex += 1
             }
 
             if let tilemap = parentElement as? SKTilemap {
                 let _ = tilemap.addLayer(groupLayer)
+                groupLayer.rawIndex = layerIndex
+                layerIndex += 1
             }
 
             // delegate callback

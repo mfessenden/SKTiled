@@ -8,3 +8,4 @@ docs/jazzy_output/
 SKTiled.playground/
 SKTiled.xcworkspace/
 Notes.md
+.swiftlint.yml

@@ -26,7 +26,6 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Arcade.ttf</string>
 		<string>ArcadeNormal.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

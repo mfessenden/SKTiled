@@ -10,7 +10,9 @@
 [![CocoaPods Compatible][pod-image]][pod-url]
 
 
-**SKTiled** is a Swift framework for using [Tiled](http://www.mapeditor.org) content with [Apple's SpriteKit][spritekit-url], allowing the creation of game assets from Tiled's .tmx files. Inspired by [TilemapKit](http://tilemapkit.com) and written purely in Swift, I began working on this for a project after the development of TilemapKit was halted. Initially created as an exercise to learn Apple's new programming language, I've decided to open-source it in case others find it helpful.
+**SKTiled** is a Swift framework for using [Tiled](http://www.mapeditor.org) content with [Apple's SpriteKit][spritekit-url], allowing the creation of game assets from Tiled's .tmx files. Inspired by [TilemapKit](http://tilemapkit.com) and written purely in Swift, I began working on this after the development of TilemapKit was halted, primarily to learn Apple's new programming language. I've decided to open-source it in case others find it helpful.
+
+Current release is Swift 3/macOS 10.11/iOS 10+. For Swift 4/Xcode 9, see the [**swift4**][swift4-url] branch.
 
 
 ![macOS Demo](images/demo-macos-iso.png)
@@ -27,21 +29,21 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 - [x] renders all projections: (orthogonal, isometric, hexagonal & isometric staggered)
 - [x] renders all layer types: (tile, object, image, group)
 - [x] supports all compression types: (base64, zlib, gzip)
-- [x] renders animated and fliped tiles
+- [x] renders animated and flipped tiles
 - [x] pre-loading of tilesets
 - [x] group nodes
 - [x] tile objects
 - [x] text objects
-- [x] custom tile classes (iOS10, macOS 10.11+)
-- [x] generate GKGridGraph graphs from custom attributes (iOS10, macOS 10.11+)
-- [x] user-definable cost properties for GKGridGraph nodes (iOS10, macOS 10.11+)
+- [x] custom tile & object classes
+- [x] generate GKGridGraph graphs from custom attributes
+- [x] user-definable cost properties for GKGridGraph nodes
 
 
 ## Requirements
 
 - iOS 9+
-- macOS 10.11+
-- Xcode 8
+- macOS 10.12+
+- Xcode 8+
 
 ## Installation
 
@@ -63,7 +65,7 @@ Loading a tilemap is very straightforward:
 
 ```swift
 if let tilemap = SKTilemap.load(tmxFile: "sample-map") {
-scene.addChild(tilemap)
+    scene.addChild(tilemap)
 }
 ```
 Once loaded, the rendered [`SKTilemap`][sktilemap-url] node reflects the various properties defined in the originating scene:
@@ -73,17 +75,17 @@ Once loaded, the rendered [`SKTilemap`][sktilemap-url] node reflects the various
 - `SKTilemap.orientation`: map orientation (ie orthogonal, isometric, etc).
 
 
-The [`SKTilemap`][sktilemap-url] node also allows access to child layers, tilesets, objects and individual tiles.
+The [`SKTilemap`][sktilemap-url] node also gives users access to child layers, tilesets, objects or individual tiles.
 
 ### Working with Layers
 
-Layers represent containers that house various types of data:
+Layers represent containers that hold various types of data:
 
 - tile layers hold an array of tile sprites and associated tileset data
 - object groups contain vector shape objects
 - image layers display a single image
 
-All **SKTiled** layer types are subclasses of the [`SKTiledLayerObject`][sktiledlayerobject-url] class and provide access to coordinate transformation and positioning information. Additionally, every layer type can have individual offset transforms and rendering flags.  
+All **SKTiled** layer types are subclasses of the base [`SKTiledLayerObject`][sktiledlayerobject-url] object and provide access to coordinate transformation and positioning information. Additionally, every layer type can have individual offset transforms and rendering flags.  
 
 Layers can be accessed by type, name or index:
 
@@ -99,24 +101,31 @@ let groundLayers = tilemap.getLayers(named: "Ground") as! [SKTileLayer]
 let objectGroups = tilemap.getLayers(named: "Objects") as! [SKObjectGroup]
 let hudLayers = tilemap.getLayers(named: "HUD") as! [SKImageLayer]
 
-
 // query layer at a specific index
 if let firstLayer = tilemap.getLayer(atIndex: 1) as! SKTileLayer {
     firstLayer.showGrid = true
 }
 ```
 
+
 ### Working with Tiles
 
-There are a number of ways to access and work with tile objects. Tiles can be queried from the [`SKTilemap`][sktilemap-url] node, or the parent [`SKTileLayer`][sktilelayer-url] layer:
+There are a number of ways to access and manipulate tile objects. Tiles can be queried from the [`SKTilemap`][sktilemap-url] node, or the parent [`SKTileLayer`][sktilelayer-url] layer:
 
 ```swift
 // access a tile via CGPoint
 let tileCoord = CGPoint(x: 7, y: 12)
-let tile = groundLayer.tileAt(coord: tileCoord)
+if let tile = groundLayer.tileAt(coord: tileCoord) {
+    tile.tileData.tileOffset.x += 8
+}
 
 // access a tile with integer coordinates
-let tile = groundLayer.tileAt(7, 12)
+if let tile = groundLayer.tileAt(7, 12) {
+    tile.tileData.tileOffset.x += 8
+}
+
+// query tiles at a specific coordinate (all layers)
+let tiles = tilemap.tilesAt(2, 4)
 ```
 
 Tiles assigned custom properties in **Tiled** can be accessed in **SKTiled**:
@@ -124,18 +133,15 @@ Tiles assigned custom properties in **Tiled** can be accessed in **SKTiled**:
 ```swift
 // query tiles of a certain type
 if let fireTiles = tilemap.getTiles(ofType: "fire") {
-// do something fiery here...
+    // do something fiery here...
 }
-
-// query tiles at a specific coordinate (all layers)
-let tiles = tilemap.tilesAt(2, 4)
 ```
 
 You can also return tiles with a specific ID value:
 
 ```swift
 if let waterTiles = waterLayer.getTiles(globalID: 17) {
-    // do something watery here
+    // do something watery here...
 }
 ```
 
@@ -154,7 +160,7 @@ let entrances = objectsLayer.getObjects(ofType: "Entrance")
 
 ### Acessing Tile Data
 
-The [`SKTilemap`][sktilemap-url] node stores an array of individual tilesets parsed from the original **Tiled** document. Individual tile data is accessible from either the [`SKTileSet`][sktileset-url] object:
+The [`SKTilemap`][sktilemap-url] node stores an array of individual tilesets parsed from the original **Tiled** document. Individual tile data is accessible from either the [`SKTileset`][sktileset-url] object:
 
 ```swift
 let tileSet = tilemap.getTileset("spritesheet-16x16")
@@ -188,8 +194,8 @@ tile.position = tilePoint
 New nodes (any [`SKNode`][sknode-url] type) can be added directly to any layer. All [`SKTiledLayerObject`][sktiledlayerobject-url] layer types have expanded convenience methods for adding child nodes with coordinates and z-position.
 
 ```swift
-let newNode = SKNode()
-groundLayer.addChild(newNode, 4, 5, zpos: 100.0)
+let roadRoot = SKNode()
+groundLayer.addChild(roadRoot, 4, 5, zpos: 100.0)
 ```
 
 **SKTiled** also provides methods for getting coordinate data from `UITouch` and `NSEvent` mouse events:
@@ -208,8 +214,8 @@ Tiles with animation will animate automatically; animated tiles can be accesssed
 let allAnimated = tilemap.animatedTiles(recursive: true)
 
 for tile in allAnimated {
-// pause the current animation
-tile.pauseAnimation = true
+    // pause the current animation
+    tile.pauseAnimation = true
 }
 
 // get animated tiles from individual layers
@@ -224,8 +230,8 @@ Custom properties are supported on all object types. All **SKTiled** objects con
 Any property added to an object in **Tiled** will be translated and stored in the `SKTiledObject.properties` dictionary.
 
 ```swift
-let tileType = groundLayer.getValue(forProperty: "type")
-groundLayer.setValue("water", forProperty: "type")
+let layerDepth = groundLayer.getValue(forProperty: "depth")
+groundLayer.setValue(12.5, forProperty: "depth")
 ```
 
 To query tiles of a given type:
@@ -238,8 +244,8 @@ let allWaterTiles = tilemap.getTiles(ofType: "water")
 For specific property/value types:
 
 ```swift
-let groundWalkable = groundLayer.getTilesWithProperty("walkable", "1")
-let allWalkable = tilemap.getTilesWithProperty("walkable", "1")
+let groundWalkable = groundLayer.getTilesWithProperty("walkable", true)
+let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 ```
 
 ## Acknowledgments
@@ -278,6 +284,9 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", "1")
 [sktilelayer-url]:https://mfessenden.github.io/SKTiled/Classes/SKTileLayer.html
 [sktileobject-url]:https://mfessenden.github.io/SKTiled/Classes/SKTileObject.html
 [sktileset-url]:https://mfessenden.github.io/SKTiled/Classes/SKTileset.html
+
+<!--- Tiled --->
+[group-layers-url]:http://doc.mapeditor.org/manual/layers/#group-layers
 
 <!--- Apple --->
 

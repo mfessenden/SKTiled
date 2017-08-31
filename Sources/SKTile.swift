@@ -407,7 +407,7 @@ open class SKTile: SKSpriteNode, Loggable {
     open func getVertices(offset: CGPoint = .zero) -> [CGPoint] {
         var vertices: [CGPoint] = []
         guard let layer = layer else {
-            log("tile \(tileData.id) does not have a layer reference.", level: .error)
+            log("tile \(tileData.id) does not have a layer reference.", level: .debug)
             return vertices
         }
 
@@ -477,9 +477,17 @@ open class SKTile: SKSpriteNode, Loggable {
 
     /**
      Draw the tile's boundary shape.
+     
+     - parameter withColor: `SKColor?` optional highlight color.
+     - parameter zpos:      `CGFloat?` optional z-position of bounds shape.
+     - parameter duration:  `TimeInterval` effect length.
      */
-    internal func drawBounds(_ withOffset: Bool=true) {
+    internal func drawBounds(withColor: SKColor?=nil, zpos: CGFloat?=nil, duration: TimeInterval = 0) {
         childNode(withName: boundsKey)?.removeFromParent()
+
+        // if a color is not passed, use the default frame color
+        let drawColor = (withColor != nil) ? withColor! : self.frameColor
+
 
         // default line width
         let defaultLineWidth: CGFloat = 1
@@ -492,24 +500,36 @@ open class SKTile: SKSpriteNode, Loggable {
         let tilesetTileSize: CGSize = tileData.tileset.tileSize
         let tilesetTileHeight: CGFloat = tilesetTileSize.height
 
-
+        // calculate the offset
+        // TODO: do this in getvertices?
         var xOffset: CGFloat = 0
         var yOffset: CGFloat = 0
 
-        // calculate the offset amount based on the current tile orientation
-        if alignment == .bottomRight || alignment == .topRight {
-            xOffset = -(tilesetTileHeight - mapTileSize.height)
 
-            if alignment == .topRight {
-                yOffset = -(tilesetTileHeight - mapTileSize.height)
+        if let layer = layer {
+            switch layer.orientation {
+            case .orthogonal:
+                // calculate the offset amount based on the current tile orientation
+                if alignment == .bottomRight || alignment == .topRight {
+                    xOffset = -(tilesetTileHeight - mapTileSize.height)
+
+                    if alignment == .topRight {
+                        yOffset = -(tilesetTileHeight - mapTileSize.height)
+                    }
+                }
+
+                if alignment == .topLeft {
+                    yOffset = -(tilesetTileHeight - mapTileSize.height)
+                }
+
+            default:
+                xOffset = 0
+                yOffset = 0
             }
         }
 
-        if alignment == .topLeft {
-            yOffset = -(tilesetTileHeight - mapTileSize.height)
-        }
-
         let alignmentOffset = CGPoint(x: xOffset, y: yOffset)
+
         let vertices = getVertices(offset: alignmentOffset)
 
         guard (vertices.isEmpty == false) else { return }
@@ -530,8 +550,8 @@ open class SKTile: SKSpriteNode, Loggable {
         bounds.miterLimit = 0
         bounds.lineWidth = defaultLineWidth * (renderQuality / 2)
 
-        bounds.strokeColor = frameColor.withAlphaComponent(0.4)
-        bounds.fillColor = frameColor.withAlphaComponent(0.15)  // 0.35
+        bounds.strokeColor = drawColor.withAlphaComponent(0.4)
+        bounds.fillColor = drawColor.withAlphaComponent(0.15)
         bounds.zPosition = shapeZPos
 
         addChild(bounds)
@@ -563,6 +583,14 @@ open class SKTile: SKSpriteNode, Loggable {
 
         pointShape.position = firstPoint
         bounds.setScale(1 / renderQuality)
+
+
+        if (duration > 0) {
+            let fadeAction = SKAction.fadeAfter(wait: duration, alpha: 0)
+            bounds.run(fadeAction, withKey: "FADEOUT_ACTION", completion: {
+                bounds.removeFromParent()
+            })
+        }
     }
 }
 
@@ -624,4 +652,47 @@ extension SKTile {
 
     /// Tile debug description.
     override open var debugDescription: String { return "<\(description)>" }
+
+    open var shortDescription: String {
+        var result = "Tile id: \(self.tileData.id)"
+        result += (self.tileData.type != nil) ? ", type: \"\(self.tileData.type!)\"" : ""
+        return result
+    }
+}
+
+
+
+extension SKTile {
+
+
+    public var tileOffset: CGPoint {
+
+        var xOffset: CGFloat = 0
+        var yOffset: CGFloat = 0
+
+        let mapOffset = tileData.tileset.mapOffset
+
+        // map tile size
+        let mapTileSize = CGSize(width: tileSize.width - mapOffset.x, height: tileSize.height - mapOffset.y)
+
+        // tileset tile size
+        let tilesetTileSize: CGSize = tileData.tileset.tileSize
+        let tilesetTileHeight: CGFloat = tilesetTileSize.height
+
+
+        // calculate the offset amount based on the current tile orientation
+        if (alignment == .bottomRight) || (alignment == .topRight) {
+            xOffset = -(tilesetTileHeight - mapTileSize.height)
+
+            if (alignment == .topRight) {
+                yOffset = -(tilesetTileHeight - mapTileSize.height)
+            }
+        }
+
+        if (alignment == .topLeft) {
+            yOffset = -(tilesetTileHeight - mapTileSize.height)
+        }
+
+        return CGPoint(x: xOffset, y: yOffset)
+    }
 }

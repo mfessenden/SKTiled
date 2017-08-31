@@ -3,6 +3,13 @@ Change Log
 
 1.15
 -----
+
+#### Changes
+
+- invert layer y-offsets properly
+- add `DemoController` to manage scenes in iOS/macOS
+
+
 - add `SKTilemap.getLayer(atPath:)`
 - add `SKTilemapDelegate.didAddNavigationGraph(_:)`
 - add `SKTilemap.newTileLayer(named:group:)`
@@ -20,25 +27,21 @@ Change Log
 - add `SKTilemap.coordinateAtMouseEvent(event:)`
 - add `SKTilemap.coordinateAtTouchLocation(_:)`
 - add `SKTileCollisionShape`
-- add `SKObjectGroup.tileObject(data:)`
+- add `SKObjectGroup.newTileObject(data:)`
 - add `SKObjectGroup.tileObject(withID:)`
 - add `SKTile.frameColor`
 - add `SKTileObject.frameColor`
-- rename `TiledLayerObject` -> `SKTiledLayerObject`
-- rename `TiledLayerObject.boundingRect` -> `SKTiledLayerObject.bounds`
-- rename `SKTiledSceneCamera.boundingRect` -> `SKTiledSceneCamera.bounds`
-- rename `SKTilemap.addLayer(_:base:)` -> `SKTilemap.addLayer(_:group:clamped:)->(success:layer:)`
-
-#### Changes
-
-- invert layer y-offsets properly
-
 - add `SKTilemap.getLayers(withPrefix:recursive:)`
 - add `SKTilemap.tileLayers(withPrefix:recursive)`
 - add `SKTilemap.objectGroups(withPrefix:recursive:)`
 - add `SKTilemap.imageLayers(withPrefix:recursive:)`
 - add `SKTilemap.groupLayers(withPrefix:recursive:)`
-- add `DemoController` to manage scenes in iOS/macOS
+- rename `TiledLayerObject` -> `SKTiledLayerObject`
+- rename `TiledLayerObject.boundingRect` -> `SKTiledLayerObject.bounds`
+- rename `SKTiledSceneCamera.boundingRect` -> `SKTiledSceneCamera.bounds`
+- rename `SKTilemap.addLayer(_:base:)` -> `SKTilemap.addLayer(_:group:clamped:)->(success:layer:)`
+- remove `SKTileLayer.validTiles()`
+
 
 1.14
 -----
@@ -49,25 +52,8 @@ Change Log
 - update API for new layer & object types, more consistent naming, etc.
 - improved grid drawing quality
 - debug functions moved to `SKTiled+Debug.swift`
-- remove `SKTilemap.indexOf(layerNamed:)`
-- rename `SKTilemap.getLayer(named:)` -> `SKTilemap.getLayers(named:recursive:)`
-- rename `SKTilemap.allLayers` -> `SKTilemap.getLayers(recursive:)`
-- rename `SKTilemap.tileLayer(named:)` -> `SKTilemap.tileLayers(named:recursive:)`
-- rename `SKTilemap.objectGroups(named:)` -> `SKTilemap.objectGroups(named:recursive:)`
-- rename `SKTilemap.getLayers(ofType:)` -> `SKTilemap.getLayers(ofType:recursive:)`
-- rename `SKTilemap.tileLayers` -> `SKTilemap.tileLayers(recursive:)`
-- rename `SKTilemap.objectGroups` -> `SKTilemap.objectGroups(recursive:)`
-- rename `SKTilemap.imageLayers` -> `SKTilemap.imageLayers(recursive:)`
-- rename `SKTilemap.groupLayers` -> `SKTilemap.groupLayers(recursive:)`
-- rename `SKTilemap.getTiles(ofType:)` -> `SKTilemap.getTiles(ofType:recursive:)`
-- rename `SKTilemap.getTiles(withID:)` -> `SKTilemap.getTiles(globalID:recursive:)`
-- rename `SKTilemap.getTilesWithProperty(_: _:)` -> `SKTilemap.getTilesWithProperty(_:_:recursive:)`
-- rename `SKTilemap.getAnimatedTiles()` -> `SKTilemap.animatedTiles(recursive:)`
-- rename `SKTilemap.getObjects()` -> `SKTilemap.getObjects(recursive:)`
-- rename `SKTilemap.getObjects(ofType:)` -> `SKTilemap.getObjects(ofType:recursive:)`
-- rename `SKTilemap.getObjects(named:)` -> `SKTilemap.getObjects(named:recursive:)`
-- rename `SKTileLayer.getAnimatedTiles()` -> `SKTileLayer.animatedTiles()`
-- rename `SKObjectGroup.getObject(named:)` -> `SKObjectGroup.getObjects(named:)`
+
+
 - add `SKObjectGroup.textObjects`
 - add `SKTilemap.textObjects`
 - add `SKTilemap.showGrid`
@@ -96,29 +82,42 @@ Change Log
 - add `SKTilemap.renderQuality`
 - add `TiledLayerObject.renderQuality`
 - add `SKTileObject.renderQuality`
-
-
 - add `SKTilemap.tilesAt(point:)`
 - add `SKTilemap.objectsAt(point:)`
-
-
 - add `alignment` to geometry types
 - add `TiledLayerObject.renderableObjects`
 - add `SKTilemap.renderableObjects`
 - add `SKTilesetData.globalID`
-
 - add `SKTileObject.showBounds`
-- rename `SKTile.getVertices()` -> `SKTile.getVertices(offset:)`
-
-- rename `TiledLayerGrid` -> `SKTiledDebugDrawNode`
 - add `BackgroundLayer` layer type
 - add `SKTilemapDelegate.zDeltaForLayers`
-
 - add `SKTilemap.bounds`
 - add `SKTilemap.url`
 - add `SKTilemap.update(_:)`
 - add `TiledLayerObject.update(_:)`
-- add `SKTilemap.graphs`
+- add `SKTiledScene.graphs`
+- remove `SKTilemap.indexOf(layerNamed:)`
+- rename `SKTilemap.getLayer(named:)` -> `SKTilemap.getLayers(named:recursive:)`
+- rename `SKTilemap.allLayers` -> `SKTilemap.getLayers(recursive:)`
+- rename `SKTilemap.tileLayer(named:)` -> `SKTilemap.tileLayers(named:recursive:)`
+- rename `SKTilemap.objectGroups(named:)` -> `SKTilemap.objectGroups(named:recursive:)`
+- rename `SKTilemap.getLayers(ofType:)` -> `SKTilemap.getLayers(ofType:recursive:)`
+- rename `SKTilemap.tileLayers` -> `SKTilemap.tileLayers(recursive:)`
+- rename `SKTilemap.objectGroups` -> `SKTilemap.objectGroups(recursive:)`
+- rename `SKTilemap.imageLayers` -> `SKTilemap.imageLayers(recursive:)`
+- rename `SKTilemap.groupLayers` -> `SKTilemap.groupLayers(recursive:)`
+- rename `SKTilemap.getTiles(ofType:)` -> `SKTilemap.getTiles(ofType:recursive:)`
+- rename `SKTilemap.getTiles(withID:)` -> `SKTilemap.getTiles(globalID:recursive:)`
+- rename `SKTilemap.getTilesWithProperty(_: _:)` -> `SKTilemap.getTilesWithProperty(_:_:recursive:)`
+- rename `SKTilemap.getAnimatedTiles()` -> `SKTilemap.animatedTiles(recursive:)`
+- rename `SKTilemap.getObjects()` -> `SKTilemap.getObjects(recursive:)`
+- rename `SKTilemap.getObjects(ofType:)` -> `SKTilemap.getObjects(ofType:recursive:)`
+- rename `SKTilemap.getObjects(named:)` -> `SKTilemap.getObjects(named:recursive:)`
+- rename `SKTileLayer.getAnimatedTiles()` -> `SKTileLayer.animatedTiles()`
+- rename `SKObjectGroup.getObject(named:)` -> `SKObjectGroup.getObjects(named:)`
+- rename `SKTile.getVertices()` -> `SKTile.getVertices(offset:)`
+- rename `TiledLayerGrid` -> `SKTiledDebugDrawNode`
+
 
 1.13
 -----
@@ -156,7 +155,6 @@ Change Log
 - `SKTilemap.renderQueue` syncs before pausing
 - add `SKTilemap.cropAtBoundary` property
 - add `SKTilemap.renderSize` property
-- `SKTilemap` now a subclass of `SKCropNode`
 - `TiledLayerObject.coordinateForPoint` method inverts y-value before converting
 - update references to `M_PI` -> `Double.pi`
 

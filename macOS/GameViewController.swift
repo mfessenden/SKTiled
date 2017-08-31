@@ -8,9 +8,13 @@
 
 import Cocoa
 import SpriteKit
+import AppKit
 
 
 class GameViewController: NSViewController, Loggable {
+
+    let demoController = DemoController.default
+
 
     // debugging labels
     @IBOutlet weak var mapInfoLabel: NSTextField!
@@ -18,17 +22,18 @@ class GameViewController: NSViewController, Loggable {
     @IBOutlet weak var propertiesInfoLabel: NSTextField!
     @IBOutlet weak var debugInfoLabel: NSTextField!
     @IBOutlet weak var cameraInfoLabel: NSTextField!
-
     @IBOutlet weak var pauseInfoLabel: NSTextField!
     @IBOutlet weak var isolatedInfoLabel: NSTextField!
 
+
     @IBOutlet weak var graphButton: NSButton!
     @IBOutlet weak var objectsButton: NSButton!
-
     @IBOutlet var demoFileAttributes: NSArrayController!
 
-    let demoController = DemoController.default
+
+    var timer = Timer()
     var loggingLevel: LoggingLevel = SKTiledLoggingLevel
+    var commandBackgroundColor: NSColor = NSColor(calibratedWhite: 0.2, alpha: 0.25)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,11 +55,14 @@ class GameViewController: NSViewController, Loggable {
             return
         }
 
+        //debugInfoLabel?.isHidden = true
+
         #if DEBUG
         skView.showsFPS = true
         skView.showsNodeCount = true
         skView.showsDrawCount = true
         skView.showsPhysics = true
+        //debugInfoLabel?.isHidden = false
         #endif
 
         // SpriteKit optimizations
@@ -66,9 +74,8 @@ class GameViewController: NSViewController, Loggable {
         NotificationCenter.default.addObserver(self, selector: #selector(updateDebugLabels), name: NSNotification.Name(rawValue: "updateDebugLabels"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateWindowTitle), name: NSNotification.Name(rawValue: "updateWindowTitle"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateUIControls), name: NSNotification.Name(rawValue: "updateUIControls"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateCommandString), name: NSNotification.Name(rawValue: "updateCommandString"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loggingLevelUpdated), name: NSNotification.Name(rawValue: "loggingLevelUpdated"), object: nil)
-
-        debugInfoLabel?.isHidden = true
 
         // create the game scene
         demoController.loadScene(url: currentURL, usePreviousCamera: false)
@@ -86,8 +93,9 @@ class GameViewController: NSViewController, Loggable {
         mapInfoLabel.stringValue = "Map: "
         tileInfoLabel.stringValue = "Tile: "
         propertiesInfoLabel.stringValue = "Properties:"
-        cameraInfoLabel.stringValue = "---"
-        isolatedInfoLabel.stringValue = "---"
+        cameraInfoLabel.stringValue = "--"
+        debugInfoLabel.stringValue = ""
+        isolatedInfoLabel.stringValue = ""
 
         // text shadow
         let shadow = NSShadow()
@@ -119,7 +127,7 @@ class GameViewController: NSViewController, Loggable {
      - parameter sender: `Any` ui button.
      */
     @IBAction func gridButtonPressed(_ sender: Any) {
-        self.demoController.toggleMapDemoDraw()
+        self.demoController.toggleMapDemoDrawGridBounds()
     }
 
     /**
@@ -222,10 +230,6 @@ class GameViewController: NSViewController, Loggable {
             propertiesInfoLabel.stringValue = propertiesInfo as! String
         }
 
-        if let debugInfo = notification.userInfo!["debugInfo"] {
-            debugInfoLabel.stringValue = debugInfo as! String
-        }
-
         if let cameraInfo = notification.userInfo!["cameraInfo"] {
             cameraInfoLabel.stringValue = cameraInfo as! String
         }
@@ -239,13 +243,109 @@ class GameViewController: NSViewController, Loggable {
         }
     }
 
+
+    /**
+     Update the the command string label.
+
+     - parameter notification: `Notification` notification.
+     */
+    func updateCommandString(notification: Notification) {
+        timer.invalidate()
+        var duration: TimeInterval = 3.0
+        if let commandString = notification.userInfo!["command"] {
+            var commandFormatted = commandString as! String
+            commandFormatted = "\(commandFormatted)".uppercaseFirst
+            debugInfoLabel.stringValue = "▹ \(commandFormatted)"
+            debugInfoLabel.backgroundColor = commandBackgroundColor
+            //debugInfoLabel.drawsBackground = true
+        }
+
+        if let commandDuration = notification.userInfo!["duration"] {
+            duration = commandDuration as! TimeInterval
+        }
+
+        guard (duration > 0) else { return }
+        timer = Timer.scheduledTimer(timeInterval: duration, target: self, selector: #selector(GameViewController.resetCommandLabel), userInfo: nil, repeats: true)
+    }
+
+    /**
+     Reset the command string label.
+     */
+    func resetCommandLabel() {
+        timer.invalidate()
+        debugInfoLabel.setStringValue("", animated: true, interval: 0.75)
+        debugInfoLabel.backgroundColor = NSColor(calibratedWhite: 0.0, alpha: 0.0)
+    }
+
+    /**
+     Enables/disable button controls based on the current map attributes.
+
+    - parameter notification: `Notification` notification.
+     */
     func updateUIControls(notification: Notification) {
         if let hasGraphs = notification.userInfo!["hasGraphs"] {
-            graphButton.isHidden = (hasGraphs as? Bool) == false
+            graphButton.isEnabled = (hasGraphs as? Bool) == true
         }
 
         if let hasObjects = notification.userInfo!["hasObjects"] {
-            objectsButton.isHidden = (hasObjects as? Bool) == false
+            objectsButton.isEnabled = (hasObjects as? Bool) == true
         }
+    }
+}
+
+
+extension NSTextField {
+    /**
+     Set the string value of the text field, with optional animated fade.
+
+     - parameter newValue: `String` new text value.
+     - parameter animated: `Bool` enable fade out effect.
+     - parameter interval: `TimeInterval` effect length.
+     */
+    func setStringValue(_ newValue: String, animated: Bool = true, interval: TimeInterval = 0.7) {
+        guard stringValue != newValue else { return }
+        if animated {
+            animate(change: { self.stringValue = newValue }, interval: interval)
+        } else {
+            stringValue = newValue
+        }
+    }
+
+    /**
+     Set the attributed string value of the text field, with optional animated fade.
+
+     - parameter newValue: `NSAttributedString` new attributed string value.
+     - parameter animated: `Bool` enable fade out effect.
+     - parameter interval: `TimeInterval` effect length.
+     */
+    func setAttributedStringValue(_ newValue: NSAttributedString, animated: Bool = true, interval: TimeInterval = 0.7) {
+        guard attributedStringValue != newValue else { return }
+        if animated {
+            animate(change: { self.attributedStringValue = newValue }, interval: interval)
+        }
+        else {
+            attributedStringValue = newValue
+        }
+    }
+
+    /**
+     Private function to animate a fade effect.
+
+     - parameter change: `() -> ()` closure.
+     - parameter interval: `TimeInterval` effect length.
+     */
+    private func animate(change: @escaping () -> Void, interval: TimeInterval) {
+        NSAnimationContext.runAnimationGroup({ context in
+            context.duration = interval / 2.0
+            context.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+            animator().alphaValue = 0.0
+        }, completionHandler: {
+            change()
+            NSAnimationContext.runAnimationGroup({ context in
+                context.duration = interval / 2.0
+                context.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+                self.animator().alphaValue = 1.0
+            }, completionHandler: {})
+        })
     }
 }

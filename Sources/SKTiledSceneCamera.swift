@@ -454,6 +454,8 @@ extension SKTiledSceneCamera {
         if (recognizer.state == UIGestureRecognizerState.ended) {
             let location = recognizer.location(in: recognizer.view)
             for delegate in self.delegates {
+                recognizer.numberOfTouches
+
                 delegate.sceneDoubleTapped(location: location)
             }
         }

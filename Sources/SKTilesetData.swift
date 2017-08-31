@@ -222,7 +222,8 @@ extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
         guard let tileset = tileset else { return "Tile ID: \(id) (no tileset)" }
         let typeString = (type != nil) ? ", type: \"\(type!)\"" : ""
         let framesString = (isAnimated == true) ? ", \(frames.count) frames" : ""
-        let dataString = properties.isEmpty == false ? "Tile ID: \(globalID)\(typeString) @ \(tileset.tileSize.shortDescription)\(framesString), " : "Tile ID: \(globalID)\(typeString) @ \(tileset.tileSize.shortDescription)\(framesString)"
+        let idValue = localID  // globalID
+        let dataString = properties.isEmpty == false ? "Tile ID: \(idValue)\(typeString) @ \(tileset.tileSize.shortDescription)\(framesString), " : "Tile ID: \(idValue)\(typeString) @ \(tileset.tileSize.shortDescription)\(framesString)"
 
         return "\(dataString)\(propertiesString)"
     }

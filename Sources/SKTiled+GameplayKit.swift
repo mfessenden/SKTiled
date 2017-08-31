@@ -240,7 +240,7 @@ public class SKTiledGraphNode: GKGridGraphNode {
         guard let gridNode = node as? SKTiledGraphNode else {
             return super.cost(to: node)
         }
-        return weight - abs(1.0 - gridNode.weight)
+        return weight - (1.0 - gridNode.weight)
     }
 
     /**

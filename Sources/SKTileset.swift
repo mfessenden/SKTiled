@@ -217,16 +217,15 @@ public class SKTileset: SKTiledObject {
             transparentColor = SKColor(hexString: transparent)
         }
 
-        var sourceTexture = SKTexture(imageNamed: self.source!)
+        let inputURL = URL(fileURLWithPath: self.source!)
+        // read image from file
+        let imageDataProvider = CGDataProvider(url: inputURL as CFURL)!
+        // creare a data provider
+        let image = CGImage(pngDataProviderSource: imageDataProvider, decode: nil, shouldInterpolate: false, intent: .defaultIntent)!
+
+        // create the texture
+        var sourceTexture = SKTexture(cgImage: image)
         sourceTexture.filteringMode = .nearest
-
-
-        if (transparentColor != nil) {
-            if #available(iOS 10.0, *) {
-            if let processedTexture = replaceColor(texture: sourceTexture, color: transparentColor!) {
-                sourceTexture = processedTexture
-            }}
-        }
 
         let textureWidth = Int(sourceTexture.size().width)
         let textureHeight = Int(sourceTexture.size().height)
@@ -240,7 +239,6 @@ public class SKTileset: SKTiledObject {
         if columns == 0 {
             columns = colTileCount
         }
-
 
         // tile count
         let totalTileCount = colTileCount * rowTileCount
@@ -334,9 +332,16 @@ public class SKTileset: SKTiledObject {
         //let imageName = source.componentsSeparatedByString("/").last!
 
         isImageCollection = true
-        let texture = SKTexture(imageNamed: source)
-        texture.filteringMode = .nearest
-        let data = SKTilesetData(id: tileID, texture: texture, tileSet: self)
+
+        let inputURL = URL(fileURLWithPath: source)
+        // read image from file
+        let imageDataProvider = CGDataProvider(url: inputURL as CFURL)!
+        // create a data provider
+        let image = CGImage(pngDataProviderSource: imageDataProvider, decode: nil, shouldInterpolate: false, intent: .defaultIntent)!
+        let sourceTexture = SKTexture(cgImage: image)
+        sourceTexture.filteringMode = .nearest
+
+        let data = SKTilesetData(id: tileID, texture: sourceTexture, tileSet: self)
         data.ignoreProperties = ignoreProperties
         // add the image name to the source attribute
         data.source = source

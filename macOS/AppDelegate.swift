@@ -14,6 +14,8 @@ import SpriteKit
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var currentLoggingLevel: NSMenuItem!
+    @IBOutlet weak var recentFilesMenu: NSMenuItem!
+    @IBOutlet weak var recentFilesSubmenu: NSMenu!
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
@@ -36,8 +38,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return nil
     }
 
-    // MARK: - Loading & Saving
+    var tilemap: SKTilemap? {
+        guard let gameController = viewController else { return nil }
+        guard let view = gameController.view as? SKView else { return nil }
+        guard let scene = view.scene as? SKTiledScene else { return nil }
+        return scene.tilemap
+    }
 
+    // MARK: - Loading & Saving
     /**
      Action to launch a file dialog and load map.
      */
@@ -63,6 +71,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 let demoController = gameController.demoController
                 let currentMapIndex = demoController.currentIndex
                 demoController.addTilemap(url: relativeURL, at: currentMapIndex)
+
+                let newMenuItem = NSMenuItem(title: filename, action: "loadRecentFile", keyEquivalent: "")
+                recentFilesSubmenu.addItem(newMenuItem)
+                newMenuItem.isEnabled = true
+                recentFilesMenu.isEnabled = true
             }
 
         } else {
@@ -70,31 +83,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    @IBAction func scanResources(_ sender: Any) {
-        Logger.default.log("scanning...", level: .info)
-    }
-
-    /**
-     Write all tile layers to images on disk.
-     */
-    @IBAction func writeMapLayers(_ sender: Any) {
-        guard let gameController = viewController else { return }
-        guard let view = gameController.view as? SKView else { return }
-        guard let scene = view.scene as? SKTiledScene else { return }
-        guard let tilemap = scene.tilemap else { return }
-
-
-        let dialog = NSOpenPanel()
-        dialog.title = "Choose a location to save."
-        dialog.canChooseDirectories = true
-        dialog.canChooseFiles = false
-        dialog.canCreateDirectories = true
-
-        if (dialog.runModal() == NSModalResponseOK) {
-            if let url = dialog.url {
-                writeMapToFiles(tilemap: tilemap, url: url)
-            }
-        }
+    func loadRecentFile(named: String) {
+        print("loading: \"\(named)\"")
     }
 
     /**
@@ -102,41 +92,105 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      */
     @IBAction func reloadScene(_ sender: Any) {
         guard let gameController = viewController else { return }
-
         let demoController = gameController.demoController
         demoController.reloadScene()
     }
 
+    @IBAction func currentFilesPressed(_ sender: Any) {
+        guard let gameController = viewController else { return }
+        let demoController = gameController.demoController
+        demoController.dumpCurrentResources()
+    }
+
+    @IBAction func dumpCurrentTilemapAction(_ sender: Any) {
+        guard let gameController = viewController else { return }
+        let demoController = gameController.demoController
+        demoController.dumpCurrentTilemap()
+    }
+
     // MARK: - Logging
 
-    @IBAction func loggingLevelDebug(_ sender: Any) {
+    @IBAction func loggingLevelDebug(_ sender: NSMenuItem) {
         Logger.default.loggingLevel = .debug
     }
 
-    @IBAction func loggingLevelInfo(_ sender: Any) {
+    @IBAction func loggingLevelInfo(_ sender: NSMenuItem) {
         Logger.default.loggingLevel = .info
     }
 
-    @IBAction func loggingLevelWarning(_ sender: Any) {
+    @IBAction func loggingLevelWarning(_ sender: NSMenuItem) {
         Logger.default.loggingLevel = .warning
     }
 
-    @IBAction func loggingLevelError(_ sender: Any) {
+    @IBAction func loggingLevelError(_ sender: NSMenuItem) {
         Logger.default.loggingLevel = .error
     }
 
-    @IBAction func loggingLevelCustom(_ sender: Any) {
+    @IBAction func loggingLevelCustom(_ sender: NSMenuItem) {
         Logger.default.loggingLevel = .custom
     }
 
-    @IBAction func loggingLevelSuccess(_ sender: Any) {
+    @IBAction func loggingLevelSuccess(_ sender: NSMenuItem) {
         Logger.default.loggingLevel = .success
     }
 
     @IBAction func mapStatisticsPressed(_ sender: Any) {
         guard let gameController = viewController else { return }
-
         let demoController = gameController.demoController
         demoController.printMapStatistics()
+    }
+
+    @IBAction func liveModeToggled(_ sender: NSMenuItem) {
+        guard let gameController = viewController else { return }
+        guard let view = gameController.view as? SKView else { return }
+        guard let scene = view.scene as? SKTiledDemoScene else { return }
+        let demoController = gameController.demoController
+        let currentLiveMode = scene.liveMode
+        let commandString = (currentLiveMode == true) ? "disabling live mode..." : "enabling live mode..."
+        scene.liveMode = !scene.liveMode
+        demoController.updateCommandString(commandString)
+
+        sender.title = (currentLiveMode == true) ? "Live Mode: Off" : "Live Mode: On"
+    }
+
+    @IBAction func drawMapBoundsAction(_ sender: NSMenuItem) {
+        guard let gameController = viewController else { return }
+        let demoController = gameController.demoController
+        demoController.toggleMapDemoDrawBounds()
+
+        var currentBoundsMode = false
+        if let tilemap = self.tilemap {
+            currentBoundsMode = tilemap.debugDrawOptions.contains(.drawBounds)
+        }
+
+        sender.title = (currentBoundsMode == true) ? "Map Bounds: Off" : "Map Bounds: On"
+    }
+
+    @IBAction func drawMapGridAction(_ sender: NSMenuItem) {
+        guard let gameController = viewController else { return }
+        let demoController = gameController.demoController
+        demoController.toggleMapDemoDrawGrid()
+
+        var currentGridMode = false
+        if let tilemap = self.tilemap {
+            currentGridMode = tilemap.debugDrawOptions.contains(.drawGrid)
+        }
+
+        sender.title = (currentGridMode == true) ? "Map Grid: Off" : "Map Grid: On"
+    }
+
+    @IBAction func drawSceneGraphsAction(_ sender: NSMenuItem) {
+        guard let gameController = viewController else { return }
+        let demoController = gameController.demoController
+        demoController.toggleMapGraphVisualization()
+        guard let view = gameController.view as? SKView else { return }
+        guard let scene = view.scene as? SKTiledDemoScene else { return }
+
+        var currentGraphMode = false
+        if let tilemap = self.tilemap {
+            currentGraphMode = tilemap.debugDrawOptions.contains(.drawGraph)
+        }
+
+        sender.title = (currentGraphMode == true) ? "Navigation Graph: Off" : "Navigation Graph: On"
     }
 }

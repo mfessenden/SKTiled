@@ -35,11 +35,12 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
             isManuallyPaused = scene.isPaused
             scene.isPaused = true
 
+            /*
             if let sceneDelegate = scene as? SKTiledSceneDelegate {
                 if let cameraNode = sceneDelegate.cameraNode {
                     cameraNode.bounds = view.bounds
                 }
-            }
+            }*/
         }
     }
 

@@ -11,7 +11,7 @@
 		4C01D3AA1F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C01D3A61F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift */; };
 		4C1774A81D90999C000C0AFD /* hex-65x65-65x230.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEA35A1D8D04320055C150 /* hex-65x65-65x230.png */; };
 		4C1774AA1D90999C000C0AFD /* isometric-130x230.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6D2DA1D8B9EA10083DA7B /* isometric-130x230.png */; };
-		4C1774AB1D90999C000C0AFD /* ortho4-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */; };
+		4C1774AB1D90999C000C0AFD /* dungeon-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E1AC1D8A242F00FCCFA3 /* dungeon-16x16.png */; };
 		4C1774AF1D9099A3000C0AFD /* SKTiled+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D71D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift */; };
 		4C1774B01D9099A3000C0AFD /* SKTilemap+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */; };
 		4C1774B11D9099A3000C0AFD /* SKTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D01D8A4EBE00FCCFA3 /* SKTile.swift */; };
@@ -81,7 +81,7 @@
 		4C8227E71F4E0E3F007E4556 /* roguelike-16x16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C8227E51F4E0E3F007E4556 /* roguelike-16x16.tmx */; };
 		4C8227E91F4E0E63007E4556 /* hex-65x65.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C8227E81F4E0E63007E4556 /* hex-65x65.tmx */; };
 		4C8227EA1F4E0E63007E4556 /* hex-65x65.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C8227E81F4E0E63007E4556 /* hex-65x65.tmx */; };
-		4C88E1AD1D8A242F00FCCFA3 /* ortho4-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */; };
+		4C88E1AD1D8A242F00FCCFA3 /* dungeon-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C88E1AC1D8A242F00FCCFA3 /* dungeon-16x16.png */; };
 		4C88E1DE1D8A4EBE00FCCFA3 /* SKTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D01D8A4EBE00FCCFA3 /* SKTile.swift */; };
 		4C88E1E01D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D21D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift */; };
 		4C88E1E21D8A4EBE00FCCFA3 /* SKTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D41D8A4EBE00FCCFA3 /* SKTileLayer.swift */; };
@@ -233,12 +233,16 @@
 		4C96C0E91F53BD8000CE1DEB /* pm-sprites-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C96C0DF1F53BD8000CE1DEB /* pm-sprites-16x16.png */; };
 		4C96C0EB1F54747900CE1DEB /* ArcadeNormal.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4C96C0EA1F54747900CE1DEB /* ArcadeNormal.ttf */; };
 		4C96C0EC1F54747900CE1DEB /* ArcadeNormal.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4C96C0EA1F54747900CE1DEB /* ArcadeNormal.ttf */; };
-		4C96C0EF1F5474F400CE1DEB /* Demo+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C96C0EE1F5474F400CE1DEB /* Demo+Debugging.swift */; };
-		4C96C0F01F5474F400CE1DEB /* Demo+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C96C0EE1F5474F400CE1DEB /* Demo+Debugging.swift */; };
-		4C96C0F21F5475C800CE1DEB /* Arcade.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4C96C0F11F5475C800CE1DEB /* Arcade.ttf */; };
-		4C96C0F31F5475C800CE1DEB /* Arcade.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4C96C0F11F5475C800CE1DEB /* Arcade.ttf */; };
-		4CAD35BD1F4B9D2C0034CA6C /* dungeon-ortho-16x16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CAD35BC1F4B9D2C0034CA6C /* dungeon-ortho-16x16.tmx */; };
-		4CAD35BE1F4B9D2C0034CA6C /* dungeon-ortho-16x16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CAD35BC1F4B9D2C0034CA6C /* dungeon-ortho-16x16.tmx */; };
+		4C96C1011F55A7CA00CE1DEB /* dungeon-16x32.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C96C1001F55A7CA00CE1DEB /* dungeon-16x32.png */; };
+		4C96C1021F55A7CA00CE1DEB /* dungeon-16x32.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C96C1001F55A7CA00CE1DEB /* dungeon-16x32.png */; };
+		4C96C1041F55A7D500CE1DEB /* dungeon-16x32.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C96C1031F55A7D500CE1DEB /* dungeon-16x32.tsx */; };
+		4C96C1051F55A7D500CE1DEB /* dungeon-16x32.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C96C1031F55A7D500CE1DEB /* dungeon-16x32.tsx */; };
+		4C96C1071F55A7DE00CE1DEB /* dungeon-32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C96C1061F55A7DE00CE1DEB /* dungeon-32x32.png */; };
+		4C96C1081F55A7DE00CE1DEB /* dungeon-32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C96C1061F55A7DE00CE1DEB /* dungeon-32x32.png */; };
+		4C96C10A1F55A7F300CE1DEB /* dungeon-32x32.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C96C1091F55A7F300CE1DEB /* dungeon-32x32.tsx */; };
+		4C96C10B1F55A7F300CE1DEB /* dungeon-32x32.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C96C1091F55A7F300CE1DEB /* dungeon-32x32.tsx */; };
+		4CAD35BD1F4B9D2C0034CA6C /* dungeon-16x16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CAD35BC1F4B9D2C0034CA6C /* dungeon-16x16.tmx */; };
+		4CAD35BE1F4B9D2C0034CA6C /* dungeon-16x16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CAD35BC1F4B9D2C0034CA6C /* dungeon-16x16.tmx */; };
 		4CBA61831D8A0A4600B31FC1 /* roguelike-16x16-anim.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */; };
 		4CBB6A9F1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6A9E1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift */; };
 		4CBB6AA11D8CBB5B00DB56F1 /* SKTiledScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA01D8CBB5B00DB56F1 /* SKTiledScene.swift */; };
@@ -285,7 +289,7 @@
 		4C8227E21F4E0D5E007E4556 /* isometric-130x66.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "isometric-130x66.tmx"; sourceTree = "<group>"; };
 		4C8227E51F4E0E3F007E4556 /* roguelike-16x16.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "roguelike-16x16.tmx"; sourceTree = "<group>"; };
 		4C8227E81F4E0E63007E4556 /* hex-65x65.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "hex-65x65.tmx"; sourceTree = "<group>"; };
-		4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ortho4-16x16.png"; sourceTree = "<group>"; };
+		4C88E1AC1D8A242F00FCCFA3 /* dungeon-16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dungeon-16x16.png"; sourceTree = "<group>"; };
 		4C88E1D01D8A4EBE00FCCFA3 /* SKTile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTile.swift; sourceTree = "<group>"; };
 		4C88E1D21D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTiledSceneCamera.swift; sourceTree = "<group>"; };
 		4C88E1D41D8A4EBE00FCCFA3 /* SKTileLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTileLayer.swift; sourceTree = "<group>"; };
@@ -366,9 +370,11 @@
 		4C96C0DE1F53BD8000CE1DEB /* pacman-8x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "pacman-8x8.tsx"; path = "pacman/pacman-8x8.tsx"; sourceTree = "<group>"; };
 		4C96C0DF1F53BD8000CE1DEB /* pm-sprites-16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pm-sprites-16x16.png"; path = "pacman/pm-sprites-16x16.png"; sourceTree = "<group>"; };
 		4C96C0EA1F54747900CE1DEB /* ArcadeNormal.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ArcadeNormal.ttf; sourceTree = "<group>"; };
-		4C96C0EE1F5474F400CE1DEB /* Demo+Debugging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Demo+Debugging.swift"; sourceTree = "<group>"; };
-		4C96C0F11F5475C800CE1DEB /* Arcade.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Arcade.ttf; sourceTree = "<group>"; };
-		4CAD35BC1F4B9D2C0034CA6C /* dungeon-ortho-16x16.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "dungeon-ortho-16x16.tmx"; sourceTree = "<group>"; };
+		4C96C1001F55A7CA00CE1DEB /* dungeon-16x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dungeon-16x32.png"; sourceTree = "<group>"; };
+		4C96C1031F55A7D500CE1DEB /* dungeon-16x32.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "dungeon-16x32.tsx"; sourceTree = "<group>"; };
+		4C96C1061F55A7DE00CE1DEB /* dungeon-32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dungeon-32x32.png"; sourceTree = "<group>"; };
+		4C96C1091F55A7F300CE1DEB /* dungeon-32x32.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "dungeon-32x32.tsx"; sourceTree = "<group>"; };
+		4CAD35BC1F4B9D2C0034CA6C /* dungeon-16x16.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "dungeon-16x16.tmx"; sourceTree = "<group>"; };
 		4CBA61651D8A048200B31FC1 /* SKTiledDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKTiledDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CBA617E1D8A0A3900B31FC1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "roguelike-16x16-anim.png"; sourceTree = "<group>"; };
@@ -442,7 +448,6 @@
 		4C440B971DAE911000DEC9A4 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				4C96C0EE1F5474F400CE1DEB /* Demo+Debugging.swift */,
 				4C4184A41F34B51D004E392A /* DemoController.swift */,
 				4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */,
 				4C440B981DAE911000DEC9A4 /* Assets.xcassets */,
@@ -507,6 +512,8 @@
 		4C7DD6241F50E16600C3FE2D /* tsx */ = {
 			isa = PBXGroup;
 			children = (
+				4C96C1031F55A7D500CE1DEB /* dungeon-16x32.tsx */,
+				4C96C1091F55A7F300CE1DEB /* dungeon-32x32.tsx */,
 				4C96C0DB1F53BD8000CE1DEB /* pacman-16x16.tsx */,
 				4C96C0DE1F53BD8000CE1DEB /* pacman-8x8.tsx */,
 				4C7DD6211F50E16000C3FE2D /* roguelike-16x16.tsx */,
@@ -597,7 +604,6 @@
 		4C96C0ED1F54748100CE1DEB /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				4C96C0F11F5475C800CE1DEB /* Arcade.ttf */,
 				4C96C0EA1F54747900CE1DEB /* ArcadeNormal.ttf */,
 			);
 			name = Fonts;
@@ -635,9 +641,9 @@
 				4C96C0ED1F54748100CE1DEB /* Fonts */,
 				4C628F151F3EFA7400FCF929 /* User */,
 				4CD5229E1DA624C400D78D81 /* CREDITS */,
-				4CAD35BC1F4B9D2C0034CA6C /* dungeon-ortho-16x16.tmx */,
-				4C8227E21F4E0D5E007E4556 /* isometric-130x66.tmx */,
+				4CAD35BC1F4B9D2C0034CA6C /* dungeon-16x16.tmx */,
 				4C8227E81F4E0E63007E4556 /* hex-65x65.tmx */,
+				4C8227E21F4E0D5E007E4556 /* isometric-130x66.tmx */,
 				4C96C0DC1F53BD8000CE1DEB /* pacman.tmx */,
 				4C8227E51F4E0E3F007E4556 /* roguelike-16x16.tmx */,
 				4C3184E71F4DCB4200950BBF /* staggered-64x33.tmx */,
@@ -671,9 +677,11 @@
 			isa = PBXGroup;
 			children = (
 				4C96C0131F53A09F00CE1DEB /* sticker-knight */,
+				4C96C1061F55A7DE00CE1DEB /* dungeon-32x32.png */,
+				4C96C1001F55A7CA00CE1DEB /* dungeon-16x32.png */,
 				4CFEA35A1D8D04320055C150 /* hex-65x65-65x230.png */,
 				4CD6D2DA1D8B9EA10083DA7B /* isometric-130x230.png */,
-				4C88E1AC1D8A242F00FCCFA3 /* ortho4-16x16.png */,
+				4C88E1AC1D8A242F00FCCFA3 /* dungeon-16x16.png */,
 				4C96C0DD1F53BD8000CE1DEB /* pm-maze-8x8.png */,
 				4C96C0DF1F53BD8000CE1DEB /* pm-sprites-16x16.png */,
 				4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */,
@@ -809,6 +817,7 @@
 					};
 					4CBA61641D8A048200B31FC1 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 747QKN4G7U;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
@@ -840,6 +849,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C96C10A1F55A7F300CE1DEB /* dungeon-32x32.tsx in Resources */,
 				4C96C0961F53A09F00CE1DEB /* platform4.png in Resources */,
 				4C96C0981F53A09F00CE1DEB /* platformBase1.png in Resources */,
 				4C96C07C1F53A09F00CE1DEB /* flare.png in Resources */,
@@ -853,10 +863,11 @@
 				4C96C0561F53A09F00CE1DEB /* backgroundArch.png in Resources */,
 				4C96C0641F53A09F00CE1DEB /* bombStroked.png in Resources */,
 				4C96C0581F53A09F00CE1DEB /* backgroundMountain.png in Resources */,
+				4C96C1011F55A7CA00CE1DEB /* dungeon-16x32.png in Resources */,
 				4C96C0681F53A09F00CE1DEB /* cloud.png in Resources */,
 				4C96C0921F53A09F00CE1DEB /* platform2.png in Resources */,
 				4C96C0941F53A09F00CE1DEB /* platform3.png in Resources */,
-				4CAD35BD1F4B9D2C0034CA6C /* dungeon-ortho-16x16.tmx in Resources */,
+				4CAD35BD1F4B9D2C0034CA6C /* dungeon-16x16.tmx in Resources */,
 				4C96C06A1F53A09F00CE1DEB /* column1.png in Resources */,
 				4C96C0A61F53A09F00CE1DEB /* platformBlock4.png in Resources */,
 				4CF0FEA11F34EF27000AADEF /* roguelike-16x16-anim.png in Resources */,
@@ -876,8 +887,8 @@
 				4C8227E91F4E0E63007E4556 /* hex-65x65.tmx in Resources */,
 				4C1774A81D90999C000C0AFD /* hex-65x65-65x230.png in Resources */,
 				4C96C05A1F53A09F00CE1DEB /* backgroundTower.png in Resources */,
+				4C96C1071F55A7DE00CE1DEB /* dungeon-32x32.png in Resources */,
 				4C96C0BE1F53A09F00CE1DEB /* sign.png in Resources */,
-				4C96C0F21F5475C800CE1DEB /* Arcade.ttf in Resources */,
 				4C96C0A21F53A09F00CE1DEB /* platformBlock2.png in Resources */,
 				4C96C09C1F53A09F00CE1DEB /* platformBase3.png in Resources */,
 				4C628F161F3EFA7400FCF929 /* User in Resources */,
@@ -917,6 +928,7 @@
 				4C96C0A41F53A09F00CE1DEB /* platformBlock3.png in Resources */,
 				4C96C0BA1F53A09F00CE1DEB /* shadow.png in Resources */,
 				4C96C0D81F53A0F700CE1DEB /* sk2-32x32.tmx in Resources */,
+				4C96C1041F55A7D500CE1DEB /* dungeon-16x32.tsx in Resources */,
 				4C96C05C1F53A09F00CE1DEB /* backgroundTree.png in Resources */,
 				4C1774AA1D90999C000C0AFD /* isometric-130x230.png in Resources */,
 				4C96C0EB1F54747900CE1DEB /* ArcadeNormal.ttf in Resources */,
@@ -926,7 +938,7 @@
 				4C96C0E01F53BD8000CE1DEB /* pacman-16x16.tsx in Resources */,
 				4C96C05E1F53A09F00CE1DEB /* blobBlue.png in Resources */,
 				4C96C0A81F53A09F00CE1DEB /* platformConnector1.png in Resources */,
-				4C1774AB1D90999C000C0AFD /* ortho4-16x16.png in Resources */,
+				4C1774AB1D90999C000C0AFD /* dungeon-16x16.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -948,6 +960,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C96C10B1F55A7F300CE1DEB /* dungeon-32x32.tsx in Resources */,
 				4C96C0971F53A09F00CE1DEB /* platform4.png in Resources */,
 				4C96C0991F53A09F00CE1DEB /* platformBase1.png in Resources */,
 				4C96C07D1F53A09F00CE1DEB /* flare.png in Resources */,
@@ -961,6 +974,7 @@
 				4C96C0571F53A09F00CE1DEB /* backgroundArch.png in Resources */,
 				4C96C0651F53A09F00CE1DEB /* bombStroked.png in Resources */,
 				4C96C0591F53A09F00CE1DEB /* backgroundMountain.png in Resources */,
+				4C96C1021F55A7CA00CE1DEB /* dungeon-16x32.png in Resources */,
 				4C96C0691F53A09F00CE1DEB /* cloud.png in Resources */,
 				4C96C0931F53A09F00CE1DEB /* platform2.png in Resources */,
 				4C96C0951F53A09F00CE1DEB /* platform3.png in Resources */,
@@ -981,11 +995,11 @@
 				4C96C07B1F53A09F00CE1DEB /* exit.png in Resources */,
 				4C96C0C51F53A09F00CE1DEB /* torch.png in Resources */,
 				4C96C0611F53A09F00CE1DEB /* blobGreen.png in Resources */,
-				4C88E1AD1D8A242F00FCCFA3 /* ortho4-16x16.png in Resources */,
+				4C88E1AD1D8A242F00FCCFA3 /* dungeon-16x16.png in Resources */,
 				4C3184EC1F4DCB4200950BBF /* staggered-paths-64x33.png in Resources */,
 				4C96C05B1F53A09F00CE1DEB /* backgroundTower.png in Resources */,
+				4C96C1081F55A7DE00CE1DEB /* dungeon-32x32.png in Resources */,
 				4C96C0BF1F53A09F00CE1DEB /* sign.png in Resources */,
-				4C96C0F31F5475C800CE1DEB /* Arcade.ttf in Resources */,
 				4C96C0A31F53A09F00CE1DEB /* platformBlock2.png in Resources */,
 				4C96C09D1F53A09F00CE1DEB /* platformBase3.png in Resources */,
 				4C440BB51DAE913A00DEC9A4 /* Main.storyboard in Resources */,
@@ -1025,6 +1039,7 @@
 				4C96C0A51F53A09F00CE1DEB /* platformBlock3.png in Resources */,
 				4C96C0BB1F53A09F00CE1DEB /* shadow.png in Resources */,
 				4C96C0D91F53A0F700CE1DEB /* sk2-32x32.tmx in Resources */,
+				4C96C1051F55A7D500CE1DEB /* dungeon-16x32.tsx in Resources */,
 				4C96C05D1F53A09F00CE1DEB /* backgroundTree.png in Resources */,
 				4C8227E41F4E0D5E007E4556 /* isometric-130x66.tmx in Resources */,
 				4C96C0EC1F54747900CE1DEB /* ArcadeNormal.ttf in Resources */,
@@ -1034,7 +1049,7 @@
 				4C96C0E11F53BD8000CE1DEB /* pacman-16x16.tsx in Resources */,
 				4C96C05F1F53A09F00CE1DEB /* blobBlue.png in Resources */,
 				4C96C0A91F53A09F00CE1DEB /* platformConnector1.png in Resources */,
-				4CAD35BE1F4B9D2C0034CA6C /* dungeon-ortho-16x16.tmx in Resources */,
+				4CAD35BE1F4B9D2C0034CA6C /* dungeon-16x16.tmx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1191,7 +1206,6 @@
 				4C440BA01DAE911000DEC9A4 /* SKTiledDemoScene.swift in Sources */,
 				4C1774B71D9099A3000C0AFD /* SKTileObject.swift in Sources */,
 				4C1774B11D9099A3000C0AFD /* SKTile.swift in Sources */,
-				4C96C0EF1F5474F400CE1DEB /* Demo+Debugging.swift in Sources */,
 				4C440BA71DAE913000DEC9A4 /* AppDelegate.swift in Sources */,
 				4C4184A51F34B51D004E392A /* DemoController.swift in Sources */,
 				4C1774B81D9099A3000C0AFD /* SKTileset.swift in Sources */,
@@ -1271,7 +1285,6 @@
 				4C88E1E01D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift in Sources */,
 				4C88E1E61D8A4EBE00FCCFA3 /* SKTilemapParser.swift in Sources */,
 				4CBB6A9F1D8CBA8A00DB56F1 /* SKTilemap+Properties.swift in Sources */,
-				4C96C0F01F5474F400CE1DEB /* Demo+Debugging.swift in Sources */,
 				4C88E1E51D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift in Sources */,
 				4C440BB61DAE913A00DEC9A4 /* GameViewController.swift in Sources */,
 				4C88E1E21D8A4EBE00FCCFA3 /* SKTileLayer.swift in Sources */,
@@ -1320,7 +1333,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/macOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiledDemo;
 				PRODUCT_NAME = SKTiledDemo;
 				SDKROOT = macosx;
@@ -1340,7 +1353,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/macOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiledDemo;
 				PRODUCT_NAME = SKTiledDemo;
 				SDKROOT = macosx;
@@ -1367,7 +1380,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/macOS/framework/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
 				PRODUCT_NAME = SKTiled;
@@ -1400,7 +1413,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/macOS/framework/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
 				PRODUCT_NAME = SKTiled;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1427,7 +1440,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/framework/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
@@ -1458,7 +1471,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/framework/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
 				PRODUCT_MODULE_NAME = SKTiled;
@@ -1561,11 +1574,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 747QKN4G7U;
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiled;
 				PRODUCT_NAME = SKTiledDemo;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1576,11 +1592,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 747QKN4G7U;
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.supermeerkat.SKTiledDemo;
 				PRODUCT_NAME = SKTiledDemo;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

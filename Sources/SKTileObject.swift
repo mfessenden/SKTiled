@@ -160,7 +160,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         case below
     }
 
-    /// Text string (for text objects)
+    /// Text string (for text objects). Setting this attribute will redraw the object automatically.
     open var text: String! {
         didSet {
             guard text != oldValue else { return }
@@ -406,6 +406,9 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                 return
             }
 
+            // in Tiled, tile data type overrides object type
+            self.type = tileData.type
+
             // grab size from texture if initializing with a gid
             if (size == CGSize.zero) {
                 size = tileData.texture.size()
@@ -466,23 +469,28 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             // remove the current text object
             childNode(withName: "TEXT_OBJECT")?.removeFromParent()
 
-            // create an image to use as a texture
-            let image = drawTextObject(withScale: renderQuality)
+
 
             strokeColor = (debug == false) ? SKColor.clear : layer.gridColor.withAlphaComponent(0.75)
             fillColor = SKColor.clear
 
+            // render text to an image
+            var textImage = drawTextObject(withScale: renderQuality)
 
-            let textTexture = SKTexture(cgImage: image)
-            let textSprite = SKSpriteNode(texture: textTexture)
-            textSprite.name = "TEXT_OBJECT"
-            addChild(textSprite)
+            if (textImage != nil) {
+                let textTexture = SKTexture(cgImage: textImage!)
+                let textSprite = SKSpriteNode(texture: textTexture)
+                textSprite.name = "TEXT_OBJECT"
+                addChild(textSprite)
 
-            // final scaling value depends on the quality factor
-            let finalScaleValue: CGFloat = (1 / renderQuality) / uiScale
-            textSprite.zPosition = zPosition - 1
-            textSprite.setScale(finalScaleValue)
-            textSprite.position = self.bounds.center
+                // final scaling value depends on the quality factor
+                let finalScaleValue: CGFloat = (1 / renderQuality) / uiScale
+                textSprite.zPosition = zPosition - 1
+                textSprite.setScale(finalScaleValue)
+                textSprite.position = self.bounds.center
+            }
+
+            textImage = nil
         }
     }
 
@@ -492,7 +500,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
      - parameter withScale: `CGFloat` size scale.
      - returns: `CGImage` rendered text image.
      */
-    open func drawTextObject(withScale: CGFloat=8) -> CGImage {
+    open func drawTextObject(withScale: CGFloat=8) -> CGImage? {
 
         let uiScale: CGFloat = SKTiledContentScaleFactor
 
@@ -599,10 +607,20 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
 
     /**
      Draw the object's bounding shape.
+     
+     - parameter withColor: `SKColor?` optional highlight color.
+     - parameter zpos:      `CGFloat?` optional z-position of bounds shape.
+     - parameter duration:  `TimeInterval` effect length.
      */
-    internal func drawBounds() {
+    internal func drawBounds(withColor: SKColor?=nil, zpos: CGFloat?=nil, duration: TimeInterval = 0) {
+        
         childNode(withName: boundsKey)?.removeFromParent()
         childNode(withName: "FIRST_POINT")?.removeFromParent()
+
+
+        // if a color is not passed, use the default frame color
+        let drawColor = (withColor != nil) ? withColor! : self.frameColor
+
 
         // default line width
         let defaultLineWidth: CGFloat = 1
@@ -616,6 +634,8 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         // scale vertices
         let scaledVertices = flippedVertices.map { $0 * renderQuality }
         let path = polygonPath(scaledVertices)
+
+        // create the bounds shape
         let bounds = SKShapeNode(path: path)
         bounds.name = boundsKey
         let shapeZPos = zPosition + 50
@@ -627,8 +647,8 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         bounds.miterLimit = 0
         bounds.lineWidth = defaultLineWidth * (renderQuality / 2)
 
-        bounds.strokeColor = frameColor.withAlphaComponent(0.4)
-        bounds.fillColor = frameColor.withAlphaComponent(0.15)  // 0.35
+        bounds.strokeColor = drawColor.withAlphaComponent(0.4)
+        bounds.fillColor = drawColor.withAlphaComponent(0.15)  // 0.35
         bounds.zPosition = shapeZPos
         bounds.isAntialiased = layer.antialiased
 
@@ -661,6 +681,13 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
 
         addChild(bounds)
         bounds.setScale(1 / renderQuality)
+
+        if (duration > 0) {
+            let fadeAction = SKAction.fadeAfter(wait: duration, alpha: 0)
+            bounds.run(fadeAction, withKey: "FADEOUT_ACTION", completion: {
+                bounds.removeFromParent()
+            })
+        }
     }
 
     // MARK: - Debugging
@@ -668,10 +695,10 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     /// Show/hide the object's boundary shape.
     open var showBounds: Bool {
         get {
-            return (childNode(withName: "BOUNDS") != nil) ? childNode(withName: "BOUNDS")!.isHidden == false : false
+            return (childNode(withName: boundsKey) != nil) ? childNode(withName: boundsKey)!.isHidden == false : false
         }
         set {
-            childNode(withName: "BOUNDS")?.removeFromParent()
+            childNode(withName: boundsKey)?.removeFromParent()
 
             if (newValue == true) {
                 isHidden = false
@@ -679,7 +706,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                 // draw the tile boundary shape
                 drawBounds()
 
-                guard let frameShape = childNode(withName: "BOUNDS") else { return }
+                guard let frameShape = childNode(withName: boundsKey) else { return }
 
                 let highlightDuration: TimeInterval = (layer != nil) ? layer!.highlightDuration : 0
 
@@ -755,6 +782,12 @@ extension SKTileObject {
 
     override open var debugDescription: String {
         return "<\(description)>"
+    }
+
+    open var shortDescription: String {
+        var result = "Object id: \(self.id)"
+        result += (self.type != nil) ? ", type: \"\(self.type!)\"" : ""
+        return result
     }
 }
 

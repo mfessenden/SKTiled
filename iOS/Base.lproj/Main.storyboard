@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
-    <device id="retina4_7" orientation="landscape">
+    <device id="retina5_5" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,108 +17,126 @@
                         <viewControllerLayoutGuide type="bottom" id="qHh-Mt-9TT"/>
                     </layoutGuides>
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
-                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <rect key="frame" x="0.0" y="0.0" width="736" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="v8l-N1-lID" userLabel="Labels View">
-                                <rect key="frame" x="28" y="319" width="611" height="36"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Ex0-TE-FEH" userLabel="Bottom Controls">
+                                <rect key="frame" x="163" y="313" width="410" height="85"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tr1-Rb-3Hz" userLabel="Map Info Label">
-                                        <rect key="frame" x="0.0" y="0.0" width="611" height="12"/>
-                                        <attributedString key="attributedText">
-                                            <fragment content="Map">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.99019607843137258" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" size="11" name="Courier"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="shadowColor" red="0.5103222150259068" green="0.5103222150259068" blue="0.5103222150259068" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <size key="shadowOffset" width="1" height="1"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ezb-0z-1AU" userLabel="Tile Info Label">
-                                        <rect key="frame" x="0.0" y="12" width="611" height="12"/>
-                                        <attributedString key="attributedText">
-                                            <fragment content="Tile">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.99019607843137258" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" size="11" name="Courier"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="shadowColor" red="0.51032221499999997" green="0.51032221499999997" blue="0.51032221499999997" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <size key="shadowOffset" width="1" height="1"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmn-aw-alp" userLabel="Properties Info Label">
-                                        <rect key="frame" x="0.0" y="24" width="611" height="12"/>
-                                        <attributedString key="attributedText">
-                                            <fragment content="Properties">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.99019607843137258" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" size="11" name="Courier"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="shadowColor" red="0.51032221499999997" green="0.51032221499999997" blue="0.51032221499999997" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <size key="shadowOffset" width="1" height="1"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="QyX-Za-Z1p" userLabel="Buttons View">
-                                <rect key="frame" x="128.5" y="289" width="410" height="22"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lBL-VH-9cm" userLabel="Fit Button">
-                                        <rect key="frame" x="0.0" y="0.0" width="82" height="22"/>
-                                        <state key="normal" image="scale-button-norm"/>
-                                        <connections>
-                                            <action selector="fitButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="yDT-ZG-pLa"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wdR-Kf-ySK" userLabel="Grid Button">
-                                        <rect key="frame" x="82" y="0.0" width="82" height="22"/>
-                                        <state key="normal" image="grid-button-norm"/>
-                                        <connections>
-                                            <action selector="gridButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="9B4-YA-0Tf"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iuB-yT-JZE" userLabel="Graph Button">
-                                        <rect key="frame" x="164" y="0.0" width="82" height="22"/>
-                                        <state key="normal" image="graph-button-norm"/>
-                                        <connections>
-                                            <action selector="graphButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="tH1-od-3fj"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V85-ZE-tfI" userLabel="Objects Button">
-                                        <rect key="frame" x="246" y="0.0" width="82" height="22"/>
-                                        <state key="normal" image="objects-button-norm"/>
-                                        <connections>
-                                            <action selector="objectsButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="cUQ-jC-jZh"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UUl-ua-DKk" userLabel="Next Button">
-                                        <rect key="frame" x="328" y="0.0" width="82" height="22"/>
-                                        <state key="normal" image="next-button-norm"/>
-                                        <connections>
-                                            <action selector="nextButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="uUZ-LA-rbL"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleAspectFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="QyX-Za-Z1p" userLabel="Buttons View">
+                                        <rect key="frame" x="0.0" y="0.0" width="410" height="22"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lBL-VH-9cm" userLabel="Fit Button">
+                                                <rect key="frame" x="0.0" y="0.0" width="82" height="22"/>
+                                                <state key="normal" image="scale-button-norm"/>
+                                                <connections>
+                                                    <action selector="fitButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="yDT-ZG-pLa"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wdR-Kf-ySK" userLabel="Grid Button">
+                                                <rect key="frame" x="82" y="0.0" width="82" height="22"/>
+                                                <state key="normal" image="grid-button-norm"/>
+                                                <connections>
+                                                    <action selector="gridButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="9B4-YA-0Tf"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iuB-yT-JZE" userLabel="Graph Button">
+                                                <rect key="frame" x="164" y="0.0" width="82" height="22"/>
+                                                <state key="normal" image="graph-button-norm"/>
+                                                <connections>
+                                                    <action selector="graphButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="tH1-od-3fj"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V85-ZE-tfI" userLabel="Objects Button">
+                                                <rect key="frame" x="246" y="0.0" width="82" height="22"/>
+                                                <state key="normal" image="objects-button-norm"/>
+                                                <connections>
+                                                    <action selector="objectsButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="cUQ-jC-jZh"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UUl-ua-DKk" userLabel="Next Button">
+                                                <rect key="frame" x="328" y="0.0" width="82" height="22"/>
+                                                <state key="normal" image="next-button-norm"/>
+                                                <connections>
+                                                    <action selector="nextButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="uUZ-LA-rbL"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="v8l-N1-lID" userLabel="Labels View">
+                                        <rect key="frame" x="0.0" y="22" width="410" height="63"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tr1-Rb-3Hz" userLabel="Map Info Label">
+                                                <rect key="frame" x="0.0" y="0.0" width="410" height="12"/>
+                                                <attributedString key="attributedText">
+                                                    <fragment content="Map">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.99019607843137258" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="11" name="Courier"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                                <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="shadowColor" red="0.5103222150259068" green="0.5103222150259068" blue="0.5103222150259068" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <size key="shadowOffset" width="1" height="1"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ezb-0z-1AU" userLabel="Tile Info Label">
+                                                <rect key="frame" x="0.0" y="17" width="410" height="12"/>
+                                                <attributedString key="attributedText">
+                                                    <fragment content="Tile">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.99019607843137258" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="11" name="Courier"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                                <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="shadowColor" red="0.51032221499999997" green="0.51032221499999997" blue="0.51032221499999997" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <size key="shadowOffset" width="1" height="1"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmn-aw-alp" userLabel="Properties Info Label">
+                                                <rect key="frame" x="0.0" y="34" width="410" height="12"/>
+                                                <attributedString key="attributedText">
+                                                    <fragment content="Properties">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.99019607843137258" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="11" name="Courier"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                                <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="shadowColor" red="0.51032221499999997" green="0.51032221499999997" blue="0.51032221499999997" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <size key="shadowOffset" width="1" height="1"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wwJ-ex-eLJ" userLabel="Debug Info Label">
+                                                <rect key="frame" x="0.0" y="51" width="410" height="12"/>
+                                                <attributedString key="attributedText">
+                                                    <fragment content="Command">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.99019607843137258" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="11" name="Courier"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                                <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="shadowColor" red="0.51032221499999997" green="0.51032221499999997" blue="0.51032221499999997" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <size key="shadowOffset" width="1" height="1"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="iuB-yT-JZE" firstAttribute="width" secondItem="QyX-Za-Z1p" secondAttribute="width" multiplier="0.2" id="68s-W3-hdS"/>
-                                    <constraint firstItem="lBL-VH-9cm" firstAttribute="width" secondItem="QyX-Za-Z1p" secondAttribute="width" multiplier="0.2" id="LuD-ny-lF4"/>
-                                    <constraint firstItem="V85-ZE-tfI" firstAttribute="width" secondItem="QyX-Za-Z1p" secondAttribute="width" multiplier="0.2" id="krK-DO-mFE"/>
-                                    <constraint firstItem="UUl-ua-DKk" firstAttribute="width" secondItem="QyX-Za-Z1p" secondAttribute="width" multiplier="0.2" id="n4c-0a-WLR"/>
-                                    <constraint firstItem="wdR-Kf-ySK" firstAttribute="width" secondItem="QyX-Za-Z1p" secondAttribute="width" multiplier="0.2" id="x8k-2z-qeH"/>
+                                    <constraint firstItem="QyX-Za-Z1p" firstAttribute="centerX" secondItem="Ex0-TE-FEH" secondAttribute="centerX" id="Qg8-wl-bdg"/>
+                                    <constraint firstItem="QyX-Za-Z1p" firstAttribute="centerX" secondItem="Ex0-TE-FEH" secondAttribute="centerX" id="haf-et-qsR"/>
+                                    <constraint firstItem="v8l-N1-lID" firstAttribute="centerX" secondItem="Ex0-TE-FEH" secondAttribute="centerX" id="kb6-c4-5TI"/>
                                 </constraints>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o8A-1P-WNU" userLabel="Camera Info Label">
-                                <rect key="frame" x="310" y="20" width="47.5" height="12"/>
+                                <rect key="frame" x="344.33333333333331" y="32" width="47.333333333333371" height="12"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Camera:">
                                         <attributes>
@@ -135,7 +151,7 @@
                                 <size key="shadowOffset" width="1" height="1"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aWk-BV-bvy" userLabel="Pause Info Label">
-                                <rect key="frame" x="313" y="40" width="41" height="12"/>
+                                <rect key="frame" x="347.66666666666669" y="52" width="40.666666666666629" height="12"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Paused">
                                         <attributes>
@@ -153,22 +169,18 @@
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="v8l-N1-lID" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leadingMargin" constant="8" id="4k8-M9-V0X"/>
+                            <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="Ex0-TE-FEH" secondAttribute="bottom" constant="16" id="0za-iA-vWF"/>
                             <constraint firstItem="aWk-BV-bvy" firstAttribute="top" secondItem="o8A-1P-WNU" secondAttribute="bottom" constant="8" id="5gg-Xk-b6N"/>
+                            <constraint firstItem="Ex0-TE-FEH" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="Gas-gE-DAP"/>
                             <constraint firstItem="aWk-BV-bvy" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="Jfc-Tu-OXx"/>
-                            <constraint firstItem="v8l-N1-lID" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="Juu-IQ-AOI"/>
                             <constraint firstItem="o8A-1P-WNU" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="K4k-XW-JaL"/>
-                            <constraint firstItem="QyX-Za-Z1p" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="QY8-Nt-hS4"/>
-                            <constraint firstItem="v8l-N1-lID" firstAttribute="top" secondItem="QyX-Za-Z1p" secondAttribute="bottom" constant="8" id="TO7-vY-DSA"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="v8l-N1-lID" secondAttribute="trailing" constant="8" id="TWI-lV-1Y5"/>
-                            <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="v8l-N1-lID" secondAttribute="bottom" constant="20" id="Y7j-r6-uOk"/>
-                            <constraint firstItem="v8l-N1-lID" firstAttribute="top" secondItem="QyX-Za-Z1p" secondAttribute="bottom" constant="8" id="gp0-Jb-kPT"/>
-                            <constraint firstItem="o8A-1P-WNU" firstAttribute="top" secondItem="8aa-yV-Osq" secondAttribute="bottom" id="iWA-a2-t9O"/>
+                            <constraint firstItem="o8A-1P-WNU" firstAttribute="top" secondItem="8aa-yV-Osq" secondAttribute="bottom" constant="12" id="iWA-a2-t9O"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="buttonsView" destination="QyX-Za-Z1p" id="lye-pg-y57"/>
                         <outlet property="cameraInfoLabel" destination="o8A-1P-WNU" id="dR5-rb-ynq"/>
+                        <outlet property="debugInfoLabel" destination="wwJ-ex-eLJ" id="Vgj-a4-rUE"/>
                         <outlet property="demoFileAttributes" destination="HDW-rS-MqN" id="cV0-3C-cQ1"/>
                         <outlet property="graphButton" destination="iuB-yT-JZE" id="347-l9-n7u"/>
                         <outlet property="mapInfoLabel" destination="Tr1-Rb-3Hz" id="5gd-ji-SGm"/>

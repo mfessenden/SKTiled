@@ -26,7 +26,7 @@ typealias RenderInfo = (idx: Int, path: String, zpos: Double, sw: Int, sh: Int, 
 
  ## Overview ##
 
- The `SKTiledLayerObject` is the generic base class for all layer types.  This class doesn't 
+ The `SKTiledLayerObject` is the generic base class for all layer types.  This class doesn't
  define any object or child types, but provides base behaviors for layered content, including:
 
  - coordinate transformations
@@ -76,6 +76,8 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
     public var index: Int = 0
     /// Logging verbosity.
     internal var loggingLevel: LoggingLevel = SKTiledLoggingLevel
+    /// Position in the render tree.
+    public var rawIndex: Int = 0
     /// Flattened layer index (internal use only).
     internal var realIndex: Int {
         return tilemap.layers.index(where: { $0 === self }) ?? self.index
@@ -170,6 +172,9 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
 
     /// Name used to access navigation graph.
     public var navigationKey: String
+
+    /// Output current zPosition
+    public var currentZPosition: CGFloat { return self.zPosition }
 
     /// Optional background color.
     public var backgroundColor: SKColor? = nil {
@@ -774,6 +779,7 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
      - parameter zpos: `CGFloat?` optional z-position.
      */
     public func addChild(_ node: SKNode, x: Int=0, y: Int=0, offset: CGPoint = CGPoint.zero, zpos: CGFloat? = nil) {
+        log("\"\(layerName)\" adding child", level: .warning)
         let coord = CGPoint(x: CGFloat(x), y: CGFloat(y))
         addChild(node, coord: coord, offset: offset, zpos: zpos)
     }
@@ -789,10 +795,11 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
      */
     public func addChild(_ node: SKNode, coord: CGPoint, offset: CGPoint = CGPoint.zero, zpos: CGFloat? = nil) {
         addChild(node)
+        log("\"\(layerName)\" adding child", level: .warning)
         node.position = pointForCoordinate(coord: coord, offsetX: offset.y, offsetY: offset.y)
         node.position.x += offset.x
         node.position.y += offset.y
-        node.zPosition = zpos != nil ? zpos! : zPosition + tilemap.zDeltaForLayers
+        node.zPosition = (zpos != nil) ? zpos! : zPosition + tilemap.zDeltaForLayers
     }
 
     /**
@@ -871,14 +878,14 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
     }
 
     /** Render the layer to a texture
-     
+
     - Returns: `SKTexture?` rendered texture.
      */
     internal func render() -> SKTexture? {
         let cropRect = CGRect(x: 0, y: -tilemap.sizeInPoints.height,
                               width: tilemap.sizeInPoints.width,
                               height: tilemap.sizeInPoints.height)
-        
+
         if let rendered = SKView().texture(from: self, crop: cropRect) {
             rendered.filteringMode = .nearest
             return rendered
@@ -886,14 +893,20 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
         return nil
     }
 
-    // MARK: - Updates
+    // MARK: - Updating
+
+    /**
+     Called before each frame is rendered.
+
+     - parameter currentTime: `TimeInterval` update interval.
+     */
     public func update(_ currentTime: TimeInterval) {
         guard (isRendered == true) else { return }
     }
 }
 
 
-// MARK: - ## Tile Layer ##
+// MARK: - Tile Layer
 
 /**
 
@@ -920,7 +933,12 @@ public class SKTileLayer: SKTiledLayerObject {
     fileprivate typealias TilesArray = Array2D<SKTile>
 
     /// Container for the tile sprites.
-    fileprivate var tiles: TilesArray                   // array of tiles
+    fileprivate var tiles: TilesArray
+
+    /// Returns a count of valid tiles.
+    public var tileCount: Int {
+        return self.getTiles().count
+    }
 
     /// Tuple of layer render statistics.
     override internal var renderStatistics: RenderInfo {
@@ -1066,7 +1084,7 @@ public class SKTileLayer: SKTiledLayerObject {
      - returns: `[SKTile]` array of animated tiles.
      */
     public func animatedTiles() -> [SKTile] {
-        return validTiles().filter { $0.tileData.isAnimated == true }
+        return getTiles().filter { $0.tileData.isAnimated == true }
     }
 
     /**
@@ -1308,7 +1326,7 @@ public class SKTileLayer: SKTiledLayerObject {
                 self.tiles[Int(coord.x), Int(coord.y)] = tile
 
                 // set the tile zPosition to the current y-coordinate
-                tile.zPosition = coord.y
+                //tile.zPosition = coord.y
 
                 // run animation for tiles with multiple frames
                 tile.runAnimation()
@@ -1403,20 +1421,29 @@ public class SKTileLayer: SKTiledLayerObject {
 
     override public func debugLayer() {
         super.debugLayer()
-        for tile in validTiles() {
+        for tile in getTiles() {
             log(tile.debugDescription, level: .debug)
         }
     }
 
-    // MARK: - Updates
+    // MARK: - Updating
+
+    /**
+     Called before each frame is rendered.
+
+     - parameter currentTime: `TimeInterval` update interval.
+     */
     override public func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
-
-        clampTilePositions(scale: SKTiledContentScaleFactor)
+        //clampTilePositions(scale: SKTiledContentScaleFactor)
     }
 
-    public func clampTilePositions(scale: CGFloat) {
+    /**
+     Clamp node positions to alleviate cracking.
 
+     - parameter scale: `CGFloat` content scale factor.
+     */
+    public func clampTilePositions(scale: CGFloat) {
         getTiles().forEach { tile in
             //let clampedX = Int((tile.position.x * scale) / scale)
             //let clampedY = Int((tile.position.y * scale) / scale)
@@ -1438,7 +1465,7 @@ internal enum SKObjectGroupDrawOrder: String {
 }
 
 
-// MARK: - ## Object Group ##
+// MARK: - Object Group
 
 /**
  ## Overview ##
@@ -1606,6 +1633,8 @@ public class SKObjectGroup: SKTiledLayerObject {
         object.ignoreProperties = ignoreProperties
         addChild(object)
 
+        object.zPosition = (objects.isEmpty == false) ? CGFloat(objects.count) : 0
+
         // hide the object if the tilemap `showObjects` property is set to false
         object.visible = (object.isRenderableType == true) ? object.visible : tilemap.showObjects
         return object
@@ -1746,7 +1775,7 @@ public class SKObjectGroup: SKTiledLayerObject {
      - parameter data: SKTilesetData` tile data.
      - returns: `SKTileObject` created tile object.
      */
-    public func tileObject(data: SKTilesetData) -> SKTileObject {
+    public func newTileObject(data: SKTilesetData) -> SKTileObject {
         var objectSize = tilemap.tileSize
         if let texture = data.texture {
             objectSize = texture.size()
@@ -1786,9 +1815,20 @@ public class SKObjectGroup: SKTiledLayerObject {
             }
         }
     }
+
+    // MARK: - Updating
+
+    /**
+     Called before each frame is rendered.
+
+     - parameter currentTime: `TimeInterval` update interval.
+     */
+    override public func update(_ currentTime: TimeInterval) {
+        super.update(currentTime)
+    }
 }
 
-// MARK: - ## Image Layer ##
+// MARK: - Image Layer
 
 /**
 
@@ -1847,7 +1887,7 @@ public class SKImageLayer: SKTiledLayerObject {
     public func setLayerImage(_ named: String) {
         self.image = named
 
-        let texture = addTexture(forFile: named)
+        let texture = addTexture(imageNamed: named)
         let textureSize = texture.size()
 
         self.sprite = SKSpriteNode(texture: texture)
@@ -1857,21 +1897,39 @@ public class SKImageLayer: SKTiledLayerObject {
         self.sprite!.position.y -= textureSize.height / 2.0
     }
 
-    private func addTexture(forFile: String) -> SKTexture {
-        let texture = SKTexture(imageNamed: forFile)
-        texture.filteringMode = .nearest
-        textures.append(texture)
-        return texture
+    private func addTexture(imageNamed named: String) -> SKTexture {
+        let inputURL = URL(fileURLWithPath: named)
+        // read image from file
+        let imageDataProvider = CGDataProvider(url: inputURL as CFURL)!
+        // creare a data provider
+        let image = CGImage(pngDataProviderSource: imageDataProvider, decode: nil, shouldInterpolate: false, intent: .defaultIntent)!
+
+        // create the texture
+        let sourceTexture = SKTexture(cgImage: image)
+        sourceTexture.filteringMode = .nearest
+        textures.append(sourceTexture)
+        return sourceTexture
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Updating
+
+    /**
+     Called before each frame is rendered.
+
+     - parameter currentTime: `TimeInterval` update interval.
+     */
+    override public func update(_ currentTime: TimeInterval) {
+        super.update(currentTime)
+    }
 }
 
 
 
-// MARK: - ## Background Layer ##
+// MARK: - Background Layer
 
 
 /**
@@ -1928,10 +1986,21 @@ internal class BackgroundLayer: SKTiledLayerObject {
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Updating
+
+    /**
+     Called before each frame is rendered.
+
+     - parameter currentTime: `TimeInterval` update interval.
+     */
+    override public func update(_ currentTime: TimeInterval) {
+        super.update(currentTime)
+    }
 }
 
 
-// MARK: - ## Group Layer ##
+// MARK: - Group Layer
 
 /**
 
@@ -1967,7 +2036,7 @@ public class SKGroupLayer: SKTiledLayerObject {
 
     /// Returns the last index for all layers.
     public var lastIndex: Int {
-        return layers.isEmpty == false ? layers.map { $0.index }.max()! : self.index
+        return (layers.isEmpty == false) ? layers.map { $0.index }.max()! : 0   // self.index
     }
 
     /// Returns the last (highest) z-position in the map.
@@ -2043,8 +2112,9 @@ public class SKGroupLayer: SKTiledLayerObject {
      */
     public func addLayer(_ layer: SKTiledLayerObject, clamped: Bool = true) -> (success: Bool, layer: SKTiledLayerObject) {
 
-        // get the next z-position from the tilemap.
-        let nextZPosition = (_layers.isEmpty == false) ? (tilemap.zDeltaForLayers / 2) * CGFloat(_layers.count) : 0
+        // set the zPosition relative to the layer index ** adding multiplier - layers with difference of 1 seem to have z-fighting issues **.
+        let zMultiplier: CGFloat = 5
+        let nextZPosition = (_layers.isEmpty == false) ? CGFloat(_layers.count + 1) * zMultiplier : 1
 
         // set the layer index
         layer.index = lastIndex + 1
@@ -2081,6 +2151,15 @@ public class SKGroupLayer: SKTiledLayerObject {
      */
     public func removeLayer(_ layer: SKTiledLayerObject) -> SKTiledLayerObject? {
         return _layers.remove(layer)
+    }
+
+    /**
+     Called before each frame is rendered.
+
+     - parameter currentTime: `TimeInterval` update interval.
+     */
+    override public func update(_ currentTime: TimeInterval) {
+        super.update(currentTime)
     }
 }
 
@@ -2157,6 +2236,7 @@ extension SKTiledLayerObject {
         let coord = CGPoint(x: CGFloat(x), y: CGFloat(y))
         let offset = CGPoint(x: dx, y: dy)
         addChild(node, coord: coord, offset: offset, zpos: zpos)
+        log("\"\(layerName)\" adding child", level: .warning)
     }
 
     /**
@@ -2245,14 +2325,15 @@ extension SKTiledLayerObject {
     override public var description: String {
         let topLevel = self.parents.count == 1
         let indexString = (topLevel == true) ? ", index: \(index)" : ""
-        return "<\(layerType.stringValue.capitalized) Layer: \"\(self.path)\"\(indexString)>"
+        return "\(layerType.stringValue.capitalized) Layer: \"\(self.path)\"\(indexString), zpos: \(Int(self.zPosition))"
     }
 
-    override public var debugDescription: String { return description }
+    override public var debugDescription: String { return "<\(description)>" }
 }
 
 
 extension SKTiledLayerObject {
+
     /// Return a string representing the layer name.
     public var layerName: String {
         return self.name ?? "null"
@@ -2317,7 +2398,7 @@ extension SKTiledLayerObject {
             return result + parent.zPosition
         })
     }
-    
+
     /// Returns a string array representing the current layer name & index.
     public var layerStatsDescription: [String] {
         let digitCount: Int = self.tilemap.lastIndex.digitCount + 1
@@ -2356,23 +2437,6 @@ extension SKTiledLayerObject.TiledLayerType {
 }
 
 
-public extension SKTileLayer {
-
-    /**
-     Returns only tiles that are valid (not empty).
-
-     - returns: `[SKTile]` array of tiles.
-     */
-    public func validTiles() -> [SKTile] {
-        return tiles.flatMap({ $0 })
-    }
-
-    /// Returns a count of valid tiles.
-    public var tileCount: Int {
-        return self.validTiles().count
-    }
-}
-
 
 extension Array2D: Sequence {
 
@@ -2408,15 +2472,13 @@ extension Array2D: CustomReflectable {
                         rowResult += "\(value)\(comma)"
                     }
                 } else {
-                    rowResult += "-\(comma)"
+                    rowResult += "---\(comma)"
                 }
             }
             rowdata.append(rowResult)
         }
 
-        let children = DictionaryLiteral<String, Any>(dictionaryLiteral:
-            ("columns", columns),
-                                                      ("rows", rowdata))
+        let children = DictionaryLiteral<String, Any>(dictionaryLiteral: ("columns", columns), ("rows", rowdata))
         return Mirror(self, children: children)
     }
 }
@@ -2467,3 +2529,17 @@ extension SKObjectGroup {
         return nil
     }
 }
+
+
+extension SKTileLayer {
+    /**
+     Returns an array of valid tiles.
+
+     - returns: `[SKTile]` array of current tiles.
+     */
+    @available(*, deprecated, message: "use `getTiles()` instead")
+    public func validTiles() -> [SKTile] {
+        return self.getTiles()
+    }
+}
+
