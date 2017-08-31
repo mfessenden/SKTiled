@@ -90,7 +90,7 @@
                                                 <action selector="mapStatisticsPressed:" target="Voe-Tx-rLC" id="1U1-ky-FUE"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Live Mode: On" id="E4z-1e-s2g" userLabel="Live Mode Toggle">
+                                        <menuItem title="Live Mode: Off" id="E4z-1e-s2g" userLabel="Live Mode Toggle">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="liveModeToggled:" target="Voe-Tx-rLC" id="MbU-kv-ILh"/>

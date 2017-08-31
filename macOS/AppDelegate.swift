@@ -71,20 +71,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 let demoController = gameController.demoController
                 let currentMapIndex = demoController.currentIndex
                 demoController.addTilemap(url: relativeURL, at: currentMapIndex)
-
-                let newMenuItem = NSMenuItem(title: filename, action: "loadRecentFile", keyEquivalent: "")
-                recentFilesSubmenu.addItem(newMenuItem)
-                newMenuItem.isEnabled = true
-                recentFilesMenu.isEnabled = true
             }
 
         } else {
             Logger.default.log("load cancelled", level: .info)
         }
-    }
-
-    func loadRecentFile(named: String) {
-        print("loading: \"\(named)\"")
     }
 
     /**
@@ -183,8 +174,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard let gameController = viewController else { return }
         let demoController = gameController.demoController
         demoController.toggleMapGraphVisualization()
-        guard let view = gameController.view as? SKView else { return }
-        guard let scene = view.scene as? SKTiledDemoScene else { return }
 
         var currentGraphMode = false
         if let tilemap = self.tilemap {

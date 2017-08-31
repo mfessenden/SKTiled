@@ -166,7 +166,7 @@ public extension SKTileset {
         if (ignoreProperties == true) { return }
          if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
 
-        for (attr, value) in properties {
+        for (attr, _) in properties {
             let lattr = attr.lowercased()
             if (lattr == "walkable") {
                 if (keyValuePair(key: attr) != nil) {

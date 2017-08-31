@@ -1376,7 +1376,6 @@ internal func drawLayerGraph(_ layer: SKTiledLayerObject,
 
         guard let graph = layer.graph else { return }
 
-        let innerColor = layer.gridColor
         // line width should be at least 1 for larger tile sizes
         let lineWidth: CGFloat = defaultLineWidth
         context.setLineWidth(lineWidth)
@@ -1396,20 +1395,19 @@ internal func drawLayerGraph(_ layer: SKTiledLayerObject,
                     if let tiledNode = node as? SKTiledGraphNode {
 
                         switch tiledNode.weight {
-                        case (-205)...(-101):
-                            fillColor = TiledObjectColors.obsidian
-                        case -100...0:
-                            fillColor = TiledObjectColors.azure
-                        case 10...100:
-                            fillColor = TiledObjectColors.dandelion
-                        case 101...250:
+                        case (-2000)...(-1):
                             fillColor = TiledObjectColors.lime
-                        case 251...500:
+                        case 0...10:
+                            fillColor = SKColor.gray
+                        case 11...200:
+                            fillColor = TiledObjectColors.tangerine
+                        case 201...Float.greatestFiniteMagnitude:
                             fillColor = TiledObjectColors.english
                         default:
-                            break
+                            fillColor = SKColor.gray
                         }
                     }
+
 
                     let screenPosition = layer.tileToScreenCoords(CGPoint(x: col, y: row))
 

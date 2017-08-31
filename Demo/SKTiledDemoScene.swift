@@ -104,11 +104,11 @@ public class SKTiledDemoScene: SKTiledScene {
         var result: [SKNode] = []
         let nodes = self.nodes(at: point)
         for node in nodes {
-            if let tile = node as? SKTile {
+            if node is SKTile {
                 result.append(node)
             }
 
-            if let object = node as? SKTileObject {
+            if node is SKTileObject {
                 result.append(node)
             }
         }
@@ -183,34 +183,17 @@ public class SKTiledDemoScene: SKTiledScene {
         switch fileNamed {
 
         case "dungeon-16x16.tmx":
-
             if let upperGraphLayer = tilemap.tileLayers(named: "Graph-Upper").first {
-                upperGraphLayer.initializeGraph(walkable: walkableTiles)
+                _ = upperGraphLayer.initializeGraph(walkable: walkableTiles)
             }
 
             if let lowerGraphLayer = tilemap.tileLayers(named: "Graph-Lower").first {
-                lowerGraphLayer.initializeGraph(walkable: walkableTiles)
-            }
-
-            let lowerGraph = graphs["Graph-Lower"]!
-            let upperGraph = graphs["Graph-Upper"]!
-
-            let lowerBridge = lowerGraph.node(atGridPosition: int2(17, 8))!
-            let upperBridge = upperGraph.node(atGridPosition: int2(17, 7))!
-
-            lowerBridge.addConnections(to: [upperBridge], bidirectional: true)
-
-
-        case "mountains-hex-65x65.tmx":
-            let tileset = tilemap.getTileset(named: "hex1-65x65-65x230")!
-            let grassTiles = tilemap.getTiles(globalID: 1)
-            for tile in grassTiles {
-                tile.alpha = 0.2
+                _ = lowerGraphLayer.initializeGraph(walkable: walkableTiles)
             }
 
         case "graphtest-8x8.tmx":
             if let graphLayer = tilemap.tileLayers(named: "Graph").first {
-                graphLayer.initializeGraph(walkable: walkableTiles)
+                _ = graphLayer.initializeGraph(walkable: walkableTiles)
             }
 
         case "pacman.tmx":
@@ -325,11 +308,10 @@ public class SKTiledDemoScene: SKTiledScene {
         let startPoint = graphCoordinates.first!.toVec2
         let endPoint = graphCoordinates[1].toVec2
 
-        for (graphKey, graph) in graphs {
+        for (_, graph) in graphs {
             if let startNode = graph.node(atGridPosition: startPoint) {
                 if let endNode = graph.node(atGridPosition: endPoint) {
                     currentPath = startNode.findPath(to: endNode) as! [GKGridGraphNode]
-
                 }
             }
         }
@@ -497,17 +479,12 @@ extension SKTiledDemoScene {
         cameraNode.mouseDown(with: event)
         let defaultLayer = tilemap.defaultLayer
 
-        // get the position relative as drawn by the
-        let positionInScene = event.location(in: self)
-        let positionInLayer = defaultLayer.mouseLocation(event: event)
         let coord = defaultLayer.coordinateAtMouseEvent(event: event)
-
-        let tileShapesUnderCursor = nodes(at: positionInScene).filter { $0 as? TileShape != nil } as! [TileShape]
+        let tileShapesUnderCursor = tileShapesAt(event: event)
 
         for tile in tileShapesUnderCursor where tile.role == .coordinate {
             tile.interactions += 1
         }
-
 
         if (liveMode == true) && (isPaused == false) {
 
@@ -565,7 +542,7 @@ extension SKTiledDemoScene {
         if let view = view {
             let viewSize = view.bounds.size
 
-            var positionInWindow = event.locationInWindow
+            let positionInWindow = event.locationInWindow
             let xpos = positionInWindow.x
             let ypos = positionInWindow.y
 
@@ -632,7 +609,7 @@ extension SKTiledDemoScene {
 
         if (tileShapesUnderCursor.isEmpty) {
             if (liveMode == true) && (isPaused == false) {
-                let tile = self.addTileToWorld(Int(coord.x), Int(coord.y), role: .highlight)
+                _ = self.addTileToWorld(Int(coord.x), Int(coord.y), role: .highlight)
             }
         }
 
@@ -758,7 +735,7 @@ internal class MouseTracker: SKNode {
     }
 
     func setOffset(dx: CGFloat, dy: CGFloat) {
-        var vector = (1 / -dy) * (fabs(dy) * 2)
+        let vector = (1 / -dy) * (fabs(dy) * 2)
         label.position.y = vector * (scaleSize * 2)
     }
 
@@ -865,7 +842,7 @@ extension SKTiledDemoScene {
         guard let view = view,
             let cameraNode = cameraNode,
             let tilemap = tilemap,
-            let worldNode = worldNode else {
+            let _ = worldNode else {
                 return
         }
 

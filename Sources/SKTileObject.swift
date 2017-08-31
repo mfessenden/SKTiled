@@ -288,7 +288,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
      */
     required public init(layer: SKObjectGroup) {
         super.init()
-        layer.addObject(self)
+        _ = layer.addObject(self)
         drawObject()
     }
 

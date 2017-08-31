@@ -1,4 +1,4 @@
-![SKTiled](images/Header-@1x.png)
+![SKTiled][header-image]
 
 > SKTiled is a Swift framework for using [Tiled](http://www.mapeditor.org) content with Apple's SpriteKit.
 
@@ -12,10 +12,11 @@
 
 **SKTiled** is a Swift framework for using [Tiled](http://www.mapeditor.org) content with [Apple's SpriteKit][spritekit-url], allowing the creation of game assets from Tiled's .tmx files. Inspired by [TilemapKit](http://tilemapkit.com) and written purely in Swift, I began working on this after the development of TilemapKit was halted, primarily to learn Apple's new programming language. I've decided to open-source it in case others find it helpful.
 
+
 Current release is Swift 3/macOS 10.11/iOS 10+. For Swift 4/Xcode 9, see the [**swift4**][swift4-url] branch.
 
 
-![macOS Demo](images/demo-macos-iso.png)
+![Demo Image][demo-image]
 
 
 Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
@@ -42,7 +43,7 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 ## Requirements
 
 - iOS 9+
-- macOS 10.12+
+- macOS 10.11+
 - Xcode 8+
 
 ## Installation
@@ -271,6 +272,8 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 [pod-image]:https://img.shields.io/cocoapods/v/SKTiled.svg
 [pod-url]:https://cocoapods.org/pods/SKTiled
 [swift4-url]:https://github.com/mfessenden/SKTiled/tree/swift4
+[header-image]:https://mfessenden.github.io/SKTiled/images/Header-@1x.png
+[demo-image]:https://mfessenden.github.io/SKTiled/images/images/demo-macos-iso.png
 
 <!--- Documentation --->
 

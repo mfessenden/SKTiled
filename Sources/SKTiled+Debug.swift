@@ -512,14 +512,11 @@ public class TileShape: SKShapeNode {
                 baseColor = SKColor.gray
             case 11...200:
                 baseColor = TiledObjectColors.dandelion
-            case 201...FLT_MAX:
+            case 201...Float.greatestFiniteMagnitude:
                 baseColor = TiledObjectColors.english
             default:
                 baseColor = SKColor.gray
             }
-
-
-
 
             baseOpacity = 0.8
             self.strokeColor = baseColor.withAlphaComponent(baseOpacity * 2)

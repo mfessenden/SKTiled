@@ -224,7 +224,7 @@ public class SKTileset: SKTiledObject {
         let image = CGImage(pngDataProviderSource: imageDataProvider, decode: nil, shouldInterpolate: false, intent: .defaultIntent)!
 
         // create the texture
-        var sourceTexture = SKTexture(cgImage: image)
+        let sourceTexture = SKTexture(cgImage: image)
         sourceTexture.filteringMode = .nearest
 
         let textureWidth = Int(sourceTexture.size().width)

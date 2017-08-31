@@ -381,7 +381,7 @@ public class SKTiledSceneCamera: SKCameraNode, Loggable {
         let usableHeight: CGFloat = newSize.height * screenScaleHeight
         let scaleFactor = (isPortrait == true) ? usableWidth / tilemapSize.width : usableHeight / tilemapSize.height
 
-        let heightOffset: CGFloat = (usableHeight / 20)
+        //let heightOffset: CGFloat = (usableHeight / 20)
         let focusPoint = CGPoint(x: tilemapCenter.x, y: tilemapCenter.y) // -heightOffset
 
         centerOn(scenePoint: focusPoint)

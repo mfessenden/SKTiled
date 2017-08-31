@@ -1550,13 +1550,6 @@ public class SKTilemap: SKNode, SKTiledObject {
         self.layers.forEach { layer in
             layer.update(currentTime)
         }
-
-        let baseLineWidth: CGFloat = 1
-        // size of one point
-        let pointSize = (1 * SKTiledContentScaleFactor)
-        let scaleFactor = 1 / currentZoom
-        let actualPointSize = (pointSize * scaleFactor)
-        let renderLineWidth = baseLineWidth * actualPointSize
     }
 }
 
@@ -1814,7 +1807,6 @@ extension SKTilemap {
 
         // get the max column size for each column
         for (_, stats) in allLayerStats.enumerated() {
-            let columns = stats.map { $0.characters.count }
             for stat in stats {
                 let cindex = Int(stats.index(of: stat)!)
 
@@ -1848,7 +1840,7 @@ extension SKTilemap {
                 let columnSize = columnSizes[sidx]
                 let buffer = buffers[sidx]
 
-                var isLastColumn = (sidx == stats.count - 1)
+                let isLastColumn = (sidx == stats.count - 1)
                 var nextValue: String? = nil
                 let nextIndex = sidx + 1
 
@@ -2001,7 +1993,7 @@ extension SKTilemap: SKTiledSceneCameraDelegate {
 
         focusObjects = []
         for node in nodesUnderCursor {
-            if let object = node as? SKTileObject {
+            if node is SKTileObject {
                 focusObjects.append(node)
             }
 
