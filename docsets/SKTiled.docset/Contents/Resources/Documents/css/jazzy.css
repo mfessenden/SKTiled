@@ -26,8 +26,14 @@ h2 {
   font-size: 2em;
   border-bottom: 1px solid #e2e2e2; }
 
+h3 {
+  font-size: 1.6em;
+  font-weight: 400;
+  border-bottom: 1px solid #f0f1f1;
+  margin-bottom: 0.3em; }
+
 h4 {
-  font-size: 13px;
+  font-size: 1.2em;
   line-height: 1.5;
   margin-top: 21px; }
 
@@ -164,6 +170,11 @@ header {
     padding-top: 10px; }
     .main-content section .task-group-section .task-group:first-of-type .section-name {
       padding-top: 15px; }
+  .main-content section .heading:before {
+    content: "";
+    display: block;
+    padding-top: 70px;
+    margin: -70px 0 0; }
 
 .section {
   padding: 0 25px; }

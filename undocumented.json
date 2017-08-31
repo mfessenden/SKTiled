@@ -2,1253 +2,1232 @@
   "warnings": [
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTile.swift",
-      "line": 20,
-      "symbol": "PhysicsShape.none",
+      "line": 28,
+      "symbol": "SKTile.TileAlignmentHint.topLeft",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTile.swift",
-      "line": 21,
-      "symbol": "PhysicsShape.rectangle",
+      "line": 29,
+      "symbol": "SKTile.TileAlignmentHint.top",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTile.swift",
-      "line": 22,
-      "symbol": "PhysicsShape.ellipse",
+      "line": 30,
+      "symbol": "SKTile.TileAlignmentHint.topRight",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTile.swift",
-      "line": 23,
-      "symbol": "PhysicsShape.texture",
+      "line": 31,
+      "symbol": "SKTile.TileAlignmentHint.left",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTile.swift",
-      "line": 24,
-      "symbol": "PhysicsShape.path",
+      "line": 32,
+      "symbol": "SKTile.TileAlignmentHint.center",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTile.swift",
+      "line": 33,
+      "symbol": "SKTile.TileAlignmentHint.right",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTile.swift",
+      "line": 34,
+      "symbol": "SKTile.TileAlignmentHint.bottomLeft",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTile.swift",
+      "line": 35,
+      "symbol": "SKTile.TileAlignmentHint.bottom",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTile.swift",
       "line": 36,
-      "symbol": "SKTile.tileData",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "symbol": "SKTile.TileAlignmentHint.bottomRight",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTile.swift",
-      "line": 37,
-      "symbol": "SKTile.tileSize",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "line": 59,
+      "symbol": "SKTile.PhysicsShape.none",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTile.swift",
-      "line": 38,
-      "symbol": "SKTile.highlightColor",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "line": 60,
+      "symbol": "SKTile.PhysicsShape.rectangle",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTile.swift",
-      "line": 41,
-      "symbol": "SKTile.physicsShape",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "line": 61,
+      "symbol": "SKTile.PhysicsShape.ellipse",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTile.swift",
       "line": 62,
-      "symbol": "SKTile.init()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "symbol": "SKTile.PhysicsShape.texture",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTile.swift",
-      "line": 113,
+      "line": 63,
+      "symbol": "SKTile.PhysicsShape.path",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTile.swift",
+      "line": 105,
       "symbol": "SKTile.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTile.swift",
-      "line": 442,
-      "symbol": "SKTile.debugDescription",
+      "line": 656,
+      "symbol": "SKTile.shortDescription",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTile.swift",
+      "line": 668,
+      "symbol": "SKTile.tileOffset",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 30,
-      "symbol": "SKTiledLayerType.invalid",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "line": null,
+      "symbol": "Array2D",
+      "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 31,
-      "symbol": "SKTiledLayerType.tile",
+      "line": 101,
+      "symbol": "SKTiledLayerObject.TileOffset.center",
       "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 32,
-      "symbol": "SKTiledLayerType.object",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 33,
-      "symbol": "SKTiledLayerType.image",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 34,
-      "symbol": "SKTiledLayerType.group",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 69,
-      "symbol": "TiledLayerObject.tilemap",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
       "line": 102,
-      "symbol": "TiledLayerObject.width",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "symbol": "SKTiledLayerObject.TileOffset.top",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
       "line": 103,
-      "symbol": "TiledLayerObject.height",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "symbol": "SKTiledLayerObject.TileOffset.topLeft",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
       "line": 104,
-      "symbol": "TiledLayerObject.tileWidth",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "symbol": "SKTiledLayerObject.TileOffset.topRight",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
       "line": 105,
-      "symbol": "TiledLayerObject.tileHeight",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "symbol": "SKTiledLayerObject.TileOffset.bottom",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
+      "line": 106,
+      "symbol": "SKTiledLayerObject.TileOffset.bottomLeft",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
       "line": 107,
-      "symbol": "TiledLayerObject.sizeHalved",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "symbol": "SKTiledLayerObject.TileOffset.bottomRight",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
       "line": 108,
-      "symbol": "TiledLayerObject.tileWidthHalf",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "symbol": "SKTiledLayerObject.TileOffset.left",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
       "line": 109,
-      "symbol": "TiledLayerObject.tileHeightHalf",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 110,
-      "symbol": "TiledLayerObject.sizeInPoints",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 113,
-      "symbol": "TiledLayerObject.gridOpacity",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 118,
-      "symbol": "TiledLayerObject.antialiased",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 119,
-      "symbol": "TiledLayerObject.colorBlendFactor",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 124,
-      "symbol": "TiledLayerObject.walkableIDs",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "symbol": "SKTiledLayerObject.TileOffset.right",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
       "line": 125,
-      "symbol": "TiledLayerObject.walkableTypes",
+      "symbol": "SKTiledLayerObject.isolated",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 271,
-      "symbol": "TiledLayerObject.init(coder:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 805,
-      "symbol": "TiledLayerObject.debugLayer()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 837,
-      "symbol": "SKTileLayer.render",
+      "line": 141,
+      "symbol": "SKTiledLayerObject.width",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 868,
+      "line": 142,
+      "symbol": "SKTiledLayerObject.height",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
+      "line": 143,
+      "symbol": "SKTiledLayerObject.tileWidth",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
+      "line": 144,
+      "symbol": "SKTiledLayerObject.tileHeight",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
+      "line": 146,
+      "symbol": "SKTiledLayerObject.sizeHalved",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
+      "line": 147,
+      "symbol": "SKTiledLayerObject.tileWidthHalf",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
+      "line": 148,
+      "symbol": "SKTiledLayerObject.tileHeightHalf",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
+      "line": 149,
+      "symbol": "SKTiledLayerObject.sizeInPoints",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
+      "line": 155,
+      "symbol": "SKTiledLayerObject.gridOpacity",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
+      "line": 169,
+      "symbol": "SKTiledLayerObject.colorBlendFactor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
+      "line": 314,
+      "symbol": "SKTiledLayerObject.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
+      "line": 339,
+      "symbol": "SKTiledLayerObject.layers",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
+      "line": 863,
+      "symbol": "SKTiledLayerObject.debugLayer()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
+      "line": 1000,
       "symbol": "SKTileLayer.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 1281,
+      "line": 1422,
       "symbol": "SKTileLayer.debugLayer()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 1393,
+      "line": 1594,
       "symbol": "SKObjectGroup.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 1587,
+      "line": 1849,
       "symbol": "SKImageLayer.image",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 1590,
+      "line": 1853,
       "symbol": "SKImageLayer.wrapX",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 1591,
+      "line": 1854,
       "symbol": "SKImageLayer.wrapY",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 1639,
+      "line": 1914,
       "symbol": "SKImageLayer.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 1710,
+      "line": 2082,
       "symbol": "SKGroupLayer.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 2023,
-      "symbol": "TiledLayerObject.description",
+      "line": 2325,
+      "symbol": "SKTiledLayerObject.description",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 2024,
-      "symbol": "TiledLayerObject.debugDescription",
+      "line": 2331,
+      "symbol": "SKTiledLayerObject.debugDescription",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
-      "line": 20,
-      "symbol": "SKObjectType.rectangle",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "line": null,
+      "symbol": "TextObjectAttributes.TextAlignment.HoriztonalAlignment",
+      "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
-      "line": 21,
-      "symbol": "SKObjectType.ellipse",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "line": null,
+      "symbol": "TextObjectAttributes.TextAlignment.VerticalAlignment",
+      "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
-      "line": 22,
-      "symbol": "SKObjectType.polygon",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
-      "line": 23,
-      "symbol": "SKObjectType.polyline",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
-      "line": 35,
-      "symbol": "CollisionType.none",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
-      "line": 36,
-      "symbol": "CollisionType.dynamic",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
-      "line": 37,
-      "symbol": "CollisionType.collision",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
-      "line": 60,
-      "symbol": "SKTileObject.layer",
+      "line": 66,
+      "symbol": "TextObjectAttributes.wrap",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
-      "line": 62,
-      "symbol": "SKTileObject.id",
+      "line": 67,
+      "symbol": "TextObjectAttributes.isBold",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
-      "line": 63,
-      "symbol": "SKTileObject.gid",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
-      "line": 64,
-      "symbol": "SKTileObject.type",
+      "line": 68,
+      "symbol": "TextObjectAttributes.isItalic",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
       "line": 69,
-      "symbol": "SKTileObject.size",
+      "symbol": "TextObjectAttributes.isUnderline",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
-      "line": 91,
-      "symbol": "SKTileObject.init()",
+      "line": 70,
+      "symbol": "TextObjectAttributes.isStrikeout",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
+      "line": 74,
+      "symbol": "TextObjectAttributes.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
-      "line": 120,
+      "line": 95,
+      "symbol": "SKTileObject.ObjectType",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
+      "line": 129,
+      "symbol": "SKTileObject.CollisionType.none",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
+      "line": 130,
+      "symbol": "SKTileObject.CollisionType.dynamic",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
+      "line": 131,
+      "symbol": "SKTileObject.CollisionType.collision",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
+      "line": 223,
       "symbol": "SKTileObject.init(attributes:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
-      "line": 168,
+      "line": 295,
       "symbol": "SKTileObject.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
-      "line": 343,
+      "line": 724,
       "symbol": "SKTileObject.didBeginRendering(completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
-      "line": 347,
+      "line": 728,
       "symbol": "SKTileObject.didFinishRendering(completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
-      "line": 382,
+      "line": 783,
       "symbol": "SKTileObject.debugDescription",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiled+GameplayKit.swift",
-      "line": 343,
-      "symbol": "SKTiledGraphNode.weight",
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
+      "line": 787,
+      "symbol": "SKTileObject.shortDescription",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileObject.swift",
+      "line": 863,
+      "symbol": "TextObjectAttributes.font",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiled+Debug.swift",
+      "line": null,
+      "symbol": "LogEvent",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiled+Debug.swift",
+      "line": null,
+      "symbol": "Loggable",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiled+Debug.swift",
+      "line": null,
+      "symbol": "Logger.DateFormat",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiled+Debug.swift",
+      "line": null,
+      "symbol": "LoggingLevel",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiled+Debug.swift",
+      "line": null,
+      "symbol": "LoggingLevel",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiled+Debug.swift",
+      "line": null,
+      "symbol": "TileShape",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiled+Debug.swift",
+      "line": 47,
+      "symbol": "DebugDrawOptions.drawMouseOverObject",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiled+Debug.swift",
+      "line": 48,
+      "symbol": "DebugDrawOptions.drawBackground",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiled+Debug.swift",
+      "line": 49,
+      "symbol": "DebugDrawOptions.drawAnchor",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiled+Debug.swift",
+      "line": 51,
+      "symbol": "DebugDrawOptions.all",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiled+Debug.swift",
+      "line": 359,
+      "symbol": "TileShape",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiled+Debug.swift",
+      "line": 652,
+      "symbol": "LoggingLevel",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiled+Debug.swift",
+      "line": 667,
+      "symbol": "LogEvent",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiled+Debug.swift",
+      "line": 693,
+      "symbol": "Logger",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiled+Debug.swift",
+      "line": 795,
+      "symbol": "Loggable",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiled+GameplayKit.swift",
-      "line": 357,
+      "line": 222,
       "symbol": "SKTiledGraphNode.init(gridPosition:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiled+GameplayKit.swift",
-      "line": 361,
+      "line": 226,
       "symbol": "SKTiledGraphNode.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledObject.swift",
-      "line": 30,
+      "line": 61,
       "symbol": "SKTiledObject.hashValue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledScene.swift",
-      "line": 78,
+      "line": 82,
       "symbol": "SKTiledScene.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledScene.swift",
-      "line": 87,
-      "symbol": "SKTiledScene.sceneDidLoad()",
+      "line": 91,
+      "symbol": "SKTiledScene.didChangeSize(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledScene.swift",
-      "line": 91,
+      "line": 95,
       "symbol": "SKTiledScene.didMove(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledScene.swift",
-      "line": 164,
+      "line": 198,
       "symbol": "SKTiledScene.didBeginParsing(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledScene.swift",
-      "line": 168,
+      "line": 202,
       "symbol": "SKTiledScene.didAddTileset(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledScene.swift",
-      "line": 172,
+      "line": 206,
       "symbol": "SKTiledScene.didAddLayer(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledScene.swift",
-      "line": 176,
+      "line": 210,
       "symbol": "SKTiledScene.didReadMap(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledScene.swift",
-      "line": 180,
+      "line": 214,
       "symbol": "SKTiledScene.didRenderMap(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledScene.swift",
+      "line": 218,
+      "symbol": "SKTiledScene.didAddNavigationGraph(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledScene.swift",
+      "line": 222,
+      "symbol": "SKTiledScene.objectForTileType(named:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledScene.swift",
+      "line": 226,
+      "symbol": "SKTiledScene.objectForVectorType(named:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledScene.swift",
+      "line": 311,
+      "symbol": "SKTiledScene.mouseDown(with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledScene.swift",
+      "line": 313,
+      "symbol": "SKTiledScene.mouseMoved(with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledScene.swift",
+      "line": 317,
+      "symbol": "SKTiledScene.mouseUp(with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledScene.swift",
+      "line": 318,
+      "symbol": "SKTiledScene.mouseEntered(with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledScene.swift",
+      "line": 319,
+      "symbol": "SKTiledScene.mouseExited(with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledScene.swift",
+      "line": 321,
+      "symbol": "SKTiledScene.scrollWheel(with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledSceneCamera.swift",
-      "line": 29,
+      "line": 90,
       "symbol": "SKTiledSceneCamera.zoom",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledSceneCamera.swift",
-      "line": 30,
+      "line": 91,
       "symbol": "SKTiledSceneCamera.initialZoom",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledSceneCamera.swift",
-      "line": 33,
+      "line": 94,
       "symbol": "SKTiledSceneCamera.allowMovement",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledSceneCamera.swift",
-      "line": 34,
+      "line": 95,
       "symbol": "SKTiledSceneCamera.allowZoom",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledSceneCamera.swift",
-      "line": 35,
+      "line": 96,
       "symbol": "SKTiledSceneCamera.allowRotation",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledSceneCamera.swift",
-      "line": 40,
+      "line": 97,
+      "symbol": "SKTiledSceneCamera.allowPause",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledSceneCamera.swift",
+      "line": 100,
+      "symbol": "SKTiledSceneCamera.minZoom",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledSceneCamera.swift",
+      "line": 101,
+      "symbol": "SKTiledSceneCamera.maxZoom",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledSceneCamera.swift",
+      "line": 102,
       "symbol": "SKTiledSceneCamera.isAtMaxZoom",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledSceneCamera.swift",
-      "line": 58,
+      "line": 105,
+      "symbol": "SKTiledSceneCamera.loggingLevel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledSceneCamera.swift",
+      "line": 123,
       "symbol": "SKTiledSceneCamera.showOverlay",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledSceneCamera.swift",
-      "line": 66,
-      "symbol": "SKTiledSceneCamera.init(view:world:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledSceneCamera.swift",
-      "line": 92,
+      "line": 164,
       "symbol": "SKTiledSceneCamera.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledSceneCamera.swift",
-      "line": 322,
-      "symbol": "SKTiledSceneCamera.mouseDown(with:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "line": 406,
+      "symbol": "SKTiledSceneCamera.description",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledSceneCamera.swift",
-      "line": 327,
+      "line": 412,
+      "symbol": "SKTiledSceneCamera.debugDescription",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledSceneCamera.swift",
+      "line": 522,
       "symbol": "SKTiledSceneCamera.mouseUp(with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledSceneCamera.swift",
-      "line": 333,
-      "symbol": "SKTiledSceneCamera.scrollWheel(with:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTiledSceneCamera.swift",
-      "line": 343,
+      "line": 552,
       "symbol": "SKTiledSceneCamera.scenePositionChanged(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 48,
-      "symbol": "TilemapOrientation.orthogonal",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "line": 138,
+      "symbol": "SKTilemapDelegate.zDeltaForLayers",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 49,
-      "symbol": "TilemapOrientation.isometric",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 50,
-      "symbol": "TilemapOrientation.hexagonal",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 51,
-      "symbol": "TilemapOrientation.staggered",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 79,
-      "symbol": "TileOffset.center",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 80,
-      "symbol": "TileOffset.top",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 81,
-      "symbol": "TileOffset.topLeft",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 82,
-      "symbol": "TileOffset.topRight",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 83,
-      "symbol": "TileOffset.bottom",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 84,
-      "symbol": "TileOffset.bottomLeft",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 85,
-      "symbol": "TileOffset.bottomRight",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 86,
-      "symbol": "TileOffset.left",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 87,
-      "symbol": "TileOffset.right",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 162,
+      "line": 139,
       "symbol": "SKTilemapDelegate.didBeginParsing(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 163,
+      "line": 140,
       "symbol": "SKTilemapDelegate.didAddTileset(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 164,
+      "line": 141,
       "symbol": "SKTilemapDelegate.didAddLayer(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 165,
+      "line": 142,
       "symbol": "SKTilemapDelegate.didReadMap(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 166,
+      "line": 143,
       "symbol": "SKTilemapDelegate.didRenderMap(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 182,
-      "symbol": "SKTilemap.filename",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "line": 144,
+      "symbol": "SKTilemapDelegate.didAddNavigationGraph(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
+      "line": 145,
+      "symbol": "SKTilemapDelegate.objectForTileType(named:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
+      "line": 146,
+      "symbol": "SKTilemapDelegate.objectForVectorType(named:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
+      "line": 147,
+      "symbol": "SKTilemapDelegate.objectForGraphType(named:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
       "line": 184,
-      "symbol": "SKTilemap.size",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "symbol": "SKTilemap.TilemapOrientation.orthogonal",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
       "line": 185,
-      "symbol": "SKTilemap.tileSize",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "symbol": "SKTilemap.TilemapOrientation.isometric",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
       "line": 186,
-      "symbol": "SKTilemap.orientation",
+      "symbol": "SKTilemap.TilemapOrientation.hexagonal",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
+      "line": 187,
+      "symbol": "SKTilemap.TilemapOrientation.staggered",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
+      "line": 198,
+      "symbol": "SKTilemap.displayName",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 190,
+      "line": 224,
       "symbol": "SKTilemap.hexsidelength",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 195,
+      "line": 229,
+      "symbol": "SKTilemap.bounds",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
+      "line": 230,
       "symbol": "SKTilemap.worldScale",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 196,
-      "symbol": "SKTilemap.allowZoom",
+      "line": 231,
+      "symbol": "SKTilemap.currentZoom",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 197,
-      "symbol": "SKTilemap.allowMovement",
+      "line": 255,
+      "symbol": "SKTilemap.bufferSize",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 198,
-      "symbol": "SKTilemap.minZoom",
+      "line": 318,
+      "symbol": "SKTilemap.objectColor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 199,
-      "symbol": "SKTilemap.maxZoom",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 202,
-      "symbol": "SKTilemap.tilesets",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 206,
-      "symbol": "SKTilemap.layerCount",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 208,
-      "symbol": "SKTilemap.zDeltaForLayers",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 212,
-      "symbol": "SKTilemap.isRendered",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 218,
-      "symbol": "SKTilemap.overlayColor",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 266,
-      "symbol": "SKTilemap.debugMode",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 267,
+      "line": 319,
       "symbol": "SKTilemap.color",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 268,
+      "line": 320,
       "symbol": "SKTilemap.gridColor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 269,
+      "line": 321,
       "symbol": "SKTilemap.frameColor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 270,
+      "line": 322,
       "symbol": "SKTilemap.highlightColor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 271,
-      "symbol": "SKTilemap.autoResize",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 274,
-      "symbol": "SKTilemap.gravity",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 508,
+      "line": 643,
       "symbol": "SKTilemap.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 1058,
+      "line": 1486,
       "symbol": "SKTilemap.mouseLocation(event:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 1158,
+      "line": 1617,
       "symbol": "SKTilemap.width",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 1159,
+      "line": 1618,
       "symbol": "SKTilemap.height",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 1181,
-      "symbol": "SKTilemap.sizeHalved",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 1182,
+      "line": 1640,
       "symbol": "SKTilemap.tileWidthHalf",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 1183,
+      "line": 1641,
       "symbol": "SKTilemap.tileHeightHalf",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 1186,
+      "line": 1642,
+      "symbol": "SKTilemap.sizeHalved",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
+      "line": 1643,
+      "symbol": "SKTilemap.tileSizeHalved",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
+      "line": 1646,
       "symbol": "SKTilemap.staggerX",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 1187,
+      "line": 1647,
       "symbol": "SKTilemap.staggerEven",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 1189,
+      "line": 1649,
       "symbol": "SKTilemap.sideLengthX",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 1190,
+      "line": 1650,
       "symbol": "SKTilemap.sideLengthY",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 1192,
+      "line": 1652,
       "symbol": "SKTilemap.sideOffsetX",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 1193,
+      "line": 1653,
       "symbol": "SKTilemap.sideOffsetY",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 1196,
+      "line": 1656,
       "symbol": "SKTilemap.columnWidth",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 1197,
+      "line": 1657,
       "symbol": "SKTilemap.rowHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 1286,
-      "symbol": "SKTilemap.description",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemap.swift",
-      "line": 1293,
-      "symbol": "SKTilemap.debugDescription",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemapParser.swift",
-      "line": 51,
-      "symbol": "SKTilemapParser.fileNames",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemapParser.swift",
-      "line": 52,
-      "symbol": "SKTilemapParser.currentFileName",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilemapParser.swift",
-      "line": 54,
-      "symbol": "SKTilemapParser.tilemap",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileset.swift",
-      "line": 25,
+      "line": 33,
       "symbol": "SKTileset.name",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileset.swift",
-      "line": 27,
-      "symbol": "SKTileset.filename",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileset.swift",
-      "line": 28,
-      "symbol": "SKTileset.tilemap",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileset.swift",
-      "line": 29,
-      "symbol": "SKTileset.tileSize",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileset.swift",
-      "line": 31,
+      "line": 43,
       "symbol": "SKTileset.columns",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileset.swift",
-      "line": 32,
+      "line": 44,
       "symbol": "SKTileset.tilecount",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileset.swift",
-      "line": 33,
+      "line": 45,
       "symbol": "SKTileset.firstGID",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileset.swift",
-      "line": 36,
+      "line": 48,
       "symbol": "SKTileset.spacing",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileset.swift",
-      "line": 37,
+      "line": 49,
       "symbol": "SKTileset.margin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileset.swift",
-      "line": 40,
+      "line": 53,
       "symbol": "SKTileset.tileOffset",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileset.swift",
-      "line": 43,
-      "symbol": "SKTileset.source",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileset.swift",
-      "line": 44,
-      "symbol": "SKTileset.atlas",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileset.swift",
-      "line": 48,
-      "symbol": "SKTileset.dataCount",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileset.swift",
-      "line": 51,
-      "symbol": "SKTileset.isImageCollection",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileset.swift",
-      "line": 52,
-      "symbol": "SKTileset.isExternalTileset",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileset.swift",
-      "line": 53,
-      "symbol": "SKTileset.transparentColor",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileset.swift",
-      "line": 54,
+      "line": 69,
       "symbol": "SKTileset.isRendered",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileset.swift",
-      "line": 365,
+      "line": 499,
       "symbol": "==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.free",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilesetData.swift",
-      "line": 33,
+      "line": 53,
       "symbol": "SKTilesetData.tileset",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilesetData.swift",
-      "line": 35,
+      "line": 57,
       "symbol": "SKTilesetData.id",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilesetData.swift",
-      "line": 36,
-      "symbol": "SKTilesetData.texture",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilesetData.swift",
-      "line": 37,
-      "symbol": "SKTilesetData.source",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilesetData.swift",
-      "line": 38,
+      "line": 62,
       "symbol": "SKTilesetData.probability",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilesetData.swift",
-      "line": 43,
-      "symbol": "SKTilesetData.isAnimated",
+      "line": 65,
+      "symbol": "SKTilesetData.tileOffset",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilesetData.swift",
-      "line": 46,
-      "symbol": "SKTilesetData.flipHoriz",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilesetData.swift",
-      "line": 47,
-      "symbol": "SKTilesetData.flipVert",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilesetData.swift",
-      "line": 48,
-      "symbol": "SKTilesetData.flipDiag",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilesetData.swift",
-      "line": 51,
-      "symbol": "SKTilesetData.walkable",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilesetData.swift",
-      "line": 52,
-      "symbol": "SKTilesetData.weight",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilesetData.swift",
-      "line": 54,
-      "symbol": "SKTilesetData.localID",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilesetData.swift",
-      "line": 60,
-      "symbol": "SKTilesetData.init()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTilesetData.swift",
-      "line": 143,
+      "line": 202,
       "symbol": "==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.free",
       "warning": "undocumented"
