@@ -43,9 +43,9 @@ public class SKTiledDemoScene: SKTiledScene {
     internal let cleanupQueue = DispatchQueue(label: "com.sktiled.cleanup", qos: .background)
 
     internal var editMode: Bool = false
-    
+
     /// Highlight tiles under the mouse
-    internal var liveMode: Bool = false {
+    internal var liveMode: Bool = true {
         didSet {
             guard oldValue != liveMode else { return }
             self.cleanupTileShapes()
@@ -82,7 +82,7 @@ public class SKTiledDemoScene: SKTiledScene {
 
     override public func didChangeSize(_ oldSize: CGSize) {
         super.didChangeSize(oldSize)
-        #if os(OSX)
+        #if os(macOS)
         updateTrackingViews()
         #endif
         updateHud(tilemap)
@@ -158,29 +158,29 @@ public class SKTiledDemoScene: SKTiledScene {
 
     }
 
-    func buildPath(start: int2, end: int2) {
-
-    }
-
     // MARK: - Deinitialization
     deinit {
         // Deregister for scene updates
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "updateCoordinate"), object: nil)
-
-        removeAllActions()
-        removeAllChildren()
     }
 
     // MARK: - Demo
 
+    /**
+     Special setup functions for various included demo content.
+
+     - parameter fileNamed: `String` tiled filename.
+     */
     func setupDemoLevel(fileNamed: String) {
         guard let tilemap = tilemap else { return }
 
+        let baseFilename = fileNamed.components(separatedBy: "/").last!
+
         let walkableTiles = tilemap.getTilesWithProperty("walkable", true)
         let walkableString = (walkableTiles.isEmpty == true) ? "" : ", \(walkableTiles.count) walkable tiles."
-        log("setting up level: \"\(fileNamed)\"\(walkableString)", level: .info)
+        log("setting up level: \"\(baseFilename)\"\(walkableString)", level: .info)
 
-        switch fileNamed {
+        switch baseFilename {
 
         case "dungeon-16x16.tmx":
             if let upperGraphLayer = tilemap.tileLayers(named: "Graph-Upper").first {
@@ -190,6 +190,8 @@ public class SKTiledDemoScene: SKTiledScene {
             if let lowerGraphLayer = tilemap.tileLayers(named: "Graph-Lower").first {
                 _ = lowerGraphLayer.initializeGraph(walkable: walkableTiles)
             }
+
+
 
         case "graphtest-8x8.tmx":
             if let graphLayer = tilemap.tileLayers(named: "Graph").first {
@@ -208,6 +210,21 @@ public class SKTiledDemoScene: SKTiledScene {
                     }
                 }
             }
+
+        case "level-ramps.tmx", "level-rivets.tmx":
+            //log("setting up Donkey Kong level: \(baseFilename)", level: .info)
+            if let actorsGroup = tilemap.objectGroups(named: "Actors").first {
+                log("found actors group", level: .info)
+                let actorObjects = actorsGroup.getObjects()
+                for object in actorObjects {
+                    print("object: \(object)")
+                }
+            }
+
+        case "line-widths.tmx":
+
+            let objectsLayer = tilemap.objectGroups(named: "objects1").first!
+            objectsLayer.lineWidth = 4
 
         default:
             return
@@ -274,7 +291,7 @@ public class SKTiledDemoScene: SKTiledScene {
 
     /**
      Callback to remove coordinates.
-     
+
      - parameter notification: `Notification` notification center callback.
      */
     public func updateCoordinate(notification: Notification) {
@@ -287,13 +304,16 @@ public class SKTiledDemoScene: SKTiledScene {
 
     /**
      Update HUD elements when the view size changes.
-     
+
      - parameter map: `SKTilemap?` tile map.
      */
     public func updateHud(_ map: SKTilemap?) {
+        guard let view = view else { return }
         guard let map = map else { return }
         updateMapInfo(msg: map.description)
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateWindowTitle"), object: nil, userInfo: ["wintitle": map.url.lastPathComponent])
+
+        let wintitle = "\(map.url.lastPathComponent) - \(view.bounds.size.shortDescription)"
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateWindowTitle"), object: nil, userInfo: ["wintitle": wintitle])
     }
 
     /**
@@ -319,7 +339,7 @@ public class SKTiledDemoScene: SKTiledScene {
 
     /**
      Cleanup all tile shapes outside of the given coordinate.
-     
+
      - parameter coord: `CGPoint?` current focus coord.
      */
     func cleanupTileShapes(coord: CGPoint? = nil) {
@@ -403,7 +423,7 @@ public class SKTiledDemoScene: SKTiledScene {
         }
     }
 
-    // MARK: - SKTilemapDelegate Callbacks
+    // MARK: - Delegate Callbacks
 
     override open func didReadMap(_ tilemap: SKTilemap) {
         log("map read: \"\(tilemap.mapName)\"", level: .debug)
@@ -412,6 +432,7 @@ public class SKTiledDemoScene: SKTiledScene {
 
     override open func didAddTileset(_ tileset: SKTileset) {
         let imageCount = (tileset.isImageCollection == true) ? tileset.dataCount : 0
+        //
         let statusMessage = (imageCount > 0) ? "images: \(imageCount)" : "rendered: \(tileset.isRendered)"
         log("tileset added: \"\(tileset.name)\", \(statusMessage)", level: .debug)
     }
@@ -466,9 +487,13 @@ extension SKTiledDemoScene {
 #endif
 
 
-#if os(OSX)
+#if os(macOS)
 // Mouse-based event handling
 extension SKTiledDemoScene {
+
+    override open func mouseUp(with event: NSEvent) {
+        super.mouseUp(with: event)
+    }
 
     override open func mouseDown(with event: NSEvent) {
         super.mouseDown(with: event)
@@ -480,14 +505,15 @@ extension SKTiledDemoScene {
         let defaultLayer = tilemap.defaultLayer
 
         let coord = defaultLayer.coordinateAtMouseEvent(event: event)
-        let tileShapesUnderCursor = tileShapesAt(event: event)
 
+        let tileShapesUnderCursor = tileShapesAt(event: event)
         for tile in tileShapesUnderCursor where tile.role == .coordinate {
-            tile.interactions += 1
+                tile.interactions += 1
         }
 
         if (liveMode == true) && (isPaused == false) {
 
+            // double click
             if (event.clickCount > 1) {
 
                 if graphCoordinates.contains(coord) {
@@ -520,6 +546,8 @@ extension SKTiledDemoScene {
                         }
                     }
                 }
+
+            // single click
             } else {
                 // highlight the current coordinate
                 if let tile = addTileToWorld(Int(coord.x), Int(coord.y), role: .coordinate) {
@@ -564,7 +592,12 @@ extension SKTiledDemoScene {
 
         // query nodes under the cursor to update the properties label
         var propertiesInfoString = "--"
+
         let tileShapesUnderCursor = tileShapesAt(event: event)
+
+        for tile in tileShapesUnderCursor where tile.role == .coordinate {
+            tile.interactions += 1
+        }
 
         currentTile = nil
         currentVectorObject = nil
@@ -627,7 +660,7 @@ extension SKTiledDemoScene {
         if (liveMode == true) {
             if (currentVectorObject != nil) {
                 if (currentVectorObject!.isRenderableType == true) {
-                    currentVectorObject!.drawBounds(withColor: TiledObjectColors.coral, zpos: nil, duration: 0.2)
+                    currentVectorObject!.drawBounds(withColor: TiledObjectColors.dandelion, zpos: nil, duration: 0.35)
                     currentVectorObject = nil
                 }
             }
@@ -658,7 +691,11 @@ extension SKTiledDemoScene {
 
     open func tileShapesAt(event: NSEvent) -> [TileShape] {
         let positionInScene = event.location(in: self)
-        return nodes(at: positionInScene).filter { $0 as? TileShape != nil } as! [TileShape]
+        // TODO: enumeration error
+        // https://stackoverflow.com/questions/24626462/error-when-attempting-to-remove-node-from-parent-using-fast-enumeration
+        // https://stackoverflow.com/questions/32464988/swift-multithreading-error-by-using-enumeratechildnodeswithname?rq=1
+        let nodesAtPosition = nodes(at: positionInScene)
+        return nodesAtPosition.filter { $0 as? TileShape != nil } as! [TileShape]
     }
 
     /**
@@ -686,7 +723,7 @@ extension SKTiledDemoScene {
 
 
 internal class MouseTracker: SKNode {
-    
+
     private var label = SKLabelNode(fontNamed: "Courier")
     private var shadow = SKLabelNode(fontNamed: "Courier")
     private var shadowOffset: CGFloat = 1
@@ -727,7 +764,7 @@ internal class MouseTracker: SKNode {
     override init() {
         scaleSequence = SKAction.sequence([scaleAction, scaleAction.reversed()])
         super.init()
-        update()
+        draw()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -739,7 +776,7 @@ internal class MouseTracker: SKNode {
         label.position.y = vector * (scaleSize * 2)
     }
 
-    func update() {
+    func draw() {
         circle = SKShapeNode(circleOfRadius: radius)
         addChild(circle)
 
@@ -874,9 +911,21 @@ extension SKTiledDemoScene {
             updateCommandString("fitting map to view...", duration: 3.0)
         }
 
-        // 'd' key is free
+        // 'd' shows oversize tiles
         if eventKey == 0x2 {
-            print("path shapes: \(self.pathshapes)")
+
+            let oversizeTiles = tilemap.getTiles().filter {
+                $0.tileSize != tilemap.tileSize
+            }
+
+            if (oversizeTiles.isEmpty == false) {
+                let tileMessage = (oversizeTiles.count == 1) ? "tile" : "tiles"
+                updateCommandString("drawing bounds for \(oversizeTiles.count) oversize \(tileMessage).", duration: 3.0)
+            }
+
+            oversizeTiles.forEach {
+                $0.drawBounds(withColor: nil, zpos: nil, duration: 6.0)
+            }
         }
 
         // 'g' shows the grid for the map default layer.
@@ -919,6 +968,9 @@ extension SKTiledDemoScene {
             let command = (self.liveMode == true) ? "disabling live mode" : "enabling live mode"
             updateCommandString(command, duration: 3.0)
             liveMode = !liveMode
+
+            let liveModeString = (liveMode == true) ? "Live Mode: On" : "Live Mode: Off"
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDelegateMenuItems"), object: nil, userInfo: ["liveMode": liveModeString])
         }
 
         // 'o' shows/hides object layers
@@ -934,6 +986,18 @@ extension SKTiledDemoScene {
         // 'r' reloads the scene
         if eventKey == 0xf {
             self.reloadScene()
+        }
+
+        // '↑' raises the speed
+        if eventKey == 0x7e {
+            self.speed += 0.5
+            updateCommandString("scene speed: \(speed.roundTo())", duration: 1.0)
+        }
+
+        // '↓' lowers the speed
+        if eventKey == 0x7d {
+            self.speed -= 0.5
+            updateCommandString("scene speed: \(speed.roundTo())", duration: 1.0)
         }
     }
 }

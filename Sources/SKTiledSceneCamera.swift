@@ -251,6 +251,21 @@ public class SKTiledSceneCamera: SKCameraNode, Loggable {
         maxZoom = maximum
     }
 
+    // MARK: - Bounds
+    /**
+     Update the camera bounds.
+
+     - parameter bounds: `CGRect` camera view bounds.
+     */
+    public func setCameraBounds(bounds: CGRect) {
+        self.bounds = bounds
+
+        // notify delegates
+        for delegate in delegates {
+            delegate.cameraBoundsChanged(bounds: bounds, position: position, zoom: zoom)
+        }
+    }
+
     // MARK: - Movement
 
     /**
@@ -349,7 +364,6 @@ public class SKTiledSceneCamera: SKCameraNode, Loggable {
     public func resetCamera(toScale scale: CGFloat) {
         centerOn(scenePoint: CGPoint(x: 0, y: 0))
         setCameraZoom(scale)
-
     }
 
     /**

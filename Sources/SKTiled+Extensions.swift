@@ -4,7 +4,7 @@
 //
 //  Created by Michael Fessenden on 4/5/16.
 //  Copyright © 2016 Michael Fessenden. All rights reserved.
-//
+//  Compression extensions based on: https://github.com/1024jp/GzipSwift
 
 import Foundation
 import SpriteKit
@@ -28,14 +28,16 @@ import Cocoa
  - parameter whatToDraw: function detailing what to draw the image.
  - returns: `CGImage` result.
  */
-public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ context: CGContext, _ bounds: CGRect, _ scale: CGFloat) -> ()) -> CGImage {
+public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ context: CGContext, _ bounds: CGRect, _ scale: CGFloat) -> ()) -> CGImage? {
     // create an image of size, not opaque, not scaled
     UIGraphicsBeginImageContextWithOptions(size, false, scale)
     let context = UIGraphicsGetCurrentContext()
+
     context!.interpolationQuality = .high
     let bounds = CGRect(origin: CGPoint.zero, size: size)
     whatToDraw(context!, bounds, scale)
     let result = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
     return result!.cgImage!
 }
 
@@ -49,7 +51,7 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
  - parameter whatToDraw: `()->()` function detailing what to draw the image.
  - returns: `CGImage` result.
  */
-public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ context: CGContext, _ bounds: CGRect, _ scale: CGFloat) -> ()) -> CGImage {
+public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ context: CGContext, _ bounds: CGRect, _ scale: CGFloat) -> ()) -> CGImage? {
     let scaledSize = size
     let image = NSImage(size: scaledSize)
     image.lockFocus()
@@ -61,6 +63,9 @@ public func imageOfSize(_ size: CGSize, scale: CGFloat=1, _ whatToDraw: (_ conte
     image.unlockFocus()
     var imageRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
     let imageRef = image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)
+
+    // force the buffer to empty
+    nsContext.flushGraphics()
     return imageRef!
 }
 
@@ -1552,6 +1557,37 @@ internal func writeToFile(_ image: CGImage, url: URL) -> Data {
 
 
 
+internal func drawAnchor(_ node: SKNode,
+                         withLabel: String? = nil,
+                         labelSize: CGFloat = 10,
+                         labelOffsetX: CGFloat = 0,
+                         labelOffsetY: CGFloat = 0,
+                         radius: CGFloat = 4,
+                         anchorColor: SKColor = SKColor.red) {
+
+    node.childNode(withName: "ANCHOR")?.removeFromParent()
+
+    let anchorShape = SKShapeNode(circleOfRadius: radius)
+    anchorShape.name = "ANCHOR"
+    node.addChild(anchorShape)
+    anchorShape.fillColor = anchorColor
+    anchorShape.strokeColor = .clear
+    anchorShape.zPosition = node.zPosition + 1
+
+    if let withLabel = withLabel {
+        let anchorLabel = SKLabelNode(fontNamed: "Courier")
+        anchorLabel.text = withLabel
+        anchorLabel.fontSize = labelSize * 4
+        anchorShape.addChild(anchorLabel)
+        anchorLabel.zPosition = anchorShape.zPosition + 1
+        anchorLabel.position.x += labelOffsetX
+        anchorLabel.position.y += labelOffsetY
+        anchorLabel.setScale(1.0 / 4.0)
+        anchorLabel.color = .white
+    }
+}
+
+
 // MARK: - Polygon Drawing
 
 /**
@@ -1748,8 +1784,8 @@ public func getContentScaleFactor() -> CGFloat {
  - returns: `CGPoint` clamped point.
  */
 internal func clampedPosition(point: CGPoint, scale: CGFloat) -> CGPoint {
-    let clampedX = Int(point.x * scale) / scale
-    let clampedY = Int(point.y * scale) / scale
+    let clampedX = round(Int(point.x * scale) / scale)
+    let clampedY = round(Int(point.y * scale) / scale)
     return CGPoint(x: clampedX, y: clampedY)
 }
 
@@ -1762,7 +1798,6 @@ internal func clampedPosition(point: CGPoint, scale: CGFloat) -> CGPoint {
  */
 internal func clampPositionWithNode(node: SKNode, scale: CGFloat) {
     node.position = clampedPosition(point: node.position, scale: SKTiledContentScaleFactor)
-    Logger.default.log("clamping position for node: \"\(String(describing: type(of: node)))\"", level: .debug)
     if let parentNode = node.parent {
         if parentNode != node.scene {
             clampPositionWithNode(node: parentNode, scale: scale)

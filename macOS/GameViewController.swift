@@ -61,7 +61,7 @@ class GameViewController: NSViewController, Loggable {
         skView.showsFPS = true
         skView.showsNodeCount = true
         skView.showsDrawCount = true
-        skView.showsPhysics = true
+        skView.showsPhysics = false
         //debugInfoLabel?.isHidden = false
         #endif
 

@@ -196,6 +196,10 @@
                 </application>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="SKTiledDemo" customModuleProvider="target">
                     <connections>
+                        <outlet property="liveModeMenuItem" destination="E4z-1e-s2g" id="PM4-kg-p6F"/>
+                        <outlet property="mapBoundsMenuItem" destination="51g-Mm-hud" id="36E-MR-hEI"/>
+                        <outlet property="mapGridMenuItem" destination="eku-8C-PZh" id="S2a-WF-dRv"/>
+                        <outlet property="navigationGraphMenuItem" destination="618-i7-afz" id="4v2-YH-n3u"/>
                         <outlet property="recentFilesMenu" destination="PxH-bD-OZi" id="bB9-r3-H32"/>
                         <outlet property="recentFilesSubmenu" destination="8G9-Wf-vRY" id="AL4-Rt-RYW"/>
                     </connections>
@@ -203,7 +207,7 @@
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <userDefaultsController representsSharedInstance="YES" id="aIM-ST-Kfn"/>
             </objects>
-            <point key="canvasLocation" x="-956" y="-246"/>
+            <point key="canvasLocation" x="-956" y="-324"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -342,7 +346,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oa4-I2-u1i" userLabel="Tile Info Label">
-                                        <rect key="frame" x="17.5" y="45" width="42" height="14"/>
+                                        <rect key="frame" x="18" y="45" width="42" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Tile:" id="sRi-Cf-RZd">
                                             <font key="font" size="11" name="Courier"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -437,7 +441,7 @@
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <arrayController id="roh-5A-x7m"/>
             </objects>
-            <point key="canvasLocation" x="-1008" y="866"/>
+            <point key="canvasLocation" x="-956" y="1068"/>
         </scene>
     </scenes>
     <resources>

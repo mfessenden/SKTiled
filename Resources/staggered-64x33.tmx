@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.2" orientation="staggered" renderorder="right-down" width="15" height="35" tilewidth="64" tileheight="33" staggeraxis="y" staggerindex="odd" backgroundcolor="#000000" nextobjectid="15">
+<map version="1.0" tiledversion="1.0.3" orientation="staggered" renderorder="right-down" width="15" height="35" tilewidth="64" tileheight="33" staggeraxis="y" staggerindex="odd" backgroundcolor="#000000" nextobjectid="15">
  <properties>
   <property name="autoResize" type="bool" value="true"/>
   <property name="frameColor" type="color" value="#ff5adc1f"/>
   <property name="gridColor" type="color" value="#ff91ff5d"/>
-  <property name="objectColor" type="color" value="#ff6b81ff"/>
+  <property name="objectColor" type="color" value="#fff9ff80"/>
  </properties>
  <tileset firstgid="1" name="staggered-64x33-64x192" tilewidth="64" tileheight="192" tilecount="72" columns="18">
   <image source="staggered-64x192.png" width="1152" height="768"/>

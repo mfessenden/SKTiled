@@ -4,16 +4,15 @@
 //
 //  Created by Michael Fessenden on 10/18/16.
 //  Copyright © 2016 Michael Fessenden. All rights reserved.
-//  **Adapted from Apple DemoBots
+//
 
 import Cocoa
 import SpriteKit
 
 
 class GameWindowController: NSWindowController, NSWindowDelegate {
-    // MARK: Properties
 
-    // if this value is true, the tilemap was already paused when the window resize began
+    // tilemap pause state before any window size change
     var isManuallyPaused: Bool = false
     
     var view: SKView {
@@ -26,13 +25,16 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
         window?.delegate = self
     }
 
-    // MARK: NSWindowDelegate
+    // MARK: - Resizing
 
     func windowWillStartLiveResize(_ notification: Notification) {
         // Pause the scene while the window resizes if the game is active.
-        if let scene = view.scene {
 
+        if let scene = view.scene {
+            // record the scene pause state
             isManuallyPaused = scene.isPaused
+
+            // pause the scene for the resize
             scene.isPaused = true
 
             /*
@@ -48,6 +50,7 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
      Tweak the window title bar when the window is resized.
      */
     func windowDidResize(_ notification: Notification) {
+        var wintitle = ""
         if let scene = view.scene {
             scene.size = view.bounds.size
 
@@ -58,13 +61,19 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
                     var renderSize = tilemap.sizeInPoints
                     renderSize.width *= sceneDelegate.cameraNode.zoom
                     renderSize.height *= sceneDelegate.cameraNode.zoom
+
+
+                    wintitle += "\(tilemap.url.lastPathComponent) - \(view.bounds.size.shortDescription)"
                 }
 
+                // update the camera bounds
                 if let cameraNode = sceneDelegate.cameraNode {
                     cameraNode.bounds = view.bounds
                 }
             }
         }
+
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateWindowTitle"), object: nil, userInfo: ["wintitle": wintitle])
     }
 
     func windowDidEndLiveResize(_ notification: Notification) {

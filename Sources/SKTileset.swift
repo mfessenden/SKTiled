@@ -450,6 +450,15 @@ public class SKTileset: SKTiledObject {
     }
 
     /**
+     Returns animated tile data.
+
+     - returns: `[SKTilesetData]` array of animated tile data.
+     */
+    public func getAnimatedTileData() -> [SKTilesetData] {
+        return tileData.filter { $0.isAnimated == true }
+    }
+
+    /**
      Convert a global ID to the tileset's local ID.
 
      - parameter id: `Int` global id.
@@ -481,6 +490,37 @@ public class SKTileset: SKTiledObject {
         // get the actual gid from the mask
         let gid = uid & flippedMask
         return Int(gid)
+    }
+
+    // MARK: - Rendering
+
+    /**
+     Check that all animated frames have textures.
+     */
+    internal func renderTileData() {
+        let animatedData = getAnimatedTileData()
+        var framesAdded = 0
+        var dataFixed = 0
+        if (animatedData.isEmpty == false) {
+            animatedData.forEach { data in
+                for frame in data.frames {
+                    if frame.texture == nil {
+                        if let frameData = getTileData(localID: frame.gid) {
+                            if frameData.texture != nil {
+                                frame.texture = frameData.texture
+                                framesAdded += 1
+                            }
+                        }
+
+                    }
+                }
+                dataFixed += 1
+            }
+        }
+
+        if framesAdded > 0 {
+            log("updated \(dataFixed) tile data animations for tileset: \"\(name)\"", level: .debug)
+        }
     }
 
     // MARK: - Debugging

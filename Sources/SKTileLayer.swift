@@ -159,7 +159,7 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
     public var debugDrawOptions: DebugDrawOptions = [] {
         didSet {
             guard oldValue != debugDrawOptions else { return }
-            debugNode?.update()
+            debugNode?.draw()
         }
     }
 
@@ -336,6 +336,7 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
 
     // MARK: - Children
 
+    /// Child layer array.
     public var layers: [SKTiledLayerObject] {
         return [self]
     }
@@ -365,7 +366,7 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
     }
     #endif
 
-    #if os(OSX)
+    #if os(macOS)
 
     // MARK: - Mouse Events
 
@@ -882,9 +883,10 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
     - Returns: `SKTexture?` rendered texture.
      */
     internal func render() -> SKTexture? {
-        let cropRect = CGRect(x: 0, y: -tilemap.sizeInPoints.height,
-                              width: tilemap.sizeInPoints.width,
-                              height: tilemap.sizeInPoints.height)
+        let renderSize = tilemap.sizeInPoints * SKTiledContentScaleFactor
+        let cropRect = CGRect(x: 0, y: -renderSize.height,
+                              width: renderSize.width,
+                              height: renderSize.height)
 
         if let rendered = SKView().texture(from: self, crop: cropRect) {
             rendered.filteringMode = .nearest
@@ -893,15 +895,24 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
         return nil
     }
 
+    // MARK: - Memory
+    /**
+     Dump debug images to conserve memory.
+     */
+    internal func flush() {
+        debugNode.flush()
+    }
+
     // MARK: - Updating
 
     /**
-     Called before each frame is rendered.
+     Update the layer before each frame is rendered.
 
      - parameter currentTime: `TimeInterval` update interval.
      */
     public func update(_ currentTime: TimeInterval) {
         guard (isRendered == true) else { return }
+        self.position = clampedPosition(point: self.position, scale: SKTiledContentScaleFactor)
     }
 }
 
@@ -954,7 +965,7 @@ public class SKTileLayer: SKTiledLayerObject {
     override public var debugDrawOptions: DebugDrawOptions {
         didSet {
             guard oldValue != debugDrawOptions else { return }
-            debugNode?.update()
+            debugNode?.draw()
 
             let doShowTileBounds = debugDrawOptions.contains(.drawTileBounds)
             tiles.forEach { $0?.showBounds = doShowTileBounds }
@@ -967,6 +978,14 @@ public class SKTileLayer: SKTiledLayerObject {
             tiles.flatMap { $0 }.forEach { $0.highlightDuration = highlightDuration }
         }
     }
+
+    override public var speed: CGFloat {
+        didSet {
+            guard oldValue != speed else { return }
+            self.getTiles().forEach {$0.speed = speed}
+        }
+    }
+
 
     // MARK: - Init
     /**
@@ -1328,9 +1347,6 @@ public class SKTileLayer: SKTiledLayerObject {
                 // set the tile zPosition to the current y-coordinate
                 //tile.zPosition = coord.y
 
-                // run animation for tiles with multiple frames
-                tile.runAnimation()
-
                 if tile.texture == nil {
                     Logger.default.cache(LogEvent("cannot find a texture for id: \(tileAttrs.gid)", level: .warning, caller: self.logSymbol))
                 }
@@ -1426,28 +1442,26 @@ public class SKTileLayer: SKTiledLayerObject {
         }
     }
 
+    // MARK: - Memory
+    /**
+     Dump debug images to conserve memory.
+     */
+    override internal func flush() {
+        super.flush()
+        getTiles().forEach { $0.flush() }
+    }
+
     // MARK: - Updating
 
     /**
-     Called before each frame is rendered.
+     Update the tile layer before each frame is rendered.
 
      - parameter currentTime: `TimeInterval` update interval.
      */
     override public func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
-        //clampTilePositions(scale: SKTiledContentScaleFactor)
-    }
-
-    /**
-     Clamp node positions to alleviate cracking.
-
-     - parameter scale: `CGFloat` content scale factor.
-     */
-    public func clampTilePositions(scale: CGFloat) {
         getTiles().forEach { tile in
-            //let clampedX = Int((tile.position.x * scale) / scale)
-            //let clampedY = Int((tile.position.y * scale) / scale)
-            tile.position = clampedPosition(point: tile.position, scale: scale)
+            tile.update(currentTime)
         }
     }
 }
@@ -1498,7 +1512,6 @@ public class SKObjectGroup: SKTiledLayerObject {
     internal var drawOrder: SKObjectGroupDrawOrder = SKObjectGroupDrawOrder.topDown
     fileprivate var objects: Set<SKTileObject> = []
 
-
     /// Toggle visibility for all of the objects in the layer.
     public var showObjects: Bool = false {
         didSet {
@@ -1518,14 +1531,18 @@ public class SKObjectGroup: SKTiledLayerObject {
         }
     }
 
+    internal var _lineWidth: CGFloat = 1.5
 
     /// Governs object line width for each object.
-    public var lineWidth: CGFloat = 1.5 {
-        didSet {
-            objects.forEach {$0.lineWidth = lineWidth}
+    public var lineWidth: CGFloat {
+        get {
+            let maxWidth = _lineWidth * 2.5
+            let proposedWidth = (_lineWidth / tilemap.currentZoom)
+            return proposedWidth < maxWidth ? (proposedWidth < _lineWidth) ? _lineWidth : proposedWidth : maxWidth
+        } set {
+            _lineWidth = newValue
         }
     }
-
 
     /// Returns a tuple of render stats used for debugging.
     override internal var renderStatistics: RenderInfo {
@@ -1549,13 +1566,19 @@ public class SKObjectGroup: SKTiledLayerObject {
     override public var debugDrawOptions: DebugDrawOptions {
         didSet {
             guard oldValue != debugDrawOptions else { return }
-            debugNode?.update()
+            debugNode?.draw()
 
             let doShowObjects = debugDrawOptions.contains(.drawObjectBounds)
             objects.forEach { $0.showBounds = doShowObjects }
         }
     }
 
+    override public var speed: CGFloat {
+        didSet {
+            guard oldValue != speed else { return }
+            self.getObjects().forEach {$0.speed = speed}
+        }
+    }
 
     // MARK: - Init
     /**
@@ -1816,15 +1839,27 @@ public class SKObjectGroup: SKTiledLayerObject {
         }
     }
 
+    // MARK: - Memory
+
+    /**
+     Dump debug images to conserve memory.
+     */
+    override internal func flush() {
+        super.flush()
+        objects.forEach { $0.flush() }
+    }
+
     // MARK: - Updating
 
     /**
-     Called before each frame is rendered.
+     Update the object group before each frame is rendered.
 
      - parameter currentTime: `TimeInterval` update interval.
      */
     override public func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
+        getObjects().forEach { $0.lineWidth = lineWidth }
+        getObjects().forEach { $0.update(currentTime)}
     }
 }
 
@@ -1897,6 +1932,16 @@ public class SKImageLayer: SKTiledLayerObject {
         self.sprite!.position.y -= textureSize.height / 2.0
     }
 
+    public func setLayerTexture(texture: SKTexture) {
+        let textureSize = texture.size()
+
+        self.sprite = SKSpriteNode(texture: texture)
+        addChild(self.sprite!)
+
+        //self.sprite!.position.x += textureSize.width / 2
+        //self.sprite!.position.y -= textureSize.height / 2.0
+    }
+
     private func addTexture(imageNamed named: String) -> SKTexture {
         let inputURL = URL(fileURLWithPath: named)
         // read image from file
@@ -1911,6 +1956,7 @@ public class SKImageLayer: SKTiledLayerObject {
         return sourceTexture
     }
 
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -1918,7 +1964,7 @@ public class SKImageLayer: SKTiledLayerObject {
     // MARK: - Updating
 
     /**
-     Called before each frame is rendered.
+     Update the image layer before each frame is rendered.
 
      - parameter currentTime: `TimeInterval` update interval.
      */
@@ -1990,7 +2036,7 @@ internal class BackgroundLayer: SKTiledLayerObject {
     // MARK: - Updating
 
     /**
-     Called before each frame is rendered.
+     Update the background layer before each frame is rendered.
 
      - parameter currentTime: `TimeInterval` update interval.
      */
@@ -2051,6 +2097,13 @@ public class SKGroupLayer: SKTiledLayerObject {
             result += layer.layers
         }
         return result
+    }
+
+    override public var speed: CGFloat {
+        didSet {
+            guard oldValue != speed else { return }
+            self.layers.forEach {$0.speed = speed}
+        }
     }
 
     // MARK: - Init
@@ -2154,7 +2207,7 @@ public class SKGroupLayer: SKTiledLayerObject {
     }
 
     /**
-     Called before each frame is rendered.
+     Update the group layer before each frame is rendered.
 
      - parameter currentTime: `TimeInterval` update interval.
      */
@@ -2508,6 +2561,31 @@ internal func SKColorWithRGB(_ r: Int, g: Int, b: Int) -> SKColor {
  */
 internal func SKColorWithRGBA(_ r: Int, g: Int, b: Int, a: Int) -> SKColor {
     return SKColor(red: CGFloat(r)/255.0, green: CGFloat(g)/255.0, blue: CGFloat(b)/255.0, alpha: CGFloat(a)/255.0)
+}
+
+
+extension SKTileLayer {
+
+    public func flatten() {
+        guard let flattenedTexture = self.render() else { return }
+        let textureSize = flattenedTexture.size()
+
+        var parentGroup: SKGroupLayer? = nil
+        if let parent = parent, parent is SKGroupLayer {
+            parentGroup = parent as? SKGroupLayer
+        }
+
+        let imageLayer = self.tilemap.newImageLayer(named: "\(layerName)_FLATTENE", group: parentGroup)
+        imageLayer.setLayerTexture(texture: flattenedTexture)
+
+        imageLayer.offset = offset
+        imageLayer.zPosition = zPosition
+
+        DispatchQueue.main.async {
+            self.removeFromParent()
+        }
+    }
+
 }
 
 

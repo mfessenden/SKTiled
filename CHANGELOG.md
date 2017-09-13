@@ -1,13 +1,31 @@
 Change Log
 ==========
 
+1.16
+-----
+
+#### Changes
+
+- add functions to alleviate tile seams, or "cracking"
+- tile animations no longer driven by `SKAction`
+    - changing `SKTilemap` speed will affect child layers
+    - tile animations will respond to `SKTilemap` speed changes, and even run backwards
+- add `SKTiledSceneCamera.setCameraBounds(bounds:)`
+- add `SKTileset.getAnimatedTileData`
+- add `SKTileset.renderTileData`
+- add `SKTilesetData.frameAt(index:)`
+- add `SKTilesetData.setTexture(_:forFrame:)`
+- add `SKTilesetData.setDuration(interval:forFrame:)`
+- remove `SKTile.pauseAnimation`
+
+
 1.15
 -----
 
 #### Changes
 
 - invert layer y-offsets properly
-- add `DemoController` to manage scenes in iOS/macOS
+- add `DemoController` to manage scenes in iOS/macOS demo targets
 
 
 - add `SKTilemap.getLayer(atPath:)`

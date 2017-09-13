@@ -18,6 +18,7 @@ import Cocoa
 /// Controller & Asset manager for the demos.
 public class DemoController: NSObject, Loggable {
 
+    public var sceneCount: Int = 0
     private let fm = FileManager.default
     static let `default` = DemoController()
 
@@ -132,7 +133,7 @@ public class DemoController: NSObject, Loggable {
 
      - parameter interval: `TimeInterval` transition duration.
      */
-    public func reloadScene(_ interval: TimeInterval=0.25) {
+    public func reloadScene(_ interval: TimeInterval=0.3) {
         guard let currentURL = currentURL else { return }
         loadScene(url: currentURL, usePreviousCamera: true, interval: interval, reload: true)
     }
@@ -142,7 +143,7 @@ public class DemoController: NSObject, Loggable {
 
      - parameter interval: `TimeInterval` transition duration.
      */
-    public func loadNextScene(_ interval: TimeInterval=0.25) {
+    public func loadNextScene(_ interval: TimeInterval=0.3) {
         guard let currentURL = currentURL else { return }
         var nextFilename = demourls.first!
         if let index = demourls.index(of: currentURL), index + 1 < demourls.count {
@@ -156,7 +157,7 @@ public class DemoController: NSObject, Loggable {
 
      - parameter interval: `TimeInterval` transition duration.
      */
-    public func loadPreviousScene(_ interval: TimeInterval=0.25) {
+    public func loadPreviousScene(_ interval: TimeInterval=0.3) {
         guard let currentURL = currentURL else { return }
         var nextFilename = demourls.last!
         if let index = demourls.index(of: currentURL), index > 0, index - 1 < demourls.count {
@@ -172,19 +173,21 @@ public class DemoController: NSObject, Loggable {
      - parameter usePreviousCamera: `Bool` transfer camera information.
      - parameter interval:          `TimeInterval` transition duration.
      */
-    internal func loadScene(url: URL, usePreviousCamera: Bool, interval: TimeInterval=0.25, reload: Bool = false) {
+    internal func loadScene(url: URL, usePreviousCamera: Bool, interval: TimeInterval=0.3, reload: Bool = false) {
         guard let view = self.view else {
             log("view is not set.", level: .error)
             return
         }
 
         var hasCurrent = false
-        var liveMode = false
+        var liveMode = true
         var showOverlay = true
         var cameraPosition = CGPoint.zero
         var cameraZoom: CGFloat = 1
         var isPaused: Bool = false
         var showObjects: Bool = false
+        var currentSpeed: CGFloat = 1
+        var sceneInfo: [String: Any] = [:]
 
         if let currentScene = view.scene as? SKTiledDemoScene {
             hasCurrent = true
@@ -202,6 +205,7 @@ public class DemoController: NSObject, Loggable {
             }
 
             isPaused = currentScene.isPaused
+            currentSpeed = currentScene.speed
         }
 
         // update the console
@@ -225,6 +229,7 @@ public class DemoController: NSObject, Loggable {
                             loggingLevel: self.loggingLevel, nil)
 
             nextScene.liveMode = liveMode
+            sceneInfo["liveMode"] = liveMode
 
             if (usePreviousCamera == true) {
                 nextScene.cameraNode?.showOverlay = showOverlay
@@ -241,8 +246,8 @@ public class DemoController: NSObject, Loggable {
                 tilemap.showObjects = (tilemap.boolForKey("showObjects") == true) ? true : showObjects
             }
 
-            let sceneInfo = ["hasGraphs": (nextScene.graphs.isEmpty == false),
-                             "hasObjects": nextScene.tilemap.getObjects().isEmpty == false]
+            sceneInfo["hasGraphs"] = (nextScene.graphs.isEmpty == false)
+            sceneInfo["hasObjects"] = nextScene.tilemap.getObjects().isEmpty == false
 
             NotificationCenter.default.post(name: Notification.Name(rawValue: "updateUIControls"), object: nil, userInfo: sceneInfo)
             nextScene.setupDemoLevel(fileNamed: url.relativePath)
@@ -252,12 +257,17 @@ public class DemoController: NSObject, Loggable {
                 nextScene.cameraNode.fitToView(newSize: view.bounds.size)
             }
 
-            // TODO: find memory leak - commenting this out for iOS for now
+            // TODO: avoid memory spiking -> commenting this out for iOS for now
             #if os(macOS)
             self.demoQueue.async {
                 tilemap.defaultLayer.debugDrawOptions = self.debugDrawOptions
             }
             #endif
+
+            self.sceneCount += 1
+            // set the previous scene's speed
+            nextScene.speed = currentSpeed
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDelegateMenuItems"), object: nil, userInfo: sceneInfo)
         }
     }
 
@@ -286,6 +296,9 @@ public class DemoController: NSObject, Loggable {
         if let tilemap = scene.tilemap {
             updateCommandString("visualizing map bounds...", duration: 3)
             tilemap.debugDrawOptions = (tilemap.debugDrawOptions.contains(.drawBounds)) ? tilemap.debugDrawOptions.subtracting([.drawBounds]) : tilemap.debugDrawOptions.insert([.drawBounds]).memberAfterInsert
+
+            let debugInfo: [String: Any] = ["mapGrid": tilemap.debugDrawOptions.contains(.drawGrid), "navGraph": tilemap.debugDrawOptions.contains(.drawGraph), "mapBounds": tilemap.debugDrawOptions.contains(.drawBounds)]
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDelegateMenuItems"), object: nil, userInfo: debugInfo)
         }
     }
 
@@ -299,6 +312,9 @@ public class DemoController: NSObject, Loggable {
         if let tilemap = scene.tilemap {
             updateCommandString("visualizing map grid...", duration: 3)
             tilemap.debugDrawOptions = (tilemap.debugDrawOptions.contains(.drawGrid)) ? tilemap.debugDrawOptions.subtracting([.drawGrid]) : tilemap.debugDrawOptions.insert([.drawGrid]).memberAfterInsert
+
+            let debugInfo: [String: Any] = ["mapGrid": tilemap.debugDrawOptions.contains(.drawGrid), "navGraph": tilemap.debugDrawOptions.contains(.drawGraph), "mapBounds": tilemap.debugDrawOptions.contains(.drawBounds)]
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDelegateMenuItems"), object: nil, userInfo: debugInfo)
         }
     }
 
@@ -312,6 +328,9 @@ public class DemoController: NSObject, Loggable {
         if let tilemap = scene.tilemap {
             updateCommandString("visualizing map grid & bounds...", duration: 3)
             tilemap.debugDrawOptions = (tilemap.debugDrawOptions.contains(.drawGrid)) ? tilemap.debugDrawOptions.subtracting([.drawGrid, .drawBounds]) : tilemap.debugDrawOptions.insert([.drawGrid, .drawBounds]).memberAfterInsert
+
+            let debugInfo: [String: Any] = ["mapGrid": tilemap.debugDrawOptions.contains(.drawGrid), "navGraph": tilemap.debugDrawOptions.contains(.drawGraph), "mapBounds": tilemap.debugDrawOptions.contains(.drawBounds)]
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDelegateMenuItems"), object: nil, userInfo: debugInfo)
         }
     }
 
@@ -405,7 +424,7 @@ public class DemoController: NSObject, Loggable {
 
     /**
      Send a command to the UI to update status.
-     
+
      - parameter command:  `String` command string.
      - parameter duration: `TimeInterval` how long the message should be displayed (0 is indefinite).
      */

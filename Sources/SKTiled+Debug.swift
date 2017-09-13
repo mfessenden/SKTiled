@@ -63,8 +63,8 @@ internal class SKTiledDebugDrawNode: SKNode {
     private var graphSprite: SKSpriteNode!
     private var frameShape: SKShapeNode!
 
-    private var gridTexture: SKTexture? = nil               // grid texture
-    private var graphTexture: SKTexture? = nil              // GKGridGraph texture
+    private var gridTexture: SKTexture?                      // grid texture
+    private var graphTexture: SKTexture?                     // GKGridGraph texture
     private var anchorKey: String = "ANCHOR"
 
     init(tileLayer: SKTiledLayerObject) {
@@ -147,7 +147,7 @@ internal class SKTiledDebugDrawNode: SKNode {
     /**
      Update the node with the various options.
      */
-    func update() {
+    func draw() {
         if self.debugDrawOptions.contains(.drawGrid) {
             self.drawGrid()
         } else {
@@ -257,33 +257,30 @@ internal class SKTiledDebugDrawNode: SKNode {
             let lineScale: CGFloat = (layer.tilemap.tileHeightHalf > 8) ? 1 : 0.75   // 2:1
 
             // generate the texture
-            var gridImage: CGImage? = drawLayerGrid(self.layer, imageScale: imageScale, lineScale: lineScale)
-            if (gridImage != nil) {
-                self.gridTexture = SKTexture(cgImage: gridImage!)
-                self.gridTexture?.filteringMode = .linear
+            if let gridImage = drawLayerGrid(self.layer, imageScale: imageScale, lineScale: lineScale) {
+
+                gridTexture = SKTexture(cgImage: gridImage)
+                gridTexture?.filteringMode = .linear
+
+                // sprite scaling factor
+                let spriteScaleFactor: CGFloat = (1 / imageScale)
+                gridSize = (gridTexture != nil) ? gridTexture!.size() / uiScale : .zero
+                gridSprite.setScale(spriteScaleFactor)
+
+                Logger.default.log("grid texture size: \(gridSize.shortDescription), bpc: \(gridImage.bitsPerComponent), scale: \(imageScale)", level: .debug)
+
+                gridSprite.texture = gridTexture
+                gridSprite.alpha = layer.gridOpacity
+                gridSprite.size = gridSize / imageScale
+
+                // need to flip the grid texture in y
+                // currently not doing this to the parent node so that objects will draw correctly.
+                #if os(iOS) || os(tvOS)
+                gridSprite.position.y = -layer.sizeInPoints.height
+                #else
+                gridSprite.yScale *= -1
+                #endif
             }
-            
-            gridImage = nil
-
-            // sprite scaling factor
-            let spriteScaleFactor: CGFloat = (1 / imageScale)
-            gridSize = (gridTexture != nil) ? gridTexture!.size() / uiScale : .zero
-            gridSprite.setScale(spriteScaleFactor)
-
-            Logger.default.log("grid texture size: \(gridSize.shortDescription)", level: .debug)
-
-            gridSprite.texture = gridTexture
-            gridSprite.alpha = layer.gridOpacity
-            gridSprite.size = gridSize / imageScale
-
-            // need to flip the grid texture in y
-            // currently not doing this to the parent node so that objects will draw correctly.
-            #if os(iOS) || os(tvOS)
-            gridSprite.position.y = -layer.sizeInPoints.height
-            #else
-            gridSprite.yScale *= -1
-            #endif
-
         }
         gridSprite.isHidden = false
     }
@@ -298,7 +295,7 @@ internal class SKTiledDebugDrawNode: SKNode {
         // get the last z-position
         zPosition = layer.tilemap.lastZPosition + (layer.tilemap.zDeltaForLayers - 10)
         isHidden = false
-        var gridSize = CGSize.zero
+        var graphSize = CGSize.zero
 
         // scale factor for texture
         let uiScale: CGFloat = SKTiledContentScaleFactor
@@ -310,31 +307,32 @@ internal class SKTiledDebugDrawNode: SKNode {
 
         // generate the texture
         if (graphTexture == nil) {
-            var graphImage = drawLayerGraph(self.layer, imageScale: imageScale, lineScale: lineScale)
-            if (graphImage != nil) {
-                graphTexture = SKTexture(cgImage: graphImage!)
+
+            if let graphImage = drawLayerGraph(self.layer, imageScale: imageScale, lineScale: lineScale) {
+
+                graphTexture = SKTexture(cgImage: graphImage)
                 graphTexture?.filteringMode = .linear
+
+                // sprite scaling factor
+                let spriteScaleFactor: CGFloat = (1 / imageScale)
+                graphSize = (graphTexture != nil) ? graphTexture!.size() / uiScale : .zero
+                graphSprite.setScale(spriteScaleFactor)
+                Logger.default.log("graph texture size: \(graphSize.shortDescription), bpc: \(graphImage.bitsPerComponent), scale: \(imageScale)", level: .debug)
+
+                graphSprite.texture = graphTexture
+                graphSprite.alpha = layer.gridOpacity * 3
+                graphSprite.size = graphSize / imageScale
+
+                // need to flip the graph texture in y
+                // currently not doing this to the parent node so that objects will draw correctly.
+                #if os(iOS) || os(tvOS)
+                graphSprite.position.y = -layer.sizeInPoints.height
+                #else
+                graphSprite.yScale *= -1
+                #endif
+
             }
-            graphImage = nil
         }
-
-        // sprite scaling factor
-        let spriteScaleFactor: CGFloat = (1 / imageScale)
-        gridSize = (graphTexture != nil) ? graphTexture!.size() / uiScale : .zero
-        graphSprite.setScale(spriteScaleFactor)
-
-
-        graphSprite.texture = graphTexture
-        graphSprite.alpha = layer.gridOpacity * 3
-        graphSprite.size = gridSize / imageScale
-
-        // need to flip the grid texture in y
-        // currently not doing this to the parent node so that objects will draw correctly.
-        #if os(iOS) || os(tvOS)
-        graphSprite.position.y = -layer.sizeInPoints.height
-        #else
-        graphSprite.yScale *= -1
-        #endif
         graphSprite.isHidden = false
     }
 
@@ -351,6 +349,18 @@ internal class SKTiledDebugDrawNode: SKNode {
 
         addChild(anchor)
         anchor.position = anchorPoint
+    }
+
+    // MARK: - Memory
+
+    /**
+     Flush large textures.
+     */
+    func flush() {
+        gridSprite.texture = nil
+        graphSprite.texture = nil
+        gridTexture = nil
+        graphTexture = nil
     }
 }
 

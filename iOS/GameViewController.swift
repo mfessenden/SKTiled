@@ -50,7 +50,7 @@ class GameViewController: UIViewController, Loggable {
         skView.showsFPS = true
         skView.showsNodeCount = true
         skView.showsDrawCount = true
-        skView.showsPhysics = true
+        skView.showsPhysics = false
         #endif
 
 

@@ -115,10 +115,16 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     
     internal var objectType: ObjectType = .rectangle        // shape type
     internal var points: [CGPoint] = []                     // points that describe the object's shape
+
+    /// Object keys
+    internal var tileObjectKey: String = "TILE_OBJECT"
+    internal var textObjectKey: String = "TEXT_OBJECT"
+    internal var boundsKey: String = "BOUNDS"
+    internal var anchorKey: String = "ANCHOR"
+
     internal var tile: SKTile?                              // optional tile
     /// Object bounds color.
     open var frameColor: SKColor = TiledObjectColors.magenta
-    internal var boundsKey: String = "BOUNDS"
     
     /**
      ## Overview ##
@@ -195,6 +201,13 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         return (objectType == .polygon) || (objectType == .polyline)
     }
 
+    override open var speed: CGFloat {
+        didSet {
+            guard oldValue != speed else { return }
+            self.tile?.speed = speed
+        }
+    }
+
     // MARK: - Init
     /**
      Initialize the object with width & height attributes.
@@ -220,6 +233,11 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         drawObject()
     }
 
+    /**
+     Initialize the object attributes dictionary.
+
+     - parameter attributes:  `[String: String]` object attributes.
+     */
     required public init?(attributes: [String: String]) {
         // required attributes
         guard let objectID = attributes["id"],
@@ -407,7 +425,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             }
 
             // in Tiled, tile data type overrides object type
-            self.type = tileData.type
+            self.type = (tileData.type == nil) ? self.type : tileData.type!
 
             // grab size from texture if initializing with a gid
             if (size == CGSize.zero) {
@@ -426,13 +444,13 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
 
             if (tileData.texture != nil) {
 
-                childNode(withName: "TILE_OBJECT")?.removeFromParent()
+                childNode(withName: tileObjectKey)?.removeFromParent()
                 if let tileSprite = SKTile(data: tileData) {
 
                     let boundingBox = polygonPath(translatedVertices)
                     let rect = boundingBox.boundingBox
 
-                    tileSprite.name = "TILE_OBJECT"
+                    tileSprite.name = tileObjectKey
                     tileSprite.size.width = rect.size.width
                     tileSprite.size.height = rect.size.height
 
@@ -445,9 +463,6 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                     lineWidth = 0.75
                     strokeColor = SKColor.clear
                     fillColor = SKColor.clear
-
-                    // run tile animation
-                    tileSprite.runAnimation()
 
                     // set tile property
                     self.tile = tileSprite
@@ -467,20 +482,16 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
             }
 
             // remove the current text object
-            childNode(withName: "TEXT_OBJECT")?.removeFromParent()
-
-
+            childNode(withName: textObjectKey)?.removeFromParent()
 
             strokeColor = (debug == false) ? SKColor.clear : layer.gridColor.withAlphaComponent(0.75)
             fillColor = SKColor.clear
 
             // render text to an image
-            var textImage = drawTextObject(withScale: renderQuality)
-
-            if (textImage != nil) {
-                let textTexture = SKTexture(cgImage: textImage!)
+            if let cgImage = drawTextObject(withScale: renderQuality) {
+                let textTexture = SKTexture(cgImage: cgImage)
                 let textSprite = SKSpriteNode(texture: textTexture)
-                textSprite.name = "TEXT_OBJECT"
+                textSprite.name = textObjectKey
                 addChild(textSprite)
 
                 // final scaling value depends on the quality factor
@@ -488,9 +499,8 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
                 textSprite.zPosition = zPosition - 1
                 textSprite.setScale(finalScaleValue)
                 textSprite.position = self.bounds.center
-            }
 
-            textImage = nil
+            }
         }
     }
 
@@ -617,13 +627,16 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         childNode(withName: boundsKey)?.removeFromParent()
         childNode(withName: "FIRST_POINT")?.removeFromParent()
 
+        let tileHeight = (layer != nil) ? layer.tilemap.tileHeight : 8
+        // smaller maps look better with thinner lines
+        let tileHeightDivisor: CGFloat = (tileHeight <= 16) ? 2 : 0.75
 
         // if a color is not passed, use the default frame color
         let drawColor = (withColor != nil) ? withColor! : self.frameColor
 
 
         // default line width
-        let defaultLineWidth: CGFloat = 1
+        let defaultLineWidth: CGFloat = (self.layer != nil) ? self.layer.lineWidth * 3 : 4.5
         guard let vertices = getVertices() else { return }
 
         let flippedVertices = (gid == nil) ? vertices.map { $0.invertedY } : vertices
@@ -645,7 +658,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         bounds.lineCap = .round
         bounds.lineJoin = .miter
         bounds.miterLimit = 0
-        bounds.lineWidth = defaultLineWidth * (renderQuality / 2)
+        bounds.lineWidth = (defaultLineWidth * (renderQuality / 2) / tileHeightDivisor)
 
         bounds.strokeColor = drawColor.withAlphaComponent(0.4)
         bounds.fillColor = drawColor.withAlphaComponent(0.15)  // 0.35
@@ -653,12 +666,10 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         bounds.isAntialiased = layer.antialiased
 
         // anchor point
-        let tileHeight = (layer != nil) ? layer.tilemap.tileHeight : 8
-        let tileHeightDivisor = (tileHeight <= 16) ? 8 : 16
-        let anchorRadius: CGFloat = ((tileHeight / 2) / tileHeightDivisor) * renderQuality
+        let anchorRadius: CGFloat = bounds.lineWidth
         let anchor = SKShapeNode(circleOfRadius: anchorRadius)
 
-        anchor.name = "ANCHOR"
+        anchor.name = anchorKey
         bounds.addChild(anchor)
         anchor.fillColor = bounds.strokeColor
         anchor.strokeColor = SKColor.clear
@@ -765,6 +776,25 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         physicsBody?.friction = (doubleForKey("friction") != nil) ? CGFloat(doubleForKey("friction")!) : 0.2
         physicsBody?.restitution = (doubleForKey("restitution") != nil) ? CGFloat(doubleForKey("restitution")!) : 0.4  // bounciness
     }
+
+
+    // MARK: - Memory
+    internal func flush() {
+        self.path = nil
+        childNode(withName: tileObjectKey)?.removeFromParent()
+        childNode(withName: textObjectKey)?.removeFromParent()
+    }
+
+    // MARK: - Updating
+
+    /**
+     Update the object before each frame is rendered.
+
+     - parameter currentTime: `TimeInterval` update interval.
+     */
+    open func update(_ deltaTime: TimeInterval) {
+        tile?.update(deltaTime)
+    }
 }
 
 
@@ -830,23 +860,6 @@ extension SKTileObject {
     /// Signifies that the object is a tile object.
     open var isTileObject: Bool {
         return (gid != nil)
-    }
-
-    /// Pause/unpause tile animation
-    open var pauseAnimation: Bool {
-        if let tile = self.tile {
-            return tile.pauseAnimation
-        }
-        return false
-    }
-
-    /**
-     Runs tile animation.
-     */
-    open func runAnimation() {
-        if let tile = self.tile {
-            tile.runAnimation()
-        }
     }
 }
 
@@ -923,4 +936,15 @@ extension TextObjectAttributes.TextAlignment.VerticalAlignment {
         }
     }
     #endif
+}
+
+// MARK: - Deprecated
+
+extension SKTileObject {
+
+    /**
+     Runs tile animation.
+     */
+    @available(*, deprecated)
+    open func runAnimation() {}
 }

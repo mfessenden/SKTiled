@@ -48,7 +48,7 @@
   <properties>
    <property name="speed" value="1"/>
    <property name="walkable" type="bool" value="true"/>
-   <property name="weight" value="-5"/>
+   <property name="weight" value="2"/>
   </properties>
  </tile>
  <tile id="59">

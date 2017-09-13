@@ -18,6 +18,13 @@ import SpriteKit
  */
 open class SKTile: SKSpriteNode, Loggable {
 
+    /// Tile size.
+    open var tileSize: CGSize
+    /// Tileset tile data.
+    open var tileData: SKTilesetData
+    /// Weak reference to the parent layer.
+    weak open var layer: SKTileLayer!
+
     /**
      ## Overview:
 
@@ -36,15 +43,12 @@ open class SKTile: SKSpriteNode, Loggable {
         case bottomRight
     }
 
-    /// Tile size.
-    open var tileSize: CGSize
-    /// Tileset tile data.
-    open var tileData: SKTilesetData
-    /// Weak reference to the parent layer.
-    weak open var layer: SKTileLayer!
-    
+    // Overlap
     fileprivate var tileOverlap: CGFloat = 1.5                      // tile overlap amount
     fileprivate var maxOverlap: CGFloat = 3.0                       // maximum tile overlap
+
+    // Update values
+    private var currentTime : TimeInterval = 0
 
     /// Tile highlight color.
     open var highlightColor: SKColor = TiledObjectColors.lime
@@ -103,7 +107,9 @@ open class SKTile: SKSpriteNode, Loggable {
     }
 
     required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        tileData = SKTilesetData()
+        tileSize = .zero
+        super.init(coder: aDecoder)
     }
 
     /**
@@ -137,11 +143,10 @@ open class SKTile: SKSpriteNode, Loggable {
      - parameter data: `SKTilesetData` tile data.
      - returns: `SKTile` tile sprite.
      */
-    internal func update() {
+    internal func draw() {
         removeAllActions()
         texture = nil
         texture = tileData.texture
-        runAnimation()
     }
 
     // MARK: - Physics
@@ -223,47 +228,19 @@ open class SKTile: SKSpriteNode, Loggable {
     // MARK: - Animation
 
     /**
-     Checks if the tile is animated and runs an action to animate it.
+     Run tile animation.
      */
-    open func runAnimation() {
-        guard tileData.isAnimated == true else { return }
-        guard let tileset = tileData.tileset else { return }
-        var framesData: [(texture: SKTexture, duration: TimeInterval)] = []
-        for frame in tileData.frames {
-            guard let frameTexture = tileset.getTileData(localID: frame.gid)?.texture else {
-                self.log("Cannot access texture for id: \(frame.gid)", level: .error)
-
-                return
-            }
-            frameTexture.filteringMode = .nearest
-            framesData.append((texture: frameTexture, duration: frame.duration))
-        }
-
-        // run tile action
-        let animationAction = SKAction.tileAnimation(framesData)
-        run(animationAction, withKey: "Animation")
-    }
-
-    /// Pauses tile animation
-    open var pauseAnimation: Bool = false {
-        didSet {
-            guard oldValue != pauseAnimation else { return }
-            guard let action = action(forKey: "Animation") else { return }
-            action.speed = (pauseAnimation == true) ? 0 : 1.0
-        }
+    public func runAnimation() {
+        tileData.runAnimation()
     }
 
     /**
-     Remove the animation for the current tile.
+     Remove tile animation.
 
-     - parameter restore: `Bool` restore the tile's first texture.
+     - parameter restore: `Bool` restore the initial texture.
      */
     open func removeAnimation(restore: Bool = false) {
-        guard tileData.isAnimated == true else { return }
-        removeAction(forKey: "Animation")
-        if (restore == true) {
-            texture = tileData.texture
-        }
+        tileData.removeAnimation(restore: restore)
     }
 
     // MARK: - Overlap
@@ -592,6 +569,60 @@ open class SKTile: SKSpriteNode, Loggable {
             })
         }
     }
+
+    // MARK: - Memory
+    internal func flush() {
+        self.texture = nil
+        self.tileData.removeAnimation()
+    }
+
+    // MARK: - Updating
+    /**
+     Render the tile before each frame is rendered.
+
+     - parameter deltaTime: `TimeInterval` update interval.
+     */
+    open func update(_ deltaTime: TimeInterval) {
+        guard (isPaused == false) else { return }
+        // max cycle time (in ms)
+        let cycleTime = tileData.animationTime
+        guard (cycleTime > 0) else { return }
+
+        // array of frame values
+        let frames: [AnimationFrame] = (speed >= 0) ? tileData.frames : tileData.frames.reversed()
+        // increment the current time value
+        currentTime += (deltaTime * abs(Double(speed)))
+
+        // current time in ms
+        let ct: Int = Int(currentTime * 1000)
+
+        // current frame
+        var cf: Int? = nil
+
+        var aggregate = 0
+        // get the frame at the current time
+        for (idx, frame) in frames.enumerated() {
+            aggregate += frame.duration
+            if ct < aggregate  {
+                if cf == nil {
+                    cf = idx
+                }
+            }
+        }
+
+        if let currentFrame = cf {
+            let frame = frames[currentFrame]
+            if let frameTexture = frame.texture {
+                self.texture = frameTexture
+                self.size = frameTexture.size()
+            }
+        }
+
+        // the the current time is greater than the animation cycle, reset current time to 0
+        if ct >= cycleTime { currentTime = 0 }
+    }
+
+
 }
 
 
@@ -694,5 +725,22 @@ extension SKTile {
         }
 
         return CGPoint(x: xOffset, y: yOffset)
+    }
+}
+
+
+// MARK: - Deprecated
+
+
+extension SKTile {
+
+    /// Pauses tile animation
+    @available(*, deprecated, message: "Use the default `SKNode.isPaused` to pause animation.")
+    open var pauseAnimation: Bool {
+        get {
+            return self.isPaused
+        } set {
+            self.isPaused = newValue
+        }
     }
 }

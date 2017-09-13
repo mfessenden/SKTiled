@@ -51,8 +51,8 @@
  </tile>
  <tile id="13" type="fire">
   <animation>
-   <frame tileid="13" duration="100"/>
-   <frame tileid="14" duration="100"/>
+   <frame tileid="13" duration="200"/>
+   <frame tileid="14" duration="200"/>
   </animation>
  </tile>
  <tile id="57" terrain="0,0,0,">
@@ -192,20 +192,20 @@
  </tile>
  <tile id="396" type="fire">
   <animation>
-   <frame tileid="396" duration="100"/>
-   <frame tileid="397" duration="100"/>
+   <frame tileid="396" duration="200"/>
+   <frame tileid="397" duration="200"/>
   </animation>
  </tile>
  <tile id="416">
   <animation>
-   <frame tileid="416" duration="100"/>
-   <frame tileid="417" duration="100"/>
+   <frame tileid="416" duration="175"/>
+   <frame tileid="417" duration="175"/>
   </animation>
  </tile>
  <tile id="453">
   <animation>
-   <frame tileid="453" duration="100"/>
-   <frame tileid="454" duration="100"/>
+   <frame tileid="453" duration="200"/>
+   <frame tileid="454" duration="200"/>
   </animation>
  </tile>
  <tile id="470" type="fire">
@@ -216,14 +216,14 @@
  </tile>
  <tile id="473">
   <animation>
-   <frame tileid="473" duration="100"/>
-   <frame tileid="474" duration="100"/>
+   <frame tileid="473" duration="175"/>
+   <frame tileid="474" duration="175"/>
   </animation>
  </tile>
  <tile id="510" type="fire">
   <animation>
-   <frame tileid="510" duration="100"/>
-   <frame tileid="511" duration="100"/>
+   <frame tileid="510" duration="200"/>
+   <frame tileid="511" duration="200"/>
   </animation>
  </tile>
  <tile id="518" terrain="1,1,1,"/>
@@ -291,8 +291,8 @@
  </tile>
  <tile id="567">
   <animation>
-   <frame tileid="567" duration="100"/>
-   <frame tileid="568" duration="100"/>
+   <frame tileid="567" duration="200"/>
+   <frame tileid="568" duration="200"/>
   </animation>
  </tile>
  <tile id="575" terrain="1,,1,1"/>
@@ -302,8 +302,8 @@
  <tile id="579" terrain="1,,1,"/>
  <tile id="624" type="fire">
   <animation>
-   <frame tileid="510" duration="100"/>
-   <frame tileid="511" duration="100"/>
+   <frame tileid="624" duration="200"/>
+   <frame tileid="625" duration="200"/>
   </animation>
  </tile>
  <tile id="634" terrain=",1,,"/>

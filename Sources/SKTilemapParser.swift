@@ -841,6 +841,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
 
                     // delegate callback
                     parsingQueue.sync {
+                        tileset.renderTileData()
                         self.mapDelegate?.didAddTileset(tileset)
                     }
                 }
@@ -979,20 +980,23 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
             }
 
             guard let id = attributeDict["tileid"],
-                let duration = attributeDict["duration"],
+                let duration = attributeDict["duration"], Int(duration) != nil,
                 let tileset = lastElement as? SKTileset else {
-                    log("fuck!", level: .fatal)
                     parser.abortParsing()
                     return
             }
 
 
-            // get duration in seconds
-            let durationInSeconds: TimeInterval = Double(duration)! / 1000.0
 
             if let currentTileData = tileset.getTileData(globalID: currentID + tileset.firstGID) {
                 // add the frame id to the frames property
-                currentTileData.addFrame(withID: Int(id)! + tileset.firstGID, interval: durationInSeconds)
+                let animationFrame = currentTileData.addFrame(withID: Int(id)! + tileset.firstGID, interval: Int(duration)!)
+
+                if let frameData = tileset.getTileData(localID: animationFrame.gid) {
+                    if let frameTexture = frameData.texture {
+                        animationFrame.texture = frameTexture
+                    }
+                }
             }
         }
 
@@ -1083,7 +1087,6 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
                 }
                 
                 tilemap.parseProperties(completion: nil)
-
             }
 
             // layer properties
@@ -1208,7 +1211,6 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
             if let objectsgroup = lastElement as? SKObjectGroup {
                 if (currentID != nil) {
                     if let lastObject = objectsgroup.getObject(withID: currentID!) {
-
                         for (key, value) in properties {
                             lastObject.properties[key] = value
                         }
@@ -1287,6 +1289,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate, Loggable {
                     tileset.isRendered = true
                     // delegate callback
                     parsingQueue.sync {
+                        tileset.renderTileData()
                         self.mapDelegate?.didAddTileset(tileset)
                     }
                 }

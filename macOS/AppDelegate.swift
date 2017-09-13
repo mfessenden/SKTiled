@@ -16,9 +16,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var currentLoggingLevel: NSMenuItem!
     @IBOutlet weak var recentFilesMenu: NSMenuItem!
     @IBOutlet weak var recentFilesSubmenu: NSMenu!
+    @IBOutlet weak var liveModeMenuItem: NSMenuItem!
+
+    @IBOutlet weak var mapBoundsMenuItem: NSMenuItem!
+    @IBOutlet weak var mapGridMenuItem: NSMenuItem!
+    @IBOutlet weak var navigationGraphMenuItem: NSMenuItem!
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
+        NotificationCenter.default.addObserver(self, selector: #selector(updateDelegateMenuItems), name: NSNotification.Name(rawValue: "updateDelegateMenuItems"), object: nil)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -181,5 +187,24 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         sender.title = (currentGraphMode == true) ? "Navigation Graph: Off" : "Navigation Graph: On"
+    }
+
+
+    func updateDelegateMenuItems(notification: Notification) {
+        if let liveMode = notification.userInfo!["liveMode"] {
+            liveModeMenuItem.title = (liveMode as? Bool) == true ? "Live Mode: On" : "Live Mode: Off"
+        }
+
+        if let mapBounds = notification.userInfo!["mapBounds"] {
+            mapBoundsMenuItem.title = (mapBounds as? Bool) == true ? "Map Bounds: On" : "Map Bounds: Off"
+        }
+
+        if let mapGrid = notification.userInfo!["mapGrid"] {
+            mapGridMenuItem.title = (mapGrid as? Bool) == true ? "Map Grid: On" : "Map Grid: Off"
+        }
+
+        if let navGraph = notification.userInfo!["navGraph"] {
+            navigationGraphMenuItem.title = (navGraph as? Bool) == true ? "Navigation Graph: On" : "Navigation Graph: Off"
+        }
     }
 }

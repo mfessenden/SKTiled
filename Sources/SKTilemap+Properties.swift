@@ -86,10 +86,6 @@ public extension SKTilemap {
                 zPosition = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : zPosition
             }
 
-            if (lattr == "linewidth") {
-                //lineWidth = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : lineWidth
-            }
-
             if (lattr == "tileoverlap") {
                 tileOverlap = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : tileOverlap
             }
@@ -317,7 +313,6 @@ public extension SKTileObject {
     public func parseProperties(completion: (() -> ())?) {
         if (ignoreProperties == true) { return }
         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
-
         for (attr, value) in properties {
 
             let lattr = attr.lowercased()

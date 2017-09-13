@@ -1,6 +1,6 @@
 ![SKTiled][header-image]
 
-> SKTiled is a Swift framework for using [Tiled](http://www.mapeditor.org) content with Apple's SpriteKit.
+> SKTiled is a Swift framework for using [Tiled][tiled-url] assets with Apple's SpriteKit.
 
 [![Swift Version][swift-image]][swift-url]
 [![Build Status][travis-image]][travis-url]
@@ -10,7 +10,7 @@
 [![CocoaPods Compatible][pod-image]][pod-url]
 
 
-**SKTiled** is a Swift framework for using [Tiled](http://www.mapeditor.org) content with [Apple's SpriteKit][spritekit-url], allowing the creation of game assets from Tiled's .tmx files. Inspired by [TilemapKit](http://tilemapkit.com) and written purely in Swift, I began working on this after the development of TilemapKit was halted, primarily to learn Apple's new programming language. I've decided to open-source it in case others find it helpful.
+**SKTiled** is a framework for using [Tiled][tiled-url] assets with [Apple's SpriteKit][spritekit-url], built from the ground up with Swift. This project began life as an exercise to learn Apple's new programming language for a game project, but I've decided to release it as open source with the hopes that others will find it useful. **SKTiled** is up-to-date and supports **Tiled's** major features, including all map & object types.
 
 
 Current release is Swift 3/macOS 10.11/iOS 10+. For Swift 4/Xcode 9, see the [**swift4**][swift4-url] branch.
@@ -35,6 +35,7 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 - [x] group nodes
 - [x] tile objects
 - [x] text objects
+- [ ] tile collision objects
 - [x] custom tile & object classes
 - [x] generate GKGridGraph graphs from custom attributes
 - [x] user-definable cost properties for GKGridGraph nodes
@@ -43,7 +44,7 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 ## Requirements
 
 - iOS 9+
-- macOS 10.11+
+- macOS 10.12+
 - Xcode 8+
 
 ## Installation
@@ -52,12 +53,12 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 
 For Carthage installation, create a Cartfile in the root of your project:
 
-    github "mfessenden/SKTiled" ~> 1.15
+    github "mfessenden/SKTiled" ~> 1.16
 
 
 For CocoaPods, install via a reference in your podfile:
 
-    pod 'SKTiled', '~> 1.15'
+    pod 'SKTiled', '~> 1.16'
 
 
 ## Usage
@@ -208,15 +209,21 @@ let touchLocation: CGPoint = objectsLayer.coordinateAtTouchLocation(touch)
 
 ## Animated Tiles
 
-Tiles with animation will animate automatically; animated tiles can be accesssed from the either the [`SKTilemap`][sktilemap-url] node or the parent layer. The `SKTile.pauseAnimation` property can stop/start animations:
+Tiles with animation will animate automatically when the tilemap node is added to the [`SKScene.update`][skscene-update-url] method. Animated tiles can be accesssed from the either the [`SKTilemap`][sktilemap-url] node or the parent layer.
+
 
 ```swift
 // get all animated tiles, including nested layers
 let allAnimated = tilemap.animatedTiles(recursive: true)
 
+// pause/unpause tile animation
 for tile in allAnimated {
-    // pause the current animation
-    tile.pauseAnimation = true
+    tile.isPaused = true
+}
+
+// run animation backwards
+for tile in allAnimated {
+    tile = -1.0
 }
 
 // get animated tiles from individual layers
@@ -289,6 +296,7 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 [sktileset-url]:https://mfessenden.github.io/SKTiled/Classes/SKTileset.html
 
 <!--- Tiled --->
+[tiled-url]:http://www.mapeditor.org
 [group-layers-url]:http://doc.mapeditor.org/manual/layers/#group-layers
 
 <!--- Apple --->
@@ -297,3 +305,4 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 [sknode-url]:https://developer.apple.com/documentation/spritekit/sknode
 [skspritenode-url]:https://developer.apple.com/documentation/spritekit/skspritenode
 [skscene-url]:https://developer.apple.com/documentation/spritekit/skscene
+[skscene-update-url]:https://developer.apple.com/documentation/spritekit/skscene/1519802-update

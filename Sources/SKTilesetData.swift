@@ -9,16 +9,22 @@ import SpriteKit
 
 
 /**
- A structure representing frame of animation.
+ A structure representing frame of animation. Time is stored in milliseconds.
 
  - parameter gid:       `Int` unique tile id.
  - parameter duration:  `TimeInterval` frame duration.
   - parameter texture:  `SKTexture?` optional tile texture.
  */
-internal struct AnimationFrame {
+public class AnimationFrame {
     public var gid: Int = 0
-    public var duration: TimeInterval = 0
+    public var duration: Int = 0
     public var texture: SKTexture?
+
+    public init(gid: Int, duration: Int, texture: SKTexture? = nil) {
+        self.gid = gid
+        self.duration = duration
+        self.texture = texture
+    }
 }
 
 
@@ -63,13 +69,26 @@ public class SKTilesetData: SKTiledObject {
     public var properties: [String: String] = [:]
     public var ignoreProperties: Bool = false       // ignore custom properties
     public var tileOffset: CGPoint = .zero          // tile offset
+
     /// Render scaling property.
     public var renderQuality: CGFloat = 8
 
     /// Animated frames.
-    internal var frames: [AnimationFrame] = []
+    internal var blockAnimation: Bool = false       // block tile animation
+    internal var _frames: [AnimationFrame] = []
+    internal var frames: [AnimationFrame] {
+        return (blockAnimation == false) ? _frames : []
+    }
+
     /// Indicates the tile is animated.
     public var isAnimated: Bool { return frames.isEmpty == false }
+
+    /// Max animation duration (in milliseconds).
+    internal var animationTime: Int {
+        guard (isAnimated == true) else { return 0 }
+        let durations: [Int] = frames.map { $0.duration }
+        return durations.reduce(0,  { $0 + $1 })
+    }
 
     // MARK: Tile Orientation
 
@@ -150,17 +169,65 @@ public class SKTilesetData: SKTiledObject {
     /**
      Add tile animation to the data.
 
-     - parameter gid:         `Int` id for frame.
-     - parameter duration:    `TimeInterval` frame interval.
+     - parameter withID:      `Int` id for frame.
+     - parameter interval:    `Int` frame interval (in milliseconds).
      - parameter tileTexture: `SKTexture?` frame texture.
+     - returns: `AnimationFrame` animation frame container.
      */
-    public func addFrame(withID: Int, interval: TimeInterval, tileTexture: SKTexture? = nil) {
+    public func addFrame(withID: Int, interval: Int, tileTexture: SKTexture? = nil) -> AnimationFrame {
         var id = withID
         // if the tileset firstGID is already set, subtract it to get the internal id
         if let tileset = tileset, tileset.firstGID > 0 {
             id = withID - tileset.firstGID
         }
-        frames.append(AnimationFrame(gid: id, duration: interval, texture: tileTexture))
+        let frame = AnimationFrame(gid: id, duration: interval, texture: tileTexture)
+        _frames.append(frame)
+        return frame
+    }
+
+    /**
+     Returns an animation frame at the given index.
+
+     - parameter index: `Int` frame index.
+     - returns: `AnimationFrame?` animation frame container.
+     */
+    public func frameAt(index: Int) -> AnimationFrame? {
+        guard _frames.indices.contains(index) else {
+            return nil
+        }
+        return frames[index]
+    }
+
+    /**
+     Set the texture for an animated frame at the given index.
+
+     - parameter texture:   `SKTexture?` new texture.
+     - parameter forFrame:  `Int` frame index.
+     - returns: `SKTexture?` old texture (if it exists).
+     */
+    public func setTexture(_ texture: SKTexture?, forFrame: Int) -> SKTexture? {
+        if let frame = frameAt(index: forFrame) {
+            let previousTexture = frame.texture
+            texture?.filteringMode = .nearest
+            frame.texture = texture
+            return previousTexture
+        }
+        return nil
+    }
+
+    /**
+     Set the duration for an animated frame at the given index.
+
+     - parameter interval:  `Int` frame interval (in milliseconds).
+     - parameter forFrame:  `Int` frame index.
+     - returns: `Bool` frame duration was set correctly.
+     */
+    public func setDuration(interval: Int, forFrame: Int) -> Bool {
+        if let frame = frameAt(index: forFrame) {
+            frame.duration = interval
+            return true
+        }
+        return false
     }
 
     /**
@@ -169,9 +236,31 @@ public class SKTilesetData: SKTiledObject {
      - parameter at: `Int` frame index.
      - returns: `AnimationFrame?` animation frame (if it exists).
      */
-    func removeFrame(at index: Int) -> AnimationFrame? {
-        return frames.remove(at: index)
+    public func removeFrame(at index: Int) -> AnimationFrame? {
+        return _frames.remove(at: index)
     }
+
+    /**
+     Run tile animation.
+     */
+    public func runAnimation() {
+        self.blockAnimation = false
+    }
+
+    /**
+     Remove tile animation. Animation is not actually destroyed, but rather blocked.
+     
+     - parameter restore: `Bool` restore the initial texture.
+     */
+    public func removeAnimation(restore: Bool = false) {
+        guard (isAnimated == true) else { return }
+        self.blockAnimation = true
+        if (restore == true) {
+            self.texture = _frames.first!.texture
+        }
+    }
+
+    // MARK: - Flip Flags
 
     /**
      Translate the global id. Returns the translated tile ID
@@ -210,8 +299,8 @@ extension SKTilesetData: Hashable {
 
 
 extension AnimationFrame: CustomStringConvertible, CustomDebugStringConvertible {
-    var description: String { return "Frame: \(gid): \(duration * 1000)" }
-    var debugDescription: String { return description }
+    public var description: String { return "Frame: \(gid): \(duration)" }
+    public var debugDescription: String { return "<\(description)>" }
 }
 
 

@@ -68,6 +68,16 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     private var lastUpdateTime: TimeInterval = 0
     private let maximumUpdateDelta: TimeInterval = 1.0 / 60.0
 
+    /// Set the tilemap speed
+    override open var speed: CGFloat {
+        didSet {
+            guard oldValue != speed else { return }
+            if let tilemap = tilemap {
+                tilemap.speed = speed
+            }
+        }
+    }
+
     // MARK: - Init
     /**
      Initialize without a tiled map.
@@ -80,12 +90,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     }
 
     required public init?(coder aDecoder: NSCoder) {
-        super.init()
-    }
-
-    deinit {
-        removeAllActions()
-        removeAllChildren()
+        super.init(coder: aDecoder)
     }
 
     override open func didChangeSize(_ oldSize: CGSize) {
@@ -307,9 +312,7 @@ extension SKTiledSceneDelegate where Self: SKScene {
 
 #if os(macOS)
 extension SKTiledScene {
-
     override open func mouseDown(with event: NSEvent) {}
-    
     override open func mouseMoved(with event: NSEvent) {
         guard let cameraNode = cameraNode else { return }
         cameraNode.mouseMoved(with: event)
