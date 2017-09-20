@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="42" height="42" tilewidth="16" tileheight="16" backgroundcolor="#6eb4d5" nextobjectid="22">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="42" height="42" tilewidth="16" tileheight="16" backgroundcolor="#6eb4d5" nextobjectid="22">
  <properties>
   <property name="gridColor" type="color" value="#99252525"/>
   <property name="highlightColor" type="color" value="#ff3271d3"/>
   <property name="level" type="int" value="1"/>
+  <property name="navigationColor" type="color" value="#ff166dff"/>
   <property name="worldScale" type="float" value="1.4"/>
  </properties>
  <tileset firstgid="1" source="roguelike-16x16.tsx"/>
@@ -77,4 +78,9 @@
    <ellipse/>
   </object>
  </objectgroup>
+ <layer name="Graph" width="42" height="42" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztl1EKAjEMRP3y/sdcbyF+LIRhJplkW0XYQtDdtsnrJJH6ej4er9tu+yP7jF8zdDh38x6LGM9RaZ2d5wCLa6ec2ZhyIq/i7OTO4ax8nnMHcDBNd3HiJ9ur2JiG3bzH+NXo9IbiZO9Xcjq+kCPyIBc+OzGcfLvnVbyshpVvpU+X03lX5SbjvNJHqlYmOar6qIrtcMZn/O4M5FQxrnCyfVc5q5rp5mkHZ+bPiYH5cPxNOF3fDudKRsa5s993clZx45xay9a4rBhP9bvDqZ6rmF3G2EfZGrcOos/s/jDlzHTq1Oqk5h3tmZ6urnENrp/cwVhcdZ+qrNI9nr3LxvxVv+2T3DNONTINWV5wz1VO5t/lZLqyHH6bE/PKtO32Y3euw5n5wzsSy4fLyeYVJ/vP0znHRMtMg5WmarfLqbSc+HDvbmy+yzq5f50xqr2oq1ufinOSB+RkDOi3qofVerqcnTr4Fuduuzlvzl9xvgE4egCv
+  </data>
+ </layer>
 </map>

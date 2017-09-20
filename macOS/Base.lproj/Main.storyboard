@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12121"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
     </dependencies>
@@ -218,6 +218,9 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="800" height="600"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <connections>
+                            <outlet property="delegate" destination="B8D-0N-5wS" id="YaQ-v4-LMo"/>
+                        </connections>
                     </window>
                     <connections>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
@@ -236,7 +239,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iiF-QO-DZ0" userLabel="Buttons View">
-                                <rect key="frame" x="179" y="110" width="442" height="16"/>
+                                <rect key="frame" x="376" y="110" width="442" height="16"/>
                                 <subviews>
                                     <button springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vU3-Eb-5vb" userLabel="Fit Button">
                                         <rect key="frame" x="0.0" y="0.0" width="82" height="16"/>
@@ -335,9 +338,9 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bpV-ih-FVj" userLabel="Labels View">
-                                <rect key="frame" x="362" y="20" width="77" height="82"/>
+                                <rect key="frame" x="559" y="20" width="77" height="82"/>
                                 <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P0U-y9-0fU" userLabel="Map Info Label">
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P0U-y9-0fU" userLabel="Map Info Label">
                                         <rect key="frame" x="20" y="67" width="37" height="15"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Map:" id="exA-0S-gy3">
                                             <font key="font" size="12" name="Courier"/>
@@ -345,7 +348,7 @@
                                             <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oa4-I2-u1i" userLabel="Tile Info Label">
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oa4-I2-u1i" userLabel="Tile Info Label">
                                         <rect key="frame" x="18" y="45" width="42" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Tile:" id="sRi-Cf-RZd">
                                             <font key="font" size="11" name="Courier"/>
@@ -353,7 +356,7 @@
                                             <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3AA-Cl-qmn" userLabel="Properties Info Label">
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3AA-Cl-qmn" userLabel="Properties Info Label">
                                         <rect key="frame" x="-2" y="23" width="81" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Properties:" id="cFa-yZ-KBh">
                                             <font key="font" size="11" name="Courier"/>
@@ -361,7 +364,7 @@
                                             <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mhh-Pu-ydl" userLabel="Debug Info Label">
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mhh-Pu-ydl" userLabel="Debug Info Label">
                                         <rect key="frame" x="9" y="0.0" width="59" height="15"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Command" drawsBackground="YES" id="xTO-Hp-dbT">
                                             <font key="font" size="12" name="Courier"/>
@@ -383,26 +386,34 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rpo-Bf-MrJ" userLabel="Camera Info Label">
-                                <rect key="frame" x="376" y="566" width="48" height="14"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Rpo-Bf-MrJ" userLabel="Camera Info Label">
+                                <rect key="frame" x="573" y="908" width="48" height="14"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Camera" id="96K-OU-ekP">
                                     <font key="font" size="11" name="Courier"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="laT-E3-Leu" userLabel="Isolate Label">
-                                <rect key="frame" x="373" y="540" width="55" height="14"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Isolate" id="sVx-4m-rwW">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qaU-aN-dXC" userLabel="Paused Label">
+                                <rect key="frame" x="570" y="827" width="55" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Paused" id="8mb-3y-U6G">
+                                    <font key="font" size="13" name="Courier"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9UR-2I-FXx" userLabel="GridGraph Label">
+                                <rect key="frame" x="576" y="882" width="42" height="14"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Coord" id="VZp-KI-vbF">
                                     <font key="font" size="11" name="Courier"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qaU-aN-dXC" userLabel="Paused Label">
-                                <rect key="frame" x="373" y="511" width="55" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Paused" id="8mb-3y-U6G">
-                                    <font key="font" size="13" name="Courier"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="laT-E3-Leu" userLabel="Isolate Label">
+                                <rect key="frame" x="570" y="856" width="55" height="14"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Isolate" id="sVx-4m-rwW">
+                                    <font key="font" size="11" name="Courier"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -410,20 +421,24 @@
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="bpV-ih-FVj" secondAttribute="bottom" constant="20" id="0sk-mt-NoX"/>
-                            <constraint firstItem="laT-E3-Leu" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="2LJ-SY-bUS"/>
+                            <constraint firstItem="qaU-aN-dXC" firstAttribute="top" secondItem="laT-E3-Leu" secondAttribute="bottom" constant="12" id="1Q3-FK-seF"/>
                             <constraint firstItem="bpV-ih-FVj" firstAttribute="top" secondItem="iiF-QO-DZ0" secondAttribute="bottom" constant="8" id="5u6-ud-mDw"/>
+                            <constraint firstItem="9UR-2I-FXx" firstAttribute="centerX" secondItem="laT-E3-Leu" secondAttribute="centerX" id="6nc-6O-QBK"/>
                             <constraint firstItem="Rpo-Bf-MrJ" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="ETp-0D-sRu"/>
+                            <constraint firstItem="qaU-aN-dXC" firstAttribute="top" secondItem="laT-E3-Leu" secondAttribute="bottom" constant="12" id="EvA-if-WpG"/>
                             <constraint firstItem="iiF-QO-DZ0" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="KyT-Qz-C79"/>
                             <constraint firstItem="Rpo-Bf-MrJ" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="NQF-GK-tLq"/>
                             <constraint firstItem="bpV-ih-FVj" firstAttribute="top" secondItem="iiF-QO-DZ0" secondAttribute="bottom" constant="8" symbolic="YES" id="TUH-35-NKU"/>
-                            <constraint firstItem="laT-E3-Leu" firstAttribute="top" secondItem="Rpo-Bf-MrJ" secondAttribute="bottom" constant="12" id="YLp-rf-6uD"/>
+                            <constraint firstItem="9UR-2I-FXx" firstAttribute="centerX" secondItem="Rpo-Bf-MrJ" secondAttribute="centerX" id="V2p-I3-SX0"/>
                             <constraint firstItem="bpV-ih-FVj" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="YWm-oh-SbK"/>
-                            <constraint firstItem="qaU-aN-dXC" firstAttribute="top" secondItem="laT-E3-Leu" secondAttribute="bottom" constant="12" id="cqn-zp-66r"/>
                             <constraint firstItem="qaU-aN-dXC" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="d3x-Ec-Nwd"/>
+                            <constraint firstItem="laT-E3-Leu" firstAttribute="top" secondItem="9UR-2I-FXx" secondAttribute="bottom" constant="12" id="fFO-di-p01"/>
+                            <constraint firstItem="9UR-2I-FXx" firstAttribute="top" secondItem="Rpo-Bf-MrJ" secondAttribute="bottom" constant="12" id="hwj-4B-gYz"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="cameraInfoLabel" destination="Rpo-Bf-MrJ" id="RyX-41-fZZ"/>
+                        <outlet property="coordinateInfoLabel" destination="9UR-2I-FXx" id="c54-4L-R7p"/>
                         <outlet property="debugInfoLabel" destination="Mhh-Pu-ydl" id="DZi-Xp-0HL"/>
                         <outlet property="demoFileAttributes" destination="roh-5A-x7m" id="IIt-Ds-dF2"/>
                         <outlet property="fitButton" destination="vU3-Eb-5vb" id="Jls-KD-3Sp"/>

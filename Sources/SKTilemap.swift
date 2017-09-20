@@ -328,7 +328,7 @@ public class SKTilemap: SKNode, SKTiledObject {
     public var gridColor: SKColor = TiledObjectColors.obsidian          // color used to visualize the tile grid
     public var frameColor: SKColor = TiledObjectColors.obsidian         // bounding box color
     public var highlightColor: SKColor = TiledObjectColors.lime         // color used to highlight tiles
-
+    public var navigationColor: SKColor = TiledObjectColors.lime        // navigation graph color.
     internal var autoResize: Bool = false                               // indicates map should auto-resize when view changes
 
     /// dynamics
@@ -714,6 +714,16 @@ public class SKTilemap: SKNode, SKTiledObject {
      */
     public func pointForCoordinate(coord: CGPoint, offsetX: CGFloat=0, offsetY: CGFloat=0) -> CGPoint {
         return defaultLayer.pointForCoordinate(coord: coord, offsetX: offsetX, offsetY: offsetY)
+    }
+
+    /**
+     Returns a tile coordinate for a given vector_int2 coordinate.
+
+     - parameter vec2:  `int2` vector int2.
+     - returns: `CGPoint` position in layer.
+     */
+    public func pointForCoordinate(vec2: int2) -> CGPoint {
+        return defaultLayer.pointForCoordinate(vec2: vec2)
     }
 
     /**

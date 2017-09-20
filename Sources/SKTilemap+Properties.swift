@@ -145,6 +145,10 @@ public extension SKTilemap {
             if ["nicename", "displayname"].contains(lattr) {
                 displayName = value
             }
+
+            if (lattr == "navigationcolor") {
+                navigationColor = SKColor(hexString: value)
+            }
         }
 
         if completion != nil { completion!() }

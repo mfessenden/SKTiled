@@ -33,10 +33,12 @@ public class SKTiledDemoScene: SKTiledScene {
     internal var selected: [SKTiledLayerObject] = []
 
     internal var clickshapes: Set<TileShape> = []
-    internal var pathshapes: Set<TileShape> = []
     internal var cleanup: Set<TileShape> = []
 
-    internal var graphCoordinates: [CGPoint] = []
+    internal var plotPathfindingPath: Bool = true
+    internal var graphStartCoordinate: CGPoint?
+    internal var graphEndCoordinate: CGPoint?
+
     internal var currentPath: [GKGridGraphNode] = []
 
     /// Cleanup tile shapes queue
@@ -49,7 +51,9 @@ public class SKTiledDemoScene: SKTiledScene {
         didSet {
             guard oldValue != liveMode else { return }
             self.cleanupTileShapes()
-            self.graphCoordinates = []
+            self.cleanupPathfindingShapes()
+            self.graphStartCoordinate = nil
+            self.graphEndCoordinate = nil
         }
     }
 
@@ -88,6 +92,12 @@ public class SKTiledDemoScene: SKTiledScene {
         updateHud(tilemap)
     }
 
+    /**
+     Return tile nodes at the given point.
+
+     - parameter coord: `CGPoint` event point.
+     - returns: `[SKTile]` tile nodes.
+     */
     func getTilesAt(coord: CGPoint) -> [SKTile] {
         var result: [SKTile] = []
         guard let tilemap = tilemap else { return result }
@@ -100,6 +110,12 @@ public class SKTiledDemoScene: SKTiledScene {
         return result
     }
 
+    /**
+     Return renderable nodes (tile & tile objects) at the given point.
+
+     - parameter point: `CGPoint` event point.
+     - returns: `[SKNode]` renderable nodes.
+     */
     func renderableNodesAt(point: CGPoint) -> [SKNode] {
         var result: [SKNode] = []
         let nodes = self.nodes(at: point)
@@ -191,13 +207,6 @@ public class SKTiledDemoScene: SKTiledScene {
                 _ = lowerGraphLayer.initializeGraph(walkable: walkableTiles)
             }
 
-
-
-        case "graphtest-8x8.tmx":
-            if let graphLayer = tilemap.tileLayers(named: "Graph").first {
-                _ = graphLayer.initializeGraph(walkable: walkableTiles)
-            }
-
         case "pacman.tmx":
             if let graphLayer = tilemap.tileLayers(named: "Graph").first {
                 if let graph = graphLayer.initializeGraph(walkable: walkableTiles) {
@@ -211,20 +220,11 @@ public class SKTiledDemoScene: SKTiledScene {
                 }
             }
 
-        case "level-ramps.tmx", "level-rivets.tmx":
-            //log("setting up Donkey Kong level: \(baseFilename)", level: .info)
-            if let actorsGroup = tilemap.objectGroups(named: "Actors").first {
-                log("found actors group", level: .info)
-                let actorObjects = actorsGroup.getObjects()
-                for object in actorObjects {
-                    print("object: \(object)")
-                }
+        case "roguelike-16x16.tmx":
+            if let graphLayer = tilemap.tileLayers(named: "Graph").first {
+                _ = graphLayer.initializeGraph(walkable: walkableTiles)
             }
 
-        case "line-widths.tmx":
-
-            let objectsLayer = tilemap.objectGroups(named: "objects1").first!
-            objectsLayer.lineWidth = 4
 
         default:
             return
@@ -277,6 +277,10 @@ public class SKTiledDemoScene: SKTiledScene {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["isolatedInfo": msg])
     }
 
+    public func updateCoordinateInfo(msg: String) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDebugLabels"), object: nil, userInfo: ["coordinateInfo": msg])
+    }
+
     /**
      Send a command to the UI to update status.
 
@@ -321,12 +325,13 @@ public class SKTiledDemoScene: SKTiledScene {
      */
     func plotNavigationPath() {
         currentPath = []
-        guard (graphCoordinates.count == 2) else { return }
+        //guard (graphCoordinates.count == 2) else { return }
+        guard let startCoord = graphStartCoordinate,
+              let endCoord = graphEndCoordinate else { return }
 
-        // cleanup
 
-        let startPoint = graphCoordinates.first!.toVec2
-        let endPoint = graphCoordinates[1].toVec2
+        let startPoint = startCoord.toVec2
+        let endPoint = endCoord.toVec2
 
         for (_, graph) in graphs {
             if let startNode = graph.node(atGridPosition: startPoint) {
@@ -335,6 +340,49 @@ public class SKTiledDemoScene: SKTiledScene {
                 }
             }
         }
+    }
+
+    /**
+     Visualize the current grid graph path with a line.
+     */
+    func drawCurrentPath(withColor: SKColor = TiledObjectColors.lime) {
+        guard let worldNode = worldNode,
+              let tilemap = tilemap else { return }
+        guard (currentPath.count > 2) else { return }
+
+        worldNode.childNode(withName: "CURRENT_PATH")?.removeFromParent()
+
+        // line dimensions
+        let headWidth: CGFloat = tilemap.tileSize.height
+        let lineWidth: CGFloat = tilemap.tileSize.halfWidth / 4
+
+        let lastZPosition = tilemap.lastZPosition + (tilemap.zDeltaForLayers * 4)
+        var points: [CGPoint] = []
+
+        for node in currentPath {
+            let nodePosition = worldNode.convert(tilemap.pointForCoordinate(vec2: node.gridPosition), from: tilemap.defaultLayer)
+            points.append(nodePosition)
+        }
+
+        // path shape
+        let path = polygonPath(points, threshold: 16)
+        let shape = SKShapeNode(path: path)
+        shape.isAntialiased = false
+        shape.lineWidth = lineWidth * 2
+        shape.strokeColor = withColor
+        shape.fillColor = .clear
+
+        worldNode.addChild(shape)
+        shape.zPosition = lastZPosition
+        shape.name = "CURRENT_PATH"
+
+        // arrowhead shape
+        let arrow = arrowFromPoints(startPoint: points[points.count - 2], endPoint: points.last!, tailWidth: lineWidth, headWidth: headWidth, headLength: headWidth)
+        let arrowShape = SKShapeNode(path: arrow)
+        arrowShape.strokeColor = .clear
+        arrowShape.fillColor = withColor
+        shape.addChild(arrowShape)
+        arrowShape.zPosition = lastZPosition
     }
 
     /**
@@ -384,14 +432,9 @@ public class SKTiledDemoScene: SKTiledScene {
      Cleanup all tile shapes representing the current path.
      */
     open func cleanupPathfindingShapes() {
-        // clean the current path shapes...
-        for pathshape in self.pathshapes {
-            let fadeAction = SKAction.fadeOut(withDuration: 0.2)
-            pathshape.run(fadeAction, completion: {
-                self.pathshapes.remove(pathshape)
-                self.cleanup.insert(pathshape)
-            })
-        }
+        // cleanup pathfinding shapes
+        guard let worldNode = worldNode else { return }
+        worldNode.childNode(withName: "CURRENT_PATH")?.removeFromParent()
     }
 
     /**
@@ -421,6 +464,17 @@ public class SKTiledDemoScene: SKTiledScene {
                 tile.removeFromParent()
             }
         }
+
+
+        var coordinateMessage = ""
+        if let graphStartCoordinate = graphStartCoordinate {
+            coordinateMessage += "Start: \(graphStartCoordinate.shortDescription)"
+            if (currentPath.isEmpty == false) {
+                coordinateMessage += ", \(currentPath.count) nodes"
+            }
+        }
+
+        updateCoordinateInfo(msg: coordinateMessage)
     }
 
     // MARK: - Delegate Callbacks
@@ -515,40 +569,20 @@ extension SKTiledDemoScene {
 
             // double click
             if (event.clickCount > 1) {
+                plotPathfindingPath = true
+                let hasStartCoordinate: Bool = (graphStartCoordinate != nil)
 
-                if graphCoordinates.contains(coord) {
+                let eventMessage = (hasStartCoordinate == true) ? "clearing coordinate" : "setting coordinate: \(coord.shortDescription)"
+                graphStartCoordinate = (hasStartCoordinate == true) ? nil : coord
+                updateCommandString(eventMessage)
+
+                if hasStartCoordinate == true {
                     cleanupPathfindingShapes()
-                    return
-                }
-
-                graphCoordinates.append(coord)
-                if graphCoordinates.count > 2 {
-
-                    cleanupPathfindingShapes()
-                    graphCoordinates = graphCoordinates.reversed()[0...1].reversed()
-                }
-
-                if (graphCoordinates.count == 2) {
-                    plotNavigationPath()
-                    if (currentPath.isEmpty == false) {
-                        for node in currentPath {
-                            let xcoord = Int(node.gridPosition.x)
-                            let ycoord = Int(node.gridPosition.y)
-
-                            var nodeWeight: Float = 1
-                            if let weightedNode = node as? SKTiledGraphNode {
-                                nodeWeight = weightedNode.weight
-                            }
-
-                            if let tile = addTileToWorld(xcoord, ycoord, role: .pathfinding, weight: nodeWeight) {
-                                self.pathshapes.insert(tile)
-                            }
-                        }
-                    }
                 }
 
             // single click
             } else {
+                plotPathfindingPath = false
                 // highlight the current coordinate
                 if let tile = addTileToWorld(Int(coord.x), Int(coord.y), role: .coordinate) {
                     self.clickshapes.insert(tile)
@@ -589,6 +623,15 @@ extension SKTiledDemoScene {
         let positionInLayer = defaultLayer.mouseLocation(event: event)
         let coord = defaultLayer.coordinateAtMouseEvent(event: event)
         let validCoord = defaultLayer.isValid(Int(coord.x), Int(coord.y))
+
+        graphEndCoordinate = (validCoord == true) ? coord : nil
+
+        if let endCoord = graphEndCoordinate {
+            if (plotPathfindingPath == true) {
+                plotNavigationPath()
+                drawCurrentPath(withColor: tilemap.navigationColor)
+            }
+        }
 
         // query nodes under the cursor to update the properties label
         var propertiesInfoString = "--"
@@ -638,7 +681,6 @@ extension SKTiledDemoScene {
         mouseTracker.zPosition = tilemap.lastZPosition * 10
         mouseTracker.coord = coord
         mouseTracker.isValid = validCoord
-
 
         if (tileShapesUnderCursor.isEmpty) {
             if (liveMode == true) && (isPaused == false) {
@@ -998,6 +1040,23 @@ extension SKTiledDemoScene {
         if eventKey == 0x7d {
             self.speed -= 0.5
             updateCommandString("scene speed: \(speed.roundTo())", duration: 1.0)
+        }
+
+        // 'c' adjusts the camera zoom clamp value
+        if eventKey == 0x8 {
+            var newClampValue: CameraZoomClamping = .none
+            switch cameraNode.zoomClamping {
+            case .none:
+                newClampValue = .tenth
+            case .tenth:
+                newClampValue = .quarter
+            case .quarter:
+                newClampValue = .half
+            case .half:
+                newClampValue = .none
+            }
+            self.cameraNode.zoomClamping = newClampValue
+            updateCommandString("camera zoom clamping: \(newClampValue)", duration: 1.0)
         }
     }
 }

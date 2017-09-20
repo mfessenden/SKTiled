@@ -67,7 +67,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
 
     private var lastUpdateTime: TimeInterval = 0
     private let maximumUpdateDelta: TimeInterval = 1.0 / 60.0
-
+    
     /// Set the tilemap speed
     override open var speed: CGFloat {
         didSet {

@@ -2349,6 +2349,16 @@ extension SKTiledLayerObject {
     }
 
     /**
+     Returns a tile coordinate for a given vector_int2 coordinate.
+
+     - parameter vec2:  `int2` vector int2.
+     - returns: `CGPoint` position in layer.
+     */
+    public func pointForCoordinate(vec2: int2) -> CGPoint {
+        return self.pointForCoordinate(coord: vec2.cgPoint)
+    }
+
+    /**
      Returns a tile coordinate for a given point in the layer.
 
      - parameter x:       `Int` x-position.

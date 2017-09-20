@@ -123,6 +123,12 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     internal var anchorKey: String = "ANCHOR"
 
     internal var tile: SKTile?                              // optional tile
+
+    /// Tile data (for tile objects).
+    open var tileData: SKTilesetData? {
+        return tile?.tileData
+    }
+
     /// Object bounds color.
     open var frameColor: SKColor = TiledObjectColors.magenta
     

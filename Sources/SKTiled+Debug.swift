@@ -667,7 +667,6 @@ public enum LoggingLevel: Int {
     case success
     case status
     case info
-    case gcd
     case debug
     case custom
 }

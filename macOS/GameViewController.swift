@@ -24,7 +24,7 @@ class GameViewController: NSViewController, Loggable {
     @IBOutlet weak var cameraInfoLabel: NSTextField!
     @IBOutlet weak var pauseInfoLabel: NSTextField!
     @IBOutlet weak var isolatedInfoLabel: NSTextField!
-
+    @IBOutlet weak var coordinateInfoLabel: NSTextField!
 
     @IBOutlet weak var graphButton: NSButton!
     @IBOutlet weak var objectsButton: NSButton!
@@ -218,6 +218,7 @@ class GameViewController: NSViewController, Loggable {
      - parameter notification: `Notification` notification.
      */
     func updateDebugLabels(notification: Notification) {
+        //coordinateInfoLabel.isHidden = true
         if let mapInfo = notification.userInfo!["mapInfo"] {
             mapInfoLabel.stringValue = mapInfo as! String
         }
@@ -240,6 +241,11 @@ class GameViewController: NSViewController, Loggable {
 
         if let isolatedInfo = notification.userInfo!["isolatedInfo"] {
             isolatedInfoLabel.stringValue = isolatedInfo as! String
+        }
+
+        if let coordinateInfo = notification.userInfo!["coordinateInfo"] {
+            coordinateInfoLabel.stringValue = coordinateInfo as! String
+            //coordinateInfoLabel.isHidden = false
         }
     }
 

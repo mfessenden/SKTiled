@@ -16,6 +16,9 @@ Change Log
 - add `SKTilesetData.frameAt(index:)`
 - add `SKTilesetData.setTexture(_:forFrame:)`
 - add `SKTilesetData.setDuration(interval:forFrame:)`
+- add `SKTileObject.tileData` property
+- add `SKTiledSceneCamera.clampZoomValue` 
+- add `SKTiledSceneCamera.zoomClamping` property
 - remove `SKTile.pauseAnimation`
 
 

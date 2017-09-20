@@ -1190,14 +1190,49 @@ public func / (lhs: int2, rhs: int2) -> int2 {
     return int2(lhs.x / rhs.x, lhs.y / rhs.y)
 }
 
-
+/*
 public func /= (lhs: inout int2, rhs: int2) {
     lhs /= rhs
 }
+*/
 
 public func == (lhs: int2, rhs: int2) -> Bool {
     return (lhs.x == rhs.x) && (lhs.y == rhs.y)
 }
+
+
+extension vector_int2 {
+
+    /**
+     Returns the difference vector to another in2.
+
+     - parameter v: `vector_int2` coordinate.
+     - returns: `CGVector` difference between.
+     */
+    public func delta(to v: int2) -> CGVector {
+        let dx = Float(x - v.x)
+        let dy = Float(y - v.y)
+        return CGVector(dx: Int(dx), dy: Int(dy))
+    }
+
+    /**
+     Returns true if the coordinate vector is contiguous to another vector.
+
+     - parameter v: `vector_int2` coordinate.
+     - returns: `Bool` coordinates are contiguous.
+     */
+    public func isContiguousTo(v: int2) -> Bool {
+        let dx = Float(x - v.x)
+        let dy = Float(y - v.y)
+        return sqrt((dx * dx) + (dy * dy)) == 1
+    }
+
+    /// Convert the int2 to CGPoint.
+    public var cgPoint: CGPoint {
+        return CGPoint(x: CGFloat(x), y: CGFloat(y))
+    }
+}
+
 
 // MARK: - Helper Functions
 
@@ -1654,7 +1689,6 @@ public func polygonPointArray(_ sides: Int, radius: CGSize, offset: CGFloat=0, o
 
  - parameter points:  `[CGPoint]` polygon points.
  - parameter closed:  `Bool` path should be closed.
- - parameter origin: `CGPoint` origin point.
   - returns: `CGPath` path from the given points.
  */
 public func polygonPath(_ points: [CGPoint], closed: Bool=true) -> CGPath {
@@ -1698,7 +1732,7 @@ public func polygonPath(_ sides: Int, radius: CGSize, offset: CGFloat=0, origin:
  - parameter points:  `[CGPoint]` polygon points.
  - parameter closed:  `Bool` path should be closed.
  - parameter alpha:   `CGFloat` curvature.
- - returns: `CGPath`   path from the given points.
+ - returns: `(CGPath, [CGPoint])` bezier path and control points.
  */
 public func bezierPath(_ points: [CGPoint], closed: Bool = true, alpha: CGFloat = 1) -> (path: CGPath, points: [CGPoint]) {
     guard points.count > 1 else { return (CGMutablePath(), [CGPoint]()) }
@@ -1759,6 +1793,84 @@ public func bezierPath(_ points: [CGPoint], closed: Bool = true, alpha: CGFloat 
 
     if (closed == true) { path.closeSubpath() }
     return (path, cpoints)
+}
+
+
+/**
+ Takes an array of grid graph points and returns a path. Set threshold value to allow for gaps in the path.
+
+ - parameter points:    `[CGPoint]` path points.
+ - parameter threshold: `CGFloat` gap threshold size.
+ - returns: `CGPath` path from the given points.
+ */
+public func polygonPath(_ points: [CGPoint], threshold: CGFloat) -> CGPath {
+    let path = CGMutablePath()
+    var mpoints = points
+    let first = mpoints.remove(at: 0)
+    path.move(to: first)
+    var current = first
+    for p in mpoints {
+        let distToLast = CGFloat(p.distance(current))
+        if (distToLast > threshold) {
+            path.move(to: p)
+        } else {
+            path.addLine(to: p)
+        }
+        current = p
+    }
+    return path
+}
+
+/**
+ Given two points, create an arrowhead.
+
+ - parameter startPoint:  `CGPoint` first point.
+ - parameter endPoint:    `CGPoint` last point.
+ - parameter tailWidth:   `CGFloat` arrow tail width.
+ - parameter headWidth:   `CGFloat` arrow head width.
+ - parameter headLength:  `CGFloat` arrow head length.
+ - returns: `CGPath` path from the given points.
+ */
+public func arrowFromPoints(startPoint: CGPoint,
+                            endPoint: CGPoint,
+                            tailWidth: CGFloat,
+                            headWidth: CGFloat,
+                            headLength: CGFloat) -> CGPath {
+
+    let length = CGFloat(hypotf(Float(endPoint.x) - Float(startPoint.x), Float(endPoint.y) - Float(startPoint.y)))
+
+    // offset from start to end
+    let offsetX = startPoint.x - endPoint.x
+    let offsetY = startPoint.y - endPoint.y
+    let offset = CGPoint(x: offsetX, y: offsetY)
+    var points: [CGPoint] = []
+
+    let tailLength = length - headLength
+
+    points.append(CGPoint(x: 0, y: tailWidth/2))
+    points.append(CGPoint(x: tailLength, y: tailWidth))
+    points.append(CGPoint(x: tailLength, y: headLength/2))
+    points.append(CGPoint(x: length, y: 0))
+    points.append(CGPoint(x: tailLength, y: -headWidth/2))
+    points.append(CGPoint(x: tailLength, y: -tailWidth/2 ))
+    points.append(CGPoint(x: 0, y: -tailWidth/2))
+
+    let cosine = (endPoint.x - startPoint.x)/length
+    let sine = (endPoint.y - startPoint.y)/length
+
+    var transform = CGAffineTransform()
+    transform.a = cosine
+    transform.b = sine
+    transform.c = -sine
+    transform.d = cosine
+    transform.tx = startPoint.x - offset.x
+    transform.ty = startPoint.y - offset.y
+
+
+    let path = CGMutablePath()
+    path.addLines(between: points, transform: transform)
+    path.closeSubpath()
+    return path
 }
 
 

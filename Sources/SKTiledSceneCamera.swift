@@ -21,7 +21,7 @@ import Cocoa
  protocol are notified of camera position & zoom changes.
  */
 public protocol SKTiledSceneCameraDelegate: class {
-
+    
     /**
      Called when the camera positon changes.
 
@@ -70,6 +70,17 @@ public protocol SKTiledSceneCameraDelegate: class {
     #endif
 }
 
+/**
+ Camera zoom rounding factor. Clamps the zoom value to nearest quarter or half percentage.
+ */
+public enum CameraZoomClamping: CGFloat {
+    case none    = 0
+    case half    = 2
+    case quarter = 4
+    case tenth   = 10
+}
+
+
 
 /**
  ## Overview ##
@@ -100,6 +111,12 @@ public class SKTiledSceneCamera: SKCameraNode, Loggable {
     public var minZoom: CGFloat = 0.2
     public var maxZoom: CGFloat = 5.0
     public var isAtMaxZoom: Bool { return zoom == maxZoom }
+    /// Clamp factor to alleviate cracks in tilemap.
+    public var zoomClamping: CameraZoomClamping = .none {
+        didSet {
+            setCameraZoom(self.zoom)
+        }
+    }
 
     // logger
     public var loggingLevel: LoggingLevel = .info
@@ -207,8 +224,11 @@ public class SKTiledSceneCamera: SKCameraNode, Loggable {
      - parameter scale: `CGFloat` zoom amount.
      */
     public func setCameraZoom(_ scale: CGFloat, interval: TimeInterval=0) {
-        // clamp scaling
-        let zoomClamped = scale.clamped(minZoom, maxZoom)
+        // clamp scaling between min/max zoom
+        var zoomClamped = scale.clamped(minZoom, maxZoom)
+
+        // round zoom value to alleviate cracking
+        zoomClamped = clampZoomValue(zoomClamped, factor: zoomClamping.rawValue)
 
         self.zoom = zoomClamped
         let zoomAction = SKAction.scale(to: zoomClamped, duration: interval)
@@ -218,6 +238,7 @@ public class SKTiledSceneCamera: SKCameraNode, Loggable {
         } else {
             world.run(zoomAction)
         }
+
         if let tilemap = (scene as? SKTiledScene)?.tilemap {
             tilemap.autoResize = false
         }
@@ -249,6 +270,19 @@ public class SKTiledSceneCamera: SKCameraNode, Loggable {
         let minValue = minimum > 0 ? minimum : 0
         minZoom = minValue
         maxZoom = maximum
+    }
+
+    /**
+     Clamp the camera scale to alleviate cracking. Default clamps float value to the nearest 0.25.
+
+     - parameter value:   `CGFloat` zoom value.
+     - parameter factor:  `CGFloat` scale factor.
+     - returns: `CGFloat` clamped zoom value.
+     */
+    internal func clampZoomValue(_ value: CGFloat, factor: CGFloat = 0) -> CGFloat {
+        guard factor != 0 else { return value }
+        let result = round(value * factor) / factor
+        return (result > 0) ? result : value
     }
 
     // MARK: - Bounds
@@ -416,15 +450,35 @@ public class SKTiledSceneCamera: SKCameraNode, Loggable {
 }
 
 
+
+extension CameraZoomClamping {
+    /// Minimum possible value.
+    public var minimum: CGFloat {
+        switch self {
+        case .half:
+            return 0.50
+        case .quarter:
+            return 0.25
+        case .tenth:
+            return 0.10
+        default:
+            return 0
+        }
+    }
+}
+
+
 extension SKTiledSceneCamera {
     override public var description: String {
         guard let scene = scene else { return "Camera: "}
         let rect = CGRect(origin: scene.convert(position, from: self), size: bounds.size)
-        return "Camera: \(rect.roundTo()), zoom: \(zoom.roundTo())"
+        let clampString = (zoomClamping != .none) ? ", clamp: \(zoomClamping.minimum)" : ""
+        return "Camera: \(rect.roundTo()), zoom: \(zoom.roundTo())\(clampString)"
     }
 
     override public var debugDescription: String {
-        return "Camera: \(bounds.roundTo()), zoom: \(zoom.roundTo())"
+        let clampString = (zoomClamping != .none) ? ", clamp: \(zoomClamping.minimum)" : ""
+        return "Camera: \(bounds.roundTo()), zoom: \(zoom.roundTo())\(clampString)"
     }
 }
 
