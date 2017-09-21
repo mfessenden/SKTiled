@@ -501,7 +501,7 @@
  <tile id="1767">
   <properties>
    <property name="walkable" type="bool" value="true"/>
-   <property name="weight" type="float" value="-5"/>
+   <property name="weight" type="float" value="1"/>
   </properties>
  </tile>
  <tile id="1768">

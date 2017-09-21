@@ -614,6 +614,7 @@ open class SKTile: SKSpriteNode, Loggable {
             let frame = frames[currentFrame]
             if let frameTexture = frame.texture {
                 self.texture = frameTexture
+                // update sprite size
                 self.size = frameTexture.size()
             }
         }
@@ -621,8 +622,6 @@ open class SKTile: SKSpriteNode, Loggable {
         // the the current time is greater than the animation cycle, reset current time to 0
         if ct >= cycleTime { currentTime = 0 }
     }
-
-
 }
 
 

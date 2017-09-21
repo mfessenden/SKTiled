@@ -78,9 +78,9 @@
    <ellipse/>
   </object>
  </objectgroup>
- <layer name="Graph" width="42" height="42" visible="0">
+ <layer name="Graph" width="42" height="42" opacity="0.8">
   <data encoding="base64" compression="zlib">
-   eJztl1EKAjEMRP3y/sdcbyF+LIRhJplkW0XYQtDdtsnrJJH6ej4er9tu+yP7jF8zdDh38x6LGM9RaZ2d5wCLa6ec2ZhyIq/i7OTO4ax8nnMHcDBNd3HiJ9ur2JiG3bzH+NXo9IbiZO9Xcjq+kCPyIBc+OzGcfLvnVbyshpVvpU+X03lX5SbjvNJHqlYmOar6qIrtcMZn/O4M5FQxrnCyfVc5q5rp5mkHZ+bPiYH5cPxNOF3fDudKRsa5s993clZx45xay9a4rBhP9bvDqZ6rmF3G2EfZGrcOos/s/jDlzHTq1Oqk5h3tmZ6urnENrp/cwVhcdZ+qrNI9nr3LxvxVv+2T3DNONTINWV5wz1VO5t/lZLqyHH6bE/PKtO32Y3euw5n5wzsSy4fLyeYVJ/vP0znHRMtMg5WmarfLqbSc+HDvbmy+yzq5f50xqr2oq1ufinOSB+RkDOi3qofVerqcnTr4Fuduuzlvzl9xvgE4egCv
+   eJztl1EKwzAMQ/u1+x+zu8XYR8EIyZbdZmXQgNm6JPaLbJfs/dq292OP/ZF9x90MHc7VvPtFjMeotM7Os4PFtVPObEw5kVdxdnLncFY+j7kdOJimqzjxk+1VbEzDbt5j/Gp0euPQTrGv4nR8IUfkQS58dmI4+XbPq3hZDSvfSp8up/NblZuM80wfqVqZ5Kjqoyq2wxmf8bszkFPFOMPJ9p3lrGqmm6cVnJk/Jwbmw/E34XR9O5xXMjLOlf2+krOKG+fUWrbGZcV4qt8dTvVcxewyxj7K1rh1EH1m94cpZ6ZTp1YnNe9oz/R0dY1rcP3kDsbiqvtUZZXu8exdNuaverdPcs841cg0ZHnBPWc5mX+Xk+nKcvhrTswr07bbj925DmfmD+9ILB8uJ5tXnOw/T+ccEy0zDa40VbtdTqXlxId7d2PzXdbJ/euIUe1FXd36VJyTPCAnY0C/VT1crafL2amDX3Gutofz4byL8wMKo/+y
   </data>
  </layer>
 </map>

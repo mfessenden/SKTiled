@@ -13,7 +13,7 @@
 **SKTiled** is a framework for using [Tiled][tiled-url] assets with [Apple's SpriteKit][spritekit-url], built from the ground up with Swift. This project began life as an exercise to learn Apple's new programming language for a game project, but I've decided to release it as open source with the hopes that others will find it useful. **SKTiled** is up-to-date and supports **Tiled's** major features, including all map & object types.
 
 
-Current release is Swift 3/macOS 10.11/iOS 10+. For Swift 4/Xcode 9, see the [**swift4**][swift4-url] branch.
+Current release is Swift 3.2/macOS 10.11/iOS 10+. For Swift 4, see the [**swift4**][swift4-url] branch.
 
 
 ![Demo Image][demo-image]
@@ -45,7 +45,7 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 
 - iOS 9+
 - macOS 10.12+
-- Xcode 8+
+- Xcode 9+
 
 ## Installation
 
@@ -200,7 +200,7 @@ let roadRoot = SKNode()
 groundLayer.addChild(roadRoot, 4, 5, zpos: 100.0)
 ```
 
-**SKTiled** also provides methods for getting coordinate data from `UITouch` and `NSEvent` mouse events:
+**SKTiled** also provides methods for getting coordinate data from [`UITouch`][uitouch-url] and [`NSEvent`][nsevent-url] mouse events:
 
 ```swift
 // get the coordinate at the location of a touch event
@@ -223,7 +223,7 @@ for tile in allAnimated {
 
 // run animation backwards
 for tile in allAnimated {
-    tile = -1.0
+    tile.speed = -1.0
 }
 
 // get animated tiles from individual layers
@@ -266,7 +266,7 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 - [Clint Bellanger: Isometric Tiles Math](http://clintbellanger.net/articles/isometric_math)
 
 
-[swift-image]:https://img.shields.io/badge/Swift-3.1-brightgreen.svg
+[swift-image]:https://img.shields.io/badge/Swift-3.2-brightgreen.svg
 [swift-url]: https://swift.org/
 [license-image]:https://img.shields.io/badge/License-MIT-blue.svg
 [license-url]:https://github.com/mfessenden/SKTiled/blob/master/LICENSE
@@ -306,3 +306,5 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 [skspritenode-url]:https://developer.apple.com/documentation/spritekit/skspritenode
 [skscene-url]:https://developer.apple.com/documentation/spritekit/skscene
 [skscene-update-url]:https://developer.apple.com/documentation/spritekit/skscene/1519802-update
+[uitouch-url]:https://developer.apple.com/documentation/uikit/uitouch
+[nsevent-url]:https://developer.apple.com/documentation/appkit/nsevent

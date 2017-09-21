@@ -96,6 +96,7 @@ class GameViewController: NSViewController, Loggable {
         cameraInfoLabel.stringValue = "--"
         debugInfoLabel.stringValue = ""
         isolatedInfoLabel.stringValue = ""
+        coordinateInfoLabel.stringValue = ""
 
         // text shadow
         let shadow = NSShadow()
@@ -110,6 +111,7 @@ class GameViewController: NSViewController, Loggable {
         cameraInfoLabel.shadow = shadow
         pauseInfoLabel.shadow = shadow
         isolatedInfoLabel.shadow = shadow
+        coordinateInfoLabel.shadow = shadow
     }
 
     /**

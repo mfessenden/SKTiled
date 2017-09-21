@@ -521,7 +521,7 @@ extension SKTiledDemoScene {
             // add a tile shape to the base layer where the user has clicked
 
             // highlight the current coordinate
-            let tile = addTileToWorld(Int(coord.x), Int(coord.y), role: .coordinate)
+            let _ = addTileToWorld(Int(coord.x), Int(coord.y), role: .highlight)
 
             // update the tile information label
             let coordStr = "Coord: \(coord.shortDescription), \(positionInLayer.roundTo())"
@@ -886,7 +886,6 @@ extension SKTiledDemoScene {
      */
     override public func sceneDoubleTapped(location: CGPoint) {
         log("scene was double tapped.", level: .debug)
-        //self.isPaused = !self.isPaused
     }
     #else
 

@@ -1909,7 +1909,7 @@ internal func clampedPosition(point: CGPoint, scale: CGFloat) -> CGPoint {
  - parameter scale:  `CGFloat` device scale.
  */
 internal func clampPositionWithNode(node: SKNode, scale: CGFloat) {
-    node.position = clampedPosition(point: node.position, scale: SKTiledContentScaleFactor)
+    node.position = clampedPosition(point: node.position, scale: scale)
     if let parentNode = node.parent {
         if parentNode != node.scene {
             clampPositionWithNode(node: parentNode, scale: scale)
