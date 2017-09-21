@@ -102,7 +102,7 @@
                 <a href="Classes/SKTiledLayerObject.html">SKTiledLayerObject</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/SKTiledLayerObject.html#/s:OC7SKTiled18SKTiledLayerObject10TileOffset">– TileOffset</a>
+                <a href="Classes/SKTiledLayerObject.html#/s:7SKTiled0A11LayerObjectC10TileOffsetO">– TileOffset</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SKTileLayer.html">SKTileLayer</a>
@@ -120,10 +120,10 @@
                 <a href="Classes/SKTile.html">SKTile</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/SKTile.html#/s:OC7SKTiled6SKTile17TileAlignmentHint">– TileAlignmentHint</a>
+                <a href="Classes/SKTile.html#/s:7SKTiled6SKTileC17TileAlignmentHintO">– TileAlignmentHint</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/SKTile.html#/s:OC7SKTiled6SKTile12PhysicsShape">– PhysicsShape</a>
+                <a href="Classes/SKTile.html#/s:7SKTiled6SKTileC12PhysicsShapeO">– PhysicsShape</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SKTilesetData.html">SKTilesetData</a>
@@ -132,7 +132,7 @@
                 <a href="Classes/SKTileObject.html">SKTileObject</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/SKTileObject.html#/s:OC7SKTiled12SKTileObject13CollisionType">– CollisionType</a>
+                <a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO">– CollisionType</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SKTiledScene.html">SKTiledScene</a>
@@ -155,16 +155,32 @@
                 <a href="Structs/TextObjectAttributes.html">TextObjectAttributes</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/TextObjectAttributes.html#/s:VV7SKTiled20TextObjectAttributes13TextAlignment">– TextAlignment</a>
+                <a href="Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV">– TextAlignment</a>
               </li>
               <li class="nav-group-task">
-                <a href="Other.html#/s:v7SKTiled25SKTiledContentScaleFactorV12CoreGraphics7CGFloat">SKTiledContentScaleFactor</a>
+                <a href="Other.html#/s:7SKTiled0A18ContentScaleFactorXev">SKTiledContentScaleFactor</a>
               </li>
               <li class="nav-group-task">
-                <a href="Other.html#/s:v7SKTiled19SKTiledLoggingLevelOS_12LoggingLevel">SKTiledLoggingLevel</a>
+                <a href="Other.html#/s:7SKTiled0A12LoggingLevelAA0bC0Ov">SKTiledLoggingLevel</a>
               </li>
               <li class="nav-group-task">
-                <a href="Other.html#/s:v7SKTiled30SKTiledTiledApplicationVersionSS">SKTiledTiledApplicationVersion</a>
+                <a href="Other.html#/s:7SKTiled0A23TiledApplicationVersionSSv">SKTiledTiledApplicationVersion</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/AnimationFrame.html">AnimationFrame</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Enums.html">Other Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/CameraZoomClamping.html">CameraZoomClamping</a>
               </li>
             </ul>
           </li>
@@ -193,7 +209,7 @@
 <p>Using Tiled assets in your projects is very straightforward with <strong>SKTiled</strong>. There are several tools included that allow you to easily access and customize content for your game.</p>
 <h2 id='sktilemapdelegate-protocol' class='heading'>SKTilemapDelegate Protocol</h2>
 
-<p>The <a href="Protocols/SKTilemapDelegate.html"><code>SKTilemapDelegate</code></a> protocol is provided to allow you to access (and change) your content as it is being created. It is recommended that your SpriteKit scenes conform to this protocol. </p>
+<p>The <a href="Protocols/SKTilemapDelegate.html"><code>SKTilemapDelegate</code></a> protocol is provided to allow you to access (and change) your content as it is being created. It is recommended that your SpriteKit scenes conform to this protocol.</p>
 
 <p>In addition to the callback methods, the protocol allows you to substitute your own classes for the default tile, vector and pathfinding objects.</p>
 <pre class="highlight swift"><code><span class="kd">protocol</span> <span class="kt">SKTilemapDelegate</span> <span class="p">{</span>
@@ -209,8 +225,11 @@
 </code></pre>
 <h3 id='scene-setup' class='heading'>Scene Setup</h3>
 
-<p>Setting up scenes is straightforward. A basic scene setup could be as simple as:</p>
+<p>Setting up scenes is straightforward. Tile maps should be loaded during the <code>SKScene.didMove(to:)</code> method, and updated during the <code>SKScene.update(_:)</code> method.</p>
+
+<p>A basic scene setup could be as simple as:</p>
 <pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">GameScene</span><span class="p">:</span> <span class="kt">SKScene</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">tilemap</span><span class="p">:</span> <span class="kt">SKTilemap</span><span class="o">!</span>
     <span class="k">override</span> <span class="kd">func</span> <span class="nf">didMove</span><span class="p">(</span><span class="n">to</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">SKView</span><span class="p">)</span> <span class="p">{</span>
         <span class="c1">// load a named map</span>
         <span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="s">"myTiledFile"</span><span class="p">)</span> <span class="p">{</span>
@@ -218,20 +237,34 @@
             <span class="c1">// center the tilemap in the scene</span>
             <span class="n">tilemap</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">view</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
             <span class="n">tilemap</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">view</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">tilemap</span> <span class="o">=</span> <span class="n">tilemap</span>
         <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">(</span><span class="n">_</span> <span class="nv">currentTime</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// update tilemap</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">tilemap</span><span class="p">?</span><span class="o">.</span><span class="nf">update</span><span class="p">(</span><span class="n">currentTime</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
 
 <p>If you choose to implement the <a href="Protocols/SKTilemapDelegate.html"><code>SKTilemapDelegate</code></a> protocol, you can utilize as many callback methods as you see fit (they are optional):</p>
 <pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">GameScene</span><span class="p">:</span> <span class="kt">SKScene</span><span class="p">,</span> <span class="kt">SKTilemapDelegate</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">tilemap</span><span class="p">:</span> <span class="kt">SKTilemap</span><span class="o">!</span>
     <span class="k">override</span> <span class="kd">func</span> <span class="nf">didMove</span><span class="p">(</span><span class="n">to</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">SKView</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">fromFile</span><span class="p">:</span> <span class="s">"myTiledFile"</span><span class="p">,</span> <span class="nv">delegate</span><span class="p">:</span> <span class="k">self</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// add the tilemap to the scene</span>
             <span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
             <span class="c1">// center the tilemap in the scene</span>
             <span class="n">tilemap</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">view</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
             <span class="n">tilemap</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">view</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">tilemap</span> <span class="o">=</span> <span class="n">tilemap</span>
         <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">(</span><span class="n">_</span> <span class="nv">currentTime</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// update tilemap</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">tilemap</span><span class="p">?</span><span class="o">.</span><span class="nf">update</span><span class="p">(</span><span class="n">currentTime</span><span class="p">)</span>
     <span class="p">}</span>
 
     <span class="kd">func</span> <span class="nf">didAddTileset</span><span class="p">(</span><span class="n">_</span> <span class="nv">tileset</span><span class="p">:</span> <span class="kt">SKTileset</span><span class="p">)</span> <span class="p">{</span>

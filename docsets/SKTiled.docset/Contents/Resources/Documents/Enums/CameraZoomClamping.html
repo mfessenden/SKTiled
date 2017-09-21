@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>SKTiledSceneDelegate Protocol Reference</title>
+    <title>CameraZoomClamping Enum Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Protocol/SKTiledSceneDelegate" class="dashAnchor"></a>
-    <a title="SKTiledSceneDelegate Protocol Reference"></a>
+    <a name="//apple_ref/swift/Enum/CameraZoomClamping" class="dashAnchor"></a>
+    <a title="CameraZoomClamping Enum Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">SKTiled Docs</a></p>
@@ -23,7 +23,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">SKTiled Reference</a>
         <img id="carat" src="../img/carat.png" />
-        SKTiledSceneDelegate Protocol Reference
+        CameraZoomClamping Enum Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -190,21 +190,14 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>SKTiledSceneDelegate</h1>
+            <h1>CameraZoomClamping</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">SKTiledSceneDelegate</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">CameraZoomClamping</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
 
                 </div>
               </div>
-            <h2 id='overview' class='heading'>Overview</h2>
-
-<p>Delegate for managing <code><a href="../Classes/SKTilemap.html">SKTilemap</a></code> nodes in an SpriteKit <a href="https://developer.apple.com/reference/spritekit/skscene"><code>SKScene</code></a> scene.
-This protocol and the <code><a href="../Classes/SKTiledScene.html">SKTiledScene</a></code> objects are included as a suggested way to use the
-<code><a href="../Classes/SKTilemap.html">SKTilemap</a></code> class, but are not required.</p>
-
-<p>In this configuration, the tile map is a child of the root node and reference the custom
-<code><a href="../Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a></code> camera.</p>
+            <p>Camera zoom rounding factor. Clamps the zoom value to nearest quarter or half percentage.</p>
 
           </section>
           <section class="section task-group-section">
@@ -213,9 +206,9 @@ This protocol and the <code><a href="../Classes/SKTiledScene.html">SKTiledScene<
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled0A13SceneDelegateP9worldNodeXev"></a>
-                    <a name="//apple_ref/swift/Property/worldNode" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled0A13SceneDelegateP9worldNodeXev">worldNode</a>
+                    <a name="/s:7SKTiled18CameraZoomClampingO7minimumXev"></a>
+                    <a name="//apple_ref/swift/Property/minimum" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SKTiled18CameraZoomClampingO7minimumXev">minimum</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -223,117 +216,19 @@ This protocol and the <code><a href="../Classes/SKTiledScene.html">SKTiledScene<
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Root container node. Tiled assets are parented to this node.</p>
+                        <p>Minimum possible value.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">worldNode</span><span class="p">:</span> <span class="kt">SKNode</span><span class="o">!</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">minimum</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledScene.swift#L27">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7SKTiled0A13SceneDelegateP10cameraNodeSQyAA0aB6CameraCGv"></a>
-                    <a name="//apple_ref/swift/Property/cameraNode" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled0A13SceneDelegateP10cameraNodeSQyAA0aB6CameraCGv">cameraNode</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Custom scene camera.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">cameraNode</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a></span><span class="o">!</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledScene.swift#L29">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7SKTiled0A13SceneDelegateP7tilemapSQyAA9SKTilemapCGv"></a>
-                    <a name="//apple_ref/swift/Property/tilemap" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled0A13SceneDelegateP7tilemapSQyAA9SKTilemapCGv">tilemap</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Tile map node.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">tilemap</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTilemap.html">SKTilemap</a></span><span class="o">!</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledScene.swift#L31">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7SKTiled0A13SceneDelegateP4loadAA9SKTilemapCSgSS7tmxFile_SSSg11inDirectorySayAA9SKTilesetCG12withTilesetsSb16ignorePropertiesAA12LoggingLevelO07loggingP0tF"></a>
-                    <a name="//apple_ref/swift/Method/load(tmxFile:inDirectory:withTilesets:ignoreProperties:loggingLevel:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled0A13SceneDelegateP4loadAA9SKTilemapCSgSS7tmxFile_SSSg11inDirectorySayAA9SKTilesetCG12withTilesetsSb16ignorePropertiesAA12LoggingLevelO07loggingP0tF">load(tmxFile:inDirectory:withTilesets:ignoreProperties:loggingLevel:)</a>
-                    </code>
-                      <span class="declaration-note">
-                        Default implementation
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Load a tilemap from disk, with optional tilesets.</p>
-
-                      </div>
-                      <h4>Default Implementation</h4>
-                      <div class="default_impl abstract">
-                        <p>Load a named TMX file, with optional tilesets.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">inDirectory</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="n">withTilesets</span> <span class="nv">tilesets</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/SKTileset.html">SKTileset</a></span><span class="p">],</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledScene.swift#L33">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledSceneCamera.swift#L456-L467">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Troubleshooting  Reference</title>
+    <title>Other Structs  Reference</title>
     <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,19 +10,19 @@
     
   </head>
   <body>
-    <a title="Troubleshooting  Reference"></a>
+    <a title="Other Structs  Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="index.html">SKTiled Docs</a></p>
         <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="img/gh.png"/>View on GitHub</a></p>
-        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2Fdocsets%2FSKTiled%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
+        <p class="header-right"><a href="dash-feed://file%3A%2FUsers%2Fmichael%2Fgit%2FSKTiled%2Fdocsets%2FSKTiled%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
       </div>
     </header>
     <div class="content-wrapper">
       <p id="breadcrumbs">
         <a href="index.html">SKTiled Reference</a>
         <img id="carat" src="img/carat.png" />
-        Troubleshooting  Reference
+        Other Structs  Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -146,33 +146,24 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Other.html">Other</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Structs/DebugDrawOptions.html">DebugDrawOptions</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/TextObjectAttributes.html">TextObjectAttributes</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV">– TextAlignment</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:7SKTiled0A18ContentScaleFactorXev">SKTiledContentScaleFactor</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:7SKTiled0A12LoggingLevelAA0bC0Ov">SKTiledLoggingLevel</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:7SKTiled0A23TiledApplicationVersionSSv">SKTiledTiledApplicationVersion</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
             <a href="Other Classes.html">Other Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Classes/AnimationFrame.html">AnimationFrame</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Global Variables.html">Other Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other Global Variables.html#/s:7SKTiled0A18ContentScaleFactorXev">SKTiledContentScaleFactor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Global Variables.html#/s:7SKTiled0A12LoggingLevelAA0bC0Ov">SKTiledLoggingLevel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Global Variables.html#/s:7SKTiled0A23TiledApplicationVersionSSv">SKTiledTiledApplicationVersion</a>
               </li>
             </ul>
           </li>
@@ -184,73 +175,122 @@
               </li>
             </ul>
           </li>
+          <li class="nav-group-name">
+            <a href="Other Structs.html">Other Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/DebugDrawOptions.html">DebugDrawOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/TextObjectAttributes.html">TextObjectAttributes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV">– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class="main-content">
         <section>
           <section class="section">
-            
-            <h1 id='troubleshooting' class='heading'>Troubleshooting</h1>
+            <h1>Other Structs</h1>
+            <p>The following structs are available globally.</p>
 
-<ul>
-<li><a href="#linking-errors">Linking Errors</a></li>
-<li><a href="#xml-parsing-errors">XML Parsing Errors</a>
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled16DebugDrawOptionsV"></a>
+                    <a name="//apple_ref/swift/Struct/DebugDrawOptions" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SKTiled16DebugDrawOptionsV">DebugDrawOptions</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
 
-<ul>
-<li><a href="#external-tileset-errors">External Tileset Errors</a></li>
-<li><a href="#tileset-texture-errors">Tileset Texture Errors</a></li>
-</ul></li>
-<li><a href="#code-signing-errors">Code Signing Errors</a></li>
-</ul>
-<h2 id='linking-errors' class='heading'>Linking Errors</h2>
-
-<p>If you get a zlib import error, make sure you have linked zlib in your Xcode project:</p>
-
-<p><em>Project &gt; Build Settings &gt; Swift Compiler - Search Paths &gt; Import Paths</em></p>
-
-<p>Add a path that represents the SKTiled zlib module:</p>
-
-<p><code>$(SRCROOT)/Sources</code></p>
-
-<p><img src="images/zlib_linking.png" alt="zlib compression"></p>
-
-<p>In your Xcode project file, the path entry will look like this:</p>
-
-<p><code>SWIFT_INCLUDE_PATHS = &quot;zlib&quot;;</code></p>
-<h2 id='xml-parsing-errors' class='heading'>XML Parsing Errors</h2>
-<h3 id='external-tileset-errors' class='heading'>External Tileset Errors</h3>
-
-<p>Occasionally the XML parser will throw errors with external tilesets that have been downloaded from the internet. Importing &amp; re-exporting the Tiled document(s) should make the error go away.</p>
-<h3 id='tileset-texture-errors' class='heading'>Tileset Texture Errors</h3>
-
-<p>If you have trouble building tilesets, check to make sure that your textures are not referenced in</p>
-
-<p>If you use the tileset transparent color feature in Tiled, make sure your png has no alpha channel.</p>
-<h2 id='code-signing-errors' class='heading'>Code Signing Errors</h2>
-
-<p>Occasionally you&rsquo;ll get a code signing error when compiling:</p>
-
-<p><img src="images/codesign-error.png" alt="Codesign Error"></p>
-
-<p>If you&rsquo;re using Photoshop to create &amp; save images, you might need to cleanup Finder metadata. To check, browse to your images directory in shell and run the following command:</p>
-<pre class="highlight plaintext"><code>ls -al@
+<p>A structure representing debug drawing options for <strong>SKTiled</strong> objects.</p>
+<h2 id='properties' class='heading'>Properties</h2>
+<pre class="highlight plaintext"><code>DebugDrawOptions.drawGrid               // visualize the objects's grid (tilemap &amp; layers).
+DebugDrawOptions.drawBounds             // visualize the objects's bounds.
+DebugDrawOptions.drawGraph              // visualize a layer's navigation graph.
+DebugDrawOptions.drawObjectBounds       // draw an object's bounds.
+DebugDrawOptions.drawTileBounds         // draw a tile's bounds.
 </code></pre>
 
-<p>If any of your files have extra metadata that Xcode doesn&rsquo;t like, you&rsquo;ll see it listed below the file name:</p>
+                        <a href="Structs/DebugDrawOptions.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">DebugDrawOptions</span><span class="p">:</span> <span class="kt">OptionSet</span></code></pre>
 
-<p><img src="images/xattr-cleanup.png" alt="Image Metadata"></p>
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiled+Debug.swift#L30-L54">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled20TextObjectAttributesV"></a>
+                    <a name="//apple_ref/swift/Struct/TextObjectAttributes" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SKTiled20TextObjectAttributesV">TextObjectAttributes</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
 
-<p>Running the <code>xattr</code> command in your images directory will clean up the extra data:</p>
-<pre class="highlight plaintext"><code>xattr -rc .
+<p>Structure for managing basic font rendering attributes for <a href="../objects.html#text-objects">text objects</a>.</p>
+<h3 id='properties' class='heading'>Properties</h3>
+<pre class="highlight swift"><code><span class="kt">TextObjectAttributes</span><span class="o">.</span><span class="n">fontName</span>        <span class="c1">// font name.</span>
+<span class="kt">TextObjectAttributes</span><span class="o">.</span><span class="n">fontSize</span>        <span class="c1">// font size.</span>
+<span class="kt">TextObjectAttributes</span><span class="o">.</span><span class="n">fontColor</span>       <span class="c1">// font color.</span>
+<span class="kt">TextObjectAttributes</span><span class="o">.</span><span class="n">alignment</span>       <span class="c1">// horizontal/vertical alignment.</span>
+<span class="kt">TextObjectAttributes</span><span class="o">.</span><span class="n">wrap</span>            <span class="c1">// wrap text.</span>
+<span class="kt">TextObjectAttributes</span><span class="o">.</span><span class="n">isBold</span>          <span class="c1">// font is bold.</span>
+<span class="kt">TextObjectAttributes</span><span class="o">.</span><span class="n">isItalic</span>        <span class="c1">// font is italicized.</span>
+<span class="kt">TextObjectAttributes</span><span class="o">.</span><span class="n">isUnderline</span>     <span class="c1">// font is underlined.</span>
+<span class="kt">TextObjectAttributes</span><span class="o">.</span><span class="n">renderQuality</span>   <span class="c1">// font resolution.</span>
 </code></pre>
 
-<p>Additionally, you could add a script phase to your app target. In Xcode, select your target and add a new <em>New Run Script Phase</em></p>
-<h2 id='carthage-problems' class='heading'>Carthage Problems</h2>
+                        <a href="Structs/TextObjectAttributes.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">TextObjectAttributes</span></code></pre>
 
-<p>If you are getting errors including a framework in Xcode, use the <code>--no-use-binaries</code> flag when updating SKTiled.</p>
-
-<p>Next: <a href="getting-started.html">Getting Started</a> - <a href="Tutorial.html">Index</a></p>
-
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTileObject.swift#L36-L84">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </section>
         </section>
         <section id="footer">

@@ -102,7 +102,7 @@
                 <a href="Classes/SKTiledLayerObject.html">SKTiledLayerObject</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/SKTiledLayerObject.html#/s:OC7SKTiled18SKTiledLayerObject10TileOffset">– TileOffset</a>
+                <a href="Classes/SKTiledLayerObject.html#/s:7SKTiled0A11LayerObjectC10TileOffsetO">– TileOffset</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SKTileLayer.html">SKTileLayer</a>
@@ -120,10 +120,10 @@
                 <a href="Classes/SKTile.html">SKTile</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/SKTile.html#/s:OC7SKTiled6SKTile17TileAlignmentHint">– TileAlignmentHint</a>
+                <a href="Classes/SKTile.html#/s:7SKTiled6SKTileC17TileAlignmentHintO">– TileAlignmentHint</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/SKTile.html#/s:OC7SKTiled6SKTile12PhysicsShape">– PhysicsShape</a>
+                <a href="Classes/SKTile.html#/s:7SKTiled6SKTileC12PhysicsShapeO">– PhysicsShape</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SKTilesetData.html">SKTilesetData</a>
@@ -132,7 +132,7 @@
                 <a href="Classes/SKTileObject.html">SKTileObject</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/SKTileObject.html#/s:OC7SKTiled12SKTileObject13CollisionType">– CollisionType</a>
+                <a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO">– CollisionType</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SKTiledScene.html">SKTiledScene</a>
@@ -155,16 +155,32 @@
                 <a href="Structs/TextObjectAttributes.html">TextObjectAttributes</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/TextObjectAttributes.html#/s:VV7SKTiled20TextObjectAttributes13TextAlignment">– TextAlignment</a>
+                <a href="Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV">– TextAlignment</a>
               </li>
               <li class="nav-group-task">
-                <a href="Other.html#/s:v7SKTiled25SKTiledContentScaleFactorV12CoreGraphics7CGFloat">SKTiledContentScaleFactor</a>
+                <a href="Other.html#/s:7SKTiled0A18ContentScaleFactorXev">SKTiledContentScaleFactor</a>
               </li>
               <li class="nav-group-task">
-                <a href="Other.html#/s:v7SKTiled19SKTiledLoggingLevelOS_12LoggingLevel">SKTiledLoggingLevel</a>
+                <a href="Other.html#/s:7SKTiled0A12LoggingLevelAA0bC0Ov">SKTiledLoggingLevel</a>
               </li>
               <li class="nav-group-task">
-                <a href="Other.html#/s:v7SKTiled30SKTiledTiledApplicationVersionSS">SKTiledTiledApplicationVersion</a>
+                <a href="Other.html#/s:7SKTiled0A23TiledApplicationVersionSSv">SKTiledTiledApplicationVersion</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/AnimationFrame.html">AnimationFrame</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Enums.html">Other Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/CameraZoomClamping.html">CameraZoomClamping</a>
               </li>
             </ul>
           </li>
@@ -178,12 +194,21 @@
 
 <ul>
 <li><a href="#querying-tiles-at-location">Querying Tiles at Location</a></li>
-<li><a href="#find-tiles-with-tile-id">Find Tiles with Tile ID</a></li>
+<li><a href="#find-tiles-with-tile-id">Querying Tiles with ID</a>
+
+<ul>
+<li><a href="#global-id">Global ID</a></li>
+<li><a href="#local-id">Local ID</a></li>
+</ul></li>
 <li><a href="#find-tiles-of-type">Find Tiles of Type</a></li>
 <li><a href="#find-tiles-with-property">Find Tiles with Property</a></li>
 <li><a href="#adding-and-removing-tiles">Adding and Removing Tiles</a></li>
 <li><a href="#tile-shapes">Tile Shapes</a></li>
-<li><a href="#animated-tiles">Animated Tiles</a></li>
+<li><a href="#animated-tiles">Animated Tiles</a>
+
+<ul>
+<li><a href="#updating-tile-animation">Updating Tile Animation</a></li>
+</ul></li>
 <li><a href="#physics">Physics</a></li>
 <li><a href="#tile-overlap">Tile Overlap</a></li>
 </ul>
@@ -197,7 +222,8 @@
 <span class="k">let</span> <span class="nv">tilesForCoord</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">tileAt</span><span class="p">(</span><span class="nv">coord</span><span class="p">:</span> <span class="n">coord</span><span class="p">)</span>
 <span class="k">let</span> <span class="nv">allTilesForCoord</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">tilesAt</span><span class="p">(</span><span class="nv">coord</span><span class="p">:</span> <span class="n">coord</span><span class="p">)</span>
 </code></pre>
-<h2 id='find-tiles-with-tile-id' class='heading'>Find Tiles with Tile ID</h2>
+<h2 id='querying-tiles-with-id' class='heading'>Querying Tiles with ID</h2>
+<h3 id='global-id' class='heading'>Global ID</h3>
 
 <p>To query tiles with a global ID, pass the value to either the <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> node, or an individual <a href="Classes/SKTileLayer.html"><code>SKTileLayer</code></a> node:</p>
 <pre class="highlight swift"><code><span class="c1">// query tiles from the tile map node</span>
@@ -206,6 +232,20 @@
 <span class="c1">// query tiles from the parent layer</span>
 <span class="k">let</span> <span class="nv">tiles</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
 </code></pre>
+<h3 id='local-id' class='heading'>Local ID</h3>
+
+<p>If you have a reference to a tileset object and want to query tile data with a local id, use the <a href="Classes/SKTileset.html#/s:FC7SKTiled9SKTileset11getTileDataFT7localIDSi_GSqCS_13SKTilesetData_"><code>SKTileset.getTileData(localID:)</code></a> method. Here&rsquo;s a reference to an external tileset with a <strong>firstgid</strong> value of <strong>1</strong>. So if we want to access tile data with a local id of <strong>79</strong>, we can query the tileset instance directly:</p>
+
+<p><img src="images/tileset-reference.png" alt="Tileset Reference"></p>
+
+<p><img src="images/tiledata-code.png" alt="Tile ID"></p>
+<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tiledata</span> <span class="o">=</span> <span class="n">tileset</span><span class="o">.</span><span class="nf">getTileData</span><span class="p">(</span><span class="nv">localID</span><span class="p">:</span> <span class="mi">79</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">tiledata</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="c1">// Tile ID: 78 @ 16x16, 6 frames</span>
+</code></pre>
+
+<p>As you can see, the tile data is correctly returned. The local ID is the sum of the tileset&rsquo;s <strong>firstgid</strong> value plus the tile&rsquo;s actual ID. (1 + 78 = 79)</p>
 <h2 id='find-tiles-of-type' class='heading'>Find Tiles of Type</h2>
 
 <p>The string property <strong>type</strong> can be used to label or group tiles in <strong>SKTiled</strong>. Adding a string property to a tile ID will allow it to be accessed from SpriteKit:</p>
@@ -259,41 +299,69 @@
 
 <p><img src="images/animated-tiles.gif" alt="Animated Tiles"></p>
 
-<p>Tiles animated in Tiled are have custom SpriteKit actions automatically created to animate the tile texture. Animated tiles are accessed with the  <a href="Classes/SKTileLayer.html"><code>SKTileLayer.getAnimatedTiles</code></a> method, or globally via the <a href="Classes/SKTilemap.html#/s:FC7SKTiled9SKTilemap16getAnimatedTilesFT_GSaCS_6SKTile_"><code>SKTilemap.getAnimatedTiles</code></a> method:</p>
+<p>Tile animations in <strong>Tiled</strong> will render if you add update your tilemap instance in your SpriteKit scene&rsquo;s <a href="https://developer.apple.com/documentation/spritekit/skscene/1519802-update"><code>SKScene.update</code></a> method. Animated tiles are easily accessed with the parent <a href="Classes/SKTileLayer.html#/s:7SKTiled11SKTileLayerC13animatedTilesSayAA0B0CGyF"><code>SKTileLayer.animatedTiles</code></a> method, or globally via the <a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC13animatedTilesSayAA6SKTileCGSb9recursive_tF"><code>SKTilemap.animatedTiles</code></a> method:</p>
 <pre class="highlight swift"><code><span class="c1">// return animated tiles in a single layer</span>
-<span class="k">let</span> <span class="nv">animatedTiles</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">getAnimatedTiles</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">animatedTiles</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">animatedTiles</span><span class="p">()</span>
 
 <span class="c1">// return all animated tiles</span>
-<span class="k">let</span> <span class="nv">allAnimatedTiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getAnimatedTiles</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">allAnimatedTiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">animatedTiles</span><span class="p">()</span>
 </code></pre>
 
-<p>All <a href="Classes/SKTile.html"><code>SKTile</code></a> instances allow you to pause &amp; remove animations:</p>
+<p>All <a href="Classes/SKTile.html"><code>SKTile</code></a> instances allow you to pause and change the animation speed:</p>
 <pre class="highlight swift"><code><span class="c1">// pause or unpause tile animation</span>
 <span class="k">for</span> <span class="n">animatedTile</span> <span class="k">in</span> <span class="n">animatedTiles</span> <span class="p">{</span>
-    <span class="n">animatedTile</span><span class="o">.</span><span class="n">pauseAnimation</span> <span class="o">=</span> <span class="kc">true</span>
+    <span class="n">animatedTile</span><span class="o">.</span><span class="n">isPaused</span> <span class="o">=</span> <span class="kc">true</span>
 <span class="p">}</span>
 
-<span class="c1">// remove the animation (optionally restore the original texture)</span>
+<span class="c1">// double animation speed</span>
+<span class="k">for</span> <span class="n">animatedTile</span> <span class="k">in</span> <span class="n">animatedTiles</span> <span class="p">{</span>
+    <span class="n">animatedTile</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="p">}</span>
+
+<span class="c1">// run animation backwards</span>
+<span class="k">for</span> <span class="n">animatedTile</span> <span class="k">in</span> <span class="n">animatedTiles</span> <span class="p">{</span>
+    <span class="n">animatedTile</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>To stop animation, use the <a href="Classes/SKTile.html#/s:7SKTiled6SKTileC15removeAnimationySb7restore_tF"><code>SKTile.removeAnimation(restore:)</code></a> method to remove the animation, and the <a href="Classes/SKTile.html#/s:7SKTiled6SKTileC12runAnimationyyF"><code>SKTile.runAnimation</code></a> method to restore it:</p>
+<pre class="highlight swift"><code><span class="c1">// remove the animation (optionally restore the original texture)</span>
 <span class="k">for</span> <span class="n">animatedTile</span> <span class="k">in</span> <span class="n">animatedTiles</span> <span class="p">{</span>
     <span class="n">animatedTile</span><span class="o">.</span><span class="nf">removeAnimation</span><span class="p">(</span><span class="nv">restore</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
 <span class="p">}</span>
+
+<span class="c1">// restore tile animations</span>
+<span class="k">for</span> <span class="n">animatedTile</span> <span class="k">in</span> <span class="n">animatedTiles</span> <span class="p">{</span>
+    <span class="n">animatedTile</span><span class="o">.</span><span class="nf">runAnimation</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id='updating-tile-animation' class='heading'>Updating Tile Animation</h3>
+
+<p>It&rsquo;s easy to add or change the animation for tile objects, but bear in mind that as <a href="Classes/SKTilesetData.html"><code>SKTilesetData</code></a> objects are still linked to their parent tileset, changing or removing animation one will <em>change every tile that references that data.</em></p>
+
+<p>To change the animated frames of a tile, you will first need to access the tile data, either from the tile itself, or the parent tileset:</p>
+<pre class="highlight swift"><code><span class="c1">// access from tile</span>
+<span class="k">let</span> <span class="nv">tileData</span> <span class="o">=</span> <span class="n">tile</span><span class="o">.</span><span class="n">tileData</span>
+
+<span class="c1">// access from tile</span>
+<span class="k">let</span> <span class="nv">tileData</span> <span class="o">=</span> <span class="n">tileset</span><span class="o">.</span><span class="n">tileData</span>
 </code></pre>
 
-<p>Since animation data is stored in the <a href="Classes/SKTilesetData.html"><code>SKTilesetData</code></a> node, to restart removed animation, simply run the <a href="Classes/SKTile.html"><code>SKTile.runAnimation</code></a> method again.</p>
+<p>To add animation to a tile, add ID values to the <a href="Classes/SKTilesetData.html"><code>SKTilesetData</code></a> instance. Frame durations are stored in milliseconds to match Tiled&rsquo;s:</p>
+<pre class="highlight swift"><code><span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">33</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mi">250</span><span class="p">)</span>
+<span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mi">350</span><span class="p">)</span>
+<span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mi">150</span><span class="p">)</span>
+</code></pre>
 
-<p>To add animation to a tile, add GID values to the <a href="Classes/SKTilesetData.html"><code>SKTilesetData</code></a>  instance associated with each tile:</p>
-<pre class="highlight swift"><code><span class="c1">// add frame GIDs</span>
-<span class="k">let</span> <span class="nv">tileData</span> <span class="o">=</span> <span class="n">tile</span><span class="o">.</span><span class="n">tileData</span>
-<span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">33</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">)</span>
-<span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mf">0.35</span><span class="p">)</span>
-<span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mf">0.15</span><span class="p">)</span>
+<p>You also have the option of manipulating frames directly:</p>
+<pre class="highlight swift"><code><span class="c1">// set the texture for a specific frame. The old texture is returned (if one exists)</span>
+<span class="k">let</span> <span class="nv">jumpTexture</span> <span class="o">=</span> <span class="kt">SKTexture</span><span class="p">(</span><span class="nv">imageNamed</span><span class="p">:</span> <span class="s">"jump-alt-002"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">oldTexture</span> <span class="o">=</span> <span class="n">tileData</span><span class="o">.</span><span class="nf">setTexture</span><span class="p">(</span><span class="n">jumpTexture</span><span class="p">,</span> <span class="nv">forFrame</span><span class="p">:</span> <span class="mi">2</span><span class="p">)</span>
 
-<span class="c1">// run the animation</span>
-<span class="n">tile</span><span class="o">.</span><span class="nf">runAnimation</span><span class="p">()</span>
-
-
-<span class="c1">// remove frames by index</span>
-<span class="n">tileData</span><span class="o">.</span><span class="nf">clearFrames</span><span class="p">()</span>
+<span class="c1">// change the frame interval for a frame (in milliseconds)</span>
+<span class="k">if</span> <span class="n">tileData</span><span class="o">.</span><span class="nf">setDuration</span><span class="p">(</span><span class="nv">interval</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span> <span class="nv">forFrame</span><span class="p">:</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"frame 2 duration is now 200!"</span><span class="p">)</span>
+<span class="p">}</span>
 </code></pre>
 <h2 id='physics' class='heading'>Physics</h2>
 

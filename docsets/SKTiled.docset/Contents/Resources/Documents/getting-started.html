@@ -102,7 +102,7 @@
                 <a href="Classes/SKTiledLayerObject.html">SKTiledLayerObject</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/SKTiledLayerObject.html#/s:OC7SKTiled18SKTiledLayerObject10TileOffset">– TileOffset</a>
+                <a href="Classes/SKTiledLayerObject.html#/s:7SKTiled0A11LayerObjectC10TileOffsetO">– TileOffset</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SKTileLayer.html">SKTileLayer</a>
@@ -120,10 +120,10 @@
                 <a href="Classes/SKTile.html">SKTile</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/SKTile.html#/s:OC7SKTiled6SKTile17TileAlignmentHint">– TileAlignmentHint</a>
+                <a href="Classes/SKTile.html#/s:7SKTiled6SKTileC17TileAlignmentHintO">– TileAlignmentHint</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/SKTile.html#/s:OC7SKTiled6SKTile12PhysicsShape">– PhysicsShape</a>
+                <a href="Classes/SKTile.html#/s:7SKTiled6SKTileC12PhysicsShapeO">– PhysicsShape</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SKTilesetData.html">SKTilesetData</a>
@@ -132,7 +132,7 @@
                 <a href="Classes/SKTileObject.html">SKTileObject</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/SKTileObject.html#/s:OC7SKTiled12SKTileObject13CollisionType">– CollisionType</a>
+                <a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO">– CollisionType</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SKTiledScene.html">SKTiledScene</a>
@@ -155,16 +155,32 @@
                 <a href="Structs/TextObjectAttributes.html">TextObjectAttributes</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/TextObjectAttributes.html#/s:VV7SKTiled20TextObjectAttributes13TextAlignment">– TextAlignment</a>
+                <a href="Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV">– TextAlignment</a>
               </li>
               <li class="nav-group-task">
-                <a href="Other.html#/s:v7SKTiled25SKTiledContentScaleFactorV12CoreGraphics7CGFloat">SKTiledContentScaleFactor</a>
+                <a href="Other.html#/s:7SKTiled0A18ContentScaleFactorXev">SKTiledContentScaleFactor</a>
               </li>
               <li class="nav-group-task">
-                <a href="Other.html#/s:v7SKTiled19SKTiledLoggingLevelOS_12LoggingLevel">SKTiledLoggingLevel</a>
+                <a href="Other.html#/s:7SKTiled0A12LoggingLevelAA0bC0Ov">SKTiledLoggingLevel</a>
               </li>
               <li class="nav-group-task">
-                <a href="Other.html#/s:v7SKTiled30SKTiledTiledApplicationVersionSS">SKTiledTiledApplicationVersion</a>
+                <a href="Other.html#/s:7SKTiled0A23TiledApplicationVersionSSv">SKTiledTiledApplicationVersion</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/AnimationFrame.html">AnimationFrame</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Enums.html">Other Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/CameraZoomClamping.html">CameraZoomClamping</a>
               </li>
             </ul>
           </li>
@@ -201,17 +217,17 @@
 
 <ul>
 <li>iOS9+/macOS 10.12+</li>
-<li>Xcode 8</li>
-<li>Swift 3.1</li>
+<li>Xcode 9</li>
+<li>Swift 3.2</li>
 </ul>
 <h3 id='swift-4' class='heading'>Swift 4</h3>
 
-<p>For use with <strong>Swift 4/Xcode 9</strong>, please check out the <a href="https://github.com/mfessenden/SKTiled/tree/swift4">Swift 4 branch</a>.</p>
+<p>For use with <strong>Swift 4</strong>, please check out the <a href="https://github.com/mfessenden/SKTiled/tree/swift4">Swift 4 branch</a>.</p>
 <h2 id='installation' class='heading'>Installation</h2>
 
 <p>The <strong>SKTiled</strong> project contains four targets; two are demo applications for iOS &amp; macOS. These are included to let you quickly test your own content, or simple play around with the included demo files. The other two are frameworks for use in your own projects.</p>
 
-<p><img src="images/project_targets.png" alt="Project Targets"></p>
+<p><img src="images/project-schemes.png" alt="Project Schemes"></p>
 
 <p>To use the frameworks, build one or both of the targets and add them to your project. Make sure the <em>Minimum Deployment Target</em> is set correctly for your project (iOS9+/macOS 10.12+).</p>
 <h2 id='framework-installation' class='heading'>Framework Installation</h2>
@@ -226,7 +242,7 @@
 <h2 id='carthage-installation' class='heading'>Carthage Installation</h2>
 
 <p>To build with <a href="https://github.com/Carthage/Carthage">Carthage</a>, create a Cartfile in your project root and add a reference to <strong>SKTiled</strong> (be sure to check the current version number):</p>
-<pre class="highlight plaintext"><code>github "mfessenden/SKTiled" ~&gt; 1.15
+<pre class="highlight plaintext"><code>github "mfessenden/SKTiled" ~&gt; 1.16
 </code></pre>
 
 <p>Close the file and run Carthage from the terminal to build the framework(s):</p>
@@ -253,7 +269,7 @@
   use_frameworks!
 
   # Pods for iOS
-  pod 'SKTiled', '~&gt; 1.15'
+  pod 'SKTiled', '~&gt; 1.16'
 
 end
 
@@ -261,7 +277,7 @@ target 'macOS' do
   use_frameworks!
 
   # Pods for macOS
-  pod 'SKTiled', '~&gt; 1.15'
+  pod 'SKTiled', '~&gt; 1.16'
 
 end
 </code></pre>

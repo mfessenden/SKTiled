@@ -103,7 +103,7 @@
                 <a href="../Classes/SKTiledLayerObject.html">SKTiledLayerObject</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/SKTiledLayerObject.html#/s:OC7SKTiled18SKTiledLayerObject10TileOffset">– TileOffset</a>
+                <a href="../Classes/SKTiledLayerObject.html#/s:7SKTiled0A11LayerObjectC10TileOffsetO">– TileOffset</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/SKTileLayer.html">SKTileLayer</a>
@@ -121,10 +121,10 @@
                 <a href="../Classes/SKTile.html">SKTile</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/SKTile.html#/s:OC7SKTiled6SKTile17TileAlignmentHint">– TileAlignmentHint</a>
+                <a href="../Classes/SKTile.html#/s:7SKTiled6SKTileC17TileAlignmentHintO">– TileAlignmentHint</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/SKTile.html#/s:OC7SKTiled6SKTile12PhysicsShape">– PhysicsShape</a>
+                <a href="../Classes/SKTile.html#/s:7SKTiled6SKTileC12PhysicsShapeO">– PhysicsShape</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/SKTilesetData.html">SKTilesetData</a>
@@ -133,7 +133,7 @@
                 <a href="../Classes/SKTileObject.html">SKTileObject</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/SKTileObject.html#/s:OC7SKTiled12SKTileObject13CollisionType">– CollisionType</a>
+                <a href="../Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO">– CollisionType</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/SKTiledScene.html">SKTiledScene</a>
@@ -156,16 +156,32 @@
                 <a href="../Structs/TextObjectAttributes.html">TextObjectAttributes</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/TextObjectAttributes.html#/s:VV7SKTiled20TextObjectAttributes13TextAlignment">– TextAlignment</a>
+                <a href="../Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV">– TextAlignment</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Other.html#/s:v7SKTiled25SKTiledContentScaleFactorV12CoreGraphics7CGFloat">SKTiledContentScaleFactor</a>
+                <a href="../Other.html#/s:7SKTiled0A18ContentScaleFactorXev">SKTiledContentScaleFactor</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Other.html#/s:v7SKTiled19SKTiledLoggingLevelOS_12LoggingLevel">SKTiledLoggingLevel</a>
+                <a href="../Other.html#/s:7SKTiled0A12LoggingLevelAA0bC0Ov">SKTiledLoggingLevel</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Other.html#/s:v7SKTiled30SKTiledTiledApplicationVersionSS">SKTiledTiledApplicationVersion</a>
+                <a href="../Other.html#/s:7SKTiled0A23TiledApplicationVersionSSv">SKTiledTiledApplicationVersion</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/AnimationFrame.html">AnimationFrame</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Enums.html">Other Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/CameraZoomClamping.html">CameraZoomClamping</a>
               </li>
             </ul>
           </li>
@@ -186,13 +202,43 @@
 <p>Custom scene camera that responds to finger gestures and mouse events.</p>
 
 <p>The <code>SKTiledSceneCamera</code> is a custom camera meant to be used with a scene conforming to the <code><a href="../Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a></code> protocol. 
-The camera defines a position in the scene to render the scene from, with a reference to the <code><a href="../Protocols/SKTiledSceneDelegate.html#/s:vP7SKTiled20SKTiledSceneDelegate9worldNodeGSQCSo6SKNode_">SKTiledSceneDelegate.worldNode</a></code> 
+The camera defines a position in the scene to render the scene from, with a reference to the <code><a href="../Protocols/SKTiledSceneDelegate.html#/s:7SKTiled0A13SceneDelegateP9worldNodeXev">SKTiledSceneDelegate.worldNode</a></code> 
 to interact with tile maps.</p>
 
           </section>
           <section class="section task-group-section">
             <div class="task-group">
               <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled0A11SceneCameraC12zoomClampingAA0c4ZoomE0Ov"></a>
+                    <a name="//apple_ref/swift/Property/zoomClamping" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SKTiled0A11SceneCameraC12zoomClampingAA0c4ZoomE0Ov">zoomClamping</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Clamp factor to alleviate cracks in tilemap.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">zoomClamping</span><span class="p">:</span> <span class="kt"><a href="../Enums/CameraZoomClamping.html">CameraZoomClamping</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">none</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledSceneCamera.swift#L115-L119">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -288,9 +334,9 @@ to interact with tile maps.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC7SKTiled18SKTiledSceneCameracFT4viewCSo6SKView5worldCSo6SKNode_S0_"></a>
+                    <a name="/s:7SKTiled0A11SceneCameraCXeXecfc"></a>
                     <a name="//apple_ref/swift/Method/init(view:world:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC7SKTiled18SKTiledSceneCameracFT4viewCSo6SKView5worldCSo6SKNode_S0_">init(view:world:)</a>
+                    <a class="token" href="#/s:7SKTiled0A11SceneCameraCXeXecfc">init(view:world:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -341,7 +387,7 @@ to interact with tile maps.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.15/Sources/SKTiledSceneCamera.swift#L137-L162">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledSceneCamera.swift#L154-L179">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -360,9 +406,9 @@ to interact with tile maps.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC7SKTiled18SKTiledSceneCamera11addDelegateFPS_26SKTiledSceneCameraDelegate_T_"></a>
+                    <a name="/s:7SKTiled0A11SceneCameraC11addDelegateyAA0abcE0_pF"></a>
                     <a name="//apple_ref/swift/Method/addDelegate(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC7SKTiled18SKTiledSceneCamera11addDelegateFPS_26SKTiledSceneCameraDelegate_T_">addDelegate(_:)</a>
+                    <a class="token" href="#/s:7SKTiled0A11SceneCameraC11addDelegateyAA0abcE0_pF">addDelegate(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -401,7 +447,7 @@ to interact with tile maps.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.15/Sources/SKTiledSceneCamera.swift#L175-L180">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledSceneCamera.swift#L192-L197">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -409,9 +455,9 @@ to interact with tile maps.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC7SKTiled18SKTiledSceneCamera14removeDelegateFPS_26SKTiledSceneCameraDelegate_T_"></a>
+                    <a name="/s:7SKTiled0A11SceneCameraC14removeDelegateyAA0abcE0_pF"></a>
                     <a name="//apple_ref/swift/Method/removeDelegate(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC7SKTiled18SKTiledSceneCamera14removeDelegateFPS_26SKTiledSceneCameraDelegate_T_">removeDelegate(_:)</a>
+                    <a class="token" href="#/s:7SKTiled0A11SceneCameraC14removeDelegateyAA0abcE0_pF">removeDelegate(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -450,7 +496,7 @@ to interact with tile maps.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.15/Sources/SKTiledSceneCamera.swift#L187-L191">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledSceneCamera.swift#L204-L208">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -469,9 +515,9 @@ to interact with tile maps.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC7SKTiled18SKTiledSceneCamera12addToOverlayFCSo6SKNodeT_"></a>
+                    <a name="/s:7SKTiled0A11SceneCameraC12addToOverlayXeXeF"></a>
                     <a name="//apple_ref/swift/Method/addToOverlay(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC7SKTiled18SKTiledSceneCamera12addToOverlayFCSo6SKNodeT_">addToOverlay(_:)</a>
+                    <a class="token" href="#/s:7SKTiled0A11SceneCameraC12addToOverlayXeXeF">addToOverlay(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -491,7 +537,7 @@ to interact with tile maps.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.15/Sources/SKTiledSceneCamera.swift#L197-L200">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledSceneCamera.swift#L214-L217">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -510,9 +556,9 @@ to interact with tile maps.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC7SKTiled18SKTiledSceneCamera13setCameraZoomFTV12CoreGraphics7CGFloat8intervalSd_T_"></a>
+                    <a name="/s:7SKTiled0A11SceneCameraC03setC4ZoomXeXeF"></a>
                     <a name="//apple_ref/swift/Method/setCameraZoom(_:interval:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC7SKTiled18SKTiledSceneCamera13setCameraZoomFTV12CoreGraphics7CGFloat8intervalSd_T_">setCameraZoom(_:interval:)</a>
+                    <a class="token" href="#/s:7SKTiled0A11SceneCameraC03setC4ZoomXeXeF">setCameraZoom(_:interval:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -551,7 +597,7 @@ to interact with tile maps.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.15/Sources/SKTiledSceneCamera.swift#L209-L229">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledSceneCamera.swift#L226-L250">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -559,9 +605,9 @@ to interact with tile maps.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC7SKTiled18SKTiledSceneCamera23setCameraZoomAtLocationFT5scaleV12CoreGraphics7CGFloat8locationVSC7CGPoint_T_"></a>
+                    <a name="/s:7SKTiled0A11SceneCameraC03setC14ZoomAtLocationXeXeF"></a>
                     <a name="//apple_ref/swift/Method/setCameraZoomAtLocation(scale:location:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC7SKTiled18SKTiledSceneCamera23setCameraZoomAtLocationFT5scaleV12CoreGraphics7CGFloat8locationVSC7CGPoint_T_">setCameraZoomAtLocation(scale:location:)</a>
+                    <a class="token" href="#/s:7SKTiled0A11SceneCameraC03setC14ZoomAtLocationXeXeF">setCameraZoomAtLocation(scale:location:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -612,7 +658,7 @@ to interact with tile maps.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.15/Sources/SKTiledSceneCamera.swift#L237-L240">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledSceneCamera.swift#L258-L261">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -620,9 +666,9 @@ to interact with tile maps.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC7SKTiled18SKTiledSceneCamera18setZoomConstraintsFT7minimumV12CoreGraphics7CGFloat7maximumS2__T_"></a>
+                    <a name="/s:7SKTiled0A11SceneCameraC18setZoomConstraintsXeXeF"></a>
                     <a name="//apple_ref/swift/Method/setZoomConstraints(minimum:maximum:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC7SKTiled18SKTiledSceneCamera18setZoomConstraintsFT7minimumV12CoreGraphics7CGFloat7maximumS2__T_">setZoomConstraints(minimum:maximum:)</a>
+                    <a class="token" href="#/s:7SKTiled0A11SceneCameraC18setZoomConstraintsXeXeF">setZoomConstraints(minimum:maximum:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -673,7 +719,67 @@ to interact with tile maps.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.15/Sources/SKTiledSceneCamera.swift#L248-L252">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledSceneCamera.swift#L269-L273">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Bounds"></a>
+                <a name="//apple_ref/swift/Section/Bounds" class="dashAnchor"></a>
+                <a href="#/Bounds">
+                  <h3 class="section-name">Bounds</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled0A11SceneCameraC03setC6BoundsXeXeF"></a>
+                    <a name="//apple_ref/swift/Method/setCameraBounds(bounds:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SKTiled0A11SceneCameraC03setC6BoundsXeXeF">setCameraBounds(bounds:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Update the camera bounds.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setCameraBounds</span><span class="p">(</span><span class="nv">bounds</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>bounds</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>CGRect</code> camera view bounds.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledSceneCamera.swift#L294-L301">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -692,9 +798,9 @@ to interact with tile maps.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC7SKTiled18SKTiledSceneCamera10moveCameraFT8locationVSC7CGPoint8previousS1__T_"></a>
+                    <a name="/s:7SKTiled0A11SceneCameraC04moveC0XeXeF"></a>
                     <a name="//apple_ref/swift/Method/moveCamera(location:previous:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC7SKTiled18SKTiledSceneCamera10moveCameraFT8locationVSC7CGPoint8previousS1__T_">moveCamera(location:previous:)</a>
+                    <a class="token" href="#/s:7SKTiled0A11SceneCameraC04moveC0XeXeF">moveCamera(location:previous:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -745,7 +851,7 @@ to interact with tile maps.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.15/Sources/SKTiledSceneCamera.swift#L262-L271">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledSceneCamera.swift#L311-L320">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -753,9 +859,9 @@ to interact with tile maps.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC7SKTiled18SKTiledSceneCamera10panToPointFTVSC7CGPoint8durationSd_T_"></a>
+                    <a name="/s:7SKTiled0A11SceneCameraC10panToPointXeXeF"></a>
                     <a name="//apple_ref/swift/Method/panToPoint(_:duration:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC7SKTiled18SKTiledSceneCamera10panToPointFTVSC7CGPoint8durationSd_T_">panToPoint(_:duration:)</a>
+                    <a class="token" href="#/s:7SKTiled0A11SceneCameraC10panToPointXeXeF">panToPoint(_:duration:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -806,7 +912,7 @@ to interact with tile maps.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.15/Sources/SKTiledSceneCamera.swift#L279-L286">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledSceneCamera.swift#L328-L335">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -814,9 +920,9 @@ to interact with tile maps.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC7SKTiled18SKTiledSceneCamera8centerOnFT10scenePointVSC7CGPoint8durationSd_T_"></a>
+                    <a name="/s:7SKTiled0A11SceneCameraC8centerOnXeXeF"></a>
                     <a name="//apple_ref/swift/Method/centerOn(scenePoint:duration:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC7SKTiled18SKTiledSceneCamera8centerOnFT10scenePointVSC7CGPoint8durationSd_T_">centerOn(scenePoint:duration:)</a>
+                    <a class="token" href="#/s:7SKTiled0A11SceneCameraC8centerOnXeXeF">centerOn(scenePoint:duration:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -867,7 +973,7 @@ to interact with tile maps.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.15/Sources/SKTiledSceneCamera.swift#L294-L309">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledSceneCamera.swift#L343-L358">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -875,9 +981,9 @@ to interact with tile maps.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC7SKTiled18SKTiledSceneCamera8centerOnFTCSo6SKNode8durationSd_T_"></a>
+                    <a name="/s:7SKTiled0A11SceneCameraC8centerOnXeXeF"></a>
                     <a name="//apple_ref/swift/Method/centerOn(_:duration:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC7SKTiled18SKTiledSceneCamera8centerOnFTCSo6SKNode8durationSd_T_">centerOn(_:duration:)</a>
+                    <a class="token" href="#/s:7SKTiled0A11SceneCameraC8centerOnXeXeF">centerOn(_:duration:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -928,7 +1034,7 @@ to interact with tile maps.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.15/Sources/SKTiledSceneCamera.swift#L317-L334">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledSceneCamera.swift#L366-L383">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -936,9 +1042,9 @@ to interact with tile maps.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC7SKTiled18SKTiledSceneCamera11resetCameraFT_T_"></a>
+                    <a name="/s:7SKTiled0A11SceneCameraC05resetC0yyF"></a>
                     <a name="//apple_ref/swift/Method/resetCamera()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC7SKTiled18SKTiledSceneCamera11resetCameraFT_T_">resetCamera()</a>
+                    <a class="token" href="#/s:7SKTiled0A11SceneCameraC05resetC0yyF">resetCamera()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -958,7 +1064,7 @@ to interact with tile maps.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.15/Sources/SKTiledSceneCamera.swift#L339-L342">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledSceneCamera.swift#L388-L391">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -966,9 +1072,9 @@ to interact with tile maps.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC7SKTiled18SKTiledSceneCamera11resetCameraFT7toScaleV12CoreGraphics7CGFloat_T_"></a>
+                    <a name="/s:7SKTiled0A11SceneCameraC05resetC0XeXeF"></a>
                     <a name="//apple_ref/swift/Method/resetCamera(toScale:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC7SKTiled18SKTiledSceneCamera11resetCameraFT7toScaleV12CoreGraphics7CGFloat_T_">resetCamera(toScale:)</a>
+                    <a class="token" href="#/s:7SKTiled0A11SceneCameraC05resetC0XeXeF">resetCamera(toScale:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1007,7 +1113,7 @@ to interact with tile maps.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.15/Sources/SKTiledSceneCamera.swift#L349-L353">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledSceneCamera.swift#L398-L401">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1015,9 +1121,9 @@ to interact with tile maps.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC7SKTiled18SKTiledSceneCamera9fitToViewFT7newSizeVSC6CGSize10transitionSd_T_"></a>
+                    <a name="/s:7SKTiled0A11SceneCameraC9fitToViewXeXeF"></a>
                     <a name="//apple_ref/swift/Method/fitToView(newSize:transition:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC7SKTiled18SKTiledSceneCamera9fitToViewFT7newSizeVSC6CGSize10transitionSd_T_">fitToView(newSize:transition:)</a>
+                    <a class="token" href="#/s:7SKTiled0A11SceneCameraC9fitToViewXeXeF">fitToView(newSize:transition:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1068,7 +1174,7 @@ to interact with tile maps.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.15/Sources/SKTiledSceneCamera.swift#L361-L391">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledSceneCamera.swift#L409-L439">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1087,9 +1193,9 @@ to interact with tile maps.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC7SKTiled18SKTiledSceneCamera11getVerticesFT_GSaVSC7CGPoint_"></a>
+                    <a name="/s:7SKTiled0A11SceneCameraC11getVerticesXeXeF"></a>
                     <a name="//apple_ref/swift/Method/getVertices()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC7SKTiled18SKTiledSceneCamera11getVerticesFT_GSaVSC7CGPoint_">getVertices()</a>
+                    <a class="token" href="#/s:7SKTiled0A11SceneCameraC11getVerticesXeXeF">getVertices()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1113,7 +1219,7 @@ to interact with tile maps.</p>
                         <p><code>[CGPoint]</code> array of points.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.15/Sources/SKTiledSceneCamera.swift#L399-L401">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledSceneCamera.swift#L447-L449">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1224,9 +1330,9 @@ to interact with tile maps.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC7SKTiled18SKTiledSceneCamera9mouseDownFT4withCSo7NSEvent_T_"></a>
+                    <a name="/s:7SKTiled0A11SceneCameraC9mouseDownXeXeF"></a>
                     <a name="//apple_ref/swift/Method/mouseDown(with:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC7SKTiled18SKTiledSceneCamera9mouseDownFT4withCSo7NSEvent_T_">mouseDown(with:)</a>
+                    <a class="token" href="#/s:7SKTiled0A11SceneCameraC9mouseDownXeXeF">mouseDown(with:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1265,7 +1371,7 @@ to interact with tile maps.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.15/Sources/SKTiledSceneCamera.swift#L497-L505">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledSceneCamera.swift#L565-L573">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1273,9 +1379,9 @@ to interact with tile maps.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC7SKTiled18SKTiledSceneCamera10mouseMovedFT4withCSo7NSEvent_T_"></a>
+                    <a name="/s:7SKTiled0A11SceneCameraC10mouseMovedXeXeF"></a>
                     <a name="//apple_ref/swift/Method/mouseMoved(with:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC7SKTiled18SKTiledSceneCamera10mouseMovedFT4withCSo7NSEvent_T_">mouseMoved(with:)</a>
+                    <a class="token" href="#/s:7SKTiled0A11SceneCameraC10mouseMovedXeXeF">mouseMoved(with:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1315,7 +1421,7 @@ coordinate origin will be the center of the current window.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.15/Sources/SKTiledSceneCamera.swift#L513-L520">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledSceneCamera.swift#L581-L588">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1323,9 +1429,9 @@ coordinate origin will be the center of the current window.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC7SKTiled18SKTiledSceneCamera11scrollWheelFT4withCSo7NSEvent_T_"></a>
+                    <a name="/s:7SKTiled0A11SceneCameraC11scrollWheelXeXeF"></a>
                     <a name="//apple_ref/swift/Method/scrollWheel(with:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC7SKTiled18SKTiledSceneCamera11scrollWheelFT4withCSo7NSEvent_T_">scrollWheel(with:)</a>
+                    <a class="token" href="#/s:7SKTiled0A11SceneCameraC11scrollWheelXeXeF">scrollWheel(with:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1345,7 +1451,7 @@ coordinate origin will be the center of the current window.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.15/Sources/SKTiledSceneCamera.swift#L532-L550">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTiledSceneCamera.swift#L600-L618">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

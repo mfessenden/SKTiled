@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Getting Started  Reference</title>
+    <title>Other Classes  Reference</title>
     <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,7 +10,7 @@
     
   </head>
   <body>
-    <a title="Getting Started  Reference"></a>
+    <a title="Other Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="index.html">SKTiled Docs</a></p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="index.html">SKTiled Reference</a>
         <img id="carat" src="img/carat.png" />
-        Getting Started  Reference
+        Other Classes  Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -189,135 +189,88 @@
       <article class="main-content">
         <section>
           <section class="section">
+            <h1>Other Classes</h1>
             
-            <h1 id='getting-started' class='heading'>Getting Started</h1>
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled14AnimationFrameC"></a>
+                    <a name="//apple_ref/swift/Class/AnimationFrame" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SKTiled14AnimationFrameC">AnimationFrame</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A structure representing frame of animation. Time is stored in milliseconds.</p>
 
-<ul>
-<li><a href="#requirements">Requirements</a>
+                        <a href="Classes/AnimationFrame.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">AnimationFrame</span></code></pre>
 
-<ul>
-<li><a href="#swift-4">Swift 4</a></li>
-</ul></li>
-<li><a href="#installation">Installation</a>
-
-<ul>
-<li><a href="#framework-installation">Framework Installation</a></li>
-<li><a href="#carthage-installation">Carthage Installation</a></li>
-<li><a href="#cocoapods-installation">CocoaPods Installation</a></li>
-</ul></li>
-<li><a href="#adding-tiled-assets-to-xcode">Adding Tiled Assets to Xcode</a>
-
-<ul>
-<li><a href="#referenced-assets">Referenced Assets</a></li>
-</ul></li>
-</ul>
-
-<p><strong>SKTiled</strong> was designed to be flexible and easy to use. To get started, simply build the framework and add your assets to your Xcode project. If you have any problems or requests, please open an issue at the <a href="https://github.com/mfessenden/SKTiled/issues">Github page</a>.</p>
-<h2 id='requirements' class='heading'>Requirements</h2>
-
-<ul>
-<li>iOS9+/macOS 10.12+</li>
-<li>Xcode 9</li>
-<li>Swift 3.2</li>
-</ul>
-<h3 id='swift-4' class='heading'>Swift 4</h3>
-
-<p>For use with <strong>Swift 4</strong>, please check out the <a href="https://github.com/mfessenden/SKTiled/tree/swift4">Swift 4 branch</a>.</p>
-<h2 id='installation' class='heading'>Installation</h2>
-
-<p>The <strong>SKTiled</strong> project contains four targets; two are demo applications for iOS &amp; macOS. These are included to let you quickly test your own content, or simple play around with the included demo files. The other two are frameworks for use in your own projects.</p>
-
-<p><img src="images/project-schemes.png" alt="Project Schemes"></p>
-
-<p>To use the frameworks, build one or both of the targets and add them to your project. Make sure the <em>Minimum Deployment Target</em> is set correctly for your project (iOS9+/macOS 10.12+).</p>
-<h2 id='framework-installation' class='heading'>Framework Installation</h2>
-
-<p><img src="images/framework.png" alt="adding framework"></p>
-
-<p>After building the framework(s), you&rsquo;ll need to add them to your project. Select your target, and add the framework to the <em>Embedded Binaries</em> and <em>Linked Frameworks and Libraries</em> sections of the <em>General</em> tab. You&rsquo;ll also need to make sure it is linked in the <em>Build Phases &gt; Embed Frameworks</em> section.</p>
-
-<p><img src="images/link_binary.png" alt="framework linking"></p>
-
-<p><img src="images/links.png" alt="framework embed"></p>
-<h2 id='carthage-installation' class='heading'>Carthage Installation</h2>
-
-<p>To build with <a href="https://github.com/Carthage/Carthage">Carthage</a>, create a Cartfile in your project root and add a reference to <strong>SKTiled</strong> (be sure to check the current version number):</p>
-<pre class="highlight plaintext"><code>github "mfessenden/SKTiled" ~&gt; 1.16
-</code></pre>
-
-<p>Close the file and run Carthage from the terminal to build the framework(s):</p>
-<pre class="highlight plaintext"><code>carthage update
-</code></pre>
-
-<p>To build for a specific platform, use the <code>platform</code> argument in your build command:</p>
-<pre class="highlight plaintext"><code>carthage update --platform iOS
-</code></pre>
-
-<p>Once you&rsquo;ve run the build command frameworks are built, you&rsquo;ll find a <strong>Carthage</strong> directory in the root of your project. The frameworks are located in the <strong>Carthage/Build/$PLATFORM_NAME</strong> directories, simply install them as described in the <a href="#framework-installation">framework installation</a> section above.</p>
-
-<p><img src="images/carthage_directories.png" alt="Carthage Directories"></p>
-
-<p>See the <a href="https://github.com/Carthage/Carthage">Carthage</a> home page for help and additional build instructions.</p>
-<h2 id='cocoapods-installation' class='heading'>CocoaPods Installation</h2>
-
-<p>Installation with <a href="https://cocoapods.org">CocoaPods</a> is similar to Carthage. Create a <strong>podfile</strong> in your project root with the command:</p>
-<pre class="highlight plaintext"><code>pod init
-</code></pre>
-
-<p>Add references to <strong>SKTiled</strong> in each of your targets:</p>
-<pre class="highlight plaintext"><code>target 'iOS' do
-  use_frameworks!
-
-  # Pods for iOS
-  pod 'SKTiled', '~&gt; 1.16'
-
-end
-
-target 'macOS' do
-  use_frameworks!
-
-  # Pods for macOS
-  pod 'SKTiled', '~&gt; 1.16'
-
-end
-</code></pre>
-
-<p>As before, be sure to check the version number. In the terminal, run the installer:</p>
-<pre class="highlight plaintext"><code>pod install
-</code></pre>
-
-<p>CocoaPods will create an <strong>.xcworkspace</strong> file with the name of your project. Open that and use this to compile your targets; dependencies will be linked automatically.</p>
-
-<p>See the <a href="https://cocoapods.org">CocoaPods</a> home page for help and additional instructions.</p>
-<h2 id='adding-tiled-assets-to-xcode' class='heading'>Adding Tiled Assets to Xcode</h2>
-
-<p><img src="images/xcode-assets-group.png" alt="Grouped Assets"></p>
-
-<p>When adding assets to your Xcode project, files are automatically bundled in your application. To load a bundled tile map, use the <a href="Classes/SKTilemap.html#/s:ZFC7SKTiled9SKTilemap4loadFT7tmxFileSS11inDirectoryGSqSS_8delegateGSqPS_17SKTilemapDelegate__12withTilesetsGSqGSaCS_9SKTileset__16ignorePropertiesSb12loggingLevelOS_12LoggingLevel_GSqS0__"><code>SKTilemap.load</code></a> method to read the file:</p>
-<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="s">"MyTilemap.tmx"</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">scene</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre>
-
-<p>On your hard drive, the map&rsquo;s tileset and image should be in the same directory as the map to avoid read errors.</p>
-<h3 id='referenced-assets' class='heading'>Referenced Assets</h3>
-
-<p><img src="images/xcode-assets-referenced.png" alt="Referenced Assets"></p>
-
-<p>If you add assets as folder references, you can supply a directory name with the <code>inDirectory</code> argument of <a href="Classes/SKTilemap.html#/s:ZFC7SKTiled9SKTilemap4loadFT7tmxFileSS11inDirectoryGSqSS_8delegateGSqPS_17SKTilemapDelegate__12withTilesetsGSqGSaCS_9SKTileset__16ignorePropertiesSb12loggingLevelOS_12LoggingLevel_GSqS0__"><code>SKTilemap.load</code></a> method:</p>
-<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="s">"MyTilemap.tmx"</span><span class="p">,</span> <span class="nv">inDirectory</span><span class="p">:</span> <span class="s">"Tiled"</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">scene</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre>
-
-<p>This will allow you more flexibility organizing your project, but be careful that your maps don&rsquo;t reference files above the referenced folder.</p>
-
-<p>Next: <a href="scenes.html">Setting Up Your Scenes</a> - <a href="Tutorial.html">Index</a></p>
-
-<!--- Images --->
-
-<!--- URLs --->
-
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>gid</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>Int</code> unique tile id.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>duration</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>TimeInterval</code> frame duration.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>texture</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>SKTexture?</code> optional tile texture.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.16/Sources/SKTilesetData.swift#L18-L28">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </section>
         </section>
         <section id="footer">
