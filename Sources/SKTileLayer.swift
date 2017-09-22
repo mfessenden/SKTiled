@@ -2351,11 +2351,13 @@ extension SKTiledLayerObject {
     /**
      Returns a tile coordinate for a given vector_int2 coordinate.
 
-     - parameter vec2:  `int2` vector int2.
+     - parameter vec2:    `int2` vector int2 coordinate.
+     - parameter offsetX: `CGFloat` x-offset value.
+     - parameter offsetY: `CGFloat` y-offset value.
      - returns: `CGPoint` position in layer.
      */
-    public func pointForCoordinate(vec2: int2) -> CGPoint {
-        return self.pointForCoordinate(coord: vec2.cgPoint)
+    public func pointForCoordinate(vec2: int2, offsetX: CGFloat=0, offsetY: CGFloat=0) -> CGPoint {
+        return self.pointForCoordinate(coord: vec2.cgPoint, offsetX: offsetX, offsetY: offsetY)
     }
 
     /**

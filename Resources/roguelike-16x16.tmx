@@ -78,7 +78,7 @@
    <ellipse/>
   </object>
  </objectgroup>
- <layer name="Graph" width="42" height="42" opacity="0.8">
+ <layer name="Graph" width="42" height="42" visible="0" opacity="0.8">
   <data encoding="base64" compression="zlib">
    eJztl1EKwzAMQ/u1+x+zu8XYR8EIyZbdZmXQgNm6JPaLbJfs/dq292OP/ZF9x90MHc7VvPtFjMeotM7Os4PFtVPObEw5kVdxdnLncFY+j7kdOJimqzjxk+1VbEzDbt5j/Gp0euPQTrGv4nR8IUfkQS58dmI4+XbPq3hZDSvfSp8up/NblZuM80wfqVqZ5Kjqoyq2wxmf8bszkFPFOMPJ9p3lrGqmm6cVnJk/Jwbmw/E34XR9O5xXMjLOlf2+krOKG+fUWrbGZcV4qt8dTvVcxewyxj7K1rh1EH1m94cpZ6ZTp1YnNe9oz/R0dY1rcP3kDsbiqvtUZZXu8exdNuaverdPcs841cg0ZHnBPWc5mX+Xk+nKcvhrTswr07bbj925DmfmD+9ILB8uJ5tXnOw/T+ccEy0zDa40VbtdTqXlxId7d2PzXdbJ/euIUe1FXd36VJyTPCAnY0C/VT1crafL2amDX3Gutofz4byL8wMKo/+y
   </data>

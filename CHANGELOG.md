@@ -17,7 +17,7 @@ Change Log
 - add `SKTilesetData.setTexture(_:forFrame:)`
 - add `SKTilesetData.setDuration(interval:forFrame:)`
 - add `SKTileObject.tileData` property
-- add `SKTiledSceneCamera.clampZoomValue` 
+- add `SKTiledSceneCamera.clampZoomValue`
 - add `SKTiledSceneCamera.zoomClamping` property
 - remove `SKTile.pauseAnimation`
 
@@ -29,8 +29,6 @@ Change Log
 
 - invert layer y-offsets properly
 - add `DemoController` to manage scenes in iOS/macOS demo targets
-
-
 - add `SKTilemap.getLayer(atPath:)`
 - add `SKTilemapDelegate.didAddNavigationGraph(_:)`
 - add `SKTilemap.newTileLayer(named:group:)`
@@ -73,8 +71,6 @@ Change Log
 - update API for new layer & object types, more consistent naming, etc.
 - improved grid drawing quality
 - debug functions moved to `SKTiled+Debug.swift`
-
-
 - add `SKObjectGroup.textObjects`
 - add `SKTilemap.textObjects`
 - add `SKTilemap.showGrid`

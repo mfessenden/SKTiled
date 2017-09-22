@@ -3,6 +3,7 @@
 > SKTiled is a Swift framework for using [Tiled][tiled-url] assets with Apple's SpriteKit.
 
 [![Swift Version][swift-image]][swift-url]
+[![Xcode Version][xcode9-image]][xcode-downloads-url]
 [![Build Status][travis-image]][travis-url]
 [![License][license-image]][license-url]
 [![Platforms][platforms-image]][platforms-url]
@@ -13,10 +14,11 @@
 **SKTiled** is a framework for using [Tiled][tiled-url] assets with [Apple's SpriteKit][spritekit-url], built from the ground up with Swift. This project began life as an exercise to learn Apple's new programming language for a game project, but I've decided to release it as open source with the hopes that others will find it useful. **SKTiled** is up-to-date and supports **Tiled's** major features, including all map & object types.
 
 
-Current release is Swift 3.2/macOS 10.11/iOS 10+. For Swift 4, see the [**swift4**][swift4-url] branch.
+![Demo Image][demo-iphone-img]
 
 
-![Demo Image][demo-image]
+- for Xcode 8, see the [**xcode8**][branch-xcode8-url] branch
+- for Swift 4, see the [**swift4**][branch-swift4-url] branch
 
 
 Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
@@ -45,7 +47,7 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 
 - iOS 9+
 - macOS 10.12+
-- Xcode 9+
+- Xcode 9/Swift 3.2
 
 ## Installation
 
@@ -266,6 +268,7 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 - [Clint Bellanger: Isometric Tiles Math](http://clintbellanger.net/articles/isometric_math)
 
 
+[swift4-image]:https://img.shields.io/badge/Swift-4-brightgreen.svg
 [swift-image]:https://img.shields.io/badge/Swift-3.2-brightgreen.svg
 [swift-url]: https://swift.org/
 [license-image]:https://img.shields.io/badge/License-MIT-blue.svg
@@ -277,10 +280,21 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 [carthage-image]:https://img.shields.io/badge/Carthage-compatible-4BC51D.svg
 [carthage-url]:https://github.com/Carthage/Carthage
 [pod-image]:https://img.shields.io/cocoapods/v/SKTiled.svg
+
+[xcode8-image]:https://img.shields.io/badge/Xcode-8-orange.svg
+[xcode9-image]:https://img.shields.io/badge/Xcode-9-orange.svg
+[xcode-downloads-url]:https://developer.apple.com/download/more/
+
 [pod-url]:https://cocoapods.org/pods/SKTiled
-[swift4-url]:https://github.com/mfessenden/SKTiled/tree/swift4
+
+[branch-master-url]:https://github.com/mfessenden/SKTiled
+[branch-xcode8-url]:https://github.com/mfessenden/SKTiled/tree/xcode8
+[branch-swift4-url]:https://github.com/mfessenden/SKTiled/tree/swift4
+
 [header-image]:https://mfessenden.github.io/SKTiled/images/Header-@1x.png
-[demo-image]:https://mfessenden.github.io/SKTiled/images/images/demo-macos-iso.png
+[demo-mac-image]:https://mfessenden.github.io/SKTiled/images/demo-macos-iso.png
+[demo-iphone-img]:https://mfessenden.github.io/SKTiled/images/demo-iphone.png
+
 
 <!--- Documentation --->
 
