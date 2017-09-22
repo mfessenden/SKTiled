@@ -15,7 +15,7 @@
       <div class="content-wrapper">
         <p><a href="index.html">SKTiled Docs</a></p>
         <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="img/gh.png"/>View on GitHub</a></p>
-        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2Fdocsets%2FSKTiled%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
+        <p class="header-right"><a href="dash-feed://file%3A%2FUsers%2Fmichael%2Fgit%2FSKTiled%2Fdocsets%2FSKTiled%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -245,7 +245,7 @@
 <span class="c1">// Tile ID: 78 @ 16x16, 6 frames</span>
 </code></pre>
 
-<p>As you can see, the tile data is correctly returned. The local ID is the sum of the tileset&rsquo;s <strong>firstgid</strong> value plus the tile&rsquo;s actual ID. (1 + 78 = 79)</p>
+<p>As you can see, the tile data is correctly returned. The local ID is the sum of the tileset&rsquo;s <strong>firstgid</strong> value plus the tile&rsquo;s internal ID. (1 + 78 = 79)</p>
 <h2 id='find-tiles-of-type' class='heading'>Find Tiles of Type</h2>
 
 <p>The string property <strong>type</strong> can be used to label or group tiles in <strong>SKTiled</strong>. Adding a string property to a tile ID will allow it to be accessed from SpriteKit:</p>
@@ -330,7 +330,7 @@
     <span class="n">animatedTile</span><span class="o">.</span><span class="nf">removeAnimation</span><span class="p">(</span><span class="nv">restore</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
 <span class="p">}</span>
 
-<span class="c1">// restore tile animations</span>
+<span class="c1">// restart tile animations</span>
 <span class="k">for</span> <span class="n">animatedTile</span> <span class="k">in</span> <span class="n">animatedTiles</span> <span class="p">{</span>
     <span class="n">animatedTile</span><span class="o">.</span><span class="nf">runAnimation</span><span class="p">()</span>
 <span class="p">}</span>
@@ -374,7 +374,7 @@
 
 <span class="c1">// setup dynamics on an array of tiles with a radius of 4</span>
 <span class="k">let</span> <span class="nv">dots</span> <span class="o">=</span> <span class="n">dotsLayer</span><span class="o">.</span><span class="nf">getTilesWithProperty</span><span class="p">(</span><span class="s">"type"</span><span class="p">,</span> <span class="s">"dot"</span> <span class="k">as</span> <span class="kt">AnyObject</span><span class="p">)</span>
-<span class="n">dots</span><span class="o">.</span><span class="n">forEach</span> <span class="p">{</span><span class="nv">$0</span><span class="o">.</span><span class="nf">setupDynamics</span><span class="p">(</span><span class="nv">radius</span><span class="p">:</span> <span class="mi">4</span><span class="p">)}</span>
+<span class="n">dots</span><span class="o">.</span><span class="n">forEach</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="nf">setupDynamics</span><span class="p">(</span><span class="nv">radius</span><span class="p">:</span> <span class="mi">4</span><span class="p">)</span> <span class="p">}</span>
 </code></pre>
 <h2 id='tile-overlap' class='heading'>Tile Overlap</h2>
 

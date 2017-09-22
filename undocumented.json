@@ -380,21 +380,21 @@
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 2388,
+      "line": 2390,
       "symbol": "SKTiledLayerObject.description",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 2394,
+      "line": 2396,
       "symbol": "SKTiledLayerObject.debugDescription",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/michael/git/SKTiled/jazzy/Sources/SKTileLayer.swift",
-      "line": 2579,
+      "line": 2581,
       "symbol": "SKTileLayer.flatten()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

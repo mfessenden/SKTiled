@@ -15,7 +15,7 @@
       <div class="content-wrapper">
         <p><a href="index.html">SKTiled Docs</a></p>
         <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="img/gh.png"/>View on GitHub</a></p>
-        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2Fdocsets%2FSKTiled%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
+        <p class="header-right"><a href="dash-feed://file%3A%2FUsers%2Fmichael%2Fgit%2FSKTiled%2Fdocsets%2FSKTiled%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -204,6 +204,7 @@
 <li><a href="#framework-installation">Framework Installation</a></li>
 <li><a href="#carthage-installation">Carthage Installation</a></li>
 <li><a href="#cocoapods-installation">CocoaPods Installation</a></li>
+<li><a href="#building-with-xcode-8">Building with Xcode 8</a></li>
 </ul></li>
 <li><a href="#adding-tiled-assets-to-xcode">Adding Tiled Assets to Xcode</a>
 
@@ -289,6 +290,13 @@ end
 <p>CocoaPods will create an <strong>.xcworkspace</strong> file with the name of your project. Open that and use this to compile your targets; dependencies will be linked automatically.</p>
 
 <p>See the <a href="https://cocoapods.org">CocoaPods</a> home page for help and additional instructions.</p>
+<h2 id='building-with-xcode-8' class='heading'>Building with Xcode 8</h2>
+
+<p>Xcode 8 requires zlib to be linked to the project. Add a link to the zlib directory for all targets:</p>
+
+<p><em>Project &gt; Build Settings &gt; Swift Compiler - Search Paths &gt; Import Paths</em></p>
+
+<p><img src="images/zlib-include.png" alt="Linking zlib"></p>
 <h2 id='adding-tiled-assets-to-xcode' class='heading'>Adding Tiled Assets to Xcode</h2>
 
 <p><img src="images/xcode-assets-group.png" alt="Grouped Assets"></p>
