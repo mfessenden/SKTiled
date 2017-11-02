@@ -176,6 +176,9 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
     /// Output current zPosition
     public var currentZPosition: CGFloat { return self.zPosition }
 
+    /// Layer contains no animation
+    public var isStatic: Bool = false
+
     /// Optional background color.
     public var backgroundColor: SKColor? = nil {
         didSet {
@@ -911,7 +914,7 @@ public class SKTiledLayerObject: SKNode, SKTiledObject {
      - parameter currentTime: `TimeInterval` update interval.
      */
     public func update(_ currentTime: TimeInterval) {
-        guard (isRendered == true) else { return }
+        guard (isRendered == true && isStatic == false)  else { return }
         self.position = clampedPosition(point: self.position, scale: SKTiledContentScaleFactor)
     }
 }

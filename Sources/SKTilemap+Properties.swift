@@ -239,6 +239,10 @@ public extension SKTiledLayerObject {
                 self.navigationKey = value
             }
 
+            if (lattr == "isstatic") {
+                isStatic = boolForKey(attr)
+            }
+
             if completion != nil { completion!() }
         }
     }

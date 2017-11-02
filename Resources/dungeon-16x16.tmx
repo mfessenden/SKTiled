@@ -365,22 +365,34 @@
  <tileset firstgid="558" source="dungeon-16x32.tsx"/>
  <group name="Lower">
   <layer name="Level1" width="22" height="21">
+   <properties>
+    <property name="isStatic" type="bool" value="false"/>
+   </properties>
    <data encoding="base64" compression="zlib">
    eJztk79KA0EQxmc9xVYtRI2EQwQthPgHEowgB2KnPoD451JY2p0m2IqVRd7BIvgKkkIfwELfQtAXsPMbboYb1zs9Ebt88GOT3dlvZ2b3iAYaqLz2HdHIP/hOgSYYAgE4cH/zGwV1MO0xA4ZBJWfPHej/4BuCXXAIjkEMlgX2XzWxXALXswHWPB9e4zq1l6GMO+LfBi/ip6iewDN4cxS3zHwXvMJ43pwX0lfNmfXA9PlczuU9HRPfA2dSs55X5Dv7zbo/15MxMecV+aLWB77PhsxxrXWh4cVzngF97m+NKOL/fB+XlL6DdcmX+70ncbeU9oHV9nwT8bb95XfL974EruR3xeSr3Ev8SU591lv7u4B7OcW4BbbBOJgw+VpY1QJf1oWg+a6ATTAJFsEjZfd2DWKX0S35HdbEV72RcxQZ3xtK35C+sU6OR564J0eUfWvvMraKt5RS4uUz5n6X1wdgVjQZ
   </data>
   </layer>
   <layer name="Objects" width="22" height="21">
+   <properties>
+    <property name="isStatic" type="bool" value="true"/>
+   </properties>
    <data encoding="base64" compression="zlib">
    eJxjYBgFo2AUDEYQRCNzM2lk7igYBSMFAACGMgC8
   </data>
   </layer>
   <layer name="Bridges" width="22" height="21">
+   <properties>
+    <property name="isStatic" type="bool" value="true"/>
+   </properties>
    <data encoding="base64" compression="zlib">
    eJxjYBgFo2AUDDcwBYinAvE0Kpq5hopmIYPDFOjF56ZbFJhLyE3khi8lbqIloEV6Gc4AAFG6CdA=
   </data>
   </layer>
   <group name="Lower Objects">
    <objectgroup name="Lower Objects">
+    <properties>
+     <property name="isStatic" type="bool" value="true"/>
+    </properties>
     <object id="79" name="crate9" gid="151" x="310" y="146" width="16" height="16"/>
     <object id="80" name="crate10" gid="151" x="317" y="146" width="16" height="16"/>
     <object id="81" name="chest1" gid="103" x="136" y="118" width="16" height="16"/>
@@ -401,11 +413,17 @@
     <object id="107" name="barrel5" gid="152" x="106" y="304" width="16" height="16"/>
    </objectgroup>
    <objectgroup name="Top Objects">
+    <properties>
+     <property name="isStatic" type="bool" value="true"/>
+    </properties>
     <object id="125" name="barrel2" gid="152" x="38" y="166" width="16" height="16"/>
     <object id="128" name="crate-error" gid="151" x="313" y="141" width="16" height="16"/>
     <object id="130" name="crate2" gid="151" x="52" y="260" width="16" height="16"/>
    </objectgroup>
    <objectgroup name="Characters-Lower">
+    <properties>
+     <property name="isStatic" type="bool" value="true"/>
+    </properties>
     <object id="129" name="knight1" gid="556" x="295" y="172" width="32" height="32"/>
     <object id="131" name="wizard1" gid="554" x="46" y="204" width="32" height="32"/>
    </objectgroup>
@@ -413,17 +431,26 @@
  </group>
  <group name="Upper">
   <layer name="Level2" width="22" height="21">
+   <properties>
+    <property name="isStatic" type="bool" value="true"/>
+   </properties>
    <data encoding="base64" compression="zlib">
    eJxjYBhZQGHUXKqau5MRwY4Hsq8C8UQqmHsFSoOMv8zI8OAckLGCCubCgBsQGwPxU6C5qmSasZMB7DaGfRC6YReQtgZiGQrd9gpo5hVGBLsIiKWB7EQKze1kRMT7FSjfBkgvZcSthxiwgBE1Pe1hRKXJAaLQcN1PgbuwAR2guaeA9DUqmzsKRhYAAItVGVU=
   </data>
   </layer>
   <layer name="Level3" width="22" height="21">
+   <properties>
+    <property name="isStatic" type="bool" value="true"/>
+   </properties>
    <data encoding="base64" compression="zlib">
    eJxjYCAfXADii0B8iQIzsIGzjAwMskB8jpG65j6BmveUyuaOglEwCkbBKBg5AADUzAX6
   </data>
   </layer>
   <group name="Upper Objects">
    <objectgroup name="Upper Objects">
+    <properties>
+     <property name="isStatic" type="bool" value="false"/>
+    </properties>
     <object id="111" name="brazier1" gid="558" x="211" y="172" width="16" height="32">
      <properties>
       <property name="lightColor" type="color" value="#ffe2c954"/>
@@ -432,17 +459,26 @@
     <object id="112" name="brazier2" gid="558" x="235" y="172" width="16" height="32"/>
    </objectgroup>
    <objectgroup name="Characters-Upper">
+    <properties>
+     <property name="isStatic" type="bool" value="true"/>
+    </properties>
     <object id="119" name="dwarf1" gid="557" x="144" y="170" width="32" height="32"/>
    </objectgroup>
   </group>
  </group>
  <group name="Graphs" opacity="0.34">
   <layer name="Graph-Lower" width="22" height="21">
+   <properties>
+    <property name="isStatic" type="bool" value="true"/>
+   </properties>
    <data encoding="base64" compression="zlib">
    eJxjYBgFo2DgQSgjKqameYTMJ8U+XObhMpeQn5DNIwVgM5cYN+GyH58Yup/x6SMkj8tcQu5B908YieGOTx0hN+Ezm1g3kBvP2OwnRZxYM3HhHBq5l1IzaWEuKQAAmRAeqw==
   </data>
   </layer>
   <layer name="Graph-Upper" width="22" height="21">
+   <properties>
+    <property name="isStatic" type="bool" value="true"/>
+   </properties>
    <data encoding="base64" compression="zlib">
    eJxjYBicIIyRNuaGjppLM3NBZsIwtc2EsWlhLqVmYMPUchu1/Y5uDq3MpYZ51E5Lo2AUUAsAAFgYChY=
   </data>

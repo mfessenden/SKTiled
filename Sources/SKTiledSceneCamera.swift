@@ -197,7 +197,7 @@ public class SKTiledSceneCamera: SKCameraNode, Loggable {
     }
 
     /**
-     Remove a camera delegate.
+     Disconnect a camera delegate.
 
      - parameter delegate:  `SKTiledSceneCameraDelegate` camera delegate.
      */

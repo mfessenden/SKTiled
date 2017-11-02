@@ -59,16 +59,25 @@
   <tile id="71" type="automobile"/>
  </tileset>
  <layer name="Ground" width="10" height="10">
+  <properties>
+   <property name="isStatic" type="bool" value="true"/>
+  </properties>
   <data encoding="base64" compression="zlib">
    eJxtz8kOgjAUheEKbnQtxmpi2MgCcIxKkzog7/9QnCY/SdO4+HIYTofrjTE3aXCSQTK5ywMXemfZSC6VrMTJjHUdvfDNSi8HWbJm0tI70gvnvWUuH7KPemHvnWyxlloKKelemSHjvWMfR3qef8lsT/5/yVd0z2lWSy6SHDjLRumTORrOdNEM+z/3C/OMgtEN9g==
   </data>
  </layer>
  <layer name="Objects" width="10" height="10">
+  <properties>
+   <property name="isStatic" type="bool" value="true"/>
+  </properties>
   <data encoding="base64" compression="zlib">
    eJxjYBh44D7QDiATOFPBDHS/AwBmUADS
   </data>
  </layer>
  <objectgroup color="#e10000" name="Collision">
+  <properties>
+   <property name="isStatic" type="bool" value="true"/>
+  </properties>
   <object id="8" name="river01" type="River" x="48" y="-36" width="28" height="376"/>
   <object id="9" name="road01" type="Road" x="354.75" y="-33">
    <polygon points="57.75,82.5 24.75,82.5 24.75,511.5 272.25,511.5 272.25,478.5 156.75,478.5 57.75,478.5 57.75,231"/>

@@ -69,6 +69,12 @@ class GameViewController: UIViewController, Loggable {
         demoController.loadScene(url: currentURL, usePreviousCamera: false)
     }
 
+    /** Update the scene. */
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        (self.view as? SKView)?.scene?.size = size
+    }
+
     override func viewDidLayoutSubviews() {
         // Pause the scene while the window resizes if the game is active.
 

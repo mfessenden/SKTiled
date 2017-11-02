@@ -2,7 +2,7 @@
 
 > SKTiled is a Swift framework for using [Tiled][tiled-url] assets with Apple's SpriteKit.
 
-[![Swift Version][swift-image]][swift-url]
+[![Swift Version][swift3-image]][swift-url]
 [![Xcode Version][xcode9-image]][xcode-downloads-url]
 [![Build Status][travis-image]][travis-url]
 [![License][license-image]][license-url]
@@ -41,13 +41,14 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 - [x] custom tile & object classes
 - [x] generate GKGridGraph graphs from custom attributes
 - [x] user-definable cost properties for GKGridGraph nodes
+- [ ] infinite maps
 
 
 ## Requirements
 
 - iOS 9+
 - macOS 10.12+
-- Xcode 9/Swift 3.2
+- Xcode 9/Swift 3.3
 
 ## Installation
 
@@ -269,7 +270,7 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 
 
 [swift4-image]:https://img.shields.io/badge/Swift-4-brightgreen.svg
-[swift-image]:https://img.shields.io/badge/Swift-3.2-brightgreen.svg
+[swift3-image]:https://img.shields.io/badge/Swift-3.3-brightgreen.svg
 [swift-url]: https://swift.org/
 [license-image]:https://img.shields.io/badge/License-MIT-blue.svg
 [license-url]:https://github.com/mfessenden/SKTiled/blob/master/LICENSE

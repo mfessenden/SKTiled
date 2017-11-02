@@ -249,8 +249,13 @@ public class SKTileset: SKTiledObject {
 
         // initial x/y coordinates
         var x = margin
+
+        let usableHeight = margin + rowHeight + rowSpacing
+        let tileSizeHeight = Int(tileSize.height)
+        let heightDifference = textureHeight - usableHeight
+
         // invert the y-coord
-        var y = margin + rowHeight + rowSpacing - Int(tileSize.height)
+        var y = (usableHeight - tileSizeHeight) + heightDifference
 
         var tilesAdded: Int = 0
 
@@ -295,7 +300,7 @@ public class SKTileset: SKTiledObject {
     // MARK: - Tile Data
 
     /**
-     Add tileset data attributes.
+     Add tileset tile data attributes. Returns a new `SKTilesetData` object, or nil if tile data already exists with the given id.
 
      - parameter tileID:  `Int` local tile ID.
      - parameter texture: `SKTexture` texture for tile at the given id.
