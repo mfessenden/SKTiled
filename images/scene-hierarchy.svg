@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1010px" height="400px" viewBox="0 0 1010 400" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>scene-hierarchy</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="scene-hierarchy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(3.000000, 8.000000)">
+            <path d="M17,71 L157,71 C163.667,71 167,74.333 167,81 L167,149 C167,155.667 163.667,159 157,159 L17,159 C10.333,159 7,155.667 7,149 L7,81 C7,74.333 10.333,71 17,71 Z" id="Shape" fill-opacity="0.2" fill="#C0C0C0" fill-rule="nonzero"></path>
+            <path d="M10,64 L150,64 C156.667,64 160,67.333 160,74 L160,142 C160,148.667 156.667,152 150,152 L10,152 C3.333,152 0,148.667 0,142 L0,74 C0,67.333 3.333,64 10,64 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+            <path d="M10,64 L150,64 C156.667,64 160,67.333 160,74 L160,142 C160,148.667 156.667,152 150,152 L10,152 C3.333,152 0,148.667 0,142 L0,74 C0,67.333 3.333,64 10,64 Z" id="Shape" stroke="#000000"></path>
+            <path d="M0,89 L160,89" id="Shape" stroke="#000000"></path>
+            <text id="Scene" fill="#000000" font-family="SFMono-Semibold, SF Mono" font-size="13" font-weight="500">
+                <tspan x="60.409668" y="84">Scene</tspan>
+            </text>
+            <path d="M297,7 L437,7 C443.667,7 447,10.333 447,17 L447,85 C447,91.667 443.667,95 437,95 L297,95 C290.333,95 287,91.667 287,85 L287,17 C287,10.333 290.333,7 297,7 Z" id="Shape" fill-opacity="0.2" fill="#C0C0C0" fill-rule="nonzero"></path>
+            <path d="M290,0 L430,0 C436.667,0 440,3.333 440,10 L440,78 C440,84.667 436.667,88 430,88 L290,88 C283.333,88 280,84.667 280,78 L280,10 C280,3.333 283.333,0 290,0 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+            <path d="M290,0 L430,0 C436.667,0 440,3.333 440,10 L440,78 C440,84.667 436.667,88 430,88 L290,88 C283.333,88 280,84.667 280,78 L280,10 C280,3.333 283.333,0 290,0 Z" id="Shape" stroke="#000000"></path>
+            <path d="M280,25 L440,25" id="Shape" stroke="#000000"></path>
+            <text id="Camera" fill="#000000" font-family="SFMono-Semibold, SF Mono" font-size="13" font-weight="500">
+                <tspan x="336.991602" y="19.5">Camera</tspan>
+            </text>
+            <path d="M297,175 L437,175 C443.667,175 447,178.333 447,185 L447,253 C447,259.667 443.667,263 437,263 L297,263 C290.333,263 287,259.667 287,253 L287,185 C287,178.333 290.333,175 297,175 Z" id="Shape" fill-opacity="0.2" fill="#C0C0C0" fill-rule="nonzero"></path>
+            <path d="M290,168 L430,168 C436.667,168 440,171.333 440,178 L440,246 C440,252.667 436.667,256 430,256 L290,256 C283.333,256 280,252.667 280,246 L280,178 C280,171.333 283.333,168 290,168 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+            <path d="M290,168 L430,168 C436.667,168 440,171.333 440,178 L440,246 C440,252.667 436.667,256 430,256 L290,256 C283.333,256 280,252.667 280,246 L280,178 C280,171.333 283.333,168 290,168 Z" id="Shape" stroke="#000000"></path>
+            <path d="M280,193 L440,193" id="Shape" stroke="#000000"></path>
+            <text id="World" fill="#000000" font-family="SFMono-Semibold, SF Mono" font-size="13" font-weight="500">
+                <tspan x="340.909668" y="187.5">World</tspan>
+            </text>
+            <path d="M561,175 L701,175 C707.667,175 711,178.333 711,185 L711,253 C711,259.667 707.667,263 701,263 L561,263 C554.333,263 551,259.667 551,253 L551,185 C551,178.333 554.333,175 561,175 Z" id="Shape" fill-opacity="0.2" fill="#C0C0C0" fill-rule="nonzero"></path>
+            <path d="M554,168 L694,168 C700.667,168 704,171.333 704,178 L704,246 C704,252.667 700.667,256 694,256 L554,256 C547.333,256 544,252.667 544,246 L544,178 C544,171.333 547.333,168 554,168 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+            <path d="M554,168 L694,168 C700.667,168 704,171.333 704,178 L704,246 C704,252.667 700.667,256 694,256 L554,256 C547.333,256 544,252.667 544,246 L544,178 C544,171.333 547.333,168 554,168 Z" id="Shape" stroke="#000000"></path>
+            <path d="M544,193 L704,193" id="Shape" stroke="#000000"></path>
+            <text id="Tilemap" fill="#000000" font-family="SFMono-Semibold, SF Mono" font-size="13" font-weight="500">
+                <tspan x="597.073535" y="187.5">Tilemap</tspan>
+            </text>
+            <path d="M857,303 L997,303 C1003.667,303 1007,306.333 1007,313 L1007,382 C1007,388.667 1003.667,392 997,392 L857,392 C850.333,392 847,388.667 847,382 L847,313 C847,306.333 850.333,303 857,303 Z" id="Shape" fill-opacity="0.2" fill="#C0C0C0" fill-rule="nonzero"></path>
+            <path d="M850,296 L990,296 C996.667,296 1000,299.333 1000,306 L1000,375 C1000,381.667 996.667,385 990,385 L850,385 C843.333,385 840,381.667 840,375 L840,306 C840,299.333 843.333,296 850,296 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+            <path d="M850,296 L990,296 C996.667,296 1000,299.333 1000,306 L1000,375 C1000,381.667 996.667,385 990,385 L850,385 C843.333,385 840,381.667 840,375 L840,306 C840,299.333 843.333,296 850,296 Z" id="Shape" stroke="#000000"></path>
+            <path d="M840,321 L1000,321" id="Shape" stroke="#000000"></path>
+            <text id="Layer" fill="#000000" font-family="SFMono-Semibold, SF Mono" font-size="13" font-weight="500">
+                <tspan x="900.909668" y="315.5">Layer</tspan>
+            </text>
+            <path d="M160,104 L200,104 M200,104 C204.389,104 208,100.389 208,96 L208,52 M208,52 C208,47.611 211.611,44 216,44 L280,44" id="Shape" stroke="#000000"></path>
+            <polyline id="Shape" stroke="#000000" points="269.837 48.21 280 44 269.837 39.79"></polyline>
+            <path d="M160,104 L200,104 M200,104 C204.389,104 208,107.611 208,112 L208,160 M208,160 C208,164.389 211.611,168 216,168 L280,168" id="Shape" stroke="#000000"></path>
+            <polyline id="Shape" stroke="#000000" points="269.837 172.21 280 168 269.837 163.79"></polyline>
+            <path d="M857,175 L997,175 C1003.667,175 1007,178.333 1007,185 L1007,254 C1007,260.667 1003.667,264 997,264 L857,264 C850.333,264 847,260.667 847,254 L847,185 C847,178.333 850.333,175 857,175 Z" id="Shape" fill-opacity="0.2" fill="#C0C0C0" fill-rule="nonzero"></path>
+            <path d="M850,168 L990,168 C996.667,168 1000,171.333 1000,178 L1000,247 C1000,253.667 996.667,257 990,257 L850,257 C843.333,257 840,253.667 840,247 L840,178 C840,171.333 843.333,168 850,168 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+            <path d="M850,168 L990,168 C996.667,168 1000,171.333 1000,178 L1000,247 C1000,253.667 996.667,257 990,257 L850,257 C843.333,257 840,253.667 840,247 L840,178 C840,171.333 843.333,168 850,168 Z" id="Shape" stroke="#000000"></path>
+            <path d="M840,193 L1000,193" id="Shape" stroke="#000000"></path>
+            <text id="Layer" fill="#000000" font-family="SFMono-Semibold, SF Mono" font-size="13" font-weight="500">
+                <tspan x="900.909668" y="187.5">Layer</tspan>
+            </text>
+            <path d="M857,47 L997,47 C1003.667,47 1007,50.333 1007,57 L1007,126 C1007,132.667 1003.667,136 997,136 L857,136 C850.333,136 847,132.667 847,126 L847,57 C847,50.333 850.333,47 857,47 Z" id="Shape" fill-opacity="0.2" fill="#C0C0C0" fill-rule="nonzero"></path>
+            <path d="M850,40 L990,40 C996.667,40 1000,43.333 1000,50 L1000,119 C1000,125.667 996.667,129 990,129 L850,129 C843.333,129 840,125.667 840,119 L840,50 C840,43.333 843.333,40 850,40 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+            <path d="M850,40 L990,40 C996.667,40 1000,43.333 1000,50 L1000,119 C1000,125.667 996.667,129 990,129 L850,129 C843.333,129 840,125.667 840,119 L840,50 C840,43.333 843.333,40 850,40 Z" id="Shape" stroke="#000000"></path>
+            <path d="M840,65 L1000,65" id="Shape" stroke="#000000"></path>
+            <text id="Layer" fill="#000000" font-family="SFMono-Semibold, SF Mono" font-size="13" font-weight="500">
+                <tspan x="900.909668" y="59.5">Layer</tspan>
+            </text>
+            <path d="M441,212 L543,212" id="Shape" stroke="#000000"></path>
+            <polyline id="Shape" stroke="#000000" points="532.837 216.21 543 212 532.837 207.79"></polyline>
+            <path d="M440,40 L608,40 M608,40 C612.389,40 616,43.611 616,48 L616,168" id="Shape" stroke="#8E8E8E" stroke-dasharray="3,2"></path>
+            <polyline id="Shape" stroke="#8E8E8E" points="611.79 157.837 616 168 620.21 157.837"></polyline>
+            <path d="M704.103,215.968 L760.103,215.968 M760.103,215.968 C764.491,215.968 768.103,212.357 768.103,207.968 L768.103,87.896 M768.103,87.896 C768.103,83.508 771.714,79.896 776.103,79.896 L840.103,79.896" id="Shape" stroke="#000000"></path>
+            <polyline id="Shape" stroke="#000000" points="829.837 84.21 840 80 829.837 75.79"></polyline>
+            <path d="M704,216 L840,216" id="Shape" stroke="#000000"></path>
+            <polyline id="Shape" stroke="#000000" points="829.837 220.21 840 216 829.837 211.79"></polyline>
+            <path d="M704,215.968 L760,215.968 M760,215.968 C764.389,215.968 768,219.58 768,223.968 L768,328 M768,328 C768,332.389 771.611,336 776,336 L840,336" id="Shape" stroke="#000000"></path>
+            <polyline id="Shape" stroke="#000000" points="829.837 340.21 840 336 829.837 331.79"></polyline>
+        </g>
+    </g>
+</svg>

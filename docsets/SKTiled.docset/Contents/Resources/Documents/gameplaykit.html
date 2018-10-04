@@ -7,6 +7,9 @@
     <meta charset='utf-8'>
     <script src="js/jquery.min.js" defer></script>
     <script src="js/jazzy.js" defer></script>
+    <script src="js/retina-preprocess.js" defer></script>
+    <script src="js/retina.js" defer></script>
+
     
   </head>
   <body>
@@ -15,7 +18,7 @@
       <div class="content-wrapper">
         <p><a href="index.html">SKTiled Docs</a></p>
         <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="img/gh.png"/>View on GitHub</a></p>
-        <p class="header-right"><a href="dash-feed://file%3A%2FUsers%2Fmichael%2Fgit%2FSKTiled%2Fdocsets%2FSKTiled%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
+        <p class="header-right"><a href="dash-feed://file%3A%2F%2F%2FUsers%2Fmichael%2Fgit%2FSKTiled%2Fdocsets%2FSKTiled%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -29,7 +32,7 @@
       <nav class="sidebar">
         <ul class="nav-groups">
           <li class="nav-group-name">
-            <a href="Tutorial.html">Tutorial</a>
+            <a href="Documentation.html">Documentation</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="whats-new.html">What&#39;s New</a>
@@ -38,28 +41,34 @@
                 <a href="getting-started.html">Getting Started</a>
               </li>
               <li class="nav-group-task">
-                <a href="scenes.html">Scenes</a>
+                <a href="scene-setup.html">Scene Setup</a>
               </li>
               <li class="nav-group-task">
-                <a href="layers.html">Layers</a>
+                <a href="working-with-maps.html">Working with Maps</a>
               </li>
               <li class="nav-group-task">
-                <a href="tiles.html">Tiles</a>
+                <a href="working-with-tilesets.html">Working with Tilesets</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="working-with-layers.html">Working with Layers</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="working-with-tiles.html">Working with Tiles</a>
               </li>
               <li class="nav-group-task">
                 <a href="coordinates.html">Coordinates</a>
               </li>
               <li class="nav-group-task">
-                <a href="objects.html">Objects</a>
+                <a href="working-with-objects.html">Working with Objects</a>
               </li>
               <li class="nav-group-task">
-                <a href="properties.html">Properties</a>
+                <a href="tiled-properties.html">Tiled Properties</a>
               </li>
               <li class="nav-group-task">
                 <a href="gameplaykit.html">GameplayKit</a>
               </li>
               <li class="nav-group-task">
-                <a href="extending.html">Extending</a>
+                <a href="extending-sktiled.html">Extending SKTiled</a>
               </li>
               <li class="nav-group-task">
                 <a href="debugging.html">Debugging</a>
@@ -83,6 +92,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/SKTiledSceneCameraDelegate.html">SKTiledSceneCameraDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a>
               </li>
             </ul>
           </li>
@@ -132,6 +144,12 @@
                 <a href="Classes/SKTileObject.html">SKTileObject</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC4TypeO">– TiledObjectType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC5ShapeO">– TiledObjectShape</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO">– CollisionType</a>
               </li>
               <li class="nav-group-task">
@@ -149,38 +167,57 @@
             <a href="Other.html">Other</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Other.html#/s:7SKTiled18TileAnimationFrameC">TileAnimationFrame</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/DebugDrawOptions.html">DebugDrawOptions</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/TextObjectAttributes.html">TextObjectAttributes</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV">– TextAlignment</a>
+                <a href="Structs/TextObjectAttributes/TextAlignment.html">– TextAlignment</a>
               </li>
               <li class="nav-group-task">
-                <a href="Other.html#/s:7SKTiled0A18ContentScaleFactorXev">SKTiledContentScaleFactor</a>
+                <a href="Other.html#/s:7SKTiled17CameraControlModeO">CameraControlMode</a>
               </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:7SKTiled0A12LoggingLevelAA0bC0Ov">SKTiledLoggingLevel</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:7SKTiled0A23TiledApplicationVersionSSv">SKTiledTiledApplicationVersion</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Classes.html">Other Classes</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Classes/AnimationFrame.html">AnimationFrame</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Enums.html">Other Enums</a>
-            <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Enums/CameraZoomClamping.html">CameraZoomClamping</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Global Variables.html">Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:7SKTiled29SKTILED_USE_SPRITEKIT_ACTIONSSbvp">SKTILED_USE_SPRITEKIT_ACTIONS</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:7SKTiled21SKTILED_LOGGING_LEVELAA12LoggingLevelOvp">SKTILED_LOGGING_LEVEL</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_CONTENT_SCALE">SKTILED_CONTENT_SCALE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:7SKTiled15SKTILED_VERSIONSSvp">SKTILED_VERSION</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:7SKTiled21SKTILED_SWIFT_VERSIONSSvp">SKTILED_SWIFT_VERSION</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_DEBUG_GRID_OPACITY">SKTILED_DEBUG_GRID_OPACITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_DEFAULT_OBJECT_RENDER_QUALITY">SKTILED_DEFAULT_OBJECT_RENDER_QUALITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_DEFAULT_RENDER_QUALITY">SKTILED_DEFAULT_RENDER_QUALITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_DEFAULT_TEXT_RENDER_QUALITY">SKTILED_DEFAULT_TEXT_RENDER_QUALITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_MAX_RENDER_QUALITY_OVERRIDE">SKTILED_MAX_RENDER_QUALITY_OVERRIDE</a>
               </li>
             </ul>
           </li>
@@ -200,15 +237,16 @@
 </ul></li>
 <li><a href="#custom-graph-nodes">Custom Graph Nodes</a></li>
 <li><a href="#debugging-the-graph">Debugging the Graph</a></li>
-<li><a href="#querying-neighbor-nodes">Querying Neighbor Nodes</a></li>
 </ul>
 
-<p><strong>SKTiled</strong> supports Apple&rsquo;s <a href="https://developer.apple.com/documentation/gameplaykit">GameplayKit</a>  by allowing users to build pathfinding graphs in tile layers (currently only orthogonal tile layers are supported). Every  <a href="https://mfessenden.github.io/SKTiled/Classes/SKTileLayer.html"><code>SKTileLayer</code></a> instance has an optional <a href="https://developer.apple.com/documentation/gameplaykit/gkgridgraph"><code>GKGridGraph</code></a> attribute accessible via the <a href="Classes/SKTiledLayerObject.html#/s:vC7SKTiled16TiledLayerObject5graphGSQGCSo11GKGridGraphCSo15GKGridGraphNode__"><code>SKTileLayer.graph</code></a> attribute.</p>
+<p><strong>SKTiled</strong> supports Apple&rsquo;s <a href="https://developer.apple.com/documentation/gameplaykit">GameplayKit</a>  by allowing users to build pathfinding graphs in tile layers (currently only orthogonal tile layers are supported). Every <code><a href="Classes/SKTileLayer.html">SKTileLayer</a></code> instance has an optional <a href="https://developer.apple.com/documentation/gameplaykit/gkgridgraph"><code>GKGridGraph</code></a> attribute accessible via the <code>SKTileLayer.graph</code> attribute.</p>
 <h2 id='building-graphs' class='heading'>Building Graphs</h2>
 
-<p>You can create navigation graphs in tile layers by using the layer&rsquo;s <a href="Classes/SKTileLayer"><code>SKTileLayer.initializeGraph</code></a> method. To do so, you&rsquo;ll need to specify which tiles you intend to be walkable, and are not.</p>
+<p><img src="images/tiledata-pathfinding-attrs.png" alt="Tile Data Pathfinding"></p>
 
-<p>You can automatically flag tiles as walkable/obstacle by adding a custom property to a tileset tile id in Tiled.</p>
+<p>You can create navigation graphs in tile layers by using the layer&rsquo;s <code>SKTileLayer.initializeGraph</code> method. To do so, you&rsquo;ll need to specify which tiles you intend to be <strong>walkable</strong>, and are not.</p>
+
+<p>You can automatically flag tiles as walkable/obstacle by adding a custom property to a tileset tile id in <strong>Tiled</strong>.</p>
 <pre class="highlight swift"><code><span class="c1">// gather walkable &amp; obstacles</span>
 <span class="k">let</span> <span class="nv">walkable</span>  <span class="o">=</span> <span class="n">graphLayer</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">tileData</span><span class="o">.</span><span class="n">walkable</span> <span class="o">==</span> <span class="kc">true</span> <span class="p">}</span>
 <span class="k">let</span> <span class="nv">obstacles</span> <span class="o">=</span> <span class="n">graphLayer</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">tileData</span><span class="o">.</span><span class="n">obstacle</span> <span class="o">==</span> <span class="kc">true</span> <span class="p">}</span>
@@ -226,14 +264,14 @@
 </code></pre>
 <h3 id='navigation-key' class='heading'>Navigation Key</h3>
 
-<p>If your SpriteKit scene is subclassed from <a href="Classes/SKTiledScene.html"><code>SKTiledScene</code></a>, navigation graphs will automatically be added to the <a href="Classes/SKTiledScene.html#/s:vC7SKTiled12SKTiledScene6graphsGVs10DictionarySSGCSo11GKGridGraphCSo15GKGridGraphNode__"><code>SKTiledScene.graphs</code></a> dictionary on creation. Each graph is accessible with a key, which defaults to the name of the parent tile layer. To customize the key value, add a custom property to the tile layer named <strong><q>navigationKey</q></strong>.</p>
+<p>If your SpriteKit scene is subclassed from <code><a href="Classes/SKTiledScene.html">SKTiledScene</a></code>, navigation graphs will automatically be added to the <code><a href="Classes/SKTiledScene.html#/graphs">SKTiledScene.graphs</a></code> dictionary on creation. Each graph is accessible with a key, which defaults to the name of the parent tile layer. To customize the key value, add a custom property to the tile layer named <strong><q>navigationKey</q></strong>.</p>
 <h2 id='custom-graph-nodes' class='heading'>Custom Graph Nodes</h2>
 
-<p><strong>SKTiled</strong> allows you to deploy your own <a href="https://developer.apple.com/documentation/gameplaykit/gkgridgraphnode"><code>GKGridGraphNode</code></a> node types for use in pathfinding graphs. If you implement the <a href="Protocols/SKTilemapDelegate.html"><code>SKTilemapDelegate</code></a> protocol, you can override the <a href="Protocols/SKTilemapDelegate.html#/s:FE7SKTiledPS_17SKTilemapDelegate18objectForGraphTypeFT5namedGSqSS__MCSo15GKGridGraphNode"><code>SKTilemapDelegate.objectForGraphType</code></a>
+<p><strong>SKTiled</strong> allows you to deploy your own <a href="https://developer.apple.com/documentation/gameplaykit/gkgridgraphnode"><code>GKGridGraphNode</code></a> node types for use in pathfinding graphs. If you implement the <code><a href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></code> protocol, you can override the <code>SKTilemapDelegate.objectForGraphType</code>
 function to return your custom <a href="https://developer.apple.com/documentation/gameplaykit/gkgridgraphnode"><code>GKGridGraphNode</code></a> type.</p>
 <h3 id='graph-node-weight' class='heading'>Graph Node Weight</h3>
 
-<p>The included <a href="Classes/SKTiledGraphNode.html"><code>SKTiledGraphNode</code></a> class adds a <code>weight</code> attribute that can be used to affect the outcome of heuristic pathfinding.</p>
+<p>The included <code><a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a></code> class adds a <code>weight</code> attribute that can be used to affect the outcome of heuristic pathfinding.</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">coord</span> <span class="o">=</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">8</span><span class="p">)</span>
 <span class="k">if</span> <span class="k">let</span> <span class="nv">node</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="nf">node</span><span class="p">(</span><span class="nv">atGridPosition</span><span class="p">:</span> <span class="n">coord</span><span class="p">)</span> <span class="k">as?</span> <span class="kt">SKTiledGraphNode</span> <span class="p">{</span>
     <span class="n">node</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="mf">100.0</span>
@@ -245,11 +283,11 @@ function to return your custom <a href="https://developer.apple.com/documentatio
 <p><img src="images/node-weight-property.png" alt="Walkable IDs"></p>
 <h2 id='debugging-the-graph' class='heading'>Debugging the Graph</h2>
 
-<p>To see a visual representation of any layer&rsquo;s navigation graph, use the <a href="Classes/SKTiledLayerObject.html#/s:vC7SKTiled16TiledLayerObject16debugDrawOptionsVS_16DebugDrawOptions.html#/s:FC7SKTiled11SKTileLayer15initializeGraphFT8walkableGSaCS_6SKTile_9obstaclesGSaS1__16diagonalsAllowedSb9nodeClassMCSo15GKGridGraphNode_GSqGCSo11GKGridGraphS2___"><code>SKTileLayer.debugDrawOptions</code></a> property.</p>
+<p>To see a visual representation of any layer&rsquo;s navigation graph, use the <code><a href="Classes/SKTileLayer.html#/s:7SKTiled11SKTileLayerC16debugDrawOptionsAA05DebugeF0Vvp">SKTileLayer.debugDrawOptions</a></code> property.</p>
 <pre class="highlight swift"><code><span class="n">graphLayer</span><span class="o">.</span><span class="n">debugDrawOptions</span> <span class="o">=</span> <span class="o">.</span><span class="n">drawGraph</span>
 </code></pre>
 
-<p>See the <a href="debugging.html">debugging</a> page for more information.</p>
+<p>See the <a href="debugging.html"><strong>debugging</strong></a> page for more information.</p>
 
 <p><img src="images/showGraph.gif" alt="Show Graph"></p>
 
@@ -260,8 +298,8 @@ function to return your custom <a href="https://developer.apple.com/documentatio
           </section>
         </section>
         <section id="footer">
-          <p>© 2016 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external">Michael Fessenden</a> under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>© 2018 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external">Michael Fessenden</a> under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

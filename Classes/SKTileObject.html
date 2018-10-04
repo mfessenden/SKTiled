@@ -7,6 +7,9 @@
     <meta charset='utf-8'>
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
+    <script src="../js/retina-preprocess.js" defer></script>
+    <script src="../js/retina.js" defer></script>
+
     
   </head>
   <body>
@@ -16,7 +19,7 @@
       <div class="content-wrapper">
         <p><a href="../index.html">SKTiled Docs</a></p>
         <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="../img/gh.png"/>View on GitHub</a></p>
-        <p class="header-right"><a href="dash-feed://file%3A%2FUsers%2Fmichael%2Fgit%2FSKTiled%2Fdocsets%2FSKTiled%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
+        <p class="header-right"><a href="dash-feed://file%3A%2F%2F%2FUsers%2Fmichael%2Fgit%2FSKTiled%2Fdocsets%2FSKTiled%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -30,7 +33,7 @@
       <nav class="sidebar">
         <ul class="nav-groups">
           <li class="nav-group-name">
-            <a href="../Tutorial.html">Tutorial</a>
+            <a href="../Documentation.html">Documentation</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../whats-new.html">What&#39;s New</a>
@@ -39,28 +42,34 @@
                 <a href="../getting-started.html">Getting Started</a>
               </li>
               <li class="nav-group-task">
-                <a href="../scenes.html">Scenes</a>
+                <a href="../scene-setup.html">Scene Setup</a>
               </li>
               <li class="nav-group-task">
-                <a href="../layers.html">Layers</a>
+                <a href="../working-with-maps.html">Working with Maps</a>
               </li>
               <li class="nav-group-task">
-                <a href="../tiles.html">Tiles</a>
+                <a href="../working-with-tilesets.html">Working with Tilesets</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../working-with-layers.html">Working with Layers</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../working-with-tiles.html">Working with Tiles</a>
               </li>
               <li class="nav-group-task">
                 <a href="../coordinates.html">Coordinates</a>
               </li>
               <li class="nav-group-task">
-                <a href="../objects.html">Objects</a>
+                <a href="../working-with-objects.html">Working with Objects</a>
               </li>
               <li class="nav-group-task">
-                <a href="../properties.html">Properties</a>
+                <a href="../tiled-properties.html">Tiled Properties</a>
               </li>
               <li class="nav-group-task">
                 <a href="../gameplaykit.html">GameplayKit</a>
               </li>
               <li class="nav-group-task">
-                <a href="../extending.html">Extending</a>
+                <a href="../extending-sktiled.html">Extending SKTiled</a>
               </li>
               <li class="nav-group-task">
                 <a href="../debugging.html">Debugging</a>
@@ -84,6 +93,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/SKTiledSceneCameraDelegate.html">SKTiledSceneCameraDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a>
               </li>
             </ul>
           </li>
@@ -133,6 +145,12 @@
                 <a href="../Classes/SKTileObject.html">SKTileObject</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC4TypeO">– TiledObjectType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC5ShapeO">– TiledObjectShape</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO">– CollisionType</a>
               </li>
               <li class="nav-group-task">
@@ -150,38 +168,57 @@
             <a href="../Other.html">Other</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Other.html#/s:7SKTiled18TileAnimationFrameC">TileAnimationFrame</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/DebugDrawOptions.html">DebugDrawOptions</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/TextObjectAttributes.html">TextObjectAttributes</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV">– TextAlignment</a>
+                <a href="../Structs/TextObjectAttributes/TextAlignment.html">– TextAlignment</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Other.html#/s:7SKTiled0A18ContentScaleFactorXev">SKTiledContentScaleFactor</a>
+                <a href="../Other.html#/s:7SKTiled17CameraControlModeO">CameraControlMode</a>
               </li>
-              <li class="nav-group-task">
-                <a href="../Other.html#/s:7SKTiled0A12LoggingLevelAA0bC0Ov">SKTiledLoggingLevel</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Other.html#/s:7SKTiled0A23TiledApplicationVersionSSv">SKTiledTiledApplicationVersion</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="../Other Classes.html">Other Classes</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Classes/AnimationFrame.html">AnimationFrame</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="../Other Enums.html">Other Enums</a>
-            <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Enums/CameraZoomClamping.html">CameraZoomClamping</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Global Variables.html">Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/s:7SKTiled29SKTILED_USE_SPRITEKIT_ACTIONSSbvp">SKTILED_USE_SPRITEKIT_ACTIONS</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/s:7SKTiled21SKTILED_LOGGING_LEVELAA12LoggingLevelOvp">SKTILED_LOGGING_LEVEL</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/SKTILED_CONTENT_SCALE">SKTILED_CONTENT_SCALE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/s:7SKTiled15SKTILED_VERSIONSSvp">SKTILED_VERSION</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/s:7SKTiled21SKTILED_SWIFT_VERSIONSSvp">SKTILED_SWIFT_VERSION</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/SKTILED_DEBUG_GRID_OPACITY">SKTILED_DEBUG_GRID_OPACITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/SKTILED_DEFAULT_OBJECT_RENDER_QUALITY">SKTILED_DEFAULT_OBJECT_RENDER_QUALITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/SKTILED_DEFAULT_RENDER_QUALITY">SKTILED_DEFAULT_RENDER_QUALITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/SKTILED_DEFAULT_TEXT_RENDER_QUALITY">SKTILED_DEFAULT_TEXT_RENDER_QUALITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/SKTILED_MAX_RENDER_QUALITY_OVERRIDE">SKTILED_MAX_RENDER_QUALITY_OVERRIDE</a>
               </li>
             </ul>
           </li>
@@ -193,13 +230,42 @@
             <h1>SKTileObject</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">SKTileObject</span><span class="p">:</span> <span class="kt">SKShapeNode</span><span class="p">,</span> <span class="kt"><a href="../Protocols/SKTiledObject.html">SKTiledObject</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">SKTileObject</span> <span class="p">:</span> <span class="kt">SKShapeNode</span><span class="p">,</span> <span class="kt"><a href="../Protocols/SKTiledObject.html">SKTiledObject</a></span></code></pre>
 
                 </div>
               </div>
             <h2 id='overview' class='heading'>Overview</h2>
 
-<p>The <code>SKTileObject</code> class represents a Tiled vector object type (rectangle, ellipse, polygon &amp; polyline). When the object is created, points can be added either with an array of <code>CGPoint</code> objects, or a string. In order to render the object, the <code><a href="../Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC11getVerticesXeXeF">SKTileObject.getVertices()</a></code> method is called, which returns the points needed to draw the path.</p>
+<p>The <code>SKTileObject</code> class represents a Tiled vector object type (rectangle, ellipse, polygon &amp; polyline). When the object is created, points can be added either with an array of <code>CGPoint</code> objects, or a string. In order to render the object, the <code><a href="../Classes/SKTileObject.html#/getVertices()">SKTileObject.getVertices()</a></code> method is called, which returns the points needed to draw the path.</p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>Tiled object id.</td>
+</tr>
+<tr>
+<td>size</td>
+<td>Object size.</td>
+</tr>
+<tr>
+<td>tileData</td>
+<td>Tile data (for <a href="http://docs.mapeditor.org/en/stable/manual/objects/#insert-tile">tile objects</a>).</td>
+</tr>
+<tr>
+<td>text</td>
+<td>Text string (for text objects). Setting this redraws the object.</td>
+</tr>
+<tr>
+<td>bounds</td>
+<td>Returns the bounding box of the shape.</td>
+</tr>
+</tbody></table>
 
           </section>
           <section class="section task-group-section">
@@ -208,9 +274,76 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC5layerSQyAA13SKObjectGroupCGXwv"></a>
+                    <a name="/s:7SKTiled12SKTileObjectC05TiledC4TypeO"></a>
+                    <a name="//apple_ref/swift/Enum/TiledObjectType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC05TiledC4TypeO">TiledObjectType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>Describes the object type (tile object, text object, etc).</p>
+<pre class="highlight swift"><code><span class="k">case</span> <span class="k">none</span>
+<span class="k">case</span> <span class="n">text</span>
+<span class="k">case</span> <span class="n">tile</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">TiledObjectType</span> <span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled12SKTileObjectC05TiledC5ShapeO"></a>
+                    <a name="//apple_ref/swift/Enum/TiledObjectShape" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC05TiledC5ShapeO">TiledObjectShape</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>Describes the vector object shape.</p>
+<pre class="highlight swift"><code><span class="k">case</span> <span class="n">rectangle</span>
+<span class="k">case</span> <span class="n">ellipse</span>
+<span class="k">case</span> <span class="n">polygon</span>
+<span class="k">case</span> <span class="n">polyline</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">TiledObjectShape</span> <span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled12SKTileObjectC5layerAA13SKObjectGroupCSgXwvp"></a>
                     <a name="//apple_ref/swift/Property/layer" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC5layerSQyAA13SKObjectGroupCGXwv">layer</a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC5layerAA13SKObjectGroupCSgXwvp">layer</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -225,7 +358,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="k">weak</span> <span class="n">open</span> <span class="k">var</span> <span class="nv">layer</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKObjectGroup.html">SKObjectGroup</a></span><span class="o">!</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">weak</span> <span class="kd">open</span> <span class="k">var</span> <span class="nv">layer</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKObjectGroup.html">SKObjectGroup</a></span><span class="o">!</span></code></pre>
 
                         </div>
                       </div>
@@ -235,9 +368,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC4uuidSSv"></a>
+                    <a name="/s:7SKTiled12SKTileObjectC4uuidSSvp"></a>
                     <a name="//apple_ref/swift/Property/uuid" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC4uuidSSv">uuid</a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC4uuidSSvp">uuid</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -252,7 +385,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">uuid</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kt">UUID</span><span class="p">()</span><span class="o">.</span><span class="n">uuidString</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">uuid</span><span class="p">:</span> <span class="kt">String</span></code></pre>
 
                         </div>
                       </div>
@@ -262,9 +395,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC2idSiv"></a>
+                    <a name="/s:7SKTiled12SKTileObjectC2idSivp"></a>
                     <a name="//apple_ref/swift/Property/id" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC2idSiv">id</a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC2idSivp">id</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -279,7 +412,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
 
                         </div>
                       </div>
@@ -289,9 +422,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC4typeSQySSGv"></a>
+                    <a name="/s:7SKTiled12SKTileObjectC4typeSSSgvp"></a>
                     <a name="//apple_ref/swift/Property/type" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC4typeSQySSGv">type</a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC4typeSSSgvp">type</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -306,7 +439,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="o">!</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="o">!</span></code></pre>
 
                         </div>
                       </div>
@@ -316,9 +449,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC4sizeXev"></a>
+                    <a name="/"></a>
                     <a name="//apple_ref/swift/Property/size" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC4sizeXev">size</a>
+                    <a class="token" href="#/">size</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -333,7 +466,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">size</span><span class="p">:</span> <span class="kt">CGSize</span> <span class="o">=</span> <span class="kt">CGSize</span><span class="o">.</span><span class="n">zero</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">size</span><span class="p">:</span> <span class="kt">CGSize</span></code></pre>
 
                         </div>
                       </div>
@@ -343,9 +476,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC8tileDataAA09SKTilesetE0CSgv"></a>
+                    <a name="/s:7SKTiled12SKTileObjectC8tileDataAA09SKTilesetE0CSgvp"></a>
                     <a name="//apple_ref/swift/Property/tileData" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC8tileDataAA09SKTilesetE0CSgv">tileData</a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC8tileDataAA09SKTilesetE0CSgvp">tileData</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -360,7 +493,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">tileData</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTilesetData.html">SKTilesetData</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">tileData</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTilesetData.html">SKTilesetData</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -370,9 +503,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC10frameColorXev"></a>
+                    <a name="/"></a>
                     <a name="//apple_ref/swift/Property/frameColor" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC10frameColorXev">frameColor</a>
+                    <a class="token" href="#/">frameColor</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -387,7 +520,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">frameColor</span><span class="p">:</span> <span class="kt">SKColor</span> <span class="o">=</span> <span class="kt">TiledObjectColors</span><span class="o">.</span><span class="n">magenta</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">frameColor</span><span class="p">:</span> <span class="kt">SKColor</span></code></pre>
 
                         </div>
                       </div>
@@ -409,14 +542,18 @@
                       <div class="abstract">
                         <h2 id='overview' class='heading'>Overview</h2>
 
-<p>Enum defining object collision type.</p>
+<p>Describes tile vector object collision type.</p>
+<pre class="highlight swift"><code> <span class="k">case</span> <span class="k">none</span>
+ <span class="k">case</span> <span class="kd">dynamic</span>
+ <span class="k">case</span> <span class="n">collision</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">CollisionType</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">CollisionType</span></code></pre>
 
                         </div>
                       </div>
@@ -426,9 +563,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC10propertiess10DictionaryVyS2SGv"></a>
+                    <a name="/s:7SKTiled12SKTileObjectC10propertiesSDyS2SGvp"></a>
                     <a name="//apple_ref/swift/Property/properties" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC10propertiess10DictionaryVyS2SGv">properties</a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC10propertiesSDyS2SGvp">properties</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -443,7 +580,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">properties</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">String</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:]</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">properties</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">]</span></code></pre>
 
                         </div>
                       </div>
@@ -453,9 +590,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC11physicsTypeAC09CollisionE0Ov"></a>
+                    <a name="/s:7SKTiled12SKTileObjectC11physicsTypeAC09CollisionE0Ovp"></a>
                     <a name="//apple_ref/swift/Property/physicsType" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC11physicsTypeAC09CollisionE0Ov">physicsType</a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC11physicsTypeAC09CollisionE0Ovp">physicsType</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -470,7 +607,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">physicsType</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO">CollisionType</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">none</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">physicsType</span><span class="p">:</span> <span class="kt">SKTileObject</span><span class="o">.</span><span class="kt"><a href="../Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO">CollisionType</a></span></code></pre>
 
                         </div>
                       </div>
@@ -480,9 +617,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC14textAttributesSQyAA04TextcE0VGv"></a>
+                    <a name="/s:7SKTiled12SKTileObjectC14textAttributesAA04TextcE0VSgvp"></a>
                     <a name="//apple_ref/swift/Property/textAttributes" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC14textAttributesSQyAA04TextcE0VGv">textAttributes</a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC14textAttributesAA04TextcE0VSgvp">textAttributes</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -497,7 +634,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">textAttributes</span><span class="p">:</span> <span class="kt"><a href="../Structs/TextObjectAttributes.html">TextObjectAttributes</a></span><span class="o">!</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">textAttributes</span><span class="p">:</span> <span class="kt"><a href="../Structs/TextObjectAttributes.html">TextObjectAttributes</a></span><span class="o">!</span></code></pre>
 
                         </div>
                       </div>
@@ -507,9 +644,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC13renderQualityXev"></a>
+                    <a name="/"></a>
                     <a name="//apple_ref/swift/Property/renderQuality" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC13renderQualityXev">renderQuality</a>
+                    <a class="token" href="#/">renderQuality</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -524,7 +661,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">renderQuality</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">8</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">renderQuality</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -534,9 +671,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC4textSQySSGv"></a>
+                    <a name="/s:7SKTiled12SKTileObjectC4textSSSgvp"></a>
                     <a name="//apple_ref/swift/Property/text" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC4textSQySSGv">text</a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC4textSSSgvp">text</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -551,7 +688,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="o">!</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -561,9 +698,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC6boundsXev"></a>
+                    <a name="/"></a>
                     <a name="//apple_ref/swift/Property/bounds" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC6boundsXev">bounds</a>
+                    <a class="token" href="#/">bounds</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -578,7 +715,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">bounds</span><span class="p">:</span> <span class="kt">CGRect</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">bounds</span><span class="p">:</span> <span class="kt">CGRect</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -588,9 +725,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC11anchorPointXev"></a>
+                    <a name="/"></a>
                     <a name="//apple_ref/swift/Property/anchorPoint" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC11anchorPointXev">anchorPoint</a>
+                    <a class="token" href="#/">anchorPoint</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -605,7 +742,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">anchorPoint</span><span class="p">:</span> <span class="kt">CGPoint</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">anchorPoint</span><span class="p">:</span> <span class="kt">CGPoint</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -615,9 +752,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC16isRenderableTypeSbv"></a>
+                    <a name="/s:7SKTiled12SKTileObjectC16isRenderableTypeSbvp"></a>
                     <a name="//apple_ref/swift/Property/isRenderableType" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC16isRenderableTypeSbv">isRenderableType</a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC16isRenderableTypeSbvp">isRenderableType</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -632,7 +769,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">isRenderableType</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">isRenderableType</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -642,9 +779,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC10isPolyTypeSbv"></a>
+                    <a name="/s:7SKTiled12SKTileObjectC10isPolyTypeSbvp"></a>
                     <a name="//apple_ref/swift/Property/isPolyType" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC10isPolyTypeSbv">isPolyType</a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC10isPolyTypeSbvp">isPolyType</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -659,7 +796,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">isPolyType</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">isPolyType</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -680,9 +817,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectCXeXecfc"></a>
+                    <a name="/"></a>
                     <a name="//apple_ref/swift/Method/init(width:height:type:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectCXeXecfc">init(width:height:type:)</a>
+                    <a class="token" href="#/">init(width:height:type:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -697,7 +834,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">required</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">ObjectType</span> <span class="o">=</span> <span class="o">.</span><span class="n">rectangle</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">required</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC5ShapeO">TiledObjectShape</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">rectangle</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -737,7 +874,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p><code>ObjectType</code>   object shape type.</p>
+                                  <p><code><a href="../Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC5ShapeO">TiledObjectShape</a></code>   object shape type.</p>
                                 </div>
                               </td>
                             </tr>
@@ -750,9 +887,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectCACSgs10DictionaryVyS2SG10attributes_tcfc"></a>
+                    <a name="/s:7SKTiled12SKTileObjectC10attributesACSgSDyS2SG_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(attributes:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectCACSgs10DictionaryVyS2SG10attributes_tcfc">init(attributes:)</a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC10attributesACSgSDyS2SG_tcfc">init(attributes:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -767,7 +904,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">required</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">?(</span><span class="nv">attributes</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">String</span><span class="p">])</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">required</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">?(</span><span class="nv">attributes</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">])</span></code></pre>
 
                         </div>
                       </div>
@@ -796,9 +933,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectCAcA13SKObjectGroupC5layer_tcfc"></a>
+                    <a name="/s:7SKTiled12SKTileObjectC5layerAcA13SKObjectGroupC_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(layer:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectCAcA13SKObjectGroupC5layer_tcfc">init(layer:)</a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC5layerAcA13SKObjectGroupC_tcfc">init(layer:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -813,7 +950,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">required</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">layer</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKObjectGroup.html">SKObjectGroup</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">required</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">layer</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKObjectGroup.html">SKObjectGroup</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -829,7 +966,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p><code>SKObjectGroup</code> object group.</p>
+                                  <p><code><a href="../Classes/SKObjectGroup.html">SKObjectGroup</a></code> object group.</p>
                                 </div>
                               </td>
                             </tr>
@@ -853,9 +990,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC8setColorXeXeF"></a>
+                    <a name="/"></a>
                     <a name="//apple_ref/swift/Method/setColor(color:withAlpha:redraw:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC8setColorXeXeF">setColor(color:withAlpha:redraw:)</a>
+                    <a class="token" href="#/">setColor(color:withAlpha:redraw:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -870,7 +1007,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">setColor</span><span class="p">(</span><span class="nv">color</span><span class="p">:</span> <span class="kt">SKColor</span><span class="p">,</span> <span class="n">withAlpha</span> <span class="nv">alpha</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="nv">redraw</span><span class="p">:</span> <span class="kt">Bool</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setColor</span><span class="p">(</span><span class="nv">color</span><span class="p">:</span> <span class="kt">SKColor</span><span class="p">,</span> <span class="n">withAlpha</span> <span class="nv">alpha</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mf">0.35</span><span class="p">,</span> <span class="nv">redraw</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -911,9 +1048,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC8setColorXeXeF"></a>
+                    <a name="/"></a>
                     <a name="//apple_ref/swift/Method/setColor(hexString:withAlpha:redraw:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC8setColorXeXeF">setColor(hexString:withAlpha:redraw:)</a>
+                    <a class="token" href="#/">setColor(hexString:withAlpha:redraw:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -928,7 +1065,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">setColor</span><span class="p">(</span><span class="nv">hexString</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">withAlpha</span> <span class="nv">alpha</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="nv">redraw</span><span class="p">:</span> <span class="kt">Bool</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setColor</span><span class="p">(</span><span class="nv">hexString</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">withAlpha</span> <span class="nv">alpha</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mf">0.35</span><span class="p">,</span> <span class="nv">redraw</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -980,9 +1117,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC04drawC0ySb5debug_tF"></a>
+                    <a name="/s:7SKTiled12SKTileObjectC04drawC05debugySb_tF"></a>
                     <a name="//apple_ref/swift/Method/drawObject(debug:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC04drawC0ySb5debug_tF">drawObject(debug:)</a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC04drawC05debugySb_tF">drawObject(debug:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -997,7 +1134,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">drawObject</span><span class="p">(</span><span class="nv">debug</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">drawObject</span><span class="p">(</span><span class="nv">debug</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1007,9 +1144,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC08drawTextC0XeXeF"></a>
+                    <a name="/"></a>
                     <a name="//apple_ref/swift/Method/drawTextObject(withScale:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC08drawTextC0XeXeF">drawTextObject(withScale:)</a>
+                    <a class="token" href="#/">drawTextObject(withScale:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1024,7 +1161,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">drawTextObject</span><span class="p">(</span><span class="nv">withScale</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGImage</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">drawTextObject</span><span class="p">(</span><span class="nv">withScale</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGImage</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -1040,7 +1177,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p><code>CGFloat</code> size scale.</p>
+                                  <p><code>CGFloat</code> render quality scaling.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1068,9 +1205,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC11getVerticesXeXeF"></a>
+                    <a name="/"></a>
                     <a name="//apple_ref/swift/Method/getVertices()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC11getVerticesXeXeF">getVertices()</a>
+                    <a class="token" href="#/">getVertices()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1085,7 +1222,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getVertices</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">CGPoint</span><span class="p">]?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getVertices</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">CGPoint</span><span class="p">]?</span></code></pre>
 
                         </div>
                       </div>
@@ -1110,9 +1247,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC10showBoundsSbv"></a>
+                    <a name="/s:7SKTiled12SKTileObjectC10showBoundsSbvp"></a>
                     <a name="//apple_ref/swift/Property/showBounds" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC10showBoundsSbv">showBounds</a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC10showBoundsSbvp">showBounds</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1127,7 +1264,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">showBounds</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">showBounds</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -1165,7 +1302,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">setupPhysics</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setupPhysics</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1186,9 +1323,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC6updateXeXeF"></a>
+                    <a name="/"></a>
                     <a name="//apple_ref/swift/Method/update(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC6updateXeXeF">update(_:)</a>
+                    <a class="token" href="#/">update(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1203,7 +1340,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">(</span><span class="n">_</span> <span class="nv">deltaTime</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">(</span><span class="n">_</span> <span class="nv">deltaTime</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="o">&lt;&lt;</span><span class="n">error</span> <span class="n"><a href="../Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC4typeSSSgvp">type</a></span><span class="o">&gt;&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1232,51 +1369,13 @@
               </ul>
             </div>
             <div class="task-group">
-              <div class="task-name-container">
-                <a name="/Properties"></a>
-                <a name="//apple_ref/swift/Section/Properties" class="dashAnchor"></a>
-                <a href="#/Properties">
-                  <h3 class="section-name">Properties</h3>
-                </a>
-              </div>
               <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC15parsePropertiesyyycSg10completion_tF"></a>
-                    <a name="//apple_ref/swift/Method/parseProperties(completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC15parsePropertiesyyycSg10completion_tF">parseProperties(completion:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Parse the object&rsquo;s properties value.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">parseProperties</span><span class="p">(</span><span class="nv">completion</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">())?)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7SKTiled12SKTileObjectC11descriptionSSv"></a>
+                    <a name="/s:7SKTiled12SKTileObjectC11descriptionSSvp"></a>
                     <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC11descriptionSSv">description</a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC11descriptionSSvp">description</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1284,14 +1383,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Tile data description.</p>
+                        <p>Object description.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="k">override</span> <span class="n">open</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">open</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -1305,9 +1404,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC7opacityXev"></a>
+                    <a name="/"></a>
                     <a name="//apple_ref/swift/Property/opacity" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC7opacityXev">opacity</a>
+                    <a class="token" href="#/">opacity</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1322,7 +1421,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">opacity</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">opacity</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -1332,9 +1431,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC7visibleSbv"></a>
+                    <a name="/s:7SKTiled12SKTileObjectC7visibleSbvp"></a>
                     <a name="//apple_ref/swift/Property/visible" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC7visibleSbv">visible</a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC7visibleSbvp">visible</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1349,7 +1448,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">visible</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">visible</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -1359,9 +1458,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC10isAnimatedSbv"></a>
+                    <a name="/s:7SKTiled12SKTileObjectC10isAnimatedSbvp"></a>
                     <a name="//apple_ref/swift/Property/isAnimated" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC10isAnimatedSbv">isAnimated</a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC10isAnimatedSbvp">isAnimated</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1376,7 +1475,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">isAnimated</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">isAnimated</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -1386,9 +1485,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC06isTextC0Sbv"></a>
+                    <a name="/s:7SKTiled12SKTileObjectC06isTextC0Sbvp"></a>
                     <a name="//apple_ref/swift/Property/isTextObject" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC06isTextC0Sbv">isTextObject</a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC06isTextC0Sbvp">isTextObject</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1403,7 +1502,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">isTextObject</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">isTextObject</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -1413,9 +1512,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled12SKTileObjectC06isTileC0Sbv"></a>
+                    <a name="/s:7SKTiled12SKTileObjectC06isTileC0Sbvp"></a>
                     <a name="//apple_ref/swift/Property/isTileObject" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12SKTileObjectC06isTileC0Sbv">isTileObject</a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC06isTileC0Sbvp">isTileObject</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1430,7 +1529,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">isTileObject</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">isTileObject</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -1440,6 +1539,13 @@
               </ul>
             </div>
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Deprecated"></a>
+                <a name="//apple_ref/swift/Section/Deprecated" class="dashAnchor"></a>
+                <a href="#/Deprecated">
+                  <h3 class="section-name">Deprecated</h3>
+                </a>
+              </div>
               <ul>
                 <li class="item">
                   <div>
@@ -1461,7 +1567,46 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">runAnimation</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated)</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">runAnimation</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Properties"></a>
+                <a name="//apple_ref/swift/Section/Properties" class="dashAnchor"></a>
+                <a href="#/Properties">
+                  <h3 class="section-name">Properties</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled12SKTileObjectC15parseProperties10completionyyycSg_tF"></a>
+                    <a name="//apple_ref/swift/Method/parseProperties(completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SKTiled12SKTileObjectC15parseProperties10completionyyycSg_tF">parseProperties(completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parse the object&rsquo;s properties value.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">parseProperties</span><span class="p">(</span><span class="nv">completion</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">())?)</span></code></pre>
 
                         </div>
                       </div>
@@ -1473,8 +1618,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>© 2016 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external">Michael Fessenden</a> under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>© 2018 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external">Michael Fessenden</a> under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

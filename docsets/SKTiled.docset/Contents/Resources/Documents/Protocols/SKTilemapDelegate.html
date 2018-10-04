@@ -7,6 +7,9 @@
     <meta charset='utf-8'>
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
+    <script src="../js/retina-preprocess.js" defer></script>
+    <script src="../js/retina.js" defer></script>
+
     
   </head>
   <body>
@@ -16,7 +19,7 @@
       <div class="content-wrapper">
         <p><a href="../index.html">SKTiled Docs</a></p>
         <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="../img/gh.png"/>View on GitHub</a></p>
-        <p class="header-right"><a href="dash-feed://file%3A%2FUsers%2Fmichael%2Fgit%2FSKTiled%2Fdocsets%2FSKTiled%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
+        <p class="header-right"><a href="dash-feed://file%3A%2F%2F%2FUsers%2Fmichael%2Fgit%2FSKTiled%2Fdocsets%2FSKTiled%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -30,7 +33,7 @@
       <nav class="sidebar">
         <ul class="nav-groups">
           <li class="nav-group-name">
-            <a href="../Tutorial.html">Tutorial</a>
+            <a href="../Documentation.html">Documentation</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../whats-new.html">What&#39;s New</a>
@@ -39,28 +42,34 @@
                 <a href="../getting-started.html">Getting Started</a>
               </li>
               <li class="nav-group-task">
-                <a href="../scenes.html">Scenes</a>
+                <a href="../scene-setup.html">Scene Setup</a>
               </li>
               <li class="nav-group-task">
-                <a href="../layers.html">Layers</a>
+                <a href="../working-with-maps.html">Working with Maps</a>
               </li>
               <li class="nav-group-task">
-                <a href="../tiles.html">Tiles</a>
+                <a href="../working-with-tilesets.html">Working with Tilesets</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../working-with-layers.html">Working with Layers</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../working-with-tiles.html">Working with Tiles</a>
               </li>
               <li class="nav-group-task">
                 <a href="../coordinates.html">Coordinates</a>
               </li>
               <li class="nav-group-task">
-                <a href="../objects.html">Objects</a>
+                <a href="../working-with-objects.html">Working with Objects</a>
               </li>
               <li class="nav-group-task">
-                <a href="../properties.html">Properties</a>
+                <a href="../tiled-properties.html">Tiled Properties</a>
               </li>
               <li class="nav-group-task">
                 <a href="../gameplaykit.html">GameplayKit</a>
               </li>
               <li class="nav-group-task">
-                <a href="../extending.html">Extending</a>
+                <a href="../extending-sktiled.html">Extending SKTiled</a>
               </li>
               <li class="nav-group-task">
                 <a href="../debugging.html">Debugging</a>
@@ -84,6 +93,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/SKTiledSceneCameraDelegate.html">SKTiledSceneCameraDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a>
               </li>
             </ul>
           </li>
@@ -133,6 +145,12 @@
                 <a href="../Classes/SKTileObject.html">SKTileObject</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC4TypeO">– TiledObjectType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC5ShapeO">– TiledObjectShape</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO">– CollisionType</a>
               </li>
               <li class="nav-group-task">
@@ -150,38 +168,57 @@
             <a href="../Other.html">Other</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Other.html#/s:7SKTiled18TileAnimationFrameC">TileAnimationFrame</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/DebugDrawOptions.html">DebugDrawOptions</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/TextObjectAttributes.html">TextObjectAttributes</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV">– TextAlignment</a>
+                <a href="../Structs/TextObjectAttributes/TextAlignment.html">– TextAlignment</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Other.html#/s:7SKTiled0A18ContentScaleFactorXev">SKTiledContentScaleFactor</a>
+                <a href="../Other.html#/s:7SKTiled17CameraControlModeO">CameraControlMode</a>
               </li>
-              <li class="nav-group-task">
-                <a href="../Other.html#/s:7SKTiled0A12LoggingLevelAA0bC0Ov">SKTiledLoggingLevel</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Other.html#/s:7SKTiled0A23TiledApplicationVersionSSv">SKTiledTiledApplicationVersion</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="../Other Classes.html">Other Classes</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Classes/AnimationFrame.html">AnimationFrame</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="../Other Enums.html">Other Enums</a>
-            <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Enums/CameraZoomClamping.html">CameraZoomClamping</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Global Variables.html">Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/s:7SKTiled29SKTILED_USE_SPRITEKIT_ACTIONSSbvp">SKTILED_USE_SPRITEKIT_ACTIONS</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/s:7SKTiled21SKTILED_LOGGING_LEVELAA12LoggingLevelOvp">SKTILED_LOGGING_LEVEL</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/SKTILED_CONTENT_SCALE">SKTILED_CONTENT_SCALE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/s:7SKTiled15SKTILED_VERSIONSSvp">SKTILED_VERSION</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/s:7SKTiled21SKTILED_SWIFT_VERSIONSSvp">SKTILED_SWIFT_VERSION</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/SKTILED_DEBUG_GRID_OPACITY">SKTILED_DEBUG_GRID_OPACITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/SKTILED_DEFAULT_OBJECT_RENDER_QUALITY">SKTILED_DEFAULT_OBJECT_RENDER_QUALITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/SKTILED_DEFAULT_RENDER_QUALITY">SKTILED_DEFAULT_RENDER_QUALITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/SKTILED_DEFAULT_TEXT_RENDER_QUALITY">SKTILED_DEFAULT_TEXT_RENDER_QUALITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/SKTILED_MAX_RENDER_QUALITY_OVERRIDE">SKTILED_MAX_RENDER_QUALITY_OVERRIDE</a>
               </li>
             </ul>
           </li>
@@ -193,23 +230,74 @@
             <h1>SKTilemapDelegate</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">SKTilemapDelegate</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">SKTilemapDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
 
                 </div>
               </div>
             <h2 id='overview' class='heading'>Overview</h2>
 
-<p>The <code>SKTilemapDelegate</code> protocol defines a delegate that allows the user to interact with a tile map as it is being created and customize its properties.</p>
-<h2 id='callbacks' class='heading'>Callbacks</h2>
+<p>Methods that allow interaction with an <code><a href="../Classes/SKTilemap.html">SKTilemap</a></code> object as it is being created to customize its properties.</p>
+<h3 id='properties' class='heading'>Properties</h3>
 
-<p>Delegate callbacks are called asynchronously as the map is being read from disk and rendered.</p>
-<pre class="highlight swift"><code><span class="kt">SKTilemapDelegate</span><span class="o">.</span><span class="nf">didBeginParsing</span><span class="p">(</span><span class="n">_</span> <span class="nv">tilemap</span><span class="p">:</span> <span class="kt">SKTilemap</span><span class="p">)</span>
-<span class="kt">SKTilemapDelegate</span><span class="o">.</span><span class="nf">didAddTileset</span><span class="p">(</span><span class="n">_</span> <span class="nv">tileset</span><span class="p">:</span> <span class="kt">SKTileset</span><span class="p">)</span>
-<span class="kt">SKTilemapDelegate</span><span class="o">.</span><span class="nf">didAddLayer</span><span class="p">(</span><span class="n">_</span> <span class="nv">layer</span><span class="p">:</span> <span class="kt">SKTiledLayerObject</span><span class="p">)</span>
-<span class="kt">SKTilemapDelegate</span><span class="o">.</span><span class="nf">didReadMap</span><span class="p">(</span><span class="n">_</span> <span class="nv">tilemap</span><span class="p">:</span> <span class="kt">SKTilemap</span><span class="p">)</span>
-<span class="kt">SKTilemapDelegate</span><span class="o">.</span><span class="nf">didRenderMap</span><span class="p">(</span><span class="n">_</span> <span class="nv">tilemap</span><span class="p">:</span> <span class="kt">SKTilemap</span><span class="p">)</span>
-</code></pre>
-<h2 id='custom-objects' class='heading'>Custom Objects</h2>
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>zDeltaForLayers</td>
+<td>Default z-distance between layers.</td>
+</tr>
+</tbody></table>
+<h3 id='instance-methods' class='heading'>Instance Methods</h3>
+
+<p>Delegate callbacks are called asynchronously as the map is being read from disk and rendered:</p>
+
+<table><thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>didBeginParsing</td>
+<td>Called when the tilemap is instantiated.</td>
+</tr>
+<tr>
+<td>didAddTileset</td>
+<td>Called when a tileset is added to a map.</td>
+</tr>
+<tr>
+<td>didAddLayer</td>
+<td>Called when a layer is added to a tilemap.</td>
+</tr>
+<tr>
+<td>didReadMap</td>
+<td>Called when the tilemap is finished parsing.</td>
+</tr>
+<tr>
+<td>didRenderMap</td>
+<td>Called when the tilemap layers are finished rendering.</td>
+</tr>
+<tr>
+<td>didAddNavigationGraph</td>
+<td>Called when the a navigation graph is built for a layer.</td>
+</tr>
+<tr>
+<td>objectForTileType</td>
+<td>Specify a custom tile object for use in tile layers.</td>
+</tr>
+<tr>
+<td>objectForVectorType</td>
+<td>Specify a custom object for use in object groups.</td>
+</tr>
+<tr>
+<td>objectForGraphType</td>
+<td>Specify a custom graph node object for use in navigation graphs.</td>
+</tr>
+</tbody></table>
+<h3 id='custom-objects' class='heading'>Custom Objects</h3>
 
 <p>Custom object methods can be used to substitute your own objects for tiles:</p>
 <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">objectForTileType</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">SKTile</span><span class="o">.</span><span class="k">Type</span> <span class="p">{</span>
@@ -223,13 +311,20 @@
           </section>
           <section class="section task-group-section">
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Extensions"></a>
+                <a name="//apple_ref/swift/Section/Extensions" class="dashAnchor"></a>
+                <a href="#/Extensions">
+                  <h3 class="section-name">Extensions</h3>
+                </a>
+              </div>
               <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE15zDeltaForLayersXev"></a>
+                    <a name="/"></a>
                     <a name="//apple_ref/swift/Property/zDeltaForLayers" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE15zDeltaForLayersXev">zDeltaForLayers</a>
+                    <a class="token" href="#/">zDeltaForLayers</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -247,7 +342,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">zDeltaForLayers</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">zDeltaForLayers</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -257,9 +352,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE15didBeginParsingyAA0B0CF"></a>
+                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE15didBeginParsingyyAA0B0CF"></a>
                     <a name="//apple_ref/swift/Method/didBeginParsing(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE15didBeginParsingyAA0B0CF">didBeginParsing(_:)</a>
+                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE15didBeginParsingyyAA0B0CF">didBeginParsing(_:)</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -277,7 +372,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didBeginParsing</span><span class="p">(</span><span class="n">_</span> <span class="nv">tilemap</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTilemap.html">SKTilemap</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didBeginParsing</span><span class="p">(</span><span class="n">_</span> <span class="nv">tilemap</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTilemap.html">SKTilemap</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -293,7 +388,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p><code>SKTilemap</code> tilemap instance.</p>
+                                  <p><code><a href="../Classes/SKTilemap.html">SKTilemap</a></code> tilemap instance.</p>
                                 </div>
                               </td>
                             </tr>
@@ -306,9 +401,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE13didAddTilesetyAA9SKTilesetCF"></a>
+                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE13didAddTilesetyyAA9SKTilesetCF"></a>
                     <a name="//apple_ref/swift/Method/didAddTileset(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE13didAddTilesetyAA9SKTilesetCF">didAddTileset(_:)</a>
+                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE13didAddTilesetyyAA9SKTilesetCF">didAddTileset(_:)</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -326,7 +421,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didAddTileset</span><span class="p">(</span><span class="n">_</span> <span class="nv">tileset</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTileset.html">SKTileset</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didAddTileset</span><span class="p">(</span><span class="n">_</span> <span class="nv">tileset</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTileset.html">SKTileset</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -342,7 +437,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p><code>SKTileset</code> tileset instance.</p>
+                                  <p><code><a href="../Classes/SKTileset.html">SKTileset</a></code> tileset instance.</p>
                                 </div>
                               </td>
                             </tr>
@@ -355,9 +450,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE11didAddLayeryAA0aF6ObjectCF"></a>
+                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE11didAddLayeryyAA0aF6ObjectCF"></a>
                     <a name="//apple_ref/swift/Method/didAddLayer(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE11didAddLayeryAA0aF6ObjectCF">didAddLayer(_:)</a>
+                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE11didAddLayeryyAA0aF6ObjectCF">didAddLayer(_:)</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -375,7 +470,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didAddLayer</span><span class="p">(</span><span class="n">_</span> <span class="nv">layer</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTiledLayerObject.html">SKTiledLayerObject</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didAddLayer</span><span class="p">(</span><span class="n">_</span> <span class="nv">layer</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTiledLayerObject.html">SKTiledLayerObject</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -391,7 +486,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p><code>SKTiledLayerObject</code> tilemap instance.</p>
+                                  <p><code><a href="../Classes/SKTiledLayerObject.html">SKTiledLayerObject</a></code> tilemap instance.</p>
                                 </div>
                               </td>
                             </tr>
@@ -404,9 +499,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE10didReadMapyAA0B0CF"></a>
+                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE10didReadMapyyAA0B0CF"></a>
                     <a name="//apple_ref/swift/Method/didReadMap(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE10didReadMapyAA0B0CF">didReadMap(_:)</a>
+                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE10didReadMapyyAA0B0CF">didReadMap(_:)</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -424,7 +519,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didReadMap</span><span class="p">(</span><span class="n">_</span> <span class="nv">tilemap</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTilemap.html">SKTilemap</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didReadMap</span><span class="p">(</span><span class="n">_</span> <span class="nv">tilemap</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTilemap.html">SKTilemap</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -440,7 +535,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p><code>SKTilemap</code> tilemap instance.</p>
+                                  <p><code><a href="../Classes/SKTilemap.html">SKTilemap</a></code> tilemap instance.</p>
                                 </div>
                               </td>
                             </tr>
@@ -453,9 +548,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE12didRenderMapyAA0B0CF"></a>
+                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE12didRenderMapyyAA0B0CF"></a>
                     <a name="//apple_ref/swift/Method/didRenderMap(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE12didRenderMapyAA0B0CF">didRenderMap(_:)</a>
+                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE12didRenderMapyyAA0B0CF">didRenderMap(_:)</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -473,7 +568,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didRenderMap</span><span class="p">(</span><span class="n">_</span> <span class="nv">tilemap</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTilemap.html">SKTilemap</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didRenderMap</span><span class="p">(</span><span class="n">_</span> <span class="nv">tilemap</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTilemap.html">SKTilemap</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -489,7 +584,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p><code>SKTilemap</code> tilemap instance.</p>
+                                  <p><code><a href="../Classes/SKTilemap.html">SKTilemap</a></code> tilemap instance.</p>
                                 </div>
                               </td>
                             </tr>
@@ -502,9 +597,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE21didAddNavigationGraphXeXeF"></a>
+                    <a name="/"></a>
                     <a name="//apple_ref/swift/Method/didAddNavigationGraph(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE21didAddNavigationGraphXeXeF">didAddNavigationGraph(_:)</a>
+                    <a class="token" href="#/">didAddNavigationGraph(_:)</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -522,7 +617,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didAddNavigationGraph</span><span class="p">(</span><span class="n">_</span> <span class="nv">graph</span><span class="p">:</span> <span class="kt">GKGridGraph</span><span class="o">&lt;</span><span class="kt">GKGridGraphNode</span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didAddNavigationGraph</span><span class="p">(</span><span class="n">_</span> <span class="nv">graph</span><span class="p">:</span> <span class="kt">GKGridGraph</span><span class="o">&lt;</span><span class="kt">GKGridGraphNode</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="o">&lt;&lt;</span><span class="n">error</span> <span class="n">type</span><span class="o">&gt;&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -551,9 +646,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE17objectForTileTypeAA6SKTileCmSSSg5named_tF"></a>
+                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE17objectForTileType5namedAA6SKTileCmSSSg_tF"></a>
                     <a name="//apple_ref/swift/Method/objectForTileType(named:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE17objectForTileTypeAA6SKTileCmSSSg5named_tF">objectForTileType(named:)</a>
+                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE17objectForTileType5namedAA6SKTileCmSSSg_tF">objectForTileType(named:)</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -571,7 +666,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">objectForTileType</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/SKTile.html">SKTile</a></span><span class="o">.</span><span class="k">Type</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">objectForTileType</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/SKTile.html">SKTile</a></span><span class="o">.</span><span class="k">Type</span></code></pre>
 
                         </div>
                       </div>
@@ -600,9 +695,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE19objectForVectorTypeAA12SKTileObjectCmSSSg5named_tF"></a>
+                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE19objectForVectorType5namedAA12SKTileObjectCmSSSg_tF"></a>
                     <a name="//apple_ref/swift/Method/objectForVectorType(named:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE19objectForVectorTypeAA12SKTileObjectCmSSSg5named_tF">objectForVectorType(named:)</a>
+                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE19objectForVectorType5namedAA12SKTileObjectCmSSSg_tF">objectForVectorType(named:)</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -620,7 +715,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">objectForVectorType</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/SKTileObject.html">SKTileObject</a></span><span class="o">.</span><span class="k">Type</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">objectForVectorType</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/SKTileObject.html">SKTileObject</a></span><span class="o">.</span><span class="k">Type</span></code></pre>
 
                         </div>
                       </div>
@@ -649,9 +744,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE18objectForGraphTypeXeXeF"></a>
+                    <a name="/"></a>
                     <a name="//apple_ref/swift/Method/objectForGraphType(named:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE18objectForGraphTypeXeXeF">objectForGraphType(named:)</a>
+                    <a class="token" href="#/">objectForGraphType(named:)</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -669,7 +764,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">objectForGraphType</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">GKGridGraphNode</span><span class="o">.</span><span class="k">Type</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">objectForGraphType</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">GKGridGraphNode</span><span class="o">.</span><span class="k">Type</span></code></pre>
 
                         </div>
                       </div>
@@ -700,8 +795,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>© 2016 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external">Michael Fessenden</a> under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>© 2018 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external">Michael Fessenden</a> under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

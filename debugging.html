@@ -7,6 +7,9 @@
     <meta charset='utf-8'>
     <script src="js/jquery.min.js" defer></script>
     <script src="js/jazzy.js" defer></script>
+    <script src="js/retina-preprocess.js" defer></script>
+    <script src="js/retina.js" defer></script>
+
     
   </head>
   <body>
@@ -15,7 +18,7 @@
       <div class="content-wrapper">
         <p><a href="index.html">SKTiled Docs</a></p>
         <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="img/gh.png"/>View on GitHub</a></p>
-        <p class="header-right"><a href="dash-feed://file%3A%2FUsers%2Fmichael%2Fgit%2FSKTiled%2Fdocsets%2FSKTiled%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
+        <p class="header-right"><a href="dash-feed://file%3A%2F%2F%2FUsers%2Fmichael%2Fgit%2FSKTiled%2Fdocsets%2FSKTiled%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -29,7 +32,7 @@
       <nav class="sidebar">
         <ul class="nav-groups">
           <li class="nav-group-name">
-            <a href="Tutorial.html">Tutorial</a>
+            <a href="Documentation.html">Documentation</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="whats-new.html">What&#39;s New</a>
@@ -38,28 +41,34 @@
                 <a href="getting-started.html">Getting Started</a>
               </li>
               <li class="nav-group-task">
-                <a href="scenes.html">Scenes</a>
+                <a href="scene-setup.html">Scene Setup</a>
               </li>
               <li class="nav-group-task">
-                <a href="layers.html">Layers</a>
+                <a href="working-with-maps.html">Working with Maps</a>
               </li>
               <li class="nav-group-task">
-                <a href="tiles.html">Tiles</a>
+                <a href="working-with-tilesets.html">Working with Tilesets</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="working-with-layers.html">Working with Layers</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="working-with-tiles.html">Working with Tiles</a>
               </li>
               <li class="nav-group-task">
                 <a href="coordinates.html">Coordinates</a>
               </li>
               <li class="nav-group-task">
-                <a href="objects.html">Objects</a>
+                <a href="working-with-objects.html">Working with Objects</a>
               </li>
               <li class="nav-group-task">
-                <a href="properties.html">Properties</a>
+                <a href="tiled-properties.html">Tiled Properties</a>
               </li>
               <li class="nav-group-task">
                 <a href="gameplaykit.html">GameplayKit</a>
               </li>
               <li class="nav-group-task">
-                <a href="extending.html">Extending</a>
+                <a href="extending-sktiled.html">Extending SKTiled</a>
               </li>
               <li class="nav-group-task">
                 <a href="debugging.html">Debugging</a>
@@ -83,6 +92,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/SKTiledSceneCameraDelegate.html">SKTiledSceneCameraDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a>
               </li>
             </ul>
           </li>
@@ -132,6 +144,12 @@
                 <a href="Classes/SKTileObject.html">SKTileObject</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC4TypeO">– TiledObjectType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC5ShapeO">– TiledObjectShape</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO">– CollisionType</a>
               </li>
               <li class="nav-group-task">
@@ -149,38 +167,57 @@
             <a href="Other.html">Other</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Other.html#/s:7SKTiled18TileAnimationFrameC">TileAnimationFrame</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/DebugDrawOptions.html">DebugDrawOptions</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/TextObjectAttributes.html">TextObjectAttributes</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV">– TextAlignment</a>
+                <a href="Structs/TextObjectAttributes/TextAlignment.html">– TextAlignment</a>
               </li>
               <li class="nav-group-task">
-                <a href="Other.html#/s:7SKTiled0A18ContentScaleFactorXev">SKTiledContentScaleFactor</a>
+                <a href="Other.html#/s:7SKTiled17CameraControlModeO">CameraControlMode</a>
               </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:7SKTiled0A12LoggingLevelAA0bC0Ov">SKTiledLoggingLevel</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:7SKTiled0A23TiledApplicationVersionSSv">SKTiledTiledApplicationVersion</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Classes.html">Other Classes</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Classes/AnimationFrame.html">AnimationFrame</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Enums.html">Other Enums</a>
-            <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Enums/CameraZoomClamping.html">CameraZoomClamping</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Global Variables.html">Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:7SKTiled29SKTILED_USE_SPRITEKIT_ACTIONSSbvp">SKTILED_USE_SPRITEKIT_ACTIONS</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:7SKTiled21SKTILED_LOGGING_LEVELAA12LoggingLevelOvp">SKTILED_LOGGING_LEVEL</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_CONTENT_SCALE">SKTILED_CONTENT_SCALE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:7SKTiled15SKTILED_VERSIONSSvp">SKTILED_VERSION</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:7SKTiled21SKTILED_SWIFT_VERSIONSSvp">SKTILED_SWIFT_VERSION</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_DEBUG_GRID_OPACITY">SKTILED_DEBUG_GRID_OPACITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_DEFAULT_OBJECT_RENDER_QUALITY">SKTILED_DEFAULT_OBJECT_RENDER_QUALITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_DEFAULT_RENDER_QUALITY">SKTILED_DEFAULT_RENDER_QUALITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_DEFAULT_TEXT_RENDER_QUALITY">SKTILED_DEFAULT_TEXT_RENDER_QUALITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_MAX_RENDER_QUALITY_OVERRIDE">SKTILED_MAX_RENDER_QUALITY_OVERRIDE</a>
               </li>
             </ul>
           </li>
@@ -202,8 +239,11 @@
 <p><img src="images/debugDrawOptions.gif" alt="Debug Options"></p>
 <h2 id='map-visualizations' class='heading'>Map Visualizations</h2>
 
-<p>Visualizing Tiled content is done via the <a href="Structs/DebugDrawOptions.html"><code>DebugDrawOptions</code></a> optionset. The options are available on the tile map node and layer nodes.</p>
+<p>Visualizing Tiled content is done via the <code><a href="Structs/DebugDrawOptions.html">DebugDrawOptions</a></code> optionset. The options are available on the tile map node and layer nodes.</p>
 <pre class="highlight swift"><code><span class="c1">// draw the map's bounding shape</span>
+<span class="n">tilemap</span><span class="o">.</span><span class="n">debugDrawOptions</span> <span class="o">=</span> <span class="o">.</span><span class="n">drawBounds</span>
+
+<span class="c1">// show object boundaries</span>
 <span class="n">tilemap</span><span class="o">.</span><span class="n">debugDrawOptions</span> <span class="o">=</span> <span class="o">.</span><span class="n">drawObjectBounds</span>
 
 <span class="c1">// draw the grid &amp; bounding shape</span>
@@ -216,7 +256,7 @@
 <span class="n">tileLayer</span><span class="o">.</span><span class="n">debugDrawOptions</span> <span class="o">=</span> <span class="o">.</span><span class="n">drawTileBounds</span>
 </code></pre>
 
-<p>To customize the grid color, set layer&rsquo;s <a href="Classes/SKTiledLayerObject.html#/s:vC7SKTiled18SKTiledLayerObject9gridColorCSo7NSColor"><code>SKTiledLayerObject.gridColor</code></a> property.</p>
+<p>To customize the grid color, set layer&rsquo;s <code><a href="Classes/SKTiledLayerObject.html#/gridColor">SKTiledLayerObject.gridColor</a></code> property.</p>
 <h2 id='visualizing-objects' class='heading'>Visualizing Objects</h2>
 
 <p>Tiled vector objects can be globally shown/hidden so that you may easily work with them in <strong>Tiled</strong>, but not see them in your game. To see them, you can set the <code>showObjects</code> property on the tilemap node, or individual object layers.</p>
@@ -237,13 +277,13 @@
 <p>Note that layer visibility supersedes object visibility; layers hidden in <strong>Tiled</strong> will not show objects unless the layer is unhidden first.</p>
 <h2 id='highlighting-tiles' class='heading'>Highlighting Tiles</h2>
 
-<p>You can highlight a tile using the <a href="Classes/SKTile.html#/s:vC7SKTiled6SKTile10showBoundsSb"><code>SKTile.showBounds</code></a> property:</p>
+<p>You can highlight a tile using the <code><a href="Classes/SKTile.html#/s:7SKTiled6SKTileC10showBoundsSbvp">SKTile.showBounds</a></code> property:</p>
 <pre class="highlight swift"><code><span class="c1">// highlight the tile for .25 seconds</span>
 <span class="n">tile</span><span class="o">.</span><span class="n">highlightDuration</span> <span class="o">=</span> <span class="mf">0.25</span>
 <span class="n">tile</span><span class="o">.</span><span class="n">showBounds</span> <span class="o">=</span> <span class="kc">true</span>
 </code></pre>
 
-<p>The tile highlight color is stored in the <a href="Classes/SKTile.html#/s:vC7SKTiled6SKTile14highlightColorCSo7NSColor"><code>SKTile.highlightColor</code></a> property:</p>
+<p>The tile highlight color is stored in the <code><a href="Classes/SKTile.html#/highlightColor">SKTile.highlightColor</a></code> property:</p>
 <pre class="highlight swift"><code><span class="c1">// set the tile highlight color for individual tiles</span>
 <span class="n">tile</span><span class="o">.</span><span class="n">highlightColor</span> <span class="o">=</span> <span class="kt">SKColor</span><span class="o">.</span><span class="n">red</span>
 
@@ -253,7 +293,7 @@
 </code></pre>
 <h2 id='map-statistics' class='heading'>Map Statistics</h2>
 
-<p>To see a quick overview of the current tilemap&rsquo;s layers, use the <a href="Classes/SKTilemap.html#/s:FC7SKTiled9SKTilemap13mapStatisticsFT7defaultSb_T_"><code>SKTilemap.mapStatistics(default:)</code></a> method:</p>
+<p>To see a quick overview of the current tilemap&rsquo;s layers, use the <code><a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC13mapStatistics7defaultySb_tF">SKTilemap.mapStatistics(default:)</a></code> method:</p>
 
 <p><img src="images/mapStatistics.png" alt="Map Statistics"></p>
 
@@ -261,13 +301,14 @@
 <pre class="highlight plaintext"><code>1.  Layer index (top-level layers)
 2.  Layer type (tile, object, group, image)
 3.  Layer visibility ("x" indicates layer is visible)
-4.  Layer hierarchy ("▿" indicates layer has children)
+4.  Layer hierarchy  ("▿" indicates layer has children)
 5.  Layer size
 6.  Layer offset
 7.  Layer anchor point
 8.  Layer z-position
 9.  Layer opacity
-10. Navigation graph node count
+10. Layer is static
+11. Navigation graph node count
 </code></pre>
 
 <p>Next: <a href="troubleshooting.html">Troubleshooting</a> - <a href="Tutorial.html">Index</a></p>
@@ -275,8 +316,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>© 2016 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external">Michael Fessenden</a> under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>© 2018 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external">Michael Fessenden</a> under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

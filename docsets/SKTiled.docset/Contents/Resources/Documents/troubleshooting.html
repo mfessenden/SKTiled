@@ -7,6 +7,9 @@
     <meta charset='utf-8'>
     <script src="js/jquery.min.js" defer></script>
     <script src="js/jazzy.js" defer></script>
+    <script src="js/retina-preprocess.js" defer></script>
+    <script src="js/retina.js" defer></script>
+
     
   </head>
   <body>
@@ -15,7 +18,7 @@
       <div class="content-wrapper">
         <p><a href="index.html">SKTiled Docs</a></p>
         <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="img/gh.png"/>View on GitHub</a></p>
-        <p class="header-right"><a href="dash-feed://file%3A%2FUsers%2Fmichael%2Fgit%2FSKTiled%2Fdocsets%2FSKTiled%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
+        <p class="header-right"><a href="dash-feed://file%3A%2F%2F%2FUsers%2Fmichael%2Fgit%2FSKTiled%2Fdocsets%2FSKTiled%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -29,7 +32,7 @@
       <nav class="sidebar">
         <ul class="nav-groups">
           <li class="nav-group-name">
-            <a href="Tutorial.html">Tutorial</a>
+            <a href="Documentation.html">Documentation</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="whats-new.html">What&#39;s New</a>
@@ -38,28 +41,34 @@
                 <a href="getting-started.html">Getting Started</a>
               </li>
               <li class="nav-group-task">
-                <a href="scenes.html">Scenes</a>
+                <a href="scene-setup.html">Scene Setup</a>
               </li>
               <li class="nav-group-task">
-                <a href="layers.html">Layers</a>
+                <a href="working-with-maps.html">Working with Maps</a>
               </li>
               <li class="nav-group-task">
-                <a href="tiles.html">Tiles</a>
+                <a href="working-with-tilesets.html">Working with Tilesets</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="working-with-layers.html">Working with Layers</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="working-with-tiles.html">Working with Tiles</a>
               </li>
               <li class="nav-group-task">
                 <a href="coordinates.html">Coordinates</a>
               </li>
               <li class="nav-group-task">
-                <a href="objects.html">Objects</a>
+                <a href="working-with-objects.html">Working with Objects</a>
               </li>
               <li class="nav-group-task">
-                <a href="properties.html">Properties</a>
+                <a href="tiled-properties.html">Tiled Properties</a>
               </li>
               <li class="nav-group-task">
                 <a href="gameplaykit.html">GameplayKit</a>
               </li>
               <li class="nav-group-task">
-                <a href="extending.html">Extending</a>
+                <a href="extending-sktiled.html">Extending SKTiled</a>
               </li>
               <li class="nav-group-task">
                 <a href="debugging.html">Debugging</a>
@@ -83,6 +92,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/SKTiledSceneCameraDelegate.html">SKTiledSceneCameraDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a>
               </li>
             </ul>
           </li>
@@ -132,6 +144,12 @@
                 <a href="Classes/SKTileObject.html">SKTileObject</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC4TypeO">– TiledObjectType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC5ShapeO">– TiledObjectShape</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO">– CollisionType</a>
               </li>
               <li class="nav-group-task">
@@ -149,38 +167,57 @@
             <a href="Other.html">Other</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Other.html#/s:7SKTiled18TileAnimationFrameC">TileAnimationFrame</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/DebugDrawOptions.html">DebugDrawOptions</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/TextObjectAttributes.html">TextObjectAttributes</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV">– TextAlignment</a>
+                <a href="Structs/TextObjectAttributes/TextAlignment.html">– TextAlignment</a>
               </li>
               <li class="nav-group-task">
-                <a href="Other.html#/s:7SKTiled0A18ContentScaleFactorXev">SKTiledContentScaleFactor</a>
+                <a href="Other.html#/s:7SKTiled17CameraControlModeO">CameraControlMode</a>
               </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:7SKTiled0A12LoggingLevelAA0bC0Ov">SKTiledLoggingLevel</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:7SKTiled0A23TiledApplicationVersionSSv">SKTiledTiledApplicationVersion</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Classes.html">Other Classes</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Classes/AnimationFrame.html">AnimationFrame</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Enums.html">Other Enums</a>
-            <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Enums/CameraZoomClamping.html">CameraZoomClamping</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Global Variables.html">Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:7SKTiled29SKTILED_USE_SPRITEKIT_ACTIONSSbvp">SKTILED_USE_SPRITEKIT_ACTIONS</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:7SKTiled21SKTILED_LOGGING_LEVELAA12LoggingLevelOvp">SKTILED_LOGGING_LEVEL</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_CONTENT_SCALE">SKTILED_CONTENT_SCALE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:7SKTiled15SKTILED_VERSIONSSvp">SKTILED_VERSION</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:7SKTiled21SKTILED_SWIFT_VERSIONSSvp">SKTILED_SWIFT_VERSION</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_DEBUG_GRID_OPACITY">SKTILED_DEBUG_GRID_OPACITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_DEFAULT_OBJECT_RENDER_QUALITY">SKTILED_DEFAULT_OBJECT_RENDER_QUALITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_DEFAULT_RENDER_QUALITY">SKTILED_DEFAULT_RENDER_QUALITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_DEFAULT_TEXT_RENDER_QUALITY">SKTILED_DEFAULT_TEXT_RENDER_QUALITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_MAX_RENDER_QUALITY_OVERRIDE">SKTILED_MAX_RENDER_QUALITY_OVERRIDE</a>
               </li>
             </ul>
           </li>
@@ -193,37 +230,44 @@
             <h1 id='troubleshooting' class='heading'>Troubleshooting</h1>
 
 <ul>
-<li><a href="#linking-errors">Linking Errors</a></li>
+<li><a href="#tile-cracking">Tile Cracking</a>
+
+<ul>
+<li><a href="#camera-zoom-clamping">Camera Zoom Clamping</a></li>
+</ul></li>
 <li><a href="#xml-parsing-errors">XML Parsing Errors</a>
 
 <ul>
 <li><a href="#external-tileset-errors">External Tileset Errors</a></li>
-<li><a href="#tileset-texture-errors">Tileset Texture Errors</a></li>
 </ul></li>
 <li><a href="#code-signing-errors">Code Signing Errors</a></li>
+<li><a href="#carthage-problems">Carthage Problems</a></li>
 </ul>
-<h2 id='linking-errors' class='heading'>Linking Errors</h2>
+<h2 id='tile-cracking' class='heading'>Tile Cracking</h2>
 
-<p>If you get a zlib import error, make sure you have linked zlib in your Xcode project:</p>
+<p><img src="images/tile-cracking.png" alt="Tile Cracking"></p>
 
-<p><em>Project &gt; Build Settings &gt; Swift Compiler - Search Paths &gt; Import Paths</em></p>
+<p>Sometimes small breaks will appear at the edges of tiles. They can be tricky to troubleshoot, but generally occur when zooming (or scaling) a node to an uneven value. Usually rounding the zoom/scale value will alleviate cracking. Additionally, turning on the <a href="https://developer.apple.com/documentation/spritekit/skeffectnode/1459385-shouldenableeffects"><code>SKTilemap.shouldEnableEffects</code></a> attribute will smooth out artifacts, at the expense of some performance.</p>
 
-<p>Add a path that represents the SKTiled zlib module:</p>
+<p>Occasionally render artifacts (<q>cracks</q>) may appear in your tilemap. This can happen for a number of reasons, though generally it is the result of moving/scaling the tilemap (or a camera zoom level) that is not a round number.</p>
 
-<p><img src="images/zlib-include.png" alt="Linking zlib"></p>
+<p>There are a few ways to alleviate this. The first is to turn on effects rendering via the <a href="https://developer.apple.com/documentation/spritekit/skeffectnode/1459385-shouldenableeffects"><code>SKTilemap.shouldEnableEffects</code></a> property, the second is to enable camera zoom clamping.</p>
+<h3 id='camera-zoom-clamping' class='heading'>Camera Zoom Clamping</h3>
 
-<p>In your Xcode project file, the path entry will look like this:</p>
+<p><img src="images/clamping.gif" alt="Zoom Cracking"></p>
 
-<p><code>SWIFT_INCLUDE_PATHS = &quot;zlib&quot;;</code></p>
+<p><strong>SKTiled&rsquo;s</strong> default camera can automatically clamp zoom values to the nearest whole pixel value to help eliminate render artifacts.</p>
+<pre class="highlight swift"><code><span class="c1">// for retina devices at 2x resolution, use CameraZoomClamping.half</span>
+<span class="n">myCamera</span><span class="o">.</span><span class="n">zoomClamping</span> <span class="o">=</span> <span class="kt">CameraZoomClamping</span><span class="o">.</span><span class="n">half</span>
+</code></pre>
+
+<p>If clamping is enabled, camera zooming will not appear as smooth, so if you need dynamic scaling in your game, you may want to turn off clamping. To do this, simply enable the <code><a href="Classes/SKTiledSceneCamera.html#/s:7SKTiled0A11SceneCameraC18ignoreZoomClampingSbvp">SKTiledSceneCamera.ignoreZoomClamping</a></code> flag:</p>
+<pre class="highlight swift"><code><span class="n">myCamera</span><span class="o">.</span><span class="n">ignoreZoomClamping</span> <span class="o">=</span> <span class="kc">true</span>
+</code></pre>
 <h2 id='xml-parsing-errors' class='heading'>XML Parsing Errors</h2>
 <h3 id='external-tileset-errors' class='heading'>External Tileset Errors</h3>
 
-<p>Occasionally the XML parser will throw errors with external tilesets that have been downloaded from the internet. Importing &amp; re-exporting the Tiled document(s) should make the error go away.</p>
-<h3 id='tileset-texture-errors' class='heading'>Tileset Texture Errors</h3>
-
-<p>If you have trouble building tilesets, check to make sure that your textures are not referenced in</p>
-
-<p>If you use the tileset transparent color feature in Tiled, make sure your png has no alpha channel.</p>
+<p>Occasionally the XML parser will throw errors with older external tilesets that have been downloaded from the internet. Importing &amp; re-exporting the Tiled document(s) should make the error go away.</p>
 <h2 id='code-signing-errors' class='heading'>Code Signing Errors</h2>
 
 <p>Occasionally you&rsquo;ll get a code signing error when compiling:</p>
@@ -252,8 +296,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>© 2016 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external">Michael Fessenden</a> under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>© 2018 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external">Michael Fessenden</a> under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

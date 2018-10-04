@@ -7,15 +7,19 @@
     <meta charset='utf-8'>
     <script src="js/jquery.min.js" defer></script>
     <script src="js/jazzy.js" defer></script>
+    <script src="js/retina-preprocess.js" defer></script>
+    <script src="js/retina.js" defer></script>
+
     
   </head>
   <body>
+    <a name="//apple_ref/swift/Section/Class Hierarchy" class="dashAnchor"></a>
     <a title="Class Hierarchy  Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="index.html">SKTiled Docs</a></p>
         <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="img/gh.png"/>View on GitHub</a></p>
-        <p class="header-right"><a href="dash-feed://file%3A%2FUsers%2Fmichael%2Fgit%2FSKTiled%2Fdocsets%2FSKTiled%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
+        <p class="header-right"><a href="dash-feed://file%3A%2F%2F%2FUsers%2Fmichael%2Fgit%2FSKTiled%2Fdocsets%2FSKTiled%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -29,7 +33,7 @@
       <nav class="sidebar">
         <ul class="nav-groups">
           <li class="nav-group-name">
-            <a href="Tutorial.html">Tutorial</a>
+            <a href="Documentation.html">Documentation</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="whats-new.html">What&#39;s New</a>
@@ -38,28 +42,34 @@
                 <a href="getting-started.html">Getting Started</a>
               </li>
               <li class="nav-group-task">
-                <a href="scenes.html">Scenes</a>
+                <a href="scene-setup.html">Scene Setup</a>
               </li>
               <li class="nav-group-task">
-                <a href="layers.html">Layers</a>
+                <a href="working-with-maps.html">Working with Maps</a>
               </li>
               <li class="nav-group-task">
-                <a href="tiles.html">Tiles</a>
+                <a href="working-with-tilesets.html">Working with Tilesets</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="working-with-layers.html">Working with Layers</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="working-with-tiles.html">Working with Tiles</a>
               </li>
               <li class="nav-group-task">
                 <a href="coordinates.html">Coordinates</a>
               </li>
               <li class="nav-group-task">
-                <a href="objects.html">Objects</a>
+                <a href="working-with-objects.html">Working with Objects</a>
               </li>
               <li class="nav-group-task">
-                <a href="properties.html">Properties</a>
+                <a href="tiled-properties.html">Tiled Properties</a>
               </li>
               <li class="nav-group-task">
                 <a href="gameplaykit.html">GameplayKit</a>
               </li>
               <li class="nav-group-task">
-                <a href="extending.html">Extending</a>
+                <a href="extending-sktiled.html">Extending SKTiled</a>
               </li>
               <li class="nav-group-task">
                 <a href="debugging.html">Debugging</a>
@@ -83,6 +93,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/SKTiledSceneCameraDelegate.html">SKTiledSceneCameraDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a>
               </li>
             </ul>
           </li>
@@ -132,6 +145,12 @@
                 <a href="Classes/SKTileObject.html">SKTileObject</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC4TypeO">– TiledObjectType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC5ShapeO">– TiledObjectShape</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO">– CollisionType</a>
               </li>
               <li class="nav-group-task">
@@ -149,38 +168,57 @@
             <a href="Other.html">Other</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Other.html#/s:7SKTiled18TileAnimationFrameC">TileAnimationFrame</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/DebugDrawOptions.html">DebugDrawOptions</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/TextObjectAttributes.html">TextObjectAttributes</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV">– TextAlignment</a>
+                <a href="Structs/TextObjectAttributes/TextAlignment.html">– TextAlignment</a>
               </li>
               <li class="nav-group-task">
-                <a href="Other.html#/s:7SKTiled0A18ContentScaleFactorXev">SKTiledContentScaleFactor</a>
+                <a href="Other.html#/s:7SKTiled17CameraControlModeO">CameraControlMode</a>
               </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:7SKTiled0A12LoggingLevelAA0bC0Ov">SKTiledLoggingLevel</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:7SKTiled0A23TiledApplicationVersionSSv">SKTiledTiledApplicationVersion</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Classes.html">Other Classes</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Classes/AnimationFrame.html">AnimationFrame</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Enums.html">Other Enums</a>
-            <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Enums/CameraZoomClamping.html">CameraZoomClamping</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Global Variables.html">Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:7SKTiled29SKTILED_USE_SPRITEKIT_ACTIONSSbvp">SKTILED_USE_SPRITEKIT_ACTIONS</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:7SKTiled21SKTILED_LOGGING_LEVELAA12LoggingLevelOvp">SKTILED_LOGGING_LEVEL</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_CONTENT_SCALE">SKTILED_CONTENT_SCALE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:7SKTiled15SKTILED_VERSIONSSvp">SKTILED_VERSION</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:7SKTiled21SKTILED_SWIFT_VERSIONSSvp">SKTILED_SWIFT_VERSION</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_DEBUG_GRID_OPACITY">SKTILED_DEBUG_GRID_OPACITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_DEFAULT_OBJECT_RENDER_QUALITY">SKTILED_DEFAULT_OBJECT_RENDER_QUALITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_DEFAULT_RENDER_QUALITY">SKTILED_DEFAULT_RENDER_QUALITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_DEFAULT_TEXT_RENDER_QUALITY">SKTILED_DEFAULT_TEXT_RENDER_QUALITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_MAX_RENDER_QUALITY_OVERRIDE">SKTILED_MAX_RENDER_QUALITY_OVERRIDE</a>
               </li>
             </ul>
           </li>
@@ -193,29 +231,29 @@
             <h2 id='protocols' class='heading'>Protocols</h2>
 
 <ul>
-<li><p><a href="Protocols/SKTiledObject.html"><strong><code>SKTiledObject</code></strong></a></p>
+<li><p><a href="Protocols/SKTiledObject.html"><strong><code><a href="Protocols/SKTiledObject.html">SKTiledObject</a></code></strong></a></p>
 
 <ul>
-<li><a href="Classes/SKTileset.html"><code>SKTileset</code></a></li>
-<li><a href="Classes/SKTilesetData.html"><code>SKTilesetData</code></a></li>
-<li><a href="Classes/SKTiledLayerObject.html"><code>SKTiledLayerObject</code></a></li>
-<li><a href="Classes/SKTilemap.html"><code>SKTilemap</code></a></li>
+<li><a href="Classes/SKTileset.html"><code><a href="Classes/SKTileset.html">SKTileset</a></code></a></li>
+<li><a href="Classes/SKTilesetData.html"><code><a href="Classes/SKTilesetData.html">SKTilesetData</a></code></a></li>
+<li><a href="Classes/SKTiledLayerObject.html"><code><a href="Classes/SKTiledLayerObject.html">SKTiledLayerObject</a></code></a></li>
+<li><a href="Classes/SKTilemap.html"><code><a href="Classes/SKTilemap.html">SKTilemap</a></code></a></li>
 </ul></li>
-<li><p><a href="Protocols/SKTiledSceneDelegate.html"><strong><code>SKTiledSceneDelegate</code></strong></a></p>
+<li><p><a href="Protocols/SKTiledSceneDelegate.html"><strong><code><a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a></code></strong></a></p>
 
 <ul>
-<li><a href="Classes/SKTiledScene.html"><code>SKTiledScene</code></a></li>
+<li><a href="Classes/SKTiledScene.html"><code><a href="Classes/SKTiledScene.html">SKTiledScene</a></code></a></li>
 </ul></li>
-<li><p><a href="Protocols/SKTilemapDelegate.html"><strong><code>SKTilemapDelegate</code></strong></a></p>
+<li><p><a href="Protocols/SKTilemapDelegate.html"><strong><code><a href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></code></strong></a></p>
 
 <ul>
-<li><a href="Classes/SKTiledScene.html"><code>SKTiledScene</code></a></li>
+<li><a href="Classes/SKTiledScene.html"><code><a href="Classes/SKTiledScene.html">SKTiledScene</a></code></a></li>
 </ul></li>
-<li><p><a href="Protocols/SKTiledSceneCameraDelegate.html"><strong><code>SKTiledSceneCameraDelegate</code></strong></a></p>
+<li><p><a href="Protocols/SKTiledSceneCameraDelegate.html"><strong><code><a href="Protocols/SKTiledSceneCameraDelegate.html">SKTiledSceneCameraDelegate</a></code></strong></a></p>
 
 <ul>
-<li><a href="Classes/SKTiledScene.html"><code>SKTiledScene</code></a></li>
-<li><a href="Classes/SKTilemap.html"><code>SKTilemap</code></a></li>
+<li><a href="Classes/SKTiledScene.html"><code><a href="Classes/SKTiledScene.html">SKTiledScene</a></code></a></li>
+<li><a href="Classes/SKTilemap.html"><code><a href="Classes/SKTilemap.html">SKTilemap</a></code></a></li>
 </ul></li>
 <li><p><a href="https://developer.apple.com/reference/foundation/xmlparserdelegate"><strong><code>XMLParserDelegate</code></strong></a></p>
 
@@ -232,35 +270,35 @@
 <li><a href="https://developer.apple.com/reference/spritekit/skcameranode"><code>SKCamera​Node</code></a>
 
 <ul>
-<li><a href="Classes/SKTiledSceneCamera.html"><code>SKTiledSceneCamera</code></a></li>
+<li><a href="Classes/SKTiledSceneCamera.html"><code><a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a></code></a></li>
 </ul></li>
-<li><a href="Classes/SKTilemap.html"><code>SKTilemap</code></a></li>
-<li><a href="https://developer.apple.com/reference/spritekit/skeffectnode"><code>SKEffect​Node</code></a>
+<li><p><a href="https://developer.apple.com/reference/spritekit/skeffectnode"><code>SKEffectNode</code></a></p>
 
 <ul>
+<li><a href="Classes/SKTilemap.html"><code><a href="Classes/SKTilemap.html">SKTilemap</a></code></a></li>
+<li><a href="Classes/SKTiledLayerObject.html"><code><a href="Classes/SKTiledLayerObject.html">SKTiledLayerObject</a></code></a>
+
+<ul>
+<li><a href="Classes/SKTileLayer.html"><code><a href="Classes/SKTileLayer.html">SKTileLayer</a></code></a></li>
+<li><a href="Classes/SKObjectGroup.html"><code><a href="Classes/SKObjectGroup.html">SKObjectGroup</a></code></a></li>
+<li><a href="Classes/SKImageLayer.html"><code><a href="Classes/SKImageLayer.html">SKImageLayer</a></code></a></li>
+<li><a href="Classes/SKGroupLayer.html"><code><a href="Classes/SKGroupLayer.html">SKGroupLayer</a></code></a></li>
+</ul></li>
 <li><a href="https://developer.apple.com/reference/spritekit/skscene"><code>SKScene</code></a>
 
 <ul>
-<li><a href="Classes/SKTiledScene.html"><code>SKTiledScene</code></a></li>
+<li><a href="Classes/SKTiledScene.html"><code><a href="Classes/SKTiledScene.html">SKTiledScene</a></code></a></li>
 </ul></li>
 </ul></li>
-<li><a href="https://developer.apple.com/reference/spritekit/skshapenode"><code>SKShapeNode</code></a>
+<li><p><a href="https://developer.apple.com/reference/spritekit/skshapenode"><code>SKShapeNode</code></a></p>
 
 <ul>
-<li><a href="Classes/SKTileObject.html"><code>SKTileObject</code></a></li>
+<li><a href="Classes/SKTileObject.html"><code><a href="Classes/SKTileObject.html">SKTileObject</a></code></a></li>
 </ul></li>
-<li><a href="https://developer.apple.com/reference/spritekit/sknode"><code>SKSpriteNode</code></a>
+<li><p><a href="https://developer.apple.com/reference/spritekit/sknode"><code>SKSpriteNode</code></a></p>
 
 <ul>
-<li><a href="Classes/SKTile.html"><code>SKTile</code></a></li>
-</ul></li>
-<li><a href="Classes/SKTiledLayerObject.html"><code>SKTiledLayerObject</code></a>
-
-<ul>
-<li><a href="Classes/SKTileLayer.html"><code>SKTileLayer</code></a></li>
-<li><a href="Classes/SKObjectGroup.html"><code>SKObjectGroup</code></a></li>
-<li><a href="Classes/SKImageLayer.html"><code>SKImageLayer</code></a></li>
-<li><a href="Classes/SKGroupLayer.html"><code>SKGroupLayer</code></a></li>
+<li><a href="Classes/SKTile.html"><code><a href="Classes/SKTile.html">SKTile</a></code></a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -284,20 +322,60 @@
                       <div class="abstract">
                         <h2 id='overview' class='heading'>Overview</h2>
 
-<p>The <code>SKTilemap</code> class defines a container for managing layers, tiles (sprites),
+<p>The <code>SKTilemap</code> class is a container for managing layers of tiles (sprites),
 vector objects &amp; images. Tile data is stored in <code><a href="Classes/SKTileset.html">SKTileset</a></code> tile sets.</p>
 <h3 id='usage' class='heading'>Usage</h3>
 
-<p>Maps can be loaded with the class function <code>SKTilemap.load(tmxFile:)</code>:</p>
+<p>Maps can be loaded with the class function <code><a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC4load7tmxFileACSgSS_tFZ">SKTilemap.load(tmxFile:)</a></code>:</p>
 <pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="s">"myfile.tmx"</span><span class="p">)</span> <span class="p">{</span>
    <span class="n">scene</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre>
 <h3 id='properties' class='heading'>Properties</h3>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">mapSize</span>    <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="n">size</span>          <span class="c1">// returns the size of the map (tiles).</span>
-<span class="k">let</span> <span class="nv">renderSize</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="n">sizeInPoints</span>  <span class="c1">// returns the size of the map (pixels).</span>
-<span class="k">let</span> <span class="nv">tileSize</span>   <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="n">tileSize</span>      <span class="c1">// returns the map tile size (pixels).</span>
-</code></pre>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>mapSize</td>
+<td>Size of the map (in tiles).</td>
+</tr>
+<tr>
+<td>tileSize</td>
+<td>Map tile size (in pixels).</td>
+</tr>
+<tr>
+<td>renderSize</td>
+<td>Size of the map in pixels.</td>
+</tr>
+<tr>
+<td>orientation</td>
+<td>Map orientation (orthogonal, isometric, etc.)</td>
+</tr>
+<tr>
+<td>isStatic</td>
+<td>Exclude the map from scene updates.</td>
+</tr>
+<tr>
+<td>bounds</td>
+<td>Map bounding rect.</td>
+</tr>
+<tr>
+<td>tilesets</td>
+<td>Array of stored tileset instances.</td>
+</tr>
+<tr>
+<td>allowZoom</td>
+<td>Allow camera zooming.</td>
+</tr>
+<tr>
+<td>layers</td>
+<td>Array of child layers.</td>
+</tr>
+</tbody></table>
 
                         <a href="Classes/SKTilemap.html" class="slightly-smaller">See more</a>
                       </div>
@@ -305,7 +383,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="Classes/SKTil
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTilemap</span><span class="p">:</span> <span class="kt">SKNode</span><span class="p">,</span> <span class="kt"><a href="Protocols/SKTiledObject.html">SKTiledObject</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTilemap</span> <span class="p">:</span> <span class="kt">SKEffectNode</span><span class="p">,</span> <span class="kt"><a href="Protocols/SKTiledObject.html">SKTiledObject</a></span></code></pre>
 
                         </div>
                       </div>
@@ -331,12 +409,71 @@ vector objects &amp; images. Tile data is stored in <code><a href="Classes/SKTil
                       <div class="abstract">
                         <h2 id='overview' class='heading'>Overview</h2>
 
-<p>The tileset class manages a set of <code><a href="Classes/SKTilesetData.html">SKTilesetData</a></code> objects, which store tile data including global id and texture.</p>
+<p>The tileset class manages a set of <code><a href="Classes/SKTilesetData.html">SKTilesetData</a></code> objects, which store tile data including global id, texture and animation.</p>
 
 <p>Tile data is accessed via a local id, and tiles can be instantiated with the resulting <code><a href="Classes/SKTilesetData.html">SKTilesetData</a></code> instance:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">data</span> <span class="o">=</span> <span class="n">tileset</span><span class="o">.</span><span class="nf">getTileData</span><span class="p">(</span><span class="nv">localID</span><span class="p">:</span> <span class="mi">56</span><span class="p">)</span>
-<span class="k">let</span> <span class="nv">tile</span> <span class="o">=</span> <span class="kt">SKTile</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">data</span> <span class="o">=</span> <span class="n">tileset</span><span class="o">.</span><span class="nf">getTileData</span><span class="p">(</span><span class="nv">localID</span><span class="p">:</span> <span class="mi">56</span><span class="p">)</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="nv">tile</span> <span class="o">=</span> <span class="kt">SKTile</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
+<span class="p">}</span>
 </code></pre>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>Tileset name.</td>
+</tr>
+<tr>
+<td>tilemap</td>
+<td>Reference to parent tilemap.</td>
+</tr>
+<tr>
+<td>tileSize</td>
+<td>Tile size (in pixels).</td>
+</tr>
+<tr>
+<td>columns</td>
+<td>Number of columns.</td>
+</tr>
+<tr>
+<td>tilecount</td>
+<td>Tile count.</td>
+</tr>
+<tr>
+<td>firstGID</td>
+<td>First tile global id.</td>
+</tr>
+<tr>
+<td>lastGID</td>
+<td>Last tile global id.</td>
+</tr>
+<tr>
+<td>tileData</td>
+<td>Set of tile data structures.</td>
+</tr>
+</tbody></table>
+<h3 id='instance-methods' class='heading'>Instance Methods</h3>
+
+<table><thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>addTextures()</td>
+<td>Generate textures from a spritesheet image.</td>
+</tr>
+<tr>
+<td>addTilesetTile()</td>
+<td>Add &amp; return new tile data object.</td>
+</tr>
+</tbody></table>
 
                         <a href="Classes/SKTileset.html" class="slightly-smaller">See more</a>
                       </div>
@@ -344,7 +481,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="Classes/SKTil
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTileset</span><span class="p">:</span> <span class="kt"><a href="Protocols/SKTiledObject.html">SKTiledObject</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTileset</span> <span class="p">:</span> <span class="kt"><a href="Protocols/SKTiledObject.html">SKTiledObject</a></span></code></pre>
 
                         </div>
                       </div>
@@ -378,12 +515,69 @@ define any object or child types, but provides base behaviors for layered conten
 <li>validating coordinates</li>
 <li>positioning and alignment</li>
 </ul>
-<h2 id='usage' class='heading'>Usage</h2>
+<h3 id='properties' class='heading'>Properties</h3>
 
-<p>Layer properties are accessed via the parent tilemap:</p>
-<pre class="highlight swift"><code><span class="n">layer</span><span class="o">.</span><span class="n">size</span>            <span class="c1">// size (in tiles)</span>
-<span class="n">layer</span><span class="o">.</span><span class="n">tileSize</span>        <span class="c1">// tile size (in pixels)</span>
-</code></pre>
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>tilemap</td>
+<td>Parent tilemap.</td>
+</tr>
+<tr>
+<td>index</td>
+<td>Layer index. Matches the index of the layer in the source TMX file.</td>
+</tr>
+<tr>
+<td>size</td>
+<td>Layer size (in tiles).</td>
+</tr>
+<tr>
+<td>tileSize</td>
+<td>Layer tile size (in pixels).</td>
+</tr>
+<tr>
+<td>anchorPoint</td>
+<td>Layer anchor point, used to position layers.</td>
+</tr>
+<tr>
+<td>origin</td>
+<td>Layer origin point, used for placing tiles.</td>
+</tr>
+</tbody></table>
+<h3 id='instance-methods' class='heading'>Instance Methods</h3>
+
+<table><thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>pointForCoordinate(coord:offset:)</td>
+<td>Returns a point for a coordinate in the layer, with optional offset.</td>
+</tr>
+<tr>
+<td>coordinateForPoint(_:)</td>
+<td>Returns a tile coordinate for a given point in the layer.</td>
+</tr>
+<tr>
+<td>touchLocation(_:)</td>
+<td>Returns a converted touch location in map space.</td>
+</tr>
+<tr>
+<td>coordinateAtTouchLocation(_:)</td>
+<td>Returns the tile coordinate at a touch location.</td>
+</tr>
+<tr>
+<td>isValid(coord:)</td>
+<td>Returns true if the coordinate is valid.</td>
+</tr>
+</tbody></table>
+<h3 id='usage' class='heading'>Usage</h3>
 
 <p>Coordinate transformation functions return points in the current tilemap projection:</p>
 <pre class="highlight swift"><code><span class="n">node</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">pointForCoordinate</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -407,7 +601,7 @@ define any object or child types, but provides base behaviors for layered conten
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTiledLayerObject</span><span class="p">:</span> <span class="kt">SKNode</span><span class="p">,</span> <span class="kt"><a href="Protocols/SKTiledObject.html">SKTiledObject</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTiledLayerObject</span> <span class="p">:</span> <span class="kt">SKEffectNode</span><span class="p">,</span> <span class="kt"><a href="Protocols/SKTiledObject.html">SKTiledObject</a></span></code></pre>
 
                         </div>
                       </div>
@@ -438,17 +632,68 @@ define any object or child types, but provides base behaviors for layered conten
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <h2 id='overview' class='heading'>Overview</h2>
+                        <p>## Overview ##</p>
 
 <p>Subclass of <code><a href="Classes/SKTiledLayerObject.html">SKTiledLayerObject</a></code>, the tile layer is a container for an array of tiles (sprites). Tiles maintain a link to the map&rsquo;s tileset via their <code><a href="Classes/SKTilesetData.html">SKTilesetData</a></code> property.</p>
-<h2 id='usage' class='heading'>Usage</h2>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>tileCount</td>
+<td>Returns a count of valid tiles.</td>
+</tr>
+</tbody></table>
+<h3 id='instance-methods' class='heading'>Instance Methods</h3>
+
+<table><thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>getTiles()</td>
+<td>Returns an array of current tiles.</td>
+</tr>
+<tr>
+<td>getTiles(ofType:)</td>
+<td>Returns tiles of the given type.</td>
+</tr>
+<tr>
+<td>getTiles(globalID:)</td>
+<td>Returns all tiles matching a global id.</td>
+</tr>
+<tr>
+<td>getTilesWithProperty(<em>:</em>)</td>
+<td>Returns tiles matching the given property &amp; value.</td>
+</tr>
+<tr>
+<td>animatedTiles()</td>
+<td>Returns all animated tiles.</td>
+</tr>
+<tr>
+<td>getTileData(globalID:)</td>
+<td>Returns all tiles matching a global id.</td>
+</tr>
+<tr>
+<td>tileAt(coord:)</td>
+<td>Returns a tile at the given coordinate, if one exists.</td>
+</tr>
+</tbody></table>
+
+<p>### Usage ###</p>
 
 <p>Accessing a tile at a given coordinate:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">tile</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">tileAt</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">!</span>
+<pre class="highlight swift"><code> <span class="k">let</span> <span class="nv">tile</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">tileAt</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">!</span>
 </code></pre>
 
-<p>Getting tiles of a certain type:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">floorTiles</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="s">"Floor"</span><span class="p">)</span>
+<p>Query tiles of a certain type:</p>
+<pre class="highlight swift"><code> <span class="k">let</span> <span class="nv">floorTiles</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="s">"Floor"</span><span class="p">)</span>
 </code></pre>
 
                         <a href="Classes/SKTileLayer.html" class="slightly-smaller">See more</a>
@@ -457,7 +702,7 @@ define any object or child types, but provides base behaviors for layered conten
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTileLayer</span><span class="p">:</span> <span class="kt"><a href="Classes/SKTiledLayerObject.html">SKTiledLayerObject</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTileLayer</span> <span class="p">:</span> <span class="kt"><a href="Classes/SKTiledLayerObject.html">SKTiledLayerObject</a></span></code></pre>
 
                         </div>
                       </div>
@@ -501,7 +746,7 @@ define any object or child types, but provides base behaviors for layered conten
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">doorObject</span> <span class="o">=</span> <span class="n">objectGroup</span><span class="o">.</span><span class="nf">getObject</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"Door"</span><span class="p">)</span>
 </code></pre>
 
-<p>Getting objects of a certain type:</p>
+<p>Returning objects of a certain type:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">rockObjects</span> <span class="o">=</span> <span class="n">objectGroup</span><span class="o">.</span><span class="nf">getObjects</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="s">"Rock"</span><span class="p">)</span>
 </code></pre>
 
@@ -511,7 +756,7 @@ define any object or child types, but provides base behaviors for layered conten
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKObjectGroup</span><span class="p">:</span> <span class="kt"><a href="Classes/SKTiledLayerObject.html">SKTiledLayerObject</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKObjectGroup</span> <span class="p">:</span> <span class="kt"><a href="Classes/SKTiledLayerObject.html">SKTiledLayerObject</a></span></code></pre>
 
                         </div>
                       </div>
@@ -567,7 +812,7 @@ define any object or child types, but provides base behaviors for layered conten
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKGroupLayer</span><span class="p">:</span> <span class="kt"><a href="Classes/SKTiledLayerObject.html">SKTiledLayerObject</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKGroupLayer</span> <span class="p">:</span> <span class="kt"><a href="Classes/SKTiledLayerObject.html">SKTiledLayerObject</a></span></code></pre>
 
                         </div>
                       </div>
@@ -613,7 +858,7 @@ define any object or child types, but provides base behaviors for layered conten
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKImageLayer</span><span class="p">:</span> <span class="kt"><a href="Classes/SKTiledLayerObject.html">SKTiledLayerObject</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKImageLayer</span> <span class="p">:</span> <span class="kt"><a href="Classes/SKTiledLayerObject.html">SKTiledLayerObject</a></span></code></pre>
 
                         </div>
                       </div>
@@ -639,9 +884,71 @@ define any object or child types, but provides base behaviors for layered conten
                       <div class="abstract">
                         <h2 id='overview' class='heading'>Overview</h2>
 
-<p>The <code>SKTile</code> class is a custom SpriteKit sprite that references data from a tileset.</p>
+<p>The <code>SKTile</code> class is a custom SpriteKit sprite node that references its data from a tileset.</p>
 
 <p>Tile data (including texture) is stored in <code><a href="Classes/SKTilesetData.html">SKTilesetData</a></code> property.</p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>tileSize</td>
+<td>tile size (in pixels)</td>
+</tr>
+<tr>
+<td>tileData</td>
+<td>tile data structure</td>
+</tr>
+<tr>
+<td>layer</td>
+<td>parent tile layer</td>
+</tr>
+<tr>
+<td>ignoreData</td>
+<td>flag to allow tile to ignore it&rsquo;s tile data</td>
+</tr>
+</tbody></table>
+<h3 id='instance-methods' class='heading'>Instance Methods</h3>
+
+<table><thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>setupPhysics(shapeOf:isDynamic:)</td>
+<td>Setup physics for the tile.</td>
+</tr>
+<tr>
+<td>setupPhysics(rectSize:isDynamic:)</td>
+<td>Setup physics for the tile.</td>
+</tr>
+<tr>
+<td>setupPhysics(withSize:isDynamic:)</td>
+<td>Setup physics for the tile.</td>
+</tr>
+<tr>
+<td>runAnimation()</td>
+<td>Play tile animation (if animated).</td>
+</tr>
+<tr>
+<td>removeAnimation(restore:)</td>
+<td>Remove animation.</td>
+</tr>
+<tr>
+<td>runAnimationAsActions()</td>
+<td>Runs a SpriteKit action to animate tile tile (if animated).</td>
+</tr>
+<tr>
+<td>removeAnimationActions(restore:)</td>
+<td>Remove the animation for the current tile.</td>
+</tr>
+</tbody></table>
 
                         <a href="Classes/SKTile.html" class="slightly-smaller">See more</a>
                       </div>
@@ -649,7 +956,7 @@ define any object or child types, but provides base behaviors for layered conten
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">SKTile</span><span class="p">:</span> <span class="kt">SKSpriteNode</span><span class="p">,</span> <span class="kt">Loggable</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">SKTile</span> <span class="p">:</span> <span class="kt">SKSpriteNode</span></code></pre>
 
                         </div>
                       </div>
@@ -678,6 +985,31 @@ define any object or child types, but provides base behaviors for layered conten
 <p>The <code>SKTilesetData</code> object stores data for a single tileset tile, referencing the tile texture, animation frames (for animated tiles) as well as tile orientation.</p>
 
 <p>Also includes navigation properties for tile accessability, and graph node weight.</p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>Tile id (local)</td>
+</tr>
+<tr>
+<td>type</td>
+<td>Tiled type</td>
+</tr>
+<tr>
+<td>texture</td>
+<td>Tile texture</td>
+</tr>
+<tr>
+<td>tileOffset</td>
+<td>Tile offset</td>
+</tr>
+</tbody></table>
 
                         <a href="Classes/SKTilesetData.html" class="slightly-smaller">See more</a>
                       </div>
@@ -685,7 +1017,7 @@ define any object or child types, but provides base behaviors for layered conten
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTilesetData</span><span class="p">:</span> <span class="kt"><a href="Protocols/SKTiledObject.html">SKTiledObject</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTilesetData</span> <span class="p">:</span> <span class="kt"><a href="Protocols/SKTiledObject.html">SKTiledObject</a></span></code></pre>
 
                         </div>
                       </div>
@@ -711,7 +1043,36 @@ define any object or child types, but provides base behaviors for layered conten
                       <div class="abstract">
                         <h2 id='overview' class='heading'>Overview</h2>
 
-<p>The <code>SKTileObject</code> class represents a Tiled vector object type (rectangle, ellipse, polygon &amp; polyline). When the object is created, points can be added either with an array of <code>CGPoint</code> objects, or a string. In order to render the object, the <code><a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC11getVerticesXeXeF">SKTileObject.getVertices()</a></code> method is called, which returns the points needed to draw the path.</p>
+<p>The <code>SKTileObject</code> class represents a Tiled vector object type (rectangle, ellipse, polygon &amp; polyline). When the object is created, points can be added either with an array of <code>CGPoint</code> objects, or a string. In order to render the object, the <code><a href="Classes/SKTileObject.html#/getVertices()">SKTileObject.getVertices()</a></code> method is called, which returns the points needed to draw the path.</p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>Tiled object id.</td>
+</tr>
+<tr>
+<td>size</td>
+<td>Object size.</td>
+</tr>
+<tr>
+<td>tileData</td>
+<td>Tile data (for <a href="http://docs.mapeditor.org/en/stable/manual/objects/#insert-tile">tile objects</a>).</td>
+</tr>
+<tr>
+<td>text</td>
+<td>Text string (for text objects). Setting this redraws the object.</td>
+</tr>
+<tr>
+<td>bounds</td>
+<td>Returns the bounding box of the shape.</td>
+</tr>
+</tbody></table>
 
                         <a href="Classes/SKTileObject.html" class="slightly-smaller">See more</a>
                       </div>
@@ -719,7 +1080,7 @@ define any object or child types, but provides base behaviors for layered conten
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">SKTileObject</span><span class="p">:</span> <span class="kt">SKShapeNode</span><span class="p">,</span> <span class="kt"><a href="Protocols/SKTiledObject.html">SKTiledObject</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">SKTileObject</span> <span class="p">:</span> <span class="kt">SKShapeNode</span><span class="p">,</span> <span class="kt"><a href="Protocols/SKTiledObject.html">SKTiledObject</a></span></code></pre>
 
                         </div>
                       </div>
@@ -747,12 +1108,63 @@ define any object or child types, but provides base behaviors for layered conten
 
 <p>Custom scene type for managing <code><a href="Classes/SKTilemap.html">SKTilemap</a></code> nodes.</p>
 
-<p>Conforms to the <code><a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a></code> &amp; <code><a href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></code> protocols.</p>
-<h3 id='properties' class='heading'>Properties:</h3>
-<pre class="highlight plaintext"><code>SKTiledScene.worldNode:    `SKNode!` root container node.
-SKTiledScene.tilemap:      `SKTilemap!` tile map object.
-SKTiledScene.cameraNode:   `SKTiledSceneCamera!` custom scene camera.
-</code></pre>
+<p>Conforms to the <code><a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a></code>, <code><a href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></code> &amp; <code><a href="Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a></code> protocols.</p>
+
+<p><a href="https://mfessenden.github.io/SKTiled/images/scene_hierarchy.png">SKTiledScene Hierarchy</a></p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>worldNode</td>
+<td>Root container node.</td>
+</tr>
+<tr>
+<td>tilemap</td>
+<td>Tile map object.</td>
+</tr>
+<tr>
+<td>cameraNode</td>
+<td>Custom scene camera.</td>
+</tr>
+</tbody></table>
+<h3 id='instance-methods' class='heading'>Instance Methods</h3>
+
+<table><thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sceneDoubleTapped</td>
+<td>Called when the scene receives a double-tap event (iOS only).</td>
+</tr>
+<tr>
+<td>cameraPositionChanged</td>
+<td>Called when the camera positon changes.</td>
+</tr>
+<tr>
+<td>cameraZoomChanged</td>
+<td>Called when the camera zoom changes.</td>
+</tr>
+<tr>
+<td>cameraBoundsChanged</td>
+<td>Called when the camera bounds updated.</td>
+</tr>
+<tr>
+<td>sceneDoubleClicked</td>
+<td>Called when the scene is double-clicked (macOS only).</td>
+</tr>
+<tr>
+<td>mousePositionChanged</td>
+<td>Called when the mouse moves in the scene (macOS only).</td>
+</tr>
+</tbody></table>
 
                         <a href="Classes/SKTiledScene.html" class="slightly-smaller">See more</a>
                       </div>
@@ -760,7 +1172,7 @@ SKTiledScene.cameraNode:   `SKTiledSceneCamera!` custom scene camera.
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">SKTiledScene</span><span class="p">:</span> <span class="kt">SKScene</span><span class="p">,</span> <span class="kt">SKPhysicsContactDelegate</span><span class="p">,</span> <span class="kt"><a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></span><span class="p">,</span> <span class="kt">Loggable</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">SKTiledScene</span> <span class="p">:</span> <span class="kt">SKScene</span><span class="p">,</span> <span class="kt">SKPhysicsContactDelegate</span><span class="p">,</span> <span class="kt"><a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a></span></code></pre>
 
                         </div>
                       </div>
@@ -788,8 +1200,8 @@ SKTiledScene.cameraNode:   `SKTiledSceneCamera!` custom scene camera.
 
 <p>Custom scene camera that responds to finger gestures and mouse events.</p>
 
-<p>The <code>SKTiledSceneCamera</code> is a custom camera meant to be used with a scene conforming to the <code><a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a></code> protocol. 
-The camera defines a position in the scene to render the scene from, with a reference to the <code><a href="Protocols/SKTiledSceneDelegate.html#/s:7SKTiled0A13SceneDelegateP9worldNodeXev">SKTiledSceneDelegate.worldNode</a></code> 
+<p>The <code>SKTiledSceneCamera</code> is a custom camera meant to be used with a scene conforming to the <code><a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a></code> protocol.
+The camera defines a position in the scene to render the scene from, with a reference to the <code><a href="Protocols/SKTiledSceneDelegate.html#/worldNode">SKTiledSceneDelegate.worldNode</a></code>
 to interact with tile maps.</p>
 
                         <a href="Classes/SKTiledSceneCamera.html" class="slightly-smaller">See more</a>
@@ -798,7 +1210,7 @@ to interact with tile maps.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTiledSceneCamera</span><span class="p">:</span> <span class="kt">SKCameraNode</span><span class="p">,</span> <span class="kt">Loggable</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTiledSceneCamera</span> <span class="p">:</span> <span class="kt">SKCameraNode</span></code></pre>
 
                         </div>
                       </div>
@@ -826,7 +1238,7 @@ to interact with tile maps.</p>
 
 <p>Custom <a href="https://developer.apple.com/documentation/gameplaykit/gkgridgraphnode"><code>GKGridGraphNode</code></a> object that adds a weight parameter for 
 use with Tiled scene properties. Can be used with normal <a href="https://developer.apple.com/documentation/gameplaykit/gkgridgraphnode"><code>GKGridGraphNode</code></a> 
-instances. The <code><a href="Classes/SKTiledGraphNode.html#/s:7SKTiled0A9GraphNodeC6weightSfv">SKTiledGraphNode.weight</a></code> property is used to affect the estimated cost to a 
+instances. The <code><a href="Classes/SKTiledGraphNode.html#/s:7SKTiled0A9GraphNodeC6weightSfvp">SKTiledGraphNode.weight</a></code> property is used to affect the estimated cost to a 
 connected node. (Increasing the weight makes it less likely to be travelled to, decreasing more likely).</p>
 <h2 id='usage' class='heading'>Usage</h2>
 <pre class="highlight swift"><code><span class="c1">// query a node in the graph and increase the weight property</span>
@@ -841,7 +1253,7 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTiledGraphNode</span><span class="p">:</span> <span class="kt">GKGridGraphNode</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTiledGraphNode</span> <span class="p">:</span> <span class="kt">GKGridGraphNode</span><span class="p">,</span> <span class="kt"><a href="Protocols/SKTiledObject.html">SKTiledObject</a></span></code></pre>
 
                         </div>
                       </div>
@@ -853,8 +1265,8 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
           </section>
         </section>
         <section id="footer">
-          <p>© 2016 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external">Michael Fessenden</a> under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>© 2018 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external">Michael Fessenden</a> under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

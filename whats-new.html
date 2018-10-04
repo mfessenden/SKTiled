@@ -7,6 +7,9 @@
     <meta charset='utf-8'>
     <script src="js/jquery.min.js" defer></script>
     <script src="js/jazzy.js" defer></script>
+    <script src="js/retina-preprocess.js" defer></script>
+    <script src="js/retina.js" defer></script>
+
     
   </head>
   <body>
@@ -15,7 +18,7 @@
       <div class="content-wrapper">
         <p><a href="index.html">SKTiled Docs</a></p>
         <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="img/gh.png"/>View on GitHub</a></p>
-        <p class="header-right"><a href="dash-feed://file%3A%2FUsers%2Fmichael%2Fgit%2FSKTiled%2Fdocsets%2FSKTiled%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
+        <p class="header-right"><a href="dash-feed://file%3A%2F%2F%2FUsers%2Fmichael%2Fgit%2FSKTiled%2Fdocsets%2FSKTiled%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -29,7 +32,7 @@
       <nav class="sidebar">
         <ul class="nav-groups">
           <li class="nav-group-name">
-            <a href="Tutorial.html">Tutorial</a>
+            <a href="Documentation.html">Documentation</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="whats-new.html">What&#39;s New</a>
@@ -38,28 +41,34 @@
                 <a href="getting-started.html">Getting Started</a>
               </li>
               <li class="nav-group-task">
-                <a href="scenes.html">Scenes</a>
+                <a href="scene-setup.html">Scene Setup</a>
               </li>
               <li class="nav-group-task">
-                <a href="layers.html">Layers</a>
+                <a href="working-with-maps.html">Working with Maps</a>
               </li>
               <li class="nav-group-task">
-                <a href="tiles.html">Tiles</a>
+                <a href="working-with-tilesets.html">Working with Tilesets</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="working-with-layers.html">Working with Layers</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="working-with-tiles.html">Working with Tiles</a>
               </li>
               <li class="nav-group-task">
                 <a href="coordinates.html">Coordinates</a>
               </li>
               <li class="nav-group-task">
-                <a href="objects.html">Objects</a>
+                <a href="working-with-objects.html">Working with Objects</a>
               </li>
               <li class="nav-group-task">
-                <a href="properties.html">Properties</a>
+                <a href="tiled-properties.html">Tiled Properties</a>
               </li>
               <li class="nav-group-task">
                 <a href="gameplaykit.html">GameplayKit</a>
               </li>
               <li class="nav-group-task">
-                <a href="extending.html">Extending</a>
+                <a href="extending-sktiled.html">Extending SKTiled</a>
               </li>
               <li class="nav-group-task">
                 <a href="debugging.html">Debugging</a>
@@ -83,6 +92,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/SKTiledSceneCameraDelegate.html">SKTiledSceneCameraDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a>
               </li>
             </ul>
           </li>
@@ -132,6 +144,12 @@
                 <a href="Classes/SKTileObject.html">SKTileObject</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC4TypeO">– TiledObjectType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC5ShapeO">– TiledObjectShape</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO">– CollisionType</a>
               </li>
               <li class="nav-group-task">
@@ -149,38 +167,57 @@
             <a href="Other.html">Other</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Other.html#/s:7SKTiled18TileAnimationFrameC">TileAnimationFrame</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/DebugDrawOptions.html">DebugDrawOptions</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/TextObjectAttributes.html">TextObjectAttributes</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV">– TextAlignment</a>
+                <a href="Structs/TextObjectAttributes/TextAlignment.html">– TextAlignment</a>
               </li>
               <li class="nav-group-task">
-                <a href="Other.html#/s:7SKTiled0A18ContentScaleFactorXev">SKTiledContentScaleFactor</a>
+                <a href="Other.html#/s:7SKTiled17CameraControlModeO">CameraControlMode</a>
               </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:7SKTiled0A12LoggingLevelAA0bC0Ov">SKTiledLoggingLevel</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Other.html#/s:7SKTiled0A23TiledApplicationVersionSSv">SKTiledTiledApplicationVersion</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Classes.html">Other Classes</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Classes/AnimationFrame.html">AnimationFrame</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Other Enums.html">Other Enums</a>
-            <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Enums/CameraZoomClamping.html">CameraZoomClamping</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Global Variables.html">Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:7SKTiled29SKTILED_USE_SPRITEKIT_ACTIONSSbvp">SKTILED_USE_SPRITEKIT_ACTIONS</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:7SKTiled21SKTILED_LOGGING_LEVELAA12LoggingLevelOvp">SKTILED_LOGGING_LEVEL</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_CONTENT_SCALE">SKTILED_CONTENT_SCALE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:7SKTiled15SKTILED_VERSIONSSvp">SKTILED_VERSION</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:7SKTiled21SKTILED_SWIFT_VERSIONSSvp">SKTILED_SWIFT_VERSION</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_DEBUG_GRID_OPACITY">SKTILED_DEBUG_GRID_OPACITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_DEFAULT_OBJECT_RENDER_QUALITY">SKTILED_DEFAULT_OBJECT_RENDER_QUALITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_DEFAULT_RENDER_QUALITY">SKTILED_DEFAULT_RENDER_QUALITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_DEFAULT_TEXT_RENDER_QUALITY">SKTILED_DEFAULT_TEXT_RENDER_QUALITY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/SKTILED_MAX_RENDER_QUALITY_OVERRIDE">SKTILED_MAX_RENDER_QUALITY_OVERRIDE</a>
               </li>
             </ul>
           </li>
@@ -193,6 +230,9 @@
             <h1 id='what-39-s-new' class='heading'>What&rsquo;s New</h1>
 
 <ul>
+<li><a href="#tvos-support">tvOS Support</a></li>
+<li><a href="#effects-rendering">Effects Rendering</a></li>
+<li><a href="#templates">Templates</a></li>
 <li><a href="#general-improvements">General Improvements</a></li>
 <li><a href="#os-compatibility">OS Compatibility</a></li>
 <li><a href="#api-changes">API Changes</a></li>
@@ -205,9 +245,21 @@
 </ul></li>
 <li><a href="#custom-classes">Custom Classes</a></li>
 </ul>
+<h2 id='tvos-support' class='heading'>tvOS Support</h2>
+
+<p><img src="images/appletv.png" alt="Apple TV"></p>
+
+<p>As of v1.17, <strong>SKTiled</strong> supports tvOS. For more information, see the <a href="https://developer.apple.com/library/archive/documentation/General/Conceptual/AppleTV_PG/index.html"><strong>tvOS Programming Guide</strong></a>.</p>
+<h2 id='effects-rendering' class='heading'>Effects Rendering</h2>
+
+<p>Both the <code><a href="Classes/SKTilemap.html">SKTilemap</a></code> &amp; <code><a href="Classes/SKTiledLayerObject.html">SKTiledLayerObject</a></code> nodes are now subclassed from the <a href="https://developer.apple.com/documentation/spritekit/skeffectnode"><code>SKEffectNode</code></a> node. Enabling the <a href="https://developer.apple.com/documentation/spritekit/skeffectnode/1459385-shouldenableeffects"><code>SKEffectNode.shouldEnableEffects</code></a> flag will render the node&rsquo;s children into a private buffer. This allows for shader effects to be applied to individual layers or even the tilemap globally. Enabling the option on the <code><a href="Classes/SKTilemap.html">SKTilemap</a></code> node is a good way to eliminate <a href="troubleshooting.html#tile-cracking">cracks</a> that sometimes appear between tiles.</p>
+<h2 id='templates' class='heading'>Templates</h2>
+
+<p>Template objects are now supported and will be loaded automatically. For more information, see <a href="https://doc.mapeditor.org/en/stable/manual/using-templates/"><strong>Using Templates</strong></a> in the <strong>Tiled</strong> manual.</p>
 <h2 id='general-improvements' class='heading'>General Improvements</h2>
 
 <ul>
+<li>the <code><a href="Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a></code> protocol allows you to easily modify tileset images as they&rsquo;re created</li>
 <li>better group layer support
 
 <ul>
@@ -228,24 +280,24 @@
 <ul>
 <li>users can implement custom tile, vector &amp; <a href="https://developer.apple.com/documentation/gameplaykit/gkgridgraphnode"><code>GKGridGraphNode</code></a> classes</li>
 </ul></li>
-<li>new protocol for interacting with the camera: <a href="Protocols/SKTiledSceneCameraDelegate.html"><code>SKTiledSceneCameraDelegate</code></a></li>
-<li>animated tiles are now updated via the <code>SKTilemap.update(_:)</code> method
+<li>new protocol for interacting with the camera: <code><a href="Protocols/SKTiledSceneCameraDelegate.html">SKTiledSceneCameraDelegate</a></code></li>
+<li>animated tiles are now updated via the <code><a href="Classes/SKTilemap.html#/update(_:)">SKTilemap.update(_:)</a></code> method
 
 <ul>
 <li>changing the tilemap&rsquo;s <code>speed</code> attribute affects tile animation speed</li>
 <li>tile animations can even play <em>backwards</em> if speed is &lt; 0</li>
 </ul></li>
 <li>functions to help alleviate tile seams (or <q>cracking</q>)</li>
-<li>tile object tile data can be accessed via <code>SKTileObject.tileData</code> (<a href="https://github.com/mfessenden/SKTiled/issues/15">issue #15</a>)</li>
+<li>tile object tile data can be accessed via <code><a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC8tileDataAA09SKTilesetE0CSgvp">SKTileObject.tileData</a></code> (<a href="https://github.com/mfessenden/SKTiled/issues/15">issue #15</a>)</li>
 </ul>
 <h2 id='os-compatibility' class='heading'>OS Compatibility</h2>
 
-<p>macOS target now requires 10.12.</p>
+<p>macOS target now requires 10.12, iOS target requires 10.</p>
 <h2 id='api-changes' class='heading'>API Changes</h2>
 
 <p>The API has gotten a significant overhaul, mainly to support <a href="http://doc.mapeditor.org/manual/layers/#group-layers">group layers</a> in <strong>Tiled 1.0</strong>.</p>
 
-<p>As layers &amp; groups can share names and index values, <a href="Classes/SKTilemap.html"><code>SKTilemap</code></a> and <a href="Classes/SKTiledLayerObject.html"><code>SKTiledLayerObject</code></a> methods that search based on name or index will now return an array:</p>
+<p>As layers &amp; groups can share names and index values, <code><a href="Classes/SKTilemap.html">SKTilemap</a></code> and <code><a href="Classes/SKTiledLayerObject.html">SKTiledLayerObject</a></code> methods that search based on name or index will now return an array:</p>
 <pre class="highlight swift"><code><span class="c1">// old way</span>
 <span class="k">if</span> <span class="k">let</span> <span class="nv">groundLayer</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getLayer</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"Ground"</span><span class="p">)</span> <span class="k">as?</span> <span class="kt">SKTileLayer</span> <span class="p">{</span>
     <span class="n">groundLayer</span><span class="o">.</span><span class="n">offset</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">4.0</span>
@@ -271,34 +323,34 @@
 <span class="c1">// ["Skyway", "Paths", "Trees", "Buildings", "Roof", "Walls", "Foundation", "Terrain", "Ground", "Water"]</span>
 </code></pre>
 
-<p>See the <a href="https://github.com/mfessenden/SKTiled/blob/master/CHANGELOG.md">CHANGELOG</a> for a complete list of changes.</p>
+<p>See the <a href="https://github.com/mfessenden/SKTiled/blob/master/CHANGELOG.md"><strong>CHANGELOG</strong></a> for a complete list of changes.</p>
 <h2 id='gameplaykit' class='heading'>GameplayKit</h2>
 
-<p><strong>SKTiled</strong> now has support for Apple&rsquo;s <a href="https://developer.apple.com/documentation/gameplaykit">GameplayKit</a>. Navigation graphs can easily be built for tile layers based on tile attributes:</p>
+<p><strong>SKTiled</strong> now has support for Apple&rsquo;s <a href="https://developer.apple.com/documentation/gameplaykit"><strong>GameplayKit</strong></a>. Navigation graphs can easily be built for tile layers based on tile attributes:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">walkable</span>  <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">tileData</span><span class="o">.</span><span class="n">walkable</span> <span class="o">==</span> <span class="kc">true</span> <span class="p">}</span>
 <span class="k">let</span> <span class="nv">obstacles</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">tileData</span><span class="o">.</span><span class="n">obstacle</span> <span class="o">==</span> <span class="kc">true</span> <span class="p">}</span>
 <span class="k">let</span> <span class="nv">graph</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">initializeGraph</span><span class="p">(</span><span class="nv">walkable</span><span class="p">:</span> <span class="n">walkable</span><span class="p">,</span> <span class="nv">obstacles</span><span class="p">:</span> <span class="n">obstacles</span><span class="p">,</span> <span class="nv">diagonalsAllowed</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span><span class="o">!</span>
 </code></pre>
 
-<p>See the <a href="gameplaykit.html">GameplayKit</a> section for more details.</p>
+<p>See the <a href="gameplaykit.html"><strong>GameplayKit</strong></a> section for more details.</p>
 <h2 id='new-object-types' class='heading'>New Object Types</h2>
 
-<p><strong>SKTiled</strong> now supports <a href="http://doc.mapeditor.org/manual/objects/#insert-tile">tile</a> and <a href="http://doc.mapeditor.org/manual/objects/#insert-text">text</a> text object types.</p>
-
-<p>See the <a href="objects.html#tile-objects">objects</a> page for more info.</p>
+<p><strong>SKTiled</strong> now supports <a href="http://doc.mapeditor.org/manual/objects/#insert-tile"><strong>tile</strong></a> and <a href="http://doc.mapeditor.org/manual/objects/#insert-text"><strong>text</strong></a> text object types.</p>
 <h3 id='tile-objects' class='heading'>Tile Objects</h3>
 
 <p><img src="images/tile-objects.gif" alt="Tile Objects"></p>
 
-<p>Tiled <a href="http://doc.mapeditor.org/manual/objects/#insert-tile">tile objects</a> are now supported. Objects assigned a tile id will render the associated tile within the object bounds, including animated textures.</p>
+<p>Tiled <a href="http://doc.mapeditor.org/manual/objects/#insert-tile"><strong>tile objects</strong></a> are now supported. Objects assigned a tile id will render the associated tile within the object bounds, including animated textures.</p>
 <h3 id='text-objects' class='heading'>Text Objects</h3>
 
 <p><img src="images/text-objects.gif" alt="Text Objects"></p>
 
-<p>Tiled <a href="http://doc.mapeditor.org/manual/objects/#insert-text">text objects</a> are now supported. Objects assigned text properties will automatically render text within the shape&rsquo;s bounds. Changing the <a href="Classes/SKTileObject.html#/s:vC7SKTiled12SKTileObject4textGSQSS_"><code>SKTileObject.text</code></a> attribute (or any of the font attributes) will automatically redraw the object, allowing for easy creation of dynamic labels.</p>
+<p>Tiled <a href="http://doc.mapeditor.org/manual/objects/#insert-text"><strong>text objects</strong></a> are now supported. Objects assigned text properties will automatically render text within the shape&rsquo;s bounds. Changing the <code><a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC4textSSSgvp">SKTileObject.text</a></code> attribute (or any of the font attributes) will automatically redraw the object, allowing for easy creation of dynamic labels.</p>
+
+<p>See the <a href="objects.html#tile-objects"><strong>objects page</strong></a> for more info.</p>
 <h2 id='custom-classes' class='heading'>Custom Classes</h2>
 
-<p>The <a href="Protocols/SKTilemapDelegate.html"><code>SKTilemapDelegate</code></a> protocol has new methods for users to easily use their own classes for tile and vector objects, as well as custom <a href="https://developer.apple.com/documentation/gameplaykit/gkgridgraphnode"><code>GKGridGraphNode</code></a> objects.</p>
+<p>The <code><a href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></code> protocol has new methods for users to easily use their own classes for tile and vector objects, as well as custom <a href="https://developer.apple.com/documentation/gameplaykit/gkgridgraphnode"><code>GKGridGraphNode</code></a> objects.</p>
 
 <p>See the <a href="extending.html"><strong>extending</strong></a> section for more info.</p>
 
@@ -313,8 +365,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>© 2016 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external">Michael Fessenden</a> under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>© 2018 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external">Michael Fessenden</a> under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
