@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="42" height="42" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#6eb4d5" nextlayerid="15" nextobjectid="22">
+ <properties>
+  <property name="gridColor" type="color" value="#99050505"/>
+  <property name="highlightColor" type="color" value="#ff3271d3"/>
+  <property name="level" type="int" value="1"/>
+  <property name="navigationColor" type="color" value="#ff166dff"/>
+  <property name="shouldEnableEffects" type="bool" value="true"/>
+  <property name="uiColor" type="color" value="#ffa57040"/>
+  <property name="worldScale" type="float" value="1.3999999999999999"/>
+ </properties>
+ <tileset firstgid="1" source="roguelike-16x16.tsx"/>
+ <layer id="1" name="Lake-Base" width="42" height="42">
+  <data encoding="base64" compression="zlib">
+   eJzt1EEKgDAMRNHBjdcKeP87SbEDQevCVYL8ByHV1TCUSgAAAP9zbFLMPWbX9d2Nszmf81bL/XnnLr2rubt7Lp9Dffp0npwv547KgNOqu9V0yJg7DK3vQaXQs8u3bivd72K3t8hyf+5wjP91scqXO+0oZ+6acQj1ei8BAACAr04OuhSj
+  </data>
+ </layer>
+ <layer id="2" name="Water" width="42" height="42">
+  <properties>
+   <property name="type" value="water"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztlUsKhTAQBCfe/6AeQwUH2mYevF1nUQXBjNkU80mqAAAAAP7jvNfxrme/JD6CXkq7qd+qr3MKd+p41dexz5OO6qSuXvukZ+dKv/pfa5/qT8+ZO552lsynz8rkp/OfwGfb8zrNfAJ1Uz91W5Wfd3f45aZxAr8jp57sOIk7Tn2QfIMavzunuu/wpk9vpd5Bu+Tzwf3UPd2XAAAAALAPFzWbNh0=
+  </data>
+ </layer>
+ <layer id="4" name="Ground/terrain" width="42" height="42">
+  <data encoding="base64" compression="zlib">
+   eJztl0sKwCAMRF15rd7/Vl0VREw/OtG8YmAWDSS+jprSnFLKhY5Kdb58zg1ZtVbvus9dvlX31Ksli+ttTZ2782BrTNtTvZ+rGSJwEu6ser54vaeS03M/1Jyz+KJxWryjvbw4rfBaLwKn0s+3EdU/BSfFT+X8JHB+id41KJwz9nwlWw9n7zmbdYdG+3t8N9WMs86Aqm/U/wEiJ4GRJJKfBFYC48VJYl3N8CcR/CQw0kTxlMBJmZ8ngpx/Jg==
+  </data>
+ </layer>
+ <layer id="5" name="Lake-Edge" width="42" height="42">
+  <data encoding="base64" compression="zlib">
+   eJzt0tENgzAMRVFLFJikKkMQtmq7Icu0Q7QBIowJ/SRWdY9kRYKPPD1HBAAA4P9U37mYqYsmyusz34bTU+zZ/q7t9n8QHzljf2GZJKjTW85u6VFn9pjTjsg251gViTeJV8f3aPMlXvrMvc3k1Yg8ZJ7nqan2cjtPSneoHeW8tb5y3mXd7btZs8adl971Ed2tpy4t3a3XLgEAAIBfPpTOFm8=
+  </data>
+ </layer>
+ <layer id="6" name="Ground overlay" width="42" height="42">
+  <data encoding="base64" compression="zlib">
+   eJzt1kEOgjAQRuEJXYh6KQXPoXgO5RyIt1IvZImdhDQhNKZgMe8l/47Fl0kXiBARxWmdiWzcttn49ycjUnk7m+mdhbWVbocA582aWm/3CZ16x7K3XcBN53Kqb+8ZQ286l7MY8OmuiTgvzpJ7vpVdneD7VK8uxPgL57fhjBvOuOGM2xKc3b9R40wpO5/Wc1zAPbse5uPt75Wgk4iIiIiI/q83StFKcw==
+  </data>
+ </layer>
+ <layer id="7" name="Objects" width="42" height="42">
+  <data encoding="base64" compression="zlib">
+   eJztmM1KAzEQx3dbC3rqSVGE+nHyEfoIhZ5aBZ9Bb14FkUIvWj1q8ap3FV9DRfDiVfGgvoUJ3cFhOpNkki0o9g9hd5Ns9pfJzGx2s2yqqf6W2hV/n+OAPpNWv2AI4ZXUCbh3P2H8NmK0vJSVY5fmw9m8i+ou8nhGYKNHUJ95NlcH2jFtu6h9IHC2FLaVGCmHyx+WSNulub6q8H0wZ0/B6bMnHDn7vZq6t6Ke2lCq0647fr6L1bW+WNiGL/l43XM+KudKThzfWkZXXOO2Q6ad2rMeYAcXGxx9uSY0FqCf5dTED7D4/BKLqwuNhR7i1MSPj9UeaS4M9VWXXHF0bcqNKbdMW0j+tFqOYDxl7gFOOx5d/w9TPk35YsYKiSFuvVcibevKn6umbc2UdcbmIXFOrxuVeFbLGRLjLkZgAvvtzcj3NhTPaqJxwJ4aVinOOf8EcTZsOuZDFbsPSX0PgbiYwXEC80vdL1FmSd1qlm1WR+dbVZnRisuTKfaUrrV75u2A/rGcVJhtmP/sH+4Scjx+91LOd4Vvg+iap8yd5oN5NOZRbbyc1PxsIOoDEqdrb4JjB1jxujyhc1/B4mKmlRCbMbET++3YS8whVL7crsmBsDdy+XyIuL1lWfOl6ijtafstFud2LboeP58zMb5RlcusMgdoOK1gfgMHp++9Tn2AxiznyzD+vTk+FOUxH+f35Zoy7UnnMXTkEFpPr8/I9UExtnY/F6KY70LpXqoy/TMmRuuB8ef6f6Xdp9lnLQhtvm9lzIkZpH8rKf8KU3IevrevsFXM92xZnJPWpDjL/if93+1Ztn4D5ze1p7FZ
+  </data>
+ </layer>
+ <group id="8" name="House Group">
+  <layer id="9" name="Main" width="42" height="42">
+   <data encoding="base64" compression="zlib">
+   eJzt1NEJwjAUheFbkwxlp3AIK8bOUXEyK1SncBETUtDmQcRWcx/+D+5DW5IcDqQiAAAAAADNvBFpTbn1n+y5cSK78Lyfcc7c9bntavk9f+1uSyfQ5Rz66MNcFPTyLsvBPKe01yx9ltmP75f+H3wjZjnZlGXt0tQufYv3tlFyd72Zdqqlv1xnU2dxjlZPf7mhErmOc6tKpwEA4L8eJI4dew==
+  </data>
+  </layer>
+  <layer id="10" name="Roof" width="42" height="42">
+   <data encoding="base64" compression="zlib">
+   eJzt00sKwjAUheFbSAfalThXcFxdShfgBsS9VdCpLsVxFTwZVaQo5EEU/g8uCYETzuSaAQCAf7fVNJp96SJfLCqzm86uKt0EQG4XZ3Z14fle2WNEfsp7p5Pus9psXof/uVP2nrin73R46bTWvdVsInoulV1F5KfEdkJZfsfOGfYsdZfBv2XYsxCfuvgde7j0exbil7oAAABg9ARQzReI
+  </data>
+  </layer>
+  <layer id="11" name="Rooftop" width="42" height="42">
+   <data encoding="base64" compression="zlib">
+   eJztzgENAAAIA6CbyP7tjOGmkIAEAADgvq7tAQAAAF8N120AMQ==
+  </data>
+  </layer>
+  <layer id="12" name="Doors &amp; Windows" width="42" height="42">
+   <data encoding="base64" compression="zlib">
+   eJzt07EJgEAQBMC7VixH7MA6tB+L0zp8MBEFAz94hZnkooVl4SIAAACg3pQRc77PryW7VeSBZ0v5ryGP+3Vj6wIn/WWvP+zXtS4AANzsX90Ftg==
+  </data>
+  </layer>
+ </group>
+ <layer id="13" name="Doors/windows/roof" width="42" height="42">
+  <data encoding="base64" compression="zlib">
+   eJzt1b0RQEAQBeAjVYMCFIAGZCKJCqR0IJPrwl93OrCBQMAdAbtr3jdzY8YG++zdHGMAAABAu4xWQKvlDuIQecas9Kw87iTfCn3uBPeUSnICwD8tSv8NBe5OEWol+zAoyXnUUOZESO7ekmOk2nSoT0IyP5FbMttqb0ip37z3jB+cgU7I3L+el6tvevGea16uvmffwTVTGynnDQDgrg3yfg2B
+  </data>
+ </layer>
+ <objectgroup color="#8984ff" id="14" name="Locations">
+  <object id="6" name="tent1" type="Tent" x="338" y="176">
+   <polygon points="-1,0 -1,-18 14,-32 30,-18 30,0"/>
+  </object>
+  <object id="8" name="tent2" type="Tent" x="386" y="144">
+   <polygon points="-1,0 -1,-18 14,-32 30,-18 30,0"/>
+  </object>
+  <object id="9" name="tent3" type="Tent" x="418" y="176">
+   <polygon points="-1,0 -1,-18 14,-32 30,-18 30,0"/>
+  </object>
+  <object id="10" name="barn2" type="Entrance" x="614" y="336" width="20" height="16"/>
+  <object id="13" name="house1" type="Entrance" x="256" y="480" width="16" height="16"/>
+  <object id="14" name="house2" type="Entrance" x="320" y="448" width="16" height="16"/>
+  <object id="16" name="garage1" type="Entrance" x="200" y="352" width="16" height="16"/>
+  <object id="17" name="pier1" type="Pier" x="290" y="338" width="12" height="12"/>
+  <object id="20" name="campfire1" type="Emitter" x="388" y="166" width="8" height="6">
+   <properties>
+    <property name="emission_rate" type="float" value="12"/>
+    <property name="particle_type" value="smoke"/>
+   </properties>
+   <ellipse/>
+  </object>
+ </objectgroup>
+</map>

@@ -1,6 +1,63 @@
 Change Log
 ==========
 
+
+1.20
+-----
+
+#### Changes
+
+- optimized tile data storage for faster updates
+- support for Tiled templates
+- add tvOS demo & framework targets
+- Xcode version is 10
+- Swift version is now 4.2
+- Requirements updated:
+    - macOS: 10.13
+    - iOS: 11.0
+    - tvOS: 12.0
+- fix spritesheet height bug if excess space existed at image bottom
+- fix tile clamping bug that shifts position slightly over time
+- fix a bug where querying tiles with a global id returned an improper result
+- fix a bug where tile object's tile type wasn't looking for delegate type
+- fix a bug where `SKTiledObject` objects improperly parse double arrays
+- add `TileRenderMode` flag
+- add `TileUpdateMode` flag
+- `SKTilemap` & `SKTiledLayerObject` nodes are now subclassed from `SKEffectNode`
+    - add `SKTilemap.setShader` method
+    - add `SKTiledLayerObject.setShader` method    
+- add `SKTiledGeometry` protocol
+- add `SKTilemap.getTileset(forTile:)` method
+- add `SKTilemap.tileObjects(globalID:)` method
+- add `SKTilemap.isValid(coord:)` method
+- add `SKTilesetDataSource` delegate
+- add `SKTiledSceneCamera.ignoreZoomClamping` flag
+- add `SKTiledSceneCamera.ignoreZoomConstraints` flag
+- add `SKTiledSceneCamera.notifyDelegatesOnContainedNodesChange` flag
+- add `SKTiledSceneCameraDelegate.containedNodesChanged` protocol method
+- add `SKTileLayer.tileAt(point:offset:)` method
+- add `SKTile.renderFlags` property
+- add `SKTileset.delegate` property
+- add `SKTileset.setDataTexture(_:imageNamed)`
+-  `SKTileset.setDataTexture` now returns the previous texture
+- add `SKTilesetData.animationAction` property
+- add `SKTilesetData.name` property
+- renamed `AnimationFrame` -> `TileAnimationFrame`
+- add `SKTiledSceneCamera.allowGestures` attribute
+- add `SKTiledSceneCamera.setupGestures(for:)` method
+- `SKTiledScene.setup` completion handler passes tilemap as argument
+- add `SKTilemap.vectorCoordinateForPoint` method.
+- add `SKTiledLayerObject.vectorCoordinateForPoint` method.
+- `SKTiledObject.boolForKey` ,  `SKTiledObject.intForKey` & `SKTiledObject.doubleForKey` are now public methods.
+-  removed `SKTiledSceneCameraDelegate` default methods; protocol methods are now optional
+- renamed `SKTiledObject.objectType`  ->  `SKTiledObject.shapeType`
+- renamed `SKObjectGroup.drawObjects`  ->  `SKObjectGroup.draw`
+
+#### Breaking
+
+- nothing
+
+
 1.16
 -----
 
@@ -12,7 +69,8 @@ Change Log
     - tile animations will respond to `SKTilemap` speed changes, and even run backwards
 - add `SKTiledSceneCamera.setCameraBounds(bounds:)`
 - add `SKTileset.getAnimatedTileData`
-- add `SKTileset.renderTileData`
+- add `SKTileset.setupAnimatedTileData`
+- add `SKTileset.getGlobalID(id:)`
 - add `SKTilesetData.frameAt(index:)`
 - add `SKTilesetData.setTexture(_:forFrame:)`
 - add `SKTilesetData.setDuration(interval:forFrame:)`
@@ -21,6 +79,11 @@ Change Log
 - add `SKTiledSceneCamera.zoomClamping` property
 - add `SKTiledLayerObject.isStatic` property
 - remove `SKTile.pauseAnimation`
+
+
+#### Breaking
+
+- animated tiles will no longer render independently; `SKTilemap` node must be added to the `SKScene.update` loop
 
 
 1.15
@@ -74,7 +137,6 @@ Change Log
 - debug functions moved to `SKTiled+Debug.swift`
 - add `SKObjectGroup.textObjects`
 - add `SKTilemap.textObjects`
-- add `SKTilemap.showGrid`
 - add `SKTilemap.showBounds`
 - add `SKObjectGroup.getObjects(withText:)`
 - add `SKTilemap.getContentLayers()`

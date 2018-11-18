@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.6" orientation="isometric" renderorder="right-down" width="10" height="10" tilewidth="130" tileheight="66" infinite="0" backgroundcolor="#634930" nextobjectid="18">
+ <properties>
+  <property name="gridColor" type="color" value="#ff4d3721"/>
+  <property name="uiColor" type="color" value="#ff762c2f"/>
+  <property name="worldScale" type="float" value="0.40000000000000002"/>
+ </properties>
+ <tileset firstgid="1" name="isometric-130x230" tilewidth="130" tileheight="230" tilecount="72" columns="12">
+  <image source="isometric-130x230.png" width="1560" height="1380"/>
+  <tile id="2" type="road"/>
+  <tile id="3" type="road"/>
+  <tile id="4" type="road"/>
+  <tile id="5" type="road"/>
+  <tile id="6" type="road">
+   <properties>
+    <property name="foliage" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="7" type="road">
+   <properties>
+    <property name="foliage" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="8" type="road"/>
+  <tile id="9" type="road"/>
+  <tile id="10" type="road"/>
+  <tile id="11" type="road"/>
+  <tile id="12" type="road"/>
+  <tile id="13" type="road"/>
+  <tile id="14" type="road"/>
+  <tile id="15" type="road"/>
+  <tile id="16" type="road"/>
+  <tile id="17" type="road"/>
+  <tile id="18" type="road"/>
+  <tile id="19" type="road"/>
+  <tile id="20" type="road"/>
+  <tile id="21" type="road"/>
+  <tile id="22" type="road"/>
+  <tile id="23" type="road"/>
+  <tile id="40" type="wall"/>
+  <tile id="41" type="wall"/>
+  <tile id="42" type="wall"/>
+  <tile id="43" type="wall"/>
+  <tile id="44" type="wall"/>
+  <tile id="45" type="wall"/>
+  <tile id="56" type="wall"/>
+  <tile id="57" type="wall"/>
+  <tile id="58" type="building"/>
+  <tile id="59" type="building"/>
+  <tile id="60" type="building"/>
+  <tile id="61" type="building"/>
+  <tile id="62" type="building"/>
+  <tile id="63" type="building"/>
+  <tile id="64" type="building"/>
+  <tile id="65" type="building"/>
+  <tile id="66" type="automobile"/>
+  <tile id="67" type="automobile"/>
+  <tile id="68" type="automobile"/>
+  <tile id="69" type="automobile"/>
+  <tile id="70" type="automobile"/>
+  <tile id="71" type="automobile"/>
+ </tileset>
+ <layer name="Ground" width="10" height="10">
+  <properties>
+   <property name="isStatic" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxtz8kOgjAUheEKbnQtxmpi2MgCcIxKkzog7/9QnCY/SdO4+HIYTofrjTE3aXCSQTK5ywMXemfZSC6VrMTJjHUdvfDNSi8HWbJm0tI70gvnvWUuH7KPemHvnWyxlloKKelemSHjvWMfR3qef8lsT/5/yVd0z2lWSy6SHDjLRumTORrOdNEM+z/3C/OMgtEN9g==
+  </data>
+ </layer>
+ <layer name="Objects" width="10" height="10">
+  <properties>
+   <property name="isStatic" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYBh44D7QDiATOFPBDHS/AwBmUADS
+  </data>
+ </layer>
+ <objectgroup color="#e10000" name="Collision">
+  <properties>
+   <property name="isStatic" type="bool" value="true"/>
+  </properties>
+  <object id="8" name="river01" type="River" x="48" y="-36" width="28" height="376"/>
+  <object id="9" name="road01" type="Road" x="354.75" y="-33">
+   <polygon points="57.75,82.5 24.75,82.5 24.75,511.5 272.25,511.5 272.25,478.5 156.75,478.5 57.75,478.5 57.75,231"/>
+  </object>
+  <object id="12" name="circle1" type="Drop" x="132" y="462" width="132" height="132">
+   <ellipse/>
+  </object>
+  <object id="16" name="river02" type="River" x="118" y="372" width="188" height="32"/>
+ </objectgroup>
+</map>

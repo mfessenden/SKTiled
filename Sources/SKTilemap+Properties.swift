@@ -9,13 +9,15 @@
 import SpriteKit
 
 
-
 public extension SKTilemap {
     // MARK: - Properties
+    
     /**
      Parse properties from the Tiled TMX file.
-     */
-    public func parseProperties(completion: (() -> ())?) {
+
+     - parameter completion: `Void?` optional completion closure.
+    */
+    public func parseProperties(completion: (() -> Void)?) {
 
         if (ignoreProperties == true) { return }
         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
@@ -34,6 +36,7 @@ public extension SKTilemap {
 
             if (lattr == "gridcolor") {
                 gridColor = SKColor(hexString: value)
+                TiledGlobals.default.debug.gridColor = gridColor
                 getLayers().forEach { $0.gridColor = gridColor }
 
                 frameColor = gridColor
@@ -44,7 +47,7 @@ public extension SKTilemap {
             }
 
             if (lattr == "gridopacity") {
-                defaultLayer.gridOpacity = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : 0.40
+                defaultLayer.gridOpacity = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : TiledGlobals.default.debug.gridOpactity
                 getLayers().forEach {$0.gridOpacity = self.defaultLayer.gridOpacity}
             }
 
@@ -61,6 +64,7 @@ public extension SKTilemap {
                 getLayers().forEach {$0.highlightColor = highlightColor}
 
                 // set base layer colors
+                TiledGlobals.default.debug.tileHighlightColor = highlightColor
                 defaultLayer.highlightColor = highlightColor
             }
 
@@ -91,11 +95,11 @@ public extension SKTilemap {
             }
 
             if (lattr == "minzoom") {
-                minZoom = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : minZoom
+                zoomConstraints.min = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : zoomConstraints.min
             }
 
             if (lattr == "maxzoom") {
-                maxZoom = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : maxZoom
+                zoomConstraints.max = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : zoomConstraints.max
             }
 
             if (lattr == "ignorebackground") {
@@ -141,13 +145,17 @@ public extension SKTilemap {
             if (lattr == "objectcolor") {
                 objectColor = SKColor(hexString: value)
             }
-
+            
             if ["nicename", "displayname"].contains(lattr) {
                 displayName = value
             }
 
             if (lattr == "navigationcolor") {
                 navigationColor = SKColor(hexString: value)
+            }
+            
+            if ["enableeffects", "shouldenableeffects"].contains(lattr) {
+                shouldEnableEffects = boolForKey(attr)
             }
         }
 
@@ -162,7 +170,7 @@ public extension SKTileset {
     /**
      Parse the tileset's properties value.
      */
-    public func parseProperties(completion: (() -> ())?) {
+    public func parseProperties(completion: (() -> Void)?) {
         if (ignoreProperties == true) { return }
          if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
 
@@ -193,7 +201,7 @@ public extension SKTiledLayerObject {
     /**
      Parse the layer's properties value.
      */
-    public func parseProperties(completion: (() -> ())?) {
+    public func parseProperties(completion: (() -> Void)?) {
 
         if (ignoreProperties == true) { return }
         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
@@ -239,10 +247,6 @@ public extension SKTiledLayerObject {
                 self.navigationKey = value
             }
 
-            if (lattr == "isstatic") {
-                isStatic = boolForKey(attr)
-            }
-
             if completion != nil { completion!() }
         }
     }
@@ -275,7 +279,7 @@ public extension SKTileLayer {
     /**
      Parse the tile layer's properties.
      */
-    override public func parseProperties(completion: (() -> ())?) {
+    override public func parseProperties(completion: (() -> Void)?) {
         super.parseProperties(completion: completion)
     }
 }
@@ -287,7 +291,7 @@ public extension SKObjectGroup {
     /**
      Parse the object group's properties.
     */
-    override public func parseProperties(completion: (() -> ())?) {
+    override public func parseProperties(completion: (() -> Void)?) {
         if (ignoreProperties == true) { return }
         for (attr, _ ) in properties {
             let lattr = attr.lowercased()
@@ -307,18 +311,19 @@ public extension SKImageLayer {
     /**
      Parse the image layer's properties.
     */
-    override public func parseProperties(completion: (() -> ())?) {
+    override public func parseProperties(completion: (() -> Void)?) {
         super.parseProperties(completion: completion)
     }
 }
 
+// MARK: - Generic Properties
 
 public extension SKTileObject {
-    // MARK: - Properties
+    
     /**
      Parse the object's properties value.
      */
-    public func parseProperties(completion: (() -> ())?) {
+    public func parseProperties(completion: (() -> Void)?) {
         if (ignoreProperties == true) { return }
         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
         for (attr, value) in properties {
@@ -354,7 +359,7 @@ extension SKTileCollisionShape {
     /**
      Parse the collision shape's properties.
      */
-    func parseProperties(completion: (() -> ())?) {
+    func parseProperties(completion: (() -> Void)?) {
         if (ignoreProperties == true) { return }
         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
     }
@@ -366,7 +371,7 @@ public extension SKTilesetData {
     /**
      Parse the tile data's properties value.
      */
-    public func parseProperties(completion: (() -> ())?) {
+    public func parseProperties(completion: (() -> Void)?) {
         if (ignoreProperties == true) { return }
         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
 
@@ -380,7 +385,6 @@ public extension SKTilesetData {
             if (lattr == "walkable") {
                 walkable = boolForKey(attr)
             }
-
         }
 
         if completion != nil { completion!() }

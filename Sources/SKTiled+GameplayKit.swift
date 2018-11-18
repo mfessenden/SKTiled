@@ -23,8 +23,8 @@ extension SKTilemap {
      */
     public func gridGraphForLayers(_ layers: [SKTileLayer],
                                    walkable: [SKTile],
-                                   obstacle: [SKTile]=[],
-                                   diagonalsAllowed: Bool=false,
+                                   obstacle: [SKTile] = [],
+                                   diagonalsAllowed: Bool = false,
                                    nodeClass: String? = nil) {
 
        layers.forEach {
@@ -49,8 +49,8 @@ public extension SKTileLayer {
      - returns:  `GKGridGraph<GKGridGraphNode>?` navigation graph, if created.
      */
     public func initializeGraph(walkable: [SKTile],
-                                obstacles: [SKTile]=[],
-                                diagonalsAllowed: Bool=false,
+                                obstacles: [SKTile] = [],
+                                diagonalsAllowed: Bool = false,
                                 withName: String? = nil,
                                 nodeClass: String? = nil) -> GKGridGraph<GKGridGraphNode>? {
 
@@ -83,6 +83,9 @@ public extension SKTileLayer {
 
                         if let tiledNode = node as? SKTiledGraphNode {
                             tiledNode.weight = Float(tile.tileData.weight)
+                            // transfer properties
+                            tiledNode.properties = tile.tileData.properties
+                            tiledNode.parseProperties(completion: nil)
                         }
 
                         if (walkable.contains(tile)) {
@@ -103,6 +106,7 @@ public extension SKTileLayer {
         graph.remove(nodesToRemove)
         let nodeCount = (graph.nodes != nil) ? graph.nodes!.count : 0
 
+
         // logging output
         let statusMessage = (nodeCount > 0) ? "navigation graph for layer \"\(layerName)\" created with \(nodeCount) nodes." : "could not build a navigation graph for layer \"\(layerName)\"."
         let statusLevel: LoggingLevel = (nodeCount > 0) ? .info : .warning
@@ -118,7 +122,7 @@ public extension SKTileLayer {
 
         // unhide the layer & kill textures
         isHidden = false
-        getTiles().forEach { $0.texture = nil }
+        clearTiles()
         return graph
     }
 
@@ -142,8 +146,8 @@ public extension SKTileLayer {
      - returns:  `GKGridGraph<GKGridGraphNode>?` navigation graph, if created.
      */
     public func initializeGraph(walkableIDs: [Int],
-                                obstacleIDs: [Int]=[],
-                                diagonalsAllowed: Bool=false,
+                                obstacleIDs: [Int] = [],
+                                diagonalsAllowed: Bool = false,
                                 nodeClass: String? = nil) -> GKGridGraph<GKGridGraphNode>? {
 
         let walkable: [SKTile] = getTiles().filter { tile in
@@ -200,7 +204,15 @@ public extension SKTileLayer {
 
  [gkgridgraphnode-url]:https://developer.apple.com/documentation/gameplaykit/gkgridgraphnode
  */
-public class SKTiledGraphNode: GKGridGraphNode {
+public class SKTiledGraphNode: GKGridGraphNode, SKTiledObject {
+
+    /// Unique id.
+    public var uuid: String = UUID().uuidString
+    
+    public var type: String!
+    public var properties: [String : String] = [:]
+    public var ignoreProperties: Bool = false
+    public var renderQuality: CGFloat = TiledGlobals.default.renderQuality.default
 
     /// Weight property.
     public var weight: Float = 1.0
@@ -214,7 +226,7 @@ public class SKTiledGraphNode: GKGridGraphNode {
      - parameter weight: `Float` node weight.
      - returns: `SKTiledGraphNode` node instance.
      */
-    public init(gridPosition: int2, weight: Float=1.0) {
+    public init(gridPosition: int2, weight: Float = 1.0) {
         self.weight = weight
         super.init(gridPosition: gridPosition)
     }
@@ -240,7 +252,7 @@ public class SKTiledGraphNode: GKGridGraphNode {
         guard let gridNode = node as? SKTiledGraphNode else {
             return super.cost(to: node)
         }
-        return weight - (1.0 - gridNode.weight)
+        return connectedNodes.contains(gridNode) ? weight - (1.0 - gridNode.weight) : Float.greatestFiniteMagnitude
     }
 
     /**
@@ -300,3 +312,16 @@ extension SKTiledScene {
     }
 }
 
+
+extension SKTiledGraphNode {
+    
+    /**
+     Parse the tile data's properties value.
+     
+     - parameter completion: `() -> Void)?` optional completion function.
+     */
+    public func parseProperties(completion: (() -> Void)?) {
+        if (ignoreProperties == true) { return }
+        if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
+    }
+}

@@ -8,28 +8,116 @@
 
 import SpriteKit
 
+
 /**
 
  ## Overview ##
 
- The `SKTile` class is a custom SpriteKit sprite that references data from a tileset.
+ The `TileRenderMode` flag determines how a particular tile instance is rendered. If the default is
+ specified, the tile renders however the parent tilemap tells it to. Only set this flag to override a
+ particular tile instance's render behavior.
+
+ ### Properties ###
+
+ | Property | Description                                    |
+ |:---------|:-----------------------------------------------|
+ | default  | Tile renders at default settings.              |
+ | static   | Tile ignores any animation data.               |
+ | ignore   | Tile does not take into account its tile data. |
+ | animated | Animate with a global id value.                |
+
+ */
+public enum TileRenderMode {
+    case `default`
+    case `static`
+    case ignore
+    case animated(gid: Int?)
+}
+
+/**
+
+ ## Overview ##
+
+ The `SKTile` class is a custom SpriteKit sprite node that references its data from a tileset.
 
  Tile data (including texture) is stored in `SKTilesetData` property.
+
+
+ ### Properties ###
+
+ | Property                          | Description                                 |
+ |:----------------------------------|:--------------------------------------------|
+ | tileSize                          | tile size (in pixels)                       |
+ | tileData                          | tile data structure                         |
+ | layer                             | parent tile layer                           |
+
+ ### Instance Methods ###
+
+ | Method                            | Description                                                 |
+ |:----------------------------------|:------------------------------------------------------------|
+ | setupPhysics(shapeOf:isDynamic:)  | Setup physics for the tile.                                 |
+ | setupPhysics(rectSize:isDynamic:) | Setup physics for the tile.                                 |
+ | setupPhysics(withSize:isDynamic:) | Setup physics for the tile.                                 |
+ | runAnimation()                    | Play tile animation (if animated).                          |
+ | removeAnimation(restore:)         | Remove animation.                                           |
+ | runAnimationAsActions()           | Runs a SpriteKit action to animate tile tile (if animated). |
+ | removeAnimationActions(restore:)  | Remove the animation for the current tile.                  |
+
  */
-open class SKTile: SKSpriteNode, Loggable {
+open class SKTile: SKSpriteNode {
 
     /// Tile size.
     open var tileSize: CGSize
+
+    /// Animation frame index
+    private var frameIndex: UInt8 = 0
+
     /// Tileset tile data.
     open var tileData: SKTilesetData
+
     /// Weak reference to the parent layer.
     weak open var layer: SKTileLayer!
 
+    /// Object is visible in camera.
+    open var visibleToCamera: Bool = true
+
+    /// Don't send updates.
+    internal var blockNotifications: Bool = false
+
+    /// Render mode for this instance.
+    open var renderMode: TileRenderMode = TileRenderMode.default {
+        didSet {
+            guard (oldValue != renderMode) else { return }
+
+            NotificationCenter.default.post(
+                name: Notification.Name.Tile.RenderModeChanged,
+                object: self,
+                userInfo: ["old": oldValue]
+            )
+        }
+    }
+
+
     /**
-     ## Overview:
+     ## Overview ##
 
      Alignment hint used to define how to handle tile positioning within layers &
      objects (in the event the tile size is different than the parent).
+
+     ### Properties ###
+
+     | Property       | Description                                 |
+     |:---------------|:--------------------------------------------|
+     | topLeft        | Tile is positioned at the upper left.       |
+     | top            | Tile is positioned at top.                  |
+     | topRight       | Tile is positioned at the upper right.      |
+     | left           | Tile is positioned at the left.             |
+     | center         | Tile is positioned in the center.           |
+     | right          | Tile is positioned to the right.            |
+     | bottomLeft     | Tile is positioned at the bottom left.      |
+     | bottom         | Tile is positioned at the bottom.           |
+     | bottomRight    | Tile is positioned at the bottom right.     |
+
      */
     public enum TileAlignmentHint: Int {
         case topLeft
@@ -44,21 +132,37 @@ open class SKTile: SKSpriteNode, Loggable {
     }
 
     // Overlap
-    fileprivate var tileOverlap: CGFloat = 1.5                      // tile overlap amount
+    fileprivate var tileOverlap: CGFloat = 1.0                      // tile overlap amount
     fileprivate var maxOverlap: CGFloat = 3.0                       // maximum tile overlap
 
     // Update values
     private var currentTime : TimeInterval = 0
 
     /// Tile highlight color.
-    open var highlightColor: SKColor = TiledObjectColors.lime
+    open var highlightColor: SKColor = TiledGlobals.default.debug.tileHighlightColor
     /// Tile bounds color.
-    open var frameColor: SKColor = TiledObjectColors.magenta
+    open var frameColor: SKColor = TiledGlobals.default.debug.frameColor
     /// Tile highlight duration.
-    open var highlightDuration: TimeInterval = 0
+    open var highlightDuration: TimeInterval = TiledGlobals.default.debug.highlightDuration
     internal var boundsKey: String = "BOUNDS"
+    internal var animationKey: String = "TILE-ANIMATION"
 
-    /// Enum describing the tile's physics shape.
+    /**
+     ## Overview:
+
+     Describes the tile's physics shape.
+
+     ### Properties ###
+
+     | Property  | Description                    |
+     |:----------|:-------------------------------|
+     | none      | No physics shape.              |
+     | rectangle | Rectangular object shape.      |
+     | ellipse   | Circular object shape.         |
+     | texture   | Texture-based shape.           |
+     | path      | Open path.                     |
+
+     */
     public enum PhysicsShape {
         case none
         case rectangle
@@ -71,7 +175,7 @@ open class SKTile: SKSpriteNode, Loggable {
     open var physicsShape: PhysicsShape = .none
 
     /// Tile positioning hint.
-    internal var alignment: TileAlignmentHint = .bottomLeft
+    internal var alignment: TileAlignmentHint = TileAlignmentHint.bottomLeft
 
     /// Returns the bounding box of the shape.
     open var bounds: CGRect {
@@ -79,19 +183,6 @@ open class SKTile: SKSpriteNode, Loggable {
     }
 
     // MARK: - Init
-    /**
-     Initialize the tile with a tile size.
-
-     - parameter tileSize: `CGSize` tile size in pixels.
-     - returns: `SKTile` tile sprite.
-     */
-    public init(tileSize size: CGSize) {
-        // create empty tileset data
-        tileData = SKTilesetData()
-        tileSize = size
-        super.init(texture: SKTexture(), color: SKColor.clear, size: tileSize)
-        colorBlendFactor = 0
-    }
 
     /**
      Initialize the tile object with `SKTilesetData`.
@@ -102,13 +193,21 @@ open class SKTile: SKSpriteNode, Loggable {
     required public init?(data: SKTilesetData) {
         guard let tileset = data.tileset else { return nil }
         self.tileData = data
+        self.animationKey += "-\(data.globalID)"
         self.tileSize = tileset.tileSize
         super.init(texture: data.texture, color: SKColor.clear, size: fabs(tileset.tileSize))
+
+        // get render mode from tile data properties
+        if let rawRenderMode = data.intForKey("renderMode") {
+            if let newRenderMode = TileRenderMode.init(rawValue: rawRenderMode) {
+                self.renderMode = newRenderMode
+            }
+        }
     }
 
     required public init?(coder aDecoder: NSCoder) {
         tileData = SKTilesetData()
-        tileSize = .zero
+        tileSize = CGSize.zero
         super.init(coder: aDecoder)
     }
 
@@ -119,6 +218,20 @@ open class SKTile: SKSpriteNode, Loggable {
         // create empty tileset data
         tileData = SKTilesetData()
         tileSize = CGSize.zero
+        super.init(texture: SKTexture(), color: SKColor.clear, size: tileSize)
+        colorBlendFactor = 0
+    }
+
+    /**
+     Initialize the tile with a tile size.
+
+     - parameter tileSize: `CGSize` tile size in pixels.
+     - returns: `SKTile` tile sprite.
+     */
+    public init(tileSize size: CGSize) {
+        // create empty tileset data
+        tileData = SKTilesetData()
+        tileSize = size
         super.init(texture: SKTexture(), color: SKColor.clear, size: tileSize)
         colorBlendFactor = 0
     }
@@ -137,16 +250,16 @@ open class SKTile: SKSpriteNode, Loggable {
         colorBlendFactor = 0
     }
 
-    /**
-     Force the tile to update it's textures.
 
-     - parameter data: `SKTilesetData` tile data.
-     - returns: `SKTile` tile sprite.
+    /**
+     Draw the tile. Force the tile to update its textures.
+
+     - parameter debug: `Bool` debug draw.
      */
-    internal func draw() {
+    open func draw(debug: Bool = false) {
         removeAllActions()
-        texture = nil
         texture = tileData.texture
+        size = tileData.texture.size()
     }
 
     // MARK: - Physics
@@ -157,7 +270,7 @@ open class SKTile: SKSpriteNode, Loggable {
      - parameter shapeOf:   `PhysicsShape` tile physics shape type.
      - parameter isDynamic: `Bool` physics body is active.
      */
-    open func setupPhysics(shapeOf: PhysicsShape = .rectangle, isDynamic: Bool = false) {
+    open func setupPhysics(shapeOf: PhysicsShape = PhysicsShape.rectangle, isDynamic: Bool = false) {
         physicsShape = shapeOf
 
         switch physicsShape {
@@ -230,7 +343,7 @@ open class SKTile: SKSpriteNode, Loggable {
     /**
      Run tile animation.
      */
-    public func runAnimation() {
+    open func runAnimation() {
         tileData.runAnimation()
     }
 
@@ -243,12 +356,44 @@ open class SKTile: SKSpriteNode, Loggable {
         tileData.removeAnimation(restore: restore)
     }
 
+    // MARK: - Legacy Animation
+
+    /**
+     Checks if the tile is animated and runs a SpriteKit action to animate it.
+     */
+    open func runAnimationAsActions() {
+        guard (tileData.isAnimated == true) else { return }
+        removeAction(forKey: animationKey)
+
+        // run tile action
+        if let animationAction = tileData.animationAction {
+            run(animationAction, withKey: animationKey)
+        } else {
+            fatalError("cannot get animation action for tile data.")
+        }
+    }
+
+    /**
+     Remove the animation for the current tile.
+
+     - parameter restore: `Bool` restore the tile's first texture.
+     */
+    open func removeAnimationActions(restore: Bool = false) {
+        removeAction(forKey: animationKey)
+
+        guard tileData.isAnimated == true else { return }
+
+        if (restore == true) {
+            texture = tileData.texture
+        }
+    }
+
     // MARK: - Overlap
 
     /**
      Set the tile overlap amount.
 
-     - parameter overlap: `CGFloat` tile overlap.
+     - parameter overlap: `CGFloat` overlap amount.
      */
     open func setTileOverlap(_ overlap: CGFloat) {
         // clamp the overlap value.
@@ -304,25 +449,23 @@ open class SKTile: SKSpriteNode, Loggable {
 
             // rotate right, flip vertically  (d, h, v)
             if (tileData.flipHoriz && tileData.flipVert) {
-                newZRotation = CGFloat(-Double.pi / 2)   // rotate 90deg
-                newXScale *= -1                          // flip horizontally
+                newZRotation = CGFloat(-Double.pi / 2)    // rotate 90deg
+                newXScale *= -1                           // flip horizontally
                 alignment = .bottomLeft
             }
 
             // rotate -90 (d, v)
             if (!tileData.flipHoriz && tileData.flipVert) {
-                newZRotation = CGFloat(Double.pi / 2)   // rotate -90deg
+                newZRotation = CGFloat(Double.pi / 2)     // rotate -90deg
                 alignment = .topLeft
             }
 
             // rotate right, flip horiz (d)
             if (!tileData.flipHoriz && !tileData.flipVert) {
-
-                newZRotation = CGFloat(Double.pi / 2)   // rotate -90deg
-                newXScale *= -1                         // flip horizontally
+                newZRotation = CGFloat(Double.pi / 2)     // rotate -90deg
+                newXScale *= -1                           // flip horizontally
                 alignment = .topRight
             }
-
 
         } else {
             if (tileData.flipHoriz == true) {
@@ -381,7 +524,7 @@ open class SKTile: SKSpriteNode, Loggable {
 
      - returns: `[CGPoint]?` array of points.
      */
-    open func getVertices(offset: CGPoint = .zero) -> [CGPoint] {
+    open func getVertices(offset: CGPoint = CGPoint.zero) -> [CGPoint] {
         var vertices: [CGPoint] = []
         guard let layer = layer else {
             log("tile \(tileData.id) does not have a layer reference.", level: .debug)
@@ -454,12 +597,12 @@ open class SKTile: SKSpriteNode, Loggable {
 
     /**
      Draw the tile's boundary shape.
-     
+
      - parameter withColor: `SKColor?` optional highlight color.
      - parameter zpos:      `CGFloat?` optional z-position of bounds shape.
      - parameter duration:  `TimeInterval` effect length.
      */
-    internal func drawBounds(withColor: SKColor?=nil, zpos: CGFloat?=nil, duration: TimeInterval = 0) {
+    internal func drawBounds(withColor: SKColor? = nil, zpos: CGFloat? = nil, duration: TimeInterval = 0) {
         childNode(withName: boundsKey)?.removeFromParent()
 
         // if a color is not passed, use the default frame color
@@ -478,10 +621,8 @@ open class SKTile: SKSpriteNode, Loggable {
         let tilesetTileHeight: CGFloat = tilesetTileSize.height
 
         // calculate the offset
-        // TODO: do this in getvertices?
         var xOffset: CGFloat = 0
         var yOffset: CGFloat = 0
-
 
         if let layer = layer {
             switch layer.orientation {
@@ -531,6 +672,7 @@ open class SKTile: SKSpriteNode, Loggable {
         bounds.fillColor = drawColor.withAlphaComponent(0.15)
         bounds.zPosition = shapeZPos
 
+        // add the bounding shape
         addChild(bounds)
 
         // anchor point
@@ -570,12 +712,6 @@ open class SKTile: SKSpriteNode, Loggable {
         }
     }
 
-    // MARK: - Memory
-    internal func flush() {
-        self.texture = nil
-        self.tileData.removeAnimation()
-    }
-
     // MARK: - Updating
     /**
      Render the tile before each frame is rendered.
@@ -583,13 +719,29 @@ open class SKTile: SKSpriteNode, Loggable {
      - parameter deltaTime: `TimeInterval` update interval.
      */
     open func update(_ deltaTime: TimeInterval) {
-        guard (isPaused == false) else { return }
+        guard (isPaused == false) && (renderMode != TileRenderMode.ignore) else { return }
+
+        // update texture for static frames
+        if (tileData.isAnimated == false) {
+
+            // check texture is the tile data texture
+            if (self.texture != tileData.texture) {
+
+                // reset tile texture & size
+                self.texture = tileData.texture
+                self.size = tileData.texture.size()
+                //self.log("updating static tile id: \(tileData.id)", level: .debug)
+            }
+            return
+        }
+
         // max cycle time (in ms)
         let cycleTime = tileData.animationTime
         guard (cycleTime > 0) else { return }
 
         // array of frame values
-        let frames: [AnimationFrame] = (speed >= 0) ? tileData.frames : tileData.frames.reversed()
+        let frames: [TileAnimationFrame] = (speed >= 0) ? tileData.frames : tileData.frames.reversed()
+
         // increment the current time value
         currentTime += (deltaTime * abs(Double(speed)))
 
@@ -597,24 +749,32 @@ open class SKTile: SKSpriteNode, Loggable {
         let ct: Int = Int(currentTime * 1000)
 
         // current frame
-        var cf: Int? = nil
+        var cf: UInt8? = nil
 
         var aggregate = 0
+
         // get the frame at the current time
         for (idx, frame) in frames.enumerated() {
             aggregate += frame.duration
-            if ct < aggregate  {
+
+            if ct < aggregate {
                 if cf == nil {
-                    cf = idx
+                    cf = UInt8(idx)
                 }
             }
         }
 
+        // set texture for current frame
         if let currentFrame = cf {
-            let frame = frames[currentFrame]
+
+            // stash the frame index
+            frameIndex = currentFrame
+            let frame = frames[Int(currentFrame)]
             if let frameTexture = frame.texture {
-                self.texture = frameTexture
+
                 // update sprite size
+                self.texture = frameTexture
+                //self.log("updating animated tile id: \(tileData.id)", level: .debug)
                 self.size = frameTexture.size()
             }
         }
@@ -624,6 +784,82 @@ open class SKTile: SKSpriteNode, Loggable {
     }
 }
 
+
+extension TileRenderMode: RawRepresentable {
+    public typealias RawValue = Int
+
+    public init?(rawValue: RawValue) {
+        switch rawValue {
+        case 0: self = .default
+        case 1: self = .static
+        case 2: self = .ignore
+        case -1: self = .animated(gid: nil)
+        default: self = .animated(gid: rawValue)
+        }
+    }
+
+    public var rawValue: RawValue {
+        switch self {
+        case .default: return 0
+        case .static: return 1
+        case .ignore: return 2
+        case .animated(let gid):
+            return gid ?? -1
+        }
+    }
+}
+
+
+
+extension TileRenderMode: CustomStringConvertible, CustomDebugStringConvertible {
+
+    public func next() -> TileRenderMode {
+        switch self {
+        case .default: return .static
+        case .static:  return .ignore
+        default: return .default
+        }
+    }
+
+    public var identifier: String {
+        switch self {
+        case .default: return "default"
+        case .static: return "static"
+        case .ignore: return "ignore"
+        case .animated(let gid):
+            let gidstr = (gid != nil) ? "-\(gid!)" : ""
+            return "animated\(gidstr)"
+        }
+    }
+
+    public var description: String {
+        switch self {
+        case .default: return "default"
+        case .static: return "static"
+        case .ignore: return "ignore"
+        case .animated(let gid):
+            let gidString = (gid != nil) ? "\(gid!)" : "nil"
+            return "animated: \(gidString)"
+        }
+    }
+
+    public var debugDescription: String {
+        switch self {
+        case .default: return ""
+        case .static: return "(static)"
+        case .ignore: return "(ignore)"
+        case .animated(let gid):
+            return (gid != nil) ? "(\(gid!))" : ""
+        }
+    }
+}
+
+
+extension TileRenderMode: Equatable {
+    public var hashValue: Int {
+        return identifier.hashValue
+    }
+}
 
 
 extension SKTile {
@@ -667,7 +903,6 @@ extension SKTile {
                     let fadeAction = SKAction.fadeOut(withDuration: highlightDuration)
                     frameShape.run(fadeAction, completion: {
                         frameShape.removeFromParent()
-
                     })
                 }
             }
@@ -677,7 +912,7 @@ extension SKTile {
     /// Tile description.
     override open var description: String {
         let layerDescription = (layer != nil) ? ", Layer: \"\(layer.layerName)\"" : ""
-        return "\(tileData.description)\(layerDescription)"
+        return "\(tileData.description)\(layerDescription) \(renderMode.debugDescription)"
     }
 
     /// Tile debug description.
@@ -743,3 +978,45 @@ extension SKTile {
         }
     }
 }
+
+
+extension SKTile.TileAlignmentHint: CustomStringConvertible, CustomDebugStringConvertible {
+    public var description: String {
+        switch self {
+        case .topLeft: return "topLeft"
+        case .top: return "top"
+        case .topRight: return "topRight"
+        case .left: return "left"
+        case .center: return "center"
+        case .right: return "right"
+        case .bottomLeft: return "bottomLeft"
+        case .bottom: return "bottom"
+        case .bottomRight: return "bottomRight"
+        }
+    }
+    
+    public var debugDescription: String {
+        return description
+    }
+}
+
+
+extension SKTile.PhysicsShape: CustomStringConvertible, CustomDebugStringConvertible {
+    public var description: String {
+        switch self {
+        case .none: return "Physics Shape: none"
+        case .rectangle: return "Physics Shape: rectangle"
+        case .ellipse: return "Physics Shape: ellipse"
+        case .texture: return "Physics Shape: texture"
+        case .path: return "Physics Shape: path"
+        }
+    }
+    
+    public var debugDescription: String {
+        return description
+    }
+}
+
+
+extension SKTile: SKTiledGeometry {}
+extension SKTile: Loggable {}

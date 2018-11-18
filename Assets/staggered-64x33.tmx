@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.6" orientation="staggered" renderorder="right-down" width="15" height="35" tilewidth="64" tileheight="33" infinite="0" staggeraxis="y" staggerindex="odd" backgroundcolor="#000000" nextobjectid="15">
+ <properties>
+  <property name="autoResize" type="bool" value="true"/>
+  <property name="frameColor" type="color" value="#ff5adc1f"/>
+  <property name="gridColor" type="color" value="#ff91ff5d"/>
+  <property name="objectColor" type="color" value="#fff9ff80"/>
+  <property name="uiColor" type="color" value="#ff5344a7"/>
+ </properties>
+ <tileset firstgid="1" name="staggered-64x33-64x192" tilewidth="64" tileheight="192" tilecount="72" columns="18">
+  <image source="staggered-64x192.png" width="1152" height="768"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="carpet"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="type" value="carpet"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="type" value="carpet"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="type" value="carpet"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="type" value="carpet"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="type" value="carpet"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="type" value="carpet"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="type" value="carpet"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="type" value="carpet"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="type" value="stairs"/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="type" value="stairs"/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="type" value="stairs"/>
+   </properties>
+  </tile>
+  <tile id="15">
+   <properties>
+    <property name="type" value="stairs"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="type" value="stairs"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="type" value="stairs"/>
+   </properties>
+  </tile>
+  <tile id="28">
+   <properties>
+    <property name="type" value="window"/>
+   </properties>
+  </tile>
+  <tile id="29">
+   <properties>
+    <property name="type" value="window"/>
+   </properties>
+  </tile>
+  <tile id="54">
+   <properties>
+    <property name="type" value="fire"/>
+   </properties>
+   <animation>
+    <frame tileid="54" duration="150"/>
+    <frame tileid="55" duration="350"/>
+    <frame tileid="56" duration="150"/>
+    <frame tileid="57" duration="275"/>
+   </animation>
+  </tile>
+  <tile id="55">
+   <properties>
+    <property name="type" value="fire"/>
+   </properties>
+  </tile>
+  <tile id="56">
+   <properties>
+    <property name="type" value="fire"/>
+   </properties>
+  </tile>
+  <tile id="57">
+   <properties>
+    <property name="type" value="fire"/>
+   </properties>
+  </tile>
+  <tile id="58">
+   <properties>
+    <property name="type" value="fire"/>
+   </properties>
+   <animation>
+    <frame tileid="58" duration="50"/>
+    <frame tileid="59" duration="175"/>
+    <frame tileid="60" duration="50"/>
+    <frame tileid="61" duration="175"/>
+   </animation>
+  </tile>
+  <tile id="59">
+   <properties>
+    <property name="type" value="fire"/>
+   </properties>
+  </tile>
+  <tile id="60">
+   <properties>
+    <property name="type" value="fire"/>
+   </properties>
+  </tile>
+  <tile id="61">
+   <properties>
+    <property name="type" value="fire"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="73" name="staggered-paths-64x33" tilewidth="64" tileheight="33" tilecount="4" columns="2">
+  <image source="staggered-paths-64x33.png" width="128" height="66"/>
+  <tile id="0">
+   <properties>
+    <property name="walkable" type="bool" value="true"/>
+    <property name="weight" type="float" value="1"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="walkable" type="bool" value="true"/>
+    <property name="weight" type="float" value="50"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="walkable" type="bool" value="true"/>
+    <property name="weight" type="float" value="100"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="walkable" type="bool" value="true"/>
+    <property name="weight" type="float" value="500"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Floor1" width="15" height="35">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAE+3RSw6AIAwE0PpXPBDX4+jaBQlpCu2gOyVhgemzQyH619dX6KwLoA3K2fKyLojvXlvrj7qW1VyrruYiUbKyoT01/5bNedGZIrOyMnvfIzq8N+vRacd7L457kZKX7SC8dj/5z+x4b+AMSjsB1nJROMRqb87ntcOVfWcwL6+zsEhP6fcHVsmaWs7yLXsBD1XkQDQIAAA=
+  </data>
+ </layer>
+ <layer name="Walls" width="15" height="35">
+  <properties>
+   <property name="role" value="wall"/>
+   <property name="script" type="file" value="script1.sh"/>
+  </properties>
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAE2NgGAWjgDggSoCPD4gAsTAePi4gC6VhakWgtByRdsKAMBY+MfqwAXx6ZfHIwQA2txOyE5/dxOpF10+MW5EBsrtJsROb3fTUCwLEpBda2T0KRsFwAgAWPBsUNAgAAA==
+  </data>
+ </layer>
+ <layer name="Objects2" width="15" height="35">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAE2NgGAWjgDggPYB2a0BpdRL0DKR7QUCMBLVDya2DAQwl9w4lt46CUUAIAACSOrP/NAgAAA==
+  </data>
+ </layer>
+ <layer name="Objects3" width="15" height="35">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAE2NgGAWjYOQByYF2AJlgqLobBIay20fBKBgFEAAAiACOYDQIAAA=
+  </data>
+ </layer>
+ <layer name="Floor2" width="15" height="35">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAE2NgGAWjYGgBTgr0MgExK5n6rCnQywjFpOhH1keOXk4y9PMzIMIIpg/kb3Yi7eVHsgumn5lIvbxoeonVh66fnUy9zGTogwFBCvWOglEwVAAAkqckJTQIAAA=
+  </data>
+ </layer>
+ <layer name="Objects4" width="15" height="35">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAE2NgGAWjYBQMZiA/gHYr0MEOaTrYMZTsFBsAO0kFMkhsdPfSw05yAalhSw07SQX4wpYedhICAHrOs3Q0CAAA
+  </data>
+ </layer>
+ <objectgroup name="Locations">
+  <object id="2" name="carpet1" x="64" y="448">
+   <polygon points="32,16 288,-112 416,-48 160,80"/>
+  </object>
+  <object id="7" name="window1" x="612" y="45">
+   <polygon points="0,0 0,84 53.3333,112 53.3333,28"/>
+  </object>
+  <object id="8" name="window2" x="708" y="93">
+   <polygon points="0,0 0,84 53.3333,112 53.3333,28"/>
+  </object>
+  <object id="9" name="window3" x="802" y="139">
+   <polygon points="0,0 0,84 53.3333,112 53.3333,28"/>
+  </object>
+  <object id="10" name="window4" x="900" y="188">
+   <polygon points="0,0 0,84 53.3333,112 53.3333,28"/>
+  </object>
+ </objectgroup>
+ <layer name="Graph" width="15" height="35" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAE+3RMQ7AMAgDQL5H1P+/p2vlYmyqqFPYGC52kogzZ7xJsSubza5cwj7NzHifNXVOfmcjuGXuEl07q94c3TT7aRbJxvPRsc7qDd1M1sNxVW83M8B9uSfed5Kp7BKu86ovc7syJw7/a3dmZV1X+WpX9u+5AVdRE540CAAA
+  </data>
+ </layer>
+</map>

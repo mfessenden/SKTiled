@@ -1,7 +1,10 @@
 language: swift
-osx_image: xcode9.0
+osx_image: xcode10
 xcode_project: SKTiled.xcodeproj
-xcode_scheme: SKTiled-iOS
+xcode_scheme: 
+  - SKTiled-iOS
+  - SKTiled-macOS
+  - SKTiled-tvOS
 branches:
   except:
     - develop

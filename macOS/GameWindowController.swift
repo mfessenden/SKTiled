@@ -1,6 +1,6 @@
 //
 //  GameViewController.swift
-//  SKTiled
+//  SKTiled Demo - macOS
 //
 //  Created by Michael Fessenden on 10/18/16.
 //  Copyright © 2016 Michael Fessenden. All rights reserved.
@@ -23,6 +23,7 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         window?.delegate = self
+        window?.acceptsMouseMovedEvents = true
     }
 
     // MARK: - Resizing
@@ -40,7 +41,7 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
             /*
             if let sceneDelegate = scene as? SKTiledSceneDelegate {
                 if let cameraNode = sceneDelegate.cameraNode {
-                    cameraNode.bounds = view.bounds
+                    cameraNode.setCameraBounds(bounds: view.bounds)
                 }
             }*/
         }
@@ -68,12 +69,16 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
 
                 // update the camera bounds
                 if let cameraNode = sceneDelegate.cameraNode {
-                    cameraNode.bounds = view.bounds
+                    cameraNode.setCameraBounds(bounds: view.bounds)
                 }
             }
         }
 
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateWindowTitle"), object: nil, userInfo: ["wintitle": wintitle])
+        NotificationCenter.default.post(
+            name: Notification.Name.Demo.WindowTitleUpdated,
+            object: nil,
+            userInfo: ["wintitle": wintitle]
+        )
     }
 
     func windowDidEndLiveResize(_ notification: Notification) {

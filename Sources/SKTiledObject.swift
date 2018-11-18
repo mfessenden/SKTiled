@@ -12,12 +12,31 @@ import SpriteKit
 
  ## Overview ##
 
- The `SKTiledObject` protocol defines a basic data structure for mapping custom Tiled 
- properties to SpriteKit objects. Objects conforming to this protocol will 
- automatically receive properties from the Tiled scene, unless supressed 
- by setting the object's `ignoreProperties` property.
+ The `SKTiledObject` protocol defines a basic data structure for mapping custom Tiled
+ properties to SpriteKit objects. Objects conforming to this protocol will
+ automatically receive properties from the Tiled scene, unless supressed
+ by setting the object's `SKTiledObject.ignoreProperties` property.
 
- ## Usage ##
+
+ ### Properties ###
+
+ | Property         | Description                                     |
+ |:-----------------|:------------------------------------------------|
+ | uuid             | Unique object id.                               |
+ | type             | Tiled object type.                              |
+ | properties       | Object of custom Tiled properties.              |
+ | ignoreProperties | Ignore Tiled properties.                        |
+ | renderQuality    | Resolution multiplier value.                    |
+
+
+ ### Instance Methods ###
+
+ | Method           | Description                                     |
+ |:-----------------|:------------------------------------------------|
+ | parseProperties  | Parse function (with optional completion block).|
+
+
+ ### Usage ###
 
  ```swift
  // query a Tiled string property
@@ -29,17 +48,9 @@ import SpriteKit
  let isDynamic = tiledObject.boolForKey("isDynamic") == true
  ```
 
- ### Properties ###
-
- ```swift
-  SKTiledObject.uuid              // unique object id.
-  SKTiledObject.type              // object type.
-  SKTiledObject.properties        // dictionary of object properties.
-  SKTiledObject.ignoreProperties  // ignore custom properties.
-  SKTiledObject.renderQuality     // resolution multiplier value.
- ```
+ [sktiledobject-url]:Protocols/SKTiledObject.html
  */
-public protocol SKTiledObject: class, Loggable {
+@objc public protocol SKTiledObject: class {
     /// Unique object id (layer & object names may not be unique).
     var uuid: String { get set }
     /// Object type.
@@ -49,7 +60,7 @@ public protocol SKTiledObject: class, Loggable {
     /// Ignore custom properties.
     var ignoreProperties: Bool { get set }
     /// Parse function (with optional completion block).
-    func parseProperties(completion: (() -> ())?)
+    func parseProperties(completion: (() -> Void)?)
     /// Render scaling property.
     var renderQuality: CGFloat { get }
 }
@@ -57,10 +68,28 @@ public protocol SKTiledObject: class, Loggable {
 
 public extension SKTiledObject {
 
-
     public var hashValue: Int { return uuid.hashValue }
 
     // MARK: - Properties Parsing
+    
+    /**
+     Return a string value for the given key, if it exists.
+     
+     ### Usage
+     
+     ```swift
+     if let name = tileData["name"] {
+        print("tile data is named \"\(name)\"")
+     }
+     ```
+     
+     - parameter key: `String` key to query.
+     - returns: `String?` value for the given key.
+     */
+    public subscript(key: String) -> String? {
+        return (ignoreProperties == false) ? properties[key] : nil
+    }
+
     /**
      Returns true if the node has stored properties.
 
@@ -71,18 +100,32 @@ public extension SKTiledObject {
     }
 
     /**
-     Returns true if the node has the given property (not case sensitive).
+     Returns true if the node has the given SKTiled property (case insensitive).
 
      - parameter key: `String` key to query.
      - returns: `Bool` properties has a value for the key.
      */
     public func hasKey(_ key: String) -> Bool {
         let pnames = properties.keys.map { $0.lowercased() }
-        return pnames.contains(key.lowercased())
+        //return pnames.contains(key.lowercased())
+        return !pnames.filter { $0 == key.lowercased()}.isEmpty
     }
 
     /**
-     Returns a string for the given key.
+     Returns a boolean value for the given key.
+
+     - parameter key: `String` properties key.
+     - returns: `Bool` value for properties key.
+     */
+    public func boolForKey(_ key: String) -> Bool {
+        if let existingPair = keyValuePair(key: key) {
+            return Bool(existingPair.value) ?? false || Int(existingPair.value) == 1
+        }
+        return false
+    }
+
+    /**
+     Returns a string for the given SKTiled key.
 
      - parameter key: `String` properties key.
      - returns: `String` value for properties key.
@@ -97,7 +140,33 @@ public extension SKTiledObject {
     }
 
     /**
-     Sets a named property. Returns the value, or nil if it does not exist.
+     Returns a integer value for the given key.
+
+     - parameter key: `String` properties key.
+     - returns: `Int?` value for properties key.
+     */
+    public func intForKey(_ key: String) -> Int? {
+        if let existingPair = keyValuePair(key: key) {
+            return Int(existingPair.value)
+        }
+        return nil
+    }
+
+    /**
+     Returns a float value for the given key.
+
+     - parameter key: `String` properties key.
+     - returns: `Double?` value for properties key.
+     */
+    public func doubleForKey(_ key: String) -> Double? {
+        if let existingPair = keyValuePair(key: key) {
+            return Double(existingPair.value)
+        }
+        return nil
+    }
+
+    /**
+     Sets a named SKTiled property. Returns the value, or nil if it does not exist.
 
      - parameter key:   `String` property key.
      - parameter value: `String` property value.
@@ -111,7 +180,7 @@ public extension SKTiledObject {
     }
 
     /**
-     Remove a named property, returns the value as a string (if property exists).
+     Remove a named SKTiled property, returns the value as a string (if property exists).
 
      - parameter key: `String` property key.
      - returns:       `String?` property value (if it exists).
@@ -132,6 +201,7 @@ public extension SKTiledObject {
         })
     }
 
+
     // MARK: - Helpers
 
     /**
@@ -142,7 +212,7 @@ public extension SKTiledObject {
      */
     internal func keyValuePair(key: String) -> (key: String, value: String)? {
         for k in properties.keys {
-            if k.lowercased() == key.lowercased() {
+            if (k.lowercased() == key.lowercased()) {
                 return (key: k, value: properties[k]!)
             }
         }
@@ -171,22 +241,11 @@ public extension SKTiledObject {
      */
     internal func stringArrayForKey(_ key: String, separatedBy: String=",") -> [String] {
         if let existingPair = keyValuePair(key: key) {
-            return existingPair.value.components(separatedBy: separatedBy)
+            return existingPair.value.components(separatedBy: separatedBy).map {
+                $0.trimmingCharacters(in: CharacterSet.whitespaces)
+            }
         }
         return [String]()
-    }
-
-    /**
-     Returns a integer value for the given key.
-
-     - parameter key: `String` properties key.
-     - returns: `Int?` value for properties key.
-     */
-    internal func intForKey(_ key: String) -> Int? {
-        if let existingPair = keyValuePair(key: key) {
-            return Int(existingPair.value)
-        }
-        return nil
     }
 
     /**
@@ -198,22 +257,12 @@ public extension SKTiledObject {
      */
     internal func integerArrayForKey(_ key: String, separatedBy: String=",") -> [Int] {
         if let existingPair = keyValuePair(key: key) {
-            return existingPair.value.components(separatedBy: separatedBy).flatMap { Int($0) }
+            return existingPair.value.components(separatedBy: ",").map {
+                $0.trimmingCharacters(in: CharacterSet.whitespaces)}.compactMap {
+                    Int($0)
+            }
         }
         return [Int]()
-    }
-
-    /**
-     Returns a float value for the given key.
-
-     - parameter key: `String` properties key.
-     - returns: `Double?` value for properties key.
-     */
-    internal func doubleForKey(_ key: String) -> Double? {
-        if let existingPair = keyValuePair(key: key) {
-            return Double(existingPair.value)
-        }
-        return nil
     }
 
     /**
@@ -225,21 +274,11 @@ public extension SKTiledObject {
      */
     internal func doubleArrayForKey(_ key: String, separatedBy: String=",") -> [Double] {
         if let existingPair = keyValuePair(key: key) {
-            return existingPair.value.components(separatedBy: separatedBy).flatMap { Double($0) }
+            return existingPair.value.components(separatedBy: ",").map {
+                $0.trimmingCharacters(in: CharacterSet.whitespaces)}.compactMap {
+                    Double($0)
+            }
         }
         return [Double]()
-    }
-
-    /**
-     Returns a boolean value for the given key.
-
-     - parameter key: `String` properties key.
-     - returns: `Bool` value for properties key.
-     */
-    internal func boolForKey(_ key: String) -> Bool {
-        if let existingPair = keyValuePair(key: key) {
-            return Bool(existingPair.value) ?? false || Int(existingPair.value) == 1
-        }
-        return false
     }
 }

@@ -2,8 +2,8 @@
 
 > SKTiled is a Swift framework for using [Tiled][tiled-url] assets with Apple's SpriteKit.
 
-[![Swift Version][swift3-image]][swift-url]
-[![Xcode Version][xcode9-image]][xcode-downloads-url]
+[![Swift Version][swift4-image]][swift-url]
+[![Xcode Version][xcode10-image]][xcode-downloads-url]
 [![Build Status][travis-image]][travis-url]
 [![License][license-image]][license-url]
 [![Platforms][platforms-image]][platforms-url]
@@ -17,8 +17,9 @@
 ![Demo Image][demo-iphone-img]
 
 
-- for Xcode 8, see the [**xcode8**][branch-xcode8-url] branch
-- for Swift 4, see the [**swift4**][branch-swift4-url] branch
+This branch is for **Xcode 10 & Swift 4.2**.
+
+- for Xcode 9 & Swift 3.2, see the [**xcode9**][branch-xcode9-url] branch
 
 
 Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
@@ -26,7 +27,7 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 ## Features
 
 - [x] iOS & macOS versions
-- [ ] tvOS version
+- [x] tvOS version
 - [x] parses inline & external tilesets
 - [x] translates custom properties for maps, layers, objects & tiles
 - [x] renders all projections: (orthogonal, isometric, hexagonal & isometric staggered)
@@ -37,18 +38,21 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 - [x] group nodes
 - [x] tile objects
 - [x] text objects
-- [ ] tile collision objects
+- [x] template objects
 - [x] custom tile & object classes
 - [x] generate GKGridGraph graphs from custom attributes
 - [x] user-definable cost properties for GKGridGraph nodes
 - [ ] infinite maps
+- [ ] tile collision objects
+- [ ] parse JSON tilemaps
 
 
 ## Requirements
 
-- iOS 9+
-- macOS 10.12+
-- Xcode 9/Swift 3.3
+- iOS 11
+- tvOS 12
+- macOS 10.13
+- Xcode 10/Swift 4.2
 
 ## Installation
 
@@ -56,12 +60,12 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 
 For Carthage installation, create a Cartfile in the root of your project:
 
-    github "mfessenden/SKTiled" ~> 1.16
+    github "mfessenden/SKTiled" ~> 1.20
 
 
 For CocoaPods, install via a reference in your podfile:
 
-    pod 'SKTiled', '~> 1.16'
+    pod 'SKTiled', '~> 1.20'
 
 
 ## Usage
@@ -108,7 +112,7 @@ let hudLayers = tilemap.getLayers(named: "HUD") as! [SKImageLayer]
 
 // query layer at a specific index
 if let firstLayer = tilemap.getLayer(atIndex: 1) as! SKTileLayer {
-    firstLayer.showGrid = true
+    firstLayer.visible = true
 }
 ```
 
@@ -269,14 +273,14 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 - [Clint Bellanger: Isometric Tiles Math](http://clintbellanger.net/articles/isometric_math)
 
 
-[swift4-image]:https://img.shields.io/badge/Swift-4-brightgreen.svg
-[swift3-image]:https://img.shields.io/badge/Swift-3.3-brightgreen.svg
+[swift4-image]:https://img.shields.io/badge/Swift-4.2-brightgreen.svg
+[swift-image]:https://img.shields.io/badge/Swift-3.2-brightgreen.svg
 [swift-url]: https://swift.org/
 [license-image]:https://img.shields.io/badge/License-MIT-blue.svg
 [license-url]:https://github.com/mfessenden/SKTiled/blob/master/LICENSE
 [travis-image]:https://travis-ci.org/mfessenden/SKTiled.svg?branch=master
 [travis-url]:https://travis-ci.org/mfessenden/SKTiled
-[platforms-image]:https://img.shields.io/badge/platforms-iOS%20%7C%20macOS-red.svg
+[platforms-image]:https://img.shields.io/badge/platforms-iOS%20%7C%20tvOS%20%7C%20macOS-red.svg
 [platforms-url]:http://www.apple.com
 [carthage-image]:https://img.shields.io/badge/Carthage-compatible-4BC51D.svg
 [carthage-url]:https://github.com/Carthage/Carthage
@@ -284,15 +288,17 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 
 [xcode8-image]:https://img.shields.io/badge/Xcode-8-orange.svg
 [xcode9-image]:https://img.shields.io/badge/Xcode-9-orange.svg
+[xcode10-image]:https://img.shields.io/badge/Xcode-10.0-orange.svg
 [xcode-downloads-url]:https://developer.apple.com/download/more/
 
 [pod-url]:https://cocoapods.org/pods/SKTiled
 
 [branch-master-url]:https://github.com/mfessenden/SKTiled
 [branch-xcode8-url]:https://github.com/mfessenden/SKTiled/tree/xcode8
+[branch-xcode9-url]:https://github.com/mfessenden/SKTiled/tree/xcode9
 [branch-swift4-url]:https://github.com/mfessenden/SKTiled/tree/swift4
 
-[header-image]:https://mfessenden.github.io/SKTiled/images/Header-@1x.png
+[header-image]:https://mfessenden.github.io/SKTiled/images/header.png
 [demo-mac-image]:https://mfessenden.github.io/SKTiled/images/demo-macos-iso.png
 [demo-iphone-img]:https://mfessenden.github.io/SKTiled/images/demo-iphone.png
 

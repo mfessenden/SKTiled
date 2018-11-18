@@ -1,0 +1,32 @@
+{
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "assets" : [
+    {
+      "filename" : "App Icon - App Store.imagestack",
+      "size" : "1280x768",
+      "idiom" : "tv",
+      "role" : "primary-app-icon"
+    },
+    {
+      "filename" : "App Icon.imagestack",
+      "size" : "400x240",
+      "idiom" : "tv",
+      "role" : "primary-app-icon"
+    },
+    {
+      "filename" : "Top Shelf Image.imageset",
+      "size" : "1920x720",
+      "idiom" : "tv",
+      "role" : "top-shelf-image"
+    },
+    {
+      "filename" : "Top Shelf Image Wide.imageset",
+      "size" : "2320x720",
+      "idiom" : "tv",
+      "role" : "top-shelf-image-wide"
+    }
+  ]
+}

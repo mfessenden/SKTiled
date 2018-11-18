@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.6" orientation="hexagonal" renderorder="right-down" width="10" height="10" tilewidth="65" tileheight="65" infinite="0" hexsidelength="31" staggeraxis="y" staggerindex="odd" backgroundcolor="#90a1a2" nextobjectid="42">
+ <properties>
+  <property name="autoResize" type="bool" value="true"/>
+  <property name="cropAtBoundary" type="bool" value="false"/>
+  <property name="gridColor" type="color" value="#b3222222"/>
+  <property name="overlayColor" type="color" value="#a1413763"/>
+  <property name="uiColor" type="color" value="#ffdd811b"/>
+  <property name="worldScale" type="float" value="0.40000000000000002"/>
+ </properties>
+ <tileset firstgid="1" name="hex1-65x65-65x230" tilewidth="65" tileheight="230" tilecount="60" columns="20">
+  <image source="hex-65x65-65x230.png" width="1300" height="690"/>
+  <tile id="0" type="grass">
+   <properties>
+    <property name="walkable" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1" type="rock">
+   <properties>
+    <property name="walkable" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="2" type="tree"/>
+  <tile id="3" type="tree"/>
+  <tile id="4" type="tree"/>
+  <tile id="5" type="flower"/>
+  <tile id="6" type="flower"/>
+  <tile id="7" type="flower"/>
+  <tile id="8" type="flower"/>
+  <tile id="9" type="flower"/>
+  <tile id="10" type="flower"/>
+  <tile id="11" type="flower"/>
+  <tile id="12" type="flower"/>
+  <tile id="13" type="flower"/>
+  <tile id="17" type="alien"/>
+  <tile id="18" type="alien"/>
+  <tile id="19" type="alien"/>
+  <tile id="20">
+   <properties>
+    <property name="type" value="dirt"/>
+    <property name="walkable" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="walkable" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="walkable" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="type" value="rock"/>
+    <property name="walkable" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="type" value="rock"/>
+    <property name="walkable" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="25" type="tree"/>
+  <tile id="26" type="tree"/>
+  <tile id="27" type="tree"/>
+  <tile id="28" type="grass"/>
+  <tile id="29" type="grass"/>
+  <tile id="30" type="grass"/>
+  <tile id="31" type="water"/>
+  <tile id="32" type="water"/>
+  <tile id="33" type="water"/>
+  <tile id="34" type="water"/>
+  <tile id="35" type="waves"/>
+  <tile id="36" type="waves"/>
+  <tile id="37">
+   <properties>
+    <property name="type" value="sand"/>
+    <property name="walkable" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="38" type="cactus"/>
+  <tile id="39" type="cactus"/>
+  <tile id="40" type="snow">
+   <properties>
+    <property name="type" value="snow"/>
+    <property name="walkable" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="43" type="tree"/>
+  <tile id="44" type="tree"/>
+  <tile id="45" type="alien"/>
+  <tile id="46" type="snow"/>
+  <tile id="49" type="tree"/>
+  <tile id="50" type="tree"/>
+  <tile id="51" type="alien"/>
+  <tile id="52" type="snow"/>
+  <tile id="55" type="tree"/>
+  <tile id="56" type="tree"/>
+  <tile id="57">
+   <properties>
+    <property name="type" value="alien"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Ground" width="10" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAE3WMMQrAMAwDnUekXpsEAp4y9f9fqwcZhHGGw2CdtEXEnAM+cPDfCSPfCmc4q+gxi9xbPp0XzqRd3g6nYqSdBh5w64WnhduS05ErXaU8nE5bTOX9pkxzOpABAAA=
+  </data>
+ </layer>
+ <layer name="Decoration" width="10" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAE22OyQoCQQxEg47LuKBzc/eiKI6C4026P85P9zWTxkIteBSddCqJZnaFBu7wtI9qCGavk3uE2nsPuMBN/qd+8oO/z1ILXuvYr8KfWs7JqKL0VccvVw2gCxvY+U2akWcqevnGKawko+fe96yFk7SWf2mugDlZJT7El+1em8Aetu0uG8EMxn7bG/iVwT6QAQAA
+  </data>
+ </layer>
+ <layer name="Characters" width="10" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAE2NgGFxAiIGhYaDdQAkQptD9ADVzzeSQAQAA
+  </data>
+ </layer>
+</map>

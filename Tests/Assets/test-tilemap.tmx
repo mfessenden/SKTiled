@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="30" height="16" tilewidth="8" tileheight="8" infinite="0" nextlayerid="9" nextobjectid="4">
+ <properties>
+  <property name="allowZoom" type="bool" value="false"/>
+  <property name="doubles" value="1.2, 5.4, 12, 18.25"/>
+  <property name="gridColor" type="color" value="#e2f58823"/>
+  <property name="integers" value=" 0,1,2 ,3,4,5,6,7 ,8,9, 10"/>
+  <property name="strings" value="tom,dick , harry"/>
+ </properties>
+ <tileset firstgid="1" source="environment-8x8.tsx"/>
+ <tileset firstgid="46" source="characters-8x8.tsx"/>
+ <tileset firstgid="74" source="items-8x8.tsx"/>
+ <tileset firstgid="90" source="portraits-8x8.tsx"/>
+ <tileset firstgid="104" source="monsters-16x16.tsx"/>
+ <layer id="1" name="Floor" width="30" height="16">
+  <data encoding="base64" compression="zlib">
+   eJyFlEEKxDAMA/MMB7rn/P+H20IDZhilh0BbN7Isy55jjHWfus98nyfed7xarN/pp8c6VgHzef4dMIjV8ciRd/v3hXustSQnD2sznuRieYm/gJv49Ngamd9zrqAXMahf4T/WYT0hDn2R9CInvlufyZXa9zv0Gj1CPtR2ynfDNb1qeF3JF1aP5bOZtLwJN+nLeTCf2Ax+7QPzH7XdfjXPUDPzDj2bdpbtL84hOXAOLafNY9pNNhPsh3ncdGXdKSf7x15+zRQ50G/mEfO5/X/iytkzH6TdxjypZtM27UTz0KmHtte5h3bsD1PsNrk=
+  </data>
+ </layer>
+ <layer id="3" name="Walls" width="30" height="16">
+  <data encoding="base64" compression="zlib">
+   eJylVVsOxCAI9FPaA3gDz9mjryZOQ8lM1S4JUQFHyqslpWSNc+PSuI71GKuN9Ry6GuwsnLOzL05X3TtNd3U5oyzkJuSKmH19wT+FvG6+xXDyB3xlH3GZDx5D4b/Jc+AUzj53h/BL4as8ruRX1QwIdaZ0jFQ97Nh07F7TOPeYWHrU+13/5vbj3r0Hoacs6NFf8Ke/uVs/Mc4s7itxnsUk1lC0Z/75b2H4mCcrpPxj8Zr1EfLEKPYCcszmHzi7u+gVzFz44Gcqo3/m5MzmfMFf7esvdRX7YOcuiPk9m+HIgYU9/EH+kU+X48v3uf9XxnlZ0rOPgfsDlksPZg==
+  </data>
+ </layer>
+ <layer id="4" name="Characters" width="30" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBh5QG+gHTAKhgSwZmBowCdvT0B+MAD3IeDGUTAKqA0Mh0i6BwDYjgMh
+  </data>
+ </layer>
+ <layer id="6" name="Objects" width="30" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBh8wJ+BoYEa5nhTw5BBCvzpaBcvHe0arEB5oB1ABUCKH4Jp5opRgA9QO6/hMo8PRxlLz3KFVDAc8iA6AABkzwMq
+  </data>
+ </layer>
+ <layer id="5" name="Monsters" width="30" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBi8gGOgHUAnIAul1ehsLzcDJIw56WzvQIHsgXYAEgCGfQM99Y0C/CB3oB0wCugOcgZBXgIAF24DQg==
+  </data>
+ </layer>
+ <layer id="2" name="HUD" width="30" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMAoGB4gaaAfQEQAAWngAWw==
+  </data>
+ </layer>
+ <objectgroup id="7" name="Collision">
+  <object id="1" x="56" y="40" width="16" height="16"/>
+  <object id="2" x="176" y="72" width="16" height="16"/>
+  <object id="3" x="216" y="104" width="16" height="16"/>
+ </objectgroup>
+</map>

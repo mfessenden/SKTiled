@@ -10,36 +10,6 @@ import SpriteKit
 import GameplayKit
 
 
-/// String representing Tiled application version.
-public var SKTiledTiledApplicationVersion: String = "0"
-
-/// Global logging level.
-public var SKTiledLoggingLevel: LoggingLevel = .info
-
-/// Global device scaling factor for retina displays.
-public var SKTiledContentScaleFactor: CGFloat = getContentScaleFactor()
-
-
-internal struct TiledObjectColors {
-    static let azure: SKColor       = SKColor(hexString: "#4A90E2")
-    static let coral: SKColor       = SKColor(hexString: "#FD4444")
-    static let crimson: SKColor     = SKColor(hexString: "#D0021B")
-    static let dandelion: SKColor   = SKColor(hexString: "#F8E71C")
-    static let english: SKColor     = SKColor(hexString: "#AF3E4D")
-    static let grass: SKColor       = SKColor(hexString: "#B8E986")
-    static let gun: SKColor         = SKColor(hexString: "#8D99AE")
-    static let indigo: SKColor      = SKColor(hexString: "#274060")
-    static let lime: SKColor        = SKColor(hexString: "#7ED321")
-    static let magenta: SKColor     = SKColor(hexString: "#FF00FF")
-    static let metal: SKColor       = SKColor(hexString: "#627C85")
-    static let obsidian: SKColor    = SKColor(hexString: "#464B4E")
-    static let pear: SKColor        = SKColor(hexString: "#CEE82C")
-    static let saffron: SKColor     = SKColor(hexString: "#F28123")
-    static let tangerine: SKColor   = SKColor(hexString: "#F5A623")
-    static let turquoise: SKColor   = SKColor(hexString: "#44CFCB")
-}
-
-
 /// Object rendering order.
 internal enum RenderOrder: String {
     case rightDown  = "right-down"
@@ -89,38 +59,84 @@ internal enum StaggerAxis: String {
  - `even`: stagger evens.
  - `odd`:  stagger odds.
  */
-internal enum StaggerIndex: String {
+internal enum StaggerIndex: UInt8 {
     case odd
     case even
 }
 
 
-//  Common tile size aliases
-internal let TileSizeZero  = CGSize(width: 0, height: 0)
-internal let TileSize8x8   = CGSize(width: 8, height: 8)
-internal let TileSize16x16 = CGSize(width: 16, height: 16)
-internal let TileSize32x32 = CGSize(width: 32, height: 32)
+/**
+ ## Overview ##
+
+ Describes how the tilemap updates its tiles in your scene. Changing this property will affect your CPU usage, so use it carefully.
+
+
+ The default mode is `TileUpdateMode.dynamic`, which updates tiles as needed each frame. For best performance, use `TileUpdateMode.actions`, which will
+ run SpriteKit actions on animated tiles.
+
+ ### Usage ###
+
+ ```swift
+ // passing the tile update mode to the load function
+ let tilemap = SKTilemap.load(tmxFile: String, updateMode: TileUpdateMode.dynamic)!
+
+ // updating the attribute on the tilemp node
+ tilemap.updateMode = TileUpdateMode.actions
+ ```
+
+ ### Properties ###
+
+ | Property              | Description                                                      |
+ |:----------------------|:-----------------------------------------------------------------|
+ | dynamic               | Dynamically update tiles as needed.                              |
+ | full                  | All tiles are updated each frame.                                |
+ | actions               | Tiles are not updated, SpriteKit actions are used instead.       |
+
+ */
+public enum TileUpdateMode: Int {
+    case dynamic                    // dynamically update tiles as needed
+    case full                       // all tiles updated
+    case actions                    // use SpriteKit actions (no update)
+}
+
+
+
+//  tile size aliases
+public let TileSizeZero  = CGSize(width: 0, height: 0)
+public let TileSize8x8   = CGSize(width: 8, height: 8)
+public let TileSize16x16 = CGSize(width: 16, height: 16)
+public let TileSize32x32 = CGSize(width: 32, height: 32)
+
 
 
 /**
  ## Overview ##
 
- The `SKTilemapDelegate` protocol defines a delegate that allows the user to interact with a tile map as it is being created and customize its properties.
+ Methods that allow interaction with an `SKTilemap` object as it is being created to customize its properties.
 
+ ### Properties ###
 
- ## Callbacks ##
+ | Property           | Description                        |
+ |:-------------------|:-----------------------------------|
+ | zDeltaForLayers    | Default z-distance between layers. |
 
- Delegate callbacks are called asynchronously as the map is being read from disk and rendered.
+ ### Instance Methods ###
 
- ```swift
- SKTilemapDelegate.didBeginParsing(_ tilemap: SKTilemap)
- SKTilemapDelegate.didAddTileset(_ tileset: SKTileset)
- SKTilemapDelegate.didAddLayer(_ layer: SKTiledLayerObject)
- SKTilemapDelegate.didReadMap(_ tilemap: SKTilemap)
- SKTilemapDelegate.didRenderMap(_ tilemap: SKTilemap)
- ```
+ Delegate callbacks are called asynchronously as the map is being read from disk and rendered:
 
- ## Custom Objects ##
+ | Method                | Description                                                      |
+ |:----------------------|:-----------------------------------------------------------------|
+ | didBeginParsing       | Called when the tilemap is instantiated.                         |
+ | didAddTileset         | Called when a tileset is added to a map.                         |
+ | didAddLayer           | Called when a layer is added to a tilemap.                       |
+ | didReadMap            | Called when the tilemap is finished parsing.                     |
+ | didRenderMap          | Called when the tilemap layers are finished rendering.           |
+ | didAddNavigationGraph | Called when the a navigation graph is built for a layer.         |
+ | objectForTileType     | Specify a custom tile object for use in tile layers.             |
+ | objectForVectorType   | Specify a custom object for use in object groups.                |
+ | objectForGraphType    | Specify a custom graph node object for use in navigation graphs. |
+
+ ### Custom Objects ###
 
  Custom object methods can be used to substitute your own objects for tiles:
 
@@ -132,7 +148,6 @@ internal let TileSize32x32 = CGSize(width: 32, height: 32)
     return SKTile.self
  }
  ```
-
 */
 public protocol SKTilemapDelegate: class {
     var zDeltaForLayers: CGFloat { get }
@@ -149,12 +164,12 @@ public protocol SKTilemapDelegate: class {
 
 
 /**
- ## Overview
+ ## Overview ##
 
- The `SKTilemap` class defines a container for managing layers, tiles (sprites),
+ The `SKTilemap` class is a container for managing layers of tiles (sprites),
  vector objects & images. Tile data is stored in `SKTileset` tile sets.
 
- ### Usage
+ ### Usage ###
 
  Maps can be loaded with the class function `SKTilemap.load(tmxFile:)`:
 
@@ -164,21 +179,36 @@ public protocol SKTilemapDelegate: class {
  }
  ```
 
- ### Properties
+ ### Properties ###
 
+ | Property    | Description                                   |
+ |:------------|:----------------------------------------------|
+ | mapSize     | Size of the map (in tiles).                   |
+ | tileSize    | Map tile size (in pixels).                    |
+ | renderSize  | Size of the map in pixels.                    |
+ | orientation | Map orientation (orthogonal, isometric, etc.) |
+ | bounds      | Map bounding rect.                            |
+ | tilesets    | Array of stored tileset instances.            |
+ | allowZoom   | Allow camera zooming.                         |
+ | layers      | Array of child layers.                        |
 
-
- ```swift
- let mapSize    = tilemap.size          // returns the size of the map (tiles).
- let renderSize = tilemap.sizeInPoints  // returns the size of the map (pixels).
- let tileSize   = tilemap.tileSize      // returns the map tile size (pixels).
- ```
  */
-public class SKTilemap: SKNode, SKTiledObject {
+public class SKTilemap: SKEffectNode, SKTiledObject {
+
     /**
      ## Overview
 
      Enum describing map orientation type.
+
+     ### Constants ###
+
+     | Property    | Description                                   |
+     |:------------|:----------------------------------------------|
+     | orthogonal  | Orthogonal(square tiles) tile map.            |
+     | isometric   | Isometric tile map.                           |
+     | hexagonal   | Hexagonal tile map.                           |
+     | staggered   | Staggered isometric tile map.                 |
+
      */
     public enum TilemapOrientation: String {
         case orthogonal
@@ -187,85 +217,189 @@ public class SKTilemap: SKNode, SKTiledObject {
         case staggered
     }
 
-    /// File path.
+
+    // MARK: Properties
+
+    /// Source file path.
     public var url: URL!
+
     /// Unique id.
     public var uuid: String = UUID().uuidString
+
     /// Tiled application version.
-    public var tiledversion: String!
-    public var properties: [String: String] = [:]                   // custom properties
-    public var type: String!                                        // map type
-    public var displayName: String!                                 // map display name
+    public var tiledversion: String!                                  // the Tiled version of this tilemap
+
+    /// Custom properties.
+    public var properties: [String: String] = [:]
+
+    /// Map type.
+    public var type: String!
+
+    /// Ignore custom properties.
+    public var ignoreProperties: Bool = false
+
+    /// Returns true if all of the child layers are rendered.
+    public internal(set) var isRendered: Bool = false
+
+    /// Returns the render time of this map.
+    public internal(set) var mapRenderTime: TimeInterval = 0
+
     /// Size of map (in tiles).
     public var size: CGSize
+
     /// Tile size (in pixels).
     public var tileSize: CGSize
+
     /// Map orientation type.
-    public var orientation: TilemapOrientation                      // map orientation
-    internal var renderOrder: RenderOrder = .rightDown              // render order
+    public var orientation: TilemapOrientation                        // map orientation
+    internal var renderOrder: RenderOrder = RenderOrder.rightDown     // render order
+
+    /// Map display name. Defaults to the current map source file name (minus the tmx extension).
+    public var displayName: String?
+
+    /// String representing the map name. Defaults to the current map source file name (minus the tmx extension).
+    public var mapName: String {
+        if let dname = self.displayName {
+            return dname
+        }
+        return self.name ?? "map"
+    }
+
+    // MARK: Updating
 
     // Update time properties.
-    private var lastUpdateTime : TimeInterval = 0
+    private var lastUpdateTime: TimeInterval = 0
     private let maximumUpdateDelta: TimeInterval = 1.0 / 60.0
 
-    /// Logging verbosity.
-    internal var loggingLevel: LoggingLevel = SKTiledLoggingLevel
+    // MARK: Dispatch Queues
+    private let renderQueue  = DispatchQueue(label: "com.sktiled.sktilemap.renderqueue", qos: .userInteractive, attributes: .concurrent)
+    private let animatedTilesQueue = DispatchQueue(label: "com.sktiled.sktilemap.tiles.animated.renderQueue", qos: .userInteractive, attributes: .concurrent)
+    private let staticTilesQueue  = DispatchQueue(label: "com.sktiled.sktilemap.tiles.static.renderQueue", qos: .userInteractive, attributes: .concurrent)
 
-    internal var maxRenderQuality: CGFloat = 16                     // max render quality
-    /// Scaling value for text objects, etc.
-    public var renderQuality: CGFloat = 8 {                         // object render quality.
+    /// Logging verbosity.
+    internal var loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel
+
+    // MARK: Tile Update Mode
+
+    /// Update mode used for tiles & objects.
+    public var updateMode: TileUpdateMode = TileUpdateMode.dynamic {
+        didSet {
+            guard (updateMode != oldValue) else { return }
+            // if we are in `none` mode, add/remove spritekit actions
+            let doRunActions = (updateMode == TileUpdateMode.actions) ? true : false
+            self.runAnimationAsActions(doRunActions)
+        }
+    }
+
+    // MARK: Render Quality
+
+    /// Maximum render quality
+    internal var maxRenderQuality: CGFloat = 16
+
+    /// Scaling factor for text objects, etc.
+    public var renderQuality: CGFloat = 2 {
         didSet {
             guard renderQuality != oldValue else { return }
             layers.forEach { $0.renderQuality = renderQuality.clamped(1, maxRenderQuality) }
         }
     }
 
-    // Set the speed of child layers
+    /// Map animation speed
     override public var speed: CGFloat {
         didSet {
             guard oldValue != speed else { return }
-            self.layers.forEach {$0.speed = speed}
+            self.layers.forEach { layer in
+                layer.speed = speed
+            }
         }
     }
 
     // hexagonal
-    public var hexsidelength: Int = 0                               // hexagonal side length
-    internal var staggeraxis: StaggerAxis = .y                      // stagger axis
-    internal var staggerindex: StaggerIndex = .odd                  // stagger index.
+    public var hexsidelength: Int = 0                                 // hexagonal side length
+    internal var staggeraxis: StaggerAxis = StaggerAxis.y             // stagger axis
+    internal var staggerindex: StaggerIndex = StaggerIndex.odd        // stagger index.
 
-    // camera/scene
-    public var bounds: CGRect = .zero                               // current bounds
-    public var worldScale: CGFloat = 1.0                            // initial world scale
-    public var currentZoom: CGFloat = 1.0                           // zoom level
+    // MARK: Camera
 
-    /// Allow camera zoom.
+    /// Render statistics
+    public struct CameraZoomConstraints {
+        public var min: CGFloat = 0.2
+        public var max: CGFloat = 5.0
+    }
+
+    public var zoomConstraints: CameraZoomConstraints = CameraZoomConstraints()
+
+    /// Indicates map should auto-resize upon view changes.
+    public internal(set) var autoResize: Bool = false
+
+    /// Map bounds.
+    public var bounds: CGRect = CGRect.zero
+
+    /// Receive notifications from camera.
+    public var receiveCameraUpdates: Bool = true
+
+    /// Display bounds that the tilemap is viewable in.
+    public var cameraBounds: CGRect?
+    public var nodesInView: [SKNode] = []
+    internal var objectsOverlay: TileObjectOverlay = TileObjectOverlay()
+
+    /// Initial world scale
+    public var worldScale: CGFloat = 1.0
+
+    /// Map zoom level
+    public var currentZoom: CGFloat = 1.0
+
+    /// Allow camera zooming.
     public var allowZoom: Bool = true
+
     /// Allow camera movement.
     public var allowMovement: Bool = true
-    /// Minimum zoom level for the map.
-    public var minZoom: CGFloat = 0.2
-    /// Mximum zoom level for the map.
-    public var maxZoom: CGFloat = 5.0
 
-    /// Ignore custom properties.
-    public var ignoreProperties: Bool = false
+    // MARK: Tilesets
 
     /// Current tilesets.
+    public var firstGID: Int = 0
     public var tilesets: Set<SKTileset> = []
 
     // current layers
-    private var _layers: Set<SKTiledLayerObject> = []               // tile map layers
+    private var _layers: Set<SKTiledLayerObject> = []                 // tile map layers
+
     /// Layer count.
     public var layerCount: Int { return self.layers.count }
 
+    /// Object count.
+    public var objectCount: Int { return self.getObjects(recursive: true).count }
+
     /// Default z-position range between layers.
     public var zDeltaForLayers: CGFloat = 50
-    public var bufferSize: CGFloat = 4.0
 
-    /// Returns true if all of the child layers are rendered.
-    internal var isRendered: Bool {
-        return layers.filter { $0.isRendered == false }.isEmpty
+
+    // MARK: Caching
+
+    /// Storage for tile updates
+    internal var dataStorage: TileDataStorage?
+
+
+    // MARK: Render Statistics/Debugging
+
+    /// Render statistics
+    public struct RenderStatistics {
+        var updateMode: TileUpdateMode = TileUpdateMode.dynamic
+        var objectCount: Int = 0                    // tile objects
+        var visibleCount: Int = 0                   // visible tiles
+        var cpuPercentage: Int = 0                  // CPU usage
+        var effectsEnabled: Bool = false            // tilemap effects enabled
+        var updatedThisFrame: Int = 0               // objects updated this frame
+        var objectsVisible: Bool = false            // tilemap has objects visible
+        var renderTime: TimeInterval = 0            // frame render time
     }
+
+    /// Debugging/Render Statistics
+    internal var renderStatistics: RenderStatistics = RenderStatistics()
+    internal var renderStatisticsSampleFrequency: Int = 60
+    internal var currentFrameIndex: Int = 0
+
+    // MARK: Layers
 
     /// Returns a flattened array of child layers.
     public var layers: [SKTiledLayerObject] {
@@ -310,35 +444,45 @@ public class SKTilemap: SKNode, SKTiledObject {
         }
     }
 
+    /// Debug visualization node
+    internal var debugNode: SKTiledDebugDrawNode!
+
+
     /// Debug visualization options.
-    public var debugDrawOptions: DebugDrawOptions {
-        get {
-            return defaultLayer.debugDrawOptions
-        } set {
-            defaultLayer.debugDrawOptions = newValue
+    public var debugDrawOptions: DebugDrawOptions = [] {
+        didSet {
+            debugNode?.draw()
+
+
+            let proxiesVisible = debugDrawOptions.contains(.drawObjectBounds)
+            let proxies = self.getObjectProxies()
+
+            NotificationCenter.default.post(
+                name: Notification.Name.DataStorage.ProxyVisibilityChanged,
+                object: proxies,
+                userInfo: ["visibility": proxiesVisible]
+            )
         }
     }
 
     /// Overlay color.
     public var overlayColor: SKColor = SKColor(hexString: "#40000000")
 
-    // MARK: - Object Colors
+    // MARK: Object Colors
+
     public var objectColor: SKColor = SKColor.gray
-    public var color: SKColor = SKColor.clear                           // used for pausing
-    public var gridColor: SKColor = TiledObjectColors.obsidian          // color used to visualize the tile grid
-    public var frameColor: SKColor = TiledObjectColors.obsidian         // bounding box color
-    public var highlightColor: SKColor = TiledObjectColors.lime         // color used to highlight tiles
-    public var navigationColor: SKColor = TiledObjectColors.lime        // navigation graph color.
-    internal var autoResize: Bool = false                               // indicates map should auto-resize when view changes
+    public var color: SKColor = SKColor.clear                                             // used for pausing
+    public var gridColor: SKColor = TiledGlobals.default.debug.gridColor                  // color used to visualize the tile grid
+    public var frameColor: SKColor = TiledGlobals.default.debug.frameColor                // bounding box color
+    public var highlightColor: SKColor = TiledGlobals.default.debug.tileHighlightColor    // color used to highlight tiles
+    public var navigationColor: SKColor = TiledGlobals.default.debug.navigationColor      // navigation graph color.
 
     /// dynamics
     public var gravity: CGVector = CGVector.zero
 
-    /// Weak reference to `SKTilemapDelegate` delegate
+    /// Reference to `SKTilemapDelegate` delegate.
     weak public var delegate: SKTilemapDelegate?
-    /// Objects under the mouse cursor.
-    public var focusObjects: [SKNode] = []
-    
+
     /// Map frame.
     override public var frame: CGRect {
         //let cy = (heightOffset == 0) ? 0 : (heightOffset / 2)
@@ -401,7 +545,7 @@ public class SKTilemap: SKNode, SKTiledObject {
     }
 
     /// Tile overlap amount. 1 is typically a good value.
-    public var tileOverlap: CGFloat = 0.5 {
+    public var tileOverlap: CGFloat = 1.0 {
         didSet {
             guard oldValue != tileOverlap else { return }
             for tileLayer in tileLayers(recursive: true) {
@@ -411,23 +555,39 @@ public class SKTilemap: SKNode, SKTiledObject {
     }
 
     /// Global property to show/hide all `SKTileObject` objects.
-    public var showObjects: Bool = false {
-        didSet {
-            guard oldValue != showObjects else { return }
-            for objectGroup in objectGroups(recursive: true) {
-                objectGroup.showObjects = showObjects
+    public var showObjects: Bool {
+        get {
+            return debugDrawOptions.contains(.drawObjectBounds)
+        } set {
+
+            if (newValue == true) {
+                debugDrawOptions.insert(.drawObjectBounds)
+            } else {
+                debugDrawOptions = debugDrawOptions.subtracting(.drawObjectBounds)
             }
+
+            let proxies = self.getObjectProxies()
+
+            NotificationCenter.default.post(
+                name: Notification.Name.DataStorage.ProxyVisibilityChanged,
+                object: proxies,
+                userInfo: ["visibility": newValue]
+            )
         }
     }
 
     /**
      Show objects for the given layers.
 
-     - parameter forLayers: `[SKTiledLayerObject]` include nested layers.
+     - parameter forLayers: `[SKTiledLayerObject]` array of layers.
      - returns: `[SKTileLayer]` array of tile layers.
      */
     public func showObjects(forLayers: [SKTiledLayerObject]) {
-
+        forLayers.forEach { layer in
+            if let objGroup = layer as? SKObjectGroup {
+                objGroup.showObjects = true
+            }
+        }
     }
 
     /**
@@ -436,7 +596,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTileLayer]` array of tile layers.
      */
-    public func tileLayers(recursive: Bool=true) -> [SKTileLayer] {
+    public func tileLayers(recursive: Bool = true) -> [SKTileLayer] {
         return getLayers(recursive: recursive).sorted(by: { $0.index < $1.index }).filter { $0 as? SKTileLayer != nil } as! [SKTileLayer]
     }
 
@@ -446,7 +606,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKObjectGroup]` array of object groups.
      */
-    public func objectGroups(recursive: Bool=true) -> [SKObjectGroup] {
+    public func objectGroups(recursive: Bool = true) -> [SKObjectGroup] {
         return getLayers(recursive: recursive).sorted(by: { $0.index < $1.index }).filter { $0 as? SKObjectGroup != nil } as! [SKObjectGroup]
     }
 
@@ -456,7 +616,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKImageLayer]` array of image layers.
      */
-    public func imageLayers(recursive: Bool=true) -> [SKImageLayer] {
+    public func imageLayers(recursive: Bool = true) -> [SKImageLayer] {
         return getLayers(recursive: recursive).sorted(by: { $0.index < $1.index }).filter { $0 as? SKImageLayer != nil } as! [SKImageLayer]
     }
 
@@ -466,7 +626,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKGroupLayer]` array of image layers.
      */
-    public func groupLayers(recursive: Bool=true) -> [SKGroupLayer] {
+    public func groupLayers(recursive: Bool = true) -> [SKGroupLayer] {
         return getLayers(recursive: recursive).sorted(by: { $0.index < $1.index }).filter { $0 as? SKGroupLayer != nil } as! [SKGroupLayer]
     }
 
@@ -500,50 +660,193 @@ public class SKTilemap: SKNode, SKTiledObject {
     // MARK: - Loading
 
     /**
-     Load a Tiled tmx file and return a new `SKTilemap` object. Returns nil if there is a parsing error.
+     Load a **Tiled** tmx file and return a new `SKTilemap` object. Returns nil if there is a parsing error.
 
-     - parameter filename:           `String` Tiled file name.
+     - parameter tmxFile:   `String` Tiled file name.
+     - returns: `SKTilemap?` tilemap object (if file read succeeds).
+     */
+    public class func load(tmxFile: String) -> SKTilemap? {
+        return SKTilemap.load(tmxFile: tmxFile, inDirectory: nil,
+                              delegate: nil, tilesetDataSource: nil,
+                              updateMode: TiledGlobals.default.updateMode,
+                              withTilesets: nil, ignoreProperties: false,
+                              loggingLevel: TiledGlobals.default.loggingLevel, nil)
+    }
+
+    /**
+     Load a **Tiled** tmx file and return a new `SKTilemap` object. Returns nil if there is a parsing error.
+
+     - parameter tmxFile:     `String` Tiled file name.
+     - parameter completion:  `((_ tilemap: SKTilemap) -> Void)?` optional completion block.
+     - returns: `SKTilemap?` tilemap object (if file read succeeds).
+     */
+    public class func load(tmxFile: String, _ completion: ((_ tilemap: SKTilemap) -> Void)? = nil) -> SKTilemap? {
+        return SKTilemap.load(tmxFile: tmxFile, inDirectory: nil,
+                              delegate: nil, tilesetDataSource: nil,
+                              updateMode: TiledGlobals.default.updateMode,
+                              withTilesets: nil, ignoreProperties: false,
+                              loggingLevel: TiledGlobals.default.loggingLevel, completion)
+    }
+
+    /**
+     Load a **Tiled** tmx file and return a new `SKTilemap` object. Returns nil if there is a parsing error.
+
+     - parameter tmxFile:       `String` Tiled file name.
+     - parameter loggingLevel:  `LoggingLevel` logging verbosity level.
+     - returns: `SKTilemap?` tilemap object (if file read succeeds).
+     */
+    public class func load(tmxFile: String, loggingLevel: LoggingLevel) -> SKTilemap? {
+        return SKTilemap.load(tmxFile: tmxFile, inDirectory: nil,
+                              delegate: nil, tilesetDataSource: nil,
+                              updateMode: TiledGlobals.default.updateMode, withTilesets: nil,
+                              ignoreProperties: false, loggingLevel: loggingLevel, nil)
+    }
+
+    /**
+     Load a **Tiled** tmx file and return a new `SKTilemap` object. Returns nil if there is a parsing error.
+
+     - parameter tmxFile:          `String` Tiled file name.
+     - parameter delegate:         `SKTilemapDelegate` tilemap [delegate](Protocols/SKTilemapDelegate.html) instance.
+     - returns: `SKTilemap?` tilemap object (if file read succeeds).
+     */
+    public class func load(tmxFile: String, delegate: SKTilemapDelegate) -> SKTilemap? {
+        return SKTilemap.load(tmxFile: tmxFile, inDirectory: nil,
+                              delegate: delegate, tilesetDataSource: nil,
+                              updateMode: TiledGlobals.default.updateMode, withTilesets: nil,
+                              ignoreProperties: false, loggingLevel: TiledGlobals.default.loggingLevel, nil)
+    }
+
+    /**
+     Load a **Tiled** tmx file and return a new `SKTilemap` object. Returns nil if there is a parsing error.
+
+     - parameter tmxFile:           `String` Tiled file name.
+     - parameter delegate:          `SKTilemapDelegate` tilemap [delegate](Protocols/SKTilemapDelegate.html) instance.
+     - parameter updateMode:        `TileUpdateMode` tile update mode.
+     - returns: `SKTilemap?` tilemap object (if file read succeeds).
+     */
+    public class func load(tmxFile: String, delegate: SKTilemapDelegate, updateMode: TileUpdateMode) -> SKTilemap? {
+        return SKTilemap.load(tmxFile: tmxFile, inDirectory: nil,
+                              delegate: delegate, tilesetDataSource: nil,
+                              updateMode: updateMode, withTilesets: nil,
+                              ignoreProperties: false, loggingLevel: TiledGlobals.default.loggingLevel, nil)
+    }
+
+    /**
+     Load a **Tiled** tmx file and return a new `SKTilemap` object. Returns nil if there is a parsing error.
+
+     - parameter tmxFile:            `String` Tiled file name.
+     - parameter delegate:           `SKTilemapDelegate` tilemap [delegate](Protocols/SKTilemapDelegate.html) instance.
+     - parameter tilesetDataSource:  `SKTilesetDataSource` tilemap [`SKTilesetDataSource`](Protocols/SKTilesetDataSource.html) instance.
+     - returns: `SKTilemap?` tilemap object (if file read succeeds).
+     */
+    public class func load(tmxFile: String, delegate: SKTilemapDelegate, tilesetDataSource: SKTilesetDataSource) -> SKTilemap? {
+        return SKTilemap.load(tmxFile: tmxFile, inDirectory: nil,
+                              delegate: delegate, tilesetDataSource: tilesetDataSource,
+                              updateMode: TiledGlobals.default.updateMode, withTilesets: nil,
+                              ignoreProperties: false, loggingLevel: TiledGlobals.default.loggingLevel, nil)
+    }
+
+
+    /**
+     Load a **Tiled** tmx file and return a new `SKTilemap` object. Returns nil if there is a parsing error.
+
+     - parameter tmxFile:            `String` Tiled file name.
+     - parameter delegate:           `SKTilemapDelegate` tilemap [delegate](Protocols/SKTilemapDelegate.html) instance.
+     - parameter tilesetDataSource:  `SKTilesetDataSource` tilemap [`SKTilesetDataSource`](Protocols/SKTilesetDataSource.html) instance.
+     - parameter updateMode:         `TileUpdateMode` tile update mode.
+     - returns: `SKTilemap?` tilemap object (if file read succeeds).
+     */
+    public class func load(tmxFile: String, delegate: SKTilemapDelegate, tilesetDataSource: SKTilesetDataSource, updateMode: TileUpdateMode) -> SKTilemap? {
+        return SKTilemap.load(tmxFile: tmxFile, inDirectory: nil,
+                              delegate: delegate, tilesetDataSource: tilesetDataSource,
+                              updateMode: updateMode, withTilesets: nil,
+                              ignoreProperties: false, loggingLevel: TiledGlobals.default.loggingLevel, nil)
+    }
+
+    /**
+     Load a **Tiled** tmx file and return a new `SKTilemap` object. Returns nil if there is a parsing error.
+
+     - parameter tmxFile:            `String` Tiled file name.
+     - parameter delegate:           `SKTilemapDelegate` tilemap [delegate](Protocols/SKTilemapDelegate.html) instance.
+     - parameter tilesetDataSource:  `SKTilesetDataSource` tilemap [`SKTilesetDataSource`](Protocols/SKTilesetDataSource.html) instance.
+     - parameter withTilesets:       `[SKTileset]` pre-loaded tilesets.
+     - returns: `SKTilemap?` tilemap object (if file read succeeds).
+     */
+    public class func load(tmxFile: String, delegate: SKTilemapDelegate, tilesetDataSource: SKTilesetDataSource, withTilesets: [SKTileset]) -> SKTilemap? {
+        return SKTilemap.load(tmxFile: tmxFile, inDirectory: nil,
+                              delegate: delegate, tilesetDataSource: tilesetDataSource,
+                              updateMode: TiledGlobals.default.updateMode, withTilesets: withTilesets,
+                              ignoreProperties: false, loggingLevel: TiledGlobals.default.loggingLevel, nil)
+    }
+
+    /**
+     Load a **Tiled** tmx file and return a new `SKTilemap` object. Returns nil if there is a parsing error.
+
+     - parameter tmxFile:            `String` Tiled file name.
      - parameter inDirectory:        `String?` search path for assets.
      - parameter delegate:           `SKTilemapDelegate?` optional [`SKTilemapDelegate`](Protocols/SKTilemapDelegate.html) instance.
+     - parameter tilesetDataSource:  `SKTilesetDataSource?` optional [`SKTilesetDataSource`](Protocols/SKTilesetDataSource.html) instance.
+     - parameter updateMode:         `TileUpdateMode` tile update mode.
      - parameter withTilesets:       `[SKTileset]?` optional tilesets.
      - parameter ignoreProperties:   `Bool` ignore custom properties from Tiled.
      - parameter loggingLevel:       `LoggingLevel` logging verbosity level.
+     - parameter completion:         `((_ tilemap: SKTilemap) -> Void)?` optional completion block.
      - returns: `SKTilemap?` tilemap object (if file read succeeds).
      */
     public class func load(tmxFile: String,
                            inDirectory: String? = nil,
                            delegate: SKTilemapDelegate? = nil,
+                           tilesetDataSource: SKTilesetDataSource? = nil,
+                           updateMode: TileUpdateMode = TiledGlobals.default.updateMode,
                            withTilesets: [SKTileset]? = nil,
                            ignoreProperties noparse: Bool = false,
-                           loggingLevel: LoggingLevel = .info) -> SKTilemap? {
+                           loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel,
+                           _ completion: ((_ tilemap: SKTilemap) -> Void)? = nil) -> SKTilemap? {
 
 
         let startTime = Date()
-        let queue = DispatchQueue(label: "com.sktiled.renderqueue", qos: .userInteractive)
+        let queue = DispatchQueue(label: "com.sktiled.loadingQueue", qos: .userInteractive)
         if let tilemap = SKTilemapParser().load(tmxFile: tmxFile,
                                                 inDirectory: inDirectory,
                                                 delegate: delegate,
+                                                tilesetDataSource: tilesetDataSource,
+                                                updateMode: updateMode,
                                                 withTilesets: withTilesets,
                                                 ignoreProperties: noparse,
                                                 loggingLevel: loggingLevel,
                                                 renderQueue: queue) {
 
 
-
-            let renderTime = Date().timeIntervalSince(startTime)
-            let timeStamp = String(format: "%.\(String(3))f", renderTime)
+            // set the map render time attribute
+            tilemap.mapRenderTime = Date().timeIntervalSince(startTime)
+            let timeStamp = String(format: "%.\(String(3))f", tilemap.mapRenderTime)
             Logger.default.log("tilemap \"\(tilemap.mapName)\" rendered in: \(timeStamp)s", level: .success)
+
+            // completion handler
+            completion?(tilemap)
             return tilemap
         }
         return nil
     }
 
     // MARK: - Init
+
+    /**
+     Default initializer.
+     */
+    required public init?(coder aDecoder: NSCoder) {
+        size = CGSize.zero
+        tileSize = CGSize.zero
+        orientation = .orthogonal
+        super.init(coder: aDecoder)
+        self.setupNotifications()
+    }
+
     /**
      Initialize with dictionary attributes from xml parser.
 
      - parameter attributes: `Dictionary` attributes dictionary.
-     - returns: `SKTileMapNode?`
+     - returns: `SKTilemap?`
      */
     public init?(attributes: [String: String]) {
         guard let width = attributes["width"] else { return nil }
@@ -586,7 +889,7 @@ public class SKTilemap: SKNode, SKTiledObject {
 
         // hex stagger index
         if let hexIndex = attributes["staggerindex"] {
-            guard let hexindex: StaggerIndex = StaggerIndex(rawValue: hexIndex) else {
+            guard let hexindex: StaggerIndex = StaggerIndex(string: hexIndex) else {
                 fatalError("stagger index \"\(hexIndex)\" not supported.")
             }
             self.staggerindex = hexindex
@@ -595,12 +898,14 @@ public class SKTilemap: SKNode, SKTiledObject {
         // Tiled application version
         if let tiledVersion = attributes["tiledversion"] {
             self.tiledversion = tiledVersion
-            SKTiledTiledApplicationVersion = tiledVersion
         }
 
         // global antialiasing
         antialiasLines = (currentZoom < 1)
         super.init()
+
+        // turn off effects rendering by default
+        shouldEnableEffects = false
 
         // set the background color
         if let backgroundHexColor = attributes["backgroundcolor"] {
@@ -615,17 +920,36 @@ public class SKTilemap: SKNode, SKTiledObject {
 
         // keep renderQuality within texture size limits
         let renderSize = CGSize(width: size.width * tileSize.width, height: size.height * tileSize.height)
-        let largestDimension = (renderSize.width > renderSize.height) ? renderSize.width : renderSize.height
-        maxRenderQuality = CGFloat(Int(16000 / (largestDimension * SKTiledContentScaleFactor)))
+        let largestPixelDimension: CGFloat = (renderSize.width > renderSize.height) ? renderSize.width : renderSize.height
 
-        // clamp max render quality
-        maxRenderQuality = (maxRenderQuality > 16) ? 16 : maxRenderQuality
+        // calculate the ideal max render quality (max size is 16384)
+        maxRenderQuality = CGFloat(Int(4000 / (largestPixelDimension * TiledGlobals.default.contentScale)))
+
+        let remainder = maxRenderQuality.truncatingRemainder(dividingBy: 2)
+        maxRenderQuality += remainder
+
+        // cap maximum render quality
+        maxRenderQuality = (TiledGlobals.default.renderQuality.override == 0) ? (maxRenderQuality > 16) ? 16 : maxRenderQuality : TiledGlobals.default.renderQuality.override
 
         #if os(iOS)
         renderQuality = maxRenderQuality / 4
         #else
         renderQuality = maxRenderQuality / 2
         #endif
+
+        // cap render quality
+        renderQuality = (renderQuality > maxRenderQuality) ? maxRenderQuality : (renderQuality > 8) ? 8 : renderQuality
+
+
+        // debug node
+        self.debugNode = SKTiledDebugDrawNode(tileLayer: self.defaultLayer, isDefault: true)
+        self.debugNode.zPosition = zPosition + zDeltaForLayers
+        self.objectsOverlay.zPosition = zPosition + (zDeltaForLayers * 2)
+
+        addChild(debugNode)
+        addChild(objectsOverlay)
+
+        self.setupNotifications()
     }
 
     /**
@@ -646,10 +970,15 @@ public class SKTilemap: SKNode, SKTiledObject {
         self.orientation = orientation
         self.antialiasLines = (currentZoom < 1)
         super.init()
+
+        // turn off effects rendering by default
+        shouldEnableEffects = false
+        self.setupNotifications()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    deinit {
+        self.dataStorage = nil
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Layer.ObjectAdded, object: nil)
     }
 
     // MARK: - Tilesets
@@ -703,6 +1032,19 @@ public class SKTilemap: SKNode, SKTiledObject {
         return nil
     }
 
+    /**
+     Returns the tileset associated with a global id.
+
+     - parameter forTile: `Int` tile global id.
+     - returns: `SKTileset?` associated tileset.
+     */
+    public func getTileset(forTile: Int) -> SKTileset? {
+        guard let tiledata = getTileData(globalID: forTile) else {
+            return nil
+        }
+        return tiledata.tileset
+    }
+
     // MARK: Coordinates
     /**
      Returns a point for a given coordinate in the layer, with optional offset values for x/y.
@@ -712,7 +1054,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter offsetY: `CGFloat` y-offset value.
      - returns: `CGPoint` point in layer.
      */
-    public func pointForCoordinate(coord: CGPoint, offsetX: CGFloat=0, offsetY: CGFloat=0) -> CGPoint {
+    public func pointForCoordinate(coord: CGPoint, offsetX: CGFloat = 0, offsetY: CGFloat = 0) -> CGPoint {
         return defaultLayer.pointForCoordinate(coord: coord, offsetX: offsetX, offsetY: offsetY)
     }
 
@@ -736,6 +1078,16 @@ public class SKTilemap: SKNode, SKTiledObject {
         return defaultLayer.coordinateForPoint(point)
     }
 
+    /**
+     Returns a tile coordinate for a given point in the layer as a vector_int2.
+
+     - parameter point: `CGPoint` point in layer.
+     - returns: `int2` tile coordinate.
+     */
+    public func vectorCoordinateForPoint(_ point: CGPoint) -> int2 {
+        return defaultLayer.vectorCoordinateForPoint(point)
+    }
+
     // MARK: - Layers
     /**
      Returns an array of child layers, sorted by index (first is lowest, last is highest).
@@ -743,7 +1095,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTiledLayerObject]` array of layers.
      */
-    public func getLayers(recursive: Bool=true) -> [SKTiledLayerObject] {
+    public func getLayers(recursive: Bool = true) -> [SKTiledLayerObject] {
         return (recursive == true) ? self.layers : Array(self._layers)
     }
 
@@ -762,7 +1114,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - returns: `[String]` layer names.
      */
     public func layerNames() -> [String] {
-        return layers.flatMap { $0.name }
+        return layers.compactMap { $0.name }
     }
 
     /**
@@ -773,6 +1125,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter clamped:  `Bool` clamp position to nearest pixel.
      - returns: `(success: Bool, layer: SKTiledLayerObject)` add was successful, layer added.
      */
+    @discardableResult
     public func addLayer(_ layer: SKTiledLayerObject, group: SKGroupLayer? = nil, clamped: Bool = true) -> (success: Bool, layer: SKTiledLayerObject) {
 
         // if a group is indicated, add it to that instead
@@ -881,7 +1234,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTiledLayerObject]` layer objects.
      */
-    public func getLayers(named layerName: String, recursive: Bool=true) -> [SKTiledLayerObject] {
+    public func getLayers(named layerName: String, recursive: Bool = true) -> [SKTiledLayerObject] {
         var result: [SKTiledLayerObject] = []
         let layersToCheck = self.getLayers(recursive: recursive)
         if let index = layersToCheck.index(where: { $0.name == layerName }) {
@@ -897,7 +1250,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTiledLayerObject]` layer objects.
      */
-    public func getLayers(withPrefix: String, recursive: Bool=true) -> [SKTiledLayerObject] {
+    public func getLayers(withPrefix: String, recursive: Bool = true) -> [SKTiledLayerObject] {
         var result: [SKTiledLayerObject] = []
         let layersToCheck = self.getLayers(recursive: recursive)
         if let index = layersToCheck.index(where: { $0.layerName.hasPrefix(withPrefix) }) {
@@ -955,7 +1308,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTiledLayerObject]` array of layers.
      */
-    public func getLayers(ofType: String, recursive: Bool=true) -> [SKTiledLayerObject] {
+    public func getLayers(ofType: String, recursive: Bool = true) -> [SKTiledLayerObject] {
         return getLayers(recursive: recursive).filter { $0.type != nil }.filter { $0.type! == ofType }
     }
 
@@ -966,7 +1319,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTileLayer]` array of tile layers.
      */
-    public func tileLayers(named layerName: String, recursive: Bool=true) -> [SKTileLayer] {
+    public func tileLayers(named layerName: String, recursive: Bool = true) -> [SKTileLayer] {
         return getLayers(recursive: recursive).filter { $0 as? SKTileLayer != nil }.filter { $0.name == layerName } as! [SKTileLayer]
     }
 
@@ -977,7 +1330,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive:  `Bool` include nested layers.
      - returns: `[SKTileLayer]` array of tile layers.
      */
-    public func tileLayers(withPrefix: String, recursive: Bool=true) -> [SKTileLayer] {
+    public func tileLayers(withPrefix: String, recursive: Bool = true) -> [SKTileLayer] {
         return getLayers(recursive: recursive).filter { $0 as? SKTileLayer != nil }.filter { $0.layerName.hasPrefix(withPrefix) } as! [SKTileLayer]
     }
 
@@ -988,7 +1341,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - returns: `SKTileLayer?` matching tile layer.
      */
     public func tileLayer(atIndex index: Int) -> SKTileLayer? {
-        if let layerIndex = tileLayers(recursive: false).index(where: { $0.index == index } ) {
+        if let layerIndex = tileLayers(recursive: false).index(where: {$0.index == index} ) {
             let layer = tileLayers(recursive: false)[layerIndex]
             return layer
         }
@@ -1002,7 +1355,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKObjectGroup]` array of object groups.
      */
-    public func objectGroups(named layerName: String, recursive: Bool=true) -> [SKObjectGroup] {
+    public func objectGroups(named layerName: String, recursive: Bool = true) -> [SKObjectGroup] {
         return getLayers(recursive: recursive).filter { $0 as? SKObjectGroup != nil }.filter { $0.name == layerName } as! [SKObjectGroup]
     }
 
@@ -1013,7 +1366,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive:  `Bool` include nested layers.
      - returns: `[SKObjectGroup]` array of object groups.
      */
-    public func objectGroups(withPrefix: String, recursive: Bool=true) -> [SKObjectGroup] {
+    public func objectGroups(withPrefix: String, recursive: Bool = true) -> [SKObjectGroup] {
         return getLayers(recursive: recursive).filter { $0 as? SKObjectGroup != nil }.filter { $0.layerName.hasPrefix(withPrefix) } as! [SKObjectGroup]
     }
 
@@ -1024,7 +1377,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - returns: `SKObjectGroup?` matching group layer.
      */
     public func objectGroup(atIndex index: Int) -> SKObjectGroup? {
-        if let layerIndex = objectGroups(recursive: false).index(where: { $0.index == index } ) {
+        if let layerIndex = objectGroups(recursive: false).index(where: {$0.index == index} ) {
             let layer = objectGroups(recursive: false)[layerIndex]
             return layer
         }
@@ -1038,7 +1391,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKImageLayer]` array of image layers.
      */
-    public func imageLayers(named layerName: String, recursive: Bool=true) -> [SKImageLayer] {
+    public func imageLayers(named layerName: String, recursive: Bool = true) -> [SKImageLayer] {
         return getLayers(recursive: recursive).filter { $0 as? SKImageLayer != nil }.filter { $0.name == layerName } as! [SKImageLayer]
     }
 
@@ -1049,7 +1402,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive:  `Bool` include nested layers.
      - returns: `[SKImageLayer]` array of image layers.
      */
-    public func imageLayers(withPrefix: String, recursive: Bool=true) -> [SKImageLayer] {
+    public func imageLayers(withPrefix: String, recursive: Bool = true) -> [SKImageLayer] {
         return getLayers(recursive: recursive).filter { $0 as? SKImageLayer != nil }.filter { $0.layerName.hasPrefix(withPrefix) } as! [SKImageLayer]
     }
 
@@ -1060,7 +1413,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - returns: `SKImageLayer?` matching image layer.
      */
     public func imageLayer(atIndex index: Int) -> SKImageLayer? {
-        if let layerIndex = imageLayers(recursive: false).index(where: { $0.index == index } ) {
+        if let layerIndex = imageLayers(recursive: false).index(where: {$0.index == index} ) {
             let layer = imageLayers(recursive: false)[layerIndex]
             return layer
         }
@@ -1074,7 +1427,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKGroupLayer]` array of group layers.
      */
-    public func groupLayers(named layerName: String, recursive: Bool=true) -> [SKGroupLayer] {
+    public func groupLayers(named layerName: String, recursive: Bool = true) -> [SKGroupLayer] {
         return getLayers(recursive: recursive).filter { $0 as? SKGroupLayer != nil }.filter { $0.name == layerName } as! [SKGroupLayer]
     }
 
@@ -1085,7 +1438,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive:   `Bool` include nested layers.
      - returns: `[SKGroupLayer]` array of group layers.
      */
-    public func groupLayers(withPrefix: String, recursive: Bool=true) -> [SKGroupLayer] {
+    public func groupLayers(withPrefix: String, recursive: Bool = true) -> [SKGroupLayer] {
         return getLayers(recursive: recursive).filter { $0 as? SKGroupLayer != nil }.filter { $0.layerName.hasPrefix(withPrefix) } as! [SKGroupLayer]
     }
 
@@ -1140,7 +1493,7 @@ public class SKTilemap: SKNode, SKTiledObject {
 
         // clamp the layer position
         if (clamped == true) {
-            let scaleFactor = SKTiledContentScaleFactor
+            let scaleFactor = TiledGlobals.default.contentScale
             layerPos = clampedPosition(point: layerPos, scale: scaleFactor)
         }
         layer.position = layerPos
@@ -1153,7 +1506,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter clamped:  `Bool` clamp position to nearest pixel.
      - parameter offset:   `CGPoint` node offset amount.
      */
-    internal func positionNode(_ node: SKNode, clamped: Bool = true, offset: CGPoint = .zero) {
+    internal func positionNode(_ node: SKNode, clamped: Bool = true, offset: CGPoint = CGPoint.zero) {
 
         var nodePosition = CGPoint.zero
 
@@ -1180,7 +1533,7 @@ public class SKTilemap: SKNode, SKTiledObject {
 
         // clamp the node position
         if (clamped == true) {
-            let scaleFactor = SKTiledContentScaleFactor
+            let scaleFactor = TiledGlobals.default.contentScale
             nodePosition = clampedPosition(point: nodePosition, scale: scaleFactor)
         }
 
@@ -1218,7 +1571,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - returns: `[SKTile]` array of tiles.
      */
     public func tilesAt(coord: CGPoint) -> [SKTile] {
-        return tileLayers(recursive: true).flatMap { $0.tileAt(coord: coord) }
+        return tileLayers(recursive: true).compactMap { $0.tileAt(coord: coord) }
     }
 
     /**
@@ -1266,7 +1619,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTile]` array of tiles.
      */
-    public func getTiles(recursive: Bool=true) -> [SKTile] {
+    public func getTiles(recursive: Bool = true) -> [SKTile] {
         return tileLayers(recursive: recursive).flatMap { $0.getTiles() }
     }
 
@@ -1277,7 +1630,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTile]` array of tiles.
      */
-    public func getTiles(ofType: String, recursive: Bool=true) -> [SKTile] {
+    public func getTiles(ofType: String, recursive: Bool = true) -> [SKTile] {
         return tileLayers(recursive: recursive).flatMap { $0.getTiles(ofType: ofType) }
     }
 
@@ -1288,7 +1641,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTile]` array of tiles.
      */
-    public func getTiles(globalID: Int, recursive: Bool=true) -> [SKTile] {
+    public func getTiles(globalID: Int, recursive: Bool = true) -> [SKTile] {
         return tileLayers(recursive: recursive).flatMap { $0.getTiles(globalID: globalID) }
     }
 
@@ -1300,7 +1653,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTile]` array of tiles.
      */
-    public func getTilesWithProperty(_ named: String, _ value: Any, recursive: Bool=true) -> [SKTile] {
+    public func getTilesWithProperty(_ named: String, _ value: Any, recursive: Bool = true) -> [SKTile] {
         var result: [SKTile] = []
         for layer in tileLayers(recursive: recursive) {
             result += layer.getTilesWithProperty(named, value)
@@ -1308,12 +1661,13 @@ public class SKTilemap: SKNode, SKTiledObject {
         return result
     }
 
+
     /**
      Returns an array of all animated tile objects.
 
      - returns: `[SKTile]` array of tiles.
      */
-    public func animatedTiles(recursive: Bool=true) -> [SKTile] {
+    public func animatedTiles(recursive: Bool = true) -> [SKTile] {
         return tileLayers(recursive: recursive).flatMap { $0.animatedTiles() }
     }
 
@@ -1380,6 +1734,17 @@ public class SKTilemap: SKNode, SKTiledObject {
         return tilesets.flatMap { $0.getTileData(withProperty: named, value) }
     }
 
+    /**
+     Returns tile data with the given name & animated state.
+
+     - parameter named:      `String` data name.
+     - parameter isAnimated: `Bool` filter data that is animated.
+     - returns: `[SKTilesetData]` array of tile data.
+     */
+    public func getTileData(named name: String, isAnimated: Bool = false) -> [SKTilesetData] {
+        return tilesets.flatMap { $0.getTileData(named: name, isAnimated: isAnimated) }
+    }
+
     // MARK: - Objects
 
     /**
@@ -1400,7 +1765,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTileObject]` array of objects.
      */
-    public func getObjects(recursive: Bool=true) -> [SKTileObject] {
+    public func getObjects(recursive: Bool = true) -> [SKTileObject] {
         return objectGroups(recursive: recursive).flatMap { $0.getObjects() }
     }
 
@@ -1411,7 +1776,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTileObject]` array of objects.
      */
-    public func getObjects(ofType: String, recursive: Bool=true) -> [SKTileObject] {
+    public func getObjects(ofType: String, recursive: Bool = true) -> [SKTileObject] {
         return objectGroups(recursive: recursive).flatMap { $0.getObjects(ofType: ofType) }
     }
 
@@ -1422,7 +1787,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTileObject]` array of objects.
      */
-    public func getObjects(named: String, recursive: Bool=true) -> [SKTileObject] {
+    public func getObjects(named: String, recursive: Bool = true) -> [SKTileObject] {
         return objectGroups(recursive: recursive).flatMap { $0.getObjects(named: named) }
     }
 
@@ -1433,7 +1798,7 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTileObject]` array of objects.
      */
-    public func getObjects(withText text: String, recursive: Bool=true) -> [SKTileObject] {
+    public func getObjects(withText text: String, recursive: Bool = true) -> [SKTileObject] {
         return objectGroups(recursive: recursive).flatMap { $0.getObjects(withText: text) }
     }
 
@@ -1444,7 +1809,16 @@ public class SKTilemap: SKNode, SKTiledObject {
      - returns: `SKTileObject?`
      */
     public func getObject(withID id: Int) -> SKTileObject? {
-        return objectGroups(recursive: true).flatMap { $0.getObject(withID: id) }.first
+        return objectGroups(recursive: true).compactMap { $0.getObject(withID: id) }.first
+    }
+
+    /**
+     Return object proxies.
+
+     - returns: `[TileObjectProxy]` array of object proxies.
+     */
+    internal func getObjectProxies() -> [TileObjectProxy] {
+        return objectGroups().flatMap { $0.getObjectProxies() }
     }
 
     /**
@@ -1453,8 +1827,19 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTileObject]` objects with a tile gid.
      */
-    public func tileObjects(recursive: Bool=true) -> [SKTileObject] {
+    public func tileObjects(recursive: Bool = true) -> [SKTileObject] {
         return objectGroups(recursive: recursive).flatMap { $0.tileObjects() }
+    }
+
+    /**
+     Return objects with a tile id. If recursive is false, only returns objects from top-level layers.
+
+     - parameter globalID:  `Int` global tile id.
+     - parameter recursive: `Bool` include nested layers.
+     - returns: `[SKTileObject]` objects with a tile gid.
+     */
+    public func tileObjects(globalID: Int, recursive: Bool = true) -> [SKTileObject] {
+        return objectGroups(recursive: recursive).flatMap { $0.tileObjects(globalID: globalID) }
     }
 
     /**
@@ -1463,11 +1848,23 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter recursive: `Bool` include nested layers.
      - returns: `[SKTileObject]` text objects.
      */
-    public func textObjects(recursive: Bool=true) -> [SKTileObject] {
+    public func textObjects(recursive: Bool = true) -> [SKTileObject] {
         return objectGroups(recursive: recursive).flatMap { $0.textObjects() }
     }
 
     // MARK: - Coordinates
+
+    /**
+     Returns true if the coordinate is valid.
+
+     - parameter coord: `CGPoint` tile coordinate.
+     - returns: `Bool` coodinate is valid.
+     */
+    public func isValid(coord: CGPoint) -> Bool {
+        return defaultLayer.isValid(Int(coord.x), Int(coord.y))
+    }
+
+
     /**
      Returns a touch location in negative-y space.
 
@@ -1516,14 +1913,32 @@ public class SKTilemap: SKNode, SKTiledObject {
     }
     #endif
 
+    // MARK: - Shaders
+
+    /**
+     Set a shader for the tile layer.
+
+     - parameter named:    `String` shader file name.
+     - parameter uniforms: `[SKUniform]` array of shader uniforms.
+     */
+    public func setShader(named: String, uniforms: [SKUniform] = []) {
+        let fshader = SKShader(fileNamed: named)
+        fshader.uniforms = uniforms
+        shouldEnableEffects = true
+        self.shader = fshader
+    }
+
     // MARK: - Callbacks
+
     /**
      Called when parser has finished reading the map.
 
      - parameter timeStarted: `Date` render start time.
      - parameter tasks:       `Int`  number of tasks to complete.
      */
-    public func didFinishParsing(timeStarted: Date, tasks: Int=0) {}
+    public func didFinishParsing(timeStarted: Date, tasks: Int = 0) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "tilemapFinishedParsing"), object: nil, userInfo: ["parseTime": timeStarted])
+    }
 
     /**
      Called when parser has finished rendering the map.
@@ -1531,7 +1946,8 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter timeStarted: `Date` render start time.
      */
     public func didFinishRendering(timeStarted: Date) {
-        log("rendering finished!", level: .debug)
+        // set the `isRendered` property
+        isRendered = layers.filter { $0.isRendered == false }.isEmpty
 
         // set the z-depth of the defaultLayer & background sprite
         defaultLayer.zPosition = -zDeltaForLayers
@@ -1542,13 +1958,109 @@ public class SKTilemap: SKNode, SKTiledObject {
         // delegate callback
         defer {
             self.delegate?.didRenderMap(self)
+            NotificationCenter.default.post(
+                name: Notification.Name.Map.FinishedRendering,
+                object: self,
+                userInfo: ["renderTime": timeStarted]
+            )
         }
 
+        // run animation actions
+        self.runAnimationAsActions(TiledGlobals.default.updateMode == TileUpdateMode.actions)
+
         // clamp the position of the map & parent nodes
-        clampPositionWithNode(node: self, scale: getContentScaleFactor())
+        clampNodePosition(node: self, scale: TiledGlobals.default.contentScale)
+
+        // set the `SKTilemap.bounds` attribute
+        //let vertices = getVertices()
+
+        // set the debug zPosition
+        let debugStartZPosition = (lastZPosition + zDeltaForLayers)
+        debugNode.zPosition = debugStartZPosition
+        debugNode.position = defaultLayer.position
+        objectsOverlay.zPosition = debugStartZPosition + (zDeltaForLayers + 100)
+        updateProxyObjects()
+    }
+
+    // MARK: - Notifications
+
+    /**
+     Setup notification callbacks.
+     */
+    internal func setupNotifications() {
+        // nuttin here
+    }
+
+    internal func updateProxyObjects() {
+        guard let dataStorage = dataStorage else {
+            log("cannot access tile data storage.", level: .error)
+            return
+        }
+
+        // clear the layer
+        objectsOverlay.removeAllChildren()
+
+        var proxyCount = 0
+
+        renderQueue.sync {
+            for object in dataStorage.objectsList {
+                // create a proxy
+                let proxyObject = TileObjectProxy(object: object, visible: self.showObjects, renderable: object.isRenderableType)
+                self.objectsOverlay.addChild(proxyObject)
+                proxyObject.container = self.objectsOverlay
+                proxyObject.zPosition = self.zDeltaForLayers
+                proxyObject.draw()
+                proxyCount += 1
+            }
+        }
+        objectsOverlay.initialized = true
+    }
+
+
+    /**
+     Post render stats to listeners.
+
+     - parameter renderStart: `Date` render start date.
+     - parameter completion: `() -> Void?` optional completion function.
+     */
+    internal func postRenderStatistics(_ renderStart: Date, _ completion: (() -> Void)? = nil) {
+        // copy the render stats and add render time
+        var renderStatsToSend = self.renderStatistics.copy()
+        renderStatsToSend.renderTime = Date().timeIntervalSince(renderStart)
+
+        renderQueue.sync {
+
+            // update observers
+            NotificationCenter.default.post(
+                name: Notification.Name.Map.RenderStatsUpdated,
+                object: renderStatsToSend
+            )
+
+            completion?()
+        }
+    }
+
+
+    // MARK: - SpriteKit Actions
+
+    /**
+     Run layer animations as SpriteKit actions.
+
+     - parameter value:   `Bool` on/off toggle.
+     - parameter restore: `Bool` restore textures.
+     */
+    public func runAnimationAsActions(_ value: Bool, restore: Bool = true) {
+        self.layers.forEach { layer in
+            if (value == true) {
+                layer.runAnimationAsActions()
+            } else {
+                layer.removeAnimationActions(restore: restore)
+            }
+        }
     }
 
     // MARK: - Updating
+
 
     /**
      Update the map as each frame is rendered.
@@ -1556,20 +2068,272 @@ public class SKTilemap: SKNode, SKTiledObject {
      - parameter currentTime: `TimeInterval` update interval.
      */
     public func update(_ currentTime: TimeInterval) {
-        // Initialize lastUpdateTime
+        guard (isRendered == true) && (isPaused == false) else {
+            return
+        }
+
+        defer {
+            // sync all queues
+            staticTilesQueue.sync {}
+            animatedTilesQueue.sync {}
+            renderStatistics.updatedThisFrame = 0
+        }
+
+        // initialize last update time
         if (self.lastUpdateTime == 0) {
             self.lastUpdateTime = currentTime
         }
 
-        // Calculate time since last update
+        // time since last update
         var dt = currentTime - self.lastUpdateTime
         dt = dt > maximumUpdateDelta ? maximumUpdateDelta : dt
 
         self.lastUpdateTime = currentTime
 
-        // Update layers
-        self.layers.forEach { layer in
-            layer.update(dt)
+        // (re)draw proxy objects
+        if (objectsOverlay.initialized == false) {
+            self.updateProxyObjects()
+        }
+
+        // update tiles
+        guard let dataStorage = dataStorage else { return }
+
+        // render start time
+        let renderStart = Date()
+
+        switch updateMode {
+
+        case .full:
+            // update cached tiles
+            self.updateStaticTiles(delta: dt) { fcount in
+                self.renderStatistics.updatedThisFrame += fcount
+            }
+
+            // update animated tiles
+            self.updateAnimatedTiles(delta: dt) { fcount in
+                self.renderStatistics.updatedThisFrame += fcount
+            }
+
+        case .dynamic:
+            // update animated tiles
+            self.updateAnimatedTiles(delta: dt) { fcount in
+                self.renderStatistics.updatedThisFrame += fcount
+            }
+
+        default:
+            break
+        }
+
+        if (currentFrameIndex >= renderStatisticsSampleFrequency) {
+            // update render statistics
+            renderStatistics.updateMode = updateMode
+            renderStatistics.objectCount = dataStorage.objectsList.count
+            renderStatistics.objectsVisible = (showObjects == true)
+            renderStatistics.visibleCount = nodesInView.count
+            renderStatistics.effectsEnabled = shouldEnableEffects
+
+            if (TiledGlobals.default.enableRenderCallbacks == true) {
+                renderStatistics.cpuPercentage = Int(cpuUsage())
+                // send render statistics back to the controller
+                self.postRenderStatistics(renderStart) {
+                    self.currentFrameIndex = 0
+                }
+            }
+        }
+
+        currentFrameIndex += 1
+    }
+
+    /**
+     Update static tiles.
+
+     - parameter delta: `TimeInterval` current time delta.
+     */
+    internal func updateStaticTiles(delta: TimeInterval, _ completion: ((Int) -> Void)? = nil) {
+        guard let dataStorage = dataStorage else { return }
+
+        var staticTilesUpdated = 0
+
+        staticTilesQueue.async {
+
+            for staticItem in dataStorage.staticTileCache.enumerated() {
+
+                let tileData = staticItem.element.key
+                let tileArray = staticItem.element.value
+                let tileTexture = tileData.texture
+
+
+                // loop through tiles
+                for tile in tileArray {
+
+                    // ignore tiles not in view
+                    if (tile.visibleToCamera) == false {
+                        continue
+                    }
+
+                    switch tile.renderMode {
+
+                    // tile is ignoring it's tile data, move on
+                    case .ignore:
+                        continue
+
+                    default:
+
+                        // for `default` & `static`, just update the tile texture and continue...
+                        guard let tileTexture = tileTexture else {
+                            continue
+                        }
+
+                        tile.texture = tileTexture
+                        tile.size = tileTexture.size()
+                    }
+
+                    staticTilesUpdated += 1
+                }
+            }
+
+            if (TiledGlobals.default.enableRenderCallbacks == true) {
+                DispatchQueue.main.async {
+                    completion?(staticTilesUpdated)
+                }
+            }
+        }
+    }
+
+
+    /**
+     Update cached animated tiles.
+
+     - parameter delta: `TimeInterval` current time delta.
+     */
+    internal func updateAnimatedTiles(delta: TimeInterval, _ completion: ((Int) -> Void)? = nil) {
+        guard let dataStorage = dataStorage else { return }
+
+        var animatedTilesUpdated = 0
+
+        animatedTilesQueue.async {
+            for animatedItem in dataStorage.animatedTileCache.enumerated() {
+
+                let tileData = animatedItem.element.key
+                let tileArray = animatedItem.element.value
+
+
+                // figure out which frame of animation we're at...
+                let cycleTime = tileData.animationTime
+                guard (cycleTime > 0) else { continue }
+
+                // array of frame values
+                let frames: [TileAnimationFrame] = (self.speed >= 0) ? tileData.frames : tileData.frames.reversed()
+
+                // increment the current time value
+                tileData.currentTime += (delta * abs(Double(self.speed)))
+
+                // current time in ms
+                let ct: Int = Int(tileData.currentTime * 1000)
+
+                // current frame
+                var cf: UInt8? = nil
+
+                var aggregate = 0
+
+                // get the frame at the current time
+                for (idx, frame) in frames.enumerated() {
+                    aggregate += frame.duration
+
+                    if ct < aggregate  {
+                        if cf == nil {
+                            cf = UInt8(idx)
+                        }
+                    }
+                }
+
+                // create a pointer to the texture we're planning to use...
+                var currentTexture: SKTexture?
+
+                // set texture for current frame
+                if let currentFrame = cf {
+
+                    // stash the frame index
+                    tileData.frameIndex = currentFrame
+                    let frame = frames[Int(currentFrame)]
+
+                    if let frameTexture = frame.texture {
+                        // update frame texture
+                        currentTexture = frameTexture
+                    }
+                }
+
+                // the the current time is greater than the animation cycle, reset current time to 0
+                if ct >= cycleTime { tileData.currentTime = 0 }
+
+
+                // loop through tiles
+                for tile in tileArray {
+
+                    // ignore tiles not in view
+                    if (tile.visibleToCamera) == false {
+                        continue
+                    }
+
+                    switch tile.renderMode {
+
+                    case .ignore, .static:
+                        continue
+
+                    default:
+
+                        if let frameTexture = currentTexture {
+                            tile.texture = frameTexture
+                            tile.size = frameTexture.size()
+                        }
+                    }
+                    animatedTilesUpdated += 1
+                }
+            }
+
+            if (TiledGlobals.default.enableRenderCallbacks == true) {
+                DispatchQueue.main.async {
+                    completion?(animatedTilesUpdated)
+                }
+            }
+        }
+    }
+}
+
+
+extension TileUpdateMode: CustomStringConvertible, CustomDebugStringConvertible {
+
+    public var name: String {
+        switch self {
+        case .dynamic: return "dynamic"
+        case .full: return "full"
+        case .actions: return "actions"
+        }
+    }
+
+
+    public var description: String {
+        return self.name
+    }
+
+    public var debugDescription: String {
+        return self.name
+    }
+}
+
+
+
+extension TileUpdateMode {
+
+    func allModes() -> [TileUpdateMode] {
+        return [.dynamic, .full, .actions]
+    }
+
+    func next() -> TileUpdateMode {
+        switch self {
+        case .dynamic: return .full
+        case .full: return .actions
+        case .actions: return .dynamic
         }
     }
 }
@@ -1577,20 +2341,18 @@ public class SKTilemap: SKNode, SKTiledObject {
 
 // MARK: - Extensions
 
-extension SKTilemap.TilemapOrientation {
+extension StaggerIndex: Hashable {
 
-    /// Hint for aligning tiles within each layer.
-    public var alignmentHint: CGPoint {
-        switch self {
-        case .orthogonal:
-            return CGPoint(x: 0.5, y: 0.5)
-        case .isometric:
-            return CGPoint(x: 0.5, y: 0.5)
-        case .hexagonal:
-            return CGPoint(x: 0.5, y: 0.5)
-        case .staggered:
-            return CGPoint(x: 0.5, y: 0.5)
+    init?(string value: String) {
+        switch value {
+        case "even": self = .even
+        case "odd":  self = .odd
+        default: return nil
         }
+    }
+
+    var hashValue: Int {
+        return (self == .even) ? 1 : 0
     }
 }
 
@@ -1621,16 +2383,9 @@ extension LayerPosition: CustomStringConvertible {
 
 extension SKTilemap {
 
-    /// String representing the map name.
-    public var mapName: String {
-        if let displayName = self.displayName {
-            return displayName
-        }
-        return self.name ?? "null"
-    }
 
     /// Auto-sizing property for map orientation.
-    internal var isPortrait: Bool {
+    public var isPortrait: Bool {
         return sizeInPoints.height > sizeInPoints.width
     }
 
@@ -1684,7 +2439,9 @@ extension SKTilemap {
      - returns: `Bool` column should be staggered.
      */
     internal func doStaggerX(_ x: Int) -> Bool {
-        return staggerX && Bool((x & 1) ^ staggerEven.hashValue)
+        let hash: Int = (staggerEven == true) ? 1 : 0
+        return staggerX && Bool((x & 1) ^ hash)
+
     }
 
     /**
@@ -1694,7 +2451,8 @@ extension SKTilemap {
      - returns: `Bool` row should be staggered.
      */
     internal func doStaggerY(_ y: Int) -> Bool {
-        return !staggerX && Bool((y & 1) ^ staggerEven.hashValue)
+        let hash: Int = (staggerEven == true) ? 1 : 0
+        return !staggerX && Bool((y & 1) ^ hash)
     }
 
     internal func topLeft(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
@@ -1763,6 +2521,19 @@ extension SKTilemap {
         }
     }
 
+    /// Returns all pathfinding graphs in the map
+    public var graphs: [GKGridGraph<GKGridGraphNode>] {
+        return tileLayers().compactMap { $0.graph }
+    }
+
+    public var isShowingGraphs: Bool {
+        let visibleGraphLayers = tileLayers().filter{ tileLayer in
+            tileLayer.debugDrawOptions.contains(.drawGraph) == true
+        }
+        return (visibleGraphLayers.isEmpty == false)
+    }
+
+
     /// String representation of the map.
     override public var description: String {
         let sizedesc = "\(sizeInPoints.shortDescription): (\(size.shortDescription) @ \(tileSize.shortDescription))"
@@ -1773,7 +2544,9 @@ extension SKTilemap {
     }
 
     /// Debug string representation of the map.
-    override public var debugDescription: String { return description }
+    override public var debugDescription: String {
+        return "Tile Map: \"\(mapName)\", \(tileCount) tiles"
+    }
 
     /**
      Returns an array of tiles/objects.
@@ -1783,7 +2556,7 @@ extension SKTilemap {
     public func renderableObjects() -> [SKNode] {
         var result: [SKNode] = []
         enumerateChildNodes(withName: "*") { node, stop in
-            if (node as? SKTile != nil) || (node as? SKTileObject != nil) {
+            if (node as? SKTiledGeometry != nil) {
                 result.append(node)
             }
         }
@@ -1791,39 +2564,72 @@ extension SKTilemap {
     }
 
     /**
-     Dump a summary of the current tilemap's layer statistics.
+     Return tiles & objects at the given point in the map.
 
-     - parameter defaul: `Bool` include the map's default layer.
+     - parameter point: `CGPoint` position in tilemap.
+     - returns: `[SKNode]` array of tiles.
      */
-    public func mapStatistics(default: Bool = false) {
+    public func renderableObjectsAt(point: CGPoint) -> [SKNode] {
+        let pixelPosition = defaultLayer.screenToPixelCoords(point)
+        return nodes(at: pixelPosition).filter { node in
+            (node as? SKTiledGeometry != nil)
+        }
+    }
+
+    /**
+     Returns an array of animated tiles/objects.
+
+     - returns: `[SKNode]` array of child objects.
+     */
+    public func animatedObjects() -> [SKNode] {
+        let renderable = renderableObjects()
+        return renderable.filter {
+            if let tile = $0 as? SKTile {
+                return tile.action(forKey: tile.animationKey) != nil
+            }
+
+            if let tileObj = $0 as? SKTileObject {
+                if let tile = tileObj.tile {
+                    return tile.action(forKey: tile.animationKey) != nil
+                }
+            }
+            return false
+        }
+    }
+}
+
+
+extension SKTilemap: CustomDebugReflectable {
+
+    /**
+     Dump a summary of the current tilemap's layer statistics.
+     */
+    public func dumpStatistics() {
         guard (layerCount > 0) else {
             print("# Tilemap \"\(mapName)\": 0 Layers")
             return
         }
 
         // collect graphs for each tile layer
-        let graphs = tileLayers().flatMap { $0.graph }
+        let graphs = tileLayers().compactMap { $0.graph }
 
         // format the header
         let graphsString = (graphs.isEmpty == false) ? (graphs.count > 1) ? " : \(graphs.count) Graphs" : " : \(graphs.count) Graph" : ""
         let headerString = "# Tilemap \"\(mapName)\": \(tileCount) Tiles: \(layerCount) Layers\(graphsString)"
-        let titleUnderline = String(repeating: "-", count: headerString.characters.count)
+        let titleUnderline = String(repeating: "-", count: headerString.count)
         var outputString = "\n\(headerString)\n\(titleUnderline)"
 
-        var allLayers = self.layers.filter { $0 as? BackgroundLayer == nil }
+        //let columnTitles = ["Index", "Type", "Visible", "Name", "Position", "Size", "Offset", "Anchor", "Z-Position", "Opacity", "Update", "Static", "Graph"]
+        let allLayers = self.layers.filter { $0 as? BackgroundLayer == nil }
 
-        if (`default` == true) {
-            allLayers.insert(self.defaultLayer, at: 0)
-        }
-
-        // grab the stats from each layer
+        // get the stats from each layer
         let allLayerStats = allLayers.map { $0.layerStatsDescription }
 
         // prefix for each column
         var prefixes: [String] = ["", "", "", "", "pos", "size", "offset", "anc", "zpos", "opac", "nav"]
 
         // buffer for each column
-        var buffers: [Int] = [1, 2, 0, 0, 1, 1, 1, 1, 1, 1, 1]
+        var buffers: [Int] = [1, 2, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
         var columnSizes: [Int] = Array(repeating: 0, count: prefixes.count)
 
         // get the max column size for each column
@@ -1831,7 +2637,7 @@ extension SKTilemap {
             for stat in stats {
                 let cindex = Int(stats.index(of: stat)!)
 
-                let colCharacters = stat.characters.count
+                let colCharacters = stat.count
                 let prefix = prefixes[cindex]
                 let buffer = buffers[cindex]
 
@@ -1839,14 +2645,14 @@ extension SKTilemap {
                 if colCharacters > 0 {
 
                     // get the prefix size + buffer
-                    let bufferSize = (prefix.characters.count > 0) ? prefix.characters.count + buffer : 2
+                    let layerBufferSize = (prefix.isEmpty == false) ? prefix.count + buffer : 2
 
                     // this is the size of the column + prefix
-                    let columnSize = colCharacters + bufferSize
+                    let columnSize = colCharacters + layerBufferSize
 
                     // if this is more than the max, update the column sizes
                     if columnSize > columnSizes[cindex] {
-                         columnSizes[cindex] = columnSize
+                        columnSizes[cindex] = columnSize
                     }
                 }
             }
@@ -1878,10 +2684,10 @@ extension SKTilemap {
 
                 // for empty values, add an extra buffer
                 var emptyBuffer = 2
-                if (stat.characters.count > 0) {
+                if (stat.isEmpty == false) {
                     emptyBuffer = 0
                     prefix = prefixes[sidx]
-                    if (prefix.characters.count > 0) {
+                    if (prefix.isEmpty == false) {
                         divider = ": "
                         // for all columns but the last, add a comma
                         if (isLastColumn == false) {
@@ -1893,7 +2699,7 @@ extension SKTilemap {
                     currentColumnValue = "\(prefix)\(stat)\(comma)"
                 }
 
-                let fillSize = columnSize + comma.characters.count + buffer + emptyBuffer
+                let fillSize = columnSize + comma.count + buffer + emptyBuffer
                 // pad each string to the right
                 layerOutputString += currentColumnValue.zfill(length: fillSize, pattern: " ", padLeft: false)
             }
@@ -1903,6 +2709,56 @@ extension SKTilemap {
         print("\n\n" + outputString + "\n\n")
     }
 }
+
+
+
+extension SKTilemap.TilemapOrientation {
+
+    /// Hint for aligning tiles within each layer.
+    public var alignmentHint: CGPoint {
+        switch self {
+        case .orthogonal:
+            return CGPoint(x: 0.5, y: 0.5)
+        case .isometric:
+            return CGPoint(x: 0.5, y: 0.5)
+        case .hexagonal:
+            return CGPoint(x: 0.5, y: 0.5)
+        case .staggered:
+            return CGPoint(x: 0.5, y: 0.5)
+        }
+    }
+}
+
+extension SKTilemap.TilemapOrientation: CustomStringConvertible, CustomDebugStringConvertible {
+    public var description: String {
+        switch self {
+        case .orthogonal: return "orthogonal"
+        case .isometric: return "isometric"
+        case .hexagonal: return "hexagonal"
+        case .staggered: return "staggered"
+        }
+    }
+    public var debugDescription: String {
+        return description
+    }
+}
+
+
+extension SKTilemap.RenderStatistics {
+
+    /**
+     Create a copy of the current render statistics.
+
+     - returns: `SKTilemap.RenderStatistics` render statistics for the current frame.
+     */
+    public func copy() -> SKTilemap.RenderStatistics {
+        return SKTilemap.RenderStatistics(updateMode: self.updateMode, objectCount: self.objectCount,
+                                          visibleCount: self.visibleCount, cpuPercentage: self.cpuPercentage,
+                                          effectsEnabled: self.effectsEnabled, updatedThisFrame: self.updatedThisFrame,
+                                          objectsVisible: self.objectsVisible, renderTime: 0)
+    }
+}
+
 
 
 /**
@@ -1983,71 +2839,82 @@ extension SKTilemapDelegate {
 }
 
 
+
 /* Clamp position of the map & parents when camera changes happen. */
 extension SKTilemap: SKTiledSceneCameraDelegate {
 
-    public func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {}
 
-    public func cameraPositionChanged(newPosition: CGPoint) {
-        // clamp the position of the map & parent nodes
-        clampPositionWithNode(node: self, scale: getContentScaleFactor())
+    /**
+     Called when the nodes in the camera view changes.
+
+     - parameter nodes: `Set<SKNode>` nodes in camera view.
+     */
+    public func containedNodesChanged(_ nodes: Set<SKNode>) {
+        guard (receiveCameraUpdates == true) else { return }
+
+        DispatchQueue.main.async {
+            self.nodesInView = nodes.filter {
+                $0.isHidden == false
+            }
+        }
     }
 
+    /**
+     Called when the camera bounds updated.
+
+     - parameter bounds:  `CGRect` camera view bounds.
+     - parameter positon: `CGPoint` camera position.
+     - parameter zoom:    `CGFloat` camera zoom amount.
+     */
+    public func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {
+        cameraBounds = bounds
+    }
+
+    /**
+     Called when the camera positon changes.
+
+     - parameter newPositon: `CGPoint` updated camera position.
+     */
+    public func cameraPositionChanged(newPosition: CGPoint) {
+        // nodesInView
+    }
+
+    /**
+     Called when the camera zoom changes.
+
+     - parameter newZoom: `CGFloat` camera zoom amount.
+     */
     public func cameraZoomChanged(newZoom: CGFloat) {
         //let oldZoom = currentZoom
         currentZoom = newZoom
         antialiasLines = (newZoom < 1)
-
-        // clamp the position of the map & parent nodes
-        clampPositionWithNode(node: self, scale: getContentScaleFactor())
     }
 
     #if os(iOS) || os(tvOS)
+
+    /**
+     Called when the scene receives a double-tap event (iOS only).
+
+     - parameter location: `CGPoint` touch event location.
+     */
     public func sceneDoubleTapped(location: CGPoint) {}
     #else
 
-    public func sceneDoubleClicked(event: NSEvent) {
-        let coord = coordinateAtMouseEvent(event: event)
-        let tiles = tilesAt(coord: coord)
-        log("\(tiles.count) tiles found at \(coord.shortDescription)", level: .debug)
-    }
+    /**
+     Called when the scene is double-clicked (macOS only).
 
-    public func mousePositionChanged(event: NSEvent) {
-        let coord = coordinateAtMouseEvent(event: event)
-        let locationInMap = event.location(in: self)
-        //let locationInLayer = mouseLocation(event: event)
+     - parameter event: `NSEvent` mouse click event.
+     */
+    public func sceneDoubleClicked(event: NSEvent) {}
 
-        let nodesUnderCursor = nodes(at: locationInMap)
+    /**
+     Called when the mouse moves in the scene (macOS only).
 
-        focusObjects = []
-        for node in nodesUnderCursor {
-            if node is SKTileObject {
-                focusObjects.append(node)
-            }
-
-            if let tile = node as? SKTile, (tile.texture != nil) {
-                if tilesAt(coord: coord).contains(tile) {
-                    focusObjects.append(node)
-                }
-            }
-        }
-    }
+     - parameter event: `NSEvent` mouse click event.
+     */
+    public func mousePositionChanged(event: NSEvent) {}
     #endif
 }
-
-
-extension TiledObjectColors {
-
-    static let all: [SKColor] = [coral, crimson, english, saffron,
-                                 tangerine, dandelion, azure, turquoise,
-                                 lime, pear, grass, indigo, metal, gun]
-    /// Returns a random color.
-    static var random: SKColor {
-        let randIndex = Int(arc4random_uniform(UInt32(TiledObjectColors.all.count)))
-        return TiledObjectColors.all[randIndex]
-    }
-}
-
 
 
 // MARK: - Deprecated
@@ -2131,9 +2998,31 @@ extension SKTilemap {
 
     /**
      Output a summary of the current scenes layer data.
+
+     - parameter reverse: `Bool` reverse layer order.
      */
-    @available(*, deprecated, message: "use `mapStatistics(default:)` instead")
-    public func debugLayers(reverse: Bool=false) {
-        mapStatistics()
+    @available(*, deprecated, message: "use `dumpStatistics` instead")
+    public func debugLayers(reverse: Bool = false) {
+        dumpStatistics()
+    }
+
+    /// Minimum zoom level for the map.
+    @available(*, deprecated, renamed: "SKTilemap.zoomConstraints.min")
+    public var minZoom: CGFloat {
+        get {
+            return zoomConstraints.min
+        } set {
+            zoomConstraints.min = newValue
+        }
+    }
+
+    /// Maximum zoom level for the map.
+    @available(*, deprecated, renamed: "SKTilemap.zoomConstraints.max")
+    public var maxZoom: CGFloat {
+        get {
+            return zoomConstraints.max
+        } set {
+            zoomConstraints.max = newValue
+        }
     }
 }

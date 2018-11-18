@@ -1,10 +1,11 @@
 //
 //  GameViewController.swift
-//  SKTiled
+//  SKTiled Demo - macOS
 //
 //  Created by Michael Fessenden on 9/19/16.
 //  Copyright © 2016 Michael Fessenden. All rights reserved.
 //
+//  macOS Game View Controller
 
 import Cocoa
 import SpriteKit
@@ -14,39 +15,57 @@ import AppKit
 class GameViewController: NSViewController, Loggable {
 
     let demoController = DemoController.default
+    var uiColor: NSColor = NSColor(hexString: "#757B8D")
+
+    // debugging labels (top)
+    @IBOutlet weak var outputTopView: NSStackView!
+    @IBOutlet weak var cameraInfoLabel: NSTextField!
+    @IBOutlet weak var isolatedInfoLabel: NSTextField!    // macOS only
+    @IBOutlet weak var pauseInfoLabel: NSTextField!
 
 
-    // debugging labels
+    // debugging labels (bottom)
+    @IBOutlet weak var outputBottomView: NSStackView!
     @IBOutlet weak var mapInfoLabel: NSTextField!
     @IBOutlet weak var tileInfoLabel: NSTextField!
     @IBOutlet weak var propertiesInfoLabel: NSTextField!
     @IBOutlet weak var debugInfoLabel: NSTextField!
-    @IBOutlet weak var cameraInfoLabel: NSTextField!
-    @IBOutlet weak var pauseInfoLabel: NSTextField!
-    @IBOutlet weak var isolatedInfoLabel: NSTextField!
-    @IBOutlet weak var coordinateInfoLabel: NSTextField!
 
+    // demo buttons
+    @IBOutlet weak var fitButton: NSButton!
+    @IBOutlet weak var gridButton: NSButton!
     @IBOutlet weak var graphButton: NSButton!
     @IBOutlet weak var objectsButton: NSButton!
-    @IBOutlet var demoFileAttributes: NSArrayController!
+    @IBOutlet weak var nextButton: NSButton!
 
+    @IBOutlet var demoFileAttributes: NSArrayController!
+    @IBOutlet weak var screenInfoLabel: NSTextField!
+
+
+    // render stats
+    @IBOutlet weak var statsStackView: NSStackView!
+    @IBOutlet weak var statsHeaderLabel: NSTextField!
+    @IBOutlet weak var statsRenderModeLabel: NSTextField!
+    @IBOutlet weak var statsCPULabel: NSTextField!
+    @IBOutlet weak var statsVisibleLabel: NSTextField!
+    @IBOutlet weak var statsObjectsLabel: NSTextField!
+    @IBOutlet weak var statsActionsLabel: NSTextField!
+    @IBOutlet weak var statsEffectsLabel: NSTextField!
+    @IBOutlet weak var statsUpdatedLabel: NSTextField!
+    @IBOutlet weak var statsRenderLabel: NSTextField!
 
     var timer = Timer()
-    var loggingLevel: LoggingLevel = SKTiledLoggingLevel
+    var loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel
     var commandBackgroundColor: NSColor = NSColor(calibratedWhite: 0.2, alpha: 0.25)
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
         // Configure the view.
         let skView = self.view as! SKView
 
         // setup the controller
-        #if DEBUG
-        SKTiledLoggingLevel = .debug
-        #endif
-        loggingLevel = SKTiledLoggingLevel
+        loggingLevel = TiledGlobals.default.loggingLevel
         demoController.loggingLevel = loggingLevel
         demoController.view = skView
 
@@ -55,54 +74,70 @@ class GameViewController: NSViewController, Loggable {
             return
         }
 
-        //debugInfoLabel?.isHidden = true
-
         #if DEBUG
-        skView.showsFPS = true
         skView.showsNodeCount = true
         skView.showsDrawCount = true
         skView.showsPhysics = false
-        //debugInfoLabel?.isHidden = false
         #endif
 
         // SpriteKit optimizations
         skView.shouldCullNonVisibleNodes = true
         skView.ignoresSiblingOrder = true
-        setupDebuggingLabels()
 
-        //set up notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(updateDebugLabels), name: NSNotification.Name(rawValue: "updateDebugLabels"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateWindowTitle), name: NSNotification.Name(rawValue: "updateWindowTitle"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateUIControls), name: NSNotification.Name(rawValue: "updateUIControls"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateCommandString), name: NSNotification.Name(rawValue: "updateCommandString"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(loggingLevelUpdated), name: NSNotification.Name(rawValue: "loggingLevelUpdated"), object: nil)
+        // intialize the demo interface
+        setupDemoInterface()
+        setupButtonAttributes()
 
+        // notifications
+        
+        // demo
+        NotificationCenter.default.addObserver(self, selector: #selector(updateDebuggingOutput), name: Notification.Name.Demo.UpdateDebugging, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(focusObjectsChanged), name: Notification.Name.Demo.FocusObjectsChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateCommandString), name: Notification.Name.Debug.CommandIssued, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateWindowTitle), name: Notification.Name.Demo.WindowTitleUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(flushScene), name: Notification.Name.Demo.FlushScene, object: nil)
+        
+        // tilemap callbacks
+        NotificationCenter.default.addObserver(self, selector: #selector(tilemapWasUpdated), name: Notification.Name.Map.Updated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(renderStatsUpdated), name: Notification.Name.Map.RenderStatsUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(tilemapUpdateModeChanged), name: Notification.Name.Map.UpdateModeChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(sceneCameraUpdated), name: Notification.Name.Camera.Updated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(renderStatisticsVisibilityChanged), name: Notification.Name.RenderStats.VisibilityChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(tilePropertiesChanged), name: Notification.Name.Tile.RenderModeChanged, object: nil)
+
+        // resolution/content scale change
+        NotificationCenter.default.addObserver(self, selector: #selector(windowDidChangeBackingProperties), name: NSWindow.didChangeBackingPropertiesNotification, object: nil)
+        
         // create the game scene
-        demoController.loadScene(url: currentURL, usePreviousCamera: false)
+        demoController.loadScene(url: currentURL, usePreviousCamera: demoController.preferences.usePreviousCamera)
     }
-
 
     override func viewDidAppear() {
         super.viewDidAppear()
+        setupButtonAttributes()
+    }
+
+    override func viewWillTransition(to newSize: NSSize) {
+        super.viewWillTransition(to: newSize)
+        (self.view as? SKView)?.scene?.size = newSize
     }
 
     /**
      Set up the debugging labels. (Mimics the text style in iOS controller).
      */
-    func setupDebuggingLabels() {
-        mapInfoLabel.stringValue = "Map: "
-        tileInfoLabel.stringValue = "Tile: "
-        propertiesInfoLabel.stringValue = "Properties:"
+    func setupDemoInterface() {
+        mapInfoLabel.stringValue = ""
+        tileInfoLabel.stringValue = ""
+        propertiesInfoLabel.stringValue = ""
         cameraInfoLabel.stringValue = "--"
         debugInfoLabel.stringValue = ""
         isolatedInfoLabel.stringValue = ""
-        coordinateInfoLabel.stringValue = ""
 
         // text shadow
         let shadow = NSShadow()
-        shadow.shadowOffset = NSSize(width: 2, height: 1)
-        shadow.shadowColor = NSColor(calibratedWhite: 0.1, alpha: 0.75)
-        shadow.shadowBlurRadius = 0.5
+        shadow.shadowOffset = NSSize(width: 1, height: 2)
+        shadow.shadowColor = NSColor(calibratedWhite: 0.1, alpha: 0.6)
+        shadow.shadowBlurRadius = 0.1
 
         mapInfoLabel.shadow = shadow
         tileInfoLabel.shadow = shadow
@@ -111,7 +146,37 @@ class GameViewController: NSViewController, Loggable {
         cameraInfoLabel.shadow = shadow
         pauseInfoLabel.shadow = shadow
         isolatedInfoLabel.shadow = shadow
-        coordinateInfoLabel.shadow = shadow
+
+        statsHeaderLabel.shadow = shadow
+        statsRenderModeLabel.shadow = shadow
+        statsCPULabel.shadow = shadow
+        statsVisibleLabel.shadow = shadow
+        statsObjectsLabel.shadow = shadow
+        statsActionsLabel.shadow = shadow
+        statsEffectsLabel.shadow = shadow
+        statsUpdatedLabel.shadow = shadow
+        statsRenderLabel.shadow = shadow
+        statsUpdatedLabel.isHidden = true
+    }
+
+    /**
+     Set up the control buttons.
+     */
+    func setupButtonAttributes() {
+
+        let normalBevel: CGFloat = 4
+        let allButtons = [fitButton, gridButton, graphButton, objectsButton, nextButton]
+
+        // set the button attributes
+        allButtons.forEach { button in
+            if let button = button {
+                button.wantsLayer = true
+                button.bezelColor = uiColor
+                button.layer?.shadowColor = uiColor.darken(by: 1.0).cgColor
+                button.layer?.cornerRadius = normalBevel
+                button.layer?.backgroundColor = uiColor.cgColor
+            }
+        }
     }
 
     /**
@@ -129,7 +194,7 @@ class GameViewController: NSViewController, Loggable {
      - parameter sender: `Any` ui button.
      */
     @IBAction func gridButtonPressed(_ sender: Any) {
-        self.demoController.toggleMapDemoDrawGridBounds()
+        self.demoController.toggleMapDemoDrawGridAndBounds()
     }
 
     /**
@@ -159,8 +224,6 @@ class GameViewController: NSViewController, Loggable {
         self.demoController.loadNextScene()
     }
 
-    // MARK: - Tracking
-
     // MARK: - Mouse Events
 
     /**
@@ -177,11 +240,31 @@ class GameViewController: NSViewController, Loggable {
     }
 
     /**
+     Update the window when resolution/dpi changes.
+
+     - parameter notification: `Notification` callback.
+     */
+    @objc func windowDidChangeBackingProperties(notification: Notification) {
+        guard (notification.object as? NSWindow != nil) else { return }
+        let skView = self.view as! SKView
+        if let tiledScene = skView.scene as? SKTiledDemoScene {
+            if let tilemap = tiledScene.tilemap {
+
+                NotificationCenter.default.post(
+                    name: Notification.Name.Map.Updated,
+                    object: tilemap,
+                    userInfo: nil
+                )
+            }
+        }
+    }
+
+    /**
      Update the window's title bar with the current scene name.
 
      - parameter notification: `Notification` callback.
      */
-    func updateWindowTitle(notification: Notification) {
+    @objc func updateWindowTitle(notification: Notification) {
         if let wintitle = notification.userInfo!["wintitle"] {
             if let infoDictionary = Bundle.main.infoDictionary {
                 if let bundleName = infoDictionary[kCFBundleNameKey as String] as? String {
@@ -192,25 +275,20 @@ class GameViewController: NSViewController, Loggable {
     }
 
     /**
-     Update the window's logging menu current value.
+     Show/hide the current SpriteKit render stats.
 
      - parameter notification: `Notification` callback.
      */
-    func loggingLevelUpdated(notification: Notification) {
-        guard let mainMenu = NSApplication.shared().mainMenu else {
-            Logger.default.log("cannot access main menu.", level: .warning, symbol: nil)
-            return
-        }
+    @objc func renderStatisticsVisibilityChanged(notification: Notification) {
+        guard let view = self.view as? SKView else { return }
+        if let showRenderStats = notification.userInfo!["showRenderStats"] as? Bool {
+            view.showsFPS = showRenderStats
+            view.showsNodeCount = showRenderStats
+            view.showsDrawCount = showRenderStats
+            view.showsPhysics = showRenderStats
+            view.showsFields = showRenderStats
 
-        let appMenu = mainMenu.item(withTitle: "Demo")!
-        if let loggingMenu = appMenu.submenu?.item(withTitle: "Logging") {
-            if let currentMenuItem = loggingMenu.submenu?.item(withTag: 1024) {
-                if let loggingLevel = notification.userInfo!["loggingLevel"] as? LoggingLevel {
-                    let newMenuTitle = loggingLevel.description.capitalized
-                    currentMenuItem.title = newMenuTitle
-                    currentMenuItem.isEnabled = false
-                }
-            }
+            statsStackView.isHidden = !showRenderStats
         }
     }
 
@@ -219,8 +297,7 @@ class GameViewController: NSViewController, Loggable {
 
      - parameter notification: `Notification` notification.
      */
-    func updateDebugLabels(notification: Notification) {
-        //coordinateInfoLabel.isHidden = true
+    @objc func updateDebuggingOutput(notification: Notification) {
         if let mapInfo = notification.userInfo!["mapInfo"] {
             mapInfoLabel.stringValue = mapInfo as! String
         }
@@ -233,10 +310,6 @@ class GameViewController: NSViewController, Loggable {
             propertiesInfoLabel.stringValue = propertiesInfo as! String
         }
 
-        if let cameraInfo = notification.userInfo!["cameraInfo"] {
-            cameraInfoLabel.stringValue = cameraInfo as! String
-        }
-
         if let pauseInfo = notification.userInfo!["pauseInfo"] {
             pauseInfoLabel.stringValue = pauseInfo as! String
         }
@@ -244,26 +317,72 @@ class GameViewController: NSViewController, Loggable {
         if let isolatedInfo = notification.userInfo!["isolatedInfo"] {
             isolatedInfoLabel.stringValue = isolatedInfo as! String
         }
+    }
 
-        if let coordinateInfo = notification.userInfo!["coordinateInfo"] {
-            coordinateInfoLabel.stringValue = coordinateInfo as! String
-            //coordinateInfoLabel.isHidden = false
+    /**
+     Called when the focus objects in the demo scene have changed.
+
+     - parameter notification: `Notification` notification.
+     */
+    @objc func focusObjectsChanged(notification: Notification) {
+        guard let focusObjects = notification.object as? [SKTiledGeometry],
+            let userInfo = notification.userInfo as? [String: Any],
+            let tilemap = userInfo["tilemap"] as? SKTilemap else { return }
+
+
+        if let tileDataStorage = tilemap.dataStorage {
+            for object in tileDataStorage.objectsList {
+                if let proxy = object.proxy {
+                    let isFocused = focusObjects.contains(where: { $0 as? TileObjectProxy == proxy })
+                    proxy.isFocused = isFocused
+                }
+            }
         }
     }
 
+    /**
+     Update the tile property label.
+
+     - parameter notification: `Notification` notification.
+     */
+    @objc func tilePropertiesChanged(notification: Notification) {
+        guard let tile = notification.object as? SKTile else { return }
+        propertiesInfoLabel.stringValue = tile.description
+    }
+
+    /**
+     Callback when cache is updated.
+
+     - parameter notification: `Notification` notification.
+     */
+    @objc func tilemapUpdateModeChanged(notification: Notification) {
+        guard let tilemap = notification.object as? SKTilemap else { return }
+        self.statsRenderModeLabel.stringValue = "Mode: \(tilemap.updateMode.name)"
+    }
+
+    /**
+     Update the camera debug information.
+
+     - parameter notification: `Notification` notification.
+     */
+    @objc func sceneCameraUpdated(notification: Notification) {
+        guard let camera = notification.object as? SKTiledSceneCamera else {
+            fatalError("no camera!!")
+        }
+        cameraInfoLabel.stringValue = camera.description
+    }
 
     /**
      Update the the command string label.
 
      - parameter notification: `Notification` notification.
      */
-    func updateCommandString(notification: Notification) {
+    @objc func updateCommandString(notification: Notification) {
         timer.invalidate()
         var duration: TimeInterval = 3.0
         if let commandString = notification.userInfo!["command"] {
-            var commandFormatted = commandString as! String
-            commandFormatted = "\(commandFormatted)".uppercaseFirst
-            debugInfoLabel.stringValue = "▹ \(commandFormatted)"
+            let commandFormatted = commandString as! String
+            debugInfoLabel.stringValue = "\(commandFormatted)"
             debugInfoLabel.backgroundColor = commandBackgroundColor
             //debugInfoLabel.drawsBackground = true
         }
@@ -276,10 +395,11 @@ class GameViewController: NSViewController, Loggable {
         timer = Timer.scheduledTimer(timeInterval: duration, target: self, selector: #selector(GameViewController.resetCommandLabel), userInfo: nil, repeats: true)
     }
 
+
     /**
      Reset the command string label.
      */
-    func resetCommandLabel() {
+    @objc func resetCommandLabel() {
         timer.invalidate()
         debugInfoLabel.setStringValue("", animated: true, interval: 0.75)
         debugInfoLabel.backgroundColor = NSColor(calibratedWhite: 0.0, alpha: 0.0)
@@ -288,16 +408,100 @@ class GameViewController: NSViewController, Loggable {
     /**
      Enables/disable button controls based on the current map attributes.
 
-    - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` notification.
      */
-    func updateUIControls(notification: Notification) {
-        if let hasGraphs = notification.userInfo!["hasGraphs"] {
-            graphButton.isEnabled = (hasGraphs as? Bool) == true
+     @objc func tilemapWasUpdated(notification: Notification) {
+        guard let tilemap = notification.object as? SKTilemap else { return }
+
+        if (tilemap.hasKey("uiColor")) {
+            if let hexString = tilemap.stringForKey("uiColor") {
+                self.uiColor = NSColor(hexString: hexString)
+            }
         }
 
-        if let hasObjects = notification.userInfo!["hasObjects"] {
-            objectsButton.isEnabled = (hasObjects as? Bool) == true
+        let effectsEnabled = (tilemap.shouldEnableEffects == true)
+        let effectsMessage = (effectsEnabled == true) ? (tilemap.shouldRasterize == true) ? "Effects: on (raster)" : "Effects: on" : "Effects: off"
+        statsHeaderLabel.stringValue = "Rendering: \(TiledGlobals.default.renderer.name)"
+        statsRenderModeLabel.stringValue = "Mode: \(tilemap.updateMode.name)"
+        statsEffectsLabel.stringValue = "\(effectsMessage)"
+        statsEffectsLabel.isHidden = (effectsEnabled == false)
+        statsVisibleLabel.stringValue = "Visible: \(tilemap.nodesInView.count)"
+        statsVisibleLabel.isHidden = (TiledGlobals.default.enableCameraCallbacks == false)
+
+        let graphsCount = tilemap.graphs.count
+        let hasGraphs = (graphsCount > 0)
+
+        var graphAction = "show"
+        for layer in tilemap.tileLayers() {
+            if layer.debugDrawOptions.contains(.drawGraph) {
+                graphAction = "hide"
+            }
         }
+
+        let graphButtonTitle = (graphsCount > 0) ? (graphsCount > 1) ? "\(graphAction) graphs" : "\(graphAction) graph" : "no graphs"
+        let hasObjects: Bool = (tilemap.getObjects().isEmpty == false)
+
+        /// ISOLATED LAYERS
+        let isolatedLayers = tilemap.getLayers().filter({ $0.isolated == true})
+        var isolatedInfoString = ""
+
+        if (isolatedLayers.isEmpty == false) {
+            isolatedInfoString = "Isolated: "
+            let isolatedLayerNames: [String] = isolatedLayers.map { "\"\($0.layerName)\"" }
+            isolatedInfoString += isolatedLayerNames.joined(separator: ", ")
+        }
+
+        isolatedInfoLabel.stringValue = isolatedInfoString
+        graphButton.isHidden = !hasGraphs
+        //graphButton.isEnabled = (graphsCount > 0)
+        objectsButton.isEnabled = hasObjects
+
+
+        gridButton.title = (tilemap.debugDrawOptions.contains(.drawGrid)) ? "hide grid" : "show grid"
+        objectsButton.title = (hasObjects == true) ? (tilemap.showObjects == true) ? "hide objects" : "show objects" : "show objects"
+        graphButton.title = graphButtonTitle
+        setupButtonAttributes()
+
+
+        // clean up render stats
+        statsCPULabel.isHidden = false
+        statsActionsLabel.isHidden = (tilemap.updateMode != .actions)
+        statsObjectsLabel.isHidden = false
+     }
+
+    /**
+     Clear the current scene.
+     */
+    @objc func flushScene() {
+        demoController.flushScene()
+        setupDemoInterface()
+    }
+
+    // MARK: - Debugging
+
+
+    /**
+     Updates the render stats debugging info.
+
+     - parameter notification: `Notification` notification.
+     */
+    @objc func renderStatsUpdated(notification: Notification) {
+        guard let renderStats = notification.object as? SKTilemap.RenderStatistics else { return }
+
+        self.statsHeaderLabel.stringValue = "Rendering: \(TiledGlobals.default.renderer.name)"
+        self.statsRenderModeLabel.stringValue = "Mode: \(renderStats.updateMode.name)"
+        self.statsVisibleLabel.stringValue = "Visible: \(renderStats.visibleCount)"
+        self.statsVisibleLabel.isHidden = (TiledGlobals.default.enableCameraCallbacks == false)
+        self.statsObjectsLabel.isHidden = (renderStats.objectsVisible == false)
+        self.statsObjectsLabel.stringValue = "Objects: \(renderStats.objectCount)"
+        self.statsCPULabel.attributedStringValue  = renderStats.processorAttributedString
+        let renderString = (TiledGlobals.default.timeDisplayMode == .seconds) ? String(format: "%.\(String(6))f", renderStats.renderTime) : String(format: "%.\(String(2))f", renderStats.renderTime.milleseconds)
+        let timeFormatString = (TiledGlobals.default.timeDisplayMode == .seconds) ? "s" : "ms"
+        self.statsRenderLabel.stringValue = "Render time: \(renderString)\(timeFormatString)"
+
+
+        self.statsUpdatedLabel.isHidden = (renderStats.updateMode == .actions)
+        self.statsUpdatedLabel.stringValue = "Updated: \(renderStats.updatedThisFrame)"
     }
 }
 
@@ -337,21 +541,33 @@ extension NSTextField {
     }
 
     /**
-     Private function to animate a fade effect.
+     Highlight the label with the given color.
 
-     - parameter change: `() -> ()` closure.
+     - parameter color: `NSColor` label color.
      - parameter interval: `TimeInterval` effect length.
      */
-    private func animate(change: @escaping () -> Void, interval: TimeInterval) {
+    func highlighWith(color: NSColor, interval: TimeInterval = 3.0) {
+        animate(change: {
+            self.textColor = color
+        }, interval: interval)
+    }
+
+    /**
+     Private function to animate a fade effect.
+
+     - parameter change: `() -> Void` closure.
+     - parameter interval: `TimeInterval` effect length.
+     */
+    fileprivate func animate(change: @escaping () -> Void, interval: TimeInterval) {
         NSAnimationContext.runAnimationGroup({ context in
             context.duration = interval / 2.0
-            context.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+            context.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
             animator().alphaValue = 0.0
         }, completionHandler: {
             change()
             NSAnimationContext.runAnimationGroup({ context in
                 context.duration = interval / 2.0
-                context.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+                context.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
                 self.animator().alphaValue = 1.0
             }, completionHandler: {})
         })
