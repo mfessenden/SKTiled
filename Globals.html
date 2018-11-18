@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Globals  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    <script src="js/retina-preprocess.js" defer></script>
+    <script src="js/retina.js" defer></script>
+
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Section/Globals" class="dashAnchor"></a>
+    <a title="Globals  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">SKTiled Docs</a> (75% documented)</p>
+        <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right"><a href="dash-feed://file%3A%2F%2F%2FUsers%2Fmichael%2Fgit%2FSKTiled%2Fdocsets%2FSKTiled%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">SKTiled Reference</a>
+        <img id="carat" src="img/carat.png" />
+        Globals  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Documentation.html">Documentation</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="whats-new.html">What&#39;s New</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="getting-started.html">Getting Started</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="scene-setup.html">Scene Setup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="working-with-maps.html">Working with Maps</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="working-with-tilesets.html">Working with Tilesets</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="working-with-layers.html">Working with Layers</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="working-with-tiles.html">Working with Tiles</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="coordinates.html">Coordinates</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="working-with-objects.html">Working with Objects</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="tiled-properties.html">Tiled Properties</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="gameplaykit.html">GameplayKit</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="extending-sktiled.html">Extending SKTiled</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="debugging.html">Debugging</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="troubleshooting.html">Troubleshooting</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/SKTiledObject.html">SKTiledObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SKTiledSceneCameraDelegate.html">SKTiledSceneCameraDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Class Hierarchy.html">Class Hierarchy</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/SKTilemap.html">SKTilemap</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTilemap/TilemapOrientation.html">– TilemapOrientation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC21CameraZoomConstraintsV">– CameraZoomConstraints</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTilemap/RenderStatistics.html">– RenderStatistics</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTileset.html">SKTileset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledLayerObject.html">SKTiledLayerObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledLayerObject.html#/s:7SKTiled0A11LayerObjectC10TileOffsetO">– TileOffset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTileLayer.html">SKTileLayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKObjectGroup.html">SKObjectGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKGroupLayer.html">SKGroupLayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKImageLayer.html">SKImageLayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTile.html">SKTile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTile/TileAlignmentHint.html">– TileAlignmentHint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTile/PhysicsShape.html">– PhysicsShape</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTilesetData.html">SKTilesetData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTileObject.html">SKTileObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTileObject/TiledObjectType.html">– TiledObjectType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTileObject/TiledObjectShape.html">– TiledObjectShape</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO">– CollisionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledScene.html">SKTiledScene</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Class Hierarchy.html#/c:@M@SKTiled@objc(cs)TileAnimationFrame">TileAnimationFrame</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Globals.html">Globals</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/TiledGlobals.html">TiledGlobals</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/TiledGlobals/Version.html">– Version</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC13RenderQualityV">– RenderQuality</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/TiledGlobals/DebugDisplayOptions.html">– DebugDisplayOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC15TimeDisplayModeO">– TimeDisplayMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC8RendererO">– Renderer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/DebugDrawOptions.html">DebugDrawOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Globals.html#/s:7SKTiled17CameraControlModeO">CameraControlMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/CameraZoomClamping.html">CameraZoomClamping</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TileRenderMode.html">TileRenderMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TileUpdateMode.html">TileUpdateMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/TextObjectAttributes.html">TextObjectAttributes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/TextObjectAttributes/TextAlignment.html">– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Globals</h1>
+            
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled12TiledGlobalsC"></a>
+                    <a name="//apple_ref/swift/Class/TiledGlobals" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC">TiledGlobals</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>The <code>TiledGlobals</code> object provides information about the framework, as well as allowing
+you to set default <strong>SKTiled</strong> attributes.</p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Property</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">renderer</td>
+<td style="text-align: left">SpriteKit renderer.</td>
+</tr>
+<tr>
+<td style="text-align: left">loggingLevel</td>
+<td style="text-align: left">Logging verbosity.</td>
+</tr>
+<tr>
+<td style="text-align: left">updateMode</td>
+<td style="text-align: left">Default tile update mode.</td>
+</tr>
+<tr>
+<td style="text-align: left">enableRenderCallbacks</td>
+<td style="text-align: left">Send render statistics.</td>
+</tr>
+<tr>
+<td style="text-align: left">enableCameraCallbacks</td>
+<td style="text-align: left">Send camera updates.</td>
+</tr>
+<tr>
+<td style="text-align: left">renderQuality</td>
+<td style="text-align: left">Global render quality values.</td>
+</tr>
+<tr>
+<td style="text-align: left">contentScale</td>
+<td style="text-align: left">Retina display scale factor.</td>
+</tr>
+<tr>
+<td style="text-align: left">version</td>
+<td style="text-align: left">Framework version.</td>
+</tr>
+</tbody></table>
+<h3 id='usage' class='heading'>Usage</h3>
+
+<p><strong>SKTiled</strong> object default values are set in the <code>TiledGlobals</code> object.</p>
+<pre class="highlight swift"><code><span class="c1">// access the default singleton instance</span>
+<span class="k">let</span> <span class="nv">tiledGlobals</span> <span class="o">=</span> <span class="kt">TiledGlobals</span><span class="o">.</span><span class="k">default</span>
+
+<span class="c1">// disable camera callbacks</span>
+<span class="n">tiledGlobals</span><span class="o">.</span><span class="n">enableCameraCallbacks</span> <span class="o">=</span> <span class="kc">false</span>
+
+<span class="c1">// set debugging mouse filters (macOS)</span>
+<span class="n">tiledGlobals</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">mouseFilters</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="n">tileCoordinates</span><span class="p">,</span> <span class="o">.</span><span class="n">tilesUnderCursor</span><span class="p">]</span>
+
+<span class="c1">// increase the default text object render quality</span>
+<span class="n">tiledGlobals</span><span class="o">.</span><span class="n">renderQuality</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="mf">12.0</span>
+</code></pre>
+
+                        <a href="Classes/TiledGlobals.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">TiledGlobals</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled16DebugDrawOptionsV"></a>
+                    <a name="//apple_ref/swift/Struct/DebugDrawOptions" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SKTiled16DebugDrawOptionsV">DebugDrawOptions</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>A structure representing debug drawing options for <strong>SKTiled</strong> objects.</p>
+<h3 id='usage' class='heading'>Usage</h3>
+<pre class="highlight swift"><code><span class="c1">// show the map's grid &amp; bounds shape</span>
+<span class="n">tilemap</span><span class="o">.</span><span class="n">debugDrawOptions</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="n">drawGrid</span><span class="p">,</span> <span class="o">.</span><span class="n">drawBounds</span><span class="p">]</span>
+
+<span class="c1">// turn off layer grid visibility</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">debugDrawOptions</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="o">.</span><span class="n">drawGrid</span><span class="p">)</span>
+</code></pre>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Property</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">drawGrid</td>
+<td style="text-align: left">Draw the layer&rsquo;s tile grid.</td>
+</tr>
+<tr>
+<td style="text-align: left">drawBounds</td>
+<td style="text-align: left">Draw the layer&rsquo;s boundary.</td>
+</tr>
+<tr>
+<td style="text-align: left">drawGraph</td>
+<td style="text-align: left">Visualize the layer&rsquo;s pathfinding graph.</td>
+</tr>
+<tr>
+<td style="text-align: left">drawObjectBounds</td>
+<td style="text-align: left">Draw vector object bounds.</td>
+</tr>
+<tr>
+<td style="text-align: left">drawTileBounds</td>
+<td style="text-align: left">Draw tile boundary shapes.</td>
+</tr>
+<tr>
+<td style="text-align: left">drawBackground</td>
+<td style="text-align: left">Draw the layer&rsquo;s background color.</td>
+</tr>
+<tr>
+<td style="text-align: left">drawAnchor</td>
+<td style="text-align: left">Draw the layer&rsquo;s anchor point.</td>
+</tr>
+</tbody></table>
+
+                        <a href="Structs/DebugDrawOptions.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">DebugDrawOptions</span> <span class="p">:</span> <span class="kt">OptionSet</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled17CameraControlModeO"></a>
+                    <a name="//apple_ref/swift/Enum/CameraControlMode" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SKTiled17CameraControlModeO">CameraControlMode</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>Determines how an attached controller interacts with the camera.</p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>none</td>
+<td>Controller does not affect camera.</td>
+</tr>
+<tr>
+<td>dolly</td>
+<td>Controller pans the camera.</td>
+</tr>
+<tr>
+<td>zoom</td>
+<td>Controller changes the camera zoom.</td>
+</tr>
+</tbody></table>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">CameraControlMode</span> <span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled18CameraZoomClampingO"></a>
+                    <a name="//apple_ref/swift/Enum/CameraZoomClamping" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SKTiled18CameraZoomClampingO">CameraZoomClamping</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>Camera zoom rounding factor. Clamps the zoom value to the nearest whole pixel value in order to alleviate cracks appearing in between individual tiles.</p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>none</td>
+<td>Do not clamp camera zoom.</td>
+</tr>
+<tr>
+<td>half</td>
+<td>Clamp zoom to the nearest half-pixel.</td>
+</tr>
+<tr>
+<td>third</td>
+<td>Clamp zoom to the nearest third of a pixel.</td>
+</tr>
+</tbody></table>
+
+                        <a href="Enums/CameraZoomClamping.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">CameraZoomClamping</span> <span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled14TileRenderModeO"></a>
+                    <a name="//apple_ref/swift/Enum/TileRenderMode" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SKTiled14TileRenderModeO">TileRenderMode</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>The <code>TileRenderMode</code> flag determines how a particular tile instance is rendered. If the default is
+specified, the tile renders however the parent tilemap tells it to. Only set this flag to override a
+particular tile instance&rsquo;s render behavior.</p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Property</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">default</td>
+<td style="text-align: left">Tile renders at default settings.</td>
+</tr>
+<tr>
+<td style="text-align: left">static</td>
+<td style="text-align: left">Tile ignores any animation data.</td>
+</tr>
+<tr>
+<td style="text-align: left">ignore</td>
+<td style="text-align: left">Tile does not take into account its tile data.</td>
+</tr>
+<tr>
+<td style="text-align: left">animated</td>
+<td style="text-align: left">Animate with a global id value.</td>
+</tr>
+</tbody></table>
+
+                        <a href="Enums/TileRenderMode.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">TileRenderMode</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled14TileUpdateModeO"></a>
+                    <a name="//apple_ref/swift/Enum/TileUpdateMode" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SKTiled14TileUpdateModeO">TileUpdateMode</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>Describes how the tilemap updates its tiles in your scene. Changing this property will affect your CPU usage, so use it carefully.</p>
+
+<p>The default mode is <code>TileUpdateMode.dynamic</code>, which updates tiles as needed each frame. For best performance, use <code>TileUpdateMode.actions</code>, which will
+run SpriteKit actions on animated tiles.</p>
+<h3 id='usage' class='heading'>Usage</h3>
+<pre class="highlight swift"><code><span class="c1">// passing the tile update mode to the load function</span>
+<span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">updateMode</span><span class="p">:</span> <span class="kt">TileUpdateMode</span><span class="o">.</span><span class="kd">dynamic</span><span class="p">)</span><span class="o">!</span>
+
+<span class="c1">// updating the attribute on the tilemp node</span>
+<span class="n">tilemap</span><span class="o">.</span><span class="n">updateMode</span> <span class="o">=</span> <span class="kt">TileUpdateMode</span><span class="o">.</span><span class="n">actions</span>
+</code></pre>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Property</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">dynamic</td>
+<td style="text-align: left">Dynamically update tiles as needed.</td>
+</tr>
+<tr>
+<td style="text-align: left">full</td>
+<td style="text-align: left">All tiles are updated each frame.</td>
+</tr>
+<tr>
+<td style="text-align: left">actions</td>
+<td style="text-align: left">Tiles are not updated, SpriteKit actions are used instead.</td>
+</tr>
+</tbody></table>
+
+                        <a href="Enums/TileUpdateMode.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">TileUpdateMode</span> <span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled20TextObjectAttributesV"></a>
+                    <a name="//apple_ref/swift/Struct/TextObjectAttributes" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SKTiled20TextObjectAttributesV">TextObjectAttributes</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>Structure for managing basic font rendering attributes for <a href="https://doc.mapeditor.org/en/stable/manual/objects/#insert-text"><strong>text objects</strong></a>.</p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>fontName</td>
+<td>Font name.</td>
+</tr>
+<tr>
+<td>fontSize</td>
+<td>Font size.</td>
+</tr>
+<tr>
+<td>fontColor</td>
+<td>Font color.</td>
+</tr>
+<tr>
+<td>alignment</td>
+<td>Horizontal/vertical text alignment.</td>
+</tr>
+<tr>
+<td>wrap</td>
+<td>Text wraps.</td>
+</tr>
+<tr>
+<td>isBold</td>
+<td>Text is bold.</td>
+</tr>
+<tr>
+<td>isItalic</td>
+<td>Text is italicized.</td>
+</tr>
+<tr>
+<td>isunderline</td>
+<td>Text is underlined.</td>
+</tr>
+<tr>
+<td>renderQuality</td>
+<td>Font scaling attribute.</td>
+</tr>
+</tbody></table>
+
+                        <a href="Structs/TextObjectAttributes.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">TextObjectAttributes</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>© 2018 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external">Michael Fessenden</a> under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

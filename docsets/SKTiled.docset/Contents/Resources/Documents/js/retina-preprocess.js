@@ -1,7 +1,6 @@
 
+// preprocessor to add attributes for retina.js
 $(document).ready(function(){
-   // jQuery methods go here...
-   console.log('Loading retina preprocessor...')
    $('img').each(function(index, item) {
        // string
        var imgSrc = item.src

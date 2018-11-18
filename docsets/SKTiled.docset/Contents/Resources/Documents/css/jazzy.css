@@ -219,7 +219,6 @@ li .nav-group-name {
   border: none; }
 
 .section-name {
-  margin: 0;
   margin-left: 18px; }
 
 .task-group-section {
@@ -411,9 +410,6 @@ section.section table tbody tr td:first-child {
 /* Table Last Row (code) */
 section.section table tbody tr:last-child {
   border-bottom: 0px; }
-
-section.section table thead th:first-child {
-  width: 40%; }
 
 section.section ul li ul {
   margin-bottom: 0.5em; }

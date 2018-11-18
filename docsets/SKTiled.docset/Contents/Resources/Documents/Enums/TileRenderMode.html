@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>TileRenderMode Enumeration Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    <script src="../js/retina-preprocess.js" defer></script>
+    <script src="../js/retina.js" defer></script>
+
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Enum/TileRenderMode" class="dashAnchor"></a>
+    <a title="TileRenderMode Enumeration Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">SKTiled Docs</a> (75% documented)</p>
+        <p class="header-right"><a href="https://github.com/mfessenden/SKTiled"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right"><a href="dash-feed://file%3A%2F%2F%2FUsers%2Fmichael%2Fgit%2FSKTiled%2Fdocsets%2FSKTiled%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">SKTiled Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        TileRenderMode Enumeration Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Documentation.html">Documentation</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../whats-new.html">What&#39;s New</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../getting-started.html">Getting Started</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../scene-setup.html">Scene Setup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../working-with-maps.html">Working with Maps</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../working-with-tilesets.html">Working with Tilesets</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../working-with-layers.html">Working with Layers</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../working-with-tiles.html">Working with Tiles</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../coordinates.html">Coordinates</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../working-with-objects.html">Working with Objects</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../tiled-properties.html">Tiled Properties</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../gameplaykit.html">GameplayKit</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../extending-sktiled.html">Extending SKTiled</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../debugging.html">Debugging</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../troubleshooting.html">Troubleshooting</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/SKTiledObject.html">SKTiledObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SKTiledSceneCameraDelegate.html">SKTiledSceneCameraDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Class Hierarchy.html">Class Hierarchy</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/SKTilemap.html">SKTilemap</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTilemap/TilemapOrientation.html">– TilemapOrientation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC21CameraZoomConstraintsV">– CameraZoomConstraints</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTilemap/RenderStatistics.html">– RenderStatistics</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTileset.html">SKTileset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTiledLayerObject.html">SKTiledLayerObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTiledLayerObject.html#/s:7SKTiled0A11LayerObjectC10TileOffsetO">– TileOffset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTileLayer.html">SKTileLayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKObjectGroup.html">SKObjectGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKGroupLayer.html">SKGroupLayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKImageLayer.html">SKImageLayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTile.html">SKTile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTile/TileAlignmentHint.html">– TileAlignmentHint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTile/PhysicsShape.html">– PhysicsShape</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTilesetData.html">SKTilesetData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTileObject.html">SKTileObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTileObject/TiledObjectType.html">– TiledObjectType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTileObject/TiledObjectShape.html">– TiledObjectShape</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO">– CollisionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTiledScene.html">SKTiledScene</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Class Hierarchy.html#/c:@M@SKTiled@objc(cs)TileAnimationFrame">TileAnimationFrame</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Globals.html">Globals</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/TiledGlobals.html">TiledGlobals</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TiledGlobals/Version.html">– Version</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC13RenderQualityV">– RenderQuality</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TiledGlobals/DebugDisplayOptions.html">– DebugDisplayOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC15TimeDisplayModeO">– TimeDisplayMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC8RendererO">– Renderer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/DebugDrawOptions.html">DebugDrawOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Globals.html#/s:7SKTiled17CameraControlModeO">CameraControlMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CameraZoomClamping.html">CameraZoomClamping</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TileRenderMode.html">TileRenderMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TileUpdateMode.html">TileUpdateMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TextObjectAttributes.html">TextObjectAttributes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TextObjectAttributes/TextAlignment.html">– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>TileRenderMode</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">TileRenderMode</span></code></pre>
+
+                </div>
+              </div>
+            <h2 id='overview' class='heading'>Overview</h2>
+
+<p>The <code>TileRenderMode</code> flag determines how a particular tile instance is rendered. If the default is
+specified, the tile renders however the parent tilemap tells it to. Only set this flag to override a
+particular tile instance&rsquo;s render behavior.</p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Property</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">default</td>
+<td style="text-align: left">Tile renders at default settings.</td>
+</tr>
+<tr>
+<td style="text-align: left">static</td>
+<td style="text-align: left">Tile ignores any animation data.</td>
+</tr>
+<tr>
+<td style="text-align: left">ignore</td>
+<td style="text-align: left">Tile does not take into account its tile data.</td>
+</tr>
+<tr>
+<td style="text-align: left">animated</td>
+<td style="text-align: left">Animate with a global id value.</td>
+</tr>
+</tbody></table>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SY8RawValueQa"></a>
+                    <a name="//apple_ref/swift/Alias/RawValue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SY8RawValueQa">RawValue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">RawValue</span> <span class="o">=</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SY8rawValuexSg03RawB0Qz_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(rawValue:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SY8rawValuexSg03RawB0Qz_tcfc">init(rawValue:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">?(</span><span class="nv">rawValue</span><span class="p">:</span> <span class="kt"><a href="../Enums/TileRenderMode.html#/s:SY8RawValueQa">RawValue</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SY8rawValue03RawB0Qzvp"></a>
+                    <a name="//apple_ref/swift/Property/rawValue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SY8rawValue03RawB0Qzvp">rawValue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">rawValue</span><span class="p">:</span> <span class="kt"><a href="../Enums/TileRenderMode.html#/s:SY8RawValueQa">RawValue</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s23CustomStringConvertibleP11descriptionSSvp"></a>
+                    <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s23CustomStringConvertibleP11descriptionSSvp">description</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s28CustomDebugStringConvertibleP16debugDescriptionSSvp"></a>
+                    <a name="//apple_ref/swift/Property/debugDescription" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s28CustomDebugStringConvertibleP16debugDescriptionSSvp">debugDescription</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">debugDescription</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>© 2018 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external">Michael Fessenden</a> under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
