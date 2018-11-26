@@ -1,10 +1,13 @@
 language: swift
 osx_image: xcode10
 xcode_project: SKTiled.xcodeproj
-xcode_scheme: 
+xcode_scheme:
   - SKTiled-iOS
   - SKTiled-macOS
   - SKTiled-tvOS
 branches:
   except:
     - develop
+script:
+  xcodebuild
+  CODE_SIGNING_REQUIRED=NO

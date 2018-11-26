@@ -970,7 +970,6 @@
 		4CBA617F1D8A0A4600B31FC1 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				4C9FEB6A219E45BF00C3EEED /* User */,
 				4CD5229E1DA624C400D78D81 /* CREDITS */,
 				4CAD35BC1F4B9D2C0034CA6C /* dungeon-16x16.tmx */,
 				4C8227E81F4E0E63007E4556 /* hex-65x65.tmx */,
@@ -981,6 +980,7 @@
 				4C96C0D51F53A0F700CE1DEB /* sk2-32x32.tmx */,
 				4C7DD6241F50E16600C3FE2D /* tsx */,
 				4CDF67CC1D8AE84300589457 /* png */,
+				4C9FEB6A219E45BF00C3EEED /* User */,
 			);
 			path = Assets;
 			sourceTree = "<group>";

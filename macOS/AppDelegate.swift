@@ -958,8 +958,7 @@ extension AppDelegate {
                 if let identifier = Int(accessibilityIdentifier) {
                     let menuOption = DebugDrawOptions.init(rawValue: identifier)
                     menuitem.state = (tilemap.debugDrawOptions.contains(menuOption)) ? .on : .off
-                    
-                    let contains = menuitem.state == .on
+                    //let contains = menuitem.state == .on
                 }
             }
         }

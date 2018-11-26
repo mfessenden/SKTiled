@@ -22,8 +22,8 @@ extension SKTiledDemoScene {
         let baseFilename = fileNamed.components(separatedBy: "/").last!
         
         let walkableTiles = tilemap.getTilesWithProperty("walkable", true)
-        let walkableString = (walkableTiles.isEmpty == true) ? "" : ", \(walkableTiles.count) walkable tiles."
-        log("setting up level: \"\(baseFilename)\"\(walkableString)", level: .debug)
+        let walkableTilesString = (walkableTiles.isEmpty == true) ? "" : ", \(walkableTiles.count) walkable tiles."
+        log("setting up level: \"\(baseFilename)\"\(walkableTilesString)", level: .debug)
         
         switch baseFilename {
             
@@ -46,5 +46,12 @@ extension SKTiledDemoScene {
         default:
             return
         }
+        
+        
+        NotificationCenter.default.post(
+            name: Notification.Name.Demo.WindowTitleUpdated,
+            object: nil,
+            userInfo: ["wintitle": fileNamed]
+        )
     }
 }

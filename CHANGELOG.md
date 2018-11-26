@@ -77,7 +77,6 @@ Change Log
 - add `SKTileObject.tileData` property
 - add `SKTiledSceneCamera.clampZoomValue`
 - add `SKTiledSceneCamera.zoomClamping` property
-- add `SKTiledLayerObject.isStatic` property
 - remove `SKTile.pauseAnimation`
 
 

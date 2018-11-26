@@ -280,7 +280,6 @@ extension TiledGlobals: CustomDebugReflectable {
         print("     - text:      \(self.renderQuality.text)")
         print(self.renderQuality.override > 0 ? "     - override:  \(self.renderQuality.override)\n" : "")
         print("  - Debug Mouse Filters:")
-        print("     - raw value:         \(self.debug.mouseFilters.rawValue)")
         print("     - tile coordinates:  \(self.debug.mouseFilters.contains(.tileCoordinates))")
         print("     - scene coordinates: \(self.debug.mouseFilters.contains(.sceneCoordinates))")
         print("     - tile data:         \(self.debug.mouseFilters.contains(.tileDataUnderCursor))")

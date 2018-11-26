@@ -19,7 +19,7 @@
 
 This branch is for **Xcode 10 & Swift 4.2**.
 
-- for Xcode 9 & Swift 3.2, see the [**xcode9**][branch-xcode9-url] branch
+- for Swift 3.3, see the [**xcode8**][branch-xcode8-url] branch
 
 
 Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
@@ -296,7 +296,6 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 [branch-master-url]:https://github.com/mfessenden/SKTiled
 [branch-xcode8-url]:https://github.com/mfessenden/SKTiled/tree/xcode8
 [branch-xcode9-url]:https://github.com/mfessenden/SKTiled/tree/xcode9
-[branch-swift4-url]:https://github.com/mfessenden/SKTiled/tree/swift4
 
 [header-image]:https://mfessenden.github.io/SKTiled/images/header.png
 [demo-mac-image]:https://mfessenden.github.io/SKTiled/images/demo-macos-iso.png
