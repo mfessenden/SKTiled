@@ -51,7 +51,7 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 
 - iOS 11
 - tvOS 12
-- macOS 10.13
+- macOS 10.12
 - Xcode 10/Swift 4.2
 
 ## Installation

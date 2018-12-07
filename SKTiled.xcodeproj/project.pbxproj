@@ -207,6 +207,10 @@
 		4C4FAC9B215E9D8C00EEF512 /* Demo+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FAC99215E9D8C00EEF512 /* Demo+Setup.swift */; };
 		4C4FAC9C215E9D8C00EEF512 /* Demo+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FAC99215E9D8C00EEF512 /* Demo+Setup.swift */; };
 		4C5479FE1DC15AF6008B3473 /* GameWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5479FD1DC15AF6008B3473 /* GameWindowController.swift */; };
+		4C73454221BAC12000EFC0AB /* CoordinateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C73454121BAC11F00EFC0AB /* CoordinateTests.swift */; };
+		4C73454321BAC12000EFC0AB /* CoordinateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C73454121BAC11F00EFC0AB /* CoordinateTests.swift */; };
+		4C73454421BAC12000EFC0AB /* CoordinateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C73454121BAC11F00EFC0AB /* CoordinateTests.swift */; };
+		4C73454521BAC12000EFC0AB /* CoordinateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C73454121BAC11F00EFC0AB /* CoordinateTests.swift */; };
 		4C7DD6221F50E16000C3FE2D /* roguelike-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C7DD6211F50E16000C3FE2D /* roguelike-16x16.tsx */; };
 		4C7DD6231F50E16000C3FE2D /* roguelike-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C7DD6211F50E16000C3FE2D /* roguelike-16x16.tsx */; };
 		4C8227E31F4E0D5E007E4556 /* isometric-130x66.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C8227E21F4E0D5E007E4556 /* isometric-130x66.tmx */; };
@@ -515,6 +519,7 @@
 		4C5812631E255E6400E80BFC /* SKTiled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTiled.h; sourceTree = "<group>"; };
 		4C5812671E255E7300E80BFC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C5812681E255E7300E80BFC /* SKTiled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTiled.h; sourceTree = "<group>"; };
+		4C73454121BAC11F00EFC0AB /* CoordinateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinateTests.swift; sourceTree = "<group>"; };
 		4C7DD6211F50E16000C3FE2D /* roguelike-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "roguelike-16x16.tsx"; sourceTree = "<group>"; };
 		4C8227E21F4E0D5E007E4556 /* isometric-130x66.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "isometric-130x66.tmx"; sourceTree = "<group>"; };
 		4C8227E51F4E0E3F007E4556 /* roguelike-16x16.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "roguelike-16x16.tmx"; sourceTree = "<group>"; };
@@ -912,6 +917,7 @@
 			isa = PBXGroup;
 			children = (
 				4CA6A7E52184F68E002BC924 /* Assets */,
+				4C73454121BAC11F00EFC0AB /* CoordinateTests.swift */,
 				4CA6A7DB2184F532002BC924 /* ParserTests.swift */,
 				4CA6A7FF2188C12F002BC924 /* PropertiesTests.swift */,
 				4CA6A7FD21875FD9002BC924 /* TilemapTests.swift */,
@@ -1248,15 +1254,18 @@
 					};
 					4C4ADA622189F3F100DB1A02 = {
 						CreatedOnToolsVersion = 10.0;
+						DevelopmentTeam = 747QKN4G7U;
 						ProvisioningStyle = Automatic;
 					};
 					4C4ADA812189F5FB00DB1A02 = {
 						4CA6A7D82184F531002BC924 = {
 						};
 						CreatedOnToolsVersion = 10.0;
+						DevelopmentTeam = 747QKN4G7U;
 						ProvisioningStyle = Automatic;
 					};
 					4CA6A7D82184F531002BC924 = {
+						DevelopmentTeam = 747QKN4G7U;
 						ProvisioningStyle = Automatic;
 					};
 					4CBA61641D8A048200B31FC1 = {
@@ -1733,6 +1742,7 @@
 				4C1774AF1D9099A3000C0AFD /* SKTiled+Extensions.swift in Sources */,
 				4C1774B41D9099A3000C0AFD /* SKTileLayer.swift in Sources */,
 				4C01D3A91F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift in Sources */,
+				4C73454221BAC12000EFC0AB /* CoordinateTests.swift in Sources */,
 				4C440BA91DAE913000DEC9A4 /* GameViewController.swift in Sources */,
 				4C1774B91D9099A3000C0AFD /* SKTilesetData.swift in Sources */,
 				4C1774B51D9099A3000C0AFD /* SKTilemap.swift in Sources */,
@@ -1848,6 +1858,7 @@
 				4C4ADA712189F45B00DB1A02 /* TilesetTests.swift in Sources */,
 				4C4ADA702189F45B00DB1A02 /* TilemapTests.swift in Sources */,
 				4C4ADA722189F45B00DB1A02 /* Tests+Extensions.swift in Sources */,
+				4C73454421BAC12000EFC0AB /* CoordinateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1861,6 +1872,7 @@
 				4C4ADA912189F81100DB1A02 /* TilesetTests.swift in Sources */,
 				4C4ADA902189F81100DB1A02 /* TilemapTests.swift in Sources */,
 				4C4ADA922189F81100DB1A02 /* Tests+Extensions.swift in Sources */,
+				4C73454521BAC12000EFC0AB /* CoordinateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1874,6 +1886,7 @@
 				4CA6A7FE21875FD9002BC924 /* TilemapTests.swift in Sources */,
 				4CA6A8002188C12F002BC924 /* PropertiesTests.swift in Sources */,
 				4CA6A8082188CD93002BC924 /* Tests+Extensions.swift in Sources */,
+				4C73454321BAC12000EFC0AB /* CoordinateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2427,7 +2440,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lz";
@@ -2479,7 +2492,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-lz";
 				OTHER_SWIFT_FLAGS = "-DRENDER_STATS";

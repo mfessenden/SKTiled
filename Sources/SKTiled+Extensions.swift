@@ -1025,7 +1025,6 @@ extension TimeInterval {
 
 extension Notification.Name {
 
-    /// IN USE
     public struct Tileset {
         public static let DataAdded             = Notification.Name(rawValue: "com.sktiled.notification.name.tileset.dataAdded")
         public static let DataRemoved           = Notification.Name(rawValue: "com.sktiled.notification.name.tileset.dataRemoved")
@@ -1954,7 +1953,7 @@ internal func drawAnchor(_ node: SKNode,
 // MARK: - Polygon Drawing
 
 /**
- Returns an array of points for the given dimensions. ** In Use **
+ Returns an array of points for the given dimensions.
 
  - parameter width:   `CGFloat` rect width.
  - parameter height:  `CGFloat` rect height.

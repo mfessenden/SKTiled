@@ -13,7 +13,7 @@ Change Log
 - Xcode version is 10
 - Swift version is now 4.2
 - Requirements updated:
-    - macOS: 10.13
+    - macOS: 10.12
     - iOS: 11.0
     - tvOS: 12.0
 - fix spritesheet height bug if excess space existed at image bottom

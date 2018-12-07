@@ -1108,7 +1108,11 @@ internal class MousePointer: SKNode {
 
                     outputString.append(labelString)
                     outputString.append(dataString)
-                    sceneLabel?.attributedText = outputString
+                    if #available(OSX 10.13, *) {
+                        sceneLabel?.attributedText = outputString
+                    } else {
+                        sceneLabel?.text = outputString.string
+                    }
                     sceneLabel?.position.y = CGFloat(labelIndex - lineCount / 2) * self.fontSize + self.fontSize
                     labelIndex += 1
                 }
@@ -1125,7 +1129,11 @@ internal class MousePointer: SKNode {
                     outputString.append(labelString)
                     outputString.append(dataString)
 
-                    coordLabel?.attributedText = outputString
+                    if #available(OSX 10.13, *) {
+                        coordLabel?.attributedText = outputString
+                    } else {
+                        coordLabel?.text = outputString.string
+                    }
                     coordLabel?.position.y = CGFloat(labelIndex - lineCount / 2) * self.fontSize + self.fontSize
                     labelIndex += 1
                 }
@@ -1187,7 +1195,11 @@ internal class MousePointer: SKNode {
                         
                         tileLabel?.position.y = CGFloat(labelIndex - lineCount / 2) * self.fontSize + self.fontSize
                         tileLabel?.isHidden = false
-                        tileLabel?.attributedText = outputString
+                        if #available(OSX 10.13, *) {
+                            tileLabel?.attributedText = outputString
+                        } else {
+                            tileLabel?.text = outputString.string
+                        }
                         labelIndex += 1
                     }
 

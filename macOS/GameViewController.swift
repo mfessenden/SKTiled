@@ -171,7 +171,9 @@ class GameViewController: NSViewController, Loggable {
         allButtons.forEach { button in
             if let button = button {
                 button.wantsLayer = true
-                button.bezelColor = uiColor
+                if #available(OSX 10.12.2, *) {
+                    button.bezelColor = uiColor
+                }
                 button.layer?.shadowColor = uiColor.darken(by: 1.0).cgColor
                 button.layer?.cornerRadius = normalBevel
                 button.layer?.backgroundColor = uiColor.cgColor
