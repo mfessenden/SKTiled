@@ -207,7 +207,6 @@
 		4C4FAC9B215E9D8C00EEF512 /* Demo+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FAC99215E9D8C00EEF512 /* Demo+Setup.swift */; };
 		4C4FAC9C215E9D8C00EEF512 /* Demo+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FAC99215E9D8C00EEF512 /* Demo+Setup.swift */; };
 		4C5479FE1DC15AF6008B3473 /* GameWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5479FD1DC15AF6008B3473 /* GameWindowController.swift */; };
-		4C73454221BAC12000EFC0AB /* CoordinateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C73454121BAC11F00EFC0AB /* CoordinateTests.swift */; };
 		4C73454321BAC12000EFC0AB /* CoordinateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C73454121BAC11F00EFC0AB /* CoordinateTests.swift */; };
 		4C73454421BAC12000EFC0AB /* CoordinateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C73454121BAC11F00EFC0AB /* CoordinateTests.swift */; };
 		4C73454521BAC12000EFC0AB /* CoordinateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C73454121BAC11F00EFC0AB /* CoordinateTests.swift */; };
@@ -1742,7 +1741,6 @@
 				4C1774AF1D9099A3000C0AFD /* SKTiled+Extensions.swift in Sources */,
 				4C1774B41D9099A3000C0AFD /* SKTileLayer.swift in Sources */,
 				4C01D3A91F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift in Sources */,
-				4C73454221BAC12000EFC0AB /* CoordinateTests.swift in Sources */,
 				4C440BA91DAE913000DEC9A4 /* GameViewController.swift in Sources */,
 				4C1774B91D9099A3000C0AFD /* SKTilesetData.swift in Sources */,
 				4C1774B51D9099A3000C0AFD /* SKTilemap.swift in Sources */,
