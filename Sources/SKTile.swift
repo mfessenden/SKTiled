@@ -146,7 +146,18 @@ open class SKTile: SKSpriteNode {
     open var highlightDuration: TimeInterval = TiledGlobals.default.debug.highlightDuration
     internal var boundsKey: String = "BOUNDS"
     internal var animationKey: String = "TILE-ANIMATION"
-
+    
+    /// Enable tile animation.
+    open var enableAnimation: Bool = true {
+        didSet {
+            if (enableAnimation == false) {
+                removeAction(forKey: animationKey)
+            } else {
+                runAnimationAsActions()
+            }
+        }
+    }
+    
     /**
      ## Overview:
 

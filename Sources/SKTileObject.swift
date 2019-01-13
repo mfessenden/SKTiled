@@ -198,7 +198,20 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     internal var boundsKey: String = "BOUNDS"
     internal var anchorKey: String = "ANCHOR"
     
-    /// Specialized properties.
+    internal var _enableAnimation: Bool = true
+    
+    /// Enable tile animation.
+    open var enableAnimation: Bool {
+        get {
+            return _enableAnimation
+        }
+        set {
+            _enableAnimation = newValue
+            tile?.enableAnimation = newValue
+        }
+    }
+    
+    /// Object tile (for tile objects)
     internal var tile: SKTile?                                               // optional tile
     internal var template: String?                                           // optional template reference
     internal var isInitialized: Bool = true

@@ -935,7 +935,7 @@ extension AppDelegate {
         if let updateModeSubMenu = updateModeMenuItem.submenu {
             updateModeSubMenu.removeAllItems()
 
-            for mode in tilemap.updateMode.allModes() {
+            for mode in TileUpdateMode.allModes() {
                 let modeMenuItem = NSMenuItem(title: mode.uiControlString, action: #selector(cycleTilemapUpdateMode), keyEquivalent: "")
                 modeMenuItem.setAccessibilityTitle("\(mode.rawValue)")
                 modeMenuItem.state = (tilemap.updateMode.rawValue == mode.rawValue) ? NSControl.StateValue.on : NSControl.StateValue.off

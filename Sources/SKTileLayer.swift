@@ -1376,11 +1376,20 @@ public class SKTileLayer: SKTiledLayerObject {
         // set the layer property
         tile.layer = self
         self.tiles[Int(coord.x), Int(coord.y)] = tile
-
+        
         // get the position in the layer (plus tileset offset)
         let tilePosition = pointForCoordinate(coord: coord, offsetX: offset.x, offsetY: offset.y)
         tile.position = tilePosition
         addChild(tile)
+        
+        // add to tile cache
+        NotificationCenter.default.post(
+            name: Notification.Name.Layer.TileAdded,
+            object: tile,
+            userInfo: ["layer": self]
+        )
+        
+        
         return tile
     }
 

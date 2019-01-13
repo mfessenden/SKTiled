@@ -735,6 +735,21 @@ public extension SKColor {
         self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
     }
 
+    /**
+    
+     Initialize an SKColor with integer values (0-255).
+    
+     - Parameters:
+       - red:   `Int` red value (0-255).
+       - green: `Int` green value (0-255).
+       - blue:  `Int` blue value (0-255).
+       - alpha: `Int` alpha value (0-255).
+     - returns: `SKColor`
+     */
+    convenience public init(red: Int, green: Int, blue: Int, alpha: Int = 255) {
+        self.init(red: CGFloat(red) / 255, green: CGFloat(green) / 255, blue: CGFloat(blue) / 255, alpha: CGFloat(alpha) / 255)
+    }
+
     /// Returns the individual color components.
     internal var components: [CGFloat] {
         guard let comps = cgColor.components else { return [0,0,0,0] }
@@ -755,6 +770,9 @@ public extension SKColor {
         let g = Int(comps[1] * 255)
         let b = Int(comps[2] * 255)
         let a = Int(comps[3] * 255)
+
+        // Swift 4.2
+        // let hex = String(254, radix: 16, uppercase: true)
 
         var rgbHex = "#\(String(format: "%02X%02X%02X", r, g, b))"
         rgbHex += (a == 255) ? "" : String(format: "%02X", a)
@@ -818,7 +836,18 @@ public extension SKColor {
 
     public var componentDescription: String {
         var result: [String] = []
-        for compDesc in components.map({ "\($0.roundTo(1))" }) {
+        for compDesc in components.map({ "\($0.roundTo(4))" }) {
+            result.append(compDesc)
+        }
+        return "SKColor: " + result.joined(separator: ",")
+    }
+    
+    
+    // TODO: Take this out in master
+    public var integerComponentDescription: String {
+        var result: [String] = []
+        let intComponents = components.map { Int($0 * 255)}
+        for compDesc in intComponents.map({ "\($0)" }) {
             result.append(compDesc)
         }
         return "SKColor: " + result.joined(separator: ",")

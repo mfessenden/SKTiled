@@ -41,8 +41,8 @@ class TestTilesetDelegate: SKTilesetDataSource {
 class ParserTests: XCTestCase {
     
     var tilemap: SKTilemap?
-    weak var tilemapDelegate: TestMapDelegate?
-    weak var tilesetDelegate: TestTilesetDelegate?
+    let tilemapDelegate = TestMapDelegate()
+    let tilesetDelegate = TestTilesetDelegate()
     var testBundle: Bundle!
     let tilemapName = "test-tilemap"
     
@@ -54,13 +54,11 @@ class ParserTests: XCTestCase {
         }
         
         if (tilemap == nil) {
-            
-            tilemapDelegate = TestMapDelegate()
-            tilesetDelegate = TestTilesetDelegate()
+            print("➜ loading test tilemap: \"\(tilemapName)\"...")
             
             let mapurl = testBundle!.url(forResource: tilemapName, withExtension: "tmx")!
-            tilemap = SKTilemap.load(tmxFile: mapurl.path, delegate: tilemapDelegate!,
-                                     tilesetDataSource: tilesetDelegate!, loggingLevel: .none)
+            tilemap = SKTilemap.load(tmxFile: mapurl.path, delegate: tilemapDelegate,
+                                     tilesetDataSource: tilesetDelegate, loggingLevel: .none)
         }
     }
 
@@ -97,8 +95,7 @@ class ParserTests: XCTestCase {
      
      */
     func testMapIsUsingDelegates() {
-        guard (tilemap != nil),
-            let tilemapDelegate = tilemapDelegate else {
+        guard (tilemap != nil) else {
             XCTFail("❗️tilemap did not load.")
             return
         }

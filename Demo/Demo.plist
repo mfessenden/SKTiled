@@ -23,9 +23,9 @@
 	<key>loggingLevel</key>
 	<integer>6</integer>
 	<key>renderCallbacks</key>
-	<true/>
+	<false/>
 	<key>cameraCallbacks</key>
-	<true/>
+	<false/>
 	<key>mouseFilters</key>
 	<integer>9</integer>
 	<key>ignoreZoomConstraints</key>

@@ -1186,6 +1186,7 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
      - parameter group: `SKGroupLayer?` optional group layer.
      - returns: `SKTileLayer` new layer.
      */
+    @discardableResult
     public func newTileLayer(named: String, group: SKGroupLayer? = nil) -> SKTileLayer {
         let tileLayer = SKTileLayer(layerName: named, tilemap: self)
         return addLayer(tileLayer, group: group).layer as! SKTileLayer
@@ -1198,6 +1199,7 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
      - parameter group: `SKGroupLayer?` optional group layer.
      - returns: `SKObjectGroup` new layer.
      */
+    @discardableResult
     public func newObjectGroup(named: String, group: SKGroupLayer? = nil) -> SKObjectGroup {
         let groupLayer = SKObjectGroup(layerName: named, tilemap: self)
         return addLayer(groupLayer, group: group).layer as! SKObjectGroup
@@ -1210,6 +1212,7 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
      - parameter group: `SKGroupLayer?` optional group layer.
      - returns: `SKImageLayer` new layer.
      */
+    @discardableResult
     public func newImageLayer(named: String, group: SKGroupLayer? = nil) -> SKImageLayer {
         let imageLayer = SKImageLayer(layerName: named, tilemap: self)
         return addLayer(imageLayer, group: group).layer as! SKImageLayer
@@ -1222,6 +1225,7 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
      - parameter group: `SKGroupLayer?` optional group layer.
      - returns: `SKGroupLayer` new layer.
      */
+    @discardableResult
     public func newGroupLayer(named: String, group: SKGroupLayer? = nil) -> SKGroupLayer {
         let groupLayer = SKGroupLayer(layerName: named, tilemap: self)
         return addLayer(groupLayer, group: group).layer as! SKGroupLayer
@@ -2162,7 +2166,6 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
                 let tileArray = staticItem.element.value
                 let tileTexture = tileData.texture
 
-
                 // loop through tiles
                 for tile in tileArray {
 
@@ -2173,7 +2176,7 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
 
                     switch tile.renderMode {
 
-                    // tile is ignoring it's tile data, move on
+                    // tile is ignoring its tile data, move on
                     case .ignore:
                         continue
 
@@ -2216,7 +2219,11 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
 
                 let tileData = animatedItem.element.key
                 let tileArray = animatedItem.element.value
-
+                
+                // ignore tile animation if the data is flagged as blocked
+                guard (tileData.blockAnimation == false) else {
+                    continue
+                }
 
                 // figure out which frame of animation we're at...
                 let cycleTime = tileData.animationTime
@@ -2269,9 +2276,13 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
 
                 // loop through tiles
                 for tile in tileArray {
-
+                    // ignore tiles with disabled animation
+                    if (tile.enableAnimation == false) {
+                        continue
+                    }
+                    
                     // ignore tiles not in view
-                    if (tile.visibleToCamera) == false {
+                    if (tile.visibleToCamera == false) {
                         continue
                     }
 
@@ -2311,7 +2322,6 @@ extension TileUpdateMode: CustomStringConvertible, CustomDebugStringConvertible 
         }
     }
 
-
     public var description: String {
         return self.name
     }
@@ -2325,11 +2335,23 @@ extension TileUpdateMode: CustomStringConvertible, CustomDebugStringConvertible 
 
 extension TileUpdateMode {
 
-    func allModes() -> [TileUpdateMode] {
+    /**
+     
+     Returns an array of all tile update modes.
+     
+      - returns: `[TileUpdateMode]` array of all tile update modes.
+     */
+    static public func allModes() -> [TileUpdateMode] {
         return [.dynamic, .full, .actions]
     }
+    
+    /**
+     
+     Returns the next tile update mode.
 
-    func next() -> TileUpdateMode {
+     - returns: `TileUpdateMode` next update mode.
+     */
+    public func next() -> TileUpdateMode {
         switch self {
         case .dynamic: return .full
         case .full: return .actions

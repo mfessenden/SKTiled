@@ -1,6 +1,21 @@
 Change Log
 ==========
 
+1.21
+-----
+
+#### Changes
+
+- `TileUpdateMode` access level is now public
+- add `SKTile.enableAnimation` flag
+- add `SKTileObject.enableAnimation` flag
+- fix a bug where animated tiles added via `SKTileLayer.addTileAt`  do not update correctly
+
+  
+#### Breaking
+
+- nothing
+
 
 1.20
 -----

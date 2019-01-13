@@ -162,6 +162,9 @@
 		4C3117DC1EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
 		4C3184E91F4DCB4200950BBF /* staggered-64x33.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C3184E71F4DCB4200950BBF /* staggered-64x33.tmx */; };
 		4C3184EA1F4DCB4200950BBF /* staggered-64x33.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C3184E71F4DCB4200950BBF /* staggered-64x33.tmx */; };
+		4C397F2321EBE55700EA84E6 /* ColorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C397F2221EBE55700EA84E6 /* ColorTests.swift */; };
+		4C397F2421EBE55700EA84E6 /* ColorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C397F2221EBE55700EA84E6 /* ColorTests.swift */; };
+		4C397F2521EBE55700EA84E6 /* ColorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C397F2221EBE55700EA84E6 /* ColorTests.swift */; };
 		4C4184A51F34B51D004E392A /* DemoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4184A41F34B51D004E392A /* DemoController.swift */; };
 		4C4184A61F34B51D004E392A /* DemoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4184A41F34B51D004E392A /* DemoController.swift */; };
 		4C41A5E81F437180001622FF /* SKTiled+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */; };
@@ -228,47 +231,36 @@
 		4C88E1E71D8A4EBE00FCCFA3 /* SKTileObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1D91D8A4EBE00FCCFA3 /* SKTileObject.swift */; };
 		4C88E1E81D8A4EBE00FCCFA3 /* SKTileset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DA1D8A4EBE00FCCFA3 /* SKTileset.swift */; };
 		4C88E1EA1D8A4EBE00FCCFA3 /* SKTilesetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */; };
-		4C94806B21938BA8002A620B /* portraits-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94804F21938BA6002A620B /* portraits-8x8.tsx */; };
 		4C94806C21938BA8002A620B /* portraits-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94804F21938BA6002A620B /* portraits-8x8.tsx */; };
 		4C94806D21938BA8002A620B /* portraits-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94804F21938BA6002A620B /* portraits-8x8.tsx */; };
 		4C94806E21938BA8002A620B /* portraits-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94804F21938BA6002A620B /* portraits-8x8.tsx */; };
-		4C94806F21938BA8002A620B /* characters-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805021938BA6002A620B /* characters-8x8.tsx */; };
 		4C94807021938BA8002A620B /* characters-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805021938BA6002A620B /* characters-8x8.tsx */; };
 		4C94807121938BA8002A620B /* characters-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805021938BA6002A620B /* characters-8x8.tsx */; };
 		4C94807221938BA8002A620B /* characters-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805021938BA6002A620B /* characters-8x8.tsx */; };
-		4C94807721938BA8002A620B /* characters-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805221938BA6002A620B /* characters-8x8.png */; };
 		4C94807821938BA8002A620B /* characters-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805221938BA6002A620B /* characters-8x8.png */; };
 		4C94807921938BA8002A620B /* characters-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805221938BA6002A620B /* characters-8x8.png */; };
 		4C94807A21938BA8002A620B /* characters-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805221938BA6002A620B /* characters-8x8.png */; };
-		4C94808321938BA8002A620B /* environment-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805521938BA7002A620B /* environment-8x8.png */; };
 		4C94808421938BA8002A620B /* environment-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805521938BA7002A620B /* environment-8x8.png */; };
 		4C94808521938BA8002A620B /* environment-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805521938BA7002A620B /* environment-8x8.png */; };
 		4C94808621938BA8002A620B /* environment-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805521938BA7002A620B /* environment-8x8.png */; };
-		4C94808721938BA8002A620B /* monsters-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805621938BA7002A620B /* monsters-16x16.tsx */; };
 		4C94808821938BA8002A620B /* monsters-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805621938BA7002A620B /* monsters-16x16.tsx */; };
 		4C94808921938BA8002A620B /* monsters-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805621938BA7002A620B /* monsters-16x16.tsx */; };
 		4C94808A21938BA8002A620B /* monsters-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805621938BA7002A620B /* monsters-16x16.tsx */; };
-		4C94808B21938BA8002A620B /* items-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805721938BA7002A620B /* items-8x8.tsx */; };
 		4C94808C21938BA8002A620B /* items-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805721938BA7002A620B /* items-8x8.tsx */; };
 		4C94808D21938BA8002A620B /* items-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805721938BA7002A620B /* items-8x8.tsx */; };
 		4C94808E21938BA8002A620B /* items-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805721938BA7002A620B /* items-8x8.tsx */; };
-		4C94808F21938BA8002A620B /* portraits-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805821938BA7002A620B /* portraits-8x8.png */; };
 		4C94809021938BA8002A620B /* portraits-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805821938BA7002A620B /* portraits-8x8.png */; };
 		4C94809121938BA8002A620B /* portraits-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805821938BA7002A620B /* portraits-8x8.png */; };
 		4C94809221938BA8002A620B /* portraits-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805821938BA7002A620B /* portraits-8x8.png */; };
-		4C94809321938BA8002A620B /* monsters-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805921938BA7002A620B /* monsters-16x16.png */; };
 		4C94809421938BA8002A620B /* monsters-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805921938BA7002A620B /* monsters-16x16.png */; };
 		4C94809521938BA8002A620B /* monsters-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805921938BA7002A620B /* monsters-16x16.png */; };
 		4C94809621938BA8002A620B /* monsters-16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805921938BA7002A620B /* monsters-16x16.png */; };
-		4C94809B21938BA8002A620B /* items-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805B21938BA7002A620B /* items-8x8.png */; };
 		4C94809C21938BA8002A620B /* items-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805B21938BA7002A620B /* items-8x8.png */; };
 		4C94809D21938BA8002A620B /* items-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805B21938BA7002A620B /* items-8x8.png */; };
 		4C94809E21938BA8002A620B /* items-8x8.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805B21938BA7002A620B /* items-8x8.png */; };
-		4C9480A721938BA8002A620B /* environment-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805E21938BA8002A620B /* environment-8x8.tsx */; };
 		4C9480A821938BA8002A620B /* environment-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805E21938BA8002A620B /* environment-8x8.tsx */; };
 		4C9480A921938BA8002A620B /* environment-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805E21938BA8002A620B /* environment-8x8.tsx */; };
 		4C9480AA21938BA8002A620B /* environment-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94805E21938BA8002A620B /* environment-8x8.tsx */; };
-		4C9480B321938BA8002A620B /* test-tilemap.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94806121938BA8002A620B /* test-tilemap.tmx */; };
 		4C9480B421938BA8002A620B /* test-tilemap.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94806121938BA8002A620B /* test-tilemap.tmx */; };
 		4C9480B521938BA8002A620B /* test-tilemap.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94806121938BA8002A620B /* test-tilemap.tmx */; };
 		4C9480B621938BA8002A620B /* test-tilemap.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94806121938BA8002A620B /* test-tilemap.tmx */; };
@@ -493,6 +485,7 @@
 		4C24B18720694D2D0027EBD5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C3117D81EF84FCF00892D9E /* SKTiled+Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKTiled+Debug.swift"; sourceTree = "<group>"; };
 		4C3184E71F4DCB4200950BBF /* staggered-64x33.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "staggered-64x33.tmx"; sourceTree = "<group>"; };
+		4C397F2221EBE55700EA84E6 /* ColorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorTests.swift; sourceTree = "<group>"; };
 		4C4184A41F34B51D004E392A /* DemoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoController.swift; sourceTree = "<group>"; };
 		4C41A5E01F437118001622FF /* SKTiled.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SKTiled.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C41A5FD1F43739C001622FF /* SKTiled.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SKTiled.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -916,6 +909,7 @@
 			isa = PBXGroup;
 			children = (
 				4CA6A7E52184F68E002BC924 /* Assets */,
+				4C397F2221EBE55700EA84E6 /* ColorTests.swift */,
 				4C73454121BAC11F00EFC0AB /* CoordinateTests.swift */,
 				4CA6A7DB2184F532002BC924 /* ParserTests.swift */,
 				4CA6A7FF2188C12F002BC924 /* PropertiesTests.swift */,
@@ -1134,6 +1128,7 @@
 				4C41A5F91F43739C001622FF /* Frameworks */,
 				4C41A5FA1F43739C001622FF /* Headers */,
 				4C41A5FB1F43739C001622FF /* Resources */,
+				4C50763C21DEC7F5001D5BAD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1496,17 +1491,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C94809B21938BA8002A620B /* items-8x8.png in Resources */,
-				4C94807721938BA8002A620B /* characters-8x8.png in Resources */,
-				4C94808B21938BA8002A620B /* items-8x8.tsx in Resources */,
-				4C94808721938BA8002A620B /* monsters-16x16.tsx in Resources */,
-				4C94806F21938BA8002A620B /* characters-8x8.tsx in Resources */,
-				4C94806B21938BA8002A620B /* portraits-8x8.tsx in Resources */,
-				4C9480B321938BA8002A620B /* test-tilemap.tmx in Resources */,
-				4C9480A721938BA8002A620B /* environment-8x8.tsx in Resources */,
-				4C94809321938BA8002A620B /* monsters-16x16.png in Resources */,
-				4C94808F21938BA8002A620B /* portraits-8x8.png in Resources */,
-				4C94808321938BA8002A620B /* environment-8x8.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1521,6 +1505,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C9480B521938BA8002A620B /* test-tilemap.tmx in Resources */,
 				4C94809D21938BA8002A620B /* items-8x8.png in Resources */,
 				4C94807921938BA8002A620B /* characters-8x8.png in Resources */,
 				4C94808D21938BA8002A620B /* items-8x8.tsx in Resources */,
@@ -1528,7 +1513,6 @@
 				4C94807121938BA8002A620B /* characters-8x8.tsx in Resources */,
 				4C9FEB72219F2A8E00C3EEED /* items-alt-8x8.png in Resources */,
 				4C94806D21938BA8002A620B /* portraits-8x8.tsx in Resources */,
-				4C9480B521938BA8002A620B /* test-tilemap.tmx in Resources */,
 				4C9480A921938BA8002A620B /* environment-8x8.tsx in Resources */,
 				4C94809521938BA8002A620B /* monsters-16x16.png in Resources */,
 				4C94809121938BA8002A620B /* portraits-8x8.png in Resources */,
@@ -1540,6 +1524,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C9480B621938BA8002A620B /* test-tilemap.tmx in Resources */,
 				4C94809E21938BA8002A620B /* items-8x8.png in Resources */,
 				4C94807A21938BA8002A620B /* characters-8x8.png in Resources */,
 				4C94808E21938BA8002A620B /* items-8x8.tsx in Resources */,
@@ -1547,7 +1532,6 @@
 				4C94807221938BA8002A620B /* characters-8x8.tsx in Resources */,
 				4C9FEB73219F2A8E00C3EEED /* items-alt-8x8.png in Resources */,
 				4C94806E21938BA8002A620B /* portraits-8x8.tsx in Resources */,
-				4C9480B621938BA8002A620B /* test-tilemap.tmx in Resources */,
 				4C9480AA21938BA8002A620B /* environment-8x8.tsx in Resources */,
 				4C94809621938BA8002A620B /* monsters-16x16.png in Resources */,
 				4C94809221938BA8002A620B /* portraits-8x8.png in Resources */,
@@ -1559,6 +1543,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C9480B421938BA8002A620B /* test-tilemap.tmx in Resources */,
 				4C94809C21938BA8002A620B /* items-8x8.png in Resources */,
 				4C94807821938BA8002A620B /* characters-8x8.png in Resources */,
 				4C94808C21938BA8002A620B /* items-8x8.tsx in Resources */,
@@ -1566,7 +1551,6 @@
 				4C94807021938BA8002A620B /* characters-8x8.tsx in Resources */,
 				4C9FEB71219F2A8E00C3EEED /* items-alt-8x8.png in Resources */,
 				4C94806C21938BA8002A620B /* portraits-8x8.tsx in Resources */,
-				4C9480B421938BA8002A620B /* test-tilemap.tmx in Resources */,
 				4C9480A821938BA8002A620B /* environment-8x8.tsx in Resources */,
 				4C94809421938BA8002A620B /* monsters-16x16.png in Resources */,
 				4C94809021938BA8002A620B /* portraits-8x8.png in Resources */,
@@ -1700,6 +1684,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "$SRCROOT/scripts/clean-assets.sh\n";
+		};
+		4C50763C21DEC7F5001D5BAD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nenv\n";
 		};
 		4CABC4D71DAEE1F900ACA1A4 /* Clean Assets */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1855,6 +1856,7 @@
 				4C1D689221932E6200D2D042 /* QueryTests.swift in Sources */,
 				4C4ADA712189F45B00DB1A02 /* TilesetTests.swift in Sources */,
 				4C4ADA702189F45B00DB1A02 /* TilemapTests.swift in Sources */,
+				4C397F2421EBE55700EA84E6 /* ColorTests.swift in Sources */,
 				4C4ADA722189F45B00DB1A02 /* Tests+Extensions.swift in Sources */,
 				4C73454421BAC12000EFC0AB /* CoordinateTests.swift in Sources */,
 			);
@@ -1869,6 +1871,7 @@
 				4C1D689321932E6200D2D042 /* QueryTests.swift in Sources */,
 				4C4ADA912189F81100DB1A02 /* TilesetTests.swift in Sources */,
 				4C4ADA902189F81100DB1A02 /* TilemapTests.swift in Sources */,
+				4C397F2521EBE55700EA84E6 /* ColorTests.swift in Sources */,
 				4C4ADA922189F81100DB1A02 /* Tests+Extensions.swift in Sources */,
 				4C73454521BAC12000EFC0AB /* CoordinateTests.swift in Sources */,
 			);
@@ -1883,6 +1886,7 @@
 				4C1D689121932E6200D2D042 /* QueryTests.swift in Sources */,
 				4CA6A7FE21875FD9002BC924 /* TilemapTests.swift in Sources */,
 				4CA6A8002188C12F002BC924 /* PropertiesTests.swift in Sources */,
+				4C397F2321EBE55700EA84E6 /* ColorTests.swift in Sources */,
 				4CA6A8082188CD93002BC924 /* Tests+Extensions.swift in Sources */,
 				4C73454321BAC12000EFC0AB /* CoordinateTests.swift in Sources */,
 			);
@@ -1982,7 +1986,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.20;
+				CURRENT_PROJECT_VERSION = 1.21;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/macOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -2003,7 +2007,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.20;
+				CURRENT_PROJECT_VERSION = 1.21;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/macOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -2024,7 +2028,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				CURRENT_PROJECT_VERSION = 1.20;
+				CURRENT_PROJECT_VERSION = 1.21;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -2057,7 +2061,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1.20;
+				CURRENT_PROJECT_VERSION = 1.21;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -2089,7 +2093,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CURRENT_PROJECT_VERSION = 1.20;
+				CURRENT_PROJECT_VERSION = 1.21;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -2115,7 +2119,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1.20;
+				CURRENT_PROJECT_VERSION = 1.21;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -2137,7 +2141,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.20;
+				CURRENT_PROJECT_VERSION = 1.21;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -2168,7 +2172,7 @@
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1.20;
+				CURRENT_PROJECT_VERSION = 1.21;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -2195,7 +2199,7 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				CURRENT_PROJECT_VERSION = 1.20;
+				CURRENT_PROJECT_VERSION = 1.21;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -2224,7 +2228,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1.20;
+				CURRENT_PROJECT_VERSION = 1.21;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -2508,7 +2512,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1.20;
+				CURRENT_PROJECT_VERSION = 1.21;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2525,7 +2529,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1.20;
+				CURRENT_PROJECT_VERSION = 1.21;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -105,7 +105,9 @@ public class SKTilesetData: SKTiledObject {
     /// Animated frames.
     internal var currentTime: TimeInterval = 0
     internal var frameIndex: UInt8 = 0
-    internal var blockAnimation: Bool = false               // supress tile animation
+    
+    /// Supress tile animation.
+    internal var blockAnimation: Bool = false
     internal var _frames: [TileAnimationFrame] = []
     public var frames:  [TileAnimationFrame] {
         return (blockAnimation == false) ? _frames : []
