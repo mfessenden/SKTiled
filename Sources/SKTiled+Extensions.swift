@@ -2,18 +2,44 @@
 //  SKTiled+Extensions.swift
 //  SKTiled
 //
-//  Created by Michael Fessenden on 4/5/16.
-//  Copyright © 2016 Michael Fessenden. All rights reserved.
-//  Compression extensions based on: https://github.com/1024jp/GzipSwift
+//  Created by Michael Fessenden.
+//  Compression extensions adapted from `GzipSwift`:
+//  - https://github.com/1024jp/GzipSwift
+//
+//  Web: https://github.com/mfessenden
+//  Email: michael.fessenden@gmail.com
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
 
-import Foundation
 import SpriteKit
 import zlib
+import GLKit
 #if os(iOS) || os(tvOS)
 import UIKit
+import MobileCoreServices
 #else
 import Cocoa
 #endif
+
+
+/// Added for backwards compatibility.
+public typealias int2 = SIMD2<Int32>
 
 
 // MARK: - Global Functions
@@ -52,9 +78,15 @@ func getSKTiledBuildVersion() -> String? {
 
  - returns: `String` Swift version.
  */
-public func getSwiftVersion() -> String {
-    var swiftVersion = ""
-    #if swift(>=4.2)
+internal func getSwiftVersion() -> String {
+    var swiftVersion = "5.0"
+    #if swift(>=5.2)
+    swiftVersion = "5.2"
+    #elseif swift(>=5.1)
+    swiftVersion = "5.1"
+    #elseif swift(>=5.0)
+    swiftVersion = "5.0"
+    #elseif swift(>=4.2)
     swiftVersion = "4.2"
     #elseif swift(>=4.1)
     swiftVersion = "4.1"
@@ -65,7 +97,6 @@ public func getSwiftVersion() -> String {
     #endif
     return swiftVersion
 }
-
 
 /**
  Dumps SKTiled framework globals to the console.
@@ -107,33 +138,33 @@ public func getContentScaleFactor() -> CGFloat {
 public func cpuUsage() -> Double {
     var kr: kern_return_t
     var task_info_count: mach_msg_type_number_t
-
+    
     task_info_count = mach_msg_type_number_t(TASK_INFO_MAX)
     var tinfo = [integer_t](repeating: 0, count: Int(task_info_count))
-
+    
     kr = task_info(mach_task_self_, task_flavor_t(TASK_BASIC_INFO), &tinfo, &task_info_count)
     if kr != KERN_SUCCESS {
         return -1
     }
-
-    var thread_list: thread_act_array_t? = UnsafeMutablePointer(mutating: [thread_act_t]())
+    
+    var thread_list: thread_act_array_t?
     var thread_count: mach_msg_type_number_t = 0
     defer {
         if let thread_list = thread_list {
             vm_deallocate(mach_task_self_, vm_address_t(UnsafePointer(thread_list).pointee), vm_size_t(thread_count))
         }
     }
-
+    
     kr = task_threads(mach_task_self_, &thread_list, &thread_count)
-
-    if kr != KERN_SUCCESS {
+    
+    if (kr != KERN_SUCCESS) {
         return -1
     }
-
+    
     var tot_cpu: Double = 0
-
+    
     if let thread_list = thread_list {
-
+        
         for j in 0 ..< Int(thread_count) {
             var thread_info_count = mach_msg_type_number_t(THREAD_INFO_MAX)
             var thinfo = [integer_t](repeating: 0, count: Int(thread_info_count))
@@ -142,23 +173,22 @@ public func cpuUsage() -> Double {
             if kr != KERN_SUCCESS {
                 return -1
             }
-
+            
             let threadBasicInfo = convertThreadInfoToThreadBasicInfo(thinfo)
-
+            
             if threadBasicInfo.flags != TH_FLAGS_IDLE {
                 tot_cpu += (Double(threadBasicInfo.cpu_usage) / Double(TH_USAGE_SCALE)) * 100.0
             }
         } // for each thread
     }
-
+    
     return tot_cpu
 }
 
 
-
-func convertThreadInfoToThreadBasicInfo(_ threadInfo: [integer_t]) -> thread_basic_info {
+internal func convertThreadInfoToThreadBasicInfo(_ threadInfo: [integer_t]) -> thread_basic_info {
     var result = thread_basic_info()
-
+    
     result.user_time = time_value_t(seconds: threadInfo[0], microseconds: threadInfo[1])
     result.system_time = time_value_t(seconds: threadInfo[2], microseconds: threadInfo[3])
     result.cpu_usage = threadInfo[4]
@@ -167,7 +197,7 @@ func convertThreadInfoToThreadBasicInfo(_ threadInfo: [integer_t]) -> thread_bas
     result.flags = threadInfo[7]
     result.suspend_count = threadInfo[8]
     result.sleep_time = threadInfo[9]
-
+    
     return result
 }
 
@@ -280,7 +310,7 @@ extension BinaryInteger {
 }
 
 
-public extension Int {
+extension Int {
     /// returns number of digits in Int number
     public var digitCount: Int {
         return numberOfDigits(in: self)
@@ -312,7 +342,7 @@ public extension Int {
 
 
 
-internal extension CGFloat {
+extension CGFloat {
 
     /**
      Convert a float to radians.
@@ -428,7 +458,7 @@ internal func sin(degrees: Float) -> Float {
 
 
 
-public extension CGPoint {
+extension CGPoint {
 
     /// Returns an point inverted in the Y-coordinate.
     public var invertedY: CGPoint {
@@ -475,15 +505,16 @@ public extension CGPoint {
 
 
 extension CGPoint: Hashable {
-
-    public var hashValue: Int {
-        return x.hashValue << 32 ^ y.hashValue
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(x)
+        hasher.combine(y)
     }
 }
 
 
 
-public extension CGSize {
+extension CGSize {
 
     public var count: Int { return Int(width) * Int(height) }
     public var halfSize: CGSize { return CGSize(width: width / 2, height: height / 2) }
@@ -505,7 +536,7 @@ public extension CGSize {
 }
 
 
-public extension CGRect {
+extension CGRect {
 
     /// Initialize with a center point and size.
     public init(center: CGPoint, size: CGSize) {
@@ -571,7 +602,7 @@ public extension CGRect {
 }
 
 
-public extension CGVector {
+extension CGVector {
     /**
      * Returns the squared length of the vector described by the CGVector.
      */
@@ -586,7 +617,7 @@ public extension CGVector {
 }
 
 
-public extension SKScene {
+extension SKScene {
     /**
      Returns the center point of a scene.
      */
@@ -605,7 +636,7 @@ public extension SKScene {
 }
 
 
-public extension SKNode {
+extension SKNode {
 
     /**
      Run an action with key & optional completion function.
@@ -651,7 +682,7 @@ public extension SKNode {
 
 
 
-public extension SKSpriteNode {
+extension SKSpriteNode {
 
     /**
      Convenience initalizer to set texture filtering to nearest neighbor.
@@ -665,7 +696,7 @@ public extension SKSpriteNode {
 }
 
 
-public extension SKColor {
+extension SKColor {
 
     /// Returns the hue, saturation, brightess & alpha components of the color
     internal var hsba: (h: CGFloat, s: CGFloat, b: CGFloat, a: CGFloat) {
@@ -1232,32 +1263,6 @@ extension SKAction {
     }
 }
 
-
-public extension Data {
-    // init with a value
-    public init<T>(from value: T) {
-        var value = value
-        self.init(buffer: UnsafeBufferPointer(start: &value, count: 1))
-    }
-
-    // export back as value
-    public func to<T>(type: T.Type) -> T {
-        return self.withUnsafeBytes { $0.pointee }
-    }
-
-    // init with array
-    public init<T>(fromArray values: [T]) {
-        var values = values
-        self.init(buffer: UnsafeBufferPointer(start: &values, count: values.count))
-    }
-
-    // output to array
-    public func toArray<T>(type: T.Type) -> [T] {
-        return self.withUnsafeBytes {
-            [T](UnsafeBufferPointer(start: $0, count: self.count/MemoryLayout<T>.stride))
-        }
-    }
-}
 
 
 // MARK: - Operators
@@ -2286,276 +2291,286 @@ public func clampPositionWithNode(node: SKNode, scale: CGFloat) {
 
 // MARK: - Compression
 
-/**
- Compression level with constants based on the zlib's constants.
- */
-public typealias CompressionLevel = Int32
+// MARK: - Compression/Gzip
 
-public extension CompressionLevel {
-
-    static public let noCompression      = Z_NO_COMPRESSION
-    static public let bestSpeed          = Z_BEST_SPEED
-    static public let bestCompression    = Z_BEST_COMPRESSION
-    static public let defaultCompression = Z_DEFAULT_COMPRESSION
+/// Compression level whose rawValue is based on the zlib's constants.
+public struct CompressionLevel: RawRepresentable {
+    
+    /// Compression level in the range of `0` (no compression) to `9` (maximum compression).
+    public let rawValue: Int32
+    
+    public static let noCompression = CompressionLevel(Z_NO_COMPRESSION)
+    public static let bestSpeed = CompressionLevel(Z_BEST_SPEED)
+    public static let bestCompression = CompressionLevel(Z_BEST_COMPRESSION)
+    public static let defaultCompression = CompressionLevel(Z_DEFAULT_COMPRESSION)
+    
+    
+    public init(rawValue: Int32) {
+        self.rawValue = rawValue
+    }
+    
+    
+    public init(_ rawValue: Int32) {
+        self.rawValue = rawValue
+    }
 }
 
 
-/**
- Errors on gzipping/gunzipping based on the zlib error codes.
- */
-public enum GzipError: Error {
+/// Errors on gzipping/gunzipping based on the zlib error codes.
+public struct GzipError: Swift.Error {
     // cf. http://www.zlib.net/manual.html
-
-    /**
-     The stream structure was inconsistent.
-
-     - underlying zlib error: `Z_STREAM_ERROR` (-2)
-     - parameter message: returned message by zlib
-     */
-    case stream(message: String)
-
-    /**
-     The input data was corrupted (input stream not conforming to the zlib format or incorrect check value).
-
-     - underlying zlib error: `Z_DATA_ERROR` (-3)
-     - parameter message: returned message by zlib
-     */
-    case data(message: String)
-
-    /**
-     There was not enough memory.
-
-     - underlying zlib error: `Z_MEM_ERROR` (-4)
-     - parameter message: returned message by zlib
-     */
-    case memory(message: String)
-
-    /**
-     No progress is possible or there was not enough room in the output buffer.
-
-     - underlying zlib error: `Z_BUF_ERROR` (-5)
-     - parameter message: returned message by zlib
-     */
-    case buffer(message: String)
-
-    /**
-     The zlib library version is incompatible with the version assumed by the caller.
-
-     - underlying zlib error: `Z_VERSION_ERROR` (-6)
-     - parameter message: returned message by zlib
-     */
-    case version(message: String)
-
-    /**
-     An unknown error occurred.
-
-     - parameter message: returned message by zlib
-     - parameter code: return error by zlib
-     */
-    case unknown(message: String, code: Int)
-
-
+    
+    public enum Kind: Equatable {
+        /// The stream structure was inconsistent.
+        ///
+        /// - underlying zlib error: `Z_STREAM_ERROR` (-2)
+        case stream
+        
+        /// The input data was corrupted
+        /// (input stream not conforming to the zlib format or incorrect check value).
+        ///
+        /// - underlying zlib error: `Z_DATA_ERROR` (-3)
+        case data
+        
+        /// There was not enough memory.
+        ///
+        /// - underlying zlib error: `Z_MEM_ERROR` (-4)
+        case memory
+        
+        /// No progress is possible or there was not enough room in the output buffer.
+        ///
+        /// - underlying zlib error: `Z_BUF_ERROR` (-5)
+        case buffer
+        
+        /// The zlib library version is incompatible with the version assumed by the caller.
+        ///
+        /// - underlying zlib error: `Z_VERSION_ERROR` (-6)
+        case version
+        
+        /// An unknown error occurred.
+        ///
+        /// - parameter code: return error by zlib
+        case unknown(code: Int)
+    }
+    
+    /// Error kind.
+    public let kind: Kind
+    
+    /// Returned message by zlib.
+    public let message: String
+    
+    
     internal init(code: Int32, msg: UnsafePointer<CChar>?) {
-
-        let message: String = {
+        
+        self.message = {
             guard let msg = msg, let message = String(validatingUTF8: msg) else {
                 return "Unknown gzip error"
             }
             return message
         }()
-
-        self = {
+        
+        self.kind = {
             switch code {
-            case Z_STREAM_ERROR:
-                return .stream(message: message)
-
-            case Z_DATA_ERROR:
-                return .data(message: message)
-
-            case Z_MEM_ERROR:
-                return .memory(message: message)
-
-            case Z_BUF_ERROR:
-                return .buffer(message: message)
-
-            case Z_VERSION_ERROR:
-                return .version(message: message)
-
-            default:
-                return .unknown(message: message, code: Int(code))
+                case Z_STREAM_ERROR:
+                    return .stream
+                case Z_DATA_ERROR:
+                    return .data
+                case Z_MEM_ERROR:
+                    return .memory
+                case Z_BUF_ERROR:
+                    return .buffer
+                case Z_VERSION_ERROR:
+                    return .version
+                default:
+                    return .unknown(code: Int(code))
             }
         }()
     }
-
-
+    
+    
     public var localizedDescription: String {
-
-        let description: String = {
-            switch self {
-            case .stream(let message):
-                return message
-            case .data(let message):
-                return message
-            case .memory(let message):
-                return message
-            case .buffer(let message):
-                return message
-            case .version(let message):
-                return message
-            case .unknown(let message, _):
-                return message
-            }
-        }()
-
-        return NSLocalizedString(description, comment: "error message")
+        
+        return self.message
     }
+    
+}
 
+/// Extension for Data objectsfor roundtripping data from arrays.
+/// https://stackoverflow.com/questions/38023838/round-trip-swift-number-types-to-from-data
+extension Data {
+    
+    // Initialize with a value.
+    init<T>(from value: T) {
+        self = Swift.withUnsafeBytes(of: value) { Data($0) }
+    }
+    
+    // Export back as value.
+    func to<T>(type: T.Type) -> T? where T: ExpressibleByIntegerLiteral {
+        var value: T = 0
+        guard count >= MemoryLayout.size(ofValue: value) else { return nil }
+        _ = Swift.withUnsafeMutableBytes(of: &value, { copyBytes(to: $0)} )
+        return value
+    }
+    
+    // Initialize with an array.
+    init<T>(fromArray values: [T]) {
+        self = values.withUnsafeBytes { Data($0) }
+    }
+    
+    // Output data to an array.
+    func toArray<T>(type: T.Type) -> [T] where T: ExpressibleByIntegerLiteral {
+        var array = Array<T>(repeating: 0, count: self.count/MemoryLayout<T>.stride)
+        _ = array.withUnsafeMutableBytes { copyBytes(to: $0) }
+        return array
+    }
 }
 
 
-public extension Data {
-
-    /**
-     Check if the reciever is already gzipped.
-
-     - returns: Whether the data is compressed.
-     */
+extension Data {
+    
+    /// Whether the receiver is compressed in gzip format.
     public var isGzipped: Bool {
-        return self.starts(with: [0x1f, 0x8b])
+        return self.starts(with: [0x1f, 0x8b])  // check magic number
     }
-
-    /**
-     Check if the reciever is already zlib compressed.
-
-     - returns: Whether the data is compressed.
-     */
+    
+    /// Whether the receiver is compressed in zlib format.
     public var isZlibCompressed: Bool {
         return self.starts(with: [0x78, 0x9C])
     }
-
-    /**
-     Create a new `Data` object by compressing the receiver using zlib.
-     Throws an error if compression failed.
-
-     - parameters:
-     - level: Compression level in the range of `0` (no compression) to `9` (maximum compression).
-
-     - throws: `GzipError`
-     - returns: Gzip-compressed `Data` object.
-     */
+    
+    
+    /// Create a new `Data` object by compressing the receiver using zlib.
+    /// Throws an error if compression failed.
+    ///
+    /// - Parameter level: Compression level.
+    /// - Returns: Gzip-compressed `Data` object.
+    /// - Throws: `GzipError`
     public func gzipped(level: CompressionLevel = .defaultCompression) throws -> Data {
-
-        guard self.isEmpty == false else {
+        
+        guard !self.isEmpty else {
             return Data()
         }
-
-        var stream = self.createZStream()
+        
+        var stream = z_stream()
         var status: Int32
-
-        status = deflateInit2_(&stream, level, Z_DEFLATED, MAX_WBITS + 16, MAX_MEM_LEVEL, Z_DEFAULT_STRATEGY, ZLIB_VERSION, STREAM_SIZE)
-
+        
+        status = deflateInit2_(&stream, level.rawValue, Z_DEFLATED, MAX_WBITS + 16, MAX_MEM_LEVEL, Z_DEFAULT_STRATEGY, ZLIB_VERSION, Int32(DataSize.stream))
+        
         guard status == Z_OK else {
             // deflateInit2 returns:
             // Z_VERSION_ERROR  The zlib library version is incompatible with the version assumed by the caller.
             // Z_MEM_ERROR      There was not enough memory.
             // Z_STREAM_ERROR   A parameter is invalid.
-
             throw GzipError(code: status, msg: stream.msg)
         }
-
-        var data = Data(capacity: CHUNK_SIZE)
-        while stream.avail_out == 0 {
+        
+        var data = Data(capacity: DataSize.chunk)
+        repeat {
             if Int(stream.total_out) >= data.count {
-                data.count += CHUNK_SIZE
+                data.count += DataSize.chunk
             }
-
-            data.withUnsafeMutableBytes { (bytes: UnsafeMutablePointer<Bytef>) in
-                stream.next_out = bytes.advanced(by: Int(stream.total_out))
+            
+            let inputCount = self.count
+            let outputCount = data.count
+            
+            self.withUnsafeBytes { (inputPointer: UnsafeRawBufferPointer) in
+                stream.next_in = UnsafeMutablePointer<Bytef>(mutating: inputPointer.bindMemory(to: Bytef.self).baseAddress!).advanced(by: Int(stream.total_in))
+                stream.avail_in = uint(inputCount) - uInt(stream.total_in)
+                
+                data.withUnsafeMutableBytes { (outputPointer: UnsafeMutableRawBufferPointer) in
+                    stream.next_out = outputPointer.bindMemory(to: Bytef.self).baseAddress!.advanced(by: Int(stream.total_out))
+                    stream.avail_out = uInt(outputCount) - uInt(stream.total_out)
+                    
+                    status = deflate(&stream, Z_FINISH)
+                    stream.next_out = nil
+                }
+                
+                stream.next_in = nil
             }
-            stream.avail_out = uInt(data.count) - uInt(stream.total_out)
-
-            deflate(&stream, Z_FINISH)
+            
+        } while stream.avail_out == 0
+        
+        guard deflateEnd(&stream) == Z_OK, status == Z_STREAM_END else {
+            throw GzipError(code: status, msg: stream.msg)
         }
-
-        deflateEnd(&stream)
+        
         data.count = Int(stream.total_out)
-
+        
         return data
     }
-
-
-    /**
-     Create a new `Data` object by decompressing the receiver using zlib.
-     Throws an error if decompression failed.
-
-     - throws: `GzipError`
-     - returns: Gzip-decompressed `Data` object.
-     */
+    
+    /// Create a new `Data` object by decompressing the receiver using zlib.
+    /// Throws an error if decompression failed.
+    ///
+    /// - Returns: Gzip-decompressed `Data` object.
+    /// - Throws: `GzipError`
     public func gunzipped() throws -> Data {
-
-        guard self.isEmpty == false else {
+        
+        guard !self.isEmpty else {
             return Data()
         }
-
-        var stream = self.createZStream()
+        
+        var stream = z_stream()
         var status: Int32
-
-        status = inflateInit2_(&stream, MAX_WBITS + 32, ZLIB_VERSION, STREAM_SIZE)
-
+        
+        status = inflateInit2_(&stream, MAX_WBITS + 32, ZLIB_VERSION, Int32(DataSize.stream))
+        
         guard status == Z_OK else {
             // inflateInit2 returns:
             // Z_VERSION_ERROR   The zlib library version is incompatible with the version assumed by the caller.
             // Z_MEM_ERROR       There was not enough memory.
             // Z_STREAM_ERROR    A parameters are invalid.
-
+            
             throw GzipError(code: status, msg: stream.msg)
         }
-
+        
         var data = Data(capacity: self.count * 2)
-
         repeat {
             if Int(stream.total_out) >= data.count {
                 data.count += self.count / 2
             }
-
-            data.withUnsafeMutableBytes { (bytes: UnsafeMutablePointer<Bytef>) in
-                stream.next_out = bytes.advanced(by: Int(stream.total_out))
+            
+            let inputCount = self.count
+            let outputCount = data.count
+            
+            self.withUnsafeBytes { (inputPointer: UnsafeRawBufferPointer) in
+                stream.next_in = UnsafeMutablePointer<Bytef>(mutating: inputPointer.bindMemory(to: Bytef.self).baseAddress!).advanced(by: Int(stream.total_in))
+                stream.avail_in = uint(inputCount) - uInt(stream.total_in)
+                
+                data.withUnsafeMutableBytes { (outputPointer: UnsafeMutableRawBufferPointer) in
+                    stream.next_out = outputPointer.bindMemory(to: Bytef.self).baseAddress!.advanced(by: Int(stream.total_out))
+                    stream.avail_out = uInt(outputCount) - uInt(stream.total_out)
+                    
+                    status = inflate(&stream, Z_SYNC_FLUSH)
+                    
+                    stream.next_out = nil
+                }
+                
+                stream.next_in = nil
             }
-            stream.avail_out = uInt(data.count) - uInt(stream.total_out)
-
-            status = inflate(&stream, Z_SYNC_FLUSH)
-
+            
         } while status == Z_OK
-
-        guard inflateEnd(&stream) == Z_OK && status == Z_STREAM_END else {
+        
+        guard inflateEnd(&stream) == Z_OK, status == Z_STREAM_END else {
             // inflate returns:
             // Z_DATA_ERROR   The input data was corrupted (input stream not conforming to the zlib format or incorrect check value).
             // Z_STREAM_ERROR The stream structure was inconsistent (for example if next_in or next_out was NULL).
             // Z_MEM_ERROR    There was not enough memory.
             // Z_BUF_ERROR    No progress is possible or there was not enough room in the output buffer when Z_FINISH is used.
-
             throw GzipError(code: status, msg: stream.msg)
         }
-
+        
         data.count = Int(stream.total_out)
-
+        
         return data
     }
-
-    private func createZStream() -> z_stream {
-
-        var stream = z_stream()
-
-        self.withUnsafeBytes { (bytes: UnsafePointer<Bytef>) in
-            stream.next_in = UnsafeMutablePointer<Bytef>(mutating: bytes)
-        }
-        stream.avail_in = uint(self.count)
-
-        return stream
-    }
-
 }
 
 
-private let CHUNK_SIZE: Int = 2 ^ 14
-private let STREAM_SIZE: Int32 = Int32(MemoryLayout<z_stream>.size)
+private struct DataSize {
+    
+    static let chunk = 1 << 14
+    static let stream = MemoryLayout<z_stream>.size
+    
+    private init() { }
+}

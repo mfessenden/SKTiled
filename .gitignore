@@ -1,11 +1,14 @@
 Assets/User/*
-Demo/shaders/*
-Develop/*
-docs/jazzy_output/*
+Docs/html
 .swiftlint.yml
 IDETemplateMacros.plist
 SKTiled.xcodeproj/xcshareddata/xcschemes/Demo*
 *.psd
 *.html
-*.js
-*.css
+
+# allowed in release, remove in master
+
+Demo/shaders/*
+Docs/Private
+Docs/Sketch
+*.graffle

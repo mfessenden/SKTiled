@@ -1,9 +1,9 @@
 ![SKTiled][header-image]
 
-> SKTiled is a Swift framework for using [Tiled][tiled-url] assets with Apple's SpriteKit.
+> **SKTiled** is a Swift framework for integrating [**Tiled**][tiled-url] assets with Apple's SpriteKit.
 
-[![Swift Version][swift4-image]][swift-url]
-[![Xcode Version][xcode10-image]][xcode-downloads-url]
+[![Swift Version][swift5-image]][swift-url]
+[![Xcode Version][xcode11-image]][xcode-downloads-url]
 [![Build Status][travis-image]][travis-url]
 [![License][license-image]][license-url]
 [![Platforms][platforms-image]][platforms-url]
@@ -11,15 +11,9 @@
 [![CocoaPods Compatible][pod-image]][pod-url]
 
 
-**SKTiled** is a framework for using [Tiled][tiled-url] assets with [Apple's SpriteKit][spritekit-url], built from the ground up with Swift. This project began life as an exercise to learn Apple's new programming language for a game project, but I've decided to release it as open source with the hopes that others will find it useful. **SKTiled** is up-to-date and supports **Tiled's** major features, including all map & object types.
-
+**SKTiled** is a framework for integrating [Tiled][tiled-url] assets with [Apple's SpriteKit][spritekit-url], built from the ground up with Swift. This project began life as an exercise to learn Apple's new programming language for a game project, but I've decided to release it as open source with the hopes that others will find it useful. **SKTiled** is up-to-date and supports **Tiled's** major features, including all map & object types.
 
 ![Demo Image][demo-iphone-img]
-
-
-This branch is for **Xcode 10 & Swift 4.2**.
-
-- for Swift 3.3, see the [**xcode8**][branch-xcode8-url] branch
 
 
 Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
@@ -45,6 +39,7 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 - [ ] infinite maps
 - [ ] tile collision objects
 - [ ] parse JSON tilemaps
+- [ ] Zstandard compression support
 
 
 ## Requirements
@@ -52,7 +47,7 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 - iOS 11
 - tvOS 12
 - macOS 10.12
-- Xcode 10/Swift 4.2
+- Xcode 11/Swift 5
 
 ## Installation
 
@@ -60,12 +55,12 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 
 For Carthage installation, create a Cartfile in the root of your project:
 
-    github "mfessenden/SKTiled" ~> 1.20
+    github "mfessenden/SKTiled" ~> 1.22
 
 
 For CocoaPods, install via a reference in your podfile:
 
-    pod 'SKTiled', '~> 1.20'
+    pod 'SKTiled', '~> 1.22'
 
 
 ## Usage
@@ -272,9 +267,9 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 - [Amit Patel](http://www-cs-students.stanford.edu/~amitp/gameprog.html): tile-based game logic
 - [Clint Bellanger: Isometric Tiles Math](http://clintbellanger.net/articles/isometric_math)
 
-
+[swift5-image]:https://img.shields.io/badge/Swift-5.2-brightgreen.svg
 [swift4-image]:https://img.shields.io/badge/Swift-4.2-brightgreen.svg
-[swift-image]:https://img.shields.io/badge/Swift-3.2-brightgreen.svg
+[swift3-image]:https://img.shields.io/badge/Swift-3.2-brightgreen.svg
 [swift-url]: https://swift.org/
 [license-image]:https://img.shields.io/badge/License-MIT-blue.svg
 [license-url]:https://github.com/mfessenden/SKTiled/blob/master/LICENSE
@@ -286,8 +281,8 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 [carthage-url]:https://github.com/Carthage/Carthage
 [pod-image]:https://img.shields.io/cocoapods/v/SKTiled.svg
 
-[xcode8-image]:https://img.shields.io/badge/Xcode-8-orange.svg
-[xcode9-image]:https://img.shields.io/badge/Xcode-9-orange.svg
+
+[xcode11-image]:https://img.shields.io/badge/Xcode-11.0-orange.svg
 [xcode10-image]:https://img.shields.io/badge/Xcode-10.0-orange.svg
 [xcode-downloads-url]:https://developer.apple.com/download/more/
 

@@ -19,13 +19,13 @@
 	<key>enableEffects</key>
 	<false/>
 	<key>updateMode</key>
-	<integer>0</integer>
+	<integer>2</integer>
 	<key>loggingLevel</key>
 	<integer>6</integer>
 	<key>renderCallbacks</key>
-	<false/>
+	<true/>
 	<key>cameraCallbacks</key>
-	<false/>
+	<true/>
 	<key>mouseFilters</key>
 	<integer>9</integer>
 	<key>ignoreZoomConstraints</key>

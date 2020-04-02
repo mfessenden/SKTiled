@@ -1,6 +1,18 @@
 Change Log
 ==========
 
+1.22
+-----
+
+#### Changes
+
+- Swift version is now 5.2
+
+#### Breaking
+
+- nothing
+
+
 1.21
 -----
 
