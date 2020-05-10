@@ -72,6 +72,19 @@ func getSKTiledBuildVersion() -> String? {
     return buildVersion
 }
 
+/**
+ Returns current framework version suffix (ie: `beta`).
+
+ - Returns: SKTiled framework build version.
+*/
+internal func getSKTiledVersionSuffix() -> String? {
+    var versionSuffix: String?
+    if let bundleSuffixValue = Bundle(for: SKTilemap.self).infoDictionary?["CFBundleVersionSuffix"] {
+        versionSuffix = "\(bundleSuffixValue)"
+    }
+    return versionSuffix
+}
+
 
 /**
  Returns current framework Swift version.

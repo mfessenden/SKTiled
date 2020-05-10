@@ -2954,8 +2954,7 @@ extension Array2D: CustomReflectable, CustomStringConvertible, CustomDebugString
             rowdata.append(rowResult)
         }
         
-        let children = DictionaryLiteral<String, Any>(dictionaryLiteral: ("columns", columns), ("rows", rowdata))
-        return Mirror(self, children: children)
+        return Mirror(self, children: KeyValuePairs<String, Any>(dictionaryLiteral: ("columns", columns), ("rows", rowdata)))
     }
 }
 

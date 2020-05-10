@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -331,10 +331,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bgh-ex-Ztr" userLabel="Output-Top">
-                                <rect key="frame" x="616" y="644" width="49" height="64"/>
+                                <rect key="frame" x="616" y="647" width="49" height="61"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Rpo-Bf-MrJ" userLabel="Camera Info Label">
-                                        <rect key="frame" x="-2" y="48" width="53" height="16"/>
+                                        <rect key="frame" x="-2" y="46" width="53" height="15"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Camera" id="96K-OU-ekP">
                                             <font key="font" metaFont="systemMedium" size="12"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -342,7 +342,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qaU-aN-dXC" userLabel="Paused Label">
-                                        <rect key="frame" x="-1" y="24" width="51" height="16"/>
+                                        <rect key="frame" x="-1" y="23" width="51" height="15"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Paused" id="8mb-3y-U6G">
                                             <font key="font" metaFont="systemMedium" size="12"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -350,7 +350,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="laT-E3-Leu" userLabel="Isolate Label">
-                                        <rect key="frame" x="1" y="0.0" width="47" height="16"/>
+                                        <rect key="frame" x="1" y="0.0" width="47" height="15"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Isolate" id="sVx-4m-rwW">
                                             <font key="font" metaFont="systemMedium" size="12"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -370,10 +370,10 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bpV-ih-FVj" userLabel="Output-Bottom">
-                                <rect key="frame" x="606" y="52" width="69" height="88"/>
+                                <rect key="frame" x="606" y="56" width="69" height="84"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P0U-y9-0fU" userLabel="Map Info Label">
-                                        <rect key="frame" x="16" y="72" width="37" height="16"/>
+                                        <rect key="frame" x="16" y="69" width="37" height="15"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Map:" id="exA-0S-gy3">
                                             <font key="font" metaFont="systemMedium" size="12"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -381,7 +381,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oa4-I2-u1i" userLabel="Tile Info Label">
-                                        <rect key="frame" x="18" y="48" width="33" height="16"/>
+                                        <rect key="frame" x="18" y="46" width="33" height="15"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Tile:" id="sRi-Cf-RZd">
                                             <font key="font" metaFont="systemMedium" size="12"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -389,7 +389,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3AA-Cl-qmn" userLabel="Properties Info Label">
-                                        <rect key="frame" x="-2" y="24" width="73" height="16"/>
+                                        <rect key="frame" x="-2" y="23" width="73" height="15"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Properties:" id="cFa-yZ-KBh">
                                             <font key="font" metaFont="systemMedium" size="12"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -397,7 +397,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="npC-Jr-qjF" userLabel="Debug Info Label">
-                                        <rect key="frame" x="11" y="0.0" width="46" height="16"/>
+                                        <rect key="frame" x="11" y="0.0" width="46" height="15"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Debug" id="faQ-9y-P5R" userLabel="Debug Info Label">
                                             <font key="font" metaFont="systemMedium" size="12"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -423,7 +423,7 @@
                                 </customSpacing>
                             </stackView>
                             <stackView alphaValue="0.84999999999999998" distribution="fillEqually" orientation="horizontal" alignment="top" spacing="12" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LqZ-dY-ggy" userLabel="Controls">
-                                <rect key="frame" x="381" y="18" width="518" height="22"/>
+                                <rect key="frame" x="381" y="22" width="518" height="22"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IwQ-St-3Wv" userLabel="Fit Button">
                                         <rect key="frame" x="0.0" y="-1" width="94" height="23"/>
@@ -497,10 +497,10 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AWK-NZ-EcJ" userLabel="Stats Stack View">
-                                <rect key="frame" x="4" y="4" width="109" height="135"/>
+                                <rect key="frame" x="4" y="4" width="109" height="126"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uha-XC-cXI" userLabel="Stats Header Label">
-                                        <rect key="frame" x="-2" y="120" width="98" height="15"/>
+                                        <rect key="frame" x="-2" y="112" width="98" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Render Stats:" id="BeR-AF-VlP" userLabel="Render Stats">
                                             <font key="font" size="12" name="Courier-Bold"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -508,7 +508,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="W4s-ny-MAx" userLabel="Stats Render Mode Label">
-                                        <rect key="frame" x="-2" y="105" width="113" height="15"/>
+                                        <rect key="frame" x="-2" y="98" width="113" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Render Mode: --" id="Q4G-QC-XPw" userLabel="Render Mode">
                                             <font key="font" size="12" name="Courier"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -516,7 +516,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cCh-yV-hn8" userLabel="Stats CPU Label">
-                                        <rect key="frame" x="-2" y="90" width="98" height="15"/>
+                                        <rect key="frame" x="-2" y="84" width="98" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" title="CPU Usage: --" id="Ne8-aA-QtM" userLabel="CPU Usage">
                                             <font key="font" size="12" name="Courier"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -524,7 +524,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TDW-3b-x8p" userLabel="Stats Visible Label">
-                                        <rect key="frame" x="-2" y="75" width="84" height="15"/>
+                                        <rect key="frame" x="-2" y="70" width="84" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Visible: --" id="sHQ-sa-FHX" userLabel="Visible">
                                             <font key="font" size="12" name="Courier"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -532,7 +532,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Bvo-K8-F5b" userLabel="Stats Actions Label">
-                                        <rect key="frame" x="-2" y="60" width="77" height="15"/>
+                                        <rect key="frame" x="-2" y="56" width="77" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Actions: 0" id="VXu-6T-95h" userLabel="Actions">
                                             <font key="font" size="12" name="Courier"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -540,7 +540,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Dw1-tm-WO4" userLabel="Stats Objects Label">
-                                        <rect key="frame" x="-2" y="45" width="77" height="15"/>
+                                        <rect key="frame" x="-2" y="42" width="77" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Objects: 0" id="e7Z-GQ-e93" userLabel="Objects">
                                             <font key="font" size="12" name="Courier"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -548,7 +548,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5BW-OW-rgF" userLabel="Stats Updated Label">
-                                        <rect key="frame" x="-2" y="30" width="77" height="15"/>
+                                        <rect key="frame" x="-2" y="28" width="77" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Updated: 0" id="8Wi-4w-sRq" userLabel="Updated:">
                                             <font key="font" size="12" name="Courier"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -556,7 +556,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Vj-2A-SbA" userLabel="Stats Effects Label">
-                                        <rect key="frame" x="-2" y="15" width="91" height="15"/>
+                                        <rect key="frame" x="-2" y="14" width="91" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Effects: off" id="5rU-3N-MpZ" userLabel="Effects:">
                                             <font key="font" size="12" name="Courier"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -564,7 +564,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pli-ih-OsQ" userLabel="Stats Render Label">
-                                        <rect key="frame" x="-2" y="0.0" width="105" height="15"/>
+                                        <rect key="frame" x="-2" y="0.0" width="105" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Render time: 0" id="t5Y-cU-9KB" userLabel="Effects">
                                             <font key="font" size="12" name="Courier-Bold"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -595,17 +595,27 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SyM-6f-mF1" userLabel="Version Label">
+                                <rect key="frame" x="618" y="4" width="44" height="11"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="version:" id="kYc-am-iL6">
+                                    <font key="font" metaFont="systemMedium" size="9"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="0.65000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="LqZ-dY-ggy" secondAttribute="bottom" constant="18" id="FpW-ev-RXT"/>
+                            <constraint firstAttribute="bottom" secondItem="LqZ-dY-ggy" secondAttribute="bottom" constant="22" id="FpW-ev-RXT"/>
                             <constraint firstItem="LqZ-dY-ggy" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="Gkp-Gf-1lM"/>
                             <constraint firstAttribute="bottom" secondItem="AWK-NZ-EcJ" secondAttribute="bottom" constant="4" id="HxY-az-QGj"/>
                             <constraint firstItem="LqZ-dY-ggy" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="MWP-Tu-zuC"/>
+                            <constraint firstItem="SyM-6f-mF1" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="Nv4-FI-6RX"/>
                             <constraint firstItem="bpV-ih-FVj" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="SuM-qs-Xo7"/>
                             <constraint firstItem="LqZ-dY-ggy" firstAttribute="top" secondItem="bpV-ih-FVj" secondAttribute="bottom" constant="12" id="bjC-aK-4cF"/>
                             <constraint firstItem="AWK-NZ-EcJ" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="4" id="q5W-ts-DgK"/>
                             <constraint firstItem="Bgh-ex-Ztr" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="12" id="qEn-DF-P5C"/>
                             <constraint firstItem="Bgh-ex-Ztr" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="yBA-Pi-6Vs"/>
+                            <constraint firstAttribute="bottom" secondItem="SyM-6f-mF1" secondAttribute="bottom" constant="4" id="yIO-lu-Wc6"/>
                         </constraints>
                     </view>
                     <connections>
@@ -613,6 +623,7 @@
                         <outlet property="debugInfoLabel" destination="npC-Jr-qjF" id="s9h-0V-GwJ"/>
                         <outlet property="demoFileAttributes" destination="roh-5A-x7m" id="IIt-Ds-dF2"/>
                         <outlet property="fitButton" destination="IwQ-St-3Wv" id="cst-mf-zi5"/>
+                        <outlet property="frameworkVersionLabel" destination="SyM-6f-mF1" id="sHr-QZ-ffy"/>
                         <outlet property="graphButton" destination="npW-cn-J3N" id="bDT-MQ-AjA"/>
                         <outlet property="gridButton" destination="nuZ-Nw-3Kh" id="YwV-TN-gdQ"/>
                         <outlet property="isolatedInfoLabel" destination="laT-E3-Leu" id="n55-Wt-6Fk"/>

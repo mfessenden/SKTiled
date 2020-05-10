@@ -48,6 +48,7 @@ class GameViewController: NSViewController, Loggable {
     @IBOutlet weak var tileInfoLabel: NSTextField!
     @IBOutlet weak var propertiesInfoLabel: NSTextField!
     @IBOutlet weak var debugInfoLabel: NSTextField!
+    @IBOutlet weak var frameworkVersionLabel: NSTextField!
 
     // demo buttons
     @IBOutlet weak var fitButton: NSButton!
@@ -107,14 +108,14 @@ class GameViewController: NSViewController, Loggable {
         setupButtonAttributes()
 
         // notifications
-        
+
         // demo
         NotificationCenter.default.addObserver(self, selector: #selector(updateDebuggingOutput), name: Notification.Name.Demo.UpdateDebugging, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(focusObjectsChanged), name: Notification.Name.Demo.FocusObjectsChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateCommandString), name: Notification.Name.Debug.CommandIssued, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateWindowTitle), name: Notification.Name.Demo.WindowTitleUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(flushScene), name: Notification.Name.Demo.FlushScene, object: nil)
-        
+
         // tilemap callbacks
         NotificationCenter.default.addObserver(self, selector: #selector(tilemapWasUpdated), name: Notification.Name.Map.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(renderStatsUpdated), name: Notification.Name.Map.RenderStatsUpdated, object: nil)
@@ -125,9 +126,10 @@ class GameViewController: NSViewController, Loggable {
 
         // resolution/content scale change
         NotificationCenter.default.addObserver(self, selector: #selector(windowDidChangeBackingProperties), name: NSWindow.didChangeBackingPropertiesNotification, object: nil)
-        
+
         // create the game scene
         demoController.loadScene(url: currentURL, usePreviousCamera: demoController.preferences.usePreviousCamera)
+        frameworkVersionLabel.stringValue = TiledGlobals.default.version.versionString
     }
 
     override func viewDidAppear() {

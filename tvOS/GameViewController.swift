@@ -41,7 +41,8 @@ class GameViewController: GCEventViewController, Loggable {
     // debugging labels (bottom)
     @IBOutlet weak var mapInfoLabel: UILabel!
     @IBOutlet weak var debugInfoLabel: UILabel!
-
+    @IBOutlet weak var frameworkVersionLabel: UILabel!
+    
 
     // demo buttons
     @IBOutlet weak var fitButton: UIButton!
@@ -124,6 +125,8 @@ class GameViewController: GCEventViewController, Loggable {
 
         /* create the game scene */
         demoController.loadScene(url: currentURL, usePreviousCamera: demoController.preferences.usePreviousCamera)
+        
+        frameworkVersionLabel.text = TiledGlobals.default.version.versionString
     }
 
     override func viewDidLayoutSubviews() {

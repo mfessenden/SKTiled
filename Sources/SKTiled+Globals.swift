@@ -93,15 +93,20 @@ public class TiledGlobals {
     }
 
     /// Returns current framework version.
-    public var version: Version {
-        return Version(getSKTiledVersion())
-    }
+    public lazy var version: Version = {
+        // returns a string from the project: 1300000
+        let verString = getSKTiledBuildVersion() ?? getSKTiledVersion()
+        var result = Version(integer: verString)
+        result.suffix = getSKTiledVersionSuffix()
+        return result
+    }()
 
     /// Returns current framework build (if any).
     internal var build: String? {
         return getSKTiledBuildVersion()
     }
-
+    
+    /// Private init.
     private init() {
         let device = MTLCreateSystemDefaultDevice()
         renderer = (device != nil) ? Renderer.metal : Renderer.opengl
@@ -119,17 +124,37 @@ public class TiledGlobals {
      | major                 | Framework major version.     |
      | minor                 | Framework minor version.     |
      | patch                 | Framework patch version      |
+     | build                 | Framework build versions.    |
+     | suffix                | Version suffix.              |
 
      */
     public struct Version {
         var major: Int = 0
         var minor: Int = 0
         var patch: Int = 0
-
-        init(major: Int, minor: Int, patch: Int = 0) {
+        var build: Int = 0
+        var suffix: String?
+        
+        /// Constructor from major, minor, patch & build values.
+        ///
+        /// - Parameters:
+        ///   - major:  major version.
+        ///   - minor:  minor version.
+        ///   - patch:  patch version.
+        ///   - build:  build version.
+        ///   - suffix: optional suffix.
+        
+        
+        /**
+         Constructor from major, minor, patch & build values.
+         
+         */
+        init(major: Int, minor: Int, patch: Int = 0, build: Int = 0, suffix: String? = nil) {
             self.major = major
             self.minor = minor
             self.patch = patch
+            self.build = build
+            self.suffix = suffix
         }
     }
 
@@ -312,34 +337,83 @@ extension TiledGlobals: CustomDebugReflectable {
 
 extension TiledGlobals.Version {
     /**
-     Initialize with a string (ie "2.1.4").
+     Initialize with a version string (ie "2.1.4").
+     
+     - parameter string: `String` version string.
      */
-    init(_ value: String) {
-        let parts = value.split(separator: ".").compactMap { Int($0) }
+    init(string: String) {
+        let digitSet = CharacterSet(charactersIn: "0123456789.")
+        let alphaString = String(string.unicodeScalars.filter { digitSet.contains($0) })
+        let parts = alphaString.split(separator: ".").compactMap { Int($0) }
         switch parts.count {
-        case 1:
-            self.major = parts.first!
-        case 2:
-            self.major = parts.first!
-            self.minor = parts[1]
-        case 3:
-            self.major = parts.first!
-            self.minor = parts[1]
-            self.patch = parts[2]
-        default:
-            self.major = 1
-            self.minor = 0
-            self.patch = 0
+            case 1:
+                self.major = parts.first!
+            case 2:
+                self.major = parts.first!
+                self.minor = parts[1]
+            case 3:
+                self.major = parts.first!
+                self.minor = parts[1]
+                self.patch = parts[2]
+            case 4:
+                self.major = parts.first!
+                self.minor = parts[1]
+                self.patch = parts[2]
+                self.build = parts[3]
+            default:
+                self.major = 1
+                self.minor = 0
+                self.patch = 0
+                self.build = 0
         }
+    }
+    
+    /**
+     Initialize with a integer version string (ie: "2010401").
+     
+     - parameter integer: `String` build string.
+     */
+    public init(integer value: String) {
+        guard (value.count >= 7),
+            let intValue = Int(value) else {
+                print("Error: invalid string '\(value)'")
+                return
+        }
+        
+        major = intValue / 1000000
+        let r1 = intValue - (1000000 * major)
+        minor = r1 / 10000
+        let r2 = r1 - (10000 * minor)
+        patch = r2 / 100
+        build = r2 - (100 * patch)
+    }
+    
+    /// Return the version expressed as an integer.
+    public var integerValue: Int32  {
+        var result = major * 1000000
+        result += minor * 10000
+        result += patch * 100
+        result += build
+        return Int32(result)
+    }
+    
+    public var versionString: String {
+        return "SKTiled version \(description) (\(integerValue))"
     }
 }
 
 
 extension TiledGlobals.Version: CustomStringConvertible, CustomDebugStringConvertible {
+    
     /// String description of the framework version.
-    public var description: String { return "\(major).\(minor)\(patch > 0 ? ".\(patch)" : "")" }
+    public var description: String {
+        let suffixString = suffix ?? ""
+        return "\(major).\(minor)\(patch > 0 ? ".\(patch)" : "")\(build > 0 ? ".\(build)" : "")\(suffixString)"
+    }
     /// String description of the framework version.
-    public var debugDescription: String { return self.description }
+    public var debugDescription: String {
+        return self.description
+    }
 }
 
 

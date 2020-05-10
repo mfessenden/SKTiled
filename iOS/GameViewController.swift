@@ -45,7 +45,7 @@ class GameViewController: UIViewController, Loggable {
     @IBOutlet weak var tileInfoLabel: UILabel!
     @IBOutlet weak var propertiesInfoLabel: UILabel!
     @IBOutlet weak var debugInfoLabel: UILabel!
-
+    @IBOutlet weak var frameworkVersionLabel: UILabel!
 
     // demo buttons
     @IBOutlet weak var fitButton: UIButton!
@@ -75,8 +75,8 @@ class GameViewController: UIViewController, Loggable {
     @IBOutlet weak var statsEffectsLabel: UILabel!
     @IBOutlet weak var statsUpdatedLabel: UILabel!
     @IBOutlet weak var statsRenderLabel: UILabel!
-    
-    
+
+
     var landscapeInitialized: Bool = false
     var timer = Timer()
     var loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel
@@ -121,9 +121,12 @@ class GameViewController: UIViewController, Loggable {
         NotificationCenter.default.addObserver(self, selector: #selector(tilemapUpdateModeChanged), name: Notification.Name.Map.UpdateModeChanged, object: nil)
 
         demoController.loadScene(url: currentURL, usePreviousCamera: demoController.preferences.usePreviousCamera)
+        
 
         // rotate device icon
         addWiggleAnimationToView(viewToAnimate: rotateDeviceIcon)
+
+        frameworkVersionLabel.text = TiledGlobals.default.version.versionString
     }
 
     func addWiggleAnimationToView(viewToAnimate: UIView) {
@@ -135,18 +138,20 @@ class GameViewController: UIViewController, Loggable {
         wiggle.timingFunctions = [easeInOutTiming, easeInOutTiming, easeInOutTiming]
         wiggle.repeatCount = HUGE
         viewToAnimate.layer.add(wiggle, forKey:"wiggle")
+        
+        
     }
 
     /// allow correct rotating
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         (self.view as? SKView)?.scene?.size = size
-        self.rotateDeviceIcon.isHidden = self.isLandScape
         self.statsStackView.isHidden = !(self.isLandScape && TiledGlobals.default.enableRenderCallbacks)
         self.renderStatsButton.isHidden = !self.isLandScape
     }
 
     override func viewDidLayoutSubviews() {
+        self.rotateDeviceIcon.isHidden = self.isLandScape
         let skView = self.view as! SKView
         if let scene = skView.scene {
             if let sceneDelegate = scene as? SKTiledSceneDelegate {
@@ -156,10 +161,10 @@ class GameViewController: UIViewController, Loggable {
             }
         }
     }
-    
+
     // MARK: - Setup
-    
-    
+
+
     /**
      Initialize the debugging labels.
      */
@@ -217,7 +222,7 @@ class GameViewController: UIViewController, Loggable {
 
         let deviceIsInLandscapeMode = self.isLandScape
         let renderStatsAreVisible = (self.isLandScape && TiledGlobals.default.enableRenderCallbacks)
-        
+
         rotateDeviceIcon.isHidden = (deviceIsInLandscapeMode == true)
         statsStackView.isHidden = !renderStatsAreVisible
         renderStatsButton.isHidden = !renderStatsAreVisible
@@ -239,9 +244,9 @@ class GameViewController: UIViewController, Loggable {
             }
         }
     }
-    
+
     // MARK: - Button Events
-    
+
     /**
      Action called when `fit to view` button is pressed.
 

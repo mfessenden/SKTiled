@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
-    <device id="retina6_1" orientation="landscape">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+    <device id="retina6_1" orientation="landscape" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -51,7 +49,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="QyX-Za-Z1p" userLabel="Controls">
-                                <rect key="frame" x="238" y="366" width="420" height="23"/>
+                                <rect key="frame" x="238" y="354" width="420" height="23"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uq7-ra-6CT">
                                         <rect key="frame" x="0.0" y="0.0" width="65" height="23"/>
@@ -146,7 +144,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="v8l-N1-lID" userLabel="Output-Bottom">
-                                <rect key="frame" x="422.5" y="319" width="51.5" height="39"/>
+                                <rect key="frame" x="422.5" y="307" width="51.5" height="39"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tr1-Rb-3Hz" userLabel="Map Info Label">
                                         <rect key="frame" x="0.0" y="0.0" width="51.5" height="13"/>
@@ -220,7 +218,7 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="WD6-vv-RLS">
-                                <rect key="frame" x="66" y="302" width="76" height="89"/>
+                                <rect key="frame" x="62" y="302" width="76" height="89"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rendering:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xyr-L8-6Nc">
                                         <rect key="frame" x="0.0" y="0.0" width="54.5" height="9"/>
@@ -278,20 +276,30 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="version:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xog-nz-hwY" userLabel="Version Label">
+                                <rect key="frame" x="433.5" y="381.5" width="29" height="9.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="7"/>
+                                <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="0.65000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="shadowColor" red="0.51032221499999997" green="0.51032221499999997" blue="0.51032221499999997" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                <size key="shadowOffset" width="1" height="1"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="fcL-31-5Qi" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="0bd-uZ-A4D"/>
                             <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="WD6-vv-RLS" secondAttribute="bottom" constant="2" id="1Po-BY-ig5"/>
+                            <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="xog-nz-hwY" secondAttribute="bottom" constant="2" id="5eK-HX-2gt"/>
                             <constraint firstItem="s2E-CQ-Gyp" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="Hl2-5d-0yi"/>
-                            <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="QyX-Za-Z1p" secondAttribute="bottom" constant="4" id="Ln4-9T-wHp"/>
+                            <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="QyX-Za-Z1p" secondAttribute="bottom" constant="16" id="Ln4-9T-wHp"/>
                             <constraint firstItem="s2E-CQ-Gyp" firstAttribute="top" secondItem="fcL-31-5Qi" secondAttribute="bottom" constant="10" id="Uqi-XG-4bL"/>
                             <constraint firstItem="7H4-fv-waa" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="gfn-1E-G7I"/>
                             <constraint firstItem="WD6-vv-RLS" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leadingMargin" constant="2" id="mNB-TP-fKI"/>
                             <constraint firstItem="QyX-Za-Z1p" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="qDt-Og-796"/>
                             <constraint firstItem="v8l-N1-lID" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="rEy-5E-WNj"/>
                             <constraint firstItem="fcL-31-5Qi" firstAttribute="top" secondItem="7H4-fv-waa" secondAttribute="bottom" constant="8" id="w2P-gh-1gZ"/>
+                            <constraint firstItem="xog-nz-hwY" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="xYF-Yi-Bxg"/>
                             <constraint firstItem="7H4-fv-waa" firstAttribute="top" secondItem="8aa-yV-Osq" secondAttribute="bottom" constant="8" id="xay-9t-usG"/>
                             <constraint firstItem="QyX-Za-Z1p" firstAttribute="top" secondItem="v8l-N1-lID" secondAttribute="bottom" constant="8" id="zKM-96-FRf"/>
                         </constraints>
@@ -303,6 +311,7 @@
                         <outlet property="debugInfoLabel" destination="wwJ-ex-eLJ" id="Vgj-a4-rUE"/>
                         <outlet property="demoFileAttributes" destination="HDW-rS-MqN" id="cV0-3C-cQ1"/>
                         <outlet property="fitButton" destination="uq7-ra-6CT" id="oc0-cS-CQB"/>
+                        <outlet property="frameworkVersionLabel" destination="xog-nz-hwY" id="y55-NY-lCO"/>
                         <outlet property="graphButton" destination="SQe-0h-fII" id="vpB-cf-ALb"/>
                         <outlet property="gridButton" destination="maM-Ym-CQj" id="Vbt-GY-9sA"/>
                         <outlet property="mapInfoLabel" destination="Tr1-Rb-3Hz" id="5gd-ji-SGm"/>

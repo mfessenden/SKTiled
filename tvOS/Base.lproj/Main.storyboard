@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="14460.31" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="499-42-d0g">
-    <device id="appleTV" orientation="landscape">
-        <adaptation id="dark"/>
-    </device>
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="16097" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="499-42-d0g">
+    <device id="appleTV" appearance="light"/>
     <dependencies>
         <deployment identifier="tvOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -215,6 +213,14 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="1900" placeholderIntrinsicHeight="24" text="version:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GYe-QP-wBM" userLabel="Version Label">
+                                <rect key="frame" x="10" y="1044" width="1900" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" white="0.10000000000000001" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <size key="shadowOffset" width="1" height="1"/>
+                            </label>
                         </subviews>
                         <constraints>
                             <constraint firstItem="s2B-9I-4Ap" firstAttribute="centerX" secondItem="weF-Pa-zaM" secondAttribute="centerX" id="DxT-0P-5So"/>
@@ -225,8 +231,10 @@
                             <constraint firstItem="eil-R2-iQo" firstAttribute="top" secondItem="wkK-nJ-MjR" secondAttribute="bottom" constant="20" id="hop-6D-217"/>
                             <constraint firstItem="wkK-nJ-MjR" firstAttribute="centerX" secondItem="weF-Pa-zaM" secondAttribute="centerX" id="ksc-Zf-gpF"/>
                             <constraint firstAttribute="bottomMargin" secondItem="eil-R2-iQo" secondAttribute="bottom" constant="24" id="mU2-i6-VrW"/>
+                            <constraint firstAttribute="bottom" secondItem="GYe-QP-wBM" secondAttribute="bottom" constant="12" id="mzJ-HM-EX9"/>
                             <constraint firstItem="6CQ-kZ-OYr" firstAttribute="leading" secondItem="weF-Pa-zaM" secondAttribute="leading" constant="4" id="nTa-t3-rYt"/>
                             <constraint firstItem="zkk-Ac-3rS" firstAttribute="top" secondItem="TiC-Vw-u93" secondAttribute="bottom" constant="1" id="vxA-ik-btx"/>
+                            <constraint firstItem="GYe-QP-wBM" firstAttribute="centerX" secondItem="weF-Pa-zaM" secondAttribute="centerX" id="yBj-FL-Uk6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6df-27-8hi"/>
                     </view>
@@ -237,6 +245,7 @@
                         <outlet property="dollyIcon" destination="dg0-Wl-Qnn" id="O8k-uO-ScY"/>
                         <outlet property="effectsButton" destination="0zq-hn-NpM" id="cbV-S8-e0Z"/>
                         <outlet property="fitButton" destination="puU-KX-a3Z" id="LVd-Od-gpP"/>
+                        <outlet property="frameworkVersionLabel" destination="GYe-QP-wBM" id="dZ8-Tk-iSj"/>
                         <outlet property="graphButton" destination="TsD-q8-9EV" id="M1B-dJ-XtA"/>
                         <outlet property="gridButton" destination="DhW-pL-J9S" id="HIe-hI-ofP"/>
                         <outlet property="mainControlsView" destination="eil-R2-iQo" id="Ny6-jy-KS2"/>

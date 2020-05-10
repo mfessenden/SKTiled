@@ -89,22 +89,4 @@ class QueryTests: XCTestCase {
         let testTiles = testLayer.getTiles(globalID: testGID)
         XCTAssert(testTiles.count == 3, "❗️tile count for gid \(testGID) is incorrect: \(testTiles.count)")
     }
-    
-    /**
-     Test to see if a tileset will return the proper tile from a global id.
-     Tileset has been given an incorrect firstGID value of: 91
-     
-     Tile Data GID: 130
-     - Local ID: 39
-     - has `color` property of `#ffa07daa`
-     */
-    func testGlobalIDQuery() {
-        guard let tilemap = tilemap else {
-            XCTFail("❗️tilemap did not load.")
-            return
-        }
-        
-        //let orangeTiles = tilemap.getTiles(globalID: 130)
-
-    }
 }
