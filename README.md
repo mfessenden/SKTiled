@@ -1,14 +1,14 @@
-![SKTiled][header-image]
-
-> **SKTiled** is a Swift framework for integrating [**Tiled**][tiled-url] assets with Apple's SpriteKit.
-
-[![Swift Version][swift5-image]][swift-url]
-[![Xcode Version][xcode11-image]][xcode-downloads-url]
-[![Build Status][travis-image]][travis-url]
-[![License][license-image]][license-url]
-[![Platforms][platforms-image]][platforms-url]
-[![Carthage Compatible][carthage-image]][carthage-url]
-[![CocoaPods Compatible][pod-image]][pod-url]
+<p align="center">
+<img src="Docs/images/doc-header.svg" alt="SKTiled" title="SKTiled" width="881" height="81"/>
+<p align="center">
+<a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-5.2-brightgreen.svg"></a>
+<a href="https://developer.apple.com/download/more/"><img src="https://img.shields.io/badge/Xcode-11.0-orange.svg"></a>
+<a href="https://travis-ci.org/mfessenden/SKTiled"><img src="https://travis-ci.org/mfessenden/SKTiled.svg?branch=master"></a>
+<a href="https://github.com/mfessenden/SKTiled/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
+<a href="http://www.apple.com"><img src="https://img.shields.io/badge/platforms-iOS%20%7C%20tvOS%20%7C%20macOS-red.svg"></a>
+<a href="https://github.com/Carthage/Carthage/"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg"></a>
+<a href="https://cocoapods.org/pods/SKTiled"><img src="https://img.shields.io/cocoapods/v/SKTiled.svg"></a>
+</p>
 
 
 **SKTiled** is a framework for integrating [Tiled][tiled-url] assets with [Apple's SpriteKit][spritekit-url], built from the ground up with Swift. This project began life as an exercise to learn Apple's new programming language for a game project, but I've decided to release it as open source with the hopes that others will find it useful. **SKTiled** is up-to-date and supports **Tiled's** major features, including all map & object types.
