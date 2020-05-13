@@ -35,7 +35,8 @@ import Cocoa
 #endif
 
 
-// special scene class used for the demo
+
+/// Special scene class used for demo projects.
 public class SKTiledDemoScene: SKTiledScene {
 
     weak internal var demoController: DemoController?

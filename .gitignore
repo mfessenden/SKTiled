@@ -1,4 +1,5 @@
 # all branches
+
 Assets/User/*
 Docs/html
 .swiftlint.yml
@@ -7,7 +8,8 @@ SKTiled.xcodeproj/xcshareddata/xcschemes/Demo*
 *.psd
 *.html
 
-# allowed in release, remove in master
+# develop branch only
+
 Contrib/*
 Demo/shaders/*
 Docs/Private

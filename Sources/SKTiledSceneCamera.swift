@@ -205,21 +205,38 @@ public class SKTiledSceneCamera: SKCameraNode {
     internal var bounds: CGRect
     internal var delegates: [SKTiledSceneCameraDelegate] = []
     
+    /// Camera zoom level.
     public var zoom: CGFloat = 1.0
+    
+    /// Initial zoom level.
     public var initialZoom: CGFloat = 1.0
     
-    // movement constraints
+    /// Camera can move freely.
     public var allowMovement: Bool = true
+    
+    /// Camera can change zoom amount.
     public var allowZoom: Bool = true
+    
+    /// Camera can rotate.
     public var allowRotation: Bool = false
+    
     public var allowPause: Bool = true
     
-    // zoom constraints
+    
+    /// Minimum zoom constraint.
     public var minZoom: CGFloat = 0.2
+    
+    /// Maximum zoom constraint.
     public var maxZoom: CGFloat = 5.0
+    
     /// Ignore mix/max zoom constraints
     public var ignoreZoomConstraints: Bool = false
-    public var isAtMaxZoom: Bool { return zoom == maxZoom }
+    
+    
+    /// Returns true if the camera zoom level is at the maximum allowed value.
+    public var isAtMaxZoom: Bool {
+        return zoom == maxZoom
+    }
     
     /// Update delegates on visible node changes.
     public var notifyDelegatesOnContainedNodesChange: Bool = true
@@ -231,7 +248,7 @@ public class SKTiledSceneCamera: SKCameraNode {
         }
     }
     
-    // camera control mode (tvOS)
+    /// Camera control mode (tvOS).
     public var controlMode: CameraControlMode = CameraControlMode.none {
         didSet {
             
@@ -268,8 +285,10 @@ public class SKTiledSceneCamera: SKCameraNode {
     #if os(iOS)
     /// Gesture recognizer to recognize camera panning
     public var cameraPanned: UIPanGestureRecognizer!
+    
     /// Gesture recognizer to recognize double taps
     public var sceneDoubleTapped: UITapGestureRecognizer!
+    
     /// Gesture recognizer to recognize pinch actions
     public var cameraPinched: UIPinchGestureRecognizer!
     #endif
@@ -286,11 +305,13 @@ public class SKTiledSceneCamera: SKCameraNode {
         }
     }
     
-    // locations
+    // Current focus location.
     fileprivate var focusLocation: CGPoint = CGPoint.zero
+    
+    /// Previous focus location.
     fileprivate var lastLocation: CGPoint!
     
-    // quick & dirty overlay node
+    /// Camera overlay node.
     internal let overlay: SKNode = SKNode()
     
     /// Flag to show the overlay
@@ -737,7 +758,7 @@ extension SKTiledSceneCamera {
         return "\(clampString)\(modeString)\(clampMode)"
     }
     
-    /// Custom camera info description
+    /// Custom camera info description.
     override public var description: String {
         guard let scene = scene else { return "Camera: "}
         let rect = CGRect(origin: scene.convert(position, from: self), size: bounds.size)

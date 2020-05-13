@@ -47,6 +47,7 @@ internal enum CacheIsolationMode: Int {
 
 
 /// Data structure for storing and recalling tile data efficiently.
+
 internal class TileDataStorage: Loggable {
     weak var tilemap: SKTilemap?
     // queues

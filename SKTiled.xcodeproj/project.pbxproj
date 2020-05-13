@@ -1048,9 +1048,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		4C17747E1D909740000C0AFD /* Demo - macOS */ = {
+		4C17747E1D909740000C0AFD /* Demo-macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4C1774911D909740000C0AFD /* Build configuration list for PBXNativeTarget "Demo - macOS" */;
+			buildConfigurationList = 4C1774911D909740000C0AFD /* Build configuration list for PBXNativeTarget "Demo-macOS" */;
 			buildPhases = (
 				4CABC4D71DAEE1F900ACA1A4 /* Clean Assets */,
 				4C17747B1D909740000C0AFD /* Sources */,
@@ -1061,7 +1061,7 @@
 			);
 			dependencies = (
 			);
-			name = "Demo - macOS";
+			name = "Demo-macOS";
 			productName = SKTiled;
 			productReference = 4C17747F1D909740000C0AFD /* SKTiled Demo.app */;
 			productType = "com.apple.product-type.application";
@@ -1084,9 +1084,9 @@
 			productReference = 4C24B14520694A140027EBD5 /* SKTiled.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		4C24B16920694C470027EBD5 /* Demo - tvOS */ = {
+		4C24B16920694C470027EBD5 /* Demo-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4C24B17C20694C470027EBD5 /* Build configuration list for PBXNativeTarget "Demo - tvOS" */;
+			buildConfigurationList = 4C24B17C20694C470027EBD5 /* Build configuration list for PBXNativeTarget "Demo-tvOS" */;
 			buildPhases = (
 				4C4FAC9D2162BCDF00EEF512 /* Clean Assets */,
 				4C24B16620694C470027EBD5 /* Sources */,
@@ -1097,7 +1097,7 @@
 			);
 			dependencies = (
 			);
-			name = "Demo - tvOS";
+			name = "Demo-tvOS";
 			productName = Demo;
 			productReference = 4C24B16A20694C470027EBD5 /* SKTiled Demo.app */;
 			productType = "com.apple.product-type.application";
@@ -1193,9 +1193,9 @@
 			productReference = 4CA6A7D92184F531002BC924 /* SKTiledTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		4CBA61641D8A048200B31FC1 /* Demo - iOS */ = {
+		4CBA61641D8A048200B31FC1 /* Demo-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4CBA617B1D8A048300B31FC1 /* Build configuration list for PBXNativeTarget "Demo - iOS" */;
+			buildConfigurationList = 4CBA617B1D8A048300B31FC1 /* Build configuration list for PBXNativeTarget "Demo-iOS" */;
 			buildPhases = (
 				4C3496881EA513D9003900C8 /* Clean Assets */,
 				4CBA61611D8A048200B31FC1 /* Sources */,
@@ -1206,7 +1206,7 @@
 			);
 			dependencies = (
 			);
-			name = "Demo - iOS";
+			name = "Demo-iOS";
 			productName = SKTiled;
 			productReference = 4CBA61651D8A048200B31FC1 /* SKTiled Demo.app */;
 			productType = "com.apple.product-type.application";
@@ -1289,9 +1289,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4C17747E1D909740000C0AFD /* Demo - macOS */,
-				4CBA61641D8A048200B31FC1 /* Demo - iOS */,
-				4C24B16920694C470027EBD5 /* Demo - tvOS */,
+				4C17747E1D909740000C0AFD /* Demo-macOS */,
+				4CBA61641D8A048200B31FC1 /* Demo-iOS */,
+				4C24B16920694C470027EBD5 /* Demo-tvOS */,
 				4C41A5DF1F437118001622FF /* SKTiled-macOS */,
 				4C41A5FC1F43739C001622FF /* SKTiled-iOS */,
 				4C24B14420694A140027EBD5 /* SKTiled-tvOS */,
@@ -2580,7 +2580,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4C1774911D909740000C0AFD /* Build configuration list for PBXNativeTarget "Demo - macOS" */ = {
+		4C1774911D909740000C0AFD /* Build configuration list for PBXNativeTarget "Demo-macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4C1774921D909740000C0AFD /* Debug */,
@@ -2598,7 +2598,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4C24B17C20694C470027EBD5 /* Build configuration list for PBXNativeTarget "Demo - tvOS" */ = {
+		4C24B17C20694C470027EBD5 /* Build configuration list for PBXNativeTarget "Demo-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4C24B17D20694C470027EBD5 /* Debug */,
@@ -2661,7 +2661,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4CBA617B1D8A048300B31FC1 /* Build configuration list for PBXNativeTarget "Demo - iOS" */ = {
+		4CBA617B1D8A048300B31FC1 /* Build configuration list for PBXNativeTarget "Demo-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4CBA617C1D8A048300B31FC1 /* Debug */,

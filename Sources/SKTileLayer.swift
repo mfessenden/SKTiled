@@ -118,12 +118,16 @@ public class SKTiledLayerObject: SKEffectNode, SKTiledObject {
     
     /// Layer type.
     public var type: String!
+    
     /// Layer index. Matches the index of the layer in the source TMX file.
     public var index: Int = 0
+    
     /// Logging verbosity.
     internal var loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel
+    
     /// Position in the render tree.
     public var rawIndex: Int = 0
+    
     /// Flattened layer index (internal use only).
     internal var realIndex: Int {
         return tilemap.layers.firstIndex(where: { $0 === self }) ?? self.index
@@ -131,6 +135,8 @@ public class SKTiledLayerObject: SKEffectNode, SKTiledObject {
     
     /// Custom layer properties.
     public var properties: [String: String] = [:]
+    
+    /// Ignore custom properties.
     public var ignoreProperties: Bool = false
     
     /**
@@ -192,14 +198,19 @@ public class SKTiledLayerObject: SKEffectNode, SKTiledObject {
     
     /// Layer color.
     public var color: SKColor = TiledObjectColors.gun
+    
     /// Grid visualization color.
     public var gridColor: SKColor = TiledGlobals.default.debug.gridColor
+    
     /// Bounding box color.
     public var frameColor: SKColor = TiledGlobals.default.debug.frameColor
+    
     /// Layer highlight color (for highlighting tiles)
     public var highlightColor: SKColor = SKColor.white
+    
     /// Layer highlight duration
     public var highlightDuration: TimeInterval = TiledGlobals.default.debug.highlightDuration
+    
     /// Layer is isolated.
     public private(set) var isolated: Bool = false
     
@@ -207,14 +218,26 @@ public class SKTiledLayerObject: SKEffectNode, SKTiledObject {
     public var offset: CGPoint = CGPoint.zero
     
     /// Layer size (in tiles).
-    public var size: CGSize { return tilemap.size }
+    public var size: CGSize {
+        return tilemap.size
+    }
+    
     /// Layer tile size (in pixels).
-    public var tileSize: CGSize { return tilemap.tileSize }
+    public var tileSize: CGSize {
+        return tilemap.tileSize
+    }
+    
     /// Tile map orientation.
-    internal var orientation: SKTilemap.TilemapOrientation { return tilemap.orientation }
+    internal var orientation: SKTilemap.TilemapOrientation {
+        return tilemap.orientation
+    }
     
     /// Layer anchor point, used to position layers.
-    public var anchorPoint: CGPoint { return tilemap.layerAlignment.anchorPoint }
+    public var anchorPoint: CGPoint {
+        return tilemap.layerAlignment.anchorPoint
+    }
+    
+    /// Storage for parsing errors.
     internal var gidErrors: [UInt32] = []
     
     /// Pathfinding graph.
@@ -234,10 +257,15 @@ public class SKTiledLayerObject: SKEffectNode, SKTiledObject {
         }
     }
     
+    /// Indicates the layer has been rendered.
     internal private(set) var isRendered: Bool = false
+    
     /// Antialias lines.
     public var antialiased: Bool = false
+    
+    /// Map color blending value.
     public var colorBlendFactor: CGFloat = 1.0
+    
     /// Render scaling property.
     public var renderQuality: CGFloat = TiledGlobals.default.renderQuality.default
     
@@ -245,7 +273,9 @@ public class SKTiledLayerObject: SKEffectNode, SKTiledObject {
     public var navigationKey: String
     
     /// Output current zPosition
-    public var currentZPosition: CGFloat { return self.zPosition }
+    public var currentZPosition: CGFloat {
+        return self.zPosition
+    }
     
     /// Optional background color.
     public var backgroundColor: SKColor? = nil {
@@ -314,7 +344,7 @@ public class SKTiledLayerObject: SKEffectNode, SKTiledObject {
         return (tiles: 0, objects: 0)
     }
     
-    /// Update mode.
+    /// Tile update mode.
     public var updateMode: TileUpdateMode {
         return tilemap.updateMode
     }

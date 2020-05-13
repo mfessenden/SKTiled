@@ -64,6 +64,7 @@ import SpriteKit
  ```
  */
 public protocol SKTilesetDataSource: class {
+    
     /**
      Provide an image name for the tileset before textures are generated.
 
@@ -86,21 +87,21 @@ public protocol SKTilesetDataSource: class {
 
 
 /**
-
+ 
  ## Overview
-
+ 
  The tileset class manages a set of `SKTilesetData` objects, which store tile data including global id, texture and animation.
-
+ 
  Tile data is accessed via a local id, and tiles can be instantiated with the resulting `SKTilesetData` instance:
-
+ 
  ```swift
  if let data = tileset.getTileData(localID: 56) {
-    let tile = SKTile(data: data)
+ let tile = SKTile(data: data)
  }
  ```
-
+ 
  ### Properties
-
+ 
  | Property              | Description                                     |
  |-----------------------|-------------------------------------------------|
  | name                  | Tileset name.                                   |
@@ -111,16 +112,16 @@ public protocol SKTilesetDataSource: class {
  | firstGID              | First tile global id.                           |
  | lastGID               | Last tile global id.                            |
  | tileData              | Set of tile data structures.                    |
-
-
+ 
+ 
  ### Instance Methods ###
-
+ 
  | Method                | Description                                     |
  |-----------------------|-------------------------------------------------|
  | addTextures()         | Generate textures from a spritesheet image.     |
  | addTilesetTile()      | Add & return new tile data object.              |
-
-
+ 
+ 
  */
 public class SKTileset: NSObject, SKTiledObject {
 
@@ -147,9 +148,14 @@ public class SKTileset: NSObject, SKTiledObject {
 
     internal var loggingLevel: LoggingLevel = LoggingLevel.warning // logging level
 
-    public var columns: Int = 0                                    // number of columns
-    public var tilecount: Int = 0                                  // tile count
-    public var firstGID: Int = 0                                   // first GID
+    /// The number of tile columns.
+    public var columns: Int = 0
+    
+    /// The number of tiles contained in this set.
+    public internal(set) var tilecount: Int = 0
+    
+    /// Tile offset value.
+    public var firstGID: Int = 0
 
     // image spacing
     public var spacing: Int = 0                                    // spacing between tiles
@@ -170,14 +176,22 @@ public class SKTileset: NSObject, SKTiledObject {
 
     /// Indicates the tileset is a collection of images.
     public var isImageCollection: Bool = false
+    
     /// The tileset is stored in an external file.
-    public var isExternalTileset: Bool { return filename != nil }
+    public var isExternalTileset: Bool {
+        return filename != nil
+    }
+    
     /// Source image transparency color.
     public var transparentColor: SKColor?
-    public var isRendered: Bool = false
+    
+    /// Indicates all of the tile data textures have been set.
+    public internal(set) var isRendered: Bool = false
 
     /// Returns the last global tile id in the tileset.
-    public var lastGID: Int { return tileData.map { $0.id }.max() ?? firstGID }
+    public var lastGID: Int {
+        return tileData.map { $0.id }.max() ?? firstGID
+    }
 
     /// Returns the difference in tile size vs. map tile size.
     internal var mapOffset: CGPoint {

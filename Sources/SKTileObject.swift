@@ -28,13 +28,11 @@
 import SpriteKit
 
 
-
 /// Generic protocol for renderable Tiled objects.
 protocol SKTiledGeometry {
     var visibleToCamera: Bool { get set }
     func draw(debug: Bool)
 }
-
 
 
 /**
@@ -63,8 +61,10 @@ public struct TextObjectAttributes {
     
     /// Font name.
     public var fontName: String  = "Arial"
+    
     /// Font size.
     public var fontSize: CGFloat = 16
+    
     /// Font color.
     public var fontColor: SKColor = .black
     
@@ -106,13 +106,25 @@ public struct TextObjectAttributes {
     /// Text alignment.
     public var alignment: TextAlignment = TextAlignment()
     
+    
+    /// Indicates text is allowed to wrap.
     public var wrap: Bool = true
+    
+    /// Text is bolded.
     public var isBold: Bool = false
+    
+    /// Text is italicized.
     public var isItalic: Bool = false
+    
+    /// Text is underlined.
     public var isUnderline: Bool = false
+    
+    /// Text is displayed with a strikethrough.
     public var isStrikeout: Bool = false
+    
     /// Font scaling property.
     public var renderQuality: CGFloat = TiledGlobals.default.renderQuality.text
+    
     
     public init() {}
     
@@ -132,7 +144,7 @@ public struct TextObjectAttributes {
  
  The `SKTileObject` class represents a Tiled vector object type (rectangle, ellipse, polygon & polyline). When the object is created, points can be added either with an array of `CGPoint` objects, or a string. In order to render the object, the `SKTileObject.getVertices()` method is called, which returns the points needed to draw the path.
  
- ### Properties 
+ ### Properties
  
  | Property | Description                                                          |
  |----------|----------------------------------------------------------------------|
@@ -192,12 +204,16 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     
     /// Object parent layer.
     weak open var layer: SKObjectGroup!
+    
     /// Unique id (layer & object names may not be unique).
     open var uuid: String = UUID().uuidString
+    
     /// Tiled object id.
     open var id: Int = 0
+    
     /// Tiled global id (for tile objects).
     internal var gid: Int!
+    
     /// Object type.
     open var type: String!
     
@@ -268,11 +284,17 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     
     /// Custom object properties.
     open var properties: [String: String] = [:]
-    open var ignoreProperties: Bool = false                 // ignore custom properties
+    
+    /// Ignore custom properties.
+    open var ignoreProperties: Bool = false
+    
     /// Physics collision type.
     open var physicsType: CollisionType = .none
+    
+    /// Invert hysics properties.
     open var invertPhysics: Bool = false
-    /// Text formatting attributes (for text objects)
+    
+    /// Text formatting attributes (for text objects).
     open var textAttributes: TextObjectAttributes!
     
     
@@ -330,6 +352,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
         return (shapeType == .polygon) || (shapeType == .polyline)
     }
     
+    /// Set the object speed value.
     override open var speed: CGFloat {
         didSet {
             guard oldValue != speed else { return }
@@ -490,9 +513,7 @@ open class SKTileObject: SKShapeNode, SKTiledObject {
     
     // MARK: - Rendering
     
-    /**
-     Render the object.
-     */
+    /// Render the object.
     open func draw(debug: Bool = false) {
         
         guard let layer = layer,
@@ -1135,7 +1156,10 @@ extension SKTileObject.TiledObjectShape: CustomStringConvertible, CustomDebugStr
 
 
 extension TextObjectAttributes {
+    
     #if os(iOS) || os(tvOS)
+    
+    /// Returns a system-native font.
     public var font: UIFont {
         if let uifont = UIFont(name: fontName, size: fontSize * renderQuality) {
         return uifont
@@ -1143,6 +1167,8 @@ extension TextObjectAttributes {
         return UIFont.systemFont(ofSize: fontSize * renderQuality)
     }
     #else
+    
+    /// Returns a system-native font.
     public var font: NSFont {
         if let nsfont = NSFont(name: fontName, size: fontSize * renderQuality) {
         return nsfont
@@ -1154,27 +1180,25 @@ extension TextObjectAttributes {
 
 
 extension TextObjectAttributes.TextAlignment.HoriztonalAlignment {
-    /// Return a integer value for passing to NSTextAlignment.
+    
     #if os(iOS) || os(tvOS)
+    
+    /// Return a integer value for passing to NSTextAlignment.
     public var intValue: Int {
         switch self {
-        case .left:
-        return 0
-        case .right:
-        return 1
-        case .center:
-        return 2
+        case .left: return 0
+        case .right: return 1
+        case .center: return 2
         }
     }
+    
     #else
+    /// Return a integer value for passing to NSTextAlignment.
     public var intValue: UInt {
         switch self {
-        case .left:
-        return 0
-        case .right:
-        return 1
-        case .center:
-        return 2
+        case .left: return 0
+        case .right: return 1
+        case .center: return 2
         }
     }
     #endif
@@ -1182,8 +1206,9 @@ extension TextObjectAttributes.TextAlignment.HoriztonalAlignment {
 
 
 extension TextObjectAttributes.TextAlignment.VerticalAlignment {
-    /// Return a UInt value for passing to NSTextAlignment.
+    
     #if os(iOS) || os(tvOS)
+    /// Return an integer value for passing to NSTextAlignment.
     public var intValue: Int {
         switch self {
         case .top:
@@ -1195,6 +1220,7 @@ extension TextObjectAttributes.TextAlignment.VerticalAlignment {
         }
     }
     #else
+    /// Return an integer value for passing to NSTextAlignment.
     public var intValue: UInt {
         switch self {
         case .top:

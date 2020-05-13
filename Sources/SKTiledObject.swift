@@ -72,14 +72,19 @@ import SpriteKit
 @objc public protocol SKTiledObject: class {
     /// Unique object id (layer & object names may not be unique).
     var uuid: String { get set }
+    
     /// Object type.
     var type: String! { get set }
+    
     /// Storage for custom Tiled properties.
     var properties: [String: String] { get set }
+    
     /// Ignore custom properties.
     var ignoreProperties: Bool { get set }
+    
     /// Parse function (with optional completion block).
     func parseProperties(completion: (() -> Void)?)
+    
     /// Render scaling property.
     var renderQuality: CGFloat { get }
 }

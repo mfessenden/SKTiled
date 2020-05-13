@@ -359,7 +359,11 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
     
     /// Display bounds that the tilemap is viewable in.
     public var cameraBounds: CGRect?
+    
+    /// :nodoc: Array of SpriteKit nodes in the current view.
     public var nodesInView: [SKNode] = []
+    
+    /// Vector object overlay.
     internal var objectsOverlay: TileObjectOverlay = TileObjectOverlay()
     
     /// Initial world scale
@@ -376,12 +380,14 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
     
     // MARK: Tilesets
     
-    /// Current tilesets.
+    /// First global id value.
     public var firstGID: Int = 0
+    
+    /// Current tilesets.
     public var tilesets: Set<SKTileset> = []
     
-    // current layers
-    private var _layers: Set<SKTiledLayerObject> = []                 // tile map layers
+    // Internal layer storage.
+    private var _layers: Set<SKTiledLayerObject> = []
     
     /// Layer count.
     public var layerCount: Int { return self.layers.count }
@@ -395,7 +401,7 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
     
     // MARK: Caching
     
-    /// Storage for tile updates
+    /// Storage for tile data and updates.
     internal var dataStorage: TileDataStorage?
     
     
@@ -728,11 +734,17 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
      - parameter delegate:         `SKTilemapDelegate` tilemap [delegate](Protocols/SKTilemapDelegate.html) instance.
      - returns: `SKTilemap?` tilemap object (if file read succeeds).
      */
-    public class func load(tmxFile: String, delegate: SKTilemapDelegate) -> SKTilemap? {
-        return SKTilemap.load(tmxFile: tmxFile, inDirectory: nil,
-                              delegate: delegate, tilesetDataSource: nil,
-                              updateMode: TiledGlobals.default.updateMode, withTilesets: nil,
-                              ignoreProperties: false, loggingLevel: TiledGlobals.default.loggingLevel, nil)
+    public class func load(tmxFile: String,
+                           delegate: SKTilemapDelegate) -> SKTilemap? {
+        
+        return SKTilemap.load(tmxFile: tmxFile,
+                              inDirectory: nil,
+                              delegate: delegate,
+                              tilesetDataSource: nil,
+                              updateMode: TiledGlobals.default.updateMode,
+                              withTilesets: nil,
+                              ignoreProperties: false,
+                              loggingLevel: TiledGlobals.default.loggingLevel, nil)
     }
     
     /**
@@ -743,11 +755,18 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
      - parameter updateMode:        `TileUpdateMode` tile update mode.
      - returns: `SKTilemap?` tilemap object (if file read succeeds).
      */
-    public class func load(tmxFile: String, delegate: SKTilemapDelegate, updateMode: TileUpdateMode) -> SKTilemap? {
-        return SKTilemap.load(tmxFile: tmxFile, inDirectory: nil,
-                              delegate: delegate, tilesetDataSource: nil,
-                              updateMode: updateMode, withTilesets: nil,
-                              ignoreProperties: false, loggingLevel: TiledGlobals.default.loggingLevel, nil)
+    public class func load(tmxFile: String,
+                           delegate: SKTilemapDelegate,
+                           updateMode: TileUpdateMode) -> SKTilemap? {
+        
+        return SKTilemap.load(tmxFile: tmxFile,
+                              inDirectory: nil,
+                              delegate: delegate,
+                              tilesetDataSource: nil,
+                              updateMode: updateMode,
+                              withTilesets: nil,
+                              ignoreProperties: false,
+                              loggingLevel: TiledGlobals.default.loggingLevel, nil)
     }
     
     /**
@@ -758,11 +777,18 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
      - parameter tilesetDataSource:  `SKTilesetDataSource` tilemap [`SKTilesetDataSource`](Protocols/SKTilesetDataSource.html) instance.
      - returns: `SKTilemap?` tilemap object (if file read succeeds).
      */
-    public class func load(tmxFile: String, delegate: SKTilemapDelegate, tilesetDataSource: SKTilesetDataSource) -> SKTilemap? {
-        return SKTilemap.load(tmxFile: tmxFile, inDirectory: nil,
-                              delegate: delegate, tilesetDataSource: tilesetDataSource,
-                              updateMode: TiledGlobals.default.updateMode, withTilesets: nil,
-                              ignoreProperties: false, loggingLevel: TiledGlobals.default.loggingLevel, nil)
+    public class func load(tmxFile: String,
+                           delegate: SKTilemapDelegate,
+                           tilesetDataSource: SKTilesetDataSource) -> SKTilemap? {
+        
+        return SKTilemap.load(tmxFile: tmxFile,
+                              inDirectory: nil,
+                              delegate: delegate,
+                              tilesetDataSource: tilesetDataSource,
+                              updateMode: TiledGlobals.default.updateMode,
+                              withTilesets: nil,
+                              ignoreProperties: false,
+                              loggingLevel: TiledGlobals.default.loggingLevel, nil)
     }
     
     
@@ -775,11 +801,19 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
      - parameter updateMode:         `TileUpdateMode` tile update mode.
      - returns: `SKTilemap?` tilemap object (if file read succeeds).
      */
-    public class func load(tmxFile: String, delegate: SKTilemapDelegate, tilesetDataSource: SKTilesetDataSource, updateMode: TileUpdateMode) -> SKTilemap? {
-        return SKTilemap.load(tmxFile: tmxFile, inDirectory: nil,
-                              delegate: delegate, tilesetDataSource: tilesetDataSource,
-                              updateMode: updateMode, withTilesets: nil,
-                              ignoreProperties: false, loggingLevel: TiledGlobals.default.loggingLevel, nil)
+    public class func load(tmxFile: String,
+                           delegate: SKTilemapDelegate,
+                           tilesetDataSource: SKTilesetDataSource,
+                           updateMode: TileUpdateMode) -> SKTilemap? {
+        
+        return SKTilemap.load(tmxFile: tmxFile,
+                              inDirectory: nil,
+                              delegate: delegate,
+                              tilesetDataSource: tilesetDataSource,
+                              updateMode: updateMode,
+                              withTilesets: nil,
+                              ignoreProperties: false,
+                              loggingLevel: TiledGlobals.default.loggingLevel, nil)
     }
     
     /**
@@ -791,11 +825,19 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
      - parameter withTilesets:       `[SKTileset]` pre-loaded tilesets.
      - returns: `SKTilemap?` tilemap object (if file read succeeds).
      */
-    public class func load(tmxFile: String, delegate: SKTilemapDelegate, tilesetDataSource: SKTilesetDataSource, withTilesets: [SKTileset]) -> SKTilemap? {
-        return SKTilemap.load(tmxFile: tmxFile, inDirectory: nil,
-                              delegate: delegate, tilesetDataSource: tilesetDataSource,
-                              updateMode: TiledGlobals.default.updateMode, withTilesets: withTilesets,
-                              ignoreProperties: false, loggingLevel: TiledGlobals.default.loggingLevel, nil)
+    public class func load(tmxFile: String,
+                           delegate: SKTilemapDelegate,
+                           tilesetDataSource: SKTilesetDataSource,
+                           withTilesets: [SKTileset]) -> SKTilemap? {
+        
+        return SKTilemap.load(tmxFile: tmxFile,
+                              inDirectory: nil,
+                              delegate: delegate,
+                              tilesetDataSource: tilesetDataSource,
+                              updateMode: TiledGlobals.default.updateMode,
+                              withTilesets: withTilesets,
+                              ignoreProperties: false,
+                              loggingLevel: TiledGlobals.default.loggingLevel, nil)
     }
     
     /**

@@ -83,7 +83,7 @@ internal class SKTileCollisionShape: SKTiledObject {
  
  Also includes navigation properties for tile accessability, and graph node weight.
  
- ### Properties 
+ ### Properties
  
  | Property   | Description     |
  |------------|-----------------|
@@ -99,10 +99,13 @@ public class SKTilesetData: SKTiledObject {
     
     /// Unique id.
     public var uuid: String = UUID().uuidString
+    
     /// Tile id (local).
     public var id: Int = 0
+    
     /// Tiled type.
     public var type: String!
+    
     /// Tile data name.
     public var name: String? {
         return properties["name"]
@@ -110,11 +113,19 @@ public class SKTilesetData: SKTiledObject {
     
     /// Tile texture.
     public var texture: SKTexture!
+    
     /// Source image name (collections tileset)
     public var source: String! = nil
-    public var probability: CGFloat = 1.0                   // carried over from Tiled application.
+    
+    /// Tile occurance probability (parsed from Tiled, not currently used).
+    
+    public var probability: CGFloat = 1.0
+    
+    /// Custom Tiled properties.
     public var properties: [String: String] = [:]
-    public var ignoreProperties: Bool = false               // ignore custom properties
+    
+    /// Node ignores custom properties.
+    public var ignoreProperties: Bool = false
     
     /// Tile offset.
     public var tileOffset: CGPoint = CGPoint.zero
@@ -129,6 +140,9 @@ public class SKTilesetData: SKTiledObject {
     /// Supress tile animation.
     internal var blockAnimation: Bool = false
     internal var _frames: [TileAnimationFrame] = []
+    
+    
+    /// Tile animation frame storate.
     public var frames:  [TileAnimationFrame] {
         return (blockAnimation == false) ? _frames : []
     }
@@ -194,8 +208,10 @@ public class SKTilesetData: SKTiledObject {
     
     /// Tile is flipped horizontally
     public var flipHoriz: Bool = false
+    
     /// Tile is flipped vertically.
     public var flipVert:  Bool = false
+    
     /// Tile is flipped diagonally.
     public var flipDiag:  Bool = false
     
@@ -203,8 +219,10 @@ public class SKTilesetData: SKTiledObject {
     
     /// Tile is walkable.
     public var walkable: Bool = false
+    
     /// Tile represents an obstacle.
     public var obstacle: Bool = false
+    
     /// Pathfinding weight.
     public var weight: CGFloat = 1
     
@@ -225,9 +243,7 @@ public class SKTilesetData: SKTiledObject {
     
     // MARK: - Init
     
-    /**
-     Initialize an empty data structure.
-     */
+    /// Initialize an empty data structure.
     public init() {}
     
     /**
@@ -438,8 +454,15 @@ extension SKTilesetData: Hashable {
 
 
 extension TileAnimationFrame {
-    override public var description: String { return "Frame: \(id): \(duration)" }
-    override public var debugDescription: String { return "<\(description)>" }
+    
+    /// Frame description.
+    override public var description: String {
+        return "Frame: \(id): \(duration)"
+    }
+    
+    override public var debugDescription: String {
+        return "<\(description)>"
+    }
 }
 
 

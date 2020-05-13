@@ -110,4 +110,17 @@ class PropertiesTests: XCTestCase {
         let ignoredMap = SKTilemap.load(tmxFile: mapurl.path, ignoreProperties: true)!
         XCTAssertFalse(ignoredMap.allowZoom == false, "❗️tilemap `allowZoom` property should still be the default `true` value")
     }
+    
+    /**
+     Test the `getTilesWithProperty` method. The `environment-8x8` tileset has several tiles with a property named `object`.
+     */
+    func testGetTilesWithProperty() {
+        let expectedPropertyValue = "hole"
+        let expectedTileCount = 2
+        if let tilemap = tilemap {
+            let holes = tilemap.getTilesWithProperty("object", "hole")
+            XCTAssertEqual(holes.count, expectedTileCount, "❗️ expected \(expectedTileCount) tiles with the value '\(expectedPropertyValue)', got \(holes.count)")
+        }
+    }
+    
 }

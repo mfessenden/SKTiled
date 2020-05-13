@@ -184,11 +184,8 @@ extension SKTilemap {
 
 
 extension SKTileset {
-    // MARK: - Properties
 
-    /**
-     Parse the tileset's properties value.
-     */
+    /// Parse the tileset's properties value.
     public func parseProperties(completion: (() -> Void)?) {
         if (ignoreProperties == true) { return }
          if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
@@ -215,11 +212,8 @@ extension SKTileset {
 
 
 extension SKTiledLayerObject {
-    // MARK: - Properties
 
-    /**
-     Parse the layer's properties value.
-     */
+    /// Parse the layer's properties value.
     public func parseProperties(completion: (() -> Void)?) {
 
         if (ignoreProperties == true) { return }
@@ -293,11 +287,8 @@ extension SKTiledLayerObject {
 
 
 extension SKTileLayer {
-    // MARK: - Properties
 
-    /**
-     Parse the tile layer's properties.
-     */
+    /// Parse the tile layer's properties.
     override public func parseProperties(completion: (() -> Void)?) {
         super.parseProperties(completion: completion)
     }
@@ -305,11 +296,8 @@ extension SKTileLayer {
 
 
 extension SKObjectGroup {
-    // MARK: - Properties
 
-    /**
-     Parse the object group's properties.
-    */
+    /// Parse the object group's properties.
     override public func parseProperties(completion: (() -> Void)?) {
         if (ignoreProperties == true) { return }
         for (attr, _ ) in properties {
@@ -326,22 +314,19 @@ extension SKObjectGroup {
 
 
 extension SKImageLayer {
-    // MARK: - Properties
-    /**
-     Parse the image layer's properties.
-    */
+    
+    /// Parse the image layer's properties.
     override public func parseProperties(completion: (() -> Void)?) {
         super.parseProperties(completion: completion)
     }
 }
 
+
 // MARK: - Generic Properties
 
 extension SKTileObject {
     
-    /**
-     Parse the object's properties value.
-     */
+    /// Parse the object's properties value.
     public func parseProperties(completion: (() -> Void)?) {
         if (ignoreProperties == true) { return }
         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
@@ -373,11 +358,8 @@ extension SKTileObject {
 
 
 extension SKTileCollisionShape {
-    // MARK: - Properties
-
-    /**
-     Parse the collision shape's properties.
-     */
+    
+    /// Parse the collision shape's properties.
     func parseProperties(completion: (() -> Void)?) {
         if (ignoreProperties == true) { return }
         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
@@ -386,10 +368,8 @@ extension SKTileCollisionShape {
 
 
 extension SKTilesetData {
-    // MARK: - Properties
-    /**
-     Parse the tile data's properties value.
-     */
+    
+    /// Parse the tile data's properties value.
     public func parseProperties(completion: (() -> Void)?) {
         if (ignoreProperties == true) { return }
         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }

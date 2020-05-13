@@ -159,11 +159,17 @@ open class SKTile: SKSpriteNode {
     
     /// Tile highlight color.
     open var highlightColor: SKColor = TiledGlobals.default.debug.tileHighlightColor
+    
     /// Tile bounds color.
     open var frameColor: SKColor = TiledGlobals.default.debug.frameColor
+    
     /// Tile highlight duration.
     open var highlightDuration: TimeInterval = TiledGlobals.default.debug.highlightDuration
+    
+    /// Bounding shape key.
     internal var boundsKey: String = "BOUNDS"
+    
+    /// Animation key.
     internal var animationKey: String = "TILE-ANIMATION"
     
     /// Enable tile animation.
@@ -235,15 +241,16 @@ open class SKTile: SKSpriteNode {
         }
     }
     
+    /// Default initializer.
+    ///
+    /// - Parameter aDecoder: decoder instance.
     required public init?(coder aDecoder: NSCoder) {
         tileData = SKTilesetData()
         tileSize = CGSize.zero
         super.init(coder: aDecoder)
     }
     
-    /**
-     Initialize an empty tile.
-     */
+    /// Initialize an empty tile.
     required public init() {
         // create empty tileset data
         tileData = SKTilesetData()
@@ -443,9 +450,7 @@ open class SKTile: SKSpriteNode {
         tileOverlap = overlap
     }
     
-    /**
-     Orient the tile based on the current flip flags.
-     */
+    /// Orient the tile based on the current flip flags.
     internal func orientTile() {
         // reset orientation & scale
         zRotation = 0
@@ -815,9 +820,16 @@ open class SKTile: SKSpriteNode {
 }
 
 
+// MARK: - Extensions
+
+// :nodoc:
 extension TileRenderMode: RawRepresentable {
+    
     public typealias RawValue = Int
     
+    /// Initialize with an integer value.
+    ///
+    /// - Parameter rawValue: raw integer.
     public init?(rawValue: RawValue) {
         switch rawValue {
             case 0: self = .default
@@ -843,6 +855,9 @@ extension TileRenderMode: RawRepresentable {
 
 extension TileRenderMode: CustomStringConvertible, CustomDebugStringConvertible {
     
+    /// Returns the next tile render mode in the array.
+    ///
+    /// - Returns: next tile render mode.
     public func next() -> TileRenderMode {
         switch self {
             case .default: return .static
@@ -851,6 +866,7 @@ extension TileRenderMode: CustomStringConvertible, CustomDebugStringConvertible 
         }
     }
     
+    /// Render mode string identifier.
     public var identifier: String {
         switch self {
             case .default: return "default"
@@ -906,7 +922,7 @@ extension SKTile {
         }
     }
     
-    /// Visibility value of the tile.
+    /// Tile visibility.
     open var visible: Bool {
         get {
             return !self.isHidden

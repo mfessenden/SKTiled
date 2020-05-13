@@ -1,0 +1,106 @@
+# jazzy --help config
+module: SKTiled
+module_version: 1.22
+author: Michael Fessenden
+author_url: https://github.com/mfessenden
+github_url: https://github.com/mfessenden/SKTiled
+github_file_prefix: https://github.com/mfessenden/SKTiled/tree/1.22
+clean: true
+skip_undocumented: true
+output: Docs/html
+readme: Docs/Start.md
+docset_icon: Docs/images/icon-16x16.png
+min_acl: public
+hide_documentation_coverage: false
+use_safe_filenames: true
+framework_root: Sources
+swift_build_tool: xcodebuild
+xcodebuild_arguments: [-project, 'SKTiled.xcodeproj', -scheme, 'SKTiled-macOS']
+
+exclude:
+  - "**/*-ObjC.swift"
+  - "Sources/SKTiled+Extensions.swift"
+  - "Sources/SKTiled+Debug.swift"
+
+copyright: '© 2020 [Michael Fessenden](https://github.com/mfessenden) under [open source license](https://github.com/mfessenden/SKTiled/tree/master/LICENSE).'
+
+
+# sktiled theme based on `RxSwift`
+theme: Docs/Themes/fulldark
+
+
+# Glob that matches available documentation
+documentation:
+    - Docs/Documentation/Coordinates.md
+    - Docs/Documentation/Debugging.md
+    - Docs/Documentation/Extending SKTiled.md
+    - Docs/Documentation/GameplayKit.md
+    - Docs/Documentation/Getting Started.md
+    - Docs/Documentation/Other API Features.md
+    - Docs/Documentation/Scene Setup.md
+    - Docs/Documentation/Tiled Properties.md
+    - Docs/Documentation/Troubleshooting.md
+    - Docs/Documentation/What's New.md
+    - Docs/Documentation/Working with Layers.md
+    - Docs/Documentation/Working with Maps.md
+    - Docs/Documentation/Working with Objects.md
+    - Docs/Documentation/Working with Tiles.md
+    - Docs/Documentation/Working with Tilesets.md
+
+# Glob that matches available abstracts for custom categories
+abstract:
+    - Docs/Sections/*.md
+
+custom_categories:
+  - name: Table of Contents
+    children:
+      - What's New
+      - Getting Started
+      - Scene Setup
+      - Working with Maps
+      - Working with Tilesets
+      - Working with Layers
+      - Working with Tiles
+      - Coordinates
+      - Working with Objects
+      - Tiled Properties
+      - GameplayKit
+      - Extending SKTiled
+      - Other API Features
+      - Debugging
+      - Troubleshooting
+
+  - name: Protocols
+    children:
+    - SKTiledObject
+    - SKTilemapDelegate
+    - SKTiledSceneDelegate
+    - SKTiledSceneCameraDelegate
+    - SKTilesetDataSource
+
+  - name: Class Hierarchy
+    children:
+    - SKTilemap
+    - SKTileset
+    - SKTiledLayerObject
+    - SKTileLayer
+    - SKObjectGroup
+    - SKGroupLayer
+    - SKImageLayer
+    - SKTile
+    - SKTilesetData
+    - SKTileObject
+    - SKTiledScene
+    - SKTiledSceneCamera
+    - SKTiledGraphNode
+    - TileAnimationFrame
+
+  - name: Globals
+    children:
+    - TiledGlobals
+    - DebugDrawOptions
+    - CameraControlMode
+    - CameraZoomClamping
+    - TileRenderMode
+    - TileUpdateMode
+    - TextObjectAttributes

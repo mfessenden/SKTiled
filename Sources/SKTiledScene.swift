@@ -60,12 +60,16 @@ import GameplayKit
  [sktiledscenedelegate-image-url]:https://mfessenden.github.io/SKTiled/images/scene-hierarchy.svg
  */
 public protocol SKTiledSceneDelegate: class {
+    
     /// Root container node. Tiled assets are parented to this node.
     var worldNode: SKNode! { get set }
+    
     /// Custom scene camera.
     var cameraNode: SKTiledSceneCamera! { get set }
+    
     /// Tile map node.
     var tilemap: SKTilemap! { get set }
+    
     /// Load a tilemap from disk, with optional tilesets.
     func load(tmxFile: String, inDirectory: String?,
               withTilesets tilesets: [SKTileset],
@@ -109,23 +113,29 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
     
     /// World container node.
     open var worldNode: SKNode!
+    
     /// Tile map node.
     open var tilemap: SKTilemap!
+    
     /// Custom scene camera.
     open var cameraNode: SKTiledSceneCamera!
+    
     /// Logging verbosity level.
     open var loggingLevel: LoggingLevel = .info
     
     /// Reference to navigation graphs.
     open var graphs: [String : GKGridGraph<GKGridGraphNode>] = [:]
     
+    /// Last update interval.
     private var lastUpdateTime: TimeInterval = 0
+    
+    /// Maximum update interval.
     private let maximumUpdateDelta: TimeInterval = 1.0 / 60.0
     
     /// Receive notifications from camera.
     open var receiveCameraUpdates: Bool = true
     
-    /// Set the tilemap speed
+    /// Set the tilemap speed.
     override open var speed: CGFloat {
         didSet {
             guard oldValue != speed else { return }
@@ -147,14 +157,24 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, SKTiledSceneDelegate
         super.init(size: size)
     }
     
+    /// Default initializer.
+    ///
+    /// - Parameter aDecoder: decoder instance.
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
+    
+    /// Called when the parent view size changes.
+    ///
+    /// - Parameter oldSize: previous size.
     override open func didChangeSize(_ oldSize: CGSize) {
         updateCamera()
     }
     
+    /// Called when the parent view is displayed.
+    ///
+    /// - Parameter view: parent view.
     override open func didMove(to view: SKView) {
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
@@ -390,15 +410,30 @@ extension SKTiledSceneDelegate where Self: SKScene {
 
 #if os(macOS)
 extension SKTiledScene {
-    override open func mouseDown(with event: NSEvent) {}
+    
+    /// Mouse click event handler.
+    ///
+    /// - Parameter event: mouse event.
+    override open func mouseDown(with event: NSEvent) {
+        guard let cameraNode = cameraNode else { return }
+        cameraNode.mouseDown(with: event)
+    }
+    
+    /// Mouse move event handler.
+    ///
+    /// - Parameter event: mouse event.
     override open func mouseMoved(with event: NSEvent) {
         guard let cameraNode = cameraNode else { return }
         cameraNode.mouseMoved(with: event)
     }
+    
     override open func mouseUp(with event: NSEvent) {}
     override open func mouseEntered(with event: NSEvent) {}
     override open func mouseExited(with event: NSEvent) {}
     
+    /// Mouse scroll wheel event handler.
+    ///
+    /// - Parameter event: mouse event.
     override open func scrollWheel(with event: NSEvent) {
         guard let cameraNode = cameraNode else { return }
         cameraNode.scrollWheel(with: event)
