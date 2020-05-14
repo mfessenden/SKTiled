@@ -165,7 +165,7 @@ For more details, check out [**Apple's SKShader tutorial page**][skshader-url].
 
 
 
-Next: [Working with Tilesets](working-with-tilesets.html) - [Index](Tutorial.html)
+Next: [Working with Tilesets](working-with-tilesets.html) - [Index](Table of Contents.html)
 
 [skscene-update-url]:https://developer.apple.com/documentation/spritekit/skscene/1519802-update
 [skshader-url]:https://developer.apple.com/documentation/spritekit/skshader

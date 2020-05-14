@@ -99,4 +99,4 @@ tileset.addTextures(fromSpriteSheet: spritesheet.path, replace: true, transparen
 Doing this will update all of the current tiles, so be careful using this method. 
 
 
-Next: [Working with Layers](working-with-layers.html) - [Index](Tutorial.html)
+Next: [Working with Layers](working-with-layers.html) - [Index](Table of Contents.html)

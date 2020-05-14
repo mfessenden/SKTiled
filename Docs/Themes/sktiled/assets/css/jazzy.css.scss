@@ -6,7 +6,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600;1,700&family=Zilla+Slab:wght@300;400;500;600&display=swap');
 
 $body_background: #fff;
-$body_font: 16px/1.7 'Nunito Light', sans-serif;
+$body_font: 16px/1.7 'Nunito', sans-serif;
+$header_font: 'Nunito', sans-serif;
 $text_color: #333;
 $gray_border: 1px solid #ddd;
 
@@ -112,6 +113,10 @@ body {
   font-size: $font-size;
   font-weight: $heading_weight;
   margin: $margin;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: $header_font;
 }
 
 h1 {
@@ -431,8 +436,8 @@ pre code {
   .token {
     padding-left: 3px;
     margin-left: 0px;
-    font-size: 1.75rem;
-    font-family: $token_header_font;
+    font-size: 1.1rem;
+    // font-family: $token_header_font;
     font-weight: 500;
     color: $token_symbol_name_color;
   }
@@ -591,4 +596,38 @@ html.dash {
   .height-container {
     display: block;
   }
+}
+
+
+// ===========================================================================
+//
+//  Task Tweaks
+//
+// ===========================================================================
+
+
+
+h2.heading {
+    font-size: 1.2rem;
+}
+
+h3.heading {
+    font-size: 1.1rem;
+}
+
+ul li p {
+    margin-bottom: 0.2em;
+}
+
+div.declaration div.language {
+    background-color: #FDF4F4;
+}
+
+
+div.task-group a.token {
+    font-family: $code_font;
+}
+
+div.task-group li.item {
+    list-style-type: square;
 }

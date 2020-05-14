@@ -62,7 +62,11 @@ Running the `xattr` command in your images directory will clean up the extra dat
 
     xattr -rc .
 
-Additionally, you could add a script phase to your app target. In Xcode, select your target and add a new *New Run Script Phase*
+Additionally, you could add a script phase to your app target. In Xcode, select your target and add a new *New Run Script Phase*. Add the following code:
+
+```bash
+xattr -rc $PROJECT_DIR/Assets/.
+```
 
 
 ## Carthage Problems
@@ -70,7 +74,7 @@ Additionally, you could add a script phase to your app target. In Xcode, select 
 If you are getting errors including a framework in Xcode, use the `--no-use-binaries` flag when updating SKTiled.
 
 
-Next: [Getting Started](getting-started.html) - [Index](Tutorial.html)
+Next: [Getting Started](getting-started.html) - [Index](Table of Contents.html)
 
 
 [zlib-include-img]:images/zlib-include.png

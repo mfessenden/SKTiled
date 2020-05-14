@@ -76,7 +76,7 @@ See the [**debugging**](debugging.html) page for more information.
 
 ![Show Graph](images/showGraph.gif)
 
-Next: [Extending SKTiled](extending-sktiled.html) - [Index](Tutorial.html)
+Next: [Extending SKTiled](extending-sktiled.html) - [Index](Table of Contents.html)
 
 <!--- Apple --->
 

@@ -6,8 +6,8 @@ xcode_scheme:
   - SKTiled-macOS
   - SKTiled-tvOS
 branches:
-  except:
-    - develop
+  only:
+    - master
 script:
   xcodebuild
   CODE_SIGNING_REQUIRED=NO

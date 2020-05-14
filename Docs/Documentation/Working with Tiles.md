@@ -289,7 +289,7 @@ tile.setTileOverlap(1.0)
 ```
 
 
-Next: [Coordinates](coordinates.html) - [Index](Tutorial.html)
+Next: [Coordinates](coordinates.html) - [Index](Table of Contents.html)
 
 [sknode-url]:https://developer.apple.com/documentation/spritekit/sknode
 [skscene-url]:https://developer.apple.com/documentation/spritekit/skscene

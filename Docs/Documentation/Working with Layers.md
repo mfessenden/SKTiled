@@ -148,8 +148,8 @@ if let wallsLayer = tilemap.getLayers(atPath: "WALLS/INNER/inner_walls").first {
 ```
 
 
-[comment]: # (Next: [Working with Tilesets](working-with-tilesets.html) - [Index](Tutorial.html))
-Next: [ Working with Tiles](working-with-tiles.html) - [Index](Tutorial.html)
+[comment]: # (Next: [Working with Tilesets](working-with-tilesets.html) - [Index](Table of Contents.html))
+Next: [ Working with Tiles](working-with-tiles.html) - [Index](Table of Contents.html)
 
 
 

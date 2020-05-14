@@ -96,4 +96,4 @@ The `SKTiledLayerObject.TileOffset` enum represents a hint for placement within 
 
 
 
- Next: [Working with Objects](working-with-objects.html) - [Index](Tutorial.html)
+ Next: [Working with Objects](working-with-objects.html) - [Index](Table of Contents.html)

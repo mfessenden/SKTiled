@@ -161,7 +161,7 @@ let tilemap = SKTilemap.load(tmxFile: "myTiledFile", ignoreProperties: true)
 
 
 
-Next: [GameplayKit](gameplaykit.html) - [Index](Tutorial.html)
+Next: [GameplayKit](gameplaykit.html) - [Index](Table of Contents.html)
 
 
 [tiled-url]:http://www.mapeditor.org

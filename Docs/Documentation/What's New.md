@@ -150,7 +150,7 @@ The `SKTilemapDelegate` protocol has new methods for users to easily use their o
 
 See the [**extending**][extending-url] section for more info.
 
-Next: [Getting Started](getting-started.html) - [Index](Tutorial.html)
+Next: [Getting Started](getting-started.html) - [Index](Table of Contents.html)
 
 <!--- Tiled --->
 

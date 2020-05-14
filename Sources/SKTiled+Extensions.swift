@@ -3,8 +3,6 @@
 //  SKTiled
 //
 //  Created by Michael Fessenden.
-//  Compression extensions adapted from `GzipSwift`:
-//  - https://github.com/1024jp/GzipSwift
 //
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
@@ -26,6 +24,9 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
+//
+//  Compression extensions adapted from `GzipSwift`:
+//  - https://github.com/1024jp/GzipSwift
 
 import SpriteKit
 import zlib

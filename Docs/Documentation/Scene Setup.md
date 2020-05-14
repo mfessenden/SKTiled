@@ -231,7 +231,7 @@ The demo project allows you to load and test your own Tiled content (macOS only)
 ![Loading External](images/demo-load-external.svg)
 
 
-Next: [Working with Maps](working-with-maps.html) - [Index](Tutorial.html)
+Next: [Working with Maps](working-with-maps.html) - [Index](Table of Contents.html)
 
 
 [extending-url]:extending.html

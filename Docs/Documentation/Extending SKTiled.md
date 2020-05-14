@@ -134,4 +134,4 @@ if let tilemap = SKTilemap.load(tmxFile: level1, delegate: levelScene) {
 # LevelScene: setting up tilemap: "level1"
 ```
 
-Next: [Debugging](debugging.html) - [Index](Tutorial.html)
+Next: [Debugging](debugging.html) - [Index](Table of Contents.html)

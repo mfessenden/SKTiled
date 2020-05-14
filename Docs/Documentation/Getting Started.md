@@ -20,7 +20,7 @@
 
 - iOS 11
 - tvOS 12
-- macOS 10.13
+- macOS 10.12
 - Xcode 11/Swift 5
 
 
@@ -30,12 +30,11 @@ The **SKTiled** project contains six targets; three are demo applications for iO
 
 ![Project Schemes](images/project-schemes.png)
 
-To use the frameworks, build the appropriate framework target and add to your project. Make sure the **Minimum Deployment Target** is set correctly for your project (iOS10+/macOS 10.12+).
-
+To use the frameworks, build the appropriate framework target and add to your project. Make sure the **Minimum Deployment Target** is set correctly for your project (iOS11+/macOS 10.12+/tvOS12+).
 
 ## Framework Installation
 
-To use the frameworks, build the appropriate framework target and add to your project. Make sure the **Minimum Deployment Target** is set correctly for your project (iOS11+/macOS 10.12+/tvOS12+). 
+To use the frameworks, build the appropriate framework target and add to your project. Make sure the **Minimum Deployment Target** is set correctly for your project (iOS11+/macOS 10.12+/tvOS12+).
 
 ![adding framework](images/framework.png)
 
@@ -165,7 +164,7 @@ if let tilemap = SKTilemap.load(tmxFile: "MyTilemap.tmx", inDirectory: "Tiled") 
 This will allow you more flexibility organizing your project, but be careful that your maps don't reference files above the referenced folder. For more information, see the [**Working with Maps**][working-with-maps-url] section.
 
 
-Next: [Scene Setup](scene-setup.html) - [Index](Tutorial.html)
+Next: [Scene Setup](scene-setup.html) - [Index](Table of Contents.html)
 
 
 <!--- Images --->

@@ -103,7 +103,7 @@ You also have the option of enabling physics for each object, allowing them to r
 ![Object Dynamics](images/dynamic-objects.gif)
 
 
- Next: [Tiled Properties](tiled-properties.html) - [Index](Tutorial.html)
+ Next: [Tiled Properties](tiled-properties.html) - [Index](Table of Contents.html)
 
 
 [sktiled-doc-url]:https://mfessenden.github.io/SKTiled
