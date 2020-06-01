@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title>SKTilemapDelegate Protocol Reference</title>
+    <link rel='stylesheet' type='text/css' href='../css/jazzy.css' />
+    <link rel='stylesheet' type='text/css' href='../css/highlight.css' />
+    <meta charset='utf-8'>
+    <script src='../js/jquery.min.js' defer></script>
+    <script src='../js/jazzy.js' defer></script>
+    <script src='../js/retina.js' defer></script>
+  </head>
+  <body>
+
+    <a name='//apple_ref/swift/Protocol/SKTilemapDelegate' class='dashAnchor'></a>
+
+    <a title='SKTilemapDelegate Protocol Reference'></a>
+
+    <header class='header'>
+      <p class='header-col header-col--primary'>
+        <a class='header-link' href='../index.html'>
+          SKTiled Docs
+        </a>
+         (81% documented)
+      </p>
+    
+        <p class='header-col header-col--secondary'>
+          <a class='header-link' href='https://github.com/mfessenden/SKTiled'>
+            <img class='header-icon' src='../img/gh.png'/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class='breadcrumbs'>
+      <a class='breadcrumb' href='../index.html'>SKTiled Reference</a>
+      <img class='carat' src='../img/carat.png' />
+      SKTilemapDelegate Protocol Reference
+    </p>
+
+    <div class='content-wrapper'>
+      <nav class='navigation'>
+        <ul class='nav-groups'>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Table of Contents.html'>Table of Contents</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../whats-new.html'>What&#39;s New</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../getting-started.html'>Getting Started</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../scene-setup.html'>Scene Setup</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../working-with-maps.html'>Working with Maps</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../working-with-tilesets.html'>Working with Tilesets</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../working-with-layers.html'>Working with Layers</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../working-with-tiles.html'>Working with Tiles</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../coordinates.html'>Coordinates</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../working-with-objects.html'>Working with Objects</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../tiled-properties.html'>Tiled Properties</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../gameplaykit.html'>GameplayKit</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../extending-sktiled.html'>Extending SKTiled</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../other-api-features.html'>Other API Features</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../debugging.html'>Debugging</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../troubleshooting.html'>Troubleshooting</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Protocols.html'>Protocols</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/SKTiledObject.html'>SKTiledObject</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/SKTilemapDelegate.html'>SKTilemapDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/SKTiledSceneDelegate.html'>SKTiledSceneDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/SKTiledSceneCameraDelegate.html'>SKTiledSceneCameraDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/SKTilesetDataSource.html'>SKTilesetDataSource</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Class Hierarchy.html'>Class Hierarchy</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTilemap.html'>SKTilemap</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTilemap/TilemapOrientation.html'>– TilemapOrientation</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC21CameraZoomConstraintsV'>– CameraZoomConstraints</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTilemap/RenderStatistics.html'>– RenderStatistics</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTileset.html'>SKTileset</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTiledLayerObject.html'>SKTiledLayerObject</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTiledLayerObject.html#/s:7SKTiled0A11LayerObjectC10TileOffsetO'>– TileOffset</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTileLayer.html'>SKTileLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKObjectGroup.html'>SKObjectGroup</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKGroupLayer.html'>SKGroupLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKImageLayer.html'>SKImageLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTile.html'>SKTile</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTile/TileAlignmentHint.html'>– TileAlignmentHint</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTile/PhysicsShape.html'>– PhysicsShape</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTilesetData.html'>SKTilesetData</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTileObject.html'>SKTileObject</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTileObject/TiledObjectType.html'>– TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTileObject/TiledObjectShape.html'>– TiledObjectShape</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO'>– CollisionType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTiledScene.html'>SKTiledScene</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTiledSceneCamera.html'>SKTiledSceneCamera</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTiledGraphNode.html'>SKTiledGraphNode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TileAnimationFrame.html'>TileAnimationFrame</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Globals.html'>Globals</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TiledGlobals.html'>TiledGlobals</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TiledGlobals/Version.html'>– Version</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC13RenderQualityV'>– RenderQuality</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TiledGlobals/DebugDisplayOptions.html'>– DebugDisplayOptions</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC15TimeDisplayModeO'>– TimeDisplayMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC8RendererO'>– Renderer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Globals.html#/s:7SKTiled17CameraControlModeO'>CameraControlMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Enums/TileRenderMode.html'>TileRenderMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Enums/TileUpdateMode.html'>TileUpdateMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TextObjectAttributes.html'>TextObjectAttributes</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class='main-content'>
+
+        <section class='section'>
+          <div class='section-content'>
+            <h1>SKTilemapDelegate</h1>
+              <div class='declaration'>
+                <div class='language'>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">SKTilemapDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                </div>
+              </div>
+            <h2 id='overview' class='heading'>Overview</h2>
+
+<p>Methods that allow interaction with an <code><a href="../Classes/SKTilemap.html">SKTilemap</a></code> object as it is being created to customize its properties.</p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Property</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">zDeltaForLayers</td>
+<td style="text-align: left">Default z-distance between layers.</td>
+</tr>
+</tbody></table>
+<h3 id='instance-methods' class='heading'>Instance Methods</h3>
+
+<p>Delegate callbacks are called asynchronously as the map is being read from disk and rendered:</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Method</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">didBeginParsing</td>
+<td style="text-align: left">Called when the tilemap is instantiated.</td>
+</tr>
+<tr>
+<td style="text-align: left">didAddTileset</td>
+<td style="text-align: left">Called when a tileset is added to a map.</td>
+</tr>
+<tr>
+<td style="text-align: left">didAddLayer</td>
+<td style="text-align: left">Called when a layer is added to a tilemap.</td>
+</tr>
+<tr>
+<td style="text-align: left">didReadMap</td>
+<td style="text-align: left">Called when the tilemap is finished parsing.</td>
+</tr>
+<tr>
+<td style="text-align: left">didRenderMap</td>
+<td style="text-align: left">Called when the tilemap layers are finished rendering.</td>
+</tr>
+<tr>
+<td style="text-align: left">didAddNavigationGraph</td>
+<td style="text-align: left">Called when the a navigation graph is built for a layer.</td>
+</tr>
+<tr>
+<td style="text-align: left">objectForTileType</td>
+<td style="text-align: left">Specify a custom tile object for use in tile layers.</td>
+</tr>
+<tr>
+<td style="text-align: left">objectForVectorType</td>
+<td style="text-align: left">Specify a custom object for use in object groups.</td>
+</tr>
+<tr>
+<td style="text-align: left">objectForGraphType</td>
+<td style="text-align: left">Specify a custom graph node object for use in navigation graphs.</td>
+</tr>
+</tbody></table>
+<h3 id='custom-objects' class='heading'>Custom Objects</h3>
+
+<p>Custom object methods can be used to substitute your own objects for tiles:</p>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">objectForTileType</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">SKTile</span><span class="o">.</span><span class="k">Type</span> <span class="p">{</span>
+   <span class="k">if</span> <span class="p">(</span><span class="n">named</span> <span class="o">==</span> <span class="s">"MyTile"</span><span class="p">)</span> <span class="p">{</span>
+       <span class="k">return</span> <span class="kt">MyTile</span><span class="o">.</span><span class="k">self</span>
+   <span class="p">}</span>
+   <span class="k">return</span> <span class="kt">SKTile</span><span class="o">.</span><span class="k">self</span>
+<span class="p">}</span>
+</code></pre>
+
+          </div>
+        </section>
+
+        <section class='section'>
+          <div class='section-content'>
+            <!--  a container for properties & methods -->
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Extensions"></a>
+                <a name="//apple_ref/swift/Section/Extensions" class="dashAnchor"></a>
+            
+                <!-- pragma -->
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Extensions"></a>
+                  <h3 class="section-name"><p>Extensions</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE15zDeltaForLayers12CoreGraphics7CGFloatVvp"></a>
+                    <a name="//apple_ref/swift/Property/zDeltaForLayers" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE15zDeltaForLayers12CoreGraphics7CGFloatVvp">zDeltaForLayers</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Determines the z-zposition difference between layers.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">zDeltaForLayers</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilemap.swift#L2853-L2855">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE15didBeginParsingyyAA0B0CF"></a>
+                    <a name="//apple_ref/swift/Method/didBeginParsing(_:)" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE15didBeginParsingyyAA0B0CF">didBeginParsing(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Called when the tilemap is instantiated.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didBeginParsing</span><span class="p">(</span><span class="n">_</span> <span class="nv">tilemap</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTilemap.html">SKTilemap</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tilemap</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code><a href="../Classes/SKTilemap.html">SKTilemap</a></code> tilemap instance.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilemap.swift#L2862">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE13didAddTilesetyyAA9SKTilesetCF"></a>
+                    <a name="//apple_ref/swift/Method/didAddTileset(_:)" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE13didAddTilesetyyAA9SKTilesetCF">didAddTileset(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Called when a tileset is added to a map.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didAddTileset</span><span class="p">(</span><span class="n">_</span> <span class="nv">tileset</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTileset.html">SKTileset</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tileset</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code><a href="../Classes/SKTileset.html">SKTileset</a></code> tileset instance.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilemap.swift#L2869">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE11didAddLayeryyAA0aF6ObjectCF"></a>
+                    <a name="//apple_ref/swift/Method/didAddLayer(_:)" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE11didAddLayeryyAA0aF6ObjectCF">didAddLayer(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Called when a layer is added to a tilemap.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didAddLayer</span><span class="p">(</span><span class="n">_</span> <span class="nv">layer</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTiledLayerObject.html">SKTiledLayerObject</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>layer</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code><a href="../Classes/SKTiledLayerObject.html">SKTiledLayerObject</a></code> tilemap instance.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilemap.swift#L2876">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE10didReadMapyyAA0B0CF"></a>
+                    <a name="//apple_ref/swift/Method/didReadMap(_:)" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE10didReadMapyyAA0B0CF">didReadMap(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Called when the tilemap is finished parsing.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didReadMap</span><span class="p">(</span><span class="n">_</span> <span class="nv">tilemap</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTilemap.html">SKTilemap</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tilemap</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code><a href="../Classes/SKTilemap.html">SKTilemap</a></code> tilemap instance.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilemap.swift#L2883">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE12didRenderMapyyAA0B0CF"></a>
+                    <a name="//apple_ref/swift/Method/didRenderMap(_:)" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE12didRenderMapyyAA0B0CF">didRenderMap(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Called when the tilemap layers are finished rendering.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didRenderMap</span><span class="p">(</span><span class="n">_</span> <span class="nv">tilemap</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTilemap.html">SKTilemap</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tilemap</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code><a href="../Classes/SKTilemap.html">SKTilemap</a></code> tilemap instance.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilemap.swift#L2890">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE21didAddNavigationGraphyySo06GKGridG0CySo0hG4NodeCGF"></a>
+                    <a name="//apple_ref/swift/Method/didAddNavigationGraph(_:)" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE21didAddNavigationGraphyySo06GKGridG0CySo0hG4NodeCGF">didAddNavigationGraph(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Called when the a navigation graph is built for a layer.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didAddNavigationGraph</span><span class="p">(</span><span class="n">_</span> <span class="nv">graph</span><span class="p">:</span> <span class="kt">GKGridGraph</span><span class="o">&lt;</span><span class="kt">GKGridGraphNode</span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>graph</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>GKGridGraph&lt;GKGridGraphNode&gt;</code> graph instance.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilemap.swift#L2897">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE17objectForTileType5namedAA6SKTileCmSSSg_tF"></a>
+                    <a name="//apple_ref/swift/Method/objectForTileType(named:)" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE17objectForTileType5namedAA6SKTileCmSSSg_tF">objectForTileType(named:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Specify a custom tile object for use in tile layers.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">objectForTileType</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/SKTile.html">SKTile</a></span><span class="o">.</span><span class="k">Type</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>className</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>String</code> optional class name.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilemap.swift#L2905">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE19objectForVectorType5namedAA12SKTileObjectCmSSSg_tF"></a>
+                    <a name="//apple_ref/swift/Method/objectForVectorType(named:)" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE19objectForVectorType5namedAA12SKTileObjectCmSSSg_tF">objectForVectorType(named:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Specify a custom object for use in object groups.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">objectForVectorType</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/SKTileObject.html">SKTileObject</a></span><span class="o">.</span><span class="k">Type</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>named</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>String</code> optional class name.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilemap.swift#L2913">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled17SKTilemapDelegatePAAE18objectForGraphType5namedSo06GKGridF4NodeCmSSSg_tF"></a>
+                    <a name="//apple_ref/swift/Method/objectForGraphType(named:)" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled17SKTilemapDelegatePAAE18objectForGraphType5namedSo06GKGridF4NodeCmSSSg_tF">objectForGraphType(named:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Specify a custom graph node object for use in navigation graphs.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">objectForGraphType</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">GKGridGraphNode</span><span class="o">.</span><span class="k">Type</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>named</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>String</code> optional class name.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilemap.swift#L2921">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class='footer'>
+      <p>© 2020 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external"><b>Michael Fessenden</b></a>. All rights reserved.</p>
+      <p>Generated by <a class='link' href='https://github.com/realm/jazzy' target='_blank' rel='external'>jazzy ♪♫ v0.13.2</a>, a <a class='link' href='http://realm.io' target='_blank' rel='external'>Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

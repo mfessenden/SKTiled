@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title>Tiled Properties  Reference</title>
+    <link rel='stylesheet' type='text/css' href='css/jazzy.css' />
+    <link rel='stylesheet' type='text/css' href='css/highlight.css' />
+    <meta charset='utf-8'>
+    <script src='js/jquery.min.js' defer></script>
+    <script src='js/jazzy.js' defer></script>
+    <script src='js/retina.js' defer></script>
+  </head>
+  <body>
+
+
+    <a title='Tiled Properties  Reference'></a>
+
+    <header class='header'>
+      <p class='header-col header-col--primary'>
+        <a class='header-link' href='index.html'>
+          SKTiled Docs
+        </a>
+         (81% documented)
+      </p>
+    
+        <p class='header-col header-col--secondary'>
+          <a class='header-link' href='https://github.com/mfessenden/SKTiled'>
+            <img class='header-icon' src='img/gh.png'/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class='breadcrumbs'>
+      <a class='breadcrumb' href='index.html'>SKTiled Reference</a>
+      <img class='carat' src='img/carat.png' />
+      Tiled Properties  Reference
+    </p>
+
+    <div class='content-wrapper'>
+      <nav class='navigation'>
+        <ul class='nav-groups'>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Table of Contents.html'>Table of Contents</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='whats-new.html'>What&#39;s New</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='getting-started.html'>Getting Started</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='scene-setup.html'>Scene Setup</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-maps.html'>Working with Maps</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-tilesets.html'>Working with Tilesets</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-layers.html'>Working with Layers</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-tiles.html'>Working with Tiles</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='coordinates.html'>Coordinates</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-objects.html'>Working with Objects</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='tiled-properties.html'>Tiled Properties</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='gameplaykit.html'>GameplayKit</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='extending-sktiled.html'>Extending SKTiled</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='other-api-features.html'>Other API Features</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='debugging.html'>Debugging</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='troubleshooting.html'>Troubleshooting</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Protocols.html'>Protocols</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/SKTiledObject.html'>SKTiledObject</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/SKTilemapDelegate.html'>SKTilemapDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/SKTiledSceneDelegate.html'>SKTiledSceneDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/SKTiledSceneCameraDelegate.html'>SKTiledSceneCameraDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/SKTilesetDataSource.html'>SKTilesetDataSource</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Class Hierarchy.html'>Class Hierarchy</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilemap.html'>SKTilemap</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilemap/TilemapOrientation.html'>– TilemapOrientation</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC21CameraZoomConstraintsV'>– CameraZoomConstraints</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilemap/RenderStatistics.html'>– RenderStatistics</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileset.html'>SKTileset</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTiledLayerObject.html'>SKTiledLayerObject</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTiledLayerObject.html#/s:7SKTiled0A11LayerObjectC10TileOffsetO'>– TileOffset</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileLayer.html'>SKTileLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKObjectGroup.html'>SKObjectGroup</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKGroupLayer.html'>SKGroupLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKImageLayer.html'>SKImageLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTile.html'>SKTile</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTile/TileAlignmentHint.html'>– TileAlignmentHint</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTile/PhysicsShape.html'>– PhysicsShape</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilesetData.html'>SKTilesetData</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileObject.html'>SKTileObject</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileObject/TiledObjectType.html'>– TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileObject/TiledObjectShape.html'>– TiledObjectShape</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO'>– CollisionType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTiledScene.html'>SKTiledScene</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTiledSceneCamera.html'>SKTiledSceneCamera</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTiledGraphNode.html'>SKTiledGraphNode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TileAnimationFrame.html'>TileAnimationFrame</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Globals.html'>Globals</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals.html'>TiledGlobals</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals/Version.html'>– Version</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC13RenderQualityV'>– RenderQuality</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals/DebugDisplayOptions.html'>– DebugDisplayOptions</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC15TimeDisplayModeO'>– TimeDisplayMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC8RendererO'>– Renderer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Globals.html#/s:7SKTiled17CameraControlModeO'>CameraControlMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Enums/TileRenderMode.html'>TileRenderMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Enums/TileUpdateMode.html'>TileUpdateMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TextObjectAttributes.html'>TextObjectAttributes</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class='main-content'>
+
+        <section class='section'>
+          <div class='section-content'>
+            
+            <h1 id='tiled-properties' class='heading'>Tiled Properties</h1>
+
+<ul>
+<li><a href="#querying-properties">Querying Properties</a></li>
+<li><a href="#object-types">Object Types</a></li>
+<li><a href="#custom-properties">Querying Properties</a></li>
+<li><a href="#custom-properties">Custom Properties</a></li>
+</ul>
+
+<p>One of the most useful features of <strong>SKTiled</strong> is the ability to exploit Tiled&rsquo;s custom properties for most objects.
+Any object that conforms to the <code><a href="Protocols/SKTiledObject.html">SKTiledObject</a></code> protocol will inherit methods for parsing Tiled object properties.</p>
+
+<p><strong>SKTiled</strong> supports the newer <strong>color</strong> and <strong>file</strong> property types (values are stored as strings internally anyway, which <em>SKTiled</em> already supports). The custom color/file types listed above will also be parsed if they are created as string types in Tiled.</p>
+
+<p>Currently all <strong>SKTiled</strong> property values are stored as strings, though this will change in the future.</p>
+<h2 id='querying-properties' class='heading'>Querying Properties</h2>
+
+<p>The <code><a href="Protocols/SKTiledObject.html">SKTiledObject</a></code> protocol enables you to easily query attributes in your scenes. The methods work exactly the same for all <strong>SKTiled</strong> classes.</p>
+<pre class="highlight swift"><code><span class="c1">// access tile data properties</span>
+<span class="n">tileData</span><span class="o">.</span><span class="n">properties</span>
+
+<span class="c1">// query an object to see if it has a named property</span>
+<span class="n">floorObject</span><span class="o">.</span><span class="nf">hasKey</span><span class="p">(</span><span class="s">"slippery"</span><span class="p">)</span>
+
+<span class="c1">// access a named property</span>
+<span class="k">let</span> <span class="nv">slipperyValue</span> <span class="o">=</span> <span class="n">floorObject</span><span class="o">.</span><span class="nf">stringForKey</span><span class="p">(</span><span class="s">"slippery"</span><span class="p">)</span><span class="o">!</span>
+
+<span class="c1">// update a value</span>
+<span class="n">floorObject</span><span class="o">.</span><span class="nf">setValue</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="s">"slippery"</span><span class="p">,</span> <span class="s">"1.2"</span><span class="p">)</span>
+
+<span class="c1">// get tile data that have a named property (regardless of value)</span>
+<span class="k">let</span> <span class="nv">dynamicObjects</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTileData</span><span class="p">(</span><span class="nv">withProperty</span><span class="p">:</span> <span class="s">"mass"</span><span class="p">)</span>
+
+<span class="c1">// get tile data that have a named property (with a specific value)</span>
+<span class="k">let</span> <span class="nv">heavyDynamicObjects</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTileData</span><span class="p">(</span><span class="nv">withProperty</span><span class="p">:</span> <span class="s">"mass"</span><span class="p">,</span> <span class="s">"10.0"</span><span class="p">)</span>
+
+<span class="c1">// removing a named property returns the value (or nil if it doesn't exist)</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">levelName</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">removeProperty</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="s">"levelName"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Level name was '</span><span class="se">\(</span><span class="n">levelName</span><span class="se">)</span><span class="s">'"</span><span class="p">)</span>
+<span class="p">}</span>
+
+</code></pre>
+<h2 id='object-types' class='heading'>Object Types</h2>
+
+<p><img src="images/type-property.png" alt="Type Property"></p>
+
+<p>Some object types in <a href="http://www.mapeditor.org"><strong>Tiled</strong></a> have a special <code>type</code> property (tiles, objects). The base <code><a href="Protocols/SKTiledObject.html">SKTiledObject</a></code> protocol in <strong>SKTiled</strong> contains a <code>type</code> property, which means that all <strong>SKTiled</strong> objects inherit it (not just the objects that Tiled supports).</p>
+
+<p>This means that you can set this attribute for tilesets, all layer types, even the map itself. If the object has a <code>type</code> property in Tiled, that will be assigned as a value. If the object has custom string property <code>type</code>, that will be used instead.</p>
+<h2 id='custom-properties' class='heading'>Custom Properties</h2>
+
+<p><strong>SKTiled</strong> recognizes several custom properties that can be used to change attributes of objects in your Tiled scenes. For instance, adding an <code>zPosition</code> float property to a layer or object in Tiled will override the property in SpriteKit.</p>
+
+<p>If you wish to ignore custom properties when your scene is read, you can pass the <code>ignoreProperties</code> argument to the <code>SKTilemap.load</code> method:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="s">"myTiledFile"</span><span class="p">,</span> <span class="nv">ignoreProperties</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+</code></pre>
+<h4 id='sktilemap' class='heading'>SKTilemap</h4>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Property</th>
+<th style="text-align: center">Type</th>
+<th style="text-align: left">Description</th>
+<th style="text-align: center">Notes</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">name</td>
+<td style="text-align: center">String</td>
+<td style="text-align: left">map name (defaults to tmx filename).</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">hidden</td>
+<td style="text-align: center">Bool</td>
+<td style="text-align: left">hide the map.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">worldScale</td>
+<td style="text-align: center">Float</td>
+<td style="text-align: left">world starting scale.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">gridColor</td>
+<td style="text-align: center">Color</td>
+<td style="text-align: left">color used for visualizing the tile grid.</td>
+<td style="text-align: center">debug</td>
+</tr>
+<tr>
+<td style="text-align: left">gridOpacity</td>
+<td style="text-align: center">Float</td>
+<td style="text-align: left">grid overlay opacity.</td>
+<td style="text-align: center">debug</td>
+</tr>
+<tr>
+<td style="text-align: left">frameColor</td>
+<td style="text-align: center">Color</td>
+<td style="text-align: left">color used for visualizing the bounding box.</td>
+<td style="text-align: center">debug</td>
+</tr>
+<tr>
+<td style="text-align: left">highlightColor</td>
+<td style="text-align: center">Color</td>
+<td style="text-align: left">color used for highlighting tiles.</td>
+<td style="text-align: center">debug</td>
+</tr>
+<tr>
+<td style="text-align: left">overlayColor</td>
+<td style="text-align: center">Color</td>
+<td style="text-align: left">pause overlay color.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">objectColor</td>
+<td style="text-align: center">Color</td>
+<td style="text-align: left">base color for drawing objects.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">zDelta</td>
+<td style="text-align: center">Float</td>
+<td style="text-align: left">default z-distance between layers.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">zPosition</td>
+<td style="text-align: center">Float</td>
+<td style="text-align: left">initial zPosition.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">allowMovement</td>
+<td style="text-align: center">Bool</td>
+<td style="text-align: left">scene camera movement enabled.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">allowZoom</td>
+<td style="text-align: center">Bool</td>
+<td style="text-align: left">scene camera zoom enabled.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">showObjects</td>
+<td style="text-align: center">Bool</td>
+<td style="text-align: left">globally show/hide objects in all object groups.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">tileOverlap</td>
+<td style="text-align: center">Float</td>
+<td style="text-align: left">tile overlap amount.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">maxZoom</td>
+<td style="text-align: center">Float</td>
+<td style="text-align: left">maximum camera zoom.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">minZoom</td>
+<td style="text-align: center">Float</td>
+<td style="text-align: left">minimum camera zoom.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">ignoreBackground</td>
+<td style="text-align: center">Bool</td>
+<td style="text-align: left">ignore Tiled background color.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">antialiasLines</td>
+<td style="text-align: center">Bool</td>
+<td style="text-align: left">antialias lines.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">autoResize</td>
+<td style="text-align: center">Bool</td>
+<td style="text-align: left">automatically resize the map in view.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">xGravity</td>
+<td style="text-align: center">Float</td>
+<td style="text-align: left">gravity in x.</td>
+<td style="text-align: center">dynamics</td>
+</tr>
+<tr>
+<td style="text-align: left">yGravity</td>
+<td style="text-align: center">Float</td>
+<td style="text-align: left">gravity in y.</td>
+<td style="text-align: center">dynamics</td>
+</tr>
+<tr>
+<td style="text-align: left">cropAtBoundary</td>
+<td style="text-align: center">Bool</td>
+<td style="text-align: left">crop the map at boundaries.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">shouldEnableEffects</td>
+<td style="text-align: center">Bool</td>
+<td style="text-align: left">toggle effects rendering on the map.</td>
+<td style="text-align: center"></td>
+</tr>
+</tbody></table>
+<h4 id='sktiledlayerobject' class='heading'>SKTiledLayerObject</h4>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Property</th>
+<th style="text-align: center">Type</th>
+<th style="text-align: left">Description</th>
+<th style="text-align: center">Notes</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">antialiasing</td>
+<td style="text-align: center">Bool</td>
+<td style="text-align: left">antialias lines.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">hidden</td>
+<td style="text-align: center">Bool</td>
+<td style="text-align: left">hide the layer.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">color</td>
+<td style="text-align: center">String</td>
+<td style="text-align: left">hex string to override color.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">gridColor</td>
+<td style="text-align: center">Color</td>
+<td style="text-align: left">color used for visualizing the tile grid.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">graphName</td>
+<td style="text-align: center">String</td>
+<td style="text-align: left">graph name for identifying pathfinding graph.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">frameColor</td>
+<td style="text-align: center">Color</td>
+<td style="text-align: left">color used for visualizing layer bounding box.</td>
+<td style="text-align: center">debug</td>
+</tr>
+<tr>
+<td style="text-align: left">backgroundColor</td>
+<td style="text-align: center">Color</td>
+<td style="text-align: left">color used for visualizing the tile grid.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">zPosition</td>
+<td style="text-align: center">Float</td>
+<td style="text-align: left">used to manually override layer zPosition.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">isDynamic</td>
+<td style="text-align: center">Bool</td>
+<td style="text-align: left">creates a collision object from the layer&rsquo;s border.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">navigationKey</td>
+<td style="text-align: center">String</td>
+<td style="text-align: left">navigation key used with navigation graphs.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">shouldEnableEffects</td>
+<td style="text-align: center">Bool</td>
+<td style="text-align: left">toggle effects rendering on the layer.</td>
+<td style="text-align: center"></td>
+</tr>
+</tbody></table>
+<h4 id='skobjectgroup' class='heading'>SKObjectGroup</h4>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Property</th>
+<th style="text-align: center">Type</th>
+<th style="text-align: left">Description</th>
+<th style="text-align: center">Notes</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">lineWidth</td>
+<td style="text-align: center">Float</td>
+<td style="text-align: left">object line width.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">showNames</td>
+<td style="text-align: center">Bool</td>
+<td style="text-align: left">display object names.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">showObjects</td>
+<td style="text-align: center">Bool</td>
+<td style="text-align: left">globally show/hide objects.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">isDynamic</td>
+<td style="text-align: center">Bool</td>
+<td style="text-align: left">automatically create objects as dynamic bodies</td>
+<td style="text-align: center"></td>
+</tr>
+</tbody></table>
+<h4 id='skimagelayer' class='heading'>SKImageLayer</h4>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Property</th>
+<th style="text-align: center">Type</th>
+<th style="text-align: left">Description</th>
+<th style="text-align: center">Notes</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">frame</td>
+<td style="text-align: center">File</td>
+<td style="text-align: left">image layer animation frame.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">duration</td>
+<td style="text-align: center">Float</td>
+<td style="text-align: left">frame duration.</td>
+<td style="text-align: center"></td>
+</tr>
+</tbody></table>
+<h4 id='sktilesetdata' class='heading'>SKTilesetData</h4>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Property</th>
+<th style="text-align: center">Type</th>
+<th style="text-align: left">Description</th>
+<th style="text-align: center">Notes</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">name</td>
+<td style="text-align: center">String</td>
+<td style="text-align: left">used to identify tile data by name.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">collisionSize</td>
+<td style="text-align: center">Float</td>
+<td style="text-align: left">used to add collision to the tile.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">collisionShape</td>
+<td style="text-align: center">Int</td>
+<td style="text-align: left">0 = rectangle, 1 = circle.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">renderMode</td>
+<td style="text-align: center">Int</td>
+<td style="text-align: left">tile render mode.</td>
+<td style="text-align: center"></td>
+</tr>
+</tbody></table>
+<h4 id='sktileobject' class='heading'>SKTileObject</h4>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Property</th>
+<th style="text-align: center">Type</th>
+<th style="text-align: left">Description</th>
+<th style="text-align: center">Notes</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">collisionSize</td>
+<td style="text-align: center">Float</td>
+<td style="text-align: left">used to add collision to the tile.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">collisionShape</td>
+<td style="text-align: center">Int</td>
+<td style="text-align: left">0 = rectangle, 1 = circle.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">hidden</td>
+<td style="text-align: center">Bool</td>
+<td style="text-align: left">hide the object.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">color</td>
+<td style="text-align: center">String</td>
+<td style="text-align: left">hex string to override object color.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">lineWidth</td>
+<td style="text-align: center">Float</td>
+<td style="text-align: left">object line width.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">isDynamic</td>
+<td style="text-align: center">Bool</td>
+<td style="text-align: left">object is dynamic.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">isCollider</td>
+<td style="text-align: center">Bool</td>
+<td style="text-align: left">object is passive collision object.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">mass</td>
+<td style="text-align: center">Float</td>
+<td style="text-align: left">physics mass.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">friction</td>
+<td style="text-align: center">Float</td>
+<td style="text-align: left">physics friction.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">restitution</td>
+<td style="text-align: center">Float</td>
+<td style="text-align: left">physics &lsquo;bounciness&rsquo;.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">linearDamping</td>
+<td style="text-align: center">Float</td>
+<td style="text-align: left">physics linear damping.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">angularDamping</td>
+<td style="text-align: center">Float</td>
+<td style="text-align: left">physics angular damping.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">zPosition</td>
+<td style="text-align: center">Float</td>
+<td style="text-align: left">initial zPosition.</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td style="text-align: left">proxyColor</td>
+<td style="text-align: center">Color</td>
+<td style="text-align: left">object proxy visualization color</td>
+<td style="text-align: center"></td>
+</tr>
+</tbody></table>
+
+<p>Next: <a href="gameplaykit.html">GameplayKit</a> - <a href="Table%20of%20Contents.html">Index</a></p>
+
+          </div>
+        </section>
+
+
+      </article>
+    </div>
+    <section class='footer'>
+      <p>© 2020 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external"><b>Michael Fessenden</b></a>. All rights reserved.</p>
+      <p>Generated by <a class='link' href='https://github.com/realm/jazzy' target='_blank' rel='external'>jazzy ♪♫ v0.13.2</a>, a <a class='link' href='http://realm.io' target='_blank' rel='external'>Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

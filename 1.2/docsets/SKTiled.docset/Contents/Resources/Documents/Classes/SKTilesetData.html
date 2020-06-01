@@ -1,0 +1,1779 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title>SKTilesetData Class Reference</title>
+    <link rel='stylesheet' type='text/css' href='../css/jazzy.css' />
+    <link rel='stylesheet' type='text/css' href='../css/highlight.css' />
+    <meta charset='utf-8'>
+    <script src='../js/jquery.min.js' defer></script>
+    <script src='../js/jazzy.js' defer></script>
+    <script src='../js/retina.js' defer></script>
+  </head>
+  <body>
+
+    <a name='//apple_ref/swift/Class/SKTilesetData' class='dashAnchor'></a>
+
+    <a title='SKTilesetData Class Reference'></a>
+
+    <header class='header'>
+      <p class='header-col header-col--primary'>
+        <a class='header-link' href='../index.html'>
+          SKTiled Docs
+        </a>
+         (81% documented)
+      </p>
+    
+        <p class='header-col header-col--secondary'>
+          <a class='header-link' href='https://github.com/mfessenden/SKTiled'>
+            <img class='header-icon' src='../img/gh.png'/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class='breadcrumbs'>
+      <a class='breadcrumb' href='../index.html'>SKTiled Reference</a>
+      <img class='carat' src='../img/carat.png' />
+      SKTilesetData Class Reference
+    </p>
+
+    <div class='content-wrapper'>
+      <nav class='navigation'>
+        <ul class='nav-groups'>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Table of Contents.html'>Table of Contents</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../whats-new.html'>What&#39;s New</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../getting-started.html'>Getting Started</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../scene-setup.html'>Scene Setup</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../working-with-maps.html'>Working with Maps</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../working-with-tilesets.html'>Working with Tilesets</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../working-with-layers.html'>Working with Layers</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../working-with-tiles.html'>Working with Tiles</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../coordinates.html'>Coordinates</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../working-with-objects.html'>Working with Objects</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../tiled-properties.html'>Tiled Properties</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../gameplaykit.html'>GameplayKit</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../extending-sktiled.html'>Extending SKTiled</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../other-api-features.html'>Other API Features</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../debugging.html'>Debugging</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../troubleshooting.html'>Troubleshooting</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Protocols.html'>Protocols</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/SKTiledObject.html'>SKTiledObject</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/SKTilemapDelegate.html'>SKTilemapDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/SKTiledSceneDelegate.html'>SKTiledSceneDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/SKTiledSceneCameraDelegate.html'>SKTiledSceneCameraDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/SKTilesetDataSource.html'>SKTilesetDataSource</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Class Hierarchy.html'>Class Hierarchy</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTilemap.html'>SKTilemap</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTilemap/TilemapOrientation.html'>– TilemapOrientation</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC21CameraZoomConstraintsV'>– CameraZoomConstraints</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTilemap/RenderStatistics.html'>– RenderStatistics</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTileset.html'>SKTileset</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTiledLayerObject.html'>SKTiledLayerObject</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTiledLayerObject.html#/s:7SKTiled0A11LayerObjectC10TileOffsetO'>– TileOffset</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTileLayer.html'>SKTileLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKObjectGroup.html'>SKObjectGroup</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKGroupLayer.html'>SKGroupLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKImageLayer.html'>SKImageLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTile.html'>SKTile</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTile/TileAlignmentHint.html'>– TileAlignmentHint</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTile/PhysicsShape.html'>– PhysicsShape</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTilesetData.html'>SKTilesetData</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTileObject.html'>SKTileObject</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTileObject/TiledObjectType.html'>– TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTileObject/TiledObjectShape.html'>– TiledObjectShape</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO'>– CollisionType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTiledScene.html'>SKTiledScene</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTiledSceneCamera.html'>SKTiledSceneCamera</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTiledGraphNode.html'>SKTiledGraphNode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TileAnimationFrame.html'>TileAnimationFrame</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Globals.html'>Globals</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TiledGlobals.html'>TiledGlobals</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TiledGlobals/Version.html'>– Version</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC13RenderQualityV'>– RenderQuality</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TiledGlobals/DebugDisplayOptions.html'>– DebugDisplayOptions</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC15TimeDisplayModeO'>– TimeDisplayMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC8RendererO'>– Renderer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Globals.html#/s:7SKTiled17CameraControlModeO'>CameraControlMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Enums/TileRenderMode.html'>TileRenderMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Enums/TileUpdateMode.html'>TileUpdateMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TextObjectAttributes.html'>TextObjectAttributes</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class='main-content'>
+
+        <section class='section'>
+          <div class='section-content'>
+            <h1>SKTilesetData</h1>
+              <div class='declaration'>
+                <div class='language'>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTilesetData</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/SKTiledObject.html">SKTiledObject</a></span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">SKTilesetData</span><span class="p">:</span> <span class="kt">Hashable</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">SKTilesetData</span><span class="p">:</span> <span class="kt">CustomStringConvertible</span><span class="p">,</span> <span class="kt">CustomDebugStringConvertible</span></code></pre>
+
+                </div>
+              </div>
+            <h2 id='overview' class='heading'>Overview</h2>
+
+<p>The <code>SKTilesetData</code> object stores data for a single tileset tile, referencing the tile texture, animation frames (for animated tiles) as well as tile orientation.</p>
+
+<p>Also includes navigation properties for tile accessability, and graph node weight.</p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>Tile id (local)</td>
+</tr>
+<tr>
+<td>type</td>
+<td>Tiled type</td>
+</tr>
+<tr>
+<td>texture</td>
+<td>Tile texture</td>
+</tr>
+<tr>
+<td>tileOffset</td>
+<td>Tile offset</td>
+</tr>
+</tbody></table>
+
+          </div>
+        </section>
+
+        <section class='section'>
+          <div class='section-content'>
+            <!--  a container for properties & methods -->
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC4uuidSSvp"></a>
+                    <a name="//apple_ref/swift/Property/uuid" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC4uuidSSvp">uuid</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Unique id.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">uuid</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L101">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC2idSivp"></a>
+                    <a name="//apple_ref/swift/Property/id" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC2idSivp">id</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tile id (local).</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L104">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC4typeSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/type" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC4typeSSSgvp">type</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tiled type.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="o">!</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L107">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC4nameSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/name" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC4nameSSSgvp">name</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tile data name.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L110-L112">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC7textureSo9SKTextureCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/texture" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC7textureSo9SKTextureCSgvp">texture</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tile texture.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">texture</span><span class="p">:</span> <span class="kt">SKTexture</span><span class="o">!</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L115">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC6sourceSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/source" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC6sourceSSSgvp">source</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Source image name (collections tileset)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">source</span><span class="p">:</span> <span class="kt">String</span><span class="o">!</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L118">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC11probability12CoreGraphics7CGFloatVvp"></a>
+                    <a name="//apple_ref/swift/Property/probability" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC11probability12CoreGraphics7CGFloatVvp">probability</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tile occurance probability (parsed from Tiled, not currently used).</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">probability</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L122">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC10propertiesSDyS2SGvp"></a>
+                    <a name="//apple_ref/swift/Property/properties" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC10propertiesSDyS2SGvp">properties</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Custom Tiled properties.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">properties</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L125">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC16ignorePropertiesSbvp"></a>
+                    <a name="//apple_ref/swift/Property/ignoreProperties" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC16ignorePropertiesSbvp">ignoreProperties</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Node ignores custom properties.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">ignoreProperties</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L128">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC10tileOffsetSo7CGPointVvp"></a>
+                    <a name="//apple_ref/swift/Property/tileOffset" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC10tileOffsetSo7CGPointVvp">tileOffset</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tile offset.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">tileOffset</span><span class="p">:</span> <span class="kt">CGPoint</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L131">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC13renderQuality12CoreGraphics7CGFloatVvp"></a>
+                    <a name="//apple_ref/swift/Property/renderQuality" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC13renderQuality12CoreGraphics7CGFloatVvp">renderQuality</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Render scaling property.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">renderQuality</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L134">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC6framesSayAA18TileAnimationFrameCGvp"></a>
+                    <a name="//apple_ref/swift/Property/frames" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC6framesSayAA18TileAnimationFrameCGvp">frames</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tile animation frame storate.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">frames</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/TileAnimationFrame.html">TileAnimationFrame</a></span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L146-L148">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC10isAnimatedSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isAnimated" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC10isAnimatedSbvp">isAnimated</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Indicates the tile is animated.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isAnimated</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L151">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC15animationActionSo8SKActionCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/animationAction" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC15animationActionSo8SKActionCSgvp">animationAction</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns an aniamtion action for the tile data.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">animationAction</span><span class="p">:</span> <span class="kt">SKAction</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L168-L198">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <!--  a container for properties & methods -->
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Tile%20Orientation"></a>
+                <a name="//apple_ref/swift/Section/Tile Orientation" class="dashAnchor"></a>
+            
+                <!-- pragma -->
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Tile%20Orientation"></a>
+                  <h3 class="section-name"><p>Tile Orientation</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC9flipHorizSbvp"></a>
+                    <a name="//apple_ref/swift/Property/flipHoriz" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC9flipHorizSbvp">flipHoriz</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tile is flipped horizontally</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">flipHoriz</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L210">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC8flipVertSbvp"></a>
+                    <a name="//apple_ref/swift/Property/flipVert" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC8flipVertSbvp">flipVert</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tile is flipped vertically.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">flipVert</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L213">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC8flipDiagSbvp"></a>
+                    <a name="//apple_ref/swift/Property/flipDiag" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC8flipDiagSbvp">flipDiag</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tile is flipped diagonally.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">flipDiag</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L216">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <!--  a container for properties & methods -->
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Pathfinding%20Attributes"></a>
+                <a name="//apple_ref/swift/Section/Pathfinding Attributes" class="dashAnchor"></a>
+            
+                <!-- pragma -->
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Pathfinding%20Attributes"></a>
+                  <h3 class="section-name"><p>Pathfinding Attributes</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC8walkableSbvp"></a>
+                    <a name="//apple_ref/swift/Property/walkable" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC8walkableSbvp">walkable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tile is walkable.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">walkable</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L221">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC8obstacleSbvp"></a>
+                    <a name="//apple_ref/swift/Property/obstacle" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC8obstacleSbvp">obstacle</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tile represents an obstacle.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">obstacle</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L224">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC6weight12CoreGraphics7CGFloatVvp"></a>
+                    <a name="//apple_ref/swift/Property/weight" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC6weight12CoreGraphics7CGFloatVvp">weight</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Pathfinding weight.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">weight</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L227">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC10collisionsSayAA12SKTileObjectCGvp"></a>
+                    <a name="//apple_ref/swift/Property/collisions" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC10collisionsSayAA12SKTileObjectCGvp">collisions</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Collision objects (not yet implemented).</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">collisions</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/SKTileObject.html">SKTileObject</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L230">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC7localIDSivp"></a>
+                    <a name="//apple_ref/swift/Property/localID" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC7localIDSivp">localID</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Local id for this tile.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">localID</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L233-L236">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC8globalIDSivp"></a>
+                    <a name="//apple_ref/swift/Property/globalID" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC8globalIDSivp">globalID</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Global id for this tile.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">globalID</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L239-L242">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <!--  a container for properties & methods -->
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Init"></a>
+                <a name="//apple_ref/swift/Section/Init" class="dashAnchor"></a>
+            
+                <!-- pragma -->
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Init"></a>
+                  <h3 class="section-name"><p>Init</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataCACycfc"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataCACycfc">init()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialize an empty data structure.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L247">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC2id11withTilesetACSi_AA0B0Ctcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(id:withTileset:)" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC2id11withTilesetACSi_AA0B0Ctcfc">init(id:<wbr>withTileset:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialize the data with a tileset, id.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">withTileset</span> <span class="nv">tileSet</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTileset.html">SKTileset</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tileId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>Int</code> unique tile id.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tileSet</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code><a href="../Classes/SKTileset.html">SKTileset</a></code> tileset reference.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>SKTilesetData</code> tile data.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L256-L262">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC2id7texture7tileSetACSi_So9SKTextureCAA0B0Ctcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(id:texture:tileSet:)" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC2id7texture7tileSetACSi_So9SKTextureCAA0B0Ctcfc">init(id:<wbr>texture:<wbr>tileSet:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialize the data with a tileset, id &amp; texture.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">texture</span><span class="p">:</span> <span class="kt">SKTexture</span><span class="p">,</span> <span class="nv">tileSet</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTileset.html">SKTileset</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>Int</code> unique tile id.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>texture</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>SKTexture</code> tile texture.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tileSet</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code><a href="../Classes/SKTileset.html">SKTileset</a></code> tileset reference.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>SKTilesetData</code> tile data.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L272-L281">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <!--  a container for properties & methods -->
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Animation"></a>
+                <a name="//apple_ref/swift/Section/Animation" class="dashAnchor"></a>
+            
+                <!-- pragma -->
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Animation"></a>
+                  <h3 class="section-name"><p>Animation</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC8addFrame6withID8interval11tileTextureAA013TileAnimationE0CSi_SiSo9SKTextureCSgtF"></a>
+                    <a name="//apple_ref/swift/Method/addFrame(withID:interval:tileTexture:)" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC8addFrame6withID8interval11tileTextureAA013TileAnimationE0CSi_SiSo9SKTextureCSgtF">addFrame(withID:<wbr>interval:<wbr>tileTexture:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add tile animation to the data.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addFrame</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">tileTexture</span><span class="p">:</span> <span class="kt">SKTexture</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/TileAnimationFrame.html">TileAnimationFrame</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>withID</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>Int</code> id for frame.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>interval</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>Int</code> frame interval (in milliseconds).</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tileTexture</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>SKTexture?</code> frame texture.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code><a href="../Classes/TileAnimationFrame.html">TileAnimationFrame</a></code> animation frame container.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L294-L310">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC7frameAt5indexAA18TileAnimationFrameCSgSi_tF"></a>
+                    <a name="//apple_ref/swift/Method/frameAt(index:)" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC7frameAt5indexAA18TileAnimationFrameCSgSi_tF">frameAt(index:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns an animation frame at the given index.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">frameAt</span><span class="p">(</span><span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/TileAnimationFrame.html">TileAnimationFrame</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>Int</code> frame index.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>TileAnimationFrame?</code> animation frame container.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L318-L323">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC25forceAnimatedFramesUpdateyyF"></a>
+                    <a name="//apple_ref/swift/Method/forceAnimatedFramesUpdate()" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC25forceAnimatedFramesUpdateyyF">forceAnimatedFramesUpdate()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Force the animated frames to update textuers.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">forceAnimatedFramesUpdate</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L328-L336">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC10setTextureySo9SKTextureCSgAGF"></a>
+                    <a name="//apple_ref/swift/Method/setTexture(_:)" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC10setTextureySo9SKTextureCSgAGF">setTexture(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set the texture for the tile data.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setTexture</span><span class="p">(</span><span class="n">_</span> <span class="nv">newTexture</span><span class="p">:</span> <span class="kt">SKTexture</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">SKTexture</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>texture</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>SKTexture?</code> new texture.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>SKTexture?</code> old texture (if it exists).</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L344-L349">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC10setTexture_8forFrameSo9SKTextureCSgAH_SitF"></a>
+                    <a name="//apple_ref/swift/Method/setTexture(_:forFrame:)" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC10setTexture_8forFrameSo9SKTextureCSgAH_SitF">setTexture(_:<wbr>forFrame:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set the texture for an animated frame at the given index.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setTexture</span><span class="p">(</span><span class="n">_</span> <span class="nv">texture</span><span class="p">:</span> <span class="kt">SKTexture</span><span class="p">?,</span> <span class="nv">forFrame</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">SKTexture</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>texture</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>SKTexture?</code> new texture.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>forFrame</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>Int</code> frame index.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>SKTexture?</code> old texture (if it exists).</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L358-L366">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC11setDuration8interval8forFrameSbSi_SitF"></a>
+                    <a name="//apple_ref/swift/Method/setDuration(interval:forFrame:)" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC11setDuration8interval8forFrameSbSi_SitF">setDuration(interval:<wbr>forFrame:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set the duration for an animated frame at the given index.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setDuration</span><span class="p">(</span><span class="nv">interval</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">forFrame</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>interval</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>Int</code> frame interval (in milliseconds).</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>forFrame</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>Int</code> frame index.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>Bool</code> frame duration was set correctly.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L375-L381">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC11removeFrame2atAA013TileAnimationE0CSgSi_tF"></a>
+                    <a name="//apple_ref/swift/Method/removeFrame(at:)" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC11removeFrame2atAA013TileAnimationE0CSgSi_tF">removeFrame(at:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Remove a tile animation frame at a given index.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeFrame</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/TileAnimationFrame.html">TileAnimationFrame</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>at</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>Int</code> frame index.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>TileAnimationFrame?</code> animation frame (if it exists).</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L389-L391">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC12runAnimationyyF"></a>
+                    <a name="//apple_ref/swift/Method/runAnimation()" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC12runAnimationyyF">runAnimation()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Run tile animation.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">runAnimation</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L396-L398">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC15removeAnimation7restoreySb_tF"></a>
+                    <a name="//apple_ref/swift/Method/removeAnimation(restore:)" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC15removeAnimation7restoreySb_tF">removeAnimation(restore:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Remove tile animation. Animation is not actually destroyed, but rather blocked.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeAnimation</span><span class="p">(</span><span class="nv">restore</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>restore</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>Bool</code> restore the initial texture.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilesetData.swift#L405-L411">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <!--  a container for properties & methods -->
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Generic%20Properties"></a>
+                <a name="//apple_ref/swift/Section/Generic Properties" class="dashAnchor"></a>
+            
+                <!-- pragma -->
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Generic%20Properties"></a>
+                  <h3 class="section-name"><p>Generic Properties</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled13SKTilesetDataC15parseProperties10completionyyycSg_tF"></a>
+                    <a name="//apple_ref/swift/Method/parseProperties(completion:)" class="dashAnchor"></a>
+                    <!-- symbol name -->
+                    <a class="token" href="#/s:7SKTiled13SKTilesetDataC15parseProperties10completionyyycSg_tF">parseProperties(completion:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parse the tile data&rsquo;s properties value.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">parseProperties</span><span class="p">(</span><span class="nv">completion</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.22/Sources/SKTilemap+Properties.swift#L373-L390">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class='footer'>
+      <p>© 2020 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external"><b>Michael Fessenden</b></a>. All rights reserved.</p>
+      <p>Generated by <a class='link' href='https://github.com/realm/jazzy' target='_blank' rel='external'>jazzy ♪♫ v0.13.2</a>, a <a class='link' href='http://realm.io' target='_blank' rel='external'>Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>
