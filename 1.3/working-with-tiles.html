@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Working with Tiles  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
+    <script src='js/retina-preprocess.js' defer></script>
+    <script src='js/retina.js' defer></script>
+  </head>
+  <body>
+
+
+    <a title="Working with Tiles  Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="index.html">
+          SKTiled 1.3 Docs
+        </a>
+         (88% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/mfessenden/SKTiled">
+            <img class="header-icon" src="img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="index.html">SKTiled Reference</a>
+      <img class="carat" src="img/carat.png" />
+      Working with Tiles  Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Table%20of%20Contents.html">Table of Contents</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="whats-new.html">What&#39;s New</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="getting-started.html">Getting Started</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="scene-setup.html">Scene Setup</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="working-with-maps.html">Working with Maps</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="working-with-tilesets.html">Working with Tilesets</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="working-with-layers.html">Working with Layers</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="working-with-tiles.html">Working with Tiles</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="coordinates.html">Coordinates</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="working-with-objects.html">Working with Objects</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="tiled-properties.html">Tiled Properties</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="gameplaykit.html">GameplayKit</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="extending-sktiled.html">Extending SKTiled</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="other-api-features.html">Other API Features</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="debugging.html">Debugging</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="troubleshooting.html">Troubleshooting</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/TiledObjectType.html">TiledObjectType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/TiledEventHandler.html">TiledEventHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/SKTiledSceneCameraDelegate.html">SKTiledSceneCameraDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/DebugDrawableType.html">DebugDrawableType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/TiledRenderableType.html">TiledRenderableType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Class%20Hierarchy.html">Class Hierarchy</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKTilemap.html">SKTilemap</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC21CameraZoomConstraintsV">– CameraZoomConstraints</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKTilemap/RenderStatistics.html">– RenderStatistics</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKTileset.html">SKTileset</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKTiledLayerObject.html">SKTiledLayerObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKTiledLayerObject/TileOffset.html">– TileOffset</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKTileLayer.html">SKTileLayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKTileLayerChunk.html">SKTileLayerChunk</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKObjectGroup.html">SKObjectGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKGroupLayer.html">SKGroupLayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKImageLayer.html">SKImageLayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKTile.html">SKTile</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKTile.html#/s:7SKTiled6SKTileC17TileAlignmentHintO">– TileAlignmentHint</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKTile.html#/s:7SKTiled6SKTileC12PhysicsShapeO">– PhysicsShape</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKTilesetData.html">SKTilesetData</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKTileObject.html">SKTileObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC4TypeO">– TiledObjectType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC5ShapeO">– TiledObjectShape</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO">– CollisionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKTiledScene.html">SKTiledScene</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SKTiledGraphNode.html">SKTiledGraphNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/TileAnimationFrame.html">TileAnimationFrame</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/TileFlags.html">TileFlags</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/TileID.html">TileID</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Globals.html">Globals</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/TiledGlobals.html">TiledGlobals</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/TiledGlobals/Version.html">– Version</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC13RenderQualityV">– RenderQuality</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/TiledGlobals/DebugDisplayOptions.html">– DebugDisplayOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC15TimeDisplayModeO">– TimeDisplayMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/TiledGlobals/Renderer.html">– Renderer</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/CameraZoomClamping.html">CameraZoomClamping</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/TileRenderMode.html">TileRenderMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/TileUpdateMode.html">TileUpdateMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/TextObjectAttributes.html">TextObjectAttributes</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV">– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content top-matter">
+            
+            <h1 id='working-with-tiles' class='heading'>Working with Tiles</h1>
+
+<ul>
+<li><a href="#tile-render-mode">Tile Render Mode</a></li>
+<li><a href="#querying-tiles-at-location">Querying Tiles at Location</a></li>
+<li><a href="#find-tiles-with-tile-id">Querying Tiles with ID</a>
+
+<ul>
+<li><a href="#global-id">Global ID</a></li>
+<li><a href="#local-id">Local ID</a></li>
+</ul></li>
+<li><a href="#tile-flags">Tile Flags</a></li>
+<li><a href="#find-tiles-of-type">Find Tiles of Type</a></li>
+<li><a href="#find-tiles-with-property">Find Tiles with Property</a></li>
+<li><a href="#adding-and-removing-tiles">Adding and Removing Tiles</a></li>
+<li><a href="#copying-tiles">Copying Tiles</a></li>
+<li><a href="#tile-shapes">Tile Shapes</a></li>
+<li><a href="#animated-tiles">Animated Tiles</a>
+
+<ul>
+<li><a href="#updating-tile-animation">Updating Tile Animation</a></li>
+<li><a href="#spritekit-actions">SpriteKit Actions</a></li>
+</ul></li>
+<li><a href="#physics">Physics</a></li>
+<li><a href="#tile-overlap">Tile Overlap</a></li>
+</ul>
+
+<p><strong>SKTiled</strong> provides several ways to work with tiles in your tilemap. Most of the methods for accessing tiles from a tile layer instances have corresponding methods in the parent <code><a href="Classes/SKTilemap.html">SKTilemap</a></code> node, which will aggregate the results from <em>all</em> tile layers.</p>
+<h2 id='tile-render-mode' class='heading'>Tile Render Mode</h2>
+
+<p>Once your tilemap is loaded, you may tweak the way tiles are rendered individually via the <code><a href="Classes/SKTile.html#/s:7SKTiled6SKTileC10renderModeAA010TileRenderD0Ovp">SKTile.renderMode</a></code> property:</p>
+
+<table><thead>
+<tr>
+<th style="text-align: center">Mode</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: center">default</td>
+<td style="text-align: left">Tile renders at default settings.</td>
+</tr>
+<tr>
+<td style="text-align: center">static</td>
+<td style="text-align: left">Tile ignores any animation data.</td>
+</tr>
+<tr>
+<td style="text-align: center">ignore</td>
+<td style="text-align: left">Tile does not take into account its tile data.</td>
+</tr>
+<tr>
+<td style="text-align: center">animated</td>
+<td style="text-align: left">Animate with a global id value.</td>
+</tr>
+</tbody></table>
+<pre class="highlight swift"><code><span class="c1">// instruct tile to ignore animation</span>
+<span class="n">tile</span><span class="o">.</span><span class="n">renderMode</span> <span class="o">=</span> <span class="kt">TileRenderMode</span><span class="o">.</span><span class="kd">static</span>
+
+<span class="c1">// tile will animate with a global id of 129</span>
+<span class="n">tile</span><span class="o">.</span><span class="n">renderMode</span> <span class="o">=</span> <span class="kt">TileRenderMode</span><span class="o">.</span><span class="nf">animated</span><span class="p">(</span><span class="mi">129</span><span class="p">)</span>
+</code></pre>
+
+<p>The <code><a href="Classes/SKTile.html#/s:7SKTiled6SKTileC10renderModeAA010TileRenderD0Ovp">SKTile.renderMode</a></code> flag allows you to quickly manipulate the appearance of a tile. While the <code>animated</code> case implies that the tile should be animated, setting this value with any global id effectively makes the tile take the appearance of another. Be aware, however, peoperties in the new tile data are not carried over to this tile&hellip; the original data still exists.</p>
+<h2 id='querying-tiles-at-location' class='heading'>Querying Tiles at Location</h2>
+
+<p>Accessing tiles is simple: simply query a tile layer or the tile map node for tiles at a given coordinate:</p>
+<pre class="highlight swift"><code><span class="c1">// return tile(s) at a given location</span>
+<span class="k">let</span> <span class="nv">coord</span> <span class="o">=</span> <span class="nf">simd_int2</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+
+<span class="c1">// query tiles from a layer at the given coordinate</span>
+<span class="k">let</span> <span class="nv">tilesForCoord</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">tileAt</span><span class="p">(</span><span class="nv">coord</span><span class="p">:</span> <span class="n">coord</span><span class="p">)</span>
+
+<span class="c1">// query tiles from tilemap at the given coordinate</span>
+<span class="k">let</span> <span class="nv">allTilesForCoord</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">tilesAt</span><span class="p">(</span><span class="nv">coord</span><span class="p">:</span> <span class="n">coord</span><span class="p">)</span>
+</code></pre>
+<h2 id='querying-tiles-with-id' class='heading'>Querying Tiles with ID</h2>
+<h3 id='global-id' class='heading'>Global ID</h3>
+
+<p>To query tiles with a global ID, pass the value to either the <code><a href="Classes/SKTilemap.html">SKTilemap</a></code> node, or an individual <code><a href="Classes/SKTileLayer.html">SKTileLayer</a></code> node:</p>
+<pre class="highlight swift"><code><span class="c1">// query tiles from the tile map node</span>
+<span class="k">let</span> <span class="nv">tiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="c1">// query tiles from the parent layer</span>
+<span class="k">let</span> <span class="nv">tiles</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
+</code></pre>
+<h3 id='local-id' class='heading'>Local ID</h3>
+
+<p>If you have a reference to a tileset object and want to query tile data with a local id, use the <code><a href="Classes/SKTileset.html#/s:7SKTiled9SKTilesetC11getTileData7localIDAA0bE0CSgs6UInt32V_tF">SKTileset.getTileData(localID:)</a></code> method. Here&rsquo;s a reference to an external tileset with a <strong>firstgid</strong> value of <strong>1</strong>. So if we want to access tile data with a local id of <strong>79</strong>, we can query the tileset instance directly:</p>
+
+<p><img src="images/tileset-code.svg" alt="Tileset Data"></p>
+<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tiledata</span> <span class="o">=</span> <span class="n">tileset</span><span class="o">.</span><span class="nf">getTileData</span><span class="p">(</span><span class="nv">localID</span><span class="p">:</span> <span class="mi">79</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">tiledata</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="c1">// Tile ID: 78 @ 16x16, 6 frames</span>
+</code></pre>
+
+<p>As you can see, the tile data is correctly returned. The local ID is the sum of the tileset&rsquo;s <strong>firstgid</strong> value plus the tile&rsquo;s internal ID: <code>(1 + 78 = 79)</code>.</p>
+<h2 id='tile-flags' class='heading'>Tile Flags</h2>
+
+<p>Each tile instance has a <code>tileID</code> property which accepts a <code>UInt32</code> value and applies tile flip flags accordingly.</p>
+<pre class="highlight swift"><code><span class="c1">// a global id of 2147483659 translates to 11, with horizontal &amp; diagonal flip flags</span>
+<span class="k">let</span> <span class="nv">tile</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="mi">11</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="o">!</span>
+<span class="k">let</span> <span class="nv">globalId</span> <span class="o">=</span> <span class="n">tile</span><span class="o">.</span><span class="n">tileID</span>
+
+<span class="n">tile</span><span class="o">.</span><span class="n">isFlippedHorizontally</span> <span class="o">=</span> <span class="kc">true</span>
+</code></pre>
+<h2 id='tile-alignment' class='heading'>Tile Alignment</h2>
+
+<p>[put gif here showing alignment/anchorpoint changing}</p>
+<h2 id='find-tiles-of-type' class='heading'>Find Tiles of Type</h2>
+
+<p>The string property <strong>type</strong> can be used to label or group tiles in <strong>SKTiled</strong>. Adding a string property to a tile ID will allow it to be accessed from SpriteKit:</p>
+
+<p><img src="images/tile-types.png" alt="Tile Types"></p>
+
+<p>Querying any tile with that property is simple:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">allFireTiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="s">"Fire"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">fireTiles</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="s">"Fire"</span><span class="p">)</span>
+</code></pre>
+<h2 id='find-tiles-with-property' class='heading'>Find Tiles with Property</h2>
+
+<p>You are not restricted to using <strong>type</strong> as a property name - any property name/value can be queried:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">fireTiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTilesWithProperty</span><span class="p">(</span><span class="s">"Attack"</span><span class="p">,</span> <span class="s">"Fire"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">waterTiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTilesWithProperty</span><span class="p">(</span><span class="s">"isWater"</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+</code></pre>
+<h2 id='adding-and-removing-tiles' class='heading'>Adding and Removing Tiles</h2>
+
+<p>To add a new tile using a GID, use the <code>SKTileLayer.addTileAt</code> method to add it to the current layer:</p>
+<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tile</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">addTileAt</span><span class="p">(</span><span class="nv">coord</span><span class="p">:</span> <span class="nf">simd_int2</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="nv">globalID</span><span class="p">:</span> <span class="mi">32</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">tile</span><span class="o">.</span><span class="nf">setupPhysics</span><span class="p">(</span><span class="nv">withSize</span><span class="p">:</span> <span class="mi">8</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>You may also specify a <em>tile type</em> with this method, for use with the <code>SKTilemapDelegate.objectForTileType</code> protocol method:</p>
+<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">wallTile</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">addTileAt</span><span class="p">(</span><span class="nv">coord</span><span class="p">:</span> <span class="nf">simd_int2</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">17</span><span class="p">),</span> <span class="nv">globalID</span><span class="p">:</span> <span class="mi">145</span><span class="p">,</span> <span class="nv">tileType</span><span class="p">:</span> <span class="s">"Wall"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// set the custom tile property</span>
+    <span class="n">wallTile</span><span class="o">.</span><span class="n">hitMaxCount</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>You are not limited to using tile objects; any <a href="https://developer.apple.com/documentation/spritekit/sknode"><code>SKNode</code></a> type can be added to a layer and positioned. All <code><a href="Classes/SKTiledLayerObject.html">SKTiledLayerObject</a></code> objects have expanded <code>addChild</code> convenience methods for positioning nodes:</p>
+<pre class="highlight swift"><code><span class="c1">// add a child with a coordinate and offset and zPosition values</span>
+<span class="n">tileLayer</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tile</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="nv">offset</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mf">4.0</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mf">8.0</span><span class="p">),</span> <span class="nv">zpos</span><span class="p">:</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="c1">// add a child with a coordinate and offset-x value</span>
+<span class="n">tileLayer</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tile</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="nv">dx</span><span class="p">:</span> <span class="mi">4</span><span class="p">)</span>
+</code></pre>
+
+<p>To remove a tile, simply call one of the <code>SKTileLayer.removeTileAt</code> methods:</p>
+<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">removedTile</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">removeTileAt</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// do something with tile</span>
+<span class="p">}</span>
+</code></pre>
+<h2 id='copying-tiles' class='heading'>Copying Tiles</h2>
+
+<p>Tiles can be copied for use as regular sprites, simply use the <code>SKTile.spriteCopy</code> method to copy a tile to a regular <a href="https://developer.apple.com/documentation/spritekit/skspritenode"><code>SKSpriteNode</code></a> instance.</p>
+<h2 id='tile-shapes' class='heading'>Tile Shapes</h2>
+
+<p>It is also possible to create shapes from individual tiles. All <strong>SKTiled</strong> geometry types have a <code>getVertices()</code> method which will return an array of points that constitute the object&rsquo;s shape.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">tileVerts</span> <span class="o">=</span> <span class="n">tile</span><span class="o">.</span><span class="nf">getVertices</span><span class="p">()</span>
+</code></pre>
+<h2 id='animated-tiles' class='heading'>Animated Tiles</h2>
+
+<p><img src="images/animated-tiles.gif" alt="Animated Tiles"></p>
+
+<p>Tile animations exist within the <code><a href="Classes/SKTilesetData.html">SKTilesetData</a></code> class, accessible via the <code><a href="Classes/SKTilesetData.html#/s:7SKTiled13SKTilesetDataC6framesSayAA18TileAnimationFrameCGvp">SKTilesetData.frames</a></code> property. To check whether the tileset data is animated, simply query the <code>SKTileset.isAnimated</code> attribute.</p>
+
+<p>Tile animations in <strong>Tiled</strong> will render if you add your tilemap instance to your SpriteKit scene&rsquo;s <code>SKScene.update</code> method. Animated tiles are easily accessed with the parent <code>SKTileLayer.animatedTiles</code> method, or globally via the <code>SKTilemap.animatedTiles</code> method:</p>
+<pre class="highlight swift"><code><span class="c1">// return animated tiles in a single layer</span>
+<span class="k">let</span> <span class="nv">animatedTiles</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">animatedTiles</span><span class="p">()</span>
+
+<span class="c1">// return all animated tiles</span>
+<span class="k">let</span> <span class="nv">allAnimatedTiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">animatedTiles</span><span class="p">()</span>
+</code></pre>
+
+<p>All <code><a href="Classes/SKTile.html">SKTile</a></code> instances allow you to pause and change the animation speed:</p>
+<pre class="highlight swift"><code><span class="c1">// pause or unpause tile animation</span>
+<span class="k">for</span> <span class="n">animatedTile</span> <span class="k">in</span> <span class="n">animatedTiles</span> <span class="p">{</span>
+    <span class="n">animatedTile</span><span class="o">.</span><span class="n">isPaused</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="p">}</span>
+
+<span class="c1">// double animation speed</span>
+<span class="k">for</span> <span class="n">animatedTile</span> <span class="k">in</span> <span class="n">animatedTiles</span> <span class="p">{</span>
+    <span class="n">animatedTile</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="p">}</span>
+
+<span class="c1">// run animation backwards</span>
+<span class="k">for</span> <span class="n">animatedTile</span> <span class="k">in</span> <span class="n">animatedTiles</span> <span class="p">{</span>
+    <span class="n">animatedTile</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Be aware that updating animation speed on objects running SpriteKit actions doesn&rsquo;t always work correctly. See the <a href="working-with-maps.html#spritekit-actions"><strong>SpriteKit Actions</strong></a> section for more details.</p>
+
+<p>To toggle animation on an <em>individual</em> tile (or tile object), use the <code><a href="Classes/SKTile.html#/s:7SKTiled6SKTileC15enableAnimationSbvp">SKTile.enableAnimation</a></code> flag:</p>
+<pre class="highlight swift"><code><span class="c1">// enable animation on a tile instance</span>
+<span class="n">tile</span><span class="o">.</span><span class="n">enableAnimation</span> <span class="o">=</span> <span class="kc">true</span>
+
+<span class="c1">// disable animation on a tile object</span>
+<span class="n">object</span><span class="o">.</span><span class="n">enableAnimation</span> <span class="o">=</span> <span class="kc">false</span>
+</code></pre>
+
+<p>To stop animation, use the <code><a href="Classes/SKTile.html#/s:7SKTiled6SKTileC15removeAnimation7restoreySb_tF">SKTile.removeAnimation(restore:)</a></code> method to remove the animation, and the <code>SKTile.runAnimation</code> method to restore it:</p>
+<pre class="highlight swift"><code><span class="c1">// remove the animation (optionally restore the original texture)</span>
+<span class="k">for</span> <span class="n">animatedTile</span> <span class="k">in</span> <span class="n">animatedTiles</span> <span class="p">{</span>
+    <span class="n">animatedTile</span><span class="o">.</span><span class="nf">removeAnimation</span><span class="p">(</span><span class="nv">restore</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// restart tile animations</span>
+<span class="k">for</span> <span class="n">animatedTile</span> <span class="k">in</span> <span class="n">animatedTiles</span> <span class="p">{</span>
+    <span class="n">animatedTile</span><span class="o">.</span><span class="nf">runAnimation</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id='updating-tile-animation' class='heading'>Updating Tile Animation</h3>
+
+<p>It&rsquo;s easy to add or change the animation for tile objects, but bear in mind that as <code><a href="Classes/SKTilesetData.html">SKTilesetData</a></code> objects are still linked to their parent tileset, changing or removing animation one will <em>change every tile that references that data.</em></p>
+
+<p>To change the animated frames of a tile, you will first need to access the tile data, either from the tile itself, or the parent tileset:</p>
+<pre class="highlight swift"><code><span class="c1">// access from tile</span>
+<span class="k">let</span> <span class="nv">tileData</span> <span class="o">=</span> <span class="n">tile</span><span class="o">.</span><span class="n">tileData</span>
+
+<span class="c1">// access from tile</span>
+<span class="k">let</span> <span class="nv">tileData</span> <span class="o">=</span> <span class="n">tileset</span><span class="o">.</span><span class="n">tileData</span>
+</code></pre>
+
+<p>To add animation to a tile, add ID values to the <code><a href="Classes/SKTilesetData.html">SKTilesetData</a></code> instance. Frame durations are stored in milliseconds to match Tiled&rsquo;s:</p>
+<pre class="highlight swift"><code><span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">33</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mi">250</span><span class="p">)</span>
+<span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mi">350</span><span class="p">)</span>
+<span class="n">tileData</span><span class="o">.</span><span class="nf">addFrame</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mi">150</span><span class="p">)</span>
+</code></pre>
+
+<p>You also have the option of manipulating frames directly:</p>
+<pre class="highlight swift"><code><span class="c1">// set the texture for a specific frame. The old texture is returned (if one exists)</span>
+<span class="k">let</span> <span class="nv">jumpTexture</span> <span class="o">=</span> <span class="kt">SKTexture</span><span class="p">(</span><span class="nv">imageNamed</span><span class="p">:</span> <span class="s">"jump-alt-002"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">oldTexture</span> <span class="o">=</span> <span class="n">tileData</span><span class="o">.</span><span class="nf">setTexture</span><span class="p">(</span><span class="n">jumpTexture</span><span class="p">,</span> <span class="nv">forFrame</span><span class="p">:</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1">// change the frame interval for a frame (in milliseconds)</span>
+<span class="k">if</span> <span class="n">tileData</span><span class="o">.</span><span class="nf">setDuration</span><span class="p">(</span><span class="nv">interval</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span> <span class="nv">forFrame</span><span class="p">:</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"frame 2 duration is now 200!"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id='spritekit-actions' class='heading'>SpriteKit Actions</h3>
+
+<p>You might get better CPU usage if you render tile animations with SpriteKit actions. See the <a href="working-with-maps.html#spritekit-actions"><strong>SpriteKit Actions</strong></a> section for more details.</p>
+<h2 id='physics' class='heading'>Physics</h2>
+
+<p>Physics can be turned on for tile objects with the <code>SKTileObject.setupPhysics</code> methods. Passing the argument <code>isDynamic</code> determines whether the physics body is active or passive.</p>
+<pre class="highlight swift"><code><span class="c1">// create a physics body with a rectangle of size 8</span>
+<span class="n">tile</span><span class="o">.</span><span class="nf">setupPhysics</span><span class="p">(</span><span class="nv">shapeOf</span><span class="p">:</span> <span class="o">.</span><span class="n">rectangle</span><span class="p">,</span> <span class="nv">isDynamic</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+
+<span class="c1">// create a physics body with a rectangle of size 8</span>
+<span class="n">tile</span><span class="o">.</span><span class="nf">setupPhysics</span><span class="p">(</span><span class="nv">rectSize</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="mi">8</span><span class="p">),</span> <span class="nv">isDynamic</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+
+<span class="c1">// setup dynamics on an array of tiles with a radius of 4</span>
+<span class="k">let</span> <span class="nv">dots</span> <span class="o">=</span> <span class="n">dotsLayer</span><span class="o">.</span><span class="nf">getTilesWithProperty</span><span class="p">(</span><span class="s">"type"</span><span class="p">,</span> <span class="s">"dot"</span> <span class="k">as</span> <span class="kt">AnyObject</span><span class="p">)</span>
+<span class="n">dots</span><span class="o">.</span><span class="n">forEach</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="nf">setupDynamics</span><span class="p">(</span><span class="nv">radius</span><span class="p">:</span> <span class="mi">4</span><span class="p">)</span> <span class="p">}</span>
+</code></pre>
+<h2 id='tile-overlap' class='heading'>Tile Overlap</h2>
+
+<p>The tile overlap value is used to help alleviate the &ldquo;cracks&rdquo; that sometimes appear when the tilemap or worldNode is scaled. The value is clamped with the <code>SKTile.maxOverlap</code> value. Usually a value between 1.0 - 3.0 is effective. While you can set the overlap value on individual tiles &amp; tile layers, for best results set it via the <code><a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC11tileOverlap12CoreGraphics7CGFloatVvp">SKTilemap.tileOverlap</a></code> property:</p>
+<pre class="highlight swift"><code><span class="c1">// this will override values for every tile</span>
+<span class="n">tilemap</span><span class="o">.</span><span class="n">tileOverlap</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+<span class="c1">// set the overlap for an entire layer</span>
+<span class="n">tileLayer</span><span class="o">.</span><span class="nf">setTileOverlap</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+
+<span class="c1">// set the overlap on individual tiles</span>
+<span class="n">tile</span><span class="o">.</span><span class="nf">setTileOverlap</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+</code></pre>
+
+<p>Next: <a href="coordinates.html">Coordinates</a> - <a href="Documentation.html">Index</a></p>
+
+          </div>
+        </section>
+
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>© 2020 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external">Michael Fessenden</a> under <a class="link" href="https://github.com/mfessenden/SKTiled/tree/master/LICENSE" target="_blank" rel="external">open source license</a>.</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

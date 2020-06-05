@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="443px" height="36px" viewBox="0 0 443 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>xcode / warnings / xcode-delegate-error</title>
+    <g id="xcode-/-warnings-/-xcode-delegate-error" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="#292A30" x="0" y="0" width="443" height="36"></rect>
+        <g id="Error" transform="translate(10.000000, 10.000000)">
+            <path d="M21,0 L21,16.5 L2,16.5 C0.8954305,16.5 1.3527075e-16,15.6045695 0,14.5 L0,2 C-1.3527075e-16,0.8954305 0.8954305,2.02906125e-16 2,0 L21,0 Z M421,0 C422.104569,-2.02906125e-16 423,0.8954305 423,2 L423,14.5 C423,15.6045695 422.104569,16.5 421,16.5 L22,16.5 L22,0 L421,0 Z" id="Error-Background" fill-opacity="0.8" fill="#853835"></path>
+            <g id="Flag" transform="translate(7.000000, 4.000000)">
+                <path d="M6.57106781,-0.5 L2.42893219,-0.5 L-0.5,2.42893219 L-0.5,6.57106781 L2.42893219,9.5 L6.57106781,9.5 L9.5,6.57106781 L9.5,2.42893219 L6.57106781,-0.5 Z" id="Flag-Background" stroke="#FFF8F8" fill="#E21314"></path>
+                <path d="M5,6 L5,7 L4,7 L4,6 L5,6 Z M5,2 L5,5 L4,5 L4,2 L5,2 Z" id="Exclamation" fill="#FFF3F3"></path>
+            </g>
+            <text id="Error-Text" font-family="Helvetica" font-size="12" font-weight="normal" line-spacing="15" letter-spacing="0.0625" fill="#FFFFFF">
+                <tspan x="28.5" y="13">Type ‘BaseScene’ does not conform to protocol ‘SKTilemapDelegate’</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
