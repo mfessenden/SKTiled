@@ -12,7 +12,6 @@
 
 Using Tiled assets in your projects is very straightforward with **SKTiled**. There are several tools included that allow you to easily access and customize content for your game.
 
-
 ## SKTilemapDelegate Protocol
 
 
@@ -25,28 +24,28 @@ In addition to the callback methods, the protocol allows you to substitute your 
 protocol SKTilemapDelegate {
     // Called when the map is instantiated.
     func didBeginParsing(_ tilemap: SKTilemap)
-    
+
     // Called when a tileset is about to be render a spritesheet.
     func willAddSpriteSheet(_ tileset: SKTileset, fileNamed: String) -> String
-    
+
     // Called when a tileset has been added.
     func didAddTileset(_ tileset: SKTileset)
-    
+
     // Called when a layer has been added.
     func didAddLayer(_ layer: SKTiledLayerObject)
-    
+
     // Called before layers begin rendering.
     func didReadMap(_ tilemap: SKTilemap)
-    
+
     // Called when layers are finished rendering.
     func didRenderMap(_ tilemap: SKTilemap)
-    
+
     // Tile object type for use with tile layers.
     func objectForTile(named: String?) -> SKTile.Type
-    
+
     // Vector object type for use with object groups.
     func objectForVector(named: String?) -> SKTileObject.Type
-    
+
     // Navigation graph node type.
     func objectForGraph(named: String?) -> GKGridGraphNode.Type     
 }
@@ -148,8 +147,6 @@ You'll need to make certain that the image you substitute has the same dimension
 
 ## Tiled Scene
 
-![Project Targets](images/project-targets.png)
-
 The included demo scene conforms to the `SKTiledSceneDelegate` protocol. This protocol outlines a standard game scene setup with a camera that interacts with your tilemaps. The included `SKTiledScene` class conforms to this protocol and can serve as a template, though you are free to implement your own setups.
 
 ![Scene Hierarchy](images/scene-hierarchy.svg)
@@ -158,13 +155,13 @@ The included demo scene conforms to the `SKTiledSceneDelegate` protocol. This pr
 public protocol SKTiledSceneDelegate: class {
     /// World container node. Tiled assets are parented to this node.
     var worldNode: SKNode! { get set }
-    
+
     /// Custom scene camera.
     var cameraNode: SKTiledSceneCamera? { get set }
-    
+
     /// Tilemap node.
     var tilemap: SKTilemap? { get set }
-    
+
     /// Load a tilemap from disk
     func load(tmxFile: String) -> SKTilemap?
 }

@@ -106,7 +106,7 @@ let waterTiles = tilemap.getTilesWithProperty("isWater", true)
 
 ## Adding and Removing Tiles
 
-To add a new tile using a GID, use the `SKTileLayer.addTileAt` method to add it to the current layer:
+To add a new tile using a global ID, use the [`SKTileLayer.addTileAt`][sktilelayer-addtileat-url] method to add it to the current layer:
 
 ```swift
 if let tile = tileLayer.addTile(at: 5, 8, gid: 32) {
@@ -294,3 +294,4 @@ Next: [Coordinates](coordinates.html) - [Index](Table of Contents.html)
 [sknode-url]:https://developer.apple.com/documentation/spritekit/sknode
 [skscene-url]:https://developer.apple.com/documentation/spritekit/skscene
 [skscene-update-url]:https://developer.apple.com/documentation/spritekit/skscene/1519802-update
+[sktilelayer-addtileat-url]:Classes/SKTileLayer.html#/s:7SKTiled11SKTileLayerC9addTileAt5coord3gid8tileTypeAA0B0CSgSo7CGPointV_SiSgSSSgtF

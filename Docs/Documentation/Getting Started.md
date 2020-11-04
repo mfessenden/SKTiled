@@ -32,7 +32,7 @@ The **SKTiled** project contains six targets; three are demo applications for iO
 
 To use the frameworks, build the appropriate framework target and add to your project. Make sure the **Minimum Deployment Target** is set correctly for your project (iOS11+/macOS 10.12+/tvOS12+).
 
-## Framework Installation
+### Framework Installation
 
 To use the frameworks, build the appropriate framework target and add to your project. Make sure the **Minimum Deployment Target** is set correctly for your project (iOS11+/macOS 10.12+/tvOS12+).
 
@@ -44,7 +44,7 @@ After building the framework(s), you'll need to add them to your project. Select
 ![framework embed](images/links.png)
 
 
-## Carthage Installation
+### Carthage Installation
 
 To build with [Carthage](https://github.com/Carthage/Carthage), create a Cartfile in your project root and add a reference to **SKTiled** (be sure to check the current version number):
 
@@ -65,7 +65,7 @@ Once you've run the build command frameworks are built, you'll find a **Carthage
 
 See the [Carthage](https://github.com/Carthage/Carthage) home page for help and additional build instructions.
 
-## CocoaPods Installation
+### CocoaPods Installation
 
 Installation with [CocoaPods](https://cocoapods.org) is similar to Carthage. Create a **podfile** in your project root with the command:
 
@@ -110,9 +110,9 @@ CocoaPods will create an **.xcworkspace** file with the name of your project. Op
 See the [CocoaPods](https://cocoapods.org) home page for help and additional instructions.
 
 
-## Building the Documentation
+### Building the Documentation
 
-To build the documentation, you'll need to install [**jazzy**][jazzy-url]. To build the html content, simply run the included script in the terminal:
+To build the documentation, you'll need to install [**jazzy**][jazzy-url]. To build the html content, simply run the included script in a shell:
 
 	./scripts/build-docs.sh
 

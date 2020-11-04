@@ -373,7 +373,7 @@ internal class TileDataStorage: Loggable {
     @objc func objectWasRemovedFromLayer(notification: Notification) {
         guard let object = notification.object as? SKTileObject else { return }
 
-        _ = objectsList.remove(where: { $0 == object}) { obj in
+        objectsList.remove(where: { $0 == object}) { obj in
             self.log("object removed: \(obj)", level: .debug)
             self.tilemap?.objectsOverlay.initialized = false
         }

@@ -146,6 +146,7 @@ class GameViewController: NSViewController, Loggable {
      Set up the debugging labels. (Mimics the text style in iOS controller).
      */
     func setupDemoInterface() {
+        
         mapInfoLabel.stringValue = ""
         tileInfoLabel.stringValue = ""
         propertiesInfoLabel.stringValue = ""
@@ -410,7 +411,9 @@ class GameViewController: NSViewController, Loggable {
         }
 
         if let commandDuration = notification.userInfo!["duration"] {
-            duration = commandDuration as! TimeInterval
+            if let durationValue = commandDuration as? TimeInterval {
+                duration = durationValue
+            }
         }
 
         guard (duration > 0) else { return }

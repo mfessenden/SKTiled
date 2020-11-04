@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# exit when any command fails
+set -e
+
+# check jazzy is installed
+if ! command -v jazzy &> /dev/null
+then
+    echo "Error: 'jazzy' is not installed. Please see https://github.com/realm/jazzy"
+    exit 126
+fi
+
+
 # specify custom config (or use default)
 CFG_FILE=$1
 CFG_FILE=".${CFG_FILE:-jazzy}.yaml"

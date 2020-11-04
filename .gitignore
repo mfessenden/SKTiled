@@ -1,6 +1,6 @@
 # all branches
-
 Assets/User/*
+Docs/Exported
 Docs/html
 .swiftlint.yml
 IDETemplateMacros.plist
@@ -9,9 +9,10 @@ SKTiled.xcodeproj/xcshareddata/xcschemes/Demo*
 *.html
 
 # develop branch only
-
 Contrib/*
-Demo/shaders/*
+Docs/*.txt
+Docs/Fonts
 Docs/Private
 Docs/Sketch
+Demo/shaders/*
 *.graffle

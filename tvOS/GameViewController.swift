@@ -42,7 +42,7 @@ class GameViewController: GCEventViewController, Loggable {
     @IBOutlet weak var mapInfoLabel: UILabel!
     @IBOutlet weak var debugInfoLabel: UILabel!
     @IBOutlet weak var frameworkVersionLabel: UILabel!
-    
+
 
     // demo buttons
     @IBOutlet weak var fitButton: UIButton!
@@ -65,16 +65,16 @@ class GameViewController: GCEventViewController, Loggable {
     @IBOutlet weak var statsUpdatedLabel: UILabel!
     @IBOutlet weak var statsRenderLabel: UILabel!
 
-    // container for the buttons
+    // container for the primary UI controls
     @IBOutlet weak var mainControlsView: UIStackView!
 
-    // camera mode icons
+    // camera mode & controller mode
+    private var currentController: GCController?
     @IBOutlet weak var controlIconView: UIStackView!
-
-    // icon controls
-    @IBOutlet weak var dollyIcon: UIImageView!
-    @IBOutlet weak var zoomIcon: UIImageView!
-
+    @IBOutlet weak var cameraControlModeIcon: UIImageView!
+    @IBOutlet weak var gameControllerIcon: UIImageView!
+    
+    // unused
     @IBOutlet var demoFileAttributes: NSObject!
 
     var timer = Timer()
@@ -84,7 +84,8 @@ class GameViewController: GCEventViewController, Loggable {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        controllerUserInteractionEnabled = true
+        /// disable focus for gamepads
+        controllerUserInteractionEnabled = false
 
         // Configure the view.
         let skView = self.view as! SKView
@@ -113,20 +114,13 @@ class GameViewController: GCEventViewController, Loggable {
         // initialize the demo interface
         setupDemoInterface()
         setupButtonAttributes()
-        
-        // demo notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(updateDebuggingOutput), name: Notification.Name.Demo.UpdateDebugging, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateCommandString), name: Notification.Name.Debug.CommandIssued, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(tilemapWasUpdated), name: Notification.Name.Map.Updated, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(sceneCameraUpdated), name: Notification.Name.Camera.Updated, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(renderStatsUpdated), name: Notification.Name.Map.RenderStatsUpdated, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(tilemapUpdateModeChanged), name: Notification.Name.Map.UpdateModeChanged, object: nil)
+
+        setupNotifications()
 
         /* create the game scene */
         demoController.loadScene(url: currentURL, usePreviousCamera: demoController.preferences.usePreviousCamera)
-        
         frameworkVersionLabel.text = TiledGlobals.default.version.versionString
+        frameworkVersionLabel.textColor = UIColor(hexString: "#dddddd7a")
     }
 
     override func viewDidLayoutSubviews() {
@@ -148,18 +142,32 @@ class GameViewController: GCEventViewController, Loggable {
         // Release any cached data, images, etc that aren't in use.
     }
 
+
+    /// Enable event notifications.
+    func setupNotifications() {
+
+        NotificationCenter.default.addObserver(self, selector: #selector(updateDebuggingOutput), name: Notification.Name.Demo.UpdateDebugging, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateCommandString), name: Notification.Name.Debug.CommandIssued, object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(tilemapWasUpdated), name: Notification.Name.Map.Updated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(sceneCameraUpdated), name: Notification.Name.Camera.Updated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(renderStatsUpdated), name: Notification.Name.Map.RenderStatsUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(tilemapUpdateModeChanged), name: Notification.Name.Map.UpdateModeChanged, object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(controllerDidConnect), name: Notification.Name.GCControllerDidConnect, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(controllerDidDisconnect), name: Notification.Name.GCControllerDidDisconnect, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(controlInputReceived), name: Notification.Name.Demo.ControlInputReceived, object: nil)
+    }
+
     /**
      Setup the main interface.
      */
     func setupDemoInterface() {
-
         mapInfoLabel.text = "map: "
         debugInfoLabel.text = "command: "
 
-        controlIconView.isHidden = true
-        controlIconView.isHidden = true
-        dollyIcon.isHidden = false
-        zoomIcon.isHidden = false
+        cameraControlModeIcon.isHidden = true
 
         if let fitButton = fitButton {
             fitButton.isEnabled = true
@@ -187,10 +195,54 @@ class GameViewController: GCEventViewController, Loggable {
 
         self.statsUpdatedLabel.isHidden = true
     }
+    
+    
+    // MARK: Controllers
+    
 
-    /**
-     Set up the control buttons.
-     */
+    /// Called when a controller is connected.
+    @objc func controllerDidConnect() {
+        updateControllerInputView()
+    }
+
+    /// Called when a controller is disconnected.
+    @objc func controllerDidDisconnect() {
+        updateControllerInputView()
+    }
+
+    /// Update the UI to reflect the controllers connected.
+    func updateControllerInputView() {
+        var defaultControlTypeImage = "remote"
+        for controller in GCController.controllers() where controller.microGamepad != nil {
+            if let _ = controller.extendedGamepad {
+                defaultControlTypeImage = "gamepad"
+                print("⭑ found controller '\(controller)'")
+            }
+        }
+        print("⭑ updating controller type '\(defaultControlTypeImage)'")
+        let controlTypeImage = UIImage(named: defaultControlTypeImage)
+        gameControllerIcon.image = controlTypeImage
+    }
+    
+    @objc func controlInputReceived(notification: Notification) {
+        guard let controller = notification.object as? GCController else {
+            return
+        }
+        print("⭑ controller input received..")
+        var controlImageName = "remote"
+        if (controller.extendedGamepad != nil) {
+            controlImageName = "gamepad"
+            print("⭑ gamepad input")
+            controllerUserInteractionEnabled = false
+        } else {
+            //controllerUserInteractionEnabled = true
+        }
+        
+        let controlTypeImage = UIImage(named: controlImageName)
+        gameControllerIcon.image = controlTypeImage
+    }
+
+    /// Set up the control buttons.
     func setupButtonAttributes() {
         let allButtons = [fitButton, gridButton, graphButton, objectsButton, effectsButton, updateModeButton, nextButton]
         // set the button attributes
@@ -294,47 +346,38 @@ class GameViewController: GCEventViewController, Loggable {
      */
     @objc func sceneCameraUpdated(notification: Notification) {
         guard let camera = notification.object as? SKTiledSceneCamera else {
-            fatalError("no camera!!")
+            fatalError("cannot access scene camera.")
         }
-
-        //controlIconView.isHidden = true
-        //dollyIcon.isHidden = true
-        //zoomIcon.isHidden = true
-
-        var stackViewHidden = true
-        var dollyHidden = true
-        var zoomHidden = true
-
+        
+        
+        
+        
+        var isRemoteControlled = true
         switch camera.controlMode {
 
         case .dolly:
-            stackViewHidden = false
-            dollyHidden = false
-            zoomHidden = true
+            isRemoteControlled = false
+            cameraControlModeIcon.image = UIImage(named: "dolly")
+            cameraControlModeIcon.isHidden = false
 
         case .zoom:
-            stackViewHidden = false
-            dollyHidden = true
-            zoomHidden = false
+            isRemoteControlled = false
+            cameraControlModeIcon.image = UIImage(named: "zoom")
+            cameraControlModeIcon.isHidden = false
 
         case .none:
-            stackViewHidden = true
-            dollyHidden = false
-            zoomHidden = false
+            isRemoteControlled = true
+            cameraControlModeIcon.isHidden = true
         }
 
-        controlIconView.isHidden = stackViewHidden
-
-        dollyIcon.isHidden = dollyHidden
-        zoomIcon.isHidden = zoomHidden
-
-        fitButton?.isEnabled = stackViewHidden
-        gridButton?.isEnabled = stackViewHidden
-        graphButton?.isEnabled = stackViewHidden
-        objectsButton?.isEnabled = stackViewHidden
-        nextButton?.isEnabled = stackViewHidden
-
-        mainControlsView.isHidden = !stackViewHidden
+        fitButton?.isEnabled = isRemoteControlled
+        gridButton?.isEnabled = isRemoteControlled
+        graphButton?.isEnabled = isRemoteControlled
+        objectsButton?.isEnabled = isRemoteControlled
+        nextButton?.isEnabled = isRemoteControlled
+        
+        // hide the main control buttons in remote control mode
+        mainControlsView.isHidden = (isRemoteControlled == false)
         cameraInfoLabel.text = camera.description
     }
 
@@ -347,7 +390,9 @@ class GameViewController: GCEventViewController, Loggable {
         var duration: TimeInterval = 3.0
 
         if let commandDuration = notification.userInfo!["duration"] {
-            duration = commandDuration as! TimeInterval
+            if let durationValue = commandDuration as? TimeInterval {
+                duration = durationValue
+            }
         }
 
         if let commandString = notification.userInfo!["command"] {

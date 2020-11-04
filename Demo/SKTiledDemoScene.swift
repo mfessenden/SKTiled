@@ -77,7 +77,7 @@ public class SKTiledDemoScene: SKTiledScene {
 
         // game controllers
         setupControllerObservers()
-        connectControllers()
+        controllerDidConnect()
 
         #if os(macOS)
         cameraNode.ignoreZoomClamping = false
@@ -593,7 +593,9 @@ extension SKTiledDemoScene {
 
     override open func mouseDragged(with event: NSEvent) {
         super.mouseDragged(with: event)
-        guard let cameraNode = cameraNode else { return }
+        guard let cameraNode = cameraNode else {
+            return
+        }
         cameraNode.scenePositionChanged(with: event)
     }
 

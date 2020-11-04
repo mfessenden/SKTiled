@@ -201,8 +201,13 @@ public enum CameraControlMode: Int {
  */
 public class SKTiledSceneCamera: SKCameraNode {
     
+    /// World container node.
     unowned let world: SKNode
+    
+    /// Camera bounds.
     internal var bounds: CGRect
+    
+    /// Camera observers.
     internal var delegates: [SKTiledSceneCameraDelegate] = []
     
     /// Camera zoom level.
@@ -221,7 +226,6 @@ public class SKTiledSceneCamera: SKCameraNode {
     public var allowRotation: Bool = false
     
     public var allowPause: Bool = true
-    
     
     /// Minimum zoom constraint.
     public var minZoom: CGFloat = 0.2
@@ -945,8 +949,11 @@ extension SKTiledSceneCamera {
         guard (self.scene as? SKTiledScene != nil) else { return }
         let location = event.location(in: self)
         
-        if lastLocation == nil { lastLocation = location }
-        if allowMovement == true {
+        if (lastLocation == nil) {
+            lastLocation = location
+        }
+        
+        if (allowMovement == true) {
             if lastLocation == nil { return }
             let difference = CGPoint(x: location.x - lastLocation.x, y: location.y - lastLocation.y)
             position = CGPoint(x: Int(position.x - difference.x), y: Int(position.y - difference.y))

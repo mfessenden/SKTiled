@@ -1,7 +1,7 @@
 <p align="center">
-<img src="Docs/images/doc-header.svg" alt="SKTiled" title="SKTiled" width="881" height="81"/>
+<img src="Docs/images/doc-banner-centered.svg" alt="SKTiled" title="SKTiled" width="881" height="81"/>
 <p align="center">
-<a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-5.2-brightgreen.svg"></a>
+<a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-5.3-brightgreen.svg"></a>
 <a href="https://developer.apple.com/download/more/"><img src="https://img.shields.io/badge/Xcode-11.0-orange.svg"></a>
 <a href="https://travis-ci.org/mfessenden/SKTiled"><img src="https://travis-ci.org/mfessenden/SKTiled.svg?branch=master"></a>
 <a href="https://github.com/mfessenden/SKTiled/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
@@ -13,10 +13,10 @@
 
 **SKTiled** is a framework for integrating [Tiled][tiled-url] assets with [Apple's SpriteKit][spritekit-url], built from the ground up with Swift. This project began life as an exercise to learn Apple's new programming language for a game project, but I've decided to release it as open source with the hopes that others will find it useful. **SKTiled** is up-to-date and supports **Tiled's** major features, including all map & object types.
 
-![Demo Image][demo-iphone-img]
+![Demo Image](Docs/images/demo-iphone.png?raw=true)
 
 
-Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
+Check out the [**Official Documentation**][sktiled-12-doc-url].
 
 ## Features
 
@@ -35,10 +35,9 @@ Check out the [Official Documentation](https://mfessenden.github.io/SKTiled).
 - [x] template objects
 - [x] custom tile & object classes
 - [x] generate GKGridGraph graphs from custom attributes
-- [x] user-definable cost properties for GKGridGraph nodes
+- [x] user-definable cost properties for `GKGridGraph` nodes
 - [ ] infinite maps
 - [ ] tile collision objects
-- [ ] parse JSON tilemaps
 - [ ] Zstandard compression support
 
 
@@ -267,7 +266,7 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 - [Amit Patel](http://www-cs-students.stanford.edu/~amitp/gameprog.html): tile-based game logic
 - [Clint Bellanger: Isometric Tiles Math](http://clintbellanger.net/articles/isometric_math)
 
-[swift5-image]:https://img.shields.io/badge/Swift-5.2-brightgreen.svg
+[swift5-image]:https://img.shields.io/badge/Swift-5.3-brightgreen.svg
 [swift4-image]:https://img.shields.io/badge/Swift-4.2-brightgreen.svg
 [swift3-image]:https://img.shields.io/badge/Swift-3.2-brightgreen.svg
 [swift-url]: https://swift.org/
@@ -292,25 +291,31 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 [branch-xcode8-url]:https://github.com/mfessenden/SKTiled/tree/xcode8
 [branch-xcode9-url]:https://github.com/mfessenden/SKTiled/tree/xcode9
 
-[header-image]:https://mfessenden.github.io/SKTiled/images/header.png
-[demo-mac-image]:https://mfessenden.github.io/SKTiled/images/demo-macos-iso.png
-[demo-iphone-img]:https://mfessenden.github.io/SKTiled/images/demo-iphone.png
+[header-image]:https://mfessenden.github.io/SKTiled/1.2/images/header.png
+[demo-mac-image]:https://mfessenden.github.io/SKTiled/1.2/images/demo-macos-iso.png
+[demo-iphone-img]:https://mfessenden.github.io/SKTiled/1.2/images/demo-iphone.png
+
+
+[demo-phone-img2]:/Docs/images/demo-iphone.png
 
 
 <!--- Documentation --->
 
-[sktiled-doc-url]:https://mfessenden.github.io/SKTiled
-[sktilemap-url]:https://mfessenden.github.io/SKTiled/Classes/SKTilemap.html
-[sktiledobject-url]:https://mfessenden.github.io/SKTiled/Protocols/SKTiledObject.html
-[sktile-url]:https://mfessenden.github.io/SKTiled/Classes/SKTile.html
-[skobjectgroup-url]:https://mfessenden.github.io/SKTiled/Classes/SKObjectGroup.html
-[sktiledlayerobject-url]:https://mfessenden.github.io/SKTiled/Classes/SKTiledLayerObject.html
-[sktiledlayerobject-pointforcoordinate-url]:https://mfessenden.github.io/SKTiled/Classes/SKTiledLayerObject.html
-[sktilelayer-url]:https://mfessenden.github.io/SKTiled/Classes/SKTileLayer.html
-[sktileobject-url]:https://mfessenden.github.io/SKTiled/Classes/SKTileObject.html
-[sktileset-url]:https://mfessenden.github.io/SKTiled/Classes/SKTileset.html
+[sktiled-gh-url]:https://mfessenden.github.io/SKTiled
+[sktiled-12-doc-url]:https://mfessenden.github.io/SKTiled/1.2/
+[sktiled-13-doc-url]:https://mfessenden.github.io/SKTiled/1.3/
+[sktilemap-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKTilemap.html
+[sktiledobject-url]:https://mfessenden.github.io/SKTiled/1.2/Protocols/SKTiledObject.html
+[sktile-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKTile.html
+[skobjectgroup-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKObjectGroup.html
+[sktiledlayerobject-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKTiledLayerObject.html
+[sktiledlayerobject-pointforcoordinate-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKTiledLayerObject.html
+[sktilelayer-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKTileLayer.html
+[sktileobject-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKTileObject.html
+[sktileset-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKTileset.html
 
 <!--- Tiled --->
+
 [tiled-url]:http://www.mapeditor.org
 [group-layers-url]:http://doc.mapeditor.org/manual/layers/#group-layers
 

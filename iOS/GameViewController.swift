@@ -416,9 +416,10 @@ class GameViewController: UIViewController, Loggable {
         var duration: TimeInterval = 3.0
 
         if let commandDuration = notification.userInfo!["duration"] {
-            duration = commandDuration as! TimeInterval
+            if let durationValue = commandDuration as? TimeInterval {
+                duration = durationValue
+            }
         }
-
 
         if let commandString = notification.userInfo!["command"] {
             let commandFormatted = commandString as! String

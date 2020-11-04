@@ -29,7 +29,7 @@ import SpriteKit
 
 
 /**
- 
+
  ## Overview
 
  Methods which allow the user to dynamically alter the properties of a tileset as it is being created.
@@ -64,7 +64,7 @@ import SpriteKit
  ```
  */
 public protocol SKTilesetDataSource: class {
-    
+
     /**
      Provide an image name for the tileset before textures are generated.
 
@@ -87,21 +87,21 @@ public protocol SKTilesetDataSource: class {
 
 
 /**
- 
+
  ## Overview
- 
+
  The tileset class manages a set of `SKTilesetData` objects, which store tile data including global id, texture and animation.
- 
+
  Tile data is accessed via a local id, and tiles can be instantiated with the resulting `SKTilesetData` instance:
- 
+
  ```swift
  if let data = tileset.getTileData(localID: 56) {
  let tile = SKTile(data: data)
  }
  ```
- 
+
  ### Properties
- 
+
  | Property              | Description                                     |
  |-----------------------|-------------------------------------------------|
  | name                  | Tileset name.                                   |
@@ -112,16 +112,16 @@ public protocol SKTilesetDataSource: class {
  | firstGID              | First tile global id.                           |
  | lastGID               | Last tile global id.                            |
  | tileData              | Set of tile data structures.                    |
- 
- 
+
+
  ### Instance Methods ###
- 
+
  | Method                | Description                                     |
  |-----------------------|-------------------------------------------------|
  | addTextures()         | Generate textures from a spritesheet image.     |
  | addTilesetTile()      | Add & return new tile data object.              |
- 
- 
+
+
  */
 public class SKTileset: NSObject, SKTiledObject {
 
@@ -150,10 +150,10 @@ public class SKTileset: NSObject, SKTiledObject {
 
     /// The number of tile columns.
     public var columns: Int = 0
-    
+
     /// The number of tiles contained in this set.
     public internal(set) var tilecount: Int = 0
-    
+
     /// Tile offset value.
     public var firstGID: Int = 0
 
@@ -176,15 +176,15 @@ public class SKTileset: NSObject, SKTiledObject {
 
     /// Indicates the tileset is a collection of images.
     public var isImageCollection: Bool = false
-    
+
     /// The tileset is stored in an external file.
     public var isExternalTileset: Bool {
         return filename != nil
     }
-    
+
     /// Source image transparency color.
     public var transparentColor: SKColor?
-    
+
     /// Indicates all of the tile data textures have been set.
     public internal(set) var isRendered: Bool = false
 
@@ -497,30 +497,44 @@ public class SKTileset: NSObject, SKTiledObject {
             return nil
         }
 
-        // bundled images shouldn't have file paths
-        //let imageName = source.componentsSeparatedByString("/").last!
-
         isImageCollection = true
 
         let inputURL = URL(fileURLWithPath: source)
+        let filename = inputURL.deletingPathExtension().lastPathComponent
+        let fileExtension = inputURL.pathExtension
+
+        guard let urlPath = Bundle.main.url(forResource: filename, withExtension: fileExtension) else {
+            return nil
+        }
+
         // read image from file
-        let imageDataProvider = CGDataProvider(url: inputURL as CFURL)!
+        let imageDataProvider = CGDataProvider(url: urlPath as CFURL)!
+
         // create a data provider
         let image = CGImage(pngDataProviderSource: imageDataProvider, decode: nil, shouldInterpolate: false, intent: .defaultIntent)!
         let sourceTexture = SKTexture(cgImage: image)
         sourceTexture.filteringMode = .nearest
 
         let data = SKTilesetData(id: tileID, texture: sourceTexture, tileSet: self)
-
-        // add to tile cache
-
-
         data.ignoreProperties = ignoreProperties
+
         // add the image name to the source attribute
         data.source = source
         self.tileData.insert(data)
         data.parseProperties(completion: nil)
         return data
+    }
+
+    /**
+     Create new data from the given texture image path. Returns a new tileset data instance & the local id associated with it.
+
+     - parameter source: source image name.
+     - returns: local tile id & tileset data (or nil if the data exists).
+     */
+    public func addTilesetTile(source: String) -> (id: UInt32, data: SKTilesetData)? {
+        let nextTileId = tilecount + 1
+        let nextData = SKTilesetData(id: nextTileId, texture: SKTexture(imageNamed: source), tileSet: self)
+        return (UInt32(nextTileId), nextData)
     }
 
     /**
