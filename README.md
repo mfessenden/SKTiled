@@ -43,7 +43,7 @@ Check out the [**Official Documentation**][sktiled-12-doc-url].
 
 ## Requirements
 
-- iOS 11
+- iOS 12
 - tvOS 12
 - macOS 10.12
 - Xcode 11/Swift 5

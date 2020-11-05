@@ -69,7 +69,7 @@ Template objects are now supported and will be loaded automatically. For more in
 
 ## OS Compatibility
 
-macOS target now requires 10.12, iOS target requires 10.
+macOS target now requires 10.12, iOS target requires 12.
 
 
 ## API Changes
