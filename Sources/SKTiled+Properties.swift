@@ -1,5 +1,5 @@
 //
-//  SKTilemap+Properties.swift
+//  SKTiled+Properties.swift
 //  SKTiled
 //
 //  Created by Michael Fessenden.

@@ -16,8 +16,9 @@ CFG_FILE=$1
 CFG_FILE=".${CFG_FILE:-jazzy}.yaml"
 
 
-THEME_DIR=$2
-THEME_DIR="${THEME_DIR:-Docs/Themes/sktiled}"
+# allow user to specify a browser ( for Chrome use `Google Chrome`)
+BROWSER=$2
+BROWSER="${BROWSER:-Google Chrome}"
 
 
 PROJECT_DIR=$PWD
@@ -25,7 +26,6 @@ HTML_DIR=$PWD/Docs/html
 IMG_SRC_DIR=$PWD/Docs/images/
 IMG_DEST_DIR=$HTML_DIR/images
 INDEX_PAGE=$HTML_DIR/index.html
-
 
 
 function imageSync() {
@@ -40,8 +40,7 @@ function imageSync() {
 }
 
 # run the jazzy command
-jazzy --theme "$THEME_DIR" --config "$CFG_FILE" ;
-
+jazzy --config "$CFG_FILE" ;
 
 # create the images directory
 [ -d $IMG_DEST_DIR ] || mkdir $IMG_DEST_DIR
@@ -49,5 +48,5 @@ jazzy --theme "$THEME_DIR" --config "$CFG_FILE" ;
 # rsync images
 imageSync;
 
-# open the result
-open $INDEX_PAGE;
+
+open -a "$BROWSER" $INDEX_PAGE;

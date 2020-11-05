@@ -9,6 +9,7 @@ Change Log
 - Swift version is now 5.3
 - fix a bug where an `SKColor` instantiated with an `#RRGGBBAA` hex string has incorrect alpha value
 - fix a crash [#28](https://github.com/mfessenden/SKTiled/issues/28) when a collections tileset image can't be found
+- `SKTilesetData.localID` is deprecated
 
 #### Breaking
 

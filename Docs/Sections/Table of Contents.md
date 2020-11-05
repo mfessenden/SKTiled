@@ -1,6 +1,6 @@
 
 - [**What's New**](whats-new.html)
-	 - [Swift 5 Support](whats-new.html#swift5-support)
+	- [Swift 5 Support](whats-new.html#swift5-support)
     - [tvOS Support](whats-new.html#os-compatibility)
     - [Performance Increases](whats-new.html#performance-increases)
     - [Effects Rendering](whats-new.html#effects-rendering)

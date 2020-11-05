@@ -46,24 +46,24 @@ extension SKTiledDemoScene {
         
         switch baseFilename {
             
-        case "dungeon-16x16.tmx":
-            
-            if let upperGraphLayer = tilemap.tileLayers(named: "Graph-Upper").first {
-                _ = upperGraphLayer.initializeGraph(walkable: walkableTiles)
-            }
-            
-            if let lowerGraphLayer = tilemap.tileLayers(named: "Graph-Lower").first {
-                _ = lowerGraphLayer.initializeGraph(walkable: walkableTiles)
-            }
-            
-            
-        case "roguelike-16x16.tmx":
-            if let graphLayer = tilemap.tileLayers(named: "Graph").first {
-                _ = graphLayer.initializeGraph(walkable: walkableTiles)
-            }
-            
-        default:
-            return
+            case "dungeon-16x16.tmx":
+                
+                if let upperGraphLayer = tilemap.tileLayers(named: "Graph-Upper").first {
+                    _ = upperGraphLayer.initializeGraph(walkable: walkableTiles)
+                }
+                
+                if let lowerGraphLayer = tilemap.tileLayers(named: "Graph-Lower").first {
+                    _ = lowerGraphLayer.initializeGraph(walkable: walkableTiles)
+                }
+                
+                
+            case "roguelike-16x16.tmx":
+                if let graphLayer = tilemap.tileLayers(named: "Graph").first {
+                    _ = graphLayer.initializeGraph(walkable: walkableTiles)
+                }
+
+            default:
+                return
         }
         
         

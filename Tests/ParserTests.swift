@@ -30,32 +30,6 @@ import SpriteKit
 @testable import SKTiled
 
 
-class TestMapDelegate: SKTilemapDelegate {
-    var zDeltaForLayers: CGFloat = 129
-    var mapRenderedSuccessfully: Bool = false
-    init() {}
-    func didRenderMap(_ tilemap: SKTilemap) {
-        mapRenderedSuccessfully = true
-    }
-}
-
-class TestTilesetDelegate: SKTilesetDataSource {
-    init() {}
-    func willAddSpriteSheet(to tileset: SKTileset, fileNamed: String) -> String {
-        
-        let fileURL = fileNamed.url
-        var parentURL = fileNamed.parentURL
-        let filename = FileManager.default.displayName(atPath: fileURL.path)
-        var result = fileNamed
-        
-        if (filename == "items-8x8.png") {
-            parentURL.appendPathComponent("items-alt-8x8.png")
-            result = parentURL.path
-        }
-        return result
-    }
-}
-
 /// Test the tiled parser
 class ParserTests: XCTestCase {
     

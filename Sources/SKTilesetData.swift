@@ -229,16 +229,10 @@ public class SKTilesetData: SKTiledObject {
     /// Collision objects (not yet implemented).
     public var collisions: [SKTileObject] = []
 
-    /// Local id for this tile.
-    public var localID: Int {
-        guard let tileset = tileset else { return id }
-        return tileset.getLocalID(forGlobalID: id)
-    }
-
     /// Global id for this tile.
     public var globalID: Int {
-        guard let tileset = tileset else { return id }
-        return (localID == id) ? (tileset.firstGID + id) : id
+        let firstGID = (tileset != nil) ? tileset.firstGID : 0
+        return id + firstGID
     }
 
     // MARK: - Init
@@ -490,5 +484,17 @@ extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
     /// :nodoc:
     public var debugDescription: String {
         return "<\(description)>"
+    }
+}
+
+
+// MARK: - Deprecated
+
+extension SKTilesetData {
+    
+    /// Local id for this tile data.
+    @available(*, deprecated, renamed: "id")
+    public var localID: Int {
+        return id
     }
 }

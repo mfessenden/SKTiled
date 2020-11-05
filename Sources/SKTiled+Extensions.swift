@@ -530,15 +530,36 @@ extension CGPoint: Hashable {
 }
 
 
-
+/// :nodoc:
 extension CGSize {
 
-    public var count: Int { return Int(width) * Int(height) }
-    public var halfSize: CGSize { return CGSize(width: width / 2, height: height / 2) }
-    public var halfWidth: CGFloat { return width / 2.0 }
-    public var halfHeight: CGFloat { return height / 2.0 }
+    /**
+     Initialize with a single integer value representing both weidth & height.
+     
+     - parameter value: `IntegerLiteralType` width & height value.
+     */
+    public init(value: IntegerLiteralType) {
+        self.init(width: value, height: value)
+    }
+    
+    /// Returns the count (in points) of this size.
+    public var pointCount: Int {
+        return Int(width) * Int(height)
+    }
+    
+    public var halfSize: CGSize {
+        return CGSize(width: width / 2, height: height / 2)
+    }
+    
+    public var halfWidth: CGFloat {
+        return width / 2.0
+    }
+    
+    public var halfHeight: CGFloat {
+        return height / 2.0
+    }
 
-    public func roundTo(_ decimals: Int = 1) -> String {
+    public func stringRoundedTo(_ decimals: Int = 1) -> String {
         return "w: \(self.width.roundTo(decimals)), h: \(self.height.roundTo(decimals))"
     }
 
@@ -551,6 +572,7 @@ extension CGSize {
         return vector_float2(Float(width), Float(height))
     }
 }
+
 
 
 extension CGRect {
@@ -2390,6 +2412,23 @@ extension SKColor {
 }
 
 
+extension CGSize {
+    
+    /// Returns a display string rounded to a given number of decimal places.
+    ///
+    /// - Parameter decimals: decimals to round to.
+    /// - Returns: display string.
+    @available(*, deprecated, renamed: "stringRoundedTo(_:)")
+    public func roundTo(_ decimals: Int = 1) -> String {
+        return stringRoundedTo(decimals)
+    }
+    
+    /// Returns the width x height.
+    @available(*, deprecated, renamed: "pointCount")
+    public var count: Int {
+        return Int(width) * Int(height)
+    }
+}
 
 
 /**

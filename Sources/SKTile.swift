@@ -116,6 +116,8 @@ open class SKTile: SKSpriteNode {
         }
     }
 
+    /// Returns true if the tile is part of a tile object.
+    public internal(set) var isTileObject: Bool = false
 
     /**
      ## Overview
@@ -833,7 +835,7 @@ open class SKTile: SKSpriteNode {
 
 // MARK: - Extensions
 
-// :nodoc:
+/// :nodoc:
 extension TileRenderMode: RawRepresentable {
 
     public typealias RawValue = Int

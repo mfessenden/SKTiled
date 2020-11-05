@@ -28,54 +28,6 @@
 import SpriteKit
 import GameplayKit
 
-/**
- ## Overview
- 
- Methods for managing `SKTilemap` nodes in an SpriteKit [`SKScene`][skscene-url] scene.
- This protocol and the `SKTiledScene` objects are included as a suggested way to use the
- `SKTilemap` class, but are not required.
- 
- In this configuration, the tile map is a child of the root node and reference the custom
- `SKTiledSceneCamera` camera.
- 
- ![SKTiledSceneDelegate Overview][sktiledscenedelegate-image-url]
- 
- ### Properties 
- 
- | Property             | Description                                                  |
- |:---------------------|:-------------------------------------------------------------|
- | worldNode            | Root container node. Tiled assets are parented to this node. |
- | cameraNode           | Custom scene camera.                                         |
- | tilemap              | Tile map node.                                               |
- 
- 
- ### Instance Methods ###
- 
- | Method                              | Description               |
- |:------------------------------------|:--------------------------|
- | [load(tmxFile:)][delegate-load-url] | Load a tilemap from disk. |
- 
- [delegate-load-url]:SKTiledSceneDelegate.html#load(tmxFile:inDirectory:withTilesets:ignoreProperties:loggingLevel:)
- [skscene-url]:https://developer.apple.com/reference/spritekit/skscene
- [sktiledscenedelegate-image-url]:https://mfessenden.github.io/SKTiled/images/scene-hierarchy.svg
- */
-public protocol SKTiledSceneDelegate: class {
-    
-    /// Root container node. Tiled assets are parented to this node.
-    var worldNode: SKNode! { get set }
-    
-    /// Custom scene camera.
-    var cameraNode: SKTiledSceneCamera! { get set }
-    
-    /// Tile map node.
-    var tilemap: SKTilemap! { get set }
-    
-    /// Load a tilemap from disk, with optional tilesets.
-    func load(tmxFile: String, inDirectory: String?,
-              withTilesets tilesets: [SKTileset],
-              ignoreProperties: Bool, loggingLevel: LoggingLevel) -> SKTilemap?
-}
-
 
 /**
  

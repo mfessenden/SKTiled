@@ -26,8 +26,7 @@ exclude:
 copyright: '© 2020 [Michael Fessenden](https://github.com/mfessenden) under [open source license](https://github.com/mfessenden/SKTiled/tree/master/LICENSE).'
 
 
-# sktiled theme based on `RxSwift`
-theme: Docs/Themes/fulldark
+theme: Docs/Themes/sktiled
 
 
 # Glob that matches available documentation

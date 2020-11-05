@@ -17,7 +17,9 @@
 
 ## Swift 5 Support
 
-With v1.22, **SKTiled** now supports **Swift 5.2**.
+![Swift 5][swift-5-img]
+
+With v1.22, **SKTiled** now supports **Swift 5.3**.
 
 ## tvOS Support
 
@@ -167,6 +169,7 @@ Next: [Getting Started](getting-started.html) - [Index](Table of Contents.html)
 [troubleshooting-tile-cracking-url]:troubleshooting.html#tile-cracking
 [appletv-img]:images/appletv.png
 [speed-boost-img]:images/speed-boost.png
+[swift-5-img]:images/swift5-logo.svg
 
 [issue3-url]:https://github.com/mfessenden/SKTiled/issues/3
 [issue9-url]:https://github.com/mfessenden/SKTiled/issues/9
@@ -177,6 +180,7 @@ Next: [Getting Started](getting-started.html) - [Index](Table of Contents.html)
 [tilerendermode-url]:working-with-tiles.html#tile-render-mode
 [tileupdatemode-url]:working-with-maps.html#rendering-tiles
 [tile-rendering-methods-url]:working-with-maps.html#tile-rendering-methods
+
 <!--- Apple --->
 
 [spritekit-url]:https://developer.apple.com/documentation/spritekit

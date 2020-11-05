@@ -17,13 +17,13 @@
 
 ![Isometric Preview](images/iso-start@2x.png)
 
-For **v1.3** documentation, click [here][sktiled-130-docs-url].
+<!-- For **v1.3** documentation, click [here][sktiled-130-docs-url]. -->
 
 <!-- SKTiled URLs -->
 [sktiled-130-docs-url]:../1.3/index.html
 
 <!--- Apple --->
-[swift5-image]:https://img.shields.io/badge/Swift-5.2-brightgreen.svg
+[swift5-image]:https://img.shields.io/badge/Swift-5.3-brightgreen.svg
 [swift-url]: https://swift.org/
 [xcode11-image]:https://img.shields.io/badge/Xcode-11-orange.svg
 [xcode-downloads-url]:https://developer.apple.com/download/more/
