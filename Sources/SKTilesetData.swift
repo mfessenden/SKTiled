@@ -28,52 +28,6 @@
 import SpriteKit
 
 
-/**
-
- ## Overview
-
- A structure representing a single frame of animation. Time is stored in milliseconds.
-
- ### Properties
-
- | Property | Description             |
- |----------|-------------------------|
- | id       | unique tile (local) id. |
- | duration | frame duration.         |
- | texture  | optional tile texture.  |
-
- */
-public class TileAnimationFrame: NSObject {
-    public var id: Int = 0
-    public var duration: Int = 0
-    public var texture: SKTexture?
-
-    public init(id: Int, duration: Int, texture: SKTexture? = nil) {
-        super.init()
-        self.id = id
-        self.duration = duration
-        self.texture = texture
-    }
-}
-
-
-/**
- A structure representing a tile collision shape.
-
- - parameter points:  `[CGPoint]` frame duration.
- */
-internal class SKTileCollisionShape: SKTiledObject {
-
-    var uuid: String = UUID().uuidString
-    var type: String!
-    var properties: [String: String] = [:]
-    var ignoreProperties: Bool = false
-    var renderQuality: CGFloat = 1
-
-    public var id: Int = 0
-    public var points: [CGPoint] = []
-}
-
 
 /**
 
@@ -448,17 +402,6 @@ extension SKTilesetData: Hashable {
 }
 
 
-extension TileAnimationFrame {
-
-    /// Frame description.
-    override public var description: String {
-        return "Frame: \(id): \(duration)"
-    }
-
-    override public var debugDescription: String {
-        return "<\(description)>"
-    }
-}
 
 
 extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
@@ -491,7 +434,7 @@ extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
 // MARK: - Deprecated
 
 extension SKTilesetData {
-    
+
     /// Local id for this tile data.
     @available(*, deprecated, renamed: "id")
     public var localID: Int {

@@ -5,6 +5,7 @@
     - [Framework Installation](#framework-installation)
     - [Carthage Installation](#carthage-installation)
     - [CocoaPods Installation](#cocoapods-installation)
+    - [Building the Demo Projects](#building-the-demo-projects)
     - [Building the Documentation](#building-the-documentation)
 - [tvOS Support](#tvos-support)
     - [A Note About 4K](#a-note-about-4k)
@@ -18,7 +19,7 @@
 
 ## Requirements
 
-- iOS 11
+- iOS 12
 - tvOS 12
 - macOS 10.12
 - Xcode 11/Swift 5
@@ -59,7 +60,7 @@ To build for a specific platform, use the `platform` argument in your build comm
 
     carthage update --platform iOS
 
-Once you've run the build command frameworks are built, you'll find a **Carthage** directory in the root of your project. The frameworks are located in the **Carthage/Build/$PLATFORM_NAME** directories, simply install them as described in the [framework installation](#framework-installation) section above.
+Once you've run the build command frameworks are built, you'll find a **Carthage** directory in the root of your project. The frameworks are located in the **Carthage/Build/$PLATFORM_NAME** directories, simply install them as described in the [**framework installation**](#framework-installation) section above.
 
 ![Carthage Directories](images/carthage_directories.png)
 
@@ -108,6 +109,17 @@ CocoaPods will create an **.xcworkspace** file with the name of your project. Op
 
 
 See the [CocoaPods](https://cocoapods.org) home page for help and additional instructions.
+
+
+### Building the Demo Projects
+
+Included are three demo projects which can be compiled and run locally to test your content. To manage code signing for the demo projects, open the **Demo.xcconfig** file included in the project and replace `${DEVELOPMENT_TEAM}` with your own team id:
+
+```
+SAMPLE_CODE_DISAMBIGUATOR = ${DEVELOPMENT_TEAM}
+```
+
+For more information, see the [**Apple Development Documentation**][apple-code-signing-url] on code signing requirements.
 
 
 ### Building the Documentation
@@ -185,3 +197,4 @@ Next: [Scene Setup](scene-setup.html) - [Index](Table of Contents.html)
 [sktilemap-load-url]:SKTilemap.load(tmxFile:inDirectory:delegate:withTilesets:ignoreProperties:loggingLevel:)
 [working-with-maps-url]:working-with-maps.html#loading-a-tilemap
 [jazzy-url]:https://github.com/realm/jazzy
+[apple-code-signing-url]:https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html

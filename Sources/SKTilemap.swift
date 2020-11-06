@@ -944,7 +944,7 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
         self.debugNode = SKTiledDebugDrawNode(tileLayer: self.defaultLayer, isDefault: true)
         self.debugNode.zPosition = zPosition + zDeltaForLayers
         self.objectsOverlay.zPosition = zPosition + (zDeltaForLayers * 2)
-        
+
         addChild(debugNode)
         addChild(objectsOverlay)
         

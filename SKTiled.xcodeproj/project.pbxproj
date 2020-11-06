@@ -432,6 +432,18 @@
 		4CA6A8092188CF54002BC924 /* TilesetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA6A8032188C9A0002BC924 /* TilesetTests.swift */; };
 		4CAD35BD1F4B9D2C0034CA6C /* dungeon-16x16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CAD35BC1F4B9D2C0034CA6C /* dungeon-16x16.tmx */; };
 		4CAD35BE1F4B9D2C0034CA6C /* dungeon-16x16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4CAD35BC1F4B9D2C0034CA6C /* dungeon-16x16.tmx */; };
+		4CB4A2F52559D18A004B8A2E /* TileAnimationFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB4A2F32559D18A004B8A2E /* TileAnimationFrame.swift */; };
+		4CB4A2F62559D18A004B8A2E /* TileAnimationFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB4A2F32559D18A004B8A2E /* TileAnimationFrame.swift */; };
+		4CB4A2F72559D18A004B8A2E /* TileAnimationFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB4A2F32559D18A004B8A2E /* TileAnimationFrame.swift */; };
+		4CB4A2F82559D18A004B8A2E /* TileAnimationFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB4A2F32559D18A004B8A2E /* TileAnimationFrame.swift */; };
+		4CB4A2F92559D18A004B8A2E /* TileAnimationFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB4A2F32559D18A004B8A2E /* TileAnimationFrame.swift */; };
+		4CB4A2FA2559D18A004B8A2E /* TileAnimationFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB4A2F32559D18A004B8A2E /* TileAnimationFrame.swift */; };
+		4CB4A2FB2559D18A004B8A2E /* TileCollisionShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB4A2F42559D18A004B8A2E /* TileCollisionShape.swift */; };
+		4CB4A2FC2559D18A004B8A2E /* TileCollisionShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB4A2F42559D18A004B8A2E /* TileCollisionShape.swift */; };
+		4CB4A2FD2559D18A004B8A2E /* TileCollisionShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB4A2F42559D18A004B8A2E /* TileCollisionShape.swift */; };
+		4CB4A2FE2559D18A004B8A2E /* TileCollisionShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB4A2F42559D18A004B8A2E /* TileCollisionShape.swift */; };
+		4CB4A2FF2559D18A004B8A2E /* TileCollisionShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB4A2F42559D18A004B8A2E /* TileCollisionShape.swift */; };
+		4CB4A3002559D18A004B8A2E /* TileCollisionShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB4A2F42559D18A004B8A2E /* TileCollisionShape.swift */; };
 		4CB6BD1A2139BD2200B1275A /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CB6BD192139BD2200B1275A /* Defaults.plist */; };
 		4CB6BD1B2139BD2200B1275A /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CB6BD192139BD2200B1275A /* Defaults.plist */; };
 		4CB6BD1C2139BD2200B1275A /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CB6BD192139BD2200B1275A /* Defaults.plist */; };
@@ -728,6 +740,8 @@
 		4CA6A8032188C9A0002BC924 /* TilesetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TilesetTests.swift; sourceTree = "<group>"; };
 		4CA6A8072188CD93002BC924 /* Tests+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tests+Extensions.swift"; sourceTree = "<group>"; };
 		4CAD35BC1F4B9D2C0034CA6C /* dungeon-16x16.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "dungeon-16x16.tmx"; sourceTree = "<group>"; };
+		4CB4A2F32559D18A004B8A2E /* TileAnimationFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileAnimationFrame.swift; sourceTree = "<group>"; };
+		4CB4A2F42559D18A004B8A2E /* TileCollisionShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileCollisionShape.swift; sourceTree = "<group>"; };
 		4CB6BD192139BD2200B1275A /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Defaults.plist; sourceTree = "<group>"; };
 		4CBA61651D8A048200B31FC1 /* SKTiled Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SKTiled Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CBA617E1D8A0A3900B31FC1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -1190,6 +1204,8 @@
 				4CE2163525535A9F0091B7B9 /* Array2D.swift */,
 				4CE215FE2553583B0091B7B9 /* Logging.swift */,
 				4CF6DB5B25543A9600D0331D /* ThreadSafeArray.swift */,
+				4CB4A2F32559D18A004B8A2E /* TileAnimationFrame.swift */,
+				4CB4A2F42559D18A004B8A2E /* TileCollisionShape.swift */,
 				4C9BE4E9216FE02B006DC74E /* TileDataStorage.swift */,
 				4C4837BD25542DBE004C220D /* TiledGlobals.swift */,
 			);
@@ -1337,7 +1353,6 @@
 				4C41A5F91F43739C001622FF /* Frameworks */,
 				4C41A5FA1F43739C001622FF /* Headers */,
 				4C41A5FB1F43739C001622FF /* Resources */,
-				4C50763C21DEC7F5001D5BAD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1898,23 +1913,6 @@
 			shellPath = /bin/sh;
 			shellScript = "$SRCROOT/scripts/clean-assets.sh\n";
 		};
-		4C50763C21DEC7F5001D5BAD /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nenv\n";
-		};
 		4CABC4D71DAEE1F900ACA1A4 /* Clean Assets */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1944,6 +1942,7 @@
 				4CE2160E2553583B0091B7B9 /* SKImageLayer.swift in Sources */,
 				4CE216142553583B0091B7B9 /* SKObjectGroup.swift in Sources */,
 				4CF1D20C2555E22200A6CC25 /* AnchorNode.swift in Sources */,
+				4CB4A2F52559D18A004B8A2E /* TileAnimationFrame.swift in Sources */,
 				4CF6DB9425543F3A00D0331D /* TilemapDelegate.swift in Sources */,
 				4CF6DBDE2554428E00D0331D /* MousePointer.swift in Sources */,
 				4CF6DB5C25543A9600D0331D /* ThreadSafeArray.swift in Sources */,
@@ -1972,6 +1971,7 @@
 				4CE2163625535A9F0091B7B9 /* Array2D.swift in Sources */,
 				4C1774B41D9099A3000C0AFD /* SKTileLayer.swift in Sources */,
 				4C01D3A91F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift in Sources */,
+				4CB4A2FB2559D18A004B8A2E /* TileCollisionShape.swift in Sources */,
 				4C440BA91DAE913000DEC9A4 /* GameViewController.swift in Sources */,
 				4C1774B91D9099A3000C0AFD /* SKTilesetData.swift in Sources */,
 				4C1774B51D9099A3000C0AFD /* SKTilemap.swift in Sources */,
@@ -1992,6 +1992,7 @@
 				4CE2160D2553583B0091B7B9 /* SKGroupLayer.swift in Sources */,
 				4C9BE4EC216FE02B006DC74E /* TileDataStorage.swift in Sources */,
 				4CF1D1E82555DF5300A6CC25 /* TileObjectProxy.swift in Sources */,
+				4CB4A2FA2559D18A004B8A2E /* TileAnimationFrame.swift in Sources */,
 				4CE216072553583B0091B7B9 /* Logging.swift in Sources */,
 				4C24B1D420694FA70027EBD5 /* SKTiledScene.swift in Sources */,
 				4CE2163B25535A9F0091B7B9 /* Array2D.swift in Sources */,
@@ -2011,6 +2012,7 @@
 				4C24B1CE20694FA70027EBD5 /* SKTiled+Debug.swift in Sources */,
 				4C24B1D820694FA70027EBD5 /* SKTilemapParser.swift in Sources */,
 				4C24B1D120694FA70027EBD5 /* SKTiled+Properties.swift in Sources */,
+				4CB4A3002559D18A004B8A2E /* TileCollisionShape.swift in Sources */,
 				4CF6DB9325543F3A00D0331D /* TilesetDataSource.swift in Sources */,
 				4C4837C325542DBF004C220D /* TiledGlobals.swift in Sources */,
 				4C24B1D220694FA70027EBD5 /* SKTile.swift in Sources */,
@@ -2026,6 +2028,7 @@
 				4C24B1E820694FA80027EBD5 /* SKTileset.swift in Sources */,
 				4CE216042553583B0091B7B9 /* Logging.swift in Sources */,
 				4CE216102553583B0091B7B9 /* SKImageLayer.swift in Sources */,
+				4CB4A2FD2559D18A004B8A2E /* TileCollisionShape.swift in Sources */,
 				4CF6DB9025543F3A00D0331D /* TilesetDataSource.swift in Sources */,
 				4CF6DB8A25543F3A00D0331D /* TiledSceneDelegate.swift in Sources */,
 				4CE64161206C1AEA004BA9E4 /* Demo+Extensions.swift in Sources */,
@@ -2059,6 +2062,7 @@
 				4C24B1DD20694FA80027EBD5 /* SKTiled+Extensions.swift in Sources */,
 				4CE2160A2553583B0091B7B9 /* SKGroupLayer.swift in Sources */,
 				4CF1D20E2555E22200A6CC25 /* AnchorNode.swift in Sources */,
+				4CB4A2F72559D18A004B8A2E /* TileAnimationFrame.swift in Sources */,
 				4CF6DB8425543F3A00D0331D /* TiledSceneCameraDelegate.swift in Sources */,
 				4C24B1DC20694FA80027EBD5 /* SKTiled+Debug.swift in Sources */,
 				4C24B1DF20694FA80027EBD5 /* SKTiled+Properties.swift in Sources */,
@@ -2077,6 +2081,7 @@
 				4CE2160B2553583B0091B7B9 /* SKGroupLayer.swift in Sources */,
 				4C9BE4EA216FE02B006DC74E /* TileDataStorage.swift in Sources */,
 				4CF1D1E62555DF5300A6CC25 /* TileObjectProxy.swift in Sources */,
+				4CB4A2F82559D18A004B8A2E /* TileAnimationFrame.swift in Sources */,
 				4CE216052553583B0091B7B9 /* Logging.swift in Sources */,
 				4C41A5EE1F437180001622FF /* SKTiledScene.swift in Sources */,
 				4CE2163925535A9F0091B7B9 /* Array2D.swift in Sources */,
@@ -2096,6 +2101,7 @@
 				4C41A5E81F437180001622FF /* SKTiled+Debug.swift in Sources */,
 				4C41A5F21F437180001622FF /* SKTilemapParser.swift in Sources */,
 				4C41A5EB1F437180001622FF /* SKTiled+Properties.swift in Sources */,
+				4CB4A2FE2559D18A004B8A2E /* TileCollisionShape.swift in Sources */,
 				4CF6DB9125543F3A00D0331D /* TilesetDataSource.swift in Sources */,
 				4C4837C125542DBF004C220D /* TiledGlobals.swift in Sources */,
 				4C41A5EC1F437180001622FF /* SKTile.swift in Sources */,
@@ -2116,6 +2122,7 @@
 				4CE2160C2553583B0091B7B9 /* SKGroupLayer.swift in Sources */,
 				4C9BE4EB216FE02B006DC74E /* TileDataStorage.swift in Sources */,
 				4CF1D1E72555DF5300A6CC25 /* TileObjectProxy.swift in Sources */,
+				4CB4A2F92559D18A004B8A2E /* TileAnimationFrame.swift in Sources */,
 				4CE216062553583B0091B7B9 /* Logging.swift in Sources */,
 				4C2FCE551F4378F0004AD742 /* SKTiledScene.swift in Sources */,
 				4CE2163A25535A9F0091B7B9 /* Array2D.swift in Sources */,
@@ -2135,6 +2142,7 @@
 				4C2FCE4F1F4378DA004AD742 /* SKTiled+Debug.swift in Sources */,
 				4C2FCE591F4378F0004AD742 /* SKTilemapParser.swift in Sources */,
 				4C2FCE521F4378F0004AD742 /* SKTiled+Properties.swift in Sources */,
+				4CB4A2FF2559D18A004B8A2E /* TileCollisionShape.swift in Sources */,
 				4CF6DB9225543F3A00D0331D /* TilesetDataSource.swift in Sources */,
 				4C4837C225542DBF004C220D /* TiledGlobals.swift in Sources */,
 				4C2FCE531F4378F0004AD742 /* SKTile.swift in Sources */,
@@ -2204,6 +2212,7 @@
 				4C3117DC1EF84FCF00892D9E /* SKTiled+Debug.swift in Sources */,
 				4CE216032553583B0091B7B9 /* Logging.swift in Sources */,
 				4CE2160F2553583B0091B7B9 /* SKImageLayer.swift in Sources */,
+				4CB4A2FC2559D18A004B8A2E /* TileCollisionShape.swift in Sources */,
 				4CF6DB8F25543F3A00D0331D /* TilesetDataSource.swift in Sources */,
 				4CF6DB8925543F3A00D0331D /* TiledSceneDelegate.swift in Sources */,
 				4CE64160206C1AEA004BA9E4 /* Demo+Extensions.swift in Sources */,
@@ -2237,6 +2246,7 @@
 				4C440BB61DAE913A00DEC9A4 /* GameViewController.swift in Sources */,
 				4CE216092553583B0091B7B9 /* SKGroupLayer.swift in Sources */,
 				4CF1D20D2555E22200A6CC25 /* AnchorNode.swift in Sources */,
+				4CB4A2F62559D18A004B8A2E /* TileAnimationFrame.swift in Sources */,
 				4CF6DB8325543F3A00D0331D /* TiledSceneCameraDelegate.swift in Sources */,
 				4C88E1E21D8A4EBE00FCCFA3 /* SKTileLayer.swift in Sources */,
 				4C88E1DE1D8A4EBE00FCCFA3 /* SKTile.swift in Sources */,
@@ -2307,7 +2317,6 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1220000;
@@ -2334,7 +2343,6 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1220000;
 				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
@@ -2362,7 +2370,6 @@
 				CURRENT_PROJECT_VERSION = 1220000;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2397,7 +2404,6 @@
 				CURRENT_PROJECT_VERSION = 1220000;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2488,7 +2494,6 @@
 				CURRENT_PROJECT_VERSION = 1220000;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2520,7 +2525,6 @@
 				CURRENT_PROJECT_VERSION = 1220000;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2548,7 +2552,6 @@
 				CURRENT_PROJECT_VERSION = 1220000;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2579,7 +2582,6 @@
 				CURRENT_PROJECT_VERSION = 1220000;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2608,7 +2610,6 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Tests/Info-iOS.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -2633,7 +2634,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Tests/Info-iOS.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -2655,7 +2655,6 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Tests/Info-tvOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -2681,7 +2680,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Tests/Info-tvOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -2705,7 +2703,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Tests/Info-macOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
@@ -2731,7 +2728,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Tests/Info-macOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";

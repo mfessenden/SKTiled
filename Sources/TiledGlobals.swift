@@ -84,6 +84,7 @@ public let TileSize32x32 = CGSize(value: 32)
  ```
  */
 public class TiledGlobals {
+    
     /// Default singleton instance.
     static public let `default` = TiledGlobals()
     
@@ -343,7 +344,9 @@ extension TiledGlobals: CustomDebugReflectable {
     
     func dumpStatistics() {
         print("\n----------- SKTiled Globals -----------")
+        #if SKTILED_DEMO
         print("  - indentifier:          \(self.identifier)")
+        #endif
         print("  - framework version:    \(self.version.description)")
         print("  - swift version:        \(getSwiftVersion())")
         

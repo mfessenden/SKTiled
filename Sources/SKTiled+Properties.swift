@@ -357,14 +357,7 @@ extension SKTileObject {
 }
 
 
-extension SKTileCollisionShape {
-    
-    /// Parse the collision shape's properties.
-    func parseProperties(completion: (() -> Void)?) {
-        if (ignoreProperties == true) { return }
-        if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
-    }
-}
+
 
 
 extension SKTilesetData {

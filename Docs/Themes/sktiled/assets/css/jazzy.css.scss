@@ -31,6 +31,7 @@ $code_font: Consolas, "Liberation Mono", Menlo, Courier, monospace;
 $attribute_weight: 700;
 $attribute_bg_color: #fdf4f4;
 $declaration_bg_color: #fdf4f480;
+$declaration_marker_color: #b08383;
 $marker_color: #2b1f1eb5;
 
 $heading1_font_size: 2rem;
@@ -68,7 +69,7 @@ $navigation_task_color: #808080;
 
 $declaration_title_language_color: #4183c4;
 $declaration_language_border: 4px solid #cde9f4;
-$declaration_bg_color: #fff;
+// $declaration_bg_color: #fff;
 $declaration_border_color: #ddd;
 
 $aside_color: #aaa;
@@ -429,7 +430,7 @@ pre code {
 .item {
   padding-top: 8px;
   width: 100%;
-  list-style-type: disc;
+  list-style-type: none;
   border-bottom: 1px solid #E6E6E6;
   margin: 1rem;
 
@@ -442,7 +443,7 @@ pre code {
 
  /* Variable/Method Listing */
   .token {
-    padding-left: 3px;
+    // padding-left: 3px;
     margin-left: 0px;
     font-size: 1.1rem;
     // font-family: $token_header_font;
@@ -657,5 +658,10 @@ div.task-group li.item div code a.token {
 
 /* attribute description */
 div.abstract p {
-    text-indent: 1em;
+    text-indent: 0.5em;
+}
+
+
+span.symbol-marker {
+    color: $declaration_marker_color;
 }

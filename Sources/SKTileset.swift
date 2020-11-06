@@ -94,8 +94,9 @@ public class SKTileset: NSObject, SKTiledObject {
 
     /// Tile size (in pixels).
     public var tileSize: CGSize
-
-    internal var loggingLevel: LoggingLevel = LoggingLevel.warning // logging level
+    
+    /// Tileset logging level.
+    internal var loggingLevel: LoggingLevel = LoggingLevel.warning
 
     /// The number of tile columns.
     public var columns: Int = 0

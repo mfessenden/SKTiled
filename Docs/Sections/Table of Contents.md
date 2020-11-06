@@ -20,6 +20,7 @@
         - [Framework Installation](getting-started.html#framework-installation)
         - [Carthage Installation](getting-started.html#carthage-installation)
         - [CocoaPods Installation](getting-started.html#cocoapods-installation)
+		- [Building the Demo Projects](getting-started.html#building-the-demo-projects)
         - [Building the Documentation](getting-started.html#building-the-documentation)
     - [tvOS Support](getting-started.html#tvos-support)
         - [A Note About 4K](getting-started.html#a-note-about-4k)
