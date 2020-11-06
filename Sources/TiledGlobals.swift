@@ -45,15 +45,15 @@ public let TileSize32x32 = CGSize(value: 32)
 
 
 /**
-
+ 
  ## Overview
-
+ 
  The `TiledGlobals` object provides information about the framework, as well as allowing
  you to set default **SKTiled** attributes.
-
-
+ 
+ 
  ### Properties
-
+ 
  | Property              | Description                                                |
  |:--------------------- |:---------------------------------------------------------- |
  | renderer              | Returns the current SpriteKit renderer (get-only).         |
@@ -64,21 +64,21 @@ public let TileSize32x32 = CGSize(value: 32)
  | renderQuality         | Global render quality values.                              |
  | contentScale          | Returns the device retina display scale factor.            |
  | version               | Returns the current framework version.                     |
-
+ 
  ### Usage
-
+ 
  **SKTiled** object default values are set in the `TiledGlobals` object.
-
+ 
  ```swift
  // access the default singleton instance
  let tiledGlobals = TiledGlobals.default
-
+ 
  // disable camera callbacks
  tiledGlobals.enableCameraCallbacks = false
-
+ 
  // set debugging mouse filters (macOS)
  tiledGlobals.debug.mouseFilters = [.tileCoordinates, .tilesUnderCursor]
-
+ 
  // increase the default text object render quality
  tiledGlobals.renderQuality.text = 12.0
  ```
@@ -86,36 +86,36 @@ public let TileSize32x32 = CGSize(value: 32)
 public class TiledGlobals {
     /// Default singleton instance.
     static public let `default` = TiledGlobals()
-
+    
     /// Current SpriteKit renderer.
     public private(set) var renderer: Renderer = Renderer.metal
-
+    
     /// Default logging verbosity.
     public var loggingLevel:  LoggingLevel = LoggingLevel.info
-
+    
     /// Default tile update mode.
     public var updateMode: TileUpdateMode = TileUpdateMode.actions
-
+    
     /// Enable callbacks for render performance statistics.
     public var enableRenderCallbacks: Bool = false
-
+    
     /// Enable callbacks from camera to camera delegates.
     public var enableCameraCallbacks: Bool = true
-
+    
     /// Default tile/object render quality attributes.
     public var renderQuality: RenderQuality = RenderQuality()
-
+    
     /// Debugging display options.
     public var debug: DebugDisplayOptions = DebugDisplayOptions()
-
+    
     /// Render statistics display.
     public var timeDisplayMode: TimeDisplayMode = TimeDisplayMode.milliseconds
-
+    
     /// Returns the current device backing scale.
     public var contentScale: CGFloat {
         return getContentScaleFactor()
     }
-
+    
     /// Returns current framework version.
     public lazy var version: Version = {
         // returns a string from the project: 1300000
@@ -124,7 +124,7 @@ public class TiledGlobals {
         result.suffix = getSKTiledVersionSuffix()
         return result
     }()
-
+    
     /// Returns current bundle identifier name.
     public lazy var identifier: String = {
         guard let infoDictionary = Bundle.main.infoDictionary,
@@ -133,25 +133,25 @@ public class TiledGlobals {
         }
         return bundleIdentifier
     }()
-
+    
     /// Returns current framework build (if any).
     internal var build: String? {
         return getSKTiledBuildVersion()
     }
-
+    
     /// Private init.
     private init() {
         let device = MTLCreateSystemDefaultDevice()
         renderer = (device != nil) ? Renderer.metal : Renderer.opengl
     }
-
+    
     /**
      ## Overview
-
+     
      Structure representing the framework version (semantic version).
-
+     
      ### Properties
-
+     
      | Property              | Description                  |
      |:----------------------|:-----------------------------|
      | major                 | Framework major version.     |
@@ -159,7 +159,7 @@ public class TiledGlobals {
      | patch                 | Framework patch version      |
      | build                 | Framework build versions.    |
      | suffix                | Version suffix.              |
-
+     
      */
     public struct Version {
         var major: Int = 0
@@ -167,10 +167,10 @@ public class TiledGlobals {
         var patch: Int = 0
         var build: Int = 0
         var suffix: String?
-
+        
         /**
          Constructor from major, minor, patch & build values.
-
+         
          - parameter major: major version.
          - parameter minor: minor version.
          - parameter patch: patch version.
@@ -185,22 +185,22 @@ public class TiledGlobals {
             self.suffix = suffix
         }
     }
-
-
+    
+    
     /**
      ## Overview
-
+     
      Represents object's render quality when dealing with higher resolutions.
-
+     
      ### Properties
-
+     
      | Property              | Description                              |
      |:----------------------|:-----------------------------------------|
      | default               | Global render quality.                   |
      | object                | Object render quality.                   |
      | text                  | Text object render quality               |
      | override              | Override value.                          |
-
+     
      */
     public struct RenderQuality {
         var `default`: CGFloat = 3
@@ -208,49 +208,49 @@ public class TiledGlobals {
         var text: CGFloat = 8
         var override: CGFloat = 0
     }
-
+    
     /**
      ## Overview
-
+     
      Global debug display properties.
-
+     
      */
     public struct DebugDisplayOptions {
-
+        
         /// Debug properties for mouse movements.
         public var mouseFilters: MouseFilters = MouseFilters.tileCoordinates
-
+        
         /// Debug display properties.
         public var highlightDuration: TimeInterval = 0.3
-
+        
         /// Debug grid drawing opacity.
         public var gridOpactity: CGFloat = 0.4
-
+        
         /// Debug grid drawing color.
         public var gridColor: SKColor = TiledObjectColors.grass
-
+        
         /// Debug frame drawing color.
         public var frameColor: SKColor = TiledObjectColors.grass
-
+        
         /// Debug tile highlight color.
         public var tileHighlightColor: SKColor = TiledObjectColors.lime
-
+        
         /// Debug object fill opacity.
         public var objectFillOpacity: CGFloat = 0.25
-
+        
         /// Debug object highlight color.
         public var objectHighlightColor: SKColor = TiledObjectColors.coral
-
+        
         /// Debug graph highlight color.
         public var navigationColor: SKColor = TiledObjectColors.azure
-
+        
         /**
          ## Overview
-
+         
          Global debug display mouse filter options (macOS).
-
+         
          ### Properties
-
+         
          | Property              | Description                              |
          |:----------------------|:-----------------------------------------|
          | tileCoordinates       | Show tile coordinates.                   |
@@ -258,56 +258,56 @@ public class TiledGlobals {
          | tileDataUnderCursor   | Show tile data properties.               |
          | tilesUnderCursor      | Highlight tiles under the cursor.        |
          | objectsUnderCursor    | Highlight objects under the cursor.      |
-
+         
          */
         public struct MouseFilters: OptionSet {
             public let rawValue: Int
-
+            
             static let tileCoordinates      = MouseFilters(rawValue: 1 << 0)   // 1*
             static let tileLocalID          = MouseFilters(rawValue: 1 << 1)   // 2
             static let sceneCoordinates     = MouseFilters(rawValue: 1 << 2)   // 4
             static let tileDataUnderCursor  = MouseFilters(rawValue: 1 << 3)   // 8*
             static let tilesUnderCursor     = MouseFilters(rawValue: 1 << 4)   // 16
             static let objectsUnderCursor   = MouseFilters(rawValue: 1 << 5)   // 32
-
+            
             static public let all: MouseFilters = [.tileCoordinates, .tileLocalID, .sceneCoordinates, .tileDataUnderCursor, .tilesUnderCursor, .objectsUnderCursor]
-
+            
             public init(rawValue: Int = 0) {
                 self.rawValue = rawValue
             }
         }
     }
-
+    
     /**
      ## Overview
-
+     
      Display flag for render statistics.
-
+     
      ### Properties ##
-
+     
      | Property              | Description                              |
      |:----------------------|:-----------------------------------------|
      | milliseconds          | Show render time in milliseconds.        |
      | seconds               | Show render time in seconds.             |
-
+     
      */
     public enum TimeDisplayMode: Int {
         case milliseconds
         case seconds
     }
-
+    
     /**
      ## Overview
-
+     
      Indicates the current renderer (OpenGL or Metal).
-
+     
      ### Properties ##
-
+     
      | Property | Description                                         |
      |:---------|:----------------------------------------------------|
      | opengl   | Indicates the current SpriteKit renderer is OpenGL. |
      | metal    | Indicates the current SpriteKit renderer is Metal.  |
-
+     
      */
     public enum Renderer {
         case opengl
@@ -340,17 +340,17 @@ internal struct TiledObjectColors {
 
 
 extension TiledGlobals: CustomDebugReflectable {
-
+    
     func dumpStatistics() {
         print("\n----------- SKTiled Globals -----------")
         print("  - indentifier:          \(self.identifier)")
         print("  - framework version:    \(self.version.description)")
         print("  - swift version:        \(getSwiftVersion())")
-
+        
         if let buildVersion = self.build {
             print("  - build version:        \(buildVersion)")
         }
-
+        
         print("  - renderer:             \(self.renderer.name)")
         print("  - ui scale:             \(self.contentScale)")
         print("  - logging level:        \(self.loggingLevel)")
@@ -382,7 +382,7 @@ extension TiledGlobals: CustomDebugReflectable {
 extension TiledGlobals.Version {
     /**
      Initialize with a version string (ie "2.1.4").
-
+     
      - parameter string: `String` version string.
      */
     init(string: String) {
@@ -411,19 +411,19 @@ extension TiledGlobals.Version {
                 self.build = 0
         }
     }
-
+    
     /**
      Initialize with a integer version string (ie: "2010401").
-
+     
      - parameter integer: `String` build string.
      */
     public init(integer value: String) {
         guard (value.count >= 7),
-            let intValue = Int(value) else {
-                print("Error: invalid string '\(value)'")
-                return
+              let intValue = Int(value) else {
+            print("Error: invalid string '\(value)'")
+            return
         }
-
+        
         major = intValue / 1000000
         let r1 = intValue - (1000000 * major)
         minor = r1 / 10000
@@ -431,7 +431,7 @@ extension TiledGlobals.Version {
         patch = r2 / 100
         build = r2 - (100 * patch)
     }
-
+    
     /// Return the version expressed as an integer.
     public var integerValue: Int32  {
         var result = major * 1000000
@@ -440,7 +440,7 @@ extension TiledGlobals.Version {
         result += build
         return Int32(result)
     }
-
+    
     public var versionString: String {
         return "SKTiled version \(description) (\(integerValue))"
     }
@@ -448,7 +448,7 @@ extension TiledGlobals.Version {
 
 
 extension TiledGlobals.Version: CustomStringConvertible, CustomDebugStringConvertible {
-
+    
     /// String description of the framework version.
     public var description: String {
         let suffixString = suffix ?? ""
@@ -462,11 +462,11 @@ extension TiledGlobals.Version: CustomStringConvertible, CustomDebugStringConver
 
 
 extension TiledGlobals.TimeDisplayMode {
-
+    
     var allModes: [TiledGlobals.TimeDisplayMode] {
         return [.seconds, .milliseconds]
     }
-
+    
     var uiControlString: String {
         switch self {
             case .seconds: return "Seconds"
@@ -478,7 +478,7 @@ extension TiledGlobals.TimeDisplayMode {
 
 
 extension TiledGlobals.Renderer {
-
+    
     var name: String {
         switch self {
             case .opengl: return "OpenGL"
@@ -489,36 +489,36 @@ extension TiledGlobals.Renderer {
 
 
 extension TiledGlobals.DebugDisplayOptions.MouseFilters {
-
+    
     public var strings: [String] {
         var result: [String] = []
         if self.contains(.tileCoordinates) {
             result.append("Tile Coordinates")
         }
-
+        
         if self.contains(.tileLocalID) {
             result.append("Tile Local ID")
         }
-
+        
         if self.contains(.sceneCoordinates) {
             result.append("Scene Coordinates")
         }
-
+        
         if self.contains(.tileDataUnderCursor) {
             result.append("Tile Data")
         }
-
+        
         if self.contains(.tilesUnderCursor) {
             result.append("Tiles Under Cursor")
         }
-
+        
         if self.contains(.objectsUnderCursor) {
             result.append("Objects Under Cursor")
         }
-
+        
         return result
     }
-
+    
 }
 
 
@@ -528,7 +528,7 @@ extension TiledObjectColors {
                                  english, grass, gun, indigo, lime,
                                  magenta, metal, obsidian, pear,
                                  saffron, tangerine, turquoise]
-
+    
     /// Returns an array of all color names.
     static let names: [String] = ["azure", "coral", "crimson","dandelion",
                                   "english","grass","gun","indigo","lime",

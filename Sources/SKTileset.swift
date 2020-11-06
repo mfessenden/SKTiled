@@ -39,7 +39,7 @@ import SpriteKit
 
  ```swift
  if let data = tileset.getTileData(localID: 56) {
- let tile = SKTile(data: data)
+    let tile = SKTile(data: data)
  }
  ```
 
@@ -83,6 +83,12 @@ public class SKTileset: NSObject, SKTiledObject {
     /// Object type.
     public var type: String!
 
+    /// Custom tileset properties.
+    public var properties: [String: String] = [:]
+
+    /// Ignore custom properties.
+    public var ignoreProperties: Bool = false
+
     /// Reference to parent tilemap.
     public var tilemap: SKTilemap!
 
@@ -97,25 +103,45 @@ public class SKTileset: NSObject, SKTiledObject {
     /// The number of tiles contained in this set.
     public internal(set) var tilecount: Int = 0
 
+    /// Tile data count.
+    public var dataCount: Int {
+        return tileData.count
+    }
+
     /// Tile offset value.
     public var firstGID: Int = 0
 
-    // image spacing
-    public var spacing: Int = 0                                    // spacing between tiles
-    public var margin: Int = 0                                     // border margin
+    /// Returns the last global tile id in the tileset.
+    public var lastGID: Int {
+        return tileData.map { $0.id }.max() ?? firstGID
+    }
 
-    public var properties: [String: String] = [:]
-    public var ignoreProperties: Bool = false                      // ignore custom properties
-    public var tileOffset = CGPoint.zero                           // draw offset for drawing tiles
+    /// Returns a range of localized tile ids.
+    public var localRange: ClosedRange<Int> {
+        return 0...(dataCount - 1)
+    }
+
+    /// Returns a range of global tile id values.
+    public var globalRange: ClosedRange<Int> {
+        return firstGID...(firstGID + lastGID)
+    }
+
+    // MARK: - Spacing
+
+    /// Spritesheet spacing between tiles.
+    public var spacing: Int = 0
+
+    /// Spritesheet border margin.
+    public var margin: Int = 0
+
+    /// Offset for drawing tiles.
+    public var tileOffset = CGPoint.zero
 
     /// Texture name (if created from source)
     public var source: String!
 
     /// Tile data set.
     private var tileData: Set<SKTilesetData> = []
-
-    /// Tile data count.
-    public var dataCount: Int { return tileData.count }
 
     /// Indicates the tileset is a collection of images.
     public var isImageCollection: Bool = false
@@ -130,11 +156,6 @@ public class SKTileset: NSObject, SKTiledObject {
 
     /// Indicates all of the tile data textures have been set.
     public internal(set) var isRendered: Bool = false
-
-    /// Returns the last global tile id in the tileset.
-    public var lastGID: Int {
-        return tileData.map { $0.id }.max() ?? firstGID
-    }
 
     /// Returns the difference in tile size vs. map tile size.
     internal var mapOffset: CGPoint {
@@ -534,16 +555,23 @@ public class SKTileset: NSObject, SKTiledObject {
     }
 
     /**
+     Returns true if the tileset contains the given ID (local).
+
+     - parameter localID:  `UInt32` local tile id.
+     - returns: `Bool` tileset contains the local id.
+     */
+    internal func contains(localID: UInt32) -> Bool {
+        return localRange ~= Int(localID)
+    }
+
+    /**
      Returns true if the tileset contains the global ID.
 
      - parameter globalID:  `UInt32` global tile id.
      - returns: `Bool` tileset contains the global id.
      */
     public func contains(globalID gid: UInt32) -> Bool {
-        if firstGID...(firstGID + lastGID) ~= Int(gid) {
-            return true
-        }
-        return false
+        return globalRange ~= Int(gid)
     }
 
     /**

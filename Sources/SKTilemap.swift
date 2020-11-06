@@ -462,11 +462,11 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
         switch orientation {
             case .orthogonal:
                 return CGSize(width: size.width * tileSize.width, height: size.height * tileSize.height)
-            
+                
             case .isometric:
                 let side = width + height
                 return CGSize(width: side * tileWidthHalf,  height: side * tileHeightHalf)
-            
+                
             case .hexagonal, .staggered:
                 var result = CGSize.zero
                 if staggerX == true {
@@ -1477,14 +1477,14 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
                 // layer offset
                 layerPos.x += layer.offset.x
                 layerPos.y -= layer.offset.y
-            
+                
             case .isometric:
                 // layer offset
                 layerPos.x = -sizeInPoints.width * layerAlignment.anchorPoint.x
                 layerPos.y = sizeInPoints.height * layerAlignment.anchorPoint.y
                 layerPos.x += layer.offset.x
                 layerPos.y -= layer.offset.y
-            
+                
             case .hexagonal, .staggered:
                 layerPos.x = -sizeInPoints.width * layerAlignment.anchorPoint.x
                 layerPos.y = sizeInPoints.height * layerAlignment.anchorPoint.y
@@ -1519,13 +1519,13 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
                 nodePosition.y = sizeInPoints.height * layerAlignment.anchorPoint.y
                 nodePosition.x += offset.x
                 nodePosition.y -= offset.y
-            
+                
             case .isometric:
                 nodePosition.x = -sizeInPoints.width * layerAlignment.anchorPoint.x
                 nodePosition.y = sizeInPoints.height * layerAlignment.anchorPoint.y
                 nodePosition.x += offset.x
                 nodePosition.y -= offset.y
-            
+                
             case .hexagonal, .staggered:
                 nodePosition.x = -sizeInPoints.width * layerAlignment.anchorPoint.x
                 nodePosition.y = sizeInPoints.height * layerAlignment.anchorPoint.y
@@ -1564,7 +1564,7 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
     public func tilesAt(point: CGPoint) -> [SKTile] {
         return nodes(at: point).filter { node in
             node as? SKTile != nil
-            } as! [SKTile]
+        } as! [SKTile]
     }
     
     /**
@@ -1759,7 +1759,7 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
     public func objectsAt(point: CGPoint) -> [SKTileObject] {
         return nodes(at: point).filter { node in
             node as? SKTileObject != nil
-            } as! [SKTileObject]
+        } as! [SKTileObject]
     }
     
     /**
@@ -2115,14 +2115,14 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
                 // update animated tiles
                 self.updateAnimatedTiles(delta: dt) { fcount in
                     self.renderStatistics.updatedThisFrame += fcount
-            }
-            
+                }
+                
             case .dynamic:
                 // update animated tiles
                 self.updateAnimatedTiles(delta: dt) { fcount in
                     self.renderStatistics.updatedThisFrame += fcount
-            }
-            
+                }
+                
             default:
                 break
         }
@@ -2178,7 +2178,7 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
                         // tile is ignoring its tile data, move on
                         case .ignore:
                             continue
-                        
+                            
                         default:
                             
                             // for `default` & `static`, just update the tile texture and continue...
@@ -2289,13 +2289,13 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
                         
                         case .ignore, .static:
                             continue
-                        
+                            
                         default:
                             
                             if let frameTexture = currentTexture {
                                 tile.texture = frameTexture
                                 tile.size = frameTexture.size()
-                        }
+                            }
                     }
                     animatedTilesUpdated += 1
                 }

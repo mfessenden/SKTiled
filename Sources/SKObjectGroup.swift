@@ -36,7 +36,7 @@ import Cocoa
 
 /**
  Represents object group draw order:
-
+ 
  - topdown:  objects are rendered from top-down
  - manual:   objects are rendered manually
  */
@@ -48,57 +48,57 @@ internal enum SKObjectGroupDrawOrder: String {
 
 /**
  ## Overview
-
+ 
  The `SKObjectGroup` class is a container for vector object types. Most object properties can be set on the parent `SKObjectGroup` which is then applied to all child objects.
-
-
+ 
+ 
  ### Properties
-
+ 
  | Property              | Description                                                      |
  |-----------------------|------------------------------------------------------------------|
  | count                 | Returns the number of objects in the layer.                      |
  | showObjects           | Toggle visibility for all of the objects in the layer.           |
  | lineWidth             | Governs object line width for each object.                       |
  | debugDrawOptions      | Debugging display flags.                                         |
-
+ 
  ### Methods ###
-
+ 
  | Method                | Description                                                      |
  |-----------------------|------------------------------------------------------------------|
  | addObject             | Returns the number of objects in the layer.                      |
  | removeObject          | Toggle visibility for all of the objects in the layer.           |
  | getObject(withID:)    | Returns an object with the given id, if it exists.               |
-
+ 
  ### Usage
-
+ 
  Adding a child object with optional color override:
-
+ 
  ```swift
  objectGroup.addObject(myObject, withColor: SKColor.red)
  ```
-
+ 
  Querying an object with a specific name:
-
+ 
  ```swift
  let doorObject = objectGroup.getObject(named: "Door")
  ```
-
+ 
  Returning objects of a certain type:
-
+ 
  ```swift
  let rockObjects = objectGroup.getObjects(ofType: "Rock")
  ```
  */
 public class SKObjectGroup: SKTiledLayerObject {
-
+    
     internal var drawOrder: SKObjectGroupDrawOrder = SKObjectGroupDrawOrder.topdown
     fileprivate var objects: Set<SKTileObject> = []
-
+    
     /// Toggle visibility for all of the objects in the layer.
     public var showObjects: Bool = false {
         didSet {
             let proxies = self.getObjectProxies()
-
+            
             NotificationCenter.default.post(
                 name: Notification.Name.DataStorage.ProxyVisibilityChanged,
                 object: proxies,
@@ -106,19 +106,19 @@ public class SKObjectGroup: SKTiledLayerObject {
             )
         }
     }
-
+    
     /// Returns the number of objects in this layer.
     public var count: Int { return objects.count }
-
+    
     /// Controls antialiasing for each object
     override public var antialiased: Bool {
         didSet {
             objects.forEach { $0.isAntialiased = antialiased }
         }
     }
-
+    
     internal var _lineWidth: CGFloat = 1.5
-
+    
     /// Governs object line width for each object.
     public var lineWidth: CGFloat {
         get {
@@ -129,18 +129,18 @@ public class SKObjectGroup: SKTiledLayerObject {
             _lineWidth = newValue
         }
     }
-
+    
     /// Returns a tuple of render stats used for debugging.
     override internal var renderInfo: RenderInfo {
         var current = super.renderInfo
         current.obj = count
         return current
     }
-
+    
     override var layerRenderStatistics: LayerRenderStatistics {
         var current = super.layerRenderStatistics
         var oc: Int
-
+        
         switch updateMode {
             case .full:
                 oc = self.getObjects().count
@@ -149,11 +149,11 @@ public class SKObjectGroup: SKTiledLayerObject {
             default:
                 oc = 0
         }
-
+        
         current.objects = oc
         return current
     }
-
+    
     /// Render scaling property.
     override public var renderQuality: CGFloat {
         didSet {
@@ -163,7 +163,7 @@ public class SKObjectGroup: SKTiledLayerObject {
             }
         }
     }
-
+    
     /// Debug visualization options.
     override public var debugDrawOptions: DebugDrawOptions {
         didSet {
@@ -172,18 +172,18 @@ public class SKObjectGroup: SKTiledLayerObject {
             objects.forEach { $0.showBounds = doShowObjects }
         }
     }
-
+    
     override public var speed: CGFloat {
         didSet {
             guard oldValue != speed else { return }
             self.getObjects().forEach {$0.speed = speed}
         }
     }
-
+    
     // MARK: - Init
     /**
      Initialize with layer name and parent `SKTilemap`.
-
+     
      - parameter layerName:    `String` layer name.
      - parameter tilemap:      `SKTilemap` parent map.
      */
@@ -192,12 +192,12 @@ public class SKObjectGroup: SKTiledLayerObject {
         self.layerType = .object
         self.color = tilemap.objectColor
     }
-
+    
     /**
      Initialize with parent `SKTilemap` and layer attributes.
-
+     
      **Do not use this intializer directly**
-
+     
      - parameter tilemap:      `SKTilemap` parent map.
      - parameter attributes:   `[String: String]` layer attributes.
      */
@@ -205,24 +205,24 @@ public class SKObjectGroup: SKTiledLayerObject {
         guard let layerName = attributes["name"] else { return nil }
         super.init(layerName: layerName, tilemap: tilemap, attributes: attributes)
         self.color = tilemap.objectColor
-
+        
         // set objects color
         if let hexColor = attributes["color"] {
             self.color = SKColor(hexString: hexColor)
         }
-
+        
         self.layerType = .object
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     // MARK: - Objects
-
+    
     /**
      Add an `SKTileObject` object to the objects set.
-
+     
      - parameter object:    `SKTileObject` object.
      - parameter withColor: `SKColor?` optional override color (otherwise defaults to parent layer color).
      - returns: `SKTileObject?` added object.
@@ -231,18 +231,18 @@ public class SKObjectGroup: SKTiledLayerObject {
         if objects.contains(where: { $0.hashValue == object.hashValue }) {
             return nil
         }
-
+        
         // if the object has a color property override, use that instead
         if object.hasKey("color") {
             if let hexColor = object.stringForKey("color") {
                 object.setColor(color: SKColor(hexString: hexColor))
             }
         }
-
+        
         // position the object
         let pixelPosition = object.position
         let screenPosition = pixelToScreenCoords(pixelPosition)
-
+        
         object.position = screenPosition.invertedY
         object.isAntialiased = antialiased
         object.lineWidth = lineWidth
@@ -250,22 +250,22 @@ public class SKObjectGroup: SKTiledLayerObject {
         object.layer = self
         object.ignoreProperties = ignoreProperties
         addChild(object)
-
+        
         object.zPosition = (objects.isEmpty == false) ? CGFloat(objects.count) : 0
-
+        
         // add to object cache
         NotificationCenter.default.post(
             name: Notification.Name.Layer.ObjectAdded,
             object: object,
             userInfo: nil
         )
-
+        
         return object
     }
-
+    
     /**
      Remove an `SKTileObject` object from the object set.
-
+     
      - parameter object:    `SKTileObject` object.
      - returns: `SKTileObject?` removed object.
      */
@@ -277,17 +277,17 @@ public class SKObjectGroup: SKTiledLayerObject {
         )
         return objects.remove(object)
     }
-
+    
     /**
      Render all of the objects in the group.
      */
     public func draw() {
         objects.forEach { $0.draw() }
     }
-
+    
     /**
      Set the color for all objects.
-
+     
      - parameter color: `SKColor` object color.
      - parameter force: `Bool` force color on objects that have an override.
      */
@@ -299,10 +299,10 @@ public class SKObjectGroup: SKTiledLayerObject {
             }
         }
     }
-
+    
     /**
      Set the color for all objects.
-
+     
      - parameter color: `SKColor` object color.
      - parameter force: `Bool` force color on objects that have an override.
      */
@@ -314,19 +314,19 @@ public class SKObjectGroup: SKTiledLayerObject {
             }
         }
     }
-
+    
     /**
      Returns an array of object names.
-
+     
      - returns: `[String]` object names in the layer.
      */
     public func objectNames() -> [String] {
         return objects.compactMap { $0.name }
     }
-
+    
     /**
      Returns an object with the given id.
-
+     
      - parameter id: `Int` Object id.
      - returns: `SKTileObject?`
      */
@@ -336,79 +336,79 @@ public class SKObjectGroup: SKTiledLayerObject {
         }
         return nil
     }
-
+    
     /**
      Return text objects with matching text.
-
+     
      - parameter withText: `String` text string to match.
      - returns: `[SKTileObject]` array of matching objects.
      */
     public func getObjects(withText text: String) -> [SKTileObject] {
         return getObjects().filter { $0.text != nil }.filter { $0.text! == text }
     }
-
+    
     /**
      Return objects with the given name.
-
+     
      - parameter named: `String` Object name.
      - returns: `[SKTileObject]` array of matching objects.
      */
     public func getObjects(named: String) -> [SKTileObject] {
         return getObjects().filter { $0.name != nil }.filter { $0.name! == named }
     }
-
+    
     /**
      Return all child objects.
-
+     
      - returns: `[SKTileObject]` array of matching objects.
      */
     public func getObjects() -> [SKTileObject] {
         return Array(objects)
     }
-
+    
     /**
      Return objects of a given type.
-
+     
      - parameter type: `String` object type.
      - returns: `[SKTileObject]` array of matching objects.
      */
     public func getObjects(ofType: String) -> [SKTileObject] {
         return getObjects().filter { $0.type != nil }.filter { $0.type! == ofType }
     }
-
+    
     /**
      Return object proxies.
-
+     
      - returns: `[TileObjectProxy]` array of object proxies.
      */
     internal func getObjectProxies() -> [TileObjectProxy] {
         return objects.compactMap { $0.proxy }
     }
-
+    
     // MARK: - Tile Objects
-
+    
     /**
      Return tile objects.
-
+     
      - returns: `[SKTileObject]` objects with a tile gid.
      */
     public func tileObjects() -> [SKTileObject] {
         return objects.filter { $0.gid != nil }
     }
-
+    
     /**
      Return tile object(s) matching the given global id.
-
+     
      - parameter globalID:    `Int` global id to query.
      - returns: `SKTileObject?` removed object.
      */
     public func tileObjects(globalID: Int) -> [SKTileObject] {
         return objects.filter { $0.gid == globalID }
     }
-
+    
     /**
      Create and add a tile object with the given tile data.
-
+     
      - parameter data: SKTilesetData` tile data.
      - returns: `SKTileObject` created tile object.
      */
@@ -423,28 +423,28 @@ public class SKObjectGroup: SKTiledLayerObject {
         object.draw()
         return object
     }
-
+    
     // MARK: - Text Objects
-
+    
     /**
      Return text objects.
-
+     
      - returns: `[SKTileObject]` text objects.
      */
     public func textObjects() -> [SKTileObject] {
         return objects.filter { $0.textAttributes != nil }
     }
-
+    
     // MARK: - Callbacks
-
+    
     /**
      Called when the layer is finished rendering.
-
+     
      - parameter duration: `TimeInterval` fade-in duration.
      */
     override public func didFinishRendering(duration: TimeInterval = 0) {
         super.didFinishRendering(duration: duration)
-
+        
         // setup dynamics for objects.
         objects.forEach {
             if ($0.boolForKey("isDynamic") == true) || ($0.boolForKey("isCollider") == true) {
@@ -452,9 +452,9 @@ public class SKObjectGroup: SKTiledLayerObject {
             }
         }
     }
-
+    
     // MARK: - Updating: Object Group
-
+    
     /**
      Run animation actions on all tile objects.
      */
@@ -463,31 +463,31 @@ public class SKObjectGroup: SKTiledLayerObject {
         let animatedObjects = getObjects().filter { $0.isAnimated == true }
         animatedObjects.forEach { $0.tile?.runAnimationAsActions() }
     }
-
+    
     /**
      Remove tile object animation.
-
+     
      - parameter restore: `Bool` restore tile/obejct texture.
      */
     override public func removeAnimationActions(restore: Bool = false) {
         super.removeAnimationActions(restore: restore)
-
+        
         let animatedTiles = getObjects().filter { object in
             if let tile = object.tile {
                 return tile.tileData.isAnimated == true
             }
             return false
         }
-
+        
         animatedTiles.forEach { object in
             object.tile!.removeAnimationActions(restore: restore)
         }
     }
-
+    
     // MARK: - Updating
     /**
      Update the object group before each frame is rendered.
-
+     
      - parameter currentTime: `TimeInterval` update interval.
      */
     override public func update(_ currentTime: TimeInterval) {

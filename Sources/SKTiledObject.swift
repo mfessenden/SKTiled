@@ -106,7 +106,7 @@ extension SKTiledObject {
      
      ```swift
      if let name = tileData["name"] {
-        print("tile data is named \"\(name)\"")
+     print("tile data is named \"\(name)\"")
      }
      ```
      
@@ -287,7 +287,7 @@ extension SKTiledObject {
             return existingPair.value.components(separatedBy: ",").map {
                 $0.trimmingCharacters(in: CharacterSet.whitespaces)}.compactMap {
                     Int($0)
-            }
+                }
         }
         return [Int]()
     }
@@ -304,7 +304,7 @@ extension SKTiledObject {
             return existingPair.value.components(separatedBy: ",").map {
                 $0.trimmingCharacters(in: CharacterSet.whitespaces)}.compactMap {
                     Double($0)
-            }
+                }
         }
         return [Double]()
     }

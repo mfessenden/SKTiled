@@ -35,50 +35,50 @@ import Cocoa
 
 
 /**
-
+ 
  ## Overview
-
+ 
  The `SKImageLayer` object is really nothing more than a sprite with positioning attributes.
-
+ 
  ### Properties
-
+ 
  | Property | Description        |
  |:---------|:-------------------|
  | image    | Layer image name.  |
  | wrapX    | Wrap horizontally. |
  | wrapY    | Wrap vertically.   |
-
-
+ 
+ 
  ### Methods ###
-
+ 
  | Method          | Description              |
  |:----------------|:-------------------------|
  | setLayerImage   | Set the layer's image.   |
  | setLayerTexture | Set the layer's texture. |
  | wrapY           | Wrap vertically.         |
-
+ 
  ### Usage
-
+ 
  Set the layer image with:
-
+ 
  ```swift
  imageLayer.setLayerImage("clouds-background")
  ```
  */
 public class SKImageLayer: SKTiledLayerObject {
-
+    
     public var image: String!                       // image name for layer
     private var textures: [SKTexture] = []          // texture values
     private var sprite: SKSpriteNode?               // sprite
-
+    
     public var wrapX: Bool = false                  // wrap horizontally
     public var wrapY: Bool = false                  // wrap vertically
-
+    
     // MARK: - Init
-
+    
     /**
      Initialize with a layer name, and parent `SKTilemap` node.
-
+     
      - parameter layerName: `String` image layer name.
      - parameter tilemap:   `SKTilemap` parent map.
      */
@@ -86,12 +86,12 @@ public class SKImageLayer: SKTiledLayerObject {
         super.init(layerName: layerName, tilemap: tilemap)
         self.layerType = .image
     }
-
+    
     /**
      Initialize with parent `SKTilemap` and layer attributes.
-
+     
      **Do not use this intializer directly**
-
+     
      - parameter tilemap:      `SKTilemap` parent map.
      - parameter attributes:   `[String: String]` layer attributes.
      */
@@ -100,38 +100,38 @@ public class SKImageLayer: SKTiledLayerObject {
         super.init(layerName: layerName, tilemap: tilemap, attributes: attributes)
         self.layerType = .image
     }
-
+    
     /**
      Set the layer image as a sprite.
-
+     
      - parameter named: `String` image name.
      */
     public func setLayerImage(_ named: String) {
         self.image = named
-
+        
         let texture = addTexture(imageNamed: named)
         let textureSize = texture.size()
-
+        
         self.sprite = SKSpriteNode(texture: texture)
         addChild(self.sprite!)
-
+        
         self.sprite!.position.x += textureSize.width / 2
         self.sprite!.position.y -= textureSize.height / 2.0
     }
-
+    
     /**
      Update the layer texture.
-
+     
      - parameter texture: `SKTexture` layer image texture.
      */
     public func setLayerTexture(texture: SKTexture) {
         self.sprite = SKSpriteNode(texture: texture)
         addChild(self.sprite!)
     }
-
+    
     /**
      Set the layer texture with an image name.
-
+     
      - parameter imageNamed: `String` image name.
      - returns: `SKTexture` texture added.
      */
@@ -144,23 +144,23 @@ public class SKImageLayer: SKTiledLayerObject {
         }
         // creare a data provider
         let image = CGImage(pngDataProviderSource: imageDataProvider, decode: nil, shouldInterpolate: false, intent: .defaultIntent)!
-
+        
         // create the texture
         let sourceTexture = SKTexture(cgImage: image)
         sourceTexture.filteringMode = .nearest
         textures.append(sourceTexture)
         return sourceTexture
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     // MARK: - Updating: Image Layer
-
+    
     /**
      Update the image layer before each frame is rendered.
-
+     
      - parameter currentTime: `TimeInterval` update interval.
      */
     override public func update(_ currentTime: TimeInterval) {

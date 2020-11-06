@@ -31,19 +31,19 @@ import GameplayKit
 
 /**
  ## Overview
-
+ 
  Methods that allow interaction with an `SKTilemap` object as it is being created to customize its properties.
-
+ 
  ### Properties
-
+ 
  | Property           | Description                        |
  |:-------------------|:-----------------------------------|
  | zDeltaForLayers    | Default z-distance between layers. |
-
+ 
  ### Instance Methods ###
-
+ 
  Delegate callbacks are called asynchronously as the map is being read from disk and rendered:
-
+ 
  | Method                | Description                                                      |
  |:----------------------|:-----------------------------------------------------------------|
  | didBeginParsing       | Called when the tilemap is instantiated.                         |
@@ -55,16 +55,16 @@ import GameplayKit
  | objectForTileType     | Specify a custom tile object for use in tile layers.             |
  | objectForVectorType   | Specify a custom object for use in object groups.                |
  | objectForGraphType    | Specify a custom graph node object for use in navigation graphs. |
-
+ 
  ### Custom Objects ###
-
+ 
  Custom object methods can be used to substitute your own objects for tiles:
-
+ 
  ```swift
  func objectForTileType(named: String? = nil) -> SKTile.Type {
-    if (named == "MyTile") {
+     if (named == "MyTile") {
         return MyTile.self
-    }
+     }
     return SKTile.self
  }
  ```

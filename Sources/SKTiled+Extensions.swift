@@ -901,15 +901,11 @@ extension SKColor {
         getRed(&r, green: &g, blue: &b, alpha: &a)
         return GLKVector4(v: (Float(r), Float(g), Float(b), Float(a)))
     }
-
+    
     /// Returns the color represented as a `vector_float4` instance.
-    ///
-    /// - Returns: color as a `vector_float4`.
     public var toVec4: vector_float4 {
-        let count = MemoryLayout<CGFloat>.size
-        var mutableComponents = self.components
-        let arrcomps = [CGFloat](UnsafeBufferPointer(start: &mutableComponents.0, count: MemoryLayout.size(ofValue: mutableComponents) / count))
-        return vector_float4(arrcomps.map { Float($0) })
+        let comps = components
+        return vector_float4([comps.r, comps.g, comps.b, comps.a].map { Float($0) })
     }
 }
 

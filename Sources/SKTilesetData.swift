@@ -474,7 +474,7 @@ extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
             sourceString = sourceURL.relativeString
         }
         let framesString = (isAnimated == true) ? ", \(frames.count) frames" : ""
-        let idValue = localID  // globalID
+        let idValue = id
         let dataString = (properties.isEmpty == false) ? "Tile ID: \(idValue)\(typeString)\(sourceString) @ \(tileset.tileSize.shortDescription)\(framesString), "
             : "Tile ID: \(idValue)\(typeString) @ \(tileset.tileSize.shortDescription)\(framesString)"
 
