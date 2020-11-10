@@ -24,7 +24,7 @@
         <a class="header-link" href="index.html">
           SKTiled 1.3 Docs
         </a>
-         (88% documented)
+         (89% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -108,25 +108,22 @@
                 <a class="nav-group-task-link" href="Protocols/TiledObjectType.html">TiledObjectType</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/TiledEventHandler.html">TiledEventHandler</a>
+                <a class="nav-group-task-link" href="Protocols/TilemapDelegate.html">TilemapDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a>
+                <a class="nav-group-task-link" href="Protocols/TiledSceneDelegate.html">TiledSceneDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
+                <a class="nav-group-task-link" href="Protocols/TiledSceneCameraDelegate.html">TiledSceneCameraDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/SKTiledSceneCameraDelegate.html">SKTiledSceneCameraDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a>
+                <a class="nav-group-task-link" href="Protocols/TilesetDataSource.html">TilesetDataSource</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/DebugDrawableType.html">DebugDrawableType</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/TiledRenderableType.html">TiledRenderableType</a>
+                <a class="nav-group-task-link" href="Protocols/TiledMappableType.html">TiledMappableType</a>
               </li>
             </ul>
           </li>
@@ -258,14 +255,15 @@
             <h1 id='setting-up-your-scenes' class='heading'>Setting Up Your Scenes</h1>
 
 <ul>
-<li><a href="#sktilemapdelegate-protocol"><code><a href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></code> Protocol</a>
+<li><a href="#tiled-content-in-spritekit">Tiled Content in SpriteKit</a>
 
 <ul>
+<li><a href="tilemapdelegate-protocol"><code><a href="Protocols/TilemapDelegate.html">TilemapDelegate</a></code> Protocol</a></li>
 <li><a href="#scene-setup">Scene Setup</a></li>
 <li><a href="#custom-tile-objects">Custom Tile Objects</a></li>
 </ul></li>
-<li><a href="#sktilesetdatasource-protocol"><code><a href="Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a></code> Protocol</a></li>
-<li><a href="#sktiledscenedelegate-protocol"><code><a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a></code> Protocol</a>
+<li><a href="#sktilesetdatasource-protocol"><code><a href="Protocols/TilesetDataSource.html">TilesetDataSource</a></code> Protocol</a></li>
+<li><a href="#tiledscenedelegate-protocol"><code><a href="Protocols/TiledSceneDelegate.html">TiledSceneDelegate</a></code> Protocol</a>
 
 <ul>
 <li><a href="#tiled-scene-camera">Tiled Scene Camera</a>
@@ -278,12 +276,27 @@
 </ul>
 
 <p>Using Tiled assets in your projects is very straightforward with <strong>SKTiled</strong>. There are several tools included that allow you to easily access and customize content for your game.</p>
-<h2 id='sktilemapdelegate-protocol' class='heading'>SKTilemapDelegate Protocol</h2>
+<h2 id='tiled-content-in-spritekit' class='heading'>Tiled Content in SpriteKit</h2>
 
-<p>The <code><a href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></code> protocol is provided to allow you to access (and change) your content as it is being created. It is recommended that your SpriteKit scenes conform to this protocol.</p>
+<p>Getting Tiled content into SpriteKit is a breeze!</p>
+
+<p>Simply setup your view controller and scene as you would normally, and add a tilemap to your scene via the <code>SKScene.load(tmxFile:)</code> method (included as an extension):</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">scene</span> <span class="o">=</span> <span class="kt">SKScene</span><span class="p">(</span><span class="nv">size</span><span class="p">:</span> <span class="n">skView</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="n">scene</span><span class="o">.</span><span class="n">scaleMode</span> <span class="o">=</span> <span class="o">.</span><span class="n">aspectFill</span>
+<span class="n">skView</span><span class="o">.</span><span class="nf">presentScene</span><span class="p">(</span><span class="n">scene</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="s">"map1"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">scene</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id='tilemapdelegate-protocol' class='heading'>TilemapDelegate Protocol</h3>
+
+<p>The <code><a href="Protocols/TilemapDelegate.html">TilemapDelegate</a></code> protocol is provided to allow you to easily access (and modify) your content even as it is being created. As the protocol methods are all optional, you only have to implement the controls you need. It is recommended that your SpriteKit scenes conform to this protocol.</p>
+<pre class="highlight swift"><code><span class="kd">extension</span>  <span class="kt">SKScene</span><span class="p">:</span> <span class="kt">TilemapDelegate</span> <span class="p">{}</span>
+</code></pre>
 
 <p>In addition to the optional callback methods, the protocol allows you to substitute your own classes for the default <strong>tile</strong>, <strong>vector</strong> and <strong>pathfinding</strong> objects.</p>
-<pre class="highlight swift"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">SKTilemapDelegate</span><span class="p">:</span> <span class="kt">TiledEventHandler</span> <span class="p">{</span>
+<pre class="highlight swift"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TilemapDelegate</span><span class="p">:</span> <span class="kt">TiledEventHandler</span> <span class="p">{</span>
 
     <span class="c1">/// Determines the z-position difference between layers.</span>
     <span class="kd">@objc</span> <span class="kd">optional</span> <span class="k">var</span> <span class="nv">zDeltaForLayers</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
@@ -364,9 +377,7 @@
 </code></pre>
 <h3 id='scene-setup' class='heading'>Scene Setup</h3>
 
-<p>Setting up scenes is straightforward. Tile maps should be loaded during the <a href="https://developer.apple.com/documentation/spritekit/skscene/1519607-didmove"><code>SKScene.didMove(to:)</code></a> method, and updated during the <a href="https://developer.apple.com/documentation/spritekit/skscene/1519802-update"><code>SKScene.update(_:)</code></a> method.</p>
-
-<p>Note: if you choose to render your maps with <strong>SpriteKit actions</strong>, you can forgo adding the <code><a href="Classes/SKTilemap.html">SKTilemap</a></code> node to the scene&rsquo;s update method.</p>
+<p>Setting up scenes is straightforward. Tile maps should be loaded during the <a href="https://developer.apple.com/documentation/spritekit/skscene/1519607-didmove"><code>SKScene.didMove(to:)</code></a> method, and updated during the <a href="https://developer.apple.com/documentation/spritekit/skscene/1519802-update"><code>SKScene.update(_:)</code></a> method (if you choose to render your maps with <strong>SpriteKit actions</strong>, you can forgo adding the <code><a href="Classes/SKTilemap.html">SKTilemap</a></code> node to the scene&rsquo;s update method).</p>
 
 <p>A basic scene setup could be as simple as:</p>
 <pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">GameScene</span><span class="p">:</span> <span class="kt">SKScene</span> <span class="p">{</span>
@@ -391,8 +402,8 @@
 <span class="p">}</span>
 </code></pre>
 
-<p>If you choose to implement the <strong><code><a href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></code></strong> protocol, you can utilize as many callback methods as you see fit (they are optional):</p>
-<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">GameScene</span><span class="p">:</span> <span class="kt">SKScene</span><span class="p">,</span> <span class="kt">SKTilemapDelegate</span> <span class="p">{</span>
+<p>If you choose to implement the <strong><code><a href="Protocols/TilemapDelegate.html">TilemapDelegate</a></code></strong> protocol, you can utilize as many of the optional callback methods as you see fit. You&rsquo;ll need to specify the tilemap&rsquo;s delegate at creation:</p>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">GameScene</span><span class="p">:</span> <span class="kt">SKScene</span><span class="p">,</span> <span class="kt">TilemapDelegate</span> <span class="p">{</span>
 
     <span class="k">var</span> <span class="nv">tilemap</span><span class="p">:</span> <span class="kt">SKTilemap</span><span class="p">?</span>
 
@@ -424,7 +435,7 @@
 <h3 id='custom-tile-objects' class='heading'>Custom Tile Objects</h3>
 
 <p>It is possible to use your own custom tile sprite objects in your projects. Subclass the built-in <code><a href="Classes/SKTile.html">SKTile</a></code> object and make it available in your scenes allows you to use different tile type for different scenes.</p>
-<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">MainMenuScene</span><span class="p">:</span> <span class="kt">SKScene</span><span class="p">,</span> <span class="kt">SKTilemapDelegate</span> <span class="p">{</span>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">MainMenuScene</span><span class="p">:</span> <span class="kt">SKScene</span><span class="p">,</span> <span class="kt">TilemapDelegate</span> <span class="p">{</span>
 
     <span class="c1">/// use a custom tile type for the main menu</span>
     <span class="kd">func</span> <span class="nf">objectForTile</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">SKTile</span><span class="o">.</span><span class="k">Type</span> <span class="p">{</span>
@@ -434,12 +445,10 @@
 </code></pre>
 
 <p>See the <a href="extending.html"><strong>Extending</strong></a> section for more details.</p>
-<h2 id='sktilesetdatasource-protocol' class='heading'>SKTilesetDataSource Protocol</h2>
+<h2 id='tilesetdatasource-protocol' class='heading'>TilesetDataSource Protocol</h2>
 
-<p>The <code><a href="Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a></code> protocol is new as of <strong>SKTiled 1.20</strong>. Objects conforming to this protocol can specify alternate attributes for a tileset as it is being created.</p>
-
-<p>For example, you can change the spritesheet image name of a tileset before the source file is loaded:</p>
-<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">SceneManager</span><span class="p">:</span> <span class="kt">SKTilesetDataSource</span> <span class="p">{</span>
+<p>The <code><a href="Protocols/TilesetDataSource.html">TilesetDataSource</a></code> protocol is new as of <strong>SKTiled 1.20</strong>. Objects conforming to this protocol can specify alternate attributes for a tileset as it is being parsed. For example, you can change the spritesheet image name of a tileset before the source file is loaded:</p>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">SceneManager</span><span class="p">:</span> <span class="kt">TilesetDataSource</span> <span class="p">{</span>
     <span class="kd">func</span> <span class="nf">willAddSpriteSheet</span><span class="p">(</span><span class="n">to</span> <span class="nv">tileset</span><span class="p">:</span> <span class="kt">SKTileset</span><span class="p">,</span> <span class="nv">fileNamed</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="p">{</span>
         <span class="k">if</span> <span class="k">let</span> <span class="nv">spritesheetForGameResolution</span> <span class="o">=</span> <span class="n">tileset</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">gameResolution</span><span class="o">.</span><span class="n">rawValue</span><span class="p">]</span> <span class="p">{</span>
             <span class="k">return</span> <span class="n">spritesheetForGameResolution</span>
@@ -450,14 +459,12 @@
 </code></pre>
 
 <p>You&rsquo;ll need to make certain that the image you substitute has the same dimensions &amp; layout as the image you are swapping it out for; the tileset will still retain the size and tile count properties defined in <strong>Tiled</strong>.</p>
-<h2 id='sktiledscenedelegate-protocol' class='heading'>SKTiledSceneDelegate Protocol</h2>
+<h2 id='tiledscenedelegate-protocol' class='heading'>TiledSceneDelegate Protocol</h2>
 
-<p><img src="images/project-targets.png" alt="Project Targets"></p>
-
-<p>The included demo scene conforms to the <code><a href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a></code> protocol. This protocol outlines a standard SpriteKit game scene implementation with a camera that can interact with your tilemap. The included <code><a href="Classes/SKTiledScene.html">SKTiledScene</a></code> class conforms to this protocol and can serve as a template, though you are free to implement your own setups.</p>
+<p>The included demo scene conforms to the <code><a href="Protocols/TiledSceneDelegate.html">TiledSceneDelegate</a></code> protocol. This protocol outlines a standard SpriteKit game scene implementation with a camera that can interact with your tilemap. The included <code><a href="Classes/SKTiledScene.html">SKTiledScene</a></code> class conforms to this protocol and can serve as a template, though you are free to implement your own setups.</p>
 
 <p><img src="images/scene-hierarchy.svg" alt="Scene Hierarchy"></p>
-<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">SKTiledSceneDelegate</span><span class="p">:</span> <span class="kd">class</span> <span class="p">{</span>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TiledSceneDelegate</span><span class="p">:</span> <span class="kd">class</span> <span class="p">{</span>
 
     <span class="c1">/// Root container node. Tiled assets are parented to this node.</span>
     <span class="k">var</span> <span class="nv">worldNode</span><span class="p">:</span> <span class="kt">SKNode</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span>
@@ -476,7 +483,7 @@
 <span class="p">}</span>
 </code></pre>
 
-<p>The tilemap is parented to a world container node, which interacts with the included <code><a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a></code> object which allows you to easily navigate the scene with mouse &amp; touch events, as well as exchanging data with the scene and tilemaps. The world node is set to 0,0 in the scene by default.</p>
+<p>The tilemap is parented to a world container node, which interacts with the included <code><a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a></code> object and allows you to easily navigate the scene with mouse &amp; touch events, as well as exchanging data with the scene and tilemaps. The world node is set to 0,0 in the scene by default.</p>
 
 <p>Calling the class method <a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC4loadACSgSS7tmxFile_SSSg11inDirectoryAA0B8Delegate_pSg8delegateSayAA9SKTilesetCGSg12withTilesetsSb16ignorePropertiesAA12LoggingLevelO07loggingP0tFZ"><code><a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC4load7tmxFileACSgSS_tFZ">SKTilemap.load(tmxFile:)</a></code></a> will initialize a parser to read the file name given.</p>
 
@@ -485,7 +492,7 @@
 
 <p><img src="images/camera-delegate.svg" alt="Camera Delegates"></p>
 
-<p>The <code><a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a></code> node is a custom <a href="https://developer.apple.com/documentation/spritekit/skcameranode">SpriteKit camera</a> that interacts with the your scene and any loaded tilemaps. To allow other objects to be notified of camera changes, you need to conform them to the <code><a href="Protocols/SKTiledSceneCameraDelegate.html">SKTiledSceneCameraDelegate</a></code> protocol. With this, you will want to implement the following methods:</p>
+<p>The <code><a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a></code> node is a custom <a href="https://developer.apple.com/documentation/spritekit/skcameranode">SpriteKit camera</a> that interacts with the your scene and any loaded tilemaps. To allow other objects to be notified of camera changes, you need to conform them to the <code><a href="Protocols/TiledSceneCameraDelegate.html">TiledSceneCameraDelegate</a></code> protocol. With this, you will want to implement the following methods:</p>
 <pre class="highlight swift"><code><span class="c1">// all platforms</span>
 <span class="kd">func</span> <span class="nf">cameraPositionChanged</span><span class="p">(</span><span class="nv">newPosition</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">)</span>
 <span class="kd">func</span> <span class="nf">cameraZoomChanged</span><span class="p">(</span><span class="nv">newZoom</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">)</span>
@@ -495,15 +502,18 @@
 <span class="kd">func</span> <span class="nf">sceneDoubleTapped</span><span class="p">(</span><span class="nv">location</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">)</span>
 
 <span class="c1">// macOS only</span>
+<span class="kd">func</span> <span class="nf">sceneClicked</span><span class="p">(</span><span class="nv">event</span><span class="p">:</span> <span class="kt">NSEvent</span><span class="p">)</span>
+<span class="kd">func</span> <span class="nf">sceneRightClicked</span><span class="p">(</span><span class="nv">event</span><span class="p">:</span> <span class="kt">NSEvent</span><span class="p">)</span>
 <span class="kd">func</span> <span class="nf">sceneDoubleClicked</span><span class="p">(</span><span class="nv">event</span><span class="p">:</span> <span class="kt">NSEvent</span><span class="p">)</span>
 <span class="kd">func</span> <span class="nf">mousePositionChanged</span><span class="p">(</span><span class="nv">event</span><span class="p">:</span> <span class="kt">NSEvent</span><span class="p">)</span>
+
 </code></pre>
 
 <p>The methods are all optional, so only create methods for the functions you need. For macOS games, be sure to set the <a href="https://developer.apple.com/documentation/appkit/nswindow/1419340-acceptsmousemovedevents"><code>NSWindow.acceptsMouseEvents</code></a> property to <code>true</code>.</p>
 <h4 id='adding-delegates' class='heading'>Adding Delegates</h4>
 
 <p>To add your objects as camera delegates, implement the delegate methods you need and add them to the camera&rsquo;s <a href="Classes/SKTiledSceneCamera.html#addDelegate">delegates</a> property:</p>
-<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Marker</span><span class="p">:</span> <span class="kt">SKTiledSceneCameraDelegate</span> <span class="p">{</span>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Marker</span><span class="p">:</span> <span class="kt">TiledSceneCameraDelegate</span> <span class="p">{</span>
     <span class="kd">func</span> <span class="nf">cameraZoomChanged</span><span class="p">(</span><span class="nv">newZoom</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">newZoom</span> <span class="o">&lt;=</span> <span class="n">minZoom</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">self</span><span class="o">.</span><span class="nf">redraw</span><span class="p">(</span><span class="nv">zoom</span><span class="p">:</span> <span class="n">minZoom</span><span class="p">)</span>
@@ -525,6 +535,10 @@
 <p><img src="images/demo-load-external.svg" alt="Loading External"></p>
 
 <p>Next: <a href="working-with-maps.html">Working with Maps</a> - <a href="Documentation.html">Index</a></p>
+
+<p>[skscene-load-url]:</p>
+
+<!-- // TODO: fix this -->
 
           </div>
         </section>

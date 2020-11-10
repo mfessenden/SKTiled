@@ -24,7 +24,7 @@
         <a class="header-link" href="index.html">
           SKTiled 1.3 Docs
         </a>
-         (88% documented)
+         (89% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -108,25 +108,22 @@
                 <a class="nav-group-task-link" href="Protocols/TiledObjectType.html">TiledObjectType</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/TiledEventHandler.html">TiledEventHandler</a>
+                <a class="nav-group-task-link" href="Protocols/TilemapDelegate.html">TilemapDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a>
+                <a class="nav-group-task-link" href="Protocols/TiledSceneDelegate.html">TiledSceneDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
+                <a class="nav-group-task-link" href="Protocols/TiledSceneCameraDelegate.html">TiledSceneCameraDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/SKTiledSceneCameraDelegate.html">SKTiledSceneCameraDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a>
+                <a class="nav-group-task-link" href="Protocols/TilesetDataSource.html">TilesetDataSource</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/DebugDrawableType.html">DebugDrawableType</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/TiledRenderableType.html">TiledRenderableType</a>
+                <a class="nav-group-task-link" href="Protocols/TiledMappableType.html">TiledMappableType</a>
               </li>
             </ul>
           </li>
@@ -280,7 +277,7 @@
 <span class="k">let</span> <span class="nv">allWallLayers</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getLayers</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="s">"walls"</span><span class="p">)</span>
 </code></pre>
 
-<p>If you need to access a layer <em>before</em> it is rendered, implement the <code><a href="Protocols/SKTilemapDelegate.html#/c:@M@SKTiled@objc(pl)SKTilemapDelegate(im)didAddLayer:">SKTilemapDelegate.didAddLayer(_:)</a></code> method. See the <a href="scenes.html#sktilemapdelegate-protocol"><strong>Setting Up Your Scenes</strong></a> page for more details.</p>
+<p>If you need to access a layer <em>before</em> it is rendered, implement the <code><a href="Protocols/TilemapDelegate.html#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddLayer:">TilemapDelegate.didAddLayer(_:)</a></code> method. See the <a href="scenes.html#tilemapdelegate-protocol"><strong>Setting Up Your Scenes</strong></a> page for more details.</p>
 <h2 id='parents-amp-children' class='heading'>Parents &amp; Children</h2>
 
 <p>The layers&rsquo; hierarchy reflects the grouping set up in <strong>Tiled</strong>. To access a layers&rsquo; parents, call the <code><a href="Classes/SKTiledLayerObject.html#/s:7SKTiled0A11LayerObjectC7parentsSaySo6SKNodeCGvp">SKTiledLayerObject.parents</a></code> attribute:</p>

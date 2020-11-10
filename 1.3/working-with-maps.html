@@ -24,7 +24,7 @@
         <a class="header-link" href="index.html">
           SKTiled 1.3 Docs
         </a>
-         (88% documented)
+         (89% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -108,25 +108,22 @@
                 <a class="nav-group-task-link" href="Protocols/TiledObjectType.html">TiledObjectType</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/TiledEventHandler.html">TiledEventHandler</a>
+                <a class="nav-group-task-link" href="Protocols/TilemapDelegate.html">TilemapDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a>
+                <a class="nav-group-task-link" href="Protocols/TiledSceneDelegate.html">TiledSceneDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
+                <a class="nav-group-task-link" href="Protocols/TiledSceneCameraDelegate.html">TiledSceneCameraDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/SKTiledSceneCameraDelegate.html">SKTiledSceneCameraDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a>
+                <a class="nav-group-task-link" href="Protocols/TilesetDataSource.html">TilesetDataSource</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/DebugDrawableType.html">DebugDrawableType</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/TiledRenderableType.html">TiledRenderableType</a>
+                <a class="nav-group-task-link" href="Protocols/TiledMappableType.html">TiledMappableType</a>
               </li>
             </ul>
           </li>
@@ -289,15 +286,15 @@
 </ul>
 <h2 id='loading-a-tilemap' class='heading'>Loading a Tilemap</h2>
 
-<p>Creating a tilemap node is very straightforward; simply call the <code><a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC4load7tmxFileACSgSS_tFZ">SKTilemap.load(tmxFile:)</a></code> function to read a Tiled tmx file from disk:</p>
+<p>Creating a tilemap node is very straightforward; simply call the <a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC4loadACSgSS7tmxFile_SSSg11inDirectoryAA0B8Delegate_pSg8delegateSayAA9SKTilesetCGSg12withTilesetsSb16ignorePropertiesAA12LoggingLevelO07loggingP0tFZ"><code><a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC4load7tmxFileACSgSS_tFZ">SKTilemap.load(tmxFile:)</a></code></a> function to read a Tiled tmx file from disk:</p>
 <pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="s">"MyTilemap.tmx"</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">worldNode</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre>
 
-<p>If you are implementing the <code><a href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></code> and <code><a href="Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a></code> protocols, you can optionally specify those when you load the tilemap:</p>
+<p>If you are implementing the <code><a href="Protocols/TilemapDelegate.html">TilemapDelegate</a></code> and <code>SKTilesetDataSource</code> protocols, you can optionally specify those when you load the tilemap:</p>
 <pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="n">tmxFile</span><span class="p">,</span>
-                                <span class="nv">delegate</span><span class="p">:</span> <span class="k">self</span> <span class="k">as?</span> <span class="kt">SKTilemapDelegate</span><span class="p">,</span>
+                                <span class="nv">delegate</span><span class="p">:</span> <span class="k">self</span> <span class="k">as?</span> <span class="kt">TilemapDelegate</span><span class="p">,</span>
                                 <span class="nv">tilesetDataSource</span><span class="p">:</span> <span class="k">self</span> <span class="k">as?</span> <span class="kt">SKTilesetDataSource</span><span class="p">)</span> <span class="p">{</span>
 
     <span class="n">worldNode</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
@@ -396,8 +393,8 @@
 
 <p>Tile update mode can be passed as an argument to the load method, or set later:</p>
 <pre class="highlight swift"><code><span class="c1">// tilemap will update only animated tiles</span>
-<span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="s">"MyTilemap.tmx"</span><span class="p">,</span> 
-                                    <span class="nv">delegate</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span> 
+<span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="s">"MyTilemap.tmx"</span><span class="p">,</span>
+                                    <span class="nv">delegate</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span>
                                     <span class="nv">updateMode</span><span class="p">:</span> <span class="kt">TileUpdateMode</span><span class="o">.</span><span class="kd">dynamic</span><span class="p">)</span> <span class="p">{</span>
 
 

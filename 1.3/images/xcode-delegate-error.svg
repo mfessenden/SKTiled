@@ -10,7 +10,7 @@
                 <path d="M5,6 L5,7 L4,7 L4,6 L5,6 Z M5,2 L5,5 L4,5 L4,2 L5,2 Z" id="Exclamation" fill="#FFF3F3"></path>
             </g>
             <text id="Error-Text" font-family="Helvetica" font-size="12" font-weight="normal" line-spacing="15" letter-spacing="0.0625" fill="#FFFFFF">
-                <tspan x="28.5" y="13">Type ‘BaseScene’ does not conform to protocol ‘SKTilemapDelegate’</tspan>
+                <tspan x="28.5" y="13">Type ‘BaseScene’ does not conform to protocol ‘TilemapDelegate’</tspan>
             </text>
         </g>
     </g>

@@ -25,7 +25,7 @@
         <a class="header-link" href="../index.html">
           SKTiled 1.3 Docs
         </a>
-         (88% documented)
+         (89% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -109,25 +109,22 @@
                 <a class="nav-group-task-link" href="../Protocols/TiledObjectType.html">TiledObjectType</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/TiledEventHandler.html">TiledEventHandler</a>
+                <a class="nav-group-task-link" href="../Protocols/TilemapDelegate.html">TilemapDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a>
+                <a class="nav-group-task-link" href="../Protocols/TiledSceneDelegate.html">TiledSceneDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
+                <a class="nav-group-task-link" href="../Protocols/TiledSceneCameraDelegate.html">TiledSceneCameraDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/SKTiledSceneCameraDelegate.html">SKTiledSceneCameraDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a>
+                <a class="nav-group-task-link" href="../Protocols/TilesetDataSource.html">TilesetDataSource</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/DebugDrawableType.html">DebugDrawableType</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/TiledRenderableType.html">TiledRenderableType</a>
+                <a class="nav-group-task-link" href="../Protocols/TiledMappableType.html">TiledMappableType</a>
               </li>
             </ul>
           </li>
@@ -298,7 +295,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayerChunk.swift#L50">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayerChunk.swift#L41">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -328,7 +325,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayerChunk.swift#L56-L58">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayerChunk.swift#L47-L49">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -358,7 +355,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayerChunk.swift#L61-L63">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayerChunk.swift#L52-L54">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -419,7 +416,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayerChunk.swift#L70-L97">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayerChunk.swift#L61-L88">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -440,9 +437,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled16SKTileLayerChunkC03setC4Data_5debugSbSays6UInt32VG_SbtF"></a>
-                    <a name="//apple_ref/swift/Method/setLayerData(_:debug:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled16SKTileLayerChunkC03setC4Data_5debugSbSays6UInt32VG_SbtF">setLayerData(_:<wbr>debug:<wbr>)</a>
+                    <a name="/s:7SKTiled16SKTileLayerChunkC03setC4DataySbSays6UInt32VGF"></a>
+                    <a name="//apple_ref/swift/Method/setLayerData(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SKTiled16SKTileLayerChunkC03setC4DataySbSays6UInt32VGF">setLayerData(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -458,7 +455,7 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="nf">setLayerData</span><span class="p">(</span><span class="n">_</span> <span class="nv">data</span><span class="p">:</span> <span class="p">[</span><span class="kt">UInt32</span><span class="p">],</span> <span class="nv">debug</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">setLayerData</span><span class="p">(</span><span class="n">_</span> <span class="nv">data</span><span class="p">:</span> <span class="p">[</span><span class="kt">UInt32</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -478,18 +475,6 @@
                                 </div>
                               </td>
                             </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>debug</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>debug mode.</p>
-                                </div>
-                              </td>
-                            </tr>
                           </tbody>
                         </table>
                       </div>
@@ -498,7 +483,7 @@
                         <p>data was sucessfully added.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayerChunk.swift#L114-L147">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayerChunk.swift#L104-L139">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -564,7 +549,7 @@
                         <p>coordinate in chunk space.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayerChunk.swift#L260-L262">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayerChunk.swift#L252-L254">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -629,7 +614,7 @@
                         <p>coordinate is valid.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayerChunk.swift#L270-L272">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayerChunk.swift#L262-L264">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -694,7 +679,7 @@
                         <p>tile object, if it exists.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayerChunk.swift#L280-L289">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayerChunk.swift#L272-L281">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

@@ -25,7 +25,7 @@
         <a class="header-link" href="../index.html">
           SKTiled 1.3 Docs
         </a>
-         (88% documented)
+         (89% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -109,25 +109,22 @@
                 <a class="nav-group-task-link" href="../Protocols/TiledObjectType.html">TiledObjectType</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/TiledEventHandler.html">TiledEventHandler</a>
+                <a class="nav-group-task-link" href="../Protocols/TilemapDelegate.html">TilemapDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a>
+                <a class="nav-group-task-link" href="../Protocols/TiledSceneDelegate.html">TiledSceneDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
+                <a class="nav-group-task-link" href="../Protocols/TiledSceneCameraDelegate.html">TiledSceneCameraDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/SKTiledSceneCameraDelegate.html">SKTiledSceneCameraDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a>
+                <a class="nav-group-task-link" href="../Protocols/TilesetDataSource.html">TilesetDataSource</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/DebugDrawableType.html">DebugDrawableType</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/TiledRenderableType.html">TiledRenderableType</a>
+                <a class="nav-group-task-link" href="../Protocols/TiledMappableType.html">TiledMappableType</a>
               </li>
             </ul>
           </li>
@@ -249,6 +246,14 @@
               </li>
             </ul>
           </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Other%20Protocols.html">Other Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/TiledEventHandler.html">TiledEventHandler</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class="main-content">
@@ -265,43 +270,43 @@
               </div>
             <h2 id='overview' class='heading'>Overview</h2>
 
-<p>This protocol provides <em>optional</em> handlers for mouse (macOS) and touch (iOS) events.</p>
+<p>Methods that provide <em>optional</em> handlers for mouse (macOS) and touch (iOS) events.</p>
 <h3 id='instance-methods' class='heading'>Instance Methods</h3>
 
 <table><thead>
 <tr>
-<th style="text-align: left">Method</th>
+<th style="text-align: center">Method</th>
 <th style="text-align: left">Description</th>
 <th style="text-align: center">Platform</th>
 </tr>
 </thead><tbody>
 <tr>
-<td style="text-align: left"><code>mouseOverTileHandler</code></td>
-<td style="text-align: left">Custom tile mouse event handler.</td>
+<td style="text-align: center"><code>mouseOverTileHandler</code></td>
+<td style="text-align: left">Custom tile mouse over event handler.</td>
 <td style="text-align: center">macOS</td>
 </tr>
 <tr>
-<td style="text-align: left"><code>mouseOverObjectHandler</code></td>
-<td style="text-align: left">Custom object mouse event handler.</td>
+<td style="text-align: center"><code>mouseOverObjectHandler</code></td>
+<td style="text-align: left">Custom object mouse over event handler.</td>
 <td style="text-align: center">macOS</td>
 </tr>
 <tr>
-<td style="text-align: left"><code>tileClickedHandler</code></td>
-<td style="text-align: left">Custom tile mouse event handler.</td>
+<td style="text-align: center"><code>tileClickedHandler</code></td>
+<td style="text-align: left">Custom tile mouse click event handler.</td>
 <td style="text-align: center">macOS</td>
 </tr>
 <tr>
-<td style="text-align: left"><code>objectClickedHandler</code></td>
-<td style="text-align: left">Custom object mouse event handler.</td>
+<td style="text-align: center"><code>objectClickedHandler</code></td>
+<td style="text-align: left">Custom object mouse click event handler.</td>
 <td style="text-align: center">macOS</td>
 </tr>
 <tr>
-<td style="text-align: left"><code>tileTouchedHandler</code></td>
+<td style="text-align: center"><code>tileTouchedHandler</code></td>
 <td style="text-align: left">Custom tile touch event handler.</td>
 <td style="text-align: center">iOS</td>
 </tr>
 <tr>
-<td style="text-align: left"><code>objectTouchedHandler</code></td>
+<td style="text-align: center"><code>objectTouchedHandler</code></td>
 <td style="text-align: left">Custom object touch event handler.</td>
 <td style="text-align: center">iOS</td>
 </tr>
@@ -363,7 +368,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>tile type.</p>
+                                  <p>optional tile type.</p>
                                 </div>
                               </td>
                             </tr>
@@ -371,7 +376,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemapDelegate.swift#L270">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledEventHandler.swift#L63">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -379,9 +384,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TiledEventHandler(im)tileClickedHandlerWithGlobalID:ofType:"></a>
-                    <a name="//apple_ref/swift/Method/tileClickedHandler(globalID:ofType:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)tileClickedHandlerWithGlobalID:ofType:">tileClickedHandler(globalID:<wbr>ofType:<wbr>)</a>
+                    <a name="/c:@M@SKTiled@objc(pl)TiledEventHandler(im)tileClickedHandlerWithGlobalID:ofType:button:"></a>
+                    <a name="//apple_ref/swift/Method/tileClickedHandler(globalID:ofType:button:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)tileClickedHandlerWithGlobalID:ofType:button:">tileClickedHandler(globalID:<wbr>ofType:<wbr>button:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -397,7 +402,7 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">tileClickedHandler</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="kt">UInt32</span><span class="p">,</span> <span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">((</span><span class="kt"><a href="../Classes/SKTile.html">SKTile</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())?</span></code></pre>
+<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">tileClickedHandler</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="kt">UInt32</span><span class="p">,</span> <span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">button</span><span class="p">:</span> <span class="kt">UInt8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">((</span><span class="kt"><a href="../Classes/SKTile.html">SKTile</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())?</span></code></pre>
 
                         </div>
                       </div>
@@ -437,7 +442,19 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>tile type.</p>
+                                  <p>optional tile type.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>button</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>mouse button.</p>
                                 </div>
                               </td>
                             </tr>
@@ -445,7 +462,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemapDelegate.swift#L279">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledEventHandler.swift#L73">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -499,7 +516,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>object type.</p>
+                                  <p>optional object type.</p>
                                 </div>
                               </td>
                             </tr>
@@ -507,7 +524,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemapDelegate.swift#L287">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledEventHandler.swift#L81">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -515,9 +532,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TiledEventHandler(im)objectClickedHandlerWithID:ofType:"></a>
-                    <a name="//apple_ref/swift/Method/objectClickedHandler(withID:ofType:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)objectClickedHandlerWithID:ofType:">objectClickedHandler(withID:<wbr>ofType:<wbr>)</a>
+                    <a name="/c:@M@SKTiled@objc(pl)TiledEventHandler(im)objectClickedHandlerWithID:ofType:button:"></a>
+                    <a name="//apple_ref/swift/Method/objectClickedHandler(withID:ofType:button:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)objectClickedHandlerWithID:ofType:button:">objectClickedHandler(withID:<wbr>ofType:<wbr>button:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -533,7 +550,7 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">objectClickedHandler</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="kt">UInt32</span><span class="p">,</span> <span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">((</span><span class="kt"><a href="../Classes/SKTileObject.html">SKTileObject</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())?</span></code></pre>
+<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">objectClickedHandler</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="kt">UInt32</span><span class="p">,</span> <span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">button</span><span class="p">:</span> <span class="kt">UInt8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">((</span><span class="kt"><a href="../Classes/SKTileObject.html">SKTileObject</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())?</span></code></pre>
 
                         </div>
                       </div>
@@ -541,18 +558,6 @@
                         <h4>Parameters</h4>
                         <table class="graybox">
                           <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>clicks</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>number of mouse clicks required.</p>
-                                </div>
-                              </td>
-                            </tr>
                             <tr>
                               <td>
                                 <code>
@@ -573,7 +578,19 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>object type.</p>
+                                  <p>optional object type.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>button</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>mouse button.</p>
                                 </div>
                               </td>
                             </tr>
@@ -581,7 +598,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemapDelegate.swift#L296">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledEventHandler.swift#L90">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

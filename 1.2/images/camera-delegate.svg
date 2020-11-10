@@ -1,43 +1,123 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="900px" height="150px" viewBox="0 0 900 150" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
-    <title>camera-delegate</title>
-    <desc>Created with Sketch.</desc>
-    <g id="camera-delegate" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Arrow" transform="translate(566.000000, 54.000000)">
-            <polyline id="Shape" stroke="#000000" points="129.837325 25.2095178 140 21 129.837325 16.7904822"></polyline>
-            <line x1="0" y1="21" x2="140" y2="21" id="Shape" stroke="#000000"></line>
-            <text id="tap-location-in-map" fill="#000000" font-family="ArialMT, Arial" font-size="13" font-weight="normal">
-                <tspan x="14.9387207" y="12.5">tap location in map</tspan>
-            </text>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="478 581 893 81" width="893" height="81">
+  <defs>
+    <filter id="Shadow" filterUnits="userSpaceOnUse" x="388.7" y="572.9">
+      <feGaussianBlur in="SourceAlpha" result="blur" stdDeviation="1.308"/>
+      <feOffset in="blur" result="offset" dx="0" dy="2"/>
+      <feFlood flood-color="black" flood-opacity=".25" result="flood"/>
+      <feComposite in="flood" in2="offset" operator="in"/>
+    </filter>
+    <font-face font-family="PT Sans" font-size="13" panose-1="2 11 7 3 2 2 3 2 2 4" units-per-em="1000" underline-position="-75" underline-thickness="50" slope="0" x-height="500" cap-height="700" ascent="899.9939" descent="-276.00098" font-weight="700">
+      <font-face-src>
+        <font-face-name name="PTSans-Bold"/>
+      </font-face-src>
+    </font-face>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="StickArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 0 M 0 -3 L 8 0 L 0 3" fill="none" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <font-face font-family="Helvetica Neue" font-size="9" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.17 
+    <dc:date>2020-08-03 18:07:31 +0000</dc:date>
+  </metadata>
+  <g id="Camera_Delegate" stroke-dasharray="none" stroke="none" fill-opacity="1" stroke-opacity="1" fill="none">
+    <title>Camera Delegate</title>
+    <g id="Camera_Delegate: Layer 1">
+      <title>Layer 1</title>
+      <g id="Graphic_3_shadow" filter="url(#Shadow)">
+        <path d="M 484.625 583.875 L 630.25 583.875 C 631.3546 583.875 632.25 584.7704 632.25 585.875 L 632.25 605.875 C 632.25 606.9796 631.3546 607.875 630.25 607.875 L 484.625 607.875 C 483.52043 607.875 482.625 606.9796 482.625 605.875 L 482.625 585.875 C 482.625 584.7704 483.52043 583.875 484.625 583.875 Z"/>
+        <path d="M 484.625 583.875 L 630.25 583.875 C 631.3546 583.875 632.25 584.7704 632.25 585.875 L 632.25 605.875 C 632.25 606.9796 631.3546 607.875 630.25 607.875 L 484.625 607.875 C 483.52043 607.875 482.625 606.9796 482.625 605.875 L 482.625 585.875 C 482.625 584.7704 483.52043 583.875 484.625 583.875 Z" stroke="#494949" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_5_shadow" filter="url(#Shadow)">
+        <path d="M 484.625 583.875 L 630.25 583.875 C 631.3546 583.875 632.25 584.7704 632.25 585.875 L 632.25 653.875 C 632.25 654.9796 631.3546 655.875 630.25 655.875 L 484.625 655.875 C 483.52043 655.875 482.625 654.9796 482.625 653.875 L 482.625 585.875 C 482.625 584.7704 483.52043 583.875 484.625 583.875 Z" fill="#f6f8f7"/>
+        <path d="M 484.625 583.875 L 630.25 583.875 C 631.3546 583.875 632.25 584.7704 632.25 585.875 L 632.25 653.875 C 632.25 654.9796 631.3546 655.875 630.25 655.875 L 484.625 655.875 C 483.52043 655.875 482.625 654.9796 482.625 653.875 L 482.625 585.875 C 482.625 584.7704 483.52043 583.875 484.625 583.875 Z" stroke="#494949" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_7_shadow" filter="url(#Shadow)">
+        <path d="M 1219.25 583.875 L 1364.875 583.875 C 1365.9796 583.875 1366.875 584.7704 1366.875 585.875 L 1366.875 605.875 C 1366.875 606.9796 1365.9796 607.875 1364.875 607.875 L 1219.25 607.875 C 1218.1454 607.875 1217.25 606.9796 1217.25 605.875 L 1217.25 585.875 C 1217.25 584.7704 1218.1454 583.875 1219.25 583.875 Z"/>
+        <path d="M 1219.25 583.875 L 1364.875 583.875 C 1365.9796 583.875 1366.875 584.7704 1366.875 585.875 L 1366.875 605.875 C 1366.875 606.9796 1365.9796 607.875 1364.875 607.875 L 1219.25 607.875 C 1218.1454 607.875 1217.25 606.9796 1217.25 605.875 L 1217.25 585.875 C 1217.25 584.7704 1218.1454 583.875 1219.25 583.875 Z" stroke="#494949" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_8_shadow" filter="url(#Shadow)">
+        <path d="M 1219.25 583.875 L 1364.875 583.875 C 1365.9796 583.875 1366.875 584.7704 1366.875 585.875 L 1366.875 653.875 C 1366.875 654.9796 1365.9796 655.875 1364.875 655.875 L 1219.25 655.875 C 1218.1454 655.875 1217.25 654.9796 1217.25 653.875 L 1217.25 585.875 C 1217.25 584.7704 1218.1454 583.875 1219.25 583.875 Z" fill="#f6f8f7"/>
+        <path d="M 1219.25 583.875 L 1364.875 583.875 C 1365.9796 583.875 1366.875 584.7704 1366.875 585.875 L 1366.875 653.875 C 1366.875 654.9796 1365.9796 655.875 1364.875 655.875 L 1219.25 655.875 C 1218.1454 655.875 1217.25 654.9796 1217.25 653.875 L 1217.25 585.875 C 1217.25 584.7704 1218.1454 583.875 1219.25 583.875 Z" stroke="#494949" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_10_shadow" filter="url(#Shadow)">
+        <path d="M 807.5 583.875 L 1042 583.875 C 1043.1046 583.875 1044 584.7704 1044 585.875 L 1044 605.875 C 1044 606.9796 1043.1046 607.875 1042 607.875 L 807.5 607.875 C 806.3954 607.875 805.5 606.9796 805.5 605.875 L 805.5 585.875 C 805.5 584.7704 806.3954 583.875 807.5 583.875 Z"/>
+        <path d="M 807.5 583.875 L 1042 583.875 C 1043.1046 583.875 1044 584.7704 1044 585.875 L 1044 605.875 C 1044 606.9796 1043.1046 607.875 1042 607.875 L 807.5 607.875 C 806.3954 607.875 805.5 606.9796 805.5 605.875 L 805.5 585.875 C 805.5 584.7704 806.3954 583.875 807.5 583.875 Z" stroke="#494949" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_11_shadow" filter="url(#Shadow)">
+        <path d="M 807.5 583.875 L 1042 583.875 C 1043.1046 583.875 1044 584.7704 1044 585.875 L 1044 653.875 C 1044 654.9796 1043.1046 655.875 1042 655.875 L 807.5 655.875 C 806.3954 655.875 805.5 654.9796 805.5 653.875 L 805.5 585.875 C 805.5 584.7704 806.3954 583.875 807.5 583.875 Z" fill="#f6f8f7"/>
+        <path d="M 807.5 583.875 L 1042 583.875 C 1043.1046 583.875 1044 584.7704 1044 585.875 L 1044 653.875 C 1044 654.9796 1043.1046 655.875 1042 655.875 L 807.5 655.875 C 806.3954 655.875 805.5 654.9796 805.5 653.875 L 805.5 585.875 C 805.5 584.7704 806.3954 583.875 807.5 583.875 Z" stroke="#494949" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Group_2">
+        <title>SKScene</title>
+        <g id="Graphic_5">
+          <title>Background</title>
+          <path d="M 484.625 583.875 L 630.25 583.875 C 631.3546 583.875 632.25 584.7704 632.25 585.875 L 632.25 653.875 C 632.25 654.9796 631.3546 655.875 630.25 655.875 L 484.625 655.875 C 483.52043 655.875 482.625 654.9796 482.625 653.875 L 482.625 585.875 C 482.625 584.7704 483.52043 583.875 484.625 583.875 Z" fill="#f6f8f7"/>
+          <path d="M 484.625 583.875 L 630.25 583.875 C 631.3546 583.875 632.25 584.7704 632.25 585.875 L 632.25 653.875 C 632.25 654.9796 631.3546 655.875 630.25 655.875 L 484.625 655.875 C 483.52043 655.875 482.625 654.9796 482.625 653.875 L 482.625 585.875 C 482.625 584.7704 483.52043 583.875 484.625 583.875 Z" stroke="#494949" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
         </g>
-        <g id="Arrow" transform="translate(194.000000, 54.000000)">
-            <polyline id="Shape" stroke="#000000" points="129.837325 25.2095178 140 21 129.837325 16.7904822"></polyline>
-            <line x1="0" y1="21" x2="140" y2="21" id="Shape" stroke="#000000"></line>
-            <text id="user-tapped" fill="#000000" font-family="ArialMT, Arial" font-size="13" font-weight="normal">
-                <tspan x="35.5" y="12.5">user tapped</tspan>
-            </text>
+        <g id="Graphic_3">
+          <title>Class Name</title>
+          <path d="M 484.625 583.875 L 630.25 583.875 C 631.3546 583.875 632.25 584.7704 632.25 585.875 L 632.25 605.875 C 632.25 606.9796 631.3546 607.875 630.25 607.875 L 484.625 607.875 C 483.52043 607.875 482.625 606.9796 482.625 605.875 L 482.625 585.875 C 482.625 584.7704 483.52043 583.875 484.625 583.875 Z" stroke="#494949" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(488.625 587.1015)" fill="#494949">
+            <tspan font-family="PT Sans" font-size="13" font-weight="700" fill="#494949" x="45.042" y="12">SKScene</tspan>
+          </text>
         </g>
-        <g id="Class3" transform="translate(706.000000, 35.000000)">
-            <path d="M10,0 L150,0 C156.666667,0 160,3.33333333 160,10 L160,70 C160,76.6666667 156.666667,80 150,80 L10,80 C3.33333333,80 0,76.6666667 0,70 L0,10 C0,3.33333333 3.33333333,0 10,0 Z" id="Shape" stroke="#000000" fill="#FFFFFF"></path>
-            <line x1="0" y1="25" x2="160" y2="25" id="Shape" stroke="#000000"></line>
-            <text id="SKTilemap" fill="#000000" font-family="Helvetica" font-size="13" font-weight="normal">
-                <tspan x="48.9489746" y="21">SKTilemap</tspan>
-            </text>
+      </g>
+      <g id="Group_6">
+        <title>SKTilemap</title>
+        <g id="Graphic_8">
+          <title>Background</title>
+          <path d="M 1219.25 583.875 L 1364.875 583.875 C 1365.9796 583.875 1366.875 584.7704 1366.875 585.875 L 1366.875 653.875 C 1366.875 654.9796 1365.9796 655.875 1364.875 655.875 L 1219.25 655.875 C 1218.1454 655.875 1217.25 654.9796 1217.25 653.875 L 1217.25 585.875 C 1217.25 584.7704 1218.1454 583.875 1219.25 583.875 Z" fill="#f6f8f7"/>
+          <path d="M 1219.25 583.875 L 1364.875 583.875 C 1365.9796 583.875 1366.875 584.7704 1366.875 585.875 L 1366.875 653.875 C 1366.875 654.9796 1365.9796 655.875 1364.875 655.875 L 1219.25 655.875 C 1218.1454 655.875 1217.25 654.9796 1217.25 653.875 L 1217.25 585.875 C 1217.25 584.7704 1218.1454 583.875 1219.25 583.875 Z" stroke="#494949" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
         </g>
-        <g id="Class2" transform="translate(334.000000, 35.000000)">
-            <path d="M10,0 L222,0 C228.666667,0 232,3.33333333 232,10 L232,70 C232,76.6666667 228.666667,80 222,80 L10,80 C3.33333333,80 0,76.6666667 0,70 L0,10 C0,3.33333333 3.33333333,0 10,0 Z" id="Shape" stroke="#000000" fill="#FFFFFF"></path>
-            <line x1="0" y1="25" x2="232" y2="25" id="Shape" stroke="#000000"></line>
-            <text id="SKTiledSceneCameraDelegate" fill="#000000" font-family="Helvetica" font-size="12" font-weight="normal">
-                <tspan x="33.3408203" y="20">SKTiledSceneCameraDelegate</tspan>
-            </text>
+        <g id="Graphic_7">
+          <title>Class Name</title>
+          <path d="M 1219.25 583.875 L 1364.875 583.875 C 1365.9796 583.875 1366.875 584.7704 1366.875 585.875 L 1366.875 605.875 C 1366.875 606.9796 1365.9796 607.875 1364.875 607.875 L 1219.25 607.875 C 1218.1454 607.875 1217.25 606.9796 1217.25 605.875 L 1217.25 585.875 C 1217.25 584.7704 1218.1454 583.875 1219.25 583.875 Z" stroke="#494949" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(1223.25 587.1015)" fill="#494949">
+            <tspan font-family="PT Sans" font-size="13" font-weight="700" fill="#494949" x="39.023" y="12">SKTilemap</tspan>
+          </text>
         </g>
-        <g id="Class1" transform="translate(34.000000, 35.000000)">
-            <path d="M10,0 L150,0 C156.666667,0 160,3.33333333 160,10 L160,70 C160,76.6666667 156.666667,80 150,80 L10,80 C3.33333333,80 0,76.6666667 0,70 L0,10 C0,3.33333333 3.33333333,0 10,0 Z" id="Shape" stroke="#000000" fill="#FFFFFF"></path>
-            <line x1="0" y1="25" x2="160" y2="25" id="Shape" stroke="#000000"></line>
-            <text id="SKScene" fill="#000000" font-family="Helvetica" font-size="13" font-weight="normal">
-                <tspan x="53.3986816" y="21">SKScene</tspan>
-            </text>
+      </g>
+      <g id="Group_9">
+        <title>SKTiledSceneCameraDelegate</title>
+        <g id="Graphic_11">
+          <title>Background</title>
+          <path d="M 807.5 583.875 L 1042 583.875 C 1043.1046 583.875 1044 584.7704 1044 585.875 L 1044 653.875 C 1044 654.9796 1043.1046 655.875 1042 655.875 L 807.5 655.875 C 806.3954 655.875 805.5 654.9796 805.5 653.875 L 805.5 585.875 C 805.5 584.7704 806.3954 583.875 807.5 583.875 Z" fill="#f6f8f7"/>
+          <path d="M 807.5 583.875 L 1042 583.875 C 1043.1046 583.875 1044 584.7704 1044 585.875 L 1044 653.875 C 1044 654.9796 1043.1046 655.875 1042 655.875 L 807.5 655.875 C 806.3954 655.875 805.5 654.9796 805.5 653.875 L 805.5 585.875 C 805.5 584.7704 806.3954 583.875 807.5 583.875 Z" stroke="#494949" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
         </g>
+        <g id="Graphic_10">
+          <title>Class Name</title>
+          <path d="M 807.5 583.875 L 1042 583.875 C 1043.1046 583.875 1044 584.7704 1044 585.875 L 1044 605.875 C 1044 606.9796 1043.1046 607.875 1042 607.875 L 807.5 607.875 C 806.3954 607.875 805.5 606.9796 805.5 605.875 L 805.5 585.875 C 805.5 584.7704 806.3954 583.875 807.5 583.875 Z" stroke="#494949" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(811.5 587.1015)" fill="#494949">
+            <tspan font-family="PT Sans" font-size="13" font-weight="700" fill="#494949" x="29.868" y="12">SKTiledSceneCameraDelegate</tspan>
+          </text>
+        </g>
+      </g>
+      <g id="Line_16">
+        <line x1="632.25" y1="619.875" x2="795.6" y2="619.875" marker-end="url(#StickArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_17">
+        <line x1="1045.125" y1="621" x2="1207.3502" y2="619.9397" marker-end="url(#StickArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_18">
+        <rect x="689.701" y="609.249" width="58.348" height="21.252" fill="white"/>
+        <text transform="translate(694.701 614.249)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="9" font-weight="400" fill="black" x="8846257e-19" y="9">user tapped</tspan>
+        </text>
+      </g>
+      <g id="Graphic_19">
+        <rect x="1094.405" y="609.767" width="87.193" height="21.252" fill="white"/>
+        <text transform="translate(1099.405 614.767)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="9" font-weight="400" fill="black" x="0" y="9">tap location in map</tspan>
+        </text>
+      </g>
     </g>
+  </g>
 </svg>

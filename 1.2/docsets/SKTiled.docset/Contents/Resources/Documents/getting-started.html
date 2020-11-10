@@ -19,7 +19,7 @@
         <a class='header-link' href='index.html'>
           SKTiled Docs
         </a>
-         (81% documented)
+         (83% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -29,6 +29,12 @@
           </a>
         </p>
     
+        <p class='header-col header-col--secondary'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+            <img class='header-icon' src='img/dash.png'/>
+            Install in Dash
+          </a>
+        </p>
     </header>
 
     <p class='breadcrumbs'>
@@ -242,6 +248,7 @@
 <li><a href="#framework-installation">Framework Installation</a></li>
 <li><a href="#carthage-installation">Carthage Installation</a></li>
 <li><a href="#cocoapods-installation">CocoaPods Installation</a></li>
+<li><a href="#building-the-demo-projects">Building the Demo Projects</a></li>
 <li><a href="#building-the-documentation">Building the Documentation</a></li>
 </ul></li>
 <li><a href="#tvos-support">tvOS Support</a>
@@ -260,7 +267,7 @@
 <h2 id='requirements' class='heading'>Requirements</h2>
 
 <ul>
-<li>iOS 11</li>
+<li>iOS 12</li>
 <li>tvOS 12</li>
 <li>macOS 10.12</li>
 <li>Xcode 11/Swift 5</li>
@@ -272,7 +279,7 @@
 <p><img src="images/project-schemes.png" alt="Project Schemes"></p>
 
 <p>To use the frameworks, build the appropriate framework target and add to your project. Make sure the <strong>Minimum Deployment Target</strong> is set correctly for your project (iOS11+/macOS 10.12+/tvOS12+).</p>
-<h2 id='framework-installation' class='heading'>Framework Installation</h2>
+<h3 id='framework-installation' class='heading'>Framework Installation</h3>
 
 <p>To use the frameworks, build the appropriate framework target and add to your project. Make sure the <strong>Minimum Deployment Target</strong> is set correctly for your project (iOS11+/macOS 10.12+/tvOS12+).</p>
 
@@ -281,7 +288,7 @@
 <p>After building the framework(s), you&rsquo;ll need to add them to your project. Select your target, and add the framework to the <strong>Embedded Binaries</strong> and <strong>Linked Frameworks and Libraries</strong> sections of the <strong>General</strong> tab. You&rsquo;ll also need to make sure it is linked in the <strong>Build Phases &gt; Embed Frameworks</strong> section.</p>
 
 <p><img src="images/links.png" alt="framework embed"></p>
-<h2 id='carthage-installation' class='heading'>Carthage Installation</h2>
+<h3 id='carthage-installation' class='heading'>Carthage Installation</h3>
 
 <p>To build with <a href="https://github.com/Carthage/Carthage">Carthage</a>, create a Cartfile in your project root and add a reference to <strong>SKTiled</strong> (be sure to check the current version number):</p>
 <pre class="highlight plaintext"><code>github "mfessenden/SKTiled" ~&gt; 1.22
@@ -295,12 +302,12 @@
 <pre class="highlight plaintext"><code>carthage update --platform iOS
 </code></pre>
 
-<p>Once you&rsquo;ve run the build command frameworks are built, you&rsquo;ll find a <strong>Carthage</strong> directory in the root of your project. The frameworks are located in the <strong>Carthage/Build/$PLATFORM_NAME</strong> directories, simply install them as described in the <a href="#framework-installation">framework installation</a> section above.</p>
+<p>Once you&rsquo;ve run the build command frameworks are built, you&rsquo;ll find a <strong>Carthage</strong> directory in the root of your project. The frameworks are located in the <strong>Carthage/Build/$PLATFORM_NAME</strong> directories, simply install them as described in the <a href="#framework-installation"><strong>framework installation</strong></a> section above.</p>
 
 <p><img src="images/carthage_directories.png" alt="Carthage Directories"></p>
 
 <p>See the <a href="https://github.com/Carthage/Carthage">Carthage</a> home page for help and additional build instructions.</p>
-<h2 id='cocoapods-installation' class='heading'>CocoaPods Installation</h2>
+<h3 id='cocoapods-installation' class='heading'>CocoaPods Installation</h3>
 
 <p>Installation with <a href="https://cocoapods.org">CocoaPods</a> is similar to Carthage. Create a <strong>podfile</strong> in your project root with the command:</p>
 <pre class="highlight plaintext"><code>pod init
@@ -339,9 +346,16 @@ end
 <p>CocoaPods will create an <strong>.xcworkspace</strong> file with the name of your project. Open that and use this to compile your targets; dependencies will be linked automatically.</p>
 
 <p>See the <a href="https://cocoapods.org">CocoaPods</a> home page for help and additional instructions.</p>
-<h2 id='building-the-documentation' class='heading'>Building the Documentation</h2>
+<h3 id='building-the-demo-projects' class='heading'>Building the Demo Projects</h3>
 
-<p>To build the documentation, you&rsquo;ll need to install <a href="https://github.com/realm/jazzy"><strong>jazzy</strong></a>. To build the html content, simply run the included script in the terminal:</p>
+<p>Included are three demo projects which can be compiled and run locally to test your content. To manage code signing for the demo projects, open the <strong>Demo.xcconfig</strong> file included in the project and replace <code>${DEVELOPMENT_TEAM}</code> with your own team id:</p>
+<pre class="highlight plaintext"><code>SAMPLE_CODE_DISAMBIGUATOR = ${DEVELOPMENT_TEAM}
+</code></pre>
+
+<p>For more information, see the <a href="https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html"><strong>Apple Development Documentation</strong></a> on code signing requirements.</p>
+<h3 id='building-the-documentation' class='heading'>Building the Documentation</h3>
+
+<p>To build the documentation, you&rsquo;ll need to install <a href="https://github.com/realm/jazzy"><strong>jazzy</strong></a>. To build the html content, simply run the included script in a shell:</p>
 <pre class="highlight plaintext"><code>./scripts/build-docs.sh
 </code></pre>
 <h2 id='tvos-support' class='heading'>tvOS Support</h2>
@@ -390,8 +404,7 @@ end
       </article>
     </div>
     <section class='footer'>
-      <p>© 2020 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external"><b>Michael Fessenden</b></a>. All rights reserved.</p>
-      <p>Generated by <a class='link' href='https://github.com/realm/jazzy' target='_blank' rel='external'>jazzy ♪♫ v0.13.2</a>, a <a class='link' href='http://realm.io' target='_blank' rel='external'>Realm</a> project.</p>
+      <p>© 2020 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external"><b>Michael Fessenden</b></a>. All rights reserved. Generated by <a class='link' href='https://github.com/realm/jazzy' target='_blank' rel='external'>jazzy v0.13.2</a></p>
     </section>
   </body>
 </div>

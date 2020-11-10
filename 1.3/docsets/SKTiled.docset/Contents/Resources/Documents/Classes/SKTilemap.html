@@ -25,7 +25,7 @@
         <a class="header-link" href="../index.html">
           SKTiled 1.3 Docs
         </a>
-         (88% documented)
+         (89% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -109,25 +109,22 @@
                 <a class="nav-group-task-link" href="../Protocols/TiledObjectType.html">TiledObjectType</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/TiledEventHandler.html">TiledEventHandler</a>
+                <a class="nav-group-task-link" href="../Protocols/TilemapDelegate.html">TilemapDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a>
+                <a class="nav-group-task-link" href="../Protocols/TiledSceneDelegate.html">TiledSceneDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/SKTiledSceneDelegate.html">SKTiledSceneDelegate</a>
+                <a class="nav-group-task-link" href="../Protocols/TiledSceneCameraDelegate.html">TiledSceneCameraDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/SKTiledSceneCameraDelegate.html">SKTiledSceneCameraDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a>
+                <a class="nav-group-task-link" href="../Protocols/TilesetDataSource.html">TilesetDataSource</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/DebugDrawableType.html">DebugDrawableType</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/TiledRenderableType.html">TiledRenderableType</a>
+                <a class="nav-group-task-link" href="../Protocols/TiledMappableType.html">TiledMappableType</a>
               </li>
             </ul>
           </li>
@@ -258,7 +255,7 @@
             <h1>SKTilemap</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTilemap</span> <span class="p">:</span> <span class="kt">SKNode</span><span class="p">,</span> <span class="kt"><a href="../Protocols/TiledRenderableType.html">TiledRenderableType</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/TiledObjectType.html">TiledObjectType</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTilemap</span> <span class="p">:</span> <span class="kt">SKNode</span><span class="p">,</span> <span class="kt"><a href="../Protocols/TiledMappableType.html">TiledMappableType</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/TiledObjectType.html">TiledObjectType</a></span></code></pre>
 
                 </div>
               </div>
@@ -1221,9 +1218,9 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled9SKTilemapC15visibleToCameraSbvp"></a>
+                    <a name="/c:@M@SKTiled@objc(cs)SKTilemap(py)visibleToCamera"></a>
                     <a name="//apple_ref/swift/Property/visibleToCamera" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled9SKTilemapC15visibleToCameraSbvp">visibleToCamera</a>
+                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTilemap(py)visibleToCamera">visibleToCamera</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1418,9 +1415,9 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled9SKTilemapC11nodesInViewSaySo6SKNodeCGvp"></a>
+                    <a name="/s:7SKTiled9SKTilemapC11nodesInViewShySo6SKNodeCGvp"></a>
                     <a name="//apple_ref/swift/Property/nodesInView" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled9SKTilemapC11nodesInViewSaySo6SKNodeCGvp">nodesInView</a>
+                    <a class="token" href="#/s:7SKTiled9SKTilemapC11nodesInViewShySo6SKNodeCGvp">nodesInView</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1435,7 +1432,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">nodesInView</span><span class="p">:</span> <span class="p">[</span><span class="kt">SKNode</span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">nodesInView</span><span class="p">:</span> <span class="kt">Set</span><span class="o">&lt;</span><span class="kt">SKNode</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -1724,7 +1721,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L476-L490">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L476-L500">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1767,7 +1764,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L505-L507">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L508-L510">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1797,7 +1794,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L510-L516">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L513-L519">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1827,7 +1824,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L527">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L530">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1857,7 +1854,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L538-L542">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L541-L545">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1887,7 +1884,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L545-L549">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L548-L552">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1930,7 +1927,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L559-L563">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L562-L566">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1960,7 +1957,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L566-L571">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L569-L574">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1990,7 +1987,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L574-L578">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L577-L581">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2020,7 +2017,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L581-L585">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L584-L588">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2050,7 +2047,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L591-L604">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L594-L607">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2093,7 +2090,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L610">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L613">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2123,7 +2120,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L613">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L616">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2153,7 +2150,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L616">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L619">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2183,7 +2180,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L619">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L622">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2213,7 +2210,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L622">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L625">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2243,7 +2240,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L625">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L628">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2273,7 +2270,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L628">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L631">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2281,9 +2278,9 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled9SKTilemapC8delegateAA0B8Delegate_pSgvp"></a>
+                    <a name="/s:7SKTiled9SKTilemapC8delegateAA15TilemapDelegate_pSgvp"></a>
                     <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled9SKTilemapC8delegateAA0B8Delegate_pSgvp">delegate</a>
+                    <a class="token" href="#/s:7SKTiled9SKTilemapC8delegateAA15TilemapDelegate_pSgvp">delegate</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2291,19 +2288,19 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Reference to <code><a href="../Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></code> delegate.</p>
+                        <p>Reference to <code><a href="../Protocols/TilemapDelegate.html">TilemapDelegate</a></code> delegate.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TilemapDelegate.html">TilemapDelegate</a></span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L631">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L634">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2333,7 +2330,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L634-L641">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L637-L644">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2341,9 +2338,9 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled9SKTilemapC6boundsSo6CGRectVvp"></a>
+                    <a name="/c:@M@SKTiled@objc(cs)SKTilemap(py)bounds"></a>
                     <a name="//apple_ref/swift/Property/bounds" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled9SKTilemapC6boundsSo6CGRectVvp">bounds</a>
+                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTilemap(py)bounds">bounds</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2363,7 +2360,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L644-L646">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L647-L649">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2393,7 +2390,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L649-L678">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L652-L681">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2423,7 +2420,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L693-L695">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L696-L698">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2453,7 +2450,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L698-L700">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L701-L703">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2483,7 +2480,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L703-L705">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L706-L708">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2513,7 +2510,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L708-L715">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L711-L718">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2566,7 +2563,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of tile layers.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L746-L748">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L749-L751">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2619,7 +2616,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of object groups.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L754-L756">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L757-L759">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2672,7 +2669,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of image layers.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L762-L764">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L765-L767">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2725,7 +2722,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of image layers.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L770-L772">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L773-L775">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2755,7 +2752,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L776-L778">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L779-L781">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2785,7 +2782,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L781-L785">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L784-L788">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2815,7 +2812,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L788-L792">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L791-L795">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2845,7 +2842,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L795-L799">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L798-L802">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2911,7 +2908,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>tilemap object (if file read succeeds).</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L807-L813">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L810-L816">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2976,7 +2973,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>tilemap object (if file read succeeds).</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L821-L827">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L824-L830">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -3041,7 +3038,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>tilemap object (if file read succeeds).</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L835-L840">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L838-L843">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -3049,9 +3046,9 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled9SKTilemapC4load7tmxFile8delegateACSgSS_AA0B8Delegate_ptFZ"></a>
+                    <a name="/s:7SKTiled9SKTilemapC4load7tmxFile8delegateACSgSS_AA15TilemapDelegate_ptFZ"></a>
                     <a name="//apple_ref/swift/Method/load(tmxFile:delegate:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled9SKTilemapC4load7tmxFile8delegateACSgSS_AA0B8Delegate_ptFZ">load(tmxFile:<wbr>delegate:<wbr>)</a>
+                    <a class="token" href="#/s:7SKTiled9SKTilemapC4load7tmxFile8delegateACSgSS_AA15TilemapDelegate_ptFZ">load(tmxFile:<wbr>delegate:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -3066,7 +3063,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">SKTilemap</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TilemapDelegate.html">TilemapDelegate</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">SKTilemap</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -3094,7 +3091,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                               </td>
                               <td>
                                 <div>
-                                  <p>tilemap <a href="Protocols/SKTilemapDelegate.html">delegate</a> instance.</p>
+                                  <p>tilemap <a href="Protocols/TilemapDelegate.html">delegate</a> instance.</p>
                                 </div>
                               </td>
                             </tr>
@@ -3106,7 +3103,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>tilemap object (if file read succeeds).</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L848-L853">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L851-L856">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -3114,9 +3111,9 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled9SKTilemapC4load7tmxFile8delegate10updateModeACSgSS_AA0B8Delegate_pAA010TileUpdateH0OtFZ"></a>
+                    <a name="/s:7SKTiled9SKTilemapC4load7tmxFile8delegate10updateModeACSgSS_AA15TilemapDelegate_pAA010TileUpdateH0OtFZ"></a>
                     <a name="//apple_ref/swift/Method/load(tmxFile:delegate:updateMode:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled9SKTilemapC4load7tmxFile8delegate10updateModeACSgSS_AA0B8Delegate_pAA010TileUpdateH0OtFZ">load(tmxFile:<wbr>delegate:<wbr>updateMode:<wbr>)</a>
+                    <a class="token" href="#/s:7SKTiled9SKTilemapC4load7tmxFile8delegate10updateModeACSgSS_AA15TilemapDelegate_pAA010TileUpdateH0OtFZ">load(tmxFile:<wbr>delegate:<wbr>updateMode:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -3131,7 +3128,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></span><span class="p">,</span> <span class="nv">updateMode</span><span class="p">:</span> <span class="kt"><a href="../Enums/TileUpdateMode.html">TileUpdateMode</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">SKTilemap</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TilemapDelegate.html">TilemapDelegate</a></span><span class="p">,</span> <span class="nv">updateMode</span><span class="p">:</span> <span class="kt"><a href="../Enums/TileUpdateMode.html">TileUpdateMode</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">SKTilemap</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -3159,7 +3156,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                               </td>
                               <td>
                                 <div>
-                                  <p>tilemap <a href="Protocols/SKTilemapDelegate.html">delegate</a> instance.</p>
+                                  <p>tilemap <a href="Protocols/TilemapDelegate.html">delegate</a> instance.</p>
                                 </div>
                               </td>
                             </tr>
@@ -3183,7 +3180,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>tilemap object (if file read succeeds).</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L862-L867">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L865-L870">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -3191,9 +3188,9 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled9SKTilemapC4load7tmxFile8delegate17tilesetDataSourceACSgSS_AA0B8Delegate_pAA09SKTilesethI0_ptFZ"></a>
+                    <a name="/s:7SKTiled9SKTilemapC4load7tmxFile8delegate17tilesetDataSourceACSgSS_AA15TilemapDelegate_pAA07TilesethI0_ptFZ"></a>
                     <a name="//apple_ref/swift/Method/load(tmxFile:delegate:tilesetDataSource:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled9SKTilemapC4load7tmxFile8delegate17tilesetDataSourceACSgSS_AA0B8Delegate_pAA09SKTilesethI0_ptFZ">load(tmxFile:<wbr>delegate:<wbr>tilesetDataSource:<wbr>)</a>
+                    <a class="token" href="#/s:7SKTiled9SKTilemapC4load7tmxFile8delegate17tilesetDataSourceACSgSS_AA15TilemapDelegate_pAA07TilesethI0_ptFZ">load(tmxFile:<wbr>delegate:<wbr>tilesetDataSource:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -3208,7 +3205,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></span><span class="p">,</span> <span class="nv">tilesetDataSource</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">SKTilemap</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TilemapDelegate.html">TilemapDelegate</a></span><span class="p">,</span> <span class="nv">tilesetDataSource</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TilesetDataSource.html">TilesetDataSource</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">SKTilemap</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -3236,7 +3233,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                               </td>
                               <td>
                                 <div>
-                                  <p>tilemap <a href="Protocols/SKTilemapDelegate.html">delegate</a> instance.</p>
+                                  <p>tilemap <a href="Protocols/TilemapDelegate.html">delegate</a> instance.</p>
                                 </div>
                               </td>
                             </tr>
@@ -3248,7 +3245,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                               </td>
                               <td>
                                 <div>
-                                  <p>tilemap <a href="Protocols/SKTilesetDataSource.html"><code><a href="../Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a></code></a> instance.</p>
+                                  <p>tilemap <a href="Protocols/TilesetDataSource.html"><code><a href="../Protocols/TilesetDataSource.html">TilesetDataSource</a></code></a> instance.</p>
                                 </div>
                               </td>
                             </tr>
@@ -3260,7 +3257,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>tilemap object (if file read succeeds).</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L876-L881">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L879-L884">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -3268,9 +3265,9 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled9SKTilemapC4load7tmxFile8delegate17tilesetDataSource10updateModeACSgSS_AA0B8Delegate_pAA09SKTilesethI0_pAA010TileUpdateK0OtFZ"></a>
+                    <a name="/s:7SKTiled9SKTilemapC4load7tmxFile8delegate17tilesetDataSource10updateModeACSgSS_AA15TilemapDelegate_pAA07TilesethI0_pAA010TileUpdateK0OtFZ"></a>
                     <a name="//apple_ref/swift/Method/load(tmxFile:delegate:tilesetDataSource:updateMode:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled9SKTilemapC4load7tmxFile8delegate17tilesetDataSource10updateModeACSgSS_AA0B8Delegate_pAA09SKTilesethI0_pAA010TileUpdateK0OtFZ">load(tmxFile:<wbr>delegate:<wbr>tilesetDataSource:<wbr>updateMode:<wbr>)</a>
+                    <a class="token" href="#/s:7SKTiled9SKTilemapC4load7tmxFile8delegate17tilesetDataSource10updateModeACSgSS_AA15TilemapDelegate_pAA07TilesethI0_pAA010TileUpdateK0OtFZ">load(tmxFile:<wbr>delegate:<wbr>tilesetDataSource:<wbr>updateMode:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -3285,7 +3282,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></span><span class="p">,</span> <span class="nv">tilesetDataSource</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a></span><span class="p">,</span> <span class="nv">updateMode</span><span class="p">:</span> <span class="kt"><a href="../Enums/TileUpdateMode.html">TileUpdateMode</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">SKTilemap</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TilemapDelegate.html">TilemapDelegate</a></span><span class="p">,</span> <span class="nv">tilesetDataSource</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TilesetDataSource.html">TilesetDataSource</a></span><span class="p">,</span> <span class="nv">updateMode</span><span class="p">:</span> <span class="kt"><a href="../Enums/TileUpdateMode.html">TileUpdateMode</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">SKTilemap</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -3313,7 +3310,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                               </td>
                               <td>
                                 <div>
-                                  <p>tilemap <a href="Protocols/SKTilemapDelegate.html">delegate</a> instance.</p>
+                                  <p>tilemap <a href="Protocols/TilemapDelegate.html">delegate</a> instance.</p>
                                 </div>
                               </td>
                             </tr>
@@ -3325,7 +3322,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                               </td>
                               <td>
                                 <div>
-                                  <p>tilemap <a href="Protocols/SKTilesetDataSource.html"><code><a href="../Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a></code></a> instance.</p>
+                                  <p>tilemap <a href="Protocols/TilesetDataSource.html"><code><a href="../Protocols/TilesetDataSource.html">TilesetDataSource</a></code></a> instance.</p>
                                 </div>
                               </td>
                             </tr>
@@ -3349,7 +3346,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>tilemap object (if file read succeeds).</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L891-L896">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L894-L899">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -3357,9 +3354,9 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled9SKTilemapC4load7tmxFile8delegate17tilesetDataSource12withTilesetsACSgSS_AA0B8Delegate_pAA09SKTilesethI0_pSayAA0M0CGtFZ"></a>
+                    <a name="/s:7SKTiled9SKTilemapC4load7tmxFile8delegate17tilesetDataSource12withTilesetsACSgSS_AA15TilemapDelegate_pAA07TilesethI0_pSayAA9SKTilesetCGtFZ"></a>
                     <a name="//apple_ref/swift/Method/load(tmxFile:delegate:tilesetDataSource:withTilesets:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled9SKTilemapC4load7tmxFile8delegate17tilesetDataSource12withTilesetsACSgSS_AA0B8Delegate_pAA09SKTilesethI0_pSayAA0M0CGtFZ">load(tmxFile:<wbr>delegate:<wbr>tilesetDataSource:<wbr>withTilesets:<wbr>)</a>
+                    <a class="token" href="#/s:7SKTiled9SKTilemapC4load7tmxFile8delegate17tilesetDataSource12withTilesetsACSgSS_AA15TilemapDelegate_pAA07TilesethI0_pSayAA9SKTilesetCGtFZ">load(tmxFile:<wbr>delegate:<wbr>tilesetDataSource:<wbr>withTilesets:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -3374,7 +3371,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></span><span class="p">,</span> <span class="nv">tilesetDataSource</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a></span><span class="p">,</span> <span class="nv">withTilesets</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/SKTileset.html">SKTileset</a></span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">SKTilemap</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TilemapDelegate.html">TilemapDelegate</a></span><span class="p">,</span> <span class="nv">tilesetDataSource</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TilesetDataSource.html">TilesetDataSource</a></span><span class="p">,</span> <span class="nv">withTilesets</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/SKTileset.html">SKTileset</a></span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">SKTilemap</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -3402,7 +3399,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                               </td>
                               <td>
                                 <div>
-                                  <p>tilemap <a href="Protocols/SKTilemapDelegate.html">delegate</a> instance.</p>
+                                  <p>tilemap <a href="Protocols/TilemapDelegate.html">delegate</a> instance.</p>
                                 </div>
                               </td>
                             </tr>
@@ -3414,7 +3411,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                               </td>
                               <td>
                                 <div>
-                                  <p>tilemap <a href="Protocols/SKTilesetDataSource.html"><code><a href="../Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a></code></a> instance.</p>
+                                  <p>tilemap <a href="Protocols/TilesetDataSource.html"><code><a href="../Protocols/TilesetDataSource.html">TilesetDataSource</a></code></a> instance.</p>
                                 </div>
                               </td>
                             </tr>
@@ -3438,7 +3435,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>tilemap object (if file read succeeds).</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L906-L911">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L909-L914">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -3446,9 +3443,9 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled9SKTilemapC4load7tmxFile11inDirectory8delegate17tilesetDataSource10updateMode12withTilesets16ignoreProperties12loggingLevel_ACSgSS_SSSgAA0B8Delegate_pSgAA09SKTilesetjK0_pSgAA010TileUpdateM0OSayAA0U0CGSgSbAA07LoggingS0OyACcSgtFZ"></a>
+                    <a name="/s:7SKTiled9SKTilemapC4load7tmxFile11inDirectory8delegate17tilesetDataSource10updateMode12withTilesets16ignoreProperties12loggingLevel_ACSgSS_SSSgAA15TilemapDelegate_pSgAA07TilesetjK0_pSgAA010TileUpdateM0OSayAA9SKTilesetCGSgSbAA07LoggingS0OyACcSgtFZ"></a>
                     <a name="//apple_ref/swift/Method/load(tmxFile:inDirectory:delegate:tilesetDataSource:updateMode:withTilesets:ignoreProperties:loggingLevel:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled9SKTilemapC4load7tmxFile11inDirectory8delegate17tilesetDataSource10updateMode12withTilesets16ignoreProperties12loggingLevel_ACSgSS_SSSgAA0B8Delegate_pSgAA09SKTilesetjK0_pSgAA010TileUpdateM0OSayAA0U0CGSgSbAA07LoggingS0OyACcSgtFZ">load(tmxFile:<wbr>inDirectory:<wbr>delegate:<wbr>tilesetDataSource:<wbr>updateMode:<wbr>withTilesets:<wbr>ignoreProperties:<wbr>loggingLevel:<wbr>_:<wbr>)</a>
+                    <a class="token" href="#/s:7SKTiled9SKTilemapC4load7tmxFile11inDirectory8delegate17tilesetDataSource10updateMode12withTilesets16ignoreProperties12loggingLevel_ACSgSS_SSSgAA15TilemapDelegate_pSgAA07TilesetjK0_pSgAA010TileUpdateM0OSayAA9SKTilesetCGSgSbAA07LoggingS0OyACcSgtFZ">load(tmxFile:<wbr>inDirectory:<wbr>delegate:<wbr>tilesetDataSource:<wbr>updateMode:<wbr>withTilesets:<wbr>ignoreProperties:<wbr>loggingLevel:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -3465,8 +3462,8 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
                        <span class="nv">inDirectory</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
-                       <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
-                       <span class="nv">tilesetDataSource</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                       <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TilemapDelegate.html">TilemapDelegate</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                       <span class="nv">tilesetDataSource</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TilesetDataSource.html">TilesetDataSource</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                        <span class="nv">updateMode</span><span class="p">:</span> <span class="kt"><a href="../Enums/TileUpdateMode.html">TileUpdateMode</a></span> <span class="o">=</span> <span class="kt"><a href="../Classes/TiledGlobals.html">TiledGlobals</a></span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="n"><a href="../Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC10updateModeAA010TileUpdateD0Ovp">updateMode</a></span><span class="p">,</span>
                        <span class="nv">withTilesets</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/SKTileset.html">SKTileset</a></span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                        <span class="n"><a href="../Classes/SKTilemap.html#/c:@M@SKTiled@objc(cs)SKTilemap(py)ignoreProperties">ignoreProperties</a></span> <span class="nv">noparse</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
@@ -3511,7 +3508,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                               </td>
                               <td>
                                 <div>
-                                  <p>optional <a href="Protocols/SKTilemapDelegate.html"><code><a href="../Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></code></a> instance.</p>
+                                  <p>optional <a href="Protocols/TilemapDelegate.html"><code><a href="../Protocols/TilemapDelegate.html">TilemapDelegate</a></code></a> instance.</p>
                                 </div>
                               </td>
                             </tr>
@@ -3523,7 +3520,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                               </td>
                               <td>
                                 <div>
-                                  <p>optional <a href="Protocols/SKTilesetDataSource.html"><code><a href="../Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a></code></a> instance.</p>
+                                  <p>optional <a href="Protocols/TilesetDataSource.html"><code><a href="../Protocols/TilesetDataSource.html">TilesetDataSource</a></code></a> instance.</p>
                                 </div>
                               </td>
                             </tr>
@@ -3595,7 +3592,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>tilemap object (if file read succeeds).</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L926-L961">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L929-L964">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -3616,9 +3613,9 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled9SKTilemapC4load4data11inDirectory8delegate17tilesetDataSource10updateMode12withTilesets16ignoreProperties12loggingLevel_ACSgSS_SSSgAA0B8Delegate_pSgAA09SKTilesetiJ0_pSgAA010TileUpdateL0OSayAA0T0CGSgSbAA07LoggingR0OyACcSgtFZ"></a>
+                    <a name="/s:7SKTiled9SKTilemapC4load4data11inDirectory8delegate17tilesetDataSource10updateMode12withTilesets16ignoreProperties12loggingLevel_ACSgSS_SSSgAA15TilemapDelegate_pSgAA07TilesetiJ0_pSgAA010TileUpdateL0OSayAA9SKTilesetCGSgSbAA07LoggingR0OyACcSgtFZ"></a>
                     <a name="//apple_ref/swift/Method/load(data:inDirectory:delegate:tilesetDataSource:updateMode:withTilesets:ignoreProperties:loggingLevel:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled9SKTilemapC4load4data11inDirectory8delegate17tilesetDataSource10updateMode12withTilesets16ignoreProperties12loggingLevel_ACSgSS_SSSgAA0B8Delegate_pSgAA09SKTilesetiJ0_pSgAA010TileUpdateL0OSayAA0T0CGSgSbAA07LoggingR0OyACcSgtFZ">load(data:<wbr>inDirectory:<wbr>delegate:<wbr>tilesetDataSource:<wbr>updateMode:<wbr>withTilesets:<wbr>ignoreProperties:<wbr>loggingLevel:<wbr>_:<wbr>)</a>
+                    <a class="token" href="#/s:7SKTiled9SKTilemapC4load4data11inDirectory8delegate17tilesetDataSource10updateMode12withTilesets16ignoreProperties12loggingLevel_ACSgSS_SSSgAA15TilemapDelegate_pSgAA07TilesetiJ0_pSgAA010TileUpdateL0OSayAA9SKTilesetCGSgSbAA07LoggingR0OyACcSgtFZ">load(data:<wbr>inDirectory:<wbr>delegate:<wbr>tilesetDataSource:<wbr>updateMode:<wbr>withTilesets:<wbr>ignoreProperties:<wbr>loggingLevel:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -3635,8 +3632,8 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">load</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
                        <span class="nv">inDirectory</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
-                       <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
-                       <span class="nv">tilesetDataSource</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                       <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TilemapDelegate.html">TilemapDelegate</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                       <span class="nv">tilesetDataSource</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TilesetDataSource.html">TilesetDataSource</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                        <span class="nv">updateMode</span><span class="p">:</span> <span class="kt"><a href="../Enums/TileUpdateMode.html">TileUpdateMode</a></span> <span class="o">=</span> <span class="kt"><a href="../Classes/TiledGlobals.html">TiledGlobals</a></span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="n"><a href="../Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC10updateModeAA010TileUpdateD0Ovp">updateMode</a></span><span class="p">,</span>
                        <span class="nv">withTilesets</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/SKTileset.html">SKTileset</a></span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                        <span class="n"><a href="../Classes/SKTilemap.html#/c:@M@SKTiled@objc(cs)SKTilemap(py)ignoreProperties">ignoreProperties</a></span> <span class="nv">noparse</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
@@ -3681,7 +3678,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                               </td>
                               <td>
                                 <div>
-                                  <p>optional <a href="Protocols/SKTilemapDelegate.html"><code><a href="../Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></code></a> instance.</p>
+                                  <p>optional <a href="Protocols/TilemapDelegate.html"><code><a href="../Protocols/TilemapDelegate.html">TilemapDelegate</a></code></a> instance.</p>
                                 </div>
                               </td>
                             </tr>
@@ -3693,7 +3690,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                               </td>
                               <td>
                                 <div>
-                                  <p>optional <a href="Protocols/SKTilesetDataSource.html"><code><a href="../Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a></code></a> instance.</p>
+                                  <p>optional <a href="Protocols/TilesetDataSource.html"><code><a href="../Protocols/TilesetDataSource.html">TilesetDataSource</a></code></a> instance.</p>
                                 </div>
                               </td>
                             </tr>
@@ -3765,7 +3762,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>tilemap object (if file read succeeds).</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L979-L1014">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L982-L1017">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -3827,7 +3824,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1022-L1028">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1025-L1031">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -3876,7 +3873,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1033-L1135">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1036-L1138">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -3975,7 +3972,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1145-L1158">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1148-L1161">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -4037,7 +4034,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1187-L1192">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1194-L1199">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -4090,7 +4087,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>removed tileset.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1198-L1200">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1205-L1207">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -4143,7 +4140,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>tileset object.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1206-L1212">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1213-L1219">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -4196,7 +4193,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>tileset with the given file name.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1218-L1224">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1225-L1231">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -4249,7 +4246,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>associated tileset.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1230-L1235">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1237-L1242">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -4315,7 +4312,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of layers.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1243-L1245">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1250-L1252">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -4349,7 +4346,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of layers.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1250-L1252">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1257-L1259">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -4383,7 +4380,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>layer names.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1257-L1259">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1264-L1266">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -4463,7 +4460,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>add was successful, added layer.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1269-L1312">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1276-L1319">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -4516,7 +4513,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>removed layer.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1318-L1320">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1325-L1327">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -4582,7 +4579,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>new layer.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1329-L1332">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1336-L1339">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -4648,7 +4645,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>new layer.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1341-L1344">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1348-L1351">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -4714,7 +4711,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>new layer.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1353-L1356">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1360-L1363">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -4780,7 +4777,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>new layer.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1365-L1368">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1372-L1375">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -4845,7 +4842,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>layer objects.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1376-L1383">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1383-L1390">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -4910,7 +4907,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>layer objects.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1391-L1398">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1398-L1405">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -4963,7 +4960,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>layer objects.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1404-L1410">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1411-L1417">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -5016,7 +5013,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>layer object.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1416-L1422">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1423-L1429">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -5069,7 +5066,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>layer object.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1428-L1434">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1435-L1441">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -5134,7 +5131,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of layers.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1442-L1444">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1449-L1451">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -5199,7 +5196,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of tile layers.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1452-L1454">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1459-L1461">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -5264,7 +5261,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of tile layers.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1462-L1464">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1469-L1471">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -5317,7 +5314,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>matching tile layer.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1470-L1476">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1477-L1483">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -5382,7 +5379,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of object groups.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1484-L1486">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1491-L1493">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -5447,7 +5444,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of object groups.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1493-L1495">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1500-L1502">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -5500,7 +5497,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>matching group layer.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1501-L1507">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1508-L1514">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -5565,7 +5562,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of image layers.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1515-L1517">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1522-L1524">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -5630,7 +5627,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of image layers.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1525-L1527">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1532-L1534">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -5683,7 +5680,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>matching image layer.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1533-L1539">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1540-L1546">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -5748,7 +5745,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of group layers.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1547-L1549">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1554-L1556">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -5813,7 +5810,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of group layers.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1557-L1559">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1564-L1566">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -5866,7 +5863,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>matching group layer.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1565-L1571">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1572-L1578">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -5915,7 +5912,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1664-L1667">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1671-L1674">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -5981,60 +5978,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of tiles.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1675-L1677">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7SKTiled9SKTilemapC7tilesAt5pointSayAA6SKTileCGSo7CGPointV_tF"></a>
-                    <a name="//apple_ref/swift/Method/tilesAt(point:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled9SKTilemapC7tilesAt5pointSayAA6SKTileCGSo7CGPointV_tF">tilesAt(point:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Return tiles at the given point (all tile layers).</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">tilesAt</span><span class="p">(</span><span class="nv">point</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/SKTile.html">SKTile</a></span><span class="p">]</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>point</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>position in tilemap.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>array of tiles.</p>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1684-L1690">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1682-L1684">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -6099,7 +6043,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of tiles.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1698-L1700">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1692-L1694">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -6164,7 +6108,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>matching tile, if one exists.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1708-L1716">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1702-L1710">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -6241,7 +6185,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>matching tile, if one exists.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1726-L1728">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1720-L1722">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -6294,7 +6238,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>first tile in layers.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1734-L1741">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1728-L1735">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -6347,7 +6291,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of tiles.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1747-L1749">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1741-L1743">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -6412,7 +6356,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of tiles.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1757-L1759">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1751-L1753">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -6477,7 +6421,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of tiles.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1767-L1769">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1761-L1763">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -6542,7 +6486,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of tiles.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1778-L1784">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1772-L1778">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -6619,7 +6563,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of tiles.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1793-L1799">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1787-L1793">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -6672,7 +6616,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of tiles</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1805-L1807">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1799-L1801">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -6738,7 +6682,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>tile data, if it exists.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1816-L1824">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1810-L1818">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -6791,7 +6735,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of tile data.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1830-L1832">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1824-L1826">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -6844,7 +6788,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of tile data.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1838-L1840">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1832-L1834">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -6909,7 +6853,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of tiles.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1848-L1850">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1842-L1844">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -6974,7 +6918,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of tile data.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1858-L1860">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1852-L1854">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -7040,7 +6984,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of objects.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1868-L1872">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1862-L1866">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -7093,7 +7037,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of objects.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1878-L1883">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1872-L1877">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -7146,7 +7090,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of objects.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1889-L1891">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1883-L1885">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -7211,7 +7155,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of objects.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1899-L1901">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1893-L1895">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -7276,7 +7220,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of objects.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1908-L1910">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1902-L1904">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -7341,7 +7285,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of matching objects.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1918-L1920">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1912-L1914">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -7394,7 +7338,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>object matching the given id.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1926-L1928">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1920-L1922">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -7447,7 +7391,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>objects with a tile gid.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1941-L1943">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1935-L1937">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -7512,7 +7456,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of objects matching the given tile global id.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1951-L1953">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1945-L1947">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -7565,7 +7509,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>text objects.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1959-L1961">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1953-L1955">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -7608,7 +7552,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1966-L1970">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1960-L1964">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -7686,7 +7630,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>coordinate is valid.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1980-L1982">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1974-L1976">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -7739,7 +7683,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>coordinate is valid</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1988-L1990">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L1982-L1984">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -7832,7 +7776,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>converted point in map coordinate system.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2019-L2021">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2013-L2015">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -7885,7 +7829,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>converted point in layer coordinate system.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2027-L2029">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2021-L2023">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -7971,7 +7915,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2041-L2047">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2035-L2041">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -8045,7 +7989,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2061-L2067">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2051-L2057">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -8094,7 +8038,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2072-L2107">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2062-L2097">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -8168,7 +8112,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2173-L2181">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2163-L2171">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -8230,7 +8174,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2188-L2277">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2178-L2267">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -8436,7 +8380,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2568-L2573">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2558-L2563">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -8466,7 +8410,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2576-L2578">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2566-L2568">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -8496,7 +8440,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2582-L2584">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2572-L2574">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -8526,7 +8470,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2587-L2589">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2577-L2579">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -8556,7 +8500,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2592-L2599">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2582-L2589">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -8586,7 +8530,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2602-L2609">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2592-L2599">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -8616,7 +8560,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2715-L2717">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2705-L2707">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -8646,7 +8590,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2720-L2725">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2710-L2715">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -8676,7 +8620,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2729-L2735">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2719-L2725">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -8706,7 +8650,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2738-L2740">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2728-L2730">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -8740,7 +8684,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of child objects.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2745-L2753">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2735-L2743">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -8793,7 +8737,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of tiles.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2759-L2765">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2749-L2760">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -8827,7 +8771,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of child objects.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2770-L2784">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2765-L2779">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -8848,9 +8792,9 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SKTiled9SKTilemapC4load8fromFile8delegate12withTilesetsACSgSS_AA0B8Delegate_pSgSayAA9SKTilesetCGSgtFZ"></a>
+                    <a name="/s:7SKTiled9SKTilemapC4load8fromFile8delegate12withTilesetsACSgSS_AA15TilemapDelegate_pSgSayAA9SKTilesetCGSgtFZ"></a>
                     <a name="//apple_ref/swift/Method/load(fromFile:delegate:withTilesets:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled9SKTilemapC4load8fromFile8delegate12withTilesetsACSgSS_AA0B8Delegate_pSgSayAA9SKTilesetCGSgtFZ">load(fromFile:<wbr>delegate:<wbr>withTilesets:<wbr>)</a>
+                    <a class="token" href="#/s:7SKTiled9SKTilemapC4load8fromFile8delegate12withTilesetsACSgSS_AA15TilemapDelegate_pSgSayAA9SKTilesetCGSgtFZ">load(fromFile:<wbr>delegate:<wbr>withTilesets:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -8867,7 +8811,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"SKTilemap.load(tmxFile:﹚"</span><span class="p">)</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">load</span><span class="p">(</span><span class="n">fromFile</span> <span class="nv">filename</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
-                       <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                       <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TilemapDelegate.html">TilemapDelegate</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                        <span class="nv">withTilesets</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/SKTileset.html">SKTileset</a></span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">SKTilemap</span><span class="p">?</span></code></pre>
 
                         </div>
@@ -8896,7 +8840,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                               </td>
                               <td>
                                 <div>
-                                  <p>optional <a href="Protocols/SKTilemapDelegate.html"><code><a href="../Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></code></a> instance.</p>
+                                  <p>optional <a href="Protocols/TilemapDelegate.html"><code><a href="../Protocols/TilemapDelegate.html">TilemapDelegate</a></code></a> instance.</p>
                                 </div>
                               </td>
                             </tr>
@@ -8920,7 +8864,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>tilemap object.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3119-L3124">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3120-L3125">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -8955,7 +8899,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of layers.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3130-L3132">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3131-L3133">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -9009,7 +8953,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>layer object.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3139-L3145">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3140-L3146">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -9063,7 +9007,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>matching tile layer.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3152-L3158">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3153-L3159">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -9117,7 +9061,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>object layer matching the given name, if one exists.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3165-L3171">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3166-L3172">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -9167,7 +9111,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3177-L3179">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3178-L3180">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -9198,7 +9142,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3183-L3189">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3184-L3190">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -9229,7 +9173,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3193-L3199">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3194-L3200">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -9260,7 +9204,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3203-L3205">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3204-L3206">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -9310,7 +9254,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3211-L3217">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3212-L3218">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -9364,7 +9308,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>associated tileset.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3224-L3226">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3225-L3227">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -9418,7 +9362,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>object matching the given id.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3233-L3235">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3234-L3236">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -9484,7 +9428,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of objects matching the given tile global id.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3244-L3246">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3245-L3247">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -9550,7 +9494,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of tiles.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3255-L3257">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3256-L3258">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -9604,7 +9548,61 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>coordinate is valid.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3264-L3266">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3265-L3267">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled9SKTilemapC7tilesAt5pointSayAA6SKTileCGSo7CGPointV_tF"></a>
+                    <a name="//apple_ref/swift/Method/tilesAt(point:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SKTiled9SKTilemapC7tilesAt5pointSayAA6SKTileCGSo7CGPointV_tF">tilesAt(point:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Return tiles at the given point (all tile layers).</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"???"</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">tilesAt</span><span class="p">(</span><span class="nv">point</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/SKTile.html">SKTile</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>point</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>position in tilemap.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>array of tiles.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3274-L3278">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -9658,7 +9656,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>array of tiles.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3273-L3275">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3285-L3287">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -9683,7 +9681,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"tileAt(coord:inLayer:﹚"</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"tileAt(coord:simd_int2:inLayer:﹚"</span><span class="p">)</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">tileAt</span><span class="p">(</span><span class="nv">coord</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">,</span> <span class="n">inLayer</span> <span class="nv">named</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/SKTile.html">SKTile</a></span><span class="p">?</span></code></pre>
 
                         </div>
@@ -9724,7 +9722,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>matching tile, if one exists.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3284-L3286">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3296-L3298">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -9778,7 +9776,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>first tile in layers.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3293-L3300">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3305-L3312">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -9832,7 +9830,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>position in map.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3307-L3309">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3319-L3321">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -9886,7 +9884,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>tile coordinate.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3316-L3318">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3328-L3330">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -9940,7 +9938,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>tile coordinate</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3326-L3328">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3338-L3340">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -9994,7 +9992,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>converted point in layer coordinate system.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3336-L3339">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3348-L3351">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -10048,7 +10046,7 @@ vector objects &amp; images. Tile data is stored in <code><a href="../Classes/SK
                         <p>layer object.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3347-L3349">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L3359-L3361">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
