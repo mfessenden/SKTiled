@@ -27,6 +27,7 @@ $table_border_color: #ddd;
 
 $code_bg_color: #f7f7f7;
 $code_font: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+$code_inline_color: #8e5656;
 
 $attribute_weight: 700;
 $attribute_bg_color: #fdf4f4;
@@ -664,4 +665,13 @@ div.abstract p {
 
 span.symbol-marker {
     color: $declaration_marker_color;
+}
+
+p code {
+    color: #222;
+}
+
+p code a {
+    font-weight: 700;
+    color: $code_inline_color;
 }
