@@ -640,7 +640,6 @@ div.task-group a.token {
 
 /* list item icon */
 div.task-group li.item::marker {
-    content: "▸";
     color: $marker_color;
 }
 
