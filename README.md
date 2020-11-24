@@ -328,3 +328,4 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 [skscene-update-url]:https://developer.apple.com/documentation/spritekit/skscene/1519802-update
 [uitouch-url]:https://developer.apple.com/documentation/uikit/uitouch
 [nsevent-url]:https://developer.apple.com/documentation/appkit/nsevent
+[swift-package-doc-url]:https://developer.apple.com/documentation/swift_packages
