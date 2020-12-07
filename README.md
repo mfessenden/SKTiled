@@ -302,7 +302,7 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 <!--- Documentation --->
 
 [sktiled-gh-url]:https://mfessenden.github.io/SKTiled
-[sktiled-12-doc-url]:https://mfessenden.github.io/SKTiled/1.2/
+[sktiled-12-doc-url]:https://mfessenden.github.io/SKTiled/1.2/index.html
 [sktilemap-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKTilemap.html
 [sktiledobject-url]:https://mfessenden.github.io/SKTiled/1.2/Protocols/SKTiledObject.html
 [sktile-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKTile.html
