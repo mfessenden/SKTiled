@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title>Working with Maps  Reference</title>
+    <link rel='stylesheet' type='text/css' href='css/jazzy.css' />
+    <link rel='stylesheet' type='text/css' href='css/highlight.css' />
+    <meta charset='utf-8'>
+    <script src='js/jquery.min.js' defer></script>
+    <script src='js/jazzy.js' defer></script>
+    <script src='js/retina.js' defer></script>
+  </head>
+  <body>
+
+
+    <a title='Working with Maps  Reference'></a>
+
+    <header class='header'>
+      <p class='header-col header-col--primary'>
+        <a class='header-link' href='index.html'>
+          SKTiled v1.22 Docs
+        </a>
+         (82% documented)
+      </p>
+    
+        <p class='header-col header-col--secondary'>
+          <a class='header-link' href='https://github.com/mfessenden/SKTiled'>
+            <img class='header-icon' src='img/gh.png'/>
+            View on GitHub
+          </a>
+        </p>
+    
+        <p class='header-col header-col--secondary'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+            <img class='header-icon' src='img/dash.png'/>
+            Install in Dash
+          </a>
+        </p>
+    </header>
+
+    <p class='breadcrumbs'>
+      <a class='breadcrumb' href='index.html'>SKTiled Reference</a>
+      <img class='carat' src='img/carat.png' />
+      Working with Maps  Reference
+    </p>
+
+    <div class='content-wrapper'>
+      <nav class='navigation'>
+        <ul class='nav-groups'>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Table of Contents.html'>Table of Contents</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='whats-new.html'>What&#39;s New</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='getting-started.html'>Getting Started</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='scene-setup.html'>Scene Setup</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-maps.html'>Working with Maps</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-tilesets.html'>Working with Tilesets</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-layers.html'>Working with Layers</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-tiles.html'>Working with Tiles</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='coordinates.html'>Coordinates</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-objects.html'>Working with Objects</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='tiled-properties.html'>Tiled Properties</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='gameplaykit.html'>GameplayKit</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='extending-sktiled.html'>Extending SKTiled</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='other-api-features.html'>Other API Features</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='debugging.html'>Debugging</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='troubleshooting.html'>Troubleshooting</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Protocols.html'>Protocols</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/SKTiledObject.html'>SKTiledObject</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/SKTilemapDelegate.html'>SKTilemapDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/SKTiledSceneDelegate.html'>SKTiledSceneDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/SKTiledSceneCameraDelegate.html'>SKTiledSceneCameraDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/SKTilesetDataSource.html'>SKTilesetDataSource</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Class Hierarchy.html'>Class Hierarchy</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilemap.html'>SKTilemap</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilemap/TilemapOrientation.html'>– TilemapOrientation</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC21CameraZoomConstraintsV'>– CameraZoomConstraints</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilemap/RenderStatistics.html'>– RenderStatistics</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileset.html'>SKTileset</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTiledLayerObject.html'>SKTiledLayerObject</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTiledLayerObject.html#/s:7SKTiled0A11LayerObjectC10TileOffsetO'>– TileOffset</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileLayer.html'>SKTileLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKObjectGroup.html'>SKObjectGroup</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKGroupLayer.html'>SKGroupLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKImageLayer.html'>SKImageLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTile.html'>SKTile</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTile/TileAlignmentHint.html'>– TileAlignmentHint</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTile/PhysicsShape.html'>– PhysicsShape</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilesetData.html'>SKTilesetData</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileObject.html'>SKTileObject</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileObject/TiledObjectType.html'>– TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileObject/TiledObjectShape.html'>– TiledObjectShape</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO'>– CollisionType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTiledScene.html'>SKTiledScene</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTiledSceneCamera.html'>SKTiledSceneCamera</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTiledGraphNode.html'>SKTiledGraphNode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TileAnimationFrame.html'>TileAnimationFrame</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Globals.html'>Globals</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals.html'>TiledGlobals</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals/Version.html'>– Version</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC13RenderQualityV'>– RenderQuality</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals/DebugDisplayOptions.html'>– DebugDisplayOptions</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC15TimeDisplayModeO'>– TimeDisplayMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC8RendererO'>– Renderer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Globals.html#/s:7SKTiled17CameraControlModeO'>CameraControlMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Enums/TileRenderMode.html'>TileRenderMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Enums/TileUpdateMode.html'>TileUpdateMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TextObjectAttributes.html'>TextObjectAttributes</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class='main-content'>
+
+        <section class='section'>
+          <div class='section-content'>
+            
+            <h1 id='working-with-maps' class='heading'>Working with Maps</h1>
+
+<ul>
+<li><a href="#loading-a-tilemap">Loading a Tilemap</a></li>
+<li><a href="#tile-rendering">Tile Rendering</a>
+
+<ul>
+<li><a href="#full-amp-dynamic">Full &amp; Dynamic</a></li>
+<li><a href="#spritekit-actions">SpriteKit Actions</a>
+
+<ul>
+<li><a href="#manually-starting-amp-starting">Manually Starting &amp; Stopping</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#tile-render-flags">Tile Render Flags</a></li>
+<li><a href="#effects-rendering">Effects Rendering</a>
+
+<ul>
+<li><a href="#shaders-amp-filters">Shaders &amp; Filters</a></li>
+</ul></li>
+<li><a href="#tile-cracking">Tile Cracking</a>
+
+<ul>
+<li><a href="#camera-zoom-clamping">Camera Zoom Clamping</a></li>
+</ul></li>
+</ul>
+<h2 id='loading-a-tilemap' class='heading'>Loading a Tilemap</h2>
+
+<p>Creating a tilemap node is very straightforward; simply call the <code><a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC4load7tmxFileACSgSS_tFZ">SKTilemap.load(tmxFile:)</a></code> function to read a Tiled tmx file from disk:</p>
+<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="s">"MyTilemap.tmx"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">worldNode</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>If you are implementing the <code><a href="Protocols/SKTilemapDelegate.html">SKTilemapDelegate</a></code> and <code><a href="Protocols/SKTilesetDataSource.html">SKTilesetDataSource</a></code> protocols, you can optionally specify those when you load the tilemap:</p>
+<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="n">tmxFile</span><span class="p">,</span>
+                                <span class="nv">delegate</span><span class="p">:</span> <span class="k">self</span> <span class="k">as?</span> <span class="kt">SKTilemapDelegate</span><span class="p">,</span>
+                                <span class="nv">tilesetDataSource</span><span class="p">:</span> <span class="k">self</span> <span class="k">as?</span> <span class="kt">SKTilesetDataSource</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="n">worldNode</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Once the map is loaded, you&rsquo;ll need to add your tilemap node to your <a href="https://developer.apple.com/documentation/spritekit/skscene/1519802-update"><code>SKScene.update</code></a> method:</p>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">GameScene</span><span class="p">:</span> <span class="kt">SKScene</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">tilemap</span><span class="p">:</span> <span class="kt">SKTilemap</span><span class="p">?</span>
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">(</span><span class="n">_</span> <span class="nv">currentTime</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">tilemap</span><span class="p">?</span><span class="o">.</span><span class="nf">update</span><span class="p">(</span><span class="n">currentTime</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h2 id='tile-rendering' class='heading'>Tile Rendering</h2>
+
+<p>By default, <strong>SKTiled</strong> updates each tile on a concurrent background queue. This includes tile animations, ensuring that frames are synced each frame. For performance, tile data is cached and updated with each frame. How the cache is updated is determined by the <code><a href="Enums/TileUpdateMode.html">TileUpdateMode</a></code> flag. There are three settings for rendering maps, choose the option that is best suited to your content:</p>
+
+<table><thead>
+<tr>
+<th style="text-align: center">Mode</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: center">full</td>
+<td style="text-align: left">All tiles are updated each frame.</td>
+</tr>
+<tr>
+<td style="text-align: center">dynamic</td>
+<td style="text-align: left">Only animated tiles are updated.</td>
+</tr>
+<tr>
+<td style="text-align: center">actions</td>
+<td style="text-align: left">No tiles are updated, animations are rendered with SpriteKit actions.</td>
+</tr>
+</tbody></table>
+
+<p>The default tile update method is <code>dynamic</code> which provides a good mix of performance and accuracy. For best performance, use <code>actions</code> and for greatest accuracy consider <code>full</code>.</p>
+
+<p>Tile update mode can be passed as an argument to the load method, or set later:</p>
+<pre class="highlight swift"><code><span class="c1">// tilemap will update only animated tiles</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="s">"MyTilemap.tmx"</span><span class="p">,</span> 
+                                    <span class="nv">delegate</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span> 
+                                    <span class="nv">updateMode</span><span class="p">:</span> <span class="kt">TileUpdateMode</span><span class="o">.</span><span class="kd">dynamic</span><span class="p">)</span> <span class="p">{</span>
+
+
+<span class="p">}</span>
+
+<span class="c1">// change the rendering to update all tiles for every frame</span>
+<span class="n">tilemap</span><span class="o">.</span><span class="n">updateMode</span> <span class="o">=</span> <span class="kt">TileUpdateMode</span><span class="o">.</span><span class="n">full</span>
+</code></pre>
+<h3 id='full-amp-dynamic' class='heading'>Full &amp; Dynamic</h3>
+
+<p>Using either of these methods, you can change the <a href="https://developer.apple.com/documentation/spritekit/sknode/1483036-speed"><code>SKNode.speed</code></a> property of your scene/tilemap/layer which will scale the speed of tile animations accordingly (including moving in reverse). In addition, tile animations are updated independent of frame rate, so animation speed will be the same regardless of fps.</p>
+<h3 id='spritekit-actions' class='heading'>SpriteKit Actions</h3>
+
+<p>If your tilemap is set to run in <code>TileUpdateMode.actions</code> mode, animated tiles will render with <a href="https://developer.apple.com/documentation/spritekit/skaction"><strong>SpriteKit Actions</strong></a>. Actions are more efficient with memory and CPU usage. If you are using a large map or don&rsquo;t need exact frame synchronization, this option might be more viable. While faster, this method might result in frames getting out of sync slightly so use accordingly. Tile animations <em>will</em> respect pausing using this method, but animation speed can&rsquo;t be changed reliably.</p>
+<h4 id='manually-starting-amp-stopping' class='heading'>Manually Starting &amp; Stopping</h4>
+
+<p>To manually enable/disable SpriteKit actions, call the <code><a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC21runAnimationAsActions_7restoreySb_SbtF">SKTilemap.runAnimationAsActions(_:restore:)</a></code> method:</p>
+<pre class="highlight swift"><code><span class="c1">// run animations as actions</span>
+<span class="n">tilemap</span><span class="o">.</span><span class="nf">runAnimationAsActions</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+
+<span class="c1">// remove all animations &amp; restore initial texture</span>
+<span class="n">tilemap</span><span class="o">.</span><span class="nf">runAnimationAsActions</span><span class="p">(</span><span class="kc">false</span><span class="p">,</span> <span class="nv">restore</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+</code></pre>
+
+<p>Passing a value of <code>false</code> will remove all actions and effectively halt all animation.</p>
+
+<p>It is also possible to start &amp; stop SpriteKit actions for each layer individually:</p>
+<pre class="highlight swift"><code>
+<span class="c1">// run SpriteKit actions for all animated tiles in the layer</span>
+<span class="n">tileLayer</span><span class="o">.</span><span class="nf">runAnimationAsActions</span><span class="p">()</span>
+
+
+<span class="c1">// remove all SpriteKit actions for the layer (stop tile animations)</span>
+<span class="n">tileLayer</span><span class="o">.</span><span class="nf">removeAnimationActions</span><span class="p">(</span><span class="nv">restore</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>
+</code></pre>
+<h2 id='tile-render-flags' class='heading'>Tile Render Flags</h2>
+
+<p>Individual tiles can also have separate render flags that determine their behavior.</p>
+
+<p>For more information, see the <a href="working-with-tiles.html#tile-render-mode"><strong>Working with Tiles</strong></a> section.</p>
+<h2 id='effects-rendering' class='heading'>Effects Rendering</h2>
+
+<p><code><a href="Classes/SKTilemap.html">SKTilemap</a></code> &amp; <code><a href="Classes/SKTiledLayerObject.html">SKTiledLayerObject</a></code> nodes are subclassed from the SpriteKit <a href="https://developer.apple.com/documentation/spritekit/skeffectnode"><code>SKEffectNode</code></a> node. The <a href="https://developer.apple.com/documentation/spritekit/skeffectnode"><code>SKEffectNode</code></a> node renders its children into a private buffer and additionally allows Core Image effects to be applied. You may also apply shaders and distortions to these nodes, allowing for sophisticated rendering effects.</p>
+
+<p>To enable shader effects, turn on the <a href="https://developer.apple.com/documentation/spritekit/skeffectnode/1459385-shouldenableeffects"><code>SKTilemap.shouldEnableEffects</code></a> attribute. This will consume slightly more CPU &amp; GPU power, so by default it is disabled to conserve resources. One additional benefit is that rendering into a buffer eliminates tile &ldquo;cracking&rdquo; artifacts.</p>
+<pre class="highlight swift"><code><span class="n">tilemap</span><span class="o">.</span><span class="n">shouldEnableEffects</span> <span class="o">=</span> <span class="kc">true</span>
+</code></pre>
+
+<p>Effects rendering also softens the edges of nearest-neighbor filtered textures slightly, which may be undesirable for retro-themed games with blocky edges.</p>
+
+<p>Be careful enabling this option for large maps; the <a href="https://developer.apple.com/documentation/spritekit/skeffectnode"><code>SKEffectNode</code></a> node buffer maximum texture size is 2048x2048. If your map is larger than that, your map will render as cropped.</p>
+
+<p><img src="images/effects-rendering.gif" alt="Effects Rendering"></p>
+<h3 id='shaders-amp-filters' class='heading'>Shaders &amp; Filters</h3>
+
+<p>Applying a shader (or filter) is done the same way as it is done with a sprite node:</p>
+<pre class="highlight swift"><code><span class="c1">// emable effects rendering on the map node</span>
+<span class="n">tilemap</span><span class="o">.</span><span class="n">shouldEnableEffects</span> <span class="o">=</span> <span class="kc">true</span>
+
+<span class="c1">// load a shader from the current project</span>
+<span class="k">let</span> <span class="nv">shader</span> <span class="o">=</span> <span class="kt">SKShader</span><span class="p">(</span><span class="nv">fileNamed</span><span class="p">:</span> <span class="s">"waves"</span><span class="p">)</span>
+
+<span class="c1">// create an attribute to pass the tilemap's render size to the shader as an attribute</span>
+<span class="n">shader</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="p">[</span><span class="kt">SKAttribute</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"a_map_size"</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="o">.</span><span class="n">vectorFloat2</span><span class="p">)]</span>
+
+<span class="c1">// set the tilemap shader</span>
+<span class="n">tilemap</span><span class="o">.</span><span class="n">shader</span> <span class="o">=</span> <span class="n">shader</span>
+
+<span class="c1">// pass the tilemap size to the shader</span>
+<span class="n">tilemap</span><span class="o">.</span><span class="nf">setValue</span><span class="p">(</span><span class="kt">SKAttributeValue</span><span class="p">(</span><span class="nv">vectorFloat2</span><span class="p">:</span> <span class="n">tilemap</span><span class="o">.</span><span class="n">sizeInPoints</span><span class="o">.</span><span class="n">toVec2</span><span class="p">),</span> <span class="nv">forAttribute</span><span class="p">:</span> <span class="s">"a_map_size"</span><span class="p">)</span>
+</code></pre>
+
+<p>For more details, check out <a href="https://developer.apple.com/documentation/spritekit/skshader"><strong>Apple&rsquo;s SKShader tutorial page</strong></a>.</p>
+
+<p>Next: <a href="working-with-tilesets.html">Working with Tilesets</a> - <a href="Table%20of%20Contents.html">Index</a></p>
+
+          </div>
+        </section>
+
+
+      </article>
+    </div>
+    <section class='footer'>
+      <p>© 2020 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external"><b>Michael Fessenden</b></a>. All rights reserved. Generated by <a class='link' href='https://github.com/realm/jazzy' target='_blank' rel='external'>jazzy v0.13.2</a></p>
+    </section>
+  </body>
+</div>
+</html>

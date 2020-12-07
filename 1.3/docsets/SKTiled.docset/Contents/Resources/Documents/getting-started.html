@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title>Getting Started  Reference</title>
+    <link rel='stylesheet' type='text/css' href='css/jazzy.css' />
+    <link rel='stylesheet' type='text/css' href='css/highlight.css' />
+    <!-- <link rel='stylesheet' type='text/css' href='css/custom.css' /> -->
+    <meta charset='utf-8'>
+    <script src='js/jquery.min.js' defer></script>
+    <script src='js/jazzy.js' defer></script>
+    <script src='js/retina-preprocess.js' defer></script>
+    <script src='js/retina.js' defer></script>
+  </head>
+  <body>
+
+
+    <a title='Getting Started  Reference'></a>
+
+    <header class='header'>
+      <p class='header-col header-col--primary'>
+        <a class='header-link' href='index.html'>
+          SKTiled v1.3 Docs
+        </a>
+         (89% documented)
+      </p>
+    
+        <p class='header-col header-col--secondary'>
+          <a class='header-link' href='https://github.com/mfessenden/SKTiled'>
+            <img class='header-icon' src='img/gh.png'/>
+            View on GitHub
+          </a>
+        </p>
+    
+        <p class='header-col header-col--secondary'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+            <img class='header-icon' src='img/dash.png'/>
+            Install in Dash
+          </a>
+        </p>
+    </header>
+
+    <p class='breadcrumbs'>
+      <a class='breadcrumb' href='index.html'>SKTiled Reference</a>
+      <img class='carat' src='img/carat.png' />
+      Getting Started  Reference
+    </p>
+
+    <div class='content-wrapper'>
+      <nav class='navigation'>
+        <ul class='nav-groups'>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Table of Contents.html'>Table of Contents</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='whats-new.html'>What&#39;s New</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='getting-started.html'>Getting Started</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='scene-setup.html'>Scene Setup</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-maps.html'>Working with Maps</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-tilesets.html'>Working with Tilesets</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-layers.html'>Working with Layers</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-tiles.html'>Working with Tiles</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='coordinates.html'>Coordinates</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-objects.html'>Working with Objects</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='tiled-properties.html'>Tiled Properties</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='gameplaykit.html'>GameplayKit</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='extending-sktiled.html'>Extending SKTiled</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='other-api-features.html'>Other API Features</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='debugging.html'>Debugging</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='troubleshooting.html'>Troubleshooting</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Protocols.html'>Protocols</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/DebugDrawableType.html'>DebugDrawableType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledGeometryType.html'>TiledGeometryType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledMappableGeometryType.html'>TiledMappableGeometryType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledOverlayType.html'>TiledOverlayType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledSceneDelegate.html'>TiledSceneDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TilemapDelegate.html'>TilemapDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TilesetDataSource.html'>TilesetDataSource</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Class Hierarchy.html'>Class Hierarchy</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilemap.html'>SKTilemap</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC21CameraZoomConstraintsV'>– CameraZoomConstraints</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilemap/RenderStatistics.html'>– RenderStatistics</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileset.html'>SKTileset</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledLayerObject.html'>TiledLayerObject</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledLayerObject/TileOffset.html'>– TileOffset</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileLayer.html'>SKTileLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKObjectGroup.html'>SKObjectGroup</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKGroupLayer.html'>SKGroupLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKImageLayer.html'>SKImageLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTile.html'>SKTile</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTile.html#/s:7SKTiled6SKTileC17TileAlignmentHintO'>– TileAlignmentHint</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTile.html#/s:7SKTiled6SKTileC12PhysicsShapeO'>– PhysicsShape</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilesetData.html'>SKTilesetData</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileObject.html'>SKTileObject</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC4TypeO'>– TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC5ShapeO'>– TiledObjectShape</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO'>– CollisionType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTiledScene.html'>SKTiledScene</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTiledSceneCamera.html'>SKTiledSceneCamera</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTiledGraphNode.html'>SKTiledGraphNode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TileAnimationFrame.html'>TileAnimationFrame</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TileFlags.html'>TileFlags</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TileID.html'>TileID</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Globals.html'>Globals</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals.html'>TiledGlobals</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals/Version.html'>– Version</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals/RenderQuality.html'>– RenderQuality</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals/DebugDisplayOptions.html'>– DebugDisplayOptions</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC15TimeDisplayModeO'>– TimeDisplayMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals/Renderer.html'>– Renderer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Enums/TileRenderMode.html'>TileRenderMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Enums/TileUpdateMode.html'>TileUpdateMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TextObjectAttributes.html'>TextObjectAttributes</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TileIsolationMode.html'>TileIsolationMode</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class='main-content'>
+
+        <section class='section'>
+          <div class='section-content'>
+            
+            <h1 id='getting-started' class='heading'>Getting Started</h1>
+
+<ul>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#installation">Installation</a>
+
+<ul>
+<li><a href="#framework-installation">Framework Installation</a></li>
+<li><a href="#carthage-installation">Carthage Installation</a></li>
+<li><a href="#cocoapods-installation">CocoaPods Installation</a></li>
+<li><a href="#building-the-demo-projects">Building the Demo Projects</a></li>
+<li><a href="#building-the-documentation">Building the Documentation</a></li>
+</ul></li>
+<li><a href="#tvos-support">tvOS Support</a>
+
+<ul>
+<li><a href="#a-note-about-4k">A Note About 4K</a></li>
+</ul></li>
+<li><a href="#using-tiled-assets-with-xcode">Using Tiled Assets with Xcode</a>
+
+<ul>
+<li><a href="#referenced-assets">Referenced Assets</a></li>
+</ul></li>
+</ul>
+
+<p><strong>SKTiled</strong> was designed to be flexible and easy to use. To get started, simply build the framework and add your assets to your Xcode project. If you have any problems or requests, please open an issue at the <a href="https://github.com/mfessenden/SKTiled/issues"><strong>Github page</strong></a>.</p>
+<h2 id='requirements' class='heading'>Requirements</h2>
+
+<ul>
+<li>iOS 12</li>
+<li>tvOS 12</li>
+<li>macOS 10.12</li>
+<li>Xcode 11/Swift 5</li>
+</ul>
+<h2 id='installation' class='heading'>Installation</h2>
+
+<p>The <strong>SKTiled</strong> project contains six targets; three are demo applications for iOS/tvOS/macOS. These are included to let you quickly test your own content, or simple play around with the included demo files. The other three are frameworks for use in your own projects. If the three demo targets do not appear in the active scheme list, choose <strong>Manage Schemes</strong> and press the <strong>Autocreate Schemes Now</strong> button.</p>
+
+<p><img src="images/project-schemes.png" alt="Project Schemes"></p>
+<h3 id='framework-installation' class='heading'>Framework Installation</h3>
+
+<p>To use the frameworks, build the appropriate framework target and add to your project. Make sure the <strong>Minimum Deployment Target</strong> is set correctly for your project (iOS11+/macOS 10.12+/tvOS12+).</p>
+
+<p><img src="images/framework.png" alt="adding framework"></p>
+
+<p>After building the framework(s), you&rsquo;ll need to add them to your project. Select your target, and add the framework to the <strong>Embedded Binaries</strong> and <strong>Linked Frameworks and Libraries</strong> sections of the <strong>General</strong> tab. You&rsquo;ll also need to make sure it is linked in the <strong>Build Phases &gt; Embed Frameworks</strong> section.</p>
+
+<p><img src="images/links.png" alt="framework embed"></p>
+<h3 id='carthage-installation' class='heading'>Carthage Installation</h3>
+
+<p>To build with <a href="https://github.com/Carthage/Carthage">Carthage</a>, create a Cartfile in your project root and add a reference to <strong>SKTiled</strong> (be sure to check the current version number):</p>
+<pre class="highlight plaintext"><code>github "mfessenden/SKTiled" ~&gt; 1.30
+</code></pre>
+
+<p>Close the file and run Carthage from the terminal to build the framework(s):</p>
+<pre class="highlight plaintext"><code>carthage update
+</code></pre>
+
+<p>To build for a specific platform, use the <code>platform</code> argument in your build command:</p>
+<pre class="highlight plaintext"><code>carthage update --platform iOS
+</code></pre>
+
+<p>Once you&rsquo;ve run the build command frameworks are built, you&rsquo;ll find a <strong>Carthage</strong> directory in the root of your project. The frameworks are located in the <strong>Carthage/Build/$PLATFORM_NAME</strong> directories, simply install them as described in the <a href="#framework-installation"><strong>framework installation</strong></a> section above.</p>
+
+<p><img src="images/carthage_directories.png" alt="Carthage Directories"></p>
+
+<p>See the <a href="https://github.com/Carthage/Carthage">Carthage</a> home page for help and additional build instructions.</p>
+<h3 id='cocoapods-installation' class='heading'>CocoaPods Installation</h3>
+
+<p>Installation with <a href="https://cocoapods.org">CocoaPods</a> is similar to Carthage. Create a <strong>podfile</strong> in your project root with the command:</p>
+<pre class="highlight plaintext"><code>pod init
+</code></pre>
+
+<p>Add references to <strong>SKTiled</strong> in each of your targets:</p>
+<pre class="highlight plaintext"><code>target 'iOS' do
+  use_frameworks!
+
+  # Pods for iOS
+  pod 'SKTiled', '~&gt; 1.30'
+
+end
+
+target 'macOS' do
+  use_frameworks!
+
+  # Pods for macOS
+  pod 'SKTiled', '~&gt; 1.30'
+
+end
+
+target 'tvOS' do
+  use_frameworks!
+
+  # Pods for tvOS
+  pod 'SKTiled', '~&gt; 1.30'
+
+end
+</code></pre>
+
+<p>As before, be sure to check the version number. In the terminal, run the installer:</p>
+<pre class="highlight plaintext"><code>pod install
+</code></pre>
+
+<p>CocoaPods will create an <strong>.xcworkspace</strong> file with the name of your project. Open that and use this to compile your targets; dependencies will be linked automatically.</p>
+
+<p>See the <a href="https://cocoapods.org">CocoaPods</a> home page for help and additional instructions.</p>
+<h3 id='building-the-demo-projects' class='heading'>Building the Demo Projects</h3>
+
+<p>Included are three demo projects which can be compiled and run locally to test your content. To manage code signing for the demo projects, open the <strong>Demo.xcconfig</strong> file included in the project and replace <code>${DEVELOPMENT_TEAM}</code> with your own team id:</p>
+<pre class="highlight plaintext"><code>SAMPLE_CODE_DISAMBIGUATOR = ${DEVELOPMENT_TEAM}
+</code></pre>
+
+<p>For more information, see the <a href="https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html"><strong>Apple Development Documentation</strong></a> on code signing requirements.</p>
+<h3 id='building-the-documentation' class='heading'>Building the Documentation</h3>
+
+<p>To build the documentation, you&rsquo;ll need to install <a href="https://github.com/realm/jazzy"><strong>jazzy</strong></a>. To build the html content, simply run the included script in a shell:</p>
+<pre class="highlight plaintext"><code>./scripts/build-docs.sh
+</code></pre>
+<h2 id='tvos-support' class='heading'>tvOS Support</h2>
+
+<p><img src="images/appletv-devices.png" alt="AppleTV Devices"></p>
+
+<p><strong>SKTiled</strong> can now be built for AppleTV devices, including AppleTV 4K. Currently only tvOS 11+ is supported, although earlier versions might be added in the future.</p>
+<h3 id='a-note-about-4k' class='heading'>A Note About 4K</h3>
+
+<p><img src="images/appletv-4k-launch.png" alt="AppleTV 4K"></p>
+
+<p>If you are displaying content on a 4K AppleTV, check that your Asset LaunchImage has a 2x resolution of <strong>3840 x 2160</strong>. This will ensure that your game runs at a full 4K resolution.</p>
+<h2 id='using-tiled-assets-with-xcode' class='heading'>Using Tiled Assets with Xcode</h2>
+
+<p><img src="images/xcode-assets-group.png" alt="Grouped Assets"></p>
+
+<p>When adding assets to your Xcode project, files are automatically bundled in your application&rsquo;s resource directory. To load a bundled tile map, use the <code><a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC4load7tmxFileACSgSS_tFZ">SKTilemap.load(tmxFile:)</a></code> method to read the file:</p>
+<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="s">"MyTilemap.tmx"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">scene</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>On your hard drive, a map&rsquo;s dependencies (images, tilesets) <em>should</em> be in the same directory as the map to avoid read errors.</p>
+<h3 id='referenced-assets' class='heading'>Referenced Assets</h3>
+
+<p><img src="images/xcode-assets-referenced.png" alt="Referenced Assets"></p>
+
+<p>If you add assets as <em>folder references</em>, you can supply a directory name with the <code>inDirectory</code> argument of <code><a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC4load7tmxFileACSgSS_tFZ">SKTilemap.load(tmxFile:)</a></code> method:</p>
+<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="s">"MyTilemap.tmx"</span><span class="p">,</span> <span class="nv">inDirectory</span><span class="p">:</span> <span class="s">"Tiled"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">scene</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>This will allow you more flexibility organizing your project, but be careful that your maps don&rsquo;t reference files above the referenced folder. For more information, see the <a href="working-with-maps.html#loading-a-tilemap"><strong>Working with Maps</strong></a> section.</p>
+
+<p>Next: <a href="scene-setup.html">Scene Setup</a> - <a href="Documentation.html">Index</a></p>
+
+<!--- Images --->
+
+<!--- URLs --->
+
+          </div>
+        </section>
+
+
+      </article>
+    </div>
+    <section class='footer'>
+      <p>© 2020 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external"><b>Michael Fessenden</b></a>. All rights reserved. Generated by <a class='link' href='https://github.com/realm/jazzy' target='_blank' rel='external'>jazzy v0.13.2</a></p>
+    </section>
+  </body>
+</div>
+</html>

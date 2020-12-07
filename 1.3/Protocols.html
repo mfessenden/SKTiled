@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title>Protocols  Reference</title>
+    <link rel='stylesheet' type='text/css' href='css/jazzy.css' />
+    <link rel='stylesheet' type='text/css' href='css/highlight.css' />
+    <!-- <link rel='stylesheet' type='text/css' href='css/custom.css' /> -->
+    <meta charset='utf-8'>
+    <script src='js/jquery.min.js' defer></script>
+    <script src='js/jazzy.js' defer></script>
+    <script src='js/retina-preprocess.js' defer></script>
+    <script src='js/retina.js' defer></script>
+  </head>
+  <body>
+
+    <a name='//apple_ref/swift/Section/Protocols' class='dashAnchor'></a>
+
+    <a title='Protocols  Reference'></a>
+
+    <header class='header'>
+      <p class='header-col header-col--primary'>
+        <a class='header-link' href='index.html'>
+          SKTiled v1.3 Docs
+        </a>
+         (89% documented)
+      </p>
+    
+        <p class='header-col header-col--secondary'>
+          <a class='header-link' href='https://github.com/mfessenden/SKTiled'>
+            <img class='header-icon' src='img/gh.png'/>
+            View on GitHub
+          </a>
+        </p>
+    
+        <p class='header-col header-col--secondary'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+            <img class='header-icon' src='img/dash.png'/>
+            Install in Dash
+          </a>
+        </p>
+    </header>
+
+    <p class='breadcrumbs'>
+      <a class='breadcrumb' href='index.html'>SKTiled Reference</a>
+      <img class='carat' src='img/carat.png' />
+      Protocols  Reference
+    </p>
+
+    <div class='content-wrapper'>
+      <nav class='navigation'>
+        <ul class='nav-groups'>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Table of Contents.html'>Table of Contents</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='whats-new.html'>What&#39;s New</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='getting-started.html'>Getting Started</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='scene-setup.html'>Scene Setup</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-maps.html'>Working with Maps</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-tilesets.html'>Working with Tilesets</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-layers.html'>Working with Layers</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-tiles.html'>Working with Tiles</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='coordinates.html'>Coordinates</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-objects.html'>Working with Objects</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='tiled-properties.html'>Tiled Properties</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='gameplaykit.html'>GameplayKit</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='extending-sktiled.html'>Extending SKTiled</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='other-api-features.html'>Other API Features</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='debugging.html'>Debugging</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='troubleshooting.html'>Troubleshooting</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Protocols.html'>Protocols</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/DebugDrawableType.html'>DebugDrawableType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledGeometryType.html'>TiledGeometryType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledMappableGeometryType.html'>TiledMappableGeometryType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledOverlayType.html'>TiledOverlayType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledSceneDelegate.html'>TiledSceneDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TilemapDelegate.html'>TilemapDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TilesetDataSource.html'>TilesetDataSource</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Class Hierarchy.html'>Class Hierarchy</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilemap.html'>SKTilemap</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC21CameraZoomConstraintsV'>– CameraZoomConstraints</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilemap/RenderStatistics.html'>– RenderStatistics</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileset.html'>SKTileset</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledLayerObject.html'>TiledLayerObject</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledLayerObject/TileOffset.html'>– TileOffset</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileLayer.html'>SKTileLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKObjectGroup.html'>SKObjectGroup</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKGroupLayer.html'>SKGroupLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKImageLayer.html'>SKImageLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTile.html'>SKTile</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTile.html#/s:7SKTiled6SKTileC17TileAlignmentHintO'>– TileAlignmentHint</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTile.html#/s:7SKTiled6SKTileC12PhysicsShapeO'>– PhysicsShape</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilesetData.html'>SKTilesetData</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileObject.html'>SKTileObject</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC4TypeO'>– TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC5ShapeO'>– TiledObjectShape</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO'>– CollisionType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTiledScene.html'>SKTiledScene</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTiledSceneCamera.html'>SKTiledSceneCamera</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTiledGraphNode.html'>SKTiledGraphNode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TileAnimationFrame.html'>TileAnimationFrame</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TileFlags.html'>TileFlags</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TileID.html'>TileID</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Globals.html'>Globals</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals.html'>TiledGlobals</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals/Version.html'>– Version</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals/RenderQuality.html'>– RenderQuality</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals/DebugDisplayOptions.html'>– DebugDisplayOptions</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC15TimeDisplayModeO'>– TimeDisplayMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals/Renderer.html'>– Renderer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Enums/TileRenderMode.html'>TileRenderMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Enums/TileUpdateMode.html'>TileUpdateMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TextObjectAttributes.html'>TextObjectAttributes</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TileIsolationMode.html'>TileIsolationMode</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class='main-content'>
+
+        <section class='section'>
+          <div class='section-content'>
+            <h1>Protocols</h1>
+            <p><strong>SKTiled</strong> protocols represent blueprints of requirements (methods, properties) to allow users to interact with <strong>Tiled</strong> content.</p>
+
+          </div>
+        </section>
+
+        <section class='section'>
+          <div class='section-content'>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@SKTiled@objc(pl)DebugDrawableType"></a>
+                    <a name="//apple_ref/swift/Protocol/DebugDrawableType" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)DebugDrawableType">DebugDrawableType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>The <code>DebugDrawableType</code> protocol provides an interface to visualizing various object attributes, such as displaying a visual grid over the container.</p>
+
+                        <a href="Protocols/DebugDrawableType.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">DebugDrawableType</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/DebugDrawableType.swift#L34-L38">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@SKTiled@objc(pl)TiledAttributedType"></a>
+                    <a name="//apple_ref/swift/Protocol/TiledAttributedType" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledAttributedType">TiledAttributedType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>The <code>TiledAttributedType</code> protocol defines a basic data structure for mapping custom Tiled
+properties to SpriteKit objects. Objects conforming to this protocol will
+automatically receive properties from the Tiled scene, unless supressed
+by setting the object&rsquo;s <code><a href="Protocols/TiledAttributedType.html#/c:@M@SKTiled@objc(pl)TiledAttributedType(py)ignoreProperties">TiledAttributedType.ignoreProperties</a></code> property.</p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: center">Property</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: center"><code>properties</code></td>
+<td style="text-align: left">Object of custom Tiled properties.</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>ignoreProperties</code></td>
+<td style="text-align: left">Ignore Tiled properties.</td>
+</tr>
+</tbody></table>
+<h3 id='instance-methods' class='heading'>Instance Methods</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: center">Method</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: center"><code>parseProperties</code></td>
+<td style="text-align: left">Parse function (with optional completion block).</td>
+</tr>
+</tbody></table>
+<h3 id='usage' class='heading'>Usage</h3>
+
+<p>Querying a property is simple. Simply use the <code>hasKey</code> function:</p>
+<pre class="highlight swift"><code><span class="n">tiledObject</span><span class="o">.</span><span class="nf">hasKey</span><span class="p">(</span><span class="s">"floorColor"</span><span class="p">)</span>
+<span class="c1">// or use a subscript to query a property...</span>
+<span class="k">let</span> <span class="nv">floorColor</span> <span class="o">=</span> <span class="n">tiledObject</span><span class="p">[</span><span class="s">"floorColor"</span><span class="p">]</span>
+</code></pre>
+<pre class="highlight swift"><code><span class="c1">// query a Tiled string property</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">nodeType</span> <span class="o">=</span> <span class="n">tiledObject</span><span class="o">.</span><span class="nf">stringForKey</span><span class="p">(</span><span class="s">"nodeType"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">tiledObject</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">nodeType</span>
+<span class="p">}</span>
+</code></pre>
+<pre class="highlight swift"><code><span class="c1">// query a boolean property</span>
+<span class="k">let</span> <span class="nv">isDynamic</span> <span class="o">=</span> <span class="n">tiledObject</span><span class="o">.</span><span class="nf">boolForKey</span><span class="p">(</span><span class="s">"isDynamic"</span><span class="p">)</span> <span class="o">==</span> <span class="kc">true</span>
+</code></pre>
+
+                        <a href="Protocols/TiledAttributedType.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TiledAttributedType</span> <span class="p">:</span> <span class="kt"><a href="Protocols/TiledObjectType.html">TiledObjectType</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L77-L88">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@SKTiled@objc(pl)TiledCustomReflectableType"></a>
+                    <a name="//apple_ref/swift/Protocol/TiledCustomReflectableType" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledCustomReflectableType">TiledCustomReflectableType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>The <code>TiledCustomReflectableType</code> protocol outlines internal debugging elements that can be used to query objects for state changes.</p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>tiledNodeName</code></td>
+<td>Tiled node type</td>
+</tr>
+<tr>
+<td><code>tiledNodeNiceName</code></td>
+<td>Proper node name</td>
+</tr>
+<tr>
+<td><code>tiledIconName</code></td>
+<td>Node icon representation</td>
+</tr>
+<tr>
+<td><code>tiledListDescription</code></td>
+<td>Description of the node used for list views</td>
+</tr>
+<tr>
+<td><code>tiledDescription</code></td>
+<td>Description of the node</td>
+</tr>
+</tbody></table>
+
+                        <a href="Protocols/TiledCustomReflectableType.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TiledCustomReflectableType</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledCustomReflectableType.swift#L48-L69">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@SKTiled@objc(pl)TiledGeometryType"></a>
+                    <a name="//apple_ref/swift/Protocol/TiledGeometryType" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType">TiledGeometryType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>The <code>TiledGeometryType</code> protocol describes a drawable type used to manage &amp; render <strong>Tiled</strong> objects.</p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Property</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code>objectPath</code></td>
+<td style="text-align: left">the node&rsquo;s bounding shape.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code>bounds</code></td>
+<td style="text-align: left">the node&rsquo;s bounding rect.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code>renderQuality</code></td>
+<td style="text-align: left">render scaling quality.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code>visibleToCamera</code></td>
+<td style="text-align: left">node is visible to camera.</td>
+</tr>
+</tbody></table>
+<h3 id='methods' class='heading'>Methods</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Method</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code>getVertices(offset: CGPoint)</code></td>
+<td style="text-align: left">return&rsquo;s the node&rsquo;s shape points.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code>contains(touch: CGPoint)</code></td>
+<td style="text-align: left">returns true if a point is contained in this shape&rsquo;s frame.</td>
+</tr>
+</tbody></table>
+
+                        <a href="Protocols/TiledGeometryType.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TiledGeometryType</span> <span class="p">:</span> <span class="kt"><a href="Protocols/DebugDrawableType.html">DebugDrawableType</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/TiledObjectType.html">TiledObjectType</a></span><span class="p">,</span> <span class="kt">TiledRasterizableType</span><span class="p">,</span> <span class="kt">TiledSelectableType</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGeometryType.swift#L51-L79">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@SKTiled@objc(pl)TiledMappableGeometryType"></a>
+                    <a name="//apple_ref/swift/Protocol/TiledMappableGeometryType" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledMappableGeometryType">TiledMappableGeometryType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>The <code>TiledMappableGeometryType</code> protocol describes a mapping structure that is broken up into two-dimensional tiles.</p>
+
+                        <a href="Protocols/TiledMappableGeometryType.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TiledMappableGeometryType</span> <span class="p">:</span> <span class="kt"><a href="Protocols/TiledGeometryType.html">TiledGeometryType</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L35-L63">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@SKTiled@objc(pl)TiledObjectType"></a>
+                    <a name="//apple_ref/swift/Protocol/TiledObjectType" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledObjectType">TiledObjectType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>The <code>TiledObjectType</code> protocol defines a basic type used throughout the API.</p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: center">Property</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: center"><code>uuid</code></td>
+<td style="text-align: left">Unique object id.</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>type</code></td>
+<td style="text-align: left">Tiled object type.</td>
+</tr>
+</tbody></table>
+
+                        <a href="Protocols/TiledObjectType.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TiledObjectType</span> <span class="p">:</span> <span class="kt"><a href="Protocols/TiledCustomReflectableType.html">TiledCustomReflectableType</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledObjectType.swift#L43-L50">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@SKTiled@objc(pl)TiledOverlayType"></a>
+                    <a name="//apple_ref/swift/Protocol/TiledOverlayType" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledOverlayType">TiledOverlayType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>The <code>TiledOverlayType</code> protocol describes an overlay structure that binds to a layer/mappable object.</p>
+
+                        <a href="Protocols/TiledOverlayType.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TiledOverlayType</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledOverlayType.swift#L34-L39">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@SKTiled@objc(pl)TiledSceneCameraDelegate"></a>
+                    <a name="//apple_ref/swift/Protocol/TiledSceneCameraDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledSceneCameraDelegate">TiledSceneCameraDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>Methods for interacting with the custom <code><a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a></code>. Classes conforming to this
+protocol are notified of camera position &amp; zoom changes unless the <code><a href="Protocols/TiledSceneCameraDelegate.html#/c:@M@SKTiled@objc(pl)TiledSceneCameraDelegate(py)receiveCameraUpdates">TiledSceneCameraDelegate.receiveCameraUpdates</a></code>
+flag is disabled.</p>
+
+<p>This delegate also receives mouse &amp; touch events and forwards them on to delegates accordingly.</p>
+
+<p><img src="../images/camera-delegate.svg" alt="Tiled Scene Camera Delegate"></p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>receiveCameraUpdates</td>
+<td>Delegate will receive camera updates.</td>
+</tr>
+<tr>
+<td>currentCoordinate</td>
+<td>The currently focused map coordinate.</td>
+</tr>
+</tbody></table>
+<h3 id='instance-methods' class='heading'>Instance Methods</h3>
+
+<table><thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>containedNodesChanged</td>
+<td>Called when the nodes in the camera view changes.</td>
+</tr>
+<tr>
+<td>cameraPositionChanged</td>
+<td>Called when the camera position changes.</td>
+</tr>
+<tr>
+<td>cameraZoomChanged</td>
+<td>Called when the camera zoom changes.</td>
+</tr>
+<tr>
+<td>cameraBoundsChanged</td>
+<td>Called when the camera bounds updated.</td>
+</tr>
+<tr>
+<td>sceneClicked</td>
+<td>Called when the scene is clicked. (macOS only)</td>
+</tr>
+<tr>
+<td>sceneRightClicked</td>
+<td>Called when the scene is right-clicked. (macOS only)</td>
+</tr>
+<tr>
+<td>sceneDoubleClicked</td>
+<td>Called when the scene is double-clicked. (macOS only)</td>
+</tr>
+<tr>
+<td>mousePositionChanged</td>
+<td>Called when the mouse moves in the scene. (macOS only)</td>
+</tr>
+<tr>
+<td>sceneDoubleTapped</td>
+<td>Called when the scene is double-tapped. (iOS only)</td>
+</tr>
+<tr>
+<td>sceneRotated</td>
+<td>Called when the scene is rotated via gesture. (iOS only)</td>
+</tr>
+</tbody></table>
+
+                        <a href="Protocols/TiledSceneCameraDelegate.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TiledSceneCameraDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledSceneCameraDelegate.swift#L65-L133">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled18TiledSceneDelegateP"></a>
+                    <a name="//apple_ref/swift/Protocol/TiledSceneDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SKTiled18TiledSceneDelegateP">TiledSceneDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>Methods for managing <code><a href="Classes/SKTilemap.html">SKTilemap</a></code> nodes in an SpriteKit <a href="https://developer.apple.com/reference/spritekit/skscene"><code>SKScene</code></a> scene.
+This protocol and the <code><a href="Classes/SKTiledScene.html">SKTiledScene</a></code> objects are included as a suggested way to use the
+<code><a href="Classes/SKTilemap.html">SKTilemap</a></code> class, but are not required.</p>
+
+<p>In this configuration, the tile map is a child of the root node and reference the custom
+<code><a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a></code> camera.</p>
+
+<p><img src="../images/scene-hierarchy.svg" alt="TiledSceneDelegate Overview"></p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Property</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">worldNode</td>
+<td style="text-align: left">Root container node. Tiled assets are parented to this node.</td>
+</tr>
+<tr>
+<td style="text-align: left">cameraNode</td>
+<td style="text-align: left">Custom scene camera.</td>
+</tr>
+<tr>
+<td style="text-align: left">tilemap</td>
+<td style="text-align: left">Tile map node.</td>
+</tr>
+</tbody></table>
+<h3 id='instance-methods' class='heading'>Instance Methods</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Method</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><a href="TiledSceneDelegate.html#load(tmxFile:inDirectory:withTilesets:ignoreProperties:loggingLevel:)">load(tmxFile:)</a></td>
+<td style="text-align: left">Load a tilemap from disk.</td>
+</tr>
+</tbody></table>
+
+                        <a href="Protocols/TiledSceneDelegate.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TiledSceneDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledSceneDelegate.swift#L63-L73">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate"></a>
+                    <a name="//apple_ref/swift/Protocol/TilemapDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate">TilemapDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>An interface to a tilemap object that allows the user to interact with it as it is being created as well as customizing its properties &amp; behaviors.</p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: center">Property</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: center"><code>zDeltaForLayers</code></td>
+<td style="text-align: left">Default z-distance between layers.</td>
+</tr>
+</tbody></table>
+<h3 id='instance-methods' class='heading'>Instance Methods</h3>
+
+<p>Delegate callbacks are called asynchronously as the map is being read from disk and rendered:</p>
+
+<table><thead>
+<tr>
+<th style="text-align: center">Method</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: center"><code>didBeginParsing</code></td>
+<td style="text-align: left">Called when the tilemap is instantiated.</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>didAddTileset</code></td>
+<td style="text-align: left">Called when a tileset is added to a map.</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>didAddLayer</code></td>
+<td style="text-align: left">Called when a layer is added to a tilemap.</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>didReadMap</code></td>
+<td style="text-align: left">Called when the tilemap is finished parsing.</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>didRenderMap</code></td>
+<td style="text-align: left">Called when the tilemap layers are finished rendering.</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>didAddNavigationGraph</code></td>
+<td style="text-align: left">Called when the a navigation graph is built for a layer.</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>objectForTileType</code></td>
+<td style="text-align: left">Specify a custom tile object for use in tile layers.</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>objectForVectorType</code></td>
+<td style="text-align: left">Specify a custom object for use in object groups.</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>objectForGraphType</code></td>
+<td style="text-align: left">Specify a custom graph node object for use in navigation graphs.</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>willAddTile</code></td>
+<td style="text-align: left">Called when a tile is about to be built.</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>didAddTile</code></td>
+<td style="text-align: left">Called when a tile has just been built.</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>attributesForNodes</code></td>
+<td style="text-align: left">Add custom attributes for Tiled nodes of the given type</td>
+</tr>
+</tbody></table>
+<h3 id='event-handlers' class='heading'>Event Handlers</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: center">Method</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: center"><code>mouseOverTileHandler</code></td>
+<td style="text-align: left">Custom tile mouse event handler (macOS only).</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>mouseOverObjectHandler</code></td>
+<td style="text-align: left">Custom object mouse event handler (macOS only).</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>tileClickedHandler</code></td>
+<td style="text-align: left">Custom tile mouse event handler (macOS only).</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>objectClickedHandler</code></td>
+<td style="text-align: left">Custom object mouse event handler (macOS only).</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>tileTouchedHandler</code></td>
+<td style="text-align: left">Custom tile touch event handler (iOS only).</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>objectTouchedHandler</code></td>
+<td style="text-align: left">Custom object touch event handler (iOS only).</td>
+</tr>
+</tbody></table>
+<h3 id='usage' class='heading'>Usage</h3>
+<h3 id='custom-objects' class='heading'>Custom Objects</h3>
+
+<p>Custom object methods can be used to substitute your own objects for tiles:</p>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">objectForTileType</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">SKTile</span><span class="o">.</span><span class="k">Type</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">named</span> <span class="o">==</span> <span class="s">"MyTile"</span><span class="p">)</span> <span class="p">{</span>
+       <span class="k">return</span> <span class="kt">MyTile</span><span class="o">.</span><span class="k">self</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kt">SKTile</span><span class="o">.</span><span class="k">self</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id='attribute-overrides' class='heading'>Attribute Overrides</h3>
+
+<p>The delegate method <a href="TilemapDelegate.html#attributesForNodes(ofType:named:globalIDs:)"><code>attributesForNodes</code></a> allows custom attributes to be added to an object based on global id, node type or name:</p>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">attributesForNodes</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">named</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">globalIDs</span><span class="p">:</span> <span class="p">[</span><span class="kt">UInt32</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">]?</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ofType</span> <span class="o">==</span> <span class="s">"barrel"</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">globalIDs</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">[</span><span class="s">"jumpBonus"</span><span class="p">:</span> <span class="s">"100"</span><span class="p">,</span> <span class="s">"hammerBonus"</span><span class="p">:</span> <span class="s">"300"</span><span class="p">]</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">[</span><span class="s">"jumpBonus"</span><span class="p">:</span> <span class="s">"300"</span><span class="p">,</span> <span class="s">"hammerBonus"</span><span class="p">:</span> <span class="s">"800"</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id='mouse-amp-touch-handlers' class='heading'>Mouse &amp; Touch Handlers</h3>
+
+<p>The optional delegate method <a href="TilemapDelegate.html#/s:7SKTiled17TilemapDelegateP18attributesForNodes6ofType5named9globalIDsSDyS2SGSgSSSg_AJSays6UInt32VGtF"><code>mouseOverTileHandler</code></a> allows mouse and touch event handlers to be added to tiles and vector objects:</p>
+<pre class="highlight swift"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">mouseOverTileHandler</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="kt">UInt32</span><span class="p">,</span> <span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">((</span><span class="kt">SKTile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())?</span> <span class="p">{</span>
+    <span class="k">guard</span> <span class="k">let</span> <span class="nv">tileType</span> <span class="o">=</span> <span class="n">ofType</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">nil</span>
+    <span class="p">}</span>
+
+    <span class="k">switch</span> <span class="n">tileType</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="s">"floors"</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span> <span class="p">(</span><span class="n">tile</span><span class="p">)</span> <span class="k">in</span> <span class="n">tile</span><span class="o">.</span><span class="n">tileData</span><span class="o">.</span><span class="nf">setValue</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="s">"color"</span><span class="p">,</span> <span class="s">"#308CC6"</span><span class="p">)</span> <span class="p">}</span>
+
+        <span class="k">case</span> <span class="s">"walls"</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span> <span class="p">(</span><span class="n">tile</span><span class="p">)</span> <span class="k">in</span> <span class="n">tile</span><span class="o">.</span><span class="n">tileData</span><span class="o">.</span><span class="nf">setValue</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="s">"color"</span><span class="p">,</span> <span class="s">"#8E6214"</span><span class="p">)</span> <span class="p">}</span>
+
+        <span class="k">default</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">nil</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>This method allows a developer to filter tiles by global id or type, or simply return a closure for all objects globally (regardless of global ID or type).</p>
+
+<p>The <a href="TiledEventHandler.html#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)tileClickedHandlerWithGlobalID:ofType:"><code>tileClickedHandler</code></a> allows you to set a custom click handler for tiles &amp; objects:</p>
+<pre class="highlight swift"><code><span class="kd">@objc</span> <span class="kd">func</span> <span class="nf">tileClickedHandler</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="kt">UInt32</span><span class="p">,</span> <span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">button</span><span class="p">:</span> <span class="kt">UInt8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">((</span><span class="kt">SKTile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())?</span> <span class="p">{</span>
+    <span class="k">switch</span> <span class="n">globalID</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">25</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span> <span class="p">(</span><span class="n">tile</span><span class="p">)</span> <span class="k">in</span>
+                <span class="n">tile</span><span class="o">.</span><span class="n">tileData</span><span class="o">.</span><span class="nf">setValue</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="s">"wasVisited"</span><span class="p">,</span> <span class="s">"true"</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="k">default</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">nil</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id='global-id-overrides' class='heading'>Global ID Overrides</h3>
+
+<p>The delegate method <code>willAddTile</code> allows the global ID of a tile to be modified <em>before</em> the tile is created:</p>
+<pre class="highlight swift"><code><span class="kd">@objc</span> <span class="kd">func</span> <span class="nf">willAddTile</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="kt">UInt32</span><span class="p">,</span> <span class="nv">coord</span><span class="p">:</span> <span class="n">simd_int2</span><span class="p">,</span> <span class="nv">in</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">UInt32</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">globalID</span> <span class="o">==</span> <span class="mi">217</span><span class="p">)</span> <span class="p">{</span>
+       <span class="k">return</span> <span class="mi">320</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">globalID</span>
+<span class="p">}</span>
+</code></pre>
+
+                        <a href="Protocols/TilemapDelegate.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TilemapDelegate</span> <span class="p">:</span> <span class="kt">TiledEventHandler</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TilemapDelegate.swift#L167-L244">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SKTiled17TilesetDataSourceP"></a>
+                    <a name="//apple_ref/swift/Protocol/TilesetDataSource" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SKTiled17TilesetDataSourceP">TilesetDataSource</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>Methods which allow the user to dynamically alter the properties of a tileset as it is being created.</p>
+<h3 id='instance-methods' class='heading'>Instance Methods</h3>
+
+<p>Delegate callbacks are called asynchronously as the tileset is being rendered.</p>
+
+<table><thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>willAddSpriteSheet</td>
+<td>Provide an image name for the tileset before textures are generated.</td>
+</tr>
+<tr>
+<td>willAddImage</td>
+<td>Provide an alernate image name for an image in a collection.</td>
+</tr>
+</tbody></table>
+<h3 id='usage' class='heading'>Usage</h3>
+
+<p>Implementing the <code>TilesetDataSource.willAddSpriteSheet</code> method allows the user to specify different spritesheet images. Take care
+that these images have the same dimensions &amp; layout.</p>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">MyScene</span><span class="p">:</span> <span class="kt">TilesetDataSource</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">willAddSpriteSheet</span><span class="p">(</span><span class="n">to</span> <span class="nv">tileset</span><span class="p">:</span> <span class="kt">SKTileset</span><span class="p">,</span> <span class="nv">fileNamed</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">currentSeason</span> <span class="o">==</span> <span class="o">.</span><span class="n">winter</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="s">"winter-tiles-16x16.png"</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">currentSeason</span> <span class="o">==</span> <span class="o">.</span><span class="n">summer</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="s">"summer-tiles-16x16.png"</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">fileNamed</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+                        <a href="Protocols/TilesetDataSource.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TilesetDataSource</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TilesetDataSource.swift#L63-L81">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class='footer'>
+      <p>© 2020 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external"><b>Michael Fessenden</b></a>. All rights reserved. Generated by <a class='link' href='https://github.com/realm/jazzy' target='_blank' rel='external'>jazzy v0.13.2</a></p>
+    </section>
+  </body>
+</div>
+</html>

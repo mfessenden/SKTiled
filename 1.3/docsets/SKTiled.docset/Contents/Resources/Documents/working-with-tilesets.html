@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title>Working with Tilesets  Reference</title>
+    <link rel='stylesheet' type='text/css' href='css/jazzy.css' />
+    <link rel='stylesheet' type='text/css' href='css/highlight.css' />
+    <!-- <link rel='stylesheet' type='text/css' href='css/custom.css' /> -->
+    <meta charset='utf-8'>
+    <script src='js/jquery.min.js' defer></script>
+    <script src='js/jazzy.js' defer></script>
+    <script src='js/retina-preprocess.js' defer></script>
+    <script src='js/retina.js' defer></script>
+  </head>
+  <body>
+
+
+    <a title='Working with Tilesets  Reference'></a>
+
+    <header class='header'>
+      <p class='header-col header-col--primary'>
+        <a class='header-link' href='index.html'>
+          SKTiled v1.3 Docs
+        </a>
+         (89% documented)
+      </p>
+    
+        <p class='header-col header-col--secondary'>
+          <a class='header-link' href='https://github.com/mfessenden/SKTiled'>
+            <img class='header-icon' src='img/gh.png'/>
+            View on GitHub
+          </a>
+        </p>
+    
+        <p class='header-col header-col--secondary'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+            <img class='header-icon' src='img/dash.png'/>
+            Install in Dash
+          </a>
+        </p>
+    </header>
+
+    <p class='breadcrumbs'>
+      <a class='breadcrumb' href='index.html'>SKTiled Reference</a>
+      <img class='carat' src='img/carat.png' />
+      Working with Tilesets  Reference
+    </p>
+
+    <div class='content-wrapper'>
+      <nav class='navigation'>
+        <ul class='nav-groups'>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Table of Contents.html'>Table of Contents</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='whats-new.html'>What&#39;s New</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='getting-started.html'>Getting Started</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='scene-setup.html'>Scene Setup</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-maps.html'>Working with Maps</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-tilesets.html'>Working with Tilesets</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-layers.html'>Working with Layers</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-tiles.html'>Working with Tiles</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='coordinates.html'>Coordinates</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='working-with-objects.html'>Working with Objects</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='tiled-properties.html'>Tiled Properties</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='gameplaykit.html'>GameplayKit</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='extending-sktiled.html'>Extending SKTiled</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='other-api-features.html'>Other API Features</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='debugging.html'>Debugging</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='troubleshooting.html'>Troubleshooting</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Protocols.html'>Protocols</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/DebugDrawableType.html'>DebugDrawableType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledGeometryType.html'>TiledGeometryType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledMappableGeometryType.html'>TiledMappableGeometryType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledOverlayType.html'>TiledOverlayType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledSceneDelegate.html'>TiledSceneDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TilemapDelegate.html'>TilemapDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TilesetDataSource.html'>TilesetDataSource</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Class Hierarchy.html'>Class Hierarchy</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilemap.html'>SKTilemap</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC21CameraZoomConstraintsV'>– CameraZoomConstraints</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilemap/RenderStatistics.html'>– RenderStatistics</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileset.html'>SKTileset</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledLayerObject.html'>TiledLayerObject</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledLayerObject/TileOffset.html'>– TileOffset</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileLayer.html'>SKTileLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKObjectGroup.html'>SKObjectGroup</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKGroupLayer.html'>SKGroupLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKImageLayer.html'>SKImageLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTile.html'>SKTile</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTile.html#/s:7SKTiled6SKTileC17TileAlignmentHintO'>– TileAlignmentHint</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTile.html#/s:7SKTiled6SKTileC12PhysicsShapeO'>– PhysicsShape</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTilesetData.html'>SKTilesetData</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileObject.html'>SKTileObject</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC4TypeO'>– TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC5ShapeO'>– TiledObjectShape</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO'>– CollisionType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTiledScene.html'>SKTiledScene</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTiledSceneCamera.html'>SKTiledSceneCamera</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/SKTiledGraphNode.html'>SKTiledGraphNode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TileAnimationFrame.html'>TileAnimationFrame</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TileFlags.html'>TileFlags</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TileID.html'>TileID</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Globals.html'>Globals</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals.html'>TiledGlobals</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals/Version.html'>– Version</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals/RenderQuality.html'>– RenderQuality</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals/DebugDisplayOptions.html'>– DebugDisplayOptions</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC15TimeDisplayModeO'>– TimeDisplayMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Classes/TiledGlobals/Renderer.html'>– Renderer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Enums/TileRenderMode.html'>TileRenderMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Enums/TileUpdateMode.html'>TileUpdateMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TextObjectAttributes.html'>TextObjectAttributes</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TileIsolationMode.html'>TileIsolationMode</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class='main-content'>
+
+        <section class='section'>
+          <div class='section-content'>
+            
+            <h1 id='working-with-tilesets' class='heading'>Working with Tilesets</h1>
+
+<ul>
+<li><a href="#accessing-tilesets">Accessing Tilesets</a></li>
+<li><a href="#preloading-tilesets">Preloading Tilesets</a></li>
+<li><a href="#accessing-tile-data">Accessing Tile Data</a></li>
+<li><a href="#updating-tile-data">Updating Tile Data</a></li>
+<li><a href="#updating-spritesheets">Updating Spritesheets</a></li>
+</ul>
+
+<p>Tile data are stored in <strong>tileset</strong> data structures, and stored in an array accessible with the <code><a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC8tilesetsShyAA9SKTilesetCGvp">SKTilemap.tilesets</a></code> property.</p>
+<h2 id='accessing-tilesets' class='heading'>Accessing Tilesets</h2>
+
+<p>Tilesets are created automatically for you when you load a tile map file. <strong>SKTiled</strong> supports both <em>inline</em> (stored in the TMX file) and <em>external</em> (stored in a separate TSX file) tilesets.</p>
+
+<p>To access a tileset, simply query the tilemap node:</p>
+<pre class="highlight swift"><code><span class="c1">// query any tileset</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">inlineTileset</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTileset</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"winter-tiles"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// do something with the tileset</span>
+<span class="p">}</span>
+
+<span class="c1">// query an externally saved tileset</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">externalTileset</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTileset</span><span class="p">(</span><span class="nv">fileNamed</span><span class="p">:</span> <span class="s">"winter-tiles.tsx"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// do something with the tileset</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Another useful feature is the ability to query the tileset associated with a global id:</p>
+<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tileset</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTileset</span><span class="p">(</span><span class="nv">forTile</span><span class="p">:</span> <span class="mi">102</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// do something with the tileset</span>
+<span class="p">}</span>
+</code></pre>
+<h2 id='preloading-tilesets' class='heading'>Preloading Tilesets</h2>
+
+<p>External tilesets can also be preloaded and passed to a tilemap when instantiated:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">tilesetFiles</span> <span class="o">=</span> <span class="p">[</span><span class="s">"winter-tiles.tsx"</span><span class="p">,</span> <span class="s">"spring-tiles.tsx"</span><span class="p">,</span> <span class="s">"summer-tiles.tsx"</span><span class="p">,</span> <span class="s">"fall-tiles.tsx"</span><span class="p">]</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">tilesets</span> <span class="o">=</span> <span class="kt">SKTileset</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">tsxFiles</span><span class="p">:</span> <span class="n">tilesetFiles</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// pass preloaded tilesets to parser</span>
+    <span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="s">"MyTilemap.tmx"</span><span class="p">,</span> <span class="nv">withTilesets</span><span class="p">:</span> <span class="n">tilesets</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">worldNode</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h2 id='accessing-tile-data' class='heading'>Accessing Tile Data</h2>
+
+<p>If you need to access tile data, you can call it from either the tilemap node, or a tileset instance with a global ID:</p>
+<pre class="highlight swift"><code><span class="c1">// query global id from tilemap</span>
+<span class="k">let</span> <span class="nv">tileDataFromMap</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTileData</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="mi">102</span><span class="p">)</span><span class="o">!</span>
+<span class="c1">// query global id from tileset</span>
+<span class="k">let</span> <span class="nv">tileDataFromTileset</span> <span class="o">=</span> <span class="n">tileset</span><span class="o">.</span><span class="nf">getTileData</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="mi">102</span><span class="p">)</span><span class="o">!</span>
+</code></pre>
+
+<p>It is also possible to query tile data with an arbitrary property (regardless of the value) or via the <code>type</code> property:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">breakables</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTileData</span><span class="p">(</span><span class="nv">withProperty</span><span class="p">:</span> <span class="s">"breakable"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">lights</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTileData</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="s">"light"</span><span class="p">)</span>
+</code></pre>
+<h2 id='updating-tile-data' class='heading'>Updating Tile Data</h2>
+
+<p>If you want to change the texture of an existing tile, you can use the <code>SKTilesetData.setTexture</code> method to update the texture:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">newTexture</span> <span class="o">=</span> <span class="kt">SKTexture</span><span class="p">(</span><span class="nv">imageNamed</span><span class="p">:</span> <span class="s">"updated-texture"</span><span class="p">)</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">oldTexture</span> <span class="o">=</span> <span class="n">tileData</span><span class="o">.</span><span class="nf">setTexture</span><span class="p">(</span><span class="n">newTexture</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">oldTextures</span><span class="o">.</span><span class="nf">append</span><span class="p">(</span><span class="n">oldTexture</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>You can additionally specify a frame number if the tile data contains animation:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">newTexture</span> <span class="o">=</span> <span class="kt">SKTexture</span><span class="p">(</span><span class="nv">imageNamed</span><span class="p">:</span> <span class="s">"updated-texture"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="k">let</span> <span class="nv">_</span> <span class="o">=</span> <span class="n">tileData</span><span class="o">.</span><span class="nf">setTexture</span><span class="p">(</span><span class="n">newTexture</span><span class="p">,</span> <span class="nv">forFrame</span><span class="p">:</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// texture is updated</span>
+<span class="p">}</span>
+</code></pre>
+<h2 id='updating-spritesheets' class='heading'>Updating Spritesheets</h2>
+
+<p>It is also possible to replace a tileset&rsquo;s spritesheet with a new source image:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">spritesheet</span> <span class="o">=</span> <span class="kt">URL</span><span class="p">(</span><span class="nv">fileURLWithPath</span><span class="p">:</span> <span class="s">"new-spritesheet.png"</span><span class="p">,</span> <span class="nv">relativeTo</span><span class="p">:</span> <span class="kt">Bundle</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">resourceURL</span><span class="p">)</span>
+<span class="n">tileset</span><span class="o">.</span><span class="nf">addTextures</span><span class="p">(</span><span class="nv">fromSpriteSheet</span><span class="p">:</span> <span class="n">spritesheet</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="nv">replace</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">transparent</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+</code></pre>
+
+<p>Doing this will update all of the current tiles, so be careful using this method.</p>
+
+<p>Next: <a href="working-with-layers.html">Working with Layers</a> - <a href="Documentation.html">Index</a></p>
+
+          </div>
+        </section>
+
+
+      </article>
+    </div>
+    <section class='footer'>
+      <p>© 2020 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external"><b>Michael Fessenden</b></a>. All rights reserved. Generated by <a class='link' href='https://github.com/realm/jazzy' target='_blank' rel='external'>jazzy v0.13.2</a></p>
+    </section>
+  </body>
+</div>
+</html>

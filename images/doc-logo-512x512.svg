@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512px" height="512px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>doc-logo-512x512</title>
+    <defs>
+        <linearGradient x1="51.5344763%" y1="23.6592387%" x2="51.5344763%" y2="127.001953%" id="linearGradient-1">
+            <stop stop-color="#C7C7C7" offset="0%"></stop>
+            <stop stop-color="#656464" offset="100%"></stop>
+        </linearGradient>
+        <path d="M165.374834,50 L346.625166,50 C386.743509,50 401.29139,54.1771525 415.958057,62.0209717 C430.624723,69.8647908 442.135209,81.3752767 449.979028,96.0419433 C457.822847,110.70861 462,125.256491 462,165.374834 L462,346.625166 C462,386.743509 457.822847,401.29139 449.979028,415.958057 C442.135209,430.624723 430.624723,442.135209 415.958057,449.979028 C401.29139,457.822847 386.743509,462 346.625166,462 L165.374834,462 C125.256491,462 110.70861,457.822847 96.0419433,449.979028 C81.3752767,442.135209 69.8647908,430.624723 62.0209717,415.958057 C54.1771525,401.29139 50,386.743509 50,346.625166 L50,165.374834 C50,125.256491 54.1771525,110.70861 62.0209717,96.0419433 C69.8647908,81.3752767 81.3752767,69.8647908 96.0419433,62.0209717 C110.70861,54.1771525 125.256491,50 165.374834,50 Z" id="path-2"></path>
+        <filter x="-4.1%" y="-3.2%" width="108.3%" height="108.3%" filterUnits="objectBoundingBox" id="filter-3">
+            <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="4" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="4.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.221497009 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <filter x="-3.9%" y="-2.9%" width="107.8%" height="107.8%" filterUnits="objectBoundingBox" id="filter-4">
+            <feMorphology radius="6" operator="erode" in="SourceAlpha" result="shadowSpreadInner1"></feMorphology>
+            <feGaussianBlur stdDeviation="3" in="shadowSpreadInner1" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="0" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.351678595 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <path d="M158.608212,74 L353.391788,74 C382.811907,74 393.480353,77.0632452 404.235908,82.8153792 C414.991464,88.5675133 423.432487,97.0085362 429.184621,107.764092 C434.936755,118.519647 438,129.188093 438,158.608212 L438,353.391788 C438,382.811907 434.936755,393.480353 429.184621,404.235908 C423.432487,414.991464 414.991464,423.432487 404.235908,429.184621 C393.480353,434.936755 382.811907,438 353.391788,438 L158.608212,438 C129.188093,438 118.519647,434.936755 107.764092,429.184621 C97.0085362,423.432487 88.5675133,414.991464 82.8153792,404.235908 C77.0632452,393.480353 74,382.811907 74,353.391788 L74,158.608212 C74,129.188093 77.0632452,118.519647 82.8153792,107.764092 C88.5675133,97.0085362 97.0085362,88.5675133 107.764092,82.8153792 C118.519647,77.0632452 129.188093,74 158.608212,74 Z" id="path-5"></path>
+        <filter x="-2.5%" y="-2.5%" width="104.9%" height="104.9%" filterUnits="objectBoundingBox" id="filter-7">
+            <feMorphology radius="1" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="0" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.318332059 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="50%" y1="4.52666905%" x2="50%" y2="127.982156%" id="linearGradient-8">
+            <stop stop-color="#FF6A6A" offset="0%"></stop>
+            <stop stop-color="#B13535" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-9">
+            <stop stop-color="#000000" stop-opacity="0.418651661" offset="0%"></stop>
+            <stop stop-color="#000000" offset="100%"></stop>
+        </linearGradient>
+        <filter x="-6.1%" y="-8.2%" width="112.1%" height="116.5%" filterUnits="objectBoundingBox" id="filter-10">
+            <feGaussianBlur stdDeviation="3.03030303" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <filter x="-6.1%" y="-8.2%" width="112.1%" height="116.5%" filterUnits="objectBoundingBox" id="filter-11">
+            <feGaussianBlur stdDeviation="3.03030303" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-12">
+            <stop stop-color="#000000" stop-opacity="0.418651661" offset="0%"></stop>
+            <stop stop-color="#000000" offset="100%"></stop>
+        </linearGradient>
+        <filter x="-6.1%" y="-8.3%" width="112.2%" height="116.7%" filterUnits="objectBoundingBox" id="filter-13">
+            <feGaussianBlur stdDeviation="3.03030303" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <filter x="-6.1%" y="-8.3%" width="112.2%" height="116.7%" filterUnits="objectBoundingBox" id="filter-14">
+            <feGaussianBlur stdDeviation="3.03030303" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-15">
+            <stop stop-color="#BCBCBC" offset="0%"></stop>
+            <stop stop-color="#5B5A5A" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-16">
+            <stop stop-color="#BCBCBC" offset="0%"></stop>
+            <stop stop-color="#5B5A5A" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="macOS" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="AppIcon.appiconset/icon_512x512">
+            <g id="Background---macOS">
+                <g id="Outer">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                    <use fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+                    <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-2"></use>
+                </g>
+                <mask id="mask-6" fill="white">
+                    <use xlink:href="#path-5"></use>
+                </mask>
+                <g id="Mask" fill="black" fill-opacity="1">
+                    <use filter="url(#filter-7)" xlink:href="#path-5"></use>
+                </g>
+                <g id="Group" mask="url(#mask-6)" fill="url(#linearGradient-8)">
+                    <g id="Background---Red">
+                        <rect x="0" y="0" width="512" height="512"></rect>
+                    </g>
+                </g>
+            </g>
+            <g id="Shadow" opacity="0.599965533" transform="translate(106.000000, 152.000000)">
+                <g id="Logo">
+                    <g id="tile-lighter-lt" transform="translate(0.000000, 66.594595)" fill="url(#linearGradient-9)">
+                        <polygon id="Shadow" style="mix-blend-mode: overlay;" filter="url(#filter-10)" points="0 47.5705706 75 5.45176183e-15 150 47.5705706 150 62.9159159 75 110.486486 0 62.9159159"></polygon>
+                    </g>
+                    <g id="tile-lighter-rt" transform="translate(149.242424, 66.594595)" fill="url(#linearGradient-9)">
+                        <polygon id="Shadow" style="mix-blend-mode: overlay;" filter="url(#filter-11)" points="0 47.5705706 75 5.45176183e-15 150 47.5705706 150 62.9159159 75 110.486486 0 62.9159159"></polygon>
+                    </g>
+                    <g id="tile-flat" transform="translate(75.757576, 115.027027)" fill="url(#linearGradient-12)">
+                        <polygon id="Shadow" style="mix-blend-mode: overlay;" filter="url(#filter-13)" points="0 46.9189189 74.2424242 5.37708016e-15 148.484848 46.9189189 148.484848 62.0540541 74.2424242 108.972973 0 62.0540541"></polygon>
+                    </g>
+                    <g id="tile-flat-copy" transform="translate(75.757576, 0.000000)" fill="url(#linearGradient-12)">
+                        <polygon id="Shadow" style="mix-blend-mode: overlay;" filter="url(#filter-14)" points="0 46.9189189 74.2424242 5.37708016e-15 148.484848 46.9189189 148.484848 62.0540541 74.2424242 108.972973 0 62.0540541"></polygon>
+                    </g>
+                </g>
+            </g>
+            <g id="Logo" transform="translate(106.000000, 144.000000)">
+                <g id="Group" transform="translate(0.000000, 66.594595)">
+                    <g id="tile-lighter" transform="translate(0.757576, 0.756757)">
+                        <g id="Mask">
+                            <polygon id="left-side" fill="#A1A7DD" points="0 46.9189189 74.2424242 93.8378378 74.2424242 108.972973 0 62.0540541"></polygon>
+                            <polygon id="right-side" fill="#666EB8" points="74.2424242 93.8378378 148.484848 46.9189189 148.484848 62.0540541 74.2424242 108.972973"></polygon>
+                            <polygon id="top" fill="#848CDF" points="74.2424242 5.37708016e-15 0 46.9189189 74.2424242 93.8378378 148.484848 46.9189189"></polygon>
+                        </g>
+                        <g id="Rims" opacity="0.55" style="mix-blend-mode: screen;" transform="translate(0.000000, 47.258900)" fill="#B3B8ED">
+                            <path d="M0.639716727,0.0643001692 L73.6027075,46.1746567 C74.0009598,46.4263398 74.2424242,46.8645797 74.2424242,47.3356946 C74.2424242,47.565977 74.0557435,47.7526577 73.8254612,47.7526577 C73.7466059,47.7526577 73.6693671,47.7302969 73.6027075,47.6881702 L0.639716727,1.57781368 C0.241464472,1.32613056 5.7694936e-17,0.887890619 0,0.416775714 C-2.82014536e-17,0.186493369 0.186680725,-0.000187355643 0.41696307,-0.000187355643 C0.49581837,-0.000187355643 0.573057191,0.0221734012 0.639716727,0.0643001692 Z" id="left-rim"></path>
+                            <path d="M74.882141,46.1746567 L147.845132,0.0643001692 C148.039799,-0.0587232786 148.297338,-0.000644811168 148.420361,0.194022057 C148.462488,0.260681593 148.484848,0.337920414 148.484848,0.416775714 C148.484848,0.887890619 148.243384,1.32613056 147.845132,1.57781368 L74.882141,47.6881702 C74.6874741,47.8111936 74.4299352,47.7531152 74.3069118,47.5584483 C74.264785,47.4917888 74.2424242,47.4145499 74.2424242,47.3356946 C74.2424242,46.8645797 74.4838887,46.4263398 74.882141,46.1746567 Z" id="right-rim"></path>
+                            <rect id="front-rim" x="73.4848485" y="46.5789379" width="1.51515152" height="15.1351351" rx="0.757575758"></rect>
+                        </g>
+                        <rect id="TINT" fill="url(#linearGradient-15)" opacity="0.5" style="mix-blend-mode: overlay;" x="-0.757575758" y="-0.756756757" width="150" height="110.486486"></rect>
+                    </g>
+                </g>
+                <g id="Group" transform="translate(149.242424, 66.594595)">
+                    <g id="tile-lighter" transform="translate(0.757576, 0.756757)">
+                        <g id="Mask">
+                            <polygon id="left-side" fill="#A1A7DD" points="0 46.9189189 74.2424242 93.8378378 74.2424242 108.972973 0 62.0540541"></polygon>
+                            <polygon id="right-side" fill="#666EB8" points="74.2424242 93.8378378 148.484848 46.9189189 148.484848 62.0540541 74.2424242 108.972973"></polygon>
+                            <polygon id="top" fill="#848CDF" points="74.2424242 5.37708016e-15 0 46.9189189 74.2424242 93.8378378 148.484848 46.9189189"></polygon>
+                        </g>
+                        <g id="Rims" opacity="0.55" style="mix-blend-mode: screen;" transform="translate(0.000000, 47.258900)" fill="#B3B8ED">
+                            <path d="M0.639716727,0.0643001692 L73.6027075,46.1746567 C74.0009598,46.4263398 74.2424242,46.8645797 74.2424242,47.3356946 C74.2424242,47.565977 74.0557435,47.7526577 73.8254612,47.7526577 C73.7466059,47.7526577 73.6693671,47.7302969 73.6027075,47.6881702 L0.639716727,1.57781368 C0.241464472,1.32613056 5.7694936e-17,0.887890619 0,0.416775714 C-2.82014536e-17,0.186493369 0.186680725,-0.000187355643 0.41696307,-0.000187355643 C0.49581837,-0.000187355643 0.573057191,0.0221734012 0.639716727,0.0643001692 Z" id="left-rim"></path>
+                            <path d="M74.882141,46.1746567 L147.845132,0.0643001692 C148.039799,-0.0587232786 148.297338,-0.000644811168 148.420361,0.194022057 C148.462488,0.260681593 148.484848,0.337920414 148.484848,0.416775714 C148.484848,0.887890619 148.243384,1.32613056 147.845132,1.57781368 L74.882141,47.6881702 C74.6874741,47.8111936 74.4299352,47.7531152 74.3069118,47.5584483 C74.264785,47.4917888 74.2424242,47.4145499 74.2424242,47.3356946 C74.2424242,46.8645797 74.4838887,46.4263398 74.882141,46.1746567 Z" id="right-rim"></path>
+                            <rect id="front-rim" x="73.4848485" y="46.5789379" width="1.51515152" height="15.1351351" rx="0.757575758"></rect>
+                        </g>
+                        <rect id="TINT" fill="url(#linearGradient-15)" opacity="0.5" style="mix-blend-mode: overlay;" x="-0.757575758" y="-0.756756757" width="150" height="110.486486"></rect>
+                    </g>
+                </g>
+                <g id="tile" transform="translate(75.757576, 115.027027)">
+                    <g id="Mask">
+                        <polygon id="left-side" fill="#7A83DA" points="0 46.9189189 74.2424242 93.8378378 74.2424242 108.972973 0 62.0540541"></polygon>
+                        <polygon id="right-side" fill="#4D55A8" points="74.2424242 93.8378378 148.484848 46.9189189 148.484848 62.0540541 74.2424242 108.972973"></polygon>
+                        <polygon id="top" fill="#5F6AD3" points="74.2424242 5.37708016e-15 0 46.9189189 74.2424242 93.8378378 148.484848 46.9189189"></polygon>
+                    </g>
+                    <g id="Rims" opacity="0.55" style="mix-blend-mode: screen;" transform="translate(0.000000, 47.258900)" fill="#A5ADFE">
+                        <path d="M0.639716727,0.0643001692 L73.6027075,46.1746567 C74.0009598,46.4263398 74.2424242,46.8645797 74.2424242,47.3356946 C74.2424242,47.565977 74.0557435,47.7526577 73.8254612,47.7526577 C73.7466059,47.7526577 73.6693671,47.7302969 73.6027075,47.6881702 L0.639716727,1.57781368 C0.241464472,1.32613056 5.7694936e-17,0.887890619 0,0.416775714 C-2.82014536e-17,0.186493369 0.186680725,-0.000187355643 0.41696307,-0.000187355643 C0.49581837,-0.000187355643 0.573057191,0.0221734012 0.639716727,0.0643001692 Z" id="left-rim"></path>
+                        <path d="M74.882141,46.1746567 L147.845132,0.0643001692 C148.039799,-0.0587232786 148.297338,-0.000644811168 148.420361,0.194022057 C148.462488,0.260681593 148.484848,0.337920414 148.484848,0.416775714 C148.484848,0.887890619 148.243384,1.32613056 147.845132,1.57781368 L74.882141,47.6881702 C74.6874741,47.8111936 74.4299352,47.7531152 74.3069118,47.5584483 C74.264785,47.4917888 74.2424242,47.4145499 74.2424242,47.3356946 C74.2424242,46.8645797 74.4838887,46.4263398 74.882141,46.1746567 Z" id="right-rim"></path>
+                        <rect id="front-rim" x="73.4848485" y="46.5789379" width="1.51515152" height="15.1351351" rx="0.757575758"></rect>
+                    </g>
+                    <rect id="TINT" fill="url(#linearGradient-16)" opacity="0.5" style="mix-blend-mode: overlay;" x="0" y="0" width="148.484848" height="108.972973"></rect>
+                </g>
+                <g id="tile" transform="translate(75.757576, 0.000000)">
+                    <g id="Mask">
+                        <polygon id="left-side" fill="#7A83DA" points="0 46.9189189 74.2424242 93.8378378 74.2424242 108.972973 0 62.0540541"></polygon>
+                        <polygon id="right-side" fill="#4D55A8" points="74.2424242 93.8378378 148.484848 46.9189189 148.484848 62.0540541 74.2424242 108.972973"></polygon>
+                        <polygon id="top" fill="#5F6AD3" points="74.2424242 5.37708016e-15 0 46.9189189 74.2424242 93.8378378 148.484848 46.9189189"></polygon>
+                    </g>
+                    <g id="Rims" opacity="0.55" style="mix-blend-mode: screen;" transform="translate(0.000000, 47.258900)" fill="#A5ADFE">
+                        <path d="M0.639716727,0.0643001692 L73.6027075,46.1746567 C74.0009598,46.4263398 74.2424242,46.8645797 74.2424242,47.3356946 C74.2424242,47.565977 74.0557435,47.7526577 73.8254612,47.7526577 C73.7466059,47.7526577 73.6693671,47.7302969 73.6027075,47.6881702 L0.639716727,1.57781368 C0.241464472,1.32613056 5.7694936e-17,0.887890619 0,0.416775714 C-2.82014536e-17,0.186493369 0.186680725,-0.000187355643 0.41696307,-0.000187355643 C0.49581837,-0.000187355643 0.573057191,0.0221734012 0.639716727,0.0643001692 Z" id="left-rim"></path>
+                        <path d="M74.882141,46.1746567 L147.845132,0.0643001692 C148.039799,-0.0587232786 148.297338,-0.000644811168 148.420361,0.194022057 C148.462488,0.260681593 148.484848,0.337920414 148.484848,0.416775714 C148.484848,0.887890619 148.243384,1.32613056 147.845132,1.57781368 L74.882141,47.6881702 C74.6874741,47.8111936 74.4299352,47.7531152 74.3069118,47.5584483 C74.264785,47.4917888 74.2424242,47.4145499 74.2424242,47.3356946 C74.2424242,46.8645797 74.4838887,46.4263398 74.882141,46.1746567 Z" id="right-rim"></path>
+                        <rect id="front-rim" x="73.4848485" y="46.5789379" width="1.51515152" height="15.1351351" rx="0.757575758"></rect>
+                    </g>
+                    <rect id="TINT" fill="url(#linearGradient-16)" opacity="0.5" style="mix-blend-mode: overlay;" x="0" y="0" width="148.484848" height="108.972973"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
