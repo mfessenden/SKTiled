@@ -870,6 +870,9 @@
 		4C440B971DAE911000DEC9A4 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				4C440BAB1DAE913A00DEC9A4 /* iOS */,
+				4C440BA11DAE913000DEC9A4 /* macOS */,
+				4C24B17F20694D2D0027EBD5 /* tvOS */,
 				4C51A2982073E4B300D12A56 /* Extensions */,
 				4C4184A41F34B51D004E392A /* DemoController.swift */,
 				4CF1D1F22555E0DE00A6CC25 /* DemoPreferences.swift */,
@@ -1106,9 +1109,6 @@
 				4CBA61931D8A0A6C00B31FC1 /* Sources */,
 				4CBA617F1D8A0A4600B31FC1 /* Assets */,
 				4C440B971DAE911000DEC9A4 /* Demo */,
-				4C440BAB1DAE913A00DEC9A4 /* iOS */,
-				4C440BA11DAE913000DEC9A4 /* macOS */,
-				4C24B17F20694D2D0027EBD5 /* tvOS */,
 				4CA6A7DA2184F532002BC924 /* Tests */,
 				4C6E496E2555F4E50033ED1A /* Configuration */,
 				4CBA61661D8A048200B31FC1 /* Products */,
@@ -1446,6 +1446,7 @@
 				TargetAttributes = {
 					4C17747E1D909740000C0AFD = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 747QKN4G7U;
 						LastSwiftMigration = 1150;
 						ProvisioningStyle = Automatic;
 					};
@@ -1456,6 +1457,7 @@
 					};
 					4C24B16920694C470027EBD5 = {
 						CreatedOnToolsVersion = 9.2;
+						DevelopmentTeam = 747QKN4G7U;
 						LastSwiftMigration = 1200;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -1492,6 +1494,7 @@
 					};
 					4CBA61641D8A048200B31FC1 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 747QKN4G7U;
 						LastSwiftMigration = 1150;
 						ProvisioningStyle = Automatic;
 					};
@@ -2322,7 +2325,7 @@
 				CURRENT_PROJECT_VERSION = 1220000;
 				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/macOS/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Demo/macOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MARKETING_VERSION = 1.22;
 				OTHER_SWIFT_FLAGS = "-DRENDER_STATS -DSKTILED_DEMO";
@@ -2346,7 +2349,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1220000;
 				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
-				INFOPLIST_FILE = "$(SRCROOT)/macOS/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Demo/macOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MARKETING_VERSION = 1.22;
 				OTHER_SWIFT_FLAGS = "-DRENDER_STATS -DSKTILED_DEMO";
@@ -2440,7 +2443,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = "$(SRCROOT)/tvOS/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Demo/tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.22;
 				OTHER_SWIFT_FLAGS = "-DRENDER_STATS -DSKTILED_DEMO";
@@ -2470,7 +2473,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = "$(SRCROOT)/tvOS/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Demo/tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.22;
 				OTHER_SWIFT_FLAGS = "-DRENDER_STATS -DSKTILED_DEMO";
@@ -2862,7 +2865,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1220000;
 				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
-				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Demo/iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.22;
 				OTHER_SWIFT_FLAGS = "-DRENDER_STATS -DSKTILED_DEMO";
@@ -2882,7 +2885,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CURRENT_PROJECT_VERSION = 1220000;
 				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
-				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Demo/iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.22;
 				OTHER_SWIFT_FLAGS = "-DRENDER_STATS -DSKTILED_DEMO";
