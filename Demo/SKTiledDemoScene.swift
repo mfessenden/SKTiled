@@ -69,8 +69,9 @@ public class SKTiledDemoScene: SKTiledScene {
 
     override public var isPaused: Bool {
         willSet {
-            let pauseMessage = (newValue == true) ? "Paused" : ""
-            updatePauseInfo(msg: pauseMessage)
+            
+            guard newValue != isPaused else { return }
+            updatePauseInfo(isPaused: newValue)
         }
     }
 
@@ -232,11 +233,15 @@ public class SKTiledDemoScene: SKTiledScene {
             userInfo: ["cameraInfo": msg]
         )
     }
-
-    public func updatePauseInfo(msg: String) {
+    /**
+     Updates the pause information in the view controller.
+    
+    - parameter isPaused:`Bool` scene is paused.
+    */
+    public func updatePauseInfo(isPaused: Bool) {
         NotificationCenter.default.post(
             name: Notification.Name.Demo.UpdateDebugging,
-            object: nil, userInfo: ["pauseInfo": msg]
+            object: nil, userInfo: ["pauseInfo": isPaused]
         )
     }
 

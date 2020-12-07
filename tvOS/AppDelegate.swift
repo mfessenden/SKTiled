@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  SKTiled Demo
+//  SKTiled Demo - tvOS
 //
 //  Created by Michael Fessenden.
 //
@@ -63,4 +63,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
-

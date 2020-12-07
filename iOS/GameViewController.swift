@@ -1,6 +1,6 @@
 //
 //  GameViewController.swift
-//  SKTiled Demo
+//  SKTiled Demo - iOS
 //
 //  Created by Michael Fessenden.
 //
@@ -121,7 +121,7 @@ class GameViewController: UIViewController, Loggable {
         NotificationCenter.default.addObserver(self, selector: #selector(tilemapUpdateModeChanged), name: Notification.Name.Map.UpdateModeChanged, object: nil)
 
         demoController.loadScene(url: currentURL, usePreviousCamera: demoController.preferences.usePreviousCamera)
-        
+
 
         // rotate device icon
         addWiggleAnimationToView(viewToAnimate: rotateDeviceIcon)
@@ -138,8 +138,8 @@ class GameViewController: UIViewController, Loggable {
         wiggle.timingFunctions = [easeInOutTiming, easeInOutTiming, easeInOutTiming]
         wiggle.repeatCount = HUGE
         viewToAnimate.layer.add(wiggle, forKey:"wiggle")
-        
-        
+
+
     }
 
     /// allow correct rotating
@@ -173,7 +173,7 @@ class GameViewController: UIViewController, Loggable {
         tileInfoLabel.text = "Tile: "
         propertiesInfoLabel.text = "--"
         cameraInfoLabel.text = "Camera:"
-        pauseInfoLabel.text = "-"
+        pauseInfoLabel.text = ""
         debugInfoLabel.text = "-"
 
         let shadowColor = SKColor(white: 0.1, alpha: 0.65)
@@ -360,7 +360,7 @@ class GameViewController: UIViewController, Loggable {
     /**
      Update the debugging labels with scene information.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func updateDebuggingOutput(notification: Notification) {
         if let mapInfo = notification.userInfo!["mapInfo"] {
@@ -381,15 +381,26 @@ class GameViewController: UIViewController, Loggable {
             }
                 }
 
-        if let pauseInfo = notification.userInfo!["pauseInfo"] {
-            pauseInfoLabel.text = pauseInfo as? String
-            }
+        if let sceneIsPaused = notification.userInfo!["pauseInfo"] as? Bool {
+            let fontColor: UIColor = (sceneIsPaused == false) ? UIColor.white : UIColor(hexString: "#2CF639")
+            let labelStyle = NSMutableParagraphStyle()
+            labelStyle.alignment = .center
+
+            let pauseLabelAttributes = [
+                .foregroundColor: fontColor,
+                .paragraphStyle: labelStyle
+            ] as [NSAttributedString.Key: Any]
+
+            let pauseString = (sceneIsPaused == false) ? "" : "•Paused•"
+            let outputString = NSMutableAttributedString(string: pauseString, attributes: pauseLabelAttributes)
+            pauseInfoLabel.attributedText = outputString
         }
+    }
 
     /**
      Update the camera debug information.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func sceneCameraUpdated(notification: Notification) {
         guard let camera = notification.object as? SKTiledSceneCamera else {
@@ -408,9 +419,9 @@ class GameViewController: UIViewController, Loggable {
     }
 
     /**
-     Update the the command string label.
+     Update the the command string label. Called when the `Notification.Name.Debug.CommandIssued` notification is sent.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func updateCommandString(notification: Notification) {
         var duration: TimeInterval = 3.0
@@ -438,7 +449,7 @@ class GameViewController: UIViewController, Loggable {
     /**
      Enables/disable button controls based on the current map attributes.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func tilemapWasUpdated(notification: Notification) {
         guard let tilemap = notification.object as? SKTilemap else { return }
@@ -492,7 +503,7 @@ class GameViewController: UIViewController, Loggable {
     /**
      Updates the render stats debugging info.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func renderStatsUpdated(notification: Notification) {
         guard let renderStats = notification.object as? SKTilemap.RenderStatistics else { return }
@@ -515,7 +526,7 @@ class GameViewController: UIViewController, Loggable {
     /**
      Show/Hide the render stats data.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func renderStatisticsVisibilityChanged(notification: Notification) {
         guard let userInfo = notification.userInfo as? [String: Any],
@@ -529,52 +540,13 @@ class GameViewController: UIViewController, Loggable {
     /**
      Callback when cache is updated.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func tilemapUpdateModeChanged(notification: Notification) {
         guard let tilemap = notification.object as? SKTilemap else { return }
         self.statsRenderModeLabel.text = "Mode: \(tilemap.updateMode.name)"
     }
 }
-
-
-extension UILabel {
-    /**
-     Set the string value of the text field, with optional animated fade.
-
-     - parameter newValue: `String` new text value.
-     - parameter animated: `Bool` enable fade out effect.
-     - parameter interval: `TimeInterval` effect length.
-     */
-    func setTextValue(_ newValue: String, animated: Bool = true, interval: TimeInterval = 0.7) {
-        if animated {
-            animate(change: { self.text = newValue }, interval: interval)
-        } else {
-            text = newValue
-        }
-    }
-
-    /**
-     Private function to animate a fade effect.
-
-     - parameter change: `() -> Void` closure.
-     - parameter interval: `TimeInterval` effect length.
-     */
-    private func animate(change: @escaping () -> Void, interval: TimeInterval) {
-        let fadeDuration: TimeInterval = 0.5
-
-        UIView.animate(withDuration: 0, delay: 0, options: UIView.AnimationOptions.curveEaseOut, animations: {
-            self.text = ""
-            self.alpha = 1.0
-        }, completion: { (Bool) -> Void in
-            change()
-            UIView.animate(withDuration: fadeDuration, delay: interval, options: UIView.AnimationOptions.curveEaseOut, animations: {
-                self.alpha = 0.0
-            }, completion: nil)
-        })
-    }
-}
-
 
 
 

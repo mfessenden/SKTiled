@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -331,28 +331,28 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bgh-ex-Ztr" userLabel="Output-Top">
-                                <rect key="frame" x="616" y="647" width="49" height="61"/>
+                                <rect key="frame" x="613" y="650" width="55" height="58"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Rpo-Bf-MrJ" userLabel="Camera Info Label">
-                                        <rect key="frame" x="-2" y="46" width="53" height="15"/>
+                                        <rect key="frame" x="1" y="44" width="52" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Camera" id="96K-OU-ekP">
-                                            <font key="font" metaFont="systemMedium" size="12"/>
+                                            <font key="font" size="12" name="Menlo-Regular"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qaU-aN-dXC" userLabel="Paused Label">
-                                        <rect key="frame" x="-1" y="23" width="51" height="15"/>
+                                        <rect key="frame" x="1" y="22" width="52" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Paused" id="8mb-3y-U6G">
-                                            <font key="font" metaFont="systemMedium" size="12"/>
+                                            <font key="font" size="12" name="Menlo-Regular"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="laT-E3-Leu" userLabel="Isolate Label">
-                                        <rect key="frame" x="1" y="0.0" width="47" height="15"/>
+                                        <rect key="frame" x="-2" y="0.0" width="59" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Isolate" id="sVx-4m-rwW">
-                                            <font key="font" metaFont="systemMedium" size="12"/>
+                                            <font key="font" size="12" name="Menlo-Regular"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -370,36 +370,36 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bpV-ih-FVj" userLabel="Output-Bottom">
-                                <rect key="frame" x="606" y="56" width="69" height="84"/>
+                                <rect key="frame" x="598" y="54" width="84" height="80"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P0U-y9-0fU" userLabel="Map Info Label">
-                                        <rect key="frame" x="16" y="69" width="37" height="15"/>
+                                        <rect key="frame" x="24" y="66" width="37" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Map:" id="exA-0S-gy3">
-                                            <font key="font" metaFont="systemMedium" size="12"/>
+                                            <font key="font" size="12" name="Menlo-Regular"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oa4-I2-u1i" userLabel="Tile Info Label">
-                                        <rect key="frame" x="18" y="46" width="33" height="15"/>
+                                        <rect key="frame" x="20" y="44" width="45" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Tile:" id="sRi-Cf-RZd">
-                                            <font key="font" metaFont="systemMedium" size="12"/>
+                                            <font key="font" size="12" name="Menlo-Regular"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3AA-Cl-qmn" userLabel="Properties Info Label">
-                                        <rect key="frame" x="-2" y="23" width="73" height="15"/>
+                                        <rect key="frame" x="-2" y="22" width="88" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Properties:" id="cFa-yZ-KBh">
-                                            <font key="font" metaFont="systemMedium" size="12"/>
+                                            <font key="font" size="12" name="Menlo-Regular"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="npC-Jr-qjF" userLabel="Debug Info Label">
-                                        <rect key="frame" x="11" y="0.0" width="46" height="15"/>
+                                        <rect key="frame" x="20" y="0.0" width="45" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Debug" id="faQ-9y-P5R" userLabel="Debug Info Label">
-                                            <font key="font" metaFont="systemMedium" size="12"/>
+                                            <font key="font" size="12" name="Menlo-Regular"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -423,10 +423,10 @@
                                 </customSpacing>
                             </stackView>
                             <stackView alphaValue="0.84999999999999998" distribution="fillEqually" orientation="horizontal" alignment="top" spacing="12" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LqZ-dY-ggy" userLabel="Controls">
-                                <rect key="frame" x="381" y="22" width="518" height="22"/>
+                                <rect key="frame" x="381" y="22" width="518" height="20"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IwQ-St-3Wv" userLabel="Fit Button">
-                                        <rect key="frame" x="0.0" y="-1" width="94" height="23"/>
+                                        <rect key="frame" x="-1" y="-2" width="96" height="23"/>
                                         <buttonCell key="cell" type="roundTextured" title="fit view" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" inset="2" id="rDK-p5-LCC">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -437,7 +437,7 @@
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nuZ-Nw-3Kh" userLabel="Grid Button">
-                                        <rect key="frame" x="106" y="-1" width="94" height="23"/>
+                                        <rect key="frame" x="105" y="-2" width="96" height="23"/>
                                         <buttonCell key="cell" type="roundTextured" title="show grid" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" inset="2" id="0tE-qU-scK">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -448,7 +448,7 @@
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="npW-cn-J3N" userLabel="Graph Button">
-                                        <rect key="frame" x="212" y="-1" width="94" height="23"/>
+                                        <rect key="frame" x="211" y="-2" width="96" height="23"/>
                                         <buttonCell key="cell" type="roundTextured" title="show graph" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" inset="2" id="bG8-NK-J7V">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -459,7 +459,7 @@
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rbx-7u-m9u" userLabel="Objects Button">
-                                        <rect key="frame" x="318" y="-1" width="94" height="23"/>
+                                        <rect key="frame" x="317" y="-2" width="96" height="23"/>
                                         <buttonCell key="cell" type="roundTextured" title="show objects" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" inset="2" id="6Iv-9I-VvD">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -470,7 +470,7 @@
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H0N-Ds-9yi" userLabel="Next Button">
-                                        <rect key="frame" x="424" y="-1" width="94" height="23"/>
+                                        <rect key="frame" x="423" y="-2" width="96" height="23"/>
                                         <buttonCell key="cell" type="roundTextured" title="next" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" inset="2" id="DO4-5u-aVv">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -596,9 +596,9 @@
                                 </customSpacing>
                             </stackView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SyM-6f-mF1" userLabel="Version Label">
-                                <rect key="frame" x="618" y="4" width="44" height="11"/>
+                                <rect key="frame" x="617" y="4" width="47" height="9"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="version:" id="kYc-am-iL6">
-                                    <font key="font" metaFont="systemMedium" size="9"/>
+                                    <font key="font" size="8" name="Menlo-Regular"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="0.65000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>

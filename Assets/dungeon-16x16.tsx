@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.2.0" name="dungeon-16x16" tilewidth="16" tileheight="16" tilecount="552" columns="23">
+<tileset version="1.4" tiledversion="1.4.3" name="dungeon-16x16" tilewidth="16" tileheight="16" tilecount="552" columns="23">
  <properties>
   <property name="spritesheet" value="User/dungeon-red-16x16.png"/>
  </properties>
@@ -258,5 +258,13 @@
    <property name="walkable" type="bool" value="true"/>
    <property name="weight" type="float" value="-1000"/>
   </properties>
+ </tile>
+ <tile id="452">
+  <animation>
+   <frame tileid="452" duration="150"/>
+   <frame tileid="453" duration="150"/>
+   <frame tileid="454" duration="150"/>
+   <frame tileid="455" duration="150"/>
+  </animation>
  </tile>
 </tileset>

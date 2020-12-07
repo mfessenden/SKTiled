@@ -339,7 +339,7 @@ internal struct TiledObjectColors {
 
 // MARK: - Extensions
 
-
+/// :nodoc:
 extension TiledGlobals: CustomDebugReflectable {
     
     func dumpStatistics() {

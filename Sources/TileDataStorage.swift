@@ -129,6 +129,11 @@ internal class TileDataStorage: Loggable {
 
     // MARK: - Notifications
 
+    /**
+     Add a tile to storage. Called when the `Notification.Name.Layer.TileAdded` notification is sent.
+     
+     - parameter notification: `Notification` event notification.
+     */
     @objc func tileAddedToLayer(notification: Notification) {
         guard let tile = notification.object as? SKTile else { return }
         addTileToCache(tile: tile)
@@ -149,7 +154,7 @@ internal class TileDataStorage: Loggable {
     /**
      Called when a map or layer node `showObjects` attribute is changed.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func objectProxyVisibilityChanged(notification: Notification) {
         guard let proxies = notification.object as? [TileObjectProxy],
@@ -169,7 +174,7 @@ internal class TileDataStorage: Loggable {
     /**
      Called when tile data is changed via the tile `renderMode` flag.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func tileDataChanged(notification: Notification) {
         guard let tile = notification.object as? SKTile else { return }
@@ -201,7 +206,7 @@ internal class TileDataStorage: Loggable {
     /**
      Called when a tileset's spritesheet is updated.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func tilesetSpriteSheetUpdated(notification: Notification) {
         guard let tileset = notification.object as? SKTileset,
@@ -224,7 +229,7 @@ internal class TileDataStorage: Loggable {
     /**
      Called when a tile's render mode is changed.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     // Tile.RenderModeChanged
     @objc func tileRenderModeChanged(notification: Notification) {
@@ -310,7 +315,7 @@ internal class TileDataStorage: Loggable {
     /**
      Called when tile data frames are updated.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func tileDataFrameAdded(notification: Notification) {
         guard let tileData = notification.object as? SKTilesetData else { return }
@@ -320,7 +325,7 @@ internal class TileDataStorage: Loggable {
     /**
      Called when a tile data's animation `SKAction` is created.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func tileDataActionAdded(notification: Notification) {
         guard let tileData = notification.object as? SKTilesetData,
@@ -334,7 +339,7 @@ internal class TileDataStorage: Loggable {
     /**
      Called when a tile data's texture is updated. Previous texture is passed in `userInfo`.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func tileDataTextureChanged(notification: Notification) {
         guard let tileData = notification.object as? SKTilesetData,
@@ -402,11 +407,19 @@ internal class TileDataStorage: Loggable {
     }
 
     // MARK: - Caching
-
+    
+    /**
+     Add a tile to storage.
+     
+     - parameter tile: `SKTile` tile being added.
+     - parameter data: `SKTilesetData?` optional tile data.
+     - parameter cache: `TileList?` optional tile list.
+     */
     func addTileToCache(tile: SKTile, data: SKTilesetData? = nil, cache: TileList? = nil) {
         let tileData = data ?? tile.tileData
         let currentCache: TileList = (cache != nil) ? cache! : (tileData.isAnimated == true) ? animatedCacheForTileData(tileData) : cacheForTileData(tileData)
         currentCache.append(tile)
+        //tile.draw()
     }
 
     /**
@@ -568,7 +581,7 @@ internal class TileDataStorage: Loggable {
 }
 
 
-
+/// :nodoc:
 extension TileDataStorage: CustomStringConvertible, CustomDebugStringConvertible, CustomDebugReflectable {
     
     var description: String {

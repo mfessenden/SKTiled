@@ -866,9 +866,7 @@ public class DemoController: NSObject, Loggable {
         print(outputString)
     }
 
-    /**
-     Dump the map statistics to the console.
-     */
+    /// Dump the map statistics to the console.
     public func dumpMapStatistics() {
         guard let view = self.view,
             let scene = view.scene as? SKTiledScene else { return }

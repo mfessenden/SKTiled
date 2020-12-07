@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="17506" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="499-42-d0g">
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="17506" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="499-42-d0g">
     <device id="appleTV" appearance="dark"/>
     <dependencies>
         <deployment identifier="tvOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17504.1"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,8 +19,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zkk-Ac-3rS" userLabel="Output-Top">
-                                <rect key="frame" x="10" y="61" width="1900" height="24"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="zkk-Ac-3rS" userLabel="Output-Top">
+                                <rect key="frame" x="10" y="61" width="1900" height="52"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="1900" placeholderIntrinsicHeight="24" text="camera:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AF7-aA-IZ9" userLabel="Camera Info Label">
                                         <rect key="frame" x="0.0" y="0.0" width="1900" height="24"/>
@@ -31,10 +30,18 @@
                                         <color key="shadowColor" red="0.098039215690000001" green="0.098039215690000001" blue="0.098039215690000001" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="1900" placeholderIntrinsicHeight="24" text="scene:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="93p-64-Dsi" userLabel="Scene Info Label">
+                                        <rect key="frame" x="0.0" y="28" width="1900" height="24"/>
+                                        <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="17"/>
+                                        <color key="textColor" systemColor="lightTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" red="0.098039215690000001" green="0.098039215690000001" blue="0.098039215690000001" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
+                                    </label>
                                 </subviews>
                             </stackView>
                             <stackView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="s2B-9I-4Ap">
-                                <rect key="frame" x="918" y="117" width="84" height="40"/>
+                                <rect key="frame" x="918" y="145" width="84" height="40"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="remote" id="kWe-Eb-Let" userLabel="Controller Icon">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
@@ -45,8 +52,8 @@
                                     </imageView>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="wkK-nJ-MjR" userLabel="Output-Bottom">
-                                <rect key="frame" x="460" y="881" width="1000" height="50"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="wkK-nJ-MjR" userLabel="Output-Bottom">
+                                <rect key="frame" x="460" y="879" width="1000" height="52"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="1900" placeholderIntrinsicHeight="24" text="map:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fkz-t7-XXx" userLabel="Map Info Label">
                                         <rect key="frame" x="0.0" y="0.0" width="1000" height="24"/>
@@ -57,7 +64,7 @@
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="1900" placeholderIntrinsicHeight="24" text="command:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I6j-i7-2CG" userLabel="Debug Info Label">
-                                        <rect key="frame" x="0.0" y="26" width="1000" height="24"/>
+                                        <rect key="frame" x="0.0" y="28" width="1000" height="24"/>
                                         <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="17"/>
                                         <color key="textColor" systemColor="lightTextColor"/>
                                         <nil key="highlightedColor"/>
@@ -226,7 +233,6 @@
                                 <size key="shadowOffset" width="1" height="1"/>
                             </label>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="6df-27-8hi"/>
                         <constraints>
                             <constraint firstItem="s2B-9I-4Ap" firstAttribute="centerX" secondItem="weF-Pa-zaM" secondAttribute="centerX" id="DxT-0P-5So"/>
                             <constraint firstAttribute="bottom" secondItem="6CQ-kZ-OYr" secondAttribute="bottom" constant="4" id="DyS-iG-6de"/>
@@ -257,6 +263,7 @@
                         <outlet property="mapInfoLabel" destination="fkz-t7-XXx" id="Yrx-g3-Vqj"/>
                         <outlet property="nextButton" destination="Ada-GI-7xO" id="shN-sO-XHW"/>
                         <outlet property="objectsButton" destination="MnW-ZK-gPs" id="hGb-uK-FHO"/>
+                        <outlet property="pauseInfoLabel" destination="93p-64-Dsi" id="oV6-x7-E4q"/>
                         <outlet property="statsActionsLabel" destination="5Z5-zR-xGA" id="3FP-Hm-QFw"/>
                         <outlet property="statsCPULabel" destination="ZFp-dT-cwY" id="yMQ-SU-FPB"/>
                         <outlet property="statsEffectsLabel" destination="lFe-mo-XbD" id="aIg-PR-S8y"/>
@@ -278,6 +285,9 @@
     <resources>
         <image name="dolly" width="40" height="40"/>
         <image name="remote" width="40" height="40"/>
+        <systemColor name="lightTextColor">
+            <color white="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="lightTextColor">
             <color white="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

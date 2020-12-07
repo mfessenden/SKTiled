@@ -299,6 +299,7 @@ open class SKTile: SKSpriteNode {
         removeAllActions()
         texture = tileData.texture
         size = tileData.texture.size()
+        runAnimationAsActions()
     }
 
     // MARK: - Physics
@@ -398,17 +399,23 @@ open class SKTile: SKSpriteNode {
     // MARK: - Legacy Animation
 
     /**
-     Checks if the tile is animated and runs a SpriteKit action to animate it.
+     Checks if the tile is animated and runs a [**SpriteKit action**][skaction-url] to animate it.
+     
+     [skaction-url]:https://developer.apple.com/documentation/spritekit/skaction
      */
     open func runAnimationAsActions() {
-        guard (tileData.isAnimated == true) else { return }
+        guard (tileData.isAnimated == true) else {
+            return
+        }
+        
+        // remove the current action.
         removeAction(forKey: animationKey)
 
         // run tile action
         if let animationAction = tileData.animationAction {
             run(animationAction, withKey: animationKey)
         } else {
-            fatalError("cannot get animation action for tile data.")
+            fatalError("cannot get animation action for tile data with globalID '\(tileData.globalID)'.")
         }
     }
 

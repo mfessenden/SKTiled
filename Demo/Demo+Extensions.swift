@@ -27,6 +27,11 @@
 
 import SpriteKit
 import GameController
+#if os(iOS) || os(tvOS)
+import UIKit
+#else
+import Cocoa
+#endif
 
 
 extension Notification.Name {
@@ -59,6 +64,9 @@ extension Notification.Name {
         public static let MapObjectVisibilityChanged    = Notification.Name(rawValue: "com.sktiled.notification.name.debug.mapObjectVisibilityChanged")
     }
 }
+
+
+// MARK: - Controllers
 
 
 
@@ -108,10 +116,9 @@ extension SKTiledDemoScene {
         controller.extendedGamepad?.valueChangedHandler = {
             (gamepad: GCExtendedGamepad, element: GCControllerElement) in
             
-            
             guard let skView = self.view,
                 let cameraNode = self.cameraNode else {
-                fatalError("fucking gamepad!")
+                return
             }
 
             if (gamepad.leftThumbstick == element) {
@@ -148,11 +155,33 @@ extension SKTiledDemoScene {
                     let newZoom = cameraNode.zoom + CGFloat(moveVector.y) * zoomScale
                     cameraNode.setCameraZoom(newZoom)
                 }
-            } else if (gamepad.buttonX == element) {
-                // pass
                 
                 
-                let command = "'x' button pressed"
+            // Gamepad Buttons
+                
+            } else if (gamepad.buttonA == element) {
+                var isPressed = false
+                if (gamepad.buttonA.isPressed == true) {
+                    isPressed = true
+                }
+                
+                let pressedString = (isPressed == true) ? "pressed" : "released"
+                let command = "'A' button \(pressedString)"
+                
+                NotificationCenter.default.post(
+                    name: Notification.Name.Debug.CommandIssued,
+                    object: controller,
+                    userInfo: ["command": command, "duration": 1]
+                )
+            
+            } else if (gamepad.buttonB == element) {
+                var isPressed = false
+                if (gamepad.buttonB.isPressed == true) {
+                    isPressed = true
+                }
+                
+                let pressedString = (isPressed == true) ? "pressed" : "released"
+                let command = "'A' button \(pressedString)"
                 
                 NotificationCenter.default.post(
                     name: Notification.Name.Debug.CommandIssued,
@@ -160,8 +189,75 @@ extension SKTiledDemoScene {
                     userInfo: ["command": command, "duration": 1]
                 )
                 
+            } else if (gamepad.buttonX == element) {
+                var isPressed = false
+                if (gamepad.buttonX.isPressed == true) {
+                    isPressed = true
+                }
+                
+                let pressedString = (isPressed == true) ? "pressed" : "released"
+                let command = "'X' button \(pressedString)"
+                
+                NotificationCenter.default.post(
+                    name: Notification.Name.Debug.CommandIssued,
+                    object: controller,
+                    userInfo: ["command": command, "duration": 1]
+                )
+            
+            } else if (gamepad.buttonY == element) {
+                var isPressed = false
+                if (gamepad.buttonY.isPressed == true) {
+                    isPressed = true
+                }
+                
+                let pressedString = (isPressed == true) ? "pressed" : "released"
+                let command = "'Y' button \(pressedString)"
+                
+                NotificationCenter.default.post(
+                    name: Notification.Name.Debug.CommandIssued,
+                    object: controller,
+                    userInfo: ["command": command, "duration": 1]
+                )
+                
+            
+            // Gamepad Directional Pad
 
-            } else if (gamepad.dpad == element) {
+                
+            } else if (gamepad.dpad.left == element) {
+
+                let command = "digital input 'left'"
+                NotificationCenter.default.post(
+                    name: Notification.Name.Debug.CommandIssued,
+                    object: controller,
+                    userInfo: ["command": command, "duration": 1]
+                )
+            
+            } else if (gamepad.dpad.right == element) {
+                
+                let command = "digital input 'right'"
+                NotificationCenter.default.post(
+                    name: Notification.Name.Debug.CommandIssued,
+                    object: controller,
+                    userInfo: ["command": command, "duration": 1]
+                )
+            
+            } else if (gamepad.dpad.up == element) {
+                
+                let command = "digital input 'up'"
+                NotificationCenter.default.post(
+                    name: Notification.Name.Debug.CommandIssued,
+                    object: controller,
+                    userInfo: ["command": command, "duration": 1]
+                )
+                
+            } else if (gamepad.dpad.down == element) {
+                
+                let command = "digital input 'down'"
+                NotificationCenter.default.post(
+                    name: Notification.Name.Debug.CommandIssued,
+                    object: controller,
+                    userInfo: ["command": command, "duration": 1]
+                )
                 
             }
             
@@ -194,30 +290,14 @@ extension SKTiledDemoScene {
             
             guard let skView = self.view,
                   let cameraNode = self.cameraNode else {
-                fatalError("fucking Siri remote!")
+                return
             }
             
             
             // buttonX = play/pause
             if (gamepad.buttonX == element) {
-                
-                
-                let pressed = (gamepad.buttonX.isPressed) ? "pressed" : "released"
-                
-                NotificationCenter.default.post(
-                    name: Notification.Name.Debug.CommandIssued,
-                    object: nil,
-                    userInfo: ["command": "'x' button \(pressed)", "duration": 2]
-                )
-                
-                
-                
-                
-                
-                
-                
+                print("⭑ 'X' button pressed...")
                 if (gamepad.buttonX.isPressed) {
-                    print("⭑ 'x' button pressed...")
                     let nextMode: CameraControlMode = CameraControlMode(rawValue: cameraNode.controlMode.rawValue + 1) ?? .none
                     cameraNode.controlMode = nextMode
                     
@@ -231,6 +311,8 @@ extension SKTiledDemoScene {
                     
                     
                     //cameraNode.updateFocusIfNeeded()
+                } else {
+                    print("⭑ 'X' button released...")
                 }
                 
                 
@@ -238,7 +320,7 @@ extension SKTiledDemoScene {
                 if (gamepad.buttonA.isPressed) {
                     print("⭑ 'A' button pressed...")
                 } else {
-                    print("⭑ 'A' button pressed...")
+                    print("⭑ 'A' button released...")
                 }
                 
             } else if (gamepad.dpad == element) {
@@ -276,7 +358,6 @@ extension SKTiledDemoScene {
                 name: Notification.Name.Demo.ControlInputReceived,
                 object: controller
             )
-            
         }
     }
 
@@ -291,6 +372,7 @@ extension SKTiledDemoScene {
 
 
 
+/// :nodoc:
 extension GCController {
     
     /// Returns the controller name.
@@ -298,18 +380,68 @@ extension GCController {
         return (isRemote == true) ? "Siri Remote" : "Gamepad"
     }
     
-    /// Returns true if the controller is a tvOS remote.
+    /// Returns true if the controller is a tvOS Siri remote.
     var isRemote: Bool {
         return (extendedGamepad == nil)
     }
     
-    /// Returns true if the controller is a game controller.
+    /// Returns true if the controller is an extended game controller.
     var isGamepad: Bool {
         return (extendedGamepad != nil)
+    }
+    
+    /// Returns the UI image name for this controller.
+    var imageName: String {
+        return (isRemote == true) ? "remote" : "pamepad"
     }
 }
 
 
+
+
+// MARK: - UIKit
+
+#if os(iOS) || os(tvOS)
+
+/// :nodoc:
+extension UILabel {
+    
+    /**
+     Set the string value of the text field, with optional animated fade.
+     
+     - parameter newValue: `String` new text value.
+     - parameter animated: `Bool` enable fade out effect.
+     - parameter interval: `TimeInterval` effect length.
+     */
+    func setTextValue(_ newValue: String, animated: Bool = true, interval: TimeInterval = 0.7) {
+        if animated {
+            animate(change: { self.text = newValue }, interval: interval)
+        } else {
+            text = newValue
+        }
+    }
+    
+    /**
+     Private function to animate a fade effect.
+     
+     - parameter change: `() -> Void` closure.
+     - parameter interval: `TimeInterval` effect length.
+     */
+    private func animate(change: @escaping () -> Void, interval: TimeInterval) {
+        let fadeDuration: TimeInterval = 0.5
+        
+        UIView.animate(withDuration: 0, delay: 0, options: UIView.AnimationOptions.curveEaseOut, animations: {
+            self.text = ""
+            self.alpha = 1.0
+        }, completion: { (Bool) -> Void in
+            change()
+            UIView.animate(withDuration: fadeDuration, delay: interval, options: UIView.AnimationOptions.curveEaseOut, animations: {
+                self.alpha = 0.0
+            }, completion: nil)
+        })
+    }
+}
+#endif
 
 
 

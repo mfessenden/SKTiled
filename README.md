@@ -34,7 +34,7 @@ Check out the [**Official Documentation**][sktiled-12-doc-url].
 - [x] text objects
 - [x] template objects
 - [x] custom tile & object classes
-- [x] generate GKGridGraph graphs from custom attributes
+- [x] generate `GKGridGraph` graphs from custom attributes
 - [x] user-definable cost properties for `GKGridGraph` nodes
 - [ ] infinite maps
 - [ ] tile collision objects
@@ -302,8 +302,7 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 <!--- Documentation --->
 
 [sktiled-gh-url]:https://mfessenden.github.io/SKTiled
-[sktiled-12-doc-url]:https://mfessenden.github.io/SKTiled/index.html
-[sktiled-13-doc-url]:https://mfessenden.github.io/SKTiled/1.3/
+[sktiled-12-doc-url]:https://mfessenden.github.io/SKTiled/1.2/
 [sktilemap-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKTilemap.html
 [sktiledobject-url]:https://mfessenden.github.io/SKTiled/1.2/Protocols/SKTiledObject.html
 [sktile-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKTile.html

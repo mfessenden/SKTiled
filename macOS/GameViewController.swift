@@ -1,6 +1,6 @@
 //
 //  GameViewController.swift
-//  SKTiled Demo
+//  SKTiled Demo - macOS
 //
 //  Created by Michael Fessenden.
 //
@@ -146,7 +146,7 @@ class GameViewController: NSViewController, Loggable {
      Set up the debugging labels. (Mimics the text style in iOS controller).
      */
     func setupDemoInterface() {
-        
+
         mapInfoLabel.stringValue = ""
         tileInfoLabel.stringValue = ""
         propertiesInfoLabel.stringValue = ""
@@ -316,9 +316,9 @@ class GameViewController: NSViewController, Loggable {
     }
 
     /**
-     Update the debugging labels with scene information.
+     Update the debugging labels with scene information. Called when the `Notification.Name.Demo.UpdateDebugging` notification is sent.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func updateDebuggingOutput(notification: Notification) {
         if let mapInfo = notification.userInfo!["mapInfo"] {
@@ -333,8 +333,19 @@ class GameViewController: NSViewController, Loggable {
             propertiesInfoLabel.stringValue = propertiesInfo as! String
         }
 
-        if let pauseInfo = notification.userInfo!["pauseInfo"] {
-            pauseInfoLabel.stringValue = pauseInfo as! String
+        if let sceneIsPaused = notification.userInfo!["pauseInfo"] as? Bool {
+            let fontColor: NSColor = (sceneIsPaused == false) ? NSColor.white : NSColor(hexString: "#2CF639")
+            let labelStyle = NSMutableParagraphStyle()
+            labelStyle.alignment = .center
+
+            let pauseLabelAttributes = [
+                .foregroundColor: fontColor,
+                .paragraphStyle: labelStyle
+            ] as [NSAttributedString.Key: Any]
+
+            let pauseString = (sceneIsPaused == false) ? "" : "•Paused•"
+            let outputString = NSMutableAttributedString(string: pauseString, attributes: pauseLabelAttributes)
+            pauseInfoLabel.attributedStringValue = outputString
         }
 
         if let isolatedInfo = notification.userInfo!["isolatedInfo"] {
@@ -345,7 +356,7 @@ class GameViewController: NSViewController, Loggable {
     /**
      Called when the focus objects in the demo scene have changed.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func focusObjectsChanged(notification: Notification) {
         guard let focusObjects = notification.object as? [SKTiledGeometry],
@@ -366,7 +377,7 @@ class GameViewController: NSViewController, Loggable {
     /**
      Update the tile property label.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func tilePropertiesChanged(notification: Notification) {
         guard let tile = notification.object as? SKTile else { return }
@@ -376,7 +387,7 @@ class GameViewController: NSViewController, Loggable {
     /**
      Callback when cache is updated.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func tilemapUpdateModeChanged(notification: Notification) {
         guard let tilemap = notification.object as? SKTilemap else { return }
@@ -386,7 +397,7 @@ class GameViewController: NSViewController, Loggable {
     /**
      Update the camera debug information.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func sceneCameraUpdated(notification: Notification) {
         guard let camera = notification.object as? SKTiledSceneCamera else {
@@ -398,7 +409,7 @@ class GameViewController: NSViewController, Loggable {
     /**
      Update the the command string label.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func updateCommandString(notification: Notification) {
         timer.invalidate()
@@ -433,7 +444,7 @@ class GameViewController: NSViewController, Loggable {
     /**
      Enables/disable button controls based on the current map attributes.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
      @objc func tilemapWasUpdated(notification: Notification) {
         guard let tilemap = notification.object as? SKTilemap else { return }
@@ -508,7 +519,7 @@ class GameViewController: NSViewController, Loggable {
     /**
      Updates the render stats debugging info.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func renderStatsUpdated(notification: Notification) {
         guard let renderStats = notification.object as? SKTilemap.RenderStatistics else { return }

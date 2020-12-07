@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  SKTiled Demo
+//  SKTiled Demo - macOS
 //
 //  Created by Michael Fessenden.
 //
@@ -96,7 +96,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         return scene.tilemap
     }
-    
+
     func setupNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(demoSceneLoaded), name: Notification.Name.Demo.SceneLoaded, object: nil)
 
@@ -538,17 +538,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             )
         }
     }
-    
-    
+
+
     // MARK: - Map Debug Drawing
-    
+
     @IBAction func debugDrawOptionsUpdated(_ sender: NSMenuItem) {
         guard let identifier = Int(sender.accessibilityIdentifier()),
             let tilemap = tilemap else {
             Logger.default.log("invalid identifier: \(sender.accessibilityIdentifier())", level: .error)
             return
         }
-        
+
         let willRemoveOption = sender.state == .on
         let drawOption = DebugDrawOptions.init(rawValue: identifier)
         if (willRemoveOption == true) {
@@ -556,8 +556,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             tilemap.debugDrawOptions.insert(drawOption)
         }
-        
-        
+
+
         NotificationCenter.default.post(
             name: Notification.Name.Map.Updated,
             object: tilemap
@@ -678,7 +678,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let layerIsVisible = (sender.state == .on)
         demoController.toggleLayerVisibility(layerID: layerID, visible: !layerIsVisible)
     }
-    
+
 
     @IBAction func toggleAllLayerVisibility(_ sender: NSMenuItem) {
         guard let identifier = Int(sender.accessibilityIdentifier()) else {
@@ -887,30 +887,30 @@ extension AppDelegate {
      - parameter tilemap: `SKTilemap` tile map object.
      */
     @objc func initializeTilemapMenus(tilemap: SKTilemap) {
-        
+
         // map debug draw options
         if let debugDrawSubmenu = mapDebugDrawMenu.submenu {
             debugDrawSubmenu.removeAllItems()
-            
+
             let allOptions = Array(DebugDrawOptions.all.elements())
             let optionStrings = DebugDrawOptions.all.strings
 
-            
+
             for (index, option) in allOptions.enumerated() {
                 guard (index <= optionStrings.count - 1) else {
                     return
                 }
-                
-                
-                
+
+
+
                 let layerMenuItem = NSMenuItem(title: optionStrings[index], action: #selector(debugDrawOptionsUpdated), keyEquivalent: "")
                 layerMenuItem.setAccessibilityIdentifier("\(option.rawValue)")
                 layerMenuItem.state = (tilemap.debugDrawOptions.contains(option)) ? NSControl.StateValue.on : NSControl.StateValue.off
                 debugDrawSubmenu.addItem(layerMenuItem)
             }
         }
-        
-        
+
+
 
         if let visibilitySubMenu = layerVisibilityMenu.submenu {
             visibilitySubMenu.removeAllItems()
@@ -967,13 +967,13 @@ extension AppDelegate {
 
         let allLayersHidden = tilemap.allLayersHidden
         let allLayersVisible = tilemap.allLayersVisible
-        
+
         // debug draw options menu
         if let debugDrawSubmenu = mapDebugDrawMenu.submenu {
-            
+
             for menuitem in debugDrawSubmenu.items {
                 let accessibilityIdentifier = menuitem.accessibilityIdentifier()
-                
+
                 if let identifier = Int(accessibilityIdentifier) {
                     let menuOption = DebugDrawOptions.init(rawValue: identifier)
                     menuitem.state = (tilemap.debugDrawOptions.contains(menuOption)) ? .on : .off
@@ -981,9 +981,9 @@ extension AppDelegate {
                 }
             }
         }
-        
-        
-        
+
+
+
         // update the tilemap update mode menu
         if let updateModeSubMenu = self.updateModeMenuItem.submenu {
             for menuitem in updateModeSubMenu.items {

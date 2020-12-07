@@ -350,11 +350,16 @@ public class SKTileLayer: SKTiledLayerObject {
      - parameter tileType:  `String` optional tile class name.
      - returns: `SKTile?` tile.
      */
-    public func addTileAt(coord: CGPoint, gid: Int? = nil, tileType: String? = nil) -> SKTile? {
-        guard isValid(coord: coord) else { return nil }
+    public func addTileAt(coord: CGPoint,
+                          gid: Int? = nil,
+                          tileType: String? = nil) -> SKTile? {
+        
+        guard isValid(coord: coord) else {
+            return nil
+        }
         
         // remove the current tile
-        _ = removeTileAt(coord: coord)
+        let existingTile = removeTileAt(coord: coord)
         
         let tileData: SKTilesetData? = (gid != nil) ? getTileData(globalID: gid!) : nil
         
@@ -379,29 +384,41 @@ public class SKTileLayer: SKTiledLayerObject {
         // get the position in the layer (plus tileset offset)
         let tilePosition = pointForCoordinate(coord: coord, offsetX: offset.x, offsetY: offset.y)
         tile.position = tilePosition
+        
+        if let currentTile = existingTile {
+            tile.zPosition = currentTile.zPosition
+            tile.zRotation = currentTile.zRotation
+        }
+
         addChild(tile)
         
         // add to tile cache
         NotificationCenter.default.post(
             name: Notification.Name.Layer.TileAdded,
             object: tile,
-            userInfo: ["layer": self]
+            userInfo: ["layer": self, "coord": coord]
         )
         
-        
+        // force tile redraw
+        tile.draw()
         return tile
     }
     
     /**
-     Build an empty tile at the given coordinates with a custom texture. Returns nil is the coordinate
+     Build an empty tile at the given coordinates with a custom texture. Returns `nil` if the coordinate
      is invalid.
      
      - parameter coord:   `CGPoint` tile coordinate.
      - parameter texture: `SKTexture?` optional tile texture.
      - returns: `SKTile?` tile.
      */
-    public func addTileAt(coord: CGPoint, texture: SKTexture? = nil, tileType: String? = nil) -> SKTile? {
-        guard isValid(coord: coord) else { return nil }
+    public func addTileAt(coord: CGPoint,
+                          texture: SKTexture? = nil,
+                          tileType: String? = nil) -> SKTile? {
+        
+        guard isValid(coord: coord) else {
+            return nil
+        }
         
         let Tile = (tilemap.delegate != nil) ? tilemap.delegate!.objectForTileType(named: tileType) : SKTile.self
         let tile = Tile.init()
@@ -421,6 +438,16 @@ public class SKTileLayer: SKTiledLayerObject {
         let tilePosition = pointForCoordinate(coord: coord, offsetX: offset.x, offsetY: offset.y)
         tile.position = tilePosition
         addChild(tile)
+        
+        // add to tile cache
+        NotificationCenter.default.post(
+            name: Notification.Name.Layer.TileAdded,
+            object: tile,
+            userInfo: ["layer": self, "coord": coord]
+        )
+        
+        // force tile redraw
+        tile.draw()
         return tile
     }
     

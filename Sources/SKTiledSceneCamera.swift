@@ -257,6 +257,11 @@ public class SKTiledSceneCamera: SKCameraNode {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        // remove delegates
+        delegates.removeAll()
+    }
+    
     #if os(iOS)
     // MARK: - Gestures
     
@@ -685,6 +690,7 @@ extension SKTiledSceneCamera {
 
 // MARK: - Debugging
 
+/// :nodoc:
 extension SKTiledSceneCamera: CustomDebugReflectable {
     
     public func dumpStatistics() {

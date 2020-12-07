@@ -10,7 +10,7 @@ Any object that conforms to the `SKTiledObject` protocol will inherit methods fo
 
 **SKTiled** supports the newer **color** and **file** property types (values are stored as strings internally anyway, which *SKTiled* already supports). The custom color/file types listed above will also be parsed if they are created as string types in Tiled.
 
-Currently all **SKTiled** property values are stored as strings, though this will change in the future.
+Currently all **SKTiled** property values are stored as strings, though this may change in the future.
 
 
 ## Querying Properties
@@ -68,7 +68,7 @@ let tilemap = SKTilemap.load(tmxFile: "myTiledFile", ignoreProperties: true)
 #### SKTilemap
 
 | Property            |  Type  | Description                                      |  Notes   |
-|:--------------------|:------:|:-------------------------------------------------|:--------:|
+|:------------------- |:------:|:------------------------------------------------ |:--------:|
 | name                | String | map name (defaults to tmx filename).             |          |
 | hidden              |  Bool  | hide the map.                                    |          |
 | worldScale          | Float  | world starting scale.                            |          |
@@ -98,7 +98,7 @@ let tilemap = SKTilemap.load(tmxFile: "myTiledFile", ignoreProperties: true)
 #### SKTiledLayerObject
 
 | Property            |  Type  | Description                                         | Notes |
-|:--------------------|:------:|:----------------------------------------------------|:-----:|
+|:------------------- |:------:|:--------------------------------------------------- |:-----:|
 | antialiasing        |  Bool  | antialias lines.                                    |       |
 | hidden              |  Bool  | hide the layer.                                     |       |
 | color               | String | hex string to override color.                       |       |
@@ -114,7 +114,7 @@ let tilemap = SKTilemap.load(tmxFile: "myTiledFile", ignoreProperties: true)
 #### SKObjectGroup
 
 | Property    | Type  | Description                                    | Notes |
-|:------------|:-----:|:-----------------------------------------------|:-----:|
+|:----------- |:-----:|:---------------------------------------------- |:-----:|
 | lineWidth   | Float | object line width.                             |       |
 | showNames   | Bool  | display object names.                          |       |
 | showObjects | Bool  | globally show/hide objects.                    |       |
@@ -125,7 +125,7 @@ let tilemap = SKTilemap.load(tmxFile: "myTiledFile", ignoreProperties: true)
 
 
 | Property | Type  | Description                  | Notes |
-|:---------|:-----:|:-----------------------------|:-----:|
+|:-------- |:-----:|:---------------------------- |:-----:|
 | frame    | File  | image layer animation frame. |       |
 | duration | Float | frame duration.              |       |
 
@@ -133,7 +133,7 @@ let tilemap = SKTilemap.load(tmxFile: "myTiledFile", ignoreProperties: true)
 #### SKTilesetData
 
 | Property       |  Type  | Description                         | Notes |
-|:---------------|:------:|:------------------------------------|:-----:|
+|:-------------- |:------:|:----------------------------------- |:-----:|
 | name           | String | used to identify tile data by name. |       |
 | collisionSize  | Float  | used to add collision to the tile.  |       |
 | collisionShape |  Int   | 0 = rectangle, 1 = circle.          |       |
@@ -143,7 +143,7 @@ let tilemap = SKTilemap.load(tmxFile: "myTiledFile", ignoreProperties: true)
 #### SKTileObject
 
 | Property       |  Type  | Description                          | Notes |
-|:---------------|:------:|:-------------------------------------|:-----:|
+|:-------------- |:------:|:------------------------------------ |:-----:|
 | collisionSize  | Float  | used to add collision to the tile.   |       |
 | collisionShape |  Int   | 0 = rectangle, 1 = circle.           |       |
 | hidden         |  Bool  | hide the object.                     |       |

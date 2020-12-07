@@ -1,6 +1,6 @@
 //
 //  GameWindowController.swift
-//  SKTiled Demo
+//  SKTiled Demo - macOS
 //
 //  Created by Michael Fessenden.
 //
@@ -33,7 +33,7 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
 
     // tilemap pause state before any window size change
     var isManuallyPaused: Bool = false
-    
+
     var view: SKView {
         let gameViewController = window!.contentViewController as! GameViewController
         return gameViewController.view as! SKView

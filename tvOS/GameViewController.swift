@@ -1,6 +1,6 @@
 //
 //  GameViewController.swift
-//  SKTiled Demo
+//  SKTiled Demo - tvOS
 //
 //  Created by Michael Fessenden.
 //
@@ -37,6 +37,7 @@ class GameViewController: GCEventViewController, Loggable {
 
     // debugging labels (top)
     @IBOutlet weak var cameraInfoLabel: UILabel!
+    @IBOutlet weak var pauseInfoLabel: UILabel!
 
     // debugging labels (bottom)
     @IBOutlet weak var mapInfoLabel: UILabel!
@@ -68,12 +69,14 @@ class GameViewController: GCEventViewController, Loggable {
     // container for the primary UI controls
     @IBOutlet weak var mainControlsView: UIStackView!
 
-    // camera mode & controller mode
-    private var currentController: GCController?
+
     @IBOutlet weak var controlIconView: UIStackView!
     @IBOutlet weak var cameraControlModeIcon: UIImageView!
     @IBOutlet weak var gameControllerIcon: UIImageView!
-    
+
+    // Game controller/remote.
+    private var currentController: GCController?
+
     // unused
     @IBOutlet var demoFileAttributes: NSObject!
 
@@ -156,7 +159,7 @@ class GameViewController: GCEventViewController, Loggable {
 
         NotificationCenter.default.addObserver(self, selector: #selector(controllerDidConnect), name: Notification.Name.GCControllerDidConnect, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(controllerDidDisconnect), name: Notification.Name.GCControllerDidDisconnect, object: nil)
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(controlInputReceived), name: Notification.Name.Demo.ControlInputReceived, object: nil)
     }
 
@@ -166,6 +169,7 @@ class GameViewController: GCEventViewController, Loggable {
     func setupDemoInterface() {
         mapInfoLabel.text = "map: "
         debugInfoLabel.text = "command: "
+        pauseInfoLabel.text = ""
 
         cameraControlModeIcon.isHidden = true
 
@@ -195,10 +199,24 @@ class GameViewController: GCEventViewController, Loggable {
 
         self.statsUpdatedLabel.isHidden = true
     }
-    
-    
-    // MARK: Controllers
-    
+
+    /// Set up the control buttons.
+    func setupButtonAttributes() {
+        let allButtons = [fitButton, gridButton, graphButton, objectsButton, effectsButton, updateModeButton, nextButton]
+        // set the button attributes
+        allButtons.forEach { button in
+            if let button = button {
+                button.setTitleColor(UIColor.white, for: .normal)
+
+                let buttonColor = (button.state == UIControl.State.normal) ? uiColor : uiColor.withAlphaComponent(0.5)
+                button.backgroundColor = buttonColor
+                button.layer.cornerRadius = 10
+            }
+        }
+    }
+
+    // MARK: - Controllers
+
 
     /// Called when a controller is connected.
     @objc func controllerDidConnect() {
@@ -216,45 +234,30 @@ class GameViewController: GCEventViewController, Loggable {
         for controller in GCController.controllers() where controller.microGamepad != nil {
             if let _ = controller.extendedGamepad {
                 defaultControlTypeImage = "gamepad"
-                print("⭑ found controller '\(controller)'")
             }
         }
-        print("⭑ updating controller type '\(defaultControlTypeImage)'")
         let controlTypeImage = UIImage(named: defaultControlTypeImage)
         gameControllerIcon.image = controlTypeImage
     }
-    
+
+    /**
+     Called when game controller input is recieved. Called when the `Notification.Name.Demo.ControlInputReceived` notification is sent.
+
+     - parameter notification:`Notification` event notification.
+     */
     @objc func controlInputReceived(notification: Notification) {
         guard let controller = notification.object as? GCController else {
             return
         }
-        print("⭑ controller input received..")
-        var controlImageName = "remote"
+
         if (controller.extendedGamepad != nil) {
-            controlImageName = "gamepad"
-            print("⭑ gamepad input")
             controllerUserInteractionEnabled = false
         } else {
             //controllerUserInteractionEnabled = true
         }
-        
-        let controlTypeImage = UIImage(named: controlImageName)
+
+        let controlTypeImage = UIImage(named: controller.imageName)
         gameControllerIcon.image = controlTypeImage
-    }
-
-    /// Set up the control buttons.
-    func setupButtonAttributes() {
-        let allButtons = [fitButton, gridButton, graphButton, objectsButton, effectsButton, updateModeButton, nextButton]
-        // set the button attributes
-        allButtons.forEach { button in
-            if let button = button {
-                button.setTitleColor(UIColor.white, for: .normal)
-
-                let buttonColor = (button.state == UIControl.State.normal) ? uiColor : uiColor.withAlphaComponent(0.5)
-                button.backgroundColor = buttonColor
-                button.layer.cornerRadius = 4
-            }
-        }
     }
 
     // MARK: - Button Actions
@@ -327,7 +330,7 @@ class GameViewController: GCEventViewController, Loggable {
     /**
      Update the debugging labels with scene information.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func updateDebuggingOutput(notification: Notification) {
         if let mapInfo = notification.userInfo!["mapInfo"] {
@@ -337,21 +340,38 @@ class GameViewController: GCEventViewController, Loggable {
         if let cameraInfo = notification.userInfo!["cameraInfo"] {
             cameraInfoLabel.text = cameraInfo as? String
         }
+
+
+        if let sceneIsPaused = notification.userInfo!["pauseInfo"] as? Bool {
+            let fontColor: UIColor = (sceneIsPaused == false) ? UIColor.white : UIColor(hexString: "#2CF639")
+            let labelStyle = NSMutableParagraphStyle()
+            labelStyle.alignment = .center
+
+            let pauseLabelAttributes = [
+                .foregroundColor: fontColor,
+                .paragraphStyle: labelStyle
+            ] as [NSAttributedString.Key: Any]
+
+            let pauseString = (sceneIsPaused == false) ? "" : "•Paused•"
+            let outputString = NSMutableAttributedString(string: pauseString, attributes: pauseLabelAttributes)
+            pauseInfoLabel.attributedText = outputString
+        }
+
     }
 
     /**
      Update the camera control controls.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func sceneCameraUpdated(notification: Notification) {
         guard let camera = notification.object as? SKTiledSceneCamera else {
             fatalError("cannot access scene camera.")
         }
-        
-        
-        
-        
+
+
+
+
         var isRemoteControlled = true
         switch camera.controlMode {
 
@@ -375,16 +395,16 @@ class GameViewController: GCEventViewController, Loggable {
         graphButton?.isEnabled = isRemoteControlled
         objectsButton?.isEnabled = isRemoteControlled
         nextButton?.isEnabled = isRemoteControlled
-        
+
         // hide the main control buttons in remote control mode
         mainControlsView.isHidden = (isRemoteControlled == false)
         cameraInfoLabel.text = camera.description
     }
 
     /**
-     Update the the command string label.
+     Update the the command string label. Called when the `Notification.Name.Debug.CommandIssued` notification is sent.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
     @objc func updateCommandString(notification: Notification) {
         var duration: TimeInterval = 3.0
@@ -412,7 +432,7 @@ class GameViewController: GCEventViewController, Loggable {
     /**
      Enables/disable button controls based on the current map attributes.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
      @objc func tilemapWasUpdated(notification: Notification) {
         guard let tilemap = notification.object as? SKTilemap else { return }
@@ -472,7 +492,7 @@ class GameViewController: GCEventViewController, Loggable {
      /**
       Updates the render stats debugging info.
 
-     - parameter notification: `Notification` notification.
+     - parameter notification: `Notification` event notification.
      */
      @objc func renderStatsUpdated(notification: Notification) {
         guard let renderStats = notification.object as? SKTilemap.RenderStatistics else { return }
@@ -500,48 +520,10 @@ class GameViewController: GCEventViewController, Loggable {
      /**
       Callback when cache is updated.
 
-      - parameter notification: `Notification` notification.
+      - parameter notification: `Notification` event notification.
       */
      @objc func tilemapUpdateModeChanged(notification: Notification) {
          guard let tilemap = notification.object as? SKTilemap else { return }
          self.statsRenderModeLabel.text = "Mode: \(tilemap.updateMode.name)"
      }
-}
-
-
-extension UILabel {
-    /**
-     Set the string value of the text field, with optional animated fade.
-
-     - parameter newValue: `String` new text value.
-     - parameter animated: `Bool` enable fade out effect.
-     - parameter interval: `TimeInterval` effect length.
-     */
-    func setTextValue(_ newValue: String, animated: Bool = true, interval: TimeInterval = 0.7) {
-        if animated {
-            animate(change: { self.text = newValue }, interval: interval)
-        } else {
-            text = newValue
-        }
-    }
-
-    /**
-     Private function to animate a fade effect.
-
-     - parameter change: `() -> Void` closure.
-     - parameter interval: `TimeInterval` effect length.
-     */
-    private func animate(change: @escaping () -> Void, interval: TimeInterval) {
-        let fadeDuration: TimeInterval = 0.5
-
-        UIView.animate(withDuration: 0, delay: 0, options: UIView.AnimationOptions.curveEaseOut, animations: {
-            self.text = ""
-            self.alpha = 1.0
-        }, completion: { (Bool) -> Void in
-            change()
-            UIView.animate(withDuration: fadeDuration, delay: interval, options: UIView.AnimationOptions.curveEaseOut, animations: {
-                self.alpha = 0.0
-            }, completion: nil)
-        })
-    }
 }

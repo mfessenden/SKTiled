@@ -5,6 +5,7 @@ Docs/html
 .swiftlint.yml
 IDETemplateMacros.plist
 SKTiled.xcodeproj/xcshareddata/xcschemes/Demo*
+bootstrap/
 *.psd
 *.html
 
