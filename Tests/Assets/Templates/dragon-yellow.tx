@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <tileset firstgid="1" source="../monsters-16x16.tsx"/>
+ <object name="yellow-dragon" gid="5" width="16" height="16">
+  <properties>
+   <property name="to_strength" type="float" value="8.67"/>
+  </properties>
+ </object>
+</template>

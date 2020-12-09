@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="8" height="8" tilewidth="8" tileheight="8" infinite="0" nextlayerid="9" nextobjectid="10">
+ <properties>
+  <property name="allowZoom" type="bool" value="false"/>
+  <property name="doubles" value="1.2, 5.4, 12, 18.25"/>
+  <property name="gridColor" type="color" value="#e2f58823"/>
+  <property name="integers" value=" 0,1,2 ,3,4,5,6,7 ,8,9, 10"/>
+  <property name="strings" value="tom,dick , harry"/>
+ </properties>
+ <tileset firstgid="1" source="environment-8x8.tsx"/>
+ <tileset firstgid="45" source="monsters-16x16.tsx"/>
+ <layer id="1" name="Castle" width="8" height="8">
+  <data encoding="base64" compression="zlib">
+   eAF9jUsOABAMBbvkBLgA97+hTmISC7GYVN9HW0TUpCQtmWeisUM/jJyCZk9/XTl9MnTMMM3hcY9dXr7afRvNPm/A9299Mj827ZoFlQ==
+  </data>
+ </layer>
+ <objectgroup id="7" name="Objects">
+  <object id="6" template="Templates/dragon-green.tx" name="parent-dragon1" x="12" y="33" width="17" height="22.7273">
+   <properties>
+    <property name="o_point_value" type="int" value="500"/>
+    <property name="t_color" value="purple"/>
+   </properties>
+  </object>
+  <object id="7" template="Templates/dragon-yellow.tx" name="baby-dragon1" type="child-dragon" x="15.9683" y="46.455" width="10" height="10" rotation="-2"/>
+  <object id="8" template="Templates/dragon-green.tx" name="baby-dragon2" type="child-dragon" gid="2147483696" x="36" y="34" width="10" height="10" rotation="4">
+   <properties>
+    <property name="o_strength" type="float" value="1"/>
+   </properties>
+  </object>
+  <object id="9" template="Templates/dragon-blue.tx" name="parent-dragon2" gid="2147483698" x="39" y="59" width="19.6532" height="20.0182" rotation="4">
+     <properties>
+      <property name="o_strength" type="float" value="6.7"/>
+     </properties>
+     </object>
+ </objectgroup>
+</map>

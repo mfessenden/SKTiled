@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="10" height="10" tilewidth="8" tileheight="8" infinite="0" nextlayerid="9" nextobjectid="4">
+ <properties>
+  <property name="allowZoom" type="bool" value="false"/>
+  <property name="doubles" value="1.2, 5.4, 12, 18.25"/>
+  <property name="gridColor" type="color" value="#e2f58823"/>
+  <property name="integers" value=" 0,1,2 ,3,4,5,6,7 ,8,9, 10"/>
+  <property name="strings" value="tom,dick , harry"/>
+ </properties>
+ <tileset firstgid="1" source="environment-8x8.tsx"/>
+ <tileset firstgid="46" source="characters-8x8.tsx"/>
+ <tileset firstgid="74" source="items-8x8.tsx"/>
+ <tileset firstgid="90" source="portraits-8x8.tsx"/>
+ <tileset firstgid="104" source="monsters-16x16.tsx"/>
+ <layer id="1" name="Floor" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eAF9zTEKwDAMBEE/IwH3/v8P4y0GTAgpxEp3J2mNMa5d94trz1Ve5NNp6TRZHh1lo/K7jH2azNd+GTmUQ//cNuOp0+Lc5YY/sn7RY157vPpz/svYdf8Bg2MLwg==
+  </data>
+ </layer>
+ <layer id="3" name="Walls" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eAF1j8sNwDAIQ3vsZ4BukDkzerEE5MltkawYBwdnbKuuRV/sgDKC7wZdS2PRQ925+3ivNwTtjHwzz9Y4W9z3sv/KXT7//18uZag6g1RG+e+EZohou5inxSQPQMYDHg==
+  </data>
+ </layer>
+ <layer id="4" name="Characters" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eAFjYBgFgykEAAGQAAE=
+  </data>
+ </layer>
+ <layer id="6" name="Objects" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eAFjYKAO4KWOMRSbokyxCfQ3ADnsAC0UAD4=
+  </data>
+ </layer>
+ <layer id="5" name="Monsters" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eAFTY8AEeZhCDJxYxOgtxM3A0EBvO+ltHwBnOwEp
+  </data>
+ </layer>
+</map>

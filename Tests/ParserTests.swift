@@ -32,26 +32,20 @@ import SpriteKit
 
 /// Test the tiled parser
 class ParserTests: XCTestCase {
-    
+
     var tilemap: SKTilemap?
     let tilemapDelegate = TestMapDelegate()
     let tilesetDelegate = TestTilesetDelegate()
-    var testBundle: Bundle!
     let tilemapName = "test-tilemap"
+
     
     override func setUp() {
         super.setUp()
         
-        if (testBundle == nil) {
-            testBundle = Bundle(for: type(of: self))
-        }
-        
-        if (tilemap == nil) {
-            print("➜ loading test tilemap: \"\(tilemapName)\"...")
-            
-            let mapurl = testBundle!.url(forResource: tilemapName, withExtension: "tmx")!
-            tilemap = SKTilemap.load(tmxFile: mapurl.path, delegate: tilemapDelegate,
-                                     tilesetDataSource: tilesetDelegate, loggingLevel: .none)
+        if let mappath = Bundle(for: ParserTests.self).path(forResource: tilemapName, ofType: "tmx") {
+            tilemap = SKTilemap.load(tmxFile: mappath, delegate: tilemapDelegate, tilesetDataSource: tilesetDelegate, loggingLevel: .none)
+        } else {
+            XCTFail("⭑ Cannot find test tilemap.")
         }
     }
 
@@ -59,39 +53,30 @@ class ParserTests: XCTestCase {
         super.tearDown()
     }
 
-    /**
-     Test the that the map can be successfull loaded.
-     
-     */
+    /// Test the that the map can be successfull loaded.
     func testMapExists() {
-        XCTAssertNotNil(self.tilemap, "❗️tilemap should not be nil.")
+        XCTAssertNotNil(self.tilemap, "⭑ tilemap should not be nil.")
     }
     
-    /**
-     Test that the map received the custom values from test delegates.
-     
-     */
+    /// Test that the map received the custom values from test delegates.
     func testMapHasCorrectFlagsSet() {
         guard let tilemap = tilemap else {
-            XCTFail("❗️tilemap did not load.")
+            XCTFail("⭑ tilemap did not load.")
             return
         }
-        
+
         let monstersTileset = tilemap.getTileset(named: "monsters-16x16")!
-        XCTAssert(tilemap.zDeltaForLayers == 129, "❗️test delegate has a z-delta value of `129`")
-        XCTAssert(monstersTileset.source.filename == "monsters-16x16.png", "❗️tileset source is incorrect: \"\(monstersTileset.source.filename)\"")
-        XCTAssert(monstersTileset.tileSize.width == 16, "❗️tileset tile width is incorrect: \"\(monstersTileset.tileSize.width)\"")
+        XCTAssert(tilemap.zDeltaForLayers == 129, "⭑ test delegate has a z-delta value of `129`")
+        XCTAssert(monstersTileset.source.filename == "monsters-16x16.png", "⭑ tileset source is incorrect: '\(monstersTileset.source.filename)'")
+        XCTAssert(monstersTileset.tileSize.width == 16, "⭑tileset tile width is incorrect: '\(monstersTileset.tileSize.width)'")
     }
-    
-    /**
-     Test that the map is calling back to delegates correctly.
-     
-     */
+
+    /// Test that the map is calling back to delegates correctly.
     func testMapIsUsingDelegates() {
         guard (tilemap != nil) else {
-            XCTFail("❗️tilemap did not load.")
+            XCTFail("⭑ tilemap did not load.")
             return
         }
-        XCTAssertTrue(tilemapDelegate.mapRenderedSuccessfully, "❗️tilemap did not call back to delegate.")
+        XCTAssertTrue(tilemapDelegate.mapRenderedSuccessfully, "⭑tilemap did not call back to delegate.")
     }
 }

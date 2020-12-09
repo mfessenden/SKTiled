@@ -1,0 +1,28 @@
+{
+  "images" : [
+    {
+      "filename" : "Top Shelf Wide - tvOS.png",
+      "idiom" : "tv",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "Top Shelf Wide - tvOS@2x.png",
+      "idiom" : "tv",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "Top Shelf Wide - tvOS.png",
+      "idiom" : "tv-marketing",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "Top Shelf Wide - tvOS@2x.png",
+      "idiom" : "tv-marketing",
+      "scale" : "2x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

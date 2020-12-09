@@ -25,13 +25,19 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import XCTest
 import Foundation
+import XCTest
 @testable import SKTiled
 
 
 extension SKTilemap {
-    
+
+
+    /// Load a tilemap from a test bundle.
+    ///
+    /// - Parameters:
+    ///   - tmxFile: tilemap file path.
+    ///   - ignoreProperties: ignore custom properties.
     public class func load(tmxFile: String, ignoreProperties: Bool) -> SKTilemap? {
         return SKTilemap.load(tmxFile: tmxFile, inDirectory: nil,
                               delegate: nil, tilesetDataSource: nil,
@@ -39,12 +45,41 @@ extension SKTilemap {
                               withTilesets: nil, ignoreProperties: ignoreProperties,
                               loggingLevel: TiledGlobals.default.loggingLevel)
     }
-    
-    public class func load(tmxFile: String, delegate: SKTilemapDelegate, tilesetDataSource: SKTilesetDataSource, loggingLevel: LoggingLevel) -> SKTilemap? {
+
+    /// Load a tilemap from a test bundle.
+    ///
+    /// - Parameters:
+    ///   - tmxFile: tilemap file path.
+    ///   - delegate: tilemap delegate.
+    ///   - tilesetDataSource: tileset data source delegate.
+    ///   - loggingLevel: logging verbosity.
+    public class func load(tmxFile: String,
+                           delegate: TilemapDelegate,
+                           tilesetDataSource: TilesetDataSource,
+                           loggingLevel: LoggingLevel) -> SKTilemap? {
+
         return SKTilemap.load(tmxFile: tmxFile, inDirectory: nil,
                               delegate: delegate, tilesetDataSource: tilesetDataSource,
                               updateMode: TiledGlobals.default.updateMode,
                               withTilesets: nil, ignoreProperties: false,
                               loggingLevel: loggingLevel)
     }
+
+    /// Load a tilemap from a test bundle.
+    ///
+    /// - Parameters:
+    ///   - tmxFile: tilemap file path.
+    ///   - delegate: tilemap delegate.
+    ///   - loggingLevel: logging verbosity.
+    public class func load(tmxFile: String,
+                           delegate: TilemapDelegate,
+                           loggingLevel: LoggingLevel) -> SKTilemap? {
+
+        return SKTilemap.load(tmxFile: tmxFile, inDirectory: nil,
+                              delegate: delegate, tilesetDataSource: nil,
+                              updateMode: TiledGlobals.default.updateMode,
+                              withTilesets: nil, ignoreProperties: false,
+                              loggingLevel: loggingLevel)
+    }
 }
+

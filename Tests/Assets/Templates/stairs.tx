@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <object name="stairs" type="stairs">
+  <properties>
+   <property name="role" type="int" value="2"/>
+  </properties>
+  <polygon points="0,0 0,6 6,6 6,0"/>
+ </object>
+</template>

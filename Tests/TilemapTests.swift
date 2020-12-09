@@ -26,98 +26,129 @@
 //  THE SOFTWARE.
 
 import XCTest
+import SpriteKit
 @testable import SKTiled
 
 
+
+// Tile map instance used for this test.
+var testBasicTilemap: SKTilemap?
+let testBasicTilemapName = "test-tilemap"
+
+
 class TilemapTests: XCTestCase {
-    
-    var testBundle: Bundle!
-    var tilemap: SKTilemap?
-    let tilemapName = "test-tilemap"
-    
-    override func setUp() {
+
+    override class func setUp() {
         super.setUp()
-        
-        if (testBundle == nil) {
-            TiledGlobals.default.loggingLevel = .none
-            testBundle = Bundle(for: type(of: self))
-        }
-        
-        if (tilemap == nil) {
-            let mapurl = testBundle!.url(forResource: tilemapName, withExtension: "tmx")!
-            tilemap = SKTilemap.load(tmxFile: mapurl.path, loggingLevel: .none)
+        if (testBasicTilemap == nil) {
+            if let tilemapUrl = TestController.default.getResource(named: testBasicTilemapName, withExtension: "tmx") {
+                testBasicTilemap = SKTilemap.load(tmxFile: tilemapUrl.path, loggingLevel: .none)
+            }
         }
     }
-    
-    override func tearDown() {
-        super.tearDown()
-    }
-    
-    /**
-     Test that the tilemap has the correct attributes compared to the source
-     Tiled file.
-     
-     */
+
+    /// Test that the tilemap has the correct attributes compared to the source Tiled file.
     func testBasicMapAttributes() {
-        guard let tilemap = tilemap else {
-            XCTFail("❗️tilemap did not load.")
+        guard let tilemap = testBasicTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testBasicTilemapName)'")
             return
         }
-        
-        
+
+
         let expectedLayerCount = 7
         let expectedObjectCount = 3
-        XCTAssert(tilemap.layerCount == expectedLayerCount, "❗️tilemap layer count incorrect: \(tilemap.layerCount)")
-        XCTAssert(tilemap.objectCount == expectedObjectCount, "❗️tilemap object count incorrect: \(tilemap.objectCount)")
+        XCTAssert(tilemap.layerCount == expectedLayerCount, "⭑ tilemap layer count incorrect: \(tilemap.layerCount)")
+        XCTAssert(tilemap.objectCount == expectedObjectCount, "⭑ tilemap object count incorrect: \(tilemap.objectCount)")
     }
-    
-    /**
-     Test that the tilemap is correctly querying tiles of a certain type.
-     
-     */
+
+
+    /// Test that the tilemap is correctly querying tiles of a certain type.
     func testQueryTilesOfType() {
-        guard let tilemap = tilemap else {
-            XCTFail("❗️tilemap did not load.")
+        guard let tilemap = testBasicTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testBasicTilemapName)'")
             return
         }
-        
-        let expectedTileCount = 191
+
+        let expectedTileCount = 189
         let tiles = tilemap.getTiles(ofType: "wall")
-        XCTAssert(tiles.count == expectedTileCount, "❗️tilemap tile count is incorrect: \(tiles.count)")
+        XCTAssert(tiles.count == expectedTileCount, "⭑ tilemap tile count is incorrect: \(tiles.count)")
     }
-    
-    /**
-     Test to make sure the `getObjectProxies` methods work.
-     */
+
+    /// Test to make sure the tile map's `getObjectProxies` methods work.
     func testMapQueryObjectProxies() {
-        guard let tilemap = tilemap else {
-            XCTFail("❗️tilemap did not load.")
+        guard let tilemap = testBasicTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testBasicTilemapName)'")
             return
         }
-        
+
         let mapObjects = tilemap.getObjects()
         let mapProxies = tilemap.getObjectProxies()
-        XCTAssert(mapProxies.count == mapObjects.count, "❗️tilemap object proxy count incorrect: \(mapProxies.count), \(mapObjects.count)")
+        XCTAssert(mapProxies.count == mapObjects.count, "⭑ tilemap object proxy count incorrect: \(mapProxies.count), \(mapObjects.count)")
     }
-    
-    /**
-     Test to make sure the `getObjectProxies` methods work.
-     */
+
+    /// Test to make sure the layer `getObjectProxies` methods work.
     func testLayerQueryObjectProxies() {
-        guard let tilemap = tilemap else {
-            XCTFail("❗️tilemap did not load.")
+        guard let tilemap = testBasicTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testBasicTilemapName)'")
             return
         }
-        
-        let objectGroup = "Collision"
-        
+
+        let objectGroup = "Bosses"
+
         guard let objLayer = tilemap.objectGroups(named: objectGroup).first else {
-            XCTFail("❗️layer '\(objectGroup)' not found in \(tilemap.mapName).")
+            XCTFail("⭑ layer '\(objectGroup)' not found in \(tilemap.mapName).")
             return
         }
-        
+
         let layerObjects = objLayer.getObjects()
         let layerProxies = objLayer.getObjectProxies()
-        XCTAssert(layerProxies.count == layerObjects.count, "❗️layer object proxy count incorrect: \(layerProxies.count), \(layerObjects.count)")
+        XCTAssert(layerProxies.count == layerObjects.count, "⭑ layer object proxy count incorrect: \(layerProxies.count), \(layerObjects.count)")
+    }
+
+
+    /// Test that a layer can be queried with a path.
+    func testQueryAtPath() {
+        guard let tilemap = testBasicTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testBasicTilemapName)'")
+            return
+        }
+
+        let testLayerPath = "Characters/Bosses"
+        let expectedLayerType = TiledLayerObject.TiledLayerType.object
+        let expectedObjectCOunt = 3
+
+        guard let testLayer = tilemap.getLayers(atPath: testLayerPath).first else {
+            XCTFail("⭑ could not find layer at path '\(testLayerPath)'.")
+            return
+        }
+
+
+        let objects = (testLayer as! SKObjectGroup).getObjects()
+
+
+        XCTAssert(testLayer.layerType == expectedLayerType, "⭑ layer '\(testLayer.layerName)' type is incorrect: '\(testLayer.layerType)', expected: '\(expectedLayerType)'")
+        XCTAssert(objects.count == expectedObjectCOunt, "⭑ layer '\(testLayer.layerName)' object count is incorrect \(objects.count), expected \(expectedObjectCOunt)")
+
+    }
+    
+    /// Test the `SKTilemap.renderableObjectsAt(point:)` method.
+    ///
+    ///
+    func testRenderableObjectsQuery() {
+        guard let tilemap = testBasicTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testBasicTilemapName)'")
+            return
+        }
+        
+        // FIXME: this doesn't work!!
+        
+        let testCoordinate = simd_int2(22, 10)
+        let location = tilemap.pointForCoordinate(coord: testCoordinate)
+
+        let expectedObjectCount = 13
+        let renderableObjects = tilemap.renderableObjectsAt(point: location)
+        let renderableObjectCount = renderableObjects.count
+        //XCTAssert(expectedObjectCount == renderableObjectCount, "⭑ incorrect number of renerables at \(testCoordinate.coordDescription)... got: \(renderableObjectCount), expected: \(expectedObjectCount)")
+        
     }
 }

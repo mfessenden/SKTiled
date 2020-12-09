@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <object name="light" type="lightbox" width="4" height="4">
+  <properties>
+   <property name="role" type="int" value="0"/>
+  </properties>
+  <ellipse/>
+ </object>
+</template>

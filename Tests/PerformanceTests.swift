@@ -30,43 +30,97 @@ import XCTest
 
 
 class PerformanceTests: XCTestCase {
-    
-    var testBundle: Bundle!
-    
-    override func setUp() {
-        super.setUp()
-        
 
-        if (testBundle == nil) {
-            TiledGlobals.default.loggingLevel = .none
-            testBundle = Bundle(for: type(of: self))
-        }
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-    }
-    
-    func testSmallMapLoadTime() {
+
+    /// Test parsing of the test map saved as `CSV`.
+    ///
+    ///   - average time: 0s ( 0.000015s best )
+    ///   - relative standard deviation: 189.808%
+    func testCSVCompressedMap() {
+
+        let testBundle = Bundle.init(for: PerformanceTests.self)
         self.measure {
-            if let mapURL = testBundle!.url(forResource: "test-small", withExtension: "tmx") {
-                if let map = SKTilemap.load(tmxFile: mapURL.path, loggingLevel: .none) {
-                    map.debugDrawOptions = [.drawGrid, .drawBounds]
+            if let mapURL = testBundle.url(forResource: "test-compression-csv", withExtension: "tmx") {
+                if let _ = SKTilemap.load(tmxFile: mapURL.path, loggingLevel: .none) {
+                    self.stopMeasuring()
                 }
             }
-            self.stopMeasuring()
         }
-        
     }
-    
+
+    /// Test parsing of the test map (using `gzip` compression).
+    ///
+    ///   - average time: 0s ( 0.000020s best )
+    ///   - relative standard deviation: 58.966%
+    func testGzipCompressedMap() {
+        let testBundle = Bundle.init(for: PerformanceTests.self)
+        self.measure {
+            if let mapURL = testBundle.url(forResource: "test-compression-gzip", withExtension: "tmx") {
+                if let _ = SKTilemap.load(tmxFile: mapURL.path, loggingLevel: .none) {
+                    self.stopMeasuring()
+                }
+            }
+        }
+    }
+
+    /// Test parsing of a 300x300/8x8 tile infinite map.
+    ///
+    ///   - average time: 14.163s
+    ///   - relative standard deviation: 30%
+    func testLargeInfiniteMapLoadTime() {
+        let testBundle = Bundle.init(for: PerformanceTests.self)
+        self.measure {
+            if let mapURL = testBundle.url(forResource: "test-large-infinite-zlib", withExtension: "tmx") {
+                if let _ = SKTilemap.load(tmxFile: mapURL.path, loggingLevel: .none) {
+                    self.stopMeasuring()
+                }
+            }
+        }
+    }
+
+
+    /// Test parsing of a 300x300/8x8 tile map.
+    ///
+    ///   - average time: 11.448s
+    ///   - relative standard deviation: 13.941%
     func testLargeMapLoadTime() {
+        let testBundle = Bundle.init(for: PerformanceTests.self)
         self.measure {
-            if let mapURL = testBundle!.url(forResource: "test-large", withExtension: "tmx") {
-                if let map = SKTilemap.load(tmxFile: mapURL.path, loggingLevel: .none) {
-                    map.debugDrawOptions = [.drawGrid, .drawBounds]
+            if let mapURL = testBundle.url(forResource: "test-large-zlib", withExtension: "tmx") {
+                if let _ = SKTilemap.load(tmxFile: mapURL.path, loggingLevel: .none) {
+                    self.stopMeasuring()
                 }
             }
-            self.stopMeasuring()
+        }
+    }
+
+    /// Test parsing of a 10x10/8x8 tile map.
+    ///
+    ///   - average time: 0.034s
+    ///   - relative standard deviation: 10.876%
+    func testSmallMapLoadTime() {
+        let testBundle = Bundle.init(for: PerformanceTests.self)
+        self.measure {
+            if let mapURL = testBundle.url(forResource: "test-small-zlib", withExtension: "tmx") {
+                if let _ = SKTilemap.load(tmxFile: mapURL.path, loggingLevel: .none) {
+                    self.stopMeasuring()
+                }
+            }
+        }
+    }
+
+    /// Test parsing of the test map (using `zlib` compression).
+    ///
+    ///   - average time: 5.324s ( 3.491s best )
+    ///   - relative standard deviation: 61.232%
+    func testZlibCompressedMap() {
+        let testBundle = Bundle.init(for: PerformanceTests.self)
+        self.measure {
+            if let mapURL = testBundle.url(forResource: "test-compression-zlib", withExtension: "tmx") {
+                if let _ = SKTilemap.load(tmxFile: mapURL.path, loggingLevel: .none) {
+                    self.stopMeasuring()
+                }
+            }
         }
     }
 }

@@ -13,10 +13,10 @@
 
 **SKTiled** is a framework for integrating [Tiled][tiled-url] assets with [Apple's SpriteKit][spritekit-url], built from the ground up with Swift. This project began life as an exercise to learn Apple's new programming language for a game project, but I've decided to release it as open source with the hopes that others will find it useful. **SKTiled** is up-to-date and supports **Tiled's** major features, including all map & object types.
 
-![Demo Image](Docs/images/demo-iphone.png?raw=true)
+![Demo Image][demo-iphone-img]
 
 
-Check out the [**Official Documentation**][sktiled-12-doc-url].
+Check out the [**Official Documentation**][sktiled-13-doc-url].
 
 ## Features
 
@@ -36,7 +36,7 @@ Check out the [**Official Documentation**][sktiled-12-doc-url].
 - [x] custom tile & object classes
 - [x] generate `GKGridGraph` graphs from custom attributes
 - [x] user-definable cost properties for `GKGridGraph` nodes
-- [ ] infinite maps
+- [x] infinite maps
 - [ ] tile collision objects
 - [ ] Zstandard compression support
 
@@ -45,7 +45,7 @@ Check out the [**Official Documentation**][sktiled-12-doc-url].
 
 - iOS 12
 - tvOS 12
-- macOS 10.12
+- macOS 10.14    (was 10.12, attribute editor updated)
 - Xcode 11/Swift 5
 
 ## Installation
@@ -54,12 +54,12 @@ Check out the [**Official Documentation**][sktiled-12-doc-url].
 
 For Carthage installation, create a Cartfile in the root of your project:
 
-    github "mfessenden/SKTiled" ~> 1.22
+    github "mfessenden/SKTiled" ~> 1.30
 
 
 For CocoaPods, install via a reference in your podfile:
 
-    pod 'SKTiled', '~> 1.22'
+    pod 'SKTiled', '~> 1.30'
 
 
 ## Usage
@@ -234,9 +234,9 @@ let layerAnimated = groundLayer.animatedTiles()
 
 ## Custom Properties
 
-Custom properties are supported on all object types. All **SKTiled** objects conform to the [`SKTiledObject`][sktiledobject-url] protocol and allow access to and parsing of custom properties.
+Custom properties are supported on all object types. All **SKTiled** objects conform to the [`TiledObjectType`][tiledobjectype-url] protocol and allow access to and parsing of custom properties.
 
-Any property added to an object in **Tiled** will be translated and stored in the `SKTiledObject.properties` dictionary.
+Any property added to an object in **Tiled** will be translated and stored in the `TiledObjectType.properties` dictionary.
 
 ```swift
 let layerDepth = groundLayer.getValue(forProperty: "depth")
@@ -257,6 +257,7 @@ let groundWalkable = groundLayer.getTilesWithProperty("walkable", true)
 let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 ```
 
+
 ## Acknowledgments
 
 - [Thorbjørn Lindeijer](https://github.com/bjorn): creator of *Tiled*
@@ -265,6 +266,8 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 - [Kenney Vleugels](http://www.kenney.nl): demo spritesheet assets
 - [Amit Patel](http://www-cs-students.stanford.edu/~amitp/gameprog.html): tile-based game logic
 - [Clint Bellanger: Isometric Tiles Math](http://clintbellanger.net/articles/isometric_math)
+- [Amit Patel](https://www.redblobgames.com)
+
 
 [swift5-image]:https://img.shields.io/badge/Swift-5.3-brightgreen.svg
 [swift4-image]:https://img.shields.io/badge/Swift-4.2-brightgreen.svg
@@ -291,27 +294,26 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 [branch-xcode8-url]:https://github.com/mfessenden/SKTiled/tree/xcode8
 [branch-xcode9-url]:https://github.com/mfessenden/SKTiled/tree/xcode9
 
-[header-image]:https://mfessenden.github.io/SKTiled/1.2/images/header.png
-[demo-mac-image]:https://mfessenden.github.io/SKTiled/1.2/images/demo-macos-iso.png
-[demo-iphone-img]:https://mfessenden.github.io/SKTiled/1.2/images/demo-iphone.png
-
-
-[demo-phone-img2]:/Docs/images/demo-iphone.png
+[header-image]:https://mfessenden.github.io/SKTiled/1.3/images/header.png
+[demo-mac-image]:https://mfessenden.github.io/SKTiled/1.3/images/demo-macos-iso.png
+<!--[demo-iphone-img]:https://mfessenden.github.io/SKTiled/1.3/images/demo-iphone.png-->
+[demo-iphone-img]:Docs/images/demo-iphone.png
 
 
 <!--- Documentation --->
 
 [sktiled-gh-url]:https://mfessenden.github.io/SKTiled
-[sktiled-12-doc-url]:https://mfessenden.github.io/SKTiled/1.2/index.html
-[sktilemap-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKTilemap.html
-[sktiledobject-url]:https://mfessenden.github.io/SKTiled/1.2/Protocols/SKTiledObject.html
-[sktile-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKTile.html
-[skobjectgroup-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKObjectGroup.html
-[sktiledlayerobject-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKTiledLayerObject.html
-[sktiledlayerobject-pointforcoordinate-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKTiledLayerObject.html
-[sktilelayer-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKTileLayer.html
-[sktileobject-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKTileObject.html
-[sktileset-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKTileset.html
+[sktiled-12-doc-url]:https://mfessenden.github.io/SKTiled/1.2/
+[sktiled-13-doc-url]:https://mfessenden.github.io/SKTiled/1.3/
+[sktilemap-url]:https://mfessenden.github.io/SKTiled/1.3/Classes/SKTilemap.html
+[sktiledobject-url]:https://mfessenden.github.io/SKTiled/1.3/Protocols/SKTiledObject.html
+[sktile-url]:https://mfessenden.github.io/SKTiled/1.3/Classes/SKTile.html
+[skobjectgroup-url]:https://mfessenden.github.io/SKTiled/1.3/Classes/SKObjectGroup.html
+[sktiledlayerobject-url]:https://mfessenden.github.io/SKTiled/1.3/Classes/SKTiledLayerObject.html
+[sktiledlayerobject-pointforcoordinate-url]:https://mfessenden.github.io/SKTiled/1.3/Classes/SKTiledLayerObject.html
+[sktilelayer-url]:https://mfessenden.github.io/SKTiled/1.3/Classes/SKTileLayer.html
+[sktileobject-url]:https://mfessenden.github.io/SKTiled/1.3/Classes/SKTileObject.html
+[sktileset-url]:https://mfessenden.github.io/SKTiled/1.3/Classes/SKTileset.html
 
 <!--- Tiled --->
 
@@ -327,4 +329,3 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 [skscene-update-url]:https://developer.apple.com/documentation/spritekit/skscene/1519802-update
 [uitouch-url]:https://developer.apple.com/documentation/uikit/uitouch
 [nsevent-url]:https://developer.apple.com/documentation/appkit/nsevent
-[swift-package-doc-url]:https://developer.apple.com/documentation/swift_packages

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+    <tileset firstgid="1" source="../monsters-16x16.tsx"/>
+    <object name="dragon-blue" gid="6" type="dragon" width="16" height="16">
+      <properties>
+       <property name="to_collider" type="int" value="3"/>
+       <property name="to_nodetype" value="bonus"/>
+       <property name="to_nodeid" type="int" value="1"/>
+      </properties>
+    </object>
+</template>
