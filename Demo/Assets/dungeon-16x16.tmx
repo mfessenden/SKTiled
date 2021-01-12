@@ -17,7 +17,7 @@
    </properties>
    <data encoding="base64" compression="zlib">
    eJztk79KA0EQxmc9xVYtRI2EQwQthPgHEowgB2KnPoD451JY2p0m2IqVRd7BIvgKkkIfwELfQtAXsPMbboYb1zs9Ebt88GOT3dlvZ2b3iAYaqLz2HdHIP/hOgSYYAgE4cH/zGwV1MO0xA4ZBJWfPHej/4BuCXXAIjkEMlgX2XzWxXALXswHWPB9e4zq1l6GMO+LfBi/ip6iewDN4cxS3zHwXvMJ43pwX0lfNmfXA9PlczuU9HRPfA2dSs55X5Dv7zbo/15MxMecV+aLWB77PhsxxrXWh4cVzngF97m+NKOL/fB+XlL6DdcmX+70ncbeU9oHV9nwT8bb95XfL974EruR3xeSr3Ev8SU591lv7u4B7OcW4BbbBOJgw+VpY1QJf1oWg+a6ATTAJFsEjZfd2DWKX0S35HdbEV72RcxQZ3xtK35C+sU6OR564J0eUfWvvMraKt5RS4uUz5n6X1wdgVjQZ
-</data>
+  </data>
   </layer>
   <layer id="3" name="Objects" width="22" height="21">
    <properties>
@@ -25,7 +25,7 @@
    </properties>
    <data encoding="base64" compression="zlib">
    eJxjYBgFo2AUDEYQRCNzM2lk7igYBSMFAACGMgC8
-</data>
+  </data>
   </layer>
   <layer id="4" name="Bridges" width="22" height="21">
    <properties>
@@ -33,41 +33,41 @@
    </properties>
    <data encoding="base64" compression="zlib">
    eJxjYBgFo2AUDDcwBYinAvE0Kpq5hopmIYPDFOjF56ZbFJhLyE3khi8lbqIloEV6Gc4AAFG6CdA=
-</data>
+  </data>
   </layer>
-   <objectgroup id="6" name="Lower Objects">
+  <objectgroup id="6" name="Lower Objects">
    <properties>
     <property name="isStatic" type="bool" value="false"/>
    </properties>
-    <object id="79" name="crate9" gid="151" x="310" y="146" width="16" height="16"/>
-    <object id="80" name="crate10" gid="151" x="317" y="146" width="16" height="16"/>
-    <object id="81" name="chest1" gid="103" x="136" y="118" width="16" height="16"/>
+   <object id="79" name="crate9" gid="151" x="310" y="146" width="16" height="16"/>
+   <object id="80" name="crate10" gid="151" x="317" y="146" width="16" height="16"/>
+   <object id="81" name="chest1" gid="103" x="136" y="118" width="16" height="16"/>
    <object id="82" name="barrel3" type="barrel" gid="152" x="32" y="174" width="16" height="16"/>
    <object id="85" name="barrel1" type="barrel" gid="152" x="44" y="174" width="16" height="16"/>
-    <object id="88" name="crate3" gid="151" x="49" y="267" width="16" height="16"/>
-    <object id="87" name="crate1" gid="151" x="58" y="266" width="16" height="16"/>
+   <object id="88" name="crate3" gid="151" x="49" y="267" width="16" height="16"/>
+   <object id="87" name="crate1" gid="151" x="58" y="266" width="16" height="16"/>
    <object id="89" name="barrel4" type="barrel" gid="152" x="275" y="172" width="16" height="16"/>
    <object id="94" name="barrel5" type="barrel" gid="152" x="100" y="316" width="16" height="16"/>
    <object id="95" name="barrel6" type="barrel" gid="152" x="176" y="256" width="16" height="16"/>
    <object id="96" name="barrel6" type="barrel" gid="152" x="144" y="144" width="16" height="16"/>
-    <object id="101" name="crate4" gid="151" x="173" y="175" width="16" height="16"/>
-    <object id="102" name="crate5" gid="151" x="180" y="175" width="16" height="16"/>
-    <object id="103" name="crate6" gid="2147483799" x="170" y="175" width="16" height="16"/>
-    <object id="104" name="crate7" gid="151" x="176" y="183" width="16" height="16"/>
-    <object id="105" name="crate8" gid="151" x="176" y="183" width="16" height="16"/>
+   <object id="101" name="crate4" gid="151" x="173" y="175" width="16" height="16"/>
+   <object id="102" name="crate5" gid="151" x="180" y="175" width="16" height="16"/>
+   <object id="103" name="crate6" gid="2147483799" x="170" y="175" width="16" height="16"/>
+   <object id="104" name="crate7" gid="151" x="176" y="183" width="16" height="16"/>
+   <object id="105" name="crate8" gid="151" x="176" y="183" width="16" height="16"/>
    <object id="106" name="barrel5" type="barrel" gid="152" x="111" y="314" width="16" height="16"/>
    <object id="107" name="barrel5" type="barrel" gid="152" x="106" y="304" width="16" height="16"/>
-   </objectgroup>
-   <objectgroup id="7" name="Top Objects">
-    <object id="125" name="barrel2" gid="152" x="38" y="166" width="16" height="16"/>
-    <object id="128" name="crate-error" gid="151" x="313" y="141" width="16" height="16"/>
-    <object id="130" name="crate2" gid="151" x="52" y="260" width="16" height="16"/>
-   </objectgroup>
-   <objectgroup id="8" name="Characters-Lower">
-    <object id="129" name="knight1" gid="556" x="295" y="172" width="32" height="32"/>
+  </objectgroup>
+  <objectgroup id="7" name="Top Objects">
+   <object id="125" name="barrel2" gid="152" x="38" y="166" width="16" height="16"/>
+   <object id="128" name="crate-error" gid="151" x="313" y="141" width="16" height="16"/>
+   <object id="130" name="crate2" gid="151" x="52" y="260" width="16" height="16"/>
+  </objectgroup>
+  <objectgroup id="8" name="Characters-Lower">
+   <object id="129" name="knight1" gid="556" x="295" y="172" width="32" height="32"/>
    <object id="131" name="wizard1" gid="2147484202" x="46" y="204" width="32" height="32"/>
-   </objectgroup>
-  </group>
+  </objectgroup>
+ </group>
  <group id="23" name="Upper">
   <layer id="10" name="Level2" width="22" height="21">
    <properties>
@@ -75,7 +75,7 @@
    </properties>
    <data encoding="base64" compression="zlib">
    eJxjYBhZQGHUXKqau5MRwY4Hsq8C8UQqmHsFSoOMv8zI8OAckLGCCubCgBsQGwPxU6C5qmSasZMB7DaGfRC6YReQtgZiGQrd9gpo5hVGBLsIiKWB7EQKze1kRMT7FSjfBkgvZcSthxiwgBE1Pe1hRKXJAaLQcN1PgbuwAR2guaeA9DUqmzsKRhYAAItVGVU=
-</data>
+  </data>
   </layer>
   <layer id="11" name="Level3" width="22" height="21">
    <properties>
@@ -83,14 +83,14 @@
    </properties>
    <data encoding="base64" compression="zlib">
    eJxjYCAfXADii0B8iQIzsIGzjAwMskB8jpG65j6BmveUyuaOglEwCkbBKBg5AADUzAX6
-</data>
+  </data>
   </layer>
-   <objectgroup id="13" name="Upper Objects">
-    <object id="141" name="brazier1" type="light" gid="558" x="208" y="172" width="16" height="32"/>
-    <object id="142" name="brazier2" type="light" gid="558" x="235" y="172" width="16" height="32"/>
-   </objectgroup>
-   <objectgroup id="14" name="Characters-Upper">
-    <object id="119" name="dwarf1" gid="557" x="144" y="170" width="32" height="32"/>
-   </objectgroup>
+  <objectgroup id="13" name="Upper Objects">
+   <object id="141" name="brazier1" type="light" gid="558" x="208" y="172" width="16" height="32"/>
+   <object id="142" name="brazier2" type="light" gid="558" x="235" y="172" width="16" height="32"/>
+  </objectgroup>
+  <objectgroup id="14" name="Characters-Upper">
+   <object id="119" name="dwarf1" gid="557" x="144" y="170" width="32" height="32"/>
+  </objectgroup>
  </group>
 </map>
