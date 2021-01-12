@@ -305,7 +305,7 @@
 <ul>
 <li><code><a href="Protocols/TiledSceneDelegate.html#/s:7SKTiled18TiledSceneDelegateP7tilemapAA9SKTilemapCSgvp">TiledSceneDelegate.tilemap</a></code> property is now optional</li>
 <li><code><a href="Protocols/TiledSceneDelegate.html#/s:7SKTiled18TiledSceneDelegateP10cameraNodeAA0aC6CameraCSgvp">TiledSceneDelegate.cameraNode</a></code> property is now optional</li>
-<li><code>SKTiledSceneCamera.worldNode</code> property is now optional</li>
+<li><code>SKTiledSceneCamera.world</code> property is now optional</li>
 </ul>
 
 <p>As a result, references to <code><a href="Classes/SKTilemap.html">SKTilemap</a></code> &amp; <code><a href="Classes/SKTiledSceneCamera.html">SKTiledSceneCamera</a></code> nodes will need to be unwrapped:</p>
@@ -417,10 +417,6 @@
 <h3 id='template-object-handling' class='heading'>Template Object Handling</h3>
 
 <p>Template object support in API 1.3 is considerably better. Prior versions of the API could occasionally clobber template object user overrides in Tiled, in v1.3 these issues have been fixed.</p>
-<h4 id='misc' class='heading'>Misc</h4>
-<pre class="highlight swift"><code><span class="c1">// Error: Ambiguous use of 'coordinateAtTouchLocation'</span>
-<span class="k">let</span> <span class="nv">coord</span> <span class="o">=</span> <span class="n">defaultLayer</span><span class="o">.</span><span class="nf">coordinateAtTouchLocation</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
-</code></pre>
 
 <p>For more information, see the <a href="migration-guide.html"><strong>Migration Guide</strong></a>.</p>
 <h2 id='swift-5-support' class='heading'>Swift 5 Support</h2>
