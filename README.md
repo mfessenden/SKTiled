@@ -16,7 +16,7 @@
 ![Demo Image](Docs/images/demo-iphone.png?raw=true)
 
 
-Check out the [**Official Documentation**][sktiled-12-doc-url].
+Check out the [**Official Documentation**][sktiled-12-doc-url]. 
 
 ## Features
 

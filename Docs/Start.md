@@ -17,6 +17,7 @@
 
 ![Isometric Preview](images/iso-start@2x.png)
 
+For **v1.3 beta** documentation, click [here][sktiled-130-docs-url].
 
 <!-- SKTiled URLs -->
 
