@@ -2,7 +2,7 @@
 //  TileCollisionShape.swift
 //  SKTiled
 //
-//  Created by Michael Fessenden.
+//  Copyright © 2020 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //

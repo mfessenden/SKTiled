@@ -7,7 +7,6 @@
 <a href="https://github.com/mfessenden/SKTiled/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
 <a href="http://www.apple.com"><img src="https://img.shields.io/badge/platforms-iOS%20%7C%20tvOS%20%7C%20macOS-red.svg"></a>
 <a href="https://github.com/Carthage/Carthage/"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg"></a>
-<a href="https://cocoapods.org/pods/SKTiled"><img src="https://img.shields.io/cocoapods/v/SKTiled.svg"></a>
 </p>
 
 
@@ -16,7 +15,7 @@
 ![Demo Image][demo-iphone-img]
 
 
-Check out the [**Official Documentation**][sktiled-13-doc-url].
+Check out the [**Official Documentation**][sktiled-13-doc-url]. Got a project based on **SKTiled**? We'd love [to hear][mailto-url] about it!
 
 ## Features
 
@@ -39,13 +38,14 @@ Check out the [**Official Documentation**][sktiled-13-doc-url].
 - [x] infinite maps
 - [ ] tile collision objects
 - [ ] Zstandard compression support
+- [ ] layer tinting
 
 
 ## Requirements
 
 - iOS 12
 - tvOS 12
-- macOS 10.14    (was 10.12, attribute editor updated)
+- macOS 10.14
 - Xcode 11/Swift 5
 
 ## Installation
@@ -54,12 +54,12 @@ Check out the [**Official Documentation**][sktiled-13-doc-url].
 
 For Carthage installation, create a Cartfile in the root of your project:
 
-    github "mfessenden/SKTiled" ~> 1.30
+    github "mfessenden/SKTiled" ~> 1.3b1
 
 
 For CocoaPods, install via a reference in your podfile:
 
-    pod 'SKTiled', '~> 1.30'
+    pod 'SKTiled', '~> 1.30b1'
 
 
 ## Usage
@@ -265,8 +265,9 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 - [Steffen Itterheim](http://www.learn-cocos2d.com): Author of TilemapKit, the inspiration for this project
 - [Kenney Vleugels](http://www.kenney.nl): demo spritesheet assets
 - [Amit Patel](http://www-cs-students.stanford.edu/~amitp/gameprog.html): tile-based game logic
-- [Clint Bellanger: Isometric Tiles Math](http://clintbellanger.net/articles/isometric_math)
-- [Amit Patel](https://www.redblobgames.com)
+- [Clint Bellanger](http://clintbellanger.net/articles/isometric_math): isometric grid math
+- [Amit Patel](https://www.redblobgames.com): hexagonal grid logic
+
 
 
 [swift5-image]:https://img.shields.io/badge/Swift-5.3-brightgreen.svg
@@ -282,7 +283,7 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 [carthage-image]:https://img.shields.io/badge/Carthage-compatible-4BC51D.svg
 [carthage-url]:https://github.com/Carthage/Carthage
 [pod-image]:https://img.shields.io/cocoapods/v/SKTiled.svg
-
+[mailto-url]:(mailto:michael.fessenden@gmail.com?subject=[SKTiled]%20Projects)
 
 [xcode11-image]:https://img.shields.io/badge/Xcode-11.0-orange.svg
 [xcode10-image]:https://img.shields.io/badge/Xcode-10.0-orange.svg

@@ -27,7 +27,7 @@
 import Foundation
 
 
-// Two-dimensional array structure.
+/// Two-dimensional array structure.
 struct Array2D<T> {
 
     /// Vertical count.
@@ -70,7 +70,9 @@ struct Array2D<T> {
 }
 
 
+
 // MARK: - Extensions
+
 
 
 extension Array2D: Sequence {
@@ -103,15 +105,18 @@ extension Array2D: Sequence {
 /// :nodoc:
 extension Array2D: CustomReflectable, CustomStringConvertible, CustomDebugStringConvertible {
 
+    /// String representation of array.
     var description: String {
         let array = items.compactMap { $0 }
         return "Array2D: \(array.count) items"
     }
 
+    /// String representation of array, used for debugging.
     var debugDescription: String {
-        return description
+        return "<\(description)>"
     }
 
+    /// Returns a custom mirror of the array.
     var customMirror: Mirror {
         var rowdata: [String] = []
         let colSize = 4
@@ -126,7 +131,7 @@ extension Array2D: CustomReflectable, CustomStringConvertible, CustomDebugString
                     if let tile = value as? SKTile {
                         
                         let gid = tile.tileData.globalID   // was `id`
-                        let gidString = "\(gid)".zfill(length: colSize, pattern: " ", padLeft: false)
+                        let gidString = "\(gid)".padRight(toLength: colSize, withPad: " ")
                         rowResult += "\(gidString)\(comma)"
                     } else {
                         rowResult += "\(value)\(comma)"

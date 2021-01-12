@@ -28,3 +28,6 @@
 // https://help.apple.com/xcode/#/dev745c5c974
 
 SAMPLE_CODE_DISAMBIGUATOR = ${DEVELOPMENT_TEAM}
+
+// macOS icon
+APPICON_NAME = AppIconBeta

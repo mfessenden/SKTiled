@@ -1,11 +1,8 @@
-<!--  a container for properties & methods -->
 <div class="task-group">
   {{#name}}
   <div class="task-name-container">
     <a name="/{{uid}}"></a>
     <a name="//apple_ref/{{language_stub}}/Section/{{name}}" class="dashAnchor"></a>
-
-    <!-- pragma -->
     <div class="section-name-container">
       <a class="section-name-link" href="#/{{uid}}"></a>
       <h3 class="section-name">{{{name_html}}}</h3>
@@ -15,7 +12,7 @@
   <ul class="item-container">
     {{#items}}
     <li class="item">
-      <div>
+      <div class="task-header">
         <code>
         <a name="/{{usr}}"></a>
         <a name="//apple_ref/{{language_stub}}/{{dash_type}}/{{name}}" class="dashAnchor"></a>
@@ -25,8 +22,7 @@
         {{/direct_link}}
         {{^direct_link}}
         {{^usage_discouraged}}
-        <!-- symbol name -->
-        <span class="symbol-marker">▶︎</span><a class="token" href="#/{{usr}}">{{{name_html}}}</a>
+        <a class="token" href="#/{{usr}}">{{{name_html}}}</a>
         {{/usage_discouraged}}
         {{#usage_discouraged}}
         <a class="token discouraged" href="#/{{usr}}">{{{name_html}}}</a>

@@ -1,6 +1,6 @@
 //
-//  File.swift
-//
+//  TestController.swift
+//  SKTiledTests
 //
 //  Copyright © 2020 Michael Fessenden. all rights reserved.
 //	Web: https://github.com/mfessenden
@@ -173,17 +173,6 @@ extension String {
         var path = URL(fileURLWithPath: self.expanded)
         path.deleteLastPathComponent()
         return path
-    }
-
-    /// Returns true if the string represents a path that exists.
-    var fileExists: Bool {
-        return FileManager.default.fileExists(atPath: self.url.path)
-    }
-
-    /// Returns true if the string represents a path that exists and is a directory.
-    var isDirectory: Bool {
-        var isDir : ObjCBool = false
-        return FileManager.default.fileExists(atPath: self, isDirectory: &isDir)
     }
 
     /// Returns the filename if string is a url.

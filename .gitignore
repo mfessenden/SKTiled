@@ -16,4 +16,5 @@ Docs/Fonts
 Docs/Private
 Docs/Sketch
 Demo/shaders/*
+Shaders/*
 *.graffle

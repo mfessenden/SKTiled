@@ -2,10 +2,9 @@
 //  AnchorNode.swift
 //  SKTiled
 //
-//  Created by Michael Fessenden.
-//
-//  Web: https://github.com/mfessenden
-//  Email: michael.fessenden@gmail.com
+//  Copyright © 2020 Michael Fessenden. all rights reserved.
+//	Web: https://github.com/mfessenden
+//	Email: michael.fessenden@gmail.com
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +39,7 @@ internal class AnchorNode: SKNode {
     var labelOffsetX: CGFloat = 0
     var labelOffsetY: CGFloat = 0
     
-    var receiveCameraUpdates: Bool = true
+    @objc var receiveCameraUpdates: Bool = true
     
     private var shapeKey = "ANCHOR_SHAPE"
     private var labelKey = "ANCHOR_LABEL"
@@ -54,7 +53,22 @@ internal class AnchorNode: SKNode {
         return childNode(withName: labelKey) as? SKLabelNode
     }
     
-    init(radius: CGFloat, color shapeColor: SKColor, label text: String? = nil, offsetX: CGFloat = 0, offsetY: CGFloat = 0, zoom: CGFloat = 1) {
+    /// Instatiate with basic object properties.
+    ///
+    /// - Parameters:
+    ///   - radius: anchor radius.
+    ///   - shapeColor: anchor shape color.
+    ///   - text: label text (optional).
+    ///   - offsetX: label x-offset.
+    ///   - offsetY: label y-offset.
+    ///   - zoom: current scene zoom.
+    init(radius: CGFloat,
+         color shapeColor: SKColor,
+         label text: String? = nil,
+         offsetX: CGFloat = 0,
+         offsetY: CGFloat = 0,
+         zoom: CGFloat = 1) {
+
         self.radius = radius
         self.color = shapeColor
         self.labelOffsetX = offsetX
@@ -67,38 +81,36 @@ internal class AnchorNode: SKNode {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
     
+    /// Draw the anchor shape.
     func draw() {
         shape?.removeFromParent()
         label?.removeFromParent()
         
-        
         //let sceneScaleInverted = (sceneScale > 1) ? abs(1 - sceneScale) : sceneScale
         let scaledRenderQuality = renderQuality * sceneScale
         
-        let minRadius: CGFloat = 4.0
-        let maxRadius: CGFloat = 8.0
+        let minRadius: CGFloat = 2.0
+        let maxRadius: CGFloat = 6.0
         var zoomedRadius = (radius / sceneScale)
         
         // clamp the anchor radius to min/max values
         zoomedRadius = (zoomedRadius > maxRadius) ? maxRadius : (zoomedRadius < minRadius) ? minRadius : zoomedRadius
         
-        // debugging
-        //let clampedString = (isClampedAtMin == true || isClampedAtMax == true) ? " (clamped)" : ""
-        //let outputString = " - radius: \(zoomedRadius.roundTo(1)) -> \(radius.roundTo())"
-        
         let scaledFontSize = (labelSize * renderQuality) * sceneScale
         let scaledOffsetX = (labelOffsetX / sceneScale)
         let scaledOffsetY = (labelOffsetY / sceneScale)
         
+
         let anchor = SKShapeNode(circleOfRadius: zoomedRadius)
         anchor.name = shapeKey
         addChild(anchor)
         anchor.fillColor = color
-        anchor.strokeColor = SKColor.clear
+        anchor.strokeColor = color.shadow(withLevel: 0.4) ?? SKColor.clear
         anchor.zPosition = parent?.zPosition ?? 100
+        anchor.lineWidth = 0.25
         
         // label
         let nameLabel = SKLabelNode(fontNamed: "Courier")
@@ -115,11 +127,35 @@ internal class AnchorNode: SKNode {
 }
 
 
+
 // MARK: - Extensions
 
+extension AnchorNode: TiledCustomReflectableType {
 
-extension AnchorNode: SKTiledSceneCameraDelegate {
+    @objc var tiledNodeName: String {
+        return "anchor"
+    }
+
+    /// Returns a "nicer" node name, for usage in the inspector.
+    @objc public var tiledNodeNiceName: String {
+        return "Anchor"
+    }
     
+    @objc var tiledIconName: String {
+        return "anchor-icon"
+    }
+
+    @objc var tiledDescription: String {
+        return "\(tiledNodeName.titleCased())"
+    }
+}
+
+
+extension AnchorNode: TiledSceneCameraDelegate {
+
+    /// Called when the camera zoom changes.
+    ///
+    /// - Parameter newZoom: camera zoom amount.
     func cameraZoomChanged(newZoom: CGFloat) {
         if (newZoom != sceneScale) {
             sceneScale = newZoom
@@ -127,5 +163,3 @@ extension AnchorNode: SKTiledSceneCameraDelegate {
         }
     }
 }
-
-

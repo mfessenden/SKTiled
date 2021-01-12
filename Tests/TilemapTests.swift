@@ -2,8 +2,7 @@
 //  TilemapTests.swift
 //  SKTiledTests
 //
-//  Created by Michael Fessenden.
-//
+//  Copyright © 2020 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -32,8 +31,8 @@ import SpriteKit
 
 
 // Tile map instance used for this test.
-var testBasicTilemap: SKTilemap?
-let testBasicTilemapName = "test-tilemap"
+fileprivate var testBasicTilemap: SKTilemap?
+fileprivate let testBasicTilemapName = "test-tilemap"
 
 
 class TilemapTests: XCTestCase {
@@ -140,7 +139,7 @@ class TilemapTests: XCTestCase {
             return
         }
         
-        // FIXME: this doesn't work!!
+        // TODO: this doesn't work!!
         
         let testCoordinate = simd_int2(22, 10)
         let location = tilemap.pointForCoordinate(coord: testCoordinate)

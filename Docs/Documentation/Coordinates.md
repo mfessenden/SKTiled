@@ -6,6 +6,9 @@
 
 ## Coordinate Conversion
 
+
+![Coordinate Conversion](images/coord-conversion-horiz.svg)
+
 SpriteKit uses a coordinate system that is different from Tiled's; SpriteKit scenes' origin is at the bottom-left, while Tiled sets the origin at top-left.
 
 To emulate this, the `SKTilemap` node draws its layers starting at the origin and moving *downwards* into the negative y-space. To accommodate this, each layer type has conversion methods for converting points to coordinates and vice-versa. Be sure to convert points to the layer you are querying to return the correct coordinate.
@@ -36,7 +39,8 @@ let point = tileLayer.pointForCoordinate(3, 4)
 Use the default [`SKNode.convert(_:from:)`](https://developer.apple.com/reference/spritekit/sknode/1483058-convert) method to convert a tile position to another node's coordinate space. If you wanted to add a node to the `SKTiledScene`:
 
 ```swift
-let positionInLayer = layer.pointForCoordinate(0, 17)
+let coord1 = simd_int2(0, 17)
+let positionInLayer = layer.pointForCoordinate(coord: coord1)
 newTile.position = worldNode.convert(positionInLayer, from: layer)
 ```
 
@@ -61,7 +65,7 @@ let coord = tileLayer.coordinateAtTouchLocation(touch)
 
 
 // get the coordinate of a mouse event
-let coord = tileLayer.coordinateAtMouseEvent(event: event)
+let coord = tileLayer.coordinateAtMouse(event: event)
 ```
 
 
@@ -84,16 +88,19 @@ let point = tileLayer.pointForCoordinate(3, 4, offset: TileOffset.center)
 
 The `SKTiledLayerObject.TileOffset` enum represents a hint for placement within each layer type:
 
-     TileOffset.center        // returns the center of the tile.    
-     TileOffset.top           // returns the top of the tile.
-     TileOffset.topLeft       // returns the top left of the tile.
-     TileOffset.topRight      // returns the top left of the tile.
-     TileOffset.bottom        // returns the bottom of the tile.      
-     TileOffset.bottomLeft    // returns the bottom left of the tile.
-     TileOffset.bottomRight   // returns the bottom right of the tile.
-     TileOffset.left          // returns the left side of the tile.
-     TileOffset.right         // returns the right side of the tile.
+
+| Alignment Hint         | Description                           |
+| ---------------------- | ------------------------------------- |
+| TileOffset.center      | returns the center of the tile.       |
+| TileOffset.top         | returns the top of the tile.          |
+| TileOffset.topLeft     | returns the top left of the tile.     |
+| TileOffset.topRight    | returns the top left of the tile.     |
+| TileOffset.bottom      | returns the bottom of the tile.       |
+| TileOffset.bottomLeft  | returns the bottom left of the tile.  |
+| TileOffset.bottomRight | returns the bottom right of the tile. |
+| TileOffset.left        | returns the left side of the tile.    |
+| TileOffset.right       | returns the right side of the tile.   |
 
 
 
- Next: [Working with Objects](working-with-objects.html) - [Index](Table of Contents.html)
+ Next: [Working with Objects](working-with-objects.html) - [Index](Documentation.html)

@@ -1,8 +1,8 @@
 //
-//  SKTemplateObject.swift
-//  SKTiled
+//  TileTests.swift
+//  SKTiledTests
 //
-//  Created by Michael Fessenden.
+//  Copyright © 2020 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -24,39 +24,40 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import XCTest
 import SpriteKit
+@testable import SKTiled
 
 
+// Tile map instance used for this test.
+fileprivate var testBasicTilemap: SKTilemap?
+fileprivate let testBasicTilemapName = "test-tilemap"
 
-internal class SKTemplateObject {
-    
-    /// The filename for the template (ie: 'green-dragon.tx', 'User/Templaes/green-dragon.tx'). This should be relative to the document root.
-    var templateFileName: String
-    
-    /// The referencing tileset.
-    var tileset: SKTileset?
-    
-    /// Initialize with the template file name.
-    ///
-    /// - Parameter txFile: template file name.
-    init(txFile: String) {
-        templateFileName = txFile
+
+class TileTests: XCTestCase {
+
+    override class func setUp() {
+        super.setUp()
+        if (testBasicTilemap == nil) {
+            if let tilemapUrl = TestController.default.getResource(named: testBasicTilemapName, withExtension: "tmx") {
+                testBasicTilemap = SKTilemap.load(tmxFile: tilemapUrl.path, loggingLevel: .none)
+            }
+        }
     }
-}
 
-
-
-// MARK: - Extensions
-
-
-
-extension SKTemplateObject {
-    
-    /// Copy attributes to a referencing object. See `SKTileObject.setObjectAttributesFromTemplateAttributes(attributes:)` method.
-    ///
-    /// - Parameter other: object referencing this template.
-    func merge(with other: SKTileObject) {
-        
+    /// Tests the `SKTile.spriteCopy` and `SKTile.replaceWithSpriteCopy` methods.
+    func testTileSpriteCopyFunctions() {
+        guard let tilemap = testBasicTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testBasicTilemapName)'")
+            return
+        }
     }
-    
+
+    /// Tests the `SKTileData.clone` functionality.
+    func testTileDataCloneFunctions() {
+        guard let tilemap = testBasicTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testBasicTilemapName)'")
+            return
+        }
+    }
 }

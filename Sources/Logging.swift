@@ -2,8 +2,7 @@
 //  Logging.swift
 //  SKTiled
 //
-//  Created by Michael Fessenden.
-//
+//  Copyright © 2020 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -15,7 +14,7 @@
 //  furnished to do so, subject to the following conditions:
 //
 //  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the S	oftware.
+//  all copies or substantial portions of the Software.
 //
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 //  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -29,7 +28,7 @@ import Foundation
 
 
 /// Loggable object protcol.
-internal protocol Loggable {
+public protocol Loggable {
 
     /// The name of the object calling the logger.
     var logSymbol: String { get }
@@ -46,9 +45,11 @@ internal protocol Loggable {
 }
 
 
+
 /// :nodoc: Logging level.
-public enum LoggingLevel: Int {
+public enum LoggingLevel: UInt8 {
     case none
+    case custom
     case fatal
     case error
     case warning
@@ -56,15 +57,13 @@ public enum LoggingLevel: Int {
     case status
     case info
     case debug
-    case custom
 }
-
 
 
 /// Simple logging class.
 internal class Logger {
 
-    public enum DateFormat {
+    internal enum DateFormat {
         case none
         case short
         case long
@@ -82,13 +81,15 @@ internal class Logger {
     /// Default logging level.
     internal var loggingLevel: LoggingLevel = LoggingLevel.info
 
-    /**
-     Print a formatted log message to output.
-
-     - parameter message: `String` logging message.
-     - parameter level:   `LoggingLevel` output verbosity.
-     - parameter symbol:  `String?` class sending the message.
-     */
+    /// Print a formatted log message to output.
+    ///
+    /// - Parameters:
+    ///   - message: message to log.
+    ///   - level: severity level.
+    ///   - symbol: message sender name.
+    ///   - file: originating module.
+    ///   - method: caller method.
+    ///   - line: reference to originating module line.
     func log(_ message: String,
              level: LoggingLevel = LoggingLevel.info,
              symbol: String? = nil,
@@ -117,13 +118,22 @@ internal class Logger {
     private var timeStamp: String {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
-        formatter.locale = Locale(identifier: "en_US")
-        formatter.dateFormat = dateFormat.formatString
+        formatter.locale = locale
+        formatter.dateFormat = dateFormat.dateFormatString
         let dateStamp = formatter.string(from: Date())
         return "[" + dateStamp + "]"
     }
 
     /// Logger message formatter.
+    ///
+    /// - Parameters:
+    ///   - message: message to log.
+    ///   - level: severity level.
+    ///   - symbol: message sender name.
+    ///   - file: originating module.
+    ///   - method: caller method.
+    ///   - line: reference to originating module line.
+    /// - Returns: formatted log string.
     private func formatMessage(_ message: String,
                                level: LoggingLevel = LoggingLevel.info,
                                symbol: String? = nil,
@@ -140,7 +150,7 @@ internal class Logger {
             if let symbol = symbol {
                 formatted = "[\(symbol)]: \(formatted)"
             }
-            return "❗️ \(formatted)"
+            return "➤ \(formatted)"
         }
 
         if (level == LoggingLevel.status) {
@@ -148,7 +158,7 @@ internal class Logger {
             if let symbol = symbol {
                 formatted = "[\(symbol)]: \(formatted)"
             }
-            return "▹ \(formatted)"
+            return "⭑ \(formatted)"
         }
 
         if (level == LoggingLevel.success) {
@@ -166,11 +176,9 @@ internal class Logger {
 }
 
 
-/**
- Perform the given function in the main thread.
-
- - parameter action: `() -> Void` closure function.
-*/
+/// Perform the given function in the main thread.
+///
+/// - Parameter action: closure.
 internal func performInMain(_ action: @escaping () -> Void) {
     if (Thread.isMainThread == true) {
         action()
@@ -181,20 +189,53 @@ internal func performInMain(_ action: @escaping () -> Void) {
 
 
 
-// Methods for all loggable objects.
+/// Methods for all loggable objects.
 extension Loggable {
-    var logSymbol: String {
+
+    /// Returns a string description of the object.
+    public var logSymbol: String {
         return String(describing: type(of: self))
     }
 
-    func log(_ message: String, level: LoggingLevel, file: String = #file, method: String = #function, line: UInt = #line) {
+    /// Default logging method.
+    ///
+    /// - Parameters:
+    ///   - message: message to log.
+    ///   - level: severity level.
+    ///   - file: originating module.
+    ///   - method: the caller method.
+    ///   - line: the caller source code line.
+    public func log(_ message: String,
+                    level: LoggingLevel,
+                    file: String = #file,
+                    method: String = #function,
+                    line: UInt = #line) {
+
         Logger.default.log(message, level: level, symbol: self.logSymbol, file: file, method: method, line: line)
     }
+
+    /// Logging call with an optional, custom symbol.
+    ///
+    /// - Parameters:
+    ///   - message: message to log.
+    ///   - level: severity level.
+    ///   - file: originating module.
+    ///   - method: the caller method.
+    ///   - line: the caller source code line.
+    func log(_ message: String,
+             level: LoggingLevel,
+             symbol: String? = nil) {
+
+        Logger.default.log(message, level: level, symbol: self.logSymbol, file: #file, method: #function, line: #line)
+}
 }
 
 
 extension Logger.DateFormat {
-    var formatString: String {
+
+
+    /// The date format string associated with the locale.
+    internal var dateFormatString: String {
         switch self {
             case .long:
                 return "yyyy-MM-dd HH:mm:ss"
@@ -207,32 +248,48 @@ extension Logger.DateFormat {
 
 
 extension LoggingLevel: Comparable {
-    static public func < (lhs: LoggingLevel, rhs: LoggingLevel) -> Bool {
+    public static func < (lhs: LoggingLevel, rhs: LoggingLevel) -> Bool {
         return lhs.rawValue < rhs.rawValue
     }
 
-    static public func == (lhs: LoggingLevel, rhs: LoggingLevel) -> Bool {
+    public static func == (lhs: LoggingLevel, rhs: LoggingLevel) -> Bool {
         return lhs.rawValue == rhs.rawValue
     }
 }
 
 
+/// :nodoc:
 extension LoggingLevel: CustomStringConvertible {
 
     /// String representation of logging level.
     public var description: String {
         switch self {
             case .none: return "none"
+            case .custom: return "CUSTOM"
             case .fatal: return "FATAL"
             case .error: return "ERROR"
             case .warning: return "WARNING"
-            case .success: return "Success"
+            case .success: return "SUCCESS"
+            case .status: return "STATUS"
             case .info: return "INFO"
             case .debug: return "DEBUG"
-            default: return "?"
         }
     }
 
     /// Array of all options.
     public static let all: [LoggingLevel] = [.none, .fatal, .error, .warning, .success, .info, .debug, .custom]
 }
+
+
+// MARK: - Extensions
+
+extension SKTilemap: Loggable {}
+extension TiledLayerObject: Loggable {}
+extension SKTileset: Loggable {}
+extension SKTilemapParser: Loggable {}
+extension TiledDebugDrawNode: Loggable {}
+extension SKTileObject: Loggable {}
+/// :nodoc:
+extension SKTile: Loggable {}
+extension SKTiledScene: Loggable {}
+extension SKTiledSceneCamera: Loggable {}

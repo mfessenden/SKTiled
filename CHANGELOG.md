@@ -12,6 +12,7 @@ Change Log
 	- `UInt32` type is used consistantly for global tile ids.
 - tile flip flags are now stored on the individual tiles, not tile data containers
 - better managing of object/template attributes
+- better handling of image types
 - add `SKTile.objectSize` property
 - add `SKTile.rotation` property
 - add `SKTilemap.getTilesWithPropery(named:recursive:)` method
@@ -23,6 +24,7 @@ Change Log
 - add `SKTiledSceneCamera.sceneRotated` property
 - add `SKTiledSceneCamera.allowRotation` property
 - add `SKTiledSceneCamera.centerOn(node:)` method
+- add `SKTiledLayerObject.tintColor` property
 - add `SKTiledLayerObject.load` method (EXPERIMENTAL)
 	- add `SKTiledLayerObject.mapDelegate` property
 
@@ -34,6 +36,7 @@ Change Log
     - fix tile object sprite positioning with tileset offset
     - fix a bug where `SKTilemap.getTileData(ofType:)` didn't return the correct tile data
     - fix a bug where updating the flip flags of a tile object updated the tile anchor point incorrectly
+	- fix a bug where mouse scroll wheel events could override the `SKTiledSceneCamera.allowZoom` flag
 
 - API changes:
 	- renamed protocol `SKTiledObject` -> `TiledObjectType`
@@ -83,6 +86,8 @@ Change Log
 	- add `SKTilemap.backgroundOffset` property
     - add `SKTilemap.chunksAt(coord:)` method
     - add `SKTilemap.chunksAt(_:_:)` method
+	- add `SKTilesetData.clone()` method
+	- add `SKTile.withTileDataClone()` method
 	- add `SKTile.tileset` property
 	- add `SKTile.tilemap` property
     - add `SKTileset.load(tsxFile:)` class function

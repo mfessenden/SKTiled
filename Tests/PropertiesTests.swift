@@ -2,8 +2,7 @@
 //  PropertiesTests.swift
 //  SKTiledTests
 //
-//  Created by Michael Fessenden.
-//
+//  Copyright © 2020 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -30,8 +29,8 @@ import XCTest
 
 
 // Tile map instance used for this test.
-var propertiesTestTilemap: SKTilemap?
-let propertiesTestTilemapName = "test-tilemap"
+fileprivate var propertiesTestTilemap: SKTilemap?
+fileprivate let propertiesTestTilemapName = "test-tilemap"
 
 
 

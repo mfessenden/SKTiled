@@ -2,8 +2,7 @@
 //  TilemapDelegateTests.swift
 //  SKTiledTests
 //
-//  Created by Michael Fessenden.
-//
+//  Copyright © 2020 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -32,9 +31,9 @@ import SpriteKit
 
 
 // Tile map instance used for this test.
-var testDelegateTilemap: SKTilemap?
-let testDelegateTilemapName = "test-tilemapdelegate"
-let testTilemapDelegate = TestMapDelegate()
+fileprivate var testDelegateTilemap: SKTilemap?
+fileprivate let testDelegateTilemapName = "test-tilemapdelegate"
+fileprivate let testTilemapDelegate = TestMapDelegate()
 
 
 class TilemapDelegateTests: XCTestCase {

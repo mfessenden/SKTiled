@@ -1,6 +1,6 @@
 //
 //  TestTilesetDelegate.swift
-//  SKTiled
+//  SKTiledTests
 //
 //  Copyright © 2020 Michael Fessenden. all rights reserved.
 //	Web: https://github.com/mfessenden

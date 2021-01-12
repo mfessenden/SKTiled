@@ -86,7 +86,7 @@
         </g>
       </g>
       <g id="Group_9">
-        <title>SKTiledSceneCameraDelegate</title>
+        <title>TiledSceneCameraDelegate</title>
         <g id="Graphic_11">
           <title>Background</title>
           <path d="M 807.5 583.875 L 1042 583.875 C 1043.1046 583.875 1044 584.7704 1044 585.875 L 1044 653.875 C 1044 654.9796 1043.1046 655.875 1042 655.875 L 807.5 655.875 C 806.3954 655.875 805.5 654.9796 805.5 653.875 L 805.5 585.875 C 805.5 584.7704 806.3954 583.875 807.5 583.875 Z" fill="#f6f8f7"/>
@@ -96,7 +96,7 @@
           <title>Class Name</title>
           <path d="M 807.5 583.875 L 1042 583.875 C 1043.1046 583.875 1044 584.7704 1044 585.875 L 1044 605.875 C 1044 606.9796 1043.1046 607.875 1042 607.875 L 807.5 607.875 C 806.3954 607.875 805.5 606.9796 805.5 605.875 L 805.5 585.875 C 805.5 584.7704 806.3954 583.875 807.5 583.875 Z" stroke="#494949" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
           <text transform="translate(811.5 587.1015)" fill="#494949">
-            <tspan font-family="PT Sans" font-size="13" font-weight="700" fill="#494949" x="29.868" y="12">SKTiledSceneCameraDelegate</tspan>
+            <tspan font-family="PT Sans" font-size="13" font-weight="700" fill="#494949" x="29.868" y="12">TiledSceneCameraDelegate</tspan>
           </text>
         </g>
       </g>

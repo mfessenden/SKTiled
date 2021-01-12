@@ -3,11 +3,10 @@
 //  Variables
 //
 // ===========================================================================
-@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600;1,700&family=Zilla+Slab:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap');
 
 $body_background: #fff;
 $body_font: 16px/1.7 'Nunito', sans-serif;
-$header_font: 'Nunito', sans-serif;
 $text_color: #333;
 $gray_border: 1px solid #ddd;
 
@@ -27,17 +26,7 @@ $table_border_color: #ddd;
 
 $code_bg_color: #f7f7f7;
 $code_font: Consolas, "Liberation Mono", Menlo, Courier, monospace;
-$code_inline_color: #8e5656;
 
-$attribute_weight: 700;
-$attribute_bg_color: #fdf4f4;
-$declaration_bg_color: #fdf4f480;
-$declaration_marker_color: #b08383;
-$marker_color: #2b1f1eb5;
-
-$heading1_font_size: 2rem;
-$heading2_font_size: 1.7rem;
-$heading3_font_size: 1.5rem;
 
 // ----- Layout
 
@@ -70,7 +59,7 @@ $navigation_task_color: #808080;
 
 $declaration_title_language_color: #4183c4;
 $declaration_language_border: 4px solid #cde9f4;
-// $declaration_bg_color: #fff;
+$declaration_bg_color: #fff;
 $declaration_border_color: #ddd;
 
 $aside_color: #aaa;
@@ -86,16 +75,22 @@ $footer_link_color: #fff;
 
 // ----- Theme customisation
 
-$link_color: #FF6A6A;
+$link_color: #ff6A6a;
+$h2_link_color: #de6363;
 $doc_coverage_color: #ccc;
-$declaration_title_language_color: #FF6A6A;
-$declaration_language_border: 4px solid #FF6A6A;
+$declaration_title_language_color: #ff6A6a;
+$declaration_language_border: 4px solid #ff6A6a;
 
 $footer_link_color: #D95151;
 $declaration_border: 4px solid $declaration_border_color;
-$token_symbol_name_color: #9C504D;
-$token_header_font: "Zilla Slab", "Georgia", sans-serif;
 
+$token_left_margin: -3px;
+$token_font_size: 1.6rem;
+$token_top_margin: 4rem;
+$token_header_text_shadow_color: #999999ab;
+$token_link_color: #505050;
+
+$h4_bullet: '\2023';  //
 
 // ===========================================================================
 //
@@ -125,10 +120,6 @@ body {
   margin: $margin;
 }
 
-h1, h2, h3, h4, h5 {
-    font-family: $header_font;
-}
-
 h1 {
   @include heading(2rem, 1.275em 0 0.6em);
   border-bottom: 1px solid #B9B9B9;
@@ -145,6 +136,10 @@ h3 {
 
 h4 {
   @include heading(1.15rem);
+  &:before {
+    content: $h4_bullet;
+    margin:0 5px;
+  }
 }
 
 h5 {
@@ -237,6 +232,15 @@ p, li {
       content: "\00a0";
     }
   }
+    }
+
+
+ul li code {
+    background: none;
+  }
+
+ul li code:first-of-type {
+    font-weight: 700;
 }
 
 pre code {
@@ -432,8 +436,6 @@ pre code {
   padding-top: 8px;
   width: 100%;
   list-style-type: none;
-  border-bottom: 1px solid #E6E6E6;
-  margin: 1rem;
 
   a[name] {
     &:before {
@@ -441,15 +443,11 @@ pre code {
       display: block;
     }
   }
-
  /* Variable/Method Listing */
   .token {
-    // padding-left: 3px;
-    margin-left: 0px;
-    font-size: 1.1rem;
-    // font-family: $token_header_font;
-    font-weight: 500;
-    color: $token_symbol_name_color;
+    padding-left: 3px;
+    margin-left: $token_left_margin;
+    font-size: $token_font_size;
   }
 
   .declaration-note {
@@ -608,69 +606,32 @@ html.dash {
   }
 }
 
-
 // ===========================================================================
 //
 //  Task Tweaks
 //
 // ===========================================================================
 
-
-
-h2.heading {
-    font-size: $heading2_font_size;
+section-content h2 a {
+    color: $link_color;
+    text-decoration: none;
 }
 
-h3.heading {
-    font-size: $heading3_font_size;
-}
-
-ul li p {
-    margin-bottom: 0.2em;
-}
-
-div.declaration div.language {
-    background-color: $attribute_bg_color;
+h2 a {
+    color: $h2_link_color;
 }
 
 
-div.task-group a.token {
-    font-family: $code_font;
+div.task-header {
+    border-bottom: 1px solid #ddd;
+    margin-top: $token_top_margin;
+
+    // add a drop shadow to object names
+    code {
+        filter: drop-shadow(0px 1px 1px $token_header_text_shadow_color);
+}
 }
 
-/* list item icon */
-div.task-group li.item::marker {
-    color: $marker_color;
-}
-
-/* attribute name background */
-div.task-group li.item div:first-child {
-    background-color: $declaration_bg_color;
-}
-
-/* attribute name text */
-div.task-group li.item div code a.token {
-  list-style-type: none;
-  font-weight: $attribute_weight;
-  margin-left: 0.5em;
-}
-
-
-/* attribute description */
-div.abstract p {
-    text-indent: 0.5em;
-}
-
-
-span.symbol-marker {
-    color: $declaration_marker_color;
-}
-
-p code {
-    color: #222;
-}
-
-p code a {
-    font-weight: 700;
-    color: $code_inline_color;
+code a.token {
+    color: $token_link_color;
 }

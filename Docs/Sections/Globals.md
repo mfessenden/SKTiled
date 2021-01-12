@@ -7,4 +7,8 @@ let globals = TiledGlobals.default
 ```
 
 
+
+
+
+
 [tiledglobals-url]:Classes/TiledGlobals.html

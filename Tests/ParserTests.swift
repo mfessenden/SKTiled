@@ -2,8 +2,7 @@
 //  ParserTests.swift
 //  SKTiledTests
 //
-//  Created by Michael Fessenden.
-//
+//  Copyright © 2020 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -28,6 +27,29 @@
 import XCTest
 import SpriteKit
 @testable import SKTiled
+
+
+
+let testXmlString = """
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="4" height="4" tilewidth="8" tileheight="8" infinite="0" nextlayerid="3" nextobjectid="1">
+ <tileset firstgid="1" name="environment-8x8" tilewidth="8" tileheight="8" tilecount="45" columns="15">
+  <image source="environment-8x8.png" width="120" height="24"/>
+ </tileset>
+ <layer id="1" name="Floor" width="4" height="4">
+  <data encoding="base64" compression="zlib">
+   eJyTZGBgkABidSgtiUQjs9XRxGEYADjwAag=
+  </data>
+ </layer>
+ <layer id="2" name="Walls" width="4" height="4">
+  <data encoding="base64" compression="zlib">
+   eJzjYmBg4ABiTijmZkAAEFsNic8FxOJAzAsVB7EBFSgAzA==
+  </data>
+ </layer>
+</map>
+"""
+
+
 
 
 /// Test the tiled parser
@@ -78,5 +100,11 @@ class ParserTests: XCTestCase {
             return
         }
         XCTAssertTrue(tilemapDelegate.mapRenderedSuccessfully, "⭑tilemap did not call back to delegate.")
+    }
+
+
+    /// Test that the parser can correctly parse an xml string.
+    func testStringParsing() {
+
     }
 }

@@ -2,8 +2,7 @@
 //  InfiniteMapTests.swift
 //  SKTiledTests
 //
-//  Created by Michael Fessenden.
-//
+//  Copyright © 2020 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -31,8 +30,8 @@ import SpriteKit
 
 
 // Tile map instance used for this test.
-var testInfiniteTilemap: SKTilemap?
-let infiniteTestTilemapName = "test-infinite"
+fileprivate var testInfiniteTilemap: SKTilemap?
+fileprivate let infiniteTestTilemapName = "test-infinite"
 
 
 /// Test infinite map functions.
@@ -116,4 +115,3 @@ class InfiniteMapTests: XCTestCase {
         
     }
 }
-

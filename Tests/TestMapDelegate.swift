@@ -82,6 +82,19 @@ class TestMapDelegate: TilemapDelegate {
         return globalID
     }
 
+    /// Called whem a tile is about to be built.
+    ///
+    /// - Parameters:
+    ///   - tile: tile object.
+    ///   - globalID: tile global id.
+    ///   - in: layer name.
+    func willAddTile(globalID: UInt32, in: String?) -> UInt32 {
+        if (globalID == 25) {
+            return 20
+        }
+        return globalID
+    }
+
     /// Provides custom attributes for objects of a certain *Tiled type*.
     ///
     /// - Parameters:
