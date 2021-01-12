@@ -154,7 +154,7 @@ class GameScene: SKScene {
 If you choose to implement the **`TilemapDelegate`** protocol, you can utilize as many of the optional callback methods as you see fit. You'll need to specify the tilemap's delegate at creation:
 
 ```swift
-class GameScene: SKScene, SKTilemapDelegate {
+class GameScene: SKScene, TilemapDelegate {
 
     var tilemap: SKTilemap?
 
@@ -204,10 +204,10 @@ See the [**Extending**][extending-url] section for more details.
 
 ## TilesetDataSource Protocol
 
-For example, you can change the spritesheet image name of a tileset before the source file is loaded:
+The `TilesetDataSource` protocol is new as of **SKTiled 1.20**. Objects conforming to this protocol can specify alternate attributes for a tileset as it is being parsed. For example, you can change the spritesheet image name of a tileset before the source file is loaded:
 
 ```swift
-extension SceneManager: SKTilesetDataSource {
+extension SceneManager: TilesetDataSource {
     func willAddSpriteSheet(to tileset: SKTileset, fileNamed: String) -> String {
         if let spritesheetForGameResolution = tileset.properties[gameResolution.rawValue] {
             return spritesheetForGameResolution
@@ -218,29 +218,33 @@ extension SceneManager: SKTilesetDataSource {
 ```
 You'll need to make certain that the image you substitute has the same dimensions & layout as the image you are swapping it out for; the tileset will still retain the size and tile count properties defined in **Tiled**.
 
-## Tiled Scene
+## TiledSceneDelegate Protocol
 
-The included demo scene conforms to the `SKTiledSceneDelegate` protocol. This protocol outlines a standard game scene setup with a camera that interacts with your tilemaps. The included `SKTiledScene` class conforms to this protocol and can serve as a template, though you are free to implement your own setups.
+The included demo scene conforms to the `TiledSceneDelegate` protocol. This protocol outlines a standard SpriteKit game scene implementation with a camera that can interact with your tilemap. The included `SKTiledScene` class conforms to this protocol and can serve as a template, though you are free to implement your own setups.
 
 ![Scene Hierarchy](images/scene-hierarchy.svg)
 
 ```swift
-public protocol SKTiledSceneDelegate: class {
-    /// World container node. Tiled assets are parented to this node.
+public protocol TiledSceneDelegate: class {
+
+    /// Root container node. Tiled assets are parented to this node.
     var worldNode: SKNode! { get set }
 
     /// Custom scene camera.
     var cameraNode: SKTiledSceneCamera? { get set }
 
-    /// Tilemap node.
+    /// Tile map node.
     var tilemap: SKTilemap? { get set }
 
-    /// Load a tilemap from disk
-    func load(tmxFile: String) -> SKTilemap?
+    /// Load a tilemap from disk, with optional tilesets.
+    func load(tmxFile: String, inDirectory: String?,
+              withTilesets tilesets: [SKTileset],
+              ignoreProperties: Bool,
+              loggingLevel: LoggingLevel) -> SKTilemap?
 }
 ```
 
-The tilemap is parented to a world container node, which interacts with the included `SKTiledSceneCamera` object which allows you to easily navigate the scene with mouse & touch events, as well as exchanging data with the scene and tilemaps. The world node is set to 0,0 in the scene by default.
+The tilemap is parented to a world container node, which interacts with the included `SKTiledSceneCamera` object and allows you to easily navigate the scene with mouse & touch events, as well as exchanging data with the scene and tilemaps. The world node is set to 0,0 in the scene by default.
 
 
 Calling the class method [`SKTilemap.load(tmxFile:)`][sktilemap-load-url] will initialize a parser to read the file name given.
@@ -253,7 +257,7 @@ To see the `SKTiledScene` in action, compile one of the demo targets and look at
 ![Camera Delegates](images/camera-delegate.svg)
 
 
-The `SKTiledSceneCamera` node is a custom [SpriteKit camera][skcameranode-url] that interacts with the your scene and any loaded tilemaps. To allow other objects to be notified of camera changes, you need to conform them to the `SKTiledSceneCameraDelegate` protocol. With this, you will want to implement the following methods:
+The `SKTiledSceneCamera` node is a custom [SpriteKit camera][skcameranode-url] that interacts with the your scene and any loaded tilemaps. To allow other objects to be notified of camera changes, you need to conform them to the `TiledSceneCameraDelegate` protocol. With this, you will want to implement the following methods:
 
 
 ```swift
@@ -266,11 +270,14 @@ func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat)
 func sceneDoubleTapped(location: CGPoint)
 
 // macOS only
+func sceneClicked(event: NSEvent)
+func sceneRightClicked(event: NSEvent)
 func sceneDoubleClicked(event: NSEvent)
 func mousePositionChanged(event: NSEvent)
+
 ```
 
-The methods are all optional, so only create methods for the functions you need.
+The methods are all optional, so only create methods for the functions you need. For macOS games, be sure to set the [`NSWindow.acceptsMouseEvents`][nswindow-url] property to `true`.
 
 #### Adding Delegates
 
@@ -278,7 +285,7 @@ To add your objects as camera delegates, implement the delegate methods you need
 
 
 ```swift
-extension Marker: SKTiledSceneCameraDelegate {
+extension Marker: TiledSceneCameraDelegate {
     func cameraZoomChanged(newZoom: CGFloat) {
         if (newZoom <= minZoom) {
             self.redraw(zoom: minZoom)
@@ -288,10 +295,11 @@ extension Marker: SKTiledSceneCameraDelegate {
 
 // create a new object & add it to the camera delegates
 let marker = Marker()
+
+// enable camera notifications
+marker.receiveCameraUpdates = true
 cameraNode.addDelegate(marker)
 ```
-
-To remove
 
 
 ### Loading External Content
@@ -301,7 +309,7 @@ The demo project allows you to load and test your own Tiled content (macOS only)
 ![Loading External](images/demo-load-external.svg)
 
 
-Next: [Working with Maps](working-with-maps.html) - [Index](Table of Contents.html)
+Next: [Working with Maps](working-with-maps.html) - [Index](Documentation.html)
 
 
 [extending-url]:extending.html
@@ -309,6 +317,12 @@ Next: [Working with Maps](working-with-maps.html) - [Index](Table of Contents.ht
 [skscene-url]:https://developer.apple.com/reference/spritekit/skscene
 [skscene-didmove-url]:https://developer.apple.com/documentation/spritekit/skscene/1519607-didmove
 [skscene-update-url]:https://developer.apple.com/documentation/spritekit/skscene/1519802-update
+[skscene-load-url]:
+
+
+
+<!-- // TODO: fix this -->
 [sktileddemoscene-source-url]:https://github.com/mfessenden/SKTiled/blob/master/Demo/SKTiledDemoScene.swift
 [skcameranode-url]:https://developer.apple.com/documentation/spritekit/skcameranode
 [sktiledscenecamera-delegates-url]:Classes/SKTiledSceneCamera.html#addDelegate
+[nswindow-url]:https://developer.apple.com/documentation/appkit/nswindow/1419340-acceptsmousemovedevents

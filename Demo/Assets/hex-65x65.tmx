@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.6" orientation="hexagonal" renderorder="right-down" width="10" height="10" tilewidth="65" tileheight="65" infinite="0" hexsidelength="31" staggeraxis="y" staggerindex="odd" backgroundcolor="#90a1a2" nextobjectid="42">
+<map version="1.4" tiledversion="1.4.2" orientation="hexagonal" renderorder="right-down" width="10" height="10" tilewidth="65" tileheight="65" infinite="0" hexsidelength="31" staggeraxis="y" staggerindex="odd" backgroundcolor="#90a1a2" nextlayerid="5" nextobjectid="43">
  <properties>
   <property name="autoResize" type="bool" value="true"/>
   <property name="cropAtBoundary" type="bool" value="false"/>
   <property name="gridColor" type="color" value="#b3222222"/>
   <property name="overlayColor" type="color" value="#a1413763"/>
   <property name="uiColor" type="color" value="#ffdd811b"/>
-  <property name="worldScale" type="float" value="0.40000000000000002"/>
+  <property name="worldScale" type="float" value="0.4"/>
  </properties>
  <tileset firstgid="1" name="hex1-65x65-65x230" tilewidth="65" tileheight="230" tilecount="60" columns="20">
   <image source="hex-65x65-65x230.png" width="1300" height="690"/>
@@ -105,19 +105,24 @@
    </properties>
   </tile>
  </tileset>
- <layer name="Ground" width="10" height="10">
+ <layer id="1" name="Ground" width="10" height="10">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAE3WMMQrAMAwDnUekXpsEAp4y9f9fqwcZhHGGw2CdtEXEnAM+cPDfCSPfCmc4q+gxi9xbPp0XzqRd3g6nYqSdBh5w64WnhduS05ErXaU8nE5bTOX9pkxzOpABAAA=
   </data>
  </layer>
- <layer name="Decoration" width="10" height="10">
+ <layer id="2" name="Decoration" width="10" height="10">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAE22OyQoCQQxEg47LuKBzc/eiKI6C4026P85P9zWTxkIteBSddCqJZnaFBu7wtI9qCGavk3uE2nsPuMBN/qd+8oO/z1ILXuvYr8KfWs7JqKL0VccvVw2gCxvY+U2akWcqevnGKawko+fe96yFk7SWf2mugDlZJT7El+1em8Aetu0uG8EMxn7bG/iVwT6QAQAA
   </data>
  </layer>
- <layer name="Characters" width="10" height="10">
+ <layer id="3" name="Characters" width="10" height="10">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAE2NgGFxAiIGhYaDdQAkQptD9ADVzzeSQAQAA
   </data>
  </layer>
+ <objectgroup id="4" name="Objects">
+  <object id="42" name="hex-object1" x="352" y="329">
+   <polyline points="32,0 64,16 64,47 32,63 0,47 0,16 32,0"/>
+  </object>
+ </objectgroup>
 </map>

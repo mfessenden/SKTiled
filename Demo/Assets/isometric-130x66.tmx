@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.6" orientation="isometric" renderorder="right-down" width="10" height="10" tilewidth="130" tileheight="66" infinite="0" backgroundcolor="#634930" nextobjectid="18">
+<map version="1.2" tiledversion="1.3.4" orientation="isometric" renderorder="right-down" width="10" height="10" tilewidth="130" tileheight="66" infinite="0" backgroundcolor="#634930" nextlayerid="4" nextobjectid="18">
  <properties>
   <property name="gridColor" type="color" value="#ff4d3721"/>
   <property name="uiColor" type="color" value="#ff762c2f"/>
-  <property name="worldScale" type="float" value="0.40000000000000002"/>
+  <property name="worldScale" type="float" value="0.4"/>
  </properties>
  <tileset firstgid="1" name="isometric-130x230" tilewidth="130" tileheight="230" tilecount="72" columns="12">
   <image source="isometric-130x230.png" width="1560" height="1380"/>
@@ -60,25 +60,25 @@
   <tile id="70" type="automobile"/>
   <tile id="71" type="automobile"/>
  </tileset>
- <layer name="Ground" width="10" height="10">
+ <layer id="1" name="Ground" width="10" height="10">
   <properties>
-   <property name="isStatic" type="bool" value="true"/>
+   <property name="isStatic" type="bool" value="false"/>
   </properties>
   <data encoding="base64" compression="zlib">
    eJxtz8kOgjAUheEKbnQtxmpi2MgCcIxKkzog7/9QnCY/SdO4+HIYTofrjTE3aXCSQTK5ywMXemfZSC6VrMTJjHUdvfDNSi8HWbJm0tI70gvnvWUuH7KPemHvnWyxlloKKelemSHjvWMfR3qef8lsT/5/yVd0z2lWSy6SHDjLRumTORrOdNEM+z/3C/OMgtEN9g==
   </data>
  </layer>
- <layer name="Objects" width="10" height="10">
+ <layer id="2" name="Objects" width="10" height="10">
   <properties>
-   <property name="isStatic" type="bool" value="true"/>
+   <property name="isStatic" type="bool" value="false"/>
   </properties>
   <data encoding="base64" compression="zlib">
    eJxjYBh44D7QDiATOFPBDHS/AwBmUADS
   </data>
  </layer>
- <objectgroup color="#e10000" name="Collision">
+ <objectgroup color="#e10000" id="3" name="Collision">
   <properties>
-   <property name="isStatic" type="bool" value="true"/>
+   <property name="isStatic" type="bool" value="false"/>
   </properties>
   <object id="8" name="river01" type="River" x="48" y="-36" width="28" height="376"/>
   <object id="9" name="road01" type="Road" x="354.75" y="-33">

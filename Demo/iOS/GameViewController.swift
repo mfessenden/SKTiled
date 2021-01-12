@@ -2,8 +2,7 @@
 //  GameViewController.swift
 //  SKTiled Demo - iOS
 //
-//  Created by Michael Fessenden.
-//
+//  Copyright © 2020 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -31,8 +30,10 @@ import SpriteKit
 
 class GameViewController: UIViewController, Loggable {
 
-    let demoController = DemoController.default
+
+    let demoController = TiledDemoController.default
     var uiColor: UIColor = UIColor(hexString: "#757B8D")
+    var hideDeviceRotationIcon: Bool = false
 
     // debugging labels (top)
     @IBOutlet weak var rotateDeviceIcon: UIImageView!
@@ -40,12 +41,13 @@ class GameViewController: UIViewController, Loggable {
     @IBOutlet weak var pauseInfoLabel: UILabel!
 
 
+
     // debugging labels (bottom)
     @IBOutlet weak var mapInfoLabel: UILabel!
     @IBOutlet weak var tileInfoLabel: UILabel!
     @IBOutlet weak var propertiesInfoLabel: UILabel!
-    @IBOutlet weak var debugInfoLabel: UILabel!
-    @IBOutlet weak var frameworkVersionLabel: UILabel!
+    @IBOutlet weak var commandOutputLabel: UILabel!
+
 
     // demo buttons
     @IBOutlet weak var fitButton: UIButton!
@@ -66,7 +68,6 @@ class GameViewController: UIViewController, Loggable {
 
     // render stats
     @IBOutlet weak var statsStackView: UIStackView!
-    @IBOutlet weak var statsHeaderLabel: UILabel!
     @IBOutlet weak var statsRenderModeLabel: UILabel!
     @IBOutlet weak var statsCPULabel: UILabel!
     @IBOutlet weak var statsVisibleLabel: UILabel!
@@ -75,6 +76,7 @@ class GameViewController: UIViewController, Loggable {
     @IBOutlet weak var statsEffectsLabel: UILabel!
     @IBOutlet weak var statsUpdatedLabel: UILabel!
     @IBOutlet weak var statsRenderLabel: UILabel!
+
 
 
     var landscapeInitialized: Bool = false
@@ -86,18 +88,19 @@ class GameViewController: UIViewController, Loggable {
 
         // Configure the view.
         let skView = self.view as! SKView
-
         loggingLevel = TiledGlobals.default.loggingLevel
+
         // setup the controller
         demoController.loggingLevel = loggingLevel
         demoController.view = skView
+        demoController.scanForResources()
 
-        guard let currentURL = demoController.currentURL else {
-            log("no tilemap to load.", level: .warning)
-            return
-        }
+
+        skView.showsFPS = true
+        skView.isAsynchronous = true
 
         #if DEBUG
+        skView.showsQuadCount = true
         skView.showsNodeCount = true
         skView.showsDrawCount = true
         skView.showsPhysics = false
@@ -106,9 +109,10 @@ class GameViewController: UIViewController, Loggable {
         /* SpriteKit optimizations */
         skView.shouldCullNonVisibleNodes = true
         skView.ignoresSiblingOrder = true
+        skView.showsFields = true
 
         // initialize the demo interface
-        setupDemoInterface()
+        setupMainInterface()
         setupButtonAttributes()
 
 
@@ -167,8 +171,7 @@ class GameViewController: UIViewController, Loggable {
 
     /**
      Initialize the debugging labels.
-     */
-    func setupDemoInterface() {
+    func setupMainInterface() {
         mapInfoLabel.text = "Map: "
         tileInfoLabel.text = "Tile: "
         propertiesInfoLabel.text = "--"
@@ -193,7 +196,7 @@ class GameViewController: UIViewController, Loggable {
 
         pauseInfoLabel.shadowColor = shadowColor
         pauseInfoLabel.shadowOffset = shadowOffset
-        debugInfoLabel.shadowOffset = shadowOffset
+        commandOutputLabel.shadowOffset = shadowOffset
 
         statsEffectsLabel.shadowColor = shadowColor
         controlsView?.alpha = 0.9

@@ -4,10 +4,10 @@
 
 - [**`TiledObjectType`**][TiledObjectType-url]
     - [**`TiledAttributedType`**][TiledAttributedType-url]
-    - [`SKTileset`][SKTileset-url]
-    - [`SKTilesetData`][SKTilesetData-url]
-    - [`SKTiledLayerObject`][SKTiledLayerObject-url]
-    - [`SKTilemap`][SKTilemap-url]
+        - [`SKTileset`][SKTileset-url]
+        - [`SKTilesetData`][SKTilesetData-url]
+        - [`SKTiledLayerObject`][SKTiledLayerObject-url]
+        - [`SKTilemap`][SKTilemap-url]
 
 - [**`TiledSceneDelegate`**][TiledSceneDelegate-url]
     - [`SKTiledScene`][SKTiledScene-url]
