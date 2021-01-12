@@ -19,9 +19,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='index.html'>
-          SKTiled v1.3 Docs
+          SKTiled v1.30b1 Docs
         </a>
-         (89% documented)
+         (90% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -30,13 +30,14 @@
             View on GitHub
           </a>
         </p>
-    
+    <!-- 
         <p class='header-col header-col--secondary'>
           <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
             <img class='header-icon' src='img/dash.png'/>
             Install in Dash
           </a>
         </p>
+       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -56,6 +57,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='getting-started.html'>Getting Started</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='migration-guide.html'>Migration Guide</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='scene-setup.html'>Scene Setup</a>
@@ -108,9 +112,6 @@
                 <a class='nav-group-task-link' href='Protocols/TiledAttributedType.html'>TiledAttributedType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
-              </li>
-              <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledGeometryType.html'>TiledGeometryType</a>
               </li>
               <li class='nav-group-task'>
@@ -118,9 +119,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledObjectType.html'>TiledObjectType</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Protocols/TiledOverlayType.html'>TiledOverlayType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -257,14 +255,6 @@
               </li>
             </ul>
           </li>
-          <li class='nav-group-name'>
-            <a class='nav-group-name-link' href='Other Structures.html'>Other Structures</a>
-            <ul class='nav-group-tasks'>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Structs/TileIsolationMode.html'>TileIsolationMode</a>
-              </li>
-            </ul>
-          </li>
         </ul>
       </nav>
       <article class='main-content'>
@@ -285,7 +275,7 @@
 <li><a href="#dynamics">Dynamics</a></li>
 </ul>
 
-<p>By default, vector objects are not shown when rendered in <strong>SKTiled</strong>. To enable them, set the <code>SKTilemap.showObjects</code> global attribute. This override has the advantage of allowing you to work in your Tiled scene with objects visible, but not see them in your game view. Note that the <code>SKTilemap.showObjects</code> property <strong>does not change the visibility of object groups</strong>, but rather affects the objects themselves. Text and tile objects are exempt from this function.</p>
+<p>By default, vector objects are not shown when rendered in <strong>SKTiled</strong>. To enable them, set the <code><a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC11showObjectsSbvp">SKTilemap.showObjects</a></code> global attribute. This override has the advantage of allowing you to work in your Tiled scene with objects visible, but not see them in your game view. Note that the <code><a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC11showObjectsSbvp">SKTilemap.showObjects</a></code> property <strong>does not change the visibility of object groups</strong>, but rather affects the objects themselves. Text and tile objects are exempt from this function.</p>
 
 <p>The <code><a href="Classes/SKTileObject.html">SKTileObject</a></code> class represents a vector object in a object group layer. <strong>SKTiled</strong> renders all Tiled object types:</p>
 

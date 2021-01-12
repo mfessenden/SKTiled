@@ -19,9 +19,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='index.html'>
-          SKTiled v1.3 Docs
+          SKTiled v1.30b1 Docs
         </a>
-         (89% documented)
+         (90% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -30,13 +30,14 @@
             View on GitHub
           </a>
         </p>
-    
+    <!-- 
         <p class='header-col header-col--secondary'>
           <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
             <img class='header-icon' src='img/dash.png'/>
             Install in Dash
           </a>
         </p>
+       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -56,6 +57,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='getting-started.html'>Getting Started</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='migration-guide.html'>Migration Guide</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='scene-setup.html'>Scene Setup</a>
@@ -108,9 +112,6 @@
                 <a class='nav-group-task-link' href='Protocols/TiledAttributedType.html'>TiledAttributedType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
-              </li>
-              <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledGeometryType.html'>TiledGeometryType</a>
               </li>
               <li class='nav-group-task'>
@@ -118,9 +119,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledObjectType.html'>TiledObjectType</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Protocols/TiledOverlayType.html'>TiledOverlayType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -257,14 +255,6 @@
               </li>
             </ul>
           </li>
-          <li class='nav-group-name'>
-            <a class='nav-group-name-link' href='Other Structures.html'>Other Structures</a>
-            <ul class='nav-group-tasks'>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Structs/TileIsolationMode.html'>TileIsolationMode</a>
-              </li>
-            </ul>
-          </li>
         </ul>
       </nav>
       <article class='main-content'>
@@ -303,7 +293,7 @@
 <ul>
 <li>iOS 12</li>
 <li>tvOS 12</li>
-<li>macOS 10.12</li>
+<li>macOS 10.14</li>
 <li>Xcode 11/Swift 5</li>
 </ul>
 <h2 id='installation' class='heading'>Installation</h2>
@@ -323,14 +313,14 @@
 <h3 id='carthage-installation' class='heading'>Carthage Installation</h3>
 
 <p>To build with <a href="https://github.com/Carthage/Carthage">Carthage</a>, create a Cartfile in your project root and add a reference to <strong>SKTiled</strong> (be sure to check the current version number):</p>
-<pre class="highlight plaintext"><code>github "mfessenden/SKTiled" ~&gt; 1.30
+<pre class="highlight plaintext"><code>github "mfessenden/SKTiled" ~&gt; 1.30b1
 </code></pre>
 
 <p>Close the file and run Carthage from the terminal to build the framework(s):</p>
 <pre class="highlight plaintext"><code>carthage update
 </code></pre>
 
-<p>To build for a specific platform, use the <code>platform</code> argument in your build command:</p>
+<p>To build for a specific platform, use the <code>--platform</code> argument in your build command:</p>
 <pre class="highlight plaintext"><code>carthage update --platform iOS
 </code></pre>
 
@@ -350,7 +340,7 @@
   use_frameworks!
 
   # Pods for iOS
-  pod 'SKTiled', '~&gt; 1.30'
+  pod 'SKTiled', '~&gt; 1.30b1'
 
 end
 
@@ -358,7 +348,7 @@ target 'macOS' do
   use_frameworks!
 
   # Pods for macOS
-  pod 'SKTiled', '~&gt; 1.30'
+  pod 'SKTiled', '~&gt; 1.30b1'
 
 end
 
@@ -366,7 +356,7 @@ target 'tvOS' do
   use_frameworks!
 
   # Pods for tvOS
-  pod 'SKTiled', '~&gt; 1.30'
+  pod 'SKTiled', '~&gt; 1.30b1'
 
 end
 </code></pre>
@@ -423,7 +413,7 @@ end
 
 <p>This will allow you more flexibility organizing your project, but be careful that your maps don&rsquo;t reference files above the referenced folder. For more information, see the <a href="working-with-maps.html#loading-a-tilemap"><strong>Working with Maps</strong></a> section.</p>
 
-<p>Next: <a href="scene-setup.html">Scene Setup</a> - <a href="Documentation.html">Index</a></p>
+<p>Next: <a href="migration-guide.html">Migration Guide</a> - <a href="Documentation.html">Index</a></p>
 
 <!--- Images --->
 

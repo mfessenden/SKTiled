@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../index.html'>
-          SKTiled v1.3 Docs
+          SKTiled v1.30b1 Docs
         </a>
-         (89% documented)
+         (90% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,13 +31,14 @@
             View on GitHub
           </a>
         </p>
-    
+    <!-- 
         <p class='header-col header-col--secondary'>
           <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
             <img class='header-icon' src='../img/dash.png'/>
             Install in Dash
           </a>
         </p>
+       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -57,6 +58,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../getting-started.html'>Getting Started</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../migration-guide.html'>Migration Guide</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../scene-setup.html'>Scene Setup</a>
@@ -109,9 +113,6 @@
                 <a class='nav-group-task-link' href='../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
-              </li>
-              <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
               </li>
               <li class='nav-group-task'>
@@ -119,9 +120,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledObjectType.html'>TiledObjectType</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledOverlayType.html'>TiledOverlayType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -258,14 +256,6 @@
               </li>
             </ul>
           </li>
-          <li class='nav-group-name'>
-            <a class='nav-group-name-link' href='../Other Structures.html'>Other Structures</a>
-            <ul class='nav-group-tasks'>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Structs/TileIsolationMode.html'>TileIsolationMode</a>
-              </li>
-            </ul>
-          </li>
         </ul>
       </nav>
       <article class='main-content'>
@@ -276,6 +266,7 @@
               <div class='declaration'>
                 <div class='language'>
                   <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTileset</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt"><a href="../Protocols/TiledAttributedType.html">TiledAttributedType</a></span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">SKTileset</span><span class="p">:</span> <span class="kt">Loggable</span></code></pre>
 
                 </div>
               </div>
@@ -355,7 +346,7 @@
             <div class="task-group">
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC3url10Foundation3URLVSgvp"></a>
                     <a name="//apple_ref/swift/Property/url" class="dashAnchor"></a>
@@ -385,7 +376,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileset(py)uuid"></a>
                     <a name="//apple_ref/swift/Property/uuid" class="dashAnchor"></a>
@@ -415,7 +406,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC8filenameSSSgvp"></a>
                     <a name="//apple_ref/swift/Property/filename" class="dashAnchor"></a>
@@ -445,7 +436,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC4nameSSvp"></a>
                     <a name="//apple_ref/swift/Property/name" class="dashAnchor"></a>
@@ -475,7 +466,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileset(py)type"></a>
                     <a name="//apple_ref/swift/Property/type" class="dashAnchor"></a>
@@ -505,7 +496,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileset(py)properties"></a>
                     <a name="//apple_ref/swift/Property/properties" class="dashAnchor"></a>
@@ -535,7 +526,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileset(py)ignoreProperties"></a>
                     <a name="//apple_ref/swift/Property/ignoreProperties" class="dashAnchor"></a>
@@ -565,7 +556,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC7tilemapAA9SKTilemapCSgvp"></a>
                     <a name="//apple_ref/swift/Property/tilemap" class="dashAnchor"></a>
@@ -595,7 +586,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC8tileSizeSo6CGSizeVvp"></a>
                     <a name="//apple_ref/swift/Property/tileSize" class="dashAnchor"></a>
@@ -625,7 +616,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC7columnsSivp"></a>
                     <a name="//apple_ref/swift/Property/columns" class="dashAnchor"></a>
@@ -655,7 +646,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC9tilecountSivp"></a>
                     <a name="//apple_ref/swift/Property/tilecount" class="dashAnchor"></a>
@@ -685,7 +676,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC9dataCountSivp"></a>
                     <a name="//apple_ref/swift/Property/dataCount" class="dashAnchor"></a>
@@ -715,7 +706,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC8firstGIDs6UInt32Vvp"></a>
                     <a name="//apple_ref/swift/Property/firstGID" class="dashAnchor"></a>
@@ -745,7 +736,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC7lastGIDs6UInt32Vvp"></a>
                     <a name="//apple_ref/swift/Property/lastGID" class="dashAnchor"></a>
@@ -775,7 +766,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC10localRangeSNys6UInt32VGvp"></a>
                     <a name="//apple_ref/swift/Property/localRange" class="dashAnchor"></a>
@@ -805,7 +796,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC11globalRangeSNys6UInt32VGvp"></a>
                     <a name="//apple_ref/swift/Property/globalRange" class="dashAnchor"></a>
@@ -848,7 +839,7 @@
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC7spacingSivp"></a>
                     <a name="//apple_ref/swift/Property/spacing" class="dashAnchor"></a>
@@ -878,7 +869,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC6marginSivp"></a>
                     <a name="//apple_ref/swift/Property/margin" class="dashAnchor"></a>
@@ -908,7 +899,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC10tileOffsetSo7CGPointVvp"></a>
                     <a name="//apple_ref/swift/Property/tileOffset" class="dashAnchor"></a>
@@ -938,7 +929,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC6sourceSSSgvp"></a>
                     <a name="//apple_ref/swift/Property/source" class="dashAnchor"></a>
@@ -968,7 +959,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC17isImageCollectionSbvp"></a>
                     <a name="//apple_ref/swift/Property/isImageCollection" class="dashAnchor"></a>
@@ -998,7 +989,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC17isExternalTilesetSbvp"></a>
                     <a name="//apple_ref/swift/Property/isExternalTileset" class="dashAnchor"></a>
@@ -1028,7 +1019,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC16transparentColorSo7NSColorCSgvp"></a>
                     <a name="//apple_ref/swift/Property/transparentColor" class="dashAnchor"></a>
@@ -1058,7 +1049,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC10isRenderedSbvp"></a>
                     <a name="//apple_ref/swift/Property/isRendered" class="dashAnchor"></a>
@@ -1088,7 +1079,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC13renderQuality12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/renderQuality" class="dashAnchor"></a>
@@ -1131,7 +1122,7 @@
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC4name8tileSize8firstgid7columns6offsetACSS_So6CGSizeVs6UInt32VSiSo7CGPointVtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(name:tileSize:firstgid:columns:offset:)" class="dashAnchor"></a>
@@ -1232,7 +1223,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC6source8firstgid7tilemap6offsetACSS_s6UInt32VAA9SKTilemapCSo7CGPointVtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(source:firstgid:tilemap:offset:)" class="dashAnchor"></a>
@@ -1320,7 +1311,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC10attributes6offsetACSgSDyS2SG_So7CGPointVtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(attributes:offset:)" class="dashAnchor"></a>
@@ -1395,7 +1386,7 @@
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC4load8tsxFiles8delegate16ignorePropertiesSayACGSaySSG_AA15TilemapDelegate_pSgSbtFZ"></a>
                     <a name="//apple_ref/swift/Method/load(tsxFiles:delegate:ignoreProperties:)" class="dashAnchor"></a>
@@ -1474,7 +1465,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC4load7tsxFile10dataSource16ignorePropertiesACSgSS_AA011TilesetDataG0_pSgSbtFZ"></a>
                     <a name="//apple_ref/swift/Method/load(tsxFile:dataSource:ignoreProperties:)" class="dashAnchor"></a>
@@ -1566,7 +1557,7 @@
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC11addTextures15fromSpriteSheet7replace11transparentySS_SbSSSgtF"></a>
                     <a name="//apple_ref/swift/Method/addTextures(fromSpriteSheet:replace:transparent:)" class="dashAnchor"></a>
@@ -1635,7 +1626,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L320-L453">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L320-L439">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1654,7 +1645,7 @@
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC14addTilesetTile6tileID7textureAA0B4DataCSgs6UInt32V_So9SKTextureCtF"></a>
                     <a name="//apple_ref/swift/Method/addTilesetTile(tileID:texture:)" class="dashAnchor"></a>
@@ -1713,13 +1704,13 @@
                         <p>tileset data (or nil if the data exists).</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L463-L484">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L449-L470">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC14addTilesetTile6tileID6sourceAA0B4DataCSgs6UInt32V_SStF"></a>
                     <a name="//apple_ref/swift/Method/addTilesetTile(tileID:source:)" class="dashAnchor"></a>
@@ -1778,13 +1769,13 @@
                         <p>tileset data (or nil if the data exists).</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L492-L535">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L478-L522">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC14addTilesetTile6sources6UInt32V2id_AA0B4DataC4datatSgSS_tF"></a>
                     <a name="//apple_ref/swift/Method/addTilesetTile(source:)" class="dashAnchor"></a>
@@ -1831,13 +1822,13 @@
                         <p>local tile id &amp; tileset data (or nil if the data exists)</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L541-L545">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L528-L532">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC14setDataTexture6tileID7textureSo9SKTextureCSgs6UInt32V_AHtF"></a>
                     <a name="//apple_ref/swift/Method/setDataTexture(tileID:texture:)" class="dashAnchor"></a>
@@ -1897,13 +1888,13 @@
                         <p>previous tile data texture.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L554-L576">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L541-L563">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC14setDataTexture6tileID10imageNamedSo9SKTextureCSgs6UInt32V_SStF"></a>
                     <a name="//apple_ref/swift/Method/setDataTexture(tileID:imageNamed:)" class="dashAnchor"></a>
@@ -1963,13 +1954,13 @@
                         <p>old tile data texture.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L585-L596">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L572-L583">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC8contains8globalIDSbs6UInt32V_tF"></a>
                     <a name="//apple_ref/swift/Method/contains(globalID:)" class="dashAnchor"></a>
@@ -2016,13 +2007,13 @@
                         <p>tileset contains the global id.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L610-L613">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L597-L600">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC11getTileData8globalIDAA0bE0CSgs6UInt32V_tF"></a>
                     <a name="//apple_ref/swift/Method/getTileData(globalID:)" class="dashAnchor"></a>
@@ -2069,13 +2060,13 @@
                         <p>tile data object.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L619-L627">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L606-L614">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC11getTileData7localIDAA0bE0CSgs6UInt32V_tF"></a>
                     <a name="//apple_ref/swift/Method/getTileData(localID:)" class="dashAnchor"></a>
@@ -2122,13 +2113,13 @@
                         <p>tile data.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L633-L639">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L620-L626">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC11getTileData12withPropertySayAA0bE0CGSS_tF"></a>
                     <a name="//apple_ref/swift/Method/getTileData(withProperty:)" class="dashAnchor"></a>
@@ -2175,13 +2166,13 @@
                         <p>array of tile data.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L645-L647">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L632-L634">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC11getTileData12withProperty_SayAA0bE0CGSS_yptF"></a>
                     <a name="//apple_ref/swift/Method/getTileData(withProperty:_:)" class="dashAnchor"></a>
@@ -2241,13 +2232,13 @@
                         <p>array of tile data.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L655-L666">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L642-L653">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC11getTileData5named10isAnimatedSayAA0bE0CGSS_SbtF"></a>
                     <a name="//apple_ref/swift/Method/getTileData(named:isAnimated:)" class="dashAnchor"></a>
@@ -2307,13 +2298,13 @@
                         <p>array of tile data.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L673-L679">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L660-L666">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC11getTileData6ofTypeSayAA0bE0CGSS_tF"></a>
                     <a name="//apple_ref/swift/Method/getTileData(ofType:)" class="dashAnchor"></a>
@@ -2360,13 +2351,13 @@
                         <p>array of tile data.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L685-L687">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L672-L674">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC19getAnimatedTileDataSayAA0bF0CGyF"></a>
                     <a name="//apple_ref/swift/Method/getAnimatedTileData()" class="dashAnchor"></a>
@@ -2394,13 +2385,13 @@
                         <p>array of animated tile data.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L692-L694">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L679-L681">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC30getTileDataWithCollisionShapesSayAA0bE0CGyF"></a>
                     <a name="//apple_ref/swift/Method/getTileDataWithCollisionShapes()" class="dashAnchor"></a>
@@ -2428,13 +2419,13 @@
                         <p>array of tile data.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L699-L703">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L686-L690">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC11getGlobalID08forLocalE0s6UInt32VAG_tF"></a>
                     <a name="//apple_ref/swift/Method/getGlobalID(forLocalID:)" class="dashAnchor"></a>
@@ -2481,13 +2472,13 @@
                         <p>global tile ID.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L709-L714">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L696-L700">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC10getLocalID06globalE0s6UInt32VAG_tF"></a>
                     <a name="//apple_ref/swift/Method/getLocalID(globalID:)" class="dashAnchor"></a>
@@ -2534,7 +2525,7 @@
                         <p>local tile id.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L720-L729">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L706-L715">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2553,7 +2544,7 @@
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileset(py)tiledNodeName"></a>
                     <a name="//apple_ref/swift/Property/tiledNodeName" class="dashAnchor"></a>
@@ -2578,13 +2569,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L779-L781">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L765-L767">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileset(py)tiledIconName"></a>
                     <a name="//apple_ref/swift/Property/tiledIconName" class="dashAnchor"></a>
@@ -2609,13 +2600,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L784-L786">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L770-L772">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileset(py)tiledDescription"></a>
                     <a name="//apple_ref/swift/Property/tiledDescription" class="dashAnchor"></a>
@@ -2640,7 +2631,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L789-L791">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L775-L777">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2659,7 +2650,7 @@
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTileset(im)parsePropertiesWithCompletion:"></a>
                     <a name="//apple_ref/swift/Method/parseProperties(completion:)" class="dashAnchor"></a>
@@ -2702,13 +2693,13 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+Properties.swift#L205-L225">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+Properties.swift#L204-L224">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTileset(py)description"></a>
                     <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
@@ -2732,13 +2723,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L809-L817">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L795-L803">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTileset(py)debugDescription"></a>
                     <a name="//apple_ref/swift/Property/debugDescription" class="dashAnchor"></a>
@@ -2762,7 +2753,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L820-L822">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L806-L808">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2781,7 +2772,7 @@
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC4name8tileSize8firstgid7columns6offsetACSS_So6CGSizeVS2iSo7CGPointVtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(name:tileSize:firstgid:columns:offset:)" class="dashAnchor"></a>
@@ -2877,13 +2868,13 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L877-L884">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L863-L870">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC6source8firstgid7tilemap6offsetACSS_SiAA9SKTilemapCSo7CGPointVtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(source:firstgid:tilemap:offset:)" class="dashAnchor"></a>
@@ -2966,13 +2957,13 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L894-L900">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L880-L886">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC11getTileData8globalIDAA0bE0CSgSi_tF"></a>
                     <a name="//apple_ref/swift/Method/getTileData(globalID:)" class="dashAnchor"></a>
@@ -3020,13 +3011,13 @@
                         <p>tile data object.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L907-L916">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L893-L902">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC11getGlobalID08forLocalE0S2i_tF"></a>
                     <a name="//apple_ref/swift/Method/getGlobalID(forLocalID:)" class="dashAnchor"></a>
@@ -3074,13 +3065,13 @@
                         <p>global tile ID.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L923-L930">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L909-L916">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC10getLocalID09forGlobalE0s6UInt32VAG_tF"></a>
                     <a name="//apple_ref/swift/Method/getLocalID(forGlobalID:)" class="dashAnchor"></a>
@@ -3128,13 +3119,13 @@
                         <p>local tile id.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L937-L939">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L923-L925">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC11getTileData7localIDAA0bE0CSgSi_tF"></a>
                     <a name="//apple_ref/swift/Method/getTileData(localID:)" class="dashAnchor"></a>
@@ -3182,13 +3173,13 @@
                         <p>tile data.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L946-L952">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L932-L938">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC14addTilesetTile_7textureAA0B4DataCSgSi_So9SKTextureCtF"></a>
                     <a name="//apple_ref/swift/Method/addTilesetTile(_:texture:)" class="dashAnchor"></a>
@@ -3248,13 +3239,13 @@
                         <p>tileset data (or nil if the data exists).</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L961-L963">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L947-L949">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC14addTilesetTile_6sourceAA0B4DataCSgSi_SStF"></a>
                     <a name="//apple_ref/swift/Method/addTilesetTile(_:source:)" class="dashAnchor"></a>
@@ -3314,13 +3305,13 @@
                         <p>tileset data (or nil if the data exists).</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L972-L974">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L958-L960">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9SKTilesetC14setDataTexture_7textureSo9SKTextureCSgSi_AGtF"></a>
                     <a name="//apple_ref/swift/Method/setDataTexture(_:texture:)" class="dashAnchor"></a>
@@ -3381,7 +3372,7 @@
                         <p>previous tile data texture.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L984-L986">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L970-L972">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

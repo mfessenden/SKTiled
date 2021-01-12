@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../index.html'>
-          SKTiled v1.3 Docs
+          SKTiled v1.30b1 Docs
         </a>
-         (89% documented)
+         (90% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,13 +31,14 @@
             View on GitHub
           </a>
         </p>
-    
+    <!-- 
         <p class='header-col header-col--secondary'>
           <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
             <img class='header-icon' src='../img/dash.png'/>
             Install in Dash
           </a>
         </p>
+       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -57,6 +58,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../getting-started.html'>Getting Started</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../migration-guide.html'>Migration Guide</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../scene-setup.html'>Scene Setup</a>
@@ -109,9 +113,6 @@
                 <a class='nav-group-task-link' href='../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
-              </li>
-              <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
               </li>
               <li class='nav-group-task'>
@@ -119,9 +120,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledObjectType.html'>TiledObjectType</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledOverlayType.html'>TiledOverlayType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -258,14 +256,6 @@
               </li>
             </ul>
           </li>
-          <li class='nav-group-name'>
-            <a class='nav-group-name-link' href='../Other Structures.html'>Other Structures</a>
-            <ul class='nav-group-tasks'>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Structs/TileIsolationMode.html'>TileIsolationMode</a>
-              </li>
-            </ul>
-          </li>
         </ul>
       </nav>
       <article class='main-content'>
@@ -276,6 +266,7 @@
               <div class='declaration'>
                 <div class='language'>
                   <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">SKTileObject</span> <span class="p">:</span> <span class="kt">SKShapeNode</span><span class="p">,</span> <span class="kt"><a href="../Protocols/TiledAttributedType.html">TiledAttributedType</a></span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">SKTileObject</span><span class="p">:</span> <span class="kt">Loggable</span></code></pre>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">SKTileObject</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TiledGeometryType.html">TiledGeometryType</a></span></code></pre>
 
                 </div>
@@ -323,7 +314,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
             <div class="task-group">
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC05TiledC4TypeO"></a>
                     <a name="//apple_ref/swift/Enum/TiledObjectType" class="dashAnchor"></a>
@@ -374,13 +365,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L162-L167">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L63-L68">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC05TiledC5ShapeO"></a>
                     <a name="//apple_ref/swift/Enum/TiledObjectShape" class="dashAnchor"></a>
@@ -431,13 +422,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L182-L187">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L83-L88">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC5layerAA13SKObjectGroupCSgvp"></a>
                     <a name="//apple_ref/swift/Property/layer" class="dashAnchor"></a>
@@ -461,13 +452,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L190">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L91">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileObject(py)uuid"></a>
                     <a name="//apple_ref/swift/Property/uuid" class="dashAnchor"></a>
@@ -491,13 +482,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L193">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L94">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC2ids6UInt32Vvp"></a>
                     <a name="//apple_ref/swift/Property/id" class="dashAnchor"></a>
@@ -521,26 +512,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L196">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L97">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/Object%20Handlers"></a>
-                <a name="//apple_ref/swift/Section/Object Handlers" class="dashAnchor"></a>
-                <div class="section-name-container">
-                  <a class="section-name-link" href="#/Object%20Handlers"></a>
-                  <h3 class="section-name"><p>Object Handlers</p>
-</h3>
-                </div>
-              </div>
-              <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileObject(py)type"></a>
                     <a name="//apple_ref/swift/Property/type" class="dashAnchor"></a>
@@ -564,13 +542,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L235">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L100">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC4sizeSo6CGSizeVvp"></a>
                     <a name="//apple_ref/swift/Property/size" class="dashAnchor"></a>
@@ -594,13 +572,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L238">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L103">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC8rotation12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/rotation" class="dashAnchor"></a>
@@ -624,13 +602,26 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L241-L247">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L106-L112">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Object%20Handlers"></a>
+                <a name="//apple_ref/swift/Section/Object Handlers" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Object%20Handlers"></a>
+                  <h3 class="section-name"><p>Object Handlers</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileObject(py)debugDrawOptions"></a>
                     <a name="//apple_ref/swift/Property/debugDrawOptions" class="dashAnchor"></a>
@@ -654,13 +645,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L250">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L158">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileObject(py)visibleToCamera"></a>
                     <a name="//apple_ref/swift/Property/visibleToCamera" class="dashAnchor"></a>
@@ -684,13 +675,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L253">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L161">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileObject(py)objectPath"></a>
                     <a name="//apple_ref/swift/Property/objectPath" class="dashAnchor"></a>
@@ -715,13 +706,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L270">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L176">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC15enableAnimationSbvp"></a>
                     <a name="//apple_ref/swift/Property/enableAnimation" class="dashAnchor"></a>
@@ -745,13 +736,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L284-L292">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L190-L198">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC4tileAA0B0CSgvp"></a>
                     <a name="//apple_ref/swift/Property/tile" class="dashAnchor"></a>
@@ -775,13 +766,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L295">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L201">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC8tileDataAA09SKTilesetE0CSgvp"></a>
                     <a name="//apple_ref/swift/Property/tileData" class="dashAnchor"></a>
@@ -805,13 +796,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L313-L315">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L219-L221">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC10frameColorSo7NSColorCvp"></a>
                     <a name="//apple_ref/swift/Property/frameColor" class="dashAnchor"></a>
@@ -835,13 +826,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L318">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L224">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC10proxyColorSo7NSColorCSgvp"></a>
                     <a name="//apple_ref/swift/Property/proxyColor" class="dashAnchor"></a>
@@ -865,13 +856,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L321">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L227">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileObject(py)boundsShape"></a>
                     <a name="//apple_ref/swift/Property/boundsShape" class="dashAnchor"></a>
@@ -895,13 +886,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L324">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L230">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC13CollisionTypeO"></a>
                     <a name="//apple_ref/swift/Enum/CollisionType" class="dashAnchor"></a>
@@ -948,13 +939,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L348-L352">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L255-L259">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileObject(py)properties"></a>
                     <a name="//apple_ref/swift/Property/properties" class="dashAnchor"></a>
@@ -978,13 +969,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L355">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L262">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileObject(py)ignoreProperties"></a>
                     <a name="//apple_ref/swift/Property/ignoreProperties" class="dashAnchor"></a>
@@ -1008,13 +999,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L358">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L265">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC11physicsTypeAC09CollisionE0Ovp"></a>
                     <a name="//apple_ref/swift/Property/physicsType" class="dashAnchor"></a>
@@ -1038,13 +1029,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L361">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L268">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC14textAttributesAA04TextcE0VSgvp"></a>
                     <a name="//apple_ref/swift/Property/textAttributes" class="dashAnchor"></a>
@@ -1068,13 +1059,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L364">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L271">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileObject(py)renderQuality"></a>
                     <a name="//apple_ref/swift/Property/renderQuality" class="dashAnchor"></a>
@@ -1098,13 +1089,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L368-L378">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L275-L285">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC4textSSSgvp"></a>
                     <a name="//apple_ref/swift/Property/text" class="dashAnchor"></a>
@@ -1128,13 +1119,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L387-L392">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L294-L299">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileObject(py)boundingRect"></a>
                     <a name="//apple_ref/swift/Property/boundingRect" class="dashAnchor"></a>
@@ -1158,13 +1149,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L395-L397">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L302-L304">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC11anchorPointSo7CGPointVvp"></a>
                     <a name="//apple_ref/swift/Property/anchorPoint" class="dashAnchor"></a>
@@ -1188,13 +1179,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L400-L411">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L307-L318">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC16isRenderableTypeSbvp"></a>
                     <a name="//apple_ref/swift/Property/isRenderableType" class="dashAnchor"></a>
@@ -1218,13 +1209,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L414-L416">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L321-L323">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC10isPolyTypeSbvp"></a>
                     <a name="//apple_ref/swift/Property/isPolyType" class="dashAnchor"></a>
@@ -1248,7 +1239,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L419-L421">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L326-L328">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1267,7 +1258,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC5width6height4typeAC12CoreGraphics7CGFloatV_AiC05TiledC5ShapeOtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(width:height:type:)" class="dashAnchor"></a>
@@ -1336,13 +1327,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L439-L456">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L346-L364">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC10attributesACSgSDyS2SG_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(attributes:)" class="dashAnchor"></a>
@@ -1385,13 +1376,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L461-L475">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L369-L385">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC5layerAcA13SKObjectGroupC_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(layer:)" class="dashAnchor"></a>
@@ -1434,7 +1425,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L559-L563">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L474-L479">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1453,7 +1444,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC8setColor5color9withAlpha6redrawySo7NSColorC_12CoreGraphics7CGFloatVSbtF"></a>
                     <a name="//apple_ref/swift/Method/setColor(color:withAlpha:redraw:)" class="dashAnchor"></a>
@@ -1522,13 +1513,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L577-L590">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L493-L506">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC8setColor9hexString9withAlpha6redrawySS_12CoreGraphics7CGFloatVSbtF"></a>
                     <a name="//apple_ref/swift/Method/setColor(hexString:withAlpha:redraw:)" class="dashAnchor"></a>
@@ -1597,7 +1588,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L598-L603">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L514-L519">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1616,7 +1607,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC11setTileDatayyAA09SKTilesetF0CF"></a>
                     <a name="//apple_ref/swift/Method/setTileData(_:)" class="dashAnchor"></a>
@@ -1659,7 +1650,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L610-L613">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L526-L529">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1678,7 +1669,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileObject(im)draw"></a>
                     <a name="//apple_ref/swift/Method/draw()" class="dashAnchor"></a>
@@ -1703,13 +1694,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L619-L865">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L535-L779">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC08drawTextC09withScaleSo10CGImageRefaSg12CoreGraphics7CGFloatV_tF"></a>
                     <a name="//apple_ref/swift/Method/drawTextObject(withScale:)" class="dashAnchor"></a>
@@ -1756,7 +1747,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         <p>rendered text image.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L871-L932">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L785-L846">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1775,7 +1766,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileObject(im)getVerticesWithOffset:"></a>
                     <a name="//apple_ref/swift/Method/getVertices(offset:)" class="dashAnchor"></a>
@@ -1804,13 +1795,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         <p>array of points.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L963-L976">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L877-L890">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileObject(im)containsWithTouch:"></a>
                     <a name="//apple_ref/swift/Method/contains(touch:)" class="dashAnchor"></a>
@@ -1858,7 +1849,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         <p>node was touched.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1015-L1017">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L929-L931">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1877,7 +1868,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/"></a>
                     <a name="//apple_ref/swift/Method/touchesBegan(_:with:)" class="dashAnchor"></a>
@@ -1908,7 +1899,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileObject(py)tiledNodeName"></a>
                     <a name="//apple_ref/swift/Property/tiledNodeName" class="dashAnchor"></a>
@@ -1933,13 +1924,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1054-L1056">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L972-L981">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileObject(py)tiledNodeNiceName"></a>
                     <a name="//apple_ref/swift/Property/tiledNodeNiceName" class="dashAnchor"></a>
@@ -1964,13 +1955,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1059-L1062">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L984-L987">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileObject(py)tiledIconName"></a>
                     <a name="//apple_ref/swift/Property/tiledIconName" class="dashAnchor"></a>
@@ -1995,13 +1986,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1065-L1068">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L990-L993">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileObject(py)tiledListDescription"></a>
                     <a name="//apple_ref/swift/Property/tiledListDescription" class="dashAnchor"></a>
@@ -2026,13 +2017,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1071-L1074">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L996-L999">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileObject(py)tiledDescription"></a>
                     <a name="//apple_ref/swift/Property/tiledDescription" class="dashAnchor"></a>
@@ -2057,13 +2048,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1077-L1079">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1002-L1004">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC10showBoundsSbvp"></a>
                     <a name="//apple_ref/swift/Property/showBounds" class="dashAnchor"></a>
@@ -2087,7 +2078,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1082-L1107">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1007-L1032">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2106,7 +2097,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC17didBeginRendering10completionyyycSg_tF"></a>
                     <a name="//apple_ref/swift/Method/didBeginRendering(completion:)" class="dashAnchor"></a>
@@ -2149,13 +2140,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1114-L1116">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1039-L1041">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC18didFinishRendering10completionyyycSg_tF"></a>
                     <a name="//apple_ref/swift/Method/didFinishRendering(completion:)" class="dashAnchor"></a>
@@ -2198,7 +2189,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1121-L1123">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1046-L1048">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2217,7 +2208,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC12setupPhysicsyyF"></a>
                     <a name="//apple_ref/swift/Method/setupPhysics()" class="dashAnchor"></a>
@@ -2241,13 +2232,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1128-L1172">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1053-L1097">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC14getPhysicsPathSo9CGPathRefaSgyF"></a>
                     <a name="//apple_ref/swift/Method/getPhysicsPath()" class="dashAnchor"></a>
@@ -2275,7 +2266,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         <p>path object.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1177-L1180">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1102-L1105">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2294,7 +2285,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC6updateyySdF"></a>
                     <a name="//apple_ref/swift/Method/update(_:)" class="dashAnchor"></a>
@@ -2337,7 +2328,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1187-L1189">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1112-L1114">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2356,7 +2347,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTileObject(py)description"></a>
                     <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
@@ -2380,13 +2371,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1247-L1259">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1172-L1184">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTileObject(py)debugDescription"></a>
                     <a name="//apple_ref/swift/Property/debugDescription" class="dashAnchor"></a>
@@ -2410,13 +2401,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1262-L1264">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1187-L1189">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC16shortDescriptionSSvp"></a>
                     <a name="//apple_ref/swift/Property/shortDescription" class="dashAnchor"></a>
@@ -2440,13 +2431,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1267-L1271">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1192-L1196">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC7opacity12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/opacity" class="dashAnchor"></a>
@@ -2470,13 +2461,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1278-L1285">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1203-L1210">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC7visibleSbvp"></a>
                     <a name="//apple_ref/swift/Property/visible" class="dashAnchor"></a>
@@ -2500,13 +2491,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1288-L1295">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1213-L1220">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC10isAnimatedSbvp"></a>
                     <a name="//apple_ref/swift/Property/isAnimated" class="dashAnchor"></a>
@@ -2530,13 +2521,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1298-L1303">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1223-L1228">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC06isTextC0Sbvp"></a>
                     <a name="//apple_ref/swift/Property/isTextObject" class="dashAnchor"></a>
@@ -2560,13 +2551,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1306-L1308">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1231-L1233">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC06isTileC0Sbvp"></a>
                     <a name="//apple_ref/swift/Property/isTileObject" class="dashAnchor"></a>
@@ -2590,7 +2581,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1311-L1313">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1236-L1238">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2609,7 +2600,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC3gids6UInt32VSgvp"></a>
                     <a name="//apple_ref/swift/Property/gid" class="dashAnchor"></a>
@@ -2634,13 +2625,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1487-L1493">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1328-L1334">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC12runAnimationyyF"></a>
                     <a name="//apple_ref/swift/Method/runAnimation()" class="dashAnchor"></a>
@@ -2665,13 +2656,13 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1497">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1338">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled12SKTileObjectC4draw5debugySb_tF"></a>
                     <a name="//apple_ref/swift/Method/draw(debug:)" class="dashAnchor"></a>
@@ -2715,7 +2706,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1503-L1505">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L1344-L1346">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2734,7 +2725,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTileObject(im)parsePropertiesWithCompletion:"></a>
                     <a name="//apple_ref/swift/Method/parseProperties(completion:)" class="dashAnchor"></a>
@@ -2777,7 +2768,7 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+Properties.swift#L374-L418">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+Properties.swift#L373-L423">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

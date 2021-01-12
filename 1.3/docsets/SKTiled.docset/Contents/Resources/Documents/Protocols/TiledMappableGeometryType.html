@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../index.html'>
-          SKTiled v1.3 Docs
+          SKTiled v1.30b1 Docs
         </a>
-         (89% documented)
+         (90% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,13 +31,14 @@
             View on GitHub
           </a>
         </p>
-    
+    <!-- 
         <p class='header-col header-col--secondary'>
           <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
             <img class='header-icon' src='../img/dash.png'/>
             Install in Dash
           </a>
         </p>
+       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -57,6 +58,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../getting-started.html'>Getting Started</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../migration-guide.html'>Migration Guide</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../scene-setup.html'>Scene Setup</a>
@@ -109,9 +113,6 @@
                 <a class='nav-group-task-link' href='../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
-              </li>
-              <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
               </li>
               <li class='nav-group-task'>
@@ -119,9 +120,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledObjectType.html'>TiledObjectType</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledOverlayType.html'>TiledOverlayType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -258,14 +256,6 @@
               </li>
             </ul>
           </li>
-          <li class='nav-group-name'>
-            <a class='nav-group-name-link' href='../Other Structures.html'>Other Structures</a>
-            <ul class='nav-group-tasks'>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Structs/TileIsolationMode.html'>TileIsolationMode</a>
-              </li>
-            </ul>
-          </li>
         </ul>
       </nav>
       <article class='main-content'>
@@ -282,7 +272,52 @@
               </div>
             <h2 id='overview' class='heading'>Overview</h2>
 
-<p>The <code>TiledMappableGeometryType</code> protocol describes a mapping structure that is broken up into two-dimensional tiles.</p>
+<p>The <code>TiledMappableGeometryType</code> protocol describes a container that is broken up into two-dimensional tiles.</p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>orientation</code></td>
+<td>Container orientation</td>
+</tr>
+<tr>
+<td><code>isInfinite</code></td>
+<td>Container represents and infinite area.</td>
+</tr>
+<tr>
+<td><code>mapSize</code></td>
+<td>Container size (in tiles)</td>
+</tr>
+<tr>
+<td><code>graph</code></td>
+<td>Container pathfinding graph (optional)</td>
+</tr>
+<tr>
+<td><code>childOffset</code></td>
+<td>Child node offset (optional)</td>
+</tr>
+<tr>
+<td><code>tileSize</code></td>
+<td>Tile size (in pixels)</td>
+</tr>
+<tr>
+<td><code>hexsidelength</code></td>
+<td>Hexagonal side length</td>
+</tr>
+<tr>
+<td><code>staggeraxis</code></td>
+<td>Hexagonal stagger axis</td>
+</tr>
+<tr>
+<td><code>staggerindex</code></td>
+<td>Hexagonal stagger index</td>
+</tr>
+</tbody></table>
 
           </div>
         </section>
@@ -292,7 +327,7 @@
             <div class="task-group">
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(pl)TiledMappableGeometryType(py)orientation"></a>
                     <a name="//apple_ref/swift/Property/orientation" class="dashAnchor"></a>
@@ -317,13 +352,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L38">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L52">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(pl)TiledMappableGeometryType(py)isInfinite"></a>
                     <a name="//apple_ref/swift/Property/isInfinite" class="dashAnchor"></a>
@@ -348,13 +383,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L41">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L55">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(pl)TiledMappableGeometryType(py)mapSize"></a>
                     <a name="//apple_ref/swift/Property/mapSize" class="dashAnchor"></a>
@@ -379,13 +414,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L44">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L58">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(pl)TiledMappableGeometryType(py)graph"></a>
                     <a name="//apple_ref/swift/Property/graph" class="dashAnchor"></a>
@@ -410,13 +445,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L47">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L61">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(pl)TiledMappableGeometryType(py)childOffset"></a>
                     <a name="//apple_ref/swift/Property/childOffset" class="dashAnchor"></a>
@@ -441,13 +476,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L50">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L64">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(pl)TiledMappableGeometryType(py)tileSize"></a>
                     <a name="//apple_ref/swift/Property/tileSize" class="dashAnchor"></a>
@@ -472,13 +507,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L53">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L67">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(pl)TiledMappableGeometryType(py)hexsidelength"></a>
                     <a name="//apple_ref/swift/Property/hexsidelength" class="dashAnchor"></a>
@@ -503,13 +538,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L56">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L70">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(pl)TiledMappableGeometryType(py)staggeraxis"></a>
                     <a name="//apple_ref/swift/Property/staggeraxis" class="dashAnchor"></a>
@@ -521,7 +556,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Hex stagger axis.</p>
+                        <p>Hexagonal stagger axis.</p>
 
                       </div>
                       <div class="declaration">
@@ -534,13 +569,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L59">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L73">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(pl)TiledMappableGeometryType(py)staggerindex"></a>
                     <a name="//apple_ref/swift/Property/staggerindex" class="dashAnchor"></a>
@@ -552,7 +587,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Hex stagger index.</p>
+                        <p>Hexagonal stagger index.</p>
 
                       </div>
                       <div class="declaration">
@@ -565,7 +600,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L62">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L76">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -584,7 +619,7 @@
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled25TiledMappableGeometryTypePAAE5width12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/width" class="dashAnchor"></a>
@@ -611,13 +646,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L74-L76">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L88-L90">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled25TiledMappableGeometryTypePAAE6height12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/height" class="dashAnchor"></a>
@@ -644,13 +679,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L79-L81">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L93-L95">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled25TiledMappableGeometryTypePAAE10sizeHalvedSo6CGSizeVvp"></a>
                     <a name="//apple_ref/swift/Property/sizeHalved" class="dashAnchor"></a>
@@ -677,13 +712,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L84-L86">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L98-L100">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled25TiledMappableGeometryTypePAAE9tileWidth12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/tileWidth" class="dashAnchor"></a>
@@ -710,13 +745,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L89-L97">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L103-L111">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled25TiledMappableGeometryTypePAAE10tileHeight12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/tileHeight" class="dashAnchor"></a>
@@ -743,13 +778,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L100-L107">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L114-L121">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled25TiledMappableGeometryTypePAAE14tileSizeHalvedSo6CGSizeVvp"></a>
                     <a name="//apple_ref/swift/Property/tileSizeHalved" class="dashAnchor"></a>
@@ -776,13 +811,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L110-L112">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L124-L126">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled25TiledMappableGeometryTypePAAE13tileWidthHalf12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/tileWidthHalf" class="dashAnchor"></a>
@@ -809,13 +844,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L116-L118">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L130-L132">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled25TiledMappableGeometryTypePAAE14tileHeightHalf12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/tileHeightHalf" class="dashAnchor"></a>
@@ -842,13 +877,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L121-L123">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L135-L137">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled25TiledMappableGeometryTypePAAE12sizeInPointsSo6CGSizeVvp"></a>
                     <a name="//apple_ref/swift/Property/sizeInPoints" class="dashAnchor"></a>
@@ -863,7 +898,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Size of the map in points.</p>
+                        <p>The size of the map, in points.</p>
 
                       </div>
                       <div class="declaration">
@@ -875,7 +910,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L126-L150">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L140-L164">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -894,7 +929,7 @@
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled25TiledMappableGeometryTypePAAE6originSo7CGPointVvp"></a>
                     <a name="//apple_ref/swift/Property/origin" class="dashAnchor"></a>
@@ -921,7 +956,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L155-L175">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L169-L189">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -940,7 +975,7 @@
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled25TiledMappableGeometryTypePAAE8staggerXSbvp"></a>
                     <a name="//apple_ref/swift/Property/staggerX" class="dashAnchor"></a>
@@ -967,13 +1002,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L181-L183">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L195-L197">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled25TiledMappableGeometryTypePAAE11staggerEvenSbvp"></a>
                     <a name="//apple_ref/swift/Property/staggerEven" class="dashAnchor"></a>
@@ -1000,13 +1035,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L186-L188">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L200-L202">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled25TiledMappableGeometryTypePAAE11sideLengthX12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/sideLengthX" class="dashAnchor"></a>
@@ -1033,7 +1068,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L191-L193">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L205-L207">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1052,7 +1087,7 @@
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled25TiledMappableGeometryTypePAAE18pointForCoordinate5coord7offsetX0J1YSo7CGPointVs5SIMD2Vys5Int32VG_12CoreGraphics7CGFloatVAQtF"></a>
                     <a name="//apple_ref/swift/Method/pointForCoordinate(coord:offsetX:offsetY:)" class="dashAnchor"></a>
@@ -1128,13 +1163,13 @@
                         <p>point in layer (spritekit space).</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L309-L337">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L323-L351">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled25TiledMappableGeometryTypePAAE18coordinateForPoint5points5SIMD2Vys5Int32VGSo7CGPointV_tF"></a>
                     <a name="//apple_ref/swift/Method/coordinateForPoint(point:)" class="dashAnchor"></a>
@@ -1184,7 +1219,7 @@
                         <p>tile coordinate.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L343-L345">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L357-L359">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1203,7 +1238,7 @@
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled25TiledMappableGeometryTypePAAE14shaderUniformsSaySo9SKUniformCGvp"></a>
                     <a name="//apple_ref/swift/Property/shaderUniforms" class="dashAnchor"></a>
@@ -1230,7 +1265,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L664-L672">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledMappableGeometryType.swift#L678-L686">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

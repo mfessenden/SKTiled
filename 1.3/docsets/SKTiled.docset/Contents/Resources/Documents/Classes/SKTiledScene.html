@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../index.html'>
-          SKTiled v1.3 Docs
+          SKTiled v1.30b1 Docs
         </a>
-         (89% documented)
+         (90% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,13 +31,14 @@
             View on GitHub
           </a>
         </p>
-    
+    <!-- 
         <p class='header-col header-col--secondary'>
           <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
             <img class='header-icon' src='../img/dash.png'/>
             Install in Dash
           </a>
         </p>
+       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -57,6 +58,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../getting-started.html'>Getting Started</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../migration-guide.html'>Migration Guide</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../scene-setup.html'>Scene Setup</a>
@@ -109,9 +113,6 @@
                 <a class='nav-group-task-link' href='../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
-              </li>
-              <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
               </li>
               <li class='nav-group-task'>
@@ -119,9 +120,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledObjectType.html'>TiledObjectType</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledOverlayType.html'>TiledOverlayType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -258,14 +256,6 @@
               </li>
             </ul>
           </li>
-          <li class='nav-group-name'>
-            <a class='nav-group-name-link' href='../Other Structures.html'>Other Structures</a>
-            <ul class='nav-group-tasks'>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Structs/TileIsolationMode.html'>TileIsolationMode</a>
-              </li>
-            </ul>
-          </li>
         </ul>
       </nav>
       <article class='main-content'>
@@ -276,6 +266,7 @@
               <div class='declaration'>
                 <div class='language'>
                   <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">SKTiledScene</span> <span class="p">:</span> <span class="kt">SKScene</span><span class="p">,</span> <span class="kt">SKPhysicsContactDelegate</span><span class="p">,</span> <span class="kt"><a href="../Protocols/TiledSceneDelegate.html">TiledSceneDelegate</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/TilemapDelegate.html">TilemapDelegate</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/TilesetDataSource.html">TilesetDataSource</a></span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">SKTiledScene</span><span class="p">:</span> <span class="kt">Loggable</span></code></pre>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">SKTiledScene</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TiledSceneCameraDelegate.html">TiledSceneCameraDelegate</a></span></code></pre>
 
                 </div>
@@ -362,7 +353,7 @@
             <div class="task-group">
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled0A5SceneC9worldNodeSo6SKNodeCSgvp"></a>
                     <a name="//apple_ref/swift/Property/worldNode" class="dashAnchor"></a>
@@ -386,13 +377,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L64">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L63">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled0A5SceneC7tilemapAA9SKTilemapCSgvp"></a>
                     <a name="//apple_ref/swift/Property/tilemap" class="dashAnchor"></a>
@@ -416,13 +407,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L67">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L66">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled0A5SceneC10cameraNodeAA0aB6CameraCSgvp"></a>
                     <a name="//apple_ref/swift/Property/cameraNode" class="dashAnchor"></a>
@@ -446,13 +437,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L70">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L69">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled0A5SceneC12loggingLevelAA07LoggingD0Ovp"></a>
                     <a name="//apple_ref/swift/Property/loggingLevel" class="dashAnchor"></a>
@@ -476,13 +467,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L73">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L72">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled0A5SceneC6graphsSDySSSo11GKGridGraphCySo0dE4NodeCGGvp"></a>
                     <a name="//apple_ref/swift/Property/graphs" class="dashAnchor"></a>
@@ -506,13 +497,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L76">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L75">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTiledScene(py)receiveCameraUpdates"></a>
                     <a name="//apple_ref/swift/Property/receiveCameraUpdates" class="dashAnchor"></a>
@@ -537,13 +528,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L85">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L84">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTiledScene(py)currentCoordinate"></a>
                     <a name="//apple_ref/swift/Property/currentCoordinate" class="dashAnchor"></a>
@@ -567,13 +558,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L91">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L90">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTiledScene(py)zDeltaForLayers"></a>
                     <a name="//apple_ref/swift/Property/zDeltaForLayers" class="dashAnchor"></a>
@@ -597,13 +588,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L94">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L93">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTiledScene(py)speed"></a>
                     <a name="//apple_ref/swift/Property/speed" class="dashAnchor"></a>
@@ -627,7 +618,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L97-L104">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L96-L103">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -646,7 +637,7 @@
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTiledScene(im)initWithSize:"></a>
                     <a name="//apple_ref/swift/Method/init(size:)" class="dashAnchor"></a>
@@ -689,13 +680,13 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L111-L113">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L110-L112">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTiledScene(im)didMoveToView:"></a>
                     <a name="//apple_ref/swift/Method/didMove(to:)" class="dashAnchor"></a>
@@ -738,7 +729,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L133-L158">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L136-L161">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -757,7 +748,7 @@
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled0A5SceneC5setup3url12withTilesets16ignoreProperties12loggingLevel_y10Foundation3URLV_SayAA9SKTilesetCGSbAA07LoggingJ0OyAA9SKTilemapCcSgtF"></a>
                     <a name="//apple_ref/swift/Method/setup(url:withTilesets:ignoreProperties:loggingLevel:_:)" class="dashAnchor"></a>
@@ -852,13 +843,13 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L170-L186">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L173-L189">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled0A5SceneC5setup7tmxFile11inDirectory12withTilesets16ignoreProperties12loggingLevel_ySS_SSSgSayAA9SKTilesetCGSbAA07LoggingM0OyAA9SKTilemapCcSgtF"></a>
                     <a name="//apple_ref/swift/Method/setup(tmxFile:inDirectory:withTilesets:ignoreProperties:loggingLevel:_:)" class="dashAnchor"></a>
@@ -966,7 +957,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L197-L256">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L200-L259">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -985,7 +976,7 @@
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didBeginParsing:"></a>
                     <a name="//apple_ref/swift/Method/didBeginParsing(_:)" class="dashAnchor"></a>
@@ -1009,13 +1000,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L260-L262">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L263-L265">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddTileset:"></a>
                     <a name="//apple_ref/swift/Method/didAddTileset(_:)" class="dashAnchor"></a>
@@ -1038,13 +1029,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L264-L266">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L267-L269">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddLayer:"></a>
                     <a name="//apple_ref/swift/Method/didAddLayer(_:)" class="dashAnchor"></a>
@@ -1067,13 +1058,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L268-L270">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L271-L273">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didReadMap:"></a>
                     <a name="//apple_ref/swift/Method/didReadMap(_:)" class="dashAnchor"></a>
@@ -1096,13 +1087,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L272-L274">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L275-L277">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didRenderMap:"></a>
                     <a name="//apple_ref/swift/Method/didRenderMap(_:)" class="dashAnchor"></a>
@@ -1125,13 +1116,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L276-L278">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L279-L281">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddNavigationGraph:"></a>
                     <a name="//apple_ref/swift/Method/didAddNavigationGraph(_:)" class="dashAnchor"></a>
@@ -1154,13 +1145,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L280-L282">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L283-L285">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)objectForTileTypeWithNamed:"></a>
                     <a name="//apple_ref/swift/Method/objectForTileType(named:)" class="dashAnchor"></a>
@@ -1183,13 +1174,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L284-L286">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L287-L289">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)objectForVectorTypeWithNamed:"></a>
                     <a name="//apple_ref/swift/Method/objectForVectorType(named:)" class="dashAnchor"></a>
@@ -1212,7 +1203,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L288-L290">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L291-L293">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1231,7 +1222,7 @@
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled17TilesetDataSourceP18willAddSpriteSheet2to9fileNamedSSAA9SKTilesetC_SStF"></a>
                     <a name="//apple_ref/swift/Method/willAddSpriteSheet(to:fileNamed:)" class="dashAnchor"></a>
@@ -1254,7 +1245,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L294-L297">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L297-L300">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1273,7 +1264,7 @@
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTiledScene(im)update:"></a>
                     <a name="//apple_ref/swift/Method/update(_:)" class="dashAnchor"></a>
@@ -1316,13 +1307,13 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L310-L324">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L313-L327">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled0A5SceneC12updateCamerayyF"></a>
                     <a name="//apple_ref/swift/Method/updateCamera()" class="dashAnchor"></a>
@@ -1346,13 +1337,13 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L327-L334">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L330-L337">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTiledScene(im)objectForGraphTypeWithNamed:"></a>
                     <a name="//apple_ref/swift/Method/objectForGraphType(named:)" class="dashAnchor"></a>
@@ -1399,13 +1390,13 @@
                         <p>dictionary insertion was successful.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+GameplayKit.swift#L295-L297">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+GameplayKit.swift#L294-L296">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled0A5SceneC8addGraph5named5graphSbSS_So06GKGridD0CySo0gD4NodeCGtF"></a>
                     <a name="//apple_ref/swift/Method/addGraph(named:graph:)" class="dashAnchor"></a>
@@ -1464,13 +1455,13 @@
                         <p>graph was added sucessfully.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+GameplayKit.swift#L305-L313">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+GameplayKit.swift#L304-L312">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled0A5SceneC11removeGraph5namedSo06GKGridD0CySo0fD4NodeCGSgSS_tF"></a>
                     <a name="//apple_ref/swift/Method/removeGraph(named:)" class="dashAnchor"></a>
@@ -1517,13 +1508,13 @@
                         <p>removed graph instance.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+GameplayKit.swift#L319-L322">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+GameplayKit.swift#L318-L321">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTiledScene(im)mouseDown:"></a>
                     <a name="//apple_ref/swift/Method/mouseDown(with:)" class="dashAnchor"></a>
@@ -1566,13 +1557,13 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L374-L376">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L373-L375">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTiledScene(im)rightMouseDown:"></a>
                     <a name="//apple_ref/swift/Method/rightMouseDown(with:)" class="dashAnchor"></a>
@@ -1615,13 +1606,13 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L381-L383">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L380-L382">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTiledScene(im)mouseUp:"></a>
                     <a name="//apple_ref/swift/Method/mouseUp(with:)" class="dashAnchor"></a>
@@ -1664,13 +1655,13 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L388-L390">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L387-L389">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTiledScene(im)rightMouseUp:"></a>
                     <a name="//apple_ref/swift/Method/rightMouseUp(with:)" class="dashAnchor"></a>
@@ -1713,13 +1704,13 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L395-L397">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L394-L396">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTiledScene(im)mouseMoved:"></a>
                     <a name="//apple_ref/swift/Method/mouseMoved(with:)" class="dashAnchor"></a>
@@ -1762,13 +1753,13 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L402-L404">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L401-L403">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTiledScene(im)scrollWheel:"></a>
                     <a name="//apple_ref/swift/Method/scrollWheel(with:)" class="dashAnchor"></a>
@@ -1811,13 +1802,13 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L409-L411">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L408-L410">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTiledScene(im)mouseDragged:"></a>
                     <a name="//apple_ref/swift/Method/mouseDragged(with:)" class="dashAnchor"></a>
@@ -1860,13 +1851,13 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L416-L418">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L415-L417">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTiledScene(im)mouseEntered:"></a>
                     <a name="//apple_ref/swift/Method/mouseEntered(with:)" class="dashAnchor"></a>
@@ -1909,13 +1900,13 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L423-L426">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L422-L425">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTiledScene(im)mouseExited:"></a>
                     <a name="//apple_ref/swift/Method/mouseExited(with:)" class="dashAnchor"></a>
@@ -1958,13 +1949,13 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L431-L434">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L430-L433">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/"></a>
                     <a name="//apple_ref/swift/Method/sceneDoubleTapped(location:)" class="dashAnchor"></a>
@@ -1996,7 +1987,7 @@
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTiledScene(im)cameraPositionChangedWithNewPosition:"></a>
                     <a name="//apple_ref/swift/Method/cameraPositionChanged(newPosition:)" class="dashAnchor"></a>
@@ -2040,13 +2031,13 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L457">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L456">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTiledScene(im)cameraZoomChangedWithNewZoom:"></a>
                     <a name="//apple_ref/swift/Method/cameraZoomChanged(newZoom:)" class="dashAnchor"></a>
@@ -2090,13 +2081,13 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L462">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L461">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTiledScene(im)cameraBoundsChangedWithBounds:position:zoom:"></a>
                     <a name="//apple_ref/swift/Method/cameraBoundsChanged(bounds:position:zoom:)" class="dashAnchor"></a>
@@ -2164,13 +2155,13 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L470">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L469">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTiledScene(im)sceneDoubleClickedWithEvent:"></a>
                     <a name="//apple_ref/swift/Method/sceneDoubleClicked(event:)" class="dashAnchor"></a>
@@ -2214,13 +2205,13 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L477">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L476">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTiledScene(im)mousePositionChangedWithEvent:"></a>
                     <a name="//apple_ref/swift/Method/mousePositionChanged(event:)" class="dashAnchor"></a>
@@ -2264,13 +2255,13 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L483">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L482">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)SKTiledScene(py)description"></a>
                     <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
@@ -2294,7 +2285,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L494-L502">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L493-L501">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

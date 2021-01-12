@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../index.html'>
-          SKTiled v1.3 Docs
+          SKTiled v1.30b1 Docs
         </a>
-         (89% documented)
+         (90% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,13 +31,14 @@
             View on GitHub
           </a>
         </p>
-    
+    <!-- 
         <p class='header-col header-col--secondary'>
           <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
             <img class='header-icon' src='../img/dash.png'/>
             Install in Dash
           </a>
         </p>
+       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -57,6 +58,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../getting-started.html'>Getting Started</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../migration-guide.html'>Migration Guide</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../scene-setup.html'>Scene Setup</a>
@@ -109,9 +113,6 @@
                 <a class='nav-group-task-link' href='../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
-              </li>
-              <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
               </li>
               <li class='nav-group-task'>
@@ -119,9 +120,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledObjectType.html'>TiledObjectType</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledOverlayType.html'>TiledOverlayType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -258,14 +256,6 @@
               </li>
             </ul>
           </li>
-          <li class='nav-group-name'>
-            <a class='nav-group-name-link' href='../Other Structures.html'>Other Structures</a>
-            <ul class='nav-group-tasks'>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Structs/TileIsolationMode.html'>TileIsolationMode</a>
-              </li>
-            </ul>
-          </li>
         </ul>
       </nav>
       <article class='main-content'>
@@ -290,16 +280,16 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
 
 <table><thead>
 <tr>
-<th style="text-align: center">Property</th>
+<th style="text-align: left">Property</th>
 <th style="text-align: left">Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td style="text-align: center"><code>properties</code></td>
+<td style="text-align: left"><code>properties</code></td>
 <td style="text-align: left">Object of custom Tiled properties.</td>
 </tr>
 <tr>
-<td style="text-align: center"><code>ignoreProperties</code></td>
+<td style="text-align: left"><code>ignoreProperties</code></td>
 <td style="text-align: left">Ignore Tiled properties.</td>
 </tr>
 </tbody></table>
@@ -307,12 +297,12 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
 
 <table><thead>
 <tr>
-<th style="text-align: center">Method</th>
+<th style="text-align: left">Method</th>
 <th style="text-align: left">Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td style="text-align: center"><code>parseProperties</code></td>
+<td style="text-align: left"><code>parseProperties</code></td>
 <td style="text-align: left">Parse function (with optional completion block).</td>
 </tr>
 </tbody></table>
@@ -320,6 +310,7 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
 
 <p>Querying a property is simple. Simply use the <code>hasKey</code> function:</p>
 <pre class="highlight swift"><code><span class="n">tiledObject</span><span class="o">.</span><span class="nf">hasKey</span><span class="p">(</span><span class="s">"floorColor"</span><span class="p">)</span>
+
 <span class="c1">// or use a subscript to query a property...</span>
 <span class="k">let</span> <span class="nv">floorColor</span> <span class="o">=</span> <span class="n">tiledObject</span><span class="p">[</span><span class="s">"floorColor"</span><span class="p">]</span>
 </code></pre>
@@ -340,7 +331,7 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
             <div class="task-group">
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(pl)TiledAttributedType(py)properties"></a>
                     <a name="//apple_ref/swift/Property/properties" class="dashAnchor"></a>
@@ -371,7 +362,38 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
+                    <code>
+                    <a name="/c:@M@SKTiled@objc(pl)TiledAttributedType(py)secondaryProperties"></a>
+                    <a name="//apple_ref/swift/Property/secondaryProperties" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledAttributedType(py)secondaryProperties">secondaryProperties</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Storage for properties from a template or tile data.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">optional</span> <span class="k">var</span> <span class="nv">secondaryProperties</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L83">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(pl)TiledAttributedType(py)ignoreProperties"></a>
                     <a name="//apple_ref/swift/Property/ignoreProperties" class="dashAnchor"></a>
@@ -396,13 +418,13 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L83">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L86">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(pl)TiledAttributedType(im)parsePropertiesWithCompletion:"></a>
                     <a name="//apple_ref/swift/Method/parseProperties(completion:)" class="dashAnchor"></a>
@@ -426,7 +448,7 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L86">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L89">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -445,7 +467,7 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled19TiledAttributedTypePAAE20tiledNodeDescriptionSSSgvp"></a>
                     <a name="//apple_ref/swift/Property/tiledNodeDescription" class="dashAnchor"></a>
@@ -472,13 +494,13 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L99-L108">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L102-L111">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled19TiledAttributedTypePAAE4hash4intoys6HasherVz_tF"></a>
                     <a name="//apple_ref/swift/Method/hash(into:)" class="dashAnchor"></a>
@@ -505,13 +527,13 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L111-L113">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L114-L116">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled19TiledAttributedTypePAAE8getValue3for07defaultF0SSSgSS_AGtF"></a>
                     <a name="//apple_ref/swift/Method/getValue(for:defaultValue:)" class="dashAnchor"></a>
@@ -573,13 +595,13 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                         <p>custom property value.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L121-L127">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L124-L130">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled19TiledAttributedTypePAAE8setValue3for_ySS_SStF"></a>
                     <a name="//apple_ref/swift/Method/setValue(for:_:)" class="dashAnchor"></a>
@@ -637,7 +659,7 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L134-L140">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L137-L143">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -656,7 +678,7 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled19TiledAttributedTypePAAEySSSgSScip"></a>
                     <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
@@ -707,13 +729,13 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L155-L161">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L158-L164">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled19TiledAttributedTypePAAE13hasPropertiesSbvp"></a>
                     <a name="//apple_ref/swift/Property/hasProperties" class="dashAnchor"></a>
@@ -740,13 +762,13 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L164-L166">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L167-L169">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled19TiledAttributedTypePAAE16propertiesStringSSvp"></a>
                     <a name="//apple_ref/swift/Property/propertiesString" class="dashAnchor"></a>
@@ -773,13 +795,13 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L169-L174">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L172-L177">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled19TiledAttributedTypePAAE010propertiesC6String10delineatorSo012NSAttributedF0CSSSg_tF"></a>
                     <a name="//apple_ref/swift/Method/propertiesAttributedString(delineator:)" class="dashAnchor"></a>
@@ -829,13 +851,13 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                         <p>attributed string.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L180-L235">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L183-L238">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled19TiledAttributedTypePAAE6hasKeyySbSSF"></a>
                     <a name="//apple_ref/swift/Method/hasKey(_:)" class="dashAnchor"></a>
@@ -881,13 +903,13 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L243-L246">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L246-L249">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled19TiledAttributedTypePAAE10boolForKeyySbSSF"></a>
                     <a name="//apple_ref/swift/Method/boolForKey(_:)" class="dashAnchor"></a>
@@ -933,13 +955,13 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L251-L256">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L254-L259">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled19TiledAttributedTypePAAE12stringForKeyySSSgSSF"></a>
                     <a name="//apple_ref/swift/Method/stringForKey(_:)" class="dashAnchor"></a>
@@ -985,13 +1007,13 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L261-L268">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L264-L271">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled19TiledAttributedTypePAAE9intForKeyySiSgSSF"></a>
                     <a name="//apple_ref/swift/Method/intForKey(_:)" class="dashAnchor"></a>
@@ -1037,13 +1059,13 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L273-L278">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L276-L281">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled19TiledAttributedTypePAAE12doubleForKeyySdSgSSF"></a>
                     <a name="//apple_ref/swift/Method/doubleForKey(_:)" class="dashAnchor"></a>
@@ -1093,13 +1115,13 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                         <p>parsed double value.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L284-L289">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L287-L292">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled19TiledAttributedTypePAAE11colorForKeyySo7NSColorCSgSSF"></a>
                     <a name="//apple_ref/swift/Method/colorForKey(_:)" class="dashAnchor"></a>
@@ -1149,13 +1171,13 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                         <p>parsed color.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L295-L300">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L298-L303">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled19TiledAttributedTypePAAE14removeProperty3forSSSgSS_tF"></a>
                     <a name="//apple_ref/swift/Method/removeProperty(for:)" class="dashAnchor"></a>
@@ -1201,13 +1223,13 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L306-L311">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L309-L314">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled19TiledAttributedTypePAAE13setProperties_9overwriteySDyS2SG_SbtF"></a>
                     <a name="//apple_ref/swift/Method/setProperties(_:overwrite:)" class="dashAnchor"></a>
@@ -1265,7 +1287,7 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L318-L327">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L321-L330">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1284,7 +1306,7 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled19TiledAttributedTypePAAE8setValue6forKey_ySS_SStF"></a>
                     <a name="//apple_ref/swift/Method/setValue(forKey:_:)" class="dashAnchor"></a>
@@ -1343,13 +1365,13 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L427-L429">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L430-L432">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled19TiledAttributedTypePAAE14removeProperty6forKeySSSgSS_tF"></a>
                     <a name="//apple_ref/swift/Method/removeProperty(forKey:)" class="dashAnchor"></a>
@@ -1396,7 +1418,7 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L435-L437">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L438-L440">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1415,7 +1437,7 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled19TiledAttributedTypePAASo6SKNodeCRbzrlE8getChild4uuidAESgSS_tF"></a>
                     <a name="//apple_ref/swift/Method/getChild(uuid:)" class="dashAnchor"></a>
@@ -1465,7 +1487,7 @@ by setting the object&rsquo;s <code><a href="../Protocols/TiledAttributedType.ht
                         <p>child <code><a href="../Protocols/TiledObjectType.html">TiledObjectType</a></code> node with the given unique id.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L405-L412">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledAttributedType.swift#L408-L415">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='index.html'>
-          SKTiled v1.3 Docs
+          SKTiled v1.30b1 Docs
         </a>
-         (89% documented)
+         (90% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,13 +31,14 @@
             View on GitHub
           </a>
         </p>
-    
+    <!-- 
         <p class='header-col header-col--secondary'>
           <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
             <img class='header-icon' src='img/dash.png'/>
             Install in Dash
           </a>
         </p>
+       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -57,6 +58,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='getting-started.html'>Getting Started</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='migration-guide.html'>Migration Guide</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='scene-setup.html'>Scene Setup</a>
@@ -109,9 +113,6 @@
                 <a class='nav-group-task-link' href='Protocols/TiledAttributedType.html'>TiledAttributedType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
-              </li>
-              <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledGeometryType.html'>TiledGeometryType</a>
               </li>
               <li class='nav-group-task'>
@@ -119,9 +120,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledObjectType.html'>TiledObjectType</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Protocols/TiledOverlayType.html'>TiledOverlayType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -258,14 +256,6 @@
               </li>
             </ul>
           </li>
-          <li class='nav-group-name'>
-            <a class='nav-group-name-link' href='Other Structures.html'>Other Structures</a>
-            <ul class='nav-group-tasks'>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Structs/TileIsolationMode.html'>TileIsolationMode</a>
-              </li>
-            </ul>
-          </li>
         </ul>
       </nav>
       <article class='main-content'>
@@ -285,7 +275,7 @@
 <ul>
 <li><a href="Classes/SKTileset.html"><code><a href="Classes/SKTileset.html">SKTileset</a></code></a></li>
 <li><a href="Classes/SKTilesetData.html"><code><a href="Classes/SKTilesetData.html">SKTilesetData</a></code></a></li>
-<li><a href="Classes/SKTiledLayerObject.html"><code>SKTiledLayerObject</code></a></li>
+<li>[<code>SKTiledLayerObject</code>][SKTiledLayerObject-url]</li>
 <li><a href="Classes/SKTilemap.html"><code><a href="Classes/SKTilemap.html">SKTilemap</a></code></a></li>
 </ul></li>
 </ul></li>
@@ -326,7 +316,7 @@
 <li><p><a href="https://developer.apple.com/reference/spritekit/skeffectnode"><code>SKEffectNode</code></a></p>
 
 <ul>
-<li><a href="Classes/SKTiledLayerObject.html"><code>SKTiledLayerObject</code></a>
+<li><a href="Classes/TiledLayerObject.html"><code><a href="Classes/TiledLayerObject.html">TiledLayerObject</a></code></a>
 
 <ul>
 <li><a href="Classes/SKTileLayer.html"><code><a href="Classes/SKTileLayer.html">SKTileLayer</a></code></a></li>
@@ -362,7 +352,7 @@
             <div class="task-group">
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTilemap"></a>
                     <a name="//apple_ref/swift/Class/SKTilemap" class="dashAnchor"></a>
@@ -434,18 +424,19 @@ vector objects &amp; images. Tile data is stored in <a href="SKTileset.html"><co
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTilemap</span> <span class="p">:</span> <span class="kt">SKNode</span><span class="p">,</span> <span class="kt"><a href="Protocols/TiledMappableGeometryType.html">TiledMappableGeometryType</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/TiledAttributedType.html">TiledAttributedType</a></span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">SKTilemap</span><span class="p">:</span> <span class="kt">Loggable</span></code></pre>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">SKTilemap</span><span class="p">:</span> <span class="kt"><a href="Protocols/TiledGeometryType.html">TiledGeometryType</a></span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L149-L2517">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L149-L2564">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileset"></a>
                     <a name="//apple_ref/swift/Class/SKTileset" class="dashAnchor"></a>
@@ -532,17 +523,18 @@ vector objects &amp; images. Tile data is stored in <a href="SKTileset.html"><co
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTileset</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt"><a href="Protocols/TiledAttributedType.html">TiledAttributedType</a></span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">SKTileset</span><span class="p">:</span> <span class="kt">Loggable</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L63-L792">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileset.swift#L63-L778">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TiledLayerObject"></a>
                     <a name="//apple_ref/swift/Class/TiledLayerObject" class="dashAnchor"></a>
@@ -651,18 +643,19 @@ define any object or child types, but provides base behaviors for layered conten
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">TiledLayerObject</span> <span class="p">:</span> <span class="kt">SKEffectNode</span><span class="p">,</span> <span class="kt"><a href="Protocols/TiledMappableGeometryType.html">TiledMappableGeometryType</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/TiledAttributedType.html">TiledAttributedType</a></span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">TiledLayerObject</span><span class="p">:</span> <span class="kt">Loggable</span></code></pre>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">TiledLayerObject</span><span class="p">:</span> <span class="kt"><a href="Protocols/TiledGeometryType.html">TiledGeometryType</a></span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L106-L876">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L105-L901">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileLayer"></a>
                     <a name="//apple_ref/swift/Class/SKTileLayer" class="dashAnchor"></a>
@@ -748,13 +741,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayer.swift#L78-L985">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayer.swift#L77-L1015">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileLayerChunk"></a>
                     <a name="//apple_ref/swift/Class/SKTileLayerChunk" class="dashAnchor"></a>
@@ -781,13 +774,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayerChunk.swift#L35-L304">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayerChunk.swift#L34-L304">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKObjectGroup"></a>
                     <a name="//apple_ref/swift/Class/SKObjectGroup" class="dashAnchor"></a>
@@ -873,13 +866,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L88-L509">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L87-L508">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKGroupLayer"></a>
                     <a name="//apple_ref/swift/Class/SKGroupLayer" class="dashAnchor"></a>
@@ -921,13 +914,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKGroupLayer.swift#L62-L222">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKGroupLayer.swift#L61-L221">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKImageLayer"></a>
                     <a name="//apple_ref/swift/Class/SKImageLayer" class="dashAnchor"></a>
@@ -1001,13 +994,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKImageLayer.swift#L65-L187">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKImageLayer.swift#L64-L186">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTile"></a>
                     <a name="//apple_ref/swift/Class/SKTile" class="dashAnchor"></a>
@@ -1099,13 +1092,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L195-L1025">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L194-L1054">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled13SKTilesetDataC"></a>
                     <a name="//apple_ref/swift/Class/SKTilesetData" class="dashAnchor"></a>
@@ -1159,13 +1152,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilesetData.swift#L45-L363">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilesetData.swift#L45-L367">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTileObject"></a>
                     <a name="//apple_ref/swift/Class/SKTileObject" class="dashAnchor"></a>
@@ -1219,18 +1212,19 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">SKTileObject</span> <span class="p">:</span> <span class="kt">SKShapeNode</span><span class="p">,</span> <span class="kt"><a href="Protocols/TiledAttributedType.html">TiledAttributedType</a></span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">SKTileObject</span><span class="p">:</span> <span class="kt">Loggable</span></code></pre>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">SKTileObject</span><span class="p">:</span> <span class="kt"><a href="Protocols/TiledGeometryType.html">TiledGeometryType</a></span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L146-L1190">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileObject.swift#L47-L1115">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTiledScene"></a>
                     <a name="//apple_ref/swift/Class/SKTiledScene" class="dashAnchor"></a>
@@ -1323,18 +1317,19 @@ In order to render the object, the <code>SKTileObject.getVertices()</code> metho
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">SKTiledScene</span> <span class="p">:</span> <span class="kt">SKScene</span><span class="p">,</span> <span class="kt">SKPhysicsContactDelegate</span><span class="p">,</span> <span class="kt"><a href="Protocols/TiledSceneDelegate.html">TiledSceneDelegate</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/TilemapDelegate.html">TilemapDelegate</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/TilesetDataSource.html">TilesetDataSource</a></span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">SKTiledScene</span><span class="p">:</span> <span class="kt">Loggable</span></code></pre>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">SKTiledScene</span><span class="p">:</span> <span class="kt"><a href="Protocols/TiledSceneCameraDelegate.html">TiledSceneCameraDelegate</a></span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L61-L335">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledScene.swift#L60-L338">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTiledSceneCamera"></a>
                     <a name="//apple_ref/swift/Class/SKTiledSceneCamera" class="dashAnchor"></a>
@@ -1398,18 +1393,19 @@ to interact with tile maps.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTiledSceneCamera</span> <span class="p">:</span> <span class="kt">SKCameraNode</span></code></pre>
-<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">SKTiledSceneCamera</span><span class="p">:</span> <span class="kt"><a href="Protocols/TiledCustomReflectableType.html">TiledCustomReflectableType</a></span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">SKTiledSceneCamera</span><span class="p">:</span> <span class="kt">Loggable</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">SKTiledSceneCamera</span><span class="p">:</span> <span class="kt">TiledCustomReflectableType</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledSceneCamera.swift#L96-L700">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiledSceneCamera.swift#L95-L700">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)SKTiledGraphNode"></a>
                     <a name="//apple_ref/swift/Class/SKTiledGraphNode" class="dashAnchor"></a>
@@ -1445,13 +1441,13 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+GameplayKit.swift#L220-L286">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+GameplayKit.swift#L219-L285">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TileAnimationFrame"></a>
                     <a name="//apple_ref/swift/Class/TileAnimationFrame" class="dashAnchor"></a>
@@ -1505,7 +1501,7 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled9TileFlagsV"></a>
                     <a name="//apple_ref/swift/Struct/TileFlags" class="dashAnchor"></a>
@@ -1563,7 +1559,7 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled6TileIDV"></a>
                     <a name="//apple_ref/swift/Struct/TileID" class="dashAnchor"></a>
@@ -1601,7 +1597,7 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L103-L163">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L103-L162">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

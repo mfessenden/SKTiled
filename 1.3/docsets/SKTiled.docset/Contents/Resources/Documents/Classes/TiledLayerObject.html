@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../index.html'>
-          SKTiled v1.3 Docs
+          SKTiled v1.30b1 Docs
         </a>
-         (89% documented)
+         (90% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,13 +31,14 @@
             View on GitHub
           </a>
         </p>
-    
+    <!-- 
         <p class='header-col header-col--secondary'>
           <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
             <img class='header-icon' src='../img/dash.png'/>
             Install in Dash
           </a>
         </p>
+       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -57,6 +58,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../getting-started.html'>Getting Started</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../migration-guide.html'>Migration Guide</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../scene-setup.html'>Scene Setup</a>
@@ -109,9 +113,6 @@
                 <a class='nav-group-task-link' href='../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
-              </li>
-              <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
               </li>
               <li class='nav-group-task'>
@@ -119,9 +120,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledObjectType.html'>TiledObjectType</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledOverlayType.html'>TiledOverlayType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -258,14 +256,6 @@
               </li>
             </ul>
           </li>
-          <li class='nav-group-name'>
-            <a class='nav-group-name-link' href='../Other Structures.html'>Other Structures</a>
-            <ul class='nav-group-tasks'>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Structs/TileIsolationMode.html'>TileIsolationMode</a>
-              </li>
-            </ul>
-          </li>
         </ul>
       </nav>
       <article class='main-content'>
@@ -276,6 +266,7 @@
               <div class='declaration'>
                 <div class='language'>
                   <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">TiledLayerObject</span> <span class="p">:</span> <span class="kt">SKEffectNode</span><span class="p">,</span> <span class="kt"><a href="../Protocols/TiledMappableGeometryType.html">TiledMappableGeometryType</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/TiledAttributedType.html">TiledAttributedType</a></span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">TiledLayerObject</span><span class="p">:</span> <span class="kt">Loggable</span></code></pre>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">TiledLayerObject</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TiledGeometryType.html">TiledGeometryType</a></span></code></pre>
 
                 </div>
@@ -378,7 +369,7 @@ define any object or child types, but provides base behaviors for layered conten
             <div class="task-group">
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TiledLayerObject(py)uuid"></a>
                     <a name="//apple_ref/swift/Property/uuid" class="dashAnchor"></a>
@@ -402,13 +393,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L115">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L114">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TiledLayerObject(py)type"></a>
                     <a name="//apple_ref/swift/Property/type" class="dashAnchor"></a>
@@ -432,13 +423,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L118">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L117">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TiledLayerObject(py)orientation"></a>
                     <a name="//apple_ref/swift/Property/orientation" class="dashAnchor"></a>
@@ -462,13 +453,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L121">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L120">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TiledLayerObject(py)isInfinite"></a>
                     <a name="//apple_ref/swift/Property/isInfinite" class="dashAnchor"></a>
@@ -493,13 +484,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L124">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L123">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TiledLayerObject(py)tileSize"></a>
                     <a name="//apple_ref/swift/Property/tileSize" class="dashAnchor"></a>
@@ -523,13 +514,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L127">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L126">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TiledLayerObject(py)hexsidelength"></a>
                     <a name="//apple_ref/swift/Property/hexsidelength" class="dashAnchor"></a>
@@ -553,13 +544,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L130">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L129">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TiledLayerObject(py)staggeraxis"></a>
                     <a name="//apple_ref/swift/Property/staggeraxis" class="dashAnchor"></a>
@@ -583,13 +574,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L133">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L132">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TiledLayerObject(py)staggerindex"></a>
                     <a name="//apple_ref/swift/Property/staggerindex" class="dashAnchor"></a>
@@ -613,7 +604,7 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L136">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L135">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -632,7 +623,7 @@ define any object or child types, but provides base behaviors for layered conten
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC5indexs6UInt32Vvp"></a>
                     <a name="//apple_ref/swift/Property/index" class="dashAnchor"></a>
@@ -656,13 +647,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L144">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L143">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC8rawIndexs6UInt32Vvp"></a>
                     <a name="//apple_ref/swift/Property/rawIndex" class="dashAnchor"></a>
@@ -686,7 +677,7 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L147">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L146">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -705,7 +696,7 @@ define any object or child types, but provides base behaviors for layered conten
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TiledLayerObject(py)properties"></a>
                     <a name="//apple_ref/swift/Property/properties" class="dashAnchor"></a>
@@ -729,13 +720,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L161">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L160">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TiledLayerObject(py)ignoreProperties"></a>
                     <a name="//apple_ref/swift/Property/ignoreProperties" class="dashAnchor"></a>
@@ -759,13 +750,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L164">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L163">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC10TileOffsetO"></a>
                     <a name="//apple_ref/swift/Enum/TileOffset" class="dashAnchor"></a>
@@ -837,13 +828,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L205-L215">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L204-L214">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TiledLayerObject(py)visibleToCamera"></a>
                     <a name="//apple_ref/swift/Property/visibleToCamera" class="dashAnchor"></a>
@@ -868,13 +859,26 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L219">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L218">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Colors"></a>
+                <a name="//apple_ref/swift/Section/Colors" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Colors"></a>
+                  <h3 class="section-name"><p>Colors</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC5colorSo7NSColorCvp"></a>
                     <a name="//apple_ref/swift/Property/color" class="dashAnchor"></a>
@@ -898,13 +902,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L225">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L228">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC9gridColorSo7NSColorCvp"></a>
                     <a name="//apple_ref/swift/Property/gridColor" class="dashAnchor"></a>
@@ -928,13 +932,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L228">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L231">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC10frameColorSo7NSColorCvp"></a>
                     <a name="//apple_ref/swift/Property/frameColor" class="dashAnchor"></a>
@@ -958,13 +962,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L231">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L234">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC14highlightColorSo7NSColorCvp"></a>
                     <a name="//apple_ref/swift/Property/highlightColor" class="dashAnchor"></a>
@@ -988,13 +992,43 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L234">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L237">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
+                    <code>
+                    <a name="/s:7SKTiled16TiledLayerObjectC9tintColorSo7NSColorCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/tintColor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SKTiled16TiledLayerObjectC9tintColorSo7NSColorCSgvp">tintColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Layer tint color.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">tintColor</span><span class="p">:</span> <span class="kt">SKColor</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L243-L258">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TiledLayerObject(py)boundsShape"></a>
                     <a name="//apple_ref/swift/Property/boundsShape" class="dashAnchor"></a>
@@ -1018,13 +1052,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L240">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L261">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC17highlightDurationSdvp"></a>
                     <a name="//apple_ref/swift/Property/highlightDuration" class="dashAnchor"></a>
@@ -1048,13 +1082,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L252">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L273">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC8isolatedSbvp"></a>
                     <a name="//apple_ref/swift/Property/isolated" class="dashAnchor"></a>
@@ -1078,13 +1112,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L255">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L276">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC8isStaticSbvp"></a>
                     <a name="//apple_ref/swift/Property/isStatic" class="dashAnchor"></a>
@@ -1108,7 +1142,7 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L258">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L279">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1127,7 +1161,7 @@ define any object or child types, but provides base behaviors for layered conten
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC6offsetSo7CGPointVvp"></a>
                     <a name="//apple_ref/swift/Property/offset" class="dashAnchor"></a>
@@ -1151,13 +1185,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L269">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L290">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TiledLayerObject(py)mapSize"></a>
                     <a name="//apple_ref/swift/Property/mapSize" class="dashAnchor"></a>
@@ -1181,13 +1215,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L272">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L293">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC11anchorPointSo7CGPointVvp"></a>
                     <a name="//apple_ref/swift/Property/anchorPoint" class="dashAnchor"></a>
@@ -1211,13 +1245,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L275-L278">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L296-L299">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TiledLayerObject(py)graph"></a>
                     <a name="//apple_ref/swift/Property/graph" class="dashAnchor"></a>
@@ -1242,13 +1276,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L284">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L305">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TiledLayerObject(py)debugDrawOptions"></a>
                     <a name="//apple_ref/swift/Property/debugDrawOptions" class="dashAnchor"></a>
@@ -1273,13 +1307,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L293-L298">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L314-L319">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC11antialiasedSbvp"></a>
                     <a name="//apple_ref/swift/Property/antialiased" class="dashAnchor"></a>
@@ -1303,13 +1337,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L304">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L325">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC16colorBlendFactor12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/colorBlendFactor" class="dashAnchor"></a>
@@ -1333,13 +1367,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L307">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L328">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TiledLayerObject(py)renderQuality"></a>
                     <a name="//apple_ref/swift/Property/renderQuality" class="dashAnchor"></a>
@@ -1363,13 +1397,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L310">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L331">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TiledLayerObject(py)shouldEnableEffects"></a>
                     <a name="//apple_ref/swift/Property/shouldEnableEffects" class="dashAnchor"></a>
@@ -1393,13 +1427,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L318-L325">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L339-L346">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC13navigationKeySSvp"></a>
                     <a name="//apple_ref/swift/Property/navigationKey" class="dashAnchor"></a>
@@ -1423,13 +1457,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L328">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L349">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC16currentZPosition12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/currentZPosition" class="dashAnchor"></a>
@@ -1453,13 +1487,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L331">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L352">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC15backgroundColorSo7NSColorCSgvp"></a>
                     <a name="//apple_ref/swift/Property/backgroundColor" class="dashAnchor"></a>
@@ -1483,13 +1517,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L334-L339">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L355-L360">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC10backgroundSo12SKSpriteNodeCvp"></a>
                     <a name="//apple_ref/swift/Property/background" class="dashAnchor"></a>
@@ -1513,7 +1547,7 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L342">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L363">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1532,7 +1566,7 @@ define any object or child types, but provides base behaviors for layered conten
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC6originSo7CGPointVvp"></a>
                     <a name="//apple_ref/swift/Property/origin" class="dashAnchor"></a>
@@ -1556,13 +1590,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L361-L381">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L382-L402">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TiledLayerObject(py)boundingRect"></a>
                     <a name="//apple_ref/swift/Property/boundingRect" class="dashAnchor"></a>
@@ -1586,13 +1620,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L384-L387">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L405-L408">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TiledLayerObject(py)frame"></a>
                     <a name="//apple_ref/swift/Property/frame" class="dashAnchor"></a>
@@ -1616,13 +1650,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L390-L394">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L411-L415">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@M@SKTiled@objc(cs)TiledLayerObject(py)objectPath"></a>
                     <a name="//apple_ref/swift/Property/objectPath" class="dashAnchor"></a>
@@ -1647,13 +1681,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L424">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L445">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC10updateModeAA010TileUpdateF0Ovp"></a>
                     <a name="//apple_ref/swift/Property/updateMode" class="dashAnchor"></a>
@@ -1677,7 +1711,7 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L442-L444">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L463-L465">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1696,7 +1730,7 @@ define any object or child types, but provides base behaviors for layered conten
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC9layerName7tilemap10attributesACSgSS_AA9SKTilemapCSDyS2SGtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(layerName:tilemap:attributes:)" class="dashAnchor"></a>
@@ -1722,13 +1756,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L457-L516">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L478-L542">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC9layerName7tilemapACSS_AA9SKTilemapCtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(layerName:tilemap:)" class="dashAnchor"></a>
@@ -1783,13 +1817,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L523-L548">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L549-L574">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC7tilemapAcA9SKTilemapC_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(tilemap:)" class="dashAnchor"></a>
@@ -1836,7 +1870,7 @@ define any object or child types, but provides base behaviors for layered conten
                         <p>tile layer object.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L554-L575">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L580-L601">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1855,7 +1889,7 @@ define any object or child types, but provides base behaviors for layered conten
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC8setColor5colorySo7NSColorC_tF"></a>
                     <a name="//apple_ref/swift/Method/setColor(color:)" class="dashAnchor"></a>
@@ -1898,13 +1932,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L598-L600">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L624-L626">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC8setColor9hexStringySS_tF"></a>
                     <a name="//apple_ref/swift/Method/setColor(hexString:)" class="dashAnchor"></a>
@@ -1947,7 +1981,7 @@ define any object or child types, but provides base behaviors for layered conten
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L605-L607">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L631-L633">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1966,7 +2000,7 @@ define any object or child types, but provides base behaviors for layered conten
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC6layersSayACGvp"></a>
                     <a name="//apple_ref/swift/Property/layers" class="dashAnchor"></a>
@@ -1990,7 +2024,7 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L612-L614">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L638-L640">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2009,7 +2043,7 @@ define any object or child types, but provides base behaviors for layered conten
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/"></a>
                     <a name="//apple_ref/swift/Method/touchLocation(_:)" class="dashAnchor"></a>
@@ -2028,7 +2062,7 @@ define any object or child types, but provides base behaviors for layered conten
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/"></a>
                     <a name="//apple_ref/swift/Method/coordinateAtTouchLocation(touch:)" class="dashAnchor"></a>
@@ -2060,7 +2094,7 @@ define any object or child types, but provides base behaviors for layered conten
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC13mouseLocation5eventSo7CGPointVSo7NSEventC_tF"></a>
                     <a name="//apple_ref/swift/Method/mouseLocation(event:)" class="dashAnchor"></a>
@@ -2107,13 +2141,13 @@ define any object or child types, but provides base behaviors for layered conten
                         <p>converted point in layer coordinate system.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L647-L649">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L673-L675">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC17coordinateAtMouse5events5SIMD2Vys5Int32VGSo7NSEventC_tF"></a>
                     <a name="//apple_ref/swift/Method/coordinateAtMouse(event:)" class="dashAnchor"></a>
@@ -2160,7 +2194,7 @@ define any object or child types, but provides base behaviors for layered conten
                         <p>coordinate in layer coordinate system.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L655-L657">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L681-L683">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2179,7 +2213,7 @@ define any object or child types, but provides base behaviors for layered conten
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC7isValidySbs5Int32V_AFtF"></a>
                     <a name="//apple_ref/swift/Method/isValid(_:_:)" class="dashAnchor"></a>
@@ -2238,13 +2272,13 @@ define any object or child types, but provides base behaviors for layered conten
                         <p>coordinate is valid.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L668-L670">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L694-L696">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC7isValid5coordSbs5SIMD2Vys5Int32VG_tF"></a>
                     <a name="//apple_ref/swift/Method/isValid(coord:)" class="dashAnchor"></a>
@@ -2291,13 +2325,13 @@ define any object or child types, but provides base behaviors for layered conten
                         <p>coordinate is valid</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L676-L678">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L702-L704">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC12convertPointySo7CGPointVAFF"></a>
                     <a name="//apple_ref/swift/Method/convertPoint(_:)" class="dashAnchor"></a>
@@ -2344,7 +2378,7 @@ define any object or child types, but provides base behaviors for layered conten
                         <p>point with y-value inverted.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L684-L687">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L710-L713">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2363,7 +2397,7 @@ define any object or child types, but provides base behaviors for layered conten
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC8addChild_5coord6offset4zposySo6SKNodeC_s5SIMD2Vys5Int32VGSo7CGPointV12CoreGraphics7CGFloatVSgtF"></a>
                     <a name="//apple_ref/swift/Method/addChild(_:coord:offset:zpos:)" class="dashAnchor"></a>
@@ -2442,13 +2476,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L698-L704">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L724-L730">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC8addChild_1x1y6offset4zposySo6SKNodeC_S2iSo7CGPointV12CoreGraphics7CGFloatVSgtF"></a>
                     <a name="//apple_ref/swift/Method/addChild(_:x:y:offset:zpos:)" class="dashAnchor"></a>
@@ -2539,7 +2573,7 @@ define any object or child types, but provides base behaviors for layered conten
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L714-L717">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L740-L743">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2558,7 +2592,7 @@ define any object or child types, but provides base behaviors for layered conten
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC18didFinishRendering8durationySd_tF"></a>
                     <a name="//apple_ref/swift/Method/didFinishRendering(duration:)" class="dashAnchor"></a>
@@ -2601,7 +2635,7 @@ define any object or child types, but provides base behaviors for layered conten
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L736-L743">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L761-L768">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2620,7 +2654,7 @@ define any object or child types, but provides base behaviors for layered conten
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC05setupC15PhysicsBoundary9isDynamicySb_tF"></a>
                     <a name="//apple_ref/swift/Method/setupLayerPhysicsBoundary(isDynamic:)" class="dashAnchor"></a>
@@ -2663,13 +2697,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L750-L753">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L775-L778">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC12setupPhysicsyyF"></a>
                     <a name="//apple_ref/swift/Method/setupPhysics()" class="dashAnchor"></a>
@@ -2693,13 +2727,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L756-L758">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L781-L783">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC19setupTileCollisionsyyF"></a>
                     <a name="//apple_ref/swift/Method/setupTileCollisions()" class="dashAnchor"></a>
@@ -2723,7 +2757,7 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L761-L763">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L786-L788">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2742,7 +2776,7 @@ define any object or child types, but provides base behaviors for layered conten
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC9setShader5named8uniformsySS_SaySo9SKUniformCGtF"></a>
                     <a name="//apple_ref/swift/Method/setShader(named:uniforms:)" class="dashAnchor"></a>
@@ -2797,7 +2831,7 @@ define any object or child types, but provides base behaviors for layered conten
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L777-L782">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L802-L807">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2816,7 +2850,7 @@ define any object or child types, but provides base behaviors for layered conten
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC07isolateC08durationySd_tF"></a>
                     <a name="//apple_ref/swift/Method/isolateLayer(duration:)" class="dashAnchor"></a>
@@ -2859,7 +2893,7 @@ define any object or child types, but provides base behaviors for layered conten
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L795-L817">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L820-L842">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2878,7 +2912,7 @@ define any object or child types, but provides base behaviors for layered conten
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC015rasterizeStaticC0yyF"></a>
                     <a name="//apple_ref/swift/Method/rasterizeStaticLayer()" class="dashAnchor"></a>
@@ -2902,13 +2936,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L838-L840">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L863-L865">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC21runAnimationAsActionsyyF"></a>
                     <a name="//apple_ref/swift/Method/runAnimationAsActions()" class="dashAnchor"></a>
@@ -2932,13 +2966,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L844-L846">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L869-L871">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC22removeAnimationActions7restoreySb_tF"></a>
                     <a name="//apple_ref/swift/Method/removeAnimationActions(restore:)" class="dashAnchor"></a>
@@ -2981,13 +3015,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L851-L853">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L876-L878">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC6updateyySdF"></a>
                     <a name="//apple_ref/swift/Method/update(_:)" class="dashAnchor"></a>
@@ -3030,7 +3064,7 @@ define any object or child types, but provides base behaviors for layered conten
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L858-L862">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L883-L887">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -3049,7 +3083,7 @@ define any object or child types, but provides base behaviors for layered conten
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC12customMirrors0F0Vvp"></a>
                     <a name="//apple_ref/swift/Property/customMirror" class="dashAnchor"></a>
@@ -3073,7 +3107,7 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L867-L875">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L892-L900">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -3092,7 +3126,7 @@ define any object or child types, but provides base behaviors for layered conten
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC20runAnimationAsActionyyF"></a>
                     <a name="//apple_ref/swift/Method/runAnimationAsAction()" class="dashAnchor"></a>
@@ -3117,7 +3151,7 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayer.swift#L1051-L1053">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTileLayer.swift#L1081-L1083">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -3136,7 +3170,7 @@ define any object or child types, but provides base behaviors for layered conten
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/c:@CM@SKTiled@objc(cs)TiledLayerObject(im)parsePropertiesWithCompletion:"></a>
                     <a name="//apple_ref/swift/Method/parseProperties(completion:)" class="dashAnchor"></a>
@@ -3179,13 +3213,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+Properties.swift#L237-L299">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+Properties.swift#L236-L298">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC8getValue11forPropertySSSgSS_tF"></a>
                     <a name="//apple_ref/swift/Method/getValue(forProperty:)" class="dashAnchor"></a>
@@ -3232,13 +3266,13 @@ define any object or child types, but provides base behaviors for layered conten
                         <p>the property value, or nil if it does not exist.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+Properties.swift#L305-L307">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+Properties.swift#L304-L306">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC8setValue_11forPropertyySS_SStF"></a>
                     <a name="//apple_ref/swift/Method/setValue(_:forProperty:)" class="dashAnchor"></a>
@@ -3293,7 +3327,7 @@ define any object or child types, but provides base behaviors for layered conten
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+Properties.swift#L313-L315">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+Properties.swift#L312-L314">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -3312,7 +3346,7 @@ define any object or child types, but provides base behaviors for layered conten
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC5width12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/width" class="dashAnchor"></a>
@@ -3336,13 +3370,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L886">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L911">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC6height12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/height" class="dashAnchor"></a>
@@ -3366,13 +3400,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L889">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L914">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC9tileWidth12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/tileWidth" class="dashAnchor"></a>
@@ -3396,13 +3430,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L892">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L917">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC10tileHeight12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/tileHeight" class="dashAnchor"></a>
@@ -3426,13 +3460,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L895">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L920">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC10sizeHalvedSo6CGSizeVvp"></a>
                     <a name="//apple_ref/swift/Property/sizeHalved" class="dashAnchor"></a>
@@ -3456,13 +3490,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L898">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L923">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC13tileWidthHalf12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/tileWidthHalf" class="dashAnchor"></a>
@@ -3486,13 +3520,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L901">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L926">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC14tileHeightHalf12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/tileHeightHalf" class="dashAnchor"></a>
@@ -3516,13 +3550,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L904">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L929">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC7opacity12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/opacity" class="dashAnchor"></a>
@@ -3546,13 +3580,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L907-L914">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L932-L939">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC7visibleSbvp"></a>
                     <a name="//apple_ref/swift/Property/visible" class="dashAnchor"></a>
@@ -3576,13 +3610,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L917-L924">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L942-L949">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC8addChild___2dx2dy4zposySo6SKNodeC_S2i12CoreGraphics7CGFloatVA2LSgtF"></a>
                     <a name="//apple_ref/swift/Method/addChild(_:_:_:dx:dy:zpos:)" class="dashAnchor"></a>
@@ -3685,13 +3719,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L935-L939">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L960-L964">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC18pointForCoordinate__7offsetX0H1YSo7CGPointVSi_Si12CoreGraphics7CGFloatVAKtF"></a>
                     <a name="//apple_ref/swift/Method/pointForCoordinate(_:_:offsetX:offsetY:)" class="dashAnchor"></a>
@@ -3774,13 +3808,13 @@ define any object or child types, but provides base behaviors for layered conten
                         <p>position in layer.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L949-L952">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L974-L977">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC18pointForCoordinate5coord6offsetSo7CGPointVs5SIMD2Vys5Int32VG_AHtF"></a>
                     <a name="//apple_ref/swift/Method/pointForCoordinate(coord:offset:)" class="dashAnchor"></a>
@@ -3839,13 +3873,13 @@ define any object or child types, but provides base behaviors for layered conten
                         <p>point in layer.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L960-L962">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L985-L987">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC18pointForCoordinate5coord10tileOffsetSo7CGPointVs5SIMD2Vys5Int32VG_AC04TileJ0OtF"></a>
                     <a name="//apple_ref/swift/Method/pointForCoordinate(coord:tileOffset:)" class="dashAnchor"></a>
@@ -3904,13 +3938,13 @@ define any object or child types, but provides base behaviors for layered conten
                         <p>point in layer.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L970-L993">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L995-L1018">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC18coordinateForPointys5SIMD2Vys5Int32VGSi_SitF"></a>
                     <a name="//apple_ref/swift/Method/coordinateForPoint(_:_:)" class="dashAnchor"></a>
@@ -3969,13 +4003,13 @@ define any object or child types, but provides base behaviors for layered conten
                         <p>position in layer.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1001-L1003">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1026-L1028">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC6centerSo7CGPointVvp"></a>
                     <a name="//apple_ref/swift/Property/center" class="dashAnchor"></a>
@@ -3999,13 +4033,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1006-L1008">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1031-L1033">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC18distanceFromOriginySo8CGVectorVSo7CGPointVF"></a>
                     <a name="//apple_ref/swift/Method/distanceFromOrigin(_:)" class="dashAnchor"></a>
@@ -4052,13 +4086,13 @@ define any object or child types, but provides base behaviors for layered conten
                         <p>distance vector.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1014-L1018">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1039-L1043">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC15menuDescriptionSSvp"></a>
                     <a name="//apple_ref/swift/Property/menuDescription" class="dashAnchor"></a>
@@ -4082,221 +4116,7 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1034-L1046">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7SKTiled16TiledLayerObjectC9layerNameSSvp"></a>
-                    <a name="//apple_ref/swift/Property/layerName" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled16TiledLayerObjectC9layerNameSSvp">layerName</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>String representing the layer name (null if not set).</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">layerName</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1053-L1055">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7SKTiled16TiledLayerObjectC7parentsSaySo6SKNodeCGvp"></a>
-                    <a name="//apple_ref/swift/Property/parents" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled16TiledLayerObjectC7parentsSaySo6SKNodeCGvp">parents</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Returns an array of parent layers, beginning with the current.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">parents</span><span class="p">:</span> <span class="p">[</span><span class="kt">SKNode</span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1058-L1068">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7SKTiled16TiledLayerObjectC11childLayersSaySo6SKNodeCGvp"></a>
-                    <a name="//apple_ref/swift/Property/childLayers" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled16TiledLayerObjectC11childLayersSaySo6SKNodeCGvp">childLayers</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Returns an array of child layers.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">childLayers</span><span class="p">:</span> <span class="p">[</span><span class="kt">SKNode</span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1084-L1086">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7SKTiled16TiledLayerObjectC17renderableObjectsSaySo6SKNodeCGyF"></a>
-                    <a name="//apple_ref/swift/Method/renderableObjects()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled16TiledLayerObjectC17renderableObjectsSaySo6SKNodeCGyF">renderableObjects()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Returns an array of tiles/objects that conform to the <code>SKTiledGeometry</code> protocol.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">renderableObjects</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">SKNode</span><span class="p">]</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>array of child objects.</p>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1091-L1099">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7SKTiled16TiledLayerObjectC10isTopLevelSbvp"></a>
-                    <a name="//apple_ref/swift/Property/isTopLevel" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled16TiledLayerObjectC10isTopLevelSbvp">isTopLevel</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Indicates the layer is a top-level layer.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isTopLevel</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1102-L1104">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7SKTiled16TiledLayerObjectC5xPathSSvp"></a>
-                    <a name="//apple_ref/swift/Property/xPath" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled16TiledLayerObjectC5xPathSSvp">xPath</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Translate the parent hierarchy to an xPath string.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">xPath</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1107-L1114">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7SKTiled16TiledLayerObjectC21layerStatsDescriptionSaySSGvp"></a>
-                    <a name="//apple_ref/swift/Property/layerStatsDescription" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled16TiledLayerObjectC21layerStatsDescriptionSaySSGvp">layerStatsDescription</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Returns a string array representing the current layer name &amp; index.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">layerStatsDescription</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1124-L1156">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1056-L1068">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -4315,7 +4135,7 @@ define any object or child types, but provides base behaviors for layered conten
               </div>
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC18coordinateForPointySo7CGPointVAFF"></a>
                     <a name="//apple_ref/swift/Method/coordinateForPoint(_:)" class="dashAnchor"></a>
@@ -4363,13 +4183,13 @@ define any object or child types, but provides base behaviors for layered conten
                         <p>tile coordinate.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1234-L1236">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1256-L1258">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC18coordinateForPointySo7CGPointVSi_SitF"></a>
                     <a name="//apple_ref/swift/Method/coordinateForPoint(_:_:)" class="dashAnchor"></a>
@@ -4429,13 +4249,13 @@ define any object or child types, but provides base behaviors for layered conten
                         <p>position in layer.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1245-L1247">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1267-L1269">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC18pointForCoordinate4vec27offsetX0I1YSo7CGPointVs5SIMD2Vys5Int32VG_12CoreGraphics7CGFloatVAQtF"></a>
                     <a name="//apple_ref/swift/Method/pointForCoordinate(vec2:offsetX:offsetY:)" class="dashAnchor"></a>
@@ -4507,13 +4327,13 @@ define any object or child types, but provides base behaviors for layered conten
                         <p>position in layer.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1257-L1259">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1279-L1281">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC24vectorCoordinateForPointys5SIMD2Vys5Int32VGSo7CGPointVF"></a>
                     <a name="//apple_ref/swift/Method/vectorCoordinateForPoint(_:)" class="dashAnchor"></a>
@@ -4561,13 +4381,13 @@ define any object or child types, but provides base behaviors for layered conten
                         <p>tile coordinate.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1266-L1268">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1288-L1290">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC7isValidySbSi_SitF"></a>
                     <a name="//apple_ref/swift/Method/isValid(_:_:)" class="dashAnchor"></a>
@@ -4627,13 +4447,13 @@ define any object or child types, but provides base behaviors for layered conten
                         <p>coordinate is valid.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1277-L1279">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1299-L1301">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC7isValid5coordSbSo7CGPointV_tF"></a>
                     <a name="//apple_ref/swift/Method/isValid(coord:)" class="dashAnchor"></a>
@@ -4681,13 +4501,13 @@ define any object or child types, but provides base behaviors for layered conten
                         <p>coordinate is valid.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1286-L1288">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1308-L1310">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC8addChild_5coord6offset4zposySo6SKNodeC_So7CGPointVAK12CoreGraphics7CGFloatVSgtF"></a>
                     <a name="//apple_ref/swift/Method/addChild(_:coord:offset:zpos:)" class="dashAnchor"></a>
@@ -4767,13 +4587,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1298-L1300">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1320-L1322">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC22coordinateAtMouseEvent5eventSo7CGPointVSo7NSEventC_tF"></a>
                     <a name="//apple_ref/swift/Method/coordinateAtMouseEvent(event:)" class="dashAnchor"></a>
@@ -4821,13 +4641,13 @@ define any object or child types, but provides base behaviors for layered conten
                         <p>converted point in layer coordinate system.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1315-L1317">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1337-L1339">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC4pathSSvp"></a>
                     <a name="//apple_ref/swift/Property/path" class="dashAnchor"></a>
@@ -4852,13 +4672,13 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1338-L1340">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1360-L1362">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/s:7SKTiled16TiledLayerObjectC4sizeSo6CGSizeVvp"></a>
                     <a name="//apple_ref/swift/Property/size" class="dashAnchor"></a>
@@ -4883,7 +4703,7 @@ define any object or child types, but provides base behaviors for layered conten
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1344-L1350">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1366-L1372">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

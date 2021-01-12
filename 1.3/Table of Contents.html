@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='index.html'>
-          SKTiled v1.3 Docs
+          SKTiled v1.30b1 Docs
         </a>
-         (89% documented)
+         (90% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,13 +31,14 @@
             View on GitHub
           </a>
         </p>
-    
+    <!-- 
         <p class='header-col header-col--secondary'>
           <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
             <img class='header-icon' src='img/dash.png'/>
             Install in Dash
           </a>
         </p>
+       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -57,6 +58,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='getting-started.html'>Getting Started</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='migration-guide.html'>Migration Guide</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='scene-setup.html'>Scene Setup</a>
@@ -109,9 +113,6 @@
                 <a class='nav-group-task-link' href='Protocols/TiledAttributedType.html'>TiledAttributedType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
-              </li>
-              <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledGeometryType.html'>TiledGeometryType</a>
               </li>
               <li class='nav-group-task'>
@@ -119,9 +120,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledObjectType.html'>TiledObjectType</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Protocols/TiledOverlayType.html'>TiledOverlayType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -258,14 +256,6 @@
               </li>
             </ul>
           </li>
-          <li class='nav-group-name'>
-            <a class='nav-group-name-link' href='Other Structures.html'>Other Structures</a>
-            <ul class='nav-group-tasks'>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Structs/TileIsolationMode.html'>TileIsolationMode</a>
-              </li>
-            </ul>
-          </li>
         </ul>
       </nav>
       <article class='main-content'>
@@ -289,6 +279,7 @@
 <li><a href="whats-new.html#tile-coordinates">Tile Coordinates</a></li>
 </ul></li>
 <li><a href="whats-new.html#tile-flip-flags">Tile Flip Flags</a></li>
+<li><a href="whats-new.html#template-object-handling">Template Object Handling</a></li>
 </ul></li>
 <li><a href="whats-new.html#swift5-support">Swift 5 Support</a></li>
 <li><a href="whats-new.html#os-compatibility">tvOS Support</a></li>
@@ -328,6 +319,13 @@
 <ul>
 <li><a href="getting-started.html#referenced-assets">Referenced Assets</a></li>
 </ul></li>
+</ul>
+<h2 id='a-href-migration-guide-html-migration-guide-a' class='heading'><a href="migration-guide.html">Migration Guide</a></h2>
+
+<ul>
+<li><a href="migration-guide.html#tile-coordinates">Tile Coordinates</a></li>
+<li><a href="migration-guide.html#tile-global-ids">Tile Global IDs</a></li>
+<li><a href="migration-guide.html#tile-iflip-flags">Tile Flip Flags</a></li>
 </ul>
 <h2 id='a-href-scene-setup-html-setting-up-your-scenes-a' class='heading'><a href="scene-setup.html">Setting Up Your Scenes</a></h2>
 
@@ -413,6 +411,7 @@
 <li><a href="working-with-tiles.html#adding-and-removing-tiles">Adding and Removing Tiles</a></li>
 <li><a href="working-with-tiles.html#copying-tiles">Copying Tiles</a></li>
 <li><a href="working-with-tiles.html#tile-shapes">Tile Shapes</a></li>
+<li><a href="working-with-tiles.html#refreshing-tile-content">Refreshing Tile Content</a></li>
 <li><a href="working-with-tiles.html#copying-tiles">Copying Tiles</a></li>
 <li><a href="working-with-tiles.html#animated-tiles">Animated Tiles</a>
 
@@ -511,7 +510,7 @@
             <div class="task-group">
               <ul class="item-container">
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/documentation.What&#39;s New"></a>
                     <a name="//apple_ref/swift/Guide/What&#39;s New" class="dashAnchor"></a>
@@ -520,7 +519,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/documentation.Getting Started"></a>
                     <a name="//apple_ref/swift/Guide/Getting Started" class="dashAnchor"></a>
@@ -529,7 +528,16 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
+                    <code>
+                    <a name="/documentation.Migration Guide"></a>
+                    <a name="//apple_ref/swift/Guide/Migration Guide" class="dashAnchor"></a>
+                    <a class="direct-link" href="migration-guide.html">Migration Guide</a>
+                    </code>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
                     <code>
                     <a name="/documentation.Scene Setup"></a>
                     <a name="//apple_ref/swift/Guide/Scene Setup" class="dashAnchor"></a>
@@ -538,7 +546,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/documentation.Working with Maps"></a>
                     <a name="//apple_ref/swift/Guide/Working with Maps" class="dashAnchor"></a>
@@ -547,7 +555,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/documentation.Working with Tilesets"></a>
                     <a name="//apple_ref/swift/Guide/Working with Tilesets" class="dashAnchor"></a>
@@ -556,7 +564,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/documentation.Working with Layers"></a>
                     <a name="//apple_ref/swift/Guide/Working with Layers" class="dashAnchor"></a>
@@ -565,7 +573,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/documentation.Working with Tiles"></a>
                     <a name="//apple_ref/swift/Guide/Working with Tiles" class="dashAnchor"></a>
@@ -574,7 +582,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/documentation.Coordinates"></a>
                     <a name="//apple_ref/swift/Guide/Coordinates" class="dashAnchor"></a>
@@ -583,7 +591,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/documentation.Working with Objects"></a>
                     <a name="//apple_ref/swift/Guide/Working with Objects" class="dashAnchor"></a>
@@ -592,7 +600,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/documentation.Tiled Properties"></a>
                     <a name="//apple_ref/swift/Guide/Tiled Properties" class="dashAnchor"></a>
@@ -601,7 +609,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/documentation.GameplayKit"></a>
                     <a name="//apple_ref/swift/Guide/GameplayKit" class="dashAnchor"></a>
@@ -610,7 +618,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/documentation.Extending SKTiled"></a>
                     <a name="//apple_ref/swift/Guide/Extending SKTiled" class="dashAnchor"></a>
@@ -619,7 +627,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/documentation.Other API Features"></a>
                     <a name="//apple_ref/swift/Guide/Other API Features" class="dashAnchor"></a>
@@ -628,7 +636,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/documentation.Debugging"></a>
                     <a name="//apple_ref/swift/Guide/Debugging" class="dashAnchor"></a>
@@ -637,7 +645,7 @@
                   </div>
                 </li>
                 <li class="item">
-                  <div>
+                  <div class="task-header">
                     <code>
                     <a name="/documentation.Troubleshooting"></a>
                     <a name="//apple_ref/swift/Guide/Troubleshooting" class="dashAnchor"></a>
