@@ -726,12 +726,12 @@
 		4C173431244F236C0043F85C /* test-large-infinite-zlib.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "test-large-infinite-zlib.tmx"; sourceTree = "<group>"; };
 		4C173436244F46C20043F85C /* InfiniteMapTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteMapTests.swift; sourceTree = "<group>"; };
 		4C17343E244F5F050043F85C /* test-infinite.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "test-infinite.tmx"; sourceTree = "<group>"; };
-		4C17747F1D909740000C0AFD /* SKTiled Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "SKTiled Demo.app"; path = SKTiled.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C17747F1D909740000C0AFD /* SKTiled Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SKTiled Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C1EA76F24E5C23700E0E340 /* TileObjectOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileObjectOverlay.swift; sourceTree = "<group>"; };
 		4C20499D251D1DBB00D2012C /* TiledDemoDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledDemoDelegate.swift; sourceTree = "<group>"; };
 		4C204A0F251E7C2000D2012C /* TiledBackgroundLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledBackgroundLayer.swift; sourceTree = "<group>"; };
 		4C24B14520694A140027EBD5 /* SKTiled.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SKTiled.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4C24B16A20694C470027EBD5 /* SKTiled Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "SKTiled Demo.app"; path = SKTiled.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C24B16A20694C470027EBD5 /* SKTiled Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SKTiled Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C24B18320694D2D0027EBD5 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		4C24B18520694D2D0027EBD5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4C24B18620694D2D0027EBD5 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -892,7 +892,7 @@
 		4CB4A3132559D2AC004B8A2E /* TileAnimationFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileAnimationFrame.swift; sourceTree = "<group>"; };
 		4CB4A3142559D2AC004B8A2E /* TileCollisionShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileCollisionShape.swift; sourceTree = "<group>"; };
 		4CB6BD192139BD2200B1275A /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Defaults.plist; sourceTree = "<group>"; };
-		4CBA61651D8A048200B31FC1 /* SKTiled Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "SKTiled Demo.app"; path = SKTiled.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CBA61651D8A048200B31FC1 /* SKTiled Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SKTiled Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CBA617E1D8A0A3900B31FC1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "roguelike-16x16-anim.png"; sourceTree = "<group>"; };
 		4CBB6A9E1D8CBA8A00DB56F1 /* SKTiled+Properties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKTiled+Properties.swift"; sourceTree = "<group>"; };
