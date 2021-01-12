@@ -686,9 +686,9 @@ extension CGPoint {
         return "x: \(self.x.roundTo(decimals)), y: \(self.y.roundTo(decimals))"
     }
 
-    /// Return a vector int (for GameplayKit).
+    /// Returns the point as a `simd_int2` instance.
     public var toVec2: simd_int2 {
-        return simd_int2(arrayLiteral: Int32(x), Int32(y))
+        return simd_int2(arrayLiteral: xCoord, yCoord)
     }
 
     /// Returns the distance to another point.

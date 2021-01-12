@@ -169,18 +169,8 @@ See the [**CHANGELOG**][sktiled-changelog-url] for a complete list of changes. I
 
 Template object support in API 1.3 is considerably better. Prior versions of the API could occasionally clobber template object user overrides in Tiled, in v1.3 these issues have been fixed.
 
-#### Misc
-
-```swift
-// Error: Ambiguous use of 'coordinateAtTouchLocation'
-let coord = defaultLayer.coordinateAtTouchLocation(touch)
-```
-
 
 For more information, see the [**Migration Guide**][migration-guide-url].
-
-
-
 
 
 ## Swift 5 Support

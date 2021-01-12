@@ -1,4 +1,3 @@
-<< ADD CONTENT HERE >>
 
 ## Protocols
 
@@ -6,7 +5,7 @@
     - [**`TiledAttributedType`**][TiledAttributedType-url]
         - [`SKTileset`][SKTileset-url]
         - [`SKTilesetData`][SKTilesetData-url]
-        - [`SKTiledLayerObject`][SKTiledLayerObject-url]
+        - [`TiledLayerObject`][TiledLayerObject-url]
         - [`SKTilemap`][SKTilemap-url]
 
 - [**`TiledSceneDelegate`**][TiledSceneDelegate-url]

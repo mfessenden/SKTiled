@@ -598,6 +598,11 @@
 		4CB6BD1A2139BD2200B1275A /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CB6BD192139BD2200B1275A /* Defaults.plist */; };
 		4CB6BD1B2139BD2200B1275A /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CB6BD192139BD2200B1275A /* Defaults.plist */; };
 		4CB6BD1C2139BD2200B1275A /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CB6BD192139BD2200B1275A /* Defaults.plist */; };
+		4CB8536E25AE19B100CC2154 /* PreferencesSearchPathsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8536925AE19B100CC2154 /* PreferencesSearchPathsController.swift */; };
+		4CB8536F25AE19B100CC2154 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CB8536A25AE19B100CC2154 /* Preferences.storyboard */; };
+		4CB8537025AE19B100CC2154 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8536B25AE19B100CC2154 /* PreferencesViewController.swift */; };
+		4CB8537125AE19B100CC2154 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8536C25AE19B100CC2154 /* PreferencesWindowController.swift */; };
+		4CB8537225AE19B100CC2154 /* PreferencesGloabalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8536D25AE19B100CC2154 /* PreferencesGloabalsViewController.swift */; };
 		4CBA61831D8A0A4600B31FC1 /* roguelike-16x16-anim.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */; };
 		4CBB6A9F1D8CBA8A00DB56F1 /* SKTiled+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6A9E1D8CBA8A00DB56F1 /* SKTiled+Properties.swift */; };
 		4CBB6AA11D8CBB5B00DB56F1 /* SKTiledScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA01D8CBB5B00DB56F1 /* SKTiledScene.swift */; };
@@ -892,6 +897,11 @@
 		4CB4A3132559D2AC004B8A2E /* TileAnimationFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileAnimationFrame.swift; sourceTree = "<group>"; };
 		4CB4A3142559D2AC004B8A2E /* TileCollisionShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileCollisionShape.swift; sourceTree = "<group>"; };
 		4CB6BD192139BD2200B1275A /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Defaults.plist; sourceTree = "<group>"; };
+		4CB8536925AE19B100CC2154 /* PreferencesSearchPathsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesSearchPathsController.swift; sourceTree = "<group>"; };
+		4CB8536A25AE19B100CC2154 /* Preferences.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
+		4CB8536B25AE19B100CC2154 /* PreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
+		4CB8536C25AE19B100CC2154 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
+		4CB8536D25AE19B100CC2154 /* PreferencesGloabalsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesGloabalsViewController.swift; sourceTree = "<group>"; };
 		4CBA61651D8A048200B31FC1 /* SKTiled Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SKTiled Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CBA617E1D8A0A3900B31FC1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "roguelike-16x16-anim.png"; sourceTree = "<group>"; };
@@ -1110,6 +1120,7 @@
 			isa = PBXGroup;
 			children = (
 				4C32CC3125A92135000A6D66 /* Supporting Files */,
+				4CB8536825AE19B100CC2154 /* Preferences */,
 				4C440BA21DAE913000DEC9A4 /* AppDelegate.swift */,
 				4C440BA31DAE913000DEC9A4 /* Main.storyboard */,
 				4C440BA51DAE913000DEC9A4 /* GameViewController.swift */,
@@ -1324,6 +1335,26 @@
 				4C9FEB7521A1BC5400C3EEED /* TiledGlobals.swift */,
 			);
 			name = Core;
+			sourceTree = "<group>";
+		};
+		4CB8536825AE19B100CC2154 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				4CB8536A25AE19B100CC2154 /* Preferences.storyboard */,
+				4CB8536C25AE19B100CC2154 /* PreferencesWindowController.swift */,
+				4CB8536B25AE19B100CC2154 /* PreferencesViewController.swift */,
+				4CB8537D25AE19C100CC2154 /* Tabs */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
+		4CB8537D25AE19C100CC2154 /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				4CB8536925AE19B100CC2154 /* PreferencesSearchPathsController.swift */,
+				4CB8536D25AE19B100CC2154 /* PreferencesGloabalsViewController.swift */,
+			);
+			name = Tabs;
 			sourceTree = "<group>";
 		};
 		4CBA615C1D8A048200B31FC1 = {
@@ -1757,6 +1788,7 @@
 				4C96C0801F53A09F00CE1DEB /* gemRedStroked.png in Resources */,
 				4C96C0B41F53A09F00CE1DEB /* pushBlock3.png in Resources */,
 				4C96C07A1F53A09F00CE1DEB /* exit.png in Resources */,
+				4CB8536F25AE19B100CC2154 /* Preferences.storyboard in Resources */,
 				4C96C0C41F53A09F00CE1DEB /* torch.png in Resources */,
 				4C96C0601F53A09F00CE1DEB /* blobGreen.png in Resources */,
 				4C8227E91F4E0E63007E4556 /* hex-65x65.tmx in Resources */,
@@ -2182,12 +2214,14 @@
 				4CEE247E24992E260029D6CC /* Logging.swift in Sources */,
 				4C77D2C5255C978400C8C18C /* TiledSelectableType.swift in Sources */,
 				4CB4A31B2559D2AC004B8A2E /* TileCollisionShape.swift in Sources */,
+				4CB8536E25AE19B100CC2154 /* PreferencesSearchPathsController.swift in Sources */,
 				4C1774B71D9099A3000C0AFD /* SKTileObject.swift in Sources */,
 				4CC09EF42519431700363145 /* TiledAttributedType.swift in Sources */,
 				4C1774B11D9099A3000C0AFD /* SKTile.swift in Sources */,
 				4C5B6DA62455CA4500F81755 /* SKGroupLayer.swift in Sources */,
 				4C20499E251D1DBB00D2012C /* TiledDemoDelegate.swift in Sources */,
 				4C5B6D9B2455C9D500F81755 /* SKImageLayer.swift in Sources */,
+				4CB8537225AE19B100CC2154 /* PreferencesGloabalsViewController.swift in Sources */,
 				4C1733E8244DFB770043F85C /* SKTileLayerChunk.swift in Sources */,
 				4CDEEA79258BFBD3003F1758 /* TiledDemoController.swift in Sources */,
 				4C440BA71DAE913000DEC9A4 /* AppDelegate.swift in Sources */,
@@ -2212,6 +2246,7 @@
 				4C1774B31D9099A3000C0AFD /* SKTiledScene.swift in Sources */,
 				4C1774B01D9099A3000C0AFD /* SKTiled+Properties.swift in Sources */,
 				4C5B6DB12455CAE800F81755 /* TiledLayerObject.swift in Sources */,
+				4CB8537125AE19B100CC2154 /* PreferencesWindowController.swift in Sources */,
 				4CA89E13252E6E5D00C23E4C /* TiledRasterizableType.swift in Sources */,
 				4CE6415F206C1AEA004BA9E4 /* Demo+Extensions.swift in Sources */,
 				4CADFAB92481852E000C2550 /* ThreadSafeArray.swift in Sources */,
@@ -2229,6 +2264,7 @@
 				4C440BA91DAE913000DEC9A4 /* GameViewController.swift in Sources */,
 				4C204A10251E7C2000D2012C /* TiledBackgroundLayer.swift in Sources */,
 				4C1774B91D9099A3000C0AFD /* SKTilesetData.swift in Sources */,
+				4CB8537025AE19B100CC2154 /* PreferencesViewController.swift in Sources */,
 				4C8DE92D249814A300CCF8EF /* DebugDrawableType.swift in Sources */,
 				4CC0658A24DDD53A00113389 /* TileContainerType.swift in Sources */,
 				4C1774B51D9099A3000C0AFD /* SKTilemap.swift in Sources */,
@@ -2639,6 +2675,7 @@
 			baseConfigurationReference = 4CF6DC8F255465FE00D0331D /* Demo.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "$(APPICON_NAME)";
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
@@ -2663,6 +2700,7 @@
 			baseConfigurationReference = 4CF6DC8F255465FE00D0331D /* Demo.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "$(APPICON_NAME)";
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
@@ -2753,6 +2791,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "Beta App Icon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "tvOS LaunchImage";
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -2781,6 +2820,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "tvOS LaunchImage";
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -3072,6 +3112,7 @@
 		4CBA61791D8A048300B31FC1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -3133,6 +3174,7 @@
 		4CBA617A1D8A048300B31FC1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -3190,6 +3232,7 @@
 			baseConfigurationReference = 4CF6DC8F255465FE00D0331D /* Demo.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1300000;
@@ -3210,6 +3253,7 @@
 			baseConfigurationReference = 4CF6DC8F255465FE00D0331D /* Demo.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CURRENT_PROJECT_VERSION = 1300000;
 				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
