@@ -104,7 +104,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MnW-ZK-gPs" userLabel="Objects Button">
-                                        <rect key="frame" x="618" y="0.0" width="180" height="45"/>
+                                        <rect key="frame" x="594" y="0.0" width="180" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="6WD-6i-S1W"/>
                                             <constraint firstAttribute="height" constant="45" id="kOf-ze-rdb"/>

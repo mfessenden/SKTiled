@@ -2,8 +2,7 @@
 //  GameViewController.swift
 //  SKTiled Demo - tvOS
 //
-//  Created by Michael Fessenden.
-//
+//  Copyright © 2020 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -32,17 +31,16 @@ import GameController
 
 class GameViewController: GCEventViewController, Loggable {
 
-    let demoController = DemoController.default
+    let demoController = TiledDemoController.default
     var uiColor: UIColor = UIColor(hexString: "#757B8D")
 
     // debugging labels (top)
     @IBOutlet weak var cameraInfoLabel: UILabel!
-    @IBOutlet weak var pauseInfoLabel: UILabel!
 
     // debugging labels (bottom)
+    @IBOutlet weak var outputBottomView: UIStackView!
     @IBOutlet weak var mapInfoLabel: UILabel!
-    @IBOutlet weak var debugInfoLabel: UILabel!
-    @IBOutlet weak var frameworkVersionLabel: UILabel!
+    @IBOutlet weak var commandOutputLabel: UILabel!
 
 
     // demo buttons
@@ -56,7 +54,6 @@ class GameViewController: GCEventViewController, Loggable {
 
     // render stats
     @IBOutlet weak var statsStackView: UIStackView!
-    @IBOutlet weak var statsHeaderLabel: UILabel!
     @IBOutlet weak var statsRenderModeLabel: UILabel!
     @IBOutlet weak var statsCPULabel: UILabel!
     @IBOutlet weak var statsVisibleLabel: UILabel!
@@ -66,18 +63,16 @@ class GameViewController: GCEventViewController, Loggable {
     @IBOutlet weak var statsUpdatedLabel: UILabel!
     @IBOutlet weak var statsRenderLabel: UILabel!
 
-    // container for the primary UI controls
+    // container for the buttons
     @IBOutlet weak var mainControlsView: UIStackView!
 
-
+    // camera mode icons
     @IBOutlet weak var controlIconView: UIStackView!
-    @IBOutlet weak var cameraControlModeIcon: UIImageView!
-    @IBOutlet weak var gameControllerIcon: UIImageView!
 
-    // Game controller/remote.
-    private var currentController: GCController?
+    // icon controls
+    @IBOutlet weak var dollyIcon: UIImageView!
+    @IBOutlet weak var zoomIcon: UIImageView!
 
-    // unused
     @IBOutlet var demoFileAttributes: NSObject!
 
     var timer = Timer()
@@ -87,8 +82,7 @@ class GameViewController: GCEventViewController, Loggable {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        /// disable focus for gamepads
-        controllerUserInteractionEnabled = false
+        controllerUserInteractionEnabled = true
 
         // Configure the view.
         let skView = self.view as! SKView
@@ -97,33 +91,32 @@ class GameViewController: GCEventViewController, Loggable {
         loggingLevel = TiledGlobals.default.loggingLevel
         demoController.loggingLevel = loggingLevel
         demoController.view = skView
+        //demoController.scanForResources()
 
-        guard let currentURL = demoController.currentURL else {
-            log("no tilemap to load.", level: .warning)
-            return
-        }
 
         #if DEBUG
-        skView.showsFPS = true
+        skView.showsQuadCount = true
         skView.showsNodeCount = true
         skView.showsDrawCount = true
+        skView.showsPhysics = false
         #endif
 
-
+        /* SpriteKit optimizations */
         skView.showsFPS = true
+        skView.isAsynchronous = true
         skView.shouldCullNonVisibleNodes = true
         skView.ignoresSiblingOrder = true
 
         // initialize the demo interface
-        setupDemoInterface()
+        setupMainInterface()
         setupButtonAttributes()
-
         setupNotifications()
+        demoController.scanForResources()
 
-        /* create the game scene */
-        demoController.loadScene(url: currentURL, usePreviousCamera: demoController.preferences.usePreviousCamera)
-        frameworkVersionLabel.text = TiledGlobals.default.version.versionString
-        frameworkVersionLabel.textColor = UIColor(hexString: "#dddddd7a")
+        print("tilemaps: \(demoController.tilemaps.count)")
+
+        // Load the initial scene.
+        demoController.loadNextScene()
     }
 
     override func viewDidLayoutSubviews() {
@@ -132,7 +125,7 @@ class GameViewController: GCEventViewController, Loggable {
         let skView = self.view as! SKView
         if let scene = skView.scene {
 
-            if let sceneDelegate = scene as? SKTiledSceneDelegate {
+            if let sceneDelegate = scene as? TiledSceneDelegate {
                 if let cameraNode = sceneDelegate.cameraNode {
                     cameraNode.setCameraBounds(bounds: view.bounds)
                 }
@@ -146,32 +139,38 @@ class GameViewController: GCEventViewController, Loggable {
     }
 
 
-    /// Enable event notifications.
-    func setupNotifications() {
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.UpdateDebugging, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Debug.DebuggingCommandSent, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.Updated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Camera.Updated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.RenderStatsUpdated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.UpdateModeChanged, object: nil)
+    }
 
-        NotificationCenter.default.addObserver(self, selector: #selector(updateDebuggingOutput), name: Notification.Name.Demo.UpdateDebugging, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateCommandString), name: Notification.Name.Debug.CommandIssued, object: nil)
+    // MARK: - Interface & Setup
+
+    func setupNotifications() {
+        // demo notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(debuggingInfoReceived), name: Notification.Name.Demo.UpdateDebugging, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateCommandString), name: Notification.Name.Debug.DebuggingCommandSent, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(tilemapWasUpdated), name: Notification.Name.Map.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sceneCameraUpdated), name: Notification.Name.Camera.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(renderStatsUpdated), name: Notification.Name.Map.RenderStatsUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tilemapUpdateModeChanged), name: Notification.Name.Map.UpdateModeChanged, object: nil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(controllerDidConnect), name: Notification.Name.GCControllerDidConnect, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(controllerDidDisconnect), name: Notification.Name.GCControllerDidDisconnect, object: nil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(controlInputReceived), name: Notification.Name.Demo.ControlInputReceived, object: nil)
     }
 
-    /**
-     Setup the main interface.
-     */
-    func setupDemoInterface() {
-        mapInfoLabel.text = "map: "
-        debugInfoLabel.text = "command: "
-        pauseInfoLabel.text = ""
+    /// Setup the main interface.
+    func setupMainInterface() {
+        outputBottomView.layer.cornerRadius = 8
+        mapInfoLabel.text = "Map: "
+        commandOutputLabel.text = "Command: "
 
-        cameraControlModeIcon.isHidden = true
+        controlIconView.isHidden = true
+        controlIconView.isHidden = true
+        dollyIcon.isHidden = false
+        zoomIcon.isHidden = false
 
         if let fitButton = fitButton {
             fitButton.isEnabled = true
@@ -200,6 +199,9 @@ class GameViewController: GCEventViewController, Loggable {
         self.statsUpdatedLabel.isHidden = true
     }
 
+    /// Resets the main interface to its original state.
+    func resetMainInterface() {}
+
     /// Set up the control buttons.
     func setupButtonAttributes() {
         let allButtons = [fitButton, gridButton, graphButton, objectsButton, effectsButton, updateModeButton, nextButton]
@@ -215,124 +217,63 @@ class GameViewController: GCEventViewController, Loggable {
         }
     }
 
-    // MARK: - Controllers
-
-
-    /// Called when a controller is connected.
-    @objc func controllerDidConnect() {
-        updateControllerInputView()
-    }
-
-    /// Called when a controller is disconnected.
-    @objc func controllerDidDisconnect() {
-        updateControllerInputView()
-    }
-
-    /// Update the UI to reflect the controllers connected.
-    func updateControllerInputView() {
-        var defaultControlTypeImage = "remote"
-        for controller in GCController.controllers() where controller.microGamepad != nil {
-            if let _ = controller.extendedGamepad {
-                defaultControlTypeImage = "gamepad"
-            }
-        }
-        let controlTypeImage = UIImage(named: defaultControlTypeImage)
-        gameControllerIcon.image = controlTypeImage
-    }
-
-    /**
-     Called when game controller input is recieved. Called when the `Notification.Name.Demo.ControlInputReceived` notification is sent.
-
-     - parameter notification:`Notification` event notification.
-     */
-    @objc func controlInputReceived(notification: Notification) {
-        guard let controller = notification.object as? GCController else {
-            return
-        }
-
-        if (controller.extendedGamepad != nil) {
-            controllerUserInteractionEnabled = false
-        } else {
-            //controllerUserInteractionEnabled = true
-        }
-
-        let controlTypeImage = UIImage(named: controller.imageName)
-        gameControllerIcon.image = controlTypeImage
-    }
-
     // MARK: - Button Actions
 
-    /**
-     Action called when `fit to view` button is pressed.
-
-     - parameter sender: `Any` ui button.
-     */
+    /// Action called when `fit to view` button is pressed.
+    ///
+    /// - Parameter sender: invoking ui element.
     @IBAction func fitButtonPressed(_ sender: Any) {
         self.demoController.fitSceneToView()
     }
 
-    /**
-     Action called when `show grid` button is pressed.
-
-     - parameter sender: `Any` ui button.
-     */
+    /// Action called when `show grid` button is pressed.
+    ///
+    /// - Parameter sender: invoking ui element.
     @IBAction func gridButtonPressed(_ sender: Any) {
         self.demoController.toggleMapDemoDrawGridAndBounds()
     }
 
-    /**
-     Action called when `show graph` button is pressed.
-
-     - parameter sender: `Any` ui button.
-     */
+    /// Action called when `show graph` button is pressed.
+    ///
+    /// - Parameter sender: invoking ui element.
     @IBAction func graphButtonPressed(_ sender: Any) {
         self.demoController.toggleMapGraphVisualization()
     }
 
-    /**
-     Action called when `show objects` button is pressed.
-
-     - parameter sender: `Any` ui button.
-     */
+    /// Action called when `show objects` button is pressed.
+    ///
+    /// - Parameter sender: invoking ui element.
     @IBAction func objectsButtonPressed(_ sender: Any) {
         self.demoController.toggleMapObjectDrawing()
     }
 
-    /**
-     Action called when `next` button is pressed.
-
-     - parameter sender: `Any` ui button.
-     */
+    /// Action called when `next` button is pressed.
+    ///
+    /// - Parameter sender: invoking ui element.
     @IBAction func nextButtonPressed(_ sender: Any) {
         self.demoController.loadNextScene()
     }
 
-    /**
-     Action called when `effects` button is pressed.
-
-     - parameter sender: `Any` ui button.
-     */
+    /// Action called when `effects` button is pressed.
+    ///
+    /// - Parameter sender: invoking ui element.
     @IBAction func effectsButtonPressed(_ sender: Any) {
         self.demoController.toggleTilemapEffectsRendering()
     }
 
-    /**
-     Action called when `update mode` button is pressed.
-
-     - parameter sender: `Any` ui button.
-     */
+    /// Action called when `update mode` button is pressed.
+    ///
+    /// - Parameter sender: invoking ui element.
     @IBAction func updateButtonPressed(_ sender: Any) {
         self.demoController.cycleTilemapUpdateMode()
     }
 
-    // MARK: - Callbacks
+    // MARK: - Event Callbacks
 
-    /**
-     Update the debugging labels with scene information.
-
-     - parameter notification: `Notification` event notification.
-     */
-    @objc func updateDebuggingOutput(notification: Notification) {
+    /// Update the debugging labels with scene information.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func debuggingInfoReceived(notification: Notification) {
         if let mapInfo = notification.userInfo!["mapInfo"] {
             mapInfoLabel.text = mapInfo as? String
         }
@@ -340,72 +281,60 @@ class GameViewController: GCEventViewController, Loggable {
         if let cameraInfo = notification.userInfo!["cameraInfo"] {
             cameraInfoLabel.text = cameraInfo as? String
         }
-
-
-        if let sceneIsPaused = notification.userInfo!["pauseInfo"] as? Bool {
-            let fontColor: UIColor = (sceneIsPaused == false) ? UIColor.white : UIColor(hexString: "#2CF639")
-            let labelStyle = NSMutableParagraphStyle()
-            labelStyle.alignment = .center
-
-            let pauseLabelAttributes = [
-                .foregroundColor: fontColor,
-                .paragraphStyle: labelStyle
-            ] as [NSAttributedString.Key: Any]
-
-            let pauseString = (sceneIsPaused == false) ? "" : "•Paused•"
-            let outputString = NSMutableAttributedString(string: pauseString, attributes: pauseLabelAttributes)
-            pauseInfoLabel.attributedText = outputString
-        }
-
     }
 
-    /**
-     Update the camera control controls.
-
-     - parameter notification: `Notification` event notification.
-     */
+    /// Update the camera control controls.
+    ///
+    /// - Parameter notification: event notification.
     @objc func sceneCameraUpdated(notification: Notification) {
         guard let camera = notification.object as? SKTiledSceneCamera else {
-            fatalError("cannot access scene camera.")
+            fatalError("no camera!!")
         }
 
+        //controlIconView.isHidden = true
+        //dollyIcon.isHidden = true
+        //zoomIcon.isHidden = true
 
+        var stackViewHidden = true
+        var dollyHidden = true
+        var zoomHidden = true
 
-
-        var isRemoteControlled = true
         switch camera.controlMode {
 
-        case .dolly:
-            isRemoteControlled = false
-            cameraControlModeIcon.image = UIImage(named: "dolly")
-            cameraControlModeIcon.isHidden = false
+            case .dolly:
+                stackViewHidden = false
+                dollyHidden = false
+                zoomHidden = true
 
-        case .zoom:
-            isRemoteControlled = false
-            cameraControlModeIcon.image = UIImage(named: "zoom")
-            cameraControlModeIcon.isHidden = false
+            case .zoom:
+                stackViewHidden = false
+                dollyHidden = true
+                zoomHidden = false
 
-        case .none:
-            isRemoteControlled = true
-            cameraControlModeIcon.isHidden = true
+            case .none:
+                stackViewHidden = true
+                dollyHidden = false
+                zoomHidden = false
         }
 
-        fitButton?.isEnabled = isRemoteControlled
-        gridButton?.isEnabled = isRemoteControlled
-        graphButton?.isEnabled = isRemoteControlled
-        objectsButton?.isEnabled = isRemoteControlled
-        nextButton?.isEnabled = isRemoteControlled
+        controlIconView.isHidden = stackViewHidden
 
-        // hide the main control buttons in remote control mode
-        mainControlsView.isHidden = (isRemoteControlled == false)
+        dollyIcon.isHidden = dollyHidden
+        zoomIcon.isHidden = zoomHidden
+
+        fitButton?.isEnabled = stackViewHidden
+        gridButton?.isEnabled = stackViewHidden
+        graphButton?.isEnabled = stackViewHidden
+        objectsButton?.isEnabled = stackViewHidden
+        nextButton?.isEnabled = stackViewHidden
+
+        mainControlsView.isHidden = !stackViewHidden
         cameraInfoLabel.text = camera.description
     }
 
-    /**
-     Update the the command string label. Called when the `Notification.Name.Debug.CommandIssued` notification is sent.
-
-     - parameter notification: `Notification` event notification.
-     */
+    /// Update the the command string label.
+    ///
+    /// - Parameter notification: event notification.
     @objc func updateCommandString(notification: Notification) {
         var duration: TimeInterval = 3.0
 
@@ -417,24 +346,20 @@ class GameViewController: GCEventViewController, Loggable {
 
         if let commandString = notification.userInfo!["command"] {
             let commandFormatted = commandString as! String
-            debugInfoLabel.setTextValue(commandFormatted, animated: true, interval: duration)
+            commandOutputLabel.setTextValue(commandFormatted, animated: true, interval: duration)
         }
     }
 
-    /**
-     Reset the command string label.
-     */
+    /// Reset the command string label.
     func resetCommandLabel() {
         timer.invalidate()
-        debugInfoLabel.text = ""
+        commandOutputLabel.text = ""
     }
 
-    /**
-     Enables/disable button controls based on the current map attributes.
-
-     - parameter notification: `Notification` event notification.
-     */
-     @objc func tilemapWasUpdated(notification: Notification) {
+    /// Enables/disable button controls based on the current map attributes.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func tilemapWasUpdated(notification: Notification) {
         guard let tilemap = notification.object as? SKTilemap else { return }
 
         if (tilemap.hasKey("uiColor")) {
@@ -446,7 +371,6 @@ class GameViewController: GCEventViewController, Loggable {
         let effectsEnabled = (tilemap.shouldEnableEffects == true)
         let effectsMessage = (effectsEnabled == true) ? (tilemap.shouldRasterize == true) ? "Effects: on (raster)" : "Effects: on" : "Effects: off"
 
-        statsHeaderLabel.text = "Rendering: \(TiledGlobals.default.renderer.name)"
         statsRenderModeLabel.text = "Mode: \(tilemap.updateMode.name)"
         statsVisibleLabel.text = "Visible: \(tilemap.nodesInView.count)"
         statsEffectsLabel.text = "\(effectsMessage)"
@@ -456,10 +380,11 @@ class GameViewController: GCEventViewController, Loggable {
 
         var graphAction = "show"
         for layer in tilemap.tileLayers() {
-            if layer.debugDrawOptions.contains(.drawGraph) {
+            if (layer.isShowingGridGraph == true) {
                 graphAction = "hide"
             }
         }
+
         let graphButtonTitle = (graphsCount > 0) ? (graphsCount > 1) ? "\(graphAction) graphs" : "\(graphAction) graph" : "no graphs"
 
         let hasObjects: Bool = (tilemap.getObjects().isEmpty == false)
@@ -467,8 +392,8 @@ class GameViewController: GCEventViewController, Loggable {
         graphButton.isHidden = !hasGraphs
         objectsButton.isEnabled = hasObjects
 
-        let gridButtonTitle = (tilemap.debugDrawOptions.contains(.drawGrid)) ? "hide grid" : "show grid"
-        let objectsButtonTitle = (hasObjects == true) ? (tilemap.showObjects == true) ? "hide objects" : "show objects" : "show objects"
+        let gridButtonTitle = (tilemap.isShowingTileGrid == true) ? "hide grid" : "show grid"
+        let objectsButtonTitle = (hasObjects == true) ? (tilemap.isShowingObjectBounds == true) ? "hide objects" : "show objects" : "show objects"
         let effectsButtonTitle = (tilemap.shouldEnableEffects == true) ? "effects: on" : "effects: off"
         let updateModeTitle = "mode: \(tilemap.updateMode.name)"
 
@@ -484,24 +409,21 @@ class GameViewController: GCEventViewController, Loggable {
         statsCPULabel.isHidden = false
         statsActionsLabel.isHidden = (tilemap.updateMode != .actions)
         statsObjectsLabel.isHidden = false
-     }
+    }
 
 
-     // MARK: - Debugging
+    // MARK: - Debugging
 
-     /**
-      Updates the render stats debugging info.
-
-     - parameter notification: `Notification` event notification.
-     */
-     @objc func renderStatsUpdated(notification: Notification) {
+    ///  Updates the render stats debugging info.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func renderStatsUpdated(notification: Notification) {
         guard let renderStats = notification.object as? SKTilemap.RenderStatistics else { return }
 
-        self.statsHeaderLabel.text = "Rendering: \(TiledGlobals.default.renderer.name)"
         self.statsRenderModeLabel.text = "Mode: \(renderStats.updateMode.name)"
         self.statsCPULabel.attributedText = renderStats.processorAttributedString
         self.statsVisibleLabel.text = "Visible: \(renderStats.visibleCount)"
-        self.statsVisibleLabel.isHidden = (TiledGlobals.default.enableCameraCallbacks == false)
+        //self.statsVisibleLabel.isHidden = (TiledGlobals.default.enableCameraCallbacks == false)
         self.statsObjectsLabel.isHidden = (renderStats.objectsVisible == false)
         self.statsObjectsLabel.text = "Objects: \(renderStats.objectCount)"
         let renderString = (TiledGlobals.default.timeDisplayMode == .seconds) ? String(format: "%.\(String(6))f", renderStats.renderTime) : String(format: "%.\(String(2))f", renderStats.renderTime.milleseconds)
@@ -511,19 +433,19 @@ class GameViewController: GCEventViewController, Loggable {
         self.statsUpdatedLabel.isHidden = (renderStats.updateMode == .actions)
         self.statsUpdatedLabel.text = "Updated: \(renderStats.updatedThisFrame)"
 
+        let actionCountString = (renderStats.actionsCount > 0) ? "\(renderStats.actionsCount)" : "--"
+        self.statsActionsLabel.text = "Actions: \(actionCountString)"
 
         // update the effects button (tvOS)
         let effectsButtonTitle = (renderStats.effectsEnabled == true) ? "effects: on" : "effects: off"
         effectsButton.setTitle(effectsButtonTitle, for: UIControl.State.normal)
-     }
+    }
 
-     /**
-      Callback when cache is updated.
-
-      - parameter notification: `Notification` event notification.
-      */
-     @objc func tilemapUpdateModeChanged(notification: Notification) {
-         guard let tilemap = notification.object as? SKTilemap else { return }
-         self.statsRenderModeLabel.text = "Mode: \(tilemap.updateMode.name)"
-     }
+    /// Callback when cache is updated.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func tilemapUpdateModeChanged(notification: Notification) {
+        guard let tilemap = notification.object as? SKTilemap else { return }
+        self.statsRenderModeLabel.text = "Mode: \(tilemap.updateMode.name)"
+    }
 }

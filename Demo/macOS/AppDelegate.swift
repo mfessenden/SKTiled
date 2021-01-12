@@ -33,7 +33,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Window controller for inspector panel.
     var inspectorController: NSWindowController?
-    var preferencesController: PreferencesWindowController?
 
     // file menu
     @IBOutlet weak var openMapMenuitem: NSMenuItem!
@@ -128,7 +127,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // demo notifications
         NotificationCenter.default.addObserver(self, selector: #selector(demoControllerAssetScanFinished), name: Notification.Name.DemoController.AssetsFinishedScanning, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(launchApplicationPreferences), name: Notification.Name.Demo.LaunchPreferences, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(demoSceneLoaded), name: Notification.Name.Demo.SceneLoaded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(demoControllerAboutToScanForAssets), name: Notification.Name.DemoController.WillBeginScanForAssets, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resetMainInterfaceAction), name: Notification.Name.DemoController.ResetDemoInterface, object: nil)
@@ -314,26 +312,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 
     // MARK: - Button & Menu Handlers
-
-    /// Open the demo preferences controller.
-    ///
-    /// - Parameter sender: Menu item.
-    @IBAction func launchApplicationPreferences(_ sender: Any) {
-        Logger.default.log("launching application preferences...", level: .info, symbol: "AppDelegate")
-        //let prefsWindowController = PreferencesWindowController.newPreferencesWindow()
-        //prefsWindowController.showWindow(sender)
-
-        if (preferencesController == nil) {
-            let storyboard = NSStoryboard(name: NSStoryboard.Name("Preferences"), bundle: nil)
-            let identifier = NSStoryboard.SceneIdentifier("PreferencesWindowController")
-            preferencesController = storyboard.instantiateController(withIdentifier: identifier) as? PreferencesWindowController
-        }
-
-        if (preferencesController != nil) {
-            preferencesController!.showWindow(sender)
-            preferencesController?.window?.title = "SKTiled Demo Preferences"
-        }
-    }
 
     /// Dismiss the SKTiled app preferences.
     @IBAction func dismissApplicationPreferences(_ sender: NSButton) {

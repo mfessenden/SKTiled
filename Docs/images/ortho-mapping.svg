@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="193px" height="193px" viewBox="0 0 193 193" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Artboard</title>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Orthogonal-Map" transform="translate(1.000000, 1.000000)">
+            <g id="Group" stroke="#222222">
+                <g id="Grid-Lines">
+                    <line x1="64.5" y1="0" x2="64.5" y2="193" id="grid-line"></line>
+                    <line x1="128.5" y1="0" x2="128.5" y2="193" id="grid-line"></line>
+                    <line x1="193" y1="64.5" x2="0" y2="64.5" id="grid-line"></line>
+                    <line x1="193" y1="128.5" x2="0" y2="128.5" id="grid-line"></line>
+                </g>
+                <rect id="Grid" x="-0.5" y="-0.5" width="194" height="194"></rect>
+            </g>
+            <g id="Coordinates" transform="translate(24.500000, 25.500000)" fill="#222222" font-family="AppleSymbols, Apple Symbols" font-size="13" font-weight="normal">
+                <text id="0,0">
+                    <tspan x="0.449462891" y="9">0,0</tspan>
+                </text>
+                <text id="0,1">
+                    <tspan x="0.449462891" y="74">0,1</tspan>
+                </text>
+                <text id="0,2">
+                    <tspan x="0.449462891" y="139">0,2</tspan>
+                </text>
+                <text id="1,0">
+                    <tspan x="64.4494629" y="9">1,0</tspan>
+                </text>
+                <text id="1,1">
+                    <tspan x="64.4494629" y="74">1,1</tspan>
+                </text>
+                <text id="1,2">
+                    <tspan x="64.4494629" y="139">1,2</tspan>
+                </text>
+                <text id="2,0">
+                    <tspan x="128.449463" y="9">2,0</tspan>
+                </text>
+                <text id="2,1">
+                    <tspan x="128.449463" y="74">2,1</tspan>
+                </text>
+                <text id="2,2">
+                    <tspan x="128.449463" y="139">2,2</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

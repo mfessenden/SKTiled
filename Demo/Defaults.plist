@@ -5,11 +5,11 @@
 	<key>renderQuality</key>
 	<integer>3</integer>
 	<key>objectRenderQuality</key>
-	<integer>8</integer>
+	<integer>4</integer>
 	<key>textRenderQuality</key>
-	<integer>8</integer>
-	<key>maxRenderQuality</key>
-	<integer>8</integer>
+	<integer>4</integer>
+	<key>lineWidth</key>
+	<real>1.2</real>
 	<key>showObjects</key>
 	<false/>
 	<key>drawGrid</key>
@@ -20,11 +20,11 @@
 	<false/>
 	<key>updateMode</key>
 	<integer>2</integer>
-	<key>loggingLevel</key>
-	<integer>6</integer>
 	<key>renderCallbacks</key>
 	<true/>
 	<key>cameraCallbacks</key>
+	<true/>
+	<key>cameraTrackContainedNodes</key>
 	<true/>
 	<key>mouseFilters</key>
 	<integer>9</integer>
@@ -33,7 +33,11 @@
 	<key>usePreviousCamera</key>
 	<false/>
 	<key>allowUserMaps</key>
-	<true/>
+	<false/>
+	<key>allowDemoMaps</key>
+	<false/>
+	<key>enableMouseEvents</key>
+	<false/>
 	<key>demoFiles</key>
 	<array>
 		<string>dungeon-16x16</string>

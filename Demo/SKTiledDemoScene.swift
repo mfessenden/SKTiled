@@ -2,8 +2,7 @@
 //  SKTiledDemoScene.swift
 //  SKTiled Demo
 //
-//  Created by Michael Fessenden.
-//
+//  Copyright © 2020 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -35,86 +34,114 @@ import Cocoa
 #endif
 
 
-
-/// Special scene class used for demo projects.
+// special scene class used for the demo
 public class SKTiledDemoScene: SKTiledScene {
 
-    weak internal var demoController: DemoController?
-    public var uiScale: CGFloat = TiledGlobals.default.contentScale
+    /// Reference to demo scene manager.
+    internal weak var demoController: TiledDemoController?
 
     /// global information label font size.
     private let labelFontSize: CGFloat = 11
 
-    /// objects stored for debugging
-    internal var currentLayer: SKTiledLayerObject?
-    internal var currentTile: SKTile?
-    internal var currentVectorObject: SKTileObject?
-    internal var currentProxyObject: TileObjectProxy?
+    /// Currently focused layer.
+    internal weak var currentLayer: TiledLayerObject?
 
-    internal var selected: [SKTiledLayerObject] = []
+    /// Currently focused proxy object.
+    internal weak var currentProxyObject: TileObjectProxy?
+
+    /// Array of selected layers.
+    internal var selected: [TiledLayerObject] = []
+
+    /// Currently focused objects.
     internal var focusObjects: [SKNode] = []
 
+    /// Flag indicating that pathfinding graphs should be calculated.
     internal var plotPathfindingPath: Bool = true
-    internal var graphStartCoordinate: CGPoint?
-    internal var graphEndCoordinate: CGPoint?
 
+    /// Start coordinate of path.
+    internal var graphStartCoordinate: simd_int2?
+
+    /// End coordinate of path.
+    internal var graphEndCoordinate: simd_int2?
+
+    /// Array of nodes in the current path.
     internal var currentPath: [GKGridGraphNode] = []
-    
+
     #if os(macOS)
-    internal var mousePointer: MousePointer!
+    internal weak var mousePointer: MousePointer?
     #endif
-    
-    private let demoQueue = DispatchQueue(label: "com.sktiled.sktiledDemoScene.demoQueue", qos: .utility)
 
+    private let demoQueue = DispatchQueue(label: "org.sktiled.sktiledDemoScene.demoQueue", qos: .utility)
 
-    override public var isPaused: Bool {
+    public override var isPaused: Bool {
         willSet {
-            
-            guard newValue != isPaused else { return }
-            updatePauseInfo(isPaused: newValue)
+            let pauseMessage = (newValue == true) ? "Paused" : ""
+            updatePauseInfo(msg: pauseMessage)
         }
     }
 
-    override public func didMove(to view: SKView) {
+    deinit {
+        // demo attributes
+        selected = []
+        focusObjects = []
+        currentPath = []
+        demoController = nil
+
+        // superclass
+        graphs = [:]
+        camera?.removeFromParent()
+        camera = nil
+        tilemap = nil
+
+        // remove notification observers
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
+    }
+
+    public override func didMove(to view: SKView) {
         super.didMove(to: view)
+
+
+        setupNotifications()
 
         // game controllers
         setupControllerObservers()
-        controllerDidConnect()
+        //connectControllers()
 
         #if os(macOS)
-        cameraNode.ignoreZoomClamping = false
+        cameraNode?.ignoreZoomClamping = false
         updateTrackingViews()
+
         #elseif os(iOS)
-        cameraNode.ignoreZoomClamping = false
+        cameraNode?.ignoreZoomClamping = false
         #else
-        cameraNode.ignoreZoomClamping = true
+        cameraNode?.ignoreZoomClamping = true
         #endif
 
         // allow gestures on iOS
-        cameraNode.allowGestures = true
+        cameraNode?.allowGestures = true
         #if os(macOS)
         if (mousePointer == nil) {
-            mousePointer = MousePointer()
-            addChild(mousePointer)
-            cameraNode.addDelegate(mousePointer)
-            mousePointer.isHidden = true
+            let pointer = MousePointer()
+            mousePointer = pointer
+            addChild(pointer)
+            cameraNode?.addDelegate(pointer)
+            cameraNode?.addDelegate(TiledDemoDelegate.default)
         }
         #endif
     }
 
-    override public func didChangeSize(_ oldSize: CGSize) {
+    public override func didChangeSize(_ oldSize: CGSize) {
         super.didChangeSize(oldSize)
         #if os(macOS)
         updateTrackingViews()
         #endif
         updateHud(tilemap)
 
-        guard let cameraNode = cameraNode else { return }
+        guard let cameraNode = self.cameraNode else { return }
         updateCameraInfo(msg: cameraNode.description)
     }
 
-    override public func willMove(from view: SKView) {
+    public override func willMove(from view: SKView) {
         #if os(macOS)
         // clear out old tracking areas
         for oldTrackingArea in view.trackingAreas {
@@ -123,13 +150,38 @@ public class SKTiledDemoScene: SKTiledScene {
         #endif
     }
 
-    /**
-     Return tile nodes at the given point.
+    // MARK: - Setup
 
-     - parameter coord: `CGPoint` event point.
-     - returns: `[SKTile]` tile nodes.
-     */
-    func tilesAt(coord: CGPoint) -> [SKTile] {
+    func setupNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionChanged), name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
+    }
+
+    // MARK: - Event Handlers
+
+
+    /// Called when the `Notification.Name.Demo.NodeSelectionChanged` notification is sent.
+    ///
+    ///  - expects a userInfo of `["nodes": [`SKNode`]]`
+    ///
+    /// - Parameter notification: event notification.
+    @objc func nodeSelectionChanged(notification: Notification) {
+        // notification.dump(#fileID, function: #function)
+        guard let userInfo = notification.userInfo as? [String: Any],
+              let selectedNodes = userInfo["nodes"] as? [SKNode] else {
+            return
+        }
+
+        /// this was moved to `TiledDemoDelegate`
+        /// for node in selectedNodes {}
+    }
+
+    // TODO: test these
+
+    /// Return tile nodes at the given point.
+    ///
+    /// - Parameter coord: event point.
+    /// - Returns: tile nodes.
+    func tilesAt(coord: simd_int2) -> [SKTile] {
         var result: [SKTile] = []
         guard let tilemap = tilemap else { return result }
         let tileLayers = tilemap.tileLayers(recursive: true).reversed().filter({ $0.visible == true })
@@ -141,12 +193,10 @@ public class SKTiledDemoScene: SKTiledScene {
         return result
     }
 
-    /**
-     Return renderable nodes (tile & tile objects) at the given point.
-
-     - parameter point: `CGPoint` event point.
-     - returns: `[SKNode]` renderable nodes.
-     */
+    /// Return renderable nodes (tile & tile objects) at the given point.
+    ///
+    /// - Parameter point: event point.
+    /// - Returns: renderable nodes.
     func renderableNodesAt(point: CGPoint) -> [SKNode] {
         var result: [SKNode] = []
         let nodes = self.nodes(at: point)
@@ -160,104 +210,89 @@ public class SKTiledDemoScene: SKTiledScene {
 
     // MARK: - Demo
 
-    /**
-     Callback to the GameViewController to reload the current scene.
-     */
+
+    /// Callback to the GameViewController to reload the current scene.
     public func reloadScene() {
-        // call back to the demo controller
-        NotificationCenter.default.post(
-            name: Notification.Name.Demo.ReloadScene,
-            object: nil,
-            userInfo: nil
-        )
+        demoController?.reloadScene()
     }
 
-    /**
-     Callback to the GameViewController to load the next scene.
-     */
+    /// Callback to the GameViewController to load the next scene.
     public func loadNextScene() {
-        // call back to the demo controller
-        NotificationCenter.default.post(
-            name: Notification.Name.Demo.LoadNextScene,
-            object: nil,
-            userInfo: nil
-        )
+        demoController?.loadNextScene()
     }
 
-    /**
-     Callback to the GameViewController to reload the previous scene.
-     */
+    /// Callback to the GameViewController to reload the previous scene.
     public func loadPreviousScene() {
-        // call back to the demo controller
-        NotificationCenter.default.post(
-            name: Notification.Name.Demo.LoadPreviousScene,
-            object: nil,
-            userInfo: nil
-        )
+        demoController?.loadPreviousScene()
     }
 
     public func updateMapInfo(msg: String) {
-
+        #if SKTILED_DEMO
         NotificationCenter.default.post(
             name: Notification.Name.Demo.UpdateDebugging,
             object: nil,
             userInfo: ["mapInfo": msg]
         )
+        #endif
     }
 
     public func updateTileInfo(msg: String) {
+        #if SKTILED_DEMO
         NotificationCenter.default.post(
             name: Notification.Name.Demo.UpdateDebugging,
             object: nil,
             userInfo: ["tileInfo": msg]
         )
+        #endif
     }
 
-    /**
-     Update the tile properties debugging info.
+    /// Update the tile properties debugging info.
+    ///
+    /// - Parameter msg: properties string.
+    public func focusedObjectsChanged(msg: String) {
 
-     - parameter msg: `String` properties string.
-     */
-    public func updatePropertiesInfo(msg: String) {
+        #if SKTILED_DEMO
         NotificationCenter.default.post(
             name: Notification.Name.Demo.UpdateDebugging,
             object: nil,
-            userInfo: ["propertiesInfo": msg]
+            userInfo: ["focusedObjectData": msg]
         )
+        #endif
     }
 
     public func updateCameraInfo(msg: String) {
+        #if SKTILED_DEMO
         NotificationCenter.default.post(
             name: Notification.Name.Demo.UpdateDebugging,
             object: nil,
             userInfo: ["cameraInfo": msg]
         )
+        #endif
     }
-    /**
-     Updates the pause information in the view controller.
-    
-    - parameter isPaused:`Bool` scene is paused.
-    */
-    public func updatePauseInfo(isPaused: Bool) {
+
+    public func updatePauseInfo(msg: String) {
+
+        #if SKTILED_DEMO
         NotificationCenter.default.post(
             name: Notification.Name.Demo.UpdateDebugging,
-            object: nil, userInfo: ["pauseInfo": isPaused]
+            object: nil, userInfo: ["pauseInfo": msg]
         )
+        #endif
     }
 
     public func updateScreenInfo(msg: String) {
+        #if SKTILED_DEMO
         NotificationCenter.default.post(
             name: Notification.Name.Demo.UpdateDebugging,
             object: nil,
             userInfo: ["screenInfo": msg]
         )
+        #endif
     }
 
-    /**
-     Update the camera debugging info.
-
-     - parameter sceneCamera:  `SKTiledSceneCamera?` scene camera.
-     */
+    /// Update the camera debugging info.
+    ///
+    /// - Parameter sceneCamera: scene camera.
     public func updateCameraInfo(_ sceneCamera: SKTiledSceneCamera?) {
         var cameraInfo = "Camera:"
         if let sceneCamera = sceneCamera {
@@ -271,37 +306,32 @@ public class SKTiledDemoScene: SKTiledScene {
         )
     }
 
-
-    /**
-     Send a command to the UI to update status.
-
-     - parameter command:  `String` command string.
-     - parameter duration: `TimeInterval` how long the message should be displayed (0 is indefinite).
-     */
+    /// Send a command to the UI to update status.
+    ///
+    /// - Parameters:
+    ///   - command: command string.
+    ///   - duration: how long the message should be displayed (0 is indefinite).
     public func updateCommandString(_ command: String, duration: TimeInterval = 3.0) {
+
         DispatchQueue.main.async {
 
             NotificationCenter.default.post(
-                name: Notification.Name.Debug.CommandIssued,
+                name: Notification.Name.Debug.DebuggingCommandSent,
                 object: nil,
                 userInfo: ["command": command, "duration": duration]
             )
         }
     }
 
-    /**
-     Update HUD elements when the view size changes.
-
-     - parameter map: `SKTilemap?` tile map.
-     */
+    /// Update HUD elements when the view size changes.
+    ///
+    /// - Parameter map: tile map.
     public func updateHud(_ map: SKTilemap?) {
         guard let map = map else { return }
         updateMapInfo(msg: map.description)
     }
 
-    /**
-     Plot a path between the last two points clicked.
-     */
+    /// Plot a path between the last two points clicked.
     func plotNavigationPath() {
         currentPath = []
         //guard (graphCoordinates.count == 2) else { return }
@@ -309,21 +339,18 @@ public class SKTiledDemoScene: SKTiledScene {
               let endCoord = graphEndCoordinate else { return }
 
 
-        let startPoint = startCoord.toVec2
-        let endPoint = endCoord.toVec2
-
         for (_, graph) in graphs {
-            if let startNode = graph.node(atGridPosition: startPoint) {
-                if let endNode = graph.node(atGridPosition: endPoint) {
+            if let startNode = graph.node(atGridPosition: startCoord) {
+                if let endNode = graph.node(atGridPosition: endCoord) {
                     currentPath = startNode.findPath(to: endNode) as! [GKGridGraphNode]
                 }
             }
         }
     }
 
-    /**
-     Visualize the current grid graph path with a line.
-     */
+    /// Visualize the current grid graph path with a line.
+    ///
+    /// - Parameter withColor: path color.
     func drawCurrentPath(withColor: SKColor = TiledObjectColors.lime) {
         guard let worldNode = worldNode,
               let tilemap = tilemap else { return }
@@ -339,7 +366,7 @@ public class SKTiledDemoScene: SKTiledScene {
         var points: [CGPoint] = []
 
         for node in currentPath {
-            let nodePosition = worldNode.convert(tilemap.pointForCoordinate(vec2: node.gridPosition), from: tilemap.defaultLayer)
+            let nodePosition = worldNode.convert(tilemap.pointForCoordinate(coord: node.gridPosition), from: tilemap.defaultLayer)
             points.append(nodePosition)
         }
 
@@ -364,21 +391,17 @@ public class SKTiledDemoScene: SKTiledScene {
         arrowShape.zPosition = lastZPosition
     }
 
-    /**
-     Cleanup all tile shapes representing the current path.
-     */
+    /// Cleanup all tile shapes representing the current path.
     open func cleanupPathfindingShapes() {
         // cleanup pathfinding shapes
         guard let worldNode = worldNode else { return }
         worldNode.childNode(withName: "CURRENT_PATH")?.removeFromParent()
     }
 
-    /**
-     Called before each frame is rendered.
-
-     - parameter currentTime: `TimeInterval` update interval.
-     */
-    override open func update(_ currentTime: TimeInterval) {
+    /// Called before each frame is rendered.
+    ///
+    /// - Parameter currentTime: update interval.
+    open override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
 
 
@@ -393,18 +416,17 @@ public class SKTiledDemoScene: SKTiledScene {
 
     // MARK: - Delegate Callbacks
 
-    override open func didReadMap(_ tilemap: SKTilemap) {
-        log("map read: \"\(tilemap.mapName)\"", level: .debug)
+    open override func didReadMap(_ tilemap: SKTilemap) {
         self.physicsWorld.speed = 1
     }
 
-    override open func didAddTileset(_ tileset: SKTileset) {
+    open override func didAddTileset(_ tileset: SKTileset) {
         let imageCount = (tileset.isImageCollection == true) ? tileset.dataCount : 0
         let statusMessage = (imageCount > 0) ? "images: \(imageCount)" : "rendered: \(tileset.isRendered)"
-        log("tileset added: \"\(tileset.name)\", \(statusMessage)", level: .debug)
+        log("tileset added: '\(tileset.name)', \(statusMessage)", level: .debug)
     }
 
-    override open func didRenderMap(_ tilemap: SKTilemap) {
+    open override func didRenderMap(_ tilemap: SKTilemap) {
         // update the HUD to reflect the number of tiles created
         updateHud(tilemap)
 
@@ -418,7 +440,7 @@ public class SKTiledDemoScene: SKTiledScene {
         )
     }
 
-    override open func didAddNavigationGraph(_ graph: GKGridGraph<GKGridGraphNode>) {
+    open override func didAddNavigationGraph(_ graph: GKGridGraph<GKGridGraphNode>) {
         super.didAddNavigationGraph(graph)
     }
 }
@@ -428,7 +450,13 @@ public class SKTiledDemoScene: SKTiledScene {
 // Touch-based event handling
 extension SKTiledDemoScene {
 
-    override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+
+    /// Detect touch events.
+    ///
+    /// - Parameters:
+    ///   - touches: touch events.
+    ///   - event: gesture event.
+    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let tilemap = tilemap else { return }
         let defaultLayer = tilemap.defaultLayer
 
@@ -437,21 +465,24 @@ extension SKTiledDemoScene {
             // get the position in the defaultLayer
             let positionInLayer = defaultLayer.touchLocation(touch)
 
-            let coord = defaultLayer.coordinateAtTouchLocation(touch)
+            // get the current coordinate for the touch event
+            let touchCoordinate = defaultLayer.coordinateAtTouchLocation(touch: touch)
 
 
             // update the tile information label
-            let coordStr = "Coord: \(coord.shortDescription), \(positionInLayer.roundTo())"
+            let coordStr = "Coord: \(touchCoordinate.shortDescription), \(positionInLayer.stringRoundedTo())"
 
+
+            // call back to the controller via `UpdateDebugging` callback (DEMO ONLY)
             updateTileInfo(msg: coordStr)
 
             // tile properties output
             var propertiesInfoString = ""
-            if let tile = tilemap.firstTileAt(coord: coord) {
+            if let tile = tilemap.firstTileAt(coord: touchCoordinate) {
                 propertiesInfoString = tile.tileData.description
             }
 
-            updatePropertiesInfo(msg: propertiesInfoString)
+            focusedObjectsChanged(msg: propertiesInfoString)
         }
     }
 }
@@ -460,176 +491,87 @@ extension SKTiledDemoScene {
 
 #if os(macOS)
 
-// Mouse-based event handling
+// Mouse-based event handling.
 extension SKTiledDemoScene {
 
-    override open func mouseUp(with event: NSEvent) {
-        super.mouseUp(with: event)
-    }
-
-    override open func mouseDown(with event: NSEvent) {
-        super.mouseDown(with: event)
-
-        guard let tilemap = tilemap,
-            let cameraNode = cameraNode else { return }
-
-        cameraNode.mouseDown(with: event)
-        let defaultLayer = tilemap.defaultLayer
-        _ = defaultLayer.coordinateAtMouseEvent(event: event)
-    }
-
-    /**
-     Highlight and get properties for objects at the current mouse position.
-
-     - parameter event: `NSEvent` mouse event.
-     */
-    override open func mouseMoved(with event: NSEvent) {
+    /// Get properties for objects at the current mouse position.
+    ///
+    /// - Parameter event: mouse move event.
+    open override func mouseMoved(with event: NSEvent) {
         super.mouseMoved(with: event)
 
-        guard (view != nil), let tilemap = tilemap else {
-            self.updateScreenInfo(msg: "--")
+        // don't capture events if the mouse is moving quickly
+        if (event.mouseSpeed > 1) {
             return
         }
 
-        DispatchQueue.main.async {
-            
-            let positionInScene = event.location(in: self)
-            let positionInView = self.convertPoint(toView: positionInScene)
+        /*
+        // Get mouse position in scene coordinates
+        let location = event.location(in: self)
 
-            // debug outputs
-            var screenInfoString = "--"
-            let viewPositionString = "view: \(positionInView.shortDescription)"
-            let scenePositionString = "scene: \(positionInScene.shortDescription)"
-            var layerPositionString = "layer: --"
-            var coordInfoString = "coord: --"
-
-            if let view = self.view {
-                let viewSize = view.bounds.size
-
-                let positionInWindow = event.locationInWindow
-                let xpos = positionInWindow.x
-                let ypos = positionInWindow.y
-
-                _ = (xpos / viewSize.width) - 0.5
-                _ = (ypos / viewSize.height) - 0.5
-            }
-
-            let defaultLayer = tilemap.defaultLayer
-
-            // get the position relative as drawn by the
-            _ = event.location(in: self)
-            let positionInLayer = defaultLayer.mouseLocation(event: event)
-
-            layerPositionString = "layer: \(positionInLayer.shortDescription)"
-
-            let coord = defaultLayer.coordinateAtMouseEvent(event: event)
-            let validCoord = defaultLayer.isValid(Int(coord.x), Int(coord.y))
-
-            coordInfoString = "coord: \(coord.shortDescription)"
-            self.graphEndCoordinate = (validCoord == true) ? coord : nil
-
-            if (self.graphEndCoordinate != nil) {
-                if (self.plotPathfindingPath == true) {
-                    self.plotNavigationPath()
-                    self.drawCurrentPath(withColor: tilemap.navigationColor)
-                }
-            }
-
-            // query nodes under the cursor to update the properties label
-            var propertiesInfoString = "--"
-
-            self.currentTile = nil
-            self.currentVectorObject = nil
-            self.currentProxyObject = nil
-
-            var currentLayerSet = false
-            if (self.currentLayer != nil) {
-                if (self.currentLayer!.isolated == true) {
-                    currentLayerSet = true
-                }
-            }
-
-            if currentLayerSet == false {
-                self.currentLayer = nil
-            }
-
-            if let focusObject = self.focusObjects.first {
-                
-                if let firstTile = focusObject as? SKTile {
-                    
-                    propertiesInfoString = firstTile.description
-                    self.currentTile = firstTile
-                    if currentLayerSet == false {
-                        self.currentLayer = firstTile.layer
-                    }
-                }
-
-                if let firstObject = focusObject as? SKTileObject {
-                    propertiesInfoString = firstObject.description
-                    self.currentVectorObject = firstObject
-                    if currentLayerSet == false {
-                        self.currentLayer = firstObject.layer
-                    }
-                }
-
-                if let firstProxy = focusObject as? TileObjectProxy {
-                    self.currentProxyObject = firstProxy
-
-                    if let proxyReference = firstProxy.reference {
-                        self.currentVectorObject = proxyReference
-                        propertiesInfoString = proxyReference.description
-                    }
-                }
-            }
-
-
-            // update the focused coordinate
-            let coordDescription = "\(Int(coord.x)), \(Int(coord.y))"
-
-            self.updateTileInfo(msg: "Coord: \(coordDescription), \(positionInLayer.roundTo())")
-            self.updatePropertiesInfo(msg: propertiesInfoString)
-
-            // debugging
-            let outputArray = [viewPositionString, scenePositionString, layerPositionString, coordInfoString]
-            screenInfoString = outputArray.joined(separator: ", ")
-
-            // send the label data to the view controller
-            self.updateScreenInfo(msg: screenInfoString)
+        // Get node at mouse position
+        let touchedNodes = nodes(at: location)
+        if let frontTouchedNode = touchedNodes.first {
+            print("top node: \(frontTouchedNode)")
         }
-    }
+        */
 
-    override open func mouseDragged(with event: NSEvent) {
-        super.mouseDragged(with: event)
-        guard let cameraNode = cameraNode else {
+        guard let skView = view else {
             return
         }
-        cameraNode.scenePositionChanged(with: event)
+
+        // dictionary of event locations
+        var locationData: [String: Any] = [:]
+        let sceneLocation = event.location(in: self)
+
+        locationData["viewPosition"] = skView.convert(sceneLocation, from: self)
+        locationData["screenPosition"] = sceneLocation
+
+        if (worldNode != nil) {
+            locationData["worldPosition"]  = event.location(in: worldNode)
+        }
+
+        // CALLBACK: mouse moved
+        if let tilemap = tilemap {
+
+            let mapPosition = tilemap.mouseLocation(event: event)
+            let coord = tilemap.coordinateAtMouse(event: event)
+
+            locationData["mapPosition"]  = mapPosition
+            locationData["coordinate"]  = coord
+            locationData["coordIsValid"] = tilemap.isValid(coord: coord)
+        }
+
+        // TODO: nothing is using this yet
+        NotificationCenter.default.post(
+            name: Notification.Name.Demo.MousePositionChanged,
+            object: nil,
+            userInfo: locationData
+        )
     }
 
-    override open func mouseEntered(with event: NSEvent) {
-        mousePointer.isHidden = false
+    open override func mouseEntered(with event: NSEvent) {
+        super.mouseEntered(with: event)
+        mousePointer?.isHidden = !TiledGlobals.default.debug.mouseFilters.enableMousePointer
     }
 
-    override open func mouseExited(with event: NSEvent) {
-        mousePointer.isHidden = true
+    open override func mouseExited(with event: NSEvent) {
+        super.mouseExited(with: event)
+        mousePointer?.isHidden = true
     }
 
-    override open func keyDown(with event: NSEvent) {
-        self.keyboardEvent(eventKey: event.keyCode)
+    open override func keyDown(with event: NSEvent) {
+        self.handleKeyboardEvent(event: event)
     }
 
-    override open func keyUp(with event: NSEvent) {
+    open override func keyUp(with event: NSEvent) {
         super.keyUp(with: event)
     }
 
-    /**
-     Remove old tracking views and add the current.
-    */
-    open func updateTrackingViews() {
+    /// Update tracking views for macOS mouse events.
+    public func updateTrackingViews() {
         if let view = self.view {
-
             let options: NSTrackingArea.Options = [.mouseEnteredAndExited, .mouseMoved, .activeAlways, .cursorUpdate]
-            //let options: NSTrackingArea.Options = [.mouseEnteredAndExited, .activeAlways]
 
             // clear out old tracking areas
             for oldTrackingArea in view.trackingAreas {
@@ -637,11 +579,19 @@ extension SKTiledDemoScene {
             }
 
             let trackingArea = NSTrackingArea(rect: view.frame, options: options, owner: self, userInfo: nil)
-
             view.addTrackingArea(trackingArea)
 
             if let cameraNode = cameraNode {
                 updateCameraInfo(msg: cameraNode.description)
+            }
+        }
+    }
+
+    /// Remove tracking views.
+    public func cleanTrackingViews() {
+        if let view = self.view {
+            for oldTrackingArea in view.trackingAreas {
+                view.removeTrackingArea(oldTrackingArea)
             }
         }
     }
@@ -653,196 +603,126 @@ extension SKTiledDemoScene {
 extension SKTiledDemoScene {
     // MARK: - Delegate Methods
 
-    /**
-     Called when the camera positon changes.
-
-     - parameter newPositon: `CGPoint` updated camera position.
-     */
-    override public func cameraPositionChanged(newPosition: CGPoint) {
+    /// Called when the camera position changes.
+    ///
+    /// - Parameter newPosition: updated camera position.
+    public override func cameraPositionChanged(newPosition: CGPoint) {
         updateCameraInfo(cameraNode)
     }
 
-    /**
-     Called when the camera zoom changes.
-
-     - parameter newZoom: `CGFloat` camera zoom amount.
-     */
-    override public func cameraZoomChanged(newZoom: CGFloat) {
+    /// Called when the camera zoom changes.
+    ///
+    /// - Parameter newZoom: camera zoom amount.
+    public override func cameraZoomChanged(newZoom: CGFloat) {
         updateCameraInfo(cameraNode)
     }
 
-    /**
-     Called when the camera bounds updated.
-
-     - parameter bounds:  `CGRect` camera view bounds.
-     - parameter positon: `CGPoint` camera position.
-     - parameter zoom:    `CGFloat` camera zoom amount.
-     */
-    override public func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {
-        // override in subclass
-        log("camera bounds updated: \(bounds.roundTo()), pos: \(position.roundTo()), zoom: \(zoom.roundTo())", level: .debug)
+    /// Called when the camera bounds updated.
+    /// - Parameters:
+    ///   - bounds: camera view bounds.
+    ///   - position: camera position.
+    ///   - zoom: camera zoom amount.
+    public override func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {
         updateCameraInfo(cameraNode)
     }
 
     #if os(iOS)
-    /**
-     Called when the scene receives a double-tap event (iOS only).
 
-     - parameter location: `CGPoint` touch event location.
-     */
-    override public func sceneDoubleTapped(location: CGPoint) {
+    /// Called when the scene receives a double-tap event (iOS only).
+    ///
+    /// - Parameter location: touch event location.
+    public override func sceneDoubleTapped(location: CGPoint) {
         log("scene was double tapped.", level: .debug)
     }
     #endif
 
     #if os(macOS)
-    /**
-     Called when the scene is double-clicked (macOS only).
 
-     - parameter event: `NSEvent` mouse click event.
-     */
-    override public func sceneDoubleClicked(event: NSEvent) {
+    /// Called when the scene is clicked (macOS only).
+    ///
+    /// - Parameter event: mouse click event.
+    public func sceneClicked(event: NSEvent) {
+        //print("⭑ [SKTiledDemoScene]: scene clicked, button: \(event.buttonNumber)")
+        let location = event.location(in: self)
+        var logMessage = "mouse clicked at: \(location.coordDescription)"
+
+        if let tilemap = tilemap {
+            let positionInMap = event.location(in: tilemap)
+            let mapCoordinate = tilemap.coordinateAtMouse(event: event)
+            logMessage += ", map pos: \(positionInMap.coordDescription), coord: \(mapCoordinate.coordDescription)"
+        }
+
+        //log(logMessage, level: .debug)
+    }
+
+
+    /// Called when the scene is double-clicked (macOS only).
+    ///
+    /// - Parameter event: mouse click event.
+    public override func sceneDoubleClicked(event: NSEvent) {
         let location = event.location(in: self)
         log("mouse double-clicked at: \(location.shortDescription)", level: .debug)
     }
 
-    /**
-     Called when the mouse moves in the scene (macOS only).
-
-     - parameter event: `NSEvent` mouse event.
-     */
-    override public func mousePositionChanged(event: NSEvent) {
-        guard let tilemap = tilemap else { return }
-        
-        let locationInMap = event.location(in: tilemap)
-        let nodesUnderCursor = tilemap.nodes(at: locationInMap)
-
-        demoQueue.async {
-            // populate the focus objects array
-            self.focusObjects = nodesUnderCursor.filter { node in
-                (node as? SKTiledGeometry != nil)
-            }
-
-            // call back to the view controller
-            DispatchQueue.main.async {
-                
-                if !self.focusObjects.isEmpty {
-            
-                    NotificationCenter.default.post(
-                        name: Notification.Name.Demo.FocusObjectsChanged,
-                        object: self.focusObjects,
-                        userInfo: ["tilemap": tilemap]
-                    )
-                
-
-                    var currentTile: SKTile?
-                    var currentObject: TileObjectProxy?
-
-
-                    let doShowTileBounds = TiledGlobals.default.debug.mouseFilters.contains(.tilesUnderCursor)
-                    let proxyIsFocused = (tilemap.showObjects == false) ? TiledGlobals.default.debug.mouseFilters.contains(.objectsUnderCursor) : false
-
-                    
-                    for object in self.focusObjects {
-
-                        if let tile = object as? SKTile {
-                            if (currentTile == nil) {
-                                currentTile = tile
-                                continue
-                            }
-                        }
-
-                        if let obj = object as? SKTileObject {
-                            if let proxy = obj.proxy {
-                                if (currentObject == nil) {
-                                    currentObject = proxy
-                                    proxy.isFocused = proxyIsFocused
-                                    continue
-                                }
-                            }
-                        }
-
-
-                        if let proxy = object as? TileObjectProxy {
-                            currentObject = proxy
-                            proxy.isFocused = proxyIsFocused
-                            continue
-                        }
-                    }
-
-                    if let currentTile = currentTile {
-
-                        NotificationCenter.default.post(
-                            name: Notification.Name.Demo.TileUnderCursor,
-                            object: currentTile,
-                            userInfo: nil
-                        )
-                    }
-
-
-                    if let currentObject = currentObject {
-                        if let object = currentObject.reference {
-                            NotificationCenter.default.post(
-                                name: Notification.Name.Demo.ObjectUnderCursor,
-                                object: object,
-                                userInfo: nil
-                            )
-                        }
-                    }
-
-
-                    currentTile?.frameColor = TiledGlobals.default.debug.tileHighlightColor
-                    currentTile?.highlightColor = TiledGlobals.default.debug.tileHighlightColor
-                    currentTile?.showBounds = doShowTileBounds
-                }
-            }
-        }
+    /// Mouse right-click event handler.
+    ///
+    /// - Parameter event: mouse event.
+    open override func rightMouseDown(with event: NSEvent) {
+        cameraNode?.rightMouseDown(with: event)
     }
 
 
     // MARK: - Keyboard Events
 
-    /**
-     Run demo keyboard events (macOS).
-
-     - parameter eventKey: `UInt16` event key.
-     */
-    public func keyboardEvent(eventKey: UInt16) {
+    /// Run demo keyboard events (macOS).
+    ///
+    /// - Parameter eventKey: event key.
+    public func handleKeyboardEvent(event: NSEvent) {
         guard let view = view else {
             return
         }
 
+
+        let eventKey = event.keyCode
+        var eventChars = event.characters ?? "⋯"
+
         // '→' advances to the next scene
         if eventKey == 0x7c {
             self.loadNextScene()
+            eventChars = "→"
         }
 
         // '←' loads the previous scene
         if eventKey == 0x7B {
+            eventChars = "←"
             self.loadPreviousScene()
         }
 
         // '↑' raises the speed
         if eventKey == 0x7e {
+            eventChars = "↑"
             self.speed += 0.2
             updateCommandString("scene speed: \(speed.roundTo())", duration: 1.0)
         }
 
         // '↓' lowers the speed
         if eventKey == 0x7d {
+            eventChars = "↓"
             self.speed -= 0.2
             updateCommandString("scene speed: \(speed.roundTo())", duration: 1.0)
         }
+
 
         // 'h' shows/hides SpriteKit stats
         if eventKey == 0x04 {
             demoController?.toggleRenderStatistics()
         }
 
+
         // 'k' clears the scene
         if eventKey == 0x28 {
+
             updateCommandString("clearing scene...", duration: 3.0)
-            
             NotificationCenter.default.post(
                 name: Notification.Name.Demo.FlushScene,
                 object: nil
@@ -861,6 +741,20 @@ extension SKTiledDemoScene {
 
         guard let cameraNode = cameraNode else {
             return
+        }
+
+
+        // '+' and '-' zoom
+        if [0x45, 0x4e, 0x1b, 0x18].contains(eventKey) {
+            // decrease zoom...
+            if [0x4e, 0x1b].contains(eventKey) {
+                let newZoom = cameraNode.zoom - 0.5
+                cameraNode.setCameraZoom(newZoom)
+            } else {
+                let newZoom = cameraNode.zoom + 0.5
+                cameraNode.setCameraZoom(newZoom)
+            }
+
         }
 
 
@@ -886,73 +780,61 @@ extension SKTiledDemoScene {
         if eventKey == 0x8 {
             var newClampValue: CameraZoomClamping = .none
             switch cameraNode.zoomClamping {
-            case .none:
-                newClampValue = .tenth
-            case .tenth:
-                newClampValue = .quarter
-            case .quarter:
-                newClampValue = .half
-            case .half:
-                newClampValue = .third
-            case .third:
-                newClampValue = .none
+                case .none:
+                    newClampValue = .tenth
+                case .tenth:
+                    newClampValue = .quarter
+                case .quarter:
+                    newClampValue = .half
+                case .half:
+                    newClampValue = .third
+                case .third:
+                    newClampValue = .none
             }
-            self.cameraNode.zoomClamping = newClampValue
+            self.cameraNode?.zoomClamping = newClampValue
             updateCommandString("camera zoom clamping: \(newClampValue)", duration: 1.0)
         }
 
+
         guard let tilemap = tilemap,
-            (worldNode != nil) else {
+              (worldNode != nil) else {
             return
         }
 
-        // 'e' turns off effects rendering
+
+        // 'e' toggles effects rendering
         if eventKey == 0xe {
             NotificationCenter.default.post(
                 name: Notification.Name.Debug.MapEffectsRenderingChanged,
                 object: nil
             )
+
+
+            let currentValue = tilemap.shouldEnableEffects
+            let nextValueString: String = (!currentValue == true) ? "off" : "on"
+            tilemap.shouldEnableEffects = !currentValue
+            updateCommandString("toggling effects rendering: \(nextValueString)", duration: 3.0)
         }
 
-        // 'g' shows the grid for the map default layer.
+        // 'g' shows the grid for the map default layer. Calls `DemoController.toggleMapDemoDrawGridAndBounds`.
         if eventKey == 0x5 {
             NotificationCenter.default.post(
-                name: Notification.Name.Debug.MapDebuggingChanged,
+                name: Notification.Name.Debug.MapDebugDrawingChanged,
                 object: nil
             )
         }
 
-        // 'i' isolates current layer under the mouse (macOS)
-        if eventKey == 0x22 {
 
-            var command = "restoring all layers"
-
-            if let currentLayer = currentLayer {
-                let willIsolateLayer = (currentLayer.isolated == false)
-                command = (willIsolateLayer == true) ? "isolating layer: \"\(currentLayer.layerName)\"" : "restoring all layers"
-                log(command, level: .debug)
-
-                // isolate the layer
-                currentLayer.isolateLayer(duration: 0.25)
-
-            // no layer selected
-            } else {
-                tilemap.getLayers().forEach { layer in
-                    if (layer.isolated == true) {
-                        layer.isolateLayer(duration: 0.25)
-                    }
-                }
+        /// 'l' tests the `DebugDrawableType.drawFrame` method.
+        if eventKey == 0x25 {
+            tilemap.getObjects().forEach { object in
+                object.drawNodeBounds(with: object.frameColor, lineWidth: 1, fillOpacity: 0, duration: 2)
             }
 
-            updateCommandString(command, duration: 3.0)
-
-            NotificationCenter.default.post(
-                name: Notification.Name.Map.Updated,
-                object: tilemap,
-                userInfo: nil
-            )
+            tilemap.drawNodeBounds(with: tilemap.frameColor, lineWidth: 1, fillOpacity: 0, duration: 2)
+            updateCommandString("drawing object bounds...", duration: 3.0)
         }
-        
+
         // 'o' shows/hides objects
         if eventKey == 0x1f {
 
@@ -965,10 +847,8 @@ extension SKTiledDemoScene {
 
         // 't' toggles effects rasterization
         if eventKey == 0x11 {
-            let currentValue = tilemap.shouldRasterize
-            let commandString = (currentValue == false) ? "on" : "off"
-            tilemap.shouldRasterize = !currentValue
-            updateCommandString("rasterization: \(commandString)", duration: 1.0)
+            tilemap.shouldRasterize.toggle()
+            updateCommandString("Tilemap rasterization: \(tilemap.shouldRasterize.valueAsOnOff)", duration: 1.0)
 
             NotificationCenter.default.post(
                 name: Notification.Name.Map.Updated,
@@ -991,11 +871,10 @@ extension SKTiledDemoScene {
             // update controllers
             NotificationCenter.default.post(
                 name: Notification.Name.Globals.Updated,
-                object: nil,
-                userInfo: nil
+                object: nil
             )
         }
     }
+
     #endif
 }
-

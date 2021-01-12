@@ -2,8 +2,7 @@
 //  Demo+Setup.swift
 //  SKTiled Demo
 //
-//  Created by Michael Fessenden.
-//
+//  Copyright © 2020 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -29,28 +28,28 @@ import SpriteKit
 
 
 extension SKTiledDemoScene {
-    
-    /**
-     Special setup functions for various included demo content.
-     
-     - parameter fileNamed: `String` tiled filename.
-     */
-    func setupDemoLevel(fileNamed: String) {
+
+    /// Special setup functions for various included demo content.
+    ///
+    /// - Parameters:
+    ///   - fileNamed: tiled filename.
+    ///   - verbose: logging verbosity.
+    func setupDemoLevel(fileNamed: String, verbose: Bool = false) {
         guard let tilemap = tilemap else { return }
-        
+
         let baseFilename = fileNamed.components(separatedBy: "/").last!
-        
+
         let walkableTiles = tilemap.getTilesWithProperty("walkable", true)
         let walkableTilesString = (walkableTiles.isEmpty == true) ? "" : ", \(walkableTiles.count) walkable tiles."
-        log("setting up level: \"\(baseFilename)\"\(walkableTilesString)", level: .debug)
-        
+        log("setting up level: '\(baseFilename)'\(walkableTilesString)", level: .debug)
+
         switch baseFilename {
-            
-            case "dungeon-16x16.tmx":                
+
+            case "dungeon-16x16.tmx":
                 if let upperGraphLayer = tilemap.tileLayers(named: "Graph-Upper").first {
                     _ = upperGraphLayer.initializeGraph(walkable: walkableTiles)
                 }
-                
+
                 if let lowerGraphLayer = tilemap.tileLayers(named: "Graph-Lower").first {
                     _ = lowerGraphLayer.initializeGraph(walkable: walkableTiles)
                 }
@@ -60,15 +59,121 @@ extension SKTiledDemoScene {
                     _ = graphLayer.initializeGraph(walkable: walkableTiles)
                 }
 
+            case "staggered-64x33.tmx":
+                if let graphLayer = tilemap.tileLayers(named: "Graph").first {
+                    _ = graphLayer.initializeGraph(walkable: walkableTiles)
+                }
+
             default:
                 return
         }
-        
-        
-        NotificationCenter.default.post(
-            name: Notification.Name.Demo.WindowTitleUpdated,
-            object: nil,
-            userInfo: ["wintitle": fileNamed]
-        )
     }
+}
+
+
+// MARK: - Demo Event Methods
+
+extension SKTiledDemoScene {
+
+    #if os(macOS)
+
+    /// Mouse over handler for the demo project.
+    ///
+    /// - Parameters:
+    ///   - globalID: e global id.
+    ///   - ofType: tile type.
+    /// - Returns: mouse handler.
+    @objc public func mouseOverTileHandler(globalID: UInt32, ofType: String? = nil) -> ((SKTile) -> ())? {
+        return { (tile) in
+            NotificationCenter.default.post(
+                name: Notification.Name.Demo.TileUnderCursor,
+                object: tile
+            )
+        }
+    }
+
+    /// Mouse click handler for the demo project.
+    ///
+    /// - Parameters:
+    ///   - clicks: number of mouse clicks required.
+    ///   - globalID: tile global id.
+    ///   - ofType: tile type.
+    /// - Returns: mouse handler.
+    @objc public func tileClickedHandler(globalID: UInt32, ofType: String? = nil, button: UInt8 = 0) -> ((SKTile) -> ())? {
+        return { (tile) in
+            NotificationCenter.default.post(
+                name: Notification.Name.Demo.TileClicked,
+                object: tile
+            )
+        }
+    }
+
+    /// Mouse over handler for the demo project.
+    ///
+    /// - Parameters:
+    ///   - withID: object id.
+    ///   - ofType: object type.
+    @objc public func mouseOverObjectHandler(withID: UInt32, ofType: String?) -> ((SKTileObject) -> ())? {
+        return { (object) in
+            NotificationCenter.default.post(
+                name: Notification.Name.Demo.ObjectUnderCursor,
+                object: object
+            )
+        }
+    }
+
+    /// Mouse click handler for the demo project.
+    ///
+    /// - Parameters:
+    ///   - clicks: number of mouse clicks required.
+    ///   - withID: object id.
+    ///   - ofType: object type.
+    @objc public func objectClickedHandler(withID: UInt32, ofType: String?, button: UInt8 = 0) -> ((SKTileObject) -> ())? {
+        return { (object) in
+            NotificationCenter.default.post(
+                name: Notification.Name.Demo.ObjectClicked,
+                object: object
+            )
+        }
+    }
+
+
+
+    #elseif os(iOS)
+
+    /// Custom touch handler for tiles matching the given properties.
+    ///
+    /// - Parameters:
+    ///   - globalID: tile global id.
+    ///   - ofType: tile type
+    ///   - block: closure.
+    ///   - userData: dictionary of attributes.
+    @objc public func tileTouchedHandler(globalID: UInt32, ofType: String?, userData: [String: Any]?) -> ((SKTile) -> ())? {
+        return { (tile) in
+
+            NotificationCenter.default.post(
+                name: Notification.Name.Demo.TileTouched,
+                object: tile
+            )
+        }
+    }
+
+    /// Custom touch handler for objects matching the given properties.
+    ///
+    /// - Parameters:
+    ///   - globalID: tile global id.
+    ///   - ofType: tile type
+    ///   - block: closure.
+    ///   - userData: dictionary of attributes.
+    @objc public func objectTouchedHandler(withID: UInt32, ofType: String?, userData: [String: Any]?) -> ((SKTileObject) -> ())? {
+        return { (object) in
+
+            NotificationCenter.default.post(
+                name: Notification.Name.Demo.ObjectTouched,
+                object: object
+            )
+        }
+    }
+
+    #endif
 }
