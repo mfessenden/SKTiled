@@ -2,8 +2,7 @@
 //  GameWindowController.swift
 //  SKTiled Demo - macOS
 //
-//  Created by Michael Fessenden.
-//
+//  Copyright © 2020 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -43,6 +42,10 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
         super.awakeFromNib()
         window?.delegate = self
         window?.acceptsMouseMovedEvents = true
+
+        // set the default window title
+        let wintitle = "\(TiledGlobals.default.windowTitle) : ~"
+        window?.title = wintitle
     }
 
     // MARK: - Resizing
@@ -56,34 +59,30 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
 
             // pause the scene for the resize
             scene.isPaused = true
-
-            /*
-            if let sceneDelegate = scene as? SKTiledSceneDelegate {
-                if let cameraNode = sceneDelegate.cameraNode {
-                    cameraNode.setCameraBounds(bounds: view.bounds)
-                }
-            }*/
         }
     }
 
-    /**
-     Tweak the window title bar when the window is resized.
-     */
+    /// Tweak the window title bar when the window is resized.
+    ///
+    /// - Parameter notification: event notification.
     func windowDidResize(_ notification: Notification) {
-        var wintitle = ""
+        var wintitle = TiledGlobals.default.windowTitle
         if let scene = view.scene {
             scene.size = view.bounds.size
 
-            if let sceneDelegate = scene as? SKTiledSceneDelegate {
+            if let sceneDelegate = scene as? TiledSceneDelegate {
 
                 // update tracking view?
                 if let tilemap = sceneDelegate.tilemap {
                     var renderSize = tilemap.sizeInPoints
-                    renderSize.width *= sceneDelegate.cameraNode.zoom
-                    renderSize.height *= sceneDelegate.cameraNode.zoom
+                    renderSize.width *= sceneDelegate.cameraNode?.zoom ?? 1
+                    renderSize.height *= sceneDelegate.cameraNode?.zoom ?? 1
 
-
-                    wintitle += "\(tilemap.url.lastPathComponent) - \(view.bounds.size.shortDescription)"
+                    var titleSuffix = ""
+                    if let mapurl = tilemap.url {
+                        titleSuffix = ": \(mapurl.lastPathComponent) - \(view.bounds.size.shortDescription)"
+                    }
+                    wintitle += titleSuffix
                 }
 
                 // update the camera bounds
@@ -93,20 +92,30 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
             }
         }
 
-        NotificationCenter.default.post(
-            name: Notification.Name.Demo.WindowTitleUpdated,
-            object: nil,
-            userInfo: ["wintitle": wintitle]
-        )
+        // set the window title
+        window?.title = "\(wintitle)"
     }
 
     func windowDidEndLiveResize(_ notification: Notification) {
+
+        var wintitle = TiledGlobals.default.windowTitle
+
         // Un-pause the scene when the window stops resizing if the game is active.
         if let scene = view.scene {
-            if (scene as? SKTiledSceneDelegate != nil) {
+
+            if let sceneDelegate = scene as? TiledSceneDelegate {
                 scene.isPaused = isManuallyPaused
+                // update tracking view?
+                if let tilemap = sceneDelegate.tilemap {
+                    if let mapurl = tilemap.url {
+                        wintitle += ": \(mapurl.lastPathComponent)"
+                    }
+                }
             }
         }
+
+        // set the window title
+        window?.title = "\(wintitle)"
     }
 
     // OS X games that use a single window for the entire game should quit when that window is closed.

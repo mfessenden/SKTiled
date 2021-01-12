@@ -1,6 +1,9 @@
 # Working with Maps
 
 - [Loading a Tilemap](#loading-a-tilemap)
+   - [Locating Assets](#locating-assets)
+- [Infinite Maps](#infinite-maps)
+- [Tiled Globals](#tiled-globals)
 - [Tile Rendering](#tile-rendering)
     - [Full & Dynamic](#full-amp-dynamic)
     - [SpriteKit Actions](#spritekit-actions)
@@ -14,7 +17,7 @@
 
 ## Loading a Tilemap
 
-Creating a tilemap node is very straightforward; simply call the `SKTilemap.load(tmxFile:)` function to read a Tiled tmx file from disk:
+Creating a tilemap node is very straightforward; simply call the [`SKTilemap.load(tmxFile:)`][sktilemap-load-url] function to read a Tiled tmx file from disk:
 
 ```swift
 if let tilemap = SKTilemap.load(tmxFile: "MyTilemap.tmx") {
@@ -22,28 +25,58 @@ if let tilemap = SKTilemap.load(tmxFile: "MyTilemap.tmx") {
 }
 ```
 
-If you are implementing the `SKTilemapDelegate` and `SKTilesetDataSource` protocols, you can optionally specify those when you load the tilemap:
+If you are implementing the `TilemapDelegate` and `SKTilesetDataSource` protocols, you can optionally specify those when you load the tilemap:
 
 ```swift
 if let tilemap = SKTilemap.load(tmxFile: tmxFile,
-                                delegate: self as? SKTilemapDelegate,
+                                delegate: self as? TilemapDelegate,
                                 tilesetDataSource: self as? SKTilesetDataSource) {
 
     worldNode.addChild(tilemap)
 }
 ```
 
-Once the map is loaded, you'll need to add your tilemap node to your [`SKScene.update`][skscene-update-url] method:
+Once the map is loaded, you'll need to add your tilemap node to your [`SKScene.update`][skscene-update-url] method (unless you're rendering tiles with SpriteKit Actions):
 
 
 ```swift
 class GameScene: SKScene {
     var tilemap: SKTilemap?
+    /// Update the tilemap.
     override func update(_ currentTime: TimeInterval) {
         self.tilemap?.update(currentTime)
     }
 }
 ```
+
+
+### Locating Assets
+
+Loading a tilemap from your project can be tricky depending on how you set up you assets. Passing the `inDirectory` argument to the `SKTilemap.load` method allows you to specify a directory in which to search for assets.
+
+Once the tilemap is rendered, you can get information about the map's source file by querying the `SKTilemap.url` property.
+
+## Infinite Maps
+
+Infinite maps work exactly as other maps do - the only difference is that internally tile layers are composed of chunks (sub-layers) with offset values.
+
+## Tiled Globals
+
+The `TiledGlobals` class stores default properties that you may tweak for your own projects.
+
+
+| Property                           | Description                             |
+|:---------------------------------- |:--------------------------------------- |
+| TiledGlobals.renderer              | SpriteKit renderer (get only).          |
+| TiledGlobals.loggingLevel          | Logging verbosity.                      |
+| TiledGlobals.updateMode            | Default tile update mode.               |
+| TiledGlobals.zDeltaForLayers       | Default layer SpriteKit offset.         |
+| TiledGlobals.enableRenderCallbacks | Allow render statistics.                |
+| TiledGlobals.enableCameraCallbacks | Allow camera updates.                   |
+| TiledGlobals.renderQuality         | Global render quality values.           |
+| TiledGlobals.contentScale          | Retina display scale factor (get only). |
+| TiledGlobals.version               | Framework version (get only).           |
+
 
 
 ## Tile Rendering
@@ -53,7 +86,7 @@ By default, **SKTiled** updates each tile on a concurrent background queue. This
 
 
 |  Mode   | Description                                                           |
-|:-------:|:----------------------------------------------------------------------|
+|:-------:|:--------------------------------------------------------------------- |
 |  full   | All tiles are updated each frame.                                     |
 | dynamic | Only animated tiles are updated.                                      |
 | actions | No tiles are updated, animations are rendered with SpriteKit actions. |
@@ -65,13 +98,12 @@ Tile update mode can be passed as an argument to the load method, or set later:
 
 ```swift
 // tilemap will update only animated tiles
-if let tilemap = SKTilemap.load(tmxFile: "MyTilemap.tmx", 
-									delegate: nil, 
+if let tilemap = SKTilemap.load(tmxFile: "MyTilemap.tmx",
+									delegate: nil,
 									updateMode: TileUpdateMode.dynamic) {
-		
-									
-}
 
+
+}
 // change the rendering to update all tiles for every frame
 tilemap.updateMode = TileUpdateMode.full
 ```
@@ -100,10 +132,7 @@ tilemap.runAnimationAsActions(true)
 tilemap.runAnimationAsActions(false, restore: true)
 ```
 
-Passing a value of `false` will remove all actions and effectively halt all animation.
-
-
-It is also possible to start & stop SpriteKit actions for each layer individually:
+Passing a value of `false` will remove all actions and effectively halt all animation. It is also possible to start & stop SpriteKit actions for each layer individually:
 
 ```swift
 
@@ -124,7 +153,7 @@ For more information, see the [**Working with Tiles**](working-with-tiles.html#t
 
 ## Effects Rendering
 
-`SKTilemap` & `SKTiledLayerObject` nodes are subclassed from the SpriteKit [`SKEffectNode`][skeffectnode-url] node. The [`SKEffectNode`][skeffectnode-url] node renders its children into a private buffer and additionally allows Core Image effects to be applied. You may also apply shaders and distortions to these nodes, allowing for sophisticated rendering effects.
+`SKTiledLayerObject` layer types are subclassed from the SpriteKit [`SKEffectNode`][skeffectnode-url] node. The [`SKEffectNode`][skeffectnode-url] node renders its children into a private buffer and additionally allows Core Image effects to be applied. You may also apply shaders and distortions to these nodes, allowing for sophisticated rendering effects.
 
 To enable shader effects, turn on the [`SKTilemap.shouldEnableEffects`][skeffectnode-effects-url] attribute. This will consume slightly more CPU & GPU power, so by default it is disabled to conserve resources. One additional benefit is that rendering into a buffer eliminates tile "cracking" artifacts.
 
@@ -160,15 +189,24 @@ tilemap.shader = shader
 tilemap.setValue(SKAttributeValue(vectorFloat2: tilemap.sizeInPoints.toVec2), forAttribute: "a_map_size")
 ```
 
-For more details, check out [**Apple's SKShader tutorial page**][skshader-url].
+Applying a CoreImage filter is similar:
+
+```swift
+let blurFilter = CIFilter(name: "CIBoxBlur",  parameters: ["inputRadius": 20])
+tilemap.filter = blurFilter      
+```
+
+For more details, check out [**Apple's SKShader tutorial page**][skshader-url] & [**Apple's SKEffectNode page**][cifilter-url] .
 
 
 
 
-Next: [Working with Tilesets](working-with-tilesets.html) - [Index](Table of Contents.html)
-
+Next: [Working with Tilesets](working-with-tilesets.html) - [Index](Documentation.html)
+[sktilemap-load-url]:Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC4loadACSgSS7tmxFile_SSSg11inDirectoryAA0B8Delegate_pSg8delegateSayAA9SKTilesetCGSg12withTilesetsSb16ignorePropertiesAA12LoggingLevelO07loggingP0tFZ
 [skscene-update-url]:https://developer.apple.com/documentation/spritekit/skscene/1519802-update
 [skshader-url]:https://developer.apple.com/documentation/spritekit/skshader
+[skeffectnode-filter-url]:https://developer.apple.com/documentation/spritekit/skeffectnode/1459392-filter
+[cifilter-url]:https://developer.apple.com/documentation/coreimage/cifilter
 [skeffectnode-url]:https://developer.apple.com/documentation/spritekit/skeffectnode
 [skeffectnode-effects-url]:https://developer.apple.com/documentation/spritekit/skeffectnode/1459385-shouldenableeffects
 [sknode-speed-url]:https://developer.apple.com/documentation/spritekit/sknode/1483036-speed

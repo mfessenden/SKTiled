@@ -2,8 +2,7 @@
 //  TiledSceneCameraDelegate.swift
 //  SKTiled
 //
-//  Created by Michael Fessenden.
-//
+//  Copyright © 2020 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -28,99 +27,111 @@
 import SpriteKit
 
 
-/**
 
- ## Overview
+/// ## Overview
+///
+/// Methods for interacting with the custom `SKTiledSceneCamera` object. Classes conforming to this
+/// protocol are notified of camera position & zoom changes unless the `TiledSceneCameraDelegate.receiveCameraUpdates`
+/// flag is disabled.
+///
+/// This delegate also receives mouse & touch events and forwards them on to delegates accordingly.
+///
+/// ![Tiled Scene Camera Delegate][tiled-scene-camera-delegate-image]
+///
+/// ### Properties
+///
+/// | Method                    | Description                                              |
+/// |---------------------------|----------------------------------------------------------|
+/// | receiveCameraUpdates      | Delegate will receive camera updates.                    |
+/// | currentCoordinate         | The currently focused map coordinate.                    |
+///
+/// ### Instance Methods
+///
+/// | Method                    | Description                                              |
+/// |---------------------------|----------------------------------------------------------|
+/// | containedNodesChanged     | Called when the nodes in the camera view changes.        |
+/// | cameraPositionChanged     | Called when the camera position changes.                 |
+/// | cameraZoomChanged         | Called when the camera zoom changes.                     |
+/// | cameraBoundsChanged       | Called when the camera bounds updated.                   |
+/// | sceneClicked              | Called when the scene is clicked. (macOS only)           |
+/// | sceneRightClicked         | Called when the scene is right-clicked. (macOS only)     |
+/// | sceneDoubleClicked        | Called when the scene is double-clicked. (macOS only)    |
+/// | mousePositionChanged      | Called when the mouse moves in the scene. (macOS only)   |
+/// | sceneDoubleTapped         | Called when the scene is double-tapped. (iOS only)       |
+/// | sceneRotated              | Called when the scene is rotated via gesture. (iOS only) |
+///
+/// [tiled-scene-camera-delegate-image]:../images/camera-delegate.svg
+@objc public protocol TiledSceneCameraDelegate: class {
 
- Methods for interacting with the custom `SKTiledSceneCamera`. Classes conforming to this
- protocol are notified of camera position & zoom changes - unless the `SKTiledSceneCameraDelegate.receiveCameraUpdates`
- flag is disabled.
-
- ![Tiled Scene Camera Delegate][tiled-scene-camera-delegate-image]
-
- ### Properties
-
- | Method                    | Description                                              |
- |---------------------------|----------------------------------------------------------|
- | receiveCameraUpdates      | Delegate will receive camera updates.                    |
-
-
- ### Instance Methods ###
-
- | Method                    | Description                                              |
- |---------------------------|----------------------------------------------------------|
- | containedNodesChanged     | Called when the nodes in the camera view changes.        |
- | cameraPositionChanged     | Called when the camera positon changes.                  |
- | cameraZoomChanged         | Called when the camera zoom changes.                     |
- | cameraBoundsChanged       | Called when the camera bounds updated.                   |
- | sceneDoubleClicked        | Called when the scene is double-clicked. (macOS only)    |
- | mousePositionChanged      | Called when the mouse moves in the scene. (macOS only)   |
- | sceneDoubleTapped         | Called when the scene is double-tapped. (iOS only)       |
-
-
- [tiled-scene-camera-delegate-image]:https://mfessenden.github.io/SKTiled/images/camera-delegate.svg
-
- */
-@objc public protocol SKTiledSceneCameraDelegate: class {
-
-    /**
-     Allow delegate to receive updates from camera.
-     */
+    /// Allow delegate to receive updates from camera.
     @objc var receiveCameraUpdates: Bool { get set }
+    
+    /// Current focus coordinate.
+    @objc optional var currentCoordinate: simd_int2 { get set }
 
-    /**
-     Allow delegates to receive updates when nodes in view change.
-
-     - parameter nodes: `[SKNode]` nodes in camera view.
-     */
+    /// Allow delegates to receive updates when nodes in view change.
+    ///
+    /// - Parameter nodes: nodes in camera view.
     @objc optional func containedNodesChanged(_ nodes: Set<SKNode>)
 
-    /**
-     Called when the camera positon changes.
-
-     - parameter newPositon: `CGPoint` updated camera position.
-     */
+    /// Called when the camera position changes.
+    ///
+    /// - Parameter newPosition: updated camera position.
     @objc optional func cameraPositionChanged(newPosition: CGPoint)
 
-    /**
-     Called when the camera zoom changes.
-
-     - parameter newZoom: `CGFloat` camera zoom amount.
-     */
+    /// Called when the camera zoom changes.
+    ///
+    /// - Parameter newZoom: camera zoom amount.
     @objc optional func cameraZoomChanged(newZoom: CGFloat)
 
-    /**
-     Called when the camera bounds updated.
-
-     - parameter bounds:  `CGRect` camera view bounds.
-     - parameter positon: `CGPoint` camera position.
-     - parameter zoom:    `CGFloat` camera zoom amount.
-     */
+    /// Called when the camera bounds are updated.
+    ///
+    /// - Parameters:
+    ///   - bounds: camera view bounds.
+    ///   - position: camera position.
+    ///   - zoom: camera zoom amount.
     @objc optional func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat)
 
     #if os(macOS)
-    /**
-     Called when the scene is double-clicked (macOS only).
 
-     - parameter event: `NSEvent` mouse click event.
-     */
+    /// Called when the scene is clicked (macOS only).
+    ///
+    /// - Parameter event: mouse click event.
+    @objc optional func sceneClicked(event: NSEvent)
+
+    /// Called when the scene is right-clicked (macOS only).
+    ///
+    /// - Parameter event: mouse click event.
+    @objc optional func sceneRightClicked(event: NSEvent)
+
+    /// Called when the scene is double-clicked (macOS only).
+    ///
+    /// - Parameter event: mouse click event.
     @objc optional func sceneDoubleClicked(event: NSEvent)
 
-    /**
-     Called when the mouse moves in the scene (macOS only).
-
-     - parameter event: `NSEvent` mouse click event.
-     */
+    /// Called when the mouse moves in the scene (macOS only).
+    ///
+    /// - Parameter event: mouse move event.
     @objc optional func mousePositionChanged(event: NSEvent)
     #endif
 
-
     #if os(iOS)
-    /**
-     Called when the scene receives a double-tap event (iOS only).
 
-     - parameter location: `CGPoint` touch event location.
-     */
+    /// Called when the scene receives a double-tap event (iOS only).
+    ///
+    /// - Parameter location: touch event location.
     @objc optional func sceneDoubleTapped(location: CGPoint)
+    
+    /// Called when the current scene has been rotated.
+    ///
+    /// - Parameters:
+    ///   - new: new rotation value.
+    ///   - old: previous rotation value.
+    @objc optional func sceneWasRotated(new: CGFloat, old: CGFloat)
     #endif
 }
+
+
+
+/// :nodoc: Typealias for v1.2 compatibility.
+public typealias SKTiledSceneCameraDelegate = TiledSceneCameraDelegate

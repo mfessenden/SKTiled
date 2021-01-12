@@ -29,30 +29,30 @@ import SpriteKit
 
 /// Anchor point visualization.
 internal class AnchorNode: SKNode {
-    
+
     var radius: CGFloat = 0
     var color: SKColor = SKColor.clear
     var labelText = "Anchor"
     var labelSize: CGFloat = 18.0
     var renderQuality: CGFloat = TiledGlobals.default.renderQuality.default
-    
+
     var labelOffsetX: CGFloat = 0
     var labelOffsetY: CGFloat = 0
-    
+
     @objc var receiveCameraUpdates: Bool = true
-    
+
     private var shapeKey = "ANCHOR_SHAPE"
     private var labelKey = "ANCHOR_LABEL"
-    
+
     var sceneScale: CGFloat = 1
-    
+
     private var shape: SKShapeNode? {
         return childNode(withName: shapeKey) as? SKShapeNode
     }
     private var label: SKLabelNode? {
         return childNode(withName: labelKey) as? SKLabelNode
     }
-    
+
     /// Instatiate with basic object properties.
     ///
     /// - Parameters:
@@ -79,30 +79,30 @@ internal class AnchorNode: SKNode {
         self.name = "ANCHOR"
         self.draw()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     /// Draw the anchor shape.
     func draw() {
         shape?.removeFromParent()
         label?.removeFromParent()
-        
+
         //let sceneScaleInverted = (sceneScale > 1) ? abs(1 - sceneScale) : sceneScale
         let scaledRenderQuality = renderQuality * sceneScale
-        
+
         let minRadius: CGFloat = 2.0
         let maxRadius: CGFloat = 6.0
         var zoomedRadius = (radius / sceneScale)
-        
+
         // clamp the anchor radius to min/max values
         zoomedRadius = (zoomedRadius > maxRadius) ? maxRadius : (zoomedRadius < minRadius) ? minRadius : zoomedRadius
-        
+
         let scaledFontSize = (labelSize * renderQuality) * sceneScale
         let scaledOffsetX = (labelOffsetX / sceneScale)
         let scaledOffsetY = (labelOffsetY / sceneScale)
-        
+
 
         let anchor = SKShapeNode(circleOfRadius: zoomedRadius)
         anchor.name = shapeKey
@@ -111,7 +111,7 @@ internal class AnchorNode: SKNode {
         anchor.strokeColor = color.shadow(withLevel: 0.4) ?? SKColor.clear
         anchor.zPosition = parent?.zPosition ?? 100
         anchor.lineWidth = 0.25
-        
+
         // label
         let nameLabel = SKLabelNode(fontNamed: "Courier")
         nameLabel.name = labelKey
@@ -140,7 +140,7 @@ extension AnchorNode: TiledCustomReflectableType {
     @objc public var tiledNodeNiceName: String {
         return "Anchor"
     }
-    
+
     @objc var tiledIconName: String {
         return "anchor-icon"
     }

@@ -2,10 +2,9 @@
 //  SKTiled+Properties.swift
 //  SKTiled
 //
-//  Created by Michael Fessenden.
-//
-//  Web: https://github.com/mfessenden
-//  Email: michael.fessenden@gmail.com
+//  Copyright © 2020 Michael Fessenden. all rights reserved.
+//	Web: https://github.com/mfessenden
+//	Email: michael.fessenden@gmail.com
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,14 +27,13 @@
 import SpriteKit
 
 
-extension SKTilemap {
-    // MARK: - Properties
-    
-    /**
-     Parse properties from the Tiled TMX file.
+// MARK: - SKTilemap
 
-     - parameter completion: `Void?` optional completion closure.
-    */
+extension SKTilemap {
+
+    /// Parse properties from the Tiled TMX file.
+    ///
+    /// - Parameter completion: optional completion closure.
     public func parseProperties(completion: (() -> Void)?) {
 
         if (ignoreProperties == true) { return }
@@ -47,10 +45,6 @@ extension SKTilemap {
 
             if ["zdelta", "zdeltaforlayers", "layerdelta"].contains(lattr) {
                 zDeltaForLayers = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : zDeltaForLayers
-            }
-
-            if ["debug", "debugmode", "debugdraw"].contains(lattr) {
-                debugDrawOptions = [.drawGrid, .drawBounds]
             }
 
             if (lattr == "gridcolor") {
@@ -101,6 +95,10 @@ extension SKTilemap {
                 allowZoom = boolForKey(attr)
             }
 
+            if (lattr == "camerazoom") {
+                currentZoom = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : 1.0
+            }
+
             if (lattr == "allowmovement") {
                 allowMovement = boolForKey(attr)
             }
@@ -134,7 +132,7 @@ extension SKTilemap {
             }
 
             if (lattr == "showobjects") {
-                showObjects = boolForKey(attr)
+                isShowingObjectBounds = boolForKey(attr)
             }
 
             if (lattr == "xgravity") {
@@ -153,7 +151,7 @@ extension SKTilemap {
 
             if (lattr == "showbounds") {
                 if (boolForKey(attr) == true) {
-                    debugDrawOptions.insert(.drawBounds)
+                    debugDrawOptions.insert(.drawFrame)
                 }
             }
 
@@ -164,7 +162,7 @@ extension SKTilemap {
             if (lattr == "objectcolor") {
                 objectColor = SKColor(hexString: value)
             }
-            
+
             if ["nicename", "displayname"].contains(lattr) {
                 displayName = value
             }
@@ -172,20 +170,37 @@ extension SKTilemap {
             if (lattr == "navigationcolor") {
                 navigationColor = SKColor(hexString: value)
             }
-            
+
             if ["enableeffects", "shouldenableeffects"].contains(lattr) {
                 shouldEnableEffects = boolForKey(attr)
             }
+
+            if ["drawgrid"].contains(lattr) {
+                debugDrawOptions.insert(.drawGrid)
+            }
+
+            if ["drawbounds"].contains(lattr) {
+                debugDrawOptions.insert(.drawFrame)
+            }
+
+            if ["debugdraw", "debugdrawoptions", "debugoptions"].contains(lattr) {
+                if let integerValue = intForKey(attr) {
+                    self.debugDrawOptions = DebugDrawOptions(rawValue: integerValue)
+                }
+            }
         }
 
-        if completion != nil { completion!() }
+        completion?()
     }
 }
 
+// MARK: - SKTileset
 
 extension SKTileset {
 
     /// Parse the tileset's properties value.
+    ///
+    /// - Parameter completion: optional completion closure.
     public func parseProperties(completion: (() -> Void)?) {
         if (ignoreProperties == true) { return }
          if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
@@ -197,7 +212,7 @@ extension SKTileset {
                     let walkableIDs = integerArrayForKey(attr)
                     log("walkable id: \(walkableIDs)", level: .debug)
                     for id in walkableIDs {
-                        if let tiledata = getTileData(localID: id) {
+                        if let tiledata = getTileData(localID: UInt32(id)) {
                             tiledata.walkable = true
                         }
                     }
@@ -205,15 +220,19 @@ extension SKTileset {
             }
         }
 
-
-        if completion != nil { completion!() }
+        completion?()
     }
 }
 
+// MARK: - TiledLayerObject
 
-extension SKTiledLayerObject {
+
+extension TiledLayerObject {
+
 
     /// Parse the layer's properties value.
+    ///
+    /// - Parameter completion: optional completion closure.
     public func parseProperties(completion: (() -> Void)?) {
 
         if (ignoreProperties == true) { return }
@@ -249,10 +268,9 @@ extension SKTiledLayerObject {
                 antialiased = boolForKey(attr)
             }
 
-
             if (lattr == "drawbounds") {
                 if boolForKey(attr) == true {
-                    drawBounds()
+                    drawNodeBounds()
                 }
             }
 
@@ -260,45 +278,63 @@ extension SKTiledLayerObject {
                 self.navigationKey = value
             }
 
-            if completion != nil { completion!() }
+            if (lattr == "proxycolor") {
+                proxyColor = SKColor(hexString: value)
+            }
+
+            if ["isstatic", "static"].contains(lattr) {
+                isStatic = boolForKey(attr)
+            }
+
+            if ["debugdraw", "debugdrawoptions", "debugoptions"].contains(lattr) {
+                if let integerValue = intForKey(attr) {
+                    self.debugDrawOptions = DebugDrawOptions(rawValue: integerValue)
+                }
+            }
+
+
+            completion?()
         }
     }
 
-    /**
-     Returns a named property for the layer.
-
-     - parameter name: `String` property name.
-     - returns: `String?` the property value, or nil if it does not exist.
-     */
+    /// Returns a named property for the layer.
+    ///
+    /// - Parameter name: property name.
+    /// - Returns: the property value, or nil if it does not exist.
     public func getValue(forProperty name: String) -> String? {
         return stringForKey(name)
     }
 
-    /**
-     Set a property/value pair.
-
-     - parameter name:  `String` property name.
-     - parameter value: `String` property value.
-     */
+    /// Set a property/value pair.
+    /// - Parameters:
+    ///   - value: property name.
+    ///   - name: property value..
     public func setValue(_ value: String, forProperty name: String) {
         properties[name] = value
     }
 }
 
+// MARK: - SKTileLayer
 
 extension SKTileLayer {
 
     /// Parse the tile layer's properties.
-    override public func parseProperties(completion: (() -> Void)?) {
+    ///
+    /// - Parameter completion: optional completion closure.
+    public override func parseProperties(completion: (() -> Void)?) {
         super.parseProperties(completion: completion)
     }
 }
 
 
+// MARK: - SKObjectGroup
+
 extension SKObjectGroup {
 
     /// Parse the object group's properties.
-    override public func parseProperties(completion: (() -> Void)?) {
+    ///
+    /// - Parameter completion: optional completion closure.
+    public override func parseProperties(completion: (() -> Void)?) {
         if (ignoreProperties == true) { return }
         for (attr, _ ) in properties {
             let lattr = attr.lowercased()
@@ -313,29 +349,43 @@ extension SKObjectGroup {
 }
 
 
+// MARK: - SKImageLayer
+
 extension SKImageLayer {
-    
+
     /// Parse the image layer's properties.
-    override public func parseProperties(completion: (() -> Void)?) {
+    ///
+    /// - Parameter completion: optional completion closure.
+    public override func parseProperties(completion: (() -> Void)?) {
         super.parseProperties(completion: completion)
     }
 }
 
 
-// MARK: - Generic Properties
+// MARK: - SKTileObject
+
 
 extension SKTileObject {
-    
-    /// Parse the object's properties value.
+
+    /// Parse the object's properties.
+    ///
+    /// - Parameter completion: optional completion closure.
     public func parseProperties(completion: (() -> Void)?) {
         if (ignoreProperties == true) { return }
         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
+
         for (attr, value) in properties {
 
             let lattr = attr.lowercased()
 
-            if (lattr == "color") {
+            if ["color", "fillcolor"].contains(lattr) {
                 setColor(hexString: value)
+                fillColor = SKColor(hexString: value)
+            }
+
+            if (lattr == "framecolor") {
+                //frameColor = SKColor(hexString: value)
+                strokeColor = SKColor(hexString: value)
             }
 
             if (lattr == "linewidth") {
@@ -345,6 +395,23 @@ extension SKTileObject {
             if (lattr == "zposition") {
                 zPosition = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : zPosition
             }
+
+            if ["proxycolor", "objectcolor"].contains(lattr) {
+                proxyColor = SKColor(hexString: value)
+            }
+        }
+
+
+        /// Grab
+        if let tileObject = self.tile {
+            for (attr, val) in tileObject.tileData.properties {
+                if let _ = self.properties[attr] {
+                    continue
+                }
+                self.properties[attr] = val
+            }
+        } else {
+            //self.log("no tile for object \(id)", level: .warning)
         }
 
         // Physics
@@ -352,22 +419,25 @@ extension SKTileObject {
         let isCollider: Bool = boolForKey("isCollider")
 
         physicsType = Int(isDynamic) ^ Int(isCollider) == 0 ? .none : (isDynamic == true) ? .dynamic : (isCollider == true) ? .collision : .none
-        if completion != nil { completion!() }
+        completion?()
     }
 }
 
 
 
+// MARK: - SKTilesetData
 
 
 extension SKTilesetData {
-    
+
     /// Parse the tile data's properties value.
+    ///
+    /// - Parameter completion: optional completion closure.
     public func parseProperties(completion: (() -> Void)?) {
         if (ignoreProperties == true) { return }
         if (self.type == nil) { self.type = properties.removeValue(forKey: "type") }
 
-        for (attr, _) in properties {
+        for (attr, value) in properties {
             let lattr = attr.lowercased()
 
             if (lattr == "weight") {
@@ -377,8 +447,31 @@ extension SKTilesetData {
             if (lattr == "walkable") {
                 walkable = boolForKey(attr)
             }
+
+            // color overrides
+            if (lattr == "color") {
+                if !hasKey("framecolor") {
+                    setValue(for: "frameColor", value)
+                }
+
+                if !hasKey("highlightcolor") {
+                    setValue(for: "highlightColor", value)
+                }
+            }
+
+            if (lattr == "highlightcolor") {
+                if !hasKey("framecolor") {
+                    setValue(for: "frameColor", value)
+                }
+            }
+
+            if (lattr == "framecolor") {
+                if !hasKey("highlightcolor") {
+                    setValue(for: "highlightColor", value)
+                }
+            }
         }
 
-        if completion != nil { completion!() }
+        completion?()
     }
 }

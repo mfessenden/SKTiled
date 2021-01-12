@@ -3,8 +3,8 @@
 //  SKTiled
 //
 //  Copyright © 2020 Michael Fessenden. all rights reserved.
-//  Web: https://github.com/mfessenden
-//  Email: michael.fessenden@gmail.com
+//	Web: https://github.com/mfessenden
+//	Email: michael.fessenden@gmail.com
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -55,7 +55,7 @@ public struct TextObjectAttributes {
     public var fontSize: CGFloat = 16
 
     /// Font color.
-    public var fontColor: SKColor = .black
+    public var fontColor: SKColor = SKColor.black
 
     /// ## Overview
     ///

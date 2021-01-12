@@ -42,7 +42,7 @@ If your SpriteKit scene is subclassed from `SKTiledScene`, navigation graphs wil
 
 ## Custom Graph Nodes
 
-**SKTiled** allows you to deploy your own [`GKGridGraphNode`][gkgridgraphnode-url] node types for use in pathfinding graphs. If you implement the `SKTilemapDelegate` protocol, you can override the `SKTilemapDelegate.objectForGraphType`
+**SKTiled** allows you to deploy your own [`GKGridGraphNode`][gkgridgraphnode-url] node types for use in pathfinding graphs. If you implement the `TilemapDelegate` protocol, you can override the `TilemapDelegate.objectForGraphType`
 function to return your custom [`GKGridGraphNode`][gkgridgraphnode-url] type.
 
 ### Graph Node Weight
@@ -76,7 +76,7 @@ See the [**debugging**](debugging.html) page for more information.
 
 ![Show Graph](images/showGraph.gif)
 
-Next: [Extending SKTiled](extending-sktiled.html) - [Index](Table of Contents.html)
+Next: [Extending SKTiled](extending-sktiled.html) - [Index](Documentation.html)
 
 <!--- Apple --->
 

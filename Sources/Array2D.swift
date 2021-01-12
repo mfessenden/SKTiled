@@ -29,22 +29,22 @@ import Foundation
 
 /// Two-dimensional array structure.
 struct Array2D<T> {
-
+    
     /// Vertical count.
     let columns: Int
-
+    
     /// Horizontal count.
     let rows: Int
-
+    
     /// Internal array of values.
     fileprivate var items: [T?]
-
+    
     init(columns: Int, rows: Int) {
         self.columns = columns
         self.rows = rows
         items = Array(repeating: nil, count: rows*columns)
     }
-
+    
     subscript(column: Int, row: Int) -> T? {
         get {
             return items[row*columns + column]
@@ -53,16 +53,16 @@ struct Array2D<T> {
             items[row*columns + column] = newValue
         }
     }
-
+    
     /// Returns the size of the array.
     var count: Int {
         return self.items.count
     }
-
+    
     var isEmpty: Bool {
         return items.isEmpty
     }
-
+    
     func contains<T : Equatable>(_ obj: T) -> Bool {
         let filtered = self.items.filter {$0 as? T == obj}
         return filtered.isEmpty == false
@@ -76,7 +76,7 @@ struct Array2D<T> {
 
 
 extension Array2D: Sequence {
-
+    
     internal func makeIterator() -> AnyIterator<T?> {
         var arrayIndex = 0
         return AnyIterator {
@@ -90,7 +90,7 @@ extension Array2D: Sequence {
             }
         }
     }
-
+    
     subscript(column: Int32, row: Int32) -> T? {
         get {
             return items[Int(row)*columns + Int(column)]
@@ -104,18 +104,18 @@ extension Array2D: Sequence {
 
 /// :nodoc:
 extension Array2D: CustomReflectable, CustomStringConvertible, CustomDebugStringConvertible {
-
+    
     /// String representation of array.
     var description: String {
         let array = items.compactMap { $0 }
         return "Array2D: \(array.count) items"
     }
-
+    
     /// String representation of array, used for debugging.
     var debugDescription: String {
         return "<\(description)>"
     }
-
+    
     /// Returns a custom mirror of the array.
     var customMirror: Mirror {
         var rowdata: [String] = []

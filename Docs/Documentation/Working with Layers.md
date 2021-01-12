@@ -6,7 +6,7 @@
 - [Tile Coordinates](#tile-coordinates)
 - [Group Layers](#group-layers)
 
-Once a map is loaded, you can easily interact with the layers within. Layers can be queried either by name, layer index, or type. Layers are parsed and indexed in the order they are read in your TMX document, so the bottom-most layer in Tiled will have an index of 0.
+Once a map is loaded, you can easily interact with the layers within. Layer node types can be queried either by name, layer index, or type. Layers are parsed and indexed in the order they are read in your TMX document, so the bottom-most layer in Tiled will have an index of 0.
 
 There are several ways to access layers from the `SKTilemap` object:
 
@@ -23,7 +23,7 @@ let allBackgroundLayers = tilemap.tileLayers().filter { $0.name == "Background" 
 let allWallLayers = tilemap.getLayers(ofType: "walls")
 ```
 
-If you need to access a layer *before* it is rendered, implement the `SKTilemapDelegate.didAddLayer(_:)` method. See the [**Setting Up Your Scenes**](scenes.html#sktilemapdelegate-protocol) page for more details.
+If you need to access a layer *before* it is rendered, implement the `TilemapDelegate.didAddLayer(_:)` method. See the [**Setting Up Your Scenes**](scenes.html#tilemapdelegate-protocol) page for more details.
 
 
 
@@ -148,8 +148,8 @@ if let wallsLayer = tilemap.getLayers(atPath: "WALLS/INNER/inner_walls").first {
 ```
 
 
-[comment]: # (Next: [Working with Tilesets](working-with-tilesets.html) - [Index](Table of Contents.html))
-Next: [ Working with Tiles](working-with-tiles.html) - [Index](Table of Contents.html)
+[comment]: # (Next: [Working with Tilesets](working-with-tilesets.html) - [Index](Documentation.html))
+Next: [ Working with Tiles](working-with-tiles.html) - [Index](Documentation.html)
 
 
 

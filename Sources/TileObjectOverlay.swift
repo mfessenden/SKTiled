@@ -2,8 +2,7 @@
 //  TileObjectOverlay.swift
 //  SKTiled
 //
-//  Created by Michael Fessenden.
-//
+//  Copyright © 2020 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -31,24 +30,127 @@ import SpriteKit
 /// Vector object proxy container overlay.
 internal class TileObjectOverlay: SKNode {
 
+    /// Allow the overlay to receive camera updates.
+    @objc var receiveCameraUpdates: Bool = false
+
     /// Indicates the layer has been initialized.
     var initialized: Bool = false
 
     /// The current camera zoom level.
     var cameraZoom: CGFloat = 1.0
+    
+    /// Desired line width for each object.
+    var lineWidth: CGFloat = TiledGlobals.default.debug.lineWidth
+    
+    /// Desired line width for each object.
+    var minimumLineWidth: CGFloat = 0.1
 
+    /// Dispatch queue.
+    let renderQueue = DispatchQueue(label: "org.sktiled.tileObjectOverlay.renderQueue")
+    
+    /// Retina scaling value.
+    let contentScale: CGFloat = TiledGlobals.default.contentScale
+    
     override init() {
         super.init()
+        isUserInteractionEnabled = false
+        setupNotifications()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init()
+        isUserInteractionEnabled = false
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Globals.Updated, object: nil)
+    }
+
+    /// Returns objects at the given point.
+    ///
+    /// - Parameter point: point (in this node's coordinate space).
+    /// - Returns: array of vector objects.
+    func objectsAt(point: CGPoint) -> [SKTileObject] {
+        let objects = nodes(at: point).compactMap { $0 as? TileObjectProxy }
+        return objects.compactMap { $0.reference }
+    }
+    
+    func setupNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(globalsUpdatedAction), name: Notification.Name.Globals.Updated, object: nil)
+    }
+    
+    @objc func globalsUpdatedAction(notification: Notification) {
+        lineWidth = TiledGlobals.default.debug.lineWidth
+        draw()
+    }
+    
+    func draw() {
+        objects.forEach { object in
+            object.baseLineWidth = lineWidth
+            object.draw()
+        }
     }
 }
 
 
 
+
+
 // MARK: - Extensions
+
+
+extension TileObjectOverlay: TiledSceneCameraDelegate {
+
+    /// Called whenever the camera zoom changes.
+    ///
+    /// - Parameter newZoom: new camera zoom.
+    @objc func cameraZoomChanged(newZoom: CGFloat) {
+        let oldZoom = cameraZoom
+        cameraZoom = newZoom
+        let delta = cameraZoom - oldZoom
+        let newLineWidth = (newZoom != 0) ? lineWidth / newZoom : minimumLineWidth 
+
+        let isAntialiased = newZoom < 1
+        weak var weakSelf = self
+        renderQueue.async {
+            for object in weakSelf!.objects {
+                object.zoomLevel = newZoom
+                //object.isAntialiased = isAntialiased
+                object.lineWidth = newLineWidth
+                object.isAntialiased = isAntialiased
+            }
+        }
+    }
+}
+
+
+
+extension TileObjectOverlay: TiledCustomReflectableType {
+    
+    @objc var tiledNodeName: String {
+        return "objectsoverlay"
+    }
+    
+    /// Returns a "nicer" node name, for usage in the inspector.
+    @objc public var tiledNodeNiceName: String {
+        return "Overlay Node"
+    }
+    
+    @objc var tiledIconName: String {
+        return "overlay-icon"
+    }
+    
+    @objc var tiledListDescription: String {
+        let objCount = objects.count
+        let objCountString = (objCount > 0) ? (objCount > 1) ? "\(objCount) objects" : "1 object" : "no objects"
+        return "Map Overlay: (\(objCountString))"
+    }
+    
+    @objc var tiledDescription: String {
+        return "Vector object proxy container overlay."
+    }
+}
+
 
 
 extension TileObjectOverlay {
@@ -59,6 +161,10 @@ extension TileObjectOverlay {
     }
 
     override var description: String {
-        return "Objects Overlay: \(objects.count) objects."
+        let objString = "<\(String(describing: Swift.type(of: self)))>"
+        var attrsString = objString
+        attrsString += " objects: \(objects.count)"
+        attrsString += " zoom level: \(cameraZoom.roundTo())"
+        return attrsString
     }
 }

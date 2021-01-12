@@ -1,10 +1,10 @@
 # Setting Up Your Scenes
-
-- [SKTilemapDelegate Protocol](#sktilemapdelegate-protocol)
+- [Tiled Content in SpriteKit](#tiled-content-in-spritekit)
+    - [`TilemapDelegate` Protocol](tilemapdelegate-protocol)
     - [Scene Setup](#scene-setup)
     - [Custom Tile Objects](#custom-tile-objects)
-- [SKTilesetDataSource Protocol](#sktilesetdatasource-protocol)
-- [Tiled Scene](#tiled-scene)
+- [`TilesetDataSource` Protocol](#sktilesetdatasource-protocol)
+- [`TiledSceneDelegate` Protocol](#tiledscenedelegate-protocol)
     - [Tiled Scene Camera](#tiled-scene-camera)
         - [Adding Delegates](#adding-delegates)
     - [Loading External Content](#loading-external-content)
@@ -12,54 +12,127 @@
 
 Using Tiled assets in your projects is very straightforward with **SKTiled**. There are several tools included that allow you to easily access and customize content for your game.
 
-## SKTilemapDelegate Protocol
 
+## Tiled Content in SpriteKit
 
-The `SKTilemapDelegate` protocol is provided to allow you to access (and change) your content as it is being created. It is recommended that your SpriteKit scenes conform to this protocol.
+Getting Tiled content into SpriteKit is a breeze!
 
-In addition to the callback methods, the protocol allows you to substitute your own classes for the default tile, vector and pathfinding objects.
+Simply setup your view controller and scene as you would normally, and add a tilemap to your scene via the `SKScene.load(tmxFile:)` method (included as an extension):
+
+```swift
+let scene = SKScene(size: skView.bounds.size)
+scene.scaleMode = .aspectFill
+skView.presentScene(scene)
+
+if let tilemap = scene.load(tmxFile: "map1") {
+    scene.addChild(tilemap)
+}
+```
+
+### TilemapDelegate Protocol
+
+The `TilemapDelegate` protocol is provided to allow you to easily access (and modify) your content even as it is being created. As the protocol methods are all optional, you only have to implement the controls you need. It is recommended that your SpriteKit scenes conform to this protocol.
 
 
 ```swift
-protocol SKTilemapDelegate {
-    // Called when the map is instantiated.
-    func didBeginParsing(_ tilemap: SKTilemap)
+extension  SKScene: TilemapDelegate {}
+```
 
-    // Called when a tileset is about to be render a spritesheet.
-    func willAddSpriteSheet(_ tileset: SKTileset, fileNamed: String) -> String
+In addition to the optional callback methods, the protocol allows you to substitute your own classes for the default **tile**, **vector** and **pathfinding** objects.
 
-    // Called when a tileset has been added.
-    func didAddTileset(_ tileset: SKTileset)
 
-    // Called when a layer has been added.
-    func didAddLayer(_ layer: SKTiledLayerObject)
+```swift
+@objc public protocol TilemapDelegate: TiledEventHandler {
 
-    // Called before layers begin rendering.
-    func didReadMap(_ tilemap: SKTilemap)
+    /// Determines the z-position difference between layers.
+    @objc optional var zDeltaForLayers: CGFloat { get }
 
-    // Called when layers are finished rendering.
-    func didRenderMap(_ tilemap: SKTilemap)
+    /// Called when the tilemap is instantiated.
+    ///
+    /// - Parameter tilemap: tilemap instance.
+    @objc optional func didBeginParsing(_ tilemap: SKTilemap)
 
-    // Tile object type for use with tile layers.
-    func objectForTile(named: String?) -> SKTile.Type
+    /// Called when a tileset is added to a map.
+    ///
+    /// - Parameter tileset: tileset instance.
+    @objc optional func didAddTileset(_ tileset: SKTileset)
 
-    // Vector object type for use with object groups.
-    func objectForVector(named: String?) -> SKTileObject.Type
+    /// Called when a layer is added to a tilemap.
+    ///
+    /// - Parameter layer: tilemap instance.
+    @objc optional func didAddLayer(_ layer: SKTiledLayerObject)
 
-    // Navigation graph node type.
-    func objectForGraph(named: String?) -> GKGridGraphNode.Type     
+    /// Called when the tilemap is finished parsing.
+    ///
+    /// - Parameter tilemap: tilemap instance.
+    @objc optional func didReadMap(_ tilemap: SKTilemap)
+
+    /// Called when the tilemap layers are finished rendering.
+    ///
+    /// - Parameter tilemap: tilemap instance.
+    @objc optional func didRenderMap(_ tilemap: SKTilemap)
+
+    /// Called when the a navigation graph is built for a layer.
+    ///
+    /// - Parameter graph: `GKGridGraph<GKGridGraphNode>` graph node instance.
+    @objc optional func didAddNavigationGraph(_ graph: GKGridGraph<GKGridGraphNode>)
+
+    /// Specify a custom tile object for use in tile layers.
+    ///
+    /// - Parameter named: optional class name.
+    /// - Returns: tile object type.
+    @objc optional func objectForTileType(named: String?) -> SKTile.Type
+
+    /// Specify a custom object for use in object groups.
+    ///
+    /// - Parameter named: optional class name
+    /// - Returns: vector object type.
+    @objc optional func objectForVectorType(named: String?) -> SKTileObject.Type
+
+    /// Specify a custom graph node object for use in navigation graphs.
+    ///
+    /// - Parameter named: optional class name.
+    /// - Returns: pathfinding graph node type.
+    @objc optional func objectForGraphType(named: String?) -> GKGridGraphNode.Type
+
+    /// Called whem a tile is about to be built in a layer.
+    ///
+    /// - Parameters:
+    ///   - globalID: tile global id.
+    ///   - coord: tile coordinate.
+    ///   - in: layer name.
+    /// - Returns: tile global id.
+    @objc optional func willAddTile(globalID: UInt32, coord: simd_int2, in: String?) -> UInt32
+
+    /// Called whem a tile was built in a layer.
+    ///
+    /// - Parameters:
+    ///   - tile: tile instance.
+    ///   - coord: tile coordinate.
+    ///   - in: layer name.
+    @objc optional func didAddTile(_ tile: SKTile, coord: simd_int2, in: String?)
+
+    /// Provides custom attributes for objects of a certain *Tiled type*.
+    ///
+    /// - Parameters:
+    ///   - type: type value.
+    ///   - named: optional node name.
+    /// - Returns: custom attributes dictionary.
+    @objc optional func attributesForNodes(ofType: String?, named: String?, globalIDs: [UInt32]) -> [String : String]?
 }
 ```
 
 ### Scene Setup
 
-Setting up scenes is straightforward. Tile maps should be loaded during the [`SKScene.didMove(to:)`][skscene-didmove-url] method, and updated during the [`SKScene.update(_:)`][skscene-update-url] method.
+Setting up scenes is straightforward. Tile maps should be loaded during the [`SKScene.didMove(to:)`][skscene-didmove-url] method, and updated during the [`SKScene.update(_:)`][skscene-update-url] method (if you choose to render your maps with **SpriteKit actions**, you can forgo adding the `SKTilemap` node to the scene's update method).
 
 A basic scene setup could be as simple as:
 
 ```swift
 class GameScene: SKScene {
-    var tilemap: SKTilemap!
+
+    var tilemap: SKTilemap?
+
     override func didMove(to view: SKView) {
         // load a named map
         if let tilemap = SKTilemap.load(tmxFile: "myTiledFile") {
@@ -78,11 +151,13 @@ class GameScene: SKScene {
 }
 ```
 
-If you choose to implement the **`SKTilemapDelegate`** protocol, you can utilize as many callback methods as you see fit (they are optional):
+If you choose to implement the **`TilemapDelegate`** protocol, you can utilize as many of the optional callback methods as you see fit. You'll need to specify the tilemap's delegate at creation:
 
 ```swift
 class GameScene: SKScene, SKTilemapDelegate {
-    var tilemap: SKTilemap!
+
+    var tilemap: SKTilemap?
+
     override func didMove(to view: SKView) {
         if let tilemap = SKTilemap.load(fromFile: "myTiledFile", delegate: self) {
             // add the tilemap to the scene
@@ -115,7 +190,7 @@ It is possible to use your own custom tile sprite objects in your projects. Subc
 
 
 ```swift
-class MainMenuScene: SKScene, SKTilemapDelegate {
+class MainMenuScene: SKScene, TilemapDelegate {
 
     /// use a custom tile type for the main menu
     func objectForTile(named: String?) -> SKTile.Type {
@@ -127,9 +202,7 @@ class MainMenuScene: SKScene, SKTilemapDelegate {
 See the [**Extending**][extending-url] section for more details.
 
 
-## SKTilesetDataSource Protocol
-
-The `SKTilesetDataSource` protocol is new as of **SKTiled 1.20**. Objects conforming to this protocol can specify alternate attributes for a tileset as it is being created.
+## TilesetDataSource Protocol
 
 For example, you can change the spritesheet image name of a tileset before the source file is loaded:
 

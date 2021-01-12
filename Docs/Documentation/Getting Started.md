@@ -9,9 +9,8 @@
     - [Building the Documentation](#building-the-documentation)
 - [tvOS Support](#tvos-support)
     - [A Note About 4K](#a-note-about-4k)
-- [Adding Tiled Assets to Xcode](#adding-tiled-assets-to-xcode)
+- [Using Tiled Assets with Xcode](#using-tiled-assets-with-xcode)
     - [Referenced Assets](#referenced-assets)
-
 
 
 **SKTiled** was designed to be flexible and easy to use. To get started, simply build the framework and add your assets to your Xcode project. If you have any problems or requests, please open an issue at the [**Github page**](https://github.com/mfessenden/SKTiled/issues).
@@ -21,17 +20,16 @@
 
 - iOS 12
 - tvOS 12
-- macOS 10.12
+- macOS 10.14
 - Xcode 11/Swift 5
 
 
 ## Installation
 
-The **SKTiled** project contains six targets; three are demo applications for iOS/tvOS/macOS. These are included to let you quickly test your own content, or simple play around with the included demo files. The other three are frameworks for use in your own projects.
+The **SKTiled** project contains six targets; three are demo applications for iOS/tvOS/macOS. These are included to let you quickly test your own content, or simple play around with the included demo files. The other three are frameworks for use in your own projects. If the three demo targets do not appear in the active scheme list, choose **Manage Schemes** and press the **Autocreate Schemes Now** button.
 
 ![Project Schemes](images/project-schemes.png)
 
-To use the frameworks, build the appropriate framework target and add to your project. Make sure the **Minimum Deployment Target** is set correctly for your project (iOS11+/macOS 10.12+/tvOS12+).
 
 ### Framework Installation
 
@@ -49,14 +47,14 @@ After building the framework(s), you'll need to add them to your project. Select
 
 To build with [Carthage](https://github.com/Carthage/Carthage), create a Cartfile in your project root and add a reference to **SKTiled** (be sure to check the current version number):
 
-    github "mfessenden/SKTiled" ~> 1.22
+    github "mfessenden/SKTiled" ~> 1.30b1
 
 
 Close the file and run Carthage from the terminal to build the framework(s):
 
     carthage update
 
-To build for a specific platform, use the `platform` argument in your build command:
+To build for a specific platform, use the `--platform` argument in your build command:
 
     carthage update --platform iOS
 
@@ -79,7 +77,7 @@ Add references to **SKTiled** in each of your targets:
       use_frameworks!
 
       # Pods for iOS
-      pod 'SKTiled', '~> 1.22'
+      pod 'SKTiled', '~> 1.30b1'
 
     end
 
@@ -87,7 +85,7 @@ Add references to **SKTiled** in each of your targets:
       use_frameworks!
 
       # Pods for macOS
-      pod 'SKTiled', '~> 1.22'
+      pod 'SKTiled', '~> 1.30b1'
 
     end
 
@@ -95,7 +93,7 @@ Add references to **SKTiled** in each of your targets:
       use_frameworks!
 
       # Pods for tvOS
-      pod 'SKTiled', '~> 1.22'
+      pod 'SKTiled', '~> 1.30b1'
 
     end
 
@@ -121,12 +119,12 @@ SAMPLE_CODE_DISAMBIGUATOR = ${DEVELOPMENT_TEAM}
 
 For more information, see the [**Apple Development Documentation**][apple-code-signing-url] on code signing requirements.
 
-
 ### Building the Documentation
 
 To build the documentation, you'll need to install [**jazzy**][jazzy-url]. To build the html content, simply run the included script in a shell:
 
 	./scripts/build-docs.sh
+
 
 
 ## tvOS Support
@@ -143,11 +141,11 @@ If you are displaying content on a 4K AppleTV, check that your Asset LaunchImage
 
 
 
-## Adding Tiled Assets to Xcode
+## Using Tiled Assets with Xcode
 
 ![Grouped Assets][xcode-assets-group-img]
 
-When adding assets to your Xcode project, files are automatically bundled in your application. To load a bundled tile map, use the `SKTilemap.load(tmxFile:)` method to read the file:
+When adding assets to your Xcode project, files are automatically bundled in your application's resource directory. To load a bundled tile map, use the `SKTilemap.load(tmxFile:)` method to read the file:
 
 
 ```swift
@@ -156,15 +154,14 @@ if let tilemap = SKTilemap.load(tmxFile: "MyTilemap.tmx") {
 }
 ```
 
-On your hard drive, the map's tileset and image should be in the same directory as the map to avoid read errors. Try this instead: [`SKTilemap.load(:)`][sktilemap-load-url]
-
+On your hard drive, a map's dependencies (images, tilesets) *should* be in the same directory as the map to avoid read errors.
 
 ### Referenced Assets
 
 
 ![Referenced Assets][xcode-assets-ref-img]
 
-If you add assets as folder references, you can supply a directory name with the `inDirectory` argument of `SKTilemap.load(tmxFile:)` method:
+If you add assets as *folder references*, you can supply a directory name with the `inDirectory` argument of `SKTilemap.load(tmxFile:)` method:
 
 
 ```swift
@@ -176,17 +173,14 @@ if let tilemap = SKTilemap.load(tmxFile: "MyTilemap.tmx", inDirectory: "Tiled") 
 This will allow you more flexibility organizing your project, but be careful that your maps don't reference files above the referenced folder. For more information, see the [**Working with Maps**][working-with-maps-url] section.
 
 
-Next: [Scene Setup](scene-setup.html) - [Index](Table of Contents.html)
+
+
+Next: [Migration Guide](migration-guide.html) - [Index](Documentation.html)
 
 
 <!--- Images --->
-
-[assets-finder-img]:images/assets-finder.png
-[xcode-add-assets-img]:images/xcode-add-assets-group.png
 [xcode-assets-group-img]:images/xcode-assets-group.png
 [xcode-assets-ref-img]:images/xcode-assets-referenced.png
-[xcode-add-assets-ref-img]:images/xcode-add-assets-reference.png
-[assets-finder-img]:images/assets-finder.png
 [zlib-include-img]:images/zlib-include.png
 
 <!--- URLs --->

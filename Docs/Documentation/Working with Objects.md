@@ -14,7 +14,7 @@ The `SKTileObject` class represents a vector object in a object group layer. **S
 - Ellipse
 - Polygon
 - Polyline
-
+- Point
 
 `SKTileObject` objects are subclasses of [`SKShapeNode`][skshapenode-url]. Each object stores an array of points from which the path is drawn.
 
@@ -41,7 +41,7 @@ The `recursive` argument is optional in both instances, and enabling it will sea
 
 ![Tile Objects](images/tile-objects-selected.gif)
 
-Tile objects are objects with an optional id value. The corresponding tile texture is rendered within the object's bounding shape.
+**Tile objects** are special object types that contain an optional globalID value. The corresponding tile texture(s) are rendered within the object's bounding shape. Tile objects are 
 
 
 Objects added via the [**Insert Tile**][insert-tile-url] tool in Tiled will render as `SKTileObject` objects. You can also create a tile object manually via the `SKObjectGroup.newTileObject(data:)` method:
@@ -103,7 +103,7 @@ You also have the option of enabling physics for each object, allowing them to r
 ![Object Dynamics](images/dynamic-objects.gif)
 
 
- Next: [Tiled Properties](tiled-properties.html) - [Index](Table of Contents.html)
+ Next: [Tiled Properties](tiled-properties.html) - [Index](Documentation.html)
 
 
 [sktiled-doc-url]:https://mfessenden.github.io/SKTiled

@@ -1,11 +1,13 @@
 # Troubleshooting
 
+
 - [Tile Cracking](#tile-cracking)
     - [Camera Zoom Clamping](#camera-zoom-clamping)
 - [XML Parsing Errors](#xml-parsing-errors)
     - [External Tileset Errors](#external-tileset-errors)
 - [Code Signing Errors](#code-signing-errors)
 - [Carthage Problems](#carthage-problems)
+- [SpriteKit Limitations](#spritekit-limitations)
 
 ## Tile Cracking
 
@@ -62,11 +64,7 @@ Running the `xattr` command in your images directory will clean up the extra dat
 
     xattr -rc .
 
-Additionally, you could add a script phase to your app target. In Xcode, select your target and add a new *New Run Script Phase*. Add the following code:
-
-```bash
-xattr -rc $PROJECT_DIR/Assets/.
-```
+Additionally, you could add a script phase to your app target. In Xcode, select your target and add a new *New Run Script Phase*
 
 
 ## Carthage Problems
@@ -74,7 +72,12 @@ xattr -rc $PROJECT_DIR/Assets/.
 If you are getting errors including a framework in Xcode, use the `--no-use-binaries` flag when updating SKTiled.
 
 
-Next: [Getting Started](getting-started.html) - [Index](Table of Contents.html)
+## SpriteKit Limitations
+
+Max texture size: `MAX_TILEMAP_PIXEL_SIZE`
+
+
+Next: [Getting Started](getting-started.html) - [Index](Documentation.html)
 
 
 [zlib-include-img]:images/zlib-include.png

@@ -2,8 +2,7 @@
 //  TiledSelectableType.swift
 //  SKTiled
 //
-//  Created by Michael Fessenden.
-//
+//  Copyright © 2020 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -27,7 +26,7 @@
 
 import SpriteKit
 
-
+/// :nodoc:
 @objc public protocol TiledSelectableType {
     
     /// Represents a node type that can be selected.

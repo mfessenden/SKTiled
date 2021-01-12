@@ -3,8 +3,8 @@
 //  SKTiled
 //
 //  Copyright © 2020 Michael Fessenden. all rights reserved.
-//  Web: https://github.com/mfessenden
-//  Email: michael.fessenden@gmail.com
+//	Web: https://github.com/mfessenden
+//	Email: michael.fessenden@gmail.com
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,13 +30,20 @@ import Foundation
 /// Thread-safe storage container.
 internal class ThreadSafeArray<Element>: Equatable {
 
+    /// Unique node id.
     fileprivate let uuid = UUID().uuidString
+
+    /// Internal queue.
     fileprivate let queue: DispatchQueue
-    
+
+    /// Internal element storate.
     internal var array: [Element] = []
 
+    /// Initialize with a queue.
+    ///
+    /// - Parameter queue: concurrent queue.
     init(queue: DispatchQueue? = nil) {
-        self.queue = (queue == nil) ? DispatchQueue(label: "com.sktiled.storageQueue", attributes: .concurrent) : queue!
+        self.queue = queue ?? DispatchQueue(label: "org.sktiled.threadSafeArray", attributes: .concurrent)
     }
 
     /// Number of elements in the array.
@@ -53,54 +60,39 @@ internal class ThreadSafeArray<Element>: Equatable {
         return result
     }
 
-    /**
-
-     Returns a boolean indicating the array contains the given element.
-
-     - Parameters:
-       - predicate: `(Element) -> Bool` conditional expression.
-       - returns: `Bool` array contains the given element.
-     */
+    /// Returns a boolean indicating the array contains the given element.
+    ///
+    /// - Parameter predicate: conditional expression.
+    /// - Returns: array contains the given element.
     func contains(where predicate: (Element) -> Bool) -> Bool {
         var result = false
         queue.sync { result = self.array.contains(where: predicate) }
         return result
     }
 
-    /**
-
-     Append a new element to the end of the array.
-
-     - Parameters:
-       - element: `Element` element to append.
-     */
+    /// Append a new element to the end of the array.
+    ///
+    /// - Parameter element: element to append.
     func append( _ element: Element) {
         queue.async(flags: .barrier) {
             self.array.append(element)
         }
     }
 
-    /**
-
-     Adds new elements to the array.
-
-     - Parameters:
-       - elements: `[Element]` array of elements to append.
-    */
+    /// Adds new elements to the array.
+    ///
+    /// - Parameter elements: array of elements to append.
     func append(contentsOf elements: [Element]) {
         queue.async(flags: .barrier) {
             self.array += elements
         }
     }
 
-    /**
-
-     Insert a new element at the specified position.
-
-     - Parameters:
-       - element: `Element` array of elements to append.
-       - index:   `Int` index to insert at.
-     */
+    /// Insert a new element at the specified position.
+    ///
+    /// - Parameters:
+    ///   - element: array of elements to append.
+    ///   - index: index to insert at.
     func insert( _ element: Element, at index: Int) {
         queue.async(flags: .barrier) {
             self.array.insert(element, at: index)
@@ -118,19 +110,14 @@ internal class ThreadSafeArray<Element>: Equatable {
         }
     }
 
-    /**
-
-     Removes and returns the element at the specified position.
-
-     - Parameters:
-       - predicate:  `(Element) -> Bool` conditional expression.
-       - completion: `([Element]) -> Void)?` optional completion closure.
-     */
+    /// Removes and returns the element at the specified position.
+    ///
+    /// - Parameters:
+    ///   - predicate: conditional expression.
+    ///   - completion: optional completion closure.
     func remove(where predicate: @escaping (Element) -> Bool, completion: ((Element) -> Void)? = nil) {
         queue.async(flags: .barrier) {
-            guard let index = self.array.firstIndex(where: predicate) else {
-                return
-            }
+            guard let index = self.array.firstIndex(where: predicate) else { return }
             let element = self.array.remove(at: index)
 
             DispatchQueue.main.async {
@@ -139,13 +126,9 @@ internal class ThreadSafeArray<Element>: Equatable {
         }
     }
 
-    /**
-
-     Removes all elements from the array.
-
-     - Parameters:
-       - completion: `([Element]) -> Void)?` optional completion closure.
-     */
+    /// Removes all elements from the array.
+    ///
+    /// - Parameter completion: optional completion closure.
     func removeAll(completion: (([Element]) -> Void)? = nil) {
         queue.async(flags: .barrier) {
             let elements = self.array
@@ -156,7 +139,6 @@ internal class ThreadSafeArray<Element>: Equatable {
             }
         }
     }
-
 
     /// Accesses the element at the specified position if it exists.
     subscript(index: Int) -> Element? {
@@ -176,7 +158,6 @@ internal class ThreadSafeArray<Element>: Equatable {
         }
     }
 }
-
 
 
 // MARK: - Extensions
@@ -216,20 +197,18 @@ extension ThreadSafeArray: Sequence {
 
 
 extension ThreadSafeArray where Element: Equatable {
-    /**
 
-     Returns a boolean indicating the array contains the given element.
-
-     - Parameters:
-     - element: `Element -> Bool` element to query.
-     - returns: `Bool` array contains the given element.
-     */
+    /// Returns a boolean indicating the array contains the given element.
+    ///
+    /// - Parameter element: element to query.
+    /// - Returns: array contains the given element.
     func contains(_ element: Element) -> Bool {
         var result = false
         queue.sync { result = self.array.contains(element) }
         return result
     }
 }
+
 
 
 extension ThreadSafeArray {
@@ -268,7 +247,9 @@ extension ThreadSafeArray {
 }
 
 
+/// :nodoc:
 extension ThreadSafeArray: CustomStringConvertible, CustomDebugStringConvertible {
+
     /// A textual representation of the array and its elements.
     var description: String {
         var result = ""

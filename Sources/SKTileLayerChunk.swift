@@ -2,10 +2,9 @@
 //  SKTileLayerChunk.swift
 //  SKTiled
 //
-//  Created by Michael Fessenden.
-//
-//  Web: https://github.com/mfessenden
-//  Email: michael.fessenden@gmail.com
+//  Copyright © 2020 Michael Fessenden. all rights reserved.
+//	Web: https://github.com/mfessenden
+//	Email: michael.fessenden@gmail.com
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -160,10 +159,12 @@ public class SKTileLayerChunk: TiledLayerObject {
             if let tile = Tile.init(data: tileData) {
 
                 // set the tile overlap amount
+                tile.isUserInteractionEnabled = true
                 tile.setTileOverlap(tilemap.tileOverlap)
 
                 // set the layer property
                 tile.layer = self.layer
+                tile.tintColor = self.layer.tintColor
                 tile.highlightDuration = highlightDuration
 
                 // get the position in the layer (plus tileset offset)
@@ -189,7 +190,6 @@ public class SKTileLayerChunk: TiledLayerObject {
                     Logger.default.log("cannot find a texture for id: \(tileId.wrappedValue)", level: .warning, symbol: self.logSymbol)
                 }
 
-                // FIXME: custom attributes seems to be getting set here
                 if let customProperties = tilemap.delegate?.attributesForNodes?(ofType: tileData.type, named: nil, globalIDs: [wrappedID]) {
                     for (attr, value) in customProperties {
                         tileData.properties[attr] = value
@@ -203,28 +203,28 @@ public class SKTileLayerChunk: TiledLayerObject {
                     userInfo: ["chunk": self, "coord": coord]
                 )
 
-                
+
                 if let tilemapDelegate = tilemap.delegate {
-                    
+
                     #if os(macOS)
-                    
+
                     if let mouseOverCallback = tilemapDelegate.mouseOverTileHandler?(globalID: thisTileId, ofType: tileData.type) {
                         tile.onMouseOver = mouseOverCallback
                     }
-                    
+
                     if let mouseClickCallback = tilemapDelegate.tileClickedHandler?(globalID: thisTileId, ofType: tileData.type, button: 0) {
                         tile.onMouseClick = mouseClickCallback
                     }
-                    
+
                     #elseif os(iOS)
-                    
+
                     if let touchHandler = tilemapDelegate.tileTouchedHandler?(globalID: thisTileId, ofType: tileData.type, userData: nil) {
                         tile.onTouch = touchHandler
                     }
-                    
+
                     #endif
                 }
-                
+
 
                 tilemap.delegate?.didAddTile?(tile, coord: coord, in: layer.name)
                 return tile
@@ -277,26 +277,26 @@ public class SKTileLayerChunk: TiledLayerObject {
 
         return tiles[xValue, yValue]
     }
-    
+
     /// Returns the internal **Tiled** node type.
     @objc public override var tiledNodeName: String {
         return "chunk"
     }
-    
+
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public override var tiledNodeNiceName: String {
         return "Tile Layer Chunk"
     }
-    
+
     /// Returns the internal **Tiled** node type icon.
     @objc public override var tiledIconName: String {
         return "chunk-icon"
     }
-    
+
     @objc public override var tiledListDescription: String {
         return "\(tiledNodeNiceName): "
     }
-    
+
     /// A description of the node.
     @objc public override var tiledDescription: String {
         return "Tile layer chunk."

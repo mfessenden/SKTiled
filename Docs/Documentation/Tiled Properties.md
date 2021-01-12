@@ -5,17 +5,17 @@
 - [Querying Properties](#custom-properties)
 - [Custom Properties](#custom-properties)
 
-One of the most useful features of **SKTiled** is the ability to exploit Tiled's custom properties for most objects.
-Any object that conforms to the `SKTiledObject` protocol will inherit methods for parsing Tiled object properties.
+One of the most useful features of **SKTiled** is the ability to take advantage of Tiled's custom properties for most object types.
+Any object that conforms to the `TiledAttributedType` protocol will inherit methods for parsing Tiled object properties.
 
-**SKTiled** supports the newer **color** and **file** property types (values are stored as strings internally anyway, which *SKTiled* already supports). The custom color/file types listed above will also be parsed if they are created as string types in Tiled.
+**SKTiled** supports the newer **color** and **file** property types (values are stored as strings internally anyway, which the API already supports). The custom color/file types listed above will also be parsed if they are created as string types in Tiled.
 
-Currently all **SKTiled** property values are stored as strings, though this may change in the future.
+Currently all **SKTiled** property values are stored as strings, though this might change in the future.
 
 
 ## Querying Properties
 
-The `SKTiledObject` protocol enables you to easily query attributes in your scenes. The methods work exactly the same for all **SKTiled** classes.
+The `TiledAttributedType` protocol enables you to easily query attributes in your scenes. The methods work exactly the same for all **SKTiled** classes.
 
 
 ```swift
@@ -25,10 +25,10 @@ tileData.properties
 // query an object to see if it has a named property
 floorObject.hasKey("slippery")
 
-// access a named property
+// access the named property 'slippery'
 let slipperyValue = floorObject.stringForKey("slippery")!
 
-// update a value
+// update the named property 'slippery'
 floorObject.setValue(forKey: "slippery", "1.2")
 
 // get tile data that have a named property (regardless of value)
@@ -48,7 +48,7 @@ if let levelName = tilemap.removeProperty(forKey: "levelName") {
 
 ![Type Property](images/type-property.png)
 
-Some object types in [**Tiled**][tiled-url] have a special `type` property (tiles, objects). The base `SKTiledObject` protocol in **SKTiled** contains a `type` property, which means that all **SKTiled** objects inherit it (not just the objects that Tiled supports).
+Some object types in [**Tiled**][tiled-url] have a special `type` property (tiles, objects). The base `TiledObjectType` protocol in **SKTiled** contains a `type` property, which means that all **SKTiled** objects inherit it (not just the objects that Tiled supports).
 
 This means that you can set this attribute for tilesets, all layer types, even the map itself. If the object has a `type` property in Tiled, that will be assigned as a value. If the object has custom string property `type`, that will be used instead.
 
@@ -138,6 +138,8 @@ let tilemap = SKTilemap.load(tmxFile: "myTiledFile", ignoreProperties: true)
 | collisionSize  | Float  | used to add collision to the tile.  |       |
 | collisionShape |  Int   | 0 = rectangle, 1 = circle.          |       |
 | renderMode     |  Int   | tile render mode.                   |       |
+| highlightColor | Color  | tile highlight color.               | debug |
+| frameColor     | Color  | tile bounds color.                  | debug |
 
 
 #### SKTileObject
@@ -161,7 +163,7 @@ let tilemap = SKTilemap.load(tmxFile: "myTiledFile", ignoreProperties: true)
 
 
 
-Next: [GameplayKit](gameplaykit.html) - [Index](Table of Contents.html)
+Next: [GameplayKit](gameplaykit.html) - [Index](Documentation.html)
 
 
 [tiled-url]:http://www.mapeditor.org

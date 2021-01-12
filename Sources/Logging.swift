@@ -27,7 +27,7 @@
 import Foundation
 
 
-/// Loggable object protcol.
+/// :nodoc: Loggable object protcol.
 public protocol Loggable {
 
     /// The name of the object calling the logger.
@@ -227,7 +227,7 @@ extension Loggable {
              symbol: String? = nil) {
 
         Logger.default.log(message, level: level, symbol: self.logSymbol, file: #file, method: #function, line: #line)
-}
+    }
 }
 
 
@@ -244,7 +244,6 @@ extension Logger.DateFormat {
         }
     }
 }
-
 
 
 extension LoggingLevel: Comparable {

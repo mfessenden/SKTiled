@@ -2,8 +2,7 @@
 //  TiledEventHandler.swift
 //  SKTiled
 //
-//  Created by Michael Fessenden.
-//
+//  Copyright © 2020 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -43,7 +42,7 @@ enum EventMouseButton: UInt8 {
 /// ### Instance Methods
 ///
 /// | Method                   | Description                              | Platform |
-/// |:------------------------:|:-----------------------------------------|:--------:|
+/// |:-------------------------|:-----------------------------------------|:--------:|
 /// | `mouseOverTileHandler`   | Custom tile mouse over event handler.    |  macOS   |
 /// | `mouseOverObjectHandler` | Custom object mouse over event handler.  |  macOS   |
 /// | `tileClickedHandler`     | Custom tile mouse click event handler.   |  macOS   |

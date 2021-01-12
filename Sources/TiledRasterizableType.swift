@@ -27,6 +27,16 @@
 import SpriteKit
 
 
+/// ## Overview
+///
+/// The `TiledRasterizableType` protocol describes an object that can.
+///
+/// ### Instance Methods
+///
+/// | Method            | Description                       |
+/// |:------------------|:----------------------------------|
+/// | `rasterize`       | rasterize the object to an image. |
+/// :nodoc:
 @objc public protocol TiledRasterizableType {
 
     /// Rasterize the current object to an image file.
@@ -43,7 +53,7 @@ import SpriteKit
 
 /// :nodoc:
 extension SKNode: TiledRasterizableType {
-    
+
     /// Rasterize the current object to an image file.
     ///
     /// - Parameters:
@@ -52,19 +62,19 @@ extension SKNode: TiledRasterizableType {
     /// - Returns: node texture image.
     @objc public func rasterize(to: URL,
                                 filtering: SKTextureFilteringMode = SKTextureFilteringMode.nearest) -> CGImage? {
-        
+
         guard let scene = scene,
               let view = scene.view,
               let texture = view.texture(from: self) else {
             return nil
         }
-        
+
         texture.filteringMode = filtering
         let cgImage = texture.cgImage()
-        
+
         // write image to disk
         if (writeCGImage(cgImage, to: to) == true) {
-            
+
         }
         return cgImage
     }

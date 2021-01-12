@@ -2,8 +2,7 @@
 //  TileObjectProxy.swift
 //  SKTiled
 //
-//  Created by Michael Fessenden.
-//
+//  Copyright © 2020 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -28,8 +27,9 @@
 import SpriteKit
 
 
+
 /// Vector object proxy.
-internal class TileObjectProxy: SKShapeNode, SKTiledGeometry {
+internal class TileObjectProxy: SKShapeNode {
     
     /// Parent container.
     weak var container: TileObjectOverlay?
@@ -43,25 +43,49 @@ internal class TileObjectProxy: SKShapeNode, SKTiledGeometry {
     var isRenderable: Bool = false
     
     var animationKey: String = "proxy"
-
+    
+    // Current camera zoom.
+    var zoomLevel: CGFloat = 1 {
+        didSet {
+            guard (oldValue != zoomLevel) else {
+                return
+            }
+            self.draw()
+        }
+    }
+    
+    /// Internal line width.
+    var _baseLineWidth: CGFloat = TiledGlobals.default.debug.lineWidth
+    
+    /// Represents the line width at the current zoom level.
+    var baseLineWidth: CGFloat {
+        get {
+            return _baseLineWidth / zoomLevel
+        } set {
+            _baseLineWidth = newValue
+            self.draw()
+        }
+    }
+    
     var showObjects: Bool = false {
         didSet {
             self.draw()
         }
     }
-
-    var objectColor = TiledGlobals.default.debug.objectHighlightColor {
+    
+    var objectColor: SKColor = TiledGlobals.default.debug.objectHighlightColor {
         didSet {
             self.draw()
         }
     }
-
-    var fillOpacity = TiledGlobals.default.debug.objectFillOpacity {
+    
+    var fillOpacity: CGFloat = TiledGlobals.default.debug.objectFillOpacity {
         didSet {
             self.draw()
         }
     }
-
+    
+    /// TODO: remember to use this!!
     var isFocused: Bool = false {
         didSet {
             guard (oldValue != isFocused) else { return }
@@ -74,8 +98,11 @@ internal class TileObjectProxy: SKShapeNode, SKTiledGeometry {
             }
         }
     }
-
-    required init(object: SKTileObject, visible: Bool = false, renderable: Bool = false) {
+    
+    required init(object: SKTileObject,
+                  visible: Bool = false,
+                  renderable: Bool = false) {
+        
         self.reference = object
         super.init()
         self.animationKey = "highlight-proxy-\(object.id)"
@@ -83,56 +110,76 @@ internal class TileObjectProxy: SKShapeNode, SKTiledGeometry {
         object.proxy = self
         showObjects = visible
         isRenderable = renderable
+        
+        // grab proxy color overrides
+        let parentProxyColor = object.layer.proxyColor ?? object.proxyColor
+        if let proxyColor = parentProxyColor {
+            objectColor = proxyColor
+        }
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         super.init()
     }
-
-    func draw(debug: Bool = false) {
-
-        let showFocused = TiledGlobals.default.debug.mouseFilters.contains(.objectsUnderCursor)
-        let proxyIsVisible = (showObjects == true) || (isFocused == true && showFocused == true)
-
+    
+    /// Draw the objects in the overlay.
+    public func draw() {
+        
+        let proxyIsVisible = (showObjects == true) || (isFocused == true)
+        
         self.removeAction(forKey: self.animationKey)
-        guard let object = reference,
-            let vertices = object.translatedVertices() else {
-                self.path = nil
-                return
+        
+        guard let object = reference else {
+            self.path = nil
+            return
         }
-
+        
+        
+        // CONVERTED: was `object.translatedVertices()`
+        let vertices = object.translatedVertices()
+        guard (vertices.count > 0) else {
+            self.path = nil
+            return
+        }
+        
+        
         // reset scale
         self.setScale(1)
-
+        
         let convertedPoints = vertices.map {
             self.convert($0, from: object)
         }
-
+        
+        //let scaleFactor = CGPoint(x: 1 / object.xScale, y: 1 / object.yScale)
+        //xScale = scaleFactor.x
+        //yScale = scaleFactor.y
+        
         let renderQuality = TiledGlobals.default.renderQuality.object
         let objectRenderQuality = renderQuality / 2
-
+        
         if (convertedPoints.isEmpty == false) {
-
+            
             let scaledVertices = convertedPoints.map { $0 * renderQuality }
-
-            let objectPath: CGPath
+            
+            let objPath: CGPath
             switch object.shapeType {
                 case .ellipse:
-                    objectPath = bezierPath(scaledVertices, closed: true, alpha: object.shapeType.curvature).path
+                    objPath = bezierPath(scaledVertices, closed: true, alpha: object.shapeType.curvature).path
                 default:
-                    objectPath = polygonPath(scaledVertices, closed: true)
+                    objPath = polygonPath(scaledVertices, closed: true)
             }
-
-            self.path = objectPath
+            
+            self.path = objPath
             self.setScale(1 / renderQuality)
-
-
+            
+            
             let currentStrokeColor = (proxyIsVisible == true) ? self.objectColor : SKColor.clear
             let currentFillColor = (proxyIsVisible == true) ? (isRenderable == false) ? currentStrokeColor.withAlphaComponent(fillOpacity) : SKColor.clear : SKColor.clear
-
+            
             self.strokeColor = currentStrokeColor
             self.fillColor = currentFillColor
-            self.lineWidth = objectRenderQuality
+            self.lineWidth = baseLineWidth * objectRenderQuality
+            self.isAntialiased = false
         }
     }
 }
@@ -140,17 +187,47 @@ internal class TileObjectProxy: SKShapeNode, SKTiledGeometry {
 
 // MARK: - Extensions
 
+extension TileObjectProxy {
+    
+    @objc override var tiledNodeName: String {
+        return "objectproxy"
+    }
+    
+    /// Returns a "nicer" node name, for usage in the inspector.
+    @objc public override var tiledNodeNiceName: String {
+        return "Object Proxy"
+    }
+    
+    @objc override var tiledIconName: String {
+        return "proxy-icon"
+    }
+    
+    @objc override var tiledListDescription: String {
+        var refString = ""
+        if let refobj = reference {
+            refString = ": object id: \(refobj.id)"
+        }
+        return "Proxy\(refString)"
+    }
+    
+    @objc override var tiledDescription: String {
+        return "Tile object proxy node."
+    }
+}
+
 
 extension TileObjectProxy {
-
-    override var description: String {
-        guard let object = reference else {
-            return "Object Proxy: nil"
+    
+    public override var description: String {
+        let objString = "<\(String(describing: Swift.type(of: self)))>"
+        var attrsString = objString
+        if let object = reference {
+            attrsString += " object: \(object.id)"
         }
-        return "Object Proxy: \(object.id)"
+        return attrsString
     }
-
-    override var debugDescription: String {
+    
+    public override var debugDescription: String {
         return description
     }
 }

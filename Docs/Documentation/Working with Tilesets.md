@@ -20,7 +20,7 @@ if let inlineTileset = tilemap.getTileset(named: "winter-tiles") {
     // do something with the tileset
 }
 
-// get an externally saved tileset
+// query an externally saved tileset
 if let externalTileset = tilemap.getTileset(fileNamed: "winter-tiles.tsx") {
     // do something with the tileset
 }
@@ -96,7 +96,7 @@ let spritesheet = URL(fileURLWithPath: "new-spritesheet.png", relativeTo: Bundle
 tileset.addTextures(fromSpriteSheet: spritesheet.path, replace: true, transparent: nil)
 ```
 
-Doing this will update all of the current tiles, so be careful using this method. 
+Doing this will update all of the current tiles, so be careful using this method.
 
 
-Next: [Working with Layers](working-with-layers.html) - [Index](Table of Contents.html)
+Next: [Working with Layers](working-with-layers.html) - [Index](Documentation.html)
