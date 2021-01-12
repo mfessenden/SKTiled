@@ -366,7 +366,7 @@ class GameViewController: NSViewController, Loggable {
     /// - Parameter notification: event notification.
     @objc func updateCommandString(notification: Notification) {
         guard (commandOutputLabel.isHidden == false) else {
-            fatalError("fucking hell.")
+            return
         }
 
 

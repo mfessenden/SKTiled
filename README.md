@@ -15,7 +15,7 @@
 ![Demo Image][demo-iphone-img]
 
 
-Check out the [**Official Documentation**][sktiled-13-doc-url]. Got a project based on **SKTiled**? We'd love [to hear][mailto-url] about it!
+Check out the [**Official Documentation**][sktiled-13-doc-url].
 
 ## Features
 
@@ -44,7 +44,7 @@ Check out the [**Official Documentation**][sktiled-13-doc-url]. Got a project ba
 ## Requirements
 
 - iOS 12
-- tvOS 12
+- tvOS 12a
 - macOS 10.14
 - Xcode 11/Swift 5
 
@@ -54,12 +54,12 @@ Check out the [**Official Documentation**][sktiled-13-doc-url]. Got a project ba
 
 For Carthage installation, create a Cartfile in the root of your project:
 
-    github "mfessenden/SKTiled" ~> 1.3b1
+    github "mfessenden/SKTiled" "release/1.30"
 
 
 For CocoaPods, install via a reference in your podfile:
 
-    pod 'SKTiled', '~> 1.30b1'
+    pod 'SKTiled', :git => 'https://github.com/mfessenden/SKTiled.git', :branch => 'release/1.30'
 
 
 ## Usage

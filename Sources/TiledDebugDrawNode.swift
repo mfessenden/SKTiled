@@ -193,7 +193,7 @@ internal class TiledDebugDrawNode: SKNode {
         
         
         guard let layer = layer else {
-            fatalError("noooooo")
+            return
         }
         
         let fillColor = layer.tilemap.gridColor
@@ -248,8 +248,6 @@ internal class TiledDebugDrawNode: SKNode {
             }
             
             frameShape.fillColor = SKColor.clear
-        } else {
-            fatalError("no object path!")
         }
         
         isHidden = false

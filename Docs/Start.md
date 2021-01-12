@@ -20,7 +20,7 @@
 - [Migration Guide](migration-guide.html)
 - [Class Hierarchy](Class Hierarchy.html)
 
-**SKTiled** is a Swift framework for using [**Tiled**](http://www.mapeditor.org) assets with Apple's SpriteKit. Includes frameworks for macOS, iOS & tvOS.
+**SKTiled** is a Swift framework for using [**Tiled**](http://www.mapeditor.org) assets with Apple's SpriteKit. Includes frameworks for macOS, iOS & tvOS. Got a project based on **SKTiled**? We'd love [to hear](mailto:michael.fessenden@gmail.com?Subject=SKTiled%20Project) about it!
 
 ![Isometric Preview](images/iso-start.svg)
 

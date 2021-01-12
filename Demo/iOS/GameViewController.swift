@@ -401,7 +401,7 @@ class GameViewController: UIViewController, Loggable {
     /// - Parameter notification: event notification.
     @objc func sceneCameraUpdated(notification: Notification) {
         guard let camera = notification.object as? SKTiledSceneCamera else {
-            fatalError("no camera!!")
+            return
         }
 
         cameraInfoLabel.text = camera.description
