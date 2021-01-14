@@ -1219,6 +1219,7 @@ extension AppDelegate {
 
     @objc func initializeLoggingLevelMenu() {
         loggingLevelMenuItem.isEnabled = true
+        
         // update the logging menu
         if let loggingLevelSubMenu = loggingLevelMenuItem.submenu {
             loggingLevelSubMenu.removeAllItems()

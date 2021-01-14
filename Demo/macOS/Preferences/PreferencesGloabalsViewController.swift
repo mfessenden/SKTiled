@@ -133,11 +133,7 @@ class PreferencesGloabalsViewController: NSViewController {
         // user/demo maps
         checkBoxes["gbl-allowusermaps-check"]?.state = (TiledGlobals.default.allowUserMaps == true) ? .on : .off
         checkBoxes["gbl-mouseenvents-check"]?.state = (TiledGlobals.default.enableMouseEvents == true) ? .on : .off
-        
-        
-        let loggingLevelMenu = popupMenus["glb-logging-menu"]
-        
-        
+
         // Tilemap
         var showObjectsValue = demoController.defaultPreferences.showObjects
         var drawGridValue = demoController.defaultPreferences.drawGrid
@@ -169,31 +165,7 @@ class PreferencesGloabalsViewController: NSViewController {
         checkBoxes["gbl-trackcameranodes-check"]?.state = (trackCameraContainedNodes == true) ? .on : .off
         checkBoxes["gbl-mouseevents-check"]?.state = (TiledGlobals.default.enableMouseEvents == true) ? .on : .off
 
-
-        loggingLevelMenu?.removeAllItems()
-        
-        
-        if let loggingMenu = loggingLevelMenu?.menu {
-            loggingMenu.removeAllItems()
-            
-            let allLoggingLevels = LoggingLevel.all
-            
-            for loggingLevel in allLoggingLevels {
-                guard (loggingLevel != LoggingLevel.none) && (loggingLevel != LoggingLevel.custom) else {
-                    continue
-                }
-                
-                let levelMenuItem = NSMenuItem(title: loggingLevel.description.uppercaseFirst, action: #selector(loggingLevelUpdated(_:)), keyEquivalent: "")
-                levelMenuItem.setAccessibilityTitle("\(loggingLevel.rawValue)")
-                levelMenuItem.state = (TiledGlobals.default.loggingLevel == loggingLevel) ? .on : .off
-                
-                if (levelMenuItem.state == .on) {
-                    //print("⭑ [Preferences]: current logging level '\(loggingLevel)'")
-                }
-                
-                loggingMenu.addItem(levelMenuItem)
-            }
-        }
+        initializeLoggingLevelMenu()
     }
     
     // MARK: - Event Handlers
@@ -333,53 +305,45 @@ class PreferencesGloabalsViewController: NSViewController {
     }
     
     @objc func initializeLoggingLevelMenu() {
-        guard let loggingLevelMenuButton = popupMenus["glb-logging-menu"] else {
+        guard let loggingLevelMenu = popupMenus["glb-logging-menu"] else {
             fatalError("cannot access menu with identifier 'glb-logging-menu'.")
         }
         
-        loggingLevelMenuButton.isEnabled = false
-        var indexToSelect = -1
+        loggingLevelMenu.isEnabled = false
         
         // update the logging menu
-        if let loggingLevelMenu = loggingLevelMenuButton.menu {
+        if let loggingLevelSubMenu = loggingLevelMenu.menu {
             
             // nsmenu
-            loggingLevelMenu.removeAllItems()
+            loggingLevelSubMenu.removeAllItems()
             
             
             let allLoggingLevels = LoggingLevel.all
             
-            for (idx, loggingLevel) in allLoggingLevels.enumerated() {
+            for (_, loggingLevel) in allLoggingLevels.enumerated() {
                 guard (loggingLevel != LoggingLevel.none) && (loggingLevel != LoggingLevel.custom) else { continue }
                 
                 let levelMenuItem = NSMenuItem(title: loggingLevel.description.uppercaseFirst, action: #selector(loggingLevelUpdated(_:)), keyEquivalent: "")
                 levelMenuItem.setAccessibilityTitle("\(loggingLevel.rawValue)")
                 
                 let isCurrentIndex = TiledGlobals.default.loggingLevel == loggingLevel
-                
-                if (isCurrentIndex == true) {
-                    indexToSelect = idx
-                }
-                
+ 
                 levelMenuItem.state = (isCurrentIndex == true) ? .on : .off
-                loggingLevelMenu.addItem(levelMenuItem)
-                
-                
-                if (isCurrentIndex == true) {
-                    //loggingLevelMenuButton.select(levelMenuItem)
+                loggingLevelSubMenu.addItem(levelMenuItem)
+            }
+            
+            for item in loggingLevelSubMenu.items {
+                if let title = item.accessibilityTitle() {
+                    if let index = Int(title) {
+                        if index == TiledGlobals.default.loggingLevel.rawValue {
+                            loggingLevelMenu.select(item)
+                        }
+                    }
                 }
             }
         }
         
-        if (indexToSelect > -1) {
-            loggingLevelMenuButton.selectItem(at: indexToSelect)
-        }
-        
-        //loggingLevelMenuButton.autoenablesItems = false
-        loggingLevelMenuButton.isEnabled = true
-        
-        let selectedTitle = loggingLevelMenuButton.selectedItem?.title ?? "nil"
-        print("⭑ [Preferences]: logging menu selected: '\(selectedTitle)'")
+        loggingLevelMenu.isEnabled = true
     }
     
     @IBAction func loggingLevelUpdated(_ sender: NSMenuItem) {
