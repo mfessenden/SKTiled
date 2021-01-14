@@ -221,8 +221,6 @@ public class TiledDemoController: NSObject, Loggable {
         TiledGlobals.default.loadApplicationDefaults()
     }
 
-
-
     // MARK: - Scanning
 
     public func scanForResources() {
@@ -232,7 +230,10 @@ public class TiledDemoController: NSObject, Loggable {
             name: Notification.Name.DemoController.WillBeginScanForAssets,
             object: nil
         )
-
+        
+        
+        
+        print("⭑ current map url: '\(currentTilemapUrl?.relativePath ?? "nil")'")
 
         let canUseDemoMaps = TiledGlobals.default.allowDemoMaps
         let canUseUserMaps = TiledGlobals.default.allowUserMaps
@@ -807,7 +808,7 @@ public class TiledDemoController: NSObject, Loggable {
     }
 
     /// Called when the user adds an asset search path. Called when the `Notification.Name.DemoController.AssetSearchPathsAdded` event fires.
-    ///   userInfo: ["urls": `[URL]`]
+    ///   userInfo: ["urls": `[URL]`] - urls to add to search paths.
     ///
     /// - Parameter notification: event notification.
     @objc public func assetSearchPathsAdded(_ notification: Notification) {
@@ -830,18 +831,20 @@ public class TiledDemoController: NSObject, Loggable {
     }
 
     /// Called when the user removes asset search paths. Called when the `Notification.Name.DemoController.AssetSearchPathsRemoved` event fires.
-    ///   userInfo: ["urls": `[URL]`]
+    ///
+    ///   userInfo: ["urls": `[URL]`] - urls to remove from search paths.
     ///
     /// - Parameter notification: event notification.
     @objc public func assetSearchPathsRemoved(_ notification: Notification) {
         // notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: [URL]],
-              let searchPaths = userInfo["urls"] else { return }
+              let searchPathsToRemove = userInfo["urls"] else { return }
 
 
-        // re-scan
-        assetSearchPaths = searchPaths.filter({ assetSearchPaths.contains($0) == false })
+        // re-scan assets
+        assetSearchPaths = searchPathsToRemove.filter({ assetSearchPaths.contains($0) == false })
         scanForResources()
+        saveToUserDefaults()
     }
 
     /// Called when the `TiledGlobals` defaults are read from disk. Called when the `Notification.Name.Globals.DefaultsRead` event fires. Object is `DemoPreferences` instance.

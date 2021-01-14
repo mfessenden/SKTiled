@@ -3,7 +3,7 @@
 - [Requirements](#requirements)
 - [Installation](#installation)
     - [Framework Installation](#framework-installation)
-    - [Binary Framework Installation](#binary-framework-installation)
+        - [Binary Frameworks](#binary-frameworks)
     - [Carthage Installation](#carthage-installation)
     - [CocoaPods Installation](#cocoapods-installation)
     - [Building the Demo Projects](#building-the-demo-projects)
@@ -44,15 +44,6 @@ After building the framework(s), you'll need to add them to your project. Select
 ![framework embed](images/links.png)
 
 
-### Binary Framework Installation ![new-feature-img]
-
-It is also possible to install the new binary framework.
-
-```
-carthage update --use-xcframeworks
-```
-
-
 ### Carthage Installation
 
 To build with [Carthage](https://github.com/Carthage/Carthage), create a Cartfile in your project root and add a reference to **SKTiled** (be sure to check the current version number):
@@ -73,6 +64,17 @@ Once you've run the build command frameworks are built, you'll find a **Carthage
 ![Carthage Directories](images/carthage_directories.png)
 
 See the [Carthage](https://github.com/Carthage/Carthage) home page for help and additional build instructions.
+
+
+#### Binary Frameworks
+
+It's also possible to build one of the new binary **xcframework** frameworks for use with mulitple platforms. Pass the `--use-xcframeworks` argument to the update command:
+
+
+    carthage update --use-xcframeworks
+
+
+Currently the release version of Carthage doesn't support building binary frameworks, so you might have to build Carthage from the master branch. See [**this issue**][carthage-issue-url] for more information.
 
 ### CocoaPods Installation
 
@@ -203,3 +205,4 @@ Next: [Migration Guide](migration-guide.html) - [Index](Documentation.html)
 [working-with-maps-url]:working-with-maps.html#loading-a-tilemap
 [jazzy-url]:https://github.com/realm/jazzy
 [apple-code-signing-url]:https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html
+[carthage-issue-url]:https://github.com/Carthage/Carthage/issues/3097

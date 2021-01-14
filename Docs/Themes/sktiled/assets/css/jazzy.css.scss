@@ -90,7 +90,8 @@ $token_top_margin: 4rem;
 $token_header_text_shadow_color: #999999ab;
 $token_link_color: #505050;
 
-$h4_bullet: '\2023';  //
+// $h4_bullet: '\2023';  //
+$h4_bullet: '';  //
 
 // ===========================================================================
 //
@@ -138,7 +139,7 @@ h4 {
   @include heading(1.15rem);
   &:before {
     content: $h4_bullet;
-    margin:0 5px;
+    margin:0 0px;
   }
 }
 

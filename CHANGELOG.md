@@ -38,12 +38,12 @@ Change Log
 	- fix a bug where mouse scroll wheel events could override the `SKTiledSceneCamera.allowZoom` flag
 
 - API changes:
-	- renamed protocol `SKTiledObject` -> `TiledObjectType`
-	- renamed `SKTiledSceneDelegate` -> `TiledSceneDelegate`
+	- rename protocol `SKTiledObject` -> `TiledObjectType`
+	- rename `SKTiledSceneDelegate` -> `TiledSceneDelegate`
 	    - `TiledSceneDelegate.tilemap` property is now optional
 	    - `TiledSceneDelegate.cameraNode` property is now optional
-	- renamed `SKTiledSceneCameraDelegate` -> `TiledSceneCameraDelegate`
-	- renamed `SKTilemapDelegate` -> `TilemapDelegate`
+	- rename `SKTiledSceneCameraDelegate` -> `TiledSceneCameraDelegate`
+	- rename `SKTilemapDelegate` -> `TilemapDelegate`
 		- `TilemapDelegate` protocol is now an `@objc` protocol
 		- `TilemapDelegate` properties & methods are now optional
 	- add `TilemapDelegate.mouseOverTileHandler` method.
@@ -59,16 +59,16 @@ Change Log
     - `TiledLayerObject.graph` property is now optional
     - `SKTiledSceneCamera.world` property is now optional
     - add `TiledGlobals.zDeltaForLayers` property
-	- renamed `SKTilemap.getTileset(forTile:)` -> `SKTilemap.getTilesetFor(globalID:)`
-	- renamed `SKTilemap.coordinateAtMouseEvent(event:)` -> `SKTilemap.coordinateAtMouse(event:)`
-	- renamed `TiledLayerObject.coordinateAtMouseEvent(event:)` -> `TiledLayerObject.coordinateAtMouse(event:)`
-    - renamed `TiledObjectType.setValue(forKey:)` -> `TiledObjectType.setValue(for:)`
-    - renamed `TiledObjectType.removeProperty(forKey:)` -> `TiledObjectType.removeProperty(for:)`
-	- renamed `SKTileset.setDataTexture(_:imageNamed:)` -> `SKTileset.setDataTexture(tileID:imageNamed:)`
-	- renamed `SKTileset.setDataTexture(_:texture:)` -> `SKTileset.setDataTexture(tileID:texture:)`
-	- renamed `SKTileset.addTilesetTile(_:texture:)` -> `SKTileset.addTilesetTile(tileID:texture:)`
-	- renamed `SKTileset.addTilesetTile(_:source:)` -> `SKTileset.addTilesetTile(tileID:source:)`
-    - renamed `SKTileObject.setObjectAttributes` -> `SKTileObject.overrideObjectAttributes`
+	- rename `SKTilemap.getTileset(forTile:)` -> `SKTilemap.getTilesetFor(globalID:)`
+	- rename `SKTilemap.coordinateAtMouseEvent(event:)` -> `SKTilemap.coordinateAtMouse(event:)`
+	- rename `TiledLayerObject.coordinateAtMouseEvent(event:)` -> `TiledLayerObject.coordinateAtMouse(event:)`
+    - rename `TiledObjectType.setValue(forKey:)` -> `TiledObjectType.setValue(for:)`
+    - rename `TiledObjectType.removeProperty(forKey:)` -> `TiledObjectType.removeProperty(for:)`
+	- rename `SKTileset.setDataTexture(_:imageNamed:)` -> `SKTileset.setDataTexture(tileID:imageNamed:)`
+	- rename `SKTileset.setDataTexture(_:texture:)` -> `SKTileset.setDataTexture(tileID:texture:)`
+	- rename `SKTileset.addTilesetTile(_:texture:)` -> `SKTileset.addTilesetTile(tileID:texture:)`
+	- rename `SKTileset.addTilesetTile(_:source:)` -> `SKTileset.addTilesetTile(tileID:source:)`
+    - rename `SKTileObject.setObjectAttributes` -> `SKTileObject.overrideObjectAttributes`
 	- add `TiledObjectType.getValue(for:defaultValue:)` protocol method
     - add `TiledObjectType.setProperties(_:overwrite:)` protocol method
 	- add `TiledObjectType.colorForKey(_:)` method
@@ -97,9 +97,9 @@ Change Log
 	- remove `TiledGlobals.DebugDisplayOptions.MouseFilters.tilesUnderCursor`
 	- remove `TiledGlobals.DebugDisplayOptions.MouseFilters.objectsUnderCursor`
 	- remove `SKTileLayer.setLayerData(data:debug)`
-	- renamed `SKTilemap.isShowingGraphs` -> `SKTilemap.isShowingGridGraph`
+	- rename `SKTilemap.isShowingGraphs` -> `SKTilemap.isShowingGridGraph`
 	- remove `TiledLayerObject.points` property
-	- renamed `TiledLayerObject.path` -> `TiledLayerObject.xPath` property
+	- rename `TiledLayerObject.path` -> `TiledLayerObject.xPath` property
 
 
 #### Breaking
@@ -190,7 +190,7 @@ Change Log
 -  `SKTileset.setDataTexture` now returns the previous texture
 - add `SKTilesetData.animationAction` property
 - add `SKTilesetData.name` property
-- renamed `AnimationFrame` -> `TileAnimationFrame`
+- rename `AnimationFrame` -> `TileAnimationFrame`
 - add `SKTiledSceneCamera.allowGestures` attribute
 - add `SKTiledSceneCamera.setupGestures(for:)` method
 - `SKTiledScene.setup` completion handler passes tilemap as argument
@@ -198,8 +198,8 @@ Change Log
 - add `TiledLayerObject.vectorCoordinateForPoint` method.
 - `SKTiledObject.boolForKey` ,  `SKTiledObject.intForKey` & `SKTiledObject.doubleForKey` are now public methods.
 -  removed `SKTiledSceneCameraDelegate` default methods; protocol methods are now optional
-- renamed `SKTiledObject.objectType`  ->  `SKTiledObject.shapeType`
-- renamed `SKObjectGroup.drawObjects`  ->  `SKObjectGroup.draw`
+- rename `SKTiledObject.objectType`  ->  `SKTiledObject.shapeType`
+- rename `SKObjectGroup.drawObjects`  ->  `SKObjectGroup.draw`
 
 #### Breaking
 
@@ -269,8 +269,8 @@ Change Log
 - add `SKTilemap.objectGroups(withPrefix:recursive:)`
 - add `SKTilemap.imageLayers(withPrefix:recursive:)`
 - add `SKTilemap.groupLayers(withPrefix:recursive:)`
-- rename `TiledLayerObject` -> `TiledLayerObject`
-- rename `TiledLayerObject.boundingRect` -> `TiledLayerObject.bounds`
+- rename `TiledLayerObject` -> `SKTiledLayerObject`
+- rename `TiledLayerObject.boundingRect` -> `SKTiledLayerObject.bounds`
 - rename `SKTiledSceneCamera.boundingRect` -> `SKTiledSceneCamera.bounds`
 - rename `SKTilemap.addLayer(_:base:)` -> `SKTilemap.addLayer(_:group:clamped:)->(success:layer:)`
 - remove `SKTileLayer.validTiles()`

@@ -430,7 +430,10 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
 
     /// Initial world scale.
     public var worldScale: CGFloat = 1.0
-
+    
+    
+    // MARK: - Camera
+    
     /// Current map zoom level.
     public internal(set) var currentZoom: CGFloat = 1.0
 
@@ -443,7 +446,7 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
     /// Allow camera rotation.
     public var allowRotation: Bool = true
 
-    // Tilesets
+    // MARK: - Tilesets
 
     /// Array of tilesets associated with this map.
     public var tilesets: Set<SKTileset> = []
@@ -2879,9 +2882,9 @@ extension SKTilemap {
         var attrsString = objString
 
         attrsString += " '\(mapName)' "
-        attrsString += " orientation: \(orientation.description) "
+        attrsString += " orientation: '\(orientation.description)' "
 
-        attrsString += "map size: \(sizeInPoints) size: \(mapSize) tile size: \(tileSize) "
+        attrsString += "map size: '\(sizeInPoints)' size: '\(mapSize)' tile size: '\(tileSize)' "
         //attrsString += " url: '\(url.relativePath)'"
 
         if isInfinite == true {
