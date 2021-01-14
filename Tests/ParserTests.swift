@@ -51,7 +51,6 @@ let testXmlString = """
 
 
 
-
 /// Test the tiled parser
 class ParserTests: XCTestCase {
 

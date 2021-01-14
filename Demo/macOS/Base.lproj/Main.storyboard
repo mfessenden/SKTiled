@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17700" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17700"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -102,6 +102,11 @@
                                             <connections>
                                                 <action selector="toggleRenderTilemapEffects:" target="Voe-Tx-rLC" id="FQB-Rx-bNb"/>
                                             </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="va6-qm-hF9"/>
+                                        <menuItem title="Camera:" enabled="NO" id="qRc-VF-DLu">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Camera:" id="Std-FX-Zs7"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="qs1-uO-RgJ"/>
                                         <menuItem title="Debug Draw:" enabled="NO" id="g9m-EM-X6F">
@@ -327,6 +332,7 @@
                         <outlet property="layerStatisticsMenuItem" destination="VaW-im-1oo" id="hKu-cG-Lc9"/>
                         <outlet property="layerVisibilityMenu" destination="ofi-Kh-OpM" id="EXP-Xd-vY6"/>
                         <outlet property="loggingLevelMenuItem" destination="2jg-PU-w23" id="PCS-Fy-fCC"/>
+                        <outlet property="mapCameraMenu" destination="qRc-VF-DLu" id="Lp5-Ux-fLf"/>
                         <outlet property="mapDebugDrawMenu" destination="g9m-EM-X6F" id="olI-40-ckw"/>
                         <outlet property="mapGridColorMenu" destination="jgc-CR-TWe" id="86e-4d-sW4"/>
                         <outlet property="mapMenuItem" destination="Ybf-hB-7LM" id="7pI-qT-NHE"/>

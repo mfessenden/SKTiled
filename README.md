@@ -44,7 +44,7 @@ Check out the [**Official Documentation**][sktiled-13-doc-url].
 ## Requirements
 
 - iOS 12
-- tvOS 12a
+- tvOS 12
 - macOS 10.14
 - Xcode 11/Swift 5
 

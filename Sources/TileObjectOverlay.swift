@@ -86,6 +86,7 @@ internal class TileObjectOverlay: SKNode {
     
     func draw() {
         objects.forEach { object in
+            object.zoomLevel = cameraZoom
             object.baseLineWidth = lineWidth
             object.draw()
         }
@@ -105,18 +106,17 @@ extension TileObjectOverlay: TiledSceneCameraDelegate {
     ///
     /// - Parameter newZoom: new camera zoom.
     @objc func cameraZoomChanged(newZoom: CGFloat) {
-        let oldZoom = cameraZoom
+        //let oldZoom = cameraZoom
         cameraZoom = newZoom
-        let delta = cameraZoom - oldZoom
-        let newLineWidth = (newZoom != 0) ? lineWidth / newZoom : minimumLineWidth 
-
+        //let delta = cameraZoom - oldZoom
+        //let newLineWidth = (newZoom != 0) ? lineWidth / newZoom : minimumLineWidth
+        lineWidth = TiledGlobals.default.debug.lineWidth
         let isAntialiased = newZoom < 1
         weak var weakSelf = self
         renderQueue.async {
             for object in weakSelf!.objects {
                 object.zoomLevel = newZoom
-                //object.isAntialiased = isAntialiased
-                object.lineWidth = newLineWidth
+                object.baseLineWidth = self.lineWidth
                 object.isAntialiased = isAntialiased
             }
         }

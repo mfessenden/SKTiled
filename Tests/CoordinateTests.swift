@@ -34,7 +34,7 @@ fileprivate let keyCoordinate: simd_int2 = simd_int2(20,3)
 fileprivate let keyLayerName = "Objects"
 
 // Tile map instance used for this test.
-fileprivate var thisTestTilemap: SKTilemap?
+fileprivate var testTilemap: SKTilemap?
 fileprivate let testTilemapName = "test-tilemap"
 
 
@@ -43,16 +43,16 @@ class CoordinateTests: XCTestCase {
 
     override class func setUp() {
         super.setUp()
-        if (thisTestTilemap == nil) {
+        if (testTilemap == nil) {
             if let tilemapUrl = TestController.default.getResource(named: testTilemapName, withExtension: "tmx") {
-                thisTestTilemap = SKTilemap.load(tmxFile: tilemapUrl.path, loggingLevel: LoggingLevel.none)
+                testTilemap = SKTilemap.load(tmxFile: tilemapUrl.path, loggingLevel: LoggingLevel.none)
             }
         }
     }
 
     /// Test that coordinate conversion is working as expected.
     func testTilemapCoordinateConversion() {
-        guard let tilemap = thisTestTilemap else {
+        guard let tilemap = testTilemap else {
             XCTFail("⭑  tilemap did not load.")
             return
         }
@@ -72,7 +72,7 @@ class CoordinateTests: XCTestCase {
     ///
     ///   coord: 20,3 - top tile is of type `key`
     func testTilemapQueryAtCoordinate() {
-        guard let tilemap = thisTestTilemap else {
+        guard let tilemap = testTilemap else {
             XCTFail("⭑ tilemap '\(testTilemapName)' did not load.")
             return
         }
@@ -90,7 +90,7 @@ class CoordinateTests: XCTestCase {
 
     /// Test that coordinate conversion is working as expected for the given layer.
     func testLayerCoordinateConversion() {
-        guard let tilemap = thisTestTilemap else {
+        guard let tilemap = testTilemap else {
             XCTFail("⭑ tilemap '\(testTilemapName)' did not load.")
             return
         }
@@ -99,17 +99,23 @@ class CoordinateTests: XCTestCase {
             XCTFail("⭑ tilemap could not find layer: '\(keyLayerName)'.")
             return
         }
-
-
-        let coordinates: [simd_int2] = [simd_int2(-2, -1), simd_int2(20,3), simd_int2(0,0), simd_int2(29,0), simd_int2(29, 15), simd_int2(0,15)]
-
-
+        
+        // test coordinates
+        let coordinates: [simd_int2] = [simd_int2(-2, -1), simd_int2(20,3), simd_int2(0,0), simd_int2(29,0), simd_int2(29, 15), simd_int2(0,15), simd_int2(13,1)]
+        
+        // loop through coordinates
         for coordinate in coordinates {
-
+            
+            // get the point in the layer & then check that the coordinate is the same
             let pointAtCoordinate = tileLayer.pointForCoordinate(coord: coordinate)
             let coordinateAtPoint = tileLayer.coordinateForPoint(point: pointAtCoordinate)
-
-            XCTAssert(coordinate == coordinateAtPoint, "⭑ coordinates are not equal: \(coordinate.shortDescription) -> \(coordinateAtPoint)")
+            
+            // get the point in the map & then check that the coordinate is the same
+            let mapPointAtCoordinate = tilemap.pointForCoordinate(coord: coordinate)
+            let mapCoordinateAtPoint = tilemap.coordinateForPoint(point: mapPointAtCoordinate)
+            
+            XCTAssert(coordinate == coordinateAtPoint, "⭑ layer coordinates are not equal: \(coordinate.shortDescription) -> \(coordinateAtPoint.shortDescription)")
+            XCTAssert(coordinate == coordinateAtPoint, "⭑ map coordinates are not equal:   \(coordinate.shortDescription) -> \(mapCoordinateAtPoint.shortDescription)")
         }
     }
 
@@ -117,7 +123,7 @@ class CoordinateTests: XCTestCase {
     ///
     /// coord: 20,3 - top file is of type `key`
     func testLayerQueryAtCoordinate() {
-        guard let tilemap = thisTestTilemap else {
+        guard let tilemap = testTilemap else {
             XCTFail("⭑ tilemap '\(testTilemapName)' did not load.")
             return
         }
@@ -156,7 +162,7 @@ class CoordinateTests: XCTestCase {
 
     /// Test that the coordinate conversion in for each coordinate in the layer is correct.
     func testLayerQueryAllCoordinates() {
-        guard let tilemap = thisTestTilemap else {
+        guard let tilemap = testTilemap else {
             XCTFail("⭑ tilemap '\(testTilemapName)' did not load.")
             return
         }

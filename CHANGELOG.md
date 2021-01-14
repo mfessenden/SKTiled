@@ -9,12 +9,11 @@ Change Log
 
 - add support for infinite maps
 - more consistent API naming and value types:
-	- `UInt32` type is used consistantly for global tile ids.
+	- `UInt32` type is used consistently for global tile ids.
 - tile flip flags are now stored on the individual tiles, not tile data containers
 - better managing of object/template attributes
 - better handling of image types
-- add `SKTile.objectSize` property
-- add `SKTile.rotation` property
+- add `SKTileObject.rotation` property
 - add `SKTilemap.getTilesWithPropery(named:recursive:)` method
 - add `SKTileLayer.getTilesWithPropery(named:)` method
 - add `SKTile.spriteCopy` method
@@ -24,9 +23,9 @@ Change Log
 - add `SKTiledSceneCamera.sceneRotated` property
 - add `SKTiledSceneCamera.allowRotation` property
 - add `SKTiledSceneCamera.centerOn(node:)` method
-- add `SKTiledLayerObject.tintColor` property
-- add `SKTiledLayerObject.load` method (EXPERIMENTAL)
-	- add `SKTiledLayerObject.mapDelegate` property
+- add `TiledLayerObject.tintColor` property
+- add `TiledLayerObject.load` method (EXPERIMENTAL)
+	- add `TiledLayerObject.mapDelegate` property
 
 - bug fixes:
     - fix a memory leak where tilemap is retained after parent scene change
@@ -39,12 +38,12 @@ Change Log
 	- fix a bug where mouse scroll wheel events could override the `SKTiledSceneCamera.allowZoom` flag
 
 - API changes:
-	- renamed protocol `SKTiledObject` -> `TiledObjectType`
-	- renamed `SKTiledSceneDelegate` -> `TiledSceneDelegate`
+	- rename protocol `SKTiledObject` -> `TiledObjectType`
+	- rename `SKTiledSceneDelegate` -> `TiledSceneDelegate`
 	    - `TiledSceneDelegate.tilemap` property is now optional
 	    - `TiledSceneDelegate.cameraNode` property is now optional
-	- renamed `SKTiledSceneCameraDelegate` -> `TiledSceneCameraDelegate`
-	- renamed `SKTilemapDelegate` -> `TilemapDelegate`
+	- rename `SKTiledSceneCameraDelegate` -> `TiledSceneCameraDelegate`
+	- rename `SKTilemapDelegate` -> `TilemapDelegate`
 		- `TilemapDelegate` protocol is now an `@objc` protocol
 		- `TilemapDelegate` properties & methods are now optional
 	- add `TilemapDelegate.mouseOverTileHandler` method.
@@ -55,21 +54,21 @@ Change Log
     - `SKTiledSceneCamera` works properly with any `SKScene` instance conforming to `TiledSceneCameraDelegate` protocol
     - `SKTileObject.tile` property is now public
     - add `SKTile.globalId` property
-    - remove the `layerName` requirement for `SKTiledLayerObject` required init
-    - `SKTiledLayerObject.tilemap` property is now `unowned`
-    - `SKTiledLayerObject.graph` property is now optional
+    - remove the `layerName` requirement for `TiledLayerObject` required init
+    - `TiledLayerObject.tilemap` property is now `unowned`
+    - `TiledLayerObject.graph` property is now optional
     - `SKTiledSceneCamera.world` property is now optional
     - add `TiledGlobals.zDeltaForLayers` property
-	- renamed `SKTilemap.getTileset(forTile:)` -> `SKTilemap.getTilesetFor(globalID:)`
-	- renamed `SKTilemap.coordinateAtMouseEvent(event:)` -> `SKTilemap.coordinateAtMouse(event:)`
-	- renamed `SKTiledLayerObject.coordinateAtMouseEvent(event:)` -> `SKTiledLayerObject.coordinateAtMouse(event:)`
-    - renamed `TiledObjectType.setValue(forKey:)` -> `TiledObjectType.setValue(for:)`
-    - renamed `TiledObjectType.removeProperty(forKey:)` -> `TiledObjectType.removeProperty(for:)`
-	- renamed `SKTileset.setDataTexture(_:imageNamed:)` -> `SKTileset.setDataTexture(tileID:imageNamed:)`
-	- renamed `SKTileset.setDataTexture(_:texture:)` -> `SKTileset.setDataTexture(tileID:texture:)`
-	- renamed `SKTileset.addTilesetTile(_:texture:)` -> `SKTileset.addTilesetTile(tileID:texture:)`
-	- renamed `SKTileset.addTilesetTile(_:source:)` -> `SKTileset.addTilesetTile(tileID:source:)`
-    - renamed `SKTileObject.setObjectAttributes` -> `SKTileObject.overrideObjectAttributes`
+	- rename `SKTilemap.getTileset(forTile:)` -> `SKTilemap.getTilesetFor(globalID:)`
+	- rename `SKTilemap.coordinateAtMouseEvent(event:)` -> `SKTilemap.coordinateAtMouse(event:)`
+	- rename `TiledLayerObject.coordinateAtMouseEvent(event:)` -> `TiledLayerObject.coordinateAtMouse(event:)`
+    - rename `TiledObjectType.setValue(forKey:)` -> `TiledObjectType.setValue(for:)`
+    - rename `TiledObjectType.removeProperty(forKey:)` -> `TiledObjectType.removeProperty(for:)`
+	- rename `SKTileset.setDataTexture(_:imageNamed:)` -> `SKTileset.setDataTexture(tileID:imageNamed:)`
+	- rename `SKTileset.setDataTexture(_:texture:)` -> `SKTileset.setDataTexture(tileID:texture:)`
+	- rename `SKTileset.addTilesetTile(_:texture:)` -> `SKTileset.addTilesetTile(tileID:texture:)`
+	- rename `SKTileset.addTilesetTile(_:source:)` -> `SKTileset.addTilesetTile(tileID:source:)`
+    - rename `SKTileObject.setObjectAttributes` -> `SKTileObject.overrideObjectAttributes`
 	- add `TiledObjectType.getValue(for:defaultValue:)` protocol method
     - add `TiledObjectType.setProperties(_:overwrite:)` protocol method
 	- add `TiledObjectType.colorForKey(_:)` method
@@ -77,7 +76,7 @@ Change Log
 	- add `TiledGlobals.enableCameraContainedNodesCallbacks` property
     - add `SKTileLayerChunk` class
     - add `TileContainerType` protocol
-    - add `SKTiledLayerObject.addChunk(_:at:)` method
+    - add `TiledLayerObject.addChunk(_:at:)` method
     - add `SKTileLayer.isInfinite` property
     - add `SKTileLayer.chunkAt(coord:)` method
     - add `SKTileLayer.chunkAt(_:_:)` method
@@ -98,12 +97,9 @@ Change Log
 	- remove `TiledGlobals.DebugDisplayOptions.MouseFilters.tilesUnderCursor`
 	- remove `TiledGlobals.DebugDisplayOptions.MouseFilters.objectsUnderCursor`
 	- remove `SKTileLayer.setLayerData(data:debug)`
-	- remove `SKTilemap.isShowingGraphs`
-
-	<!-- POSSIBLY NOT CHANGED -->
-	- remove `SKTiledLayerObject.points` property
-	- renamed `SKTiledLayerObject.path` -> `SKTiledLayerObject.xPath` property
-    - **add `SKTiledLayerObject` deprecations**
+	- rename `SKTilemap.isShowingGraphs` -> `SKTilemap.isShowingGridGraph`
+	- remove `TiledLayerObject.points` property
+	- rename `TiledLayerObject.path` -> `TiledLayerObject.xPath` property
 
 
 #### Breaking
@@ -177,7 +173,7 @@ Change Log
 - add `TileUpdateMode` flag
 - `SKTilemap` & `SKTiledLayerObject` nodes are now subclassed from `SKEffectNode`
     - add `SKTilemap.setShader` method
-    - add `SKTiledLayerObject.setShader` method    
+    - add `TiledLayerObject.setShader` method    
 - add `SKTiledGeometry` protocol
 - add `SKTilemap.getTileset(forTile:)` method
 - add `SKTilemap.tileObjects(globalID:)` method
@@ -194,16 +190,16 @@ Change Log
 -  `SKTileset.setDataTexture` now returns the previous texture
 - add `SKTilesetData.animationAction` property
 - add `SKTilesetData.name` property
-- renamed `AnimationFrame` -> `TileAnimationFrame`
+- rename `AnimationFrame` -> `TileAnimationFrame`
 - add `SKTiledSceneCamera.allowGestures` attribute
 - add `SKTiledSceneCamera.setupGestures(for:)` method
 - `SKTiledScene.setup` completion handler passes tilemap as argument
 - add `SKTilemap.vectorCoordinateForPoint` method.
-- add `SKTiledLayerObject.vectorCoordinateForPoint` method.
+- add `TiledLayerObject.vectorCoordinateForPoint` method.
 - `SKTiledObject.boolForKey` ,  `SKTiledObject.intForKey` & `SKTiledObject.doubleForKey` are now public methods.
 -  removed `SKTiledSceneCameraDelegate` default methods; protocol methods are now optional
-- renamed `SKTiledObject.objectType`  ->  `SKTiledObject.shapeType`
-- renamed `SKObjectGroup.drawObjects`  ->  `SKObjectGroup.draw`
+- rename `SKTiledObject.objectType`  ->  `SKTiledObject.shapeType`
+- rename `SKObjectGroup.drawObjects`  ->  `SKObjectGroup.draw`
 
 #### Breaking
 

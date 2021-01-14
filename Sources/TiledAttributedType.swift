@@ -79,7 +79,7 @@ import SpriteKit
     /// Storage for custom Tiled properties.
     @objc var properties: [String: String] { get set }
 
-    /// Storage for properties from a template or tile data.
+    /// :nodoc: Storage for properties from a template or tile data.
     @objc optional var secondaryProperties: [String: String] { get set }
 
     /// Ignore custom node properties.

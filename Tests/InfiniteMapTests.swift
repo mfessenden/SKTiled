@@ -30,8 +30,8 @@ import SpriteKit
 
 
 // Tile map instance used for this test.
-fileprivate var testInfiniteTilemap: SKTilemap?
-fileprivate let infiniteTestTilemapName = "test-infinite"
+fileprivate var testTilemap: SKTilemap?
+fileprivate let testTilemapName = "test-infinite"
 
 
 /// Test infinite map functions.
@@ -39,20 +39,40 @@ class InfiniteMapTests: XCTestCase {
     
     override class func setUp() {
         super.setUp()
-        if (testInfiniteTilemap == nil) {
-            if let tilemapUrl = TestController.default.getResource(named: infiniteTestTilemapName, withExtension: "tmx") {
-                testInfiniteTilemap = SKTilemap.load(tmxFile: tilemapUrl.path, loggingLevel: .none)
+        if (testTilemap == nil) {
+            if let tilemapUrl = TestController.default.getResource(named: testTilemapName, withExtension: "tmx") {
+                testTilemap = SKTilemap.load(tmxFile: tilemapUrl.path, loggingLevel: .none)
             }
         }
     }
-    
-    
     
     /// Test to determine that coordinate conversion between tile layer and a child chunk will return the expected value.
     ///
     ///   Tests the `SKTileLayerChunk.coordinateForLayer(coord:)` method.
     func testCoordinateConversionFromLayerToChunk() {
+        let layerNameToQuery = "Characters"
         
+        guard let tilemap = testTilemap else {
+            XCTFail("⭑ failed to load tilemap `\(testTilemapName)`")
+            return
+        }
+        
+        guard let tileLayer = tilemap.getLayers(named: layerNameToQuery).first as? SKTileLayer,
+              let firstChunk = tileLayer.chunks.first else {
+            XCTFail("⭑ could not access layer '\(layerNameToQuery)' -> '\(testTilemapName)'")
+            return
+        }
+    
+        
+        // test coordinates
+        let coordinates: [simd_int2] = [simd_int2(-2, -1), simd_int2(20,3), simd_int2(0,0), simd_int2(29,0), simd_int2(29, 15), simd_int2(0,15), simd_int2(13,1)]
+        
+        // loop through coordinates
+        for coordinate in coordinates {
+            let chunkCoordinate = firstChunk.coordinateForLayer(coord: coordinate)
+            
+            print("❗️ coordinate: '\(coordinate.coordDescription)', chunk coordinate: '\(chunkCoordinate.coordDescription)', offset: '\(firstChunk.offset.coordDescription)'")
+        }
     }
     
     /// Test to determine that
@@ -72,13 +92,13 @@ class InfiniteMapTests: XCTestCase {
         
         
         
-        guard let tilemap = testInfiniteTilemap else {
-            XCTFail("⭑ failed to load tilemap `\(infiniteTestTilemapName)`")
+        guard let tilemap = testTilemap else {
+            XCTFail("⭑ failed to load tilemap `\(testTilemapName)`")
             return
         }
         
         guard let objectsLayer = tilemap.getLayers(named: layerNameToQuery).first as? SKTileLayer else {
-            XCTFail("⭑ could not access layer '\(layerNameToQuery)' -> '\(infiniteTestTilemapName)'")
+            XCTFail("⭑ could not access layer '\(layerNameToQuery)' -> '\(testTilemapName)'")
             return
         }
         

@@ -1320,7 +1320,6 @@ extension TiledLayerObject {
     public func addChild(_ node: SKNode, coord: CGPoint, offset: CGPoint = CGPoint.zero, zpos: CGFloat? = nil) {
         addChild(node, coord: coord.toVec2, offset: offset, zpos: zpos)
     }
-
 }
 
 

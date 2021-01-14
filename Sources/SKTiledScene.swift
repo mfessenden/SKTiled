@@ -243,7 +243,8 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, 
             // camera properties inherited from tilemap
             cameraNode?.allowMovement = tilemap.allowMovement
             cameraNode?.allowZoom = tilemap.allowZoom
-
+            cameraNode?.allowRotation = tilemap.allowRotation
+            
             // initial zoom level
             if (tilemap.autoResize == true) {
                 if let view = view {
