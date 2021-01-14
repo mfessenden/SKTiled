@@ -495,7 +495,7 @@ extension PreferencesGloabalsViewController: NSTextFieldDelegate {
             if let doubleValue = Double(textFieldValue) {
                 TiledGlobals.default.debug.lineWidth = CGFloat(doubleValue)
                 
-                // update controllers
+                // update controllers ->
                 NotificationCenter.default.post(
                     name: Notification.Name.Globals.Updated,
                     object: nil

@@ -36,7 +36,7 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         window?.level = .floating
         
         // set the window title
-        window?.title = "SKTiled Demo Preferences"
+        window?.title = "\(TiledGlobals.default.executableName) Preferences"
         
         // set the proper size
         //window?.setFrame(NSRect(x: 0, y: 0, width: 660, height: 400), display: true)
