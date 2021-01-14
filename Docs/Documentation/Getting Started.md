@@ -3,6 +3,7 @@
 - [Requirements](#requirements)
 - [Installation](#installation)
     - [Framework Installation](#framework-installation)
+    - [Binary Framework Installation](#binary-framework-installation)
     - [Carthage Installation](#carthage-installation)
     - [CocoaPods Installation](#cocoapods-installation)
     - [Building the Demo Projects](#building-the-demo-projects)
@@ -41,6 +42,15 @@ After building the framework(s), you'll need to add them to your project. Select
 
 
 ![framework embed](images/links.png)
+
+
+### Binary Framework Installation ![new-feature-img]
+
+It is also possible to install the new binary framework.
+
+```
+carthage update --use-xcframeworks
+```
 
 
 ### Carthage Installation
@@ -182,6 +192,7 @@ Next: [Migration Guide](migration-guide.html) - [Index](Documentation.html)
 [xcode-assets-group-img]:images/xcode-assets-group.png
 [xcode-assets-ref-img]:images/xcode-assets-referenced.png
 [zlib-include-img]:images/zlib-include.png
+[new-feature-img]:/Users/michael/git/SKTiled/release/Docs/images/new-feature.svg
 
 <!--- URLs --->
 

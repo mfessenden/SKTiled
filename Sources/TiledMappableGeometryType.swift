@@ -408,8 +408,7 @@ extension TiledMappableGeometryType {
     /// - Parameter point: point in screen space.
     /// - Returns: tile coordinate.
     internal func screenToTileCoords(point: CGPoint) -> simd_int2 {
-
-        // CHECKME: math here might be off. Is the result a tile coordinate or a *point in tile space*?
+        
         var pixelX = point.x
         var pixelY = point.y
 
@@ -467,7 +466,7 @@ extension TiledMappableGeometryType {
                                CGVector(dx: centerX + Int(columnWidth), dy: centerY)
                     ]
 
-                    // pointy
+                // pointy
                 } else {
                     let top: Int = Int(sideLengthY / 2)
                     let centerX: Int = Int(tileWidth / 2)
@@ -511,8 +510,8 @@ extension TiledMappableGeometryType {
 
                 let offsets: [CGPoint] = (staggerX == true) ? offsetsStaggerX : offsetsStaggerY
                 let result = referencePoint + offsets[nearest]
+                // this is a floor
                 return result.toVec2
-
 
             case .staggered:
 

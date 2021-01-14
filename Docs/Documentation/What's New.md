@@ -32,7 +32,7 @@ A pesky, long-standing strong reference cycle memory leak is fixed, which will r
 
 - `TiledSceneDelegate.tilemap` property is now optional
 - `TiledSceneDelegate.cameraNode` property is now optional
-- `SKTiledSceneCamera.worldNode` property is now optional
+- `SKTiledSceneCamera.world` property is now optional
 
 As a result, references to `SKTilemap` & `SKTiledSceneCamera` nodes will need to be unwrapped:
 

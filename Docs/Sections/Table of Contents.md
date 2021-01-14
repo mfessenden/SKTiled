@@ -27,6 +27,7 @@
 - [Requirements](getting-started.html#requirements)
 - [Installation](getting-started.html#installation)
     - [Framework Installation](getting-started.html#framework-installation)
+    - [Binary Framework Installation](getting-started.html#binary-framework-installation)
     - [Carthage Installation](getting-started.html#carthage-installation)
     - [CocoaPods Installation](getting-started.html#cocoapods-installation)
     - [Building the Demo Projects](getting-started.html#building-the-demo-projects)
