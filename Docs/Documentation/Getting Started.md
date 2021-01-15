@@ -46,9 +46,9 @@ After building the framework(s), you'll need to add them to your project. Select
 
 ### Carthage Installation
 
-To build with [Carthage](https://github.com/Carthage/Carthage), create a Cartfile in your project root and add a reference to **SKTiled** (be sure to check the current version number):
+To build with [Carthage](https://github.com/Carthage/Carthage), create a Cartfile in your project root and add a reference to **SKTiled**:
 
-    github "mfessenden/SKTiled" ~> 1.30b1
+    github "mfessenden/SKTiled"
 
 
 Close the file and run Carthage from the terminal to build the framework(s):
@@ -68,13 +68,16 @@ See the [Carthage](https://github.com/Carthage/Carthage) home page for help and 
 
 #### Binary Frameworks
 
-It's also possible to build one of the new binary **xcframework** frameworks for use with mulitple platforms. Pass the `--use-xcframeworks` argument to the update command:
+It's also possible to build a binary **xcframework** framework for use with multiple platforms/architectures. Pass the `--use-xcframeworks` argument to the update command:
 
 
     carthage update --use-xcframeworks
 
 
-Currently the release version of Carthage doesn't support building binary frameworks, so you might have to build Carthage from the master branch. See [**this issue**][carthage-issue-url] for more information.
+The resulting framework file `**SKTiled.xcframework**` can be added to your project via dragging it into the **General > Frameworks, Libraries, and Embedded Content** section of each target. Unlike normal frameworks, this framework can be used with *any* platform.
+
+
+You'll need **Carthage v0.37.0** to build binary frameworks. See [**this issue**][carthage-issue-url] for more information.
 
 ### CocoaPods Installation
 

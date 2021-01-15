@@ -343,10 +343,8 @@ public class SKTileset: NSObject, TiledAttributedType {
             // read the file and create a texture
             guard let _ = CGDataProvider(url: inputUrl as CFURL),
                   let sourceTexture = SKTexture(contentsOf: inputUrl) else {
-                self.log("Error reading image: '\(source)'", level: .fatal)
-
-                // TODO: throw here
-                fatalError("Error reading image: '\(source)'")
+                  self.log("Error reading image: '\(source)'", level: .fatal)
+                  fatalError("Error reading image: '\(source)'")
             }
 
             sourceTexture.filteringMode = .nearest

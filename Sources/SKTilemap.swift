@@ -1048,7 +1048,7 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
             let parseTimeStamp  = String(format: "%.\(String(3))f", tilemap.parseTime)
             Logger.default.log("tilemap '\(tilemap.mapName)' rendered in: \(renderTimeStamp)s ( parse: \(parseTimeStamp)s )", level: .success)
 
-            // completion handler
+            // completion handler5
             completion?(tilemap)
             return tilemap
         }
@@ -1068,6 +1068,7 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
     ///   - loggingLevel: logging verbosity level.
     ///   - completion: optional completion block.
     /// - Returns: tilemap object (if file read succeeds).
+    @available(*, deprecated, message: "This method has not yet been implemented.")
     public class func load(data: Data,
                            documentRoot: String? = nil,
                            delegate: TilemapDelegate? = nil,

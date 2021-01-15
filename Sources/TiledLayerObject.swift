@@ -561,7 +561,7 @@ public class TiledLayerObject: SKEffectNode, TiledMappableGeometryType, TiledAtt
         self.navigationKey = layerName
 
         self.tilemap = tilemap
-        self.mapDelegate = tilemap as! TiledMappableGeometryType
+        self.mapDelegate = tilemap as TiledMappableGeometryType
 
         super.init()
         self.debugNode = TiledDebugDrawNode(tileLayer: self)
@@ -592,7 +592,7 @@ public class TiledLayerObject: SKEffectNode, TiledMappableGeometryType, TiledAtt
         self.navigationKey = "NULL"
 
         self.tilemap = tilemap
-        self.mapDelegate = tilemap as! TiledMappableGeometryType
+        self.mapDelegate = tilemap as TiledMappableGeometryType
 
         super.init()
         self.debugNode = TiledDebugDrawNode(tileLayer: self)

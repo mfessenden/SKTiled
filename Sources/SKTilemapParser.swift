@@ -245,8 +245,8 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
     /// Parsed image files.
     internal var externalImageAssetFiles: [URL] = []
 
-    /// Current tilemap url, relative to the bundle path. This is really just used for debugging.
-    internal var documentReadUrl: URL?
+    /// Current tilemap url, relative to the bundle path. This is used for introspection.
+    internal var tilemapUrl: URL?
 
     // MARK: - Loading
 
@@ -279,7 +279,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
         tileUpdateMode = updateMode
 
 
-        // set the parser document root
+        // set the parser document root (sets `documentRoot`, `currentFilename`, `documentReadUrl`)
         resolveDocumentRoot(tmxFile: tmxUrl.path, assetPath: nil)
 
         // set the current file name & url
@@ -290,7 +290,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
         externalFileUrls.append(currentFileUrl)
 
         // set the root document path (this is mostly just for reflection).
-        documentReadUrl = currentFileUrl
+        tilemapUrl = currentFileUrl
 
         return nil
     }
@@ -317,9 +317,14 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
                        ignoreProperties noparse: Bool = false,
                        loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel,
                        renderQueue: DispatchQueue) -> SKTilemap? {
-
-
-        let data: Data = Data(base64Encoded: string)!
+        
+        
+        guard let encodedString = string.base64Encoded(),
+              let data = Data(base64Encoded: encodedString) else {
+            log("cannot parse tilemap from string data.", level: .error)
+            return nil
+        }
+        
         return load(data: data, documentRoot: documentRoot, delegate: delegate, tilesetDataSource: tilesetDataSource, updateMode: updateMode, withTilesets: withTilesets, ignoreProperties: ignoreProperties, loggingLevel: loggingLevel, renderQueue: renderQueue)
     }
 
@@ -348,8 +353,6 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
                        renderQueue: DispatchQueue) -> SKTilemap? {
 
 
-        // TODO: resolve document root!
-
 
 
         // update the default logging level
@@ -367,11 +370,20 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
         self.timer = Date()
         self.ignoreProperties = noparse
         self.loggingLevel = loggingLevel
+        
+        // document root
+        if let documentRootPath = documentRoot {
+            self.documentRoot = URL(fileURLWithPath: documentRootPath).standardized
+        }
 
         let parser: XMLParser = XMLParser(data: data)
         parser.shouldResolveExternalEntities = false
         parser.delegate = self
-
+        
+        
+        // hacky, but it works
+        currentFilename = "tilemap"
+        
         // parse the file
         let successs: Bool = parser.parse()
 
@@ -562,7 +574,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
 
                 defer {
                     let fileRead = externalFileUrls.remove(at: 0)
-                    if (fileRead.path != documentReadUrl?.path) {
+                    if (fileRead.path != tilemapUrl?.path) {
                         externalXMLFiles.append(fileRead)
                     }
                 }
@@ -642,6 +654,8 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
         // pre-processing callback
         renderQueue.sync {
             currentMap.parseTime = Date().timeIntervalSince(timer)
+            
+            // call back to the tilemap delegate for overrides
             self.tilemapDelegate?.didReadMap?(currentMap)
         }
 
@@ -736,7 +750,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
 
                 defer {
                     let fileRead = externalFileUrls.remove(at: 0)
-                    if (fileRead.path != documentReadUrl?.path) {
+                    if (fileRead.path != tilemapUrl?.path) {
                         externalXMLFiles.append(fileRead)
                     }
                 }
@@ -904,29 +918,31 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
     internal func resolveDocumentRoot(tmxFile: String, assetPath: String?) {
         // if the tmxFile string represents a full path, use that & return
         let absTmxUrl = URL(fileURLWithPath: tmxFile).standardized
-        if (FileManager.default.fileExists(atPath: tmxFile) == true) {
+        
+        // if the user passes a full path, just parse it
+        if (FileManager.default.fileExists(atPath: absTmxUrl.path) == true) {
             documentRoot = absTmxUrl.deletingLastPathComponent()
             currentFilename = absTmxUrl.lastPathComponent
             return
         }
 
         // the default is the bundle resource path
-        if let resourceURL = Bundle.main.resourceURL {
-            documentRoot = resourceURL
+        if let bundleResourceUrl = Bundle.main.resourceURL {
+            documentRoot = bundleResourceUrl
         }
 
         // if the tmxFile string represents a relative path...
 
-        // ...check the asset path...
+        /// ...check the `assetPath`...
         if let assetPath = assetPath {
 
-            // if the asset path is a path that exists, assume that's the document root
+            /// if the `assetPath` string is a path that exists, assume that's the document root
             var assetPathExists : ObjCBool = false
             if (FileManager.default.fileExists(atPath: assetPath, isDirectory: &assetPathExists) == true) {
                 documentRoot = URL(fileURLWithPath: assetPath).standardized
 
-
-            // otherwise, the assetPath string may refer to a search path (ie: `User`), so we should append it...
+            /// otherwise, the `assetPath` string may refer to a search path (ie: `User`), so we
+            /// should append it to the existing `documentRoot` property
             } else {
                 let bundledAssetUrl = documentRoot.appendingPathComponent(assetPath)
                 var bundledAssetPathExists : ObjCBool = false
@@ -943,7 +959,8 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
         if (FileManager.default.fileExists(atPath: relTmxUrl.path, isDirectory: &tmxUrlExists) == true) {
             documentRoot = relTmxUrl.deletingLastPathComponent()
             currentFilename = relTmxUrl.lastPathComponent
-            documentReadUrl = relTmxUrl
+            /// set the tilemap url
+            tilemapUrl = relTmxUrl
         }
     }
 
@@ -997,8 +1014,10 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
             tilemap.delegate = self.tilemapDelegate
 
             // set the tilemap url property
-            tilemap.url = URL(fileURLWithPath: currentFilename).standardized
-            tilemap.fileUrl = currentFileUrl
+            if (currentFilename != nil) {
+                tilemap.url = URL(fileURLWithPath: currentFilename).standardized
+                tilemap.fileUrl = currentFileUrl
+            }
 
             if let tiledVersion = tilemap.tiledversion {
                 log("Tiled map version: \(tiledVersion)", level: .debug)
@@ -1009,12 +1028,14 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
             }
 
             // get the filename to use as the map name
-            let currentFile = currentFilename.url.lastPathComponent
-            let currentBasename = currentFile.components(separatedBy: ".").first!
-
-            // `SKTilemap.name` represents the tmx filename (minus .tmx extension)
-            tilemap.name = currentBasename
-            tilemap.displayName = currentBasename
+            if (currentFilename != nil) {
+                let currentFile = currentFilename.url.lastPathComponent
+                let currentBasename = currentFile.components(separatedBy: ".").first!
+                
+                // `SKTilemap.name` represents the tmx filename (minus .tmx extension)
+                tilemap.name = currentBasename
+                tilemap.displayName = currentBasename
+            }
 
             // run setup functions on tilemap
             self.tilemapDelegate?.didBeginParsing?(tilemap)
@@ -2233,7 +2254,7 @@ extension SKTilemapParser {
 
                 defer {
                     let fileRead = externalFileUrls.remove(at: 0)
-                    if (fileRead.path != documentReadUrl?.path) {
+                    if (fileRead.path != tilemapUrl?.path) {
                         externalXMLFiles.append(fileRead)
                     }
                 }
@@ -2361,7 +2382,7 @@ extension SKTilemapParser: CustomReflectable {
             tilesetdatasource = String(describing: type(of: self.tilesetDataSource!))
         }
 
-        return Mirror(self, children: ["tmxFile": documentReadUrl?.path ?? "nil",
+        return Mirror(self, children: ["tmxFile": tilemapUrl?.path ?? "nil",
                                        "documentRoot": documentRoot.path,
                                        "currentFilename": currentFilename ?? "nil",
                                        "currentFileUrl": currentFileUrl.relativePathString,

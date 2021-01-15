@@ -1042,7 +1042,7 @@ extension SKTiledSceneCamera {
         guard let scene = self.scene,(allowZoom == true) else {
             return
         }
-
+        
         isMoving = true
 
         var windowLocation = event.locationInWindow
@@ -1062,8 +1062,8 @@ extension SKTiledSceneCamera {
         focusLocation = position
         lastLocation = position
 
-        //setCameraZoom(zoom)
-        setCameraZoomAtLocation(scale: zoom, location: position)
+        setCameraZoom(zoom)
+        //setCameraZoomAtLocation(scale: zoom, location: position)
     }
 
     /// Handler for mouse drag events.

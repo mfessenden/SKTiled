@@ -315,8 +315,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             fatalError("cannot access scene.")
         }
 
-        Logger.default.log("demo scene loaded '\(demoScene.description)'", level: .success, symbol: "AppDelegate")
-
         initializeDemoFilesMenu()
 
         mapMenuItem.isEnabled = true

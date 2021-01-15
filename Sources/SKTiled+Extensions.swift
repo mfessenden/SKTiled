@@ -1621,18 +1621,6 @@ extension String {
         return path
     }
 
-    /*
-    /// Returns true if the string represents a path that exists.
-    var fileExists: Bool {
-        return FileManager.default.fileExists(atPath: self.url.path)
-    }
-
-    /// Returns true if the string represents a path that exists and is a directory.
-    var isDirectory: Bool {
-        var isDir : ObjCBool = false
-        return FileManager.default.fileExists(atPath: self, isDirectory: &isDir)
-    }
-     */
     /// Returns the filename if string is a url.
     var filename: String {
         return FileManager.default.displayName(atPath: self.url.path)
@@ -1680,6 +1668,29 @@ extension String {
     /// - Returns: hex color, or clear if the string is invalid.
     public func toHexColor() -> SKColor {
         return (self.isValidHexColor == true) ? SKColor(hexString: self) : SKColor.clear
+    }
+}
+
+
+extension String {
+    
+    /// Returns a base64 encoded string.
+    ///
+    /// - Returns: base64 encoded string.
+    func base64Encoded() -> String? {
+        return data(using: .utf8)?.base64EncodedString()
+    }
+    
+    /// Decodes a base64 encoded string.
+    ///
+    /// - Returns: decoded string.
+    func base64Decoded() -> String? {
+        var st = self;
+        if (self.count % 4 <= 2){
+            st += String(repeating: "=", count: (self.count % 4))
+        }
+        guard let data = Data(base64Encoded: st) else { return nil }
+        return String(data: data, encoding: .utf8)
     }
 }
 
