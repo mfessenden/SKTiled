@@ -29,18 +29,18 @@ import XCTest
 
 
 // Tile map instance used for this test.
-fileprivate var tempalateTestsTilemap: SKTilemap?
-fileprivate let tempalateTestsTilemapName = "test-templates"
+fileprivate var testTilemap: SKTilemap?
+fileprivate let testTilemapName = "test-templates"
 
 
-
+/// This test checks that templated objects are being parsed correctly.
 class TemplateTests: XCTestCase {
 
     override class func setUp() {
         super.setUp()
-        if (tempalateTestsTilemap == nil) {
-            if let tilemapUrl = TestController.default.getResource(named: tempalateTestsTilemapName, withExtension: "tmx") {
-                tempalateTestsTilemap = SKTilemap.load(tmxFile: tilemapUrl.path, loggingLevel: .none)
+        if (testTilemap == nil) {
+            if let tilemapUrl = TestController.default.getResource(named: testTilemapName, withExtension: "tmx") {
+                testTilemap = SKTilemap.load(tmxFile: tilemapUrl.path, loggingLevel: .none)
             }
         }
     }
@@ -49,8 +49,8 @@ class TemplateTests: XCTestCase {
     ///
     ///  template file data: gid: 4, width: 16, height: 16
     func testTemplateOverrides() {
-        guard let tilemap = tempalateTestsTilemap else {
-            XCTFail("⭑ failed to load tilemap '\(tempalateTestsTilemapName)'")
+        guard let tilemap = testTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testTilemapName)'")
             return
         }
         
@@ -131,11 +131,11 @@ class TemplateTests: XCTestCase {
         let param4 = "to_strength"
         
         
-
+        /*
         print(node1Object.properties)
         print(node2Object.properties)
         print(node3Object.properties)
-
+         */
         
         
 

@@ -81,7 +81,7 @@ tileLayer.highlightColor = SKColor.blue
 
 To see a quick overview of the current tilemap's layers, use the `SKTilemap.mapStatistics(default:)` method:
 
-![Map Statistics](images/mapStatistics.png)
+![Map Statistics](images/map-statistics.svg)
 
 The output represents a visualization of the scene hierarchy; nested layers are indented under their parent. Layer index and position are shown for top-level layers only.
 

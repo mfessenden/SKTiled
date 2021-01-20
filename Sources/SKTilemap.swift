@@ -1256,6 +1256,7 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
     }
 
     deinit {
+        objectsOverlay.removeAllChildren()
         _layers = []
         dataStorage?.objectsList = nil
         dataStorage = nil

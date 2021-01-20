@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.4" tiledversion="1.4.3" name="environment-8x8" tilewidth="8" tileheight="8" tilecount="31" columns="15" objectalignment="topleft">
+<tileset version="1.4" tiledversion="1.4.3" name="environment-8x8" tilewidth="8" tileheight="8" tilecount="45" columns="15" objectalignment="topleft">
  <image source="environment-8x8.png" width="120" height="24"/>
  <tile id="0" type="wall" probability="0.25"/>
  <tile id="1" type="wall" probability="0.25"/>

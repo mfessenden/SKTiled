@@ -27,6 +27,7 @@
 - [Requirements](getting-started.html#requirements)
 - [Installation](getting-started.html#installation)
     - [Framework Installation](getting-started.html#framework-installation)
+    - [Swift Package Manager](getting-started.html#swift-package-manager)
     - [Carthage Installation](getting-started.html#carthage-installation)
             - [Binary Frameworks](getting-started.html#binary-frameworks)
     - [CocoaPods Installation](getting-started.html#cocoapods-installation)

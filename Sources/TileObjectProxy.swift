@@ -50,6 +50,8 @@ internal class TileObjectProxy: SKShapeNode {
             guard (oldValue != zoomLevel) else {
                 return
             }
+            
+            // FIXME: crash here
             self.draw()
         }
     }
@@ -136,6 +138,8 @@ internal class TileObjectProxy: SKShapeNode {
         
         
         // CONVERTED: was `object.translatedVertices()`
+        
+        // FIXME: crash here
         let vertices = object.translatedVertices()
         guard (vertices.count > 0) else {
             self.path = nil

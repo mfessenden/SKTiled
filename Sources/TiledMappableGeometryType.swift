@@ -28,6 +28,43 @@ import SpriteKit
 import GameplayKit
 
 
+/// Hexagonal stagger axis.
+///
+/// - `x`: axis is along the x-coordinate.
+/// - `y`: axis is along the y-coordinate.
+@objc public enum StaggerAxis: UInt8 {
+    case x, y
+}
+
+
+/// Hexagonal stagger index.
+///
+/// - `even`: stagger evens.
+/// - `odd`:  stagger odds.
+@objc public enum StaggerIndex: UInt8 {
+    case odd, even
+}
+
+/// ## Overview
+///
+/// This describes the tilemap orientation type.
+///
+/// ### Constants
+///
+/// | Property      | Description                                   |
+/// |:-------------:|:----------------------------------------------|
+/// | `orthogonal`  | Orthogonal(square tiles) tile map.            |
+/// | `isometric`   | Isometric tile map.                           |
+/// | `hexagonal`   | Hexagonal tile map.                           |
+/// | `staggered`   | Staggered isometric tile map.                 |
+///
+@objc public enum TilemapOrientation: UInt8 {
+    case orthogonal, isometric, hexagonal, staggered
+}
+
+
+
+
 /// ## Overview
 ///
 /// The `TiledMappableGeometryType` protocol describes a container that is broken up into two-dimensional tiles.

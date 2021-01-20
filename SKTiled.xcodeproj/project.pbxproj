@@ -200,6 +200,9 @@
 		4C263A202460962100568681 /* TilemapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C263A1C2460962100568681 /* TilemapDelegate.swift */; };
 		4C263A212460962100568681 /* TilemapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C263A1C2460962100568681 /* TilemapDelegate.swift */; };
 		4C263A222460962100568681 /* TilemapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C263A1C2460962100568681 /* TilemapDelegate.swift */; };
+		4C2B720025B8A03E008205D1 /* DebugDrawOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2B71FF25B8A03E008205D1 /* DebugDrawOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C2B720125B8A03E008205D1 /* DebugDrawOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2B71FF25B8A03E008205D1 /* DebugDrawOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C2B720225B8A03E008205D1 /* DebugDrawOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2B71FF25B8A03E008205D1 /* DebugDrawOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C2BFABF24D886B100C71CA9 /* TiledEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2BFABE24D886B100C71CA9 /* TiledEventHandler.swift */; };
 		4C2BFAC024D886B100C71CA9 /* TiledEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2BFABE24D886B100C71CA9 /* TiledEventHandler.swift */; };
 		4C2BFAC124D886B100C71CA9 /* TiledEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2BFABE24D886B100C71CA9 /* TiledEventHandler.swift */; };
@@ -743,6 +746,7 @@
 		4C24B18720694D2D0027EBD5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C263A15246079F100568681 /* TiledGeometryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledGeometryType.swift; sourceTree = "<group>"; };
 		4C263A1C2460962100568681 /* TilemapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TilemapDelegate.swift; sourceTree = "<group>"; };
+		4C2B71FF25B8A03E008205D1 /* DebugDrawOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DebugDrawOptions.h; sourceTree = "<group>"; };
 		4C2BFABE24D886B100C71CA9 /* TiledEventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TiledEventHandler.swift; sourceTree = "<group>"; };
 		4C312F9F240ED5E8006A9CD6 /* TestController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
 		4C3184E71F4DCB4200950BBF /* staggered-64x33.tmx */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "staggered-64x33.tmx"; sourceTree = "<group>"; };
@@ -1085,6 +1089,7 @@
 			children = (
 				4C35033E257E85B70071A6BF /* Info.plist */,
 				4C35033F257E85B70071A6BF /* SKTiled.h */,
+				4C2B71FF25B8A03E008205D1 /* DebugDrawOptions.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1479,6 +1484,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C8D35C2257E908500FBED07 /* SKTiled.h in Headers */,
+				4C2B720225B8A03E008205D1 /* DebugDrawOptions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1487,6 +1493,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C8D35B6257E908500FBED07 /* SKTiled.h in Headers */,
+				4C2B720025B8A03E008205D1 /* DebugDrawOptions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1495,6 +1502,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C8D35C1257E908500FBED07 /* SKTiled.h in Headers */,
+				4C2B720125B8A03E008205D1 /* DebugDrawOptions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2725,6 +2733,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -2757,6 +2766,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -2847,6 +2857,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -2877,6 +2888,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -2906,6 +2918,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CURRENT_PROJECT_VERSION = 1300000;
@@ -2935,6 +2948,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				COPY_PHASE_STRIP = YES;

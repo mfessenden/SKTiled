@@ -27,11 +27,11 @@
 import XCTest
 @testable import SKTiled
 
-fileprivate let tilesetTestTilemapName = "test-tilemap"
-fileprivate var tilesetTestTilemap: SKTilemap?
+fileprivate let testTilemapName = "test-tilemap"
+fileprivate var testTilemap: SKTilemap?
 
-fileprivate let tilesetTestTilesetName = "environment-8x8"
-fileprivate var tilesetTestTileset: SKTileset?
+fileprivate let testTilesetName = "environment-8x8"
+fileprivate var testTileset: SKTileset?
 
 
 /// Test tileset objects.
@@ -39,12 +39,12 @@ class TilesetTests: XCTestCase {
 
     override class func setUp() {
         super.setUp()
-        if (tilesetTestTilemap == nil) {
-            if let tilemapUrl = TestController.default.getResource(named: tilesetTestTilemapName, withExtension: "tmx") {
-                tilesetTestTilemap = SKTilemap.load(tmxFile: tilemapUrl.path, loggingLevel: .none)
+        if (testTilemap == nil) {
+            if let tilemapUrl = TestController.default.getResource(named: testTilemapName, withExtension: "tmx") {
+                testTilemap = SKTilemap.load(tmxFile: tilemapUrl.path, loggingLevel: .none)
 
-                if (tilesetTestTileset == nil) {
-                    tilesetTestTileset = tilesetTestTilemap?.getTileset(named: tilesetTestTilesetName)
+                if (testTileset == nil) {
+                    testTileset = testTilemap?.getTileset(named: testTilesetName)
                 }
             }
         }
@@ -52,7 +52,7 @@ class TilesetTests: XCTestCase {
 
     /// Test to see if a named tileset can be properly queried.
     func testTilesetExists() {
-        XCTAssertNotNil(tilesetTestTileset, "⭑ cannot access tileset: '\(tilesetTestTilesetName)'")
+        XCTAssertNotNil(testTileset, "⭑ cannot access tileset: '\(testTilesetName)'")
     }
 
     /// Test to see if a named tileset has the correct basic Tiled properties:
@@ -65,7 +65,7 @@ class TilesetTests: XCTestCase {
     ///    columns="15"
     ///
     func testTilesetProperties() {
-        guard let tileset = tilesetTestTileset else {
+        guard let tileset = testTileset else {
             XCTFail("⭑ could not load test tileset.")
             return
         }
@@ -78,7 +78,6 @@ class TilesetTests: XCTestCase {
         XCTAssert(tileset.firstGID == 1, "⭑ tileset first gid is incorrect.")
     }
 
-
     /// Test to see if a tileset will return the proper tile from a global id.
     /// We're looking at the `key` tile contained in the `items-8x8` tileset.
     ///
@@ -87,8 +86,8 @@ class TilesetTests: XCTestCase {
     ///    - has `color` property of `#ffa07daa`
     ///
     func testGlobalIDQuery() {
-        guard let tilemap = tilesetTestTilemap,
-            (tilesetTestTileset != nil) else {
+        guard let tilemap = testTilemap,
+            (testTileset != nil) else {
             XCTFail("⭑ could not load test assets.")
             return
         }
@@ -96,7 +95,7 @@ class TilesetTests: XCTestCase {
         // gid 79 is the key
         let keyid: UInt32 = 79
         let expectedLocalID: UInt32  = 5
-        let expectedKeyCount = 4
+        let expectedKeyCount = 5
         let keyTiles = tilemap.getTiles(globalID: keyid)
         XCTAssert(keyTiles.count == expectedKeyCount, "⭑ tile count for gid \(keyid) should be \(expectedKeyCount), got \(keyTiles.count)")
 
@@ -105,7 +104,7 @@ class TilesetTests: XCTestCase {
         for tile in keyTiles {
             let tileColorHex = tile.tileData.stringForKey("color")
             keyPropertyIsCorrect = (tileColorHex != nil) && (tileColorHex == "#ffa07daa")
-            keyIDsAreCorrect = (tile.tileData.localID == expectedLocalID) && (tile.tileData.globalID == keyid)
+            keyIDsAreCorrect = (tile.tileData.id == expectedLocalID) && (tile.tileData.globalID == keyid)
         }
 
         XCTAssert(keyPropertyIsCorrect == true, "⭑ tiles with gid \(keyid) should have a `color` property")
@@ -117,8 +116,8 @@ class TilesetTests: XCTestCase {
     ///   `SKTileset.getTileData(withProperty:_)`
     ///
     func testGetTileDataWithProperty() {
-        guard let tileset = tilesetTestTileset else {
-            XCTFail("⭑ could not load test tileset '\(tilesetTestTilesetName)'")
+        guard let tileset = testTileset else {
+            XCTFail("⭑ could not load test tileset '\(testTilesetName)'")
             return
         }
         
@@ -130,8 +129,8 @@ class TilesetTests: XCTestCase {
     ///   `SKTileset.getTileData(withProperty:)`
     ///
     func testGetTileDataWithPropertyAnValue() {
-        guard let tileset = tilesetTestTileset else {
-            XCTFail("⭑ could not load test tileset '\(tilesetTestTilesetName)'")
+        guard let tileset = testTileset else {
+            XCTFail("⭑ could not load test tileset '\(testTilesetName)'")
             return
         }
     }
@@ -140,8 +139,8 @@ class TilesetTests: XCTestCase {
     ///   `SKTileset.contains(globalID:)`
     ///
     func testTilesetGlobalIDRange() {
-        guard let tileset = tilesetTestTileset else {
-            XCTFail("⭑ could not load test tileset '\(tilesetTestTilesetName)'")
+        guard let tileset = testTileset else {
+            XCTFail("⭑ could not load test tileset '\(testTilesetName)'")
             return
         }
     }
@@ -150,16 +149,16 @@ class TilesetTests: XCTestCase {
     ///   `SKTilemap.getTileset(forTile:)`
     ///
     func testGetTilesetForGlobalId() {
-        guard let tileset = tilesetTestTileset else {
-            XCTFail("⭑ could not load test tileset '\(tilesetTestTilesetName)'")
+        guard let tileset = testTileset else {
+            XCTFail("⭑ could not load test tileset '\(testTilesetName)'")
             return
         }
     }
 
     /// Tests the `SKTileset.localRange` & `SKTileset.globalRange` properties.
     func testTilesetRangeValues() {
-        guard let tileset = tilesetTestTileset else {
-            XCTFail("⭑ could not load test tileset '\(tilesetTestTilesetName)'")
+        guard let tileset = testTileset else {
+            XCTFail("⭑ could not load test tileset '\(testTilesetName)'")
             return
         }
 
@@ -199,7 +198,7 @@ class TilesetTests: XCTestCase {
 
     /// Test to check that tileset ids are correctly parsed.
     func testTilesetGlobalIDQueries() {
-        guard let tileset = tilesetTestTileset else {
+        guard let tileset = testTileset else {
             XCTFail("⭑ could not load test tileset.")
             return
         }
@@ -230,7 +229,7 @@ class TilesetTests: XCTestCase {
         <tileset firstgid="104" source="monsters-16x16.tsx"/> - 0-6
         */
 
-        guard let tilemap = tilesetTestTilemap,
+        guard let tilemap = testTilemap,
               let firstTileset = tilemap.getTileset(named: "environment-8x8"),
               let secondTileset = tilemap.getTileset(named: "characters-8x8"),
               let thirdTileset = tilemap.getTileset(named: "monsters-16x16") else {
@@ -270,7 +269,7 @@ class TilesetTests: XCTestCase {
 
     /// Test to check that tileset ids are correctly parsed.
     func testTilesetGlobalIDComparison() {
-        guard let tileset = tilesetTestTileset else {
+        guard let tileset = testTileset else {
             XCTFail("⭑ could not load test tileset.")
             return
         }

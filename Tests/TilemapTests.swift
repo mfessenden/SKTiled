@@ -54,8 +54,8 @@ class TilemapTests: XCTestCase {
         }
 
 
-        let expectedLayerCount = 7
-        let expectedObjectCount = 3
+        let expectedLayerCount = 9
+        let expectedObjectCount = 4
         XCTAssert(tilemap.layerCount == expectedLayerCount, "⭑ tilemap layer count incorrect: \(tilemap.layerCount)")
         XCTAssert(tilemap.objectCount == expectedObjectCount, "⭑ tilemap object count incorrect: \(tilemap.objectCount)")
     }

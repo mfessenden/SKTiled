@@ -306,7 +306,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Called when a new scene has been loaded. Called when the `Notification.Name.Demo.SceneLoaded` event fires.
     ///
-    ///  userInfo: ["tilemapName": `String`, "relativePath": `String`, "currentMapIndex": `Int`]
+    ///  object is `SKTiledScene`, userInfo: ["tilemapName": `String`, "relativePath": `String`, "currentMapIndex": `Int`]
     ///
     /// - Parameter notification: event notification.
     @objc func demoSceneLoaded(notification: Notification) {
@@ -314,7 +314,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard let demoScene = notification.object as? SKTiledScene else {
             fatalError("cannot access scene.")
         }
-
+        
+        // re-initialize the demo files menu
         initializeDemoFilesMenu()
 
         mapMenuItem.isEnabled = true

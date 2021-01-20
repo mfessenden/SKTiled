@@ -894,6 +894,11 @@ open class SKTileObject: SKShapeNode, TiledAttributedType {
     /// - Returns: `[CGPoint]?` array of points.
     internal func translatedVertices() -> [CGPoint] {
         let vertices = self.getVertices()
+        guard (vertices.count > 1) else {
+            return [CGPoint]()
+        }
+        
+        assert(vertices.count > 1, "invalid object vertex count: '\(vertices.count)'")
         let translated = (isPolyType == true) ? (globalID == nil) ? vertices.map { $0.invertedY } : vertices : (globalID == nil) ? vertices.map { $0.invertedY } : vertices
         var result: [CGPoint] = []
         if (shapeType == TiledObjectShape.ellipse) {

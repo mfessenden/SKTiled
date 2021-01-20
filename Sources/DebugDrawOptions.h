@@ -1,5 +1,5 @@
 //
-//  SKTiled.h
+//  DebugDrawOptions.h
 //  SKTiled
 //
 //  Copyright © 2021 Michael Fessenden. all rights reserved.
@@ -23,16 +23,44 @@
 //	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
-//
-//  Description:
-//     - SKTiled objective-c bridging header.
 
 #import <Foundation/Foundation.h>
 
+#ifndef DebugDrawOptions_h
+#define DebugDrawOptions_h
 
-FOUNDATION_EXPORT double SKTiledVersionNumber;
-FOUNDATION_EXPORT const unsigned char SKTiledVersionString[];
+
+/// ## Overview
+///
+/// A structure representing debug drawing options for **SKTiled** objects.
+///
+/// ### Usage
+///
+/// ```swift
+/// // show the map's grid & bounds shape
+/// tilemap.debugDrawOptions = [.drawGrid, .drawFrame]
+///
+/// // turn off layer grid visibility
+/// layer.debugDrawOptions.remove(.drawGrid)
+/// ```
+///
+/// ### Properties
+///
+/// | Property            | Description                              |
+/// |:------------------- |:---------------------------------------- |
+/// | drawGrid            | Visualize the nodes's tile grid.         |
+/// | drawFrame           | Visualize the nodes's bounding rect.     |
+/// | drawGraph           | Visualize the nodes's pathfinding graph. |
+/// | drawObjectFrames    | Draw object's bounding shapes.           |
+/// | drawAnchor          | Draw the layer's anchor point.           |
+///
+typedef NS_OPTIONS(NSInteger, DebugDrawOptions) {
+    drawGrid              = 1 << 0,
+    drawFrame             = 1 << 1,
+    drawGraph             = 1 << 2,
+    drawObjectFrames      = 1 << 3,
+    drawAnchor            = 1 << 4,
+};
 
 
-// imports
-#import "DebugDrawOptions.h"
+#endif /* DebugDrawOptions_h */

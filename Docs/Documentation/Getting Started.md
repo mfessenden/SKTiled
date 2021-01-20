@@ -4,6 +4,7 @@
 - [Installation](#installation)
     - [Framework Installation](#framework-installation)
         - [Binary Frameworks](#binary-frameworks)
+    - [Swift Package Manager](#swift-package-manager)
     - [Carthage Installation](#carthage-installation)
     - [CocoaPods Installation](#cocoapods-installation)
     - [Building the Demo Projects](#building-the-demo-projects)
@@ -44,6 +45,10 @@ After building the framework(s), you'll need to add them to your project. Select
 ![framework embed](images/links.png)
 
 
+### Swift Package Manager
+
+Coming soon!
+
 ### Carthage Installation
 
 To build with [Carthage](https://github.com/Carthage/Carthage), create a Cartfile in your project root and add a reference to **SKTiled**:
@@ -68,14 +73,13 @@ See the [Carthage](https://github.com/Carthage/Carthage) home page for help and 
 
 #### Binary Frameworks
 
-It's also possible to build a binary **xcframework** framework for use with multiple platforms/architectures. Pass the `--use-xcframeworks` argument to the update command:
+It's also possible to build the new binary **xcframework** framework for use with multiple platforms/architectures. Pass the `--use-xcframeworks` argument to the update command:
 
 
     carthage update --use-xcframeworks
 
 
-The resulting framework file `**SKTiled.xcframework**` can be added to your project via dragging it into the **General > Frameworks, Libraries, and Embedded Content** section of each target. Unlike normal frameworks, this framework can be used with *any* platform.
-
+The resulting framework file `**SKTiled.xcframework**` can be added to your project via dragging it into the **General > Frameworks, Libraries, and Embedded Content** section of each target. Unlike normal frameworks, this framework can be used with *any* platform. If your project will be build for multiple processor architectures (x86, Apple ARM), this is the preferred method.
 
 You'll need **Carthage v0.37.0** to build binary frameworks. See [**this issue**][carthage-issue-url] for more information.
 

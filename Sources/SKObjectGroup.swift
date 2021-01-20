@@ -304,7 +304,7 @@ public class SKObjectGroup: TiledLayerObject {
         return nil
     }
 
-    /// Return text objects with matching text.
+    /// Returns text objects with matching text.
     ///
     /// - Parameter text: text string to match.
     /// - Returns: array of matching objects.
@@ -312,7 +312,7 @@ public class SKObjectGroup: TiledLayerObject {
         return getObjects().filter { $0.text != nil }.filter { $0.text! == text }
     }
 
-    /// Return objects with the given name.
+    /// Returns objects with the given name.
     ///
     /// - Parameter named: Object name.
     /// - Returns: array of matching objects.
@@ -320,14 +320,14 @@ public class SKObjectGroup: TiledLayerObject {
         return getObjects().filter { $0.name != nil }.filter { $0.name! == named }
     }
 
-    /// Return all child objects contained in the layer.
+    /// Returns all child objects contained in the layer.
     ///
     /// - Returns: array of child objects.
     public func getObjects() -> [SKTileObject] {
         return Array(objects)
     }
 
-    /// Return objects of a given type.
+    /// Returns objects of a given type.
     ///
     /// - Parameter ofType: object type.
     /// - Returns: array of matching objects.
@@ -335,7 +335,7 @@ public class SKObjectGroup: TiledLayerObject {
         return getObjects().filter { $0.type != nil }.filter { $0.type! == ofType }
     }
 
-    /// Return object proxies.
+    /// Returns object proxies.
     ///
     /// - Returns: array of object proxies.
     internal func getObjectProxies() -> [TileObjectProxy] {

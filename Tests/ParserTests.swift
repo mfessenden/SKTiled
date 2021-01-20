@@ -30,7 +30,7 @@ import SpriteKit
 
 
 
-let simpleXmlString = """
+let testXmlStringSimple = """
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="4" height="4" tilewidth="8" tileheight="8" infinite="0" nextlayerid="3" nextobjectid="1">
  <tileset firstgid="1" name="environment-8x8" tilewidth="8" tileheight="8" tilecount="45" columns="15">
@@ -50,9 +50,10 @@ let simpleXmlString = """
 """
 
 
-let testXmlString = """
+/// this is the string data from `test-tilemap.tmx`
+let testXmlStringComplex = """
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="30" height="16" tilewidth="8" tileheight="8" infinite="0" nextlayerid="11" nextobjectid="4">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="30" height="16" tilewidth="8" tileheight="8" infinite="0" nextlayerid="13" nextobjectid="5">
  <properties>
   <property name="allowZoom" type="bool" value="false"/>
   <property name="doubles" value="1.2, 5.4, 12, 18.25"/>
@@ -93,15 +94,22 @@ let testXmlString = """
   </data>
   </layer>
  </group>
- <layer id="2" name="HUD" width="30" height="16">
-  <data encoding="base64" compression="zlib">
+ <group id="11" name="HUD">
+  <layer id="2" name="Portraits" width="30" height="16">
+   <data encoding="base64" compression="zlib">
    eAFjYBgFoyEwGgKjITAaAqMhMDhCIGpwOIPmrtjqx84AAF5EAWU=
   </data>
- </layer>
+  </layer>
+  <objectgroup id="12" name="Text">
+   <object id="4" x="18" y="112" width="38" height="9">
+    <text fontfamily=".AppleSystemUIFontMonospaced" pixelsize="7" wrap="1" color="#ffffff">Level 1</text>
+   </object>
+  </objectgroup>
+ </group>
 </map>
 """
 
-/// Test the tiled parser
+/// Testing for the `SKTiled` parser.
 class ParserTests: XCTestCase {
 
     var tilemap: SKTilemap?
@@ -149,9 +157,9 @@ class ParserTests: XCTestCase {
 
 
     /// Test that the parser can correctly parse an xml string.
-    func testStringParsing() {
+    func testTilemapParsingFromStringData() {
         if let resourcePath = Bundle(for: ParserTests.self).path(forResource: tilemapName, ofType: "png") {
-            guard let testTilemap = SKTilemap.load(string: testXmlString, documentRoot: resourcePath) else {
+            guard let testTilemap = SKTilemap.load(string: testXmlStringComplex, documentRoot: resourcePath) else {
                 XCTFail("⭑ Failed to load tilemap from string data.")
                 return
             }
@@ -159,16 +167,30 @@ class ParserTests: XCTestCase {
 
             let expectedMapVersion = "1.4.3"
             let parsedMapVersion = testTilemap.tiledversion
-            
+
             let parsedTilesetCount = testTilemap.tilesets.count
             let expectedTilesetCount = 5
-            
-            
-            
+
+
+
             XCTAssert(parsedMapVersion == expectedMapVersion, "⭑ incorrect tilemap version '\(parsedMapVersion)', expected '\(expectedMapVersion)'")
             XCTAssert(parsedTilesetCount == expectedTilesetCount, "⭑ incorrect tileset count '\(parsedTilesetCount)', expected '\(expectedTilesetCount)'")
+
             
             
+            /// Query objects
+            
+            let textObjectText = "Level 1"
+            let expectedObjectId = 4
+            
+            guard let textObject = testTilemap.getObjects(withText: textObjectText).first else {
+                XCTFail("⭑ Cannot find text object with text '\(textObjectText)'.")
+                return
+            }
+            
+            let textObjectId = textObject.id
+            
+            XCTAssert(textObjectId == expectedObjectId, "⭑ incorrect object id '\(textObjectId)', expected '\(expectedObjectId)'")
         }
     }
 }
