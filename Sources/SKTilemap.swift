@@ -146,7 +146,7 @@ public struct TileIsolationMode: OptionSet {
 /// | layers      | Array of child layers.                        |
 ///
 /// [tileset-url]:SKTileset.html
-public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
+public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, TiledAttributedType {
 
     /// Tilemap source file path.
     public var url: URL!
@@ -444,7 +444,7 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
     public var allowMovement: Bool = true
 
     /// Allow camera rotation.
-    public var allowRotation: Bool = true
+    public var allowRotation: Bool = false
 
     // MARK: - Tilesets
 
@@ -996,6 +996,8 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
             tilemap.renderTime = Date().timeIntervalSince(startTime)
             let renderTimeStamp = String(format: "%.\(String(3))f", tilemap.renderTime)
             let parseTimeStamp  = String(format: "%.\(String(3))f", tilemap.parseTime)
+            
+            // FIXME: check for errors here
             Logger.default.log("tilemap '\(tilemap.mapName)' rendered in: \(renderTimeStamp)s ( parse: \(parseTimeStamp)s )", level: .success)
 
             // completion handler
@@ -1049,6 +1051,8 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
             tilemap.renderTime = Date().timeIntervalSince(startTime)
             let renderTimeStamp = String(format: "%.\(String(3))f", tilemap.renderTime)
             let parseTimeStamp  = String(format: "%.\(String(3))f", tilemap.parseTime)
+            
+            // FIXME: check for errors here
             Logger.default.log("tilemap '\(tilemap.mapName)' rendered in: \(renderTimeStamp)s ( parse: \(parseTimeStamp)s )", level: .success)
 
             // completion handler5
@@ -1100,6 +1104,8 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
             tilemap.renderTime = Date().timeIntervalSince(startTime)
             let renderTimeStamp = String(format: "%.\(String(3))f", tilemap.renderTime)
             let parseTimeStamp  = String(format: "%.\(String(3))f", tilemap.parseTime)
+            
+            // FIXME: check for errors here
             Logger.default.log("tilemap '\(tilemap.mapName)' rendered in: \(renderTimeStamp)s ( parse: \(parseTimeStamp)s )", level: .success)
 
             // completion handler
@@ -1110,7 +1116,7 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
     }
 
 
-    // MARK: - Init
+    // MARK: - Initialization
 
     /// Default initializer.
     ///
@@ -1139,7 +1145,7 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
 
         // tile orientation
         guard let tileOrientation: TilemapOrientation = TilemapOrientation(string: orient) else {
-            fatalError("orientation '\(orient)' not supported.")
+            fatalError("invalid orientation '\(orient)'.")
         }
 
         self.orientation = tileOrientation
@@ -1155,7 +1161,7 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
         // render order
         if let rendorder = attributes["renderorder"] {
             guard let renderorder: RenderOrder = RenderOrder(rawValue: rendorder) else {
-                fatalError("orientation '\(rendorder)' not supported.")
+                fatalError("invalid render order '\(rendorder)'.")
             }
             self.renderOrder = renderorder
         }
@@ -1168,7 +1174,7 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
         // hex stagger axis
         if let hexStagger = attributes["staggeraxis"] {
             guard let staggerAxis: StaggerAxis = StaggerAxis(string: hexStagger) else {
-                fatalError("stagger axis '\(hexStagger)' not supported.")
+                fatalError("invalid stagger axis '\(hexStagger)'.")
             }
             self.staggeraxis = staggerAxis
         }
@@ -1176,7 +1182,7 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
         // hex stagger index
         if let hexIndex = attributes["staggerindex"] {
             guard let hexindex: StaggerIndex = StaggerIndex(string: hexIndex) else {
-                fatalError("stagger index '\(hexIndex)' not supported.")
+                fatalError("invalid stagger index '\(hexIndex)'.")
             }
             self.staggerindex = hexindex
         }
@@ -1705,13 +1711,13 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
         result.x += layer.offset.x
         result.y -= layer.offset.y
 
-
         // clamp the layer position
         if (clamped == true) {
             let scaleFactor = TiledGlobals.default.contentScale
             result = clampedPosition(point: result, scale: scaleFactor)
         }
-
+                
+        
         // apply offset for infinite maps
         result.x += layer.layerInfiniteOffset.x
 
@@ -1839,7 +1845,7 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
     ///   - recursive: include nested layers.
     /// - Returns: array of tiles.
     public func getTiles(globalID: UInt32, recursive: Bool = true) -> [SKTile] {
-        // TODO: deprecate this - use `SKTilemap.allTiles(globalId:)`
+        // TODO: deprecate this - use `SKTilemap.allTiles(globalID:)`
         return tileLayers(recursive: recursive).flatMap { $0.getTiles(globalID: globalID) }
     }
 
@@ -2129,6 +2135,7 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
     ///   - timeStarted: render start time.
     ///   - tasks: number of tasks to complete.
     public func didFinishParsing(timeStarted: Date, tasks: Int = 0) {
+        
         NotificationCenter.default.post(
             name: Notification.Name(rawValue: "tilemapFinishedParsing"),
             object: nil,
@@ -2140,6 +2147,7 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
     ///
     /// - Parameter timeStarted: render start time.
     public func didFinishRendering(timeStarted: Date) {
+        
         // set the `isRendered` property
         isRendered = layers.filter { $0.isRendered == false }.isEmpty
 
@@ -2154,7 +2162,7 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
         // delegate callback
         defer {
             self.delegate?.didRenderMap?(self)
-
+            
             NotificationCenter.default.post(
                 name: Notification.Name.Map.FinishedRendering,
                 object: self,
@@ -2520,7 +2528,6 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
         }
     }
 
-
     // MARK: - Chunks
 
     /// Returns a chunk at the given coordinate.
@@ -2538,7 +2545,7 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
         }
         return result
     }
-
+    
     /// Returns a chunk at the given coordinate.
     ///
     /// - Parameters:
@@ -2547,6 +2554,10 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
     internal func chunksAt(coord: simd_int2) -> [SKTileLayerChunk] {
         return chunksAt(coord.x, coord.y)
     }
+    
+    
+    // MARK: - UI
+
 
     /// Returns the internal **Tiled** node type.
     @objc public var tiledNodeName: String {
@@ -2571,6 +2582,19 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
     /// A description of the node.
     @objc public var tiledDescription: String {
         return "Tile map node."
+    }
+    
+    // MARK: - Reflection
+    
+    /// Returns a custom mirror for this object.
+    public var customMirror: Mirror {
+        return Mirror(self, children: ["name": self.mapName,
+                                       "url": self.url.relativePath,
+                                       "isInfinite": self.isInfinite,
+                                       "mapSize": self.mapSize,
+                                       "tileSize": self.tileSize,
+                                       "layers": self.layers]
+        )
     }
 }
 
@@ -2718,6 +2742,7 @@ extension LayerPosition: CustomStringConvertible {
         }
     }
 
+    
     internal var anchorPoint: CGPoint {
         switch self {
             case .bottomLeft: return CGPoint(x: 0, y: 0)
@@ -2886,7 +2911,7 @@ extension SKTilemap {
 
     /// String representation of the map.
     public override var description: String {
-        var attrsString = tiledNodeName.titleCased()
+        var attrsString = className
 
         attrsString += " '\(mapName)' "
         attrsString += " orientation: '\(orientation.description)' "
@@ -2903,7 +2928,7 @@ extension SKTilemap {
 
     /// Debug string representation of the map.
     public override var debugDescription: String {
-        return description
+        return "\(description)"
     }
 
     /// Returns an array of renderable tiles/objects.
@@ -2962,24 +2987,6 @@ extension SKTilemap {
         }
     }
 }
-
-
-/// :nodoc:
-extension SKTilemap: CustomReflectable {
-
-    /// Returns a custom mirror for this object.
-    public var customMirror: Mirror {
-        return Mirror(self, children: ["name": self.mapName,
-                                       "mapSize": self.mapSize,
-                                       "tileSize": self.tileSize,
-                                       "layers": self.layers],
-                            displayStyle: .struct,
-                            ancestorRepresentation: .generated
-        )
-    }
-}
-
-// ancestorRepresentation: .customized({ super.customMirror })
 
 
 /// :nodoc:
@@ -3269,18 +3276,18 @@ extension SKTilemap {
     
     /// Returns a SpriteKit action for the given global id (if one exists).
     ///
-    /// - Parameter globalId: tile global id.
+    /// - Parameter globalID: tile global id.
     /// - Returns: SpriteKit action for the given id.
-    public func actionFor(globalId: UInt32) -> SKAction? {
-        return dataStorage?.tileAnimationAction(globalId: globalId)
+    public func actionFor(globalID: UInt32) -> SKAction? {
+        return dataStorage?.tileAnimationAction(globalID: globalID)
     }
     
     /// Returns an array of tiles matching the given global id.
     ///
-    /// - Parameter globalId: tile global id.
+    /// - Parameter globalID: tile global id.
     /// - Returns: SpriteKit action for the given id.
-    public func allTiles(globalId: UInt32) -> [SKTile]? {
-        return dataStorage?.tilesWith(globalId: globalId)
+    public func allTiles(globalID: UInt32) -> [SKTile]? {
+        return dataStorage?.tilesWith(globalID: globalID)
     }
 }
 

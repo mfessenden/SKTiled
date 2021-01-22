@@ -28,23 +28,6 @@ import Cocoa
 import SpriteKit
 
 
-/* Issues
- - globals `show objects` isn't useful
- - `render effects` is used on the tilemap node & demo prefs
- 
- 
- TiledGlobals.default.renderQuality.default = CGFloat(preferences.renderQuality)
- TiledGlobals.default.renderQuality.object = CGFloat(preferences.objectRenderQuality)
- TiledGlobals.default.renderQuality.text = CGFloat(preferences.textRenderQuality)
- TiledGlobals.default.enableRenderCallbacks = preferences.renderCallbacks
- TiledGlobals.default.enableCameraCallbacks = preferences.cameraCallbacks
- TiledGlobals.default.enableCameraContainedNodesCallbacks = preferences.cameraTrackContainedNodes
- 
- 
- */
-
-
-
 class PreferencesGloabalsViewController: NSViewController {
     
     let demoController = TiledDemoController.default
@@ -126,6 +109,10 @@ class PreferencesGloabalsViewController: NSViewController {
         textFields["glb-renderqualityoverride-field"]?.stringValue = String(format: "%.2f", TiledGlobals.default.renderQuality.override)
         textFields["glb-linewidth-field"]?.stringValue = String(format: "%.2f", TiledGlobals.default.debug.lineWidth)
         
+        
+        
+        
+        
                
         checkBoxes["gbl-rendercb-check"]?.state = (TiledGlobals.default.enableRenderCallbacks == true) ? .on : .off
         checkBoxes["gbl-cameracb-check"]?.state = (TiledGlobals.default.enableCameraCallbacks == true) ? .on : .off
@@ -140,15 +127,18 @@ class PreferencesGloabalsViewController: NSViewController {
         var drawBoundsValue = demoController.defaultPreferences.drawBounds
         var shouldEnableEffects = demoController.defaultPreferences.enableEffects
         var drawGraphsValue = false
-        
+        var globalsHeaderString = "Tilemap Globals"
         if let tilemap = demoController.currentTilemap {
             shouldEnableEffects = tilemap.shouldEnableEffects
             showObjectsValue = tilemap.isShowingObjectBounds
             drawGridValue = tilemap.isShowingTileGrid
             drawBoundsValue = tilemap.isShowingBounds
             drawGraphsValue = tilemap.isShowingGridGraph
+            globalsHeaderString = "Tilemap Globals: '\(tilemap.url.relativePath)'"
         }
         
+        textFields["glb-globalheader-field"]?.stringValue = globalsHeaderString
+
         checkBoxes["gbl-effects-check"]?.state = (shouldEnableEffects == true) ? .on : .off
         checkBoxes["gbl-showobjects-check"]?.state = (showObjectsValue == true) ? .on : .off
         checkBoxes["gbl-showgrid-check"]?.state = (drawGridValue == true) ? .on : .off

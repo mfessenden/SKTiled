@@ -44,7 +44,9 @@ import SpriteKit
     /// Unique object id (layer & object names may not be unique).
     var uuid: String { get }
 
-    /// Object type property.
+    /// ## Overview
+    ///
+    /// Object type property as parsed from **Tiled**.
     var type: String! { get set }
 }
 

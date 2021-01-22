@@ -47,7 +47,6 @@ class PreferencesSearchPathsController: NSViewController {
         let defaults = UserDefaults.shared
         
         if let assetSearchPaths = defaults.array(forKey: "TiledAssetSearchPaths") as? [String] {
-            Logger.default.log("found \(assetSearchPaths.count) asset search paths.", level: .info, symbol: "PreferencesSearchPathsController")
             userSearchPaths = assetSearchPaths
             searchPathsTableView.reloadData()
         }

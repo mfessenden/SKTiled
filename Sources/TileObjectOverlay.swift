@@ -164,7 +164,7 @@ extension TileObjectOverlay {
         let objString = "<\(String(describing: Swift.type(of: self)))>"
         var attrsString = objString
         attrsString += " objects: \(objects.count)"
-        attrsString += " zoom level: \(cameraZoom.roundTo())"
+        attrsString += " zoom level: \(cameraZoom.stringRoundedTo())"
         return attrsString
     }
 }

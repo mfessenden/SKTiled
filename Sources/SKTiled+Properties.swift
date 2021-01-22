@@ -255,6 +255,10 @@ extension TiledLayerObject {
                 background.color = SKColor(hexString: value)
                 background.colorBlendFactor = 1.0
             }
+            
+            if ["tint", "tintcolor"].contains(lattr) {
+                tintColor = SKColor(hexString: value)
+            }
 
             if (lattr == "hidden") {
                 isHidden = boolForKey(attr)

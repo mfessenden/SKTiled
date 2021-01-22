@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.author                 = { "Michael Fessenden" => "michael.fessenden@gmail.com" }
   s.homepage               = "https://github.com/mfessenden/SKTiled"
   s.license                = { :type => 'MIT', :file => 'LICENSE.md' }
-  
+
   s.osx.deployment_target  = '10.14'
   s.ios.deployment_target  = '12.0'
   s.tvos.deployment_target = '12.0'

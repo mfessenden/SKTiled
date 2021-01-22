@@ -459,8 +459,8 @@ public class TiledGlobals {
 
     public struct LayerTintOptions {
 
-        /// Default tint mode.
-        public var blendMode: SKBlendMode = SKBlendMode.replace
+        /// Default tint belnding mode mode.
+        public var blendMode: SKBlendMode = SKBlendMode.alpha
     }
 
     /// ## Overview
@@ -531,9 +531,13 @@ extension TiledGlobals: TiledCustomReflectableType {
     public func dumpStatistics() {
         let headerString = " SKTiled Globals ".padEven(toLength: 40, withPad: "-")
         print("\n\(headerString)\n")
+        
+        #if SKTILED_DEMO
         print("  ▸ product name:            '\(self.executableName)'")
         print("  ▸ bundle indentifier:      '\(self.identifier)'")
         print("  ▸ bundle name:             '\(self.bundleName)'")
+        #endif
+        
         print("  ▸ framework version:       \(self.version.description)")
 
         let buildConfig = (getBuildConfiguration() == true) ? "release" : "debug"
@@ -547,7 +551,7 @@ extension TiledGlobals: TiledCustomReflectableType {
         print("  ▸ demo:                    \(isDemo)")
         print("  ▸ beta:                    \(isBeta)")
         print("  ▸ playground:              \(isPlayground)")
-        print("  ▸ speed:                   \(self.speed.roundTo(1))")
+        print("  ▸ speed:                   \(self.speed.stringRoundedTo(1))")
         print("  ▸ renderer:                \(self.renderer.name)")
         print("  ▸ screen size:             \(self.screenSize.shortDescription)")
         print("  ▸ retina scale factor:     \(self.contentScale)")

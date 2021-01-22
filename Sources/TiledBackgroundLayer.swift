@@ -63,7 +63,7 @@ internal class TiledBackgroundLayer: TiledLayerObject {
         }
     }
     
-    // MARK: - Init
+    // MARK: - Initialization
     
     /// Initialize with a parent `SKTilemap` node.
     ///

@@ -236,7 +236,7 @@ public class SKTiledGraphNode: GKGridGraphNode, TiledAttributedType {
     /// Weight property.
     public var weight: Float = 1.0
 
-    // MARK: - Init
+    // MARK: - Initialization
 
 
     /// Initialize the node with a weight parameter.

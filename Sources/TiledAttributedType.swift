@@ -182,7 +182,7 @@ extension TiledAttributedType {
     /// - Returns: attributed string.
     public func propertiesAttributedString(delineator: String?) -> NSAttributedString {
         let outputString = NSMutableAttributedString()
-        let paragraphStyle = NSMutableParagraphStyle()
+        // let paragraphStyle = NSMutableParagraphStyle()
 
         for (idx, property)  in properties.enumerated() {
             let thisPropertyString = NSMutableAttributedString()

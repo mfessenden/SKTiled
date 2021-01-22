@@ -156,7 +156,7 @@ public class SKTileLayer: TiledLayerObject {
                 color = SKColor(hexString: "#ffffff00")
                 blendMode = .alpha
 
-
+                
                 getTiles().forEach { tile in
                     tile.tintColor = nil
                 }
@@ -167,7 +167,7 @@ public class SKTileLayer: TiledLayerObject {
             self.color = newColor
             self.blendMode = TiledGlobals.default.layerTintAttributes.blendMode
             self.colorBlendFactor = 1
-
+            
             getTiles().forEach { tile in
                 tile.tintColor = newColor
             }
@@ -175,7 +175,7 @@ public class SKTileLayer: TiledLayerObject {
     }
 
 
-    // MARK: - Init
+    // MARK: - Initialization
 
     /// Initialize with layer name and parent `SKTilemap`.
     /// - Parameters:
@@ -707,7 +707,7 @@ public class SKTileLayer: TiledLayerObject {
 
                 // set the layer property
                 tile.layer = self
-                tile.tintColor = tintColor
+                //tile.tintColor = tintColor
                 tile.highlightDuration = highlightDuration
 
                 // get the position in the layer (plus tileset offset)
@@ -976,15 +976,25 @@ public class SKTileLayer: TiledLayerObject {
 
 
     // MARK: - Reflection
-
+    
+    
     /// Returns a custom mirror for this layer.
     public override var customMirror: Mirror {
-        return Mirror(self, children:
-                        ["name": self.layerName,
-                         "size": self.mapSize,
-                         "tileSize": self.tileSize,
-                         "data": self.tiles.customMirror]
-        )
+        var attributes: [(label: String?, value: Any)] = [
+            (label: "name", value: layerName),
+            (label: "uuid", uuid),
+            (label: "xPath", value: xPath),
+            (label: "size", value: mapSize),
+            (label: "tileSize", value: tileSize)
+        ]
+        
+        if (isInfinite == true) {
+            attributes.append(("chunks", chunks))
+        } else {
+            attributes.append(("data", tiles))
+        }
+        
+        return Mirror(self, children: attributes, ancestorRepresentation: .suppressed)
     }
 
     /// Returns the internal **Tiled** node type.

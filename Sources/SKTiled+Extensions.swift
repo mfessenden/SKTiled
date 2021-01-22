@@ -489,6 +489,21 @@ extension Array where Element: SKNode {
 }
 
 
+extension Mirror {
+    
+    static func reflectProperties<T>(
+        of target: Any,
+        matchingType type: T.Type = T.self,
+        using closure: (T) -> Void
+    ) {
+        let mirror = Mirror(reflecting: target)
+        
+        for child in mirror.children {
+            (child.value as? T).map(closure)
+        }
+    }
+}
+
 
 
 
@@ -604,7 +619,7 @@ extension CGFloat {
     ///
     /// - Parameter decimals: number of decimals to round to.
     /// - Returns: rounded display string.
-    func roundTo(_ decimals: Int = 2) -> String {
+    func stringRoundedTo(_ decimals: Int = 2) -> String {
         return String(format: "%.\(String(decimals))f", self)
     }
 
@@ -683,14 +698,38 @@ extension CGPoint {
     /// - Parameter decimals: decimals to round to.
     /// - Returns: display string.
     public func stringRoundedTo(_ decimals: Int = 1) -> String {
-        return "x: \(self.x.roundTo(decimals)), y: \(self.y.roundTo(decimals))"
+        return "x: \(self.x.stringRoundedTo(decimals)), y: \(self.y.stringRoundedTo(decimals))"
     }
 
     /// Returns the point as a `simd_int2` instance.
     public var toVec2: simd_int2 {
         return simd_int2(arrayLiteral: xCoord, yCoord)
     }
-
+    
+    /// Returns the squared length of the vector described by the CGPoint.
+    ///
+    /// - Returns: vector length.
+    public func magnitude() -> CGFloat {
+        if (abs(x) > abs(y)) {
+            return x
+        }
+        return y
+    }
+    
+    /// Returns the squared length of the vector described by the CGPoint.
+    ///
+    /// - Returns: vector length.
+    public func length() -> CGFloat {
+        return sqrt(x*x + y*y)
+    }
+    
+    /// Returns the squared length of the vector described by the CGVector.
+    ///
+    /// - Returns: vector length.
+    public func lengthSquared() -> CGFloat {
+        return x*x + y*y
+    }
+    
     /// Returns the distance to another point.
     ///
     /// - Parameter point: point to compare.
@@ -843,12 +882,12 @@ extension CGSize {
     /// - Parameter decimals: decimals to round to.
     /// - Returns: display string.
     public func stringRoundedTo(_ decimals: Int = 1) -> String {
-        return "w: \(self.width.roundTo(decimals)), h: \(self.height.roundTo(decimals))"
+        return "w: \(self.width.stringRoundedTo(decimals)), h: \(self.height.stringRoundedTo(decimals))"
     }
 
     /// Returns a shortened textual representation for debugging.
     public var shortDescription: String {
-        return "\(self.width.roundTo(0)) x \(self.height.roundTo(0))"
+        return "\(self.width.stringRoundedTo(0)) x \(self.height.stringRoundedTo(0))"
     }
 }
 
@@ -919,23 +958,35 @@ extension CGRect {
         return CGRect(origin: .zero, size: size)
     }
 
-    /// Returns a display string rounded.
+    /// Returns a display string rounded to a given number of decimals.
     ///
     /// - Parameter decimals: decimals to round to.
     /// - Returns: display string.
     public func stringRoundedTo(_ decimals: Int = 1) -> String {
-        return "origin: \(Int(origin.x)), \(Int(origin.y)), size: \(Int(size.width)) x \(Int(size.height))"
+        let xval = origin.x.stringRoundedTo(decimals)
+        let yval = origin.y.stringRoundedTo(decimals)
+        
+        let wval = size.width.stringRoundedTo(decimals)
+        let hval = size.height.stringRoundedTo(decimals)
+        return "origin: \(xval), \(yval), size: \(wval) x \(hval)"
     }
 
     /// Returns a shortened textual representation for debugging.
     public var shortDescription: String {
-        return "x: \(Int(minX)), y: \(Int(minY)), w: \(width.roundTo()), h: \(height.roundTo())"
+        return "x: \(Int(minX)), y: \(Int(minY)), w: \(width.stringRoundedTo()), h: \(height.stringRoundedTo())"
     }
 }
 
 
 extension CGVector {
-
+    
+    /// Returns the length (magnitude) of the vector described by the CGVector.
+    ///
+    /// - Returns: vector length.
+    public func length() -> CGFloat {
+        return sqrt(dx*dx + dy*dy)
+    }
+    
     /// Returns the squared length of the vector described by the CGVector.
     ///
     /// - Returns: vector length.
@@ -1113,6 +1164,17 @@ extension SKSpriteNode {
     }
 }
 
+
+/*
+/// :nodoc:
+extension SKSpriteNode: CustomReflectable {
+    
+    /// Custom mirror for tile objects.
+    public var customMirror: Mirror {
+        return Mirror(reflecting: self)
+    }
+}
+*/
 
 extension SKColor {
 
@@ -1307,10 +1369,10 @@ extension SKColor {
     /// - Returns: RGBA component string description.
     public var componentDescription: String {
         let comps = components
-        let r = comps.r.roundTo(3)
-        let g = comps.g.roundTo(3)
-        let b = comps.b.roundTo(3)
-        let a = comps.a.roundTo(3)
+        let r = comps.r.stringRoundedTo(3)
+        let g = comps.g.stringRoundedTo(3)
+        let b = comps.b.stringRoundedTo(3)
+        let a = comps.a.stringRoundedTo(3)
         return "SKColor(r: \(r), g: \(g), b: \(b), a: \(a))"
     }
 }
@@ -1836,7 +1898,7 @@ extension TimeInterval {
 
 
 extension FloatingPoint {
-
+    
     /// Returns a value that is precise to a given number of digits.
     ///
     /// - Parameter value: floating point precision.
@@ -2403,11 +2465,7 @@ public func expandShortenedHexString(_ hexString: String) -> String {
 /// - Returns: visual grid texture.
 internal func drawLayerGrid(_ object: TiledMappableGeometryType,
                             imageScale: CGFloat = 8,
-                            lineScale: CGFloat = 1,
-                            gridColor: SKColor? = nil) -> CGImage? {
-
-
-    let gridColor = gridColor ?? TiledGlobals.default.debug.gridColor
+                            lineScale: CGFloat = 1) -> CGImage? {
 
 
     // get the ui scale value for the device
@@ -3147,6 +3205,21 @@ public func getSKTiledGlobals() {
 @available(*, deprecated, renamed: "clampNodePosition(node:scale:)")
 public func clampPositionWithNode(node: SKNode, scale: CGFloat) {
     clampNodePosition(node: node, scale: scale)
+}
+
+
+
+extension CGFloat {
+    
+    /// Returns a display string rounded to a given number of decimal places.
+    ///
+    /// - Parameter decimals: decimals to round to.
+    /// - Returns: display string.
+    @available(*, deprecated, renamed: "stringRoundedTo(_:)")
+    public func roundTo(_ decimals: Int = 1) -> String {
+        return stringRoundedTo(decimals)
+    }
+
 }
 
 

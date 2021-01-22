@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -103,11 +103,6 @@
                                                 <action selector="toggleRenderTilemapEffects:" target="Voe-Tx-rLC" id="FQB-Rx-bNb"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="va6-qm-hF9"/>
-                                        <menuItem title="Camera:" enabled="NO" id="qRc-VF-DLu">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Camera:" id="Std-FX-Zs7"/>
-                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="qs1-uO-RgJ"/>
                                         <menuItem title="Debug Draw:" enabled="NO" id="g9m-EM-X6F">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -161,6 +156,28 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="ceh-Zb-Rb0"/>
+                                        <menuItem title="Allow Zoom" enabled="NO" id="DUG-oI-rxj">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <accessibility identifier="allowZoom"/>
+                                            <connections>
+                                                <action selector="cameraOptionsUpdated:" target="Voe-Tx-rLC" id="e4u-Qa-LYv"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Allow Movement" enabled="NO" id="o6f-SD-ND0">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <accessibility identifier="allowMovement"/>
+                                            <connections>
+                                                <action selector="cameraOptionsUpdated:" target="Voe-Tx-rLC" id="NnI-Aj-LV6"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Allow Rotation" enabled="NO" id="lEg-h6-y6d">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <accessibility identifier="allowRotation"/>
+                                            <connections>
+                                                <action selector="cameraOptionsUpdated:" target="Voe-Tx-rLC" id="IeB-hq-zcS"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="bWe-h2-cvJ"/>
                                         <menuItem title="Fit to view" enabled="NO" id="h0m-Sd-EwV">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
@@ -277,6 +294,11 @@
                                                 <action selector="dumpTileLayersDataAction:" target="Voe-Tx-rLC" id="yyB-NN-Z6a"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Dump Selected Node" enabled="NO" keyEquivalent="d" id="djR-ZZ-q6d">
+                                            <connections>
+                                                <action selector="dumpSelectedNodes:" target="Voe-Tx-rLC" id="P9L-Th-N9V"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="9YA-hV-8Rw"/>
                                         <menuItem title="Current Maps..." enabled="NO" id="OCC-zQ-5nF">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -320,6 +342,9 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="SKTiled_Demo" customModuleProvider="target">
                     <connections>
                         <outlet property="allAssetsMapsMenuItem" destination="ANV-Se-DZa" id="6z4-SF-dvk"/>
+                        <outlet property="cameraAllowMovementItem" destination="o6f-SD-ND0" id="MtT-Zd-0PX"/>
+                        <outlet property="cameraAllowRotationItem" destination="lEg-h6-y6d" id="KRZ-Kf-WKw"/>
+                        <outlet property="cameraAllowZoomItem" destination="DUG-oI-rxj" id="siF-5K-AZo"/>
                         <outlet property="cameraCallbacksMenuItem" destination="o3p-eM-sA8" id="4a6-Pk-NSP"/>
                         <outlet property="cameraIgnoreMaxZoomMenuItem" destination="1eq-9H-4kc" id="a3X-Cr-9N1"/>
                         <outlet property="cameraMainMenu" destination="3by-9S-Udp" id="c4m-7k-O80"/>
@@ -331,6 +356,7 @@
                         <outlet property="demoFilesMenu" destination="Lwz-hJ-Y8i" id="hrl-vA-kNI"/>
                         <outlet property="demoFilesSubmenu" destination="jWA-dT-spd" id="quS-cZ-oDY"/>
                         <outlet property="developmentMainMenu" destination="FNa-3o-AiI" id="gXj-Mg-ZID"/>
+                        <outlet property="dumpSelectedMenuItem" destination="djR-ZZ-q6d" id="wJm-ct-MO9"/>
                         <outlet property="externalAssetsMenuItem" destination="Ywb-f1-YfU" id="ZVi-fl-4Xl"/>
                         <outlet property="isolateTilesMenuItem" destination="wI7-rC-RX7" id="JIC-LU-OsQ"/>
                         <outlet property="isolationModeMenuItem" destination="NIF-SX-zDE" id="bcJ-9R-oe3"/>
@@ -338,7 +364,6 @@
                         <outlet property="layerStatisticsMenuItem" destination="VaW-im-1oo" id="hKu-cG-Lc9"/>
                         <outlet property="layerVisibilityMenu" destination="ofi-Kh-OpM" id="EXP-Xd-vY6"/>
                         <outlet property="loggingLevelMenuItem" destination="2jg-PU-w23" id="PCS-Fy-fCC"/>
-                        <outlet property="mapCameraMenu" destination="qRc-VF-DLu" id="Lp5-Ux-fLf"/>
                         <outlet property="mapDebugDrawMenu" destination="g9m-EM-X6F" id="olI-40-ckw"/>
                         <outlet property="mapGridColorMenu" destination="jgc-CR-TWe" id="86e-4d-sW4"/>
                         <outlet property="mapMenuItem" destination="Ybf-hB-7LM" id="7pI-qT-NHE"/>

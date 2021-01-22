@@ -360,6 +360,7 @@ extension Notification.Name {
 
         public static let NodesRightClicked             = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodesRightClicked")        // nodes right-clicked in demo app
         public static let NodeAttributesChanged         = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodeAttributesChanged")    // node changes via inspector
+        public static let DumpSelectedNodes             = Notification.Name(rawValue: "org.sktiled.notification.name.demo.dumpSelectedNodes")
 
 
         // iOS
@@ -410,7 +411,7 @@ extension SKNode {
     public func setAttr(key: String, value: Any) {
         initializeAttributes()
         guard let tiledAttrs = userData!["__sktiled_attributes"] as? NSMutableDictionary else {
-            fatalError("attribute creation failed!")
+            return
         }
         tiledAttrs[key] = value
     }
@@ -421,7 +422,7 @@ extension SKNode {
     public func setAttrs(values: [String: Any]) {
         initializeAttributes()
         guard let tiledAttrs = userData!["__sktiled_attributes"] as? NSMutableDictionary else {
-            fatalError("attribute creation failed!")
+            return
         }
         for (_, property) in values.enumerated() {
             tiledAttrs[property.key] = property.value
@@ -436,7 +437,7 @@ extension SKNode {
     public func getAttr(key: String, defaultValue: Any? = nil) -> Any? {
         initializeAttributes()
         guard let tiledAttrs = userData!["__sktiled_attributes"] as? NSMutableDictionary else {
-            fatalError("attribute creation failed!")
+            return nil
         }
 
         guard let currentValue = tiledAttrs[key] else {
@@ -454,7 +455,7 @@ extension SKNode {
     public func getAttrs() -> [String: Any] {
         initializeAttributes()
         guard let tiledAttrs = userData!["__sktiled_attributes"] as? NSMutableDictionary else {
-            fatalError("could not create node attributes.")
+            return [:]
         }
 
         return tiledAttrs as! [String: Any]
@@ -797,10 +798,43 @@ extension NSColor {
 
 
 extension NSEvent {
-
+    
+    /// Returns the local position in a view. Converts a global position to a local position.
+    ///
+    /// - Parameter view: view.
+    /// - Returns: point of event in the given view.
+    func localPosition(_ view: NSView) -> CGPoint {
+        return view.convert(locationInWindow, from: nil)
+    }
+    
+    /// Indicates the `option` key is currently pressed.
+    var optionKeyPressed: Bool {
+        return modifierFlags.contains(NSEvent.ModifierFlags.option)
+    }
+    
+    /// Indicates the `control` key is currently pressed.
+    var controlKeyPressed: Bool {
+        return modifierFlags.contains(NSEvent.ModifierFlags.control)
+    }
+    
+    /// Indicates the `command` key is currently pressed.
+    var commandKeyPressed: Bool {
+        return modifierFlags.contains(NSEvent.ModifierFlags.command)
+    }
+    
     /// Gives an approximation of the mouse movement speed.
     var mouseSpeed: CGFloat {
         return max(abs(deltaX),abs(deltaY))
+    }
+    
+    /// Returns difference in scroll wheel events.
+    var scrollingDelta: CGPoint {
+        return CGPoint(x: scrollingDeltaX, y: scrollingDeltaY)
+    }
+    
+    // TODO: remove this
+    func isPressModifierFlags(only flag: NSEvent.ModifierFlags) -> Bool {
+        return modifierFlags.intersection(.deviceIndependentFlagsMask) == flag
     }
 }
 

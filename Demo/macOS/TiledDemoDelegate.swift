@@ -48,7 +48,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
         return defaultDemoDelegate
     }
     
-    // MARK: - Init
+    // MARK: - Initialization
     
     /// Default initializer.
     public override init() {
@@ -59,9 +59,10 @@ public class TiledDemoDelegate: NSObject, Loggable {
     deinit {
         // remove notifications
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.FocusCoordinateChanged, object: nil)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodesRightClicked, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.SceneWillUnload, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.FlushScene, object: nil)
+
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodesRightClicked, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Globals.Updated, object: nil)
     }
@@ -84,6 +85,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionChanged), name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(mouseRightClickAction), name: Notification.Name.Demo.MouseRightClicked, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(globalsUpdatedAction), name: Notification.Name.Globals.Updated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(dumpSelectedNodes), name: Notification.Name.Demo.DumpSelectedNodes, object: nil)
     }
        
     // MARK: - Handlers
@@ -172,6 +174,49 @@ public class TiledDemoDelegate: NSObject, Loggable {
             }
         }
     }
+    
+    
+    // MARK: - Debugging
+    
+    /// Send a command description to the UI to update status.
+    ///
+    /// - Parameters:
+    ///   - command: command string.
+    ///   - duration: how long the message should be displayed (0 is indefinite).
+    public func updateCommandString(_ command: String, duration: TimeInterval = 3.0) {
+        
+        NotificationCenter.default.post(
+            name: Notification.Name.Debug.DebuggingCommandSent,
+            object: nil,
+            userInfo: ["command": command, "duration": duration]
+        )
+    }
+    
+    
+    /// Handles the `Notification.Name.Globals.Updated` callback. Changes selected nodes' highlight color.
+    ///
+    ///   userInfo: ["tileColor": `SKColor`, "objectColor": `SKColor`]
+    ///
+    /// - Parameter notification: event notification.
+    @objc func dumpSelectedNodes(notification: Notification) {
+        guard (currentNodes.isEmpty == false) else {
+            updateCommandString("Error: nothing is selected.")
+            return
+        }
+        
+        let nodecount = currentNodes.count
+        let countdesc = (nodecount == 1) ? "node" : "nodes"
+        let logmsg = "dumping \(nodecount) \(countdesc):"
+
+        let logevent = log(logmsg, level: .info)
+        let asciiLine = String(repeating: "-", count: logevent.rawString?.count ?? 40)
+        
+        
+        for node in currentNodes {
+            print("\(asciiLine)\n")
+            dump(node)
+        }
+    }
 }
 
 
@@ -186,7 +231,7 @@ let defaultDemoDelegate = TiledDemoDelegate()
 extension TiledDemoDelegate: TiledSceneCameraDelegate {
     
     @objc public func cameraZoomChanged(newZoom: CGFloat) {
-        let oldZoom = currentCameraZoom
+        //let oldZoom = currentCameraZoom
         currentCameraZoom = newZoom
     }
 }

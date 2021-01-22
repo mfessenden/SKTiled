@@ -26,7 +26,7 @@ Change Log
 - add `TiledLayerObject.tintColor` property
 - add `TiledLayerObject.load` method (EXPERIMENTAL)
 	- add `TiledLayerObject.mapDelegate` property
-- add `SKTilemap.allTiles(globalId:)` method
+- add `SKTilemap.allTiles(globalID:)` method
 
 - bug fixes:
     - fix a memory leak where tilemap is retained after parent scene change
@@ -90,7 +90,11 @@ Change Log
 	- add `SKTile.withTileDataClone()` method
 	- add `SKTile.tileset` property
 	- add `SKTile.tilemap` property
+	- add `SKTile.newTile(globalID:in:)` class function
+	- add `SKTile.newTile(localID:in:)` class function
     - add `SKTileset.load(tsxFile:)` class function
+	- add `SKTileset.newTile(globalID:)` method
+	- add `SKTileset.newTile(localID:)` method
     - add `SKTile.mouseOverHandler` handler
     - `SKTilemap.showObjects(forLayers:)` is deprecated
     - `SKTileObject.getVertices()` now returns an empty set if there are no points

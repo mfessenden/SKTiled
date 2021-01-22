@@ -102,7 +102,7 @@ typealias LayerRenderStatistics = (tiles: Int, objects: Int)
 /// ```swift
 /// coord = groupLayer.coordinateAtMouse(event: mouseClicked)
 /// ```
-public class TiledLayerObject: SKEffectNode, TiledMappableGeometryType, TiledAttributedType {
+public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeometryType, TiledAttributedType {
 
     /// Reference to the parent tilemap.
     unowned let tilemap: SKTilemap
@@ -220,9 +220,7 @@ public class TiledLayerObject: SKEffectNode, TiledMappableGeometryType, TiledAtt
     /// The type of objects contained in this layer.
     internal var layerType: TiledLayerType = TiledLayerType.none
     
-    
     // MARK: - Colors
-    
     
     /// Layer color.
     public var color: SKColor = TiledObjectColors.gun
@@ -257,6 +255,15 @@ public class TiledLayerObject: SKEffectNode, TiledMappableGeometryType, TiledAtt
         }
     }
     
+    /// Sprite to allow for color tinting.
+    lazy internal var tintSprite: SKSpriteNode? = {
+        let sprite = SKSpriteNode(color: SKColor.clear, size: sizeInPoints)
+        sprite.anchorPoint = CGPoint.zero
+        addChild(sprite)
+        sprite.zPosition = zPosition + 1
+        return sprite
+    }()
+    
     /// Layer bounding shape.
     public lazy var boundsShape: SKShapeNode? = {
         let scaledverts = getVertices().map { $0 * renderQuality }
@@ -286,7 +293,7 @@ public class TiledLayerObject: SKEffectNode, TiledMappableGeometryType, TiledAtt
 
     // MARK: Sizing & Positioning
 
-    /// Layer offset value.
+    /// Layer offset value (in pixels).
     public var offset: CGPoint = CGPoint.zero
 
     /// Container size (in tiles).
@@ -404,8 +411,8 @@ public class TiledLayerObject: SKEffectNode, TiledMappableGeometryType, TiledAtt
     /// Returns the frame rectangle of the layer (used to draw bounds).
     public override var boundingRect: CGRect {
         // TODO: implement this
-        let offset = CGPoint.zero
-        return CGRect(x: offset.x, y: offset.y, width: sizeInPoints.width, height: -sizeInPoints.height)
+        let boundsOffset = CGPoint.zero
+        return CGRect(x: boundsOffset.x, y: boundsOffset.y, width: sizeInPoints.width, height: -sizeInPoints.height)
     }
 
     /// Returns a rectangle in this node's parent's coordinate system.
@@ -415,9 +422,7 @@ public class TiledLayerObject: SKEffectNode, TiledMappableGeometryType, TiledAtt
         return CGRect(center: CGPoint(x: px, y: py), size: sizeInPoints)
     }
 
-    // TODO: see if Tiled manages this differently.
-
-    /// Initial layer position for infinite maps. Used to reposition tile layers & chunks in infinite maps.
+    /// Initial layer position for infinite maps. Used to reposition tile layers & chunks in infinite maps. This is used by the tilemap to position the layers as they are added.
     internal var layerInfiniteOffset: CGPoint {
         if (isInfinite == false) || (layerType != .tile) {
             return CGPoint.zero
@@ -426,6 +431,7 @@ public class TiledLayerObject: SKEffectNode, TiledMappableGeometryType, TiledAtt
         var offsetPos = CGPoint.zero
 
         switch orientation {
+            
             case .orthogonal:
                 offsetPos.x -= tileWidthHalf
                 offsetPos.y += tileHeightHalf
@@ -466,7 +472,7 @@ public class TiledLayerObject: SKEffectNode, TiledMappableGeometryType, TiledAtt
     }
 
 
-    // MARK: - Init
+    // MARK: - Initialization
 
     ///  Initialize via the tilemap parser.
     ///
@@ -534,6 +540,8 @@ public class TiledLayerObject: SKEffectNode, TiledMappableGeometryType, TiledAtt
         // layer tint
         if let layerTint = attributes["tintcolor"] {
             self.tintColor = SKColor(hexString: layerTint)
+            colorBlendFactor = 1
+            print("tint color found:  \(layerTint)")
         }
 
         // set the layer's antialiasing based on tile size
@@ -709,7 +717,6 @@ public class TiledLayerObject: SKEffectNode, TiledMappableGeometryType, TiledAtt
     /// - Parameter point: input point.
     /// - Returns: point with y-value inverted.
     public func convertPoint(_ point: CGPoint) -> CGPoint {
-        // TODO: add this to protocol?
         return point.invertedY
     }
 
@@ -882,7 +889,9 @@ public class TiledLayerObject: SKEffectNode, TiledMappableGeometryType, TiledAtt
     ///
     /// - Parameter currentTime: update interval.
     public func update(_ currentTime: TimeInterval) {
-        guard (isRendered == true) else { return }
+        guard (isRendered == true) else {
+            return
+        }
         // clamp the position of the map & parent nodes
         // clampNodePosition(node: self, scale: SKTiledGlobals.default.contentScale)
     }
@@ -892,14 +901,20 @@ public class TiledLayerObject: SKEffectNode, TiledMappableGeometryType, TiledAtt
     /// Returns a custom mirror for this layer.
     public var customMirror: Mirror {
         return Mirror(self, children:
-                        ["name": self.layerName,
-                         "uuid": self.uuid,
-                         "size": self.mapSize,
-                         "layerType": self.layerType,
-                         "tileSize": self.tileSize]
+                        ["name": layerName,
+                         "uuid": uuid,
+                         "xPath": xPath,
+                         "layerType": layerType,
+                         "size": mapSize,
+                         "tileSize": tileSize,
+                        ],
+                      ancestorRepresentation: .suppressed
+                      
         )
     }
 }
+
+
 
 
 // MARK: - Extensions
@@ -1175,7 +1190,7 @@ extension TiledLayerObject {
 
         return [indexString, typeString, layerVisibilityString, layerPathString, positionString,
                 self.sizeInPoints.shortDescription, self.offset.shortDescription,
-                self.anchorPoint.shortDescription, "\(Int(self.zPosition))", self.opacity.roundTo(2), graphStat]
+                self.anchorPoint.shortDescription, "\(Int(self.zPosition))", self.opacity.stringRoundedTo(2), graphStat]
     }
 }
 
@@ -1242,6 +1257,22 @@ extension TiledLayerObject.TileOffset {
         }
     }
 }
+
+
+extension TiledLayerObject {
+    
+    
+    @objc func dumpStatistics() {
+        print("\nLayer: '\(layerName)'")
+        print("------------------------------------------")
+        print("   size:       \(mapSize.shortDescription)")
+        print("   tile size:  \(tileSize.shortDescription)")
+        print("   offset:     \(offset.shortDescription)")
+        print("\n")
+    }
+    
+}
+
 
 
 // MARK: - Deprecations

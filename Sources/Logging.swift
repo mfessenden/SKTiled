@@ -29,10 +29,10 @@ import Foundation
 
 /// :nodoc: Loggable object protcol.
 public protocol Loggable {
-
+    
     /// The name of the object calling the logger.
     var logSymbol: String { get }
-
+    
     /// Log funtion.
     ///
     /// - Parameters:
@@ -41,9 +41,47 @@ public protocol Loggable {
     ///   - file: originating module.
     ///   - method: caller method.
     ///   - line: caller source code line.
-    func log(_ message: String, level: LoggingLevel, file: String, method: String, line: UInt)
+    func log(_ message: String, level: LoggingLevel, file: String, method: String, line: UInt) -> LogEvent
 }
 
+
+
+/// :nodoc:
+public struct LogEvent: Hashable {
+    public let date = Date()
+    public var message: String
+    public var severity: LoggingLevel
+    public var symbol: String?
+    
+    
+    public let file: String     = #file
+    public let function: String = #function
+    public let line: UInt       = #line
+    public let column: UInt     = #column
+    
+    internal var rawString: String?
+    
+    /// Initializer.
+    ///
+    /// - Parameters:
+    ///   - message: logging message.
+    ///   - level: logging severity.
+    ///   - caller: caller symbol.
+    public init(_ message: String,
+         level: LoggingLevel = LoggingLevel.info,
+         caller: String? = nil) {
+        
+        self.message = message
+        self.severity = level
+        self.symbol = caller
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(date)
+        hasher.combine(file)
+        hasher.combine(file)
+    }
+}
 
 
 /// :nodoc: Logging level.
@@ -90,28 +128,32 @@ internal class Logger {
     ///   - file: originating module.
     ///   - method: caller method.
     ///   - line: reference to originating module line.
+    @discardableResult
     func log(_ message: String,
              level: LoggingLevel = LoggingLevel.info,
              symbol: String? = nil,
              file: String = #file,
              method: String = #function,
-             line: UInt = #line) {
+             line: UInt = #line) -> LogEvent {
 
-        // MARK: Logging Level
-
+        var event = LogEvent(message, level: level, caller: symbol)
+        
         // filter events at the current logging level (or higher)
         if (self.loggingLevel.rawValue > LoggingLevel.none.rawValue) && (level.rawValue <= self.loggingLevel.rawValue) {
             // format the message
             let formattedMessage = formatMessage(message, level: level,
                                                  symbol: symbol, file: file,
                                                  method: method, line: line)
-
+            
+            
+            
+            event.rawString = formattedMessage
             performInMain {
                 let outputStream = (self.loggingLevel.rawValue < 3) ? stderr : stdout
                 fputs("\(formattedMessage)\n", outputStream)
             }
-            return
         }
+        return event
     }
 
     /// Formatted time stamp
@@ -205,13 +247,14 @@ extension Loggable {
     ///   - file: originating module.
     ///   - method: the caller method.
     ///   - line: the caller source code line.
+    @discardableResult
     public func log(_ message: String,
                     level: LoggingLevel,
                     file: String = #file,
                     method: String = #function,
-                    line: UInt = #line) {
+                    line: UInt = #line) -> LogEvent {
 
-        Logger.default.log(message, level: level, symbol: self.logSymbol, file: file, method: method, line: line)
+        return Logger.default.log(message, level: level, symbol: self.logSymbol, file: file, method: method, line: line)
     }
 
     /// Logging call with an optional, custom symbol.
@@ -222,9 +265,10 @@ extension Loggable {
     ///   - file: originating module.
     ///   - method: the caller method.
     ///   - line: the caller source code line.
+    @discardableResult
     func log(_ message: String,
              level: LoggingLevel,
-             symbol: String? = nil) {
+             symbol: String? = nil) -> LogEvent {
 
         Logger.default.log(message, level: level, symbol: self.logSymbol, file: #file, method: #function, line: #line)
     }

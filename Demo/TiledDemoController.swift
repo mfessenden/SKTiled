@@ -104,7 +104,7 @@ public class TiledDemoController: NSObject, Loggable {
     /// indicates the index of the user maps.
     public internal(set) var userIndexStart = -1
 
-    // MARK: - Init
+    // MARK: - Initialization
 
     /// Initialize with the current view.
     ///
@@ -116,9 +116,6 @@ public class TiledDemoController: NSObject, Loggable {
 
     /// Default initializer.
     public override init() {
-
-        print("◆ [TiledDemoController]: initializing demo controller...")
-
         super.init()
 
         // setup notifications...must do this before loading defaults
@@ -230,8 +227,6 @@ public class TiledDemoController: NSObject, Loggable {
             name: Notification.Name.DemoController.WillBeginScanForAssets,
             object: nil
         )
-        
-        print("⭑ current map url: '\(currentTilemapUrl?.relativePath ?? "nil")'")
 
         let canUseDemoMaps = TiledGlobals.default.allowDemoMaps
         let canUseUserMaps = TiledGlobals.default.allowUserMaps
@@ -345,6 +340,12 @@ public class TiledDemoController: NSObject, Loggable {
         return resourcesFound
     }
 
+    
+    /// Add a tilemap url to the stack.
+    ///
+    /// - Parameters:
+    ///   - url: file url.
+    ///   - index: index to insert at.
     public func addTilemap(url: URL, at index: Int) {
 
         let newAsset = TiledDemoAsset(url, isUser: true)
@@ -421,7 +422,7 @@ public class TiledDemoController: NSObject, Loggable {
         // disasble the camera
         nextScene.cameraNode?.allowMovement = false
         nextScene.cameraNode?.allowZoom = false
-
+        nextScene.cameraNode?.allowRotation = false
 
         // calls back to AppDelegate
         NotificationCenter.default.post(
@@ -784,7 +785,8 @@ public class TiledDemoController: NSObject, Loggable {
         if let tilemap = scene.tilemap {
             if let cache = tilemap.dataStorage {
                 updateCommandString("showing tilemap cache statistics...", duration: 3)
-                cache.dumpStatistics()
+                //cache.dumpStatistics()
+                dump(cache)
             }
 
         } else {
@@ -1369,7 +1371,7 @@ extension TiledDemoController {
 
     // MARK: - Debug Output
 
-    /// Send a command to the UI to update status.
+    /// Send a command description to the UI to update status.
     ///
     /// - Parameters:
     ///   - command: command string.

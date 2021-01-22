@@ -80,7 +80,7 @@ public enum TileRenderMode {
 ///
 /// [tiledata-url]:SKTilesetData.html
 /// [skspritenode-url]:https://developer.apple.com/documentation/spritekit/skspritenode
-open class SKTile: SKSpriteNode {
+open class SKTile: SKSpriteNode, CustomReflectable {
 
     /// Tile size.
     open var tileSize: CGSize
@@ -110,7 +110,7 @@ open class SKTile: SKSpriteNode {
         }
     }
 
-    /// The tile global id.
+    /// Tile global id attribute. This attribute determines the tile data assigned to the tile.
     ///
     /// This is a wrapper for the `TileID` data structure and represents both global ID & tile orientation flags.
     @TileID open var globalId: UInt32 = 0 {
@@ -463,7 +463,7 @@ open class SKTile: SKSpriteNode {
     /// Tile animation.
     internal var objectAnimation: SKAction?
 
-    // MARK: - Init
+    // MARK: - Initialization
 
     /// Initialize the tile object with `SKTilesetData` data.
     ///
@@ -638,20 +638,18 @@ open class SKTile: SKSpriteNode {
 
     // MARK: - Legacy Animation
 
-
     /// Checks if the tile is animated and runs a [**SpriteKit action**][skaction-url] to animate it.
     ///
     /// [skaction-url]:https://developer.apple.com/documentation/spritekit/skaction
     open func runAnimationAsActions() {
-        guard (tileData.isAnimated == true) else { return }
+        guard (tileData.isAnimated == true) else {
+            return
+        }
         removeAction(forKey: animationKey)
 
         // run tile action
         if let animationAction = tileData.animationAction {
             run(animationAction, withKey: animationKey)
-        } else {
-            // TODO: throw here
-            fatalError("cannot get animation action for tile data with globalID '\(tileData.globalID)'.")
         }
     }
 
@@ -949,6 +947,28 @@ open class SKTile: SKSpriteNode {
         // the the current time is greater than the animation cycle, reset current time to 0
         if ct >= cycleTime { currentTime = 0 }
     }
+    
+    // MARK: - Reflection
+    
+    /// Custom mirror for tile objects.
+    public var customMirror: Mirror {
+        return Mirror(self,
+                      children: [
+                        "type": type as Any,
+                        "globalId": _globalId,
+                        "tileData": tileData,
+                        "tileSize": tileSize,
+                        "layer": layer.xPath,
+                        "renderMode": renderMode,
+                        "alignment": alignment,
+                        "bounds": boundingRect,
+                        "visibleToCamera": visibleToCamera,
+                        "blockNotifications": blockNotifications,
+                        
+                      ]
+        )
+        
+    }
 
 }
 
@@ -1123,7 +1143,7 @@ extension SKTile {
     /// Tile textual description.
     open override var description: String {
         let layerDescription = (layer != nil) ? ", Layer: '\(layer.layerName)'" : ""
-        return "Tile: id: \(tileData.id)\(layerDescription) \(renderMode.debugDescription)"
+        return "\(self.className): id: \(tileData.id)\(layerDescription) \(renderMode.debugDescription)"
     }
 
     /// Tile debug textual description.
@@ -1171,8 +1191,42 @@ extension SKTile {
     }
 }
 
+
+extension SKTile {
+    
+    /// Creates and returns a new tile instance with the given tileset & global id.
+    ///
+    /// - Parameters:
+    ///   - globalID: tile global id.
+    ///   - tileset: tileset instance.
+    /// - Returns: tile object with the given data.
+    public class func newTile(globalID: UInt32, in tileset: SKTileset) -> SKTile {
+        guard let newtile = tileset.newTile(globalID: globalID) else {
+            return SKTile()
+        }
+        return newtile
+    }
+    
+    /// Creates and returns a new tile instance with the given tileset & local id.
+    ///
+    /// - Parameters:
+    ///   - localID: tileset local id.
+    ///   - tileset: tileset instance.
+    /// - Returns: tile object with the given data.
+    public class func newTile(localID: UInt32, in tileset: SKTileset) -> SKTile {
+        guard let newtile = tileset.newTile(localID: localID) else {
+            return SKTile()
+        }
+        return newtile
+    }
+}
+
+
+
 /// :nodoc:
 extension SKTile.TileAlignmentHint: CustomStringConvertible, CustomDebugStringConvertible {
+    
+    /// String representation of this node.
     public var description: String {
         switch self {
             case .topLeft: return "topLeft"
@@ -1186,7 +1240,8 @@ extension SKTile.TileAlignmentHint: CustomStringConvertible, CustomDebugStringCo
             case .bottomRight: return "bottomRight"
         }
     }
-
+    
+    /// Debug string representation of this node.
     public var debugDescription: String {
         return description
     }
@@ -1194,6 +1249,8 @@ extension SKTile.TileAlignmentHint: CustomStringConvertible, CustomDebugStringCo
 
 /// :nodoc:
 extension SKTile.PhysicsShape: CustomStringConvertible, CustomDebugStringConvertible {
+    
+    /// String representation of this node.
     public var description: String {
         switch self {
             case .none: return "Physics Shape: none"
@@ -1204,6 +1261,7 @@ extension SKTile.PhysicsShape: CustomStringConvertible, CustomDebugStringConvert
         }
     }
 
+    /// Debug string representation of this node.
     public var debugDescription: String {
         return description
     }
@@ -1262,22 +1320,6 @@ extension SKTile {
 }
 
 
-
-/// :nodoc: Custom mirror for tiles.
-extension SKTile: CustomReflectable {
-
-    /// Custom mirror for tile objects.
-    public var customMirror: Mirror {
-        return Mirror(self, children: ["data": tileData,
-                                       "tile size": tileSize,
-                                       "layer": layer.layerName,
-                                       "render mode": renderMode,
-                                       "alignment": alignment,
-                                       "bounds": boundingRect.shortDescription
-            ],
-            displayStyle: .dictionary)
-    }
-}
 
 
 /// :nodoc: Tiled inspector attributes.

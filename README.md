@@ -50,11 +50,23 @@ Check out the [**Official Documentation**][sktiled-13-doc-url].
 
 ## Installation
 
-### Carthage & CocoaPods Support
+
+
+### Carthage
 
 For Carthage installation, create a Cartfile in the root of your project:
 
     github "mfessenden/SKTiled" "release/1.30"
+
+
+To use the new **[binary framework][binary-frameworks-url]** format, pass the **`--use-xcframeworks`** parameter to the build command:
+
+	carthage update --use-xcframeworks
+
+For more information, see the **[Carthage Installation][docs-carthage-url]** documentation.
+
+
+### CocoaPods
 
 
 For CocoaPods, install via a reference in your podfile:
@@ -94,10 +106,10 @@ Layers can be accessed by type, name or index:
 
 ```swift
 // query layers by type
-let tileLayers = tilemap.tileLayers
+let tileLayers   = tilemap.tileLayers
 let objectGroups = tilemap.objectGroups
-let imageLayers = tilemap.imageLayers
-let groupLayers = tilemap.groupLayers
+let imageLayers  = tilemap.imageLayers
+let groupLayers  = tilemap.groupLayers
 
 // query named layers
 let groundLayers = tilemap.getLayers(named: "Ground") as! [SKTileLayer]
@@ -315,6 +327,7 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 [sktilelayer-url]:https://mfessenden.github.io/SKTiled/1.3/Classes/SKTileLayer.html
 [sktileobject-url]:https://mfessenden.github.io/SKTiled/1.3/Classes/SKTileObject.html
 [sktileset-url]:https://mfessenden.github.io/SKTiled/1.3/Classes/SKTileset.html
+[docs-carthage-url]:https://mfessenden.github.io/SKTiled/1.3/getting-started.html#carthage-installation
 
 <!--- Tiled --->
 
@@ -330,3 +343,4 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 [skscene-update-url]:https://developer.apple.com/documentation/spritekit/skscene/1519802-update
 [uitouch-url]:https://developer.apple.com/documentation/uikit/uitouch
 [nsevent-url]:https://developer.apple.com/documentation/appkit/nsevent
+[binary-frameworks-url]:https://developer.apple.com/videos/play/wwdc2019/416/

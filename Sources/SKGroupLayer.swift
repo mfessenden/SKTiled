@@ -89,7 +89,7 @@ public class SKGroupLayer: TiledLayerObject {
         }
     }
 
-    // MARK: - Init
+    // MARK: - Initialization
 
     /// Initialize with a layer name, and parent `SKTilemap` node.
     ///

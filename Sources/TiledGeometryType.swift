@@ -104,7 +104,17 @@ extension TiledGeometryType {
 
 /// :nodoc:
 extension SKNode {
-
+    
+    /// Node he rotation value (in degrees).
+    @objc public var rotation: CGFloat {
+        get {
+            return zRotation.degrees()
+        }
+        set {
+            zRotation = -newValue.radians()
+        }
+    }
+    
     /// Returns true if an event (mouse or touch) contacts this node.
     ///
     /// - Parameter touch: event point in this node's coordinate space.
@@ -129,7 +139,7 @@ extension SKNode {
 
     #if os(macOS)
 
-    // TODO: this is overiding derivative classes
+    // FIXME: this is overiding derivative classes
 
     /// Returns the object class name.
     public override var className: String {

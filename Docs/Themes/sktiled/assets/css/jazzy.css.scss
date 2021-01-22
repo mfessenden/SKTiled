@@ -3,18 +3,18 @@
 //  Variables
 //
 // ===========================================================================
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap");
 
 $body_background: #fff;
-$body_font: 16px/1.7 'Nunito', sans-serif;
+$body_font: 16px/1.7 "Nunito", sans-serif;
 $text_color: #333;
 $gray_border: 1px solid #ddd;
 
 $heading_weight: 700;
 $light_heading_color: #777;
 
-$heading1_border_color: #9F9F9F;
-$heading2_border_color: #B1B0B0;
+$heading1_border_color: #9f9f9f;
+$heading2_border_color: #b1b0b0;
 
 $quote_color: #858585;
 $quote_border: 4px solid #e5e5e5;
@@ -27,12 +27,10 @@ $table_border_color: #ddd;
 $code_bg_color: #f7f7f7;
 $code_font: Consolas, "Liberation Mono", Menlo, Courier, monospace;
 
-
 // ----- Layout
 
 $gutter: 16px;
 $navigation_max_width: 300px;
-
 
 // ----- Header
 
@@ -40,12 +38,10 @@ $header_bg_color: #444;
 $header_link_color: #fff;
 $doc_coverage_color: #999;
 
-
 // ----- Breadcrumbs
 
 $breadcrumbs_bg_color: #fbfbfb;
 $breadcrumbs_border_color: #ddd;
-
 
 // ----- Navigation
 
@@ -75,13 +71,13 @@ $footer_link_color: #fff;
 
 // ----- Theme customisation
 
-$link_color: #ff6A6a;
+$link_color: #ff6a6a;
 $h2_link_color: #de6363;
 $doc_coverage_color: #ccc;
-$declaration_title_language_color: #ff6A6a;
-$declaration_language_border: 4px solid #ff6A6a;
+$declaration_title_language_color: #ff6a6a;
+$declaration_language_border: 4px solid #ff6a6a;
 
-$footer_link_color: #D95151;
+$footer_link_color: #d95151;
 $declaration_border: 4px solid $declaration_border_color;
 
 $token_left_margin: -3px;
@@ -91,7 +87,7 @@ $token_header_text_shadow_color: #999999ab;
 $token_link_color: #505050;
 
 // $h4_bullet: '\2023';  //
-$h4_bullet: '';  //
+$h4_bullet: ""; //
 $heading3_section_name_border_color: #b9b9b9;
 $heading3_section_name_font_size: 1.8rem;
 $heading2_overview_size: 1.15rem;
@@ -102,7 +98,9 @@ $heading2_overview_size: 1.15rem;
 //
 // ===========================================================================
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: inherit;
 }
 
@@ -111,7 +109,7 @@ body {
   background: $body_background;
   color: $text_color;
   font: $body_font;
-  letter-spacing: .2px;
+  letter-spacing: 0.2px;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
@@ -126,12 +124,12 @@ body {
 
 h1 {
   @include heading(2rem, 1.275em 0 0.6em);
-  border-bottom: 1px solid #B9B9B9;
+  border-bottom: 1px solid #b9b9b9;
 }
 
 h2 {
   @include heading(1.75rem, 1.275em 0 0.3em);
-  border-bottom: 1px solid #D3D3D3;
+  border-bottom: 1px solid #d3d3d3;
 }
 
 h3 {
@@ -142,7 +140,7 @@ h4 {
   @include heading(1.15rem);
   &:before {
     content: $h4_bullet;
-    margin:0 0px;
+    margin: 0 0px;
   }
 }
 
@@ -157,9 +155,14 @@ h6 {
 
 p {
   margin: 0 0 1em;
+
+  a {
+      font-weight: 700;
+  }
 }
 
-ul, ol {
+ul,
+ol {
   padding: 0 0 0 2em;
   margin: 0 0 0.85em;
 }
@@ -171,10 +174,10 @@ blockquote {
   border-left: $quote_border;
 }
 
-
 // ----- Inline elements
 
-svg, img {
+svg,
+img {
   max-width: 100%;
 }
 
@@ -182,12 +185,12 @@ a {
   color: $link_color;
   text-decoration: none;
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     outline: 0;
     text-decoration: underline;
   }
 }
-
 
 // ----- Tables
 
@@ -206,20 +209,20 @@ tr {
   }
 }
 
-th, td {
+th,
+td {
   padding: 6px 13px;
   border: 1px solid $table_border_color;
 }
-
 
 // ----- Code
 
 pre {
   margin: 0 0 1.275em;
-  padding: .85em 1em;
+  padding: 0.85em 1em;
   overflow: auto;
   background: $code_bg_color;
-  font-size: .85em;
+  font-size: 0.85em;
   font-family: $code_font;
 }
 
@@ -227,31 +230,31 @@ code {
   font-family: $code_font;
 }
 
-p, li {
+p,
+li {
   > code {
     background: $code_bg_color;
-    padding: .2em;
-    &:before, &:after {
-      letter-spacing: -.2em;
+    padding: 0.2em;
+    &:before,
+    &:after {
+      letter-spacing: -0.2em;
       content: "\00a0";
     }
   }
-    }
-
+}
 
 ul li code {
-    background: none;
-  }
+  background: none;
+}
 
 ul li code:first-of-type {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 pre code {
   padding: 0;
   white-space: pre;
 }
-
 
 // ===========================================================================
 //
@@ -266,7 +269,6 @@ pre code {
     flex-direction: row;
   }
 }
-
 
 // ===========================================================================
 //
@@ -284,7 +286,7 @@ pre code {
 
 .header-col {
   margin: 0;
-  padding: 0 $gutter/2
+  padding: 0 $gutter/2;
 }
 
 .header-col--primary {
@@ -300,8 +302,6 @@ pre code {
   vertical-align: -4px;
   height: 16px;
 }
-
-
 
 // ===========================================================================
 //
@@ -322,7 +322,6 @@ pre code {
   margin: 0 5px;
 }
 
-
 // ===========================================================================
 //
 //  Navigation
@@ -336,7 +335,7 @@ pre code {
     order: 1;
     width: 25%;
     max-width: $navigation_max_width;
-    padding-bottom: $gutter*4;
+    padding-bottom: $gutter * 4;
     overflow: hidden;
     word-wrap: normal;
     background: $navigation_bg_color;
@@ -447,7 +446,7 @@ pre code {
       display: block;
     }
   }
- /* Variable/Method Listing */
+  /* Variable/Method Listing */
   .token {
     padding-left: 3px;
     margin-left: $token_left_margin;
@@ -455,7 +454,7 @@ pre code {
   }
 
   .declaration-note {
-    font-size: .85em;
+    font-size: 0.85em;
     color: #808080;
     font-style: italic;
   }
@@ -468,7 +467,7 @@ pre code {
   position: relative;
   &:before {
     position: absolute;
-    content: '';
+    content: "";
     width: 20px;
     height: 20px;
     left: -47px;
@@ -498,7 +497,8 @@ pre code {
   }
 }
 
-.aside, .language {
+.aside,
+.language {
   padding: 6px 12px;
   margin: 12px 0;
   border-left: $aside_border;
@@ -524,7 +524,9 @@ pre code {
   }
 }
 
-.aside-warning, .aside-deprecated, .aside-unavailable {
+.aside-warning,
+.aside-deprecated,
+.aside-unavailable {
   border-left: $aside_warning_border;
   .aside-title {
     color: $aside_warning_color;
@@ -558,18 +560,18 @@ pre code {
 }
 
 .button {
-  border: 1px solid #FF6A6A;
+  border: 1px solid #ff6a6a;
   display: inline-block;
   padding: 2px 10px;
   margin-right: 4px;
   transition: all 0.3s;
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     text-decoration: none;
     border-color: #333;
     color: #333;
   }
 }
-
 
 // ===========================================================================
 //
@@ -592,7 +594,6 @@ pre code {
   }
 }
 
-
 // ===========================================================================
 //
 //  Dash
@@ -600,8 +601,10 @@ pre code {
 // ===========================================================================
 
 html.dash {
-
-  .header, .breadcrumbs, .navigation, .footer {
+  .header,
+  .breadcrumbs,
+  .navigation,
+  .footer {
     display: none;
   }
 
@@ -617,36 +620,34 @@ html.dash {
 // ===========================================================================
 
 section-content h2 a {
-    color: $link_color;
-    text-decoration: none;
+  color: $link_color;
+  text-decoration: none;
 }
 
 h2 a {
-    color: $h2_link_color;
+  color: $h2_link_color;
 }
 
 h3.section-name p {
-    font-size: $heading3_section_name_font_size;
-    border-bottom: 1px solid $heading3_section_name_border_color;
-    margin: 1.275em 0 0.6em;
+  font-size: $heading3_section_name_font_size;
+  border-bottom: 1px solid $heading3_section_name_border_color;
+  margin: 1.275em 0 0.6em;
 }
 
-
 div.task-header {
-    border-bottom: 1px solid #ddd;
-    margin-top: $task_header_top_margin;
+  border-bottom: 1px solid #ddd;
+  margin-top: $task_header_top_margin;
 
-    // add a drop shadow to object names
-    code {
-        //filter: drop-shadow(0px 1px 1px $token_header_text_shadow_color);
-    }
+  // add a drop shadow to object names
+  code {
+    //filter: drop-shadow(0px 1px 1px $token_header_text_shadow_color);
+  }
 }
 
 code a.token {
-    color: $token_link_color;
+  color: $token_link_color;
 }
 
-
 div.abstract h2#overview {
-    font-size: $heading2_overview_size;
+  font-size: $heading2_overview_size;
 }

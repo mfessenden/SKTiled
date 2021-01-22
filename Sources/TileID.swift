@@ -89,7 +89,7 @@ public struct TileFlags: OptionSet {
 @propertyWrapper
 public struct TileID {
 
-    /// Raw tile id value (for flipped objects, this will be the larger value).
+    /// Masked tile id value (id + flip flags).
     private var rawValue: UInt32
 
     /// Associated tile flip flags.
@@ -238,17 +238,12 @@ extension TileFlags: CustomStringConvertible {
 extension TileID: CustomStringConvertible, CustomDebugStringConvertible {
 
     public var description: String {
-        let flagsvalue = (flags.rawValue > 0) ? ", flags: \(flags.description)" : ""
-        return "Tile ID: \(wrappedValue)\(flagsvalue)"
+        let className = String(describing: Swift.type(of: self))
+        let flagsvalue = (flags.rawValue > 0) ? " flags: \(flags.description)" : ""
+        return "\(className): global id: \(wrappedValue)\(flagsvalue) rawValue: \(rawValue)"
     }
 
     public var debugDescription: String {
-        let flagsvalue = (flags.rawValue > 0) ? ", flags: \(flags.description)" : ""
-        return "Tile ID: \(wrappedValue)\(flagsvalue), rawValue: \(rawValue)"
+        return "<\(description)>"
     }
 }
-
-
-
-
-// MARK: - Extensions

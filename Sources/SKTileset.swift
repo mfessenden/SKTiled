@@ -60,7 +60,7 @@ import SpriteKit
 /// | addTextures()         | Generate textures from a spritesheet image.     |
 /// | addTilesetTile()      | Add & return new tile data object.              |
 ///
-public class SKTileset: NSObject, TiledAttributedType {
+public class SKTileset: NSObject, CustomReflectable, TiledAttributedType {
 
     /// Tileset url (external tileset).
     public var url: URL!
@@ -167,7 +167,7 @@ public class SKTileset: NSObject, TiledAttributedType {
         }
     }
 
-    // MARK: - Init
+    // MARK: - Initialization
 
     /// Initialize with basic properties.
     /// - Parameters:
@@ -343,8 +343,8 @@ public class SKTileset: NSObject, TiledAttributedType {
             // read the file and create a texture
             guard let _ = CGDataProvider(url: inputUrl as CFURL),
                   let sourceTexture = SKTexture(contentsOf: inputUrl) else {
-                  self.log("Error reading image: '\(source)'", level: .fatal)
-                  fatalError("Error reading image: '\(source)'")
+                  self.log("Error reading image '\(source)'", level: .fatal)
+                  fatalError("Error reading image '\(source)'")
             }
 
             sourceTexture.filteringMode = .nearest
@@ -756,7 +756,7 @@ public class SKTileset: NSObject, TiledAttributedType {
         }
     }
 
-    // MARK: - Debugging
+    // MARK: - UI
 
     /// Returns the internal **Tiled** node type.
     @objc public var tiledNodeName: String {
@@ -771,6 +771,43 @@ public class SKTileset: NSObject, TiledAttributedType {
     /// A description of the node.
     @objc public var tiledDescription: String {
         return "\(tiledNodeName.titleCased()): "
+    }
+    
+    // MARK: - Reflection
+    
+    
+    struct TilesetMirror {
+        var name: String
+        var firstGID: UInt32
+        var lastGID: UInt32
+        var dataCount: Int
+        var tileCount: Int
+    }
+    
+    
+    func tilesetDataStruct() -> TilesetMirror {
+        return TilesetMirror(name: name,
+                             firstGID: firstGID,
+                             lastGID: lastGID,
+                             dataCount: dataCount,
+                             tileCount: tilecount
+                )
+        
+        
+    }
+    
+    
+    public var customMirror: Mirror {
+        return Mirror(self, children:
+                        ["name": name,
+                         "tile size": tileSize,
+                         "firstgid": firstGID,
+                         "lastgid": lastGID,
+                         "tilecount": tilecount,
+                         "collection": isImageCollection,
+                         "data": tileData
+                        ]
+        )
     }
 }
 
@@ -790,8 +827,9 @@ extension SKTileset {
 
     /// String representation of the tileset object.
     public override var description: String {
+        let className = String(describing: Swift.type(of: self))
         let gidRangeString = "\(firstGID)...\(lastGID)"
-        var desc = "Tileset: '\(name)' @ \(tileSize), range: \(gidRangeString), \(dataCount) tiles"
+        var desc = "\(className): '\(name)' @ \(tileSize), range: \(gidRangeString), \(dataCount) tiles"
 
         if (tileOffset.x != 0) || (tileOffset.y != 0) {
             desc += ", offset: \(tileOffset.x)x\(tileOffset.y)"
@@ -823,24 +861,42 @@ extension SKTileset {
     }*/
 }
 
-/// :nodoc:
-extension SKTileset: CustomReflectable {
 
-    public var customMirror: Mirror {
-        return Mirror(self, children:
-            ["name": name,
-             "tile size": tileSize,
-             "firstgid": firstGID,
-             "lastgid": lastGID,
-             "tilecount": tilecount,
-             "collection": isImageCollection,
-             "data": tileData],
-              displayStyle: .dictionary
-        )
+
+
+
+
+
+extension SKTileset {
+    
+    /// Creates and returns a new tile instance with the given global id.
+    ///
+    /// - Parameters:
+    ///   - localID: tile local id.
+    ///   - tileType: tile object type.
+    /// - Returns: tile instance, if tile data exists.
+    public func newTile(globalID: UInt32, type tileType: SKTile.Type = SKTile.self) -> SKTile? {
+        guard let tiledata = getTileData(globalID: globalID),
+              let newtile = tileType.init(data: tiledata) else {
+            return nil
+        }
+        return newtile
+    }
+    
+    /// Creates and returns a new tile instance with the given local id.
+    ///
+    /// - Parameters:
+    ///   - localID: tile local id.
+    ///   - tileType: tile object type.
+    /// - Returns: tile instance, if tile data exists.
+    public func newTile(localID: UInt32, type tileType: SKTile.Type = SKTile.self) -> SKTile? {
+        guard let tiledata = getTileData(localID: localID),
+              let newtile = tileType.init(data: tiledata) else {
+            return nil
+        }
+        return newtile
     }
 }
-
-
 
 
 
@@ -886,23 +942,16 @@ extension SKTileset {
     ///
     /// - Parameter gid: global tile id.
     /// - Returns: tile data object.
-    @available(*, deprecated, renamed: "getTileData(globalID:)")
+    @available(*, deprecated, message: "tile ids should be `UInt32`.")
     public func getTileData(globalID gid: Int) -> SKTilesetData? {
-        // parse out flipped flags
-        var id = realTileId(globalID: UInt32(gid))
-        id = getLocalID(forGlobalID: id)
-
-        if let index = tileData.firstIndex(where: { $0.id == id }) {
-            return tileData[index]
-        }
-        return nil
+        return getTileData(globalID: UInt32(gid))
     }
 
     ///  Convert a global ID to the tileset's local ID.
     ///
     /// - Parameter id: local id.
     /// - Returns: global tile ID.
-    @available(*, deprecated, renamed: "getGlobalID(forLocalID:)")
+    @available(*, deprecated, message: "tile ids should be `UInt32`.")
     public func getGlobalID(forLocalID id: Int) -> Int {
         if (id > firstGID) {
             return Int(id)
@@ -925,7 +974,7 @@ extension SKTileset {
     ///
     /// - Parameter id: local tile id.
     /// - Returns: tile data.
-    @available(*, deprecated, renamed: "getTileData(localID:)")
+    @available(*, deprecated, message: "tile ids should be `UInt32`.")
     public func getTileData(localID id: Int) -> SKTilesetData? {
         let localID = realTileId(globalID: UInt32(id))
         if let index = tileData.firstIndex(where: { $0.id == localID }) {

@@ -88,7 +88,7 @@ class GameViewController: NSViewController, Loggable {
 
     var commandBackgroundColor: NSColor = NSColor(calibratedWhite: 0.2, alpha: 0.25)
 
-    // MARK: - Init
+    // MARK: - Initialization
 
     override init(nibName: NSNib.Name?, bundle: Bundle?) {
         super.init(nibName: nibName, bundle: bundle)

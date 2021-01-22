@@ -125,7 +125,7 @@ internal class TileDataStorage: Loggable {
         return tilemap.updateMode
     }
     
-    // MARK: - Init
+    // MARK: - Initialization
     
     
     /// Initialize with a tilemap instance.
@@ -582,17 +582,17 @@ internal class TileDataStorage: Loggable {
     
     /// Returns the tile data corresponding to the given global id.
     ///
-    /// - Parameter globalId: tile global id.
+    /// - Parameter globalID: tile global id.
     /// - Returns: tile data.
-    func tileDataFor(globalId: UInt32) -> SKTilesetData? {
+    func tileDataFor(globalID: UInt32) -> SKTilesetData? {
         for item in staticTileCache {
-            if item.key.globalID == globalId {
+            if item.key.globalID == globalID {
                 return item.key
             }
         }
         
         for item in animatedTileCache {
-            if item.key.globalID == globalId {
+            if item.key.globalID == globalID {
                 return item.key
             }
         }
@@ -601,18 +601,18 @@ internal class TileDataStorage: Loggable {
     
     /// Returns tiles matching the given global id.
     ///
-    /// - Parameter globalId: tile global id.
+    /// - Parameter globalID: tile global id.
     /// - Returns: tiles with the given global id.
-    func tilesWith(globalId: UInt32) -> [SKTile]? {
+    func tilesWith(globalID: UInt32) -> [SKTile]? {
         var result: [SKTile] = []
         for item in staticTileCache {
-            if item.key.globalID == globalId {
+            if item.key.globalID == globalID {
                 result.append(contentsOf: item.value)
             }
         }
         
         for item in animatedTileCache {
-            if item.key.globalID == globalId {
+            if item.key.globalID == globalID {
                 result.append(contentsOf: item.value)
             }
         }
@@ -622,11 +622,11 @@ internal class TileDataStorage: Loggable {
     
     /// Returns a tile animation action for the given data.
     ///
-    /// - Parameter globalId: tile global id.
+    /// - Parameter globalID: tile global id.
     /// - Returns: tile animation action.
-    func tileAnimationAction(globalId: UInt32) -> SKAction? {
+    func tileAnimationAction(globalID: UInt32) -> SKAction? {
         for item in actionsCache {
-            if item.key.globalID == globalId {
+            if item.key.globalID == globalID {
                 return item.value
             }
         }
@@ -830,35 +830,31 @@ extension TileDataStorage: CustomReflectable, TiledCustomReflectableType {
         var staticTileCount = 0
         var animatedTileCount = 0
         
-        var staticTileData: [String: String] = [:]
-        var animatedTileData: [String: String] = [:]
-        var actionsTileData: [String: String] = [:]
+        //var staticTileData:   [String: String] = [:]
+        //var animatedTileData: [String: String] = [:]
+        //var actionsTileData:  [String: String] = [:]
         
         for (_, sitem) in staticTileCache.enumerated() {
-            let val = sitem.key
-            staticDataCount += 1
             staticTileCount += sitem.value.count
+            staticDataCount += 1
         }
 
         for (_, aitem) in animatedTileCache.enumerated() {
-            animatedDataCount += 1
             animatedTileCount += aitem.value.count
+            animatedDataCount += 1
         }
 
-        let staticData: [String: Any] = ["data": staticDataCount, "tiles": staticTileCount]
+        let staticData:   [String: Any] = ["data": staticDataCount, "tiles": staticTileCount]
         let animatedData: [String: Any] = ["data": animatedDataCount, "tiles": animatedTileCount]
-
-        
-        let actionData: [String: Any] = ["data": animatedDataCount, "tiles": animatedTileCount]
-        
-        let objectData: [String: Any] = ["id": "0"]
+        let actionData:   [String: Any] = ["data": animatedDataCount, "tiles": animatedTileCount]
+        let objectData:   [String: Any] = ["id": "0"]
         
         return Mirror(self, children:
                         ["static": staticData,
                          "animated": animatedData,
                          "objects": objectData,
                          "actions": actionData],
-                      displayStyle: .dictionary
+                      displayStyle: .class
         )
     }
 

@@ -122,12 +122,12 @@ extension TiledMappableGeometryType {
 
     // MARK: - Sizing
 
-    /// Returns the width (in tiles) of the map.
+    /// Returns the width (in tiles) of the container.
     public var width: CGFloat {
         return mapSize.width
     }
 
-    /// Returns the height (in tiles) of the map.
+    /// Returns the height (in tiles) of the container.
     public var height: CGFloat {
         return mapSize.height
     }
@@ -174,7 +174,7 @@ extension TiledMappableGeometryType {
         return tileHeight / 2
     }
 
-    /// The size of the map, in points.
+    /// The size of the container, in points.
     public var sizeInPoints: CGSize {
         switch orientation {
             case .orthogonal:

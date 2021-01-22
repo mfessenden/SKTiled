@@ -166,7 +166,7 @@ public class SKObjectGroup: TiledLayerObject {
         }
     }
 
-    // MARK: - Init
+    // MARK: - Initialization
 
     /// Initialize with layer name and parent `SKTilemap` instance.
     /// - Parameters:
@@ -467,19 +467,10 @@ public class SKObjectGroup: TiledLayerObject {
         super.update(currentTime)
         guard (self.updateMode != TileUpdateMode.actions) else { return }
     }
-
-    // MARK: - Reflection
-
-    /// Returns a custom mirror for this layer.
-    public override var customMirror: Mirror {
-        return Mirror(self, children:
-                        ["name": self.layerName,
-                         "size": self.mapSize,
-                         "tileSize": self.tileSize,
-                         "objects": self.objects]
-        )
-    }
-
+    
+    // MARK: - UI
+    
+    
     /// Returns the internal **Tiled** node type.
     @objc public override var tiledNodeName: String {
         return "objectgroup"
@@ -504,6 +495,24 @@ public class SKObjectGroup: TiledLayerObject {
     /// A description of the node.
     @objc public override var tiledDescription: String {
         return "Layer container for vector objects."
+    }
+    
+    // MARK: - Reflection
+    
+    /// Returns a custom mirror for this layer.
+    public override var customMirror: Mirror {
+        return Mirror(self, children:
+                        ["name": layerName,
+                         "uuid": uuid,
+                         "xPath": xPath,
+                         "layerType": layerType,
+                         "size": mapSize,
+                         "tileSize": tileSize,
+                         "objects": objects
+                        ],
+                      ancestorRepresentation: .suppressed
+                      
+        )
     }
 }
 

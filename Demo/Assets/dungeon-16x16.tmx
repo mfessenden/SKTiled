@@ -11,7 +11,7 @@
  <tileset firstgid="553" source="dungeon-32x32.tsx"/>
  <tileset firstgid="558" source="dungeon-16x32.tsx"/>
  <group id="22" name="Lower">
-  <layer id="2" name="Level1" width="22" height="21">
+  <layer id="2" name="Level1" width="22" height="21" tintcolor="#53cb49">
    <properties>
     <property name="isStatic" type="bool" value="false"/>
    </properties>

@@ -78,7 +78,7 @@ public class SKImageLayer: TiledLayerObject {
     /// Layer wraps vertically.
     public var wrapY: Bool = false
 
-    // MARK: - Init
+    // MARK: - Initialization
 
     /// Initialize with a layer name, and parent `SKTilemap` node.
     ///
@@ -135,9 +135,11 @@ public class SKImageLayer: TiledLayerObject {
         let inputURL = URL(fileURLWithPath: named)
         // read image from file
         guard let imageDataProvider = CGDataProvider(url: inputURL as CFURL) else {
-            self.log("Image read error: '\(named)'", level: .fatal)
-            fatalError("Error reading image: '\(named)'")
+            let errorMsg = "Image read error: '\(named)'"
+            self.log(errorMsg, level: .fatal)
+            fatalError(errorMsg)
         }
+        
         // creare a data provider
         let image = CGImage(pngDataProviderSource: imageDataProvider, decode: nil, shouldInterpolate: false, intent: .defaultIntent)!
 

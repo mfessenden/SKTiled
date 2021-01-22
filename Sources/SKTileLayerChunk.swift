@@ -41,6 +41,9 @@ public class SKTileLayerChunk: TiledLayerObject {
 
     /// The size of the chunk (in tiles).
     internal var chunkSize: CGSize = CGSize.zero
+    
+    /// Represents the offset (in tiles) from the parent layer.
+    internal var chunkOffset: CGPoint = CGPoint.zero
 
     /// Returns a count of valid tiles.
     public var tileCount: Int {
@@ -60,24 +63,24 @@ public class SKTileLayerChunk: TiledLayerObject {
     public init?(layer: SKTileLayer, attributes: [String: String]) {
         // name, width and height are required
         self.layer = layer
-
+        
         guard let xpos = attributes["x"] else { return nil }
         guard let ypos = attributes["y"] else { return nil }
         guard let width = attributes["width"] else { return nil }
         guard let height = attributes["height"] else { return nil }
-
-
+        
+        
         assert(Int(width) != nil, "cannot parse chunk width: '\(width)'")
         assert(Int(height) != nil, "cannot parse chunk height: '\(height)'")
-
+        
         self.chunkSize = CGSize(width: CGFloat(Int(width)!), height: CGFloat(Int(height)!))
         self.tiles = Array2D<SKTile>(columns: Int(chunkSize.width), rows: Int(chunkSize.height))
-
+        
         super.init(tilemap: layer.tilemap)
-
+        
         self.layerType = .tile
         self.offset = CGPoint(x: Int(xpos)!, y: Int(ypos)!)
-
+        
         let chunkIndex = layer.chunks.count
         self.navigationKey = "\(layer.layerName)/Chunk"
         self.name = "\(layer.layerName)/chunk\(chunkIndex)"
@@ -164,7 +167,7 @@ public class SKTileLayerChunk: TiledLayerObject {
 
                 // set the layer property
                 tile.layer = self.layer
-                tile.tintColor = self.layer.tintColor
+                //tile.tintColor = self.layer.tintColor
                 tile.highlightDuration = highlightDuration
 
                 // get the position in the layer (plus tileset offset)
@@ -277,6 +280,27 @@ public class SKTileLayerChunk: TiledLayerObject {
 
         return tiles[xValue, yValue]
     }
+    
+    
+    // MARK: - Reflection
+    
+    
+    /// Returns a custom mirror for this layer.
+    public override var customMirror: Mirror {
+        return Mirror(self, children:
+                        ["layer": layer.layerName,
+                         "size": mapSize,
+                         "tileSize": tileSize,
+                         "offset": offset,
+                         "data": tiles
+                        ],
+                      ancestorRepresentation: .suppressed
+        )
+    }
+    
+    
+    // MARK: - UI
+    
 
     /// Returns the internal **Tiled** node type.
     @objc public override var tiledNodeName: String {

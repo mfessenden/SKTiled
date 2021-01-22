@@ -44,7 +44,7 @@ import SpriteKit
 ///
 /// [tile-objects-url]:http://docs.mapeditor.org/en/stable/manual/objects/#insert-tile
 ///
-open class SKTileObject: SKShapeNode, TiledAttributedType {
+open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
 
 
     /// ### Overview
@@ -102,17 +102,14 @@ open class SKTileObject: SKShapeNode, TiledAttributedType {
     /// Object size.
     open var size: CGSize = CGSize.zero
 
-    /// Object rotation in degrees.
-    open var rotation: CGFloat {
-        get {
-            return zRotation.degrees()
-        } set {
-            zRotation = -newValue.radians()
-        }
-    }
-
     /// Tiled global tile id (for tile objects).
     @TileID internal var tileId: UInt32 = 0
+
+
+    /// Returns the *masked* tile global id. If the tile is not flipped at all, this will be the same as the `SKTileObject.tileId` value.
+    internal var realTileId: UInt32 {
+        return _tileId.realValue
+    }
 
     /// Tiled global id (for tile objects).
     internal var globalID: UInt32! {
@@ -124,12 +121,7 @@ open class SKTileObject: SKShapeNode, TiledAttributedType {
             draw()
         }
     }
-
-    /// Returns the *masked* tile global id. If the tile is not flipped at all, this will be the same as the `SKTileObject.tileId` value.
-    internal var realTileId: UInt32 {
-        return _tileId.realValue
-    }
-
+    
     // MARK: - Object Handlers
 
 
@@ -335,7 +327,7 @@ open class SKTileObject: SKShapeNode, TiledAttributedType {
         }
     }
 
-    // MARK: - Init
+    // MARK: - Initialization
 
     /// Initialize the object with width & height attributes.
     ///
@@ -433,7 +425,7 @@ open class SKTileObject: SKShapeNode, TiledAttributedType {
 
             if (key == "gid") {
                 guard let intVal = UInt32(value) else {
-                    fatalError("invalid gid: \(value)")
+                    fatalError("invalid gid '\(value)'")
                 }
 
                 globalID = UInt32(intVal)
@@ -883,6 +875,7 @@ open class SKTileObject: SKShapeNode, TiledAttributedType {
 
         return points.map { point in
             var offset = layer.pixelToScreenCoords(point: point)
+            
             // offset the point from the origin (isometric only)
             offset.x -= layer.origin.x
             return offset
@@ -970,7 +963,7 @@ open class SKTileObject: SKShapeNode, TiledAttributedType {
     #endif
 
 
-    // MARK: - Debugging
+    // MARK: - UI
 
     /// Returns the internal **Tiled** node type.
     @objc public override var tiledNodeName: String {
@@ -1116,6 +1109,43 @@ open class SKTileObject: SKShapeNode, TiledAttributedType {
     open func update(_ deltaTime: TimeInterval) {
         tile?.update(deltaTime)
     }
+    
+    // MARK: - Reflection
+    
+    /// Returns a custom mirror for this object.
+    public var customMirror: Mirror {
+        
+        var attributes: [(label: String?, value: Any)] = [
+            (label: "points", value: points),
+            (label: "objectType", value: objectType),
+            (label: "shapeType", value: shapeType),
+            (label: "frameColor", value: frameColor.hexString()),
+            (label: "properties", value: properties)
+        ]
+        
+        if let gid = globalID {
+            attributes.insert(("globalID",gid), at: 0)
+        }
+        
+        if let tname = template {
+            attributes.insert(("template",tname), at: 0)
+        }
+        
+        if let layer = layer {
+            attributes.insert(("layer", layer.xPath), at: 0)
+        }
+        
+        if let type = type {
+            attributes.insert(("type", type), at: 0)
+        }
+        
+        if let name = name {
+            attributes.insert(("name", name), at: 0)
+        }
+        
+        return Mirror(self, children: attributes, ancestorRepresentation: .suppressed)
+        
+    }
 }
 
 
@@ -1170,7 +1200,11 @@ extension SKTileObject.TiledObjectShape {
 
 extension SKTileObject {
 
-    open override var hash: Int { return id.hashValue }
+    open override var hash: Int {
+        return id.hashValue
+    }
+    
+    
 
     /// String representation of tile object.
     open override var description: String {
@@ -1184,6 +1218,7 @@ extension SKTileObject {
         let miscDesc = (objectType == .text) ? " text quality: \(renderQuality)" : (objectType == .tile) ? " tile id: \(globalID ?? 0)" : (objectType == .point) ? "point:" : ""
         let layerDescription = (layer != nil) ? " Layer: '\(layer.layerName)'" : ""
         let pointString = (points.isEmpty == true) ? "0 points" : "\(points.count) points"
+        
         return "\(tiledNodeName) id: \(id)\(objectName)\(typeString)\(templateDescription)\(miscDesc)\(comma)\(propertiesString)\(layerDescription) \(pointString)"
     }
 
@@ -1283,43 +1318,6 @@ extension SKTileObject.TiledObjectShape: CustomStringConvertible, CustomDebugStr
     }
 }
 
-
-
-
-
-/// :nodoc:
-extension SKTileObject: CustomReflectable {
-
-    /// Returns a custom mirror for this object.
-    public var customMirror: Mirror {
-
-        var layerName = "null"
-        var globalId = "nil"
-        var objtype = "nil"
-
-        if let layerParent = layer {
-            layerName = layerParent.layerName
-        }
-
-        if let globalid = globalID {
-            globalId = "\(globalid)"
-        }
-
-        if let otype = type {
-            objtype = otype
-        }
-
-        return Mirror(self, children:
-                        ["name": self.name ?? "null",
-                         "type": objtype,
-                         "id": self.id,
-                         "layer": layerName,
-                         "globalId": globalId],
-
-                      displayStyle: .dictionary
-        )
-    }
-}
 
 
 // MARK: - Deprecations

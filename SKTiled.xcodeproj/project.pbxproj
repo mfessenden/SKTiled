@@ -367,6 +367,9 @@
 		4C8DE930249814A300CCF8EF /* DebugDrawableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DE92C249814A300CCF8EF /* DebugDrawableType.swift */; };
 		4C8DE931249814A300CCF8EF /* DebugDrawableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DE92C249814A300CCF8EF /* DebugDrawableType.swift */; };
 		4C8DE932249814A300CCF8EF /* DebugDrawableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DE92C249814A300CCF8EF /* DebugDrawableType.swift */; };
+		4C92E6F125BB6224007E4F2B /* errortest.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C92E6F025BB6224007E4F2B /* errortest.tmx */; };
+		4C92E6F225BB6224007E4F2B /* errortest.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C92E6F025BB6224007E4F2B /* errortest.tmx */; };
+		4C92E6F325BB6224007E4F2B /* errortest.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 4C92E6F025BB6224007E4F2B /* errortest.tmx */; };
 		4C94806C21938BA8002A620B /* portraits-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94804F21938BA6002A620B /* portraits-8x8.tsx */; };
 		4C94806D21938BA8002A620B /* portraits-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94804F21938BA6002A620B /* portraits-8x8.tsx */; };
 		4C94806E21938BA8002A620B /* portraits-8x8.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C94804F21938BA6002A620B /* portraits-8x8.tsx */; };
@@ -808,6 +811,7 @@
 		4C88E1DA1D8A4EBE00FCCFA3 /* SKTileset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTileset.swift; sourceTree = "<group>"; };
 		4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTilesetData.swift; sourceTree = "<group>"; };
 		4C8DE92C249814A300CCF8EF /* DebugDrawableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugDrawableType.swift; sourceTree = "<group>"; };
+		4C92E6F025BB6224007E4F2B /* errortest.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = errortest.tmx; sourceTree = "<group>"; };
 		4C94804F21938BA6002A620B /* portraits-8x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "portraits-8x8.tsx"; sourceTree = "<group>"; };
 		4C94805021938BA6002A620B /* characters-8x8.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "characters-8x8.tsx"; sourceTree = "<group>"; };
 		4C94805221938BA6002A620B /* characters-8x8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "characters-8x8.png"; sourceTree = "<group>"; };
@@ -1319,6 +1323,7 @@
 		4CA6A7E52184F68E002BC924 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				4C92E6F025BB6224007E4F2B /* errortest.tmx */,
 				4C17343E244F5F050043F85C /* test-infinite.tmx */,
 				4CD7B2CC2410306B00F943AA /* test-large-zlib.tmx */,
 				4CD7B2CD2410306B00F943AA /* test-small-zlib.tmx */,
@@ -1364,8 +1369,8 @@
 		4CB8537D25AE19C100CC2154 /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
-				4CB8536925AE19B100CC2154 /* PreferencesSearchPathsController.swift */,
 				4CB8536D25AE19B100CC2154 /* PreferencesGloabalsViewController.swift */,
+				4CB8536925AE19B100CC2154 /* PreferencesSearchPathsController.swift */,
 			);
 			name = Tabs;
 			sourceTree = "<group>";
@@ -1997,6 +2002,7 @@
 				4C9480A921938BA8002A620B /* environment-8x8.tsx in Resources */,
 				4C94809521938BA8002A620B /* monsters-16x16.png in Resources */,
 				4C94809121938BA8002A620B /* portraits-8x8.png in Resources */,
+				4C92E6F225BB6224007E4F2B /* errortest.tmx in Resources */,
 				4CD7B2D22410306B00F943AA /* test-large-zlib.tmx in Resources */,
 				4CD7B2CF2410306B00F943AA /* test-templates.tmx in Resources */,
 				4C0E6E9223CD1F6D003CDFB8 /* Templates in Resources */,
@@ -2023,6 +2029,7 @@
 				4C9480AA21938BA8002A620B /* environment-8x8.tsx in Resources */,
 				4C94809621938BA8002A620B /* monsters-16x16.png in Resources */,
 				4C94809221938BA8002A620B /* portraits-8x8.png in Resources */,
+				4C92E6F325BB6224007E4F2B /* errortest.tmx in Resources */,
 				4CD7B2D32410306B00F943AA /* test-large-zlib.tmx in Resources */,
 				4CD7B2D02410306B00F943AA /* test-templates.tmx in Resources */,
 				4C0E6E9323CD1F6D003CDFB8 /* Templates in Resources */,
@@ -2049,6 +2056,7 @@
 				4C9480A821938BA8002A620B /* environment-8x8.tsx in Resources */,
 				4C94809421938BA8002A620B /* monsters-16x16.png in Resources */,
 				4C94809021938BA8002A620B /* portraits-8x8.png in Resources */,
+				4C92E6F125BB6224007E4F2B /* errortest.tmx in Resources */,
 				4CD7B2D12410306B00F943AA /* test-large-zlib.tmx in Resources */,
 				4CD7B2CE2410306B00F943AA /* test-templates.tmx in Resources */,
 				4C0E6E9123CD1F6D003CDFB8 /* Templates in Resources */,

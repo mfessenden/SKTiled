@@ -102,7 +102,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, 
         }
     }
 
-    // MARK: - Init
+    // MARK: - Initialization
 
     /// Initialize without a tiled map name.
     ///
@@ -126,7 +126,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, 
         updateCamera()
     }
 
-    override open func sceneDidLoad() {
+    open override func sceneDidLoad() {
         isUserInteractionEnabled = true
     }
 
@@ -414,7 +414,7 @@ extension SKTiledScene {
     ///
     /// - Parameter event: mouse event.
     open override func mouseDragged(with event: NSEvent) {
-        cameraNode?.scenePositionChanged(with: event)
+        cameraNode?.mouseDragged(with: event)
     }
 
     /// Mouse enter event handler.

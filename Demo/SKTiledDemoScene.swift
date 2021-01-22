@@ -167,12 +167,11 @@ public class SKTiledDemoScene: SKTiledScene {
     @objc func nodeSelectionChanged(notification: Notification) {
         // notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: Any],
-              let selectedNodes = userInfo["nodes"] as? [SKNode] else {
+              let _ = userInfo["nodes"] as? [SKNode] else {
             return
         }
 
-        /// this was moved to `TiledDemoDelegate`
-        /// for node in selectedNodes {}
+        // TODO: moved to `TiledDemoDelegate`
     }
 
     // TODO: test these
@@ -227,6 +226,7 @@ public class SKTiledDemoScene: SKTiledScene {
     }
 
     public func updateMapInfo(msg: String) {
+        
         #if SKTILED_DEMO
         NotificationCenter.default.post(
             name: Notification.Name.Demo.UpdateDebugging,
@@ -237,6 +237,7 @@ public class SKTiledDemoScene: SKTiledScene {
     }
 
     public func updateTileInfo(msg: String) {
+        
         #if SKTILED_DEMO
         NotificationCenter.default.post(
             name: Notification.Name.Demo.UpdateDebugging,
@@ -685,6 +686,7 @@ extension SKTiledDemoScene {
 
         let eventKey = event.keyCode
         var eventChars = event.characters ?? "⋯"
+        
 
         // '→' advances to the next scene
         if eventKey == 0x7c {
@@ -702,14 +704,14 @@ extension SKTiledDemoScene {
         if eventKey == 0x7e {
             eventChars = "↑"
             self.speed += 0.2
-            updateCommandString("scene speed: \(speed.roundTo())", duration: 1.0)
+            updateCommandString("scene speed: \(speed.stringRoundedTo())", duration: 1.0)
         }
 
         // '↓' lowers the speed
         if eventKey == 0x7d {
             eventChars = "↓"
             self.speed -= 0.2
-            updateCommandString("scene speed: \(speed.roundTo())", duration: 1.0)
+            updateCommandString("scene speed: \(speed.stringRoundedTo())", duration: 1.0)
         }
 
 
@@ -852,8 +854,7 @@ extension SKTiledDemoScene {
 
             NotificationCenter.default.post(
                 name: Notification.Name.Map.Updated,
-                object: tilemap,
-                userInfo: nil
+                object: tilemap
             )
         }
 
@@ -875,6 +876,18 @@ extension SKTiledDemoScene {
             )
         }
         
+        // 'q' dumps the selected objects
+        if eventKey == 0x0C {
+            
+            NotificationCenter.default.post(
+                name: Notification.Name.Demo.DumpSelectedNodes,
+                object: nil
+            )
+            
+            //updateCommandString("No command set for '\(eventChars)'.", duration: 3.0)
+            updateCommandString("dumping selected node properties", duration: 3.0)
+        }
+        
         // 'w' clears the cache
         if eventKey == 0xd {
             tilemap.dataStorage = nil
@@ -882,14 +895,13 @@ extension SKTiledDemoScene {
             tilemap.dataStorage = TileDataStorage(map: tilemap)
         }
         
-        // 'x' displays the map url
+        // 'x' runs a debugging command
         if eventKey == 0x7 {
-            guard let mapurl = tilemap.fileUrl else {
-                updateCommandString("unknown map url.", duration: 3.0)
-                return
+            
+            for layer in tilemap.layers {
+                layer.dumpStatistics()
             }
             
-            updateCommandString("map file: '\(mapurl.path)'", duration: 7.0)
         }
     }
 

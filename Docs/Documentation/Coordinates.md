@@ -104,3 +104,9 @@ The `SKTiledLayerObject.TileOffset` enum represents a hint for placement within 
 
 
  Next: [Working with Objects](working-with-objects.html) - [Index](Documentation.html)
+
+
+| Command | Usage | Description                                                                                                                          |
+|:------- |:----- |:------------------------------------------------------------------------------------------------------------------------------------ |
+| `set`   |       | allows you to change the values of shell options & set positional parameters, or to display the names and values of shell variables. |
+| `shift` |       |                                                                                                                                      |

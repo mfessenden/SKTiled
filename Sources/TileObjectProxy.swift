@@ -168,8 +168,10 @@ internal class TileObjectProxy: SKShapeNode {
             
             let objPath: CGPath
             switch object.shapeType {
+                
                 case .ellipse:
                     objPath = bezierPath(scaledVertices, closed: true, alpha: object.shapeType.curvature).path
+                    
                 default:
                     objPath = polygonPath(scaledVertices, closed: true)
             }

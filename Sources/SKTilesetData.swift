@@ -42,7 +42,7 @@ import SpriteKit
 /// | texture    | Tile texture    |
 /// | tileOffset | Tile offset     |
 ///
-public class SKTilesetData: TiledAttributedType {
+public class SKTilesetData: CustomReflectable, TiledAttributedType {
 
     /// Reference to parent tileset.
     public weak var tileset: SKTileset!
@@ -195,7 +195,7 @@ public class SKTilesetData: TiledAttributedType {
         return id + firstGID
     }
 
-    // MARK: - Init
+    // MARK: - Initialization
 
     /// Initialize an empty data structure.
     public init() {}
@@ -364,6 +364,30 @@ public class SKTilesetData: TiledAttributedType {
             self.texture = _frames.first!.texture
         }
     }
+    
+    // MARK: - Reflection
+    
+    
+    
+    
+    
+    /// Returns a custom mirror for this object.
+    public var customMirror: Mirror {
+        return Mirror(self,
+                      children: [
+                        "id": id,
+                        "gid": globalID,
+                        "type": type as Any,
+                        "source": source as Any,
+                        "probability": probability,
+                        "tileset": tileset.tilesetDataStruct(),
+                        "tileSize:": tileSize,
+                        "tile offset": tileOffset,
+                        "properties": properties
+                      ],
+                      displayStyle: .class
+        )
+    }
 }
 
 
@@ -451,25 +475,28 @@ extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
 
     /// Tile data description.
     public var description: String {
+        let className = String(describing: Swift.type(of: self))
         guard let tileset = tileset else {
-            return "Tile ID: \(id) (no tileset)"
+            return "\(className): tile id: \(id) (no tileset)"
         }
 
         // add the tile data type, if it exists...
         let typeString = (type != nil) ? ", type: '\(type!)'" : ""
-
+        
+        // for collections data, add the image source path
         var sourceString = ""
         if (source != nil) {
             let sourceURL = URL(fileURLWithPath: source!, relativeTo: Bundle.main.bundleURL)
             sourceString = sourceURL.relativeString
         }
 
+        // animated fromes description
         let framesString = (isAnimated == true) ? ", \(frames.count) frames" : ""
-        let dataString = (properties.isEmpty == false) ? "Tile id: \(id)\(typeString)\(sourceString) @ \(tileset.tileSize.shortDescription)\(framesString), "
-            : "Tile id: \(id)\(typeString) @ \(tileset.tileSize.shortDescription)\(framesString)"
-
-        let dataCollision = (collisions.count > 0) ? ", collisions: \(collisions.count)" : ""
-        return "\(dataString)\(propertiesString)\(dataCollision)"
+        let frameOutput = (properties.isEmpty == false) ? "tile id: \(id)\(typeString)\(sourceString) @ \(tileset.tileSize.shortDescription)\(framesString), "
+            : "tile id: \(id)\(typeString) @ \(tileset.tileSize.shortDescription)\(framesString)"
+        
+        let collisionOutput = (collisions.count > 0) ? ", collisions: \(collisions.count)" : ""
+        return "\(className): \(frameOutput)\(propertiesString)\(collisionOutput)"
     }
 
     public var debugDescription: String {
@@ -477,31 +504,6 @@ extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
     }
 }
 
-/// :nodoc:
-extension SKTilesetData: CustomReflectable {
-
-    /// Returns a custom mirror for this object.
-    public var customMirror: Mirror {
-
-        var tilesetData: [String: Any] = [:]
-
-        var tilesetString = ""
-        if let thisTileset = tileset {
-            tilesetString = "`\(thisTileset.name)`, firstgid: \(thisTileset.firstGID), count: \(thisTileset.tilecount), tilesize: \(thisTileset.tileSize)"
-            tilesetData["name"] = thisTileset.name
-            tilesetData["firstgid"] = thisTileset.firstGID
-            tilesetData["count"] = thisTileset.tilecount
-            tilesetData["tilesize"] = thisTileset.tileSize
-        }
-
-        return Mirror(self, children: ["id": id,
-                                       "gid": globalID,
-                                       "tileset": tilesetString,
-                                       "tile size:": tileSize,
-                                       "tile offset": tileOffset]
-        )
-    }
-}
 
 
 // MARK: - Deprecations
