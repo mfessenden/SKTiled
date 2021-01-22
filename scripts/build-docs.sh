@@ -16,7 +16,7 @@ CFG_FILE=$1
 CFG_FILE=".${CFG_FILE:-jazzy}.yaml"
 
 
-# allow user to specify a browser ( for Chrome use `Google Chrome`)
+# allow user to specify a browser ( for Chrome use `Google Chrome`, for Safari use...well...`Safari`)
 BROWSER=$2
 BROWSER="${BROWSER:-Safari}"
 

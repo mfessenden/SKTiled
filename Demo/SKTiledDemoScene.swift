@@ -866,13 +866,30 @@ extension SKTiledDemoScene {
         if eventKey == 0x9 {
             let nextFormat: TiledGlobals.TimeDisplayMode = (TiledGlobals.default.timeDisplayMode == .seconds) ? .milliseconds : .seconds
             TiledGlobals.default.timeDisplayMode = nextFormat
-            self.updateCommandString("setting render stats time format: \(TiledGlobals.default.timeDisplayMode)", duration: 2)
+            updateCommandString("setting render stats time format: \(TiledGlobals.default.timeDisplayMode)", duration: 2)
 
             // update controllers
             NotificationCenter.default.post(
                 name: Notification.Name.Globals.Updated,
                 object: nil
             )
+        }
+        
+        // 'w' clears the cache
+        if eventKey == 0xd {
+            tilemap.dataStorage = nil
+            updateCommandString("Clearing tilemap cache...", duration: 3.0)
+            tilemap.dataStorage = TileDataStorage(map: tilemap)
+        }
+        
+        // 'x' displays the map url
+        if eventKey == 0x7 {
+            guard let mapurl = tilemap.fileUrl else {
+                updateCommandString("unknown map url.", duration: 3.0)
+                return
+            }
+            
+            updateCommandString("map file: '\(mapurl.path)'", duration: 7.0)
         }
     }
 

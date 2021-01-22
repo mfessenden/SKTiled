@@ -131,7 +131,8 @@ internal class TileObjectProxy: SKShapeNode {
         
         self.removeAction(forKey: self.animationKey)
         
-        guard let object = reference else {
+        guard let object = reference,
+              let _ = object.layer else {
             self.path = nil
             return
         }

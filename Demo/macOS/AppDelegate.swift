@@ -75,6 +75,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var developmentMainMenu: NSMenuItem!
     @IBOutlet weak var renderStatisticsMenuItem: NSMenuItem!
     @IBOutlet weak var tilemapStatisticsMenuItem: NSMenuItem!
+    @IBOutlet weak var tilemapCachesStatisticsMenuItem: NSMenuItem!
     @IBOutlet weak var layerStatisticsMenuItem: NSMenuItem!
     @IBOutlet weak var currentMapsMenuItem: NSMenuItem!
     @IBOutlet weak var allAssetsMapsMenuItem: NSMenuItem!
@@ -86,7 +87,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         setupMainInterface()
         setupNotifications()
     }
-    
+
     func applicationDidBecomeActive(_ notification: Notification) {
         // if the app starts in the background, populate the current files menu.
         //initializeDemoFilesMenu()
@@ -184,6 +185,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //developmentMainMenu.isEnabled = false
         renderStatisticsMenuItem.isEnabled = false
         tilemapStatisticsMenuItem.isEnabled = false
+        tilemapCachesStatisticsMenuItem.isEnabled = false
         layerStatisticsMenuItem.isEnabled = false
         currentMapsMenuItem.isEnabled = false
         allAssetsMapsMenuItem.isEnabled = false
@@ -278,8 +280,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // update the tilemap menus
         updateTilemapMenus(tilemap: tilemap)
-        
-        
+
+
         // update camera values
         camera?.allowZoom = tilemap.allowZoom
         camera?.allowMovement = tilemap.allowMovement
@@ -314,7 +316,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard let demoScene = notification.object as? SKTiledScene else {
             fatalError("cannot access scene.")
         }
-        
+
         // re-initialize the demo files menu
         initializeDemoFilesMenu()
 
@@ -718,6 +720,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         demoController.dumpMapStatistics()
     }
 
+    
+    @IBAction func mapCacheStatisticsPressed(_ sender: Any) {
+        guard let gameController = viewController else {
+            return
+        }
+        
+        let demoController = gameController.demoController
+        demoController.dumpMapCacheStatistics()
+    }
+
     @IBAction func mapRenderQualityPressed(_ sender: Any) {
         guard let tilemap = self.tilemap else { return }
 
@@ -766,18 +778,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             )
         }
     }
-    
+
     // MARK: - Camera Functions
-    
+
     /// Updates the tilemap camera options.
     ///
     /// - Parameter sender: menu item with tilemap camera option.
     @IBAction func cameraOptionsUpdated(_ sender: NSMenuItem) {
         guard let tilemap = self.tilemap else { return }
         let identifier = sender.accessibilityIdentifier()
-        
+
         let currentValue = sender.state == .on
-        
+
         print("⭑ property '\(identifier)' -> \(currentValue)")
         switch identifier {
             case "allowZoom":
@@ -789,7 +801,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             default:
                 return
         }
-        
+
         NotificationCenter.default.post(
             name: Notification.Name.Map.Updated,
             object: tilemap,
@@ -1122,7 +1134,7 @@ extension AppDelegate {
         }
         return nil
     }
-    
+
     /// Reference to the current demo controller.
     var demoController: TiledDemoController? {
         return viewController?.demoController
@@ -1142,7 +1154,7 @@ extension AppDelegate {
         }
         return scene
     }
-    
+
     /// Reference to the current scene camera.
     var camera: SKTiledSceneCamera? {
         guard let scene = scene else {
@@ -1218,7 +1230,7 @@ extension AppDelegate {
 
     @objc func initializeLoggingLevelMenu() {
         loggingLevelMenuItem.isEnabled = true
-        
+
         // update the logging menu
         if let loggingLevelSubMenu = loggingLevelMenuItem.submenu {
             loggingLevelSubMenu.removeAllItems()
@@ -1448,6 +1460,7 @@ extension AppDelegate {
 
         // development menu items
         tilemapStatisticsMenuItem.isEnabled = true
+        tilemapCachesStatisticsMenuItem.isEnabled = true
         layerStatisticsMenuItem.isEnabled = true
         currentMapsMenuItem.isEnabled = true
         allAssetsMapsMenuItem.isEnabled = true
@@ -1474,25 +1487,25 @@ extension AppDelegate {
                 debugDrawSubmenu.addItem(layerMenuItem)
             }
         }
-        
-        
+
+
         // map camera options
         if let cameraSubmenu = mapCameraMenu.submenu {
             cameraSubmenu.removeAllItems()
-            
+
             let allowZoomMenuItem = NSMenuItem(title: "Allow Zoom", action: #selector(cameraOptionsUpdated), keyEquivalent: "")
             allowZoomMenuItem.setAccessibilityIdentifier("allowZoom")
             allowZoomMenuItem.state = (tilemap.allowZoom == true) ? NSControl.StateValue.on : NSControl.StateValue.off
-            
+
             let allowMovementMenuItem = NSMenuItem(title: "Allow Movement", action: #selector(cameraOptionsUpdated), keyEquivalent: "")
             allowMovementMenuItem.setAccessibilityIdentifier("allowMovement")
             allowMovementMenuItem.state = (tilemap.allowMovement == true) ? NSControl.StateValue.on : NSControl.StateValue.off
-            
+
             let allowRotationMenuItem = NSMenuItem(title: "Allow Rotation", action: #selector(cameraOptionsUpdated), keyEquivalent: "")
             allowRotationMenuItem.setAccessibilityIdentifier("allowRotation")
             allowRotationMenuItem.state = (tilemap.allowRotation == true) ? NSControl.StateValue.on : NSControl.StateValue.off
-            
-            
+
+
             cameraSubmenu.addItem(allowZoomMenuItem)
             cameraSubmenu.addItem(allowMovementMenuItem)
             cameraSubmenu.addItem(allowRotationMenuItem)
@@ -1554,7 +1567,6 @@ extension AppDelegate {
         }
     }
 
-
     /// Update various submenus when the tilemap has been sent via notification.
     ///
     /// - Parameter tilemap: tilemap instance.
@@ -1573,28 +1585,30 @@ extension AppDelegate {
                     let menuOption = DebugDrawOptions.init(rawValue: identifier)
                     menuitem.state = (tilemap.debugDrawOptions.contains(menuOption)) ? .on : .off
                     //let contains = menuitem.state == .on
+                } else {
+                    print("⭑ [AppDelegate]: invalid identifier: \(accessibilityIdentifier)")
                 }
             }
         }
-        
-        
+
+
         // map camera options
         if let cameraSubmenu = mapCameraMenu.submenu {
             cameraSubmenu.removeAllItems()
-            
+
             let allowZoomMenuItem = NSMenuItem(title: "Allow Zoom", action: #selector(cameraOptionsUpdated), keyEquivalent: "")
             allowZoomMenuItem.setAccessibilityIdentifier("allowZoom")
             allowZoomMenuItem.state = (tilemap.allowZoom == true) ? NSControl.StateValue.on : NSControl.StateValue.off
-            
+
             let allowMovementMenuItem = NSMenuItem(title: "Allow Movement", action: #selector(cameraOptionsUpdated), keyEquivalent: "")
             allowMovementMenuItem.setAccessibilityIdentifier("allowMovement")
             allowMovementMenuItem.state = (tilemap.allowMovement == true) ? NSControl.StateValue.on : NSControl.StateValue.off
-            
+
             let allowRotationMenuItem = NSMenuItem(title: "Allow Rotation", action: #selector(cameraOptionsUpdated), keyEquivalent: "")
             allowRotationMenuItem.setAccessibilityIdentifier("allowRotation")
             allowRotationMenuItem.state = (tilemap.allowRotation == true) ? NSControl.StateValue.on : NSControl.StateValue.off
-            
-            
+
+
             cameraSubmenu.addItem(allowZoomMenuItem)
             cameraSubmenu.addItem(allowMovementMenuItem)
             cameraSubmenu.addItem(allowRotationMenuItem)

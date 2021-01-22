@@ -86,12 +86,15 @@ $declaration_border: 4px solid $declaration_border_color;
 
 $token_left_margin: -3px;
 $token_font_size: 1.6rem;
-$token_top_margin: 4rem;
+$task_header_top_margin: 1rem;
 $token_header_text_shadow_color: #999999ab;
 $token_link_color: #505050;
 
 // $h4_bullet: '\2023';  //
 $h4_bullet: '';  //
+$heading3_section_name_border_color: #b9b9b9;
+$heading3_section_name_font_size: 1.8rem;
+$heading2_overview_size: 1.15rem;
 
 // ===========================================================================
 //
@@ -622,17 +625,28 @@ h2 a {
     color: $h2_link_color;
 }
 
+h3.section-name p {
+    font-size: $heading3_section_name_font_size;
+    border-bottom: 1px solid $heading3_section_name_border_color;
+    margin: 1.275em 0 0.6em;
+}
+
 
 div.task-header {
     border-bottom: 1px solid #ddd;
-    margin-top: $token_top_margin;
+    margin-top: $task_header_top_margin;
 
     // add a drop shadow to object names
     code {
-        filter: drop-shadow(0px 1px 1px $token_header_text_shadow_color);
-}
+        //filter: drop-shadow(0px 1px 1px $token_header_text_shadow_color);
+    }
 }
 
 code a.token {
     color: $token_link_color;
+}
+
+
+div.abstract h2#overview {
+    font-size: $heading2_overview_size;
 }

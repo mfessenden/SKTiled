@@ -28,13 +28,14 @@ import Foundation
 import SpriteKit
 
 
-typealias TileList      = ThreadSafeArray<SKTile>
-typealias ObjectsList   = ThreadSafeArray<SKTileObject>
-typealias GeometryList  = ThreadSafeArray<TiledGeometryType>
+typealias TileList          = ThreadSafeArray<SKTile>
+typealias ObjectsList       = ThreadSafeArray<SKTileObject>
+typealias GeometryList      = ThreadSafeArray<TiledGeometryType>
 
 
-typealias DataCache     = [SKTilesetData: TileList]
-typealias ActionsCache  = [SKTilesetData: SKAction]
+typealias DataCache         = [SKTilesetData: TileList]
+typealias GlobalIDCache     = [UInt32: TileList]
+typealias ActionsCache      = [SKTilesetData: SKAction]
 
 
 internal enum CacheIsolationMode: UInt8 {
@@ -45,22 +46,68 @@ internal enum CacheIsolationMode: UInt8 {
     case animated
 }
 
+/// :nodoc:
+internal struct MemorySize {
+    
+    /// Raw size (in bytes).
+    let bytes: Int64
+    
+    /// Instantiate with a bytes value.
+    ///
+    /// - Parameter bytes: size in bytes.
+    init(bytes: Int64) {
+        self.bytes = bytes
+    }
+}
+
 
 
 /// Data structure for storing and recalling tile data efficiently.
 internal class TileDataStorage: Loggable {
-
-    weak var tilemap: SKTilemap?
-
+    
+    /// Queues
     fileprivate let updateQueue = DispatchQueue(label: "org.sktiled.tileDataStorage.updateQueue", qos: .userInitiated)
     fileprivate let storageQueue = DispatchQueue(label: "org.sktiled.tileDataStorage.storageQueue", qos: .userInitiated, attributes: .concurrent)
-
-    var staticTileCache:   DataCache = [:]
+    
+    /// The parent tilemap.
+    weak var tilemap: SKTilemap?
+    
+    var globalIdCache: GlobalIDCache = [:]
+    
+    /// Cache for static tiles.
+    var staticTileCache: DataCache = [:]
+    
+    /// Cache for animated tiles.
     var animatedTileCache: DataCache = [:]
-    var actionsCache:      ActionsCache = [:]
-
+    
+    /// Cache for Spritekit actions.
+    var actionsCache: ActionsCache = [:]
+    
+    /// List of objects.
     var objectsList: ObjectsList?
+    
+    /// Indicates the cache should ignore notifications.
     var blockNotifications: Bool = true
+    
+    var sizeString: String {
+        let memsize = MemorySize(bytes: self.bytes)
+        return memsize.description
+    }
+    
+    /// Returns the size of the cache (in bytes).
+    var bytes: Int {
+        return MemoryLayout.size(ofValue: self)
+    }
+    
+    /// Returns the size of the cache (in kilobytes).
+    var kilobytes: Float {
+        return Float(bytes) * 0.001
+    }
+    
+    /// Returns the size of the cache (in megabytes).
+    var megabytes: Float {
+        return kilobytes * 0.001
+    }
 
     /// Returns the current tile isolation mode.
     var isolationMode: CacheIsolationMode = CacheIsolationMode.none {
@@ -77,7 +124,13 @@ internal class TileDataStorage: Loggable {
         }
         return tilemap.updateMode
     }
-
+    
+    // MARK: - Init
+    
+    
+    /// Initialize with a tilemap instance.
+    ///
+    /// - Parameter map: tilemap node.
     init(map: SKTilemap) {
         tilemap = map
         objectsList = ObjectsList(queue: self.storageQueue)
@@ -122,6 +175,7 @@ internal class TileDataStorage: Loggable {
 
         // reset caches
         staticTileCache    = [:]
+        globalIdCache      = [:]
         animatedTileCache  = [:]
         actionsCache       = [:]
         objectsList        = nil
@@ -130,12 +184,12 @@ internal class TileDataStorage: Loggable {
     /// Returns an array of all stored tiles.
     var allTiles: [SKTile] {
         var result: [SKTile] = []
-        for items in staticTileCache.enumerated() {
-            result.append(contentsOf: items.element.value.array)
+        for item in staticTileCache {
+            result.append(contentsOf: item.value)
         }
 
-        for items in animatedTileCache.enumerated() {
-            result.append(contentsOf: items.element.value.array)
+        for item in animatedTileCache {
+            result.append(contentsOf: item.value)
         }
 
         return result
@@ -157,7 +211,7 @@ internal class TileDataStorage: Loggable {
         addTileToCache(tile: tile)
     }
 
-    /// Called when an tile is removed from a layer.
+    /// Destory a given tile when it is removed from a layer. Called when the `Notification.Name.Layer.TileRemoved` notification is sent.
     ///
     /// - Parameter notification: event notificaton.
     @objc func tileRemovedFromLayer(notification: Notification) {
@@ -488,7 +542,11 @@ internal class TileDataStorage: Loggable {
     func addTileToCache(tile: SKTile, data: SKTilesetData? = nil, cache: TileList? = nil) {
         let tileData = data ?? tile.tileData
         let currentCache: TileList = (cache != nil) ? cache! : (tileData.isAnimated == true) ? animatedCacheForTileData(tileData) : cacheForTileData(tileData)
+        
+        
+        let globalId = tileData.globalID
         currentCache.append(tile)
+        globalIdCache[globalId]?.append(tile)
 
         if (updateMode == TileUpdateMode.actions) {
             if (tileData.isAnimated == true) {
@@ -518,6 +576,61 @@ internal class TileDataStorage: Loggable {
             return nil
         }
         return savedAction
+    }
+    
+    // MARK: - Queries
+    
+    /// Returns the tile data corresponding to the given global id.
+    ///
+    /// - Parameter globalId: tile global id.
+    /// - Returns: tile data.
+    func tileDataFor(globalId: UInt32) -> SKTilesetData? {
+        for item in staticTileCache {
+            if item.key.globalID == globalId {
+                return item.key
+            }
+        }
+        
+        for item in animatedTileCache {
+            if item.key.globalID == globalId {
+                return item.key
+            }
+        }
+        return nil
+    }
+    
+    /// Returns tiles matching the given global id.
+    ///
+    /// - Parameter globalId: tile global id.
+    /// - Returns: tiles with the given global id.
+    func tilesWith(globalId: UInt32) -> [SKTile]? {
+        var result: [SKTile] = []
+        for item in staticTileCache {
+            if item.key.globalID == globalId {
+                result.append(contentsOf: item.value)
+            }
+        }
+        
+        for item in animatedTileCache {
+            if item.key.globalID == globalId {
+                result.append(contentsOf: item.value)
+            }
+        }
+        
+        return (result.isEmpty == false) ? result : nil
+    }
+    
+    /// Returns a tile animation action for the given data.
+    ///
+    /// - Parameter globalId: tile global id.
+    /// - Returns: tile animation action.
+    func tileAnimationAction(globalId: UInt32) -> SKAction? {
+        for item in actionsCache {
+            if item.key.globalID == globalId {
+                return item.value
+            }
+        }
+        return nil
     }
 
     // MARK: - Helpers
@@ -661,6 +774,52 @@ extension CacheIsolationMode {
     static var all: [CacheIsolationMode] = [.default, .ignored, .static, .animated]
 }
 
+
+extension MemorySize {
+    
+    /// Instantiate with a bytes value.
+    ///
+    /// - Parameter bytes: size in bytes.
+    init(bytes bytesInt: Int) {
+        self.bytes = Int64(bytesInt)
+    }
+    
+    /// Size in kb.
+    var kilobytes: Double {
+        return Double(bytes) / 1_024
+    }
+    
+    /// Size in kb.
+    var megabytes: Double {
+        return kilobytes / 1_024
+    }
+    
+    /// Size in gb.
+    var gigabytes: Double {
+        return megabytes / 1_024
+    }
+}
+
+
+extension MemorySize: CustomStringConvertible {
+    
+    var description: String {
+        switch bytes {
+            case 0..<1_024:
+                return "\(bytes) bytes"
+            case 1_024..<(1_024 * 1_024):
+                return "\(String(format: "%.2f", kilobytes)) kb"
+            case 1_024..<(1_024 * 1_024 * 1_024):
+                return "\(String(format: "%.2f", megabytes)) mb"
+            case (1_024 * 1_024 * 1_024)...Int64.max:
+                return "\(String(format: "%.2f", gigabytes)) gb"
+            default:
+                return "\(bytes) bytes"
+        }
+    }
+}
+
+
 /// :nodoc:
 extension TileDataStorage: CustomReflectable, TiledCustomReflectableType {
 
@@ -670,8 +829,13 @@ extension TileDataStorage: CustomReflectable, TiledCustomReflectableType {
         var animatedDataCount = 0
         var staticTileCount = 0
         var animatedTileCount = 0
-
+        
+        var staticTileData: [String: String] = [:]
+        var animatedTileData: [String: String] = [:]
+        var actionsTileData: [String: String] = [:]
+        
         for (_, sitem) in staticTileCache.enumerated() {
+            let val = sitem.key
             staticDataCount += 1
             staticTileCount += sitem.value.count
         }
@@ -684,35 +848,51 @@ extension TileDataStorage: CustomReflectable, TiledCustomReflectableType {
         let staticData: [String: Any] = ["data": staticDataCount, "tiles": staticTileCount]
         let animatedData: [String: Any] = ["data": animatedDataCount, "tiles": animatedTileCount]
 
+        
+        let actionData: [String: Any] = ["data": animatedDataCount, "tiles": animatedTileCount]
+        
+        let objectData: [String: Any] = ["id": "0"]
+        
         return Mirror(self, children:
                         ["static": staticData,
                          "animated": animatedData,
-                         "objects": objectsList?.count ?? 0,
-                         "actions": actionsCache.count]
+                         "objects": objectData,
+                         "actions": actionData],
+                      displayStyle: .dictionary
         )
     }
 
     public func dumpStatistics() {
-        let output = "\n----------- Tile Data Storage -----------"
-        var staticOutput = underlined(for: "Static")
-        var animatedOutput = underlined(for: "Animated")
-
+        let headerString = " Tile Data Storage ".padEven(toLength: 40, withPad: "-")
+        var output = "\n\(headerString)\n"
+        
+        output += "\n ▸ Size: \(sizeString) \n"
+        
+        
+        /// Static tiles
+        output += "\n ▾ Static Tiles:\n"
         for item in staticTileCache.enumerated() {
             let tileData = item.element.key
             let tileList = item.element.value.array
-            let tileDataHeader = "\n   - tile data: \(tileData.globalID) (\(tileList.count) tiles):"
-            staticOutput += tileDataHeader
-
+            let gidString = "\(tileData.globalID)".padRight(toLength: 4, withPad: " ")
+            
+            let tileDataHeader = "\n   ▸ gid: \(gidString) → (\(tileList.count) tiles)"
+            output += tileDataHeader
         }
-
+        
+        /// Animated tiles
+        output += "\n\n ▾ Animated Tiles:\n"
         for item in animatedTileCache.enumerated() {
             let tileData = item.element.key
             let tileList = item.element.value.array
-            let tileDataHeader = "\n   - tile data: \(tileData.globalID) (\(tileList.count) tiles):"
-            animatedOutput += tileDataHeader
+            let gidString = "\(tileData.globalID)".padRight(toLength: 4, withPad: " ")
+            let tileDataHeader = "\n   ▸ gid: \(gidString) → (\(tileList.count) tiles)"
+            output += tileDataHeader
         }
 
-        print("\n\(output)\n\(staticOutput)\n\(animatedOutput)")
+        print(output)
+        print("\n---------------------------------------\n")
+        print(customMirror)
     }
 }
 

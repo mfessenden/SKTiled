@@ -150,4 +150,9 @@ class TilemapTests: XCTestCase {
         //XCTAssert(expectedObjectCount == renderableObjectCount, "⭑ incorrect number of renerables at \(testCoordinate.coordDescription)... got: \(renderableObjectCount), expected: \(expectedObjectCount)")
         
     }
+    
+    /// Test the `SKTileLayer.chunksAt` method.
+    func testLayerGetChunks() {
+        // TODO: not yet implemented
+    }
 }

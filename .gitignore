@@ -2,6 +2,7 @@
 Demo/Assets/User/*
 Docs/Exported
 Docs/html
+Frameworks/
 .swiftlint.yml
 IDETemplateMacros.plist
 SKTiled.xcodeproj/xcshareddata/xcschemes/Demo*

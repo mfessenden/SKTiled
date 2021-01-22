@@ -37,6 +37,7 @@ class DemoPreferences: Codable {
 
     var showObjects: Bool = false
     var drawGrid: Bool = false
+    var drawBounds: Bool = false
     var drawAnchor: Bool = false
     var enableEffects: Bool = false      // using this?
     var updateMode: UInt8 = 0
@@ -61,6 +62,7 @@ class DemoPreferences: Codable {
         case lineWidth
         case showObjects
         case drawGrid
+        case drawBounds
         case drawAnchor
         case enableEffects
         case updateMode
@@ -93,6 +95,7 @@ class DemoPreferences: Codable {
         lineWidth = try values.decode(Double.self, forKey: .lineWidth)
         showObjects = try values.decode(Bool.self, forKey: .showObjects)
         drawGrid = try values.decode(Bool.self, forKey: .drawGrid)
+        drawBounds = try values.decode(Bool.self, forKey: .drawBounds)
         drawAnchor = try values.decode(Bool.self, forKey: .drawAnchor)
         enableEffects = try values.decode(Bool.self, forKey: .enableEffects)
         updateMode = try values.decode(UInt8.self, forKey: .updateMode)
@@ -117,6 +120,7 @@ class DemoPreferences: Codable {
         try container.encode(lineWidth, forKey: .lineWidth)
         try container.encode(showObjects, forKey: .showObjects)
         try container.encode(drawGrid, forKey: .drawGrid)
+        try container.encode(drawBounds, forKey: .drawBounds)
         try container.encode(drawAnchor, forKey: .drawAnchor)
         try container.encode(enableEffects, forKey: .enableEffects)
         try container.encode(updateMode, forKey: .updateMode)

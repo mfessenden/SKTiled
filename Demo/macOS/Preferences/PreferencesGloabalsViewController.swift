@@ -137,6 +137,7 @@ class PreferencesGloabalsViewController: NSViewController {
         // Tilemap
         var showObjectsValue = demoController.defaultPreferences.showObjects
         var drawGridValue = demoController.defaultPreferences.drawGrid
+        var drawBoundsValue = demoController.defaultPreferences.drawBounds
         var shouldEnableEffects = demoController.defaultPreferences.enableEffects
         var drawGraphsValue = false
         
@@ -144,12 +145,14 @@ class PreferencesGloabalsViewController: NSViewController {
             shouldEnableEffects = tilemap.shouldEnableEffects
             showObjectsValue = tilemap.isShowingObjectBounds
             drawGridValue = tilemap.isShowingTileGrid
+            drawBoundsValue = tilemap.isShowingBounds
             drawGraphsValue = tilemap.isShowingGridGraph
         }
         
         checkBoxes["gbl-effects-check"]?.state = (shouldEnableEffects == true) ? .on : .off
         checkBoxes["gbl-showobjects-check"]?.state = (showObjectsValue == true) ? .on : .off
         checkBoxes["gbl-showgrid-check"]?.state = (drawGridValue == true) ? .on : .off
+        checkBoxes["gbl-showbounds-check"]?.state = (drawBoundsValue == true) ? .on : .off
         checkBoxes["gbl-showgraphs-check"]?.state = (drawGraphsValue == true) ? .on : .off
         
         // Camera
@@ -192,6 +195,14 @@ class PreferencesGloabalsViewController: NSViewController {
                     demoController.currentTilemap?.debugDrawOptions.update(with: .drawGrid)
                 } else {
                     demoController.currentTilemap?.debugDrawOptions.subtract(.drawGrid)
+                }
+            }
+            
+            if (textIdentifier == "gbl-showbounds-check") {
+                demoController.toggleMapDemoDrawBounds()
+                
+                guard let tilemap = demoController.currentTilemap else {
+                    return
                 }
             }
             

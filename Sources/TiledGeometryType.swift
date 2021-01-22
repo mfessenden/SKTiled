@@ -35,21 +35,21 @@ import SpriteKit
 ///
 /// | Property          | Description                |
 /// |:------------------|:-------------------------- |
-/// | `objectPath`      | the node's bounding shape. |
-/// | `bounds`          | the node's bounding rect.  |
-/// | `renderQuality`   | render scaling quality.    |
-/// | `visibleToCamera` | node is visible to camera. |
+/// | `objectPath`      | the node's bounding shape  |
+/// | `bounds`          | the node's bounding rect   |
+/// | `renderQuality`   | render scaling quality     |
+/// | `visibleToCamera` | node is visible to camera  |
 ///
 /// ### Methods
 ///
 /// | Method                         | Description                                                 |
 /// |:-------------------------------|:----------------------------------------------------------- |
-/// | `getVertices(offset: CGPoint)` | return's the node's shape points.                           |
-/// | `contains(touch: CGPoint)`     | returns true if a point is contained in this shape's frame. |
+/// | `getVertices(offset: CGPoint)` | return's the node's shape points                            |
+/// | `contains(touch: CGPoint)`     | returns true if a point is contained in this shape's frame  |
 ///
 @objc public protocol TiledGeometryType: TiledSelectableType, TiledRasterizableType, TiledObjectType, DebugDrawableType {
 
-    /// Object points, property translated with the current map orientation.
+    /// Object points, translated with the current map orientation.
     @objc func getVertices(offset: CGPoint) -> [CGPoint]
 
     /// A path defining the shape of geometry. Used to draw the bounding shape.
@@ -129,6 +129,8 @@ extension SKNode {
 
     #if os(macOS)
 
+    // TODO: this is overiding derivative classes
+
     /// Returns the object class name.
     public override var className: String {
         let objtype = String(describing: type(of: self))
@@ -149,6 +151,8 @@ extension SKNode {
         guard let tilednode = self as? TiledMappableGeometryType else {
             return CGRect.zero
         }
+
+        // TODO: offset?
         let nodesize = tilednode.sizeInPoints
         return CGRect(x: 0, y: 0, width: nodesize.width, height: -nodesize.height)
     }
@@ -161,6 +165,7 @@ extension SKNode {
         guard let tiledGeo = self as? TiledGeometryType else {
             return [CGPoint]()
         }
+        // TODO: offset?
         return tiledGeo.boundingRect.points
     }
 

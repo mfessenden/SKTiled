@@ -45,9 +45,10 @@ import GameplayKit
     case odd, even
 }
 
+
 /// ## Overview
 ///
-/// This describes the tilemap orientation type.
+/// The `TilemapOrientation` property describes the map projection type.
 ///
 /// ### Constants
 ///
@@ -58,11 +59,11 @@ import GameplayKit
 /// | `hexagonal`   | Hexagonal tile map.                           |
 /// | `staggered`   | Staggered isometric tile map.                 |
 ///
+/// [sktile-tileid-url]:../Classes/SKTile.html#/s:7SKTiled6SKTileC6tileIds6UInt32Vvp
+/// [working-with-tiles-url]:../working-with-tiles.html
 @objc public enum TilemapOrientation: UInt8 {
     case orthogonal, isometric, hexagonal, staggered
 }
-
-
 
 
 /// ## Overview
@@ -178,23 +179,27 @@ extension TiledMappableGeometryType {
         switch orientation {
             case .orthogonal:
                 return CGSize(width: mapSize.width * tileSize.width, height: mapSize.height * tileSize.height)
-
+                
             case .isometric:
                 let side = width + height
                 return CGSize(width: side * tileWidthHalf,  height: side * tileHeightHalf)
-
+                
             case .hexagonal, .staggered:
                 var result = CGSize.zero
                 if staggerX == true {
                     result = CGSize(width: width * columnWidth + sideOffsetX,
                                     height: height * (tileHeight + sideLengthY))
-
-                    if width > 1 { result.height += rowHeight }
+                    
+                    if (width > 1) {
+                        result.height += rowHeight
+                    }
                 } else {
                     result = CGSize(width: width * (tileWidth + sideLengthX),
                                     height: height * rowHeight + sideOffsetY)
-
-                    if height > 1 { result.width += columnWidth }
+                    
+                    if (height > 1) {
+                        result.width += columnWidth
+                    }
                 }
                 return result
         }
@@ -702,14 +707,31 @@ extension TiledMappableGeometryType {
 
 // MARK: - Extensions
 
+extension StaggerAxis: CustomStringConvertible {
+    
+    public var description: String {
+        switch self {
+            case .x: return "x"
+            case .y: return "y"
+        }
+    }
+}
+
+
+extension StaggerIndex: CustomStringConvertible {
+    
+    public var description: String {
+        switch self {
+            case .odd: return "odd"
+            case .even: return "even"
+        }
+    }
+}
+
+
 
 extension TiledMappableGeometryType {
-    /*
-     u_tile_w: tile width
-     u_tile_h: tile height
-     u_size_w: number of tiles in x
-     u_size_h: number of tiles in y
-     */
+
     /// Returns an array of shader unforms based on the current attributes.
     public var shaderUniforms: [SKUniform] {
         let uniforms: [SKUniform] = [

@@ -462,7 +462,7 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
 
     // MARK: - Caching
 
-    /// Storage for tile updates
+    /// Storage for tile updates.
     internal var dataStorage: TileDataStorage?
 
     // MARK: Debugging
@@ -493,7 +493,10 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
 
         /// Number of animated tile actions.
         public var actionsCount: UInt32 = 0
-
+        
+        /// Tile data cache size.
+        public var cacheSize: String = "-"
+        
         /// Frame render time.
         public var renderTime: TimeInterval = 0
     }
@@ -1258,7 +1261,7 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
     deinit {
         objectsOverlay.removeAllChildren()
         _layers = []
-        dataStorage?.objectsList = nil
+        // dataStorage?.objectsList = nil
         dataStorage = nil
     }
 
@@ -1819,7 +1822,7 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
         return tileLayers(recursive: recursive).flatMap { $0.getTiles() }
     }
 
-    /// Returns tiles with a property of the given type. If recursive is false, only returns tiles from top-level layers.
+    /// Returns an array of tiles with a property of the given type. If recursive is false, only returns tiles from top-level layers.
     ///
     /// - Parameters:
     ///   - ofType: tile type.
@@ -1829,16 +1832,16 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
         return tileLayers(recursive: recursive).flatMap { $0.getTiles(ofType: ofType) }
     }
 
-    /// Returns tiles with the given global id. If recursive is false, only returns tiles from top-level layers.
+    /// Returns an array of tiles matching the given global id. If recursive is false, only returns tiles from top-level layers.
     ///
     /// - Parameters:
     ///   - globalID: tile global id.
     ///   - recursive: include nested layers.
     /// - Returns: array of tiles.
     public func getTiles(globalID: UInt32, recursive: Bool = true) -> [SKTile] {
+        // TODO: deprecate this - use `SKTilemap.allTiles(globalId:)`
         return tileLayers(recursive: recursive).flatMap { $0.getTiles(globalID: globalID) }
     }
-
 
     /// Returns tiles with a property matching the given name.
     ///
@@ -2214,6 +2217,7 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
     ///   - renderStart: render start date.
     ///   - completion: optional completion function.
     internal func postRenderStatistics(_ renderStart: Date, _ completion: (() -> Void)? = nil) {
+        
         // copy the render stats and add render time
         var renderStatsToSend = self.renderStatistics.copy()
         renderStatsToSend.renderTime = Date().timeIntervalSince(renderStart)
@@ -2335,8 +2339,10 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
                 #endif
                 renderStatistics.effectsEnabled = shouldEnableEffects
                 renderStatistics.actionsCount = UInt32(dataStorage.actionsCache.count)
-
-
+                
+                // cache size
+                renderStatistics.cacheSize = dataStorage.sizeString
+                
                 // get the cpu usage of the app currently
                 renderStatistics.cpuPercentage = Int(cpuUsage())
 
@@ -2544,12 +2550,12 @@ public class SKTilemap: SKNode, TiledMappableGeometryType, TiledAttributedType {
 
     /// Returns the internal **Tiled** node type.
     @objc public var tiledNodeName: String {
-        return "tilemap"
+        return (isInfinite == true) ? "infinite map" : "tilemap"
     }
 
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public var tiledNodeNiceName: String {
-        return "Tilemap"
+        return tiledNodeName.titleCased()
     }
 
     /// Returns the internal **Tiled** node type icon.
@@ -2880,19 +2886,18 @@ extension SKTilemap {
 
     /// String representation of the map.
     public override var description: String {
-        let objString = tiledNodeName.titleCased()
-        var attrsString = objString
+        var attrsString = tiledNodeName.titleCased()
 
         attrsString += " '\(mapName)' "
         attrsString += " orientation: '\(orientation.description)' "
 
-        attrsString += "map size: '\(sizeInPoints)' size: '\(mapSize)' tile size: '\(tileSize)' "
+        attrsString += "map size: \(sizeInPoints) size: \(mapSize) tile size: \(tileSize) "
         //attrsString += " url: '\(url.relativePath)'"
-
-        if isInfinite == true {
-            attrsString += " infinite: true "
+        
+        if (orientation == .staggered) {
+            attrsString += "axis: '\(staggeraxis)' index: '\(staggerindex)'"
         }
-
+        
         return attrsString
     }
 
@@ -3154,7 +3159,8 @@ extension SKTilemap.RenderStatistics {
         return SKTilemap.RenderStatistics(updateMode: self.updateMode, objectCount: self.objectCount,
                                           visibleCount: self.visibleCount, cpuPercentage: self.cpuPercentage,
                                           effectsEnabled: self.effectsEnabled, updatedThisFrame: self.updatedThisFrame,
-                                          objectsVisible: self.objectsVisible, actionsCount: self.actionsCount, renderTime: 0)
+                                          objectsVisible: self.objectsVisible, actionsCount: self.actionsCount,
+                                          cacheSize: self.cacheSize, renderTime: 0)
     }
 }
 
@@ -3255,6 +3261,29 @@ extension SKTilemap: TiledSceneCameraDelegate {
     }
     #endif
 }
+
+
+// MARK: Tile Data Cache
+
+extension SKTilemap {
+    
+    /// Returns a SpriteKit action for the given global id (if one exists).
+    ///
+    /// - Parameter globalId: tile global id.
+    /// - Returns: SpriteKit action for the given id.
+    public func actionFor(globalId: UInt32) -> SKAction? {
+        return dataStorage?.tileAnimationAction(globalId: globalId)
+    }
+    
+    /// Returns an array of tiles matching the given global id.
+    ///
+    /// - Parameter globalId: tile global id.
+    /// - Returns: SpriteKit action for the given id.
+    public func allTiles(globalId: UInt32) -> [SKTile]? {
+        return dataStorage?.tilesWith(globalId: globalId)
+    }
+}
+
 
 
 

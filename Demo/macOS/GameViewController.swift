@@ -74,6 +74,7 @@ class GameViewController: NSViewController, Loggable {
     @IBOutlet weak var statsStackView: NSStackView!
     @IBOutlet weak var statsRenderModeLabel: NSTextField!
     @IBOutlet weak var statsCPULabel: NSTextField!
+    @IBOutlet weak var statsCacheSizeLabel: NSTextField!
     @IBOutlet weak var statsVisibleLabel: NSTextField!
     @IBOutlet weak var statsObjectsLabel: NSTextField!
     @IBOutlet weak var statsActionsLabel: NSTextField!
@@ -238,6 +239,7 @@ class GameViewController: NSViewController, Loggable {
 
         statsRenderModeLabel.shadow = shadow
         statsCPULabel.shadow = shadow
+        statsCacheSizeLabel.shadow = shadow
         statsVisibleLabel.shadow = shadow
         statsObjectsLabel.shadow = shadow
         statsActionsLabel.shadow = shadow
@@ -1021,7 +1023,7 @@ class GameViewController: NSViewController, Loggable {
 
     // MARK: - Debugging
 
-    /// Updates the render stats debugging info.
+    /// Updates the render stats debugging info. Called when the `Notification.Name.Map.RenderStatsUpdated` notification is sent.
     ///
     /// - Parameter notification: event notification.
     @objc func renderStatsUpdated(notification: Notification) {
@@ -1037,6 +1039,9 @@ class GameViewController: NSViewController, Loggable {
         self.statsObjectsLabel.isHidden = (renderStats.objectsVisible == false)
         self.statsObjectsLabel.stringValue = "Objects: \(renderStats.objectCount)"
         self.statsCPULabel.attributedStringValue  = renderStats.processorAttributedString
+        self.statsCacheSizeLabel.stringValue = "Cache Size: \(renderStats.cacheSize.description)"
+
+
         let renderString = (TiledGlobals.default.timeDisplayMode == .seconds) ? String(format: "%.\(String(6))f", renderStats.renderTime) : String(format: "%.\(String(2))f", renderStats.renderTime.milleseconds)
         let timeFormatString = (TiledGlobals.default.timeDisplayMode == .seconds) ? "s" : "ms"
         self.statsRenderLabel.stringValue = "Render time: \(renderString)\(timeFormatString)"
@@ -1046,5 +1051,7 @@ class GameViewController: NSViewController, Loggable {
 
         let actionCountString = (renderStats.actionsCount > 0) ? "\(renderStats.actionsCount)" : "--"
         self.statsActionsLabel.stringValue = "Actions: \(actionCountString)"
+
+
     }
 }

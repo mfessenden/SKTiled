@@ -14,7 +14,8 @@
     <li class="item">
       <div class="task-header">
         <code>
-        <a name="/{{usr}}"></a>
+        <!-- <a name="/{{usr}}"></a> -->
+        <a name="/{{name}}.{{usr}}"></a>
         <a name="//apple_ref/{{language_stub}}/{{dash_type}}/{{name}}" class="dashAnchor"></a>
         {{#direct_link}}
         <a class="direct-link" href="{{url}}">{{name}}</a>
@@ -22,10 +23,11 @@
         {{/direct_link}}
         {{^direct_link}}
         {{^usage_discouraged}}
+        <!-- <a class="token" href="#/{{usr}}">{{{name_html}}}</a> -->
         <a class="token" href="#/{{usr}}">{{{name_html}}}</a>
         {{/usage_discouraged}}
         {{#usage_discouraged}}
-        <a class="token discouraged" href="#/{{usr}}">{{{name_html}}}</a>
+        <a class="token discouraged" href="#/{{usr}}">{{name}}.{{{name_html}}}</a>
         {{/usage_discouraged}}
         </code>
         {{#default_impl_abstract}}

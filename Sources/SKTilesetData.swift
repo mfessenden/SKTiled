@@ -50,7 +50,7 @@ public class SKTilesetData: TiledAttributedType {
     /// Unique id.
     public var uuid: String = UUID().uuidString
 
-    /// Tile id (local).
+    /// Local tile id.
     public var id: UInt32 = 0
 
     /// Tiled type.

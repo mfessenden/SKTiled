@@ -231,8 +231,6 @@ public class TiledDemoController: NSObject, Loggable {
             object: nil
         )
         
-        
-        
         print("⭑ current map url: '\(currentTilemapUrl?.relativePath ?? "nil")'")
 
         let canUseDemoMaps = TiledGlobals.default.allowDemoMaps
@@ -761,7 +759,7 @@ public class TiledDemoController: NSObject, Loggable {
     }
 
 
-    /// Dump the map statistics to the console.
+    /// Dump the tilemap statistics to the console.
     public func dumpMapStatistics() {
         guard let view = self.view,
               let scene = view.scene as? SKTiledScene else {
@@ -769,13 +767,30 @@ public class TiledDemoController: NSObject, Loggable {
         }
 
         if let tilemap = scene.tilemap {
-            updateCommandString("showing map statistics...", duration: 3)
+            updateCommandString("showing tilemap statistics...", duration: 3)
             tilemap.dumpStatistics()
         } else {
             log("no tilemap loaded.", level: .warning)
         }
     }
+    
+    /// Dump the tilemap cache statistics to the console.
+    public func dumpMapCacheStatistics() {
+        guard let view = self.view,
+              let scene = view.scene as? SKTiledScene else {
+            return
+        }
+        
+        if let tilemap = scene.tilemap {
+            if let cache = tilemap.dataStorage {
+                updateCommandString("showing tilemap cache statistics...", duration: 3)
+                cache.dumpStatistics()
+            }
 
+        } else {
+            log("no tilemap loaded.", level: .warning)
+        }
+    }
 
     public func updateTileUpdateMode(value: UInt8) {
         guard let view = self.view,
@@ -1010,7 +1025,11 @@ extension TiledDemoController {
     /// Show/hide the map bounds.
     public func toggleMapDemoDrawBounds() {
         guard let view = self.view,
-              let scene = view.scene as? SKTiledScene else { return }
+              let scene = view.scene as? SKTiledScene else {
+            
+            print("error accessing scene.")
+            return
+        }
 
         if let tilemap = scene.tilemap {
             updateCommandString("visualizing map bounds...", duration: 3)
@@ -1026,6 +1045,8 @@ extension TiledDemoController {
                 object: tilemap,
                 userInfo: nil
             )
+        } else {
+            print("error accessing tilemap.")
         }
     }
 

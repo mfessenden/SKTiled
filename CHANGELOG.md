@@ -26,6 +26,7 @@ Change Log
 - add `TiledLayerObject.tintColor` property
 - add `TiledLayerObject.load` method (EXPERIMENTAL)
 	- add `TiledLayerObject.mapDelegate` property
+- add `SKTilemap.allTiles(globalId:)` method
 
 - bug fixes:
     - fix a memory leak where tilemap is retained after parent scene change

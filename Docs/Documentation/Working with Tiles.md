@@ -1,16 +1,20 @@
 # Working with Tiles
+
 - [Tile Render Mode](#tile-render-mode)
 - [Querying Tiles at Location](#querying-tiles-at-location)
 - [Querying Tiles with ID](#find-tiles-with-tile-id)
     - [Global ID](#global-id)
     - [Local ID](#local-id)
 - [Tile Flags](#tile-flags)
+- [Tile Alignment](#tile-alignment)
 - [Find Tiles of Type](#find-tiles-of-type)
 - [Find Tiles with Property](#find-tiles-with-property)
 - [Adding and Removing Tiles](#adding-and-removing-tiles)
 - [Refreshing Tile Content](#refreshing-tile-content)
 - [Copying Tiles](#copying-tiles)
 - [Tile Shapes](#tile-shapes)
+- [Tile Colors](#tile-colors)
+    - [Tint Color](#tint-color)
 - [Animated Tiles](#animated-tiles)
     - [Updating Tile Animation](#updating-tile-animation)
     - [SpriteKit Actions](#spritekit-actions)
@@ -61,6 +65,7 @@ let allTilesForCoord = tilemap.tilesAt(coord: coord)
 
 
 ### Global ID
+
 To query tiles with a global ID, pass the value to either the `SKTilemap` node, or an individual `SKTileLayer` node:
 
 ```swift
@@ -77,7 +82,6 @@ If you have a reference to a tileset object and want to query tile data with a l
 
 
 ![Tileset Data](images/tileset-code.svg)
-
 
 
 ```swift
@@ -106,7 +110,7 @@ tile.isFlippedHorizontally = true
 
 ## Tile Alignment
 
-[put gif here showing alignment/anchorpoint changing}
+{put gif here showing alignment/anchorpoint changing}
 
 
 ## Find Tiles of Type
@@ -186,6 +190,15 @@ It is also possible to create shapes from individual tiles. All **SKTiled** geom
 ```swift
 let tileVerts = tile.getVertices()
 ```
+
+## Tile Colors
+
+### Tint Color
+
+```swift
+let tileVerts = tile.getVertices()
+```
+
 
 ## Animated Tiles
 

@@ -1472,8 +1472,8 @@ extension String {
     ///
     /// - Returns: title cased string copy.
     func titleCased() -> String {
-        if self.count <= 1 {
-            return self.uppercased()
+        if (count <= 1) {
+            return uppercased()
         }
 
         let regex = try! NSRegularExpression(pattern: "(?=\\S)[A-Z]", options: [])
@@ -1487,7 +1487,6 @@ extension String {
         }
         return titlecased
     }
-
 
     /// Simple function to split a string with the given pattern.
     ///
@@ -1536,7 +1535,7 @@ extension String {
         return [self, padString].joined(separator: "")
     }
 
-    /// Returns a string right-padded to the given length.
+    /// Returns a string centered with the given length.
     ///
     /// - Parameters:
     ///   - toLength: resulting string size.
@@ -1817,9 +1816,7 @@ extension URL {
 
     /// Returns true if the URL represents a path in the app bundle.
     var isBundled: Bool {
-        let mutableURL = self
-        let result = (mutableURL.deletingLastPathComponent().relativePath == ".") ? nil : mutableURL.deletingLastPathComponent().relativePath
-        return result == nil
+        return parent == nil
     }
 }
 

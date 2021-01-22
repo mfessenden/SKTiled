@@ -45,21 +45,21 @@ typealias TilesArray = Array2D<SKTile>
 /// ### Properties
 ///
 /// | Property                  | Description                                            |
-/// |---------------------------|--------------------------------------------------------|
-/// | tileCount                 | Returns a count of valid tiles.                        |
+/// |:--------------------------|:-------------------------------------------------------|
+/// | `tileCount`               | Returns a count of valid tiles.                        |
 ///
 ///
 /// ### Instance Methods
 ///
-/// | Method                    | Description                                            |
-/// |---------------------------|--------------------------------------------------------|
-/// | getTiles()                | Returns an array of current tiles.                     |
-/// | getTiles(ofType:)         | Returns tiles of the given type.                       |
-/// | getTiles(globalID:)       | Returns all tiles matching a global id.                |
-/// | getTilesWithProperty(_:_) | Returns tiles matching the given property & value.     |
-/// | animatedTiles()           | Returns all animated tiles.                            |
-/// | getTileData(globalID:)    | Returns all tiles matching a global id.                |
-/// | tileAt(coord:)            | Returns a tile at the given coordinate, if one exists. |
+/// | Method                      | Description                                           |
+/// |:--------------------------- |:----------------------------------------------------- |
+/// | `getTiles()`                | Returns an array of current tiles                     |
+/// | `getTiles(ofType:)`         | Returns tiles of the given type                       |
+/// | `getTiles(globalID:)`       | Returns all tiles matching a global id                |
+/// | `getTilesWithProperty(_:_)` | Returns tiles matching the given property & value     |
+/// | `animatedTiles()`           | Returns all animated tiles                            |
+/// | `getTileData(globalID:)`    | Returns all tiles matching a global id                |
+/// | `tileAt(coord:)`            | Returns a tile at the given coordinate, if one exists |
 ///
 /// ### Usage
 ///

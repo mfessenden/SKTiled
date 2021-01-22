@@ -14,6 +14,8 @@
 	<false/>
 	<key>drawGrid</key>
 	<false/>
+	<key>drawBounds</key>
+	<false/>
 	<key>drawAnchor</key>
 	<false/>
 	<key>enableEffects</key>

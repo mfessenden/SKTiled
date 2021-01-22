@@ -264,6 +264,12 @@
                                                 <action selector="mapStatisticsPressed:" target="Voe-Tx-rLC" id="Jpq-Ut-F27"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Tilemap Cache..." enabled="NO" id="Rcr-r2-Ts4">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="mapCacheStatisticsPressed:" target="Voe-Tx-rLC" id="V1e-da-Lnt"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="B5e-Bv-NGi"/>
                                         <menuItem title="Dump Layer Data..." enabled="NO" id="VaW-im-1oo">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -344,6 +350,7 @@
                         <outlet property="renderStatisticsMenuItem" destination="8DF-Mo-t1x" id="pAi-xd-fpR"/>
                         <outlet property="selectedNodesMenuItem" destination="lsc-wR-o4q" id="RWW-sO-uJL"/>
                         <outlet property="tileColorsMenuItem" destination="hnS-2z-nKA" id="Seb-hg-B27"/>
+                        <outlet property="tilemapCachesStatisticsMenuItem" destination="Rcr-r2-Ts4" id="hyf-Tn-WBO"/>
                         <outlet property="tilemapStatisticsMenuItem" destination="OXT-yC-4Eg" id="J5H-GF-0Kg"/>
                         <outlet property="timeDisplayMenuItem" destination="EBE-ZU-Vi0" id="U0H-Rq-jsO"/>
                         <outlet property="updateModeMenuItem" destination="01r-QV-0xf" id="NJ6-M8-3Di"/>
@@ -570,10 +577,10 @@
                                 </customSpacing>
                             </stackView>
                             <stackView hidden="YES" distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AWK-NZ-EcJ" userLabel="Stats Stack View">
-                                <rect key="frame" x="4" y="4" width="109" height="112"/>
+                                <rect key="frame" x="4" y="4" width="109" height="126"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="W4s-ny-MAx" userLabel="Stats Render Mode Label">
-                                        <rect key="frame" x="-2" y="98" width="113" height="14"/>
+                                        <rect key="frame" x="-2" y="112" width="113" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Render Mode: --" id="Q4G-QC-XPw" userLabel="Render Mode">
                                             <font key="font" size="12" name="CourierNewPSMT"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -581,8 +588,16 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cCh-yV-hn8" userLabel="Stats CPU Label">
-                                        <rect key="frame" x="-2" y="84" width="98" height="14"/>
+                                        <rect key="frame" x="-2" y="98" width="98" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" title="CPU Usage: --" id="Ne8-aA-QtM" userLabel="CPU Usage">
+                                            <font key="font" size="12" name="CourierNewPSMT"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" red="0.1176470588" green="0.1176470588" blue="0.1176470588" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="acH-9D-NiU" userLabel="Cache Label">
+                                        <rect key="frame" x="-2" y="84" width="105" height="14"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" title="Cache Size: --" id="ZNT-XR-XM3" userLabel="Cache Size">
                                             <font key="font" size="12" name="CourierNewPSMT"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" red="0.1176470588" green="0.1176470588" blue="0.1176470588" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
@@ -646,8 +661,10 @@
                                     <integer value="1000"/>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
+                                    <integer value="1000"/>
                                 </visibilityPriorities>
                                 <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
@@ -701,6 +718,7 @@
                         <outlet property="selectedInfoLabel" destination="sxh-rQ-zgn" id="kve-4v-lbl"/>
                         <outlet property="statsActionsLabel" destination="Bvo-K8-F5b" id="fd0-Ww-1cb"/>
                         <outlet property="statsCPULabel" destination="cCh-yV-hn8" id="ebq-Fx-TCh"/>
+                        <outlet property="statsCacheSizeLabel" destination="acH-9D-NiU" id="nba-Jc-iMz"/>
                         <outlet property="statsEffectsLabel" destination="1Vj-2A-SbA" id="NmK-2V-SRw"/>
                         <outlet property="statsObjectsLabel" destination="Dw1-tm-WO4" id="czg-lh-wu9"/>
                         <outlet property="statsRenderLabel" destination="pli-ih-OsQ" id="mdg-yk-89V"/>

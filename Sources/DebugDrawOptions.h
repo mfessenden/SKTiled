@@ -25,6 +25,7 @@
 //	THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
+// #import <Cocoa/Cocoa.h>
 
 #ifndef DebugDrawOptions_h
 #define DebugDrawOptions_h

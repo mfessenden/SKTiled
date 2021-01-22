@@ -193,9 +193,10 @@ internal class TiledDebugDrawNode: SKNode {
         
         
         guard let layer = layer else {
+            log("cannot access parent layer.", level: .error)
             return
         }
-        
+        log("drawing layer bounds.", level: .warning)
         let fillColor = layer.tilemap.gridColor
         let objPath: CGPath!
         
@@ -232,6 +233,7 @@ internal class TiledDebugDrawNode: SKNode {
                 objPath = polygonPath(invertedPoints)
             
             case .hexagonal, .staggered:
+                
                 objPath = polygonPath(layer.boundingRect.points)
         }
         

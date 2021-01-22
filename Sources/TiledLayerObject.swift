@@ -404,7 +404,8 @@ public class TiledLayerObject: SKEffectNode, TiledMappableGeometryType, TiledAtt
     /// Returns the frame rectangle of the layer (used to draw bounds).
     public override var boundingRect: CGRect {
         // TODO: implement this
-        return CGRect(x: 0, y: 0, width: sizeInPoints.width, height: -sizeInPoints.height)
+        let offset = CGPoint.zero
+        return CGRect(x: offset.x, y: offset.y, width: sizeInPoints.width, height: -sizeInPoints.height)
     }
 
     /// Returns a rectangle in this node's parent's coordinate system.
@@ -414,7 +415,7 @@ public class TiledLayerObject: SKEffectNode, TiledMappableGeometryType, TiledAtt
         return CGRect(center: CGPoint(x: px, y: py), size: sizeInPoints)
     }
 
-    // CHECKME: see if Tiled manages this differently.
+    // TODO: see if Tiled manages this differently.
 
     /// Initial layer position for infinite maps. Used to reposition tile layers & chunks in infinite maps.
     internal var layerInfiniteOffset: CGPoint {

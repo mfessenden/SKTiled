@@ -593,7 +593,6 @@ public class SKTileset: NSObject, TiledAttributedType {
     /// - Parameter globalID: global tile id.
     /// - Returns: tileset contains the global id.
     public func contains(globalID: UInt32) -> Bool {
-        let isContained = globalRange.contains(globalID)
         return globalRange ~= globalID
     }
 

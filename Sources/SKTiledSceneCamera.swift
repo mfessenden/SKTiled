@@ -805,23 +805,23 @@ extension SKTiledSceneCamera: TiledCustomReflectableType {
         }
 
         print("\n\(headerString)")
-        print("  ‣ position:                  \(position.shortDescription)")
-        print("  ‣ zoom:                      \(zoom.roundTo(3))")
-        print("     ⁃ min:                    \(minZoom)")
-        print("     ⁃ max:                    \(maxZoom)")
-        print("  ‣ ignore zoom constraints:   \(ignoreZoomConstraints)")
-        print("  ‣ allow negative:            \(allowNegativeZoom)")
-        print("  ‣ clamping:                  \(zoomClamping.name)")
-        print("  ‣ ignore clamping:           \(ignoreZoomClamping)")
-        print("  ‣ control mode:              \(controlMode)")
-        print("  ‣ tiled nodes visible:       \(containedNodes.count)")
-        print("  ‣ world position:            \(world.position.shortDescription)")
-        print("  ‣ world rotation:            \(world.zRotation.roundTo(3))")
-        print("\n  ▪︎ delegates:")
+        print("  ▸ position:                  \(position.shortDescription)")
+        print("  ▾ zoom:                      \(zoom.roundTo(3))")
+        print("     ▸ min:                    \(minZoom)")
+        print("     ▸ max:                    \(maxZoom)")
+        print("  ▸ ignore zoom constraints:   \(ignoreZoomConstraints)")
+        print("  ▸ allow negative:            \(allowNegativeZoom)")
+        print("  ▸ clamping:                  \(zoomClamping.name)")
+        print("  ▸ ignore clamping:           \(ignoreZoomClamping)")
+        print("  ▸ control mode:              \(controlMode)")
+        print("  ▸ tiled nodes visible:       \(containedNodes.count)")
+        print("  ▸ world position:            \(world.position.shortDescription)")
+        print("  ▸ world rotation:            \(world.zRotation.roundTo(3))")
+        print("\n  ▾ delegates:")
 
         for delegate in delegates {
             let delegateName = String(describing: type(of: delegate) )
-            print("   ‣ \(delegate.receiveCameraUpdates.valueAsCheckbox) `\(delegateName)`")
+            print("   ▸ \(delegate.receiveCameraUpdates.valueAsCheckbox) `\(delegateName)`")
         }
         print("\n\n")
     }
