@@ -115,18 +115,14 @@ public class SKTiledSceneCamera: SKCameraNode {
     /// Camera zoom level.
     public var zoom: CGFloat = 1.0
     
-    /// Camera z-rotation.
+    /// Camera rotation (in degrees).
     @objc public override var rotation: CGFloat {
         get {
-            return world?.rotation ?? zRotation.degrees()
+            return zRotation.degrees()
         } set {
-            guard let worldnode = world,
-                  worldnode.rotation != newValue else {
-                return
-            }
+            zRotation = newValue.radians()
             
-            worldnode.rotation = newValue
-            
+            // TODO: document this notification
             NotificationCenter.default.post(
                 name: Notification.Name.Camera.Updated,
                 object: self
@@ -148,6 +144,9 @@ public class SKTiledSceneCamera: SKCameraNode {
     
     /// Restore normal rotation values after a certain period.
     public var restoreRotation: Bool = true
+    
+    /// Amount to dampen the camera rotation.
+    public var rotationDamping: CGFloat = 0.001
     
     /// Allow tap events.
     internal var allowTaps: Bool = true
@@ -647,19 +646,32 @@ public class SKTiledSceneCamera: SKCameraNode {
     
     
     /// Reset the camera position & zoom level.
-    public func resetCamera() {
-        centerOn(scenePoint: CGPoint(x: 0, y: 0))
-        setCameraZoom(initialZoom)
-        rotation = 0
+    public func resetCamera(duration: TimeInterval = 0) {
+        if duration == 0 {
+            centerOn(scenePoint: .zero)
+            rotation = 0
+            return
+        }
+        
+        let resetAction = SKAction.group([
+            SKAction.run {
+                //panToPoint(.zero, duration: duration)
+                self.centerOn(scenePoint: .zero, duration: duration)
+                self.setCameraZoom(self.initialZoom)
+            },
+            SKAction.rotate(toAngle: 0, duration: duration)
+        ])
+        
+        run(resetAction)
     }
     
     /// Reset the camera position & zoom level.
     ///
     /// - Parameter scale: camera scale.
-    public func resetCamera(toScale scale: CGFloat) {
+    public func resetCamera(toScale scale: CGFloat, duration: TimeInterval = 0) {
         centerOn(scenePoint: CGPoint(x: 0, y: 0))
         setCameraZoom(scale)
-        rotation = 0
+        run(SKAction.rotate(toAngle: 0, duration: 1))
     }
     
     /// Center & fit the current tilemap in the frame when the parent scene is resized.
@@ -710,36 +722,8 @@ public class SKTiledSceneCamera: SKCameraNode {
     @objc public func getVertices() -> [CGPoint] {
         return self.bounds.points
     }
-    
-    // MARK: - Debugging
-    
-    /// Returns the internal **Tiled** node type.
-    @objc public var tiledNodeName: String {
-        return "camera"
-    }
-    
-    /// Returns a "nicer" node name, for usage in the inspector.
-    @objc public var tiledNodeNiceName: String {
-        return "\(tiledNodeName.titleCased())"
-    }
-    
-    /// Returns the internal **Tiled** node type icon.
-    @objc public var tiledIconName: String {
-        return "camera-icon"
-    }
-    
-    /// A description of the node.
-    @objc public var tiledListDescription: String {
-        let nameString = (name != nil) ? ": '\(name!)'" : ""
-        let delegateString = "( \(delegates.count) delegates )"
-        return "\(tiledNodeNiceName)\(nameString) \(delegateString)"
-    }
-    
-    /// A description of the node used for list views.
-    @objc public var tiledDescription: String {
-        return "Tiled scene camera."
-    }
 }
+
 
 // MARK: - Extensions
 
@@ -828,9 +812,8 @@ extension SKTiledSceneCamera {
     
     /// Custom camera info description.
     public override var description: String {
-        let objString = tiledNodeName.titleCased()
         guard let scene = scene else {
-            return "\(objString): "
+            return "\(tiledNodeNiceName): "
         }
         
         let rect = CGRect(origin: scene.convert(position, from: self), size: bounds.size)
@@ -840,7 +823,7 @@ extension SKTiledSceneCamera {
         let attrsString = "origin: \(rect.origin.stringRoundedTo(1)) size: \(rect.size)\(scaleString) zoom: \(zoom.stringRoundedTo())\(clampString)"
 
         let movementModeString = (cameraMovementMode != .none) ? " mode: \(cameraMovementMode.symbol)" : ""
-        return "\(objString) \(attrsString)\(movementModeString)\(rotationDescription)"
+        return "\(tiledNodeNiceName): \(attrsString)\(movementModeString)\(rotationDescription)"
     }
 }
 
@@ -878,6 +861,28 @@ extension SKTiledSceneCamera: TiledCustomReflectableType {
             print("   ▸ \(delegate.receiveCameraUpdates.valueAsCheckbox) `\(delegateName)`")
         }
         print("\n\n")
+    }
+    
+    /// Returns a "nicer" node name, for usage in the inspector.
+    @objc public var tiledNodeNiceName: String {
+        return "Camera"
+    }
+    
+    /// Returns the internal **Tiled** node type icon.
+    @objc public var tiledIconName: String {
+        return "camera-icon"
+    }
+    
+    /// A description of the node.
+    @objc public var tiledListDescription: String {
+        let nameString = (name != nil) ? ": '\(name!)'" : ""
+        let delegateString = "( \(delegates.count) delegates )"
+        return "\(tiledNodeNiceName)\(nameString) \(delegateString)"
+    }
+    
+    /// A description of the node used for list views.
+    @objc public var tiledDescription: String {
+        return "Tiled scene camera."
     }
 }
 
@@ -1202,31 +1207,14 @@ extension SKTiledSceneCamera {
     ///
     /// - Parameter event: mouse drag event.
     public func sceneRotationChanged(with event: NSEvent) {
-        guard let worldNode = world else {
-            return
-        }
-
         let location = event.location(in: self)
         if (lastLocation == nil) {
             lastLocation = location
         }
         
         if (allowRotation == true) {
-            
-            let dx = event.deltaX
-            let dy = event.deltaY
-            
-            var delta: CGFloat = 0
-            if (abs(dx)) > abs(dy) {
-                delta = dx
-            } else {
-                delta = dy
-            }
-            
-            let dampening: CGFloat = 0.05
-            delta = delta * dampening
-            
-            zRotation += delta
+            let delta = event.delta
+            zRotation += delta * rotationDamping
         }
     }
     #endif

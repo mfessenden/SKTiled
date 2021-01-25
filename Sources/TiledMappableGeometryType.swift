@@ -682,14 +682,6 @@ extension TiledMappableGeometryType {
     /// - Parameter point:  point in map space.
     /// - Returns: point in screen space.
     internal func pixelToScreenCoords(point: CGPoint) -> CGPoint {
-        var mutablePoint = point
-
-        // infinite offset
-        if (isInfinite == true) {
-            mutablePoint.x -= tileWidth
-            mutablePoint.y += tileHeightHalf
-        }
-
         switch orientation {
             case .isometric:
                 let originX = height * tileWidth / 2
@@ -699,7 +691,7 @@ extension TiledMappableGeometryType {
                 return CGPoint(x: (tileX - tileY) * tileWidth / 2 + originX,
                                y: (tileX + tileY) * tileHeight / 2)
             default:
-                return mutablePoint
+                return point
         }
     }
 }
@@ -743,3 +735,22 @@ extension TiledMappableGeometryType {
         return uniforms
     }
 }
+
+
+
+extension TiledMappableGeometryType where Self: SKNode {
+    
+    /// Returns an array of parent layers, beginning with the current.
+    public var parents: [SKNode] {
+        var current = self as SKNode
+        var result: [SKNode] = [current]
+        while current.parent != nil {
+            if (current.parent! as? TiledMappableGeometryType != nil) {
+                result.append(current.parent!)
+            }
+            current = current.parent!
+        }
+        return result
+    }
+}
+

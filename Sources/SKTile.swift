@@ -1320,13 +1320,11 @@ extension SKTile {
 }
 
 
-
-
 /// :nodoc: Tiled inspector attributes.
 extension SKTile {
 
     /// Returns the internal **Tiled** node type.
-    @objc public override var tiledNodeName: String {
+    @objc public var tiledNodeName: String {
         return "tile"
     }
 

@@ -27,6 +27,7 @@ Change Log
 - add `TiledLayerObject.load` method (EXPERIMENTAL)
 	- add `TiledLayerObject.mapDelegate` property
 - add `SKTilemap.allTiles(globalID:)` method
+- add `SKTiledSceneCamera.rotationDamping` property
 
 - bug fixes:
     - fix a memory leak where tilemap is retained after parent scene change

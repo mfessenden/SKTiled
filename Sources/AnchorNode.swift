@@ -132,10 +132,6 @@ internal class AnchorNode: SKNode {
 
 extension AnchorNode: TiledCustomReflectableType {
 
-    @objc var tiledNodeName: String {
-        return "anchor"
-    }
-
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public var tiledNodeNiceName: String {
         return "Anchor"
@@ -146,9 +142,10 @@ extension AnchorNode: TiledCustomReflectableType {
     }
 
     @objc var tiledDescription: String {
-        return "\(tiledNodeName.titleCased())"
+        return tiledNodeNiceName
     }
 }
+
 
 
 extension AnchorNode: TiledSceneCameraDelegate {

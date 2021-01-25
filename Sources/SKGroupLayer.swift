@@ -191,29 +191,37 @@ public class SKGroupLayer: TiledLayerObject {
     public override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
     }
+}
 
+
+
+// MARK: - Extensions
+
+// :nodoc:
+extension SKGroupLayer {
+    
     /// Returns the internal **Tiled** node type.
-    @objc public override var tiledNodeName: String {
-        return "group layer"
+    @objc public var tiledNodeName: String {
+        return "group"
     }
-
+    
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public override var tiledNodeNiceName: String {
         return "Group Layer"
     }
-
+    
     /// Returns the internal **Tiled** node type icon.
     @objc public override var tiledIconName: String {
         return "group-icon"
     }
-
+    
     /// A description of the node.
     @objc public override var tiledListDescription: String {
         let childCount = (children.count == 0) ? ": (no children)" : ": (\(children.count) children)"
         let layerNameString = (name != nil) ? " '\(name!)'" : ""
         return "\(tiledNodeNiceName)\(layerNameString)\(childCount)"
     }
-
+    
     /// A description of the node.
     @objc public override var tiledDescription: String {
         return "Container node for Tiled layer types."

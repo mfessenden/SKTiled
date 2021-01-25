@@ -153,6 +153,21 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         return UInt32(firstIndex)
     }
 
+    /// The layer XPath.
+    public var xPath: String = #"/"#
+    
+    /// Translate the parent hierarchy to an layer path string.
+    public var path: String {
+        let allParents: [SKNode] = parents.filter( { $0 as? SKTilemap == nil } ).reversed()
+        if (allParents.count == 1) {
+            return layerName
+        }
+        
+        return allParents.reduce("") { result, node in
+            let divider = allParents.firstIndex(of: node)! < allParents.count - 1 ? "/" : ""
+            return result + "\(node.name ?? "element")" + divider
+        }
+    }
 
     // MARK: - Layer Properties
 
@@ -219,9 +234,9 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 
     /// The type of objects contained in this layer.
     internal var layerType: TiledLayerType = TiledLayerType.none
-    
+
     // MARK: - Colors
-    
+
     /// Layer color.
     public var color: SKColor = TiledObjectColors.gun
 
@@ -236,25 +251,25 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 
     /// Layer proxy object color.
     internal var proxyColor: SKColor?
-    
+
     /// Layer tint color.
     public var tintColor: SKColor? {
         didSet {
             guard let newColor = tintColor else {
-                
+
                 // reset color blending attributes
                 colorBlendFactor = 0
                 color = SKColor(hexString: "#ffffff00")
                 blendMode = .alpha
                 return
             }
-            
+
             self.color = newColor
             self.blendMode = TiledGlobals.default.layerTintAttributes.blendMode
             self.colorBlendFactor = 1
         }
     }
-    
+
     /// Sprite to allow for color tinting.
     lazy internal var tintSprite: SKSpriteNode? = {
         let sprite = SKSpriteNode(color: SKColor.clear, size: sizeInPoints)
@@ -263,7 +278,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         sprite.zPosition = zPosition + 1
         return sprite
     }()
-    
+
     /// Layer bounding shape.
     public lazy var boundsShape: SKShapeNode? = {
         let scaledverts = getVertices().map { $0 * renderQuality }
@@ -424,14 +439,13 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 
     /// Initial layer position for infinite maps. Used to reposition tile layers & chunks in infinite maps. This is used by the tilemap to position the layers as they are added.
     internal var layerInfiniteOffset: CGPoint {
-        if (isInfinite == false) || (layerType != .tile) {
+        //if (isInfinite == false) || (layerType != .tile) {
+        if (isInfinite == false) {
             return CGPoint.zero
         }
-
+        
         var offsetPos = CGPoint.zero
-
         switch orientation {
-            
             case .orthogonal:
                 offsetPos.x -= tileWidthHalf
                 offsetPos.y += tileHeightHalf
@@ -536,7 +550,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         if let layerOpacity = attributes["opacity"] {
             self.opacity = CGFloat(Double(layerOpacity)!)
         }
-        
+
         // layer tint
         if let layerTint = attributes["tintcolor"] {
             self.tintColor = SKColor(hexString: layerTint)
@@ -864,6 +878,35 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         }
         return nil
     }
+    
+    /// Generic highlight method that works for all `SpriteKit` types.
+    ///
+    /// - Parameters:
+    ///   - color: highlight color.
+    ///   - duration: duration of highlight effect.
+    @objc public override func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
+        let removeHighlight: Bool = (color == SKColor.clear)
+        let highlightFillColor = (removeHighlight == false) ? color.withAlphaComponent(0.2) : color
+        
+        boundsShape?.strokeColor = color
+        boundsShape?.fillColor = highlightFillColor
+        boundsShape?.isHidden = false
+        
+        if (duration > 0) {
+            let fadeInAction = SKAction.colorize(withColorBlendFactor: 1, duration: duration)
+            
+            let groupAction = SKAction.group(
+                [
+                    fadeInAction,
+                    SKAction.wait(forDuration: duration),
+                    fadeInAction.reversed()
+                ]
+            )
+            boundsShape?.run(groupAction, completion: {
+                self.boundsShape?.isHidden = true
+            })
+        }
+    }
 
     // MARK: - Updating
 
@@ -895,21 +938,22 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         // clamp the position of the map & parent nodes
         // clampNodePosition(node: self, scale: SKTiledGlobals.default.contentScale)
     }
-    
+
     // MARK: - Reflection
-    
+
     /// Returns a custom mirror for this layer.
     public var customMirror: Mirror {
         return Mirror(self, children:
                         ["name": layerName,
                          "uuid": uuid,
                          "xPath": xPath,
+                         "path": path,
                          "layerType": layerType,
                          "size": mapSize,
                          "tileSize": tileSize,
                         ],
                       ancestorRepresentation: .suppressed
-                      
+
         )
     }
 }
@@ -1061,7 +1105,7 @@ extension TiledLayerObject {
     public override var description: String {
         let isTopLevel = self.parents.count == 1
         let indexString = (isTopLevel == true) ? ", index: \(index)" : ""
-        return "\(tiledNodeNiceName) '\(self.xPath)'\(indexString) zpos: \(Int(self.zPosition))"
+        return "\(tiledNodeNiceName) '\(path)'\(indexString) zpos: \(Int(zPosition))"
     }
 
     public override var debugDescription: String {
@@ -1092,18 +1136,7 @@ extension TiledLayerObject {
         return self.name ?? "null"
     }
 
-    /// Returns an array of parent layers, beginning with the current.
-    public var parents: [SKNode] {
-        var current = self as SKNode
-        var result: [SKNode] = [current]
-        while current.parent != nil {
-            if (current.parent! as? TiledLayerObject != nil) {
-                result.append(current.parent!)
-            }
-            current = current.parent!
-        }
-        return result
-    }
+
 
     /// Recursively enumerate child layers.
     ///
@@ -1139,16 +1172,6 @@ extension TiledLayerObject {
     /// Indicates the layer is a top-level layer.
     public var isTopLevel: Bool {
         return self.parents.count <= 1
-    }
-
-    /// Translate the parent hierarchy to an xPath string.
-    public var xPath: String {
-        let allParents: [SKNode] = self.parents.reversed()
-        if (allParents.count == 1) { return self.layerName }
-        return allParents.reduce("") { result, node in
-            let comma = allParents.firstIndex(of: node)! < allParents.count - 1 ? "/" : ""
-            return result + "\(node.name ?? "nil")" + comma
-        }
     }
 
     /// Returns the actual zPosition as rendered by the scene.
@@ -1260,8 +1283,8 @@ extension TiledLayerObject.TileOffset {
 
 
 extension TiledLayerObject {
-    
-    
+
+
     @objc func dumpStatistics() {
         print("\nLayer: '\(layerName)'")
         print("------------------------------------------")
@@ -1270,7 +1293,7 @@ extension TiledLayerObject {
         print("   offset:     \(offset.shortDescription)")
         print("\n")
     }
-    
+
 }
 
 
@@ -1385,12 +1408,6 @@ extension TiledLayerObject {
 
 
 extension TiledLayerObject {
-
-    /// Translate the parent hierarchy to an xPath string.
-    @available(*, deprecated, renamed: "xPath")
-    public var path: String {
-        return xPath
-    }
 
     /// Container size (in tiles).
     @available(*, deprecated, renamed: "mapSize")

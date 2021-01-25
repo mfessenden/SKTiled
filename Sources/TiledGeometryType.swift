@@ -184,16 +184,19 @@ extension SKNode {
     /// - Parameters:
     ///   - color: highlight color.
     ///   - duration: duration of highlight effect.
-    public func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
-
+    @objc public func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
+        
+        // FIXME: this is a mess
         let removeHighlight: Bool = (color == SKColor.clear)
-
+        let highlightFillColor = (removeHighlight == false) ? color.withAlphaComponent(0.2) : color
+        
+        
         if let sprite = self as? SKSpriteNode {
             sprite.color = color
             sprite.colorBlendFactor = (removeHighlight == false) ? 1 : 0
-
+            
             if let tiledSprite = sprite as? TiledGeometryType {
-
+                
                 if (removeHighlight == false) {
                     tiledSprite.boundsShape?.strokeColor = color
                     tiledSprite.boundsShape?.lineWidth = 0.5
@@ -202,7 +205,7 @@ extension SKNode {
                     tiledSprite.boundsShape?.strokeColor = SKColor.clear
                 }
             }
-
+            
             if (duration > 0) {
                 let fadeInAction = SKAction.colorize(withColorBlendFactor: 1, duration: duration)
                 let groupAction = SKAction.group(
@@ -220,14 +223,14 @@ extension SKNode {
             }
             return
         }
-
+        
         if let shape = self as? SKShapeNode {
             if let tiledObejct = shape as? SKTileObject {
                 tiledObejct.proxy?.highlightNode(with: color, duration: duration)
             } else {
                 shape.strokeColor = color
                 shape.lineWidth = 1
-                shape.fillColor = (removeHighlight == false) ? color.withAlphaComponent(0.6) : color
+                shape.fillColor = highlightFillColor
                 shape.isAntialiased = false
                 if (duration > 0) {
                     shape.run(SKAction.colorFadeAction(after: duration))

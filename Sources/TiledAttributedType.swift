@@ -87,7 +87,6 @@ import SpriteKit
 
     /// Parse function (with optional completion block).
     func parseProperties(completion: (() -> Void)?)
-
 }
 
 

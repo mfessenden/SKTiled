@@ -124,12 +124,9 @@ extension TileObjectOverlay: TiledSceneCameraDelegate {
 }
 
 
-
+/// :nodoc:
 extension TileObjectOverlay: TiledCustomReflectableType {
-    
-    @objc var tiledNodeName: String {
-        return "objectsoverlay"
-    }
+
     
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public var tiledNodeNiceName: String {

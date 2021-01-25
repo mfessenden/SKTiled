@@ -507,17 +507,12 @@ extension SKTiledScene {
 }
 
 
-
+/// :nodoc:
 extension SKWorld: TiledCustomReflectableType {
-
-    /// Returns the internal **Tiled** node type.
-    @objc public var tiledNodeName: String {
-        return "world"
-    }
 
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public var tiledNodeNiceName: String {
-        return "\(tiledNodeName.titleCased()) Node"
+        return "World Node"
     }
 
     /// Returns the internal **Tiled** node type icon.

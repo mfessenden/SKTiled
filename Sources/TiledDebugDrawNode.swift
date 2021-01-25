@@ -196,7 +196,7 @@ internal class TiledDebugDrawNode: SKNode {
             log("cannot access parent layer.", level: .error)
             return
         }
-        log("drawing layer bounds.", level: .warning)
+
         let fillColor = layer.tilemap.gridColor
         let objPath: CGPath!
         
@@ -398,10 +398,6 @@ internal class TiledDebugDrawNode: SKNode {
 // MARK: - Extensions
 
 extension TiledDebugDrawNode: TiledCustomReflectableType {
-    
-    @objc var tiledNodeName: String {
-        return "debugroot"
-    }
     
     @objc var tiledNodeNiceName: String {
         return "Debug Draw Node"

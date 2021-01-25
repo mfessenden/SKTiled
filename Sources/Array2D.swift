@@ -131,7 +131,7 @@ extension Array2D: CustomReflectable, CustomStringConvertible, CustomDebugString
                     if let tile = value as? SKTile {
                         
                         let gid = tile.tileData.globalID   // was `id`
-                        let gidString = "\(gid)".padRight(toLength: colSize, withPad: " ")
+                        let gidString = "\(gid)".padEven(toLength: colSize, withPad: " ")
                         rowResult += "\(gidString)\(comma)"
                     } else {
                         rowResult += "\(value)\(comma)"

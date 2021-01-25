@@ -755,23 +755,6 @@ public class SKTileset: NSObject, CustomReflectable, TiledAttributedType {
             log("updated \(dataFixed) tile data animations for tileset: '\(name)'", level: .debug)
         }
     }
-
-    // MARK: - UI
-
-    /// Returns the internal **Tiled** node type.
-    @objc public var tiledNodeName: String {
-        return "tileset"
-    }
-
-    /// Returns the internal **Tiled** node type icon.
-    @objc public var tiledIconName: String {
-        return "tileset-icon"
-    }
-
-    /// A description of the node.
-    @objc public var tiledDescription: String {
-        return "\(tiledNodeName.titleCased()): "
-    }
     
     // MARK: - Reflection
     
@@ -864,9 +847,6 @@ extension SKTileset {
 
 
 
-
-
-
 extension SKTileset {
     
     /// Creates and returns a new tile instance with the given global id.
@@ -898,6 +878,26 @@ extension SKTileset {
     }
 }
 
+
+
+/// :nodoc
+extension SKTileset {
+    
+    /// Returns the internal **Tiled** node type.
+    @objc public var tiledNodeName: String {
+        return "tileset"
+    }
+    
+    /// Returns the internal **Tiled** node type icon.
+    @objc public var tiledIconName: String {
+        return "tileset-icon"
+    }
+    
+    /// A description of the node.
+    @objc public var tiledDescription: String {
+        return "\(tiledNodeName.titleCased()): "
+    }
+}
 
 
 // MARK: - Deprecations

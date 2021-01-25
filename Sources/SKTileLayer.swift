@@ -235,8 +235,28 @@ public class SKTileLayer: TiledLayerObject {
     internal func addChunk(_ chunk: SKTileLayerChunk, at position: CGPoint) {
         if (chunks.contains(chunk) == false) {
             chunks.append(chunk)
+            
+            
             chunk.position = pointForCoordinate(coord: simd_int2(x: chunk.offset.xCoord, y: chunk.offset.yCoord))
             addChild(chunk)
+            
+            /*
+            let label = SKLabelNode(text: chunk.xPath)
+            
+            label.fontSize = 8
+            label.zPosition = chunk.zPosition + 100
+            
+            chunk.addChild(label)
+            
+            
+            let randColor = TiledObjectColors.random
+            chunk.boundsShape?.strokeColor = randColor
+            label.position.x = chunk.sizeInPoints.halfWidth
+            label.position.y = chunk.sizeInPoints.halfHeight
+            label.color = randColor
+            
+            chunk.highlightNode(with: randColor, duration: 0.5)
+             */
         }
     }
 
@@ -984,6 +1004,7 @@ public class SKTileLayer: TiledLayerObject {
             (label: "name", value: layerName),
             (label: "uuid", uuid),
             (label: "xPath", value: xPath),
+            (label: "path", value: path),
             (label: "size", value: mapSize),
             (label: "tileSize", value: tileSize)
         ]
@@ -997,35 +1018,7 @@ public class SKTileLayer: TiledLayerObject {
         return Mirror(self, children: attributes, ancestorRepresentation: .suppressed)
     }
 
-    /// Returns the internal **Tiled** node type.
-    @objc public override var tiledNodeName: String {
-        return "layer"
-    }
-
-    /// Returns a "nicer" node name, for usage in the inspector.
-    @objc public override var tiledNodeNiceName: String {
-        return "Tile Layer"
-    }
-
-    /// Returns the internal **Tiled** node type icon.
-    @objc public override var tiledIconName: String {
-        return "tilelayer-icon"
-    }
-
-    /// A description of the node.
-    @objc public override var tiledListDescription: String {
-        let nameString = "'\(layerName)'"
-        return "Tile Layer \(nameString) (\(tileCount) tiles)"
-    }
-
-    /// A description of the node.
-    @objc public override var tiledDescription: String {
-        return "Layer container for tiles."
-    }
 }
-
-
-
 
 
 // MARK: - Extensions
@@ -1073,7 +1066,35 @@ extension SKTileLayer {
 }
 
 
-
+/// :nodoc:
+extension SKTileLayer {
+    
+    /// Returns the internal **Tiled** node type.
+    @objc public var tiledNodeName: String {
+        return "layer"
+    }
+    
+    /// Returns a "nicer" node name, for usage in the inspector.
+    @objc public override var tiledNodeNiceName: String {
+        return "Tile Layer"
+    }
+    
+    /// Returns the internal **Tiled** node type icon.
+    @objc public override var tiledIconName: String {
+        return "tilelayer-icon"
+    }
+    
+    /// A description of the node.
+    @objc public override var tiledListDescription: String {
+        let nameString = "'\(layerName)'"
+        return "Tile Layer \(nameString) (\(tileCount) tiles)"
+    }
+    
+    /// A description of the node.
+    @objc public override var tiledDescription: String {
+        return "Layer container for tiles."
+    }
+}
 
 
 

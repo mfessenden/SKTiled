@@ -1524,17 +1524,25 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         }
         return result
     }
-
-    /// Returns layers given a path.
+    
+    /// Return layers with matching the given path. Tiled allows for duplicate layer names, so we're returning an array.
     ///
-    /// - Parameter atPath: layer path.
+    /// - Parameters:
+    ///   - withPrefix: layer path to search for.
     /// - Returns: layer objects.
     public func getLayers(atPath: String) -> [TiledLayerObject] {
-        var result: [TiledLayerObject] = []
-        if let xpath = self.layers.firstIndex(where: { $0.xPath == atPath }) {
-            result.append(self.layers[xpath])
+        return getLayers(recursive: true).filter( { $0.path == atPath })
+    }
+    
+    /// Returns a layer given an `xPath` value.
+    ///
+    /// - Parameter xPath: layer xPath.
+    /// - Returns: layer objects.
+    public func getLayer(xPath: String) -> TiledLayerObject? {
+        if let xindex = layers.firstIndex(where: { $0.xPath == xPath }) {
+            return layers[xindex]
         }
-        return result
+        return nil
     }
 
     /// Returns a layer matching the given UUID.
@@ -1718,11 +1726,14 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         }
                 
         
-        // apply offset for infinite maps
-        result.x += layer.layerInfiniteOffset.x
-
-        // CHECKME: should this be minus?
-        result.y += layer.layerInfiniteOffset.y
+        if let tileLayer = layer as? SKTileLayer {
+            
+            // apply offset for infinite maps
+            result.x += layer.layerInfiniteOffset.x
+            
+            // CHECKME: should this be minus?
+            result.y += layer.layerInfiniteOffset.y
+        }
 
         // set the layer final position
         layer.position = result
@@ -2182,6 +2193,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         debugNode.position = defaultLayer.position
         objectsOverlay.zPosition = debugStartZPosition + (zDeltaForLayers + 100)
         updateProxyObjects()
+        calculateXPaths()
     }
 
     // MARK: - Notifications
@@ -2555,35 +2567,6 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return chunksAt(coord.x, coord.y)
     }
     
-    
-    // MARK: - UI
-
-
-    /// Returns the internal **Tiled** node type.
-    @objc public var tiledNodeName: String {
-        return (isInfinite == true) ? "infinite map" : "tilemap"
-    }
-
-    /// Returns a "nicer" node name, for usage in the inspector.
-    @objc public var tiledNodeNiceName: String {
-        return tiledNodeName.titleCased()
-    }
-
-    /// Returns the internal **Tiled** node type icon.
-    @objc public var tiledIconName: String {
-        return "map-icon"
-    }
-
-    /// A description of the node.
-    @objc public var tiledListDescription: String {
-        return "\(tiledNodeName.titleCased()): '\(mapName)'"
-    }
-
-    /// A description of the node.
-    @objc public var tiledDescription: String {
-        return "Tile map node."
-    }
-    
     // MARK: - Reflection
     
     /// Returns a custom mirror for this object.
@@ -2915,8 +2898,10 @@ extension SKTilemap {
 
         attrsString += " '\(mapName)' "
         attrsString += " orientation: '\(orientation.description)' "
-
-        attrsString += "map size: \(sizeInPoints) size: \(mapSize) tile size: \(tileSize) "
+        
+        
+        let mapsizeString = (isInfinite == false) ? "map size: \(sizeInPoints)" : "map size: infinite"
+        attrsString += "\(mapsizeString) size: \(mapSize) tile size: \(tileSize) "
         //attrsString += " url: '\(url.relativePath)'"
         
         if (orientation == .staggered) {
@@ -3292,6 +3277,85 @@ extension SKTilemap {
 }
 
 
+/// :nodoc:
+extension SKTilemap {
+    
+    
+    /// Returns the internal **Tiled** node type.
+    @objc public var tiledNodeName: String {
+        return "map"
+    }
+    
+    /// Returns a "nicer" node name, for usage in the inspector.
+    @objc public var tiledNodeNiceName: String {
+        return (isInfinite == true) ? "infinite map" : "tilemap"
+    }
+    
+    /// Returns the internal **Tiled** node type icon.
+    @objc public var tiledIconName: String {
+        return "map-icon"
+    }
+    
+    /// A description of the node.
+    @objc public var tiledListDescription: String {
+        return "\(tiledNodeNiceName.titleCased()): '\(mapName)'"
+    }
+    
+    /// A description of the node.
+    @objc public var tiledDescription: String {
+        return "Tile map node."
+    }
+}
+
+
+
+extension SKTilemap {
+    
+    
+    /// Calculate the xPath values of the layers.
+    internal func calculateXPaths() {
+        var currentPath = #"/\#(tiledNodeName)"#
+        for (i, layer) in layers.enumerated() {
+            if let tileLayer = layer as? SKTileLayer {
+                let layerPathName = "\(tileLayer.tiledNodeName)[\(i)]"
+                currentPath += #"/\#(layerPathName)"#
+                tileLayer.xPath = currentPath
+                
+                var currentLayerName = tileLayer.layerName
+                for (x, chunk) in tileLayer.chunks.enumerated() {
+                    let chunnkPathName = "\(chunk.tiledNodeName)[\(x)]"
+                    currentPath += #"/\#(chunnkPathName)"#
+                    chunk.xPath = currentPath
+                    
+                    // FIXME: 'name' might be the wrong attribute to be using here
+                    chunk.name = #"\#(currentLayerName)/\#(chunnkPathName)"#
+                }
+            }
+            
+            if let objectGroup = layer as? SKObjectGroup {
+                let layerPathName = "\(objectGroup.tiledNodeName)[\(i)]"
+                currentPath += #"/\#(layerPathName)"#
+                objectGroup.xPath = currentPath
+
+            }
+            
+            
+            if let groupLayer = layer as? SKGroupLayer {
+                let layerPathName = "\(groupLayer.tiledNodeName)[\(i)]"
+                currentPath += #"/\#(layerPathName)"#
+                groupLayer.xPath = currentPath
+            }
+            
+            
+            if let imageLayer = layer as? SKImageLayer {
+                let layerPathName = "\(imageLayer.tiledNodeName)[\(i)]"
+                currentPath += #"/\#(layerPathName)"#
+                imageLayer.xPath = currentPath
+            }
+        }
+    }
+}
+
 
 
 // MARK: - Deprecations
@@ -3344,7 +3408,7 @@ extension SKTilemap {
         }
         return nil
     }
-
+    
     /// Returns a named tile layer if it exists, otherwise, nil.
     ///
     /// - Parameter name: tile layer name.

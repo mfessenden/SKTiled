@@ -550,12 +550,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         
         if let camera = scene.cameraNode {
-            camera.panToPoint(CGPoint.zero, duration: 0.25)
-            
-            
-            
-            let action = SKAction.rotate(toAngle: 0, duration: 0.25)
-            camera.run(action)
+            camera.resetCamera(duration: 0.2)
         }
     }
 
@@ -584,7 +579,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let currentState = sender.state
         guard let gameController = viewController else { return }
 
-        var preferences = gameController.demoController.defaultPreferences
+        let preferences = gameController.demoController.defaultPreferences
         preferences.usePreviousCamera = (currentState == .off) ? true : false
         Logger.default.log("setting use previous camera: \(preferences.usePreviousCamera)", level: .info, symbol: "AppDelegate")
         gameController.demoController.updateCommandString("setting use previous camera: \(preferences.usePreviousCamera)")

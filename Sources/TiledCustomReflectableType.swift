@@ -96,11 +96,6 @@ extension TiledCustomReflectableType {
 /// :nodoc:
 extension SKLabelNode: TiledCustomReflectableType {
 
-    /// Returns the internal **Tiled** node type.
-    @objc public var tiledNodeName: String {
-        return "label"
-    }
-
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public var tiledNodeNiceName: String {
         return "Label"
@@ -126,11 +121,6 @@ extension SKLabelNode: TiledCustomReflectableType {
 
 /// :nodoc:
 extension SKSpriteNode: TiledCustomReflectableType {
-
-    /// Returns the internal **Tiled** node type.
-    @objc public var tiledNodeName: String {
-        return "sprite"
-    }
 
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public var tiledNodeNiceName: String {
@@ -158,11 +148,6 @@ extension SKSpriteNode: TiledCustomReflectableType {
 /// :nodoc:
 extension SKCropNode: TiledCustomReflectableType {
 
-    /// Returns the internal **Tiled** node type.
-    @objc public var tiledNodeName: String {
-        return "crop"
-    }
-
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public var tiledNodeNiceName: String {
         return "Crop Node"
@@ -187,11 +172,6 @@ extension SKCropNode: TiledCustomReflectableType {
 
 /// :nodoc:
 extension SKEffectNode: TiledCustomReflectableType {
-
-    /// Returns the internal **Tiled** node type.
-    @objc public var tiledNodeName: String {
-        return "effect"
-    }
 
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public var tiledNodeNiceName: String {
@@ -219,11 +199,6 @@ extension SKEffectNode: TiledCustomReflectableType {
 
 /// :nodoc:
 extension SKShapeNode: TiledCustomReflectableType {
-
-    /// Returns the internal **Tiled** node type.
-    @objc public var tiledNodeName: String {
-        return "shape"
-    }
 
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public var tiledNodeNiceName: String {

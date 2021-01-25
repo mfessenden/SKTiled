@@ -962,44 +962,6 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
 
     #endif
 
-
-    // MARK: - UI
-
-    /// Returns the internal **Tiled** node type.
-    @objc public override var tiledNodeName: String {
-        switch shapeType {
-            case .ellipse:
-                return "ellipse object"
-            case .polygon, .polyline:
-                return "polygon object"
-            default:
-                return "object"
-        }
-    }
-
-    /// Returns a "nicer" node name, for usage in the inspector.
-    @objc public override var tiledNodeNiceName: String {
-        //return (globalID == nil) ? "Object" : "Tile Object"
-        return objectType.niceName
-    }
-
-    /// Returns the internal **Tiled** node type icon.
-    @objc public override var tiledIconName: String {
-        //return (globalID == nil) ? "object-icon" : "tileobject-icon"
-        return objectType.iconName
-    }
-
-    /// A description of the node.
-    @objc public override var tiledListDescription: String {
-        let objName = (name != nil) ? " '\(name!)'" : ""
-        return "\(tiledNodeNiceName)\(objName) id: \(id)"
-    }
-
-    /// A description of the node.
-    @objc public override var tiledDescription: String {
-        return (globalID == nil) ? "Tiled vector object type." : "Tiled tile vector object type."
-    }
-
     /// Show/hide the object's boundary shape.
     open var showBounds: Bool {
         get {
@@ -1186,6 +1148,7 @@ extension SKTileObject.TiledObjectType {
 }
 
 
+
 extension SKTileObject.TiledObjectShape {
 
     /// Returns the curvature value for drawing the object path.
@@ -1197,6 +1160,38 @@ extension SKTileObject.TiledObjectShape {
     }
 }
 
+/// :nodoc:
+extension SKTileObject {
+    
+    /// Returns the internal **Tiled** node type.
+    @objc public var tiledNodeName: String {
+        return "object"
+    }
+    
+    /// Returns a "nicer" node name, for usage in the inspector.
+    @objc public override var tiledNodeNiceName: String {
+        return objectType.niceName
+    }
+    
+    /// Returns the internal **Tiled** node type icon.
+    @objc public override var tiledIconName: String {
+        //return (globalID == nil) ? "object-icon" : "tileobject-icon"
+        return objectType.iconName
+    }
+    
+    /// A description of the node.
+    @objc public override var tiledListDescription: String {
+        let objName = (name != nil) ? " '\(name!)'" : ""
+        return "\(tiledNodeNiceName)\(objName) id: \(id)"
+    }
+    
+    /// A description of the node.
+    @objc public override var tiledDescription: String {
+        return (globalID == nil) ? "Tiled vector object type." : "Tiled tile vector object type."
+    }
+}
+
+
 
 extension SKTileObject {
 
@@ -1204,8 +1199,6 @@ extension SKTileObject {
         return id.hashValue
     }
     
-    
-
     /// String representation of tile object.
     open override var description: String {
         let comma = propertiesString.isEmpty == false ? " " : ""

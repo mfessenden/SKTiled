@@ -468,36 +468,9 @@ public class SKObjectGroup: TiledLayerObject {
         guard (self.updateMode != TileUpdateMode.actions) else { return }
     }
     
-    // MARK: - UI
-    
-    
-    /// Returns the internal **Tiled** node type.
-    @objc public override var tiledNodeName: String {
-        return "objectgroup"
-    }
-
-    /// Returns a "nicer" node name, for usage in the inspector.
-    @objc public override var tiledNodeNiceName: String {
-        return "Object Group"
-    }
-
-    /// Returns the internal **Tiled** node type icon.
-    @objc public override var tiledIconName: String {
-        return "objectgroup-icon"
-    }
-
-    /// A description of the node.
-    @objc public override var tiledListDescription: String {
-        let ccstring = (children.count == 0) ? ": (no children)" : ": (\(children.count) children)"
-        return "\(tiledNodeNiceName)\(ccstring)"
-    }
-
-    /// A description of the node.
-    @objc public override var tiledDescription: String {
-        return "Layer container for vector objects."
-    }
     
     // MARK: - Reflection
+    
     
     /// Returns a custom mirror for this layer.
     public override var customMirror: Mirror {
@@ -505,6 +478,7 @@ public class SKObjectGroup: TiledLayerObject {
                         ["name": layerName,
                          "uuid": uuid,
                          "xPath": xPath,
+                         "path": path,
                          "layerType": layerType,
                          "size": mapSize,
                          "tileSize": tileSize,
@@ -534,6 +508,37 @@ extension SKObjectGroupDrawOrder: CustomStringConvertible, CustomDebugStringConv
     }
 }
 
+
+
+// :nodoc:
+extension SKObjectGroup {
+    
+    /// Returns the internal **Tiled** node type.
+    @objc public var tiledNodeName: String {
+        return "objectgroup"
+    }
+    
+    /// Returns a "nicer" node name, for usage in the inspector.
+    @objc public override var tiledNodeNiceName: String {
+        return "Object Group"
+    }
+    
+    /// Returns the internal **Tiled** node type icon.
+    @objc public override var tiledIconName: String {
+        return "objectgroup-icon"
+    }
+    
+    /// A description of the node.
+    @objc public override var tiledListDescription: String {
+        let ccstring = (children.count == 0) ? ": (no children)" : ": (\(children.count) children)"
+        return "\(tiledNodeNiceName)\(ccstring)"
+    }
+    
+    /// A description of the node.
+    @objc public override var tiledDescription: String {
+        return "Layer container for vector objects."
+    }
+}
 
 
 

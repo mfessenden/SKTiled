@@ -363,12 +363,7 @@ extension MousePointer: TiledSceneCameraDelegate {
 extension MousePointer: TiledCustomReflectableType {
 
     public func dumpStatistics() {
-        print("MousePointer:")
-    }
-
-    /// Returns the internal **Tiled** node type.
-    @objc public var tiledNodeName: String {
-        return "mousepointer"
+        dump(self)
     }
 
     /// Returns a "nicer" node name, for usage in the inspector.

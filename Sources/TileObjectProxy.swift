@@ -194,11 +194,9 @@ internal class TileObjectProxy: SKShapeNode {
 
 // MARK: - Extensions
 
+
+/// :nodoc:
 extension TileObjectProxy {
-    
-    @objc override var tiledNodeName: String {
-        return "objectproxy"
-    }
     
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public override var tiledNodeNiceName: String {

@@ -845,7 +845,21 @@ extension SKTiledDemoScene {
                 object: nil
             )
         }
-
+        
+        // 's' clears the cache
+        if eventKey == 0x01 {
+            let layerName = "Floor"
+            var interval: TimeInterval = 0.5
+            if let layer = tilemap.getLayers(named: layerName).first as? SKTileLayer {
+                updateCommandString("cannot find a layer named '\(layerName)'")
+                for chunk in layer.chunks {
+                    chunk.highlightNode(with: TiledObjectColors.random, duration: interval)
+                    interval += 0.5
+                }
+            } else {
+                updateCommandString("cannot find a layer named '\(layerName)'")
+            }
+        }
 
         // 't' toggles effects rasterization
         if eventKey == 0x11 {
@@ -887,6 +901,9 @@ extension SKTiledDemoScene {
             //updateCommandString("No command set for '\(eventChars)'.", duration: 3.0)
             updateCommandString("dumping selected node properties", duration: 3.0)
         }
+        
+        
+        
         
         // 'w' clears the cache
         if eventKey == 0xd {

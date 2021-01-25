@@ -445,35 +445,11 @@ extension SKTilesetData: Hashable {
     }
 }
 
-/// :nodoc: Tile animation frame debug descriptions.
-extension SKTilesetData: TiledCustomReflectableType {
 
-    /// Returns the internal **Tiled** node type.
-    @objc public var tiledNodeName: String {
-        return "tile data"
-    }
-
-    /// Returns a "nicer" node name, for usage in the inspector.
-    @objc public var tiledNodeNiceName: String {
-        return "TileData"
-    }
-
-    /// Returns the internal **Tiled** node type icon.
-    @objc public var tiledIconName: String {
-        return "tiledata-icon"
-    }
-
-    /// A description of the node.
-    @objc public var tiledDescription: String {
-        return "\(tiledNodeName.titleCased()): \(id)"
-    }
-}
-
-
-/// :nodoc: String descriptions of the tlie data.
+/// :nodoc:
 extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
 
-    /// Tile data description.
+    /// String representation of the tile data.
     public var description: String {
         let className = String(describing: Swift.type(of: self))
         guard let tileset = tileset else {

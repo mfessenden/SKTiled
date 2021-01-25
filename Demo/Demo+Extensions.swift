@@ -827,6 +827,10 @@ extension NSEvent {
         return max(abs(deltaX),abs(deltaY))
     }
     
+    var delta: CGFloat {
+        return abs(deltaX) > abs(deltaY) ? deltaX : deltaY
+    }
+    
     /// Returns difference in scroll wheel events.
     var scrollingDelta: CGPoint {
         return CGPoint(x: scrollingDeltaX, y: scrollingDeltaY)

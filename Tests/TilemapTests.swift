@@ -31,25 +31,25 @@ import SpriteKit
 
 
 // Tile map instance used for this test.
-fileprivate var testBasicTilemap: SKTilemap?
-fileprivate let testBasicTilemapName = "test-tilemap"
+fileprivate var testTilemap: SKTilemap?
+fileprivate let testTilemapName = "test-tilemap"
 
 
 class TilemapTests: XCTestCase {
 
     override class func setUp() {
         super.setUp()
-        if (testBasicTilemap == nil) {
-            if let tilemapUrl = TestController.default.getResource(named: testBasicTilemapName, withExtension: "tmx") {
-                testBasicTilemap = SKTilemap.load(tmxFile: tilemapUrl.path, loggingLevel: .none)
+        if (testTilemap == nil) {
+            if let tilemapUrl = TestController.default.getResource(named: testTilemapName, withExtension: "tmx") {
+                testTilemap = SKTilemap.load(tmxFile: tilemapUrl.path, loggingLevel: .none)
             }
         }
     }
 
     /// Test that the tilemap has the correct attributes compared to the source Tiled file.
     func testBasicMapAttributes() {
-        guard let tilemap = testBasicTilemap else {
-            XCTFail("⭑ failed to load tilemap '\(testBasicTilemapName)'")
+        guard let tilemap = testTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testTilemapName)'")
             return
         }
 
@@ -63,8 +63,8 @@ class TilemapTests: XCTestCase {
 
     /// Test that the tilemap is correctly querying tiles of a certain type.
     func testQueryTilesOfType() {
-        guard let tilemap = testBasicTilemap else {
-            XCTFail("⭑ failed to load tilemap '\(testBasicTilemapName)'")
+        guard let tilemap = testTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testTilemapName)'")
             return
         }
 
@@ -75,8 +75,8 @@ class TilemapTests: XCTestCase {
 
     /// Test to make sure the tile map's `getObjectProxies` methods work.
     func testMapQueryObjectProxies() {
-        guard let tilemap = testBasicTilemap else {
-            XCTFail("⭑ failed to load tilemap '\(testBasicTilemapName)'")
+        guard let tilemap = testTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testTilemapName)'")
             return
         }
 
@@ -87,8 +87,8 @@ class TilemapTests: XCTestCase {
 
     /// Test to make sure the layer `getObjectProxies` methods work.
     func testLayerQueryObjectProxies() {
-        guard let tilemap = testBasicTilemap else {
-            XCTFail("⭑ failed to load tilemap '\(testBasicTilemapName)'")
+        guard let tilemap = testTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testTilemapName)'")
             return
         }
 
@@ -107,8 +107,8 @@ class TilemapTests: XCTestCase {
 
     /// Test that a layer can be queried with a path.
     func testQueryAtPath() {
-        guard let tilemap = testBasicTilemap else {
-            XCTFail("⭑ failed to load tilemap '\(testBasicTilemapName)'")
+        guard let tilemap = testTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testTilemapName)'")
             return
         }
 
@@ -134,8 +134,8 @@ class TilemapTests: XCTestCase {
     ///
     ///
     func testRenderableObjectsQuery() {
-        guard let tilemap = testBasicTilemap else {
-            XCTFail("⭑ failed to load tilemap '\(testBasicTilemapName)'")
+        guard let tilemap = testTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testTilemapName)'")
             return
         }
         

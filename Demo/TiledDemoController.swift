@@ -566,10 +566,12 @@ public class TiledDemoController: NSObject, Loggable {
 
 
         // loaded from preferences
-        var showObjects: Bool = defaultPreferences.showObjects
-        var enableEffects: Bool = defaultPreferences.enableEffects
-        var shouldRasterize: Bool = false
+        var showObjects = defaultPreferences.showObjects
+        var enableEffects = defaultPreferences.enableEffects
+        var shouldRasterize = false
         var tileUpdateMode: TileUpdateMode?
+        
+        var allowCameraZoom = false
 
 
         if (tileUpdateMode == nil) {
@@ -599,11 +601,19 @@ public class TiledDemoController: NSObject, Loggable {
         var notifyDelegatesOnContainedNodesChange: Bool = TiledGlobals.default.enableCameraContainedNodesCallbacks
         var zoomClamping: CameraZoomClamping = CameraZoomClamping.none
         var ignoreZoomConstraints: Bool = defaultPreferences.ignoreZoomConstraints
-
+        
+        
+        var currentCameraAllowRotation = false
+        var currentCameraZRotation: CGFloat = 0
+        
+        if (currentCameraZRotation != 0) {
+            currentCameraAllowRotation = true
+        }
+        
         var sceneInfo: [String: Any] = [:]
 
 
-        // get current scene info
+        // get current scene & camera info
         if let currentScene = view.scene as? SKTiledDemoScene {
             hasCurrent = true
             if let cameraNode = currentScene.cameraNode {
@@ -613,6 +623,7 @@ public class TiledDemoController: NSObject, Loggable {
                 notifyDelegatesOnContainedNodesChange = cameraNode.notifyDelegatesOnContainedNodesChange
                 zoomClamping = cameraNode.zoomClamping
                 ignoreZoomConstraints = cameraNode.ignoreZoomConstraints
+                currentCameraZRotation = cameraNode.zRotation
             }
 
             // pass current values to next tilemap
@@ -631,7 +642,8 @@ public class TiledDemoController: NSObject, Loggable {
                 tilemap.dataStorage = nil
                 tilemap.removeFromParent()
             }
-
+            
+            // destory the current instance
             currentScene.tilemap = nil
             isPaused = currentScene.isPaused
             currentSpeed = currentScene.speed
@@ -676,7 +688,11 @@ public class TiledDemoController: NSObject, Loggable {
                 nextScene.cameraNode?.notifyDelegatesOnContainedNodesChange = notifyDelegatesOnContainedNodesChange
                 nextScene.cameraNode?.zoomClamping = zoomClamping
                 nextScene.cameraNode?.ignoreZoomConstraints = ignoreZoomConstraints
-
+                nextScene.cameraNode?.zRotation = currentCameraZRotation
+                nextScene.cameraNode?.allowRotation = currentCameraAllowRotation
+                
+                tilemap.allowRotation = currentCameraAllowRotation
+                
                 // previous camera settings
                 if (usePreviousCamera == true) {
                     nextScene.cameraNode?.showOverlay = showOverlay
@@ -687,7 +703,7 @@ public class TiledDemoController: NSObject, Loggable {
 
                 // if tilemap has a property override to show objects, use it...else use demo prefs
                 tilemap.isShowingObjectBounds = (tilemap.boolForKey("showObjects") == true) ? true : showObjects
-
+                
                 sceneInfo["hasGraphs"] = (nextScene.graphs.isEmpty == false)
                 sceneInfo["hasObjects"] = nextScene.tilemap?.getObjects().isEmpty == false
                 sceneInfo["focusedObjectData"] = ""

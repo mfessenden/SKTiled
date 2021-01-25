@@ -64,8 +64,13 @@ public class SKTileLayerChunk: TiledLayerObject {
         // name, width and height are required
         self.layer = layer
         
+        // chunk mapSize should be 128x128
+        
+        // chunk position
         guard let xpos = attributes["x"] else { return nil }
         guard let ypos = attributes["y"] else { return nil }
+        
+        // chunk size shoud be 16x16
         guard let width = attributes["width"] else { return nil }
         guard let height = attributes["height"] else { return nil }
         
@@ -73,22 +78,36 @@ public class SKTileLayerChunk: TiledLayerObject {
         assert(Int(width) != nil, "cannot parse chunk width: '\(width)'")
         assert(Int(height) != nil, "cannot parse chunk height: '\(height)'")
         
+        
+        
+        /// chunk size becomes 16x16
         self.chunkSize = CGSize(width: CGFloat(Int(width)!), height: CGFloat(Int(height)!))
+        self.chunkOffset = CGPoint(x: CGFloat(Int(xpos)!), y: CGFloat(Int(ypos)!))
         self.tiles = Array2D<SKTile>(columns: Int(chunkSize.width), rows: Int(chunkSize.height))
         
+        
+        // TODO: need a different super
+        /// `mapSize` gets set here, but will be wrong
         super.init(tilemap: layer.tilemap)
         
+        self.mapSize = CGSize(width: chunkSize.width, height: chunkSize.height)
+        //self.mapDelegate = layer as TiledMappableGeometryType
         self.layerType = .tile
-        self.offset = CGPoint(x: Int(xpos)!, y: Int(ypos)!)
+    
         
-        let chunkIndex = layer.chunks.count
+        self.offset = CGPoint(x: Int(xpos)!, y: Int(ypos)!)
         self.navigationKey = "\(layer.layerName)/Chunk"
-        self.name = "\(layer.layerName)/chunk\(chunkIndex)"
         self.shouldEnableEffects = false
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        removeAllActions()
+        removeAllChildren()
+        removeFromParent()
     }
 
 
@@ -288,41 +307,52 @@ public class SKTileLayerChunk: TiledLayerObject {
     /// Returns a custom mirror for this layer.
     public override var customMirror: Mirror {
         return Mirror(self, children:
-                        ["layer": layer.layerName,
+                        ["xPath": xPath,
+                         "uuid": uuid,
+                         "path": path,
                          "size": mapSize,
                          "tileSize": tileSize,
+                         "chunkSize": chunkSize,
+                         "chunkOffset": chunkOffset,
                          "offset": offset,
                          "data": tiles
                         ],
                       ancestorRepresentation: .suppressed
         )
     }
-    
-    
-    // MARK: - UI
-    
+}
 
+
+// MARK: - Extensions
+
+
+
+/// :nodoc:
+extension SKTileLayerChunk {
+    
+    
     /// Returns the internal **Tiled** node type.
-    @objc public override var tiledNodeName: String {
+    @objc public var tiledNodeName: String {
         return "chunk"
     }
-
+    
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public override var tiledNodeNiceName: String {
         return "Tile Layer Chunk"
     }
-
+    
     /// Returns the internal **Tiled** node type icon.
     @objc public override var tiledIconName: String {
         return "chunk-icon"
     }
-
+    
     @objc public override var tiledListDescription: String {
         return "\(tiledNodeNiceName): "
     }
-
+    
     /// A description of the node.
     @objc public override var tiledDescription: String {
         return "Tile layer chunk."
     }
+    
 }

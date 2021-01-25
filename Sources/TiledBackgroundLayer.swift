@@ -111,12 +111,6 @@ internal class TiledBackgroundLayer: TiledLayerObject {
 
 extension TiledBackgroundLayer {
     
-    
-    /// Returns the internal **Tiled** node type.
-    @objc public override var tiledNodeName: String {
-        return "background"
-    }
-    
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public override var tiledNodeNiceName: String {
         return "Background Layer"
