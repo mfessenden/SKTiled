@@ -48,9 +48,9 @@ import SpriteKit
 /// | `contains(touch: CGPoint)`     | returns true if a point is contained in this shape's frame  |
 ///
 @objc public protocol TiledGeometryType: TiledSelectableType, TiledRasterizableType, TiledObjectType, DebugDrawableType {
-
-    /// Object points, translated with the current map orientation.
-    @objc func getVertices(offset: CGPoint) -> [CGPoint]
+    
+    /// The object's parent container.
+    @objc optional var container: TiledMappableGeometryType? { get }
 
     /// A path defining the shape of geometry. Used to draw the bounding shape.
     @objc var objectPath: CGPath { get }
@@ -73,6 +73,12 @@ import SpriteKit
     /// - Returns: node was touched.
     @objc func contains(touch: CGPoint) -> Bool
 
+    /// Returns the points representing the object's bounding shape - translated with the current map orientation.
+    ///
+    /// - Parameter offset: offset to be applied to each point.
+    /// - Returns: array of points.
+    @objc func getVertices(offset: CGPoint) -> [CGPoint]
+
     /// Refresh the object's content.
     @objc optional func draw()
 }
@@ -85,7 +91,7 @@ import SpriteKit
 
 /// :nodoc:
 extension TiledGeometryType {
-
+    
     /// Returns the `SKTiled` geometry object class name.
     public var className: String {
         let objtype = String(describing: Swift.type(of: self))
@@ -162,7 +168,7 @@ extension SKNode {
             return CGRect.zero
         }
 
-        // TODO: offset?
+        // FIXME: offset is off with infinite maps
         let nodesize = tilednode.sizeInPoints
         return CGRect(x: 0, y: 0, width: nodesize.width, height: -nodesize.height)
     }
@@ -175,8 +181,15 @@ extension SKNode {
         guard let tiledGeo = self as? TiledGeometryType else {
             return [CGPoint]()
         }
-        // TODO: offset?
-        return tiledGeo.boundingRect.points
+        
+        // FIXME: offset is off with infinite maps
+        var offset = CGPoint.zero
+        if let tiledLayer = self as? TiledLayerObject {
+            offset = tiledLayer.layerInfiniteOffset
+        }
+        
+        let vertices = tiledGeo.boundingRect.points
+        return vertices.map { $0 - offset }
     }
 
     /// Generic highlight method that works for all `SpriteKit` types.

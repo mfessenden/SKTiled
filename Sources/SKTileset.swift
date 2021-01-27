@@ -764,42 +764,61 @@ public class SKTileset: NSObject, CustomReflectable, TiledAttributedType {
         var firstGID: UInt32
         var lastGID: UInt32
         var dataCount: Int
-        var tileCount: Int
+        var localRange: ClosedRange<UInt32>
+        var globalRange: ClosedRange<UInt32>
     }
     
     
+    /// Referenced as `(label: "tileset", value: tileset.tilesetDataStruct())`
+    ///
+    /// - Returns: custom mirror data
     func tilesetDataStruct() -> TilesetMirror {
-        return TilesetMirror(name: name,
+        let nameValue = (url != nil) ? url.relativePath : name
+        return TilesetMirror(name: nameValue,
                              firstGID: firstGID,
                              lastGID: lastGID,
                              dataCount: dataCount,
-                             tileCount: tilecount
+                             localRange: localRange,
+                             globalRange: globalRange
                 )
-        
         
     }
     
-    
+    /// Returns a custom mirror for this object.
     public var customMirror: Mirror {
-        return Mirror(self, children:
-                        ["name": name,
-                         "tile size": tileSize,
-                         "firstgid": firstGID,
-                         "lastgid": lastGID,
-                         "tilecount": tilecount,
-                         "collection": isImageCollection,
-                         "data": tileData
-                        ]
-        )
+        var attributes: [(label: String?, value: Any)] = [
+            (label: "name", value: name),
+            (label: "tile size", value: tileSize),
+            (label: "firstgid", value: firstGID),
+            (label: "lastgid", value: lastGID),
+            (label: "tilecount", value: tilecount),
+            (label: "collection", value: isImageCollection),
+            (label: "data", value: tileData),
+            (label: "properties", value: mirrorChildren())
+        ]
+        
+        
+        /// internal debugging attrs
+        attributes.append(("tiled element name", tiledElementName))
+        //attributes.append(("tiled node nice name", tiledNodeNiceName))
+        //attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
+        attributes.append(("tiled description", tiledDescription))
+        
+        
+        return Mirror(self, children: attributes, displayStyle: .class)
     }
 }
 
 
+// MARK: - Helpers
 
 
 public func == (lhs: SKTileset, rhs: SKTileset) -> Bool {
     return (lhs.hash == rhs.hash)
 }
+
+
+// MARK: - Extensions
 
 
 extension SKTileset {
@@ -879,12 +898,11 @@ extension SKTileset {
 }
 
 
-
 /// :nodoc
 extension SKTileset {
     
     /// Returns the internal **Tiled** node type.
-    @objc public var tiledNodeName: String {
+    @objc public var tiledElementName: String {
         return "tileset"
     }
     
@@ -895,8 +913,24 @@ extension SKTileset {
     
     /// A description of the node.
     @objc public var tiledDescription: String {
-        return "\(tiledNodeName.titleCased()): "
+        return "\(tiledElementName.titleCased()): "
     }
+}
+
+
+/// :nodoc
+extension SKTileset.TilesetMirror: CustomStringConvertible, CustomDebugStringConvertible {
+    
+    /// A textual representation of the object.
+    public var description: String {
+        return #"'\#(name)'"#
+    }
+    
+    /// A textual representation of the object, used for debugging.
+    public var debugDescription: String {
+        return #"\#(description)"#
+    }
+    
 }
 
 
@@ -906,6 +940,7 @@ extension SKTileset {
 extension SKTileset {
 
     /// Initialize with basic properties.
+    ///
     /// - Parameters:
     ///   - name: tileset name.
     ///   - size: tile size.

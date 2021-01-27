@@ -27,7 +27,6 @@
 import SpriteKit
 
 
-
 /// ## Overview
 ///
 /// The `TiledCustomReflectableType` protocol outlines internal debugging elements that can be used to query objects for state changes.
@@ -36,19 +35,20 @@ import SpriteKit
 /// ### Properties
 ///
 /// | Property               | Description                                 |
-/// | -----------------------| ------------------------------------------- |
-/// | `tiledNodeName`        | Tiled node type                             |
+/// |:-----------------------| ------------------------------------------- |
+/// | `tiledElementName`     | Tiled element type                          |
 /// | `tiledNodeNiceName`    | Proper node name                            |
 /// | `tiledIconName`        | Node icon representation                    |
 /// | `tiledListDescription` | Description of the node used for list views |
-/// | `tiledDescription`     | Description of the node                     |
+/// | `tiledDescription`     | Description of the node type                |
+///
 /// :nodoc:
 @objc public protocol TiledCustomReflectableType: class {
 
     /// Returns the internal **Tiled** node type, for XML nodes, or our custom types.
-    @objc optional var tiledNodeName: String { get }
+    @objc optional var tiledElementName: String { get }
 
-    /// Returns a "nicer" node name, for usage in the inspector.
+    /// Returns a "nicer" node name, for usage in the inspector and menu items.
     @objc optional var tiledNodeNiceName: String { get }
 
     /// Returns the internal **Tiled** node type icon.
@@ -57,7 +57,7 @@ import SpriteKit
     /// A description of the node used in list views.
     @objc optional var tiledListDescription: String { get }
 
-    /// A description of the node.
+    /// Description of the node type.
     @objc optional var tiledDescription: String { get }
 
     /// Dump the current object's properties to the console.

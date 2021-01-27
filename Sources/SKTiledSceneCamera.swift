@@ -1043,8 +1043,12 @@ extension SKTiledSceneCamera {
     public override func mouseMoved(with event: NSEvent) {
         super.mouseMoved(with: event)
         
+        
         if (event.type == .mouseMoved) {
             lastLocation = event.location(in: self)
+            
+            //guard (TiledGlobals.default.enableMouseEvents == true) else { return }
+            
             
             for delegate in self.delegates {
                 guard (delegate.receiveCameraUpdates == true) else {
@@ -1073,7 +1077,7 @@ extension SKTiledSceneCamera {
     ///
     /// - Parameter event: mouse wheel event.
     public override func scrollWheel(with event: NSEvent) {
-        guard let scene = self.scene,(allowZoom == true) else {
+        guard let scene = self.scene, (allowZoom == true) else {
             return
         }
         

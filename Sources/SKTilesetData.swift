@@ -373,20 +373,21 @@ public class SKTilesetData: CustomReflectable, TiledAttributedType {
     
     /// Returns a custom mirror for this object.
     public var customMirror: Mirror {
-        return Mirror(self,
-                      children: [
-                        "id": id,
-                        "gid": globalID,
-                        "type": type as Any,
-                        "source": source as Any,
-                        "probability": probability,
-                        "tileset": tileset.tilesetDataStruct(),
-                        "tileSize:": tileSize,
-                        "tile offset": tileOffset,
-                        "properties": properties
-                      ],
-                      displayStyle: .class
-        )
+        
+        let attributes: [(label: String?, value: Any)] = [
+            (label: "id", value: id),
+            (label: "gid", value: globalID),
+            (label: "type", value: type as Any),
+            (label: "frames", value: frames),
+            (label: "source", value: source as Any),
+            (label: "probability", value: probability),
+            (label: "tile size", value:  tileSize),
+            (label: "tileoffset", value: tileOffset),
+            (label: "properties", value: mirrorChildren()),
+            (label: "tileset", value: tileset.tilesetDataStruct())
+        ]
+        
+        return Mirror(self, children: attributes, displayStyle: .optional)   // was .class
     }
 }
 

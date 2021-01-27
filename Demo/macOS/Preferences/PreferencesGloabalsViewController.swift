@@ -165,7 +165,7 @@ class PreferencesGloabalsViewController: NSViewController {
     
     /// Handler for button/checkbox events.
     ///
-    /// - Parameter sender: invoking UI element.
+    /// - Parameter sender: invoking ui element.
     @objc func handleButtonEvent(_ sender: NSButton) {
         if let bid = sender.identifier {
             let textIdentifier = bid.rawValue

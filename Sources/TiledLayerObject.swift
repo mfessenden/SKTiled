@@ -106,6 +106,9 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 
     /// Reference to the parent tilemap.
     unowned let tilemap: SKTilemap
+    
+    /// Reference to the parent container.
+    public weak var container: TiledMappableGeometryType?
 
     /// Reference to the mappable parent.
     unowned let mapDelegate: TiledMappableGeometryType
@@ -830,11 +833,24 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 
     // MARK: - Debugging
 
-    public func debugLayer() {
-        /* override in subclass */
-        let comma = (propertiesString.isEmpty == false) ? ", " : ""
-        self.log("Layer: \(name != nil ? "'\(layerName)'" : "null")\(comma)\(propertiesString)", level: .debug)
+    struct LayerMirror {
+        var name: String
+        var path: String
+        var mapSize: CGSize
+        var tileSize: CGSize
     }
+    
+    /// Referenced as `(label: "layer", value: layer.layerDataStruct())`
+    ///
+    /// - Returns: custom mirror data
+    func layerDataStruct() -> LayerMirror {
+        return LayerMirror(name: layerName,
+                           path: path,
+                           mapSize: mapSize,
+                           tileSize: tileSize
+        )
+    }
+    
 
     /// Toggle layer isolation on/off.
     ///
@@ -943,18 +959,19 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 
     /// Returns a custom mirror for this layer.
     public var customMirror: Mirror {
-        return Mirror(self, children:
-                        ["name": layerName,
-                         "uuid": uuid,
-                         "xPath": xPath,
-                         "path": path,
-                         "layerType": layerType,
-                         "size": mapSize,
-                         "tileSize": tileSize,
-                        ],
-                      ancestorRepresentation: .suppressed
+        let attributes: [(label: String?, value: Any)] = [
+            (label: "name", value: layerName),
+            (label: "uuid", uuid),
+            (label: "xPath", value: xPath),
+            (label: "path", value: path),
+            (label: "layerType", value: layerType),
+            (label: "size", value: mapSize),
+            (label: "tile size", value: tileSize),
+            (label: "offset", value: offset),
+            (label: "properties", value: mirrorChildren())
+        ]
 
-        )
+        return Mirror(self, children: attributes, ancestorRepresentation: .suppressed)
     }
 }
 
@@ -1105,11 +1122,11 @@ extension TiledLayerObject {
     public override var description: String {
         let isTopLevel = self.parents.count == 1
         let indexString = (isTopLevel == true) ? ", index: \(index)" : ""
-        return "\(tiledNodeNiceName) '\(path)'\(indexString) zpos: \(Int(zPosition))"
+        return #"\#(tiledNodeNiceName) '\#(path)'\#(indexString) zpos: \#(Int(zPosition))"#
     }
 
     public override var debugDescription: String {
-        return description
+        return #"<\#(description)>"#
     }
 
     /// Returns a string representation for use with a dropdown menu.
@@ -1282,8 +1299,22 @@ extension TiledLayerObject.TileOffset {
 }
 
 
-extension TiledLayerObject {
+/// :nodoc
+extension TiledLayerObject.LayerMirror: CustomStringConvertible, CustomDebugStringConvertible {
+    
+    /// A textual representation of the object.
+    public var description: String {
+        return "Layer"
+    }
+    
+    /// A textual representation of the object, used for debugging.
+    public var debugDescription: String {
+        return #"<\#(description)>"#
+    }
+}
 
+
+extension TiledLayerObject {
 
     @objc func dumpStatistics() {
         print("\nLayer: '\(layerName)'")
@@ -1293,7 +1324,6 @@ extension TiledLayerObject {
         print("   offset:     \(offset.shortDescription)")
         print("\n")
     }
-
 }
 
 
@@ -1374,6 +1404,13 @@ extension TiledLayerObject {
     @available(*, deprecated, renamed: "addChild(_:coord:offset:zpos:)")
     public func addChild(_ node: SKNode, coord: CGPoint, offset: CGPoint = CGPoint.zero, zpos: CGFloat? = nil) {
         addChild(node, coord: coord.toVec2, offset: offset, zpos: zpos)
+    }
+    
+    @available(*, deprecated, message: "use `dumpStatistics`")
+    public func debugLayer() {
+        /* override in subclass */
+        let comma = (propertiesString.isEmpty == false) ? ", " : ""
+        self.log("Layer: \(name != nil ? "'\(layerName)'" : "null")\(comma)\(propertiesString)", level: .debug)
     }
 }
 

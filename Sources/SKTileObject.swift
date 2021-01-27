@@ -292,7 +292,12 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
 
     /// Returns the bounding box of the shape.
     open override var boundingRect: CGRect {
-        return CGRect(x: 0, y: 0, width: size.width, height: -size.height)
+        switch shapeType {
+            case .polyline, .polygon:
+                return calculateAccumulatedFrame()
+            default:
+                return CGRect(x: 0, y: 0, width: size.width, height: -size.height)
+        }
     }
 
     /// Returns the object anchor point (based on the current map's tile size).
@@ -932,18 +937,14 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
     #if os(macOS)
 
     open override func mouseMoved(with event: NSEvent) {
-        guard (TiledGlobals.default.enableMouseEvents == true) else {
-            return
-        }
+        // guard (TiledGlobals.default.enableMouseEvents == true) else { return }
         if contains(touch: event.location(in: self)) {
             onMouseOver?(self)
         }
     }
 
     open override func mouseDown(with event: NSEvent) {
-        guard (TiledGlobals.default.enableMouseEvents == true) else {
-            return
-        }
+        // guard (TiledGlobals.default.enableMouseEvents == true) else { return }
         if contains(touch: event.location(in: self)) {
             onMouseClick?(self)
         }
@@ -1082,7 +1083,10 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
             (label: "objectType", value: objectType),
             (label: "shapeType", value: shapeType),
             (label: "frameColor", value: frameColor.hexString()),
-            (label: "properties", value: properties)
+            (label: "properties", value: mirrorChildren()),
+            (label: "bounds", value: boundingRect),
+            (label: "visibleToCamera", value: visibleToCamera),
+            (label: "isUserInteractionEnabled", value: isUserInteractionEnabled)
         ]
         
         if let gid = globalID {
@@ -1094,7 +1098,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
         }
         
         if let layer = layer {
-            attributes.insert(("layer", layer.xPath), at: 0)
+            attributes.append(("layer", layer.layerDataStruct()))
         }
         
         if let type = type {
@@ -1104,6 +1108,13 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
         if let name = name {
             attributes.insert(("name", name), at: 0)
         }
+        
+        /// internal debugging attrs
+        attributes.append(("tiled element name", tiledElementName))
+        attributes.append(("tiled node nice name", tiledNodeNiceName))
+        attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
+        attributes.append(("tiled description", tiledDescription))
+        
         
         return Mirror(self, children: attributes, ancestorRepresentation: .suppressed)
         
@@ -1164,7 +1175,7 @@ extension SKTileObject.TiledObjectShape {
 extension SKTileObject {
     
     /// Returns the internal **Tiled** node type.
-    @objc public var tiledNodeName: String {
+    @objc public var tiledElementName: String {
         return "object"
     }
     
@@ -1210,9 +1221,14 @@ extension SKTileObject {
         let templateDescription = (template != nil) ? " Template: '\(template!)'" : ""
         let miscDesc = (objectType == .text) ? " text quality: \(renderQuality)" : (objectType == .tile) ? " tile id: \(globalID ?? 0)" : (objectType == .point) ? "point:" : ""
         let layerDescription = (layer != nil) ? " Layer: '\(layer.layerName)'" : ""
-        let pointString = (points.isEmpty == true) ? "0 points" : "\(points.count) points"
         
-        return "\(tiledNodeName) id: \(id)\(objectName)\(typeString)\(templateDescription)\(miscDesc)\(comma)\(propertiesString)\(layerDescription) \(pointString)"
+        
+        var pointsString = ""
+        if (isPolyType == true) {
+            pointsString = (points.isEmpty == true) ? " 0 points" : " \(points.count) points"
+        }
+        
+        return "\(tiledNodeNiceName) id: \(id)\(objectName)\(typeString)\(templateDescription)\(miscDesc)\(comma)\(propertiesString)\(layerDescription)\(pointsString)"
     }
 
     /// Returns a string representation for debugging.

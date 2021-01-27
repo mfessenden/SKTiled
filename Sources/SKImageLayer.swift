@@ -167,7 +167,7 @@ public class SKImageLayer: TiledLayerObject {
     // MARK: - Debugging
 
     /// Returns the internal **Tiled** node type.
-    @objc public var tiledNodeName: String {
+    @objc public var tiledElementName: String {
         return "imagelayer"
     }
 

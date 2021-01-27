@@ -201,7 +201,7 @@ public class SKGroupLayer: TiledLayerObject {
 extension SKGroupLayer {
     
     /// Returns the internal **Tiled** node type.
-    @objc public var tiledNodeName: String {
+    @objc public var tiledElementName: String {
         return "group"
     }
     

@@ -528,10 +528,8 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     }
     
     deinit {
-        NotificationCenter.default.post(
-            name: Notification.Name.Layer.TileRemoved,
-            object: self
-        )
+        removeAllActions()
+        removeAllChildren()
     }
 
     // MARK: - Drawing
@@ -820,10 +818,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     ///
     /// - Parameter event: mouse event.
     open override func mouseMoved(with event: NSEvent) {
-        guard (TiledGlobals.default.enableMouseEvents == true) else {
-            return
-        }
-
+        //guard (TiledGlobals.default.enableMouseEvents == true) else { return }
         if contains(touch: event.location(in: self)) {
             // for demo, this calls `Notification.Name.Demo.TileClicked`
             onMouseOver?(self)
@@ -834,10 +829,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     ///
     /// - Parameter event: mouse event.
     open override func mouseDown(with event: NSEvent) {
-        guard (TiledGlobals.default.enableMouseEvents == true) else {
-            return
-        }
-
+        // guard (TiledGlobals.default.enableMouseEvents == true) else { return }
         if contains(touch: event.location(in: self)) {
             // for demo, this calls `Notification.Name.Demo.TileClicked`
             onMouseClick?(self)
@@ -952,24 +944,32 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     
     /// Custom mirror for tile objects.
     public var customMirror: Mirror {
-        return Mirror(self,
-                      children: [
-                        "type": type as Any,
-                        "globalId": _globalId,
-                        "tileData": tileData,
-                        "tileSize": tileSize,
-                        "layer": layer.xPath,
-                        "renderMode": renderMode,
-                        "alignment": alignment,
-                        "bounds": boundingRect,
-                        "visibleToCamera": visibleToCamera,
-                        "blockNotifications": blockNotifications,
-                        
-                      ]
-        )
-        
-    }
 
+        var attributes: [(label: String?, value: Any)] = [
+            (label: "type", value: type as Any),
+            (label: "global id", value: _globalId),
+            (label: "tile size", value: tileSize),
+            (label: "renderMode", value: renderMode),
+            (label: "alignment", value: alignment),
+            (label: "bounds", value: boundingRect),
+            (label: "visibleToCamera", value: visibleToCamera),
+            (label: "blockNotifications", value: blockNotifications),
+            (label: "isUserInteractionEnabled", value: isUserInteractionEnabled),
+            (label: "data", value: tileData)
+        ]
+        
+        if let layer = layer {
+            attributes.append(("layer", layer.layerDataStruct()))
+        }
+
+        /// internal debugging attrs
+        attributes.append(("tiled element name", tiledElementName))
+        attributes.append(("tiled node nice name", tiledNodeNiceName))
+        attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
+        attributes.append(("tiled description", tiledDescription))
+        
+        return Mirror(self, children: attributes)
+    }
 }
 
 
@@ -1143,7 +1143,8 @@ extension SKTile {
     /// Tile textual description.
     open override var description: String {
         let layerDescription = (layer != nil) ? ", Layer: '\(layer.layerName)'" : ""
-        return "\(self.className): id: \(tileData.id)\(layerDescription) \(renderMode.debugDescription)"
+        let spacer = (renderMode == TileRenderMode.default) ? "" : " "
+        return "\(self.className): id: \(tileData.id)\(layerDescription)\(spacer)\(renderMode.debugDescription)"
     }
 
     /// Tile debug textual description.
@@ -1324,13 +1325,13 @@ extension SKTile {
 extension SKTile {
 
     /// Returns the internal **Tiled** node type.
-    @objc public var tiledNodeName: String {
+    @objc public var tiledElementName: String {
         return "tile"
     }
 
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public override var tiledNodeNiceName: String {
-        return "Tile Node"
+        return "Tile"
     }
 
     /// Returns the internal **Tiled** node type icon.

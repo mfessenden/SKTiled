@@ -134,4 +134,41 @@ class InfiniteMapTests: XCTestCase {
         XCTAssertEqual(tilesetPropertyValue2, expectedPropertyValue2, "⭑ tile data property '\(propertyName2)' has an incorrect value '\(tilesetPropertyValue2)', expected: `\(expectedPropertyValue2)`.")
         
     }
+    
+    /// Test to see if layer & chunk `xPath` attributes are set correctly.
+    func testLayerAndChunkXPathNaming() {
+        guard let tilemap = testTilemap else {
+            XCTFail("⭑ failed to load tilemap `\(testTilemapName)`")
+            return
+        }
+        
+        let layerName = "Walls"
+        let expectedXPath = "/map/layer[3]"
+        
+        
+        guard let tileLayer = tilemap.getLayers(named: layerName).first as? SKTileLayer else {
+            XCTFail("⭑ cannot find layer named `\(layerName)`")
+            return
+        }
+        
+        let layerXPath = tileLayer.xPath
+        let layerUUID = tileLayer.uuid
+        
+        XCTAssertEqual(layerXPath, expectedXPath, "⭑ layer xPath '\(layerXPath)' is incorrect, expected: '\(expectedXPath)'.")
+        
+        
+        
+        guard let layerAtXPath = tilemap.getLayer(xPath: expectedXPath) else {
+            XCTFail("⭑ cannot find layer at xPath '\(expectedXPath)'")
+            return
+        }
+        
+        let thisLayerXPath = layerAtXPath.xPath
+        let thisLayerUUID = layerAtXPath.uuid
+        
+        XCTAssertEqual(layerUUID, thisLayerUUID, "⭑ layer uuid '\(thisLayerUUID)' is incorrect, expected: '\(layerUUID)'.")
+        
+        XCTAssertEqual(thisLayerXPath, layerXPath, "⭑ layer xPath '\(thisLayerXPath)' is incorrect, expected: '\(layerXPath)'.")
+        
+    }
 }

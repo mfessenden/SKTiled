@@ -236,9 +236,6 @@ extension TiledAttributedType {
         return outputString
     }
 
-
-
-
     /// Returns true if the node has the given custom `SKTiled` property (case insensitive).
     ///
     /// - Parameter key: custom property key.
@@ -395,6 +392,20 @@ extension TiledAttributedType {
         }
         return [Double]()
     }
+}
+
+
+/// :nodoc
+extension TiledAttributedType {
+    
+    public func mirrorChildren() -> [(label: String, value: Any)] {
+        var attributes: [(label: String, value: Any)] = []
+        for (key, value) in properties {
+            attributes.append((key, value as Any))
+        }
+        return attributes
+    }
+    
 }
 
 

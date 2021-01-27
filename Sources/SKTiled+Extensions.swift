@@ -115,6 +115,12 @@ internal func getSwiftVersion() -> String {
 /// Dumps SKTiled framework globals to the console.
 public func SKTiledGlobals() {
     TiledGlobals.default.dumpStatistics()
+    
+    /*
+     print("\n")
+     dump(TiledGlobals.default)
+     print("\n")
+     */
 }
 
 /// Returns the device screen size.
@@ -480,9 +486,12 @@ extension Int {
     }
 }
 
-
+/// :nodoc:
 extension Array where Element: SKNode {
-
+    
+    /// Returns the topmost element in the array.
+    ///
+    /// - Returns: first `SKNode` by-zposition.
     public func topMost() -> SKNode? {
         return self.sorted(by: { $0.zPosition > $1.zPosition }).first
     }
@@ -491,20 +500,68 @@ extension Array where Element: SKNode {
 
 extension Mirror {
     
+    
     static func reflectProperties<T>(
         of target: Any,
         matchingType type: T.Type = T.self,
         using closure: (T) -> Void
     ) {
         let mirror = Mirror(reflecting: target)
-        
         for child in mirror.children {
             (child.value as? T).map(closure)
         }
     }
 }
 
+// MARK: - Cocoa
 
+#if os(macOS)
+extension NSEvent {
+    
+    /// Returns the local position in a view. Converts a global position to a local position.
+    ///
+    /// - Parameter view: view.
+    /// - Returns: point of event in the given view.
+    func localPosition(_ view: NSView) -> CGPoint {
+        return view.convert(locationInWindow, from: nil)
+    }
+    
+    /// Indicates the `option` key is currently pressed.
+    var optionKeyPressed: Bool {
+        return modifierFlags.contains(NSEvent.ModifierFlags.option)
+    }
+    
+    /// Indicates the `control` key is currently pressed.
+    var controlKeyPressed: Bool {
+        return modifierFlags.contains(NSEvent.ModifierFlags.control)
+    }
+    
+    /// Indicates the `command` key is currently pressed.
+    var commandKeyPressed: Bool {
+        return modifierFlags.contains(NSEvent.ModifierFlags.command)
+    }
+    
+    /// Gives an approximation of the mouse movement speed.
+    var mouseSpeed: CGFloat {
+        return max(abs(deltaX),abs(deltaY))
+    }
+    
+    var delta: CGFloat {
+        return abs(deltaX) > abs(deltaY) ? deltaX : deltaY
+    }
+    
+    /// Returns difference in scroll wheel events.
+    var scrollingDelta: CGPoint {
+        return CGPoint(x: scrollingDeltaX, y: scrollingDeltaY)
+    }
+    
+    // TODO: remove this
+    func isPressModifierFlags(only flag: NSEvent.ModifierFlags) -> Bool {
+        return modifierFlags.intersection(.deviceIndependentFlagsMask) == flag
+    }
+}
+
+#endif
 
 
 // MARK: - UIKit
@@ -1164,17 +1221,6 @@ extension SKSpriteNode {
     }
 }
 
-
-/*
-/// :nodoc:
-extension SKSpriteNode: CustomReflectable {
-    
-    /// Custom mirror for tile objects.
-    public var customMirror: Mirror {
-        return Mirror(reflecting: self)
-    }
-}
-*/
 
 extension SKColor {
 

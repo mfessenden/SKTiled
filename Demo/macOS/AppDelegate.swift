@@ -70,6 +70,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // debug menu
     @IBOutlet weak var debugMainMenu: NSMenuItem!
     @IBOutlet weak var loggingLevelMenuItem: NSMenuItem!
+    @IBOutlet weak var mouseEventsMenuItem: NSMenuItem!
     @IBOutlet weak var mouseFiltersMenuItem: NSMenuItem!
     @IBOutlet weak var selectedNodesMenuItem: NSMenuItem!
     @IBOutlet weak var tileColorsMenuItem: NSMenuItem!
@@ -166,7 +167,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         renderStatisticsMenuItem.state = (TiledGlobals.default.enableRenderCallbacks == true) ? .on : .off
         cameraCallbacksMenuItem.toolTip = "toggles the `TiledGlobals.enableCameraCallbacks` property"
         cameraTrackVisibleNodesItem.toolTip = "toggles the `SKTiledSceneCamera.notifyDelegatesOnContainedNodesChange` property"
-
+        mouseEventsMenuItem.state = (TiledGlobals.default.enableMouseEvents == true) ? .on : .off
     }
 
     /// Reset the interace. Called when the `Notification.Name.DemoController.ResetDemoInterface` notification is sent.
@@ -210,6 +211,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // selected nodes menu
         selectedNodesMenuItem.submenu?.removeAllItems()
         selectedNodesMenuItem.isEnabled = false
+        
+        // mouse events
+        mouseEventsMenuItem.state = (TiledGlobals.default.enableMouseEvents == true) ? .on : .off
  
     }
 
@@ -882,7 +886,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @IBAction func drawSceneGraphsAction(_ sender: NSMenuItem) {
-        print("⭑ [AppDelegate]: drawing graphs action...")
         guard let gameController = viewController else { return }
         let demoController = gameController.demoController
         demoController.toggleMapGraphVisualization()
@@ -896,7 +899,24 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     // MARK: - Debug Menu
-
+    @IBAction func enableMouseEventsAction(_ sender: Any) {
+        guard let menuItem = sender as? NSMenuItem else {
+            return
+        }
+        
+        let currentValue = (menuItem.state == .on) ? true : false
+        TiledGlobals.default.enableMouseEvents = !currentValue
+        
+        NotificationCenter.default.post(
+            name: Notification.Name.Globals.Updated,
+            object: nil
+        )
+        
+        let enableString = (TiledGlobals.default.enableMouseEvents == true) ? "enabling" : "disabling"
+        updateCommandString("\(enableString) mouse events", duration: 4)
+    }
+    
+    
     @IBAction func showGlobalsAction(_ sender: Any) {
         TiledGlobals.default.dumpStatistics()
     }
@@ -916,7 +936,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Called when the map isolation mode is changed.
     ///
-    /// - Parameter sender: invoking UI element.
+    /// - Parameter sender: invoking ui element.
     @IBAction func islolationModeChangedAction(_ sender: NSMenuItem) {
         guard let identifier = UInt8(sender.accessibilityIdentifier()) else {
             Logger.default.log("invalid identifier: \(sender.accessibilityIdentifier())", level: .error)
@@ -937,7 +957,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Called when the cache isolation mode is changed.
     ///
-    /// - Parameter sender: invoking UI element.
+    /// - Parameter sender: invoking ui element.
     @IBAction func isloateCachedTilesAction(_ sender: NSMenuItem) {
         guard let identifier = UInt8(sender.accessibilityIdentifier()) else {
             Logger.default.log("invalid identifier: \(sender.accessibilityIdentifier())", level: .error)
@@ -970,10 +990,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
               let selectedNodes = userInfo["nodes"] as? [SKNode] else {
             return
         }
-        
-        
-        
-        
+
         let selectedCount = selectedNodes.count
         let nodeDesc = (selectedCount > 1) ? "Nodes" : "Node"
         selectedNodesMenuItem.title = "Selected \(nodeDesc)"
@@ -984,8 +1001,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
             if let tiledNode = node as? TiledCustomReflectableType {
                 if let tiledDescription = tiledNode.tiledListDescription {
-                    let nodeMenuItem = NSMenuItem(title: "\(tiledDescription)", action: #selector(selectedNodeAction), keyEquivalent: "")
+                    let nodeMenuItem = NSMenuItem(title: "\(tiledDescription)", action: #selector(nodeWasSelectedAction), keyEquivalent: "")
+                    nodeMenuItem.representedObject = tiledNode
                     selectedNodesMenuItem.submenu?.addItem(nodeMenuItem)
+                    
                 } else {
                     Logger.default.log("cannot get tiled description for '\(node.description)'", level: .error, symbol: "AppDelegate")
                 }
@@ -1019,8 +1038,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
     }
 
-    @IBAction func selectedNodeAction(_ sender: NSMenuItem) {
-        print("[AppDelegate]: node selected: '\(sender.title)'")
+    /// Called when a node is selected in the interface.
+    ///
+    /// - Parameter sender: invoking ui element.
+    @IBAction func nodeWasSelectedAction(_ sender: NSMenuItem) {
+        guard let selectedNode = sender.representedObject as? TiledCustomReflectableType else {
+            Logger.default.log("cannot access SpriteKit node.", level: .warning)
+            return
+        }
+        
+        updateCommandString("dumping selected node '\(selectedNode.tiledDescription)'", duration: 3.0)
+        dump(selectedNode)
     }
 
     // MARK: - Callbacks & Helpers
@@ -1147,6 +1175,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         self.cameraCallbacksMenuItem.state = (TiledGlobals.default.enableCameraCallbacks == true) ? .on : .off
         self.cameraTrackVisibleNodesItem.state = (TiledGlobals.default.enableCameraContainedNodesCallbacks == true) ? .on : .off
+        self.mouseEventsMenuItem.state = (TiledGlobals.default.enableMouseEvents == true) ? .on : .off
+
     }
 
     @objc func sceneCameraUpdated(notification: Notification) {

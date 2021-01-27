@@ -116,6 +116,10 @@ extension TiledGlobals {
         if (defaults.value(forKey: "tiled-gbl-rndqual-override") != nil) {
             self.renderQuality.override = CGFloat(defaults.double(forKey: "tiled-gbl-rndqual-override"))
         }
+        
+        if (defaults.value(forKey: "tiled-gbl-mouseevents") != nil) {
+            self.enableMouseEvents = defaults.bool(forKey: "tiled-gbl-mouseevents")
+        }
 
         // MARK: Camera
 
@@ -178,7 +182,6 @@ extension TiledGlobals {
             self.debug.mouseFilters = TiledGlobals.DebugDisplayOptions.MouseFilters(rawValue: UInt8(mouseFiltersRaw))
         }
 
-
         // MARK: Demo Content
 
         if (defaults.value(forKey: "tiled-gbl-demo-allowusermaps") != nil) {
@@ -207,6 +210,7 @@ extension TiledGlobals {
         defaults.set(self.debugDrawOptions.rawValue, forKey: "tiled-gbl-ddoptions")
         defaults.set(self.zDeltaForLayers, forKey: "tiled-gbl-zdelta")
         defaults.set(self.loggingLevel.rawValue, forKey: "tiled-gbl-logginglevel")
+        defaults.set(self.enableMouseEvents, forKey: "tiled-gbl-mouseevents")
 
         // render quality
         defaults.set(self.renderQuality.default, forKey: "tiled-gbl-rndqual-default")
@@ -795,56 +799,6 @@ extension NSColor {
         self.init(name: nil, dynamicProvider: { $0.name == .darkAqua ? dark : light })
     }
 }
-
-
-extension NSEvent {
-    
-    /// Returns the local position in a view. Converts a global position to a local position.
-    ///
-    /// - Parameter view: view.
-    /// - Returns: point of event in the given view.
-    func localPosition(_ view: NSView) -> CGPoint {
-        return view.convert(locationInWindow, from: nil)
-    }
-    
-    /// Indicates the `option` key is currently pressed.
-    var optionKeyPressed: Bool {
-        return modifierFlags.contains(NSEvent.ModifierFlags.option)
-    }
-    
-    /// Indicates the `control` key is currently pressed.
-    var controlKeyPressed: Bool {
-        return modifierFlags.contains(NSEvent.ModifierFlags.control)
-    }
-    
-    /// Indicates the `command` key is currently pressed.
-    var commandKeyPressed: Bool {
-        return modifierFlags.contains(NSEvent.ModifierFlags.command)
-    }
-    
-    /// Gives an approximation of the mouse movement speed.
-    var mouseSpeed: CGFloat {
-        return max(abs(deltaX),abs(deltaY))
-    }
-    
-    var delta: CGFloat {
-        return abs(deltaX) > abs(deltaY) ? deltaX : deltaY
-    }
-    
-    /// Returns difference in scroll wheel events.
-    var scrollingDelta: CGPoint {
-        return CGPoint(x: scrollingDeltaX, y: scrollingDeltaY)
-    }
-    
-    // TODO: remove this
-    func isPressModifierFlags(only flag: NSEvent.ModifierFlags) -> Bool {
-        return modifierFlags.intersection(.deviceIndependentFlagsMask) == flag
-    }
-}
-
-
-
-
 
 
 extension NSView {

@@ -49,6 +49,11 @@ public class SKTileLayerChunk: TiledLayerObject {
     public var tileCount: Int {
         return self.getTiles().count
     }
+    
+    /// TODO: check this.
+    public override var layerInfiniteOffset: CGPoint {
+        return CGPoint.zero
+    }
 
     /// Returns an array of current tiles.
     public func getTiles() -> [SKTile] {
@@ -85,13 +90,10 @@ public class SKTileLayerChunk: TiledLayerObject {
         self.chunkOffset = CGPoint(x: CGFloat(Int(xpos)!), y: CGFloat(Int(ypos)!))
         self.tiles = Array2D<SKTile>(columns: Int(chunkSize.width), rows: Int(chunkSize.height))
         
-        
         // TODO: need a different super
         /// `mapSize` gets set here, but will be wrong
         super.init(tilemap: layer.tilemap)
-        
-        self.mapSize = CGSize(width: chunkSize.width, height: chunkSize.height)
-        //self.mapDelegate = layer as TiledMappableGeometryType
+        self.mapSize = self.chunkSize
         self.layerType = .tile
     
         
@@ -306,19 +308,29 @@ public class SKTileLayerChunk: TiledLayerObject {
     
     /// Returns a custom mirror for this layer.
     public override var customMirror: Mirror {
-        return Mirror(self, children:
-                        ["xPath": xPath,
-                         "uuid": uuid,
-                         "path": path,
-                         "size": mapSize,
-                         "tileSize": tileSize,
-                         "chunkSize": chunkSize,
-                         "chunkOffset": chunkOffset,
-                         "offset": offset,
-                         "data": tiles
-                        ],
-                      ancestorRepresentation: .suppressed
-        )
+        
+        var attributes: [(label: String?, value: Any)] = [
+            (label: "name", value: layerName),
+            (label: "uuid", uuid),
+            (label: "xPath", value: xPath),
+            (label: "path", value: path),
+            (label: "size", value: mapSize),
+            (label: "tile size", value: tileSize),
+            (label: "chunkSize", value: chunkSize),
+            (label: "chunkOffset", value: chunkOffset),
+            (label: "offset", value: offset),
+            (label: "data", value: tiles),
+            (label: "properties", value: mirrorChildren())
+        ]
+        
+        
+        /// internal debugging attrs
+        attributes.append(("tiled element name", tiledElementName))
+        attributes.append(("tiled node nice name", tiledNodeNiceName))
+        attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
+        attributes.append(("tiled description", tiledDescription))
+        
+        return Mirror(self, children: attributes, ancestorRepresentation: .suppressed)
     }
 }
 
@@ -332,7 +344,7 @@ extension SKTileLayerChunk {
     
     
     /// Returns the internal **Tiled** node type.
-    @objc public var tiledNodeName: String {
+    @objc public var tiledElementName: String {
         return "chunk"
     }
     

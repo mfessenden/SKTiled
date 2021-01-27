@@ -11,6 +11,9 @@
  <tileset firstgid="553" source="dungeon-32x32.tsx"/>
  <tileset firstgid="558" source="dungeon-16x32.tsx"/>
  <group id="22" name="Lower">
+  <properties>
+   <property name="zPosition" type="float" value="10"/>
+  </properties>
   <layer id="2" name="Level1" width="22" height="21" tintcolor="#53cb49">
    <properties>
     <property name="isStatic" type="bool" value="false"/>
@@ -38,6 +41,7 @@
   <objectgroup id="6" name="Lower Objects">
    <properties>
     <property name="isStatic" type="bool" value="false"/>
+    <property name="zPosition" type="float" value="5"/>
    </properties>
    <object id="79" name="crate9" gid="151" x="310" y="146" width="16" height="16"/>
    <object id="80" name="crate10" gid="151" x="317" y="146" width="16" height="16"/>
@@ -59,11 +63,17 @@
    <object id="107" name="barrel5" type="barrel" gid="152" x="106" y="304" width="16" height="16"/>
   </objectgroup>
   <objectgroup id="7" name="Top Objects">
+   <properties>
+    <property name="zPosition" type="float" value="10"/>
+   </properties>
    <object id="125" name="barrel2" gid="152" x="38" y="166" width="16" height="16"/>
    <object id="128" name="crate-error" gid="151" x="313" y="141" width="16" height="16"/>
    <object id="130" name="crate2" gid="151" x="52" y="260" width="16" height="16"/>
   </objectgroup>
   <objectgroup id="8" name="Characters-Lower">
+   <properties>
+    <property name="zPosition" type="float" value="15"/>
+   </properties>
    <object id="129" name="knight1" gid="556" x="295" y="172" width="32" height="32"/>
    <object id="131" name="wizard1" gid="2147484202" x="46" y="204" width="32" height="32"/>
   </objectgroup>
@@ -86,10 +96,16 @@
   </data>
   </layer>
   <objectgroup id="13" name="Upper Objects">
+   <properties>
+    <property name="zPosition" type="float" value="20"/>
+   </properties>
    <object id="141" name="brazier1" type="light" gid="558" x="208" y="172" width="16" height="32"/>
    <object id="142" name="brazier2" type="light" gid="558" x="235" y="172" width="16" height="32"/>
   </objectgroup>
   <objectgroup id="14" name="Characters-Upper">
+   <properties>
+    <property name="zPosition" type="float" value="25"/>
+   </properties>
    <object id="119" name="dwarf1" gid="557" x="144" y="170" width="32" height="32"/>
   </objectgroup>
  </group>

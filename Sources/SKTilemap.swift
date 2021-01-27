@@ -2571,13 +2571,26 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     
     /// Returns a custom mirror for this object.
     public var customMirror: Mirror {
-        return Mirror(self, children: ["name": self.mapName,
-                                       "url": self.url.relativePath,
-                                       "isInfinite": self.isInfinite,
-                                       "mapSize": self.mapSize,
-                                       "tileSize": self.tileSize,
-                                       "layers": self.layers]
-        )
+        
+        var attributes: [(label: String?, value: Any)] = [
+            (label: "name", value: mapName),
+            (label: "uuid", uuid),
+            (label: "url", value: url.relativePath),
+            (label: "isInfinite", value: isInfinite),
+            (label: "map size", value: mapSize),
+            (label: "tile size", value: tileSize),
+            (label: "layers", value: layers),
+            (label: "properties", value: mirrorChildren())
+        ]
+        
+        
+        /// internal debugging attrs
+        attributes.append(("tiled element name", tiledElementName))
+        attributes.append(("tiled node nice name", tiledNodeNiceName))
+        attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
+        attributes.append(("tiled description", tiledDescription))
+        
+        return Mirror(self, children: attributes)
     }
 }
 
@@ -2913,7 +2926,7 @@ extension SKTilemap {
 
     /// Debug string representation of the map.
     public override var debugDescription: String {
-        return "\(description)"
+        return #"<\#(description)>"#
     }
 
     /// Returns an array of renderable tiles/objects.
@@ -3282,7 +3295,7 @@ extension SKTilemap {
     
     
     /// Returns the internal **Tiled** node type.
-    @objc public var tiledNodeName: String {
+    @objc public var tiledElementName: String {
         return "map"
     }
     
@@ -3314,43 +3327,26 @@ extension SKTilemap {
     
     /// Calculate the xPath values of the layers.
     internal func calculateXPaths() {
-        var currentPath = #"/\#(tiledNodeName)"#
+        var rootPath = #"/\#(tiledElementName)"#
         for (i, layer) in layers.enumerated() {
-            if let tileLayer = layer as? SKTileLayer {
-                let layerPathName = "\(tileLayer.tiledNodeName)[\(i)]"
-                currentPath += #"/\#(layerPathName)"#
-                tileLayer.xPath = currentPath
-                
-                var currentLayerName = tileLayer.layerName
-                for (x, chunk) in tileLayer.chunks.enumerated() {
-                    let chunnkPathName = "\(chunk.tiledNodeName)[\(x)]"
-                    currentPath += #"/\#(chunnkPathName)"#
-                    chunk.xPath = currentPath
-                    
-                    // FIXME: 'name' might be the wrong attribute to be using here
-                    chunk.name = #"\#(currentLayerName)/\#(chunnkPathName)"#
-                }
-            }
-            
-            if let objectGroup = layer as? SKObjectGroup {
-                let layerPathName = "\(objectGroup.tiledNodeName)[\(i)]"
-                currentPath += #"/\#(layerPathName)"#
-                objectGroup.xPath = currentPath
 
-            }
-            
-            
-            if let groupLayer = layer as? SKGroupLayer {
-                let layerPathName = "\(groupLayer.tiledNodeName)[\(i)]"
-                currentPath += #"/\#(layerPathName)"#
-                groupLayer.xPath = currentPath
-            }
-            
-            
-            if let imageLayer = layer as? SKImageLayer {
-                let layerPathName = "\(imageLayer.tiledNodeName)[\(i)]"
-                currentPath += #"/\#(layerPathName)"#
-                imageLayer.xPath = currentPath
+            if let tiledlayer = layer as? TiledCustomReflectableType {
+                if let nodeType = tiledlayer.tiledElementName {
+                    
+                    let layerPathName = "\(nodeType)[\(i)]"
+                    let thisLayerPath = rootPath + #"/\#(layerPathName)"#
+                    layer.xPath = thisLayerPath
+                    
+                    if let tileLayer = layer as? SKTileLayer {
+                        /// currentPath: ''
+                        for (x, chunk) in tileLayer.chunks.enumerated() {
+                            let chunnkPathName = "\(chunk.tiledElementName)[\(x)]"
+                            let thisNodePath = thisLayerPath + #"/\#(chunnkPathName)"#
+                            chunk.xPath = thisNodePath
+                            chunk.name = chunnkPathName
+                        }
+                    }
+                }
             }
         }
     }

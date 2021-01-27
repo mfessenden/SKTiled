@@ -83,7 +83,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, 
     /// Receive notifications from camera.
     @objc open var receiveCameraUpdates: Bool = true
 
-    /// Indicates the mouse is in the scene bounds.
+    /// Indicates the mouse is within scene bounds.
     internal var hasMouseFocus: Bool = false
 
     /// Current focus coordinate.
@@ -400,6 +400,8 @@ extension SKTiledScene {
     ///
     /// - Parameter event: mouse event.
     open override func mouseMoved(with event: NSEvent) {
+        //guard (TiledGlobals.default.enableMouseEvents == true) else { return }
+        //print("⭑ scene mouse event \(event.location(in: self))")
         cameraNode?.mouseMoved(with: event)
     }
 
@@ -407,6 +409,7 @@ extension SKTiledScene {
     ///
     /// - Parameter event: mouse event.
     open override func scrollWheel(with event: NSEvent) {
+        // guard (TiledGlobals.default.enableMouseEvents == true) else { return }
         cameraNode?.scrollWheel(with: event)
     }
 
@@ -414,6 +417,7 @@ extension SKTiledScene {
     ///
     /// - Parameter event: mouse event.
     open override func mouseDragged(with event: NSEvent) {
+        // guard (TiledGlobals.default.enableMouseEvents == true) else { return }
         cameraNode?.mouseDragged(with: event)
     }
 

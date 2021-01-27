@@ -78,11 +78,11 @@ public class TileAnimationFrame: NSObject {
 extension TileAnimationFrame {
 
     public override var description: String {
-        return "Frame: \(id): \(duration)"
+        return "id: \(id): \(duration)"
     }
 
     public override var debugDescription: String {
-        return "<\(description)>"
+        return #"<\#(description)>"#
     }
 }
 
@@ -92,7 +92,12 @@ extension TileAnimationFrame: CustomReflectable {
 
     /// Returns a custom mirror for this object.
     public var customMirror: Mirror {
-        return Mirror(reflecting: self)
+        let attributes: [(label: String?, value: Any)] = [
+            (label: "tile id", value: self.id),
+            (label: "duration", value: self.duration)
+        ]
+        
+        return Mirror(self, children: attributes, displayStyle: .struct, ancestorRepresentation: .suppressed)
     }
 }
 

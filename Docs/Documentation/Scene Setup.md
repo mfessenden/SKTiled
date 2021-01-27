@@ -122,6 +122,25 @@ In addition to the optional callback methods, the protocol allows you to substit
 }
 ```
 
+For instance, if you wanted to create a cache for certain types of tiles, you could implement the `TilemapDelegate.didAddTile` method:
+
+
+```swift
+class GameScene: SKScene {
+
+    func didAddTile(_ tile: SKTile, coord: simd_int2, in: String?) {
+        if (tile.tileId == 12) {
+
+        }
+    }
+
+}
+```
+
+
+As the methods are optional, you can choose to implement as few or as many methods as you need.
+
+
 ### Scene Setup
 
 Setting up scenes is straightforward. Tile maps should be loaded during the [`SKScene.didMove(to:)`][skscene-didmove-url] method, and updated during the [`SKScene.update(_:)`][skscene-update-url] method (if you choose to render your maps with **SpriteKit actions**, you can forgo adding the `SKTilemap` node to the scene's update method).

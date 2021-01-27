@@ -219,6 +219,13 @@
                                             <menu key="submenu" title="Logging Level:" id="6yZ-kP-7C4"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="ah8-dN-ZnU"/>
+                                        <menuItem title="Enable Mouse Events" enabled="NO" id="dZ9-iQ-pyA">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="enableMouseEventsAction:" target="Voe-Tx-rLC" id="hA4-J3-UUx"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="VTH-l7-gSr"/>
                                         <menuItem title="Mouse Filters:" enabled="NO" id="ATK-4p-nLS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Mouse Filters:" id="oq8-Jb-xFt"/>
@@ -367,6 +374,7 @@
                         <outlet property="mapDebugDrawMenu" destination="g9m-EM-X6F" id="olI-40-ckw"/>
                         <outlet property="mapGridColorMenu" destination="jgc-CR-TWe" id="86e-4d-sW4"/>
                         <outlet property="mapMenuItem" destination="Ybf-hB-7LM" id="7pI-qT-NHE"/>
+                        <outlet property="mouseEventsMenuItem" destination="dZ9-iQ-pyA" id="4Ko-NN-Dr9"/>
                         <outlet property="mouseFiltersMenuItem" destination="ATK-4p-nLS" id="Suf-LS-YT5"/>
                         <outlet property="objectColorsMenuItem" destination="69E-5M-crK" id="wOQ-bR-nt9"/>
                         <outlet property="openMapMenuitem" destination="IAo-SY-fd9" id="Y5p-rr-0OB"/>

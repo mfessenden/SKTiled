@@ -408,7 +408,7 @@
                                     <gridCell row="BXW-mn-2Va" column="8XV-PJ-ccv" id="U8d-gm-kid">
                                         <button key="contentView" identifier="gbl-mouseenvents-check" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eRe-YW-C4Q">
                                             <rect key="frame" x="167" y="-1" width="111" height="18"/>
-                                            <buttonCell key="cell" type="check" title="Mouse Events" bezelStyle="regularSquare" imagePosition="left" enabled="NO" state="on" inset="2" id="KjW-Ym-T29">
+                                            <buttonCell key="cell" type="check" title="Mouse Events" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="KjW-Ym-T29">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>

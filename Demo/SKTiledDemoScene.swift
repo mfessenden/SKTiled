@@ -119,6 +119,7 @@ public class SKTiledDemoScene: SKTiledScene {
 
         // allow gestures on iOS
         cameraNode?.allowGestures = true
+        
         #if os(macOS)
         if (mousePointer == nil) {
             let pointer = MousePointer()
@@ -506,16 +507,15 @@ extension SKTiledDemoScene {
             return
         }
 
-        /*
+        
         // Get mouse position in scene coordinates
         let location = event.location(in: self)
-
+        mousePointer?.position = location
+        
         // Get node at mouse position
-        let touchedNodes = nodes(at: location)
+        let touchedNodes = nodes(at: location).filter( { $0 != mousePointer })
         if let frontTouchedNode = touchedNodes.first {
-            print("top node: \(frontTouchedNode)")
         }
-        */
 
         guard let skView = view else {
             return

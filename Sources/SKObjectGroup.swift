@@ -474,19 +474,26 @@ public class SKObjectGroup: TiledLayerObject {
     
     /// Returns a custom mirror for this layer.
     public override var customMirror: Mirror {
-        return Mirror(self, children:
-                        ["name": layerName,
-                         "uuid": uuid,
-                         "xPath": xPath,
-                         "path": path,
-                         "layerType": layerType,
-                         "size": mapSize,
-                         "tileSize": tileSize,
-                         "objects": objects
-                        ],
-                      ancestorRepresentation: .suppressed
-                      
-        )
+        var attributes: [(label: String?, value: Any)] = [
+            (label: "name", value: layerName),
+            (label: "uuid", uuid),
+            (label: "xPath", value: xPath),
+            (label: "path", value: path),
+            (label: "layerType", value: layerType),
+            (label: "size", value: mapSize),
+            (label: "offset", value: offset),
+            (label: "properties", value: mirrorChildren()),
+            (label: "objects", value: objects)
+        ]
+
+        
+        /// internal debugging attrs
+        attributes.append(("tiled element name", tiledElementName))
+        attributes.append(("tiled node nice name", tiledNodeNiceName))
+        attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
+        attributes.append(("tiled description", tiledDescription))
+        
+        return Mirror(self, children: attributes, ancestorRepresentation: .suppressed)
     }
 }
 
@@ -496,6 +503,7 @@ public class SKObjectGroup: TiledLayerObject {
 
 /// :nodoc:
 extension SKObjectGroupDrawOrder: CustomStringConvertible, CustomDebugStringConvertible {
+    
     var description: String {
         switch self {
             case .manual: return "manual"
@@ -514,7 +522,7 @@ extension SKObjectGroupDrawOrder: CustomStringConvertible, CustomDebugStringConv
 extension SKObjectGroup {
     
     /// Returns the internal **Tiled** node type.
-    @objc public var tiledNodeName: String {
+    @objc public var tiledElementName: String {
         return "objectgroup"
     }
     

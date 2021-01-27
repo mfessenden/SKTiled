@@ -105,13 +105,13 @@ extension Array2D: Sequence {
 /// :nodoc:
 extension Array2D: CustomReflectable, CustomStringConvertible, CustomDebugStringConvertible {
     
-    /// String representation of array.
+    /// A textual representation of the array.
     var description: String {
         let array = items.compactMap { $0 }
         return "Array2D: \(array.count) items"
     }
     
-    /// String representation of array, used for debugging.
+    /// A textual representation of the array, used for debugging.
     var debugDescription: String {
         return "<\(description)>"
     }
@@ -128,8 +128,7 @@ extension Array2D: CustomReflectable, CustomStringConvertible, CustomDebugString
                 let comma: String = (c < columns - 1) ? ", " : ""
                 
                 if let value = self[c, r] {
-                    if let tile = value as? SKTile {
-                        
+                    if let tile = value as? SKTile {                        
                         let gid = tile.tileData.globalID   // was `id`
                         let gidString = "\(gid)".padEven(toLength: colSize, withPad: " ")
                         rowResult += "\(gidString)\(comma)"

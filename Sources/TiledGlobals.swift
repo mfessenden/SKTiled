@@ -45,18 +45,18 @@ public let SKTILED_DEFAULT_LOGGING_LEVEL: LoggingLevel = LoggingLevel.info
 
 
 #if SKTILED_DEMO
-let SKTILED_DEMO = true
+let SKTILED_DEMO_MODE = true
 let DEFAULT_MAP_DEBUG_DRAW_OPTIONS: DebugDrawOptions = DebugDrawOptions.default
 #else
-let SKTILED_DEMO = false
+let SKTILED_DEMO_MODE = false
 let DEFAULT_MAP_DEBUG_DRAW_OPTIONS: DebugDrawOptions = []
 #endif
 
 
 #if SKTILED_BETA
-let SKTILED_BETA = true
+let SKTILED_BETA_MODE = true
 #else
-let SKTILED_BETA = false
+let SKTILED_BETA_MODE = false
 #endif
 
 
@@ -146,10 +146,10 @@ public class TiledGlobals {
 
     /// Indicates the current framework is a beta release.
     public var isBeta: Bool {
-        return SKTILED_BETA
+        return SKTILED_BETA_MODE
     }
 
-    /// Indicates the environment is a playground.
+    /// Indicates the current environment is a playground.
     public var isPlayground: Bool {
         return ProcessInfo.processInfo.environment["PLAYGROUND_COMMUNICATION_SOCKET"] != nil
     }
@@ -161,7 +161,7 @@ public class TiledGlobals {
 
     /// Indicates the current application is the demo.
     public var isDemo: Bool {
-        return SKTILED_DEMO
+        return SKTILED_DEMO_MODE
     }
 
     /// Default logging verbosity.
@@ -524,6 +524,45 @@ public struct TiledObjectColors {
 // MARK: - Extensions
 
 
+
+/// :nodoc:
+extension TiledGlobals: CustomReflectable, CustomStringConvertible, CustomDebugStringConvertible {
+    
+    /// Returns a custom mirror for this object.
+    public var customMirror: Mirror {
+        
+        let buildConfig = (getBuildConfiguration() == true) ? "release" : "debug"
+        
+        var attributes: [(label: String?, value: Any)] = [
+            (label: "framework version", value: self.version.description),
+            (label: "build configuration", buildConfig),
+            (label: "operating system", value: self.os),
+            (label: "Swift version", value: getSwiftVersion())
+        ]
+        
+        
+        if (isDemo == true) {
+            attributes.insert(("bundle name", self.bundleName), at: 0)
+            attributes.insert(("bundle indentifier", self.identifier), at: 0)
+            attributes.insert(("product name", self.executableName), at: 0)
+        }
+
+        return Mirror(self, children: attributes, displayStyle: .class)
+    }
+    
+    /// A textual representation of the object.
+    public var description: String {
+        return #"SKTiled Globals v\#(self.version.description)"#
+    }
+    
+    /// A textual representation of the object, used for debugging.
+    public var debugDescription: String {
+        return #"<\#(description)>"#
+    }
+}
+
+
+
 /// :nodoc:
 extension TiledGlobals: TiledCustomReflectableType {
 
@@ -547,7 +586,7 @@ extension TiledGlobals: TiledCustomReflectableType {
             print("  ▸ build version:           \(buildVersion)")
         }
         print("  ▸ OS:                      \(self.os)")
-        print("  ▸ swift version:           \(getSwiftVersion())")
+        print("  ▸ Swift version:           \(getSwiftVersion())")
         print("  ▸ demo:                    \(isDemo)")
         print("  ▸ beta:                    \(isBeta)")
         print("  ▸ playground:              \(isPlayground)")

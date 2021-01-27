@@ -289,6 +289,15 @@ public class SKTileLayer: TiledLayerObject {
         return chunkAt(coord.x, coord.y)
     }
 
+    /// Returns a chunk at the given index.
+    ///
+    /// - Parameters:
+    ///   - index: chunk array index.
+    /// - Returns: chunk at the given index.
+    internal func chunkAt(index: Int) -> SKTileLayerChunk? {
+        return chunks[index]
+    }
+    
     // MARK: - Tiles
 
     /// Returns a tile at the given coordinate, if one exists.
@@ -882,16 +891,9 @@ public class SKTileLayer: TiledLayerObject {
         }
     }
 
-    // MARK: - Debugging
+    // MARK: - Rasterization
 
-    public override func debugLayer() {
-        super.debugLayer()
-        for tile in getTiles() {
-            log(tile.debugDescription, level: .debug)
-        }
-    }
-
-        /// Rasterize a static layer into an image.
+    /// Rasterize a static layer into an image.
     public override func rasterizeStaticLayer() {
 
         #if os(macOS)
@@ -1005,10 +1007,19 @@ public class SKTileLayer: TiledLayerObject {
             (label: "uuid", uuid),
             (label: "xPath", value: xPath),
             (label: "path", value: path),
+            (label: "layerType", value: layerType),
             (label: "size", value: mapSize),
-            (label: "tileSize", value: tileSize)
+            (label: "tile size", value: tileSize),
+            (label: "offset", value: offset),
+            (label: "properties", value: mirrorChildren())
         ]
-        
+
+        /// internal debugging attrs
+        attributes.append(("tiled element name", tiledElementName))
+        attributes.append(("tiled node nice name", tiledNodeNiceName))
+        attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
+        attributes.append(("tiled description", tiledDescription))
+
         if (isInfinite == true) {
             attributes.append(("chunks", chunks))
         } else {
@@ -1070,7 +1081,7 @@ extension SKTileLayer {
 extension SKTileLayer {
     
     /// Returns the internal **Tiled** node type.
-    @objc public var tiledNodeName: String {
+    @objc public var tiledElementName: String {
         return "layer"
     }
     

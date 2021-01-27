@@ -58,8 +58,6 @@ public struct MouseFocusableOptions: OptionSet {
 }
 
 
-
-
 /// Debugging HUD display that follows the macOS cursor
 internal class MousePointer: SKNode {
 
@@ -88,11 +86,12 @@ internal class MousePointer: SKNode {
         newLabel.name = "MOUSEPOINTER_LABEL"
         newLabel.setAttrs(values: ["tiled-node-desc": "Label reflecting the current mouse position in scene."])
         addChild(newLabel)
+        newLabel.text = "poo"
         return newLabel
     }()
 
-
     // TODO: put this on the current scene or view.
+    
     /// Current mouse filters.
     var mouseFilters: MouseFocusableOptions = MouseFocusableOptions.default
 
@@ -160,18 +159,19 @@ internal class MousePointer: SKNode {
     @objc func globalsUpdatedAction(notification: Notification) {
         let mousePointerEnabled = TiledGlobals.default.debug.mouseFilters.enableMousePointer
         isHidden = !mousePointerEnabled
-
-        if (mousePointerEnabled == true) {
-            //self.draw(event: <#T##NSEvent#>)
-        }
+        // self.draw(event: <#T##NSEvent#>)
     }
 
 
     func draw(event: NSEvent) {
-
+        guard (TiledGlobals.default.debug.mouseFilters.enableMousePointer == true) else {
+            print("⭑ mouse pointer is not enabled.")
+            return
+        }
+        
         let coordColor = (isValidCoordinate == true) ? TiledObjectColors.grass : TiledObjectColors.coral
-
         let labelStyle = NSMutableParagraphStyle()
+        
         labelStyle.alignment = .center
 
         let defaultLabelAttributes = [
@@ -186,6 +186,18 @@ internal class MousePointer: SKNode {
             .foregroundColor: coordColor,
             .paragraphStyle: labelStyle
         ] as [NSAttributedString.Key: Any]
+
+        let mousePointerEnabled = TiledGlobals.default.debug.mouseFilters.enableMousePointer
+        isHidden = !mousePointerEnabled
+        
+        
+        if let currentCoordinate = _currentCoordinate {
+            let coordString = NSAttributedString(string: currentCoordinate.coordDescription, attributes: coordAttributes)
+            label?.attributedText = coordString
+        } else {
+            let coordString = NSAttributedString(string: "coord: [-,-]", attributes: coordAttributes)
+            label?.attributedText = coordString
+        }
 
         /*
         /// here's the result
