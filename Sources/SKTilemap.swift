@@ -199,25 +199,24 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     /// Chunk size (infinite maps).
     public internal(set) var chunkSize: CGSize?
 
-    /// Mappable object offset.
+    /// Mappable child node offset. Used when a map container aligns all of the layers.
     public var childOffset: CGPoint {
         var offsetOutput = CGPoint.zero
         let layerAnchorPoint = layerAlignment.anchorPoint
-
+        
         switch orientation {
             case .orthogonal:
                 offsetOutput.x = -sizeInPoints.width * layerAnchorPoint.x
                 offsetOutput.y = sizeInPoints.height * layerAnchorPoint.y
-
-            case .isometric:
+            
+             case .isometric:
                 offsetOutput.x = -sizeInPoints.width * layerAnchorPoint.x
                 offsetOutput.y = sizeInPoints.height * layerAnchorPoint.y
-
+             
             case .hexagonal, .staggered:
                 offsetOutput.x = -sizeInPoints.width * layerAnchorPoint.x
                 offsetOutput.y = sizeInPoints.height * layerAnchorPoint.y
         }
-
         return offsetOutput
     }
 
@@ -1706,14 +1705,18 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return nil
     }
 
-    /// Position child layers in relation to the map's anchorpoint.
+    /// Position child layers in relation to the map's anchorpoint. Called when a layer is initially added, or the tilemap node's `layerAlignment` is modified.
     ///
     /// - Parameters:
     ///   - layer: layer instance.
     ///   - clamped: clamp the result.
     internal func positionLayer(_ layer: TiledLayerObject, clamped: Bool = false) {
-
+        
+        //var result = CGPoint.zero
         var result = self.childOffset
+        
+        
+        
 
         // layer offset
         result.x += layer.offset.x
@@ -1724,19 +1727,29 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
             let scaleFactor = TiledGlobals.default.contentScale
             result = clampedPosition(point: result, scale: scaleFactor)
         }
-                
         
+        
+        if (isInfinite == true) {
+            print("\n⭑ initial child offset x: \(childOffset.x)")
+        }
+        
+        
+        // apply offset for infinite maps
         if let tileLayer = layer as? SKTileLayer {
             
-            // apply offset for infinite maps
-            result.x += layer.layerInfiniteOffset.x
+            print("   - infinite offset x: -\(tileLayer.layerInfiniteOffset.x)")
             
-            // CHECKME: should this be minus?
-            result.y += layer.layerInfiniteOffset.y
+            result.x -= tileLayer.layerInfiniteOffset.x
+            result.y += tileLayer.layerInfiniteOffset.y
         }
 
         // set the layer final position
         layer.position = result
+        
+        // -650 - (-910)
+        if (isInfinite == true) {
+            print("   - final x position: \(result.x)\n")
+        }
     }
 
     /// Position a child node in relation to the map's anchorpoint.
@@ -2984,6 +2997,35 @@ extension SKTilemap {
             return false
         }
     }
+    
+    /// Generic highlight method that works for all `SpriteKit` types.
+    ///
+    /// - Parameters:
+    ///   - color: highlight color.
+    ///   - duration: duration of highlight effect.
+    @objc public override func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
+        let removeHighlight: Bool = (color == SKColor.clear)
+        let highlightFillColor = (removeHighlight == false) ? color.withAlphaComponent(0.2) : color
+        
+        boundsShape?.strokeColor = color
+        boundsShape?.fillColor = highlightFillColor
+        boundsShape?.isHidden = false
+        
+        if (duration > 0) {
+            let fadeInAction = SKAction.colorize(withColorBlendFactor: 1, duration: duration)
+            
+            let groupAction = SKAction.group(
+                [
+                    fadeInAction,
+                    SKAction.wait(forDuration: duration),
+                    fadeInAction.reversed()
+                ]
+            )
+            boundsShape?.run(groupAction, completion: {
+                self.boundsShape?.isHidden = true
+            })
+        }
+    }
 }
 
 
@@ -3240,6 +3282,8 @@ extension SKTilemap: TiledSceneCameraDelegate {
         let clickedObjects = objectsOverlay.nodes(at: location).filter { $0 as? TileObjectProxy != nil} as! [TileObjectProxy]
         if let firstClicked = clickedObjects.first {
             if let referringObject = firstClicked.reference {
+                
+                /// calls `Notification.Name.Demo.TileClicked` event
                 referringObject.mouseDown(with: event)
             }
         }
@@ -3263,6 +3307,7 @@ extension SKTilemap: TiledSceneCameraDelegate {
     public func mousePositionChanged(event: NSEvent) {
         //let mapPosition = event.location(in: self)
         currentCoordinate = coordinateAtMouse(event: event)
+        //print("⭑ tilemap mouse event at \(event.location(in: self).shortDescription), coord \(currentCoordinate.shortDescription)")
     }
     #endif
 }
@@ -3311,6 +3356,11 @@ extension SKTilemap {
     
     /// A description of the node.
     @objc public var tiledListDescription: String {
+        return "\(tiledNodeNiceName.titleCased()): '\(mapName)'"
+    }
+    
+    /// A description of the node.
+    @objc public var tiledMenuDescription: String {
         return "\(tiledNodeNiceName.titleCased()): '\(mapName)'"
     }
     

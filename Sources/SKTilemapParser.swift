@@ -2084,7 +2084,6 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
         activeElement = nil
     }
 
-    // foundCharacters happens whenever parser enters a key poop
     internal func parser(_ parser: XMLParser, foundCharacters string: String) {
         // append data attribute
         characterData += string

@@ -40,17 +40,17 @@ import SpriteKit
 /// | mapCoordinates        | Show position in current map.            |
 /// | tileDataUnderCursor   | Show tile data properties.               |
 ///
-public struct MouseFocusableOptions: OptionSet {
+public struct MouseEventOptions: OptionSet {
     public let rawValue: UInt8
 
-    public static let tileCoordinates      = MouseFocusableOptions(rawValue: 1 << 0)
-    public static let sceneCoordinates     = MouseFocusableOptions(rawValue: 1 << 1)
-    public static let mapCoordinates       = MouseFocusableOptions(rawValue: 1 << 2)
-    public static let tileDataUnderCursor  = MouseFocusableOptions(rawValue: 1 << 3)
+    public static let tileCoordinates      = MouseEventOptions(rawValue: 1 << 0)
+    public static let sceneCoordinates     = MouseEventOptions(rawValue: 1 << 1)
+    public static let mapCoordinates       = MouseEventOptions(rawValue: 1 << 2)
+    public static let tileDataUnderCursor  = MouseEventOptions(rawValue: 1 << 3)
 
-    public static let `default`: MouseFocusableOptions = [.tileCoordinates, .sceneCoordinates]
+    public static let `default`: MouseEventOptions = [.tileCoordinates, .sceneCoordinates]
 
-    public static let all: MouseFocusableOptions = [.tileCoordinates, .sceneCoordinates, .mapCoordinates, .tileDataUnderCursor]
+    public static let all: MouseEventOptions = [.tileCoordinates, .sceneCoordinates, .mapCoordinates, .tileDataUnderCursor]
 
     public init(rawValue: UInt8 = 0) {
         self.rawValue = rawValue
@@ -74,11 +74,13 @@ internal class MousePointer: SKNode {
     @objc var receiveCameraUpdates: Bool = TiledGlobals.default.enableCameraCallbacks
 
 
-    var scenePositionString: String?
+    
     var _currentCoordinate: simd_int2?
     var isValidCoordinate: Bool = false
+    
     var tileDataString: String?
     var mapPositionString: String?
+    var scenePositionString: String?
 
     /// Label node.
     lazy var label: SKLabelNode? = {
@@ -86,14 +88,14 @@ internal class MousePointer: SKNode {
         newLabel.name = "MOUSEPOINTER_LABEL"
         newLabel.setAttrs(values: ["tiled-node-desc": "Label reflecting the current mouse position in scene."])
         addChild(newLabel)
-        newLabel.text = "poo"
+        newLabel.text = "coord:"
         return newLabel
     }()
 
     // TODO: put this on the current scene or view.
     
     /// Current mouse filters.
-    var mouseFilters: MouseFocusableOptions = MouseFocusableOptions.default
+    var mouseFilters: MouseEventOptions = MouseEventOptions.all
 
     // MARK: - Mouse Pointer Init
 
@@ -120,7 +122,7 @@ internal class MousePointer: SKNode {
         NotificationCenter.default.addObserver(self, selector: #selector(tileUnderCursor), name: Notification.Name.Demo.TileUnderCursor, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileClicked), name: Notification.Name.Demo.TileClicked, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(globalsUpdatedAction), name: Notification.Name.Globals.Updated, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(globalsUpdatedAction), name: Notification.Name.Map.FocusCoordinateChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(focusCoordinateChanged), name: Notification.Name.Map.FocusCoordinateChanged, object: nil)
     }
 
     /// Called when the tilemap focus coordinate is updated. Called when the `Notification.Name.Map.FocusCoordinateChanged` notification is sent.
@@ -130,11 +132,13 @@ internal class MousePointer: SKNode {
         guard let mapFocusedCoordinate = notification.object as? simd_int2,
               let userInfo = notification.userInfo as? [String: Any],
               let oldCoordinate = userInfo["old"] as? simd_int2,
-              let isValidCoord = userInfo["valid"] as? Bool else {
+              let isValidCoord = userInfo["isValid"] as? Bool else {
             return
         }
-
+        
+        isValidCoordinate = isValidCoord
         _currentCoordinate = mapFocusedCoordinate
+        draw()
     }
 
     /// Set the current tile value. Called when the `Notification.Name.Demo.TileUnderCursor` notification is sent.
@@ -142,14 +146,19 @@ internal class MousePointer: SKNode {
     /// - Parameter notification: event notification.
     @objc func tileUnderCursor(notification: Notification) {
         guard let tile = notification.object as? SKTile else { return }
+        
+        
     }
 
 
-    /// Set the current tile value.
+    /// Set the current tile value. Called when the `Notification.Name.Demo.TileClicked` notification is sent.
     ///
     /// - Parameter notification: event notification.
     @objc func tileClicked(notification: Notification) {
         guard let tile = notification.object as? SKTile else { return }
+        
+        tileDataString = #"gid: \#(tile.globalId)"#
+        draw()
     }
 
 
@@ -159,13 +168,12 @@ internal class MousePointer: SKNode {
     @objc func globalsUpdatedAction(notification: Notification) {
         let mousePointerEnabled = TiledGlobals.default.debug.mouseFilters.enableMousePointer
         isHidden = !mousePointerEnabled
-        // self.draw(event: <#T##NSEvent#>)
+        self.draw()
     }
-
-
-    func draw(event: NSEvent) {
-        guard (TiledGlobals.default.debug.mouseFilters.enableMousePointer == true) else {
-            print("⭑ mouse pointer is not enabled.")
+    
+    func draw() {
+        guard (TiledGlobals.default.debug.mouseFilters.enableMousePointer == true),
+              let currentCoordinate = _currentCoordinate else {
             return
         }
         
@@ -173,30 +181,60 @@ internal class MousePointer: SKNode {
         let labelStyle = NSMutableParagraphStyle()
         
         labelStyle.alignment = .center
-
+        let stop = NSTextTab(type: .rightTabStopType, location: 8)
+        labelStyle.addTabStop(stop)
+        
         let defaultLabelAttributes = [
             .font: NSFont(name: self.fontName, size: self.fontSize)!,
             .foregroundColor: self.color,
             .paragraphStyle: labelStyle
-
+            
         ] as [NSAttributedString.Key: Any]
-
+        
         let coordAttributes = [
             .font: NSFont(name: self.fontName, size: self.fontSize)!,
             .foregroundColor: coordColor,
             .paragraphStyle: labelStyle
         ] as [NSAttributedString.Key: Any]
-
-        let mousePointerEnabled = TiledGlobals.default.debug.mouseFilters.enableMousePointer
-        isHidden = !mousePointerEnabled
         
         
-        if let currentCoordinate = _currentCoordinate {
-            let coordString = NSAttributedString(string: currentCoordinate.coordDescription, attributes: coordAttributes)
-            label?.attributedText = coordString
+        /// here's the result
+        let outputString = NSMutableAttributedString()
+        
+        
+        let labelText = "coord: "
+        
+        if (mouseFilters.isShowingTileCoordinates == true) {
+        
+            let labelString = NSMutableAttributedString(string: labelText, attributes: defaultLabelAttributes)
+            let dataString = NSMutableAttributedString(string: currentCoordinate.shortDescription, attributes: coordAttributes)
+            
+            outputString.append(labelString)
+            outputString.append(dataString)
+        
+        }
+        
+        if (mouseFilters.isShowingTileData == true) {
+            if let tileDataInfo = tileDataString {
+                let dataString = "\\n\(tileDataInfo)"
+                let dataOutput = NSMutableAttributedString(string: dataString, attributes: defaultLabelAttributes)
+                
+                outputString.append(dataOutput)
+            }
+        }
+        
+        
+        
+        if #available(OSX 10.13, *) {
+            label?.attributedText = outputString
         } else {
-            let coordString = NSAttributedString(string: "coord: [-,-]", attributes: coordAttributes)
-            label?.attributedText = coordString
+            label?.text = outputString.string
+        }
+    }
+
+    func draw(event: NSEvent) {
+        guard (TiledGlobals.default.debug.mouseFilters.enableMousePointer == true) else {
+            return
         }
 
         /*
@@ -359,6 +397,49 @@ internal class MousePointer: SKNode {
 
 
 // MARK: - Extensions
+
+extension MouseEventOptions {
+    
+    /// Indicates the mouse should display tile coordinates.
+    public var isShowingTileCoordinates: Bool {
+        get {
+            return self.contains(.tileCoordinates)
+        } set {
+            if (newValue == true) {
+                self.insert(.tileCoordinates)
+            } else {
+                self = self.subtracting(.tileCoordinates)
+            }
+        }
+    }
+    
+    /// Indicates the mouse should display scene coordinates.
+    public var isShowingSceneCoordinates: Bool {
+        get {
+            return self.contains(.sceneCoordinates)
+        } set {
+            if (newValue == true) {
+                self.insert(.sceneCoordinates)
+            } else {
+                self = self.subtracting(.sceneCoordinates)
+            }
+        }
+    }
+    
+    /// Indicates the mouse should display tile data attributes .
+    public var isShowingTileData: Bool {
+        get {
+            return self.contains(.tileDataUnderCursor)
+        } set {
+            if (newValue == true) {
+                self.insert(.tileDataUnderCursor)
+            } else {
+                self = self.subtracting(.tileDataUnderCursor)
+            }
+        }
+    }
+}
+
 
 
 extension MousePointer: TiledSceneCameraDelegate {

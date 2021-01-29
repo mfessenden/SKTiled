@@ -31,7 +31,7 @@ If adding objects to a layer, you can easily get a position for a Tiled coordina
 
 ```swift
 // get position in a layer for the given coordinate
-let point = tileLayer.pointForCoordinate(3, 4)
+let point = tileLayer.pointForCoordinate(coord: 3, 4)
 ```
 
 ### Converting Coordinates from Other Nodes
@@ -50,10 +50,10 @@ newTile.position = worldNode.convert(positionInLayer, from: layer)
 
 
 ```swift
-// iOS with UITouch
+/// iOS with `UITouch` event
 let touchPosition = tileLayer.touchLocation(touch)
 
-// OSX with NSEvent mouse event
+/// macOS with `NSEvent` mouse event
 let eventPosition = tileLayer.mouseLocation(event: mouseEvent)
 ```
 
@@ -61,7 +61,7 @@ You can also query coordinates at an event directly:
 
 ```swift
 // get the coordinate of a touch event
-let coord = tileLayer.coordinateAtTouchLocation(touch)
+let coord = tileLayer.coordinateAtTouchLocation(touch: event)
 
 
 // get the coordinate of a mouse event
@@ -104,9 +104,3 @@ The `SKTiledLayerObject.TileOffset` enum represents a hint for placement within 
 
 
  Next: [Working with Objects](working-with-objects.html) - [Index](Documentation.html)
-
-
-| Command | Usage | Description                                                                                                                          |
-|:------- |:----- |:------------------------------------------------------------------------------------------------------------------------------------ |
-| `set`   |       | allows you to change the values of shell options & set positional parameters, or to display the names and values of shell variables. |
-| `shift` |       |                                                                                                                                      |

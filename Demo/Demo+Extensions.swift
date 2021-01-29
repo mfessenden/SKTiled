@@ -274,6 +274,10 @@ extension Notification {
     /// Dump the notification contents to the console.
     internal func dump(_ fileId: String, function: String, symbol: String = "◦") {
         var output = "\(symbol) [\(fileId.components(separatedBy: CharacterSet(charactersIn: #"/."#))[1])]: notification received '\(self.loggingName)' -> '\(function)'"
+        if let userObject = object {
+            output += ", object: '\(String(describing: type(of: userObject)))'"
+        }
+        
         if let userDict = userInfo as? [String: Any] {
             let userDictCount = userDict.count - 1
             output += ", user info: ["
@@ -283,7 +287,7 @@ extension Notification {
                 if let valstr = attr.value as? String {
                     valueString = "'\(valstr)'"
                 }
-                output += "'\(attr.key)'=\(valueString)\(comma)"
+                output += "'\(attr.key)' = \(valueString)\(comma)"
             }
             output += "]"
         }
@@ -307,6 +311,7 @@ extension Notification {
 }
 
 
+
 extension Notification.Name {
     /*
 
@@ -323,8 +328,12 @@ extension Notification.Name {
         // events
         public static let WillBeginScanForAssets        = Notification.Name(rawValue: "org.sktiled.notification.name.demoController.willBeginScanForAssets")
         public static let AssetsFinishedScanning        = Notification.Name(rawValue: "org.sktiled.notification.name.demoController.assetsFinishedScanning")
+        
+        // map events
         public static let CurrentMapSet                 = Notification.Name(rawValue: "org.sktiled.notification.name.demoController.currentMapSet")
         public static let CurrentMapRemoved             = Notification.Name(rawValue: "org.sktiled.notification.name.demoController.currentMapRemoved")
+        
+        // debug
         public static let ResetDemoInterface            = Notification.Name(rawValue: "org.sktiled.notification.name.demoController.resetDemoInterface")
 
         // asset search paths (macOS)
@@ -373,8 +382,7 @@ extension Notification.Name {
 
 
         // node selected in right-click menu
-        public static let NodeSelectionChanged           = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodeSelectionChanged")
-        public static let NodesAboutToBeSelected         = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodesAboutToBeSelected")
+        public static let NodeSelectionChanged           = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodeSelectionChanged")   // sent from demo delegate to indicate that the current node selection has changed
     }
 
 
@@ -997,7 +1005,7 @@ extension NSTextField {
     var isNumericTextField: Bool {
         return formatter as? NumberFormatter != nil
     }
-
+    
     /// Returns the identifier string for this field.
     var identifierString: String? {
         return identifier?.rawValue
@@ -1008,7 +1016,7 @@ extension NSTextField {
         stringValue = ""
         placeholderString = ""
     }
-
+    
     /// Set the string value of the text field, with optional animated fade.
     ///
     /// - Parameters:

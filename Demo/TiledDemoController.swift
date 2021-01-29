@@ -530,6 +530,7 @@ public class TiledDemoController: NSObject, Loggable {
     }
 
     /// User has made a call to load a file manually. Called when the `Notification.Name.DemoController.LoadFileManually` event fires.
+    /// 
     /// - Parameter notification: event notification.
     @objc func loadFileManually(notification: Notification) {
         // TODO: implement this
@@ -954,17 +955,17 @@ extension TiledDemoController {
 extension TiledDemoController: TiledCustomReflectableType {
 
     public func dumpStatistics() {
-        var headerString = " Demo Controller ".padEven(toLength: 40, withPad: "-")
-        headerString = "\n\(headerString)\n"
+        var outputString = " Demo Controller ".padEven(toLength: 40, withPad: "-")
+        outputString = "\n\(outputString)\n"
 
         var currentMapName = "nil"
         if let currentMap = currentTilemap {
             currentMapName = "'\(currentMap.mapName)'"
         }
 
-
-        headerString += " ▸ User map index:               \(userIndexStart)\n"
-        headerString += " ▸ Current map:                  \(currentMapName)\n"
+        outputString += " ▸ Map Assets:                   \(tilemaps.count)\n"
+        outputString += " ▸ User map index:               \(userIndexStart)\n"
+        outputString += " ▸ Current map:                  \(currentMapName)\n"
 
         var currentUrlPath = "nil"
 
@@ -972,7 +973,7 @@ extension TiledDemoController: TiledCustomReflectableType {
             currentUrlPath = "'\(currentTilemapUrl!.relativePath)'"
         }
 
-        headerString += " ▸ Current map url:              \(currentUrlPath)\n\n"
+        outputString += " ▸ Current map url:              \(currentUrlPath)\n\n"
 
         let resourcesCount = tiledResourceFiles.count
         let tilemapsCount  = tilemaps.count
@@ -981,24 +982,24 @@ extension TiledDemoController: TiledCustomReflectableType {
         let imagesCount    = images.count
 
         if resourcesCount > 0 {
-            headerString += " ▸ Scanned assets:               \(resourcesCount)\n"
+            outputString += " ▸ Scanned assets:               \(resourcesCount)\n"
 
             if tilemapsCount > 0 {
-                headerString += "   ∙ Tilemaps:                   \(tilemaps.count)\n"
+                outputString += "   ∙ Tilemaps:                   \(tilemaps.count)\n"
             }
 
             if tilesetsCount > 0 {
-                headerString += "   ∙ Tilesets:                   \(tilesets.count)\n"
+                outputString += "   ∙ Tilesets:                   \(tilesets.count)\n"
             }
 
             if templatesCount > 0 {
-                headerString += "   ∙ Templates:                  \(templates.count)\n"
+                outputString += "   ∙ Templates:                  \(templates.count)\n"
             }
             if imagesCount > 0 {
-                headerString += "   ∙ Images:                     \(images.count)\n"
+                outputString += "   ∙ Images:                     \(images.count)\n"
             }
 
-            headerString += "\n"
+            outputString += "\n"
         }
 
 
@@ -1015,11 +1016,11 @@ extension TiledDemoController: TiledCustomReflectableType {
         }
 
         if let userPathsString = userPathsString {
-            headerString += "\(userPathsString)\n"
+            outputString += "\(userPathsString)\n"
         }
 
 
-        print("\(headerString)\n\n")
+        print("\(outputString)\n\n")
     }
 }
 

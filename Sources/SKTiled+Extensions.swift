@@ -2885,6 +2885,7 @@ internal func drawAnchor(_ node: SKNode,
                          anchorColor: SKColor = SKColor.red,
                          zoomScale: CGFloat = 0) -> AnchorNode {
 
+    
     node.childNode(withName: key)?.removeFromParent()
     let anchor = AnchorNode(radius: radius, color: anchorColor, label: withLabel, offsetX: labelOffsetX, offsetY: labelOffsetY, zoom: zoomScale)
     anchor.labelSize = labelSize
@@ -2896,7 +2897,7 @@ internal func drawAnchor(_ node: SKNode,
 
     // let x = "⎚"
     anchor.position = CGPoint(x: 0, y: 0)
-    anchor.zPosition = node.zPosition * 100
+    anchor.zPosition = (node.zPosition + 50) * 100
     return anchor
 }
 

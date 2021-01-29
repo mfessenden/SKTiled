@@ -98,7 +98,7 @@ import GameplayKit
     /// Pathfinding graph.
     @objc optional weak var graph: GKGridGraph<GKGridGraphNode>? { get set }
 
-    /// Child node offset.
+    /// Child node offset. Used when a map container aligns all of the layers.
     @objc optional var childOffset: CGPoint { get }
 
     /// Tile size (in pixels).
@@ -186,13 +186,18 @@ extension TiledMappableGeometryType {
                 
             case .hexagonal, .staggered:
                 var result = CGSize.zero
-                if staggerX == true {
+                
+                
+                if (staggerX == true) {
                     result = CGSize(width: width * columnWidth + sideOffsetX,
                                     height: height * (tileHeight + sideLengthY))
                     
                     if (width > 1) {
                         result.height += rowHeight
                     }
+                    
+                    
+                // FIXME: this is where the problem is happening, h: 35
                 } else {
                     result = CGSize(width: width * (tileWidth + sideLengthX),
                                     height: height * rowHeight + sideOffsetY)
@@ -201,8 +206,16 @@ extension TiledMappableGeometryType {
                         result.width += columnWidth
                     }
                 }
+                
+                
+                if (orientation == .staggered) {
+                    print("⭑ sizeInPoints: \(result.shortDescription)")
+                }
+                
                 return result
         }
+        
+
     }
 
     // MARK: - Geometry
@@ -247,7 +260,8 @@ extension TiledMappableGeometryType {
     public var sideLengthX: CGFloat {
         return (staggeraxis == .x) ? CGFloat(hexsidelength) : 0
     }
-
+    
+    /// Returns the side length for pointy hexagons.
     public var sideLengthY: CGFloat {
         return (staggeraxis == .y) ? CGFloat(hexsidelength) : 0
     }
@@ -260,6 +274,7 @@ extension TiledMappableGeometryType {
         return (tileSize.height - sideLengthY) / 2
     }
 
+    
     public var columnWidth: CGFloat {
         return sideOffsetX + sideLengthX
     }

@@ -825,6 +825,11 @@ extension SKTiledDemoScene {
                 object: nil
             )
         }
+        
+        // 'i' isolates the selected object(s).
+        if eventKey == 0x22 {
+            updateCommandString("isolating selected objects...", duration: 3.0)
+        }
 
 
         /// 'l' tests the `DebugDrawableType.drawFrame` method.
@@ -914,13 +919,50 @@ extension SKTiledDemoScene {
         
         // 'x' runs a debugging command
         if eventKey == 0x7 {
-            
-            for layer in tilemap.layers {
-                layer.dumpStatistics()
+            tilemap.enumerateChildNodes(withName: ".//*") { node, _ in
+                if (node as? TiledGeometryType != nil) {
+                    let currentValue = node.isUserInteractionEnabled
+                    node.isUserInteractionEnabled = !currentValue
+                }
+
+                //stop.pointee = true
             }
+            let currentMapValue = tilemap.isUserInteractionEnabled
+            tilemap.isUserInteractionEnabled = !currentMapValue
             
+            
+            updateCommandString("Setting user iteraction \(tilemap.isUserInteractionEnabled.valueAsOnOff)", duration: 3.0)
+            
+        }
+        
+        // 'y' runs a debugging command
+        if eventKey == 0x10 {
+
+            NotificationCenter.default.post(
+                name: Notification.Name.DemoController.ResetDemoInterface,
+                object: nil
+            )
+            updateCommandString("Forcing interface reset.", duration: 3.0)
+            
+        }
+        
+        // 'z' runs a debugging command
+        if eventKey == 0x6 {
+            /*
+            drawAnchor(tilemap, withKey: "ANCHOR", withLabel: "tilemap", labelSize: 12, labelOffsetX: 0, labelOffsetY: 0, radius: 0, anchorColor: TiledObjectColors.random, zoomScale: 1)
+            
+            tilemap.layers.forEach( {
+                drawAnchor($0, anchorColor: TiledObjectColors.random)
+            })*/
+            
+            
+            
+            drawAnchor(tilemap.debugNode)
+            
+            updateCommandString("drawing mappable object anchors...", duration: 3.0)
         }
     }
 
     #endif
 }
+

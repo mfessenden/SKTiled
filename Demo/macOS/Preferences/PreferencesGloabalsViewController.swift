@@ -58,7 +58,7 @@ class PreferencesGloabalsViewController: NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(cameraWasUpdated), name: Notification.Name.Camera.Updated, object: nil)
     }
     
-    /// Initialize the attributes editor. This method parses values from the storyboard and allows easy recall of UI widgets.
+    /// Initialize the preferences view. This method parses values from the storyboard and allows easy recall of UI widgets.
     func setupInterface() {
         
         /// map the current ui elements
@@ -167,8 +167,8 @@ class PreferencesGloabalsViewController: NSViewController {
     ///
     /// - Parameter sender: invoking ui element.
     @objc func handleButtonEvent(_ sender: NSButton) {
-        if let bid = sender.identifier {
-            let textIdentifier = bid.rawValue
+        if let buttonId = sender.identifier {
+            let textIdentifier = buttonId.rawValue
             let buttonVal = sender.state == .on
             print("⭑ [Preferences]: button changed: '\(textIdentifier)', value: \(buttonVal)")
             

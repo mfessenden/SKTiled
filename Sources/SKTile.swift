@@ -109,7 +109,9 @@ open class SKTile: SKSpriteNode, CustomReflectable {
             )
         }
     }
-
+    
+    /// ## Overview
+    ///
     /// Tile global id attribute. This attribute determines the tile data assigned to the tile.
     ///
     /// This is a wrapper for the `TileID` data structure and represents both global ID & tile orientation flags.
@@ -128,9 +130,9 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     /// ## Overview
     ///
     /// Returns the tile data "real value" (global id with flags mask).
-    ///
+    /// 
     ///  For example, a value of 2684354571 indicates a global id of 11, flipped horizontally & diagonally.
-    public var realTileId: UInt32 {
+    public var maskedTileId: UInt32 {
         return _globalId.realValue
     }
 
@@ -820,7 +822,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     open override func mouseMoved(with event: NSEvent) {
         //guard (TiledGlobals.default.enableMouseEvents == true) else { return }
         if contains(touch: event.location(in: self)) {
-            // for demo, this calls `Notification.Name.Demo.TileClicked`
+            // for demo, this calls `Notification.Name.Demo.TileUnderCursor`
             onMouseOver?(self)
         }
     }
@@ -1345,6 +1347,13 @@ extension SKTile {
         let tiledataString = "gid \(tileData.globalID)"
         return "Tile: \(tiledataString)"
     }
+    
+    /// A description of the node.
+    @objc public override var tiledMenuDescription: String {
+        //let tiledataString = "gid \(tileData.globalID), tileset '\(tileData.tileset.name)'"
+        let tiledataString = "gid \(tileData.globalID)"
+        return "Tile: \(tiledataString)"
+    }
 
     /// A description of the node.
     @objc public override var tiledDescription: String {
@@ -1395,5 +1404,11 @@ extension SKTile {
         set {
             self.isHidden = !newValue
         }
+    }
+    
+    /// Tiled global id.
+    @available(*, deprecated, renamed: "maskedTileId")
+    public var realTileId: UInt32 {
+        return maskedTileId
     }
 }

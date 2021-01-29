@@ -105,9 +105,8 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
     /// Tiled global tile id (for tile objects).
     @TileID internal var tileId: UInt32 = 0
 
-
     /// Returns the *masked* tile global id. If the tile is not flipped at all, this will be the same as the `SKTileObject.tileId` value.
-    internal var realTileId: UInt32 {
+    internal var maskedTileId: UInt32 {
         return _tileId.realValue
     }
 
@@ -1197,6 +1196,12 @@ extension SKTileObject {
     }
     
     /// A description of the node.
+    @objc public override var tiledMenuDescription: String {
+        let objName = (name != nil) ? " '\(name!)'" : ""
+        return "\(tiledNodeNiceName)\(objName) id: \(id)"
+    }
+    
+    /// A description of the node.
     @objc public override var tiledDescription: String {
         return (globalID == nil) ? "Tiled vector object type." : "Tiled tile vector object type."
     }
@@ -1342,6 +1347,12 @@ extension SKTileObject {
         } set {
             self.globalID = newValue
         }
+    }
+    
+    /// Tiled global id (for tile objects).
+    @available(*, deprecated, renamed: "maskedTileId")
+    public var realTileId: UInt32 {
+        return maskedTileId
     }
 
     /// Runs a tile animation.

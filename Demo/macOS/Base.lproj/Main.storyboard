@@ -74,7 +74,7 @@
                                             <menu key="submenu" title="Current maps" id="jWA-dT-spd" userLabel="Map Files Submenu"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="iXz-gw-ITL"/>
-                                        <menuItem title="Reload tile map" enabled="NO" keyEquivalent="r" id="f06-eB-0wr">
+                                        <menuItem title="Reload tilemap" enabled="NO" keyEquivalent="r" id="f06-eB-0wr">
                                             <connections>
                                                 <action selector="reloadTilemapAction:" target="Voe-Tx-rLC" id="Uxe-wl-Cmz"/>
                                             </connections>
@@ -243,6 +243,12 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Object Color:" id="prY-eX-DfI"/>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="J1W-Md-ZLQ"/>
+                                        <menuItem title="Attribute Editor..." enabled="NO" keyEquivalent="i" id="tra-Fh-z0y">
+                                            <connections>
+                                                <action selector="launchAttributeEditorAction:" target="Voe-Tx-rLC" id="8uN-3h-KR5"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -267,6 +273,12 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="showDemoControllerAttributesAction:" target="Voe-Tx-rLC" id="xJd-Wy-OwV"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Demo Delegate..." id="WG3-rh-SP4">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="showDemoDelegateAttributesAction:" target="Voe-Tx-rLC" id="8jM-hy-pm8"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="PaH-my-jqn"/>
@@ -349,6 +361,7 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="SKTiled_Demo" customModuleProvider="target">
                     <connections>
                         <outlet property="allAssetsMapsMenuItem" destination="ANV-Se-DZa" id="6z4-SF-dvk"/>
+                        <outlet property="attributeEditorMenuItem" destination="tra-Fh-z0y" id="h1p-CB-E9s"/>
                         <outlet property="cameraAllowMovementItem" destination="o6f-SD-ND0" id="MtT-Zd-0PX"/>
                         <outlet property="cameraAllowRotationItem" destination="lEg-h6-y6d" id="KRZ-Kf-WKw"/>
                         <outlet property="cameraAllowZoomItem" destination="DUG-oI-rxj" id="siF-5K-AZo"/>
@@ -424,10 +437,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView hidden="YES" distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bgh-ex-Ztr" userLabel="Output-Top">
-                                <rect key="frame" x="592" y="608" width="97" height="100"/>
+                                <rect key="frame" x="592" y="630" width="97" height="78"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Rpo-Bf-MrJ" userLabel="Camera Info Label">
-                                        <rect key="frame" x="22" y="86" width="53" height="14"/>
+                                        <rect key="frame" x="22" y="64" width="53" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Camera" id="96K-OU-ekP">
                                             <font key="font" size="12" name="SFMono-Regular"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -435,7 +448,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="a7z-V4-BtP" userLabel="Map Description Label ">
-                                        <rect key="frame" x="-2" y="66" width="101" height="12"/>
+                                        <rect key="frame" x="-2" y="44" width="101" height="12"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Map Description" id="z8I-8k-f5C">
                                             <font key="font" size="10" name="SFMono-Regular"/>
                                             <color key="textColor" red="0.82736928839432566" green="0.82736928839432566" blue="0.82736928839432566" alpha="0.90326780431410847" colorSpace="custom" customColorSpace="displayP3"/>
@@ -443,16 +456,8 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sxh-rQ-zgn" userLabel="Selected Label">
-                                        <rect key="frame" x="11" y="44" width="75" height="14"/>
+                                        <rect key="frame" x="11" y="22" width="75" height="14"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Selected:" id="mBT-nD-zp6">
-                                            <font key="font" size="12" name="SFMono-Regular"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qaU-aN-dXC" userLabel="Paused Label">
-                                        <rect key="frame" x="22" y="22" width="53" height="14"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Paused" id="8mb-3y-U6G">
                                             <font key="font" size="12" name="SFMono-Regular"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
@@ -472,10 +477,8 @@
                                     <integer value="1000"/>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
-                                    <integer value="1000"/>
                                 </visibilityPriorities>
                                 <customSpacing>
-                                    <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
@@ -711,11 +714,21 @@
                             <progressIndicator hidden="YES" maxValue="100" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="4yy-6f-eef">
                                 <rect key="frame" x="624" y="150" width="32" height="32"/>
                             </progressIndicator>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9x3-wF-4hL">
+                                <rect key="frame" x="576" y="339" width="128" height="43"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Paused" id="L19-lG-gUj">
+                                    <font key="font" metaFont="systemSemibold" size="36"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="LqZ-dY-ggy" secondAttribute="bottom" constant="18" id="FpW-ev-RXT"/>
                             <constraint firstItem="LqZ-dY-ggy" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="Gkp-Gf-1lM"/>
+                            <constraint firstItem="9x3-wF-4hL" firstAttribute="centerY" secondItem="m2S-Jp-Qdl" secondAttribute="centerY" id="Gw5-XY-RdR"/>
                             <constraint firstAttribute="bottom" secondItem="AWK-NZ-EcJ" secondAttribute="bottom" constant="4" id="HxY-az-QGj"/>
+                            <constraint firstItem="9x3-wF-4hL" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="JHw-3K-3GX"/>
                             <constraint firstItem="LqZ-dY-ggy" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="MWP-Tu-zuC"/>
                             <constraint firstItem="bpV-ih-FVj" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="SuM-qs-Xo7"/>
                             <constraint firstItem="4yy-6f-eef" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="ZGI-F4-xNs"/>
@@ -745,7 +758,7 @@
                         <outlet property="objectsButton" destination="rbx-7u-m9u" id="cqO-dj-HqS"/>
                         <outlet property="outputBottomView" destination="bpV-ih-FVj" id="rr1-8J-iHW"/>
                         <outlet property="outputTopView" destination="Bgh-ex-Ztr" id="Q1F-nb-2q8"/>
-                        <outlet property="pauseInfoLabel" destination="qaU-aN-dXC" id="OHo-cQ-UJv"/>
+                        <outlet property="pauseInfoLabel" destination="9x3-wF-4hL" id="81Q-OQ-77V"/>
                         <outlet property="progressIndicator" destination="4yy-6f-eef" id="tmI-64-Keh"/>
                         <outlet property="propertiesInfoLabel" destination="3AA-Cl-qmn" id="Kqk-Q6-bCh"/>
                         <outlet property="selectedInfoLabel" destination="sxh-rQ-zgn" id="kve-4v-lbl"/>

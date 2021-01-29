@@ -57,14 +57,17 @@ public class TiledDemoDelegate: NSObject, Loggable {
     }
     
     deinit {
-        // remove notifications
+        // remove notification observers
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Globals.Updated, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.FocusCoordinateChanged, object: nil)
+        
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.SceneWillUnload, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.FlushScene, object: nil)
-
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodesRightClicked, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.Globals.Updated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.MouseRightClicked, object: nil)        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.DumpSelectedNodes, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.TileClicked, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.ObjectClicked, object: nil)
     }
     
     /// Reset the delegate.
@@ -79,13 +82,16 @@ public class TiledDemoDelegate: NSObject, Loggable {
     }
     
     func setupNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(globalsUpdatedAction), name: Notification.Name.Globals.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(focusedCoordinateChanged), name: Notification.Name.Map.FocusCoordinateChanged, object: nil)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(sceneWillUnloadAction), name: Notification.Name.Demo.SceneWillUnload, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sceneWillUnloadAction), name: Notification.Name.Demo.FlushScene, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionChanged), name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(mouseRightClickAction), name: Notification.Name.Demo.MouseRightClicked, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(globalsUpdatedAction), name: Notification.Name.Globals.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(dumpSelectedNodes), name: Notification.Name.Demo.DumpSelectedNodes, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(tileClickedAction), name: Notification.Name.Demo.TileClicked, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(objectClickedAction), name: Notification.Name.Demo.ObjectClicked, object: nil)
     }
        
     // MARK: - Handlers
@@ -119,10 +125,11 @@ public class TiledDemoDelegate: NSObject, Loggable {
     
     /// Handles the `Notification.Name.Demo.NodeSelectionChanged` callback.
     ///
-    ///   userInfo: ["nodes": `[SKNode]`]
+    ///   userInfo: ["nodes": `[SKNode]`, "focusLocation": `CGPoint`]
     ///
     /// - Parameter notification: event notification.
     @objc func nodeSelectionChanged(notification: Notification) {
+        notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: Any],
               let selectedNodes = userInfo["nodes"] as? [SKNode] else {
             return
@@ -143,19 +150,64 @@ public class TiledDemoDelegate: NSObject, Loggable {
         }
     }
     
+    /// Handles the `Notification.Name.Demo.TileClicked` event.
+    ///
+    ///  object: `SKTile`
+    ///
+    /// - Parameter notification: event notification.
+    @objc func tileClickedAction(notification: Notification) {
+        notification.dump(#fileID, function: #function)
+        guard let tile = notification.object as? SKTile else {
+            return
+        }
+        currentNodes.removeAll()
+        currentNodes.append(tile)
+        
+        /// event: `Notification.Name.Demo.NodeSelectionChanged`
+        NotificationCenter.default.post(
+            name: Notification.Name.Demo.NodeSelectionChanged,
+            object: nil,
+            userInfo: ["nodes": [tile]]
+        )
+    }
+    
+    /// Handles the `Notification.Name.Demo.TileClicked` event.
+    ///
+    ///  object: `SKTile`
+    ///
+    /// - Parameter notification: event notification.
+    @objc func objectClickedAction(notification: Notification) {
+        notification.dump(#fileID, function: #function)
+        guard let object = notification.object as? SKTileObject else {
+            return
+        }
+        currentNodes.removeAll()
+        currentNodes.append(object)
+        
+        
+        /// event: `Notification.Name.Demo.NodeSelectionChanged`
+        NotificationCenter.default.post(
+            name: Notification.Name.Demo.NodeSelectionChanged,
+            object: nil,
+            userInfo: ["nodes": [object]]
+        )
+    }
+    
     /// Handles the `Notification.Name.Demo.MouseRightClicked` callback. This is the action that clears the current node highlights.
     ///
     /// - Parameter notification: event notification.
     @objc func mouseRightClickAction(notification: Notification) {
+        notification.dump(#fileID, function: #function)
         reset()
     }
     
-    /// Handles the `Notification.Name.Globals.Updated` callback. Changes selected nodes' highlight color.
+    /// Handles the `Notification.Name.Globals.Updated` event. Changes selected nodes' highlight color.
     ///
     ///   userInfo: ["tileColor": `SKColor`, "objectColor": `SKColor`]
     ///
     /// - Parameter notification: event notification.
     @objc func globalsUpdatedAction(notification: Notification) {
+        notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: Any] else {
             return
         }
@@ -192,7 +244,6 @@ public class TiledDemoDelegate: NSObject, Loggable {
         )
     }
     
-    
     /// Handles the `Notification.Name.Globals.Updated` callback. Changes selected nodes' highlight color.
     ///
     ///   userInfo: ["tileColor": `SKColor`, "objectColor": `SKColor`]
@@ -227,6 +278,34 @@ let defaultDemoDelegate = TiledDemoDelegate()
 
 
 // MARK: - Extensions
+
+
+/// :nodoc:
+extension TiledDemoDelegate: TiledCustomReflectableType {
+    
+    public func dumpStatistics() {
+        var outputString = " Demo Delegate ".padEven(toLength: 40, withPad: "-")
+        outputString = "\n\(outputString)\n"
+        
+        
+        outputString += "  ▾ Camera:\n"
+        outputString += "     ▸ Receive Camera Updates:      \(receiveCameraUpdates)\n"
+        outputString += "     ▸ Camera Zoom:                 \(currentCameraZoom.stringRoundedTo(2))\n\n"
+        
+        if (currentNodes.isEmpty == false) {
+            outputString += "  ▾ Selected Nodes:\n"
+            
+            for node in currentNodes {
+                outputString += "     ▸  \(node.description) \n"
+            }
+        } else {
+            outputString += "  ▸ Selected Nodes: 0\n"
+        }
+        
+        print("\(outputString)\n\n")
+    }
+}
+
 
 extension TiledDemoDelegate: TiledSceneCameraDelegate {
     

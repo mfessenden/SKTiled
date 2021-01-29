@@ -141,6 +141,7 @@ internal class TiledDebugDrawNode: SKNode {
     func draw() {
         guard let _ = layer,
             let debugDrawOptions = debugDrawOptions else {
+            log("cannot access the parent layer", level: .warning)
             return
         }
     

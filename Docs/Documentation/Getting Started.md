@@ -81,6 +81,8 @@ It's also possible to build the new binary **xcframework** framework for use wit
 
 The resulting framework file `**SKTiled.xcframework**` can be added to your project via dragging it into the **General > Frameworks, Libraries, and Embedded Content** section of each target. Unlike normal frameworks, this framework can be used with *any* platform. If your project will be build for multiple processor architectures (x86, Apple ARM), this is the preferred method.
 
+![xcframework embed](images/embed-xcframeworks.svg)
+
 You'll need **Carthage v0.37.0** to build binary frameworks. See [**this issue**][carthage-issue-url] for more information.
 
 ### CocoaPods Installation

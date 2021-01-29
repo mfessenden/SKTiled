@@ -236,27 +236,9 @@ public class SKTileLayer: TiledLayerObject {
         if (chunks.contains(chunk) == false) {
             chunks.append(chunk)
             
-            
             chunk.position = pointForCoordinate(coord: simd_int2(x: chunk.offset.xCoord, y: chunk.offset.yCoord))
             addChild(chunk)
-            
-            /*
-            let label = SKLabelNode(text: chunk.xPath)
-            
-            label.fontSize = 8
-            label.zPosition = chunk.zPosition + 100
-            
-            chunk.addChild(label)
-            
-            
-            let randColor = TiledObjectColors.random
-            chunk.boundsShape?.strokeColor = randColor
-            label.position.x = chunk.sizeInPoints.halfWidth
-            label.position.y = chunk.sizeInPoints.halfHeight
-            label.color = randColor
-            
-            chunk.highlightNode(with: randColor, duration: 0.5)
-             */
+
         }
     }
 

@@ -102,7 +102,7 @@ internal enum CameraMovementMode: UInt8 {
 /// | zoomClamping  | Clamping factor used to alleviate render artifacts like cracking. |
 ///
 public class SKTiledSceneCamera: SKCameraNode {
-    
+
     /// World container node.
     weak internal var world: SKNode?
     
@@ -1042,19 +1042,16 @@ extension SKTiledSceneCamera {
     /// - Parameter event: mouse event.
     public override func mouseMoved(with event: NSEvent) {
         super.mouseMoved(with: event)
-        
+       // print("⭑ camera mouse event at \(event.location(in: self).shortDescription)")
         
         if (event.type == .mouseMoved) {
             lastLocation = event.location(in: self)
             
             //guard (TiledGlobals.default.enableMouseEvents == true) else { return }
-            
-            
             for delegate in self.delegates {
                 guard (delegate.receiveCameraUpdates == true) else {
                     continue
                 }
-                
                 delegate.mousePositionChanged?(event: event)
             }
         }
@@ -1071,7 +1068,6 @@ extension SKTiledSceneCamera {
             scenePositionChanged(with: event)
         }
     }
-    
     
     /// Manage mouse wheel zooming. Need to ensure that lastLocation is a location in *this* node.
     ///
@@ -1109,13 +1105,11 @@ extension SKTiledSceneCamera {
         }
     }
     
-    
     /// Handler for mouse right-click events.
     ///
     /// - Parameter event: mouse event.
     public override func rightMouseDown(with event: NSEvent) {
         
-        // TODO: remove for release
         #if SKTILED_DEMO
         
         // clear the currently selected node
@@ -1123,7 +1117,6 @@ extension SKTiledSceneCamera {
             name: Notification.Name.Demo.MouseRightClicked,
             object: nil
         )
-        
         #endif
         
         if let tiledScene = scene as? SKTiledScene {
@@ -1141,21 +1134,13 @@ extension SKTiledSceneCamera {
     public override func rightMouseUp(with event: NSEvent) {
         
         #if SKTILED_DEMO
-        
-        // FIXME: this shouldn't be called in both up/down
-        
-        // clear the currently selected node
-        NotificationCenter.default.post(
-            name: Notification.Name.Demo.MouseRightClicked,
-            object: nil
-        )
-        
-        
+
         if let tiledScene = scene as? SKTiledScene {
             let locationInScene = event.location(in: tiledScene)
             let nodesUnderMouse = tiledScene.nodes(at: locationInScene).filter( { $0 as? TiledGeometryType != nil })
             
             if (nodesUnderMouse.isEmpty == true) {
+                log("no nodes at event location '\(event.location(in: self).shortDescription)'", level: .warning)
                 return
             }
             

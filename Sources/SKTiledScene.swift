@@ -401,7 +401,7 @@ extension SKTiledScene {
     /// - Parameter event: mouse event.
     open override func mouseMoved(with event: NSEvent) {
         //guard (TiledGlobals.default.enableMouseEvents == true) else { return }
-        //print("⭑ scene mouse event \(event.location(in: self))")
+        //print("⭑ scene mouse event at \(event.location(in: self).shortDescription)")
         cameraNode?.mouseMoved(with: event)
     }
 

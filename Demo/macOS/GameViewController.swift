@@ -202,7 +202,6 @@ class GameViewController: NSViewController, Loggable {
         NotificationCenter.default.removeObserver(self, name: NSWindow.didChangeBackingPropertiesNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeAttributesChanged, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodesRightClicked, object: nil)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodesAboutToBeSelected, object: nil)
 
 
         NotificationCenter.default.removeObserver(self, name: Notification.Name.DemoController.ResetDemoInterface, object: nil)
@@ -221,7 +220,8 @@ class GameViewController: NSViewController, Loggable {
         cameraInfoLabel.stringValue = ""
         commandOutputLabel.stringValue = ""
         isolatedInfoLabel.stringValue = ""
-
+        pauseInfoLabel.textColor = TiledObjectColors.grass
+        
         // text shadow
         let shadow = NSShadow()
         shadow.shadowOffset = NSSize(width: 1, height: 2)
@@ -350,15 +350,12 @@ class GameViewController: NSViewController, Loggable {
 
         // testing
         NotificationCenter.default.addObserver(self, selector: #selector(nodeAttributesChanged), name: Notification.Name.Demo.NodeAttributesChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(nodesRightClicked), name: Notification.Name.Demo.NodesRightClicked, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(nodesRightClickedAction), name: Notification.Name.Demo.NodesRightClicked, object: nil)
 
         // new!!
         NotificationCenter.default.addObserver(self, selector: #selector(resetMainInterfaceAction), name: Notification.Name.DemoController.ResetDemoInterface, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(demoControllerFinishedScanningAssets), name: Notification.Name.DemoController.AssetsFinishedScanning, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(demoControllerResetAction), name: Notification.Name.DemoController.WillBeginScanForAssets, object: nil)
-
-        // inspector
-        NotificationCenter.default.addObserver(self, selector: #selector(nodesAboutToBeSelected), name: Notification.Name.Demo.NodesAboutToBeSelected, object: nil)
     }
 
     // MARK: - Command Strings
@@ -505,6 +502,32 @@ class GameViewController: NSViewController, Loggable {
         self.mapDescriptionLabel.isHidden = !showMapDescriptionLabel
         self.mapDescriptionLabel.stringValue = mapDescriptionString
         self.mapDescriptionLabel.textColor = NSColor(hexString: "#CCCCCC")
+        
+
+        
+        /// update the selected node label
+        if let selected = Array(demoDelegate.currentNodes).first {
+            selectedInfoLabel.isHidden = false
+            
+            let attributedString = NSMutableAttributedString()
+            let selectedColor = NSColor(hexString: "#6DD400")
+            let selectedStyle = NSMutableParagraphStyle()
+            selectedStyle.alignment = .left
+            
+            
+            let selectedAttributes = [
+                .foregroundColor: selectedColor,
+                .paragraphStyle: selectedStyle
+            ] as [NSAttributedString.Key: Any]
+            
+            let selectedLabelString = NSMutableAttributedString(string: "Selected: ", attributes: selectedAttributes)
+            attributedString.append(selectedLabelString)
+            attributedString.append(NSAttributedString(string: selected.description))
+            
+            selectedInfoLabel.attributedStringValue = attributedString
+        }
+        
+        
     }
 
     /// Show/hide the current SpriteKit render stats.
@@ -527,7 +550,7 @@ class GameViewController: NSViewController, Loggable {
         }
     }
 
-    /// Update the debugging labels with various scene information.
+    /// Update the debugging labels with various scene information. Called when node values are changed via the demo inspector. Called when the `Notification.Name.Demo.UpdateDebugging` notification is sent.
     ///
     /// - Parameter notification: notification event.
     @objc func debuggingInfoReceived(notification: Notification) {
@@ -555,6 +578,7 @@ class GameViewController: NSViewController, Loggable {
 
         if let pauseInfo = notification.userInfo!["pauseInfo"] {
             pauseInfoLabel.stringValue = pauseInfo as! String
+            
         }
 
         if let isolatedInfo = notification.userInfo!["isolatedInfo"] {
@@ -591,7 +615,7 @@ class GameViewController: NSViewController, Loggable {
     ///  - expects a user dictionary value of ["nodes": [`SKNode`], "locationInWindow": `CGPoint`]
     ///
     /// - Parameter notification: event notification.
-    @objc func nodesRightClicked(notification: Notification) {
+    @objc func nodesRightClickedAction(notification: Notification) {
         // notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: Any],
               let skView = self.view as? SKView else {
@@ -617,17 +641,35 @@ class GameViewController: NSViewController, Loggable {
             nodesMenu.addItem(NSMenuItem.separator())
 
             var firstNode: SKNode!
-
+            
+            
+            var previousIndentationLevel = 0
+            
+            // loop through the nodes...
             for node in nodesUnderMouse {
+                
+                // filter out the first node...
                 if (firstNode == nil) {
                     firstNode = node
                 }
+                
+                
+                var currentIndenationLevel = 0
 
                 var nodeImageName = "node-icon"
                 var nodeNameString = node.className
                 if let tiledNode = node as? TiledCustomReflectableType {
+                    
                     nodeNameString = tiledNode.tiledListDescription ?? "tiled node"
                     nodeImageName = tiledNode.tiledIconName ?? "node-icon"
+
+                    if let mappableNode = tiledNode as? TiledMappableGeometryType {
+                        nodeNameString = mappableNode.tiledMenuDescription ?? "tiled node"
+                        
+                        if let layerNode = tiledNode as? TiledLayerObject {
+                            currentIndenationLevel = layerNode.parents.count
+                        }
+                    }
                 }
 
                 if let nodeName = node.name {
@@ -636,11 +678,11 @@ class GameViewController: NSViewController, Loggable {
 
                 let thisNodeMenuItem = NSMenuItem(title: nodeNameString, action: #selector(handleSceneRightClickAction(_:)), keyEquivalent: "")
                 thisNodeMenuItem.image = NSImage(named: nodeImageName)
-                thisNodeMenuItem.identifier = NSUserInterfaceItemIdentifier(rawValue: "\(node.hash)")
+                thisNodeMenuItem.representedObject = node
+                thisNodeMenuItem.indentationLevel = currentIndenationLevel
                 nodesMenu.addItem(thisNodeMenuItem)
-
-                //let parentCount = (node.allParents().count - 1 < 0) ? 0 : node.allParents().count - 1
-                //thisNodeMenuItem.indentationLevel = parentCount
+                
+                previousIndentationLevel = currentIndenationLevel
             }
 
             skView.menu = nodesMenu
@@ -722,38 +764,41 @@ class GameViewController: NSViewController, Loggable {
     }
 
     // MARK: - Right-Click Handlers
-
-    /// Handler for the view's right-click menu action.
+    
+    /// Handler for the view's right-click menu items. The `NSMenuItem.representedObject` is the node's hash value.
     ///
     /// - Parameter sender: menu item.
     @objc private func handleSceneRightClickAction(_ sender: AnyObject) {
         guard let menuItem = sender as? NSMenuItem,
-              let identifier = menuItem.identifier else {
+              let node = menuItem.representedObject as? SKNode else {
+            fatalError("can't access menu item's represented object")
+        }
+        
+        guard let skView = view as? SKView,
+              let scene = skView.scene as? SKTiledDemoScene else {
             return
         }
 
-
-        guard let view = demoController.view,
-              let scene = view.scene as? SKTiledDemoScene else {
-            return
-        }
-
-        // identifier is the node's hash value
-        let stringIdentifier = identifier.rawValue
-        scene.enumerateChildNodes(withName: ".//*") { node, stop in
-            let hashString = "\(node.hash)"
-            if (hashString == stringIdentifier) {
-
-                /// event: `Notification.Name.Demo.NodeSelectionChanged`
-                NotificationCenter.default.post(
-                    name: Notification.Name.Demo.NodeSelectionChanged,
-                    object: nil,
-                    userInfo: ["nodes": [node], "focusLocation": scene.convert(node.position, to: scene)]
-                )
-                stop.pointee = true
-            }
-        }
+        /// calls back to the AppDelegate to build the `Selected Node` menu.
+        /// calls back to the demo delegate and highlights the selected nodes
+        /// calls back to this object to set the selection label
+        NotificationCenter.default.post(
+            name: Notification.Name.Demo.NodeSelectionChanged,
+            object: nil,
+            userInfo: ["nodes": [node], "focusLocation": scene.convert(node.position, to: scene)]
+        )
     }
+    
+    
+    /// Handles the `Notification.Name.Demo.MouseRightClicked` callback.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func mouseRightClickAction(notification: Notification) {
+        notification.dump(#fileID, function: #function)
+        selectedInfoLabel.isHidden = true
+        selectedInfoLabel.stringValue = "Nothing Selected"
+    }
+
 
     // MARK: - Reset
 
@@ -766,24 +811,14 @@ class GameViewController: NSViewController, Loggable {
         //demoController.flushScene()
     }
 
-    /// Called when the user begins a new selection. Called when the `Notification.Name.Demo.NodesAboutToBeSelected` notification is sent.
-    ///
-    ///  - expects a userInfo of `["nodes": [SKNode]]`
-    ///
-    /// - Parameter notification: event notification.
-    @objc func nodesAboutToBeSelected(_ notification: Notification) {
-        // notification.dump(#fileID, function: #function)
-        selectedInfoLabel.isHidden = true
-    }
-
 
     /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.NodeSelectionChanged` notification is sent.
     ///
-    ///  - expects a userInfo of `["nodes": [SKNode]]`
+    ///  - expects a userInfo of `["nodes": [SKNode], "focusLocation": CGPoint]`
     ///
     /// - Parameter notification: event notification.
     @objc func nodeSelectionChanged(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: Any],
               let selectedNodes = userInfo["nodes"] as? [SKNode] else {
             return
@@ -807,7 +842,12 @@ class GameViewController: NSViewController, Loggable {
 
         let isSingleSelection = (selectedCount == 1)
         if (isSingleSelection == true) {
+            
+            // show only th first node....
             if let selected = selectedNodes.first {
+                
+                
+                drawAnchor(selected, radius: 1, anchorColor: TiledObjectColors.random, zoomScale: 1)
                 if let tiledNode = selected as? TiledCustomReflectableType {
 
                     selectedInfoLabel.isHidden = false
@@ -834,7 +874,6 @@ class GameViewController: NSViewController, Loggable {
             //selectedNode = nil
             selectedInfoLabel.isHidden = false
 
-
             let selectedColor = NSColor(hexString: "#6DD400")
             let selectedStyle = NSMutableParagraphStyle()
             selectedStyle.alignment = .left
@@ -850,14 +889,6 @@ class GameViewController: NSViewController, Loggable {
         }
     }
 
-    /// Handles the `Notification.Name.Demo.MouseRightClicked` callback.
-    ///
-    /// - Parameter notification: event notification.
-    @objc func mouseRightClickAction(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
-        selectedInfoLabel.isHidden = true
-        selectedInfoLabel.stringValue = ""
-    }
 
     /// Update the tile property label. Called when the `Notification.Name.Tile.RenderModeChanged` notification is sent.
     ///

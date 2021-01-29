@@ -403,29 +403,6 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 
     // MARK: - Geometry
 
-    /// Returns the position of layer origin point (used to place tiles).
-    public var origin: CGPoint {
-
-        // TODO: add layerInfiniteOffset?
-        switch orientation {
-
-            case .orthogonal:
-                return CGPoint.zero
-
-            case .isometric:
-                return CGPoint(x: height * tileWidthHalf, y: tileHeightHalf)
-
-            case .hexagonal:
-                let startPoint = CGPoint.zero
-                //startPoint.x -= tileWidthHalf
-                //startPoint.y -= tileHeightHalf
-                return startPoint
-
-            case .staggered:
-                return CGPoint.zero
-        }
-    }
-
     /// Returns the frame rectangle of the layer (used to draw bounds).
     public override var boundingRect: CGRect {
         // TODO: implement this
@@ -454,7 +431,9 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
                 offsetPos.y += tileHeightHalf
 
             case .isometric:
-                offsetPos.x -= sizeInPoints.halfWidth
+                let offsetXValue = (height * tileWidthHalf) + (tileWidth * 2)
+   
+                offsetPos.x += offsetXValue
                 offsetPos.y += tileHeightHalf
 
             case .hexagonal, .staggered:
@@ -895,7 +874,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         return nil
     }
     
-    /// Generic highlight method that works for all `SpriteKit` types.
+    /// Highlights the layer with the given color.
     ///
     /// - Parameters:
     ///   - color: highlight color.
@@ -1128,9 +1107,8 @@ extension TiledLayerObject {
     public override var debugDescription: String {
         return #"<\#(description)>"#
     }
-
     /// Returns a string representation for use with a dropdown menu.
-    public var menuDescription: String {
+    @objc public override var tiledListDescription: String {
         let parentCount = parents.count
         let isGrouped: Bool = (parentCount > 1)
         var layerSymbol: String = layerType.symbol
@@ -1139,11 +1117,18 @@ extension TiledLayerObject {
         if (isGroupNode == true) {
             layerSymbol = (hasChildren == true) ? "▿" : "▹"
         }
-
+        
         let filler = (isGrouped == true) ? String(repeating: "   ", count: parentCount - 1) : ""
         return "\(filler)\(layerSymbol) \(layerName)"
     }
+    
+    
+    /// Returns a string representation for use with a dropdown menu.
+    @objc public override var tiledMenuDescription: String {
+        return description
+    }
 }
+
 
 /// :nodoc:
 extension TiledLayerObject {
