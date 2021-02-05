@@ -427,7 +427,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         var offsetPos = CGPoint.zero
         switch orientation {
             case .orthogonal:
-                offsetPos.x -= tileWidthHalf
+                offsetPos.x += tileWidthHalf
                 offsetPos.y += tileHeightHalf
 
             case .isometric:
@@ -437,7 +437,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
                 offsetPos.y += tileHeightHalf
 
             case .hexagonal, .staggered:
-                offsetPos.x -= tileWidthHalf
+                offsetPos.x += tileWidthHalf
                 offsetPos.y += tileHeightHalf
         }
 
