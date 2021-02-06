@@ -94,11 +94,12 @@
 
 ## [Working with Tiles](working-with-tiles.html)
 
+- [Tile IDs](working-with-tiles.html#tile-render-mode)
+    - [Querying Tiles with ID](working-with-tiles.html#find-tiles-with-tile-id)
+        - [Global ID](working-with-tiles.html#global-id)
+        - [Local ID](working-with-tiles.html#local-id)
 - [Tile Render Mode](working-with-tiles.html#tile-render-mode)
 - [Querying Tiles at Location](working-with-tiles.html#querying-tiles-at-location)
-- [Querying Tiles with ID](working-with-tiles.html#find-tiles-with-tile-id)
-    - [Global ID](working-with-tiles.html#global-id)
-    - [Local ID](working-with-tiles.html#local-id)
 - [Tile Flags](working-with-tiles.html#tile-flags)
 - [Tile Alignment](working-with-tiles.html#tile-alignment)
 - [Find Tiles of Type](working-with-tiles.html#find-tiles-of-type)

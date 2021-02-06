@@ -42,16 +42,16 @@ import SpriteKit
 ///
 public struct MouseEventOptions: OptionSet {
     public let rawValue: UInt8
-
+    
     public static let tileCoordinates      = MouseEventOptions(rawValue: 1 << 0)
     public static let sceneCoordinates     = MouseEventOptions(rawValue: 1 << 1)
     public static let mapCoordinates       = MouseEventOptions(rawValue: 1 << 2)
     public static let tileDataUnderCursor  = MouseEventOptions(rawValue: 1 << 3)
-
+    
     public static let `default`: MouseEventOptions = [.tileCoordinates, .sceneCoordinates]
-
+    
     public static let all: MouseEventOptions = [.tileCoordinates, .sceneCoordinates, .mapCoordinates, .tileDataUnderCursor]
-
+    
     public init(rawValue: UInt8 = 0) {
         self.rawValue = rawValue
     }
@@ -60,72 +60,146 @@ public struct MouseEventOptions: OptionSet {
 
 /// Debugging HUD display that follows the macOS cursor
 internal class MousePointer: SKNode {
-
+    
+    /// The current font name used for the labels.
     var fontName: String = "Menlo"
-    var _baseFontSize: CGFloat = TiledGlobals.default.debug.mousePointerSize
+    
+    /// Base size for the labels.
+    var _baseFontSize: CGFloat {
+        return TiledGlobals.default.debug.mousePointerSize
+    }
+    
+    /// Labell size multiplier.
     var _fontSizeMultiplier: CGFloat = 1
-
+    
+    /// Computed font size.
     var fontSize: CGFloat {
         return _baseFontSize * _fontSizeMultiplier
     }
-
-    var color: SKColor = SKColor.white
-
-    @objc var receiveCameraUpdates: Bool = TiledGlobals.default.enableCameraCallbacks
-
-
     
+    /// Label base color.
+    var color: SKColor = SKColor.white
+    
+    /// Enable camera updates.
+    @objc var receiveCameraUpdates: Bool = TiledGlobals.default.enableCameraCallbacks
+    
+    /// The currently focused tile.
+    weak var currentTile: SKTile?
+    
+    /// The currently focused object.
+    weak var currentObject: SKTileObject?
+    
+    /// Current location of mouse.
     var _currentCoordinate: simd_int2?
+    
+    /// Indicates the coordinate is a valid map coordinate.
     var isValidCoordinate: Bool = false
     
-    var tileDataString: String?
-    var mapPositionString: String?
-    var scenePositionString: String?
-
-    /// Label node.
-    lazy var label: SKLabelNode? = {
-        let newLabel = SKLabelNode(fontNamed: fontName)
-        newLabel.name = "MOUSEPOINTER_LABEL"
-        newLabel.setAttrs(values: ["tiled-node-desc": "Label reflecting the current mouse position in scene."])
-        addChild(newLabel)
-        newLabel.text = "coord:"
-        return newLabel
-    }()
-
-    // TODO: put this on the current scene or view.
+    /// Label for scene position.
+    var sceneLabel: SKLabelNode?
+    
+    /// Label for map coordinates.
+    var coordLabel: SKLabelNode?
+    
+    /// Label for tile data display.
+    var tileLabel:  SKLabelNode?
     
     /// Current mouse filters.
-    var mouseFilters: MouseEventOptions = MouseEventOptions.all
-
-    // MARK: - Mouse Pointer Init
-
+    var mouseFilters: TiledGlobals.DebugDisplayOptions.MouseFilters {
+        return TiledGlobals.default.debug.mouseFilters
+    }
+    
+    /// Draw the tile local id.
+    var drawLocalID: Bool {
+        return mouseFilters.contains(.tileLocalID)
+    }
+    
+    /// Calculates the line count.
+    var lineCount: Int {
+        var result = 0
+        if (mouseFilters.isShowingTileCoordinates) {
+            result += 1
+        }
+        if (mouseFilters.isShowingSceneCoordinates) {
+            result += 1
+        }
+        
+        if (mouseFilters.isShowingTileData) {
+            result += 1
+        }
+        return result
+    }
+    
+    // MARK: - Initialization
+    
     override init() {
         super.init()
         zPosition = 10000
+        setupLabels()
         setupNotifications()
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         super.init()
+        setupLabels()
         setupNotifications()
     }
-
-
+    
     deinit {
+        // remove references to objects
+        currentTile = nil
+        currentObject = nil
+        
+        // destroy the labels
+        sceneLabel?.removeFromParent()
+        sceneLabel = nil
+        
+        coordLabel?.removeFromParent()
+        coordLabel = nil
+        
+        tileLabel?.removeFromParent()
+        tileLabel = nil
+        
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.TileUnderCursor, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.TileClicked, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Globals.Updated, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.FocusCoordinateChanged, object: nil)
     }
-
+    
+    // MARK: - Setup
+    
+    func setupLabels() {
+        if (sceneLabel == nil) {
+            let label = SKLabelNode(fontNamed: fontName)
+            addChild(label)
+            sceneLabel = label
+        }
+        if (coordLabel == nil) {
+            let label = SKLabelNode(fontNamed: fontName)
+            addChild(label)
+            coordLabel = label
+        }
+        
+        if (tileLabel == nil) {
+            let label = SKLabelNode(fontNamed: fontName)
+            addChild(label)
+            tileLabel = label
+        }
+    }
+    
     func setupNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(tileUnderCursor), name: Notification.Name.Demo.TileUnderCursor, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileClicked), name: Notification.Name.Demo.TileClicked, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(globalsUpdatedAction), name: Notification.Name.Globals.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(focusCoordinateChanged), name: Notification.Name.Map.FocusCoordinateChanged, object: nil)
     }
-
+    
+    
+    // MARK: - Notification Handlers
+    
     /// Called when the tilemap focus coordinate is updated. Called when the `Notification.Name.Map.FocusCoordinateChanged` notification is sent.
+    ///
+    ///  object: `simd_int2`, userInfo: `["oldValue": simd_int2, "isValid": Bool]`
     ///
     /// - Parameter notification: event notification.
     @objc func focusCoordinateChanged(notification: Notification) {
@@ -138,209 +212,140 @@ internal class MousePointer: SKNode {
         
         isValidCoordinate = isValidCoord
         _currentCoordinate = mapFocusedCoordinate
-        draw()
+        //redraw()
     }
-
+    
     /// Set the current tile value. Called when the `Notification.Name.Demo.TileUnderCursor` notification is sent.
     ///
     /// - Parameter notification: event notification.
     @objc func tileUnderCursor(notification: Notification) {
-        guard let tile = notification.object as? SKTile else { return }
-        
-        
+        notification.dump(#fileID, function: #function)
+        guard let tile = notification.object as? SKTile else {
+            return
+        }
+        currentTile = tile
+        redraw()
     }
-
-
+    
     /// Set the current tile value. Called when the `Notification.Name.Demo.TileClicked` notification is sent.
     ///
     /// - Parameter notification: event notification.
     @objc func tileClicked(notification: Notification) {
-        guard let tile = notification.object as? SKTile else { return }
-        
-        tileDataString = #"gid: \#(tile.globalId)"#
-        draw()
+        guard let tile = notification.object as? SKTile else {
+            return
+        }
+        currentTile = tile
+        redraw()
     }
-
-
+    
     /// Called when the globals are updated.
     ///
     /// - Parameter notification: event notification.
     @objc func globalsUpdatedAction(notification: Notification) {
+        notification.dump(#fileID, function: #function)
         let mousePointerEnabled = TiledGlobals.default.debug.mouseFilters.enableMousePointer
         isHidden = !mousePointerEnabled
-        self.draw()
+        redraw()
     }
     
-    func draw() {
-        guard (TiledGlobals.default.debug.mouseFilters.enableMousePointer == true),
-              let currentCoordinate = _currentCoordinate else {
-            return
-        }
-        
-        let coordColor = (isValidCoordinate == true) ? TiledObjectColors.grass : TiledObjectColors.coral
-        let labelStyle = NSMutableParagraphStyle()
-        
-        labelStyle.alignment = .center
-        let stop = NSTextTab(type: .rightTabStopType, location: 8)
-        labelStyle.addTabStop(stop)
-        
-        let defaultLabelAttributes = [
-            .font: NSFont(name: self.fontName, size: self.fontSize)!,
-            .foregroundColor: self.color,
-            .paragraphStyle: labelStyle
-            
-        ] as [NSAttributedString.Key: Any]
-        
-        let coordAttributes = [
-            .font: NSFont(name: self.fontName, size: self.fontSize)!,
-            .foregroundColor: coordColor,
-            .paragraphStyle: labelStyle
-        ] as [NSAttributedString.Key: Any]
-        
-        
-        /// here's the result
-        let outputString = NSMutableAttributedString()
-        
-        
-        let labelText = "coord: "
-        
-        if (mouseFilters.isShowingTileCoordinates == true) {
-        
-            let labelString = NSMutableAttributedString(string: labelText, attributes: defaultLabelAttributes)
-            let dataString = NSMutableAttributedString(string: currentCoordinate.shortDescription, attributes: coordAttributes)
-            
-            outputString.append(labelString)
-            outputString.append(dataString)
-        
-        }
-        
-        if (mouseFilters.isShowingTileData == true) {
-            if let tileDataInfo = tileDataString {
-                let dataString = "\\n\(tileDataInfo)"
-                let dataOutput = NSMutableAttributedString(string: dataString, attributes: defaultLabelAttributes)
-                
-                outputString.append(dataOutput)
-            }
-        }
-        
-        
-        
-        if #available(OSX 10.13, *) {
-            label?.attributedText = outputString
-        } else {
-            label?.text = outputString.string
-        }
-    }
-
+    /// Draw the pointer.
+    ///
+    /// - Parameter event: mouse event.
     func draw(event: NSEvent) {
         guard (TiledGlobals.default.debug.mouseFilters.enableMousePointer == true) else {
+            isHidden = true
             return
         }
-
-        /*
-        /// here's the result
-        var attributedStringResult: NSAttributedString = NSMutableAttributedString()
+        
+        guard let tiledScene = scene as? SKTiledScene,
+              let tilemap = tiledScene.tilemap else {
+            isHidden = true
+            return
+        }
+        
+        let windowLocation = event.locationInWindow
         let scenePosition = event.location(in: tiledScene)
-        let mapPosition = event.location(in: tilemap)
+        
+
         self.position = scenePosition
-
-
         let coordinate = tilemap.coordinateAtMouse(event: event)
-
-        let coordColor = tilemap.isValid(coord: coordinate) ? self.color : TiledObjectColors.coral
-
-
+        let coordColor = tilemap.isValid(coord: coordinate) ? TiledObjectColors.grass : TiledObjectColors.coral
+        
+        
         let labelStyle = NSMutableParagraphStyle()
         labelStyle.alignment = .center
-
+        
         let defaultLabelAttributes = [
-            .font: NSFont(name: self.fontName, size: self.fontSize)!,
-            .foregroundColor: self.color,
+            .font: NSFont(name: fontName, size: fontSize)!,
+            .foregroundColor: color,
             .paragraphStyle: labelStyle
         ] as [NSAttributedString.Key: Any]
-
+        
         let coordAttributes = [
-            .font: NSFont(name: self.fontName, size: self.fontSize)!,
+            .font: NSFont(name: fontName, size: fontSize)!,
             .foregroundColor: coordColor,
             .paragraphStyle: labelStyle
         ] as [NSAttributedString.Key: Any]
-
-
+        
+        
         var labelIndex = 0
-
+        
         if (mouseFilters.isShowingSceneCoordinates == true) {
-
+            
             let outputString = NSMutableAttributedString()
-
+            
             let labelText = "scene: "
             let labelString = NSMutableAttributedString(string: labelText, attributes: defaultLabelAttributes)
             let dataString = NSMutableAttributedString(string: scenePosition.shortDescription, attributes: defaultLabelAttributes)
-
+            
             outputString.append(labelString)
             outputString.append(dataString)
             if #available(OSX 10.13, *) {
-                self.sceneLabel?.attributedText = outputString
+                sceneLabel?.attributedText = outputString
             } else {
-                self.sceneLabel?.text = outputString.string
+                sceneLabel?.text = outputString.string
             }
-            self.sceneLabel?.position.y = CGFloat(labelIndex - self.lineCount / 2) * self.fontSize + self.fontSize
+            sceneLabel?.position.y = CGFloat(labelIndex - lineCount / 2) * self.fontSize + self.fontSize
             labelIndex += 1
         }
-
+        
+        
         if (mouseFilters.isShowingTileCoordinates == true) {
-
+            
             let outputString = NSMutableAttributedString()
-
+            
             let labelText = "coord: "
             let labelString = NSMutableAttributedString(string: labelText, attributes: defaultLabelAttributes)
             let dataString = NSMutableAttributedString(string: coordinate.shortDescription, attributes: coordAttributes)
-
+            
             outputString.append(labelString)
             outputString.append(dataString)
-
+            
             if #available(OSX 10.13, *) {
-                self.coordLabel?.attributedText = outputString
+                coordLabel?.attributedText = outputString
             } else {
-                self.coordLabel?.text = outputString.string
+                coordLabel?.text = outputString.string
             }
-            self.coordLabel?.position.y = CGFloat(labelIndex - self.lineCount / 2) * self.fontSize + self.fontSize
+            coordLabel?.position.y = CGFloat(labelIndex - lineCount / 2) * self.fontSize + self.fontSize
             labelIndex += 1
         }
-
-        if (mouseFilters.isShowingMapCoordinates == true) {
-            let outputString = NSMutableAttributedString()
-
-            let labelText = "map: "
-            let labelString = NSMutableAttributedString(string: labelText, attributes: defaultLabelAttributes)
-            let dataString = NSMutableAttributedString(string: mapPosition.shortDescription, attributes: defaultLabelAttributes)
-
-            outputString.append(labelString)
-            outputString.append(dataString)
-
-            if #available(OSX 10.13, *) {
-                self.mapLabel?.attributedText = outputString
-            } else {
-                self.mapLabel?.text = outputString.string
-            }
-            self.mapLabel?.position.y = CGFloat(labelIndex - self.lineCount / 2) * self.fontSize + self.fontSize
-            labelIndex += 1
-        }
-
-        self.tileLabel?.isHidden = true
-
+        
+        tileLabel?.isHidden = true
+        
         if (mouseFilters.isShowingTileData == true) {
-
+            
             // tile id: 0, gid: 27
             let outputString = NSMutableAttributedString()
-
-            if let currentTile = self.currentTile {
+            
+            if let currentTile = currentTile {
+                
                 let td = currentTile.tileData
                 let idsIdentical = (td.id == td.globalID)
-
+                
                 var globalIDString = "\(td.globalID)"
                 var originalIDString: String? = nil
-                var idColor = self.color
-
+                var idColor = color
+                
                 switch currentTile.renderMode {
                     case .animated(let gid):
                         if (gid != nil) {
@@ -348,23 +353,24 @@ internal class MousePointer: SKNode {
                             originalIDString = "\(td.globalID)"
                             idColor = TiledObjectColors.dandelion
                         }
-
+                        
                     default:
                         break
                 }
-
+                
+                
                 let globalIDLabelAttributes = [
-                    .font: NSFont(name: self.fontName, size: self.fontSize)!,
+                    .font: NSFont(name: fontName, size: fontSize)!,
                     .foregroundColor: idColor,
                     .paragraphStyle: labelStyle
                 ] as [NSAttributedString.Key: Any]
 
-
+                
                 // contruct the first part of the label
-                let tileDataString = (idsIdentical == true) ? "tile gid: " : (mouseFilters.isShowingTileLocalId == true) ? "tile id: \(td.id), gid: " : "tile gid: "
+                let tileDataString = (idsIdentical == true) ? "tile gid: " : (drawLocalID == true) ? "tile id: \(td.id), gid: " : "tile gid: "
                 let labelStringFirst = NSMutableAttributedString(string: tileDataString, attributes: defaultLabelAttributes)
                 outputString.append(labelStringFirst)
-
+                
                 // tile id: 0, gid:
                 if let originalIDString = originalIDString {
                     // highlight the global id in yellow
@@ -373,30 +379,142 @@ internal class MousePointer: SKNode {
                     let labelStringThird = NSMutableAttributedString(string: " (\(originalIDString))", attributes: defaultLabelAttributes)
                     outputString.append(labelStringSecond)
                     outputString.append(labelStringThird)
-
+                    
                 } else {
                     // just add the normal tile gid
                     let labelStringSecond = NSMutableAttributedString(string: globalIDString, attributes: defaultLabelAttributes)
                     outputString.append(labelStringSecond)
                 }
-
-                self.tileLabel?.position.y = CGFloat(labelIndex - self.lineCount / 2) * self.fontSize + self.fontSize
-                self.tileLabel?.isHidden = false
-
+                
+                tileLabel?.position.y = CGFloat(labelIndex - lineCount / 2) * self.fontSize + self.fontSize
+                tileLabel?.isHidden = false
                 if #available(OSX 10.13, *) {
-                    self.tileLabel?.attributedText = outputString
+                    tileLabel?.attributedText = outputString
                 } else {
-                    self.tileLabel?.text = outputString.string
+                    tileLabel?.text = outputString.string
                 }
                 labelIndex += 1
             }
         }
-        */
+    }
+    
+    func redraw() {
+
+        let labelStyle = NSMutableParagraphStyle()
+        labelStyle.alignment = .center
+        
+        let defaultLabelAttributes = [
+            .font: NSFont(name: fontName, size: fontSize)!,
+            .foregroundColor: color,
+            .paragraphStyle: labelStyle
+        ] as [NSAttributedString.Key: Any]
+
+        var labelIndex = 0
+
+        if (mouseFilters.isShowingTileCoordinates == true) {
+            
+            if let coordinate = _currentCoordinate {
+                let coordColor = (isValidCoordinate == true) ? TiledObjectColors.grass : TiledObjectColors.coral
+                
+                let coordAttributes = [
+                    .font: NSFont(name: fontName, size: fontSize)!,
+                    .foregroundColor: coordColor,
+                    .paragraphStyle: labelStyle
+                ] as [NSAttributedString.Key: Any]
+
+                let outputString = NSMutableAttributedString()
+                
+                let labelText = "coord: "
+                let labelString = NSMutableAttributedString(string: labelText, attributes: defaultLabelAttributes)
+                let dataString = NSMutableAttributedString(string: coordinate.shortDescription, attributes: coordAttributes)
+                
+                outputString.append(labelString)
+                outputString.append(dataString)
+                
+                if #available(OSX 10.13, *) {
+                    coordLabel?.attributedText = outputString
+                } else {
+                    coordLabel?.text = outputString.string
+                }
+                coordLabel?.position.y = CGFloat(labelIndex - lineCount / 2) * self.fontSize + self.fontSize
+                labelIndex += 1
+            }
+        }
+        
+        tileLabel?.isHidden = true
+        
+        if (mouseFilters.isShowingTileData == true) {
+            
+            // tile id: 0, gid: 27
+            let outputString = NSMutableAttributedString()
+            
+            if let currentTile = currentTile {
+                
+                let td = currentTile.tileData
+                let idsIdentical = (td.id == td.globalID)
+                
+                var globalIDString = "\(td.globalID)"
+                var originalIDString: String? = nil
+                var idColor = color
+                
+                switch currentTile.renderMode {
+                    case .animated(let gid):
+                        if (gid != nil) {
+                            globalIDString = "\(gid!)"
+                            originalIDString = "\(td.globalID)"
+                            idColor = TiledObjectColors.dandelion
+                        }
+                        
+                    default:
+                        break
+                }
+                
+                
+                let globalIDLabelAttributes = [
+                    .font: NSFont(name: fontName, size: fontSize)!,
+                    .foregroundColor: idColor,
+                    .paragraphStyle: labelStyle
+                ] as [NSAttributedString.Key: Any]
+                
+                
+                // contruct the first part of the label
+                let tileDataString = (idsIdentical == true) ? "tile gid: " : (drawLocalID == true) ? "tile id: \(td.id), gid: " : "tile gid: "
+                let labelStringFirst = NSMutableAttributedString(string: tileDataString, attributes: defaultLabelAttributes)
+                outputString.append(labelStringFirst)
+                
+                // tile id: 0, gid:
+                if let originalIDString = originalIDString {
+                    // highlight the global id in yellow
+                    let labelStringSecond = NSMutableAttributedString(string: globalIDString, attributes: globalIDLabelAttributes)
+                    // after, in parenthesis, indicate the ORIGINAL gid
+                    let labelStringThird = NSMutableAttributedString(string: " (\(originalIDString))", attributes: defaultLabelAttributes)
+                    outputString.append(labelStringSecond)
+                    outputString.append(labelStringThird)
+                    
+                } else {
+                    // just add the normal tile gid
+                    let labelStringSecond = NSMutableAttributedString(string: globalIDString, attributes: defaultLabelAttributes)
+                    outputString.append(labelStringSecond)
+                }
+                
+                tileLabel?.position.y = CGFloat(labelIndex - lineCount / 2) * self.fontSize + self.fontSize
+                tileLabel?.isHidden = false
+                if #available(OSX 10.13, *) {
+                    tileLabel?.attributedText = outputString
+                } else {
+                    tileLabel?.text = outputString.string
+                }
+                labelIndex += 1
+            }
+        }
     }
 }
 
 
 // MARK: - Extensions
+
+
+
 
 extension MouseEventOptions {
     
@@ -443,7 +561,7 @@ extension MouseEventOptions {
 
 
 extension MousePointer: TiledSceneCameraDelegate {
-
+    
     /// Called when the mouse moves in the scene.
     ///
     /// - Parameter event: mouse event.
@@ -454,26 +572,26 @@ extension MousePointer: TiledSceneCameraDelegate {
 
 
 extension MousePointer: TiledCustomReflectableType {
-
+    
     public func dumpStatistics() {
         dump(self)
     }
-
+    
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public var tiledNodeNiceName: String {
         return "MousePointer"
     }
-
+    
     /// Returns the internal **Tiled** node type icon.
     @objc public var tiledIconName: String {
         return "mousepointer-icon"
     }
-
+    
     /// A description of the node used for list views.
     @objc public var tiledListDescription: String {
         return "MousePointer"
     }
-
+    
     /// A description of the node.
     @objc public var tiledDescription: String {
         return "A node that tracks mouse movement."

@@ -112,7 +112,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     
     /// ## Overview
     ///
-    /// Tile global id attribute. This attribute determines the tile data assigned to the tile.
+    /// Tile global id attribute. This attribute determines the tile data assigned to the tile. Changing this value will update this tiles' tile data.
     ///
     /// This is a wrapper for the `TileID` data structure and represents both global ID & tile orientation flags.
     @TileID open var globalId: UInt32 = 0 {
@@ -141,6 +141,9 @@ open class SKTile: SKSpriteNode, CustomReflectable {
 
     /// Weak reference to the parent layer.
     open weak var layer: TiledLayerObject!
+    
+    /// Parent tile onbject.
+    open weak var object: SKTileObject?
 
     /// Object is visible in camera.
     open var visibleToCamera: Bool = true
@@ -407,7 +410,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
                     hexPoints[4] = CGPoint(x: -(variableSize / 2), y: -h)
                     hexPoints[5] = CGPoint(x: -(tileWidth / 2), y: 0)
 
-                    // pointy
+                // pointy
                 } else {
                     let r = (tileWidth / 2)
                     let h = (tileHeight - sideLengthY) / 2
@@ -422,8 +425,15 @@ open class SKTile: SKSpriteNode, CustomReflectable {
 
                 vertices = hexPoints.map { $0.invertedY }
         }
+        
+        let offsetVertices = vertices.map { $0 + offset }
+        
+        /// if this is a tile object, the object anchor lies at the first point (typically bottom-left)
+        if let parentObj = object {
+            return offsetVertices.map { parentObj.convert($0, from: parentObj) }
+        }
 
-        return vertices.map { $0 + offset }
+        return offsetVertices
     }
 
     /// ## Overview:
@@ -530,6 +540,8 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     }
     
     deinit {
+        layer = nil
+        object = nil
         removeAllActions()
         removeAllChildren()
     }
@@ -541,6 +553,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         removeAllActions()
         texture = tileData.texture
         size = tileData.texture.size()
+        // TODO: animations?
         orientTile()
     }
 
@@ -653,13 +666,14 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         }
     }
 
-    /// Remove the animation for the current tile.
+    /// Remove the SpriteKit animation action for the current tile. If the `restore` argument is true, the tile's texture will reflect the tile data's initial texture.
     ///
     /// - Parameter restore: restore the tile's initial texture.
     open func removeAnimationActions(restore: Bool = false) {
         removeAction(forKey: animationKey)
-
-        guard tileData.isAnimated == true else { return }
+        guard tileData.isAnimated == true else {
+            return
+        }
 
         if (restore == true) {
             texture = tileData.texture
@@ -1276,7 +1290,7 @@ extension SKTile {
 
     /// Copies the tile object to a generic SpriteKit `SKSpriteNode` node. If the tile has animation, returns a sprite running a custom `SKAction`.
     ///
-    /// - Returns: sprite copy with current animation.
+    /// - Returns: sprite copy of tile with current texture/animation.
     public func spriteCopy() -> SKSpriteNode {
         let sprite = SKSpriteNode(texture: tileData.texture, color: self.color, size: tileData.texture.size())
 
@@ -1293,13 +1307,14 @@ extension SKTile {
         sprite.zRotation = zRotation
         sprite.xScale = xScale
         sprite.yScale = yScale
-
+        
         return sprite
     }
 
     /// Replace the tile object with sprite copy of the tile.
     ///
     /// - Returns: sprite with current animation.
+    @discardableResult
     public func replaceWithSpriteCopy() -> SKSpriteNode {
         defer {
             self.removeFromParent()
@@ -1312,6 +1327,7 @@ extension SKTile {
             name: Notification.Name.Layer.TileRemoved,
             object: self
         )
+        
         return sprite
     }
 

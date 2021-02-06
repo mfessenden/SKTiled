@@ -115,8 +115,6 @@ class AttributeEditorViewController: NSViewController {
             
             if let window = view.window {
                 window.title = "Attribute Editor: '\(mapNameString)'"
-            } else {
-                print("❗️ cannot access window")
             }
         }
         

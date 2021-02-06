@@ -538,8 +538,9 @@ extension SKObjectGroup {
     
     /// A description of the node.
     @objc public override var tiledListDescription: String {
+        let nameString = "'\(layerName)'"
         let ccstring = (children.count == 0) ? ": (no children)" : ": (\(children.count) children)"
-        return "\(tiledNodeNiceName)\(ccstring)"
+        return "\(tiledNodeNiceName) \(nameString)\(ccstring)"
     }
     
     /// A description of the node.
@@ -547,7 +548,6 @@ extension SKObjectGroup {
         return "Layer container for vector objects."
     }
 }
-
 
 
 // MARK: - Deprecations

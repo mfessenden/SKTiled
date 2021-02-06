@@ -324,6 +324,12 @@
 		4C5B6DB42455CAE800F81755 /* TiledLayerObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5B6DB02455CAE800F81755 /* TiledLayerObject.swift */; };
 		4C5B6DB52455CAE800F81755 /* TiledLayerObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5B6DB02455CAE800F81755 /* TiledLayerObject.swift */; };
 		4C5B6DB62455CAE800F81755 /* TiledLayerObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5B6DB02455CAE800F81755 /* TiledLayerObject.swift */; };
+		4C64EC3D25D463740090F4F3 /* SKWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C64EC3C25D463740090F4F3 /* SKWorld.swift */; };
+		4C64EC3E25D463740090F4F3 /* SKWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C64EC3C25D463740090F4F3 /* SKWorld.swift */; };
+		4C64EC3F25D463740090F4F3 /* SKWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C64EC3C25D463740090F4F3 /* SKWorld.swift */; };
+		4C64EC4025D463740090F4F3 /* SKWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C64EC3C25D463740090F4F3 /* SKWorld.swift */; };
+		4C64EC4125D463740090F4F3 /* SKWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C64EC3C25D463740090F4F3 /* SKWorld.swift */; };
+		4C64EC4225D463740090F4F3 /* SKWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C64EC3C25D463740090F4F3 /* SKWorld.swift */; };
 		4C6898E625C9B38800EE7006 /* TiledNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6898E525C9B38800EE7006 /* TiledNode.swift */; };
 		4C6898E725C9B38800EE7006 /* TiledNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6898E525C9B38800EE7006 /* TiledNode.swift */; };
 		4C6898E825C9B38800EE7006 /* TiledNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6898E525C9B38800EE7006 /* TiledNode.swift */; };
@@ -801,6 +807,7 @@
 		4C5B6D9A2455C9D500F81755 /* SKImageLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKImageLayer.swift; sourceTree = "<group>"; };
 		4C5B6DA52455CA4500F81755 /* SKGroupLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKGroupLayer.swift; sourceTree = "<group>"; };
 		4C5B6DB02455CAE800F81755 /* TiledLayerObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TiledLayerObject.swift; sourceTree = "<group>"; };
+		4C64EC3C25D463740090F4F3 /* SKWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKWorld.swift; sourceTree = "<group>"; };
 		4C6898E525C9B38800EE7006 /* TiledNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TiledNode.swift; sourceTree = "<group>"; };
 		4C68993F25CAF89800EE7006 /* AttributeEditor.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AttributeEditor.storyboard; sourceTree = "<group>"; };
 		4C68995525CAF96F00EE7006 /* AttributeEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributeEditorViewController.swift; sourceTree = "<group>"; };
@@ -1375,6 +1382,7 @@
 			children = (
 				4CAA236C2469D0D00050A341 /* Array2D.swift */,
 				4CEE247D24992E260029D6CC /* Logging.swift */,
+				4C64EC3C25D463740090F4F3 /* SKWorld.swift */,
 				4CAA23642469D0160050A341 /* Stack.swift */,
 				4C98279B257FD0A100792D01 /* TextObjectAttributes.swift */,
 				4CADFAB82481852E000C2550 /* ThreadSafeArray.swift */,
@@ -1688,6 +1696,7 @@
 				4CA6A7D52184F531002BC924 /* Sources */,
 				4CA6A7D62184F531002BC924 /* Frameworks */,
 				4CA6A7D72184F531002BC924 /* Resources */,
+				4C64EC0925D448BC0090F4F3 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2228,6 +2237,23 @@
 			shellPath = /bin/sh;
 			shellScript = "$SRCROOT/scripts/clean-demo-assets.sh\nenv\n";
 		};
+		4C64EC0925D448BC0090F4F3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
+		};
 		4C96275224E7000B0009D5B3 /* Run Documentation Build */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2307,6 +2333,7 @@
 				4C5B6DB12455CAE800F81755 /* TiledLayerObject.swift in Sources */,
 				4CB8537125AE19B100CC2154 /* PreferencesWindowController.swift in Sources */,
 				4CA89E13252E6E5D00C23E4C /* TiledRasterizableType.swift in Sources */,
+				4C64EC3D25D463740090F4F3 /* SKWorld.swift in Sources */,
 				4CAA144125B9F5F600F7919C /* TileID.swift in Sources */,
 				4CE6415F206C1AEA004BA9E4 /* Demo+Extensions.swift in Sources */,
 				4CADFAB92481852E000C2550 /* ThreadSafeArray.swift in Sources */,
@@ -2384,6 +2411,7 @@
 				4C24B1D320694FA70027EBD5 /* TiledObjectType.swift in Sources */,
 				4C3BC78F2461979100D54290 /* TiledSceneDelegate.swift in Sources */,
 				4CC09EF92519431700363145 /* TiledAttributedType.swift in Sources */,
+				4C64EC4225D463740090F4F3 /* SKWorld.swift in Sources */,
 				4C9FEB7B21A1BC5400C3EEED /* TiledGlobals.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2430,6 +2458,7 @@
 				4CE07801254366D100187F4E /* DemoPreferences.swift in Sources */,
 				4C263A18246079F100568681 /* TiledGeometryType.swift in Sources */,
 				4C24B1E420694FA80027EBD5 /* SKTileLayer.swift in Sources */,
+				4C64EC3F25D463740090F4F3 /* SKWorld.swift in Sources */,
 				4CCDEA7D24E31067009926E3 /* TilesetDataSource.swift in Sources */,
 				4C24B1E520694FA80027EBD5 /* SKTilemap.swift in Sources */,
 				4C1733EA244DFB770043F85C /* SKTileLayerChunk.swift in Sources */,
@@ -2500,6 +2529,7 @@
 				4C41A5ED1F437180001622FF /* TiledObjectType.swift in Sources */,
 				4C3BC78D2461979100D54290 /* TiledSceneDelegate.swift in Sources */,
 				4CC09EF72519431700363145 /* TiledAttributedType.swift in Sources */,
+				4C64EC4025D463740090F4F3 /* SKWorld.swift in Sources */,
 				4C9FEB7921A1BC5400C3EEED /* TiledGlobals.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2554,6 +2584,7 @@
 				4C2FCE541F4378F0004AD742 /* TiledObjectType.swift in Sources */,
 				4C3BC78E2461979100D54290 /* TiledSceneDelegate.swift in Sources */,
 				4CC09EF82519431700363145 /* TiledAttributedType.swift in Sources */,
+				4C64EC4125D463740090F4F3 /* SKWorld.swift in Sources */,
 				4C9FEB7A21A1BC5400C3EEED /* TiledGlobals.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2666,6 +2697,7 @@
 				4C263A17246079F100568681 /* TiledGeometryType.swift in Sources */,
 				4C88E1E01D8A4EBE00FCCFA3 /* SKTiledSceneCamera.swift in Sources */,
 				4C88E1E61D8A4EBE00FCCFA3 /* SKTilemapParser.swift in Sources */,
+				4C64EC3E25D463740090F4F3 /* SKWorld.swift in Sources */,
 				4C1733E9244DFB770043F85C /* SKTileLayerChunk.swift in Sources */,
 				4C5B6D912455C8F500F81755 /* SKObjectGroup.swift in Sources */,
 				4CBB6A9F1D8CBA8A00DB56F1 /* SKTiled+Properties.swift in Sources */,

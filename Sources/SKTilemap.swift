@@ -514,9 +514,9 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         didSet {
             guard (oldValue != currentCoordinate) else { return }
 
-            // TODO: not yet implemented
-
             #if SKTILED_DEMO
+            
+            // TODO: not yet implemented
             NotificationCenter.default.post(
                 name: Notification.Name.Demo.UpdateDebugging,
                 object: nil,
@@ -2998,7 +2998,7 @@ extension SKTilemap {
         }
     }
     
-    /// Generic highlight method that works for all `SpriteKit` types.
+    /// Nighlights the map.
     ///
     /// - Parameters:
     ///   - color: highlight color.
@@ -3021,8 +3021,10 @@ extension SKTilemap {
                     fadeInAction.reversed()
                 ]
             )
+            
             boundsShape?.run(groupAction, completion: {
                 self.boundsShape?.isHidden = true
+                self.removeAnchor()
             })
         }
     }
@@ -3267,47 +3269,46 @@ extension SKTilemap: TiledSceneCameraDelegate {
     }
     #else
 
-    /// Called when the scene is clicked (macOS only).
+    /// Handler for when the scene is clicked (macOS only).
     ///
     /// - Parameter event: mouse click event.
-    public func sceneClicked(event: NSEvent) {
-
+    @objc public func sceneClicked(event: NSEvent) {
+        
         let mapCoordinate = coordinateAtMouse(event: event)
         let tilesAtMapCoordinate = tilesAt(coord: mapCoordinate)
-
+        
+        print("⭑ map clicked at \(mapCoordinate.coordDescription)")
+        
         // set the current coordinate
         currentCoordinate = mapCoordinate
         let location = event.location(in: objectsOverlay)
 
+        // filter any overlay nodes and get the object referenced
         let clickedObjects = objectsOverlay.nodes(at: location).filter { $0 as? TileObjectProxy != nil} as! [TileObjectProxy]
         if let firstClicked = clickedObjects.first {
             if let referringObject = firstClicked.reference {
-                
                 /// calls `Notification.Name.Demo.TileClicked` event
                 referringObject.mouseDown(with: event)
+                return
             }
         }
 
-        // active the first tile...
+        // activate the first tile...
         tilesAtMapCoordinate.first?.mouseDown(with: event)
     }
-
 
     /// Called when the scene is double-clicked (macOS only).
     ///
     /// - Parameter event: mouse click event.
-    public func sceneDoubleClicked(event: NSEvent) {
-        // set the current coordinate
-        currentCoordinate = coordinateAtMouse(event: event)
+    @objc public func sceneDoubleClicked(event: NSEvent) {
+        // TODO: implement this
     }
 
-    /// Called when the mouse moves in the scene (macOS only).
+    /// Called when the mouse moves in the scene (macOS only). This triggers the `Notification.Name.Map.FocusCoordinateChanged` event.
     ///
     /// - Parameter event: mouse click event.
-    public func mousePositionChanged(event: NSEvent) {
-        //let mapPosition = event.location(in: self)
+    @objc public func mousePositionChanged(event: NSEvent) {
         currentCoordinate = coordinateAtMouse(event: event)
-        //print("⭑ tilemap mouse event at \(event.location(in: self).shortDescription), coord \(currentCoordinate.shortDescription)")
     }
     #endif
 }
@@ -3379,22 +3380,21 @@ extension SKTilemap {
     internal func calculateXPaths() {
         var rootPath = #"/\#(tiledElementName)"#
         for (i, layer) in layers.enumerated() {
-
-            if let tiledlayer = layer as? TiledCustomReflectableType {
-                if let nodeType = tiledlayer.tiledElementName {
-                    
-                    let layerPathName = "\(nodeType)[\(i)]"
-                    let thisLayerPath = rootPath + #"/\#(layerPathName)"#
-                    layer.xPath = thisLayerPath
-                    
-                    if let tileLayer = layer as? SKTileLayer {
-                        /// currentPath: ''
-                        for (x, chunk) in tileLayer.chunks.enumerated() {
-                            let chunnkPathName = "\(chunk.tiledElementName)[\(x)]"
-                            let thisNodePath = thisLayerPath + #"/\#(chunnkPathName)"#
-                            chunk.xPath = thisNodePath
-                            chunk.name = chunnkPathName
-                        }
+            
+            let tiledlayer = layer as! TiledCustomReflectableType
+            if let nodeType = tiledlayer.tiledElementName {
+                
+                let layerPathName = "\(nodeType)[\(i)]"
+                let thisLayerPath = rootPath + #"/\#(layerPathName)"#
+                layer.xPath = thisLayerPath
+                
+                if let tilelayer = layer as? SKTileLayer {
+                    /// currentPath: ''
+                    for (x, chunk) in tilelayer.chunks.enumerated() {
+                        let chunnkPathName = "\(chunk.tiledElementName)[\(x)]"
+                        let thisNodePath = thisLayerPath + #"/\#(chunnkPathName)"#
+                        chunk.xPath = thisNodePath
+                        chunk.name = chunnkPathName
                     }
                 }
             }

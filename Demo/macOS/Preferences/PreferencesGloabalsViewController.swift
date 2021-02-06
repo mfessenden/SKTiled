@@ -108,12 +108,9 @@ class PreferencesGloabalsViewController: NSViewController {
         textFields["glb-objrenderquality-field"]?.stringValue = String(format: "%.2f", TiledGlobals.default.renderQuality.object)
         textFields["glb-renderqualityoverride-field"]?.stringValue = String(format: "%.2f", TiledGlobals.default.renderQuality.override)
         textFields["glb-linewidth-field"]?.stringValue = String(format: "%.2f", TiledGlobals.default.debug.lineWidth)
+        textFields["glb-mousepointerfontsize-field"]?.stringValue = String(format: "%.2f", TiledGlobals.default.debug.mousePointerSize)
         
-        
-        
-        
-        
-               
+
         checkBoxes["gbl-rendercb-check"]?.state = (TiledGlobals.default.enableRenderCallbacks == true) ? .on : .off
         checkBoxes["gbl-cameracb-check"]?.state = (TiledGlobals.default.enableCameraCallbacks == true) ? .on : .off
         
@@ -156,6 +153,7 @@ class PreferencesGloabalsViewController: NSViewController {
         
         checkBoxes["gbl-ignorezoom-check"]?.state = (ignoreZoomConstraints == true) ? .on : .off
         checkBoxes["gbl-trackcameranodes-check"]?.state = (trackCameraContainedNodes == true) ? .on : .off
+        checkBoxes["gbl-mousepointer-check"]?.state = (TiledGlobals.default.debug.mouseFilters.enableMousePointer == true) ? .on : .off
         checkBoxes["gbl-mouseevents-check"]?.state = (TiledGlobals.default.enableMouseEvents == true) ? .on : .off
 
         initializeLoggingLevelMenu()
@@ -266,6 +264,15 @@ class PreferencesGloabalsViewController: NSViewController {
                 NotificationCenter.default.post(
                     name: Notification.Name.Camera.Updated,
                     object: camera
+                )
+            }
+            
+            if (textIdentifier == "gbl-mousepointer-check") {
+                //TiledGlobals.default.debug.mouseFilters.enableMousePointer = buttonVal
+                
+                NotificationCenter.default.post(
+                    name: Notification.Name.Globals.Updated,
+                    object: nil
                 )
             }
             
@@ -468,5 +475,18 @@ extension PreferencesGloabalsViewController: NSTextFieldDelegate {
             }
         }
         
+        if (textIdentifier == "glb-mousepointerfontsize-field") {
+            if let doubleValue = Double(textFieldValue) {
+                TiledGlobals.default.debug.mousePointerSize = CGFloat(doubleValue)
+                
+                // update controllers ->
+                NotificationCenter.default.post(
+                    name: Notification.Name.Globals.Updated,
+                    object: nil
+                )
+            }
+        }
+        
     }
 }
+

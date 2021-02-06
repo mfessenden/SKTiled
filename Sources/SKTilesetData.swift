@@ -358,7 +358,9 @@ public class SKTilesetData: CustomReflectable, TiledAttributedType {
     ///
     /// - Parameter restore: restore the initial texture.
     public func removeAnimation(restore: Bool = false) {
-        guard (isAnimated == true) else { return }
+        guard (isAnimated == true) else {
+            return
+        }
         self.blockAnimation = true
         if (restore == true) {
             self.texture = _frames.first!.texture
@@ -366,9 +368,6 @@ public class SKTilesetData: CustomReflectable, TiledAttributedType {
     }
     
     // MARK: - Reflection
-    
-    
-    
     
     
     /// Returns a custom mirror for this object.
@@ -403,7 +402,7 @@ public func == (lhs: SKTilesetData, rhs: SKTilesetData) -> Bool {
 /// :nodoc:
 extension SKTilesetData: NSCopying {
 
-    /// Copy the tile data. This data is not stored in the tileset tile data set, though it is still accessible.
+    /// Creates a new copy of the tile data. This data is not stored in the tileset tile data set, though it is still accessible.
     ///
     /// - Parameter zone: memory handler.
     /// - Returns: tile data copy.

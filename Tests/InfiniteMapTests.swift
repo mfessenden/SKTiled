@@ -71,7 +71,7 @@ class InfiniteMapTests: XCTestCase {
         for coordinate in coordinates {
             let chunkCoordinate = firstChunk.coordinateForLayer(coord: coordinate)
             
-            print("❗️ coordinate: '\(coordinate.coordDescription)', chunk coordinate: '\(chunkCoordinate.coordDescription)', offset: '\(firstChunk.offset.coordDescription)'")
+            //print("❗️ coordinate: '\(coordinate.coordDescription)', chunk coordinate: '\(chunkCoordinate.coordDescription)', offset: '\(firstChunk.offset.coordDescription)'")
         }
     }
     

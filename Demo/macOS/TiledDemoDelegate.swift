@@ -78,6 +78,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
         }
         currentNodes.forEach { node in
             node.highlightNode(with: .clear)
+            
         }
     }
     
@@ -88,6 +89,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
         NotificationCenter.default.addObserver(self, selector: #selector(sceneWillUnloadAction), name: Notification.Name.Demo.SceneWillUnload, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sceneWillUnloadAction), name: Notification.Name.Demo.FlushScene, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionChanged), name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionCleared), name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(mouseRightClickAction), name: Notification.Name.Demo.MouseRightClicked, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(dumpSelectedNodes), name: Notification.Name.Demo.DumpSelectedNodes, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileClickedAction), name: Notification.Name.Demo.TileClicked, object: nil)
@@ -144,9 +146,22 @@ public class TiledDemoDelegate: NSObject, Loggable {
                 if let tile = tiledNode as? SKTile {
                     highlightColor = tile.highlightColor
                 }
-
+                
                 node.highlightNode(with: highlightColor)
             }
+        }
+    }
+    
+    /// Handles the `Notification.Name.Demo.NodeSelectionCleared` callback.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func nodeSelectionCleared(notification: Notification) {
+        // notification.dump(#fileID, function: #function)
+        defer { currentNodes.removeAll() }
+        
+        for node in currentNodes {
+            node.removeHighlight()
+            node.removeAnchor()
         }
     }
     
@@ -181,6 +196,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
         guard let object = notification.object as? SKTileObject else {
             return
         }
+        
         currentNodes.removeAll()
         currentNodes.append(object)
         

@@ -30,33 +30,135 @@ import SpriteKit
 
 
 // Tile map instance used for this test.
-fileprivate var testBasicTilemap: SKTilemap?
-fileprivate let testBasicTilemapName = "test-tilemap"
+fileprivate var testTilemap: SKTilemap?
+fileprivate let testTilemapname = "test-tilemap"
 
 
 class TileTests: XCTestCase {
 
     override class func setUp() {
         super.setUp()
-        if (testBasicTilemap == nil) {
-            if let tilemapUrl = TestController.default.getResource(named: testBasicTilemapName, withExtension: "tmx") {
-                testBasicTilemap = SKTilemap.load(tmxFile: tilemapUrl.path, loggingLevel: .none)
+        if (testTilemap == nil) {
+            if let tilemapUrl = TestController.default.getResource(named: testTilemapname, withExtension: "tmx") {
+                testTilemap = SKTilemap.load(tmxFile: tilemapUrl.path, loggingLevel: .none)
+            }
+        }
+    }
+    
+    /// Test to ensure that changing the `globalId` property of the `SKTile` object results in tile data being replace properly.
+    func testTileGlobalIdChange() {
+        guard let tilemap = testTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testTilemapname)'")
+            return
+        }
+        
+        
+        // the global ids we're going to switch
+        let sourceId: UInt32 = 25
+        let destId: UInt32 = 13
+        
+        // expected counts before the switch
+        let expectedSourceIdCount = 165
+        let expectedDestIdCount = 3
+        
+        
+        let sourceTiles = tilemap.getTiles(globalID: sourceId)
+        let destTiles = tilemap.getTiles(globalID: destId)
+        
+        // switch tile ids
+        for tile in sourceTiles {
+            tile.globalId = destId
+        }
+        
+
+        // expected counts after the switch
+        let updatedSourceIdCount = 0
+        let updatedDestIdCount = expectedSourceIdCount + expectedDestIdCount
+        
+        
+        // re-query the two global ids
+        let udpatedSourceTiles = tilemap.getTiles(globalID: sourceId)
+        let updatedDestTiles = tilemap.getTiles(globalID: destId)
+        
+
+        XCTAssert(udpatedSourceTiles.count == 0, "⭑ tile count for gid \(sourceId) should be zero, got \(udpatedSourceTiles.count).")
+        XCTAssert(updatedDestTiles.count == updatedDestIdCount, "⭑ tile count for gid \(sourceId) should be \(updatedDestIdCount), got \(updatedDestTiles.count).")
+        
+        
+        // check that the tile data for the updated tiles is correct
+        let expectedDataType = "door"
+
+        for updatedTile in updatedDestTiles {
+            if updatedTile.tileData.type != expectedDataType {
+                XCTFail("⭑ updated tile data type should be '\(expectedDataType)'.")
+                return
+            }
+        }
+    }
+    
+    
+    /// This is a dupe of the `TileTests.testTileGlobalIdChange` test, only using the `SKTile.renderMode` attribute to change tile data.
+    func testTileRenderModeChange() {
+        guard let tilemap = testTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testTilemapname)'")
+            return
+        }
+        
+        // the global ids we're going to switch
+        let sourceId: UInt32 = 25
+        let destId: UInt32 = 13
+        
+        // expected counts before the switch
+        let expectedSourceIdCount = 165
+        let expectedDestIdCount = 3
+        
+        
+        let sourceTiles = tilemap.getTiles(globalID: sourceId)
+        let destTiles = tilemap.getTiles(globalID: destId)
+        
+        // switch tile ids
+        for tile in sourceTiles {
+            tile.renderMode = TileRenderMode.animated(gid: 13)
+        }
+        
+        
+        // expected counts after the switch
+        let updatedSourceIdCount = 0
+        let updatedDestIdCount = expectedSourceIdCount + expectedDestIdCount
+        
+        
+        // re-query the two global ids
+        let udpatedSourceTiles = tilemap.getTiles(globalID: sourceId)
+        let updatedDestTiles = tilemap.getTiles(globalID: destId)
+        
+        
+        XCTAssert(udpatedSourceTiles.count == 0, "⭑ tile count for gid \(sourceId) should be zero, got \(udpatedSourceTiles.count).")
+        XCTAssert(updatedDestTiles.count == updatedDestIdCount, "⭑ tile count for gid \(sourceId) should be \(updatedDestIdCount), got \(updatedDestTiles.count).")
+        
+        
+        // check that the tile data for the updated tiles is correct
+        let expectedDataType = "door"
+        
+        for updatedTile in updatedDestTiles {
+            if updatedTile.tileData.type != expectedDataType {
+                XCTFail("⭑ updated tile data type should be '\(expectedDataType)'.")
+                return
             }
         }
     }
 
     /// Tests the `SKTile.spriteCopy` and `SKTile.replaceWithSpriteCopy` methods.
     func testTileSpriteCopyFunctions() {
-        guard let tilemap = testBasicTilemap else {
-            XCTFail("⭑ failed to load tilemap '\(testBasicTilemapName)'")
+        guard let tilemap = testTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testTilemapname)'")
             return
         }
     }
 
-    /// Tests the `SKTileData.clone` functionality.
+    /// Tests the `SKTileData.copy(with:)` method.
     func testTileDataCloneFunctions() {
-        guard let tilemap = testBasicTilemap else {
-            XCTFail("⭑ failed to load tilemap '\(testBasicTilemapName)'")
+        guard let tilemap = testTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testTilemapname)'")
             return
         }
     }

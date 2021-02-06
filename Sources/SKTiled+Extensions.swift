@@ -158,6 +158,7 @@ public func getContentScaleFactor() -> CGFloat {
     #if os(tvOS)
     scaleFactor = UIScreen.main.scale
     #endif
+    
     return scaleFactor
 }
 
@@ -396,6 +397,7 @@ func measure<A>(name: String = "", _ block: () -> A) -> A {
 // MARK: - Extensions
 
 extension Bool {
+    
     init<T : BinaryInteger>(_ integer: T) {
         self.init(integer != 0)
     }
@@ -409,7 +411,8 @@ extension Bool {
     var valueAsCheckbox: String {
         return (self == true) ? "[x]" : "[ ]"
     }
-
+    
+    /// Return the value as 'on/off'.
     var valueAsOnOff: String {
         return (self == true) ? "on" : "off"
     }
@@ -2421,11 +2424,15 @@ extension simd_int2 {
     }
 
     /// Returns a shortened textual representation for debugging.
+    ///
+    ///    `[12, 10]`
     public var shortDescription: String {
         return "[\(String(format: "%d", x)),\(String(format: "%d", y))]"
     }
 
     /// Returns a shortened textual representation for debugging.
+    ///
+    ///    `[x: 12, y: 10]`
     public var coordDescription: String {
         return " [x: \(String(format: "%d", x)), y: \(String(format: "%d", y))]"
     }
@@ -2890,7 +2897,8 @@ internal func drawAnchor(_ node: SKNode,
     let anchor = AnchorNode(radius: radius, color: anchorColor, label: withLabel, offsetX: labelOffsetX, offsetY: labelOffsetY, zoom: zoomScale)
     anchor.labelSize = labelSize
     node.addChild(anchor)
-
+    
+    // add as a delegate
     if let tileScene = node.scene as? SKTiledScene {
         tileScene.cameraNode?.addDelegate(anchor)
     }

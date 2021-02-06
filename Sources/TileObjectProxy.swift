@@ -138,9 +138,8 @@ internal class TileObjectProxy: SKShapeNode {
         }
         
         
-        // CONVERTED: was `object.translatedVertices()`
-        
         // FIXME: crash here
+        
         let vertices = object.translatedVertices()
         guard (vertices.count > 0) else {
             self.path = nil

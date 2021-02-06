@@ -405,7 +405,6 @@ extension TiledAttributedType {
         }
         return attributes
     }
-    
 }
 
 

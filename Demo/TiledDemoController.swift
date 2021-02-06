@@ -244,7 +244,7 @@ public class TiledDemoController: NSObject, Loggable {
         var tilemapUrls: [TiledDemoAsset] = []
         var alreadyAdded: [URL] = []
 
-
+        
         for assetSearchPath in assetSearchPaths {
 
             // is this a user path?
@@ -252,14 +252,7 @@ public class TiledDemoController: NSObject, Loggable {
 
             // skip if we aren't using user maps
             if (isUserAssetPath == true) && (canUseUserMaps == false) {
-
-                // call back to the AppDelegate, creates the `File > Current maps` menu.
-                NotificationCenter.default.post(
-                    name: Notification.Name.DemoController.AssetsFinishedScanning,
-                    object: nil
-                )
-
-                return
+                continue
             }
 
 
@@ -321,6 +314,7 @@ public class TiledDemoController: NSObject, Loggable {
 
         log("found \(tilemapUrls.count) tilemaps...", level: .debug)
 
+        
         // call back to the AppDelegate, creates the `File > Current maps` menu.
         NotificationCenter.default.post(
             name: Notification.Name.DemoController.AssetsFinishedScanning,
@@ -895,11 +889,11 @@ public class TiledDemoController: NSObject, Loggable {
 
     /// Called when the `TiledGlobals` are updated. Called when the `Notification.Name.Globals.Updated` event fires.
     ///
-    ///   userInfo: ["tileColor": `SKColor`, "objectColor": `SKColor`]
+    ///   userInfo: `["tileColor": SKColor, "objectColor": SKColor]`
     ///
     /// - Parameter notification: event notification.
     @objc public func globalsUpdatedAction(_ notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        notification.dump(#fileID, function: #function)
 
         let globals = TiledGlobals.default
         globals.saveToUserDefaults()
@@ -982,21 +976,22 @@ extension TiledDemoController: TiledCustomReflectableType {
         let imagesCount    = images.count
 
         if resourcesCount > 0 {
-            outputString += " ▸ Scanned assets:               \(resourcesCount)\n"
+            outputString += " ▾ Scanned assets:               \(resourcesCount)\n"
 
             if tilemapsCount > 0 {
-                outputString += "   ∙ Tilemaps:                   \(tilemaps.count)\n"
+                outputString += "   ▸ Tilemaps:                   \(tilemaps.count)\n"
             }
 
             if tilesetsCount > 0 {
-                outputString += "   ∙ Tilesets:                   \(tilesets.count)\n"
+                outputString += "   ▸ Tilesets:                   \(tilesets.count)\n"
             }
 
             if templatesCount > 0 {
-                outputString += "   ∙ Templates:                  \(templates.count)\n"
+                outputString += "   ▸ Templates:                  \(templates.count)\n"
             }
+            
             if imagesCount > 0 {
-                outputString += "   ∙ Images:                     \(images.count)\n"
+                outputString += "   ▸ Images:                     \(images.count)\n"
             }
 
             outputString += "\n"
@@ -1005,11 +1000,14 @@ extension TiledDemoController: TiledCustomReflectableType {
 
         var userPathsString: String?
         if (assetSearchPaths.isEmpty == false) {
-            var assetPathString = "\n ▸ Asset Search Paths:"
+            
+            
+            
+            var assetPathString = "\n ▾ Asset Search Paths (\(assetSearchPaths.count))"
             for assetSearchPath in assetSearchPaths {
 
                 let pathString = (assetSearchPath == TiledGlobals.default.resourceUrl) ? "<Bundle.main>" : assetSearchPath.path
-                assetPathString += "\n   ∙ \(pathString)"
+                assetPathString += "\n   ▸ \(pathString)"
             }
 
             userPathsString = assetPathString
@@ -1583,10 +1581,8 @@ extension FileManager {
         var urls: [URL] = []
         enumerator(atPath: path)?.forEach({ (e) in
             guard let s = e as? String else { return }
-
             let url = URL(fileURLWithPath: s, relativeTo: baseurl)
             let pathExtension = url.pathExtension.lowercased()
-
             if withExtensions.contains(pathExtension) || (withExtensions.isEmpty) {
                 urls.append(url)
             }

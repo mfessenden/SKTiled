@@ -1077,13 +1077,13 @@ extension SKTileLayer {
         return "tilelayer-icon"
     }
     
-    /// A description of the node.
+    /// A description of the node used for menu items.
     @objc public override var tiledListDescription: String {
         let nameString = "'\(layerName)'"
-        return "Tile Layer \(nameString) (\(tileCount) tiles)"
+        return "\(tiledNodeNiceName) \(nameString) (\(tileCount) tiles)"
     }
     
-    /// A description of the node.
+    /// A string description of the node's function.
     @objc public override var tiledDescription: String {
         return "Layer container for tiles."
     }

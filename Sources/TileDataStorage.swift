@@ -224,6 +224,9 @@ internal class TileDataStorage: Loggable {
 
         let listToRemoveFrom: TileList = (tile.tileData.isAnimated == true) ? animatedCacheForTileData(tile.tileData) : cacheForTileData(tile.tileData)
         listToRemoveFrom.remove(where: {$0 == tile})
+        
+        tile.removeAllActions()
+        tile.removeAllChildren()
         tile.removeFromParent()
     }
 

@@ -802,6 +802,16 @@ extension SKTiledDemoScene {
               (worldNode != nil) else {
             return
         }
+        
+        // 'd' dumps the selected node(s)
+        if eventKey == 0x02 {
+            NotificationCenter.default.post(
+                name: Notification.Name.Demo.DumpSelectedNodes,
+                object: nil
+            )
+            updateCommandString("dumping selected nodes...", duration: 3.0)
+        }
+        
 
 
         // 'e' toggles effects rendering
@@ -828,6 +838,12 @@ extension SKTiledDemoScene {
         
         // 'i' isolates the selected object(s).
         if eventKey == 0x22 {
+            
+            NotificationCenter.default.post(
+                name: Notification.Name.Demo.IsolateSelectedEnabled,
+                object: nil
+            )
+            
             updateCommandString("isolating selected objects...", duration: 3.0)
         }
 
@@ -923,6 +939,7 @@ extension SKTiledDemoScene {
                 if (node as? TiledGeometryType != nil) {
                     let currentValue = node.isUserInteractionEnabled
                     node.isUserInteractionEnabled = !currentValue
+                    print(" - node '\(node.className)' user interaction: \(node.isUserInteractionEnabled.valueAsOnOff)")
                 }
 
                 //stop.pointee = true
@@ -937,29 +954,47 @@ extension SKTiledDemoScene {
         
         // 'y' runs a debugging command
         if eventKey == 0x10 {
-
+            /*
             NotificationCenter.default.post(
                 name: Notification.Name.DemoController.ResetDemoInterface,
                 object: nil
             )
-            updateCommandString("Forcing interface reset.", duration: 3.0)
+            
+            updateCommandString("Forcing interface reset", duration: 3.0)
+            */
+            
+            var tilecount = 0
+            let tileId: UInt32 = 25
+            for tile in tilemap.getTiles(globalID: tileId) {
+                tilecount += 1
+                let sprite = tile.replaceWithSpriteCopy()
+                sprite.alpha = 0.25
+            }
+            
+            updateCommandString("replaced \(tilecount) tiles.", duration: 3.0)
             
         }
         
         // 'z' runs a debugging command
         if eventKey == 0x6 {
-            /*
-            drawAnchor(tilemap, withKey: "ANCHOR", withLabel: "tilemap", labelSize: 12, labelOffsetX: 0, labelOffsetY: 0, radius: 0, anchorColor: TiledObjectColors.random, zoomScale: 1)
+            for layer in tilemap.getLayers() {
+                let parentCount = layer.parents.count
+                let buffer = String(repeating: " ", count: parentCount)
+                print("\(buffer) - '\(layer.tiledListDescription)'")
+            }
             
-            tilemap.layers.forEach( {
-                drawAnchor($0, anchorColor: TiledObjectColors.random)
-            })*/
+            updateCommandString("dumping tilemap layers", duration: 3.0)
+        }
+        
+        // 'clear' clears the current selection
+        if eventKey == 0x47 {
             
+            NotificationCenter.default.post(
+                name: Notification.Name.Demo.NodeSelectionCleared,
+                object: nil
+            )
             
-            
-            drawAnchor(tilemap.debugNode)
-            
-            updateCommandString("drawing mappable object anchors...", duration: 3.0)
+            updateCommandString("clearing selection...", duration: 3.0)
         }
     }
 

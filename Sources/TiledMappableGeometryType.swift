@@ -657,7 +657,7 @@ extension TiledMappableGeometryType {
                     }
                     pixelX = tileX * Int(columnWidth)
 
-                    // pointy
+                // pointy
                 } else {
                     pixelX = tileX * Int(tileWidth + sideLengthX)
                     if doStaggerY(tileY) {

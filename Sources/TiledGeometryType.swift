@@ -161,6 +161,12 @@ extension SKNode {
     public var isHighlightable: Bool {
         return (self as? SKTileObject != nil) || (self as? SKTile != nil)
     }
+    
+    /// Returns true if the object is a tiled layer object.
+    public var isLayerType: Bool {
+        return (self as? TiledLayerObject != nil)
+    }
+    
 
     /// Returns the frame rectangle of the layer (used to draw bounds).
     @objc public var boundingRect: CGRect {
@@ -231,6 +237,7 @@ extension SKNode {
                 sprite.run(groupAction, completion: {
                     if let tiledSprite = sprite as? TiledGeometryType {
                         tiledSprite.boundsShape?.removeFromParent()
+                        sprite.removeAnchor()
                     }
                 })
             }
@@ -256,6 +263,11 @@ extension SKNode {
     /// Remove the current object's highlight color.
     public func removeHighlight() {
         highlightNode(with: SKColor.clear)
+    }
+    
+    /// Remove the current node's anchor point.
+    public func removeAnchor() {
+        childNode(withName: "ANCHOR")?.removeFromParent()
     }
 
     /// Draw the bounds of the object type.

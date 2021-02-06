@@ -38,17 +38,22 @@ internal class AnchorNode: SKNode {
 
     var labelOffsetX: CGFloat = 0
     var labelOffsetY: CGFloat = 0
+    
+    var minRadius: CGFloat = 0.25
+    var maxRadius: CGFloat = 3.0
 
     @objc var receiveCameraUpdates: Bool = true
 
     private var shapeKey = "ANCHOR_SHAPE"
     private var labelKey = "ANCHOR_LABEL"
-
+    
+    /// Represents the current camera zoom level.
     var sceneScale: CGFloat = 1
 
     private var shape: SKShapeNode? {
         return childNode(withName: shapeKey) as? SKShapeNode
     }
+    
     private var label: SKLabelNode? {
         return childNode(withName: labelKey) as? SKLabelNode
     }
@@ -79,7 +84,10 @@ internal class AnchorNode: SKNode {
         self.name = "ANCHOR"
         self.draw()
     }
-
+    
+    /// Default initializer.
+    ///
+    /// - Parameter aDecoder: decoder instance.
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -91,9 +99,6 @@ internal class AnchorNode: SKNode {
 
         //let sceneScaleInverted = (sceneScale > 1) ? abs(1 - sceneScale) : sceneScale
         let scaledRenderQuality = renderQuality * sceneScale
-
-        let minRadius: CGFloat = 2.0
-        let maxRadius: CGFloat = 6.0
         var zoomedRadius = (radius / sceneScale)
 
         // clamp the anchor radius to min/max values
@@ -111,6 +116,7 @@ internal class AnchorNode: SKNode {
         anchor.strokeColor = color.shadow(withLevel: 0.4) ?? SKColor.clear
         anchor.zPosition = parent?.zPosition ?? 100
         anchor.lineWidth = 0.25
+        anchor.isAntialiased = false
 
         // label
         let nameLabel = SKLabelNode(fontNamed: "Courier")
@@ -130,6 +136,7 @@ internal class AnchorNode: SKNode {
 
 // MARK: - Extensions
 
+/// :nodoc:
 extension AnchorNode: TiledCustomReflectableType {
 
     /// Returns a "nicer" node name, for usage in the inspector.
@@ -142,7 +149,7 @@ extension AnchorNode: TiledCustomReflectableType {
     }
 
     @objc var tiledDescription: String {
-        return tiledNodeNiceName
+        return "A node representing the anchor point of an object."
     }
 }
 

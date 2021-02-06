@@ -777,20 +777,6 @@ extension CameraZoomClamping {
     }
 }
 
-extension CameraMovementMode {
-    
-    internal var symbol: String {
-        switch self {
-            case .movement:
-                return "☩"
-            case .rotation:
-                return "↺"
-            default:
-                return ""
-        }
-    }
-}
-
 
 // :nodoc:
 extension SKTiledSceneCamera {
@@ -798,11 +784,9 @@ extension SKTiledSceneCamera {
     /// Current clamp status.
     fileprivate var clampDescription: String {
         let clampString = (ignoreZoomClamping == false) ? (zoomClamping != .none) ? ", clamp: \(zoomClamping.minimum)" : "" : ""
-        let modeString = (controlMode != .none) ? ", mode: \(controlMode)" : ""
         let clampMode = (ignoreZoomClamping == true) ? ", clamp: off" : ""
-        return "\(clampString)\(modeString)\(clampMode)"
+        return "\(clampString)\(clampMode)"
     }
-    
     
     /// World rotation status.
     fileprivate var rotationDescription: String {
@@ -821,9 +805,7 @@ extension SKTiledSceneCamera {
         let scaleString = (uiScale > 1) ? " scale: \(uiScale) " : ""
         let clampString = (zoomClamping != .none) ? " clamp: \(zoomClamping.minimum)" : ""
         let attrsString = "origin: \(rect.origin.stringRoundedTo(1)) size: \(rect.size)\(scaleString) zoom: \(zoom.stringRoundedTo())\(clampString)"
-
-        let movementModeString = (cameraMovementMode != .none) ? " mode: \(cameraMovementMode.symbol)" : ""
-        return "\(tiledNodeNiceName): \(attrsString)\(movementModeString)\(rotationDescription)"
+        return "\(tiledNodeNiceName): \(attrsString)\(rotationDescription)"
     }
 }
 
@@ -834,7 +816,7 @@ extension SKTiledSceneCamera: TiledCustomReflectableType {
     
     /// Dump camera statistics to the console.
     public func dumpStatistics() {
-        let headerString = "-------------- Camera --------------"
+        let headerString = "--------------- Camera ---------------"
         guard let world = world else {
             print("\n\(headerString)\n  - no world node \n\n")
             return
@@ -854,12 +836,13 @@ extension SKTiledSceneCamera: TiledCustomReflectableType {
         print("  ▸ tiled nodes visible:       \(containedNodes.count)")
         print("  ▸ world position:            \(world.position.shortDescription)")
         print("  ▸ world rotation:            \(world.zRotation.stringRoundedTo(3))")
-        print("\n  ▾ delegates:")
-        
+        print("\n  ▾ Delegates:")
+
         for delegate in delegates {
-            let delegateName = String(describing: type(of: delegate) )
-            print("   ▸ \(delegate.receiveCameraUpdates.valueAsCheckbox) `\(delegateName)`")
+            let dname = String(describing: type(of: delegate))
+            print("   ▸ \(delegate.receiveCameraUpdates.valueAsCheckbox) '\(dname)'")
         }
+
         print("\n\n")
     }
     

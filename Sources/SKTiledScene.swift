@@ -244,7 +244,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, 
             cameraNode?.allowMovement = tilemap.allowMovement
             cameraNode?.allowZoom = tilemap.allowZoom
             cameraNode?.allowRotation = tilemap.allowRotation
-            
+
             // initial zoom level
             if (tilemap.autoResize == true) {
                 if let view = view {
@@ -339,31 +339,6 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, 
 }
 
 
-public class SKWorld: SKNode, TiledSceneCameraDelegate {
-
-    /// Allow the node to receive camera notifications.
-    @objc public var receiveCameraUpdates: Bool = true
-
-    public override init() {
-        super.init()
-        setupNotifications()
-        name = "World"
-    }
-
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-
-    /// Setup notifications.
-    func setupNotifications() {}
-
-    /// Called when the camera zoom changes.
-    ///
-    /// - Parameter newZoom: camera zoom amount.
-    public func cameraZoomChanged(newZoom: CGFloat) {}
-}
-
-
 
 #if os(macOS)
 extension SKTiledScene {
@@ -401,7 +376,6 @@ extension SKTiledScene {
     /// - Parameter event: mouse event.
     open override func mouseMoved(with event: NSEvent) {
         //guard (TiledGlobals.default.enableMouseEvents == true) else { return }
-        //print("⭑ scene mouse event at \(event.location(in: self).shortDescription)")
         cameraNode?.mouseMoved(with: event)
     }
 
@@ -507,30 +481,5 @@ extension SKTiledScene {
 
     open override var debugDescription: String {
         return description
-    }
-}
-
-
-/// :nodoc:
-extension SKWorld: TiledCustomReflectableType {
-
-    /// Returns a "nicer" node name, for usage in the inspector.
-    @objc public var tiledNodeNiceName: String {
-        return "World Node"
-    }
-
-    /// Returns the internal **Tiled** node type icon.
-    @objc public var tiledIconName: String {
-        return "world-icon"
-    }
-
-    /// A description of the node.
-    @objc public var tiledListDescription: String {
-        return "\(tiledNodeNiceName): pos: \(self.position.coordDescription)"
-    }
-
-    /// A description of the node.
-    @objc public var tiledDescription: String {
-        return "World container node."
     }
 }

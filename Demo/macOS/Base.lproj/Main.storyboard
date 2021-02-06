@@ -269,11 +269,24 @@
                                                 <action selector="showDemoPreferencesAction:" target="Voe-Tx-rLC" id="aia-1w-Zwh"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Demo Controller..." id="wbb-Hy-4Xp">
+                                        <menuItem title="Demo Controller:" id="wbb-Hy-4Xp">
                                             <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="showDemoControllerAttributesAction:" target="Voe-Tx-rLC" id="xJd-Wy-OwV"/>
-                                            </connections>
+                                            <menu key="submenu" title="Demo Controller:" id="Zk6-o8-yOv">
+                                                <items>
+                                                    <menuItem title="Show Assets..." id="eC9-wi-nCP">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="showDemoControllerAttributesAction:" target="Voe-Tx-rLC" id="vgi-VA-y5N"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Scan for Assets..." id="bP1-lr-ORw">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="rescanForAssetsAction:" target="Voe-Tx-rLC" id="13N-lg-CHH"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
                                         </menuItem>
                                         <menuItem title="Demo Delegate..." id="WG3-rh-SP4">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -394,7 +407,9 @@
                         <outlet property="reloadMapMenuitem" destination="f06-eB-0wr" id="gh2-Dp-JO1"/>
                         <outlet property="renderEffectsMenuItem" destination="wkw-1O-o10" id="UbN-iN-brG"/>
                         <outlet property="renderStatisticsMenuItem" destination="8DF-Mo-t1x" id="pAi-xd-fpR"/>
+                        <outlet property="rescanForAssetsMenuItem" destination="bP1-lr-ORw" id="4KP-oE-BHq"/>
                         <outlet property="selectedNodesMenuItem" destination="lsc-wR-o4q" id="RWW-sO-uJL"/>
+                        <outlet property="showDemoAssetsMenuItem" destination="eC9-wi-nCP" id="mxl-a2-f9d"/>
                         <outlet property="tileColorsMenuItem" destination="hnS-2z-nKA" id="Seb-hg-B27"/>
                         <outlet property="tilemapCachesStatisticsMenuItem" destination="Rcr-r2-Ts4" id="hyf-Tn-WBO"/>
                         <outlet property="tilemapStatisticsMenuItem" destination="OXT-yC-4Eg" id="J5H-GF-0Kg"/>

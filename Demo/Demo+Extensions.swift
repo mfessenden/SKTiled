@@ -181,6 +181,11 @@ extension TiledGlobals {
             let mouseFiltersRaw = defaults.double(forKey: "tiled-gbl-dd-mousefilters")
             self.debug.mouseFilters = TiledGlobals.DebugDisplayOptions.MouseFilters(rawValue: UInt8(mouseFiltersRaw))
         }
+        
+        if (defaults.value(forKey: "tiled-gbl-dd-mousepointersize") != nil) {
+            let mouseFiltersRaw = defaults.double(forKey: "tiled-gbl-dd-mousepointersize")
+            self.debug.mousePointerSize = CGFloat(defaults.double(forKey: "tiled-gbl-dd-mousepointersize"))
+        }
 
         // MARK: Demo Content
 
@@ -238,7 +243,8 @@ extension TiledGlobals {
 
         // mouse filters
         defaults.set(self.debug.mouseFilters.rawValue, forKey: "tiled-gbl-dd-mousefilters")
-
+        defaults.set(self.debug.mousePointerSize, forKey: "tiled-gbl-dd-mousepointersize")
+        
         // demo content
         defaults.set(self.allowUserMaps, forKey: "tiled-gbl-demo-allowusermaps")
         defaults.set(self.allowDemoMaps, forKey: "tiled-gbl-demo-allowdemomaps")
@@ -369,7 +375,7 @@ extension Notification.Name {
         public static let TileClicked                   = Notification.Name(rawValue: "org.sktiled.notification.name.demo.tileClicked")
         public static let ObjectUnderCursor             = Notification.Name(rawValue: "org.sktiled.notification.name.demo.objectUnderCursor")
         public static let ObjectClicked                 = Notification.Name(rawValue: "org.sktiled.notification.name.demo.objectClicked")
-        public static let NothingClicked                = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nothingClicked")
+
 
         public static let NodesRightClicked             = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodesRightClicked")        // nodes right-clicked in demo app
         public static let NodeAttributesChanged         = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodeAttributesChanged")    // node changes via inspector
@@ -383,6 +389,12 @@ extension Notification.Name {
 
         // node selected in right-click menu
         public static let NodeSelectionChanged           = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodeSelectionChanged")   // sent from demo delegate to indicate that the current node selection has changed
+        public static let NodeSelectionCleared           = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodeSelectionCleared")
+        
+        // selected node isolation
+        public static let IsolateSelectedEnabled         = Notification.Name(rawValue: "org.sktiled.notification.name.demo.isolateSelectedEnabled")
+        public static let IsolateSelectedDisabled        = Notification.Name(rawValue: "org.sktiled.notification.name.demo.isolateSelectedDisabled")
+        
     }
 
 
@@ -1103,11 +1115,7 @@ extension NSImageView {
 /*
 extension NSMenuItem {
 
-    convenience init() {
-        <#statements#>
-    }
-
-
+    convenience init() {}
 }
 */
 

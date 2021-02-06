@@ -83,6 +83,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var tilemapStatisticsMenuItem: NSMenuItem!
     @IBOutlet weak var tilemapCachesStatisticsMenuItem: NSMenuItem!
     @IBOutlet weak var layerStatisticsMenuItem: NSMenuItem!
+    
+    @IBOutlet weak var showDemoAssetsMenuItem: NSMenuItem!
+    @IBOutlet weak var rescanForAssetsMenuItem: NSMenuItem!
+    
     @IBOutlet weak var dumpSelectedMenuItem: NSMenuItem!
     @IBOutlet weak var currentMapsMenuItem: NSMenuItem!
     @IBOutlet weak var allAssetsMapsMenuItem: NSMenuItem!
@@ -226,6 +230,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // mouse events
         mouseEventsMenuItem.state = (TiledGlobals.default.enableMouseEvents == true) ? .on : .off
+        
+        showDemoAssetsMenuItem.isEnabled = true
+        rescanForAssetsMenuItem.isEnabled = true
     }
 
     /// Update the current demo interface when the tilemap has finished rendering.
@@ -684,7 +691,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         demoController.defaultPreferences.dumpStatistics()
     }
 
-    /// Called when the `Development > Demo Controller...` menu item is selected.
+    /// Called when the `Development > Demo Controller: Show Assets...>` menu item is selected.
     ///
     /// - Parameter sender: invoking ui element.
     @IBAction func showDemoControllerAttributesAction(_ sender: Any) {
@@ -693,6 +700,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         let demoController = gameController.demoController
         demoController.dumpStatistics()
+    }
+    
+    
+    /// Called when the `Development > Demo Controller: Scan for Assets...>` menu item is selected.
+    ///
+    /// - Parameter sender: invoking ui element.
+    @IBAction func rescanForAssetsAction(_ sender: Any) {
+        guard let gameController = viewController else {
+            return
+        }
+        let demoController = gameController.demoController
+        demoController.scanForResources()
     }
     
     /// Called when the `Development > Demo Delegate...` menu item is selected.

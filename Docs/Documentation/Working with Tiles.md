@@ -1,10 +1,11 @@
 # Working with Tiles
 
+- [Tile IDs](#tile-render-mode)
+    - [Querying Tiles with ID](#find-tiles-with-tile-id)
+        - [Global ID](#global-id)
+        - [Local ID](#local-id)
 - [Tile Render Mode](#tile-render-mode)
 - [Querying Tiles at Location](#querying-tiles-at-location)
-- [Querying Tiles with ID](#find-tiles-with-tile-id)
-    - [Global ID](#global-id)
-    - [Local ID](#local-id)
 - [Tile Flags](#tile-flags)
 - [Tile Alignment](#tile-alignment)
 - [Find Tiles of Type](#find-tiles-of-type)
@@ -41,7 +42,7 @@ Once your tilemap is loaded, you may tweak the way tiles are rendered individual
 tile.renderMode = TileRenderMode.static
 
 // tile will animate with a global id of 129
-tile.renderMode = TileRenderMode.animated(129)
+tile.renderMode = TileRenderMode.animated(gid: 129)
 ```
 
 The `SKTile.renderMode` flag allows you to quickly manipulate the appearance of a tile. While the `animated` case implies that the tile should be animated, setting this value with any global id effectively makes the tile take the appearance of another. Be aware, however, peoperties in the new tile data are not carried over to this tile... the original data still exists.
@@ -61,10 +62,14 @@ let tilesForCoord = tileLayer.tileAt(coord: coord)
 let allTilesForCoord = tilemap.tilesAt(coord: coord)
 ```
 
-## Querying Tiles with ID
+## Tile IDs
+
+The `SKTile.globalId` property
+
+### Querying Tiles with ID
 
 
-### Global ID
+#### Global ID
 
 To query tiles with a global ID, pass the value to either the `SKTilemap` node, or an individual `SKTileLayer` node:
 
@@ -76,7 +81,7 @@ let tiles = tilemap.getTiles(globalID: 10)
 let tiles = tileLayer.getTiles(globalID: 10)
 ```
 
-### Local ID
+#### Local ID
 
 If you have a reference to a tileset object and want to query tile data with a local id, use the `SKTileset.getTileData(localID:)` method. Here's a reference to an external tileset with a **firstgid** value of **1**. So if we want to access tile data with a local id of **79**, we can query the tileset instance directly:
 

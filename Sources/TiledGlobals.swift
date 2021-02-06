@@ -259,7 +259,7 @@ public class TiledGlobals {
 
     /// Returns current framework version.
     public lazy var version: Version = {
-        // returns a string from the project: 1300000
+        // returns a string from the project, ie: `1300000`
         let verString = getSKTiledBuildVersion() ?? getSKTiledVersion()
         var result = Version(integer: verString)
         result.suffix = getSKTiledVersionSuffix()
@@ -395,7 +395,7 @@ public class TiledGlobals {
         public var mouseFilters: MouseFilters = [.tileCoordinates]
 
         /// Mouse pointer size (demo).
-        public var mousePointerSize: CGFloat = 12
+        public var mousePointerSize: CGFloat = 10
 
         /// Debug display properties.
         public var highlightDuration: TimeInterval = 0.3
@@ -733,6 +733,7 @@ extension TiledGlobals.Renderer {
         }
     }
 }
+
 
 /// :nodoc:
 extension TiledGlobals.DebugDisplayOptions.MouseFilters {

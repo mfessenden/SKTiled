@@ -652,7 +652,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
                 if let tileSprite = Tile.init(data: tileData) {
 
                     tileSprite.isUserInteractionEnabled = false
-
+                    tileSprite.object = self
 
                     tileSprite.boundsOffset.x = layer.tileSize.halfWidth
                     tileSprite.boundsOffset.y = layer.tileSize.halfHeight
@@ -888,7 +888,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
 
     /// Returns the translated points array, correctly orientated.
     ///
-    /// - Returns: `[CGPoint]?` array of points.
+    /// - Returns: array of points.
     internal func translatedVertices() -> [CGPoint] {
         let vertices = self.getVertices()
         guard (vertices.count > 1) else {
@@ -897,6 +897,8 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
         
         let translated = (isPolyType == true) ? (globalID == nil) ? vertices.map { $0.invertedY } : vertices : (globalID == nil) ? vertices.map { $0.invertedY } : vertices
         var result: [CGPoint] = []
+        
+        // return interpolated points if the shape is an ellipse
         if (shapeType == TiledObjectShape.ellipse) {
             for (index, point) in translated.enumerated() {
                 let nextIndex = (index < translated.count - 1) ? index + 1 : 0

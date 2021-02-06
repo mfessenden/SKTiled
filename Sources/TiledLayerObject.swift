@@ -899,6 +899,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
             )
             boundsShape?.run(groupAction, completion: {
                 self.boundsShape?.isHidden = true
+                self.removeAnchor()
             })
         }
     }
@@ -1107,6 +1108,7 @@ extension TiledLayerObject {
     public override var debugDescription: String {
         return #"<\#(description)>"#
     }
+    
     /// Returns a string representation for use with a dropdown menu.
     @objc public override var tiledListDescription: String {
         let parentCount = parents.count
