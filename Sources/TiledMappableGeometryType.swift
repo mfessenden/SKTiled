@@ -216,8 +216,7 @@ extension TiledMappableGeometryType {
 
     /// Returns the position of layer origin point (used to place tiles).
     public var origin: CGPoint {
-
-        // TODO: add layerInfiniteOffset?
+        
         switch orientation {
 
             case .orthogonal:

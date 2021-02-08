@@ -40,7 +40,7 @@ extension TiledGlobals {
            let xml = FileManager.default.contents(atPath: defaultsPath),
            let demoPreferences = try? PropertyListDecoder().decode(DemoPreferences.self, from: xml) {
 
-            //defaultPreferences = demoPreferences
+            /// apply the demo defaults to `TiledGlobals`
             let globals = TiledGlobals.default
 
             globals.renderQuality.default = CGFloat(demoPreferences.renderQuality)
@@ -52,8 +52,8 @@ extension TiledGlobals {
             globals.enableCameraContainedNodesCallbacks = demoPreferences.cameraTrackContainedNodes
 
 
-            globals.debug.mouseFilters = TiledGlobals.DebugDisplayOptions.MouseFilters(rawValue: demoPreferences.mouseFilters)
-            globals.debug.lineWidth = CGFloat(demoPreferences.lineWidth)
+            globals.debugDisplayOptions.mouseFilters = TiledGlobals.DebugDisplayOptions.MouseFilters(rawValue: demoPreferences.mouseFilters)
+            globals.debugDisplayOptions.lineWidth = CGFloat(demoPreferences.lineWidth)
 
             globals.allowDemoMaps = demoPreferences.allowDemoMaps
             globals.allowUserMaps = demoPreferences.allowUserMaps
@@ -64,14 +64,12 @@ extension TiledGlobals {
                 return
             }
 
-            #if SKTILED_DEMO
 
+            // call back to the DemoController & Prefs UI
             NotificationCenter.default.post(
                 name: Notification.Name.Globals.DefaultsRead,
                 object: demoPreferences
             )
-
-            #endif
 
 
 

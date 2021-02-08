@@ -1375,9 +1375,11 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
 
                     // add an image property to the tileset collection
                     let tileData = tileset.addTilesetTile(tileID: currentID, source: sourceImagePath)
-                    tilesetImagesAdded += 1
+
                     if (tileData == nil) {
                         log("\(parsingMode) parser: tile id \(currentID) is invalid.", level: .warning)
+                    } else {
+                        tilesetImagesAdded += 1
                     }
 
                 } else {

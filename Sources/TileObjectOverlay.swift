@@ -40,7 +40,7 @@ internal class TileObjectOverlay: SKNode {
     var cameraZoom: CGFloat = 1.0
     
     /// Desired line width for each object.
-    var lineWidth: CGFloat = TiledGlobals.default.debug.lineWidth
+    var lineWidth: CGFloat = TiledGlobals.default.debugDisplayOptions.lineWidth
     
     /// Desired line width for each object.
     var minimumLineWidth: CGFloat = 0.1
@@ -94,7 +94,7 @@ internal class TileObjectOverlay: SKNode {
     }
     
     @objc func globalsUpdatedAction(notification: Notification) {
-        lineWidth = TiledGlobals.default.debug.lineWidth
+        lineWidth = TiledGlobals.default.debugDisplayOptions.lineWidth
         draw()
     }
     
@@ -125,7 +125,7 @@ extension TileObjectOverlay: TiledSceneCameraDelegate {
         cameraZoom = newZoom
         //let delta = cameraZoom - oldZoom
         //let newLineWidth = (newZoom != 0) ? lineWidth / newZoom : minimumLineWidth
-        lineWidth = TiledGlobals.default.debug.lineWidth
+        lineWidth = TiledGlobals.default.debugDisplayOptions.lineWidth
         let isAntialiased = newZoom < 1
         weak var weakSelf = self
         renderQueue.async {

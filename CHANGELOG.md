@@ -71,6 +71,7 @@ Change Log
 	- rename `SKTileset.addTilesetTile(_:texture:)` -> `SKTileset.addTilesetTile(tileID:texture:)`
 	- rename `SKTileset.addTilesetTile(_:source:)` -> `SKTileset.addTilesetTile(tileID:source:)`
     - rename `SKTileObject.setObjectAttributes` -> `SKTileObject.overrideObjectAttributes`
+	- rename `TiledGlobals.debug` -> `TiledGlobals.debugDisplayOptions`
 	- add `TiledObjectType.getValue(for:defaultValue:)` protocol method
     - add `TiledObjectType.setProperties(_:overwrite:)` protocol method
 	- add `TiledObjectType.colorForKey(_:)` method

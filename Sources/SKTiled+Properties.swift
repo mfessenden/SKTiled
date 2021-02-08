@@ -49,7 +49,7 @@ extension SKTilemap {
 
             if (lattr == "gridcolor") {
                 gridColor = SKColor(hexString: value)
-                TiledGlobals.default.debug.gridColor = gridColor
+                TiledGlobals.default.debugDisplayOptions.gridColor = gridColor
                 getLayers().forEach { $0.gridColor = gridColor }
 
                 frameColor = gridColor
@@ -60,7 +60,7 @@ extension SKTilemap {
             }
 
             if (lattr == "gridopacity") {
-                defaultLayer.gridOpacity = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : TiledGlobals.default.debug.gridOpactity
+                defaultLayer.gridOpacity = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : TiledGlobals.default.debugDisplayOptions.gridOpactity
                 getLayers().forEach {$0.gridOpacity = self.defaultLayer.gridOpacity}
             }
 
@@ -77,7 +77,7 @@ extension SKTilemap {
                 getLayers().forEach {$0.highlightColor = highlightColor}
 
                 // set base layer colors
-                TiledGlobals.default.debug.tileHighlightColor = highlightColor
+                TiledGlobals.default.debugDisplayOptions.tileHighlightColor = highlightColor
                 defaultLayer.highlightColor = highlightColor
             }
 

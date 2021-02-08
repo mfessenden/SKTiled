@@ -66,7 +66,7 @@ internal class MousePointer: SKNode {
     
     /// Base size for the labels.
     var _baseFontSize: CGFloat {
-        return TiledGlobals.default.debug.mousePointerSize
+        return TiledGlobals.default.debugDisplayOptions.mousePointerSize
     }
     
     /// Labell size multiplier.
@@ -117,7 +117,7 @@ internal class MousePointer: SKNode {
     
     /// Current mouse filters.
     var mouseFilters: TiledGlobals.DebugDisplayOptions.MouseFilters {
-        return TiledGlobals.default.debug.mouseFilters
+        return TiledGlobals.default.debugDisplayOptions.mouseFilters
     }
     
     /// Draw the tile local id.
@@ -269,7 +269,7 @@ internal class MousePointer: SKNode {
     /// - Parameter notification: event notification.
     @objc func globalsUpdatedAction(notification: Notification) {
         //notification.dump(#fileID, function: #function)
-        let mousePointerEnabled = TiledGlobals.default.debug.mouseFilters.enableMousePointer
+        let mousePointerEnabled = TiledGlobals.default.debugDisplayOptions.mouseFilters.enableMousePointer
         isHidden = !mousePointerEnabled
         redraw()
     }
@@ -278,7 +278,7 @@ internal class MousePointer: SKNode {
     ///
     /// - Parameter event: mouse event.
     func draw(event: NSEvent) {
-        guard (TiledGlobals.default.debug.mouseFilters.enableMousePointer == true) else {
+        guard (TiledGlobals.default.debugDisplayOptions.mouseFilters.enableMousePointer == true) else {
             isHidden = true
             return
         }

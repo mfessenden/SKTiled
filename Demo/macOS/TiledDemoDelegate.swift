@@ -140,7 +140,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
         currentNodes.removeAll()
         
         for node in selectedNodes {
-            var highlightColor = TiledGlobals.default.debug.objectHighlightColor
+            var highlightColor = TiledGlobals.default.debugDisplayOptions.objectHighlightColor
             currentNodes.append(node)
             if let tiledNode = node as? TiledGeometryType {
                 if let tile = tiledNode as? SKTile {

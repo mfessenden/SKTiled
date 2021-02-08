@@ -60,6 +60,13 @@ let SKTILED_BETA_MODE = false
 #endif
 
 
+#if DEVELOPMENT_MODE
+let SKTILED_DEVELOPMENT_MODE = true
+#else
+let SKTILED_DEVELOPMENT_MODE = false
+#endif
+
+
 /// :nodoc: Allow mouse events (macOS).
 public let ENABLE_MOUSE_EVENTS: Bool = false
 
@@ -164,6 +171,11 @@ public class TiledGlobals {
         return SKTILED_DEMO_MODE
     }
 
+    /// Indicates extra development features should be enabled.
+    public var isDevelopment: Bool {
+        return SKTILED_DEVELOPMENT_MODE
+    }
+    
     /// Default logging verbosity.
     public var loggingLevel:  LoggingLevel = SKTILED_DEFAULT_LOGGING_LEVEL
 
@@ -192,7 +204,7 @@ public class TiledGlobals {
     public var renderQuality: RenderQuality = RenderQuality()
 
     /// Debugging display options.
-    public var debug: DebugDisplayOptions = DebugDisplayOptions()
+    public var debugDisplayOptions: DebugDisplayOptions = DebugDisplayOptions()
 
     /// Render statistics display.
     public var timeDisplayMode: TimeDisplayMode = TimeDisplayMode.milliseconds
@@ -271,7 +283,6 @@ public class TiledGlobals {
         return getSKTiledBuildVersion()
     }
 
-
     // MARK: - Demo Properties
 
     /// Enable the demo app to load demo content.
@@ -279,7 +290,7 @@ public class TiledGlobals {
 
     /// Enable the demo app to load user content.
     public var allowUserMaps: Bool = true
-    
+
     /// Enable mouse events (macOS).
     public var enableMouseEvents: Bool = false
 
@@ -527,20 +538,20 @@ public struct TiledObjectColors {
 
 /// :nodoc:
 extension TiledGlobals: CustomReflectable, CustomStringConvertible, CustomDebugStringConvertible {
-    
+
     /// Returns a custom mirror for this object.
     public var customMirror: Mirror {
-        
+
         let buildConfig = (getBuildConfiguration() == true) ? "release" : "debug"
-        
+
         var attributes: [(label: String?, value: Any)] = [
             (label: "framework version", value: self.version.description),
             (label: "build configuration", buildConfig),
             (label: "operating system", value: self.os),
             (label: "Swift version", value: getSwiftVersion())
         ]
-        
-        
+
+
         if (isDemo == true) {
             attributes.insert(("bundle name", self.bundleName), at: 0)
             attributes.insert(("bundle indentifier", self.identifier), at: 0)
@@ -549,12 +560,12 @@ extension TiledGlobals: CustomReflectable, CustomStringConvertible, CustomDebugS
 
         return Mirror(self, children: attributes, displayStyle: .class)
     }
-    
+
     /// A textual representation of the object.
     public var description: String {
         return #"SKTiled Globals v\#(self.version.description)"#
     }
-    
+
     /// A textual representation of the object, used for debugging.
     public var debugDescription: String {
         return #"<\#(description)>"#
@@ -570,13 +581,13 @@ extension TiledGlobals: TiledCustomReflectableType {
     public func dumpStatistics() {
         let headerString = " SKTiled Globals ".padEven(toLength: 40, withPad: "-")
         print("\n\(headerString)\n")
-        
+
         #if SKTILED_DEMO
         print("  ▸ product name:            '\(self.executableName)'")
         print("  ▸ bundle indentifier:      '\(self.identifier)'")
         print("  ▸ bundle name:             '\(self.bundleName)'")
         #endif
-        
+
         print("  ▸ framework version:       \(self.version.description)")
 
         let buildConfig = (getBuildConfiguration() == true) ? "release" : "debug"
@@ -588,6 +599,7 @@ extension TiledGlobals: TiledCustomReflectableType {
         print("  ▸ OS:                      \(self.os)")
         print("  ▸ Swift version:           \(getSwiftVersion())")
         print("  ▸ demo:                    \(isDemo)")
+        print("  ▸ development mode:        \(isDevelopment)")
         print("  ▸ beta:                    \(isBeta)")
         print("  ▸ playground:              \(isPlayground)")
         print("  ▸ speed:                   \(self.speed.stringRoundedTo(1))")
@@ -607,11 +619,11 @@ extension TiledGlobals: TiledCustomReflectableType {
         print("     ▸ allow demo assets:    \(self.allowDemoMaps)")
         print("     ▸ allow user assets:    \(self.allowUserMaps)\n")
         print("  ▾ Debug Display: ")
-        print("     ▸ highlight duration:   \(self.debug.highlightDuration)")
-        print("     ▸ grid opacity:         \(self.debug.gridOpactity)")
-        print("     ▸ object fill opacity:  \(self.debug.objectFillOpacity)")
-        print("     ▸ object line width:    \(self.debug.lineWidth)")
-        print("     ▸ grid color:           \(self.debug.gridColor.hexString())\n")
+        print("     ▸ highlight duration:   \(self.debugDisplayOptions.highlightDuration)")
+        print("     ▸ grid opacity:         \(self.debugDisplayOptions.gridOpactity)")
+        print("     ▸ object fill opacity:  \(self.debugDisplayOptions.objectFillOpacity)")
+        print("     ▸ object line width:    \(self.debugDisplayOptions.lineWidth)")
+        print("     ▸ grid color:           \(self.debugDisplayOptions.gridColor.hexString())\n")
         print("  ▾ Render Quality: ")
         print("     ▸ default:              \(self.renderQuality.default)")
         print("     ▸ object:               \(self.renderQuality.object)")
@@ -619,11 +631,11 @@ extension TiledGlobals: TiledCustomReflectableType {
         print(self.renderQuality.override > 0 ? "     ⁃ override:             \(self.renderQuality.override)\n" : "")
         #if os(macOS)
         print("  ▾ Debug Mouse Filters:")
-        print("     ▸ tile coordinates:     \(self.debug.mouseFilters.contains(.tileCoordinates))")
-        print("     ▸ scene coordinates:    \(self.debug.mouseFilters.contains(.sceneCoordinates))")
-        print("     ▸ map coordinates:      \(self.debug.mouseFilters.contains(.mapCoordinates))")
-        print("     ▸ tile data:            \(self.debug.mouseFilters.contains(.tileDataUnderCursor))")
-        print("     ▸ mouse pointer:        \(self.debug.mouseFilters.enableMousePointer)")
+        print("     ▸ tile coordinates:     \(self.debugDisplayOptions.mouseFilters.contains(.tileCoordinates))")
+        print("     ▸ scene coordinates:    \(self.debugDisplayOptions.mouseFilters.contains(.sceneCoordinates))")
+        print("     ▸ map coordinates:      \(self.debugDisplayOptions.mouseFilters.contains(.mapCoordinates))")
+        print("     ▸ tile data:            \(self.debugDisplayOptions.mouseFilters.contains(.tileDataUnderCursor))")
+        print("     ▸ mouse pointer:        \(self.debugDisplayOptions.mouseFilters.enableMousePointer)")
         #endif
         print("\n---------------------------------------\n")
     }
@@ -812,5 +824,22 @@ extension TiledObjectColors {
     public static var random: SKColor {
         let randIndex = Int(arc4random_uniform(UInt32(TiledObjectColors.all.count)))
         return TiledObjectColors.all[randIndex]
+    }
+}
+
+
+
+// MARK: - Deprecations
+
+extension TiledGlobals {
+
+    /// Debugging display options.
+    @available(*, deprecated, renamed: "debugDisplayOptions")
+    public var debug: DebugDisplayOptions {
+        get {
+            return debugDisplayOptions
+        } set {
+            debugDisplayOptions = newValue
+        }
     }
 }

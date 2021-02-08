@@ -488,10 +488,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if let identifier = UInt8(idstring) {
             let sentFlag = TiledGlobals.DebugDisplayOptions.MouseFilters.init(rawValue: identifier)
 
-            if TiledGlobals.default.debug.mouseFilters.contains(sentFlag) {
-                TiledGlobals.default.debug.mouseFilters = TiledGlobals.default.debug.mouseFilters.subtracting(sentFlag)
+            if TiledGlobals.default.debugDisplayOptions.mouseFilters.contains(sentFlag) {
+                TiledGlobals.default.debugDisplayOptions.mouseFilters = TiledGlobals.default.debugDisplayOptions.mouseFilters.subtracting(sentFlag)
             } else {
-                TiledGlobals.default.debug.mouseFilters.insert(sentFlag)
+                TiledGlobals.default.debugDisplayOptions.mouseFilters.insert(sentFlag)
             }
 
             // rebuild the mouse filter menu
@@ -503,7 +503,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard let colorString = sender.accessibilityTitle() else { return }
 
         let newColor = SKColor(hexString: colorString)
-        TiledGlobals.default.debug.tileHighlightColor = newColor
+        TiledGlobals.default.debugDisplayOptions.tileHighlightColor = newColor
         Logger.default.log("setting new tile highlight color: \(colorString)", level: .info, symbol: "AppDelegate")
 
         // TODO: SpriteKit Inspector
@@ -520,7 +520,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard let colorString = sender.accessibilityTitle() else { return }
 
         let newColor = SKColor(hexString: colorString)
-        TiledGlobals.default.debug.objectHighlightColor = newColor
+        TiledGlobals.default.debugDisplayOptions.objectHighlightColor = newColor
         Logger.default.log("setting new object highlight color: \(colorString)", level: .info, symbol: "AppDelegate")
 
         // NYI: This is for the Inspector
@@ -1389,7 +1389,7 @@ extension AppDelegate {
                 let featureMenuItem = NSMenuItem(title: optionStrings[index], action: #selector(mouseFiltersUpdatedAction), keyEquivalent: "")
                 let thisOption = TiledGlobals.DebugDisplayOptions.MouseFilters.init(rawValue: option.rawValue)
                 featureMenuItem.setAccessibilityTitle("\(option.rawValue)")
-                featureMenuItem.state = TiledGlobals.default.debug.mouseFilters.contains(thisOption) ? NSControl.StateValue.on : NSControl.StateValue.off
+                featureMenuItem.state = TiledGlobals.default.debugDisplayOptions.mouseFilters.contains(thisOption) ? NSControl.StateValue.on : NSControl.StateValue.off
                 coordinateDisplaySubMenu.addItem(featureMenuItem)
             }
         }
@@ -1401,8 +1401,8 @@ extension AppDelegate {
         let allColors = TiledObjectColors.all
         let colorNames = TiledObjectColors.names
 
-        let currentTileColor = TiledGlobals.default.debug.tileHighlightColor
-        let currentObjectColor = TiledGlobals.default.debug.objectHighlightColor
+        let currentTileColor = TiledGlobals.default.debugDisplayOptions.tileHighlightColor
+        let currentObjectColor = TiledGlobals.default.debugDisplayOptions.objectHighlightColor
 
         // create the tile colors menu
         if let tileColorsSubMenu = tileColorsMenuItem.submenu {

@@ -235,10 +235,10 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     public var color: SKColor = TiledObjectColors.gun
 
     /// Grid visualization color.
-    public var gridColor: SKColor = TiledGlobals.default.debug.gridColor
+    public var gridColor: SKColor = TiledGlobals.default.debugDisplayOptions.gridColor
 
     /// Bounding box color.
-    public var frameColor: SKColor = TiledGlobals.default.debug.frameColor
+    public var frameColor: SKColor = TiledGlobals.default.debugDisplayOptions.frameColor
 
     /// Layer highlight color (for highlighting tiles)
     public var highlightColor: SKColor = SKColor.white
@@ -286,7 +286,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     }()
 
     /// Layer highlight duration.
-    public var highlightDuration: TimeInterval = TiledGlobals.default.debug.highlightDuration
+    public var highlightDuration: TimeInterval = TiledGlobals.default.debugDisplayOptions.highlightDuration
 
     /// Layer is isolated.
     public private(set) var isolated: Bool = false
@@ -321,7 +321,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     @objc public weak var graph: GKGridGraph<GKGridGraphNode>?
 
     // Debug visualizations.
-    public var gridOpacity: CGFloat = TiledGlobals.default.debug.gridOpactity
+    public var gridOpacity: CGFloat = TiledGlobals.default.debugDisplayOptions.gridOpactity
 
     /// Debug visualization node
     internal var debugNode: TiledDebugDrawNode!

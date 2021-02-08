@@ -279,7 +279,10 @@ public class TiledDemoController: NSObject, Loggable {
         for demoFilename in demoFilenames {
 
             var fileMatched = false
-
+            
+            
+            print("⭑ matching file '\(demoFilename)'...")
+            
             for tilemapAsset in tilemapUrls {
 
                 let url = tilemapAsset.url
@@ -290,6 +293,7 @@ public class TiledDemoController: NSObject, Loggable {
                     tiledResourceFiles.append(tilemapAsset)
                     alreadyAdded.append(tilemapAsset.url)
                     fileMatched = true
+                    print("   - matched: '\(tilemapAsset.url.path)'...")
                 }
             }
 
@@ -860,7 +864,6 @@ public class TiledDemoController: NSObject, Loggable {
     /// - Parameter notification: event notification.
     @objc public func globalsUpdatedAction(_ notification: Notification) {
         //notification.dump(#fileID, function: #function)
-
         let globals = TiledGlobals.default
         globals.saveToUserDefaults()
 
@@ -870,9 +873,6 @@ public class TiledDemoController: NSObject, Loggable {
 
         // stub here, we're not using..
         let searchPaths = userInfo["assetSearchPaths"]
-
-
-
 
         if (globals.allowUserMaps == true) || (globals.allowDemoMaps == true) {
             if (searchPaths != nil) {

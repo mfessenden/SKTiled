@@ -668,16 +668,16 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     public var color: SKColor = SKColor.clear
 
     /// Color used to visualize the tile grid.
-    public var gridColor: SKColor = TiledGlobals.default.debug.gridColor
+    public var gridColor: SKColor = TiledGlobals.default.debugDisplayOptions.gridColor
 
     /// Bounding frame color.
-    public var frameColor: SKColor = TiledGlobals.default.debug.frameColor
+    public var frameColor: SKColor = TiledGlobals.default.debugDisplayOptions.frameColor
 
     /// Color used to highlight tiles.
-    public var highlightColor: SKColor = TiledGlobals.default.debug.tileHighlightColor
+    public var highlightColor: SKColor = TiledGlobals.default.debugDisplayOptions.tileHighlightColor
 
     /// Navigation graph color.
-    public var navigationColor: SKColor = TiledGlobals.default.debug.navigationColor
+    public var navigationColor: SKColor = TiledGlobals.default.debugDisplayOptions.navigationColor
 
     /// Gravity vector.
     public var gravity: CGVector = CGVector.zero
@@ -1145,7 +1145,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
         // tile orientation
         guard let tileOrientation: TilemapOrientation = TilemapOrientation(string: orient) else {
-            fatalError("invalid orientation '\(orient)'.")
+            fatalError("invalid tilemap orientation '\(orient)'.")
         }
 
         self.orientation = tileOrientation

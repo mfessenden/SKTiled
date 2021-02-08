@@ -540,7 +540,7 @@ public class SKTiledSceneCamera: SKCameraNode {
     func drawBounds(withColor: SKColor? = nil,
                     duration: TimeInterval = 0) {
         
-        let boundsColor = (withColor != nil) ? withColor! : TiledGlobals.default.debug.cameraBoundsColor
+        let boundsColor = (withColor != nil) ? withColor! : TiledGlobals.default.debugDisplayOptions.cameraBoundsColor
         cameraBoundsShape.path = CGPath(rect: bounds.insetBy(boundsInset), transform: nil)
         cameraBoundsShape.strokeColor = boundsColor.withAlphaComponent(0.6)
         cameraBoundsShape.position = CGPoint(x: -bounds.size.width / 2, y: -bounds.size.height / 2)

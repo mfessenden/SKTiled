@@ -27,9 +27,9 @@
 import SpriteKit
 
 
-/// ## Overview
+/// The `SKTileset` class manages a set of `SKTilesetData` objects, which store tile data including global id, texture and animation.
 ///
-/// The tileset class manages a set of `SKTilesetData` objects, which store tile data including global id, texture and animation.
+/// ![Tileset Setup][tiledata-diagram-url]
 ///
 /// Tile data is accessed via a local id, and tiles can be instantiated with the resulting `SKTilesetData` instance:
 ///
@@ -41,25 +41,22 @@ import SpriteKit
 ///
 /// ### Properties
 ///
-/// | Property              | Description                                     |
-/// |:----------------------|:------------------------------------------------|
-/// | name                  | Tileset name.                                   |
-/// | tilemap               | Reference to parent tilemap.                    |
-/// | tileSize              | Tile size (in pixels).                          |
-/// | columns               | Number of columns.                              |
-/// | tilecount             | Tile count.                                     |
-/// | firstGID              | First tile global id.                           |
-/// | lastGID               | Last tile global id.                            |
-/// | tileData              | Set of tile data structures.                    |
+/// - `name`: Tileset name.
+/// - `tilemap`: Reference to parent tilemap.
+/// - `tileSize`: Tile size (in pixels).
+/// - `columns`: Number of columns.
+/// - `tilecount`: Tile count.
+/// - `firstGID`: First tile global id.
+/// - `lastGID`: Last tile global id.
+/// - `tileData`: Set of tile data structures.
 ///
 ///
 /// ### Instance Methods
 ///
-/// | Method                | Description                                     |
-/// |:----------------------|:------------------------------------------------|
-/// | `addTextures()`       | Generate textures from a spritesheet image.     |
-/// | `addTilesetTile()`    | Add & return new tile data object.              |
+/// - `addTextures()`: Generate textures from a spritesheet image.     
+/// - `addTilesetTile()`: Add & return new tile data object.
 ///
+/// [tiledata-diagram-url]:https://mfessenden.github.io/SKTiled/1.3/images/tiledata-setup.svg
 public class SKTileset: NSObject, CustomReflectable, TiledAttributedType {
 
     /// Tileset url (external tileset).
@@ -478,20 +475,18 @@ public class SKTileset: NSObject, CustomReflectable, TiledAttributedType {
             log("invalid tile id '\(tileID)'", level: .error)
             return nil
         }
-
+        
+        // flag the tileset as being a collections tileset
         isImageCollection = true
 
+        // standardize the url
         let inputURL = URL(fileURLWithPath: source).standardized
-        let filename = inputURL.deletingPathExtension().lastPathComponent
-        let fileExtension = inputURL.pathExtension
 
-        guard let urlPath = Bundle.main.url(forResource: filename, withExtension: fileExtension) else {
-            log("cannot locate file '\(filename).\(fileExtension)'.", level: .error)
+        // check to see if
+        guard let imageDataProvider = CGDataProvider(url: inputURL as CFURL) else {
+            log("invalid image source '\(inputURL.path)'.", level: .error)
             return nil
         }
-
-        // read image from file
-        let imageDataProvider = CGDataProvider(url: urlPath as CFURL)!
 
         // create a data provider
         let image = CGImage(pngDataProviderSource: imageDataProvider, decode: nil, shouldInterpolate: false, intent: .defaultIntent)!
@@ -509,7 +504,6 @@ public class SKTileset: NSObject, CustomReflectable, TiledAttributedType {
                 data.properties[attr] = value
             }
         }
-
 
         data.ignoreProperties = ignoreProperties
         // add the image name to the source attribute
@@ -755,10 +749,10 @@ public class SKTileset: NSObject, CustomReflectable, TiledAttributedType {
             log("updated \(dataFixed) tile data animations for tileset: '\(name)'", level: .debug)
         }
     }
-    
+
     // MARK: - Reflection
-    
-    
+
+
     struct TilesetMirror {
         var name: String
         var firstGID: UInt32
@@ -767,8 +761,8 @@ public class SKTileset: NSObject, CustomReflectable, TiledAttributedType {
         var localRange: ClosedRange<UInt32>
         var globalRange: ClosedRange<UInt32>
     }
-    
-    
+
+
     /// Referenced as `(label: "tileset", value: tileset.tilesetDataStruct())`
     ///
     /// - Returns: custom mirror data
@@ -781,9 +775,9 @@ public class SKTileset: NSObject, CustomReflectable, TiledAttributedType {
                              localRange: localRange,
                              globalRange: globalRange
                 )
-        
+
     }
-    
+
     /// Returns a custom mirror for this object.
     public var customMirror: Mirror {
         var attributes: [(label: String?, value: Any)] = [
@@ -796,15 +790,15 @@ public class SKTileset: NSObject, CustomReflectable, TiledAttributedType {
             (label: "data", value: tileData),
             (label: "properties", value: mirrorChildren())
         ]
-        
-        
+
+
         /// internal debugging attrs
         attributes.append(("tiled element name", tiledElementName))
         //attributes.append(("tiled node nice name", tiledNodeNiceName))
         //attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
         attributes.append(("tiled description", tiledDescription))
-        
-        
+
+
         return Mirror(self, children: attributes, displayStyle: .class)
     }
 }
@@ -867,7 +861,7 @@ extension SKTileset {
 
 
 extension SKTileset {
-    
+
     /// Creates and returns a new tile instance with the given global id.
     ///
     /// - Parameters:
@@ -881,7 +875,7 @@ extension SKTileset {
         }
         return newtile
     }
-    
+
     /// Creates and returns a new tile instance with the given local id.
     ///
     /// - Parameters:
@@ -900,17 +894,17 @@ extension SKTileset {
 
 /// :nodoc
 extension SKTileset {
-    
+
     /// Returns the internal **Tiled** node type.
     @objc public var tiledElementName: String {
         return "tileset"
     }
-    
+
     /// Returns the internal **Tiled** node type icon.
     @objc public var tiledIconName: String {
         return "tileset-icon"
     }
-    
+
     /// A description of the node.
     @objc public var tiledDescription: String {
         return "\(tiledElementName.titleCased()): "
@@ -920,17 +914,17 @@ extension SKTileset {
 
 /// :nodoc
 extension SKTileset.TilesetMirror: CustomStringConvertible, CustomDebugStringConvertible {
-    
+
     /// A textual representation of the object.
     public var description: String {
         return #"'\#(name)'"#
     }
-    
+
     /// A textual representation of the object, used for debugging.
     public var debugDescription: String {
         return #"\#(description)"#
     }
-    
+
 }
 
 

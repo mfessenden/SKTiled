@@ -107,15 +107,17 @@ class PreferencesGloabalsViewController: NSViewController {
         textFields["glb-textrenderquality-field"]?.stringValue = String(format: "%.2f", TiledGlobals.default.renderQuality.text)
         textFields["glb-objrenderquality-field"]?.stringValue = String(format: "%.2f", TiledGlobals.default.renderQuality.object)
         textFields["glb-renderqualityoverride-field"]?.stringValue = String(format: "%.2f", TiledGlobals.default.renderQuality.override)
-        textFields["glb-linewidth-field"]?.stringValue = String(format: "%.2f", TiledGlobals.default.debug.lineWidth)
-        textFields["glb-mousepointerfontsize-field"]?.stringValue = String(format: "%.2f", TiledGlobals.default.debug.mousePointerSize)
+        textFields["glb-linewidth-field"]?.stringValue = String(format: "%.2f", TiledGlobals.default.debugDisplayOptions.lineWidth)
+        textFields["glb-mousepointerfontsize-field"]?.stringValue = String(format: "%.2f", TiledGlobals.default.debugDisplayOptions.mousePointerSize)
         
 
         checkBoxes["gbl-rendercb-check"]?.state = (TiledGlobals.default.enableRenderCallbacks == true) ? .on : .off
         checkBoxes["gbl-cameracb-check"]?.state = (TiledGlobals.default.enableCameraCallbacks == true) ? .on : .off
         
         // user/demo maps
+        checkBoxes["gbl-allowdemomaps-check"]?.state = (TiledGlobals.default.allowDemoMaps == true) ? .on : .off
         checkBoxes["gbl-allowusermaps-check"]?.state = (TiledGlobals.default.allowUserMaps == true) ? .on : .off
+        
         checkBoxes["gbl-mouseenvents-check"]?.state = (TiledGlobals.default.enableMouseEvents == true) ? .on : .off
 
         // Tilemap
@@ -153,7 +155,7 @@ class PreferencesGloabalsViewController: NSViewController {
         
         checkBoxes["gbl-ignorezoom-check"]?.state = (ignoreZoomConstraints == true) ? .on : .off
         checkBoxes["gbl-trackcameranodes-check"]?.state = (trackCameraContainedNodes == true) ? .on : .off
-        checkBoxes["gbl-mousepointer-check"]?.state = (TiledGlobals.default.debug.mouseFilters.enableMousePointer == true) ? .on : .off
+        checkBoxes["gbl-mousepointer-check"]?.state = (TiledGlobals.default.debugDisplayOptions.mouseFilters.enableMousePointer == true) ? .on : .off
         checkBoxes["gbl-mouseevents-check"]?.state = (TiledGlobals.default.enableMouseEvents == true) ? .on : .off
 
         initializeLoggingLevelMenu()
@@ -271,7 +273,7 @@ class PreferencesGloabalsViewController: NSViewController {
             }
             
             if (textIdentifier == "gbl-mousepointer-check") {
-                //TiledGlobals.default.debug.mouseFilters.enableMousePointer = buttonVal
+                //TiledGlobals.default.debugDisplayOptions.mouseFilters.enableMousePointer = buttonVal
                 
                 NotificationCenter.default.post(
                     name: Notification.Name.Globals.Updated,
@@ -299,6 +301,9 @@ class PreferencesGloabalsViewController: NSViewController {
                     name: Notification.Name.Globals.Updated,
                     object: nil
                 )
+                
+                
+                // FIXME: trigger re-scan here
             }
             
             
@@ -469,7 +474,7 @@ extension PreferencesGloabalsViewController: NSTextFieldDelegate {
         
         if (textIdentifier == "glb-linewidth-field") {
             if let doubleValue = Double(textFieldValue) {
-                TiledGlobals.default.debug.lineWidth = CGFloat(doubleValue)
+                TiledGlobals.default.debugDisplayOptions.lineWidth = CGFloat(doubleValue)
                 
                 // update controllers ->
                 NotificationCenter.default.post(
@@ -481,7 +486,7 @@ extension PreferencesGloabalsViewController: NSTextFieldDelegate {
         
         if (textIdentifier == "glb-mousepointerfontsize-field") {
             if let doubleValue = Double(textFieldValue) {
-                TiledGlobals.default.debug.mousePointerSize = CGFloat(doubleValue)
+                TiledGlobals.default.debugDisplayOptions.mousePointerSize = CGFloat(doubleValue)
                 
                 // update controllers ->
                 NotificationCenter.default.post(

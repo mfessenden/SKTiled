@@ -212,7 +212,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
     }
 
     /// Object bounds color.
-    open var frameColor: SKColor = TiledGlobals.default.debug.objectHighlightColor
+    open var frameColor: SKColor = TiledGlobals.default.debugDisplayOptions.objectHighlightColor
 
     /// Optional proxy color.
     open var proxyColor: SKColor?
@@ -222,7 +222,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
         didSet {
             guard let newColor = tintColor else {
                 
-                frameColor = TiledGlobals.default.debug.objectHighlightColor
+                frameColor = TiledGlobals.default.debugDisplayOptions.objectHighlightColor
                 blendMode = .alpha
                 tile?.tintColor = nil
                 return
@@ -308,6 +308,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
     open override var boundingRect: CGRect {
         switch shapeType {
             case .polyline, .polygon:
+                // TODO: this might be inaccurate
                 return calculateAccumulatedFrame()
             default:
                 return CGRect(x: 0, y: 0, width: size.width, height: -size.height)
@@ -325,6 +326,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
             let tileAlignmentY = layer.tilemap.tileHeightHalf
             return CGPoint(x: tileAlignmentX, y: tileAlignmentY)
         }
+        
         return boundingRect.center
     }
 
@@ -547,6 +549,11 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
 
     /// Render the object.
     @objc open func draw() {
+        
+        #if DEVELOPMENT_MODE
+        
+        #endif
+        
         let uiScale: CGFloat = TiledGlobals.default.contentScale
         self.strokeColor = SKColor.clear
         self.fillColor = SKColor.clear

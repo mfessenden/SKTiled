@@ -49,13 +49,13 @@ import SpriteKit
 public struct DebugDrawProperties {
     
     /// Object frame color.
-    public var frameColor: SKColor = TiledGlobals.default.debug.frameColor
+    public var frameColor: SKColor = TiledGlobals.default.debugDisplayOptions.frameColor
     
     /// Grid color.
-    public var gridColor: SKColor = TiledGlobals.default.debug.gridColor
+    public var gridColor: SKColor = TiledGlobals.default.debugDisplayOptions.gridColor
     
     /// Highlight color.
-    public var highlightColor: SKColor = TiledGlobals.default.debug.tileHighlightColor
+    public var highlightColor: SKColor = TiledGlobals.default.debugDisplayOptions.tileHighlightColor
 }
 
 

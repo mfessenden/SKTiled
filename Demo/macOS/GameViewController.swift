@@ -171,8 +171,9 @@ class GameViewController: NSViewController, Loggable {
         loggingLevel = TiledGlobals.default.loggingLevel
         demoController.loggingLevel = loggingLevel
         demoController.view = skView
+        
+        // start the demo here
         demoController.scanForResources()
-
 
         skView.showsFPS = true
         skView.showsNodeCount = true
@@ -788,7 +789,7 @@ class GameViewController: NSViewController, Loggable {
         }
 
         // check for
-        object.highlightNode(with: TiledGlobals.default.debug.objectHighlightColor, duration: TiledGlobals.default.debug.highlightDuration)
+        object.highlightNode(with: TiledGlobals.default.debugDisplayOptions.objectHighlightColor, duration: TiledGlobals.default.debugDisplayOptions.highlightDuration)
         tileInfoLabel.stringValue = object.description
 
         propertiesInfoLabel.isHidden = false
@@ -822,7 +823,7 @@ class GameViewController: NSViewController, Loggable {
             return
         }
 
-        clickedTile.drawNodeBounds(with: clickedTile.frameColor, lineWidth: 0.25, fillOpacity: 0.2, duration: TiledGlobals.default.debug.highlightDuration)
+        clickedTile.drawNodeBounds(with: clickedTile.frameColor, lineWidth: 0.25, fillOpacity: 0.2, duration: TiledGlobals.default.debugDisplayOptions.highlightDuration)
         tileInfoLabel.stringValue = clickedTile.description
 
         propertiesInfoLabel.isHidden = false

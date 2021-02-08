@@ -267,7 +267,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     /// Tile highlight color.
     open var highlightColor: SKColor {
         get {
-            return userHighlightColor ?? TiledGlobals.default.debug.tileHighlightColor
+            return userHighlightColor ?? TiledGlobals.default.debugDisplayOptions.tileHighlightColor
         } set {
             tileData.setValue(for: "highlightColor", newValue.hexString())
         }
@@ -276,7 +276,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     /// Tile bounds color.
     open var frameColor: SKColor {
         get {
-            return userFrameColor ?? TiledGlobals.default.debug.frameColor
+            return userFrameColor ?? TiledGlobals.default.debugDisplayOptions.frameColor
         } set {
             tileData.setValue(for: "frameColor", newValue.hexString())
         }
@@ -323,7 +323,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     }()
 
     /// Tile highlight duration.
-    open var highlightDuration: TimeInterval = TiledGlobals.default.debug.highlightDuration
+    open var highlightDuration: TimeInterval = TiledGlobals.default.debugDisplayOptions.highlightDuration
 
     /// Key used to access bounding box shapes.
     internal var boundsKey: String {
@@ -475,6 +475,8 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     /// Tile object size.
     internal var objectSize: CGSize?
 
+    // TODO: this isn't used anywhere ⬇︎
+    
     /// Tile animation.
     internal var objectAnimation: SKAction?
 

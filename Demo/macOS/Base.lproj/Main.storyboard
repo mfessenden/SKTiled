@@ -68,6 +68,22 @@
                                                 <action selector="openAndLoadExternalTilemapAction:" target="Voe-Tx-rLC" id="Bm9-MU-z0p"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Open Recent" id="mOm-eQ-TNp">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Open Recent" systemMenu="recentDocuments" id="Kz3-1p-0Ev">
+                                                <items>
+                                                    <menuItem title="Clear Menu" id="FrA-Ge-BRC">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="clearRecentDocuments:" target="Ady-hI-5gd" id="PN5-ts-c9a"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                            <connections>
+                                                <action selector="openAndLoadExternalTilemapAction:" target="Voe-Tx-rLC" id="xDx-Vx-5Es"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="ydn-Ww-N0c"/>
                                         <menuItem title="Current maps" enabled="NO" id="Lwz-hJ-Y8i">
                                             <modifierMask key="keyEquivalentModifierMask"/>

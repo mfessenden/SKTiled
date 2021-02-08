@@ -73,7 +73,7 @@ class AttributeEditorViewController: NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionChangedAction), name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(mouseRightClickAction), name: Notification.Name.Demo.MouseRightClicked, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tilemapWasUpdated), name: Notification.Name.Map.Updated, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(sceneWillUnload), name: Notification.Name.Demo.SceneWillUnload, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(sceneWillUnloadAction), name: Notification.Name.Demo.SceneWillUnload, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(newSceneWasLoaded), name: Notification.Name.Demo.SceneLoaded, object: nil)
         
         
@@ -425,7 +425,7 @@ class AttributeEditorViewController: NSViewController {
     /// Called when the `Notification.Name.Demo.SceneWillUnload` event fires.
     ///
     /// - Parameter notification: event notification.
-    @objc func sceneWillUnload(notification: Notification) {
+    @objc func sceneWillUnloadAction(notification: Notification) {
         //notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: Any],
               let nextUrl = userInfo["url"] as? URL else {

@@ -475,7 +475,7 @@ extension SKTiledDemoScene {
 
     open override func mouseEntered(with event: NSEvent) {
         super.mouseEntered(with: event)
-        mousePointer?.isHidden = !TiledGlobals.default.debug.mouseFilters.enableMousePointer
+        mousePointer?.isHidden = !TiledGlobals.default.debugDisplayOptions.mouseFilters.enableMousePointer
     }
 
     open override func mouseExited(with event: NSEvent) {

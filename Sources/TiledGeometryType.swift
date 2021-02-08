@@ -310,8 +310,8 @@ extension SKNode {
     /// Draw the bounds of the object type.
     public func drawNodeBounds() {
         if let _ = self as? TiledGeometryType {
-            let fColor = TiledGlobals.default.debug.frameColor
-            let duration = TiledGlobals.default.debug.highlightDuration
+            let fColor = TiledGlobals.default.debugDisplayOptions.frameColor
+            let duration = TiledGlobals.default.debugDisplayOptions.highlightDuration
             drawNodeBounds(with: fColor, lineWidth: 1, fillOpacity: 0, duration: duration)
         }
     }

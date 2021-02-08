@@ -26,9 +26,10 @@
 
 import SpriteKit
 
+
 /// :nodoc:
 @objc public protocol TiledSelectableType {
     
-    /// Represents a node type that can be selected.
+    /// Represents a node type that can be interacted with.
     @objc optional var isSelectable: Bool { get }
 }

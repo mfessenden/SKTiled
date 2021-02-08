@@ -56,7 +56,7 @@ internal class TileObjectProxy: SKShapeNode {
     }
     
     /// Internal line width.
-    var _baseLineWidth: CGFloat = TiledGlobals.default.debug.lineWidth
+    var _baseLineWidth: CGFloat = TiledGlobals.default.debugDisplayOptions.lineWidth
     
     /// Represents the line width at the current zoom level.
     var baseLineWidth: CGFloat {
@@ -74,7 +74,7 @@ internal class TileObjectProxy: SKShapeNode {
         }
     }
     
-    var objectColor: SKColor = TiledGlobals.default.debug.objectHighlightColor {
+    var objectColor: SKColor = TiledGlobals.default.debugDisplayOptions.objectHighlightColor {
         didSet {
             guard objectColor != oldValue else {
                 return
@@ -84,7 +84,7 @@ internal class TileObjectProxy: SKShapeNode {
         }
     }
     
-    var fillOpacity: CGFloat = TiledGlobals.default.debug.objectFillOpacity {
+    var fillOpacity: CGFloat = TiledGlobals.default.debugDisplayOptions.objectFillOpacity {
         didSet {
             self.draw()
         }
