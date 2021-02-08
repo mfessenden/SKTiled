@@ -27,7 +27,6 @@
 import SpriteKit
 
 
-
 /// Vector object proxy.
 internal class TileObjectProxy: SKShapeNode {
     
@@ -77,6 +76,10 @@ internal class TileObjectProxy: SKShapeNode {
     
     var objectColor: SKColor = TiledGlobals.default.debug.objectHighlightColor {
         didSet {
+            guard objectColor != oldValue else {
+                return
+            }
+            
             self.draw()
         }
     }
@@ -101,6 +104,12 @@ internal class TileObjectProxy: SKShapeNode {
         }
     }
     
+    /// Initialize with an object reference.
+    ///
+    /// - Parameters:
+    ///   - object: reference object.
+    ///   - visible: obejct is initially visible.
+    ///   - renderable: object is renderable.
     required init(object: SKTileObject,
                   visible: Bool = false,
                   renderable: Bool = false) {
@@ -135,6 +144,14 @@ internal class TileObjectProxy: SKShapeNode {
               let _ = object.layer else {
             self.path = nil
             return
+        }
+        
+        // don't draw text objects in iso, hex, staggered (for now)
+        if object.layer.orientation != .orthogonal {
+            if object.objectType == .text {
+                self.path = nil
+                return
+            }
         }
         
         

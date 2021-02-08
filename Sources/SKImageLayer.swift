@@ -149,7 +149,10 @@ public class SKImageLayer: TiledLayerObject {
         textures.append(sourceTexture)
         return sourceTexture
     }
-
+    
+    /// Instantiate the node with a decoder instance.
+    ///
+    /// - Parameter aDecoder: decoder.
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -512,17 +512,23 @@ extension SKTiledDemoScene {
         let location = event.location(in: self)
         mousePointer?.position = location
         
+        
+        // dictionary of event locations
+        var locationData: [String: Any] = [:]
+        
+        
         // Get node at mouse position
         let touchedNodes = nodes(at: location).filter( { $0 != mousePointer })
+        
         if let frontTouchedNode = touchedNodes.first {
+            locationData["firstNode"] = frontTouchedNode
         }
 
         guard let skView = view else {
             return
         }
 
-        // dictionary of event locations
-        var locationData: [String: Any] = [:]
+
         let sceneLocation = event.location(in: self)
 
         locationData["viewPosition"] = skView.convert(sceneLocation, from: self)
@@ -541,14 +547,15 @@ extension SKTiledDemoScene {
             locationData["mapPosition"]  = mapPosition
             locationData["coordinate"]  = coord
             locationData["coordIsValid"] = tilemap.isValid(coord: coord)
+            
         }
 
-        // TODO: nothing is using this yet
+        /*
         NotificationCenter.default.post(
             name: Notification.Name.Demo.MousePositionChanged,
             object: nil,
             userInfo: locationData
-        )
+        )*/
     }
 
     open override func mouseEntered(with event: NSEvent) {
@@ -602,6 +609,7 @@ extension SKTiledDemoScene {
 
 
 extension SKTiledDemoScene {
+    
     // MARK: - Delegate Methods
 
     /// Called when the camera position changes.
@@ -643,7 +651,6 @@ extension SKTiledDemoScene {
     ///
     /// - Parameter event: mouse click event.
     public func sceneClicked(event: NSEvent) {
-        //print("⭑ [SKTiledDemoScene]: scene clicked, button: \(event.buttonNumber)")
         let location = event.location(in: self)
         var logMessage = "mouse clicked at: \(location.coordDescription)"
 

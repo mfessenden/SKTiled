@@ -25,16 +25,60 @@
 **SKTiled** provides several ways to work with tiles in your tilemap. Most of the methods for accessing tiles from a tile layer instances have corresponding methods in the parent `SKTilemap` node, which will aggregate the results from *all* tile layers.
 
 
+## Tile IDs
+
+The `SKTile.globalId` property determines how each tile is rendered. 
+
+```swift
+tiles.globalId = 13
+```
+
+
+### Querying Tiles with ID
+
+
+#### Global ID
+
+To query tiles with a global ID, pass the value to either the `SKTilemap` node, or an individual `SKTileLayer` node:
+
+```swift
+// query tiles from the tilemap node
+let tiles = tilemap.getTiles(globalID: 10)
+
+// query tiles from the parent layer
+let tiles = tileLayer.getTiles(globalID: 10)
+```
+
+#### Local ID
+
+If you have a reference to a tileset object and want to query tile data with a local id, use the `SKTileset.getTileData(localID:)` method. Here's a reference to an external tileset with a **firstgid** value of **1**. So if we want to access tile data with a local id of **79**, we can query the tileset instance directly:
+
+
+![Tileset Data](images/tileset-code.svg)
+
+
+```swift
+if let tiledata = tileset.getTileData(localID: 79) {
+    print(tiledata)
+}
+// Tile ID: 78 @ 16x16, 6 frames
+```
+
+As you can see, the tile data is correctly returned. The local ID is the sum of the tileset's **firstgid** value plus the tile's internal ID: `(1 + 78 = 79)`.
+
+
+
+
 ## Tile Render Mode
 
 Once your tilemap is loaded, you may tweak the way tiles are rendered individually via the `SKTile.renderMode` property:
 
-|   Mode   | Description                                    |
-|:--------:|:---------------------------------------------- |
-| default  | Tile renders at default settings.              |
-|  static  | Tile ignores any animation data.               |
-|  ignore  | Tile does not take into account its tile data. |
-| animated | Animate with a global id value.                |
+| Mode       | Description                                    |
+|:---------- |:---------------------------------------------- |
+| `default`  | Tile renders at default settings.              |
+| `static`   | Tile ignores any animation data.               |
+| `ignore`   | Tile does not take into account its tile data. |
+| `animated` | Animate with a global id value.                |
 
 
 ```swift
@@ -62,41 +106,6 @@ let tilesForCoord = tileLayer.tileAt(coord: coord)
 let allTilesForCoord = tilemap.tilesAt(coord: coord)
 ```
 
-## Tile IDs
-
-The `SKTile.globalId` property
-
-### Querying Tiles with ID
-
-
-#### Global ID
-
-To query tiles with a global ID, pass the value to either the `SKTilemap` node, or an individual `SKTileLayer` node:
-
-```swift
-// query tiles from the tile map node
-let tiles = tilemap.getTiles(globalID: 10)
-
-// query tiles from the parent layer
-let tiles = tileLayer.getTiles(globalID: 10)
-```
-
-#### Local ID
-
-If you have a reference to a tileset object and want to query tile data with a local id, use the `SKTileset.getTileData(localID:)` method. Here's a reference to an external tileset with a **firstgid** value of **1**. So if we want to access tile data with a local id of **79**, we can query the tileset instance directly:
-
-
-![Tileset Data](images/tileset-code.svg)
-
-
-```swift
-if let tiledata = tileset.getTileData(localID: 79) {
-    print(tiledata)
-}
-// Tile ID: 78 @ 16x16, 6 frames
-```
-
-As you can see, the tile data is correctly returned. The local ID is the sum of the tileset's **firstgid** value plus the tile's internal ID: `(1 + 78 = 79)`.
 
 
 ## Tile Flags

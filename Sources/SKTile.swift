@@ -52,32 +52,28 @@ public enum TileRenderMode {
 
 /// ## Overview
 ///
-/// The `SKTile` class is a custom **[SpriteKit sprite][skspritenode-url]** node that references its image and animation data from tileset. The tile represents a single piece of a larger image stored in a **[tile layer](SKTileLayer.html)** container.
+/// The `SKTile` class is a custom **[SpriteKit sprite][skspritenode-url]** node that references its image and animation data from a tileset container. The tile represents a single piece of a larger image stored in a **[tile layer](SKTileLayer.html)** container.
 ///
-///
-/// ![Tile Data Setup](../images/tiledata-setup.svg)
+/// ![Tile Data Setup][tiledata-diagram-url]
 ///
 /// ### Properties
 ///
-/// | Property                          | Description                                      |
-/// |:----------------------------------|:-------------------------------------------------|
-/// | `globalId`                        | tile global id                                   |
-/// | `tileData`                        | tileset [tile data][tiledata-url] reference      |
-/// | `tileSize`                        | tile size (in pixels)                            |
-/// | `layer`                           | parent tile layer                                |
+///  - `globalId`: tile global id
+///  - `tileData`: tileset [tile data][tiledata-url] reference
+///  - `tileSize`: tile size (in pixels)
+///  - `layer`: parent tile layer                                
 ///
 /// ### Instance Methods
 ///
-/// | Method                            | Description                                      |
-/// |:----------------------------------|:-------------------------------------------------|
-/// | setupPhysics(shapeOf:isDynamic:)  | Setup physics for the tile                       |
-/// | setupPhysics(rectSize:isDynamic:) | Setup physics for the tile                       |
-/// | setupPhysics(withSize:isDynamic:) | Setup physics for the tile                       |
-/// | runAnimation()                    | Play tile animation (if animated)                |
-/// | removeAnimation(restore:)         | Remove animation                                 |
-/// | runAnimationAsActions()           | Runs a SpriteKit action to animate the tile      |
-/// | removeAnimationActions(restore:)  | Remove the animation for the current tile        |
+///  - `setupPhysics(shapeOf:isDynamic:)`:  setup physics for the tile
+///  - `setupPhysics(rectSize:isDynamic:)`: setup physics for the tile
+///  - `setupPhysics(withSize:isDynamic:)`: setup physics for the tile
+///  - `runAnimation()`:                    play tile animation (if animated)
+///  - `removeAnimation(restore:)`:         remove animation
+///  - `runAnimationAsActions()`:           runs a SpriteKit action to animate the tile
+///  - `removeAnimationActions(restore:)`:  remove the animation for the current tile
 ///
+/// [tiledata-diagram-url]:https://mfessenden.github.io/SKTiled/1.3/images/tiledata-setup.svg
 /// [tiledata-url]:SKTilesetData.html
 /// [skspritenode-url]:https://developer.apple.com/documentation/spritekit/skspritenode
 open class SKTile: SKSpriteNode, CustomReflectable {
@@ -109,7 +105,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
             )
         }
     }
-    
+
     /// ## Overview
     ///
     /// Tile global id attribute. This attribute determines the tile data assigned to the tile. Changing this value will update this tiles' tile data.
@@ -130,7 +126,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     /// ## Overview
     ///
     /// Returns the tile data "real value" (global id with flags mask).
-    /// 
+    ///
     ///  For example, a value of 2684354571 indicates a global id of 11, flipped horizontally & diagonally.
     public var maskedTileId: UInt32 {
         return _globalId.realValue
@@ -141,7 +137,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
 
     /// Weak reference to the parent layer.
     open weak var layer: TiledLayerObject!
-    
+
     /// Parent tile onbject.
     open weak var object: SKTileObject?
 
@@ -336,7 +332,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
 
     /// Key used to access tile animation actions.
     internal var animationKey: String = "TILE-ANIMATION"
-    
+
     /// Enable tile animation.
     open var enableAnimation: Bool = true {
         didSet {
@@ -369,6 +365,18 @@ open class SKTile: SKSpriteNode, CustomReflectable {
 
         let tileSizeHalved = CGSize(width: tileLayer.tileSize.halfWidth, height: tileLayer.tileSize.halfHeight)
 
+        
+        /// if this is a tile object, the object anchor lies at the first point (typically bottom-left)
+        if let parentObj = object {
+            return parentObj.getVertices().map { point in
+                var offsetpoint = point
+                offsetpoint.x += self.layer.tileWidthHalf
+                offsetpoint.y += self.layer.tileHeightHalf
+                return self.convert(offsetpoint, from: parentObj)
+            }
+        }
+        
+
         switch tileLayer.orientation {
 
             case .orthogonal:
@@ -378,7 +386,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
                 // adjust for tileset.tileOffset here
                 origin.x += tileData.tileOffset.x
                 vertices = rectPointArray(tileSize, origin: origin)
-                vertices = vertices.map { $0.invertedY }
+                //vertices = vertices.map { $0.invertedY }
 
             case .isometric, .staggered:
                 vertices = [
@@ -425,14 +433,9 @@ open class SKTile: SKSpriteNode, CustomReflectable {
 
                 vertices = hexPoints.map { $0.invertedY }
         }
-        
-        let offsetVertices = vertices.map { $0 + offset }
-        
-        /// if this is a tile object, the object anchor lies at the first point (typically bottom-left)
-        if let parentObj = object {
-            return offsetVertices.map { parentObj.convert($0, from: parentObj) }
-        }
 
+        // apply the offset value
+        let offsetVertices = vertices.map { $0 + offset }
         return offsetVertices
     }
 
@@ -538,7 +541,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         colorBlendFactor = 0
         isUserInteractionEnabled = true
     }
-    
+
     deinit {
         layer = nil
         object = nil
@@ -637,7 +640,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
 
     // MARK: - Animation
 
-    /// Run tile animation.
+    /// Run the tile's animation.
     open func runAnimation() {
         tileData.runAnimation()
     }
@@ -648,8 +651,6 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     open func removeAnimation(restore: Bool = false) {
         tileData.removeAnimation(restore: restore)
     }
-
-    // MARK: - Legacy Animation
 
     /// Checks if the tile is animated and runs a [**SpriteKit action**][skaction-url] to animate it.
     ///
@@ -955,9 +956,9 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         // the the current time is greater than the animation cycle, reset current time to 0
         if ct >= cycleTime { currentTime = 0 }
     }
-    
+
     // MARK: - Reflection
-    
+
     /// Custom mirror for tile objects.
     public var customMirror: Mirror {
 
@@ -973,17 +974,34 @@ open class SKTile: SKSpriteNode, CustomReflectable {
             (label: "isUserInteractionEnabled", value: isUserInteractionEnabled),
             (label: "data", value: tileData)
         ]
-        
+
+        /// COLORS
+        attributes.append(("frameColor", frameColor.hexString()))
+        if let userfrmcolor = userFrameColor {
+            attributes.append(("userFrameColor", userfrmcolor.hexString()))
+        }
+
+
+        attributes.append(("highlightColor", highlightColor.hexString()))
+        if let userhicolor = userHighlightColor {
+            attributes.append(("userHighlightColor", userhicolor.hexString()))
+        }
+
+        /// LAYER
+
         if let layer = layer {
             attributes.append(("layer", layer.layerDataStruct()))
         }
+
+
+        /// DEBUGGING
 
         /// internal debugging attrs
         attributes.append(("tiled element name", tiledElementName))
         attributes.append(("tiled node nice name", tiledNodeNiceName))
         attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
         attributes.append(("tiled description", tiledDescription))
-        
+
         return Mirror(self, children: attributes)
     }
 }
@@ -1115,7 +1133,7 @@ extension SKTile {
             self.isHidden = !newValue
         }
     }
-    
+
     /// Tile flip flags.
     public var flipFlags: TileFlags {
         get {
@@ -1125,7 +1143,7 @@ extension SKTile {
             orientTile()
         }
     }
-    
+
     /// Tile is flipped horizontally.
     public var isFlippedHorizontally: Bool {
         get {
@@ -1210,7 +1228,7 @@ extension SKTile {
 
 
 extension SKTile {
-    
+
     /// Creates and returns a new tile instance with the given tileset & global id.
     ///
     /// - Parameters:
@@ -1223,7 +1241,7 @@ extension SKTile {
         }
         return newtile
     }
-    
+
     /// Creates and returns a new tile instance with the given tileset & local id.
     ///
     /// - Parameters:
@@ -1242,7 +1260,7 @@ extension SKTile {
 
 /// :nodoc:
 extension SKTile.TileAlignmentHint: CustomStringConvertible, CustomDebugStringConvertible {
-    
+
     /// String representation of this node.
     public var description: String {
         switch self {
@@ -1257,7 +1275,7 @@ extension SKTile.TileAlignmentHint: CustomStringConvertible, CustomDebugStringCo
             case .bottomRight: return "bottomRight"
         }
     }
-    
+
     /// Debug string representation of this node.
     public var debugDescription: String {
         return description
@@ -1266,7 +1284,7 @@ extension SKTile.TileAlignmentHint: CustomStringConvertible, CustomDebugStringCo
 
 /// :nodoc:
 extension SKTile.PhysicsShape: CustomStringConvertible, CustomDebugStringConvertible {
-    
+
     /// String representation of this node.
     public var description: String {
         switch self {
@@ -1307,7 +1325,7 @@ extension SKTile {
         sprite.zRotation = zRotation
         sprite.xScale = xScale
         sprite.yScale = yScale
-        
+
         return sprite
     }
 
@@ -1327,7 +1345,7 @@ extension SKTile {
             name: Notification.Name.Layer.TileRemoved,
             object: self
         )
-        
+
         return sprite
     }
 
@@ -1363,7 +1381,7 @@ extension SKTile {
         let tiledataString = "gid \(tileData.globalID)"
         return "Tile: \(tiledataString)"
     }
-    
+
     /// A description of the node.
     @objc public override var tiledMenuDescription: String {
         //let tiledataString = "gid \(tileData.globalID), tileset '\(tileData.tileset.name)'"
@@ -1421,7 +1439,7 @@ extension SKTile {
             self.isHidden = !newValue
         }
     }
-    
+
     /// Tiled global id.
     @available(*, deprecated, renamed: "maskedTileId")
     public var realTileId: UInt32 {

@@ -371,10 +371,10 @@ class AttributeEditorViewController: NSViewController {
     ///
     /// - Parameter notification: event notification.
     @objc func nodeSelectionChangedAction(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: Any],
               let selectedNodes = userInfo["nodes"] as? [SKNode] else {
-            fatalError("no nodes!")
+            return
         }
 
         handleNodeSelection()
@@ -384,7 +384,7 @@ class AttributeEditorViewController: NSViewController {
     ///
     /// - Parameter notification: event notification.
     @objc func tileClickedAction(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let tile = notification.object as? SKTile else {
             return
         }
@@ -396,9 +396,8 @@ class AttributeEditorViewController: NSViewController {
     ///
     /// - Parameter notification: event notification.
     @objc func objectClickedAction(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let object = notification.object as? SKTileObject else {
-            print("WARNING: object clicked is '\(notification.object)'")
             return
         }
         
@@ -409,7 +408,7 @@ class AttributeEditorViewController: NSViewController {
     ///
     /// - Parameter notification: event notification.
     @objc func mouseRightClickAction(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         //populateInterface()
         resetInterface()
     }
@@ -418,7 +417,7 @@ class AttributeEditorViewController: NSViewController {
     ///
     /// - Parameter notification: event notification.
     @objc func tilemapWasUpdated(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         populateInterface()
     }
     
@@ -427,7 +426,7 @@ class AttributeEditorViewController: NSViewController {
     ///
     /// - Parameter notification: event notification.
     @objc func sceneWillUnload(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: Any],
               let nextUrl = userInfo["url"] as? URL else {
             return
@@ -444,7 +443,7 @@ class AttributeEditorViewController: NSViewController {
     ///
     /// - Parameter notification: event notification.
     @objc func newSceneWasLoaded(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: Any],
               let mapName = userInfo["tilemapName"],
               let relativePath = userInfo["relativePath"] else {
@@ -463,8 +462,11 @@ class AttributeEditorViewController: NSViewController {
         if let buttonId = sender.identifier {
             let textIdentifier = buttonId.rawValue
             let buttonVal = sender.state == .on
+            
+            #if DEBUG
             print("⭑ [AttributeEditor]: button changed: '\(textIdentifier)', value: \(buttonVal)")
-
+            #endif
+            
             if (textIdentifier == "node-paused-check") {
                 for node in currentNodes {
                     node.isPaused = buttonVal
@@ -562,7 +564,10 @@ extension AttributeEditorViewController: NSTextFieldDelegate {
         
         let floatValue: CGFloat = CGFloat(textField.floatValue)
         let textFieldDescription = (hasFormatter == true) ? "number field" : "text field"
+        
+        #if DEBUG
         print("⭑ [AttributeEditorViewController]: \(textFieldDescription) '\(textIdentifier)', value: '\(textFieldValue)'")
+        #endif
         
         switch textIdentifier {
             case "node-name-field":

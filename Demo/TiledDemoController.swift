@@ -333,7 +333,6 @@ public class TiledDemoController: NSObject, Loggable {
         let resourcesFound = FileManager.default.listFiles(path: url.path, withExtensions: types)
         return resourcesFound
     }
-
     
     /// Add a tilemap url to the stack.
     ///
@@ -341,21 +340,9 @@ public class TiledDemoController: NSObject, Loggable {
     ///   - url: file url.
     ///   - index: index to insert at.
     public func addTilemap(url: URL, at index: Int) {
-
         let newAsset = TiledDemoAsset(url, isUser: true)
-        var actualIndex = 0
-        var indexToInsert = 0
-        for (idx, resource) in tiledResourceFiles.enumerated() {
-            if (resource.isTilemap == true) {
-                actualIndex += 1
-            }
-
-            if (actualIndex == index) {
-                indexToInsert = idx
-            }
-        }
-        tiledResourceFiles.insert(newAsset, at: indexToInsert)
-
+        log("adding tilemap at index \(index)", level: .info)
+        tiledResourceFiles.insert(newAsset, at: index)
     }
 
     // MARK: - Scene Management
@@ -476,9 +463,13 @@ public class TiledDemoController: NSObject, Loggable {
 
         // if there's no current map, load the first in the stack
         if (currentTilemapUrl == nil) {
+            
+            // if there's a first map, load it
             if let demoUrl = tiledDemoUrls.first {
                 currentTilemapUrl = demoUrl
                 loadScene(url: demoUrl, usePreviousCamera: false, interval: interval, reload: false)
+            
+            // create an empty scene
             } else {
 
                 // create an empty scene
@@ -506,6 +497,7 @@ public class TiledDemoController: NSObject, Loggable {
                 fileUrlToLoad = tiledDemoUrls[index + 1]
             }
         }
+        
         loadScene(url: fileUrlToLoad, usePreviousCamera: defaultPreferences.usePreviousCamera, interval: interval, reload: false)
     }
 
@@ -552,6 +544,12 @@ public class TiledDemoController: NSObject, Loggable {
 
 
         currentTilemap = nil
+        
+        
+        // set the map index
+        if let mapindex = tiledDemoUrls.firstIndex(of: url) {
+            currentTilemapIndex = Int(mapindex)
+        }
 
         NotificationCenter.default.post(
             name: Notification.Name.Demo.SceneWillUnload,
@@ -881,7 +879,7 @@ public class TiledDemoController: NSObject, Loggable {
     @objc public func globalsReadAction(_ notification: Notification) {
         // notification.dump(#fileID, function: #function)
         guard let demoPreferences = notification.object as? DemoPreferences else {
-            fatalError("demo preferences not included.")
+            fatalError("invalid demo preferences.")
         }
         // set the current prefs
         self.defaultPreferences = demoPreferences
@@ -893,7 +891,7 @@ public class TiledDemoController: NSObject, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc public func globalsUpdatedAction(_ notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
 
         let globals = TiledGlobals.default
         globals.saveToUserDefaults()
@@ -960,7 +958,8 @@ extension TiledDemoController: TiledCustomReflectableType {
         outputString += " ▸ Map Assets:                   \(tilemaps.count)\n"
         outputString += " ▸ User map index:               \(userIndexStart)\n"
         outputString += " ▸ Current map:                  \(currentMapName)\n"
-
+        outputString += " ▸ Current map index:            \(currentTilemapIndex)\n"
+        
         var currentUrlPath = "nil"
 
         if (currentTilemapUrl != nil) {
@@ -1652,68 +1651,3 @@ extension SKTilemap.RenderStatistics {
         return NSMutableAttributedString(string: labelText, attributes: cpuStatsAttributes)
     }
 }
-
-
-
-
-// MARK: - Outtakes
-
-/*
-/// Scan root directories and return any matching resource files.
-private func scanForResourceTypes() {
-
-    // call back to the AppDelegate, creates the `File > Current maps` menu.
-    NotificationCenter.default.post(
-        name: Notification.Name.Demo.DidBeginAssetScan,
-        object: nil,
-        userInfo: nil
-    )
-
-    var resourcesAdded = 0
-    for root in assetSearchPaths {
-        let urls = FileManager.default.listFiles(path: root.path, withExtensions: resourceTypes)
-        for url in urls {
-            guard tiledResourceFiles.contains(url) == false else {
-                continue
-            }
-
-            tiledResourceFiles.append(url)
-            resourcesAdded += 1
-        }
-    }
-
-    /*
-    /// Add resources from user search paths
-    for userPath in userPaths {
-        let urls = FileManager.default.listFiles(path: userPath.path, withExtensions: resourceTypes)
-        for url in urls {
-            guard resources.contains(url) == false else {
-                continue
-            }
-
-            // add user maps to the end of the
-            if (url.pathExtension == "tmx") {
-                addTilemap(url: url, at: userIndexStart)
-            }
-
-            resources.append(url)
-            resourcesAdded += 1
-        }
-    }*/
-
-
-    let statusMsg = (resourcesAdded > 0) ? "\(resourcesAdded) resources added." : "no resources found."
-    let statusLevel = (resourcesAdded > 0) ? LoggingLevel.info : LoggingLevel.warning
-    log(statusMsg, level: statusLevel)
-
-    // increment the internal scan counter.
-    scanCount += 1
-
-    // call back to the AppDelegate, creates the `File > Current maps` menu.
-    NotificationCenter.default.post(
-        name: Notification.Name.Demo.DemoAssetsLoaded,
-        object: nil,
-        userInfo: nil
-    )
-}
-*/

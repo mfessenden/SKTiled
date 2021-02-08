@@ -1117,9 +1117,9 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
     // MARK: - Initialization
 
-    /// Default initializer.
+    /// Instantiate the map with a decoder instance.
     ///
-    /// - Parameter aDecoder: decoder instance.
+    /// - Parameter aDecoder: decoder.
     required public init?(coder aDecoder: NSCoder) {
         mapSize = CGSize.zero
         tileSize = CGSize.zero
@@ -1712,12 +1712,8 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     ///   - clamped: clamp the result.
     internal func positionLayer(_ layer: TiledLayerObject, clamped: Bool = false) {
         
-        //var result = CGPoint.zero
         var result = self.childOffset
         
-        
-        
-
         // layer offset
         result.x += layer.offset.x
         result.y -= layer.offset.y
@@ -1728,28 +1724,14 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
             result = clampedPosition(point: result, scale: scaleFactor)
         }
         
+        // if (isInfinite == true) {}
         
-        if (isInfinite == true) {
-            print("\n⭑ initial child offset x: \(childOffset.x)")
-        }
+        // apply offset for infinite maps (tile layers only)
+        result.x -= layer.layerInfiniteOffset.x
+        result.y += layer.layerInfiniteOffset.y
         
-        
-        // apply offset for infinite maps
-        if let tileLayer = layer as? SKTileLayer {
-            
-            print("   - infinite offset x: -\(tileLayer.layerInfiniteOffset.x)")
-            
-            result.x -= tileLayer.layerInfiniteOffset.x
-            result.y += tileLayer.layerInfiniteOffset.y
-        }
-
         // set the layer final position
         layer.position = result
-        
-        // -650 - (-910)
-        if (isInfinite == true) {
-            print("   - final x position: \(result.x)\n")
-        }
     }
 
     /// Position a child node in relation to the map's anchorpoint.
@@ -3273,11 +3255,8 @@ extension SKTilemap: TiledSceneCameraDelegate {
     ///
     /// - Parameter event: mouse click event.
     @objc public func sceneClicked(event: NSEvent) {
-        
         let mapCoordinate = coordinateAtMouse(event: event)
         let tilesAtMapCoordinate = tilesAt(coord: mapCoordinate)
-        
-        print("⭑ map clicked at \(mapCoordinate.coordDescription)")
         
         // set the current coordinate
         currentCoordinate = mapCoordinate

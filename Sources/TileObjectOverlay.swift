@@ -51,12 +51,18 @@ internal class TileObjectOverlay: SKNode {
     /// Retina scaling value.
     let contentScale: CGFloat = TiledGlobals.default.contentScale
     
+    // MARK: - Initialization
+    
+    /// Default initializer.
     override init() {
         super.init()
         isUserInteractionEnabled = false
         setupNotifications()
     }
 
+    /// Instantiate the node with a decoder instance.
+    ///
+    /// - Parameter aDecoder: decoder.
     required init?(coder aDecoder: NSCoder) {
         super.init()
         isUserInteractionEnabled = false
@@ -64,6 +70,12 @@ internal class TileObjectOverlay: SKNode {
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Globals.Updated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.Updated, object: nil)
+    }
+    
+    func setupNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(globalsUpdatedAction), name: Notification.Name.Globals.Updated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(mapUpdatedAction), name: Notification.Name.Map.Updated, object: nil)
     }
 
     /// Returns objects at the given point.
@@ -75,8 +87,10 @@ internal class TileObjectOverlay: SKNode {
         return objects.compactMap { $0.reference }
     }
     
-    func setupNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(globalsUpdatedAction), name: Notification.Name.Globals.Updated, object: nil)
+
+    
+    @objc func mapUpdatedAction(notification: Notification) {
+        draw()
     }
     
     @objc func globalsUpdatedAction(notification: Notification) {
@@ -84,10 +98,11 @@ internal class TileObjectOverlay: SKNode {
         draw()
     }
     
-    func draw() {
+    @objc func draw() {
         objects.forEach { object in
             object.zoomLevel = cameraZoom
             object.baseLineWidth = lineWidth
+            object.reference?.tintColor
             object.draw()
         }
     }
@@ -127,7 +142,6 @@ extension TileObjectOverlay: TiledSceneCameraDelegate {
 /// :nodoc:
 extension TileObjectOverlay: TiledCustomReflectableType {
 
-    
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public var tiledNodeNiceName: String {
         return "Overlay Node"
@@ -152,6 +166,8 @@ extension TileObjectOverlay: TiledCustomReflectableType {
 
 extension TileObjectOverlay {
 
+    
+    /// Returns an array of contained object proxies.
     internal var objects: [TileObjectProxy] {
         let proxies = children.filter { $0 as? TileObjectProxy != nil }
         return proxies as? [TileObjectProxy] ?? [TileObjectProxy]()

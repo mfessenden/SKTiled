@@ -155,7 +155,9 @@ internal class TileDataStorage: Loggable {
     }
 
     deinit {
-
+        // turn off notifications
+        blockNotifications = true
+        
         // remove notifications
         NotificationCenter.default.removeObserver(self, name: Notification.Name.DataStorage.ProxyVisibilityChanged, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Globals.Updated, object: nil)
@@ -170,8 +172,6 @@ internal class TileDataStorage: Loggable {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.TileData.TextureChanged, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Tileset.SpriteSheetUpdated, object: nil)
 
-        // turn off notifications
-        blockNotifications = true
 
         // reset caches
         staticTileCache    = [:]

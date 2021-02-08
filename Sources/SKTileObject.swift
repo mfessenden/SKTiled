@@ -216,6 +216,22 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
 
     /// Optional proxy color.
     open var proxyColor: SKColor?
+    
+    /// Optional tint color.
+    open var tintColor: SKColor? {
+        didSet {
+            guard let newColor = tintColor else {
+                
+                frameColor = TiledGlobals.default.debug.objectHighlightColor
+                blendMode = .alpha
+                tile?.tintColor = nil
+                return
+            }
+            
+            tile?.tintColor = newColor
+            frameColor = newColor
+        }
+    }
 
     /// Layer bounding shape.
     public lazy var boundsShape: SKShapeNode? = {
@@ -229,7 +245,6 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
         shape.zPosition = zPosition + 1
         return shape
     }()
-
 
     /// ### Overview
     ///
@@ -473,7 +488,10 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
         isUserInteractionEnabled = true
         draw()
     }
-
+    
+    /// Instantiate the node with a decoder instance.
+    ///
+    /// - Parameter aDecoder: decoder.
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -672,8 +690,9 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
                         addChild(scalerNode)
                         scaler = scalerNode
                     }
-
-
+                    
+                    //tileSprite.anchorPoint = CGPoint.zero
+                    tileSprite.tintColor = tintColor
                     tileSprite.layer = layer
                     tileSprite.isTileObject = true
 
@@ -876,7 +895,10 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
               (points.count > 1) else {
             return [CGPoint]()
         }
-
+        
+        
+        
+        
         return points.map { point in
             var offset = layer.pixelToScreenCoords(point: point)
             

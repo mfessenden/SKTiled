@@ -57,7 +57,7 @@ extension PreferencesWindowController {
         let storyboard = NSStoryboard(name: NSStoryboard.Name("Preferences"), bundle: nil)
         let identifier = NSStoryboard.SceneIdentifier("PreferencesWindowController")
         guard let windowController = storyboard.instantiateController(withIdentifier: identifier) as? PreferencesWindowController else {
-            fatalError("cannot access `MainViewController` in storyboard.")
+            fatalError("cannot access `PreferencesWindowController` in storyboard.")
         }
         return windowController
     }

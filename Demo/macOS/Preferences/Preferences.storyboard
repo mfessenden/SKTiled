@@ -386,7 +386,7 @@
                                     <gridCell row="uOT-o1-gSv" column="u5L-GX-ZzS" id="s64-Zj-eXz">
                                         <button key="contentView" identifier="gbl-ignorezoom-check" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="K0k-On-wG2">
                                             <rect key="frame" x="305" y="77" width="227" height="18"/>
-                                            <buttonCell key="cell" type="check" title="Ignore Camera Zoom Constraints" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="qzw-Ig-9Sy">
+                                            <buttonCell key="cell" type="check" title="Enable Camera Zoom Constraints" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="qzw-Ig-9Sy">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>

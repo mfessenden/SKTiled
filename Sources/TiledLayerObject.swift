@@ -45,68 +45,59 @@ typealias RenderInfo = (idx: UInt32, path: String, zpos: Double,
 typealias LayerRenderStatistics = (tiles: Int, objects: Int)
 
 
-/// ## Overview
+/// The `TiledLayerObject` is the generic base class for all layer types.
 ///
-/// The `TiledLayerObject` is the generic base class for all layer types.  This class doesn't
-/// define any object or child types, but provides base behaviors for layered content, including:
+/// This class doesn't specify any object or child types, but provides base behaviors for layered content, including:
 ///
 /// - coordinate transformations
 /// - validating coordinates
 /// - positioning and alignment
 ///
-///
 /// ### Properties
 ///
-/// | Property    | Description                                                          |
-/// |-------------|----------------------------------------------------------------------|
-/// | tilemap     | Parent tilemap.                                                      |
-/// | index       | Layer index. Matches the index of the layer in the source TMX file.  |
-/// | size        | Layer size (in tiles).                                               |
-/// | tileSize    | Layer tile size (in pixels).                                         |
-/// | anchorPoint | Layer anchor point, used to position layers.                         |
-/// | origin      | Layer origin point, used for placing tiles.                          |
+///  - `tilemap`: parent tilemap.
+///  - `index`: layer index. Matches the index of the layer in the source TMX file.
+///  - `size`: layer size (in tiles).
+///  - `tileSize`: layer tile size (in pixels).
+///  - `anchorPoint`: layer anchor point, used to position layers.
+///  - `origin`: layer origin point, used for placing tiles.
 ///
 ///
 /// ### Instance Methods
 ///
-/// | Method                            | Description                                                          |
-/// |-----------------------------------|----------------------------------------------------------------------|
-/// | pointForCoordinate(coord:offset:) | Returns a point for a coordinate in the layer, with optional offset. |
-/// | coordinateForPoint(_:)            | Returns a tile coordinate for a given point in the layer.            |
-/// | touchLocation(_:)                 | Returns a converted touch location in map space. (iOS only)          |
-/// | coordinateAtTouchLocation(_:)     | Returns the tile coordinate at a touch location. (iOS only)          |
-/// | isValid(coord:)                   | Returns true if the coordinate is valid.                             |
+///  - `pointForCoordinate(coord:offset:)`: returns a point for a coordinate in the layer, with optional offset.
+///  - `coordinateForPoint(_:)`: returns a tile coordinate for a given point in the layer.
+///  - `touchLocation(_:)`: returns a converted touch location in map space. (iOS only)
+///  - `coordinateAtTouchLocation(_:)`: returns the tile coordinate at a touch location. (iOS only)
+///  - `isValid(coord:)`: returns true if the coordinate is valid.
 ///
 ///
 /// ### Usage
 ///
-/// Coordinate transformation functions return points in the current tilemap projection:
+/// All layer types share identical methods for translating screen coordinates to map coordinates (and vice versa):
 ///
 /// ```swift
+/// // return a point in the current projection
 /// node.position = tileLayer.pointForCoordinate(2, 1)
-/// ```
-/// Coordinate transformation functions translate points to map coordinates:
 ///
-/// ```swift
+/// // translate a point to map a coordinate
 /// coord = coordinateForPoint(touchPosition)
 /// ```
-///
-/// Return the tile coordinate at a touch event (iOS):
+/// 
+/// In addition, all layer types respond to mouse/touch events:
 ///
 /// ```swift
+/// // return the tile coordinate at a touch event (iOS)
 /// coord = imageLayer.coordinateAtTouchLocation(touchPosition)
-/// ```
 ///
-/// Return the tile coordinate at a mouse event (macOS):
-///
-/// ```swift
+/// // return the tile coordinate at a mouse event (macOS)
 /// coord = groupLayer.coordinateAtMouse(event: mouseClicked)
 /// ```
 public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeometryType, TiledAttributedType {
 
     /// Reference to the parent tilemap.
     unowned let tilemap: SKTilemap
-    
+
     /// Reference to the parent container.
     public weak var container: TiledMappableGeometryType?
 
@@ -158,14 +149,14 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 
     /// The layer XPath.
     public var xPath: String = #"/"#
-    
+
     /// Translate the parent hierarchy to an layer path string.
     public var path: String {
         let allParents: [SKNode] = parents.filter( { $0 as? SKTilemap == nil } ).reversed()
         if (allParents.count == 1) {
             return layerName
         }
-        
+
         return allParents.reduce("") { result, node in
             let divider = allParents.firstIndex(of: node)! < allParents.count - 1 ? "/" : ""
             return result + "\(node.name ?? "element")" + divider
@@ -419,29 +410,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 
     /// Initial layer position for infinite maps. Used to reposition tile layers & chunks in infinite maps. This is used by the tilemap to position the layers as they are added.
     internal var layerInfiniteOffset: CGPoint {
-        //if (isInfinite == false) || (layerType != .tile) {
-        if (isInfinite == false) {
-            return CGPoint.zero
-        }
-        
-        var offsetPos = CGPoint.zero
-        switch orientation {
-            case .orthogonal:
-                offsetPos.x += tileWidthHalf
-                offsetPos.y += tileHeightHalf
-
-            case .isometric:
-                let offsetXValue = (height * tileWidthHalf) + (tileWidth * 2)
-   
-                offsetPos.x += offsetXValue
-                offsetPos.y += tileHeightHalf
-
-            case .hexagonal, .staggered:
-                offsetPos.x += tileWidthHalf
-                offsetPos.y += tileHeightHalf
-        }
-
-        return offsetPos
+        return CGPoint.zero
     }
 
     /// Shape describing this object.
@@ -537,7 +506,6 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         if let layerTint = attributes["tintcolor"] {
             self.tintColor = SKColor(hexString: layerTint)
             colorBlendFactor = 1
-            print("tint color found:  \(layerTint)")
         }
 
         // set the layer's antialiasing based on tile size
@@ -604,7 +572,10 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         // set the layer's antialiasing based on tile size
         self.antialiased = (self.tilemap.currentZoom < 1)
     }
-
+    
+    /// Instantiate the node with a decoder instance.
+    ///
+    /// - Parameter aDecoder: decoder.
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -813,23 +784,25 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     // MARK: - Debugging
 
     struct LayerMirror {
-        var name: String
+        var type: String
         var path: String
+        var xPath: String
         var mapSize: CGSize
         var tileSize: CGSize
     }
-    
+
     /// Referenced as `(label: "layer", value: layer.layerDataStruct())`
     ///
     /// - Returns: custom mirror data
     func layerDataStruct() -> LayerMirror {
-        return LayerMirror(name: layerName,
+        return LayerMirror(type: layerType.stringValue,
                            path: path,
+                           xPath: xPath,
                            mapSize: mapSize,
                            tileSize: tileSize
         )
     }
-    
+
 
     /// Toggle layer isolation on/off.
     ///
@@ -873,7 +846,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         }
         return nil
     }
-    
+
     /// Highlights the layer with the given color.
     ///
     /// - Parameters:
@@ -882,14 +855,14 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     @objc public override func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
         let removeHighlight: Bool = (color == SKColor.clear)
         let highlightFillColor = (removeHighlight == false) ? color.withAlphaComponent(0.2) : color
-        
+
         boundsShape?.strokeColor = color
         boundsShape?.fillColor = highlightFillColor
         boundsShape?.isHidden = false
-        
+
         if (duration > 0) {
             let fadeInAction = SKAction.colorize(withColorBlendFactor: 1, duration: duration)
-            
+
             let groupAction = SKAction.group(
                 [
                     fadeInAction,
@@ -940,10 +913,9 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     /// Returns a custom mirror for this layer.
     public var customMirror: Mirror {
         let attributes: [(label: String?, value: Any)] = [
-            (label: "name", value: layerName),
+            (label: "path", value: path),
             (label: "uuid", uuid),
             (label: "xPath", value: xPath),
-            (label: "path", value: path),
             (label: "layerType", value: layerType),
             (label: "size", value: mapSize),
             (label: "tile size", value: tileSize),
@@ -1108,7 +1080,7 @@ extension TiledLayerObject {
     public override var debugDescription: String {
         return #"<\#(description)>"#
     }
-    
+
     /// Returns a string representation for use with a dropdown menu.
     @objc public override var tiledListDescription: String {
         let parentCount = parents.count
@@ -1119,12 +1091,12 @@ extension TiledLayerObject {
         if (isGroupNode == true) {
             layerSymbol = (hasChildren == true) ? "▿" : "▹"
         }
-        
+
         let filler = (isGrouped == true) ? String(repeating: "   ", count: parentCount - 1) : ""
         return "\(filler)\(layerSymbol) \(layerName)"
     }
-    
-    
+
+
     /// Returns a string representation for use with a dropdown menu.
     @objc public override var tiledMenuDescription: String {
         return description
@@ -1226,7 +1198,9 @@ extension TiledLayerObject {
 extension TiledLayerObject.TiledLayerType {
 
     /// Returns a string representation of the layer type.
-    internal var stringValue: String { return "\(self)".lowercased() }
+    internal var stringValue: String {
+        return "\(self)".lowercased()
+    }
 
     /// Returns a symbol for use in menus and debug output.
     internal var symbol: String {
@@ -1288,12 +1262,15 @@ extension TiledLayerObject.TileOffset {
 
 /// :nodoc
 extension TiledLayerObject.LayerMirror: CustomStringConvertible, CustomDebugStringConvertible {
-    
+
     /// A textual representation of the object.
     public var description: String {
-        return "Layer"
+        guard type != "none" else {
+            return "Layer"
+        }
+        return "\(type.titleCased()) Layer"
     }
-    
+
     /// A textual representation of the object, used for debugging.
     public var debugDescription: String {
         return #"<\#(description)>"#
@@ -1392,7 +1369,7 @@ extension TiledLayerObject {
     public func addChild(_ node: SKNode, coord: CGPoint, offset: CGPoint = CGPoint.zero, zpos: CGFloat? = nil) {
         addChild(node, coord: coord.toVec2, offset: offset, zpos: zpos)
     }
-    
+
     @available(*, deprecated, message: "use `dumpStatistics`")
     public func debugLayer() {
         /* override in subclass */

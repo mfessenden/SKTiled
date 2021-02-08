@@ -33,12 +33,10 @@ import SpriteKit
 ///
 /// ### Properties
 ///
-/// | Property         | Description                               |
-/// |:---------------- |:----------------------------------------- |
-/// | `none`           | tile is rendered with no transformations. |
-/// | `flipHorizontal` | tile is flipped on the x-axis.            |
-/// | `flipVertical`   | tile is flipped on the y-axis.            |
-/// | `flipDiagonal`   | tile is rotated.                          |
+///  - `none`: tile is rendered with no transformations.
+///  - `flipHorizontal`: tile is flipped on the x-axis.
+///  - `flipVertical`: tile is flipped on the y-axis.
+///  - `flipDiagonal`: tile is rotated.
 ///
 public struct TileFlags: OptionSet {
 

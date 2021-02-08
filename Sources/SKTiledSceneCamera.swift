@@ -837,7 +837,7 @@ extension SKTiledSceneCamera: TiledCustomReflectableType {
         print("  ▸ world position:            \(world.position.shortDescription)")
         print("  ▸ world rotation:            \(world.zRotation.stringRoundedTo(3))")
         print("\n  ▾ Delegates:")
-
+        
         for delegate in delegates {
             let dname = String(describing: type(of: delegate))
             print("   ▸ \(delegate.receiveCameraUpdates.valueAsCheckbox) '\(dname)'")

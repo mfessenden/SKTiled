@@ -49,11 +49,6 @@ public class SKTileLayerChunk: TiledLayerObject {
     public var tileCount: Int {
         return self.getTiles().count
     }
-    
-    /// TODO: check this.
-    public override var layerInfiniteOffset: CGPoint {
-        return CGPoint.zero
-    }
 
     /// Returns an array of current tiles.
     public func getTiles() -> [SKTile] {
@@ -102,6 +97,9 @@ public class SKTileLayerChunk: TiledLayerObject {
         self.shouldEnableEffects = false
     }
 
+    /// Instantiate the node with a decoder instance.
+    ///
+    /// - Parameter aDecoder: decoder.
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -188,7 +186,7 @@ public class SKTileLayerChunk: TiledLayerObject {
 
                 // set the layer property
                 tile.layer = self.layer
-                //tile.tintColor = self.layer.tintColor
+                tile.tintColor = self.layer.tintColor
                 tile.highlightDuration = highlightDuration
 
                 // get the position in the layer (plus tileset offset)
@@ -310,10 +308,9 @@ public class SKTileLayerChunk: TiledLayerObject {
     public override var customMirror: Mirror {
         
         var attributes: [(label: String?, value: Any)] = [
-            (label: "name", value: layerName),
+            (label: "path", value: path),
             (label: "uuid", uuid),
             (label: "xPath", value: xPath),
-            (label: "path", value: path),
             (label: "size", value: mapSize),
             (label: "tile size", value: tileSize),
             (label: "chunkSize", value: chunkSize),

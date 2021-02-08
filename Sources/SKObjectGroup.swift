@@ -165,6 +165,33 @@ public class SKObjectGroup: TiledLayerObject {
             self.getObjects().forEach {$0.speed = speed}
         }
     }
+    
+    /// Layer tint color.
+    public override var tintColor: SKColor? {
+        didSet {
+            guard let newColor = tintColor else {
+                
+                // reset color blending attributes
+                colorBlendFactor = 0
+                color = SKColor(hexString: "#ffffff00")
+                blendMode = .alpha
+                
+                objects.forEach { object in
+                    object.tile?.tintColor = nil
+                }
+                
+                return
+            }
+            
+            self.color = newColor
+            self.blendMode = TiledGlobals.default.layerTintAttributes.blendMode
+            self.colorBlendFactor = 1
+            
+            objects.forEach { object in
+                object.tile?.tintColor = newColor
+            }
+        }
+    }
 
     // MARK: - Initialization
 
@@ -196,7 +223,10 @@ public class SKObjectGroup: TiledLayerObject {
 
         self.layerType = .object
     }
-
+    
+    /// Instantiate the node with a decoder instance.
+    ///
+    /// - Parameter aDecoder: decoder.
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -475,10 +505,9 @@ public class SKObjectGroup: TiledLayerObject {
     /// Returns a custom mirror for this layer.
     public override var customMirror: Mirror {
         var attributes: [(label: String?, value: Any)] = [
-            (label: "name", value: layerName),
+            (label: "path", value: path),
             (label: "uuid", uuid),
             (label: "xPath", value: xPath),
-            (label: "path", value: path),
             (label: "layerType", value: layerType),
             (label: "size", value: mapSize),
             (label: "offset", value: offset),

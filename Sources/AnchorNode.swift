@@ -85,9 +85,9 @@ internal class AnchorNode: SKNode {
         self.draw()
     }
     
-    /// Default initializer.
+    /// Instantiate the node with a decoder instance.
     ///
-    /// - Parameter aDecoder: decoder instance.
+    /// - Parameter aDecoder: decoder.
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }

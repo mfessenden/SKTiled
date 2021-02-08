@@ -57,7 +57,6 @@ public class TestController: NSObject {
 
         if (resources.isEmpty) {
             scanForResources(url: testBundle)
-            print("⭑ [TestController]: \(resources.count) resources loaded.")
         }
     }
 

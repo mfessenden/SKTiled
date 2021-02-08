@@ -88,6 +88,37 @@ public class SKGroupLayer: TiledLayerObject {
             self.layers.forEach { $0.speed = speed }
         }
     }
+    
+    /// ## Overview
+    ///
+    /// Set the layer tint color. Tiles contained in this layer will be tinted with the given color.
+    public override var tintColor: SKColor? {
+        didSet {
+            guard let newColor = tintColor else {
+                
+                // reset color blending attributes
+                colorBlendFactor = 0
+                color = SKColor(hexString: "#ffffff00")
+                blendMode = .alpha
+                
+                // tint all of the tiles
+                layers.forEach { layer in
+                    layer.tintColor = nil
+                }
+                
+                return
+            }
+            
+            self.color = newColor
+            self.blendMode = TiledGlobals.default.layerTintAttributes.blendMode
+            self.colorBlendFactor = 1
+            
+            // tint all of the tiles
+            layers.forEach { layer in
+                layer.tintColor = newColor
+            }
+        }
+    }
 
     // MARK: - Initialization
 
@@ -113,7 +144,10 @@ public class SKGroupLayer: TiledLayerObject {
         super.init(layerName: layerName, tilemap: tilemap, attributes: attributes)
         self.layerType = .group
     }
-
+    
+    /// Instantiate the node with a decoder instance.
+    ///
+    /// - Parameter aDecoder: decoder.
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -159,10 +193,9 @@ public class SKGroupLayer: TiledLayerObject {
         // layer offset
         layer.position.x += layer.offset.x
         layer.position.y -= layer.offset.y
-
-
+        
+        // add and update the 
         addChild(layer)
-
         layer.zPosition = nextZPosition
 
         // override debugging colors
@@ -171,7 +204,13 @@ public class SKGroupLayer: TiledLayerObject {
         layer.highlightColor = highlightColor
         layer.loggingLevel = loggingLevel
         layer.ignoreProperties = ignoreProperties
-
+        
+        // propogate the tint color to child layers
+        if layer.tintColor == nil {
+            layer.tintColor = tintColor
+        }
+        
+        
         return (success, inserted)
     }
 

@@ -207,11 +207,6 @@ extension TiledMappableGeometryType {
                     }
                 }
                 
-                
-                if (orientation == .staggered) {
-                    print("⭑ sizeInPoints: \(result.shortDescription)")
-                }
-                
                 return result
         }
         

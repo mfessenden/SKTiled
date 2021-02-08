@@ -27,9 +27,6 @@
 import SpriteKit
 
 
-
-/// ## Overview
-///
 /// Methods for interacting with the custom `SKTiledSceneCamera` object. Classes conforming to this
 /// protocol are notified of camera position & zoom changes unless the `TiledSceneCameraDelegate.receiveCameraUpdates`
 /// flag is disabled.
@@ -40,32 +37,29 @@ import SpriteKit
 ///
 /// ### Properties
 ///
-/// | Method                    | Description                                              |
-/// |---------------------------|----------------------------------------------------------|
-/// | receiveCameraUpdates      | Delegate will receive camera updates.                    |
-/// | currentCoordinate         | The currently focused map coordinate.                    |
+///  - `receiveCameraUpdates`:  delegate will receive camera updates.
+///  - `currentCoordinate`:  currently focused map coordinate.
 ///
 /// ### Instance Methods
 ///
-/// | Method                    | Description                                              |
-/// |---------------------------|----------------------------------------------------------|
-/// | containedNodesChanged     | Called when the nodes in the camera view changes.        |
-/// | cameraPositionChanged     | Called when the camera position changes.                 |
-/// | cameraZoomChanged         | Called when the camera zoom changes.                     |
-/// | cameraBoundsChanged       | Called when the camera bounds updated.                   |
-/// | sceneClicked              | Called when the scene is clicked. (macOS only)           |
-/// | sceneRightClicked         | Called when the scene is right-clicked. (macOS only)     |
-/// | sceneDoubleClicked        | Called when the scene is double-clicked. (macOS only)    |
-/// | mousePositionChanged      | Called when the mouse moves in the scene. (macOS only)   |
-/// | sceneDoubleTapped         | Called when the scene is double-tapped. (iOS only)       |
-/// | sceneRotated              | Called when the scene is rotated via gesture. (iOS only) |
+///  - `containedNodesChanged`:  nodes in the camera view change.
+///  - `cameraPositionChanged`:  camera position change.
+///  - `cameraZoomChanged`:  camera zoom change.
+///  - `cameraBoundsChanged`:  camera bounds updated.
+///  - `sceneClicked`:  scene is clicked. (macOS only)
+///  - `sceneRightClicked`:  scene is right-clicked. (macOS only)
+///  - `sceneDoubleClicked`:  scene is double-clicked. (macOS only)
+///  - `mousePositionChanged`:  mouse moves in the scene. (macOS only)
+///  - `sceneDoubleTapped`:  scene is double-tapped. (iOS only)
+///  - `sceneRotated`:  scene is rotated via gesture. (iOS only)
 ///
-/// [tiled-scene-camera-delegate-image]:../images/camera-delegate.svg
+///
+/// [tiled-scene-camera-delegate-image]:https://mfessenden.github.io/SKTiled/1.3/images/camera-delegate.svg
 @objc public protocol TiledSceneCameraDelegate: class {
 
     /// Allow delegate to receive updates from camera.
     @objc var receiveCameraUpdates: Bool { get set }
-    
+
     /// Current focus coordinate.
     @objc optional var currentCoordinate: simd_int2 { get set }
 
@@ -121,7 +115,7 @@ import SpriteKit
     ///
     /// - Parameter location: touch event location.
     @objc optional func sceneDoubleTapped(location: CGPoint)
-    
+
     /// Called when the current scene has been rotated.
     ///
     /// - Parameters:

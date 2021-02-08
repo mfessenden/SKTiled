@@ -31,7 +31,7 @@
    eJxjYBgFo2AUDEYQRCNzM2lk7igYBSMFAACGMgC8
   </data>
   </layer>
-  <layer id="4" name="Bridges" width="22" height="21">
+  <layer id="4" name="Bridges" width="22" height="21" tintcolor="#e1ebdc">
    <properties>
     <property name="isStatic" type="bool" value="false"/>
    </properties>
@@ -79,8 +79,8 @@
    <object id="131" name="wizard1" gid="2147484202" x="46" y="204" width="32" height="32"/>
   </objectgroup>
  </group>
- <group id="23" name="Upper">
-  <layer id="10" name="Level2" width="22" height="21">
+ <group id="23" name="Upper" tintcolor="#f5e700">
+  <layer id="10" name="Level2" width="22" height="21" tintcolor="#ff2944">
    <properties>
     <property name="isStatic" type="bool" value="false"/>
    </properties>
@@ -96,7 +96,7 @@
    eJxjYCAfXADii0B8iQIzsIGzjAwMskB8jpG65j6BmveUyuaOglEwCkbBKBg5AADUzAX6
   </data>
   </layer>
-  <objectgroup id="13" name="Upper Objects">
+  <objectgroup id="13" name="Upper Objects" tintcolor="#00a64f">
    <properties>
     <property name="zPosition" type="float" value="20"/>
    </properties>

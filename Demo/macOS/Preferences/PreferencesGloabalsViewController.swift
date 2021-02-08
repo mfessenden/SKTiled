@@ -168,7 +168,10 @@ class PreferencesGloabalsViewController: NSViewController {
         if let buttonId = sender.identifier {
             let textIdentifier = buttonId.rawValue
             let buttonVal = sender.state == .on
+            
+            #if DEBUG
             print("⭑ [Preferences]: button changed: '\(textIdentifier)', value: \(buttonVal)")
+            #endif
             
             if (textIdentifier == "gbl-showobjects-check") {
                 if (buttonVal == true) {
@@ -314,7 +317,7 @@ class PreferencesGloabalsViewController: NSViewController {
     
     @objc func initializeLoggingLevelMenu() {
         guard let loggingLevelMenu = popupMenus["glb-logging-menu"] else {
-            fatalError("cannot access menu with identifier 'glb-logging-menu'.")
+            return
         }
         
         loggingLevelMenu.isEnabled = false
@@ -412,8 +415,9 @@ extension PreferencesGloabalsViewController: NSTextFieldDelegate {
         let hasFormatter = formatter != nil
         let textFieldDescription = (hasFormatter == true) ? "number field" : "text field"
 
-        
+        #if DEBUG
         print("⭑ [PreferencesGloabalsViewController]: \(textFieldDescription) '\(textIdentifier)', value: '\(textFieldValue)'")
+        #endif
         
         if (textIdentifier == "glb-renderquality-field") {
             if let doubleValue = Double(textFieldValue) {

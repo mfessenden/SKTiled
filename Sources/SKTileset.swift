@@ -42,7 +42,7 @@ import SpriteKit
 /// ### Properties
 ///
 /// | Property              | Description                                     |
-/// |-----------------------|-------------------------------------------------|
+/// |:----------------------|:------------------------------------------------|
 /// | name                  | Tileset name.                                   |
 /// | tilemap               | Reference to parent tilemap.                    |
 /// | tileSize              | Tile size (in pixels).                          |
@@ -56,9 +56,9 @@ import SpriteKit
 /// ### Instance Methods
 ///
 /// | Method                | Description                                     |
-/// |-----------------------|-------------------------------------------------|
-/// | addTextures()         | Generate textures from a spritesheet image.     |
-/// | addTilesetTile()      | Add & return new tile data object.              |
+/// |:----------------------|:------------------------------------------------|
+/// | `addTextures()`       | Generate textures from a spritesheet image.     |
+/// | `addTilesetTile()`    | Add & return new tile data object.              |
 ///
 public class SKTileset: NSObject, CustomReflectable, TiledAttributedType {
 

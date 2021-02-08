@@ -437,6 +437,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let result = dialog.url
 
             if let tmxURL = result {
+                
+                
+                Logger.default.log("loading tilemap from '\(tmxURL.relativePath)'", level: .info)
+                
+                
                 // add this file to the recent files array.
                 NSDocumentController.shared.noteNewRecentDocumentURL(tmxURL)
 
@@ -453,7 +458,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
 
                 // add the tilemap to the demo controller stack...
-                demoController.addTilemap(url: relativeURL, at: currentMapIndex)
+                demoController.addTilemap(url: relativeURL, at: currentMapIndex + 1)
+                demoController.loadScene(url: relativeURL, usePreviousCamera: false, interval: 0.3, reload: false)
             }
 
         } else {
@@ -863,8 +869,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let identifier = sender.accessibilityIdentifier()
         let currentValue = sender.state == .on
-
-        print("⭑ camera option '\(identifier)', state: \(currentValue.valueAsOnOff)")
 
         switch identifier {
             case "allowZoom":

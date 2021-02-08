@@ -44,9 +44,9 @@ public class SKWorld: SKNode, TiledSceneCameraDelegate {
         name = "World"
     }
     
-    /// Initialize from a decoder object.
+    /// Instantiate the node with a decoder instance.
     ///
-    /// - Parameter aDecoder: decoder instance.
+    /// - Parameter aDecoder: decoder.
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }

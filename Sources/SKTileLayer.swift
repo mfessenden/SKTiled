@@ -44,22 +44,17 @@ typealias TilesArray = Array2D<SKTile>
 ///
 /// ### Properties
 ///
-/// | Property                  | Description                                            |
-/// |:--------------------------|:-------------------------------------------------------|
-/// | `tileCount`               | Returns a count of valid tiles.                        |
-///
+///  - `tileCount`:  returns a count of valid tiles.
 ///
 /// ### Instance Methods
 ///
-/// | Method                      | Description                                           |
-/// |:--------------------------- |:----------------------------------------------------- |
-/// | `getTiles()`                | Returns an array of current tiles                     |
-/// | `getTiles(ofType:)`         | Returns tiles of the given type                       |
-/// | `getTiles(globalID:)`       | Returns all tiles matching a global id                |
-/// | `getTilesWithProperty(_:_)` | Returns tiles matching the given property & value     |
-/// | `animatedTiles()`           | Returns all animated tiles                            |
-/// | `getTileData(globalID:)`    | Returns all tiles matching a global id                |
-/// | `tileAt(coord:)`            | Returns a tile at the given coordinate, if one exists |
+///  - `getTiles()`: returns an array of current tiles
+///  - `getTiles(ofType:)`: returns tiles of the given type
+///  - `getTiles(globalID:)`: returns all tiles matching a global id
+///  - `getTilesWithProperty(_:_)`: returns tiles matching the given property & value
+///  - `animatedTiles()`: returns all animated tiles
+///  - `getTileData(globalID:)`: returns all tiles matching a global id
+///  - `tileAt(coord:)`: returns a tile at the given coordinate, if one exists
 ///
 /// ### Usage
 ///
@@ -145,8 +140,9 @@ public class SKTileLayer: TiledLayerObject {
 
     // MARK: Colors
 
-
-    /// Layer tint color.
+    /// ## Overview
+    ///
+    /// Set the layer tint color. Tiles contained in this layer will be tinted with the given color.
     public override var tintColor: SKColor? {
         didSet {
             guard let newColor = tintColor else {
@@ -156,7 +152,7 @@ public class SKTileLayer: TiledLayerObject {
                 color = SKColor(hexString: "#ffffff00")
                 blendMode = .alpha
 
-                
+                // tint all of the tiles
                 getTiles().forEach { tile in
                     tile.tintColor = nil
                 }
@@ -167,13 +163,12 @@ public class SKTileLayer: TiledLayerObject {
             self.color = newColor
             self.blendMode = TiledGlobals.default.layerTintAttributes.blendMode
             self.colorBlendFactor = 1
-            
+
             getTiles().forEach { tile in
                 tile.tintColor = newColor
             }
         }
     }
-
 
     // MARK: - Initialization
 
@@ -201,6 +196,9 @@ public class SKTileLayer: TiledLayerObject {
         self.layerType = .tile
     }
 
+    /// Instantiate the node with a decoder instance.
+    ///
+    /// - Parameter aDecoder: decoder.
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -220,7 +218,36 @@ public class SKTileLayer: TiledLayerObject {
 
 
     // MARK: - Chunks
+    /// Initial layer position for infinite maps. Used to reposition tile layers & chunks in infinite maps. This is used by the tilemap to position the layers as they are added.
+    internal override var layerInfiniteOffset: CGPoint {
+        //if (isInfinite == false) || (layerType != .tile) {
+        if (isInfinite == false) {
+            return CGPoint.zero
+        }
 
+        var offsetPos = CGPoint.zero
+        switch orientation {
+            case .orthogonal:
+                offsetPos.x += tileWidthHalf
+                offsetPos.y += tileHeightHalf
+
+            case .isometric:
+                // 10 * 65 = 650
+                // 650 + (130 * 2) = 910
+
+                // tileWidth * 13
+                // tileWidthHalf * 26
+                let offsetXValue = (height * tileWidthHalf) + tileWidthHalf
+                offsetPos.x += offsetXValue + (tileWidth + tileWidthHalf)
+                offsetPos.y += tileHeightHalf
+
+            case .hexagonal, .staggered:
+                offsetPos.x += tileWidthHalf
+                offsetPos.y += tileHeightHalf
+        }
+
+        return offsetPos
+    }
 
     /// Returns the number of chunks contained in this layer.
     public var chunkCount: Int {
@@ -235,10 +262,9 @@ public class SKTileLayer: TiledLayerObject {
     internal func addChunk(_ chunk: SKTileLayerChunk, at position: CGPoint) {
         if (chunks.contains(chunk) == false) {
             chunks.append(chunk)
-            
+
             chunk.position = pointForCoordinate(coord: simd_int2(x: chunk.offset.xCoord, y: chunk.offset.yCoord))
             addChild(chunk)
-
         }
     }
 
@@ -279,7 +305,7 @@ public class SKTileLayer: TiledLayerObject {
     internal func chunkAt(index: Int) -> SKTileLayerChunk? {
         return chunks[index]
     }
-    
+
     // MARK: - Tiles
 
     /// Returns a tile at the given coordinate, if one exists.
@@ -325,7 +351,7 @@ public class SKTileLayer: TiledLayerObject {
         return tileAt(coord: coord)
     }
 
-    /// Returns an array of all tiles in the layer.
+    /// Returns an array of *all* tiles in the layer.
     ///
     /// - Returns: array of tiles.
     public func getTiles() -> [SKTile] {
@@ -718,7 +744,7 @@ public class SKTileLayer: TiledLayerObject {
 
                 // set the layer property
                 tile.layer = self
-                //tile.tintColor = tintColor
+                tile.tintColor = tintColor
                 tile.highlightDuration = highlightDuration
 
                 // get the position in the layer (plus tileset offset)
@@ -980,15 +1006,14 @@ public class SKTileLayer: TiledLayerObject {
 
 
     // MARK: - Reflection
-    
-    
+
+
     /// Returns a custom mirror for this layer.
     public override var customMirror: Mirror {
         var attributes: [(label: String?, value: Any)] = [
-            (label: "name", value: layerName),
+            (label: "path", value: path),
             (label: "uuid", uuid),
             (label: "xPath", value: xPath),
-            (label: "path", value: path),
             (label: "layerType", value: layerType),
             (label: "size", value: mapSize),
             (label: "tile size", value: tileSize),
@@ -1007,7 +1032,7 @@ public class SKTileLayer: TiledLayerObject {
         } else {
             attributes.append(("data", tiles))
         }
-        
+
         return Mirror(self, children: attributes, ancestorRepresentation: .suppressed)
     }
 
@@ -1061,28 +1086,28 @@ extension SKTileLayer {
 
 /// :nodoc:
 extension SKTileLayer {
-    
+
     /// Returns the internal **Tiled** node type.
     @objc public var tiledElementName: String {
         return "layer"
     }
-    
+
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public override var tiledNodeNiceName: String {
         return "Tile Layer"
     }
-    
+
     /// Returns the internal **Tiled** node type icon.
     @objc public override var tiledIconName: String {
         return "tilelayer-icon"
     }
-    
+
     /// A description of the node used for menu items.
     @objc public override var tiledListDescription: String {
         let nameString = "'\(layerName)'"
         return "\(tiledNodeNiceName) \(nameString) (\(tileCount) tiles)"
     }
-    
+
     /// A string description of the node's function.
     @objc public override var tiledDescription: String {
         return "Layer container for tiles."

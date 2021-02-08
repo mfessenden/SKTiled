@@ -722,8 +722,6 @@ class GameViewController: NSViewController, Loggable {
                         let parentCount = layerNode.parents.count
                         currentIndenationLevel = (parentCount > 0) ? parentCount - 1 : 0
                     }
-                    
-                    print(" - adding node '\(node.className): \(node.name ?? "null")' at indentation \(currentIndenationLevel)")
                 }
             }
             
@@ -764,7 +762,6 @@ class GameViewController: NSViewController, Loggable {
         propertiesInfoLabel.isHidden = false
         propertiesInfoLabel.attributedStringValue = object.propertiesAttributedString(delineator: nil)
 
-        print("⭑ object highlighted!")
     }
 
     /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.ObjectClicked` notification is sent.
@@ -824,7 +821,7 @@ class GameViewController: NSViewController, Loggable {
     @objc private func handleSceneRightClickAction(_ sender: AnyObject) {
         guard let menuItem = sender as? NSMenuItem,
               let node = menuItem.representedObject as? SKNode else {
-            fatalError("can't access menu item's represented object")
+            return
         }
         
         guard let skView = view as? SKView,
@@ -847,7 +844,7 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func mouseRightClickAction(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         selectedInfoLabel.isHidden = true
         selectedInfoLabel.stringValue = "Nothing Selected"
     }
@@ -909,7 +906,7 @@ class GameViewController: NSViewController, Loggable {
                     zoomScale = scene.cameraNode?.zoom ?? 0.25
                 }
                 
-                drawAnchor(selected, radius: 0.5, anchorColor: TiledObjectColors.random, zoomScale: zoomScale)
+                drawAnchor(selected, radius: 1, anchorColor: TiledObjectColors.random, zoomScale: zoomScale)
                 if let tiledNode = selected as? TiledCustomReflectableType {
 
                     selectedInfoLabel.isHidden = false
@@ -1106,7 +1103,6 @@ class GameViewController: NSViewController, Loggable {
         //notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: [TiledDemoAsset]],
               let tilemapUrls = userInfo["tilemapAssets"] else {
-            //fatalError("cannot access asset urls")
             return
         }
 

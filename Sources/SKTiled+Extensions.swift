@@ -115,7 +115,7 @@ internal func getSwiftVersion() -> String {
 /// Dumps SKTiled framework globals to the console.
 public func SKTiledGlobals() {
     TiledGlobals.default.dumpStatistics()
-    
+
     /*
      print("\n")
      dump(TiledGlobals.default)
@@ -158,7 +158,7 @@ public func getContentScaleFactor() -> CGFloat {
     #if os(tvOS)
     scaleFactor = UIScreen.main.scale
     #endif
-    
+
     return scaleFactor
 }
 
@@ -241,6 +241,7 @@ internal func convertThreadInfoToThreadBasicInfo(_ threadInfo: [integer_t]) -> t
 #if os(macOS)
 
 /// Returns an image of the given size.
+///
 /// - Parameters:
 ///   - size: size of resulting image.
 ///   - scale: scale of result, for macOS that should be 1.
@@ -397,7 +398,7 @@ func measure<A>(name: String = "", _ block: () -> A) -> A {
 // MARK: - Extensions
 
 extension Bool {
-    
+
     init<T : BinaryInteger>(_ integer: T) {
         self.init(integer != 0)
     }
@@ -411,7 +412,7 @@ extension Bool {
     var valueAsCheckbox: String {
         return (self == true) ? "[x]" : "[ ]"
     }
-    
+
     /// Return the value as 'on/off'.
     var valueAsOnOff: String {
         return (self == true) ? "on" : "off"
@@ -491,7 +492,7 @@ extension Int {
 
 /// :nodoc:
 extension Array where Element: SKNode {
-    
+
     /// Returns the topmost element in the array.
     ///
     /// - Returns: first `SKNode` by-zposition.
@@ -502,8 +503,8 @@ extension Array where Element: SKNode {
 
 
 extension Mirror {
-    
-    
+
+
     static func reflectProperties<T>(
         of target: Any,
         matchingType type: T.Type = T.self,
@@ -520,7 +521,7 @@ extension Mirror {
 
 #if os(macOS)
 extension NSEvent {
-    
+
     /// Returns the local position in a view. Converts a global position to a local position.
     ///
     /// - Parameter view: view.
@@ -528,36 +529,36 @@ extension NSEvent {
     func localPosition(_ view: NSView) -> CGPoint {
         return view.convert(locationInWindow, from: nil)
     }
-    
+
     /// Indicates the `option` key is currently pressed.
     var optionKeyPressed: Bool {
         return modifierFlags.contains(NSEvent.ModifierFlags.option)
     }
-    
+
     /// Indicates the `control` key is currently pressed.
     var controlKeyPressed: Bool {
         return modifierFlags.contains(NSEvent.ModifierFlags.control)
     }
-    
+
     /// Indicates the `command` key is currently pressed.
     var commandKeyPressed: Bool {
         return modifierFlags.contains(NSEvent.ModifierFlags.command)
     }
-    
+
     /// Gives an approximation of the mouse movement speed.
     var mouseSpeed: CGFloat {
         return max(abs(deltaX),abs(deltaY))
     }
-    
+
     var delta: CGFloat {
         return abs(deltaX) > abs(deltaY) ? deltaX : deltaY
     }
-    
+
     /// Returns difference in scroll wheel events.
     var scrollingDelta: CGPoint {
         return CGPoint(x: scrollingDeltaX, y: scrollingDeltaY)
     }
-    
+
     // TODO: remove this
     func isPressModifierFlags(only flag: NSEvent.ModifierFlags) -> Bool {
         return modifierFlags.intersection(.deviceIndependentFlagsMask) == flag
@@ -765,7 +766,7 @@ extension CGPoint {
     public var toVec2: simd_int2 {
         return simd_int2(arrayLiteral: xCoord, yCoord)
     }
-    
+
     /// Returns the squared length of the vector described by the CGPoint.
     ///
     /// - Returns: vector length.
@@ -775,21 +776,21 @@ extension CGPoint {
         }
         return y
     }
-    
+
     /// Returns the squared length of the vector described by the CGPoint.
     ///
     /// - Returns: vector length.
     public func length() -> CGFloat {
         return sqrt(x*x + y*y)
     }
-    
+
     /// Returns the squared length of the vector described by the CGVector.
     ///
     /// - Returns: vector length.
     public func lengthSquared() -> CGFloat {
         return x*x + y*y
     }
-    
+
     /// Returns the distance to another point.
     ///
     /// - Parameter point: point to compare.
@@ -1025,7 +1026,7 @@ extension CGRect {
     public func stringRoundedTo(_ decimals: Int = 1) -> String {
         let xval = origin.x.stringRoundedTo(decimals)
         let yval = origin.y.stringRoundedTo(decimals)
-        
+
         let wval = size.width.stringRoundedTo(decimals)
         let hval = size.height.stringRoundedTo(decimals)
         return "origin: \(xval), \(yval), size: \(wval) x \(hval)"
@@ -1039,14 +1040,14 @@ extension CGRect {
 
 
 extension CGVector {
-    
+
     /// Returns the length (magnitude) of the vector described by the CGVector.
     ///
     /// - Returns: vector length.
     public func length() -> CGFloat {
         return sqrt(dx*dx + dy*dy)
     }
-    
+
     /// Returns the squared length of the vector described by the CGVector.
     ///
     /// - Returns: vector length.
@@ -1783,14 +1784,14 @@ extension String {
 
 
 extension String {
-    
+
     /// Returns a base64 encoded string.
     ///
     /// - Returns: base64 encoded string.
     func base64Encoded() -> String? {
         return data(using: .utf8)?.base64EncodedString()
     }
-    
+
     /// Decodes a base64 encoded string.
     ///
     /// - Returns: decoded string.
@@ -1947,7 +1948,7 @@ extension TimeInterval {
 
 
 extension FloatingPoint {
-    
+
     /// Returns a value that is precise to a given number of digits.
     ///
     /// - Parameter value: floating point precision.
@@ -2870,17 +2871,19 @@ internal func writeToFile(_ image: CGImage, url: URL) -> Data {
 
 // TODO: cleanup for master
 
-/// Draw an node visualizing the node's anchor point.
+/// Draw a shape visualizing the node's anchor point.
 ///
-/// - Parameter node: parent node.
-/// - Parameter key: anchor name.
-/// - Parameter withLabel: string label (optional).
-/// - Parameter labelSize: label font size.
-/// - Parameter labelOffsetX: label x-offset.
-/// - Parameter labelOffsetY: label y-offset.
-/// - Parameter radius: anchor radius.
-/// - Parameter anchorColor: anchor color.
-/// - Parameter zoomScale: scene camera zoom.
+/// - Parameters
+///     - node: parent node.
+///     - key: anchor name.
+///     - withLabel: string label (optional).
+///     - labelSize: label font size.
+///     - labelOffsetX: label x-offset.
+///     - labelOffsetY: label y-offset.
+///     - radius: anchor radius.
+///     - anchorColor: anchor color.
+///     - zoomScale: scene camera zoom.
+/// - Returns: anchor node.
 @discardableResult
 internal func drawAnchor(_ node: SKNode,
                          withKey key: String = "ANCHOR",
@@ -2892,12 +2895,12 @@ internal func drawAnchor(_ node: SKNode,
                          anchorColor: SKColor = SKColor.red,
                          zoomScale: CGFloat = 0) -> AnchorNode {
 
-    
+
     node.childNode(withName: key)?.removeFromParent()
     let anchor = AnchorNode(radius: radius, color: anchorColor, label: withLabel, offsetX: labelOffsetX, offsetY: labelOffsetY, zoom: zoomScale)
     anchor.labelSize = labelSize
     node.addChild(anchor)
-    
+
     // add as a delegate
     if let tileScene = node.scene as? SKTiledScene {
         tileScene.cameraNode?.addDelegate(anchor)
@@ -2909,13 +2912,14 @@ internal func drawAnchor(_ node: SKNode,
     return anchor
 }
 
-
-/// Draw an node visualizing the node's anchor point.
+/// Draw a shape visualizing the node's anchor point.
 ///
-/// - Parameter node: parent node.
-/// - Parameter radius: anchor radius.
-/// - Parameter anchorColor: anchor color.
-/// - Parameter zoomScale: scene camera zoom.
+/// - Parameters
+///   - node: parent node.
+///   - radius: anchor radius.
+///   - anchorColor: anchor color.
+///   - zoomScale: scene camera zoom.
+/// - Returns: anchor node.
 @discardableResult
 internal func drawAnchor(_ node: SKNode,
                          radius: CGFloat = 1,
@@ -3265,7 +3269,7 @@ public func clampPositionWithNode(node: SKNode, scale: CGFloat) {
 
 
 extension CGFloat {
-    
+
     /// Returns a display string rounded to a given number of decimal places.
     ///
     /// - Parameter decimals: decimals to round to.

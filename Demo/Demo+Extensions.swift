@@ -367,7 +367,6 @@ extension Notification.Name {
         public static let FlushScene                    = Notification.Name(rawValue: "org.sktiled.notification.name.demo.flushScene")
 
         // macOS
-        public static let MousePositionChanged          = Notification.Name(rawValue: "org.sktiled.notification.name.demo.mousePositionChanged")  // handles demo scene mouse movement
         public static let MouseRightClicked             = Notification.Name(rawValue: "org.sktiled.notification.name.demo.mouseRightClicked")    // called when the mouse right-click action begins - clears out 'selected nodes'
 
 
