@@ -114,7 +114,7 @@ extension TiledGlobals {
         if (defaults.value(forKey: "tiled-gbl-rndqual-override") != nil) {
             self.renderQuality.override = CGFloat(defaults.double(forKey: "tiled-gbl-rndqual-override"))
         }
-        
+
         if (defaults.value(forKey: "tiled-gbl-mouseevents") != nil) {
             self.enableMouseEvents = defaults.bool(forKey: "tiled-gbl-mouseevents")
         }
@@ -179,7 +179,7 @@ extension TiledGlobals {
             let mouseFiltersRaw = defaults.double(forKey: "tiled-gbl-dd-mousefilters")
             self.debug.mouseFilters = TiledGlobals.DebugDisplayOptions.MouseFilters(rawValue: UInt8(mouseFiltersRaw))
         }
-        
+
         if (defaults.value(forKey: "tiled-gbl-dd-mousepointersize") != nil) {
             let mouseFiltersRaw = defaults.double(forKey: "tiled-gbl-dd-mousepointersize")
             self.debug.mousePointerSize = CGFloat(defaults.double(forKey: "tiled-gbl-dd-mousepointersize"))
@@ -227,22 +227,22 @@ extension TiledGlobals {
         defaults.set(self.enableCameraContainedNodesCallbacks, forKey: "tiled-gbl-camera-contained-callbacks")
 
         // debug display
-        defaults.set(self.debug.highlightDuration, forKey: "tiled-gbl-dd-contained-hlduration")
-        defaults.set(self.debug.gridOpactity, forKey: "tiled-gbl-dd-gridopacity")
-        defaults.set(self.debug.gridColor.hexString(), forKey: "tiled-gbl-dd-gridcolor")
-        defaults.set(self.debug.frameColor.hexString(), forKey: "tiled-gbl-dd-framecolor")
-        defaults.set(self.debug.lineWidth, forKey: "tiled-gbl-dd-linewidth")
-        defaults.set(self.debug.tileHighlightColor.hexString(), forKey: "tiled-gbl-dd-tilehlcolor")
-        defaults.set(self.debug.objectFillOpacity, forKey: "tiled-gbl-dd-objopacity")
-        defaults.set(self.debug.objectHighlightColor.hexString(), forKey: "tiled-gbl-dd-objhlcolor")
-        defaults.set(self.debug.navigationColor.hexString(), forKey: "tiled-gbl-dd-navcolor")
-        defaults.set(self.debug.cameraBoundsColor.hexString(), forKey: "tiled-gbl-dd-camboundscolor")
+        defaults.set(self.debugDisplayOptions.highlightDuration, forKey: "tiled-gbl-dd-contained-hlduration")
+        defaults.set(self.debugDisplayOptions.gridOpactity, forKey: "tiled-gbl-dd-gridopacity")
+        defaults.set(self.debugDisplayOptions.gridColor.hexString(), forKey: "tiled-gbl-dd-gridcolor")
+        defaults.set(self.debugDisplayOptions.frameColor.hexString(), forKey: "tiled-gbl-dd-framecolor")
+        defaults.set(self.debugDisplayOptions.lineWidth, forKey: "tiled-gbl-dd-linewidth")
+        defaults.set(self.debugDisplayOptions.tileHighlightColor.hexString(), forKey: "tiled-gbl-dd-tilehlcolor")
+        defaults.set(self.debugDisplayOptions.objectFillOpacity, forKey: "tiled-gbl-dd-objopacity")
+        defaults.set(self.debugDisplayOptions.objectHighlightColor.hexString(), forKey: "tiled-gbl-dd-objhlcolor")
+        defaults.set(self.debugDisplayOptions.navigationColor.hexString(), forKey: "tiled-gbl-dd-navcolor")
+        defaults.set(self.debugDisplayOptions.cameraBoundsColor.hexString(), forKey: "tiled-gbl-dd-camboundscolor")
 
 
         // mouse filters
-        defaults.set(self.debug.mouseFilters.rawValue, forKey: "tiled-gbl-dd-mousefilters")
-        defaults.set(self.debug.mousePointerSize, forKey: "tiled-gbl-dd-mousepointersize")
-        
+        defaults.set(self.debugDisplayOptions.mouseFilters.rawValue, forKey: "tiled-gbl-dd-mousefilters")
+        defaults.set(self.debugDisplayOptions.mousePointerSize, forKey: "tiled-gbl-dd-mousepointersize")
+
         // demo content
         defaults.set(self.allowUserMaps, forKey: "tiled-gbl-demo-allowusermaps")
         defaults.set(self.allowDemoMaps, forKey: "tiled-gbl-demo-allowdemomaps")
@@ -281,7 +281,7 @@ extension Notification {
         if let userObject = object {
             output += ", object: '\(String(describing: type(of: userObject)))'"
         }
-        
+
         if let userDict = userInfo as? [String: Any] {
             let userDictCount = userDict.count - 1
             output += ", user info: ["
@@ -289,15 +289,15 @@ extension Notification {
                 let comma = idx < userDictCount ? ", " : ""
 
                 var valueString = "\(attr.value)"
-                
+
                 if let valstr = attr.value as? String {
                     valueString = "'\(valstr)'"
                 }
-                
+
                 if let valurl = attr.value as? URL {
                     valueString = "\(valurl.relativePath)"
                 }
-                
+
                 output += "'\(attr.key)' = \(valueString)\(comma)"
             }
             output += "]"
@@ -335,18 +335,18 @@ extension Notification.Name {
 
     */
     public struct DemoController {
-    
+
         /// demo status
         public static let DemoStatusUpdated             = Notification.Name(rawValue: "org.sktiled.notification.name.demoController.demoStatusUpdated")
-        
+
         // events
         public static let WillBeginScanForAssets        = Notification.Name(rawValue: "org.sktiled.notification.name.demoController.willBeginScanForAssets")
         public static let AssetsFinishedScanning        = Notification.Name(rawValue: "org.sktiled.notification.name.demoController.assetsFinishedScanning")
-        
+
         // map events
         public static let CurrentMapSet                 = Notification.Name(rawValue: "org.sktiled.notification.name.demoController.currentMapSet")
         public static let CurrentMapRemoved             = Notification.Name(rawValue: "org.sktiled.notification.name.demoController.currentMapRemoved")
-        
+
         // debug
         public static let ResetDemoInterface            = Notification.Name(rawValue: "org.sktiled.notification.name.demoController.resetDemoInterface")
 
@@ -397,11 +397,11 @@ extension Notification.Name {
         // node selected in right-click menu
         public static let NodeSelectionChanged           = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodeSelectionChanged")   // sent from demo delegate to indicate that the current node selection has changed
         public static let NodeSelectionCleared           = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodeSelectionCleared")
-        
+
         // selected node isolation
         public static let IsolateSelectedEnabled         = Notification.Name(rawValue: "org.sktiled.notification.name.demo.isolateSelectedEnabled")
         public static let IsolateSelectedDisabled        = Notification.Name(rawValue: "org.sktiled.notification.name.demo.isolateSelectedDisabled")
-        
+
     }
 
 
@@ -1024,7 +1024,7 @@ extension NSTextField {
     var isNumericTextField: Bool {
         return formatter as? NumberFormatter != nil
     }
-    
+
     /// Returns the identifier string for this field.
     var identifierString: String? {
         return identifier?.rawValue
@@ -1035,7 +1035,7 @@ extension NSTextField {
         stringValue = ""
         placeholderString = ""
     }
-    
+
     /// Set the string value of the text field, with optional animated fade.
     ///
     /// - Parameters:

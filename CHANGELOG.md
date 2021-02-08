@@ -88,6 +88,7 @@ Change Log
 	- add `SKTilemap.backgroundOffset` property
     - add `SKTilemap.chunksAt(coord:)` method
     - add `SKTilemap.chunksAt(_:_:)` method
+	- add `SKTilemap.contains(globalID:)` method
 	- add `SKTilesetData.clone()` method
 	- add `SKTile.withTileDataClone()` method
 	- add `SKTile.tileset` property

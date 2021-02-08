@@ -1075,7 +1075,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
         
-        updateCommandString("dumping selected node '\(selectedNode.tiledDescription)'", duration: 3.0)
+        
+        let nodeDescription = selectedNode.tiledDescription ?? String(describing: type(of: selectedNode))
+        updateCommandString("dumping selected node '\(nodeDescription)'", duration: 3.0)
         dump(selectedNode)
     }
 

@@ -29,7 +29,7 @@ import SpriteKit
 
 /// The `SKTileset` class manages a set of `SKTilesetData` objects, which store tile data including global id, texture and animation.
 ///
-/// ![Tileset Setup][tiledata-diagram-url]
+/// ![Tileset Setup](https://mfessenden.github.io/SKTiled/1.3/images/tiledata-setup.svg)
 ///
 /// Tile data is accessed via a local id, and tiles can be instantiated with the resulting `SKTilesetData` instance:
 ///
@@ -41,14 +41,16 @@ import SpriteKit
 ///
 /// ### Properties
 ///
-/// - `name`: Tileset name.
-/// - `tilemap`: Reference to parent tilemap.
-/// - `tileSize`: Tile size (in pixels).
-/// - `columns`: Number of columns.
-/// - `tilecount`: Tile count.
-/// - `firstGID`: First tile global id.
-/// - `lastGID`: Last tile global id.
-/// - `tileData`: Set of tile data structures.
+/// - `name`: tileset name.
+/// - `tilemap`: reference to parent tilemap.
+/// - `tileSize`: tile size (in pixels).
+/// - `localRange`: range of local tile data id values.
+/// - `globalRange`: range of global tile data id values.
+/// - `columns`: number of columns.
+/// - `tilecount`: tile count.
+/// - `firstGID`: first tile global id.
+/// - `lastGID`: last tile global id.
+/// - `tileData`: set of tile data structures.
 ///
 ///
 /// ### Instance Methods
@@ -111,7 +113,7 @@ public class SKTileset: NSObject, CustomReflectable, TiledAttributedType {
         return tileData.map { $0.id }.max() ?? firstGID
     }
 
-    /// Returns a range of localized tile ids.
+    /// Returns a range of localized tile id values.
     public var localRange: ClosedRange<UInt32> {
         return 0...UInt32(dataCount - 1)
     }

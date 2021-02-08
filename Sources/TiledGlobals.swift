@@ -118,7 +118,7 @@ public let TileSize32x32 = CGSize(value: 32)
 /// tiledGlobals.enableCameraCallbacks = false
 ///
 /// // set debugging mouse filters (macOS)
-/// tiledGlobals.debug.mouseFilters = [.tileCoordinates, .tilesUnderCursor]
+/// tiledGlobals.debugDisplayOptions.mouseFilters = [.tileCoordinates, .tilesUnderCursor]
 ///
 /// // increase the default text object render quality
 /// tiledGlobals.renderQuality.text = 12.0

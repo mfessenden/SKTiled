@@ -1354,13 +1354,26 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
     /// Returns the tileset associated with a global id.
     ///
-    /// - Parameter forTile: tile global id.
+    /// - Parameter globalID: tile global id.
     /// - Returns: associated tileset.
     public func getTilesetFor(globalID: UInt32) -> SKTileset? {
         guard let tiledata = getTileData(globalID: globalID) else {
             return nil
         }
         return tiledata.tileset
+    }
+    
+    /// Returns the tileset containing the given global id.
+    ///
+    /// - Parameter globalID: tile global id.
+    /// - Returns: tuple of result & matching tileset.
+    public func contains(globalID: UInt32) -> (Bool, SKTileset?) {
+        for tileset in tilesets {
+            if tileset.contains(globalID: globalID) == true {
+                return (true, tileset)
+            }
+        }
+        return (false, nil)
     }
 
     // MARK: - Layer Management
@@ -1894,7 +1907,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return tileLayers(recursive: recursive).flatMap { $0.animatedTiles() }
     }
 
-    // MARK: - Data
+    // MARK: - Tile Data
 
     /// Returns data for a global tile id.
     ///
@@ -1902,9 +1915,9 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     ///   - globalID: global tile id.
     /// - Returns: tile data, if it exists.
     public func getTileData(globalID: UInt32) -> SKTilesetData? {
-        let realID = flippedTileFlags(id: globalID).globalID
-        for tileset in tilesets where tileset.contains(globalID: realID) {
-            if let tileData = tileset.getTileData(globalID: realID) {
+        let unmaskedGid = flippedTileFlags(id: globalID).globalID
+        for tileset in tilesets where tileset.contains(globalID: unmaskedGid) {
+            if let tileData = tileset.getTileData(globalID: unmaskedGid) {
                 return tileData
             }
         }

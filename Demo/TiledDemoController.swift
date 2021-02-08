@@ -280,9 +280,6 @@ public class TiledDemoController: NSObject, Loggable {
 
             var fileMatched = false
             
-            
-            print("⭑ matching file '\(demoFilename)'...")
-            
             for tilemapAsset in tilemapUrls {
 
                 let url = tilemapAsset.url
@@ -293,7 +290,6 @@ public class TiledDemoController: NSObject, Loggable {
                     tiledResourceFiles.append(tilemapAsset)
                     alreadyAdded.append(tilemapAsset.url)
                     fileMatched = true
-                    print("   - matched: '\(tilemapAsset.url.path)'...")
                 }
             }
 
