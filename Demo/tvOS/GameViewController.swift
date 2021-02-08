@@ -2,7 +2,7 @@
 //  GameViewController.swift
 //  SKTiled Demo - tvOS
 //
-//  Copyright © 2020 Michael Fessenden. all rights reserved.
+//  Copyright ©2016-2021 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -40,7 +40,7 @@ class GameViewController: GCEventViewController, Loggable {
     // debugging labels (bottom)
     @IBOutlet weak var outputBottomView: UIStackView!
     @IBOutlet weak var mapInfoLabel: UILabel!
-    @IBOutlet weak var commandOutputLabel: UILabel!
+    @IBOutlet weak var debuggingMessageLabel: UILabel!
 
 
     // demo buttons
@@ -113,8 +113,6 @@ class GameViewController: GCEventViewController, Loggable {
         setupNotifications()
         demoController.scanForResources()
 
-        print("tilemaps: \(demoController.tilemaps.count)")
-
         // Load the initial scene.
         demoController.loadNextScene()
     }
@@ -141,7 +139,7 @@ class GameViewController: GCEventViewController, Loggable {
 
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.UpdateDebugging, object: nil)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.Debug.DebuggingCommandSent, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Debug.DebuggingMessageSent, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.Updated, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Camera.Updated, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.RenderStatsUpdated, object: nil)
@@ -153,7 +151,7 @@ class GameViewController: GCEventViewController, Loggable {
     func setupNotifications() {
         // demo notifications
         NotificationCenter.default.addObserver(self, selector: #selector(debuggingInfoReceived), name: Notification.Name.Demo.UpdateDebugging, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateCommandString), name: Notification.Name.Debug.DebuggingCommandSent, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(debuggingMessageReceived), name: Notification.Name.Debug.DebuggingMessageSent, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(tilemapWasUpdated), name: Notification.Name.Map.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sceneCameraUpdated), name: Notification.Name.Camera.Updated, object: nil)
@@ -165,7 +163,7 @@ class GameViewController: GCEventViewController, Loggable {
     func setupMainInterface() {
         outputBottomView.layer.cornerRadius = 8
         mapInfoLabel.text = "Map: "
-        commandOutputLabel.text = "Command: "
+        debuggingMessageLabel.text = "Command: "
 
         controlIconView.isHidden = true
         controlIconView.isHidden = true
@@ -274,6 +272,7 @@ class GameViewController: GCEventViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func debuggingInfoReceived(notification: Notification) {
+        notification.dump(#fileID, function: #function)
         if let mapInfo = notification.userInfo!["mapInfo"] {
             mapInfoLabel.text = mapInfo as? String
         }
@@ -287,6 +286,7 @@ class GameViewController: GCEventViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func sceneCameraUpdated(notification: Notification) {
+        notification.dump(#fileID, function: #function)
         guard let camera = notification.object as? SKTiledSceneCamera else {
             return
         }
@@ -335,7 +335,8 @@ class GameViewController: GCEventViewController, Loggable {
     /// Update the the command string label.
     ///
     /// - Parameter notification: event notification.
-    @objc func updateCommandString(notification: Notification) {
+    @objc func debuggingMessageReceived(notification: Notification) {
+        notification.dump(#fileID, function: #function)
         var duration: TimeInterval = 3.0
 
         if let commandDuration = notification.userInfo!["duration"] {
@@ -344,22 +345,23 @@ class GameViewController: GCEventViewController, Loggable {
             }
         }
 
-        if let commandString = notification.userInfo!["command"] {
+        if let commandString = notification.userInfo!["message"] {
             let commandFormatted = commandString as! String
-            commandOutputLabel.setTextValue(commandFormatted, animated: true, interval: duration)
+            debuggingMessageLabel.setTextValue(commandFormatted, animated: true, interval: duration)
         }
     }
 
     /// Reset the command string label.
     func resetCommandLabel() {
         timer.invalidate()
-        commandOutputLabel.text = ""
+        debuggingMessageLabel.text = ""
     }
 
     /// Enables/disable button controls based on the current map attributes.
     ///
     /// - Parameter notification: event notification.
     @objc func tilemapWasUpdated(notification: Notification) {
+        notification.dump(#fileID, function: #function)
         guard let tilemap = notification.object as? SKTilemap else { return }
 
         if (tilemap.hasKey("uiColor")) {

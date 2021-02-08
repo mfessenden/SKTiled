@@ -307,7 +307,7 @@
                                                 <action selector="renderStatisticsVisibilityAction:" target="Voe-Tx-rLC" id="Mzc-xl-pjC"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Tilemap Statistics..." enabled="NO" id="OXT-yC-4Eg">
+                                        <menuItem title="Tilemap Layer Stats..." enabled="NO" id="OXT-yC-4Eg">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="mapStatisticsPressed:" target="Voe-Tx-rLC" id="Jpq-Ut-F27"/>
@@ -730,9 +730,9 @@
                                 <rect key="frame" x="624" y="150" width="32" height="32"/>
                             </progressIndicator>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9x3-wF-4hL">
-                                <rect key="frame" x="576" y="339" width="128" height="43"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Paused" id="L19-lG-gUj">
-                                    <font key="font" metaFont="systemSemibold" size="36"/>
+                                <rect key="frame" x="600" y="345" width="80" height="31"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Status" id="L19-lG-gUj">
+                                    <font key="font" textStyle="largeTitle" name=".SFNS-Regular"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -753,16 +753,13 @@
                             <constraint firstItem="bpV-ih-FVj" firstAttribute="top" secondItem="4yy-6f-eef" secondAttribute="bottom" constant="20" id="raP-We-bWX"/>
                             <constraint firstItem="Bgh-ex-Ztr" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="yBA-Pi-6Vs"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="color" keyPath="scene.backgroundColor">
-                                <color key="value" red="1" green="0.66466454061183644" blue="0.41147704851150202" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
                         <outlet property="cameraInfoLabel" destination="Rpo-Bf-MrJ" id="RyX-41-fZZ"/>
-                        <outlet property="commandOutputLabel" destination="npC-Jr-qjF" id="s9h-0V-GwJ"/>
+                        <outlet property="controlButtonView" destination="LqZ-dY-ggy" id="8ae-cv-7nw"/>
+                        <outlet property="debuggingMessageLabel" destination="npC-Jr-qjF" id="s9h-0V-GwJ"/>
                         <outlet property="demoFileAttributes" destination="roh-5A-x7m" id="IIt-Ds-dF2"/>
+                        <outlet property="demoStatusInfoLabel" destination="9x3-wF-4hL" id="81Q-OQ-77V"/>
                         <outlet property="fitButton" destination="IwQ-St-3Wv" id="cst-mf-zi5"/>
                         <outlet property="graphButton" destination="npW-cn-J3N" id="bDT-MQ-AjA"/>
                         <outlet property="gridButton" destination="nuZ-Nw-3Kh" id="YwV-TN-gdQ"/>
@@ -773,7 +770,6 @@
                         <outlet property="objectsButton" destination="rbx-7u-m9u" id="cqO-dj-HqS"/>
                         <outlet property="outputBottomView" destination="bpV-ih-FVj" id="rr1-8J-iHW"/>
                         <outlet property="outputTopView" destination="Bgh-ex-Ztr" id="Q1F-nb-2q8"/>
-                        <outlet property="pauseInfoLabel" destination="9x3-wF-4hL" id="81Q-OQ-77V"/>
                         <outlet property="progressIndicator" destination="4yy-6f-eef" id="tmI-64-Keh"/>
                         <outlet property="propertiesInfoLabel" destination="3AA-Cl-qmn" id="Kqk-Q6-bCh"/>
                         <outlet property="selectedInfoLabel" destination="sxh-rQ-zgn" id="kve-4v-lbl"/>

@@ -2,7 +2,7 @@
 //  TileDataStorage.swift
 //  SKTiled
 //
-//  Copyright © 2020 Michael Fessenden. all rights reserved.
+//  Copyright ©2016-2021 Michael Fessenden. all rights reserved.
 //	Web: https://github.com/mfessenden
 //	Email: michael.fessenden@gmail.com
 //
@@ -838,6 +838,7 @@ extension TileDataStorage: CustomReflectable, TiledCustomReflectableType {
         //var actionsTileData:  [String: String] = [:]
         
         for (_, sitem) in staticTileCache.enumerated() {
+            let data = sitem.key
             staticTileCount += sitem.value.count
             staticDataCount += 1
         }

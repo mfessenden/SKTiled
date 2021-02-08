@@ -2,7 +2,7 @@
 //  SKTiledDemoScene.swift
 //  SKTiled Demo
 //
-//  Copyright © 2020 Michael Fessenden. all rights reserved.
+//  Copyright ©2016-2021 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -73,10 +73,17 @@ public class SKTiledDemoScene: SKTiledScene {
 
     private let demoQueue = DispatchQueue(label: "org.sktiled.sktiledDemoScene.demoQueue", qos: .utility)
 
+    
     public override var isPaused: Bool {
         willSet {
             let pauseMessage = (newValue == true) ? "Paused" : ""
-            updatePauseInfo(msg: pauseMessage)
+            let hideStatus = (newValue == true) ? false : true
+            
+            NotificationCenter.default.post(
+                name: Notification.Name.DemoController.DemoStatusUpdated,
+                object: nil,
+                userInfo: ["status": pauseMessage, "isHidden": hideStatus, "color": tilemap?.highlightColor ?? SKColor.white]
+            )
         }
     }
 
@@ -211,85 +218,62 @@ public class SKTiledDemoScene: SKTiledScene {
     // MARK: - Demo
 
 
-    /// Callback to the GameViewController to reload the current scene.
+    /// Callback to the `TiledDemoController` to reload the current scene.
     public func reloadScene() {
         demoController?.reloadScene()
     }
 
-    /// Callback to the GameViewController to load the next scene.
+    /// Callback to the `TiledDemoController` to load the next scene.
     public func loadNextScene() {
         demoController?.loadNextScene()
     }
 
-    /// Callback to the GameViewController to reload the previous scene.
+    /// Callback to the `TiledDemoController` to reload the previous scene.
     public func loadPreviousScene() {
         demoController?.loadPreviousScene()
     }
 
     public func updateMapInfo(msg: String) {
-        
-        #if SKTILED_DEMO
         NotificationCenter.default.post(
             name: Notification.Name.Demo.UpdateDebugging,
             object: nil,
             userInfo: ["mapInfo": msg]
         )
-        #endif
     }
 
     public func updateTileInfo(msg: String) {
-        
-        #if SKTILED_DEMO
         NotificationCenter.default.post(
             name: Notification.Name.Demo.UpdateDebugging,
             object: nil,
             userInfo: ["tileInfo": msg]
         )
-        #endif
     }
 
     /// Update the tile properties debugging info.
     ///
     /// - Parameter msg: properties string.
     public func focusedObjectsChanged(msg: String) {
-
-        #if SKTILED_DEMO
         NotificationCenter.default.post(
             name: Notification.Name.Demo.UpdateDebugging,
             object: nil,
             userInfo: ["focusedObjectData": msg]
         )
-        #endif
     }
 
     public func updateCameraInfo(msg: String) {
-        #if SKTILED_DEMO
         NotificationCenter.default.post(
             name: Notification.Name.Demo.UpdateDebugging,
             object: nil,
             userInfo: ["cameraInfo": msg]
         )
-        #endif
-    }
-
-    public func updatePauseInfo(msg: String) {
-
-        #if SKTILED_DEMO
-        NotificationCenter.default.post(
-            name: Notification.Name.Demo.UpdateDebugging,
-            object: nil, userInfo: ["pauseInfo": msg]
-        )
-        #endif
     }
 
     public func updateScreenInfo(msg: String) {
-        #if SKTILED_DEMO
         NotificationCenter.default.post(
             name: Notification.Name.Demo.UpdateDebugging,
             object: nil,
             userInfo: ["screenInfo": msg]
         )
-        #endif
     }
 
     /// Update the camera debugging info.
@@ -306,23 +290,6 @@ public class SKTiledDemoScene: SKTiledScene {
             object: sceneCamera,
             userInfo: ["cameraInfo": cameraInfo]
         )
-    }
-
-    /// Send a command to the UI to update status.
-    ///
-    /// - Parameters:
-    ///   - command: command string.
-    ///   - duration: how long the message should be displayed (0 is indefinite).
-    public func updateCommandString(_ command: String, duration: TimeInterval = 3.0) {
-
-        DispatchQueue.main.async {
-
-            NotificationCenter.default.post(
-                name: Notification.Name.Debug.DebuggingCommandSent,
-                object: nil,
-                userInfo: ["command": command, "duration": duration]
-            )
-        }
     }
 
     /// Update HUD elements when the view size changes.
@@ -501,61 +468,9 @@ extension SKTiledDemoScene {
     /// - Parameter event: mouse move event.
     open override func mouseMoved(with event: NSEvent) {
         super.mouseMoved(with: event)
-
-        // don't capture events if the mouse is moving quickly
-        if (event.mouseSpeed > 1) {
-            return
-        }
-
-        
-        // Get mouse position in scene coordinates
+        // update the mouse pointer
         let location = event.location(in: self)
         mousePointer?.position = location
-        
-        
-        // dictionary of event locations
-        var locationData: [String: Any] = [:]
-        
-        
-        // Get node at mouse position
-        let touchedNodes = nodes(at: location).filter( { $0 != mousePointer })
-        
-        if let frontTouchedNode = touchedNodes.first {
-            locationData["firstNode"] = frontTouchedNode
-        }
-
-        guard let skView = view else {
-            return
-        }
-
-
-        let sceneLocation = event.location(in: self)
-
-        locationData["viewPosition"] = skView.convert(sceneLocation, from: self)
-        locationData["screenPosition"] = sceneLocation
-
-        if (worldNode != nil) {
-            locationData["worldPosition"]  = event.location(in: worldNode)
-        }
-
-        // CALLBACK: mouse moved
-        if let tilemap = tilemap {
-
-            let mapPosition = tilemap.mouseLocation(event: event)
-            let coord = tilemap.coordinateAtMouse(event: event)
-
-            locationData["mapPosition"]  = mapPosition
-            locationData["coordinate"]  = coord
-            locationData["coordIsValid"] = tilemap.isValid(coord: coord)
-            
-        }
-
-        /*
-        NotificationCenter.default.post(
-            name: Notification.Name.Demo.MousePositionChanged,
-            object: nil,
-            userInfo: locationData
-        )*/
     }
 
     open override func mouseEntered(with event: NSEvent) {
@@ -693,7 +608,7 @@ extension SKTiledDemoScene {
 
         let eventKey = event.keyCode
         var eventChars = event.characters ?? "⋯"
-        
+        print("key pressed '\(eventChars)'")
 
         // '→' advances to the next scene
         if eventKey == 0x7c {
@@ -935,6 +850,9 @@ extension SKTiledDemoScene {
         
         // 'w' clears the cache
         if eventKey == 0xd {
+            
+            
+            
             tilemap.dataStorage = nil
             updateCommandString("Clearing tilemap cache...", duration: 3.0)
             tilemap.dataStorage = TileDataStorage(map: tilemap)

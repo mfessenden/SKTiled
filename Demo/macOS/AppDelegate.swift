@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  SKTiled Demo - macOS
 //
-//  Copyright © 2020 Michael Fessenden. all rights reserved.
+//  Copyright ©2016-2021 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -31,8 +31,6 @@ import SpriteKit
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    /// Window controller for inspector panel.
-    var inspectorController: NSWindowController?
     var preferencesController: PreferencesWindowController?
     var attributeEditorWindowController: AttributeEditorWindowController?
 
@@ -97,18 +95,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         setupMainInterface()
         setupNotifications()
+        
+        // the demo controller will have scanned assets, so go ahead and create the demo files menu
+        initializeDemoFilesMenu()
     }
     
     func applicationWillResignActive(_ notification: Notification) {
         view?.isPaused = true
-        viewController?.pauseInfoLabel.isHidden = false
+        viewController?.demoStatusInfoLabel.isHidden = false
     }
     
     func applicationDidBecomeActive(_ notification: Notification) {
-        // if the app starts in the background, populate the current files menu.
-        //initializeDemoFilesMenu()
         view?.isPaused = false
-        viewController?.pauseInfoLabel.isHidden = false
+        viewController?.demoStatusInfoLabel.isHidden = false
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -152,8 +151,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 
     func setupNotifications() {
-
-
         // demo notifications
         NotificationCenter.default.addObserver(self, selector: #selector(demoControllerAssetScanFinished), name: Notification.Name.DemoController.AssetsFinishedScanning, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(launchApplicationPreferences), name: Notification.Name.Demo.LaunchPreferences, object: nil)
@@ -192,10 +189,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         resetMainInterface()
     }
 
-    /// Resets the main interface to its original state.
+    /// Resets the interface to its original state.
     @objc func resetMainInterface() {
-        Logger.default.log("resetting main interface...", level: .info, symbol: "AppDelegate")
-
         mapMenuItem.isEnabled = false
         cameraMainMenu.isEnabled = false
         debugMainMenu.isEnabled = false
@@ -233,6 +228,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         showDemoAssetsMenuItem.isEnabled = true
         rescanForAssetsMenuItem.isEnabled = true
+        
+        
+        // if the scan is done, build the current demo file menu
+        if let demoController = demoController {
+            
+        }
     }
 
     /// Update the current demo interface when the tilemap has finished rendering.
@@ -275,9 +276,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // initialize the tile isolation menu
         self.initializeIsolateTilesMenu()
         
-        
-
-
         // set the window title
         guard let window = NSApplication.shared.mainWindow else {
             return
@@ -405,7 +403,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ///
     /// - Parameter notification: event notification.
     @IBAction func demoControllerAboutToScanForAssets(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        notification.dump(#fileID, function: #function)
         resetMainInterface()
     }
 
@@ -414,7 +412,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ///
     /// - Parameter notification: event notification.
     @objc func demoControllerAssetScanFinished(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        notification.dump(#fileID, function: #function)
         initializeDemoFilesMenu()
     }
 
@@ -450,15 +448,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
                 let relativeURL = URL(fileURLWithPath: filename, relativeTo: dirname)
                 let demoController = gameController.demoController
-                var currentMapIndex = demoController.currentTilemapIndex
 
-                if (currentMapIndex < 0) {
-                    Logger.default.log("invalid index map index \(currentMapIndex)", level: .error)
-                    currentMapIndex = 0
-                }
 
                 // add the tilemap to the demo controller stack...
-                demoController.addTilemap(url: relativeURL, at: currentMapIndex + 1)
+                demoController.addTilemap(url: relativeURL, at: demoController.currentTilemapIndex + 1)
                 demoController.loadScene(url: relativeURL, usePreviousCamera: false, interval: 0.3, reload: false)
             }
 
@@ -637,7 +630,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let nextState = !currentState
 
         TiledGlobals.default.enableCameraCallbacks = nextState
-        gameController.demoController.updateCommandString("enable camera callbacks: \(nextState == true ? "on" : "off")")
+        updateCommandString("enable camera callbacks: \(nextState == true ? "on" : "off")")
 
 
         NotificationCenter.default.post(
@@ -660,7 +653,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let nextState = !currentState
 
         scene.cameraNode?.notifyDelegatesOnContainedNodesChange = nextState
-        gameController.demoController.updateCommandString("enable camera visible node tracking: \(nextState == true ? "on" : "off")")
+        updateCommandString("enable camera visible node tracking: \(nextState == true ? "on" : "off")")
     }
 
     @IBAction func cameraStatistics(_ sender: NSMenuItem) {
@@ -1006,11 +999,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let newIsolationMode = TileIsolationMode(rawValue: identifier)
         Logger.default.log("new isolation mode: '\(newIsolationMode.strings)'", level: .info)
         tilemap.isolationMode = newIsolationMode
-
-
-        if let gameController = viewController {
-            gameController.demoController.updateCommandString("updating map isolation mode \(newIsolationMode.strings)", duration: 4)
-        }
+        updateCommandString("updating map isolation mode \(newIsolationMode.strings)", duration: 4)
     }
 
     /// Called when the cache isolation mode is changed.
@@ -1198,22 +1187,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    /// Send a command to the UI to update status.
-    ///
-    /// - Parameters:
-    ///   - command: command string.
-    ///   - duration: how long the message should be displayed (0 is indefinite).
-    public func updateCommandString(_ command: String, duration: TimeInterval = 3.0) {
-        DispatchQueue.main.async {
-
-            NotificationCenter.default.post(
-                name: Notification.Name.Debug.DebuggingCommandSent,
-                object: nil,
-                userInfo: ["command": command, "duration": duration]
-            )
-        }
-    }
-
     // MARK: Show/Hide Render Stats
 
     @objc func renderStatisticsVisibilityChanged(notification: Notification) {
@@ -1291,9 +1264,6 @@ extension AppDelegate {
     var demoDelegate: TiledDemoDelegate? {
         return viewController?.demoDelegate
     }
-
-    /// Reference to the current scene (if it exists).
-
 
     /// Reference to the current scene camera.
     var camera: SKTiledSceneCamera? {

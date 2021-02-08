@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "group-icon.pdf",
+      "filename" : "grouplayer-icon.pdf",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "light"
         }
       ],
-      "filename" : "group-icon-light.pdf",
+      "filename" : "grouplayer-icon-light.pdf",
       "idiom" : "universal"
     },
     {
@@ -21,7 +21,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "group-icon-dark.pdf",
+      "filename" : "grouplayer-icon-dark.pdf",
       "idiom" : "universal"
     }
   ],

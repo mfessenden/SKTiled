@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17700" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -288,17 +288,17 @@
                     </view>
                     <connections>
                         <outlet property="cameraInfoLabel" destination="o8A-1P-WNU" id="dR5-rb-ynq"/>
-                        <outlet property="commandOutputLabel" destination="wwJ-ex-eLJ" id="Vgj-a4-rUE"/>
                         <outlet property="controlIconView" destination="3se-qz-xqx" id="juV-dF-Ago"/>
                         <outlet property="controlsView" destination="QyX-Za-Z1p" id="g7h-du-93L"/>
+                        <outlet property="debuggingMessageLabel" destination="wwJ-ex-eLJ" id="Vgj-a4-rUE"/>
                         <outlet property="demoFileAttributes" destination="HDW-rS-MqN" id="cV0-3C-cQ1"/>
+                        <outlet property="demoStatusInfoLabel" destination="aWk-BV-bvy" id="da9-WC-LEC"/>
                         <outlet property="fitButton" destination="uq7-ra-6CT" id="oc0-cS-CQB"/>
                         <outlet property="graphButton" destination="SQe-0h-fII" id="vpB-cf-ALb"/>
                         <outlet property="gridButton" destination="maM-Ym-CQj" id="Vbt-GY-9sA"/>
                         <outlet property="mapInfoLabel" destination="Tr1-Rb-3Hz" id="5gd-ji-SGm"/>
                         <outlet property="nextButton" destination="NrO-HR-9ZX" id="WQG-KT-Qey"/>
                         <outlet property="objectsButton" destination="d0Y-a6-XdN" id="sWq-vS-GQN"/>
-                        <outlet property="pauseInfoLabel" destination="aWk-BV-bvy" id="da9-WC-LEC"/>
                         <outlet property="propertiesInfoLabel" destination="cmn-aw-alp" id="Fg1-SO-Kwb"/>
                         <outlet property="renderStatsButton" destination="XwY-Pv-dUG" id="wIC-vD-vjD"/>
                         <outlet property="rotateDeviceIcon" destination="s2E-CQ-Gyp" id="hVU-H6-20G"/>

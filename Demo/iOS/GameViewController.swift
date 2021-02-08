@@ -2,7 +2,7 @@
 //  GameViewController.swift
 //  SKTiled Demo - iOS
 //
-//  Copyright © 2020 Michael Fessenden. all rights reserved.
+//  Copyright ©2016-2021 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -38,7 +38,7 @@ class GameViewController: UIViewController, Loggable {
     // debugging labels (top)
     @IBOutlet weak var rotateDeviceIcon: UIImageView!
     @IBOutlet weak var cameraInfoLabel: UILabel!
-    @IBOutlet weak var pauseInfoLabel: UILabel!
+    @IBOutlet weak var demoStatusInfoLabel: UILabel!
 
 
 
@@ -46,7 +46,7 @@ class GameViewController: UIViewController, Loggable {
     @IBOutlet weak var mapInfoLabel: UILabel!
     @IBOutlet weak var tileInfoLabel: UILabel!
     @IBOutlet weak var propertiesInfoLabel: UILabel!
-    @IBOutlet weak var commandOutputLabel: UILabel!
+    @IBOutlet weak var debuggingMessageLabel: UILabel!
 
 
     // demo buttons
@@ -116,10 +116,6 @@ class GameViewController: UIViewController, Loggable {
         setupButtonAttributes()
         setupNotifications()
 
-        //demoController.scanForResources()
-        print("tilemaps: \(demoController.tilemaps.count)")
-
-
         // Load the initial scene.
         demoController.loadNextScene()
 
@@ -168,7 +164,7 @@ class GameViewController: UIViewController, Loggable {
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.Updated, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.UpdateDebugging, object: nil)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.Debug.DebuggingCommandSent, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Debug.DebuggingMessageSent, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Camera.Updated, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.RenderStatsUpdated, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.RenderStats.VisibilityChanged, object: nil)
@@ -180,7 +176,7 @@ class GameViewController: UIViewController, Loggable {
     func setupNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(tilemapWasUpdated), name: Notification.Name.Map.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(debuggingInfoReceived), name: Notification.Name.Demo.UpdateDebugging, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateCommandString), name: Notification.Name.Debug.DebuggingCommandSent, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(debuggingMessageReceived), name: Notification.Name.Debug.DebuggingMessageSent, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sceneCameraUpdated), name: Notification.Name.Camera.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(renderStatsUpdated), name: Notification.Name.Map.RenderStatsUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(renderStatisticsVisibilityChanged), name: Notification.Name.RenderStats.VisibilityChanged, object: nil)
@@ -193,8 +189,8 @@ class GameViewController: UIViewController, Loggable {
         tileInfoLabel.text = "Tile: "
         propertiesInfoLabel.text = "--"
         cameraInfoLabel.text = "Camera:"
-        pauseInfoLabel.text = "-"
-        commandOutputLabel.text = "-"
+        demoStatusInfoLabel.text = "-"
+        debuggingMessageLabel.text = "-"
 
         let shadowColor = SKColor(white: 0.1, alpha: 0.65)
         let shadowOffset = CGSize(width: 1, height: 1)
@@ -211,9 +207,9 @@ class GameViewController: UIViewController, Loggable {
         cameraInfoLabel.shadowColor = shadowColor
         cameraInfoLabel.shadowOffset = shadowOffset
 
-        pauseInfoLabel.shadowColor = shadowColor
-        pauseInfoLabel.shadowOffset = shadowOffset
-        commandOutputLabel.shadowOffset = shadowOffset
+        demoStatusInfoLabel.shadowColor = shadowColor
+        demoStatusInfoLabel.shadowOffset = shadowOffset
+        debuggingMessageLabel.shadowOffset = shadowOffset
 
         statsEffectsLabel.shadowColor = shadowColor
         controlsView?.alpha = 0.9
@@ -389,10 +385,12 @@ class GameViewController: UIViewController, Loggable {
                 }
             }
         }
-
+        
+        // TODO: this is part of the demo status callback
+        /*
         if let pauseInfo = notification.userInfo!["pauseInfo"] {
-            pauseInfoLabel.text = pauseInfo as? String
-        }
+            demoStatusInfoLabel.text = pauseInfo as? String
+        }*/
     }
 
 
@@ -418,7 +416,7 @@ class GameViewController: UIViewController, Loggable {
     /// Update the the command string label.
     ///
     /// - Parameter notification: event notification.
-    @objc func updateCommandString(notification: Notification) {
+    @objc func debuggingMessageReceived(notification: Notification) {
         var duration: TimeInterval = 3.0
 
         if let commandDuration = notification.userInfo!["duration"] {
@@ -430,14 +428,14 @@ class GameViewController: UIViewController, Loggable {
 
         if let commandString = notification.userInfo!["command"] {
             let commandFormatted = commandString as! String
-            commandOutputLabel.setTextValue(commandFormatted, animated: true, interval: duration)
+            debuggingMessageLabel.setTextValue(commandFormatted, animated: true, interval: duration)
         }
     }
 
     /// Reset the command string label.
     func resetCommandLabel() {
         timer.invalidate()
-        commandOutputLabel.setTextValue(" ", animated: true, interval: 0.5)
+        debuggingMessageLabel.setTextValue(" ", animated: true, interval: 0.5)
     }
 
     /// Enables/disable button controls based on the current map attributes.

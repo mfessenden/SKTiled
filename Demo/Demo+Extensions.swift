@@ -2,7 +2,7 @@
 //  Demo+Extensions.swift
 //  SKTiled Demo
 //
-//  Copyright © 2020 Michael Fessenden. all rights reserved.
+//  Copyright ©2016-2021 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -35,7 +35,7 @@ import GameController
 extension TiledGlobals {
 
     /// Load prefs from the defaults plist.
-    internal func loadApplicationDefaults() {
+    internal func loadFromDemoDefaults() {
         if let defaultsPath = Bundle.main.path(forResource: "Defaults", ofType: "plist"),
            let xml = FileManager.default.contents(atPath: defaultsPath),
            let demoPreferences = try? PropertyListDecoder().decode(DemoPreferences.self, from: xml) {
@@ -266,7 +266,7 @@ extension TiledGlobals {
     internal func resetUserDefaults() {
         let defaults = UserDefaults.shared
         defaults.removePersistentDomain(forName: "org.sktiled")
-        loadApplicationDefaults()
+        loadFromDemoDefaults()
     }
 }
 
@@ -289,10 +289,17 @@ extension Notification {
             output += ", user info: ["
             for (idx, attr) in userDict.enumerated() {
                 let comma = idx < userDictCount ? ", " : ""
+
                 var valueString = "\(attr.value)"
+                
                 if let valstr = attr.value as? String {
                     valueString = "'\(valstr)'"
                 }
+                
+                if let valurl = attr.value as? URL {
+                    valueString = "\(valurl.relativePath)"
+                }
+                
                 output += "'\(attr.key)' = \(valueString)\(comma)"
             }
             output += "]"
@@ -330,7 +337,10 @@ extension Notification.Name {
 
     */
     public struct DemoController {
-
+    
+        /// demo status
+        public static let DemoStatusUpdated             = Notification.Name(rawValue: "org.sktiled.notification.name.demoController.demoStatusUpdated")
+        
         // events
         public static let WillBeginScanForAssets        = Notification.Name(rawValue: "org.sktiled.notification.name.demoController.willBeginScanForAssets")
         public static let AssetsFinishedScanning        = Notification.Name(rawValue: "org.sktiled.notification.name.demoController.assetsFinishedScanning")
@@ -400,7 +410,7 @@ extension Notification.Name {
     // TODO: cleanup these
     public struct Debug {
         public static let UpdateDebugging               = Notification.Name(rawValue: "org.sktiled.notification.name.debug.updateDebugging")
-        public static let DebuggingCommandSent          = Notification.Name(rawValue: "org.sktiled.notification.name.debug.debuggingCommandSent")  // sends a debugging command & duration to GVC (displays on bottom)
+        public static let DebuggingMessageSent          = Notification.Name(rawValue: "org.sktiled.notification.name.debug.debuggingMessageSent")  // sends a debugging command & duration to GVC (displays on bottom)
         public static let MapDebugDrawingChanged        = Notification.Name(rawValue: "org.sktiled.notification.name.debug.mapDebuggingChanged")   // sent when the `g` key is pressed (shows grid & bounds)
         public static let MapEffectsRenderingChanged    = Notification.Name(rawValue: "org.sktiled.notification.name.debug.mapEffectsRenderingChanged")
         public static let MapObjectVisibilityChanged    = Notification.Name(rawValue: "org.sktiled.notification.name.debug.mapObjectVisibilityChanged")

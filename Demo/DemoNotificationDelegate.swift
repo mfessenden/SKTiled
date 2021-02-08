@@ -1,6 +1,6 @@
 //
-//  TiledObjectType.swift
-//  SKTiled
+//  DemoNotificationDelegate.swift
+//  SKTiled Demo - macOS
 //
 //  Copyright ©2016-2021 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
@@ -24,54 +24,39 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import SpriteKit
+import Foundation
 
 
-/// ## Overview
-///
-/// The `TiledObjectType` protocol defines a basic type used throughout the API.
-///
-///
-/// ### Properties
-///
-/// | Property           | Description                                     |
-/// |:-------------------|:------------------------------------------------|
-/// | `uuid`             | Unique object id.                               |
-/// | `type`             | Tiled object type.                              |
-///
-@objc public protocol TiledObjectType: TiledCustomReflectableType {
-
-    /// Unique object id (layer & object names may not be unique).
-    var uuid: String { get }
-
-    /// ## Overview
+@objc protocol DemoNotificationDelegate {
+    
+    /// Send a debugging message to the UI delegate.
     ///
-    /// Object type property as parsed from **Tiled**.
-    var type: String! { get set }
+    /// - Parameters:
+    ///   - message: message string.
+    ///   - duration: how long the message should be displayed (0 is indefinite).
+    @objc func updateCommandString(_ message: String, duration: TimeInterval)
 }
-
 
 
 // MARK: - Extensions
 
+
 /// :nodoc:
-extension TiledObjectType {
-
-    /// Shortened unique id string.
-    public var shortId: String {
-        return uuid.components(separatedBy: "-").first ?? "NULL"
-    }
-
-    /// Allows the type to be used in a hashable data structure.
+extension NSObject: DemoNotificationDelegate {
+    
+    /// Send a debugging message to the UI delegate.
     ///
-    /// - Parameter hasher: hasher instance.
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(uuid)
+    /// - Parameters:
+    ///   - message: message string.
+    ///   - duration: how long the message should be displayed (0 is indefinite).
+    @objc func updateCommandString(_ message: String, duration: TimeInterval = 3.0) {
+        DispatchQueue.main.async {
+            
+            NotificationCenter.default.post(
+                name: Notification.Name.Debug.DebuggingMessageSent,
+                object: nil,
+                userInfo: ["message": message, "duration": duration]
+            )
+        }
     }
 }
-
-
-
-
-/// :nodoc: Typealias for v1.2 compatibility.
-public typealias SKTiledObject = TiledObjectType

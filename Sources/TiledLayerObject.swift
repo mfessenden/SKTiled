@@ -2,7 +2,7 @@
 //  TiledLayerObject.swift
 //  SKTiled
 //
-//  Copyright © 2020 Michael Fessenden. all rights reserved.
+//  Copyright ©2016-2021 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -408,7 +408,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         return CGRect(center: CGPoint(x: px, y: py), size: sizeInPoints)
     }
 
-    /// Initial layer position for infinite maps. Used to reposition tile layers & chunks in infinite maps. This is used by the tilemap to position the layers as they are added.
+    /// Initial layer position for infinite maps. Used to reposition tile layers & chunks in infinite map space. This is used by the tilemap to position the layers as they are added.
     internal var layerInfiniteOffset: CGPoint {
         return CGPoint.zero
     }

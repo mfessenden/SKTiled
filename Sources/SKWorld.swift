@@ -2,7 +2,7 @@
 //  SKWorld.swift
 //  SKTiled
 //
-//  Copyright © 2020 Michael Fessenden. all rights reserved.
+//  Copyright ©2016-2021 Michael Fessenden. all rights reserved.
 //	Web: https://github.com/mfessenden
 //	Email: michael.fessenden@gmail.com
 //
@@ -28,7 +28,7 @@ import SpriteKit
 
 
 /// :nodoc:
-/// A Generic world container node.
+/// A Generic world container node used to respond to camera updates.
 public class SKWorld: SKNode, TiledSceneCameraDelegate {
     
     /// Allow the node to receive camera notifications.
@@ -36,6 +36,8 @@ public class SKWorld: SKNode, TiledSceneCameraDelegate {
     
     /// Camera zoom level.
     public var zoom: CGFloat = 1.0
+    
+    // MARK: - Initialization
     
     /// Default initializer.
     public override init() {
@@ -49,6 +51,11 @@ public class SKWorld: SKNode, TiledSceneCameraDelegate {
     /// - Parameter aDecoder: decoder.
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    deinit {
+        removeAllActions()
+        removeAllChildren()
     }
     
     /// Setup notifications.
@@ -69,6 +76,8 @@ public class SKWorld: SKNode, TiledSceneCameraDelegate {
     }
 }
 
+
+// MARK: - Extensions
 
 
 /// :nodoc:
@@ -92,5 +101,19 @@ extension SKWorld: TiledCustomReflectableType {
     /// A description of the node.
     @objc public var tiledDescription: String {
         return "World container node."
+    }
+}
+
+/// :nodoc:
+extension SKWorld: CustomReflectable {
+    
+    /// Returns a custom mirror for this object.
+    public var customMirror: Mirror {
+        let attributes: [(label: String?, value: Any)] = [
+            (label: "name", value: name as Any),
+            (label: "zoom", value: zoom)
+        ]
+        
+        return Mirror(self, children: attributes, displayStyle: .struct, ancestorRepresentation: .suppressed)
     }
 }

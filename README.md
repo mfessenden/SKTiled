@@ -39,6 +39,7 @@ Check out the [**Official Documentation**][sktiled-13-doc-url].
 - [ ] tile collision objects
 - [ ] Zstandard compression support
 - [ ] layer tinting
+- [ ] file properties
 
 
 ## Requirements

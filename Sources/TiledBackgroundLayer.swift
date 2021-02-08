@@ -2,7 +2,7 @@
 //  TiledBackgroundLayer.swift
 //  SKTiled
 //
-//  Copyright © 2020 Michael Fessenden. all rights reserved.
+//  Copyright ©2016-2021 Michael Fessenden. all rights reserved.
 //	Web: https://github.com/mfessenden
 //	Email: michael.fessenden@gmail.com
 //
@@ -50,7 +50,9 @@ internal class TiledBackgroundLayer: TiledLayerObject {
     /// The background color.
     override var color: SKColor {
         didSet {
-            guard let sprite = sprite else { return }
+            guard let sprite = sprite else {
+                return
+            }
             sprite.color = (_debugColor == nil) ? color : _debugColor!
         }
     }

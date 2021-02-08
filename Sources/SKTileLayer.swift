@@ -2,7 +2,7 @@
 //  SKTileLayer.swift
 //  SKTiled
 //
-//  Copyright © 2020 Michael Fessenden. all rights reserved.
+//  Copyright ©2016-2021 Michael Fessenden. all rights reserved.
 //	Web: https://github.com/mfessenden
 //	Email: michael.fessenden@gmail.com
 //
@@ -216,8 +216,8 @@ public class SKTileLayer: TiledLayerObject {
         chunks = []
     }
 
-
-    // MARK: - Chunks
+    // MARK: - Infinite Map/Chunks
+    
     /// Initial layer position for infinite maps. Used to reposition tile layers & chunks in infinite maps. This is used by the tilemap to position the layers as they are added.
     internal override var layerInfiniteOffset: CGPoint {
         //if (isInfinite == false) || (layerType != .tile) {
@@ -232,11 +232,6 @@ public class SKTileLayer: TiledLayerObject {
                 offsetPos.y += tileHeightHalf
 
             case .isometric:
-                // 10 * 65 = 650
-                // 650 + (130 * 2) = 910
-
-                // tileWidth * 13
-                // tileWidthHalf * 26
                 let offsetXValue = (height * tileWidthHalf) + tileWidthHalf
                 offsetPos.x += offsetXValue + (tileWidth + tileWidthHalf)
                 offsetPos.y += tileHeightHalf

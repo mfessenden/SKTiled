@@ -2,7 +2,7 @@
 //  SKTilemapParser.swift
 //  SKTiled
 //
-//  Copyright © 2020 Michael Fessenden. all rights reserved.
+//  Copyright ©2016-2021 Michael Fessenden. all rights reserved.
 //	Web: https://github.com/mfessenden
 //	Email: michael.fessenden@gmail.com
 //
@@ -784,7 +784,8 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
 
                         case .infinite:
                             for chunk in tileLayer.chunks {
-                                // get stashed tile data
+                                
+                                // get stashed tile data for this chunk
                                 if let chunkTileData = self.layerTileData[chunk.uuid] {
                                     // add the layer data
                                     if (chunk.setLayerData(chunkTileData) == false) {
@@ -796,7 +797,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
 
                         default:
 
-                            // get stashed tile data
+                            // get stashed tile data for this layer
                             if let tileData = self.layerTileData[tileLayer.uuid] {
                                 // add the layer data
                                 if (tileLayer.setLayerData(tileData) == false) {
@@ -821,7 +822,10 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
             }
 
             // add the layer render work item to the external queue
-            queue.async(group: renderGroup, execute: renderItem)
+            queue.async(
+                group: renderGroup,
+                execute: renderItem
+            )
         }
 
         // run callbacks when the group is finished
@@ -830,12 +834,11 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
             self.tilesets = [:]
         }
 
-        // sync external queue here
+        // sync external queue here (or async for smaller)
         queue.sync {
             self.tilemap?.didFinishRendering(timeStarted: self.timer)
         }
     }
-
 
     // MARK: - Helpers
 

@@ -2,7 +2,7 @@
 //  TiledDemoController.swift
 //  SKTiled Demo
 //
-//  Copyright © 2020 Michael Fessenden. all rights reserved.
+//  Copyright ©2016-2021 Michael Fessenden. all rights reserved.
 //  Web: https://github.com/mfessenden
 //  Email: michael.fessenden@gmail.com
 //
@@ -70,7 +70,10 @@ public class TiledDemoController: NSObject, Loggable {
     /// The current tilemap url.
     internal var currentTilemapUrl: URL? {
         didSet {
-            guard (oldValue != currentTilemapUrl) else { return }
+            guard (oldValue != currentTilemapUrl) else {
+                return
+            }
+            
             guard let newUrl = currentTilemapUrl else {
                 NotificationCenter.default.post(
                     name: Notification.Name.DemoController.CurrentMapRemoved,
@@ -187,7 +190,7 @@ public class TiledDemoController: NSObject, Loggable {
 
     /// Load default preferences from the `Defaults.plist` file.
     public func loadApplicationDefaults() {
-        TiledGlobals.default.loadApplicationDefaults()
+        TiledGlobals.default.loadFromDemoDefaults()
     }
 
     /// Load globals and search paths from user defaults.
@@ -215,7 +218,7 @@ public class TiledDemoController: NSObject, Loggable {
 
     /// Reset the demo application defaults.
     public func resetApplicationDefaults() {
-        TiledGlobals.default.loadApplicationDefaults()
+        TiledGlobals.default.loadFromDemoDefaults()
     }
 
     // MARK: - Scanning
@@ -373,21 +376,6 @@ public class TiledDemoController: NSObject, Loggable {
         view.presentScene(nextScene, transition: transition)
 
 
-        // create an error label
-        let errorLabel = SKLabelNode()
-
-        #if os(macOS)
-        let errorString = "please select a file to open"
-        #else
-        let errorString = ""
-        #endif
-        errorLabel.alpha = 0
-
-        // create the font attributes
-        let fontAttributes: [NSAttributedString.Key : Any] = [.font: Font.systemFont(ofSize: 24), .foregroundColor: Color.white]
-        errorLabel.attributedText = NSAttributedString(string: errorString, attributes: fontAttributes)
-        nextScene.worldNode.addChild(errorLabel)
-
         let fadeInAction = SKAction.fadeIn(withDuration: interval)
         let groupAction = SKAction.group(
             [
@@ -396,9 +384,13 @@ public class TiledDemoController: NSObject, Loggable {
                 SKAction.scale(by: 1.2, duration: 0.5)
             ]
         )
+        
+        NotificationCenter.default.post(
+            name: Notification.Name.DemoController.DemoStatusUpdated,
+            object: nil,
+            userInfo: ["status": "please select a file to load", "isHidden": false, "color": SKColor.white]
+        )
 
-
-        errorLabel.run(groupAction)
 
         // disasble the camera
         nextScene.cameraNode?.allowMovement = false
@@ -411,40 +403,254 @@ public class TiledDemoController: NSObject, Loggable {
             object: nextScene
         )
     }
-
-
-    /// Clear the current scene.
-    @objc public func flushScene() {
+    
+    /// Loads a new demo scene with a named tilemap.
+    ///
+    /// - Parameters:
+    ///   - url: tilemap file url
+    ///   - usePreviousCamera: transfer camera information
+    ///   - interval: transition duration.
+    ///   - reload: current scene is reloaded.
+    ///   - completion: optional completion handler.
+    internal func loadScene(url: URL,
+                            usePreviousCamera: Bool,
+                            interval: TimeInterval = 0.3,
+                            reload: Bool = false,
+                            _ completion: (() -> Void)? = nil) {
+        
         guard let view = self.view else {
-            log("view is not set.", level: .error)
             return
         }
-
-
-        guard let demoScene = view.scene as? SKTiledDemoScene else {
-            log("cannot access demo scene.", level: .error)
-            return
+        
+        
+        currentTilemap = nil
+        
+        
+        // set the map index
+        if let mapindex = tiledDemoUrls.firstIndex(of: url) {
+            currentTilemapIndex = Int(mapindex)
         }
+        
+        NotificationCenter.default.post(
+            name: Notification.Name.Demo.SceneWillUnload,
+            object: nil,
+            userInfo: ["url": url]
+        )
+        
+        
+        // loaded from preferences
+        var showObjects = defaultPreferences.showObjects
+        var enableEffects = defaultPreferences.enableEffects
+        var shouldRasterize = false
+        var tileUpdateMode: TileUpdateMode?
+        
+        var allowCameraZoom = false
+        
+        
+        if (tileUpdateMode == nil) {
+            if let prefsUpdateMode = TileUpdateMode(rawValue: defaultPreferences.updateMode) {
+                tileUpdateMode = prefsUpdateMode
+            }
+        }
+        
+        // grid visualization
+        let drawGrid: Bool = defaultPreferences.drawGrid
+        if (drawGrid == true) {
+            debugDrawOptions.insert([.drawGrid, .drawFrame])
+        }
+        
+        let drawSceneAnchor: Bool = defaultPreferences.drawAnchor
+        if (drawSceneAnchor == true) {
+            debugDrawOptions.insert(.drawAnchor)
+        }
+        
+        var hasCurrent = false
+        var showOverlay = true
+        var cameraZoom: CGFloat = 1
+        var isPaused: Bool = false
+        
+        var currentSpeed: CGFloat = 1
+        var ignoreZoomClamping: Bool = false
+        var notifyDelegatesOnContainedNodesChange: Bool = TiledGlobals.default.enableCameraContainedNodesCallbacks
+        var zoomClamping: CameraZoomClamping = CameraZoomClamping.none
+        var ignoreZoomConstraints: Bool = defaultPreferences.ignoreZoomConstraints
+        
+        
+        var currentCameraAllowRotation = false
+        var currentCameraZRotation: CGFloat = 0
+        
+        if (currentCameraZRotation != 0) {
+            currentCameraAllowRotation = true
+        }
+        
+        var sceneInfo: [String: Any] = [:]
+        
+        
+        // get current scene & camera info
+        if let currentScene = view.scene as? SKTiledDemoScene {
+            
+            hasCurrent = true
+            
+            // note whether this scene is currently paused, then unpause it
+            isPaused = currentScene.isPaused
+            currentScene.isPaused = false
+            
+            if let cameraNode = currentScene.cameraNode {
+                showOverlay = cameraNode.showOverlay
+                cameraZoom = cameraNode.zoom
+                ignoreZoomClamping = cameraNode.ignoreZoomClamping
+                notifyDelegatesOnContainedNodesChange = cameraNode.notifyDelegatesOnContainedNodesChange
+                zoomClamping = cameraNode.zoomClamping
+                ignoreZoomConstraints = cameraNode.ignoreZoomConstraints
+                currentCameraZRotation = cameraNode.zRotation
+            }
+            
+            // pass current values to next tilemap
+            if let tilemap = currentScene.tilemap {
+                tilemap.dataStorage?.blockNotifications = true
+                debugDrawOptions = tilemap.debugDrawOptions
+                currentTilemapUrl = url
+                showObjects = tilemap.isShowingObjectBounds
+                enableEffects = tilemap.shouldEnableEffects
+                shouldRasterize = tilemap.shouldRasterize
+                tileUpdateMode = tilemap.updateMode
+                
+                // remove tilemap
+                tilemap.removeAllActions()
+                tilemap.removeAllChildren()
+                tilemap.dataStorage = nil
+                tilemap.removeFromParent()
+            }
+            
+            // destory the current instance
+            currentScene.tilemap = nil
+            currentSpeed = currentScene.speed
+            currentScene.demoController = nil
+            
+            // remove scene from memory
+            currentScene.removeAllActions()
+            currentScene.removeAllChildren()
+            currentScene.removeFromParent()
+            view.presentScene(nil)
+        }
+        
+        // update the console
+        let commandString = (reload == false) ? "loading map: '\(url.filename)'..." : "reloading map: '\(url.filename)'..."
+        updateCommandString(commandString, duration: 3.0)
+        
+        
+        // load the next scene on the main queue
+        DispatchQueue.main.async { [unowned self] in
+            
+            let nextScene = SKTiledDemoScene(size: view.bounds.size * TiledGlobals.default.contentScale)
+            
+            nextScene.scaleMode = .aspectFill
+            nextScene.demoController = self
+            nextScene.receiveCameraUpdates = TiledGlobals.default.enableCameraCallbacks
+            
+            
+            // create the transition
+            let transition = SKTransition.fade(withDuration: interval)
+            view.presentScene(nextScene, transition: transition)
 
-        // release tileap resources
-        demoScene.camera = nil
-        demoScene.cameraNode?.removeFromParent()
-        demoScene.cameraNode = nil
-        demoScene.tilemap?.removeAllActions()
-        demoScene.tilemap?.removeAllChildren()
-        demoScene.tilemap?.removeFromParent()
-        demoScene.tilemap = nil
-        demoScene.removeFromParent()
-
-
-
-        currentTilemapIndex = 0
-        currentTilemapUrl = nil
-
-        demoScene.cameraNode?.setCameraZoom(1)
-
-        // create and move to a new scene.
-        createEmptyScene()
+            // setup a new scene with the next tilemap filename
+            nextScene.setup(tmxFile: url.relativePath,
+                            inDirectory: (url.baseURL == nil) ? nil : url.baseURL!.path,
+                            withTilesets: [],
+                            ignoreProperties: false,
+                            loggingLevel: self.loggingLevel) { tilemap in
+                
+                nextScene.cameraNode?.ignoreZoomClamping = ignoreZoomClamping
+                nextScene.cameraNode?.notifyDelegatesOnContainedNodesChange = notifyDelegatesOnContainedNodesChange
+                nextScene.cameraNode?.zoomClamping = zoomClamping
+                nextScene.cameraNode?.ignoreZoomConstraints = ignoreZoomConstraints
+                nextScene.cameraNode?.zRotation = currentCameraZRotation
+                nextScene.cameraNode?.allowRotation = currentCameraAllowRotation
+                
+                tilemap.allowRotation = currentCameraAllowRotation
+                
+                // previous camera settings
+                if (usePreviousCamera == true) {
+                    nextScene.cameraNode?.showOverlay = showOverlay
+                    nextScene.cameraNode?.setCameraZoom(cameraZoom, interval: interval)
+                }
+                
+                self.currentTilemap = tilemap
+                
+                // if tilemap has a property override to show objects, use it...else use demo prefs
+                tilemap.isShowingObjectBounds = (tilemap.boolForKey("showObjects") == true) ? true : showObjects
+                
+                sceneInfo["hasGraphs"] = (nextScene.graphs.isEmpty == false)
+                sceneInfo["hasObjects"] = nextScene.tilemap?.getObjects().isEmpty == false
+                sceneInfo["focusedObjectData"] = ""
+                
+                
+                if (hasCurrent == false) {
+                    self.log("auto-resizing the view.", level: .debug)
+                    nextScene.cameraNode?.fitToView(newSize: view.bounds.size)
+                }
+                
+                // don't turn on effects for large tilemaps
+                if (tilemap.pixelCount > SKTILED_MAX_TILEMAP_PIXEL_SIZE) {
+                    enableEffects = false
+                }
+                
+                tilemap.shouldEnableEffects = (tilemap.boolForKey("shouldEnableEffects") == true) ? true : enableEffects
+                tilemap.shouldRasterize = shouldRasterize
+                tilemap.updateMode = tileUpdateMode ?? TiledGlobals.default.updateMode
+                
+                
+                self.demoQueue.async { [unowned self] in
+                    for option in self.debugDrawOptions.elements() {
+                        tilemap.debugDrawOptions.insert(option)
+                    }
+                }
+                
+                
+                // set the previous scene's speed
+                nextScene.speed = currentSpeed
+                
+                #if os(iOS)
+                // for some reason properties label not updating properly
+                NotificationCenter.default.post(
+                    name: Notification.Name.Demo.UpdateDebugging,
+                    object: tilemap,
+                    userInfo: sceneInfo
+                )
+                #endif
+                
+                // setup the demo level scene
+                nextScene.setupDemoLevel(fileNamed: url.relativePath, verbose: false)
+                
+                self.demoQueue.sync {
+                    
+                    NotificationCenter.default.post(
+                        name: Notification.Name.Map.Updated,
+                        object: tilemap,
+                        userInfo: nil
+                    )
+                    
+                    // calls back to AppDelegate
+                    NotificationCenter.default.post(
+                        name: Notification.Name.Demo.SceneLoaded,
+                        object: nextScene,
+                        userInfo: ["tilemapName": tilemap.mapName, "relativePath": url.relativePath]
+                    )
+                    
+                    NotificationCenter.default.post(
+                        name: Notification.Name.Camera.Updated,
+                        object: nextScene.cameraNode,
+                        userInfo: nil
+                    )
+                }
+                
+                nextScene.isPaused = isPaused
+                
+            } // end of completion handler
+        }
+        
+        // run completion
+        completion?()
     }
 
 
@@ -474,9 +680,9 @@ public class TiledDemoController: NSObject, Loggable {
 
                 // create an empty scene
                 NotificationCenter.default.post(
-                    name: Notification.Name.Debug.DebuggingCommandSent,
+                    name: Notification.Name.Debug.DebuggingMessageSent,
                     object: nil,
-                    userInfo: ["command": "cannot find any tiled assets.", "duration": 5]
+                    userInfo: ["message": "cannot find any tiled assets.", "duration": 5]
                 )
 
                 // if there's nothing to load, just create an empty scene
@@ -521,295 +727,67 @@ public class TiledDemoController: NSObject, Loggable {
     @objc func loadFileManually(notification: Notification) {
         // TODO: implement this
     }
-
-    // MARK: - Loading
-
-    /// Loads a new demo scene with a named tilemap.
-    ///
-    /// - Parameters:
-    ///   - url: tilemap file url
-    ///   - usePreviousCamera: transfer camera information
-    ///   - interval: transition duration.
-    ///   - reload: current scene is reloaded.
-    ///   - completion: optional completion handler.
-    internal func loadScene(url: URL,
-                            usePreviousCamera: Bool,
-                            interval: TimeInterval = 0.3,
-                            reload: Bool = false,
-                            _ completion: (() -> Void)? = nil) {
-
+    
+    /// Clear the current scene.
+    @objc public func flushScene() {
         guard let view = self.view else {
+            log("view is not set.", level: .error)
             return
         }
-
-
-        currentTilemap = nil
         
         
-        // set the map index
-        if let mapindex = tiledDemoUrls.firstIndex(of: url) {
-            currentTilemapIndex = Int(mapindex)
+        guard let demoScene = view.scene as? SKTiledDemoScene else {
+            log("cannot access demo scene.", level: .error)
+            return
         }
-
+        
+        // release tileap resources
+        demoScene.camera = nil
+        demoScene.cameraNode?.removeFromParent()
+        demoScene.cameraNode = nil
+        demoScene.tilemap?.removeAllActions()
+        demoScene.tilemap?.removeAllChildren()
+        demoScene.tilemap?.removeFromParent()
+        demoScene.tilemap = nil
+        demoScene.removeFromParent()
+        
+        
+        
+        currentTilemapIndex = 0
+        currentTilemapUrl = nil
+        
+        demoScene.cameraNode?.setCameraZoom(1)
+        
+        // create and move to a new scene.
+        createEmptyScene()
+        
         NotificationCenter.default.post(
-            name: Notification.Name.Demo.SceneWillUnload,
+            name: Notification.Name.DemoController.DemoStatusUpdated,
             object: nil,
-            userInfo: ["url": url]
+            userInfo: ["status": "please select a file to load", "isHidden": false]
         )
-
-
-        // loaded from preferences
-        var showObjects = defaultPreferences.showObjects
-        var enableEffects = defaultPreferences.enableEffects
-        var shouldRasterize = false
-        var tileUpdateMode: TileUpdateMode?
         
-        var allowCameraZoom = false
-
-
-        if (tileUpdateMode == nil) {
-            if let prefsUpdateMode = TileUpdateMode(rawValue: defaultPreferences.updateMode) {
-                tileUpdateMode = prefsUpdateMode
-            }
-        }
-
-        // grid visualization
-        let drawGrid: Bool = defaultPreferences.drawGrid
-        if (drawGrid == true) {
-            debugDrawOptions.insert([.drawGrid, .drawFrame])
-        }
-
-        let drawSceneAnchor: Bool = defaultPreferences.drawAnchor
-        if (drawSceneAnchor == true) {
-            debugDrawOptions.insert(.drawAnchor)
-        }
-
-        var hasCurrent = false
-        var showOverlay = true
-        var cameraZoom: CGFloat = 1
-        var isPaused: Bool = false
-
-        var currentSpeed: CGFloat = 1
-        var ignoreZoomClamping: Bool = false
-        var notifyDelegatesOnContainedNodesChange: Bool = TiledGlobals.default.enableCameraContainedNodesCallbacks
-        var zoomClamping: CameraZoomClamping = CameraZoomClamping.none
-        var ignoreZoomConstraints: Bool = defaultPreferences.ignoreZoomConstraints
-        
-        
-        var currentCameraAllowRotation = false
-        var currentCameraZRotation: CGFloat = 0
-        
-        if (currentCameraZRotation != 0) {
-            currentCameraAllowRotation = true
-        }
-        
-        var sceneInfo: [String: Any] = [:]
-
-
-        // get current scene & camera info
-        if let currentScene = view.scene as? SKTiledDemoScene {
-            hasCurrent = true
-            if let cameraNode = currentScene.cameraNode {
-                showOverlay = cameraNode.showOverlay
-                cameraZoom = cameraNode.zoom
-                ignoreZoomClamping = cameraNode.ignoreZoomClamping
-                notifyDelegatesOnContainedNodesChange = cameraNode.notifyDelegatesOnContainedNodesChange
-                zoomClamping = cameraNode.zoomClamping
-                ignoreZoomConstraints = cameraNode.ignoreZoomConstraints
-                currentCameraZRotation = cameraNode.zRotation
-            }
-
-            // pass current values to next tilemap
-            if let tilemap = currentScene.tilemap {
-                tilemap.dataStorage?.blockNotifications = true
-                debugDrawOptions = tilemap.debugDrawOptions
-                currentTilemapUrl = url
-                showObjects = tilemap.isShowingObjectBounds
-                enableEffects = tilemap.shouldEnableEffects
-                shouldRasterize = tilemap.shouldRasterize
-                tileUpdateMode = tilemap.updateMode
-
-                // remove tilemap
-                tilemap.removeAllActions()
-                tilemap.removeAllChildren()
-                tilemap.dataStorage = nil
-                tilemap.removeFromParent()
-            }
-            
-            // destory the current instance
-            currentScene.tilemap = nil
-            isPaused = currentScene.isPaused
-            currentSpeed = currentScene.speed
-            currentScene.demoController = nil
-
-            // remove scene from memory
-            currentScene.removeAllActions()
-            currentScene.removeAllChildren()
-            currentScene.removeFromParent()
-            view.presentScene(nil)
-        }
-
-        // update the console
-        let commandString = (reload == false) ? "loading map: '\(url.filename)'..." : "reloading map: '\(url.filename)'..."
-        updateCommandString(commandString, duration: 3.0)
-
-
-
-        // load the next scene on the main queue
-        DispatchQueue.main.async { [unowned self] in
-
-            let nextScene = SKTiledDemoScene(size: view.bounds.size)
-
-            nextScene.scaleMode = .aspectFill
-            nextScene.demoController = self
-            nextScene.receiveCameraUpdates = TiledGlobals.default.enableCameraCallbacks
-
-
-            // create the transition
-            let transition = SKTransition.fade(withDuration: interval)
-            view.presentScene(nextScene, transition: transition)
-            nextScene.isPaused = isPaused
-
-            // setup a new scene with the next tilemap filename
-            nextScene.setup(tmxFile: url.relativePath,
-                            inDirectory: (url.baseURL == nil) ? nil : url.baseURL!.path,
-                            withTilesets: [],
-                            ignoreProperties: false,
-                            loggingLevel: self.loggingLevel) { tilemap in
-
-                nextScene.cameraNode?.ignoreZoomClamping = ignoreZoomClamping
-                nextScene.cameraNode?.notifyDelegatesOnContainedNodesChange = notifyDelegatesOnContainedNodesChange
-                nextScene.cameraNode?.zoomClamping = zoomClamping
-                nextScene.cameraNode?.ignoreZoomConstraints = ignoreZoomConstraints
-                nextScene.cameraNode?.zRotation = currentCameraZRotation
-                nextScene.cameraNode?.allowRotation = currentCameraAllowRotation
-                
-                tilemap.allowRotation = currentCameraAllowRotation
-                
-                // previous camera settings
-                if (usePreviousCamera == true) {
-                    nextScene.cameraNode?.showOverlay = showOverlay
-                    nextScene.cameraNode?.setCameraZoom(cameraZoom, interval: interval)
-                }
-
-                self.currentTilemap = tilemap
-
-                // if tilemap has a property override to show objects, use it...else use demo prefs
-                tilemap.isShowingObjectBounds = (tilemap.boolForKey("showObjects") == true) ? true : showObjects
-                
-                sceneInfo["hasGraphs"] = (nextScene.graphs.isEmpty == false)
-                sceneInfo["hasObjects"] = nextScene.tilemap?.getObjects().isEmpty == false
-                sceneInfo["focusedObjectData"] = ""
-
-
-                if (hasCurrent == false) {
-                    self.log("auto-resizing the view.", level: .debug)
-                    nextScene.cameraNode?.fitToView(newSize: view.bounds.size)
-                }
-
-                // don't turn on effects for large tilemaps
-                if (tilemap.pixelCount > SKTILED_MAX_TILEMAP_PIXEL_SIZE) {
-                    enableEffects = false
-                }
-
-                tilemap.shouldEnableEffects = (tilemap.boolForKey("shouldEnableEffects") == true) ? true : enableEffects
-                tilemap.shouldRasterize = shouldRasterize
-                tilemap.updateMode = tileUpdateMode ?? TiledGlobals.default.updateMode
-
-
-                self.demoQueue.async { [unowned self] in
-                    for option in self.debugDrawOptions.elements() {
-                        tilemap.debugDrawOptions.insert(option)
-                    }
-                }
-
-
-                // set the previous scene's speed
-                nextScene.speed = currentSpeed
-
-                #if os(iOS)
-                // for some reason properties label not updating properly
-                NotificationCenter.default.post(
-                    name: Notification.Name.Demo.UpdateDebugging,
-                    object: tilemap,
-                    userInfo: sceneInfo
-                )
-                #endif
-
-                // setup the demo level scene
-                nextScene.setupDemoLevel(fileNamed: url.relativePath, verbose: false)
-
-                self.demoQueue.sync {
-
-                    NotificationCenter.default.post(
-                        name: Notification.Name.Map.Updated,
-                        object: tilemap,
-                        userInfo: nil
-                    )
-
-                    // calls back to AppDelegate
-                    NotificationCenter.default.post(
-                        name: Notification.Name.Demo.SceneLoaded,
-                        object: nextScene,
-                        userInfo: ["tilemapName": tilemap.mapName, "relativePath": url.relativePath]
-                    )
-
-                    NotificationCenter.default.post(
-                        name: Notification.Name.Camera.Updated,
-                        object: nextScene.cameraNode,
-                        userInfo: nil
-                    )
-                }
-
-            } // end of completion handler
-        }
-
-        // run completion
-        completion?()
     }
 
+    // MARK: - Event Handlers
 
-    /// Dump the tilemap statistics to the console.
-    public func dumpMapStatistics() {
-        guard let view = self.view,
-              let scene = view.scene as? SKTiledScene else {
-            return
-        }
-
-        if let tilemap = scene.tilemap {
-            updateCommandString("showing tilemap statistics...", duration: 3)
-            tilemap.dumpStatistics()
-        } else {
-            log("no tilemap loaded.", level: .warning)
-        }
+    /// Resets the main interface to its original state.
+    @objc func resetMainInterface(_ notification: Notification) {
+        // notification.dump(#fileID, function: #function)
+        reset()
+        createEmptyScene()
     }
     
-    /// Dump the tilemap cache statistics to the console.
-    public func dumpMapCacheStatistics() {
-        guard let view = self.view,
-              let scene = view.scene as? SKTiledScene else {
-            return
-        }
-        
-        if let tilemap = scene.tilemap {
-            if let cache = tilemap.dataStorage {
-                updateCommandString("showing tilemap cache statistics...", duration: 3)
-                //cache.dumpStatistics()
-                dump(cache)
-            }
-
-        } else {
-            log("no tilemap loaded.", level: .warning)
-        }
-    }
-
+    /// Called from the AppDelegate, this changes the method with which tiles are rendered (SpriteKit actions, dynamic, full).
+    ///
+    /// - Parameter value: update mode raw value.
     public func updateTileUpdateMode(value: UInt8) {
         guard let view = self.view,
               let scene = view.scene as? SKTiledScene else { return }
-
-
+        
+        
         let nextUpdateMode: TileUpdateMode = TileUpdateMode.init(rawValue: value) ?? TiledGlobals.default.updateMode.next()
-
+        
         if (nextUpdateMode != TiledGlobals.default.updateMode) {
             TiledGlobals.default.updateMode = nextUpdateMode
             updateCommandString("tile update mode: \(nextUpdateMode.name)", duration: 1)
@@ -822,17 +800,7 @@ public class TiledDemoController: NSObject, Loggable {
             }
         }
     }
-
-
-    // MARK: - Event Handlers
-
-    /// Resets the main interface to its original state.
-    @objc func resetMainInterface(_ notification: Notification) {
-        // notification.dump(#fileID, function: #function)
-        reset()
-        createEmptyScene()
-    }
-
+    
     /// Called when the user adds an asset search path. Called when the `Notification.Name.DemoController.AssetSearchPathsAdded` event fires.
     ///   userInfo: ["urls": `[URL]`] - urls to add to search paths.
     ///
@@ -950,20 +918,14 @@ extension TiledDemoController: TiledCustomReflectableType {
         var outputString = " Demo Controller ".padEven(toLength: 40, withPad: "-")
         outputString = "\n\(outputString)\n"
 
-        var currentMapName = "nil"
-        if let currentMap = currentTilemap {
-            currentMapName = "'\(currentMap.mapName)'"
-        }
-
         outputString += " ▸ Map Assets:                   \(tilemaps.count)\n"
         outputString += " ▸ User map index:               \(userIndexStart)\n"
-        outputString += " ▸ Current map:                  \(currentMapName)\n"
         outputString += " ▸ Current map index:            \(currentTilemapIndex)\n"
         
         var currentUrlPath = "nil"
 
-        if (currentTilemapUrl != nil) {
-            currentUrlPath = "'\(currentTilemapUrl!.relativePath)'"
+        if let currenturl = currentTilemapUrl {
+            currentUrlPath = "'\(currenturl.relativePath)'"
         }
 
         outputString += " ▸ Current map url:              \(currentUrlPath)\n\n"
@@ -1040,6 +1002,7 @@ extension TiledDemoController {
 
     /// Show/hide the map bounds.
     public func toggleMapDemoDrawBounds() {
+        print("\(#function), \(#fileID)")
         guard let view = self.view,
               let scene = view.scene as? SKTiledScene else {
             
@@ -1068,6 +1031,7 @@ extension TiledDemoController {
 
     /// Show/hide the map grid.
     public func toggleMapDemoDrawGrid() {
+        print("\(#function), \(#fileID)")
         guard let view = self.view,
               let scene = view.scene as? SKTiledScene else { return }
 
@@ -1090,6 +1054,7 @@ extension TiledDemoController {
 
     /// Show/hide the grid & map bounds. This is meant to be used with the interface buttons/keys to quickly turn grid & bounds drawing on. Called when the `Notification.Name.Demo.MapDebugDrawingChanged` notification is sent.
     @objc public func toggleMapDemoDrawGridAndBounds() {
+        print("\(#function), \(#fileID)")
         guard let view = self.view,
               let scene = view.scene as? SKTiledScene else { return }
 
@@ -1110,6 +1075,7 @@ extension TiledDemoController {
 
     /// Show/hide navigation graph visualizations.
     public func toggleMapGraphVisualization() {
+        print("\(#function), \(#fileID)")
         guard let view = self.view,
               let scene = view.scene as? SKTiledScene else {
             return
@@ -1151,6 +1117,7 @@ extension TiledDemoController {
 
     /// Show/hide current scene vector object debug visualization. Called when the `Notification.Name.Demo.MapObjectVisibilityChanged` notification is sent.
     @objc public func toggleMapObjectDrawing() {
+        print("\(#function), \(#fileID)")
         guard let view = self.view,
               let scene = view.scene as? SKTiledScene else {
             return
@@ -1176,6 +1143,7 @@ extension TiledDemoController {
 
     /// Toggles the tilemap's effects rendering flag. Called when the `Notification.Name.Debug.MapEffectsRenderingChanged` notification is sent.
     @objc public func toggleTilemapEffectsRendering() {
+        print("\(#function), \(#fileID)")
         guard let view = self.view,
               let scene = view.scene as? SKTiledScene else {
             return
@@ -1199,6 +1167,7 @@ extension TiledDemoController {
     }
 
     @objc public func cycleTilemapUpdateMode() {
+        print("\(#function), \(#fileID)")
         guard let view = self.view,
               let scene = view.scene as? SKTiledScene,
               let tilemap = scene.tilemap else { return }
@@ -1379,34 +1348,45 @@ extension TiledDemoController {
         )
     }
 
-    // MARK: - Render Statistics
-
-    public func updateRenderStatistics() {}
-
-    // MARK: - Debug Output
-
-    /// Send a command description to the UI to update status.
-    ///
-    /// - Parameters:
-    ///   - command: command string.
-    ///   - duration: how long the message should be displayed (0 is indefinite).
-    public func updateCommandString(_ command: String, duration: TimeInterval = 3.0) {
-        NotificationCenter.default.post(
-            name: Notification.Name.Debug.DebuggingCommandSent,
-            object: nil,
-            userInfo: ["command": command, "duration": duration]
-        )
-    }
-
     // MARK: - Debugging
 
+    /// Dump the current tilemap's statistics to the console.
+    public func dumpMapStatistics() {
+        guard let view = self.view,
+              let scene = view.scene as? SKTiledScene else {
+            return
+        }
+        
+        if let tilemap = scene.tilemap {
+            updateCommandString("showing tilemap statistics...", duration: 3)
+            tilemap.dumpStatistics()
+        }
+    }
+    
+    /// Dump the tilemap cache statistics to the console.
+    public func dumpMapCacheStatistics() {
+        guard let view = self.view,
+              let scene = view.scene as? SKTiledScene else {
+            return
+        }
+        
+        if let tilemap = scene.tilemap {
+            if let cache = tilemap.dataStorage {
+                updateCommandString("showing tilemap cache statistics...", duration: 3)
+                //cache.dumpStatistics()
+                dump(cache)
+            }
+        }
+    }
+    
     // this is received as a command from AppDelegate (main menu action)
     public func toggleRenderStatistics(value nextState: Bool) {
         updateCommandString("render statistics are \(nextState.valueAsOnOff)", duration: 2.0)
+        
         NotificationCenter.default.post(
             name: Notification.Name.RenderStats.VisibilityChanged,
             object: nil,
-            userInfo: ["showRenderStats": nextState]
+            userInfo: ["isHidden": !nextState]
         )
     }
 
@@ -1422,7 +1402,7 @@ extension TiledDemoController {
         NotificationCenter.default.post(
             name: Notification.Name.RenderStats.VisibilityChanged,
             object: nil,
-            userInfo: ["showRenderStats": statsNextState]
+            userInfo: ["isHidden": !statsNextState]
         )
         #endif
     }

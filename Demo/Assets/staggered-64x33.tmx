@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.6" orientation="staggered" renderorder="right-down" width="15" height="35" tilewidth="64" tileheight="33" infinite="0" staggeraxis="y" staggerindex="odd" backgroundcolor="#000000" nextobjectid="15">
+<map version="1.4" tiledversion="1.4.3" orientation="staggered" renderorder="right-down" width="15" height="35" tilewidth="64" tileheight="33" infinite="0" staggeraxis="y" staggerindex="odd" backgroundcolor="#000000" nextlayerid="9" nextobjectid="15">
  <properties>
   <property name="autoResize" type="bool" value="true"/>
   <property name="frameColor" type="color" value="#ff5adc1f"/>
@@ -174,12 +174,12 @@
    </properties>
   </tile>
  </tileset>
- <layer name="Floor1" width="15" height="35">
+ <layer id="1" name="Floor1" width="15" height="35">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAE+3RSw6AIAwE0PpXPBDX4+jaBQlpCu2gOyVhgemzQyH619dX6KwLoA3K2fKyLojvXlvrj7qW1VyrruYiUbKyoT01/5bNedGZIrOyMnvfIzq8N+vRacd7L457kZKX7SC8dj/5z+x4b+AMSjsB1nJROMRqb87ntcOVfWcwL6+zsEhP6fcHVsmaWs7yLXsBD1XkQDQIAAA=
   </data>
  </layer>
- <layer name="Walls" width="15" height="35">
+ <layer id="2" name="Walls" width="15" height="35">
   <properties>
    <property name="role" value="wall"/>
    <property name="script" type="file" value="script1.sh"/>
@@ -188,27 +188,27 @@
    H4sIAAAAAAAAE2NgGAWjgDggSoCPD4gAsTAePi4gC6VhakWgtByRdsKAMBY+MfqwAXx6ZfHIwQA2txOyE5/dxOpF10+MW5EBsrtJsROb3fTUCwLEpBda2T0KRsFwAgAWPBsUNAgAAA==
   </data>
  </layer>
- <layer name="Objects2" width="15" height="35">
+ <layer id="3" name="Objects2" width="15" height="35">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAE2NgGAWjgDggPYB2a0BpdRL0DKR7QUCMBLVDya2DAQwl9w4lt46CUUAIAACSOrP/NAgAAA==
   </data>
  </layer>
- <layer name="Objects3" width="15" height="35">
+ <layer id="4" name="Objects3" width="15" height="35">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAE2NgGAWjYOQByYF2AJlgqLobBIay20fBKBgFEAAAiACOYDQIAAA=
   </data>
  </layer>
- <layer name="Floor2" width="15" height="35">
+ <layer id="5" name="Floor2" width="15" height="35">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAE2NgGAWjYGgBTgr0MgExK5n6rCnQywjFpOhH1keOXk4y9PMzIMIIpg/kb3Yi7eVHsgumn5lIvbxoeonVh66fnUy9zGTogwFBCvWOglEwVAAAkqckJTQIAAA=
   </data>
  </layer>
- <layer name="Objects4" width="15" height="35">
+ <layer id="6" name="Objects4" width="15" height="35">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAE2NgGAWjYBQMZiA/gHYr0MEOaTrYMZTsFBsAO0kFMkhsdPfSw05yAalhSw07SQX4wpYedhICAHrOs3Q0CAAA
   </data>
  </layer>
- <objectgroup name="Locations">
+ <objectgroup id="7" name="Locations" visible="0">
   <object id="2" name="carpet1" x="64" y="448">
    <polygon points="32,16 288,-112 416,-48 160,80"/>
   </object>
@@ -225,7 +225,7 @@
    <polygon points="0,0 0,84 53.3333,112 53.3333,28"/>
   </object>
  </objectgroup>
- <layer name="Graph" width="15" height="35" visible="0">
+ <layer id="8" name="Graph" width="15" height="35" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAE+3RMQ7AMAgDQL5H1P+/p2vlYmyqqFPYGC52kogzZ7xJsSubza5cwj7NzHifNXVOfmcjuGXuEl07q94c3TT7aRbJxvPRsc7qDd1M1sNxVW83M8B9uSfed5Kp7BKu86ovc7syJw7/a3dmZV1X+WpX9u+5AVdRE540CAAA
   </data>

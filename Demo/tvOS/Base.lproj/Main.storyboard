@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="17700" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="499-42-d0g">
-    <device id="appleTV" appearance="light"/>
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="17701" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="499-42-d0g">
     <dependencies>
-        <deployment identifier="tvOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -222,8 +220,8 @@
                     </view>
                     <connections>
                         <outlet property="cameraInfoLabel" destination="AF7-aA-IZ9" id="Mif-wB-Vq5"/>
-                        <outlet property="commandOutputLabel" destination="I6j-i7-2CG" id="rha-yL-dq9"/>
                         <outlet property="controlIconView" destination="s2B-9I-4Ap" id="1J6-54-ieG"/>
+                        <outlet property="debuggingMessageLabel" destination="I6j-i7-2CG" id="rha-yL-dq9"/>
                         <outlet property="dollyIcon" destination="dg0-Wl-Qnn" id="O8k-uO-ScY"/>
                         <outlet property="effectsButton" destination="0zq-hn-NpM" id="cbV-S8-e0Z"/>
                         <outlet property="fitButton" destination="puU-KX-a3Z" id="LVd-Od-gpP"/>

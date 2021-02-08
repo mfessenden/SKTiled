@@ -2,7 +2,7 @@
 //  TiledDemoDelegate.swift
 //  SKTiled Demo - macOS
 //
-//  Copyright © 2020 Michael Fessenden. all rights reserved.
+//  Copyright ©2016-2021 Michael Fessenden. all rights reserved.
 //	Web: https://github.com/mfessenden
 //	Email: michael.fessenden@gmail.com
 //
@@ -131,7 +131,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func nodeSelectionChanged(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        // notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: Any],
               let selectedNodes = userInfo["nodes"] as? [SKNode] else {
             return
@@ -171,7 +171,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func tileClickedAction(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        // notification.dump(#fileID, function: #function)
         guard let tile = notification.object as? SKTile else {
             return
         }
@@ -192,7 +192,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func objectClickedAction(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let object = notification.object as? SKTileObject else {
             return
         }
@@ -213,7 +213,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func mouseRightClickAction(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         reset()
     }
     
@@ -223,7 +223,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func globalsUpdatedAction(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: Any] else {
             return
         }
@@ -245,20 +245,6 @@ public class TiledDemoDelegate: NSObject, Loggable {
     
     
     // MARK: - Debugging
-    
-    /// Send a command description to the UI to update status.
-    ///
-    /// - Parameters:
-    ///   - command: command string.
-    ///   - duration: how long the message should be displayed (0 is indefinite).
-    public func updateCommandString(_ command: String, duration: TimeInterval = 3.0) {
-        
-        NotificationCenter.default.post(
-            name: Notification.Name.Debug.DebuggingCommandSent,
-            object: nil,
-            userInfo: ["command": command, "duration": duration]
-        )
-    }
     
     /// Handles the `Notification.Name.Globals.Updated` callback. Changes selected nodes' highlight color.
     ///

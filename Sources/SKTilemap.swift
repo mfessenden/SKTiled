@@ -2,7 +2,7 @@
 //  SKTilemap.swift
 //  SKTiled
 //
-//  Copyright © 2020 Michael Fessenden. all rights reserved.
+//  Copyright ©2016-2021 Michael Fessenden. all rights reserved.
 //	Web: https://github.com/mfessenden
 //	Email: michael.fessenden@gmail.com
 //
@@ -516,12 +516,13 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
             #if SKTILED_DEMO
             
+            /*
             // TODO: not yet implemented
             NotificationCenter.default.post(
                 name: Notification.Name.Demo.UpdateDebugging,
                 object: nil,
                 userInfo: ["focusedObjectData": ""]
-            )
+            )*/
 
             NotificationCenter.default.post(
                 name: Notification.Name.Map.FocusCoordinateChanged,
@@ -609,14 +610,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
     // MARK: - Background Properties
 
-    /// Ignore Tiled background color.
-    public var ignoreBackground: Bool = false {
-        didSet {
-            backgroundColor = (ignoreBackground == false) ? backgroundColor : nil
-        }
-    }
-
-    /// Optional background color (read from the Tiled file).
+    /// Optional background color (parsed from the source tmx file).
     public var backgroundColor: SKColor? = nil {
         didSet {
             self.defaultLayer.color = (backgroundColor != nil) ? backgroundColor! : SKColor.clear
@@ -628,6 +622,13 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     public var backgroundOpacity: CGFloat = 1 {
         didSet {
             self.defaultLayer.opacity = backgroundOpacity
+        }
+    }
+    
+    /// Ignore Tiled background color.
+    public var ignoreBackground: Bool = false {
+        didSet {
+            defaultLayer.colorBlendFactor = (ignoreBackground == false) ? 1.0 : 0
         }
     }
 
@@ -1265,6 +1266,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
     deinit {
         objectsOverlay.removeAllChildren()
+        objectsOverlay.removeFromParent()
         _layers = []
         // dataStorage?.objectsList = nil
         dataStorage = nil
