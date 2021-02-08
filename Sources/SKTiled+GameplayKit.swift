@@ -199,9 +199,7 @@ extension SKTileLayer {
     }
 }
 
-/// ## Overview
-///
-/// Custom [`GKGridGraphNode`][gkgridgraphnode-url] object that adds a weight parameter for
+/// The `SKTiledGraphNode` node is a custom [`GKGridGraphNode`][gkgridgraphnode-url] object that adds a weight parameter for
 /// use with Tiled scene properties. Can be used with normal [`GKGridGraphNode`][gkgridgraphnode-url]
 /// instances. The `SKTiledGraphNode.weight` property is used to affect the estimated cost to a
 /// connected node. (Increasing the weight makes it less likely to be travelled to, decreasing more likely).

@@ -46,12 +46,12 @@ import SpriteKit
 ///  - `cameraPositionChanged`:  camera position change.
 ///  - `cameraZoomChanged`:  camera zoom change.
 ///  - `cameraBoundsChanged`:  camera bounds updated.
-///  - `sceneClicked`:  scene is clicked. (macOS only)
-///  - `sceneRightClicked`:  scene is right-clicked. (macOS only)
-///  - `sceneDoubleClicked`:  scene is double-clicked. (macOS only)
-///  - `mousePositionChanged`:  mouse moves in the scene. (macOS only)
-///  - `sceneDoubleTapped`:  scene is double-tapped. (iOS only)
-///  - `sceneRotated`:  scene is rotated via gesture. (iOS only)
+///  - `sceneClicked`:  scene is clicked. **(macOS only)**
+///  - `sceneRightClicked`:  scene is right-clicked. **(macOS only)**
+///  - `sceneDoubleClicked`:  scene is double-clicked. **(macOS only)**
+///  - `mousePositionChanged`:  mouse moves in the scene. **(macOS only)**
+///  - `sceneDoubleTapped`:  scene is double-tapped. **(iOS only)**
+///  - `sceneRotated`:  scene is rotated via gesture. **(iOS only)**
 ///
 ///
 /// [tiled-scene-camera-delegate-image]:https://mfessenden.github.io/SKTiled/1.3/images/camera-delegate.svg
@@ -88,22 +88,22 @@ import SpriteKit
 
     #if os(macOS)
 
-    /// Called when the scene is clicked (macOS only).
+    /// Called when the scene is clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
     @objc optional func sceneClicked(event: NSEvent)
 
-    /// Called when the scene is right-clicked (macOS only).
+    /// Called when the scene is right-clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
     @objc optional func sceneRightClicked(event: NSEvent)
 
-    /// Called when the scene is double-clicked (macOS only).
+    /// Called when the scene is double-clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
     @objc optional func sceneDoubleClicked(event: NSEvent)
 
-    /// Called when the mouse moves in the scene (macOS only).
+    /// Called when the mouse moves in the scene **(macOS only)**.
     ///
     /// - Parameter event: mouse move event.
     @objc optional func mousePositionChanged(event: NSEvent)

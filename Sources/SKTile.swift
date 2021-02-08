@@ -27,20 +27,16 @@
 import SpriteKit
 
 
-/// ## Overview
-///
 /// The `TileRenderMode` flag determines how a particular tile instance is rendered. If the default is
 /// specified, the tile renders however the parent tilemap tells it to. Only set this flag to override a
 /// particular tile instance's render behavior.
 ///
 /// ### Properties
 ///
-/// | Property | Description                                    |
-/// |:---------|:-----------------------------------------------|
-/// | default  | Tile renders at default settings.              |
-/// | static   | Tile ignores any animation data.               |
-/// | ignore   | Tile does not take into account its tile data. |
-/// | animated | Animate with a global id value.                |
+/// - `default`: Tile renders at default settings.
+/// - `static`: Tile ignores any animation data.
+/// - `ignore`: Tile does not take into account its tile data.
+/// - `animated`: Animate with a global id value.
 ///
 public enum TileRenderMode {
     case `default`
@@ -50,35 +46,33 @@ public enum TileRenderMode {
 }
 
 
-/// ## Overview
-///
 /// The `SKTile` class is a custom **[SpriteKit sprite][skspritenode-url]** node that references its image and animation data from a tileset container. The tile represents a single piece of a larger image stored in a **[tile layer](SKTileLayer.html)** container.
 ///
 /// ![Tile Data Setup][tiledata-diagram-url]
 ///
 /// ### Properties
 ///
-///  - `globalId`: tile global id
-///  - `tileData`: tileset [tile data][tiledata-url] reference
-///  - `tileSize`: tile size (in pixels)
-///  - `layer`: parent tile layer                                
+///  - `globalId`: tile global id.
+///  - `tileData`: tileset **[tile data][tiledata-url]** reference.
+///  - `tileSize`: tile size (in pixels).
+///  - `layer`: parent tile layer.
 ///
 /// ### Instance Methods
 ///
-///  - `setupPhysics(shapeOf:isDynamic:)`:  setup physics for the tile
-///  - `setupPhysics(rectSize:isDynamic:)`: setup physics for the tile
-///  - `setupPhysics(withSize:isDynamic:)`: setup physics for the tile
-///  - `runAnimation()`:                    play tile animation (if animated)
-///  - `removeAnimation(restore:)`:         remove animation
-///  - `runAnimationAsActions()`:           runs a SpriteKit action to animate the tile
-///  - `removeAnimationActions(restore:)`:  remove the animation for the current tile
+///  - `setupPhysics(shapeOf:isDynamic:)`:  setup physics for the tile.
+///  - `setupPhysics(rectSize:isDynamic:)`: setup physics for the tile.
+///  - `setupPhysics(withSize:isDynamic:)`: setup physics for the tile.
+///  - `runAnimation()`:                    play tile animation (if animated).
+///  - `removeAnimation(restore:)`:         remove animation.
+///  - `runAnimationAsActions()`:           runs a SpriteKit action to animate the tile.
+///  - `removeAnimationActions(restore:)`:  remove the animation for the current tile.
 ///
 /// [tiledata-diagram-url]:https://mfessenden.github.io/SKTiled/1.3/images/tiledata-setup.svg
 /// [tiledata-url]:SKTilesetData.html
 /// [skspritenode-url]:https://developer.apple.com/documentation/spritekit/skspritenode
 open class SKTile: SKSpriteNode, CustomReflectable {
 
-    /// Tile size.
+    /// Tile size (in pixels).
     open var tileSize: CGSize
 
     /// Node unique indentifier.
@@ -197,26 +191,22 @@ open class SKTile: SKSpriteNode, CustomReflectable {
 
     #endif
 
-    /// ## Overview
-    ///
     /// Alignment hint used to define how to handle tile positioning within layers &
     /// objects (in the event the tile size is different than the parent).
     ///
     /// ### Properties
     ///
-    /// | Property       | Description                                 |
-    /// |:---------------|:--------------------------------------------|
-    /// | topLeft        | Tile is positioned at the upper left.       |
-    /// | top            | Tile is positioned at top.                  |
-    /// | topRight       | Tile is positioned at the upper right.      |
-    /// | left           | Tile is positioned at the left.             |
-    /// | center         | Tile is positioned in the center.           |
-    /// | right          | Tile is positioned to the right.            |
-    /// | bottomLeft     | Tile is positioned at the bottom left.      |
-    /// | bottom         | Tile is positioned at the bottom.           |
-    /// | bottomRight    | Tile is positioned at the bottom right.     |
+    /// - `topLeft`: Tile is positioned at the upper left.
+    /// - `top`: Tile is positioned at top.
+    /// - `topRight`: Tile is positioned at the upper right.
+    /// - `left`: Tile is positioned at the left.
+    /// - `center`: Tile is positioned in the center.
+    /// - `right`: Tile is positioned to the right.
+    /// - `bottomLeft`: Tile is positioned at the bottom left.
+    /// - `bottom`: Tile is positioned at the bottom.
+    /// - `bottomRight`: Tile is positioned at the bottom right.
     ///
-    public enum TileAlignmentHint: Int {
+    public enum TileAlignmentHint: UInt8 {
         case topLeft
         case top
         case topRight
@@ -365,7 +355,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
 
         let tileSizeHalved = CGSize(width: tileLayer.tileSize.halfWidth, height: tileLayer.tileSize.halfHeight)
 
-        
+
         /// if this is a tile object, the object anchor lies at the first point (typically bottom-left)
         if let parentObj = object {
             return parentObj.getVertices().map { point in
@@ -375,7 +365,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
                 return self.convert(offsetpoint, from: parentObj)
             }
         }
-        
+
 
         switch tileLayer.orientation {
 
@@ -439,19 +429,15 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         return offsetVertices
     }
 
-    /// ## Overview:
-    ///
     /// Describes the tile's physics shape.
     ///
     /// ### Properties
     ///
-    /// | Property  | Description                    |
-    /// |:----------|:-------------------------------|
-    /// | none      | No physics shape.              |
-    /// | rectangle | Rectangular object shape.      |
-    /// | ellipse   | Circular object shape.         |
-    /// | texture   | Texture-based shape.           |
-    /// | path      | Open path.                     |
+    /// - `none`: No physics shape.
+    /// - `rectangle`: Rectangular object shape.
+    /// - `ellipse`: Circular object shape.
+    /// - `texture`: Texture-based shape.
+    /// - `path`: Open path.
     ///
     public enum PhysicsShape {
         case none
@@ -476,7 +462,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     internal var objectSize: CGSize?
 
     // TODO: this isn't used anywhere ⬇︎
-    
+
     /// Tile animation.
     internal var objectAnimation: SKAction?
 
@@ -492,6 +478,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         self.tileSize = tileset.tileSize
         super.init(texture: data.texture, color: SKColor.clear, size: fabs(tileset.tileSize))
         isUserInteractionEnabled = true
+
         // get render mode from tile data properties
         if let rawRenderMode = data.intForKey("renderMode") {
             if let newRenderMode = TileRenderMode.init(rawValue: rawRenderMode) {
@@ -1028,7 +1015,8 @@ extension TileRenderMode: RawRepresentable {
             default: self = .animated(gid: rawValue)
         }
     }
-
+    
+    /// Returns the internal raw value.
     public var rawValue: RawValue {
         switch self {
             case .default: return 0

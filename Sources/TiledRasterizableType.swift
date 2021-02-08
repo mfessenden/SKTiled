@@ -27,15 +27,12 @@
 import SpriteKit
 
 
-/// ## Overview
-///
-/// The `TiledRasterizableType` protocol describes an object that can.
+/// The `TiledRasterizableType` protocol describes an object that can be rasterized to an image.
 ///
 /// ### Instance Methods
 ///
-/// | Method            | Description                       |
-/// |:------------------|:----------------------------------|
-/// | `rasterize`       | rasterize the object to an image. |
+/// - `rasterize(to:filtering:)`: rasterize the object to an image.
+///
 /// :nodoc:
 @objc public protocol TiledRasterizableType {
 

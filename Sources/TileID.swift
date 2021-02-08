@@ -27,8 +27,6 @@
 import SpriteKit
 
 
-/// ## Overview
-///
 /// The `TileFlags` option set represents the various transformation flags that can be set for a given tile.
 ///
 /// ### Properties
@@ -56,8 +54,6 @@ public struct TileFlags: OptionSet {
 }
 
 
-/// ## Overview
-///
 /// The `TileID`structure provides an interface to a **[masked tile id][flip-flags-url]**.
 ///
 /// Tile flipping is represented by a mask of a tile global id, with the upper three bits storing orientation values (flipped horizontally, flipped vertically, flipped diagonally).

@@ -31,9 +31,7 @@
 #define DebugDrawOptions_h
 
 
-/// ## Overview
-///
-/// A structure representing debug drawing options for **SKTiled** objects.
+/// The `DebugDrawOptions` structure represents debug drawing options for **SKTiled** objects.
 ///
 /// ### Usage
 ///
@@ -47,13 +45,11 @@
 ///
 /// ### Properties
 ///
-/// | Property            | Description                              |
-/// |:------------------- |:---------------------------------------- |
-/// | drawGrid            | Visualize the nodes's tile grid.         |
-/// | drawFrame           | Visualize the nodes's bounding rect.     |
-/// | drawGraph           | Visualize the nodes's pathfinding graph. |
-/// | drawObjectFrames    | Draw object's bounding shapes.           |
-/// | drawAnchor          | Draw the layer's anchor point.           |
+/// - `drawGrid`: visualize the nodes's tile grid.
+/// - `drawFrame`: visualize the nodes's bounding rect.
+/// - `drawGraph`: visualize the nodes's pathfinding graph.
+/// - `drawObjectFrames`: draw object's bounding shapes.
+/// - `drawAnchor`: draw the layer's anchor point.           
 ///
 typedef NS_OPTIONS(NSInteger, DebugDrawOptions) {
     drawGrid              = 1 << 0,

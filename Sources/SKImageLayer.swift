@@ -33,26 +33,19 @@ import Cocoa
 #endif
 
 
-/// ## Overview
-///
 /// The `SKImageLayer` object is really nothing more than a sprite with positioning attributes.
 ///
 /// ### Properties
 ///
-/// | Property | Description        |
-/// |:---------|:-------------------|
-/// | image    | Layer image name.  |
-/// | wrapX    | Wrap horizontally. |
-/// | wrapY    | Wrap vertically.   |
-///
+/// - `image`: Layer image name.
+/// - `wrapX`: Wrap horizontally.
+/// - `wrapY`: Wrap vertically.
 ///
 /// ### Methods
 ///
-/// | Method          | Description              |
-/// |:----------------|:-------------------------|
-/// | setLayerImage   | Set the layer's image.   |
-/// | setLayerTexture | Set the layer's texture. |
-/// | wrapY           | Wrap vertically.         |
+/// - `setLayerImage`: set the layer's image.
+/// - `setLayerTexture`: set the layer's texture.
+/// - `wrapY`: wrap vertically.
 ///
 /// ### Usage
 ///
@@ -139,7 +132,7 @@ public class SKImageLayer: TiledLayerObject {
             self.log(errorMsg, level: .fatal)
             fatalError(errorMsg)
         }
-        
+
         // creare a data provider
         let image = CGImage(pngDataProviderSource: imageDataProvider, decode: nil, shouldInterpolate: false, intent: .defaultIntent)!
 
@@ -149,7 +142,7 @@ public class SKImageLayer: TiledLayerObject {
         textures.append(sourceTexture)
         return sourceTexture
     }
-    
+
     /// Instantiate the node with a decoder instance.
     ///
     /// - Parameter aDecoder: decoder.

@@ -43,8 +43,6 @@ internal enum SKObjectGroupDrawOrder: String {
 }
 
 
-/// ## Overview
-///
 /// The `SKObjectGroup` class is a container for vector object types. Most object properties can be set on the parent `SKObjectGroup` which is then applied to all child objects.
 ///
 ///

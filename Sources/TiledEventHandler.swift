@@ -35,35 +35,31 @@ enum EventMouseButton: UInt8 {
 }
 
 
-/// ## Overview
-///
-/// Methods that provide *optional* handlers for mouse (macOS) and touch (iOS) events.
+/// The `TiledEventHandler` protocol defines methods that provide *optional* handlers for mouse (macOS) and touch (iOS) events.
 ///
 /// ### Instance Methods
 ///
-/// | Method                   | Description                              | Platform |
-/// |:-------------------------|:-----------------------------------------|:--------:|
-/// | `mouseOverTileHandler`   | Custom tile mouse over event handler.    |  macOS   |
-/// | `mouseOverObjectHandler` | Custom object mouse over event handler.  |  macOS   |
-/// | `tileClickedHandler`     | Custom tile mouse click event handler.   |  macOS   |
-/// | `objectClickedHandler`   | Custom object mouse click event handler. |  macOS   |
-/// | `tileTouchedHandler`     | Custom tile touch event handler.         |   iOS    |
-/// | `objectTouchedHandler`   | Custom object touch event handler.       |   iOS    |
+/// - `mouseOverTileHandler`: Custom tile mouse over event handler.       macOS   
+/// - `mouseOverObjectHandler`: Custom object mouse over event handler.    macOS
+/// - `tileClickedHandler`: Custom tile mouse click event handler.     macOS
+/// - `objectClickedHandler`: Custom object mouse click event handler.   macOS
+/// - `tileTouchedHandler`: Custom tile touch event handler.            iOS
+/// - `objectTouchedHandler`: Custom object touch event handler.          iOS
 ///
 /// :nodoc:
 @objc public protocol TiledEventHandler: class {
 
-    /// Custom mouse over handler for tiles matching the given properties (macOS only).
+    /// Custom mouse over handler for tiles matching the given properties **(macOS only)**.
     ///
     /// - Parameters:
     ///   - globalID: tile global id.
     ///   - ofType: optional tile type.
     @objc optional func onCreate(globalID: UInt32, ofType: String?) -> ((SKTile) -> ())?
-    
-    
+
+
     #if os(macOS)
 
-    /// Custom mouse over handler for tiles matching the given properties (macOS only).
+    /// Custom mouse over handler for tiles matching the given properties **(macOS only)**.
     ///
     /// - Parameters:
     ///   - globalID: tile global id.
@@ -71,7 +67,7 @@ enum EventMouseButton: UInt8 {
     @objc optional func mouseOverTileHandler(globalID: UInt32, ofType: String?) -> ((SKTile) -> ())?
 
 
-    /// Custom mouse click handler for tiles matching the given properties (macOS only).
+    /// Custom mouse click handler for tiles matching the given properties **(macOS only)**.
     ///
     /// - Parameters:
     ///   - clicks: number of mouse clicks required.
@@ -81,7 +77,7 @@ enum EventMouseButton: UInt8 {
     @objc optional func tileClickedHandler(globalID: UInt32, ofType: String?, button: UInt8) -> ((SKTile) -> ())?
 
 
-    /// Custom mouse over handler for objects matching the given properties (macOS only).
+    /// Custom mouse over handler for objects matching the given properties **(macOS only)**.
     ///
     /// - Parameters:
     ///   - withID: object id.
@@ -89,7 +85,7 @@ enum EventMouseButton: UInt8 {
     @objc optional func mouseOverObjectHandler(withID: UInt32, ofType: String?) -> ((SKTileObject) -> ())?
 
 
-    /// Custom mouse click handler for objects matching the given properties (macOS only).
+    /// Custom mouse click handler for objects matching the given properties **(macOS only)**.
     ///
     /// - Parameters:
     ///   - withID: object id.
@@ -100,7 +96,7 @@ enum EventMouseButton: UInt8 {
 
     #elseif os(iOS)
 
-    /// Custom touch handler for tiles matching the given properties (iOS only).
+    /// Custom touch handler for tiles matching the given properties **(iOS only)**.
     ///
     /// - Parameters:
     ///   - globalID: tile global id.
@@ -109,7 +105,7 @@ enum EventMouseButton: UInt8 {
     @objc optional func tileTouchedHandler(globalID: UInt32, ofType: String?, userData: [String: Any]?) -> ((SKTile) -> ())?
 
 
-    /// Custom touch handler for objects matching the given properties (iOS only).
+    /// Custom touch handler for objects matching the given properties **(iOS only)**.
     ///
     /// - Parameters:
     ///   - withID: object id.

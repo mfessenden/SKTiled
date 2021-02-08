@@ -27,17 +27,13 @@
 import SpriteKit
 
 
-/// ## Overview
-///
-/// The `TiledObjectType` protocol defines a basic type used throughout the API.
+/// The `TiledObjectType` protocol describes a basic node type used throughout the API.
 ///
 ///
 /// ### Properties
 ///
-/// | Property           | Description                                     |
-/// |:-------------------|:------------------------------------------------|
-/// | `uuid`             | Unique object id.                               |
-/// | `type`             | Tiled object type.                              |
+/// - `uuid`:  unique object id.
+/// - `type`: Tiled object type.
 ///
 @objc public protocol TiledObjectType: TiledCustomReflectableType {
 
@@ -69,7 +65,6 @@ extension TiledObjectType {
         hasher.combine(uuid)
     }
 }
-
 
 
 

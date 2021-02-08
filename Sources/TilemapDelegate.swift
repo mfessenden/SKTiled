@@ -29,45 +29,37 @@ import GameplayKit
 
 
 
-/// ## Overview
-///
 /// An interface to a tilemap object that allows the user to interact with it as it is being created as well as customizing its properties & behaviors.
 ///
 /// ### Properties
 ///
-/// | Property             | Description                        |
-/// |:---------------------|:-----------------------------------|
-/// | `zDeltaForLayers`    | Default z-distance between layers. |
+/// - `zDeltaForLayers`:  Default z-distance between layers.
 ///
 /// ### Instance Methods
 ///
 /// Delegate callbacks are called asynchronously as the map is being read from disk and rendered:
 ///
-/// | Method                   | Description                                                      |
-/// |:-------------------------|:---------------------------------------------------------------- |
-/// | `didBeginParsing`        | Called when the tilemap is instantiated.                         |
-/// | `didAddTileset`          | Called when a tileset is added to a map.                         |
-/// | `didAddLayer`            | Called when a layer is added to a tilemap.                       |
-/// | `didReadMap`             | Called when the tilemap is finished parsing.                     |
-/// | `didRenderMap`           | Called when the tilemap layers are finished rendering.           |
-/// | `didAddNavigationGraph`  | Called when the a navigation graph is built for a layer.         |
-/// | `objectForTileType`      | Specify a custom tile object for use in tile layers.             |
-/// | `objectForVectorType`    | Specify a custom object for use in object groups.                |
-/// | `objectForGraphType`     | Specify a custom graph node object for use in navigation graphs. |
-/// | `willAddTile`            | Called when a tile is about to be built.                         |
-/// | `didAddTile`             | Called when a tile has just been built.                          |
-/// | `attributesForNodes`     | Add custom attributes for Tiled nodes of the given type          |
+/// - `didBeginParsing`:  called when the tilemap is instantiated.
+/// - `didAddTileset`:  called when a tileset is added to a map.
+/// - `didAddLayer`:  called when a layer is added to a tilemap.
+/// - `didReadMap`:  called when the tilemap is finished parsing.
+/// - `didRenderMap`:  called when the tilemap layers are finished rendering.
+/// - `didAddNavigationGraph`:  called when the a navigation graph is built for a layer.
+/// - `objectForTileType`:  specify a custom tile object for use in tile layers.
+/// - `objectForVectorType`:  specify a custom object for use in object groups.
+/// - `objectForGraphType`:  specify a custom graph node object for use in navigation graphs.
+/// - `willAddTile`:  called when a tile is about to be built.
+/// - `didAddTile`:  called when a tile has just been built.
+/// - `attributesForNodes`:  Add custom attributes for Tiled nodes of the given type
 ///
 /// ### Event Handlers
 ///
-/// | Method                   | Description                                     |
-/// |:-------------------------|:----------------------------------------------- |
-/// | `mouseOverTileHandler`   | Custom tile mouse event handler (macOS only).   |
-/// | `mouseOverObjectHandler` | Custom object mouse event handler (macOS only). |
-/// | `tileClickedHandler`     | Custom tile mouse event handler (macOS only).   |
-/// | `objectClickedHandler`   | Custom object mouse event handler (macOS only). |
-/// | `tileTouchedHandler`     | Custom tile touch event handler (iOS only).     |
-/// | `objectTouchedHandler`   | Custom object touch event handler (iOS only).   |
+/// - `mouseOverTileHandler`:  custom tile mouse event handler **(macOS only)**.
+/// - `mouseOverObjectHandler`:  custom object mouse event handler **(macOS only)**.
+/// - `tileClickedHandler`:  custom tile mouse event handler **(macOS only)**.
+/// - `objectClickedHandler`:  custom object mouse event handler **(macOS only)**.
+/// - `tileTouchedHandler`:  custom tile touch event handler **(iOS only)**.
+/// - `objectTouchedHandler`:  custom object touch event handler **(iOS only)**.
 ///
 /// ### Usage
 ///
@@ -232,7 +224,7 @@ import GameplayKit
     ///   - in: layer name (optional).
     /// - Returns: tile global id.
     @objc optional func willAddTile(globalID: UInt32, in: String?) -> UInt32
-    
+
     /// Called whem a tile has just been built in a layer.
     ///
     /// - Parameters:
@@ -247,7 +239,7 @@ import GameplayKit
     ///   - tile: tile instance.
     ///   - in: layer name.
     @objc optional func didAddTile(_ tile: SKTile, in: String?)
-    
+
     /// Provides custom attributes for objects of a certain *Tiled type*.
     ///
     /// - Parameters:
@@ -255,9 +247,9 @@ import GameplayKit
     ///   - named: optional node name.
     /// - Returns: custom attributes dictionary.
     @objc optional func attributesForNodes(ofType: String?, named: String?, globalIDs: [UInt32]) -> [String : String]?
-    
-    
-    
+
+
+
     @objc optional func didChangeTiledGID(for tile: SKTile)
 }
 

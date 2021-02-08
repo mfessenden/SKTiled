@@ -27,23 +27,19 @@
 import SpriteKit
 
 
-/// ## Overview
-///
-/// Structure for managing basic font rendering attributes for [**text objects**][text-objects-url].
+/// The `TextObjectAttributes` structure is used for managing basic font rendering attributes for **[text objects][text-objects-url]**.
 ///
 /// ### Properties
 ///
-/// | Property      | Description                         |
-/// |---------------|-------------------------------------|
-/// | fontName      | Font name.                          |
-/// | fontSize      | Font size.                          |
-/// | fontColor     | Font color.                         |
-/// | alignment     | Horizontal/vertical text alignment. |
-/// | wrap          | Text wraps.                         |
-/// | isBold        | Text is bold.                       |
-/// | isItalic      | Text is italicized.                 |
-/// | isunderline   | Text is underlined.                 |
-/// | renderQuality | Font scaling attribute.             |
+/// - `fontName`: font name.
+/// - `fontSize`: font size.
+/// - `fontColor`: font color.
+/// - `alignment`: horizontal/vertical text alignment.
+/// - `wrap`: text wraps.
+/// - `isBold`: text is **bold**.
+/// - `isItalic`: text is *italicized*.
+/// - `isUnderline`: text is <u>underlined</u>.
+/// - `renderQuality`: font scaling attribute.
 ///
 /// [text-objects-url]:https://doc.mapeditor.org/en/stable/manual/objects/#insert-text
 public struct TextObjectAttributes {
@@ -57,8 +53,6 @@ public struct TextObjectAttributes {
     /// Font color.
     public var fontColor: SKColor = SKColor.black
 
-    /// ## Overview
-    ///
     /// Structure describing text alignment.
     ///
     /// ### Properties

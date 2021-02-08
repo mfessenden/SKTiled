@@ -41,7 +41,12 @@
 
 ## [Migration Guide](migration-guide.html)
 
-- [Renamed Properties & Methods](migration-guide.html#renamed-properties-&-Methods)
+- [Renamed Objects](migration-guide.html#renamed-objects)
+    - [Objects](migration-guide.html#properties-&-Methods)
+    - [Properties & Methods](migration-guide.html#properties-&-Methods)
+- [Tile Coordinates](#tile-coordinates)
+- [Tile Global IDs](#tile-global-ids)
+- [Tile Flip Flags](#tile-iflip-flags)
 - [Tile Coordinates](migration-guide.html#tile-coordinates)
 - [Tile Global IDs](migration-guide.html#tile-global-ids)
 - [Tile Flip Flags](migration-guide.html#tile-iflip-flags)

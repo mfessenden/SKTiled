@@ -27,10 +27,8 @@
 import SpriteKit
 
 
-/// ## Overview
-///
+/// :nodoc:
 /// The `SKTileLayerChunk` object is a container for tiles in an infinite tile map. It represents a sub-layer of a `SKTileLayer` layer type in infinite maps.
-///
 public class SKTileLayerChunk: TiledLayerObject {
 
     /// Container for the tile sprites.

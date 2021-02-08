@@ -28,35 +28,38 @@ import SpriteKit
 import GameplayKit
 
 
-/// ## Overview
-///
 /// The `SKTiledScene` object represents a scene of content in SpriteKit, customized for including **Tiled** asset types. This scene type automatically creates  **camera** and **world container** nodes and sets up interactivity between them and an associated tile map node.
 ///
-/// ![SKTiledScene Hierarchy](../images/scene-hierarchy.svg)
+/// ![SKTiledScene Hierarchy][tiled-scene-hierarchy-image-url]
 ///
 /// The **camera node** determines what part of the scene’s coordinate space is visible in the view.
 ///
 /// ### Properties
 ///
-/// | Property   | Description          |
-/// |:-----------|:---------------------|
-/// | worldNode  | Root container node. |
-/// | tilemap    | Tile map node.       |
-/// | cameraNode | Custom scene camera. |
+/// - `worldNode`: Root container node.
+/// - `tilemap`: Tile map node.
+/// - `cameraNode`: Custom scene camera.
 ///
+/// ## Instance Methods - All Platforms
 ///
-/// ### Instance Methods
+/// - `cameraPositionChanged`: called when the camera position changes.
+/// - `cameraZoomChanged`: called when the camera zoom changes.
+/// - `cameraBoundsChanged`: called when the camera bounds updated.
 ///
-/// | Method                 | Description                                                  | Platform  |
-/// |:-----------------------|:-------------------------------------------------------------|:---------:|
-/// | cameraPositionChanged  | Called when the camera position changes.                     | (all)     |
-/// | cameraZoomChanged      | Called when the camera zoom changes.                         | (all)     |
-/// | cameraBoundsChanged    | Called when the camera bounds updated.                       | (all)     |
-/// | sceneDoubleTapped      | Called when the scene receives a double-tap event (iOS only).| iOS       |
-/// | sceneClicked           | Called when the scene is clicked (macOS only).               | macOS     |
-/// | sceneDoubleClicked     | Called when the scene is double-clicked (macOS only).        | macOS     |
-/// | mousePositionChanged   | Called when the mouse moves in the scene (macOS only).       | macOS     |
+/// ### iOS
 ///
+/// - `sceneDoubleTapped`: Called when the scene receives a double-tap event **(iOS only)**.
+///
+/// ### macOS
+///
+/// - `sceneClicked`: called when the scene is clicked **(macOS only)**.
+/// - `sceneDoubleClicked`: called when the scene is double-clicked **(macOS only)**.
+/// - `mousePositionChanged`: called when the mouse moves in the scene **(macOS only)**.
+///
+/// For more information, see the **[Setting Up Your Scenes][tiled-scene-doc-url]** page in the **[official documentation][sktiled-docroot-url]**.
+///
+/// [tiled-scene-hierarchy-image-url]:https://mfessenden.github.io/SKTiled/1.3/images/scene-hierarchy.svg
+/// [tiled-scene-doc-url]:https://mfessenden.github.io/SKTiled/1.3/scene-setup.html
 open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, TilemapDelegate, TilesetDataSource {
 
     /// World container node.
@@ -421,7 +424,7 @@ extension SKTiledScene: TiledSceneCameraDelegate {
 
     #if os(iOS)
 
-    /// Called when the scene receives a double-tap event (iOS only).
+    /// Called when the scene receives a double-tap event **(iOS only)**.
     ///
     /// - Parameter location: touch event location.
     open func sceneDoubleTapped(location: CGPoint) {}
@@ -449,13 +452,13 @@ extension SKTiledScene: TiledSceneCameraDelegate {
 
     #if os(macOS)
 
-    /// Called when the scene is double-clicked (macOS only).
+    /// Called when the scene is double-clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
     @objc open func sceneDoubleClicked(event: NSEvent) {}
 
 
-    /// Called when the mouse moves in the scene (macOS only).
+    /// Called when the mouse moves in the scene **(macOS only)**.
     ///
     /// - Parameter event: mouse move event.
     @objc open func mousePositionChanged(event: NSEvent) {}

@@ -26,39 +26,32 @@
 
 import SpriteKit
 
-/// ## Overview
-///
 /// The `SKTileObject` class represents a Tiled vector object type (rectangle, ellipse, polygon, point & polyline).
 /// When the object is created, points can be added either with an array of points, or a string.
 /// In order to render the object, the `SKTileObject.getVertices()` method is called, which returns the points needed to draw the path.
 ///
 /// ### Properties
 ///
-/// | Property | Description                                                          |
-/// |----------|----------------------------------------------------------------------|
-/// | id       | Tiled object id.                                                     |
-/// | size     | Object size.                                                         |
-/// | tileData | Tile data (for [tile objects][tile-objects-url]).                    |
-/// | text     | Text string (for text objects). Setting this redraws the object.     |
-/// | bounds   | Returns the bounding box of the shape.                               |
+/// - `id`: Tiled object id.
+/// - `size`: object size.
+/// - `tileData`: tile data (for [tile objects][tile-objects-url]).
+/// - `text`: text string (for text objects). Setting this redraws the object.
+/// - `bounds`: returns the bounding box of the shape.
 ///
-/// [tile-objects-url]:http://docs.mapeditor.org/en/stable/manual/objects/#insert-tile
+/// For more information, see the **[Working with Objects][objects-doc-url]** page in the **[official documentation][sktiled-docroot-url]**.
 ///
+/// [objects-doc-url]:http://docs.mapeditor.org/en/stable/manual/objects/#insert-tile
+/// [tile-objects-url]:https://mfessenden.github.io/SKTiled/1.3/working-with-objects.html
 open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
 
-
-    /// ### Overview
-    ///
-    /// Describes a vector object type (tile object, text object, etc).
+    /// The `TiledObjectType` enumeration describes a vector object type (tile object, text object, etc).
     ///
     /// #### Properties
     ///
-    /// | Property | Description                            |
-    /// |:---------|:---------------------------------------|
-    /// | none     | Object is a simple vector object type. |
-    /// | text     | Object is text object.                 |
-    /// | tile     | Object is effectively a tile.          |
-    /// | point    | Object is a references a single point. |
+    /// - `none`: object is a simple vector object type.
+    /// - `text`: object is text object.
+    /// - `tile`: object is effectively a tile.
+    /// - `point`: object is a references a single point.
     ///
     public enum TiledObjectType: String {
         case none
@@ -67,18 +60,14 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
         case point
     }
 
-    /// ### Overview
-    ///
-    /// Describes a vector object shape.
+    /// The `TiledObjectType` enumeration describes the shape of vector objects.
     ///
     /// #### Properties
     ///
-    /// | Property  | Description                    |
-    /// |-----------|--------------------------------|
-    /// | rectangle | Rectangular object shape.      |
-    /// | ellipse   | Circular object shape.         |
-    /// | polygon   | Closed polygonal object shape. |
-    /// | polyline  | Open polygonal object shape.   |
+    /// - `rectangle`: rectangular object shape.
+    /// - `ellipse`: circular object shape.
+    /// - `polygon`: closed polygonal object shape.
+    /// - `polyline`: ppen polygonal object shape.
     ///
     public enum TiledObjectShape: String {
         case rectangle
@@ -120,7 +109,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
             draw()
         }
     }
-    
+
     // MARK: - Object Handlers
 
 
@@ -216,18 +205,18 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
 
     /// Optional proxy color.
     open var proxyColor: SKColor?
-    
+
     /// Optional tint color.
     open var tintColor: SKColor? {
         didSet {
             guard let newColor = tintColor else {
-                
+
                 frameColor = TiledGlobals.default.debugDisplayOptions.objectHighlightColor
                 blendMode = .alpha
                 tile?.tintColor = nil
                 return
             }
-            
+
             tile?.tintColor = newColor
             frameColor = newColor
         }
@@ -246,17 +235,13 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
         return shape
     }()
 
-    /// ### Overview
-    ///
-    /// Describes tile vector object collision type.
+    /// The `CollisionType` enumeration describes tile vector object collision type.
     ///
     /// #### Properties
     ///
-    /// | Property  | Description                       |
-    /// |-----------|-----------------------------------|
-    /// | none      | No physics collisions.            |
-    /// | dynamic   | Object is a dynamic physics body. |
-    /// | collision | Object records collisions only.   |
+    /// - `none`: no physics collisions.
+    /// - `dynamic`: object is a dynamic physics body.
+    /// - `collision`: object records collisions only.
     ///
     public enum CollisionType {
         case none
@@ -326,7 +311,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
             let tileAlignmentY = layer.tilemap.tileHeightHalf
             return CGPoint(x: tileAlignmentX, y: tileAlignmentY)
         }
-        
+
         return boundingRect.center
     }
 
@@ -490,7 +475,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
         isUserInteractionEnabled = true
         draw()
     }
-    
+
     /// Instantiate the node with a decoder instance.
     ///
     /// - Parameter aDecoder: decoder.
@@ -549,11 +534,11 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
 
     /// Render the object.
     @objc open func draw() {
-        
+
         #if DEVELOPMENT_MODE
-        
+
         #endif
-        
+
         let uiScale: CGFloat = TiledGlobals.default.contentScale
         self.strokeColor = SKColor.clear
         self.fillColor = SKColor.clear
@@ -697,7 +682,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
                         addChild(scalerNode)
                         scaler = scalerNode
                     }
-                    
+
                     //tileSprite.anchorPoint = CGPoint.zero
                     tileSprite.tintColor = tintColor
                     tileSprite.layer = layer
@@ -902,13 +887,13 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
               (points.count > 1) else {
             return [CGPoint]()
         }
-        
-        
-        
-        
+
+
+
+
         return points.map { point in
             var offset = layer.pixelToScreenCoords(point: point)
-            
+
             // offset the point from the origin (isometric only)
             offset.x -= layer.origin.x
             return offset
@@ -923,10 +908,10 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
         guard (vertices.count > 1) else {
             return [CGPoint]()
         }
-        
+
         let translated = (isPolyType == true) ? (globalID == nil) ? vertices.map { $0.invertedY } : vertices : (globalID == nil) ? vertices.map { $0.invertedY } : vertices
         var result: [CGPoint] = []
-        
+
         // return interpolated points if the shape is an ellipse
         if (shapeType == TiledObjectShape.ellipse) {
             for (index, point) in translated.enumerated() {
@@ -1102,12 +1087,12 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
     open func update(_ deltaTime: TimeInterval) {
         tile?.update(deltaTime)
     }
-    
+
     // MARK: - Reflection
-    
+
     /// Returns a custom mirror for this object.
     public var customMirror: Mirror {
-        
+
         var attributes: [(label: String?, value: Any)] = [
             (label: "points", value: points),
             (label: "objectType", value: objectType),
@@ -1118,36 +1103,36 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
             (label: "visibleToCamera", value: visibleToCamera),
             (label: "isUserInteractionEnabled", value: isUserInteractionEnabled)
         ]
-        
+
         if let gid = globalID {
             attributes.insert(("globalID",gid), at: 0)
         }
-        
+
         if let tname = template {
             attributes.insert(("template",tname), at: 0)
         }
-        
+
         if let layer = layer {
             attributes.append(("layer", layer.layerDataStruct()))
         }
-        
+
         if let type = type {
             attributes.insert(("type", type), at: 0)
         }
-        
+
         if let name = name {
             attributes.insert(("name", name), at: 0)
         }
-        
+
         /// internal debugging attrs
         attributes.append(("tiled element name", tiledElementName))
         attributes.append(("tiled node nice name", tiledNodeNiceName))
         attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
         attributes.append(("tiled description", tiledDescription))
-        
-        
+
+
         return Mirror(self, children: attributes, ancestorRepresentation: .suppressed)
-        
+
     }
 }
 
@@ -1203,35 +1188,35 @@ extension SKTileObject.TiledObjectShape {
 
 /// :nodoc:
 extension SKTileObject {
-    
+
     /// Returns the internal **Tiled** node type.
     @objc public var tiledElementName: String {
         return "object"
     }
-    
+
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public override var tiledNodeNiceName: String {
         return objectType.niceName
     }
-    
+
     /// Returns the internal **Tiled** node type icon.
     @objc public override var tiledIconName: String {
         //return (globalID == nil) ? "object-icon" : "tileobject-icon"
         return objectType.iconName
     }
-    
+
     /// A description of the node.
     @objc public override var tiledListDescription: String {
         let objName = (name != nil) ? " '\(name!)'" : ""
         return "\(tiledNodeNiceName)\(objName) id: \(id)"
     }
-    
+
     /// A description of the node.
     @objc public override var tiledMenuDescription: String {
         let objName = (name != nil) ? " '\(name!)'" : ""
         return "\(tiledNodeNiceName)\(objName) id: \(id)"
     }
-    
+
     /// A description of the node.
     @objc public override var tiledDescription: String {
         return (globalID == nil) ? "Tiled vector object type." : "Tiled tile vector object type."
@@ -1245,7 +1230,7 @@ extension SKTileObject {
     open override var hash: Int {
         return id.hashValue
     }
-    
+
     /// String representation of tile object.
     open override var description: String {
         let comma = propertiesString.isEmpty == false ? " " : ""
@@ -1257,13 +1242,13 @@ extension SKTileObject {
         let templateDescription = (template != nil) ? " Template: '\(template!)'" : ""
         let miscDesc = (objectType == .text) ? " text quality: \(renderQuality)" : (objectType == .tile) ? " tile id: \(globalID ?? 0)" : (objectType == .point) ? "point:" : ""
         let layerDescription = (layer != nil) ? " Layer: '\(layer.layerName)'" : ""
-        
-        
+
+
         var pointsString = ""
         if (isPolyType == true) {
             pointsString = (points.isEmpty == true) ? " 0 points" : " \(points.count) points"
         }
-        
+
         return "\(tiledNodeNiceName) id: \(id)\(objectName)\(typeString)\(templateDescription)\(miscDesc)\(comma)\(propertiesString)\(layerDescription)\(pointsString)"
     }
 
@@ -1379,7 +1364,7 @@ extension SKTileObject {
             self.globalID = newValue
         }
     }
-    
+
     /// Tiled global id (for tile objects).
     @available(*, deprecated, renamed: "maskedTileId")
     public var realTileId: UInt32 {

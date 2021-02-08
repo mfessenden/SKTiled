@@ -27,21 +27,21 @@
 import SpriteKit
 
 
-/// ## Overview
-///
-/// The `TiledGeometryType` protocol describes a drawable type used to manage & render **Tiled** objects.
+/// The `TiledGeometryType` protocol describes a drawable type used to manage and render **Tiled** geometry objects.
 ///
 /// ### Properties
 ///
 ///  - `objectPath`: the node's bounding shape
-///  - `bounds`:  the node's bounding rect
+///  - `boundingRect`:  the node's bounding rect
+///  - `boundsShape`:  the node's rect shape
 ///  - `renderQuality`: render scaling quality
 ///  - `visibleToCamera`: node is visible to camera
 ///
 /// ### Methods
 ///
-///  - `getVertices(offset: CGPoint)`: return's the node's shape points
-///  - `contains(touch: CGPoint)`: returns true if a point is contained in this shape's frame
+///  - `contains(touch: CGPoint)`: returns true if a point is contained in this shape's frame.
+///  - `getVertices(offset: CGPoint)`: return's the node's shape points.
+///  - `draw()`: draw the object's contents.
 ///
 @objc public protocol TiledGeometryType: TiledSelectableType, TiledRasterizableType, TiledObjectType, DebugDrawableType {
 

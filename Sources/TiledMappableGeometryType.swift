@@ -45,19 +45,14 @@ import GameplayKit
     case odd, even
 }
 
-
-/// ## Overview
-///
 /// The `TilemapOrientation` property describes the map projection type.
 ///
 /// ### Constants
 ///
-/// | Property      | Description                                   |
-/// |:-------------:|:----------------------------------------------|
-/// | `orthogonal`  | Orthogonal(square tiles) tile map.            |
-/// | `isometric`   | Isometric tile map.                           |
-/// | `hexagonal`   | Hexagonal tile map.                           |
-/// | `staggered`   | Staggered isometric tile map.                 |
+/// - `orthogonal`: orthogonal(square tiles) tile map.
+/// - `isometric`:  isometric tile map.
+/// - `hexagonal`:  hexagonal tile map.
+/// - `staggered`:  staggered isometric tile map.
 ///
 /// [sktile-tileid-url]:../Classes/SKTile.html#/s:7SKTiled6SKTileC6tileIds6UInt32Vvp
 /// [working-with-tiles-url]:../working-with-tiles.html
@@ -66,23 +61,19 @@ import GameplayKit
 }
 
 
-/// ## Overview
-///
 /// The `TiledMappableGeometryType` protocol describes a container that is broken up into two-dimensional tiles.
 ///
 /// ### Properties
 ///
-/// | Property        | Description                             |
-/// | --------------- | --------------------------------------- |
-/// | `orientation`   | Container orientation                   |
-/// | `isInfinite`    | Container represents and infinite area. |
-/// | `mapSize`       | Container size (in tiles)               |
-/// | `graph`         | Container pathfinding graph (optional)  |
-/// | `childOffset`   | Child node offset (optional)            |
-/// | `tileSize`      | Tile size (in pixels)                   |
-/// | `hexsidelength` | Hexagonal side length                   |
-/// | `staggeraxis`   | Hexagonal stagger axis                  |
-/// | `staggerindex`  | Hexagonal stagger index                 |
+/// - `orientation`:  Container orientation
+/// - `isInfinite`:  Container represents and infinite area.
+/// - `mapSize`:  Container size (in tiles)
+/// - `graph`:  Container pathfinding graph (optional)
+/// - `childOffset`:  Child node offset (optional)
+/// - `tileSize`:  Tile size (in pixels)
+/// - `hexsidelength`:  Hexagonal side length
+/// - `staggeraxis`:  Hexagonal stagger axis
+/// - `staggerindex`:  Hexagonal stagger index                 
 ///
 @objc public protocol TiledMappableGeometryType: TiledGeometryType {
 
@@ -178,37 +169,37 @@ extension TiledMappableGeometryType {
         switch orientation {
             case .orthogonal:
                 return CGSize(width: mapSize.width * tileSize.width, height: mapSize.height * tileSize.height)
-                
+
             case .isometric:
                 let side = width + height
                 return CGSize(width: side * tileWidthHalf,  height: side * tileHeightHalf)
-                
+
             case .hexagonal, .staggered:
                 var result = CGSize.zero
-                
-                
+
+
                 if (staggerX == true) {
                     result = CGSize(width: width * columnWidth + sideOffsetX,
                                     height: height * (tileHeight + sideLengthY))
-                    
+
                     if (width > 1) {
                         result.height += rowHeight
                     }
-                    
-                    
+
+
                 // FIXME: this is where the problem is happening, h: 35
                 } else {
                     result = CGSize(width: width * (tileWidth + sideLengthX),
                                     height: height * rowHeight + sideOffsetY)
-                    
+
                     if (height > 1) {
                         result.width += columnWidth
                     }
                 }
-                
+
                 return result
         }
-        
+
 
     }
 
@@ -216,7 +207,7 @@ extension TiledMappableGeometryType {
 
     /// Returns the position of layer origin point (used to place tiles).
     public var origin: CGPoint {
-        
+
         switch orientation {
 
             case .orthogonal:
@@ -253,7 +244,7 @@ extension TiledMappableGeometryType {
     public var sideLengthX: CGFloat {
         return (staggeraxis == .x) ? CGFloat(hexsidelength) : 0
     }
-    
+
     /// Returns the side length for pointy hexagons.
     public var sideLengthY: CGFloat {
         return (staggeraxis == .y) ? CGFloat(hexsidelength) : 0
@@ -267,7 +258,7 @@ extension TiledMappableGeometryType {
         return (tileSize.height - sideLengthY) / 2
     }
 
-    
+
     public var columnWidth: CGFloat {
         return sideOffsetX + sideLengthX
     }
@@ -458,7 +449,7 @@ extension TiledMappableGeometryType {
     /// - Parameter point: point in screen space.
     /// - Returns: tile coordinate.
     internal func screenToTileCoords(point: CGPoint) -> simd_int2 {
-        
+
         var pixelX = point.x
         var pixelY = point.y
 
@@ -708,7 +699,7 @@ extension TiledMappableGeometryType {
 // MARK: - Extensions
 
 extension StaggerAxis: CustomStringConvertible {
-    
+
     public var description: String {
         switch self {
             case .x: return "x"
@@ -719,7 +710,7 @@ extension StaggerAxis: CustomStringConvertible {
 
 
 extension StaggerIndex: CustomStringConvertible {
-    
+
     public var description: String {
         switch self {
             case .odd: return "odd"
@@ -747,7 +738,7 @@ extension TiledMappableGeometryType {
 
 
 extension TiledMappableGeometryType where Self: SKNode {
-    
+
     /// Returns an array of parent layers, beginning with the current.
     public var parents: [SKNode] {
         var current = self as SKNode
@@ -761,4 +752,3 @@ extension TiledMappableGeometryType where Self: SKNode {
         return result
     }
 }
-

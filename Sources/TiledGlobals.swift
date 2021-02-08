@@ -87,24 +87,19 @@ public let TileSize16x16 = CGSize(value: 16)
 public let TileSize32x32 = CGSize(value: 32)
 
 
-/// ## Overview
-///
 /// The `TiledGlobals` object provides information about the framework, as well as allowing
 /// you to set default attributes for various objects.
 ///
-///
 /// ### Properties
 ///
-/// | Property              | Description                                                |
-/// |:--------------------- |:---------------------------------------------------------- |
-/// | renderer              | Returns the current SpriteKit renderer (get-only).         |
-/// | loggingLevel          | Logging verbosity.                                         |
-/// | updateMode            | Default tile update mode.                                  |
-/// | enableRenderCallbacks | Enable callbacks from the tilemap on rendering statistics. |
-/// | enableCameraCallbacks | Enable callbacks from camera to camera delegates.          |
-/// | renderQuality         | Global render quality values.                              |
-/// | contentScale          | Returns the device retina display scale factor.            |
-/// | version               | Returns the current framework version.                     |
+///  - `renderer`:               returns the current SpriteKit renderer (get-only).
+///  - `loggingLevel`:           logging verbosity.
+///  - `updateMode`:             default tile update mode.
+///  - `enableRenderCallbacks`:  enable callbacks from the tilemap on rendering statistics.
+///  - `enableCameraCallbacks`:  enable callbacks from camera to camera delegates.
+///  - `renderQuality`:          global render quality values.
+///  - `contentScale`:           returns the device retina display scale factor.
+///  - `version`:                returns the current framework version.
 ///
 /// ### Usage
 ///
@@ -175,7 +170,7 @@ public class TiledGlobals {
     public var isDevelopment: Bool {
         return SKTILED_DEVELOPMENT_MODE
     }
-    
+
     /// Default logging verbosity.
     public var loggingLevel:  LoggingLevel = SKTILED_DEFAULT_LOGGING_LEVEL
 
@@ -322,19 +317,17 @@ public class TiledGlobals {
     }
 
 
-    /// ### Overview
-    ///
-    /// Structure representing the framework version (semantic version).
+    /// The `Version` structure represents the framework version (semantic version).
     ///
     /// ### Properties
     ///
     /// | Property              | Description                  |
     /// |:----------------------|:-----------------------------|
-    /// | major                 | Framework major version.     |
-    /// | minor                 | Framework minor version.     |
-    /// | patch                 | Framework patch version.     |
-    /// | build                 | Framework build versions.    |
-    /// | suffix                | Version suffix.              |
+    /// | `major`               | Framework major version.     |
+    /// | `minor`               | Framework minor version.     |
+    /// | `patch`               | Framework patch version.     |
+    /// | `build`               | Framework build versions.    |
+    /// | `suffix`              | Version suffix.              |
     ///
     public struct Version {
         var major: Int = 0
@@ -360,9 +353,7 @@ public class TiledGlobals {
         }
     }
 
-    /// ### Overview
-    ///
-    /// Represents the render scaling factor when dealing with higher resolutions & retina screen scale factors.
+    /// The `RenderQuality` structure represents the render scaling factor used when dealing with higher resolutions & retina screen scale factors.
     ///
     /// #### Properties
     ///
@@ -388,17 +379,13 @@ public class TiledGlobals {
         public var `override`: CGFloat = 0
     }
 
-    /// ### Overview
-    ///
-    /// This structure represents global debugging visualization attributes.
+    /// The `DebugDisplayOptions` structure represents global debugging visualization attributes.
     ///
     /// ### Properties
     ///
-    /// | Property     | Description                                                  | Render Speed   |
-    /// |:-------------|:-------------------------------------------------------------|:--------------:|
-    /// | dynamic      | Dynamically update tiles as needed.                          | normal         |
-    /// | full         | All tiles are updated each frame.                            | slower         |
-    /// | actions      | Tiles are not updated, SpriteKit actions are used instead.   | fastest        |
+    /// - `mouseFilters`: mouse interaction options.
+    /// - `mousePointerSize`: mouse pointer font size.
+    /// - `highlightDuration`: global highlight duration for selectable objects.
     ///
     public struct DebugDisplayOptions {
 
@@ -438,17 +425,13 @@ public class TiledGlobals {
         /// Debug camera bounds color.
         public var cameraBoundsColor: SKColor = TiledObjectColors.metal
 
-        /// ### Overview
-        ///
         /// Global debug display mouse filter options (macOS).
         ///
         /// #### Properties
         ///
-        /// | Property              | Description                              |
-        /// |:----------------------|:-----------------------------------------|
-        /// | tileCoordinates       | Show tile coordinates.                   |
-        /// | sceneCoordinates      | Show scene coordinates.                  |
-        /// | tileDataUnderCursor   | Show tile data properties.               |
+        /// - `tileCoordinates`: show tile coordinates.
+        /// - `sceneCoordinates`: show scene coordinates.
+        /// - `tileDataUnderCursor`: show tile data properties.
         ///
         public struct MouseFilters: OptionSet {
             public let rawValue: UInt8
@@ -474,31 +457,24 @@ public class TiledGlobals {
         public var blendMode: SKBlendMode = SKBlendMode.alpha
     }
 
-    /// ## Overview
-    ///
     /// Display flag for render statistics.
     ///
     /// ### Properties
     ///
-    /// | Property              | Description                              |
-    /// |:----------------------|:-----------------------------------------|
-    /// | milliseconds          | Show render time in milliseconds.        |
-    /// | seconds               | Show render time in seconds.             |
+    /// - `milliseconds`: show render time in milliseconds.
+    /// - `seconds`: show render time in seconds.
+    ///
     public enum TimeDisplayMode: Int, CaseIterable {
         case milliseconds
         case seconds
     }
 
-    /// ## Overview
-    ///
     /// Indicates the current renderer (OpenGL or Metal).
     ///
     /// ### Properties
     ///
-    /// | Property | Description                                         |
-    /// |:---------|:----------------------------------------------------|
-    /// | opengl   | Indicates the current SpriteKit renderer is OpenGL. |
-    /// | metal    | Indicates the current SpriteKit renderer is Metal.  |
+    /// - `opengl`: indicates the current SpriteKit renderer is OpenGL. 
+    /// - `metal`: indicates the current SpriteKit renderer is Metal.
     ///
     public enum Renderer {
         case opengl

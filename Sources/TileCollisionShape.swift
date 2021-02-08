@@ -27,16 +27,12 @@
 import SpriteKit
 
 
-/// ## Overview
-///
-/// A structure representing a tile collision shape.
+/// The `TileCollisionShape` structure representing a tile collision shape.
 ///
 /// ### Properties
 ///
-/// | Property   | Description             |
-/// |:-----------|:------------------------|
-/// | `id`       | object id.              |
-/// | `points`   | frame points.           |
+/// - `id`:  object id.
+/// - `points`: frame points.           
 ///
 internal class TileCollisionShape: TiledAttributedType {
 

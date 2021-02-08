@@ -72,12 +72,11 @@ internal enum TilemapCanvasType {
 }
 
 
-/// ## Overview
-///
-/// The `SKTilemapParser` class is a custom [`XMLParserDelegate`](https://developer.apple.com/reference/foundation/xmlparserdelegate)
-/// parser for reading Tiled TMX and tileset TSX files.
+/// The `SKTilemapParser` class is a custom [`XMLParserDelegate`][xmlparserdelegate-url] parser for reading Tiled TMX and tileset TSX files.
 ///
 /// This class is not meant to be instantiated directly, but rather invoked via `SKTilemap.load` class function.
+///
+/// [xmlparserdelegate-url]:https://developer.apple.com/reference/foundation/xmlparserdelegate
 internal class SKTilemapParser: NSObject, XMLParserDelegate {
 
     // XML Parser error types.

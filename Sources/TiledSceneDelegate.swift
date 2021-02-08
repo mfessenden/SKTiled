@@ -28,9 +28,7 @@ import SpriteKit
 import GameplayKit
 
 
-/// ## Overview
-///
-/// Methods for managing `SKTilemap` nodes in an SpriteKit [`SKScene`][skscene-url] scene.
+/// The `TiledSceneDelegate` Methods for managing `SKTilemap` nodes in an SpriteKit [`SKScene`][skscene-url] scene.
 /// This protocol and the `SKTiledScene` objects are included as a suggested way to use the
 /// `SKTilemap` class, but are not required.
 ///

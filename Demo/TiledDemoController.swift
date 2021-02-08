@@ -37,9 +37,7 @@ typealias Font = NSFont
 #endif
 
 
-/// ## Overview
-///
-/// Class that manages file-based assets & preferences for the demo application. Also
+/// The `TiledDemoController `class manages file-based assets & preferences for the demo application.
 public class TiledDemoController: NSObject, Loggable {
 
     /// Demo preferences, stored on disk.

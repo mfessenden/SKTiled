@@ -27,8 +27,6 @@
 import SpriteKit
 
 
-/// ## Overview
-///
 /// The `TiledBackgroundLayer` object represents the default background for a tilemap.
 internal class TiledBackgroundLayer: TiledLayerObject {
     

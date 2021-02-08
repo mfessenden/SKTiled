@@ -58,6 +58,10 @@ import SpriteKit
 /// - `addTextures()`: Generate textures from a spritesheet image.     
 /// - `addTilesetTile()`: Add & return new tile data object.
 ///
+/// For more information, see the **[Working with Tilesets][tilesets-doc-url]** page in the **[official documentation][sktiled-docroot-url]**.
+///
+/// [tilesets-doc-url]:https://mfessenden.github.io/SKTiled/1.3/Classes/SKTileset.html
+/// [sktiled-docroot-url]:https://mfessenden.github.io/SKTiled/1.3/index.html
 /// [tiledata-diagram-url]:https://mfessenden.github.io/SKTiled/1.3/images/tiledata-setup.svg
 public class SKTileset: NSObject, CustomReflectable, TiledAttributedType {
 

@@ -27,27 +27,16 @@
 import SpriteKit
 
 
-/// ## Overview
-///
-/// The `TiledAttributedType` protocol defines a basic data structure for mapping custom Tiled
+/// The `TiledAttributedType` protocol defines a basic node type with a data structure for mapping custom **Tiled**
 /// properties to SpriteKit objects. Objects conforming to this protocol will
-/// automatically receive properties from the Tiled scene, unless supressed
+/// automatically receive properties from the source Tiled scene, unless supressed
 /// by setting the object's `TiledAttributedType.ignoreProperties` property.
-///
 ///
 /// ### Properties
 ///
-/// | Property           | Description                                     |
-/// |:-------------------|:------------------------------------------------|
-/// | `properties`       | Object of custom Tiled properties.              |
-/// | `ignoreProperties` | Ignore Tiled properties.                        |
-///
-///
-/// ### Instance Methods
-///
-/// | Method             | Description                                     |
-/// |:-------------------|:------------------------------------------------|
-/// | `parseProperties`  | Parse function (with optional completion block).|
+/// - `properties`:       object of custom Tiled properties.
+/// - `ignoreProperties`: ignore Tiled properties.
+/// - `parseProperties`:  parse function (with optional completion block).
 ///
 
 /// ### Usage
@@ -73,7 +62,12 @@ import SpriteKit
 /// let isDynamic = tiledObject.boolForKey("isDynamic") == true
 /// ```
 ///
-/// [tiledobjectype-url]:Protocols/TiledObjectType.html
+/// For more information, see the **[TiledAttributedType][tileattributedype-url]** page in the **[official documentation][sktiled-docroot-url]**. Also see the **[Custom Properties][tiled-custom-properties-url]** page in the **[Tiled Documentation][tiled-docroot-url]**.
+///
+/// [tileattributedype-url]:Protocols/TiledAttributedType.html
+/// [sktiled-docroot-url]:https://mfessenden.github.io/SKTiled/1.3/index.html
+/// [tiled-custom-properties-url]:https://doc.mapeditor.org/en/stable/manual/custom-properties/
+/// [tiled-docroot-url]:https://doc.mapeditor.org/en/stable
 @objc public protocol TiledAttributedType: TiledObjectType {
 
     /// Storage for custom Tiled properties.

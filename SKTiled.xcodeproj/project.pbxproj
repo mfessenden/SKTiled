@@ -1135,15 +1135,15 @@
 		4C440B971DAE911000DEC9A4 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				4CE077FE254366D100187F4E /* DemoPreferences.swift */,
-				4CDEEA78258BFBD3003F1758 /* TiledDemoController.swift */,
 				4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */,
+				4CDEEA78258BFBD3003F1758 /* TiledDemoController.swift */,
+				4CE077FE254366D100187F4E /* DemoPreferences.swift */,
 				4C440B981DAE911000DEC9A4 /* Assets.xcassets */,
+				4CBA617F1D8A0A4600B31FC1 /* Assets */,
 				4C440BAB1DAE913A00DEC9A4 /* iOS */,
 				4C440BA11DAE913000DEC9A4 /* macOS */,
 				4C24B17F20694D2D0027EBD5 /* tvOS */,
 				4C71829225893A0100E6046A /* Supporting Files */,
-				4CBA617F1D8A0A4600B31FC1 /* Assets */,
 			);
 			path = Demo;
 			sourceTree = "<group>";

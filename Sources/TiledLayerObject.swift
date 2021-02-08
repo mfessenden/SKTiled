@@ -67,8 +67,8 @@ typealias LayerRenderStatistics = (tiles: Int, objects: Int)
 ///
 ///  - `pointForCoordinate(coord:offset:)`: returns a point for a coordinate in the layer, with optional offset.
 ///  - `coordinateForPoint(_:)`: returns a tile coordinate for a given point in the layer.
-///  - `touchLocation(_:)`: returns a converted touch location in map space. (iOS only)
-///  - `coordinateAtTouchLocation(_:)`: returns the tile coordinate at a touch location. (iOS only)
+///  - `touchLocation(_:)`: returns a converted touch location in map space. **(iOS only)**
+///  - `coordinateAtTouchLocation(_:)`: returns the tile coordinate at a touch location. **(iOS only)**
 ///  - `isValid(coord:)`: returns true if the coordinate is valid.
 ///
 ///
@@ -83,7 +83,7 @@ typealias LayerRenderStatistics = (tiles: Int, objects: Int)
 /// // translate a point to map a coordinate
 /// coord = coordinateForPoint(touchPosition)
 /// ```
-/// 
+///
 /// In addition, all layer types respond to mouse/touch events:
 ///
 /// ```swift
@@ -171,9 +171,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     /// Ignore custom node properties.
     public var ignoreProperties: Bool = false
 
-    /// ## Overview
-    ///
-    /// Enum describing layer type.
+    /// The `TiledLayerType` enumeration denotes the type of layer this is.
     ///
     /// ### Constants
     ///
@@ -192,23 +190,19 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         case group
     }
 
-    /// ## Overview
-    ///
-    /// Tile offset hint for coordinate conversion.
+    /// The `TiledLayerType` enumeration determines tile offset hints for coordinate conversion.
     ///
     /// ### Constants
     ///
-    /// | Property    | Description                               |
-    /// |:------------|:------------------------------------------|
-    /// | center      | Tile is centered.                         |
-    /// | top         | Tile is offset at the top.                |
-    /// | topLeft     | Tile is offset at the upper left.         |
-    /// | topRight    | Tile is offset at the upper right.        |
-    /// | bottom      | Tile is offset at the bottom.             |
-    /// | bottomLeft  | Tile is offset at the bottom left.        |
-    /// | bottomRight | Tile is offset at the bottom right.       |
-    /// | left        | Tile is offset at the left side.          |
-    /// | right       | Tile is offset at the right side.         |
+    /// - `center`: tile is centered.
+    /// - `top`: tile is offset at the top.
+    /// - `topLeft`: tile is offset at the upper left.
+    /// - `topRight`: tile is offset at the upper right.
+    /// - `bottom`: tile is offset at the bottom.
+    /// - `bottomLeft`: tile is offset at the bottom left.
+    /// - `bottomRight`: tile is offset at the bottom right.
+    /// - `left`: tile is offset at the left side.
+    /// - `right`: tile is offset at the right side.
     ///
     public enum TileOffset: Int {
         case center
@@ -396,7 +390,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 
     /// Returns the frame rectangle of the layer (used to draw bounds).
     public override var boundingRect: CGRect {
-        // TODO: implement this
+        // TODO: implement this; see Tiled renderer implementations
         let boundsOffset = CGPoint.zero
         return CGRect(x: boundsOffset.x, y: boundsOffset.y, width: sizeInPoints.width, height: -sizeInPoints.height)
     }
@@ -572,7 +566,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         // set the layer's antialiasing based on tile size
         self.antialiased = (self.tilemap.currentZoom < 1)
     }
-    
+
     /// Instantiate the node with a decoder instance.
     ///
     /// - Parameter aDecoder: decoder.

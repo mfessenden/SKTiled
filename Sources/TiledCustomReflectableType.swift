@@ -27,20 +27,15 @@
 import SpriteKit
 
 
-/// ## Overview
-///
 /// The `TiledCustomReflectableType` protocol outlines internal debugging elements that can be used to query objects for state changes.
-///
 ///
 /// ### Properties
 ///
-/// | Property               | Description                                 |
-/// |:-----------------------| ------------------------------------------- |
-/// | `tiledElementName`     | Tiled element type                          |
-/// | `tiledNodeNiceName`    | Proper node name                            |
-/// | `tiledIconName`        | Node icon representation                    |
-/// | `tiledListDescription` | Description of the node used for list views |
-/// | `tiledDescription`     | Description of the node type                |
+/// - `tiledElementName`: Tiled element type.
+/// - `tiledNodeNiceName`: proper node name.
+/// - `tiledIconName`: node icon representation.
+/// - `tiledListDescription`: description of the node used for list views.
+/// - `tiledDescription`: description of the node type.
 ///
 /// :nodoc:
 @objc public protocol TiledCustomReflectableType: class {
@@ -56,7 +51,7 @@ import SpriteKit
 
     /// A description of the node used in list views.
     @objc optional var tiledListDescription: String { get }
-    
+
     /// A description of the node used in combo menus views.
     @objc optional var tiledMenuDescription: String { get }
 
@@ -93,8 +88,8 @@ extension TiledCustomReflectableType {
         let underlinedString = String(repeating: "-", count: formattedString.count)
         return "\n\(formattedString)\n\(underlinedString)\n"
     }
-    
-    
+
+
 }
 
 
@@ -142,7 +137,7 @@ extension SKSpriteNode: TiledCustomReflectableType {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
         return "Sprite\(nameString)"
     }
-    
+
     /// A description of the node.
     @objc public var tiledMenuDescription: String {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
@@ -174,7 +169,7 @@ extension SKCropNode: TiledCustomReflectableType {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
         return "Crop\(nameString)"
     }
-    
+
     /// A description of the node.
     @objc public var tiledMenuDescription: String {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
@@ -205,7 +200,7 @@ extension SKEffectNode: TiledCustomReflectableType {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
         return "Effect\(nameString)"
     }
-    
+
     /// A description of the node.
     @objc public var tiledMenuDescription: String {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
@@ -238,7 +233,7 @@ extension SKShapeNode: TiledCustomReflectableType {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
         return "Shape\(nameString)"
     }
-    
+
     /// A description of the node.
     @objc public var tiledMenuDescription: String {
         let nameString = (name != nil) ? ": '\(name!)'" : ""

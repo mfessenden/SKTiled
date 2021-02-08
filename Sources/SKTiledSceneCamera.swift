@@ -32,17 +32,15 @@ import Cocoa
 #endif
 
 
-/// ## Overview
-///
-/// Camera zoom rounding factor. Clamps the zoom value to the nearest whole pixel value in order to alleviate cracks appearing in between individual tiles.
+/// The `CameraZoomClamping` enumeration denotes the camera zoom rounding factor. Clamps the zoom value to the nearest whole pixel value in order to alleviate cracks appearing in between individual tiles.
 ///
 /// ### Properties
 ///
-/// | Property | Description                                 |
-/// |----------|---------------------------------------------|
-/// | none     | Do not clamp camera zoom.                   |
-/// | half     | Clamp zoom to the nearest half-pixel.       |
-/// | third    | Clamp zoom to the nearest third of a pixel. |
+/// - `none`: do not clamp camera zoom.
+/// - `half`: clamp zoom to the nearest half-pixel.
+/// - `third`: clamp zoom to the nearest third of a pixel.
+/// - `quarter`: clamp zoom to the nearest quarter of a pixel.
+/// - `tenth`: clamp zoom to the nearest 1/10 of a pixel.
 ///
 public enum CameraZoomClamping: CGFloat {
     case none    = 0
@@ -53,17 +51,13 @@ public enum CameraZoomClamping: CGFloat {
 }
 
 
-/// ## Overview
-///
-/// Determines how an attached controller interacts with the camera.
+/// The `CameraControlMode` enumeration determines how an attached controller interacts with the camera.
 ///
 /// ### Properties
 ///
-/// | Property | Description                                 |
-/// |----------|---------------------------------------------|
-/// | none     | Controller does not affect camera.          |
-/// | dolly    | Controller pans the camera.                 |
-/// | zoom     | Controller changes the camera zoom.         |
+/// - `none`: Controller does not affect camera.
+/// - `dolly`: Controller pans the camera.
+/// - `zoom`: Controller changes the camera zoom.
 /// :nodoc:
 public enum CameraControlMode: UInt8 {
     case none
@@ -72,7 +66,14 @@ public enum CameraControlMode: UInt8 {
 }
 
 
-
+/// The `CameraMovementMode` enumeration determines how the scene camera interprets touch and mouse events.
+///
+/// ### Properties
+///
+/// - `none`: camera will not move.
+/// - `dolly`: camera will pan based on mouse/touch drag events.
+/// - `rotation`: camera rotates on its z-axis.
+/// :nodoc:
 internal enum CameraMovementMode: UInt8 {
     case none
     case movement
@@ -80,10 +81,7 @@ internal enum CameraMovementMode: UInt8 {
 }
 
 
-
-/// ## Overview
-///
-/// Custom scene camera that responds to finger gestures and mouse events.
+/// The `SKTiledSceneCamera` is a custom scene camera that responds to finger gestures and mouse events.
 ///
 /// The `SKTiledSceneCamera` is a custom camera meant to be used with a scene conforming to the `TiledSceneDelegate` protocol.
 /// The camera defines a position in the scene to render the scene from, with a reference to the `TiledSceneDelegate.worldNode`
@@ -91,37 +89,40 @@ internal enum CameraMovementMode: UInt8 {
 ///
 /// ### Properties
 ///
-/// | Property      | Description                                                       |
-/// |---------------|-------------------------------------------------------------------|
-/// | world         | World container node.                                             |
-/// | delegates     | Array of delegates to notify about camera updates.                |
-/// | zoom          | Camera zoom value.                                                |
-/// | allowMovement | Toggle to allow camera movement.                                  |
-/// | minZoom       | Minimum zoom value.                                               |
-/// | maxZoom       | Maximum zoom value.                                               |
-/// | zoomClamping  | Clamping factor used to alleviate render artifacts like cracking. |
+/// - `world`: world container node.
+/// - `delegates`: array of delegates to notify about camera updates.
+/// - `zoom`: camera zoom value.
+/// - `allowMovement`: toggle to allow camera movement.
+/// - `minZoom`: minimum zoom value.
+/// - `maxZoom`: maximum zoom value.
+/// - `zoomClamping`: clamping factor used to alleviate render artifacts like cracking.
 ///
+/// For more information, see the **[Tiled Scene Camera][camera-doc-url]** page in the **[official documentation][sktiled-docroot-url]**.
+///
+/// [camera-doc-url]:https://mfessenden.github.io/SKTiled/1.3/scene-setup.html#tiled-scene-camera
+/// [sktiled-docroot-url]:https://mfessenden.github.io/SKTiled/1.3/index.html
+/// [tiledata-diagram-url]:https://mfessenden.github.io/SKTiled/1.3/images/tiledata-setup.svg
 public class SKTiledSceneCamera: SKCameraNode {
 
     /// World container node.
     weak internal var world: SKNode?
-    
+
     /// Camera bounds.
     internal var bounds: CGRect = CGRect.zero
-    
+
     /// Array of delegates.
     internal var delegates: [TiledSceneCameraDelegate] = []
-    
+
     /// Camera zoom level.
     public var zoom: CGFloat = 1.0
-    
+
     /// Camera rotation (in degrees).
     @objc public override var rotation: CGFloat {
         get {
             return zRotation.degrees()
         } set {
             zRotation = newValue.radians()
-            
+
             // TODO: document this notification
             NotificationCenter.default.post(
                 name: Notification.Name.Camera.Updated,
@@ -129,28 +130,28 @@ public class SKTiledSceneCamera: SKCameraNode {
             )
         }
     }
-    
+
     /// Initial camera zoom.
     public var initialZoom: CGFloat = 1.0
-    
+
     /// Movement constraints.
     public var allowMovement: Bool = true
-    
+
     /// Camera can adjust zoom.
     public var allowZoom: Bool = true
-    
+
     /// Camera can rotate.
     public var allowRotation: Bool = true
-    
+
     /// Restore normal rotation values after a certain period.
     public var restoreRotation: Bool = true
-    
+
     /// Amount to dampen the camera rotation.
     public var rotationDamping: CGFloat = 0.001
-    
+
     /// Allow tap events.
     internal var allowTaps: Bool = true
-    
+
     /// Allow gesture recognition.
     public var allowGestures: Bool = false {
         didSet {
@@ -163,46 +164,46 @@ public class SKTiledSceneCamera: SKCameraNode {
             #endif
         }
     }
-    
+
     /// Zoom minimum constraint.
     public var minZoom: CGFloat = 0.2
-    
+
     /// Zoom maximum constraint.
     public var maxZoom: CGFloat = 5.0
-    
+
     /// Ignore mix/max zoom constraints.
     public var ignoreZoomConstraints: Bool = false
-    
+
     /// Allow the camera zoom to be inverted.
     public var allowNegativeZoom: Bool = false
-    
+
     /// Returns true if the camera is zoomed out completely.
     public var isAtMaxZoom: Bool {
         return zoom == maxZoom
     }
-    
+
     /// Indicates the camera is currently moving.
     internal var isMoving: Bool = false
-    
+
     /// Update delegates on visible node changes.
     public var notifyDelegatesOnContainedNodesChange: Bool = TiledGlobals.default.enableCameraContainedNodesCallbacks {
         didSet {
             guard (oldValue != notifyDelegatesOnContainedNodesChange) else  { return }
-            
+
             NotificationCenter.default.post(
                 name: Notification.Name.Camera.Updated,
                 object: self
             )
         }
     }
-    
+
     /// Returns all **SKTiled** nodes contained within the camera view.
     public var containedNodes: [SKNode] {
         return containedNodeSet().filter { node in
             return (node as? TiledGeometryType != nil)
         }
     }
-    
+
     /// Camera control mode (tvOS).
     public var controlMode: CameraControlMode = CameraControlMode.none {
         didSet {
@@ -214,31 +215,31 @@ public class SKTiledSceneCamera: SKCameraNode {
             )
         }
     }
-    
+
     /// Clamping factor used to alleviate render artifacts like cracking.
     public var zoomClamping: CameraZoomClamping = CameraZoomClamping.none {
         didSet {
             setCameraZoom(self.zoom)
-            
+
             NotificationCenter.default.post(
                 name: Notification.Name.Camera.Updated,
                 object: self
             )
         }
     }
-    
+
     /// The current movement mode.
     internal var cameraMovementMode: CameraMovementMode = CameraMovementMode.none
-    
+
     /// Flag to ignore zoom clamping.
     public var ignoreZoomClamping: Bool = true
-    
+
     /// Logging verbosity.
     public var loggingLevel: LoggingLevel = .info
-    
+
     /// Camera bounds inset value.
     internal var boundsInset: CGFloat = 4
-    
+
     /// Bounds visualization.
     internal lazy var cameraBoundsShape: SKShapeNode = {
         let shape = SKShapeNode(rect: self.bounds.insetBy(self.boundsInset))
@@ -246,40 +247,40 @@ public class SKTiledSceneCamera: SKCameraNode {
         shape.position = CGPoint(x: -self.bounds.size.width / 2, y: -self.bounds.size.height / 2)
         return shape
     }()
-    
-    
+
+
     // gestures
-    
+
     #if os(iOS)
-    
+
     /// Gesture recognizer to handle camera pan actions.
     public var cameraPanned: UIPanGestureRecognizer!
-    
+
     /// Gesture recognizer to handle double-tap events.
     public var sceneDoubleTapped: UITapGestureRecognizer!
-    
+
     /// Gesture recognizer to handle pinch actions.
     public var cameraPinched: UIPinchGestureRecognizer!
-    
+
     /// Gesture recognizer to handle touch rotation actions.
     public var cameraRotated: UIRotationGestureRecognizer!
     #endif
-    
+
     // MARK: - Locations
-    
+
     /// Current focal point.
     fileprivate var focusLocation: CGPoint = CGPoint.zero
-    
+
     /// Last focal point.
     fileprivate var lastLocation: CGPoint!
-    
-    
+
+
     // MARK: - Overlay
-    
-    
+
+
     /// Quick & dirty overlay node.
     internal let overlay: SKNode = SKNode()
-    
+
     /// Flag to show the overlay.
     public var showOverlay: Bool = true {
         didSet {
@@ -287,9 +288,9 @@ public class SKTiledSceneCamera: SKCameraNode {
             overlay.isHidden = !showOverlay
         }
     }
-    
+
     // MARK: - Initialization
-    
+
     /// Initialize the camera with a `SKView` and world node references.
     ///
     /// - Parameters:
@@ -300,44 +301,44 @@ public class SKTiledSceneCamera: SKCameraNode {
         world = node
         bounds = view.bounds
         super.init()
-        
+
         // add the overlay
         overlay.name = "CAMERA_OVERLAY"
         addChild(overlay)
         overlay.isHidden = true
-        
+
         #if SKTILED_DEMO
         overlay.setAttrs(values: ["tiled-node-name": "overlay", "tiled-node-icon": "overlay-icon", "tiled-node-desc": "Camera overlay node.", "tiled-node-listdesc": "Camera Overlay", "tiled-node-nicename": "Camera Overlay"])
         #endif
-        
+
         #if os(iOS)
         setupGestures(for: view)
         #endif
-        
+
         if let clampingMode = CameraZoomClamping(rawValue: TiledGlobals.default.contentScale) {
             zoomClamping = clampingMode
         }
-        
+
         #if os(macOS)
         if let mainWindow = view.window {
             mainWindow.acceptsMouseMovedEvents = true
         }
         #endif
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     deinit {
         // remove delegates
         delegates.removeAll()
     }
-    
+
     // MARK: - Gestures
-    
+
     #if os(iOS)
-    
+
     /// Setup gesture recognizers for navigating the scene.
     ///
     /// - Parameter skView: current SpriteKit view.
@@ -348,28 +349,28 @@ public class SKTiledSceneCamera: SKCameraNode {
         cameraPanned.maximumNumberOfTouches = 1
         skView.addGestureRecognizer(cameraPanned)
         cameraPanned.isEnabled = allowGestures
-        
+
         /// double-tap recognizer
         sceneDoubleTapped = UITapGestureRecognizer(target: self, action: #selector(sceneDoubleTapAction))
         sceneDoubleTapped.numberOfTapsRequired = 2
         skView.addGestureRecognizer(sceneDoubleTapped)
         sceneDoubleTapped.isEnabled = allowGestures
-        
+
         /// setup pinch recognizer
         cameraPinched = UIPinchGestureRecognizer(target: self, action: #selector(scenePinched(_:)))
         skView.addGestureRecognizer(cameraPinched)
         cameraPinched.isEnabled = allowGestures
-        
+
         /// setup rotation recognizer
         cameraRotated = UIRotationGestureRecognizer(target: self, action: #selector(sceneRotated(_:)))
         skView.addGestureRecognizer(cameraRotated)
         cameraRotated.isEnabled = allowGestures
     }
-    
+
     #endif
-    
+
     // MARK: - Delegates
-    
+
     /// Enable/disable camera callbacks for *all* delegates.
     ///
     /// - Parameter value: enable delegate callbacks.
@@ -378,7 +379,7 @@ public class SKTiledSceneCamera: SKCameraNode {
             delegate.receiveCameraUpdates = value
         }
     }
-    
+
     /// Add a camera delegate to allow it to be notified of camera changes.
     ///
     /// - Parameter delegate: camera delegate.
@@ -389,7 +390,7 @@ public class SKTiledSceneCamera: SKCameraNode {
         //delegate.currentZoomLevel = zoom
         delegates.append(delegate)
     }
-    
+
     /// Disconnect a camera delegate.
     ///
     /// - Parameter delegate: camera delegate.
@@ -398,29 +399,29 @@ public class SKTiledSceneCamera: SKCameraNode {
             delegates.remove(at: idx)
         }
     }
-    
+
     /// Notify delegates when the contained nodes change.
     internal func updateContainedNodes() {
         guard (notifyDelegatesOnContainedNodesChange == true) else {
             return
         }
-        
+
         let currentlyContained = Set(self.containedNodes)
-        
+
         // pass nodes to delegates
         for delegate in self.delegates {
             guard (delegate.receiveCameraUpdates == true) else {
                 continue
             }
-            
+
             DispatchQueue.main.async {
                 delegate.containedNodesChanged?(currentlyContained)
             }
         }
     }
-    
+
     // MARK: - Overlay
-    
+
     /// Add a node to the overlay node.
     ///
     /// - Parameter node: node.
@@ -428,9 +429,9 @@ public class SKTiledSceneCamera: SKCameraNode {
         overlay.addChild(node)
         node.zPosition = zPosition + 10
     }
-    
+
     // MARK: - Zooming
-    
+
     /// Apply zooming to the world node (as scale).
     ///
     /// - Parameters:
@@ -440,51 +441,51 @@ public class SKTiledSceneCamera: SKCameraNode {
     public func setCameraZoom(_ scale: CGFloat,
                               interval: TimeInterval = 0,
                               update: Bool = true) {
-        
-        
-        
+
+
+
         // clamp scaling between min/max zoom
         var zoomClamped = (ignoreZoomConstraints == true) ? scale.clamped(minZoom, maxZoom) : scale
-        
+
         // round zoom value to alleviate artifact
         zoomClamped = (ignoreZoomClamping == false) ? clampZoomValue(zoomClamped, factor: zoomClamping.rawValue) : scale
-        
+
         // if scale is negative, decide how to handle it
         //zoomClamped = (allowNegativeZoom == false) ? minZoom : zoomClamped
-        
+
         if (zoomClamped <= 0) {
             if (allowNegativeZoom == false) {
                 zoomClamped = abs(zoomClamped)
             }
         }
-        
+
         self.zoom = zoomClamped
-        
+
         let zoomAction = SKAction.scale(to: zoomClamped, duration: interval)
-        
+
         if (interval == 0) {
             world?.setScale(zoomClamped)
         } else {
             world?.run(zoomAction)
         }
-        
+
         if let tilemap = (scene as? TiledSceneDelegate)?.tilemap {
             tilemap.autoResize = false
         }
-        
-        
+
+
         // notify delegates
         DispatchQueue.main.async {
             for delegate in self.delegates {
                 delegate.cameraZoomChanged?(newZoom: zoomClamped)
             }
         }
-        
+
         if (update == true) {
             self.updateContainedNodes()
         }
     }
-    
+
     /// Apply zooming to the camera at a specific location.
     ///
     /// - Parameters:
@@ -495,7 +496,7 @@ public class SKTiledSceneCamera: SKCameraNode {
         setCameraZoom(scale, interval: 0, update: false)
         moveCamera(location: location, previous: position)
     }
-    
+
     /// Set the camera min/max zoom values. This setting will be ignored if the `SKTiledSceneCamera.ignoreZoomConstraints` property is `false`.
     ///
     /// - Parameters:
@@ -506,7 +507,7 @@ public class SKTiledSceneCamera: SKCameraNode {
         minZoom = minValue
         maxZoom = maximum
     }
-    
+
     /// Clamp the camera scale to alleviate cracking. Default clamps float value to the nearest 0.25.
     ///
     /// - Parameters:
@@ -518,15 +519,15 @@ public class SKTiledSceneCamera: SKCameraNode {
         let result = round(value * factor) / factor
         return (result > 0) ? result : value
     }
-    
+
     // MARK: - Bounds
-    
+
     /// Update the camera bounds. Camera delegates are notified automatically with the changes.
     ///
     /// - Parameter bounds: camera view bounds.
     public func setCameraBounds(bounds: CGRect) {
         self.bounds = bounds
-        
+
         // notify delegates
         DispatchQueue.main.async {
             for delegate in self.delegates {
@@ -535,41 +536,41 @@ public class SKTiledSceneCamera: SKCameraNode {
         }
         self.updateContainedNodes()
     }
-    
+
     /// Redraw the camera bounding shape.
     func drawBounds(withColor: SKColor? = nil,
                     duration: TimeInterval = 0) {
-        
+
         let boundsColor = (withColor != nil) ? withColor! : TiledGlobals.default.debugDisplayOptions.cameraBoundsColor
         cameraBoundsShape.path = CGPath(rect: bounds.insetBy(boundsInset), transform: nil)
         cameraBoundsShape.strokeColor = boundsColor.withAlphaComponent(0.6)
         cameraBoundsShape.position = CGPoint(x: -bounds.size.width / 2, y: -bounds.size.height / 2)
     }
-    
+
     // MARK: - Movement
-    
+
     /// Move the camera to a given location in the scene.
     ///
     /// - Parameters:
     ///   - location: new location.
     ///   - previous: old location.
     public func moveCamera(location: CGPoint, previous: CGPoint) {
-        
+
         let dy = position.y - (location.y - previous.y)
         let dx = position.x - (location.x - previous.x)
-        
+
         position = CGPoint(x: dx, y: dy)
-        
+
         // notify delegates
         DispatchQueue.main.async {
             for delegate in self.delegates {
                 delegate.cameraPositionChanged?(newPosition: self.position)
             }
         }
-        
+
         self.updateContainedNodes()
     }
-    
+
     /// Pan the camera manually. Optionally, a duration can be specified for the movement.
     ///
     /// - Parameters:
@@ -581,16 +582,16 @@ public class SKTiledSceneCamera: SKCameraNode {
             DispatchQueue.main.async {
                 for delegate in self.delegates {
                     guard (delegate.receiveCameraUpdates == true) else { continue }
-                    
+
                     // TODO: async notify
                     delegate.cameraPositionChanged?(newPosition: point)
                 }
             }
-            
+
             self.updateContainedNodes()
         })
     }
-    
+
     /// Center the camera on a location in the scene.
     ///
     /// - Parameters:
@@ -605,7 +606,7 @@ public class SKTiledSceneCamera: SKCameraNode {
             }
             self.updateContainedNodes()
         }
-        
+
         if duration == 0 {
             position = point
         } else {
@@ -614,7 +615,7 @@ public class SKTiledSceneCamera: SKCameraNode {
             run(moveAction)
         }
     }
-    
+
     /// Center the camera on a node in the scene.
     ///
     /// - Parameters:
@@ -623,7 +624,7 @@ public class SKTiledSceneCamera: SKCameraNode {
     public func centerOn(_ node: SKNode, duration: TimeInterval = 0) {
         guard let scene = self.scene else { return }
         let nodePosition = scene.convert(node.position, from: node)
-        
+
         defer {
             // notify delegates
             for delegate in self.delegates {
@@ -641,10 +642,10 @@ public class SKTiledSceneCamera: SKCameraNode {
             run(moveAction)
         }
     }
-    
+
     // MARK: - Camera Reset
-    
-    
+
+
     /// Reset the camera position & zoom level.
     public func resetCamera(duration: TimeInterval = 0) {
         if duration == 0 {
@@ -652,7 +653,7 @@ public class SKTiledSceneCamera: SKCameraNode {
             rotation = 0
             return
         }
-        
+
         let resetAction = SKAction.group([
             SKAction.run {
                 //panToPoint(.zero, duration: duration)
@@ -661,10 +662,10 @@ public class SKTiledSceneCamera: SKCameraNode {
             },
             SKAction.rotate(toAngle: 0, duration: duration)
         ])
-        
+
         run(resetAction)
     }
-    
+
     /// Reset the camera position & zoom level.
     ///
     /// - Parameter scale: camera scale.
@@ -673,7 +674,7 @@ public class SKTiledSceneCamera: SKCameraNode {
         setCameraZoom(scale)
         run(SKAction.rotate(toAngle: 0, duration: 1))
     }
-    
+
     /// Center & fit the current tilemap in the frame when the parent scene is resized.
     ///
     /// - Parameters:
@@ -683,39 +684,39 @@ public class SKTiledSceneCamera: SKCameraNode {
         guard let scene = scene,
               let tiledScene = scene as? TiledSceneDelegate,
               let tilemap = tiledScene.tilemap else { return }
-        
+
         let mapsize = tilemap.sizeInPoints // (tilemap.sizeInPoints / TiledGlobals.default.contentScale)
         let tilemapCenter = scene.convert(tilemap.position, from: tilemap)
-        
+
         let isPortrait: Bool = newSize.height > newSize.width
-        
+
         let widthFactor: CGFloat = (tilemap.isPortrait == true) ? 0.85 : 0.75
         let heightFactor: CGFloat = (tilemap.isPortrait == true) ? 0.75 : 0.85
-        
+
         let screenScaleWidth: CGFloat = isPortrait ? widthFactor : 0.8
         let screenScaleHeight: CGFloat = isPortrait ? heightFactor : 0.8
-        
+
         // get the usable height/width
         let usableWidth: CGFloat = newSize.width * screenScaleWidth
         let usableHeight: CGFloat = newSize.height * screenScaleHeight
         let scaleFactor = (isPortrait == true) ? usableWidth / mapsize.width : usableHeight / mapsize.height
-        
+
         //let heightOffset: CGFloat = (usableHeight / 20)
         let focusPoint = CGPoint(x: tilemapCenter.x, y: tilemapCenter.y) // -heightOffset
-        
+
         centerOn(scenePoint: focusPoint)
         setCameraZoom(scaleFactor, interval: transition)
         self.log("fitting to view: \(usableWidth.stringRoundedTo()) x \(usableHeight.stringRoundedTo()),  scale: \(scaleFactor.stringRoundedTo())", level: .debug)
-        
+
         NotificationCenter.default.post(
             name: Notification.Name.Camera.Updated,
             object: self,
             userInfo: ["cameraInfo": self.description, "cameraControlMode": self.controlMode]
         )
     }
-    
+
     // MARK: - Geometry
-    
+
     /// Returns the points of the camera's bounding shape.
     ///
     /// - Returns: array of points.
@@ -729,7 +730,7 @@ public class SKTiledSceneCamera: SKCameraNode {
 
 
 extension CameraZoomClamping {
-    
+
     public var name: String {
         switch self {
             case .none: return "None"
@@ -739,14 +740,14 @@ extension CameraZoomClamping {
             case .tenth: return "Tenth"
         }
     }
-    
+
     /// Returns an array of all camera zoom modes.
     ///
     /// - Returns: current camera zoom modes.
     public static func allModes() -> [CameraZoomClamping] {
         return [CameraZoomClamping.none, CameraZoomClamping.half, CameraZoomClamping.third, CameraZoomClamping.quarter, CameraZoomClamping.tenth]
     }
-    
+
     /// Returns the next camera clamping mode.
     ///
     /// - Returns: next camera zoom clamping mode.
@@ -759,7 +760,7 @@ extension CameraZoomClamping {
             case .tenth: return .none
         }
     }
-    
+
     /// The *minimum* possible value for a given zoom clamping level.
     public var minimum: CGFloat {
         switch self {
@@ -780,26 +781,26 @@ extension CameraZoomClamping {
 
 // :nodoc:
 extension SKTiledSceneCamera {
-    
+
     /// Current clamp status.
     fileprivate var clampDescription: String {
         let clampString = (ignoreZoomClamping == false) ? (zoomClamping != .none) ? ", clamp: \(zoomClamping.minimum)" : "" : ""
         let clampMode = (ignoreZoomClamping == true) ? ", clamp: off" : ""
         return "\(clampString)\(clampMode)"
     }
-    
+
     /// World rotation status.
     fileprivate var rotationDescription: String {
         return (rotation != 0) ? " rotation: \(rotation.stringRoundedTo(2))" : ""
     }
-    
-    
+
+
     /// Custom camera info description.
     public override var description: String {
         guard let scene = scene else {
             return "\(tiledNodeNiceName): "
         }
-        
+
         let rect = CGRect(origin: scene.convert(position, from: self), size: bounds.size)
         let uiScale = getContentScaleFactor()
         let scaleString = (uiScale > 1) ? " scale: \(uiScale) " : ""
@@ -812,8 +813,9 @@ extension SKTiledSceneCamera {
 
 // MARK: - Debugging
 
+// :nodoc:
 extension SKTiledSceneCamera: TiledCustomReflectableType {
-    
+
     /// Dump camera statistics to the console.
     public func dumpStatistics() {
         let headerString = "--------------- Camera ---------------"
@@ -821,7 +823,7 @@ extension SKTiledSceneCamera: TiledCustomReflectableType {
             print("\n\(headerString)\n  - no world node \n\n")
             return
         }
-        
+
         print("\n\(headerString)")
         print("  ▸ position:                  \(position.shortDescription)")
         print("  ▸ rotation:                  \(rotation.stringRoundedTo(1))")
@@ -837,7 +839,7 @@ extension SKTiledSceneCamera: TiledCustomReflectableType {
         print("  ▸ world position:            \(world.position.shortDescription)")
         print("  ▸ world rotation:            \(world.zRotation.stringRoundedTo(3))")
         print("\n  ▾ Delegates:")
-        
+
         for delegate in delegates {
             let dname = String(describing: type(of: delegate))
             print("   ▸ \(delegate.receiveCameraUpdates.valueAsCheckbox) '\(dname)'")
@@ -845,24 +847,24 @@ extension SKTiledSceneCamera: TiledCustomReflectableType {
 
         print("\n\n")
     }
-    
+
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public var tiledNodeNiceName: String {
         return "Camera"
     }
-    
+
     /// Returns the internal **Tiled** node type icon.
     @objc public var tiledIconName: String {
         return "camera-icon"
     }
-    
+
     /// A description of the node.
     @objc public var tiledListDescription: String {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
         let delegateString = "( \(delegates.count) delegates )"
         return "\(tiledNodeNiceName)\(nameString) \(delegateString)"
     }
-    
+
     /// A description of the node used for list views.
     @objc public var tiledDescription: String {
         return "Tiled scene camera."
@@ -875,11 +877,11 @@ extension SKTiledSceneCamera: TiledCustomReflectableType {
 
 
 extension SKTiledSceneCamera {
-    
+
     #if os(iOS)
-    
+
     // MARK: - Gesture Handlers
-    
+
     /// Update the scene camera when a pan gesture is recogized.
     ///
     /// - Parameter recognizer: pan gesture recognizer.
@@ -887,23 +889,23 @@ extension SKTiledSceneCamera {
         guard (self.scene != nil), (allowMovement == true) else {
             return
         }
-        
+
         if (recognizer.state == .began) {
             let location = recognizer.location(in: recognizer.view)
             lastLocation = location
         }
-        
+
         if (recognizer.state == .changed) && (allowMovement == true) {
             if lastLocation == nil { return }
             let location = recognizer.location(in: recognizer.view)
             let delta = CGPoint(x: location.x - lastLocation.x, y: location.y - lastLocation.y)
-            
+
             // calls `cameraPositionChanged`
             centerOn(scenePoint: CGPoint(x: Int(position.x - delta.x), y: Int(position.y - -delta.y)))
             lastLocation = location
         }
     }
-    
+
     /// Handler for double-tap gestures.
     ///
     /// - Parameter recognizer: tap gesture recognizer.
@@ -916,7 +918,7 @@ extension SKTiledSceneCamera {
             }
         }
     }
-    
+
     ///  Handler for pinch gesture events. Updates the camera scale in the scene.
     ///
     /// - Parameter recognizer: pinch gesture recognizer.
@@ -924,23 +926,23 @@ extension SKTiledSceneCamera {
         guard let scene = self.scene,(allowZoom == true) else {
             return
         }
-        
+
         if recognizer.state == .began {
             let location = recognizer.location(in: recognizer.view)
             focusLocation = scene.convertPoint(fromView: location)  // correct
             // calls `cameraPositionChanged`
             centerOn(scenePoint: focusLocation)
         }
-        
+
         if recognizer.state == .changed {
             zoom *= recognizer.scale
-            
+
             // set the world scaling here
             setCameraZoomAtLocation(scale: zoom, location: focusLocation)
             recognizer.scale = 1
         }
     }
-    
+
     ///  Handler for multi-touch rotation events. Updates the camera rotation in the scene.
     ///
     /// - Parameter recognizer: rotation gesture recognizer.
@@ -948,19 +950,19 @@ extension SKTiledSceneCamera {
         guard let world = self.world, (allowRotation == true) else {
             return
         }
-        
+
         let rotationAmount = recognizer.rotation
         let rotationVelocity = abs(recognizer.velocity)
         let newRotation = rotationAmount * rotationVelocity
         rotation -= newRotation
     }
-    
+
     #endif
-    
+
     #if os(macOS)
-    
+
     // MARK: - Mouse Handlers
-    
+
     /// Handler for mouse click events.
     ///
     /// - Parameter event: mouse event.
@@ -974,16 +976,16 @@ extension SKTiledSceneCamera {
         }
 
         #if SKTILED_DEMO
-        
+
         // clear the currently selected node
         NotificationCenter.default.post(
             name: Notification.Name.Camera.Updated,
             object: nil
         )
-        
+
         #endif
-        
-        
+
+
         if (event.clickCount == 1) {
             for delegate in self.delegates {
                 guard (delegate.receiveCameraUpdates == true) else { continue }
@@ -991,8 +993,8 @@ extension SKTiledSceneCamera {
             }
             return
         }
-        
-        
+
+
         if (event.clickCount > 1) {
             for delegate in self.delegates {
                 guard (delegate.receiveCameraUpdates == true) else { continue }
@@ -1001,7 +1003,7 @@ extension SKTiledSceneCamera {
             return
         }
     }
-    
+
     /// Handle mouseup events.
     ///
     /// - Parameter event: mouse event.
@@ -1009,27 +1011,27 @@ extension SKTiledSceneCamera {
         guard (self.scene as? TiledSceneDelegate != nil) else {
             return
         }
-        
+
         if (isMoving == true) {
             updateContainedNodes()
         }
-        
+
         let location = event.location(in: self)
         lastLocation = location
         focusLocation = location
         isMoving = false
     }
-    
+
     /// Track mouse movement in the scene. Location is in local space, so coordinate origin will be the center of the current window.
     ///
     /// - Parameter event: mouse event.
     public override func mouseMoved(with event: NSEvent) {
         super.mouseMoved(with: event)
        // print("⭑ camera mouse event at \(event.location(in: self).shortDescription)")
-        
+
         if (event.type == .mouseMoved) {
             lastLocation = event.location(in: self)
-            
+
             //guard (TiledGlobals.default.enableMouseEvents == true) else { return }
             for delegate in self.delegates {
                 guard (delegate.receiveCameraUpdates == true) else {
@@ -1039,7 +1041,7 @@ extension SKTiledSceneCamera {
             }
         }
     }
-    
+
     /// Tracks mouse drag events.
     ///
     /// - Parameter event: mouse event
@@ -1051,7 +1053,7 @@ extension SKTiledSceneCamera {
             scenePositionChanged(with: event)
         }
     }
-    
+
     /// Manage mouse wheel zooming. Need to ensure that lastLocation is a location in *this* node.
     ///
     /// - Parameter event: mouse wheel event.
@@ -1059,74 +1061,74 @@ extension SKTiledSceneCamera {
         guard let scene = self.scene, (allowZoom == true) else {
             return
         }
-        
-        
+
+
         if (allowZoom == true) {
-            
+
             // get mouse position in window
             // get mouse position relative to center
 
             isMoving = true
-            
+
             // this is correct
             var windowLocation = event.locationInWindow
             windowLocation = scene.convertPoint(fromView: windowLocation)
-            
+
             // convert the scene position
             let anchorPointInCamera = convert(windowLocation, from: scene)
-            
+
             // set the zoom level
             zoom += (event.deltaY * 0.05) * (zoom * 0.5)
-            
+
             let anchorPointInScene = scene.convert(anchorPointInCamera, from: self)
             let translationOfAnchorInScene = (x: windowLocation.x - anchorPointInScene.x, y: windowLocation.y - anchorPointInScene.y)
             position = CGPoint(x: position.x - translationOfAnchorInScene.x, y: position.y - translationOfAnchorInScene.y)
-            
+
             focusLocation = windowLocation
             lastLocation = position
             setCameraZoom(zoom)
         }
     }
-    
+
     /// Handler for mouse right-click events.
     ///
     /// - Parameter event: mouse event.
     public override func rightMouseDown(with event: NSEvent) {
-        
+
         #if SKTILED_DEMO
-        
+
         // clear the currently selected node
         NotificationCenter.default.post(
             name: Notification.Name.Demo.MouseRightClicked,
             object: nil
         )
         #endif
-        
+
         if let tiledScene = scene as? SKTiledScene {
             let nodesUnderMouse = tiledScene.nodes(at: event.location(in: tiledScene)).filter( { $0 as? TiledGeometryType != nil })
-            
+
             if (nodesUnderMouse.isEmpty == true) {
                 return
             }
         }
     }
-    
+
     /// Handler for mouse right-click events.
     ///
     /// - Parameter event: mouse event.
     public override func rightMouseUp(with event: NSEvent) {
-        
+
         #if SKTILED_DEMO
 
         if let tiledScene = scene as? SKTiledScene {
             let locationInScene = event.location(in: tiledScene)
             let nodesUnderMouse = tiledScene.nodes(at: locationInScene).filter( { $0 as? TiledGeometryType != nil })
-            
+
             if (nodesUnderMouse.isEmpty == true) {
                 log("no nodes at event location '\(event.location(in: self).shortDescription)'", level: .warning)
                 return
             }
-            
+
             // REFERENCE: these nodes are correct!
             NotificationCenter.default.post(
                 name: Notification.Name.Demo.NodesRightClicked,
@@ -1135,14 +1137,14 @@ extension SKTiledSceneCamera {
                            "positionInWindow": event.locationInWindow]
             )
         }
-        
+
         #endif
     }
-    
-    
-    
+
+
+
     // MARK: - Movement Handlers
-    
+
     /// Handler for mouse drag events.
     ///
     /// - Parameter event: mouse drag event.
@@ -1150,31 +1152,31 @@ extension SKTiledSceneCamera {
         guard (self.scene != nil) else {
             return
         }
-        
+
         let location = event.location(in: self)
         if (lastLocation == nil) {
             lastLocation = location
         }
-        
-        
+
+
         if (allowMovement == true) {
             isMoving = true
-            
+
             let difference = CGPoint(x: location.x - lastLocation.x, y: location.y - lastLocation.y)
-            
+
             position = CGPoint(x: Int(position.x - difference.x), y: Int(position.y - difference.y))
-            
+
             lastLocation = location
-            
+
             /// notify delegates
             for delegate in delegates {
-                
+
                 // TODO: async operation
                 delegate.cameraPositionChanged?(newPosition: position)
             }
         }
     }
-    
+
     /// Handler for mouse drag events (with option modifier).
     ///
     /// - Parameter event: mouse drag event.
@@ -1183,7 +1185,7 @@ extension SKTiledSceneCamera {
         if (lastLocation == nil) {
             lastLocation = location
         }
-        
+
         if (allowRotation == true) {
             let delta = event.delta
             zRotation += delta * rotationDamping
@@ -1193,13 +1195,11 @@ extension SKTiledSceneCamera {
 }
 
 
-
-
 // MARK: - Deprecations
 
 
 extension SKTiledSceneCamera {
-    
+
     /// Center & fit the current tilemap in the frame when the parent scene is resized.
     ///
     /// - Parameters:
@@ -1210,7 +1210,7 @@ extension SKTiledSceneCamera {
     public func fitToView(newSize: CGSize, transition: TimeInterval = 0, verbose: Bool = false) {
         fitToView(newSize: newSize, transition: transition)
     }
-    
+
     #if os(iOS)
     /// Handler for double-tap gestures.
     ///

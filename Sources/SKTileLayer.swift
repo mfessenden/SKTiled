@@ -37,8 +37,6 @@ import Cocoa
 typealias TilesArray = Array2D<SKTile>
 
 
-/// ## Overview
-///
 /// Subclass of `TiledLayerObject`, the **tile layer** is a container for an array of tiles (sprites). Tiles maintain a link to the map's tileset via their `SKTilesetData` property.
 ///
 ///

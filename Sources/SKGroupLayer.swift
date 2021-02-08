@@ -33,9 +33,7 @@ import Cocoa
 #endif
 
 
-/// ## Overview
-///
-/// Subclass of `TiledLayerObject`, the group layer is a container for managing groups of layers.
+/// Subclass of `TiledLayerObject`, the `SKGroupLayer` node is a container for managing groups of layers.
 ///
 /// ### Usage
 ///

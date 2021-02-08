@@ -552,7 +552,7 @@ extension SKTiledDemoScene {
 
     #if os(iOS)
 
-    /// Called when the scene receives a double-tap event (iOS only).
+    /// Called when the scene receives a double-tap event **(iOS only)**.
     ///
     /// - Parameter location: touch event location.
     public override func sceneDoubleTapped(location: CGPoint) {
@@ -562,7 +562,7 @@ extension SKTiledDemoScene {
 
     #if os(macOS)
 
-    /// Called when the scene is clicked (macOS only).
+    /// Called when the scene is clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
     public func sceneClicked(event: NSEvent) {
@@ -579,7 +579,7 @@ extension SKTiledDemoScene {
     }
 
 
-    /// Called when the scene is double-clicked (macOS only).
+    /// Called when the scene is double-clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
     public override func sceneDoubleClicked(event: NSEvent) {

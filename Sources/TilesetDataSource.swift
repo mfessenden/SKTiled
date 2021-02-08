@@ -27,19 +27,14 @@
 import SpriteKit
 
 
-/// ## Overview
-///
-/// Methods which allow the user to dynamically alter the properties of a tileset as it is being created.
-///
+/// The `TilesetDataSource` protocol outlines methods which allow the user to dynamically alter the properties of a tileset as it is being created.
 ///
 /// ### Instance Methods
 ///
 /// Delegate callbacks are called asynchronously as the tileset is being rendered.
 ///
-/// | Method               | Description                                                          |
-/// |----------------------|----------------------------------------------------------------------|
-/// | `willAddSpriteSheet` | Provide an image name for the tileset before textures are generated. |
-/// | `willAddImage`       | Provide an alernate image name for an image in a collection.         |
+/// - `willAddSpriteSheet`: Provide an image name for the tileset before textures are generated.
+/// - `willAddImage`: Provide an alernate image name for an image in a collection.
 ///
 /// ### Usage
 ///
@@ -84,11 +79,10 @@ public protocol TilesetDataSource: class {
 // MARK: - Extensions
 
 
-
 /// Default methods for `TilesetDataSource` protocol.
 extension TilesetDataSource {
-    
-    /// Called when a tileset is about to process a spritesheet. This method allows you to substitute a new filename *before* the tileset is built.
+
+    /// Called when a tileset is about to process a spritesheet image. This method allows you to substitute a new filename *before* the tileset is built.
     ///
     /// - Parameters:
     ///   - tileset: tileset instance.
@@ -97,7 +91,7 @@ extension TilesetDataSource {
     public func willAddSpriteSheet(to tileset: SKTileset, fileNamed: String) -> String {
         return fileNamed
     }
-    
+
     /// Called when a tileset is about to add an image from a collection. This method allows you to substitute a new filename *before* the tileset is built.
     ///
     /// - Parameters:
@@ -108,20 +102,27 @@ extension TilesetDataSource {
     public func willAddImage(to tileset: SKTileset, forId: UInt32, fileNamed: String) -> String {
         return fileNamed
     }
-    
-    /// Called when a tileset is about to add an image from a collection. This method allows you to substitute a new filename *before* the tileset is built.
-    ///
-    /// - Parameters:
-    ///   - tileset: tileset instance.
-    ///   - forId: tile id.
-    ///   - fileNamed: image file name.
-    /// - Returns: image file name.
-    @available(*, unavailable, renamed: "willAddImage(to:forId:fileNamed:)")
-    public func willAddImage(to tileset: SKTileset, forId: Int, fileNamed: String) -> String {
-        return fileNamed
-    }
 }
+
 
 
 /// :nodoc: Typealias for v1.2 compatibility.
 public typealias SKTilesetDataSource = TilesetDataSource
+
+
+// MARK: - Deprecations
+
+extension TilesetDataSource {
+
+        /// Called when a tileset is about to add an image from a collection. This method allows you to substitute a new filename *before* the tileset is built.
+        ///
+        /// - Parameters:
+        ///   - tileset: tileset instance.
+        ///   - forId: tile id.
+        ///   - fileNamed: image file name.
+        /// - Returns: image file name.
+        @available(*, unavailable, renamed: "willAddImage(to:forId:fileNamed:)")
+        public func willAddImage(to tileset: SKTileset, forId: Int, fileNamed: String) -> String {
+            return fileNamed
+        }
+}

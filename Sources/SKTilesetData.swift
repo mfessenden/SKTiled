@@ -27,20 +27,16 @@
 import SpriteKit
 
 
-/// ## Overview
-///
 /// The `SKTilesetData` structure stores data for a single tileset tile, referencing the tile texture or animation frames (for animated tiles).
 ///
 /// This class optionally includes navigation properties for tile accessability, and graph node weight.
 ///
 /// ### Properties
 ///
-/// | Property   | Description     |
-/// |------------|-----------------|
-/// | id         | Tile id (local) |
-/// | type       | Tiled type      |
-/// | texture    | Tile texture    |
-/// | tileOffset | Tile offset     |
+/// - `id`: tile id (local).
+/// - `type`: tiled object type.
+/// - `texture`: Tile texture.
+/// - `tileOffset`: Tile offset.
 ///
 public class SKTilesetData: CustomReflectable, TiledAttributedType {
 
@@ -366,13 +362,13 @@ public class SKTilesetData: CustomReflectable, TiledAttributedType {
             self.texture = _frames.first!.texture
         }
     }
-    
+
     // MARK: - Reflection
-    
-    
+
+
     /// Returns a custom mirror for this object.
     public var customMirror: Mirror {
-        
+
         let attributes: [(label: String?, value: Any)] = [
             (label: "id", value: id),
             (label: "gid", value: globalID),
@@ -385,7 +381,7 @@ public class SKTilesetData: CustomReflectable, TiledAttributedType {
             (label: "properties", value: mirrorChildren()),
             (label: "tileset", value: tileset.tilesetDataStruct())
         ]
-        
+
         return Mirror(self, children: attributes, displayStyle: .optional)   // was .class
     }
 }
@@ -458,7 +454,7 @@ extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
 
         // add the tile data type, if it exists...
         let typeString = (type != nil) ? ", type: '\(type!)'" : ""
-        
+
         // for collections data, add the image source path
         var sourceString = ""
         if (source != nil) {
@@ -470,7 +466,7 @@ extension SKTilesetData: CustomStringConvertible, CustomDebugStringConvertible {
         let framesString = (isAnimated == true) ? ", \(frames.count) frames" : ""
         let frameOutput = (properties.isEmpty == false) ? "tile id: \(id)\(typeString)\(sourceString) @ \(tileset.tileSize.shortDescription)\(framesString), "
             : "tile id: \(id)\(typeString) @ \(tileset.tileSize.shortDescription)\(framesString)"
-        
+
         let collisionOutput = (collisions.count > 0) ? ", collisions: \(collisions.count)" : ""
         return "\(className): \(frameOutput)\(propertiesString)\(collisionOutput)"
     }

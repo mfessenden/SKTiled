@@ -28,15 +28,11 @@ import Foundation
 import SpriteKit
 
 
-/// ## Overview
-///
 /// The `DebugDrawableType` protocol provides an interface to visualizing various object attributes, such as displaying a visual grid over the container, or highlighting object bounds.
 
 /// ### Properties
 ///
-/// | Property             | Description                        |
-/// |:---------------------|:-----------------------------------|
-/// | `debugDrawOptions`   | Debugging visualization options    |
+/// - `debugDrawOptions`: debugging visualization options.
 ///
 @objc public protocol DebugDrawableType: class {
 

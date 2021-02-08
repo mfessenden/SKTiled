@@ -27,10 +27,7 @@
 import SpriteKit
 
 
-
-/// ## Overview
-///
-/// A structure representing a single frame of animation. Time is stored in milliseconds.
+/// The `TileAnimationFrame` structure represents a single frame of animation. Time is stored in milliseconds.
 ///
 /// ### Properties
 ///

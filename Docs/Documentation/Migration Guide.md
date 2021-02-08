@@ -1,16 +1,26 @@
 # Migration Guide
 
-- [Renamed Properties & Methods](#renamed-properties-&-Methods)
+- [Renamed Objects](#renamed-objects)
+    - [Objects](#properties-&-Methods)
+    - [Properties & Methods](#properties-&-Methods)
 - [Tile Coordinates](#tile-coordinates)
 - [Tile Global IDs](#tile-global-ids)
 - [Tile Flip Flags](#tile-iflip-flags)
 
 Moving from the **v1.2** -> **v1.3** API should be fairly straightforward; here are the highlights of what's changed.
 
+## Renamed Objects
 
-## Renamed Properties & Methods
 
+### Objects
+
+- `SKTiledObject` -> `TiledObjectType`
+
+### Properties & Methods
 - `SKTilemap.size` -> `SKTilemap.mapSize`
+
+
+
 
 
 ## Tile Coordinates
