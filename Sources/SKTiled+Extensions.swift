@@ -1983,15 +1983,6 @@ extension Notification.Name {
 
     public struct Camera {
         public static let Updated                   = Notification.Name(rawValue: "org.sktiled.notification.name.camera.updated")
-
-        // TODO: rename these as `ZoomIncreaseRequested` as these aren't coming from the camera itself.
-        public static let ZoomIncreased             = Notification.Name(rawValue: "org.sktiled.notification.name.camera.zoomIncreased")
-        public static let ZoomDecreased             = Notification.Name(rawValue: "org.sktiled.notification.name.camera.zoomDecreased")
-    }
-
-    public struct DataStorage {
-        public static let ProxyVisibilityChanged    = Notification.Name(rawValue: "org.sktiled.notification.name.dataStorage.proxyVisibilityChanged")
-        public static let IsolationModeChanged      = Notification.Name(rawValue: "org.sktiled.notification.name.dataStorage.isolationModeChanged")
     }
 
     public struct Globals {

@@ -39,19 +39,13 @@ import GameplayKit
 ///
 /// ### Properties
 ///
-/// | Property             | Description                                                  |
-/// |:---------------------|:-------------------------------------------------------------|
-/// | worldNode            | Root container node. Tiled assets are parented to this node. |
-/// | cameraNode           | Custom scene camera.                                         |
-/// | tilemap              | Tile map node.                                               |
-///
+/// - `worldNode`: Root container node. Tiled assets are parented to this node.
+/// - `cameraNode`: Custom scene camera.
+/// - `tilemap`: Tile map node.
 ///
 /// ### Instance Methods
 ///
-/// | Method                              | Description               |
-/// |:------------------------------------|:--------------------------|
-/// | [load(tmxFile:)][delegate-load-url] | Load a tilemap from disk. |
-///
+/// - [`load(tmxFile:)`][delegate-load-url]: Load a tilemap from disk.
 ///
 /// [delegate-load-url]:TiledSceneDelegate.html#load(tmxFile:inDirectory:withTilesets:ignoreProperties:loggingLevel:)
 /// [skscene-url]:https://developer.apple.com/reference/spritekit/skscene
@@ -112,7 +106,7 @@ extension TiledSceneDelegate where Self: SKScene {
                 cameraNode.setCameraZoom(tilemap.worldScale)
                 cameraNode.maxZoom = tilemap.zoomConstraints.max
             }
-            
+
             completion?(tilemap)
             return tilemap
         }

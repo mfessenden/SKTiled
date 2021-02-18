@@ -40,26 +40,28 @@ import GameplayKit
 /// - `tilemap`: Tile map node.
 /// - `cameraNode`: Custom scene camera.
 ///
-/// ## Instance Methods - All Platforms
+/// ## Instance Methods
 ///
 /// - `cameraPositionChanged`: called when the camera position changes.
 /// - `cameraZoomChanged`: called when the camera zoom changes.
 /// - `cameraBoundsChanged`: called when the camera bounds updated.
 ///
-/// ### iOS
+/// ### Instance Methods (iOS)
 ///
 /// - `sceneDoubleTapped`: Called when the scene receives a double-tap event **(iOS only)**.
 ///
-/// ### macOS
+/// ### Instance Methods (macOS)
 ///
 /// - `sceneClicked`: called when the scene is clicked **(macOS only)**.
 /// - `sceneDoubleClicked`: called when the scene is double-clicked **(macOS only)**.
 /// - `mousePositionChanged`: called when the mouse moves in the scene **(macOS only)**.
 ///
+/// - SeeAlso:
 /// For more information, see the **[Setting Up Your Scenes][tiled-scene-doc-url]** page in the **[official documentation][sktiled-docroot-url]**.
 ///
 /// [tiled-scene-hierarchy-image-url]:https://mfessenden.github.io/SKTiled/1.3/images/scene-hierarchy.svg
 /// [tiled-scene-doc-url]:https://mfessenden.github.io/SKTiled/1.3/scene-setup.html
+/// [sktiled-docroot-url]:https://mfessenden.github.io/SKTiled/1.3/index.html
 open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, TilemapDelegate, TilesetDataSource {
 
     /// World container node.
@@ -87,7 +89,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, 
     @objc open var receiveCameraUpdates: Bool = true
 
     /// Indicates the mouse is within scene bounds.
-    internal var hasMouseFocus: Bool = false
+    internal var hasMouseFocus: Bool = false 
 
     /// Current focus coordinate.
     open var currentCoordinate = simd_int2(arrayLiteral: 0, 0)

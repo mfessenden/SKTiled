@@ -147,11 +147,6 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Isolate Layers:" id="Miq-qF-Qjd"/>
                                         </menuItem>
-                                        <menuItem title="Isolate Tiles:" enabled="NO" identifier="menu-identifier" id="wI7-rC-RX7">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Time Display:" id="HRD-GT-00b"/>
-                                            <accessibility description="access-description" identifier="123"/>
-                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -407,7 +402,6 @@
                         <outlet property="developmentMainMenu" destination="FNa-3o-AiI" id="gXj-Mg-ZID"/>
                         <outlet property="dumpSelectedMenuItem" destination="djR-ZZ-q6d" id="wJm-ct-MO9"/>
                         <outlet property="externalAssetsMenuItem" destination="Ywb-f1-YfU" id="ZVi-fl-4Xl"/>
-                        <outlet property="isolateTilesMenuItem" destination="wI7-rC-RX7" id="JIC-LU-OsQ"/>
                         <outlet property="isolationModeMenuItem" destination="NIF-SX-zDE" id="bcJ-9R-oe3"/>
                         <outlet property="layerIsolationMenu" destination="cCe-8N-Uhp" id="RIH-hV-AvD"/>
                         <outlet property="layerStatisticsMenuItem" destination="VaW-im-1oo" id="hKu-cG-Lc9"/>

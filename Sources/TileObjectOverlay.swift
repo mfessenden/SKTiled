@@ -157,7 +157,7 @@ extension TileObjectOverlay: TiledCustomReflectableType {
         return "Map Overlay: (\(objCountString))"
     }
     
-    @objc var tiledDescription: String {
+    @objc var tiledHelpDescription: String {
         return "Vector object proxy container overlay."
     }
 }

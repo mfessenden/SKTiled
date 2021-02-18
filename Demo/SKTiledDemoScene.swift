@@ -103,21 +103,21 @@ public class SKTiledDemoScene: SKTiledScene {
         // remove notification observers
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
     }
-
+    
+    /// Called when the scene is displayed in the parent `SKView`.
+    ///
+    /// - Parameter view: parent view.
     public override func didMove(to view: SKView) {
         super.didMove(to: view)
 
-
         setupNotifications()
 
-        // game controllers
+        // start listening for game controllers (or tvOS remote)
         setupControllerObservers()
-        //connectControllers()
 
         #if os(macOS)
         cameraNode?.ignoreZoomClamping = false
         updateTrackingViews()
-
         #elseif os(iOS)
         cameraNode?.ignoreZoomClamping = false
         #else

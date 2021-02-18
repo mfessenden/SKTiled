@@ -95,7 +95,7 @@ import GameplayKit
 ///
 /// ### Mouse & Touch Handlers
 ///
-/// The optional delegate method [`mouseOverTileHandler`][tilemapdelegate-mouseover-url] allows mouse and touch event handlers to be added to tiles and vector objects:
+/// The optional delegate method [`mouseOverTileHandler`][mouseover-handler-url] allows mouse and touch event handlers to be added to tiles and vector objects:
 ///
 ///
 ///
@@ -120,9 +120,7 @@ import GameplayKit
 ///
 /// This method allows a developer to filter tiles by global id or type, or simply return a closure for all objects globally (regardless of global ID or type).
 ///
-///
-///
-/// The [`tileClickedHandler`][tilemapdelegate-tileclicked-url] allows you to set a custom click handler for tiles & objects:
+/// The [`tileClickedHandler`][tileclicked-handler-url] allows you to set a custom click handler for tiles & objects:
 ///
 /// ```swift
 /// @objc func tileClickedHandler(globalID: UInt32, ofType: String?, button: UInt8) -> ((SKTile) -> ())? {
@@ -150,11 +148,11 @@ import GameplayKit
 /// }
 /// ```
 ///
-/// [tilemapdelegate-willaddtile-url]:TilemapDelegate.html#willAddTile(globalID:coord:in:)
-/// [tilemapdelegate-attrs-url]:TilemapDelegate.html#attributesForNodes(ofType:named:globalIDs:)
 /// [sktilemap-url]:../Classes/SKTilemap.html
-/// [tilemapdelegate-mouseover-url]:TilemapDelegate.html#/s:7SKTiled17TilemapDelegateP18attributesForNodes6ofType5named9globalIDsSDyS2SGSgSSSg_AJSays6UInt32VGtF
-/// [tilemapdelegate-tileclicked-url]:TiledEventHandler.html#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)tileClickedHandlerWithGlobalID:ofType:
+/// [tilemapdelegate-willaddtile-url]:TilemapDelegate.html#willAddTile(globalID:coord:in:)
+/// [tilemapdelegate-attrs-url]:TilemapDelegate.html#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)attributesForNodesOfType:named:globalIDs:
+/// [mouseover-handler-url]:TiledEventHandler.html#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)mouseOverTileHandlerWithGlobalID:ofType:
+/// [tileclicked-handler-url]:TiledEventHandler.html#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)tileClickedHandlerWithGlobalID:ofType:button:
 @objc public protocol TilemapDelegate: TiledEventHandler {
 
     /// Determines the z-position difference between layers.

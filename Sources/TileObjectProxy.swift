@@ -231,7 +231,7 @@ extension TileObjectProxy {
         return "Proxy\(refString)"
     }
     
-    @objc override var tiledDescription: String {
+    @objc override var tiledHelpDescription: String {
         return "Tile object proxy node."
     }
 }

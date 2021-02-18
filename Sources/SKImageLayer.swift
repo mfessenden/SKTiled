@@ -178,7 +178,7 @@ public class SKImageLayer: TiledLayerObject {
     }
 
     /// A description of the node.
-    @objc public override var tiledDescription: String {
+    @objc public override var tiledHelpDescription: String {
         return "Tiled image layer type."
     }
 }

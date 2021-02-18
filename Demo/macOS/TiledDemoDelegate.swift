@@ -64,7 +64,6 @@ public class TiledDemoDelegate: NSObject, Loggable {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.SceneWillUnload, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.FlushScene, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.MouseRightClicked, object: nil)        
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.DumpSelectedNodes, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.TileClicked, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.ObjectClicked, object: nil)
@@ -90,7 +89,6 @@ public class TiledDemoDelegate: NSObject, Loggable {
         NotificationCenter.default.addObserver(self, selector: #selector(sceneWillUnloadAction), name: Notification.Name.Demo.FlushScene, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionChanged), name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionCleared), name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(mouseRightClickAction), name: Notification.Name.Demo.MouseRightClicked, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(dumpSelectedNodes), name: Notification.Name.Demo.DumpSelectedNodes, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileClickedAction), name: Notification.Name.Demo.TileClicked, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(objectClickedAction), name: Notification.Name.Demo.ObjectClicked, object: nil)
@@ -209,14 +207,6 @@ public class TiledDemoDelegate: NSObject, Loggable {
         )
     }
     
-    /// Handles the `Notification.Name.Demo.MouseRightClicked` callback. This is the action that clears the current node highlights.
-    ///
-    /// - Parameter notification: event notification.
-    @objc func mouseRightClickAction(notification: Notification) {
-        //notification.dump(#fileID, function: #function)
-        reset()
-    }
-    
     /// Handles the `Notification.Name.Globals.Updated` event. Changes selected nodes' highlight color.
     ///
     ///   userInfo: ["tileColor": `SKColor`, "objectColor": `SKColor`]
@@ -314,6 +304,10 @@ extension TiledDemoDelegate: TiledSceneCameraDelegate {
     @objc public func cameraZoomChanged(newZoom: CGFloat) {
         //let oldZoom = currentCameraZoom
         currentCameraZoom = newZoom
+    }
+    
+    @objc public func sceneRightClicked(event: NSEvent) {
+
     }
 }
 

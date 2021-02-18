@@ -419,7 +419,7 @@ extension TiledDebugDrawNode: TiledCustomReflectableType {
         return "\(tiledNodeNiceName)\(objName)"
     }
     
-    @objc var tiledDescription: String {
+    @objc var tiledHelpDescription: String {
         return "Tilemap node debug visualization root."
     }
 }

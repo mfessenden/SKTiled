@@ -36,14 +36,14 @@
 - [tvOS Support](getting-started.html#tvos-support)
     - [A Note About 4K](getting-started.html#a-note-about-4k)
 - [Using Tiled Assets with Xcode](getting-started.html#using-tiled-assets-with-xcode)
-    - [Referenced Assets](getting-started.html#referenced-assets)
 
 
 ## [Migration Guide](migration-guide.html)
 
 - [Renamed Objects](migration-guide.html#renamed-objects)
-    - [Objects](migration-guide.html#properties-&-Methods)
+    - [Symbols](migration-guide.html#symbols)
     - [Properties & Methods](migration-guide.html#properties-&-Methods)
+- [Type Changes](migration-guide.html#type-changes)
 - [Tile Coordinates](#tile-coordinates)
 - [Tile Global IDs](#tile-global-ids)
 - [Tile Flip Flags](#tile-iflip-flags)

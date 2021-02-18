@@ -323,7 +323,7 @@ public class SKTileLayerChunk: TiledLayerObject {
         attributes.append(("tiled element name", tiledElementName))
         attributes.append(("tiled node nice name", tiledNodeNiceName))
         attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
-        attributes.append(("tiled description", tiledDescription))
+        attributes.append(("tiled help description", tiledHelpDescription))
         
         return Mirror(self, children: attributes, ancestorRepresentation: .suppressed)
     }
@@ -358,7 +358,7 @@ extension SKTileLayerChunk {
     }
     
     /// A description of the node.
-    @objc public override var tiledDescription: String {
+    @objc public override var tiledHelpDescription: String {
         return "Tile layer chunk."
     }
     

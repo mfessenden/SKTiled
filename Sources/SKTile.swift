@@ -67,7 +67,7 @@ public enum TileRenderMode {
 ///  - `runAnimationAsActions()`:           runs a SpriteKit action to animate the tile.
 ///  - `removeAnimationActions(restore:)`:  remove the animation for the current tile.
 ///
-/// [tiledata-diagram-url]:https://mfessenden.github.io/SKTiled/1.3/images/tiledata-setup.svg
+/// [tiledata-diagram-url]:../images/tiledata-setup.svg
 /// [tiledata-url]:SKTilesetData.html
 /// [skspritenode-url]:https://developer.apple.com/documentation/spritekit/skspritenode
 open class SKTile: SKSpriteNode, CustomReflectable {
@@ -90,7 +90,9 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     /// contains attributes like texture, animation frame data and
     open var tileData: SKTilesetData {
         didSet {
-            guard (oldValue != tileData) else { return }
+            guard (oldValue != tileData) else {
+                return
+            }
 
             NotificationCenter.default.post(
                 name: Notification.Name.Tile.TileDataChanged,
@@ -107,7 +109,9 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     /// This is a wrapper for the `TileID` data structure and represents both global ID & tile orientation flags.
     @TileID open var globalId: UInt32 = 0 {
         didSet {
-            guard (oldValue != globalId) && (oldValue != 0) else { return }
+            guard (oldValue != globalId) && (oldValue != 0) else {
+                return
+            }
 
             NotificationCenter.default.post(
                 name: Notification.Name.Tile.TileIDChanged,
@@ -864,20 +868,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
 
     // MARK: - Updating
 
-    /// Update the tile's tile data instance.
-    ///
-    /// - Parameter data: new tile data.
-    open func setTileData(data: SKTilesetData) {
-        let currentData = self.tileData
-        self.tileData = data
 
-        // add to tile cache
-        NotificationCenter.default.post(
-            name: Notification.Name.Tile.TileDataChanged,
-            object: self,
-            userInfo: ["old": currentData]
-        )
-    }
 
     /// Render the tile before each frame is rendered.
     ///
@@ -989,7 +980,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         attributes.append(("tiled element name", tiledElementName))
         attributes.append(("tiled node nice name", tiledNodeNiceName))
         attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
-        attributes.append(("tiled description", tiledDescription))
+        attributes.append(("tiled help description", tiledHelpDescription))
 
         return Mirror(self, children: attributes)
     }
@@ -1380,7 +1371,7 @@ extension SKTile {
     }
 
     /// A description of the node.
-    @objc public override var tiledDescription: String {
+    @objc public override var tiledHelpDescription: String {
         return "Represents a single map tile."
     }
 }
@@ -1390,7 +1381,24 @@ extension SKTile {
 
 
 extension SKTile {
-
+    
+    /// Tile visibility.
+    @available(*, deprecated, renamed: "isVisible")
+    open var visible: Bool {
+        get {
+            return !self.isHidden
+        }
+        set {
+            self.isHidden = !newValue
+        }
+    }
+    
+    /// Tiled global id.
+    @available(*, deprecated, renamed: "maskedTileId")
+    public var realTileId: UInt32 {
+        return maskedTileId
+    }
+    
     /// Pauses tile animation
     @available(*, deprecated, message: "Use the default `SKNode.isPaused` to pause animation.")
     open var pauseAnimation: Bool {
@@ -1419,20 +1427,11 @@ extension SKTile {
         self.draw()
     }
 
-    /// Tile visibility.
-    @available(*, deprecated, renamed: "isVisible")
-    open var visible: Bool {
-        get {
-            return !self.isHidden
-        }
-        set {
-            self.isHidden = !newValue
-        }
-    }
-
-    /// Tiled global id.
-    @available(*, deprecated, renamed: "maskedTileId")
-    public var realTileId: UInt32 {
-        return maskedTileId
+    /// Update the tile's tile data instance.
+    ///
+    /// - Parameter data: new tile data.
+    @available(*, deprecated, message: "Use the `SKTile.tileData` property.")
+    open func setTileData(data: SKTilesetData) {
+        self.tileData = data
     }
 }

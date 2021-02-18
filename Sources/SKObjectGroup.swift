@@ -48,20 +48,16 @@ internal enum SKObjectGroupDrawOrder: String {
 ///
 /// ### Properties
 ///
-/// | Property              | Description                                                      |
-/// |-----------------------|------------------------------------------------------------------|
-/// | count                 | Returns the number of objects in the layer.                      |
-/// | showObjects           | Toggle visibility for all of the objects in the layer.           |
-/// | lineWidth             | Governs object line width for each object.                       |
-/// | debugDrawOptions      | Debugging display flags.                                         |
+/// - `count`: returns the number of objects in the layer.
+/// - `showObjects`: toggle visibility for all of the objects in the layer.
+/// - `lineWidth`: governs object line width for each object.
+/// - `debugDrawOptions`: debugging display flags.
 ///
 /// ### Methods
 ///
-/// | Method                | Description                                                      |
-/// |-----------------------|------------------------------------------------------------------|
-/// | addObject             | Add an object to the object group.                               |
-/// | removeObject          | Remove an object from the object group.                          |
-/// | getObject(withID:)    | Returns an object with the given id, if it exists.               |
+/// - `addObject`: add an object to the object group.
+/// - `removeObject`: remove an object from the object group.
+/// - `getObject(withID:)`: returns an object with the given id, if it exists.
 ///
 /// ### Usage
 ///
@@ -160,31 +156,31 @@ public class SKObjectGroup: TiledLayerObject {
     public override var speed: CGFloat {
         didSet {
             guard oldValue != speed else { return }
-            self.getObjects().forEach {$0.speed = speed}
+            self.getObjects().forEach { $0.speed = speed }
         }
     }
-    
+
     /// Layer tint color.
     public override var tintColor: SKColor? {
         didSet {
             guard let newColor = tintColor else {
-                
+
                 // reset color blending attributes
                 colorBlendFactor = 0
                 color = SKColor(hexString: "#ffffff00")
                 blendMode = .alpha
-                
+
                 objects.forEach { object in
                     object.tile?.tintColor = nil
                 }
-                
+
                 return
             }
-            
+
             self.color = newColor
             self.blendMode = TiledGlobals.default.layerTintAttributes.blendMode
             self.colorBlendFactor = 1
-            
+
             objects.forEach { object in
                 object.tile?.tintColor = newColor
             }
@@ -221,7 +217,7 @@ public class SKObjectGroup: TiledLayerObject {
 
         self.layerType = .object
     }
-    
+
     /// Instantiate the node with a decoder instance.
     ///
     /// - Parameter aDecoder: decoder.
@@ -495,11 +491,11 @@ public class SKObjectGroup: TiledLayerObject {
         super.update(currentTime)
         guard (self.updateMode != TileUpdateMode.actions) else { return }
     }
-    
-    
+
+
     // MARK: - Reflection
-    
-    
+
+
     /// Returns a custom mirror for this layer.
     public override var customMirror: Mirror {
         var attributes: [(label: String?, value: Any)] = [
@@ -513,13 +509,13 @@ public class SKObjectGroup: TiledLayerObject {
             (label: "objects", value: objects)
         ]
 
-        
+
         /// internal debugging attrs
         attributes.append(("tiled element name", tiledElementName))
         attributes.append(("tiled node nice name", tiledNodeNiceName))
         attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
-        attributes.append(("tiled description", tiledDescription))
-        
+        attributes.append(("tiled help description", tiledHelpDescription))
+
         return Mirror(self, children: attributes, ancestorRepresentation: .suppressed)
     }
 }
@@ -530,7 +526,7 @@ public class SKObjectGroup: TiledLayerObject {
 
 /// :nodoc:
 extension SKObjectGroupDrawOrder: CustomStringConvertible, CustomDebugStringConvertible {
-    
+
     var description: String {
         switch self {
             case .manual: return "manual"
@@ -547,31 +543,31 @@ extension SKObjectGroupDrawOrder: CustomStringConvertible, CustomDebugStringConv
 
 // :nodoc:
 extension SKObjectGroup {
-    
+
     /// Returns the internal **Tiled** node type.
     @objc public var tiledElementName: String {
         return "objectgroup"
     }
-    
+
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public override var tiledNodeNiceName: String {
         return "Object Group"
     }
-    
+
     /// Returns the internal **Tiled** node type icon.
     @objc public override var tiledIconName: String {
         return "objectgroup-icon"
     }
-    
+
     /// A description of the node.
     @objc public override var tiledListDescription: String {
         let nameString = "'\(layerName)'"
         let ccstring = (children.count == 0) ? ": (no children)" : ": (\(children.count) children)"
         return "\(tiledNodeNiceName) \(nameString)\(ccstring)"
     }
-    
+
     /// A description of the node.
-    @objc public override var tiledDescription: String {
+    @objc public override var tiledHelpDescription: String {
         return "Layer container for vector objects."
     }
 }

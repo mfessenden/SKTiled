@@ -33,7 +33,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     var preferencesController: PreferencesWindowController?
     var attributeEditorWindowController: AttributeEditorWindowController?
-
+    var receiveCameraUpdates: Bool = true
+    
     // file menu
     @IBOutlet weak var openMapMenuitem: NSMenuItem!
     @IBOutlet weak var reloadMapMenuitem: NSMenuItem!
@@ -50,7 +51,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var timeDisplayMenuItem: NSMenuItem!
     @IBOutlet weak var layerIsolationMenu: NSMenuItem!
     @IBOutlet weak var isolationModeMenuItem: NSMenuItem!
-    @IBOutlet weak var isolateTilesMenuItem: NSMenuItem!    // deprecated, use `isolationModeMenuItem`
 
     // camera menu
     @IBOutlet weak var cameraMainMenu: NSMenuItem!
@@ -81,10 +81,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var tilemapStatisticsMenuItem: NSMenuItem!
     @IBOutlet weak var tilemapCachesStatisticsMenuItem: NSMenuItem!
     @IBOutlet weak var layerStatisticsMenuItem: NSMenuItem!
-    
+
     @IBOutlet weak var showDemoAssetsMenuItem: NSMenuItem!
     @IBOutlet weak var rescanForAssetsMenuItem: NSMenuItem!
-    
+
     @IBOutlet weak var dumpSelectedMenuItem: NSMenuItem!
     @IBOutlet weak var currentMapsMenuItem: NSMenuItem!
     @IBOutlet weak var allAssetsMapsMenuItem: NSMenuItem!
@@ -95,16 +95,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         setupMainInterface()
         setupNotifications()
-        
+
         // the demo controller will have scanned assets, so go ahead and create the demo files menu
         initializeDemoFilesMenu()
+        
+        if let scenecamera = camera {
+            scenecamera.addDelegate(self)
+            print("adding delegate...")
+        }
     }
-    
+
     func applicationWillResignActive(_ notification: Notification) {
         view?.isPaused = true
         viewController?.demoStatusInfoLabel.isHidden = false
     }
-    
+
     func applicationDidBecomeActive(_ notification: Notification) {
         view?.isPaused = false
         viewController?.demoStatusInfoLabel.isHidden = false
@@ -129,7 +134,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         demoController.loadScene(url: URL(fileURLWithPath: filename), usePreviousCamera: false)
         return true
     }
-    
+
 
 
     deinit {
@@ -142,7 +147,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.TileIsolationModeChanged, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.RenderStats.VisibilityChanged, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Camera.Updated, object: nil)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.DataStorage.IsolationModeChanged, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.DemoController.ResetDemoInterface, object: nil)
     }
 
@@ -166,10 +170,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(initializeInterfaceForTilemap), name: Notification.Name.Map.TileIsolationModeChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(renderStatisticsVisibilityChanged), name: Notification.Name.RenderStats.VisibilityChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sceneCameraUpdated), name: Notification.Name.Camera.Updated, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(initializeIsolateTilesMenu), name: Notification.Name.DataStorage.IsolationModeChanged, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionChanged), name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(mouseRightClickAction), name: Notification.Name.Demo.MouseRightClicked, object: nil)
     }
 
 
@@ -200,7 +202,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         cameraAllowMovementItem.isEnabled = false
         cameraAllowRotationItem.isEnabled = false
 
-        
+
         // items in the 'Development' menu
         //developmentMainMenu.isEnabled = false
         renderStatisticsMenuItem.isEnabled = false
@@ -213,7 +215,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         externalAssetsMenuItem.isEnabled = false
         attributeEditorMenuItem.isEnabled = false
         reloadMapMenuitem.isEnabled = false
-        
+
         demoFilesMenu.isEnabled = false
         debugMainMenu.isEnabled = false
 
@@ -225,14 +227,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // mouse events
         mouseEventsMenuItem.state = (TiledGlobals.default.enableMouseEvents == true) ? .on : .off
-        
+
         showDemoAssetsMenuItem.isEnabled = true
         rescanForAssetsMenuItem.isEnabled = true
-        
-        
+
+
         // if the scan is done, build the current demo file menu
         if let demoController = demoController {
-            
+
         }
     }
 
@@ -273,9 +275,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // initialize the map isolation mode menu
         self.initializeIsolationModeMenu(tilemap: tilemap)
 
-        // initialize the tile isolation menu
-        self.initializeIsolateTilesMenu()
-        
         // set the window title
         guard let window = NSApplication.shared.mainWindow else {
             return
@@ -347,6 +346,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         cameraMainMenu.isEnabled = true
         debugMainMenu.isEnabled = true
         developmentMainMenu.isEnabled = true
+        
+        demoScene.cameraNode?.addDelegate(self)
     }
 
 
@@ -435,11 +436,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let result = dialog.url
 
             if let tmxURL = result {
-                
-                
+
+
                 Logger.default.log("loading tilemap from '\(tmxURL.relativePath)'", level: .info)
-                
-                
+
+
                 // add this file to the recent files array.
                 NSDocumentController.shared.noteNewRecentDocumentURL(tmxURL)
 
@@ -630,7 +631,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let nextState = !currentState
 
         TiledGlobals.default.enableCameraCallbacks = nextState
-        updateCommandString("enable camera callbacks: \(nextState == true ? "on" : "off")")
+        
+        let actionString = (nextState == true) ? "enabling" : "disabling"
+        updateCommandString("\(actionString) camera delegate notifications...")
 
 
         NotificationCenter.default.post(
@@ -700,8 +703,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let demoController = gameController.demoController
         demoController.dumpStatistics()
     }
-    
-    
+
+
     /// Called when the `Development > Demo Controller: Scan for Assets...>` menu item is selected.
     ///
     /// - Parameter sender: invoking ui element.
@@ -712,7 +715,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let demoController = gameController.demoController
         demoController.scanForResources()
     }
-    
+
     /// Called when the `Development > Demo Delegate...` menu item is selected.
     ///
     /// - Parameter sender: invoking ui element.
@@ -882,7 +885,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     // MARK: - Map Debug Drawing
-    
+
     /// Handler for the `Map -> Debug Draw` menu items.
     ///
     /// - Parameter sender: menu item with debug draw option identifier.
@@ -895,7 +898,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let willRemoveOption = sender.state == .on
         let drawOption = DebugDrawOptions.init(rawValue: identifier)
-        
+
         if (willRemoveOption == true) {
             tilemap.debugDrawOptions = tilemap.debugDrawOptions.subtracting(drawOption)
         } else {
@@ -903,7 +906,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         tilemap.debugNode.draw()
-        
+
         NotificationCenter.default.post(
             name: Notification.Name.Map.Updated,
             object: tilemap
@@ -1065,7 +1068,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         dumpSelectedMenuItem.title = "Dump Selected \(nodeDesc)"
         attributeEditorMenuItem.isEnabled = true
     }
-    
+
     /// Called when a node is selected in the interface.
     ///
     /// - Parameter sender: invoking ui element.
@@ -1074,9 +1077,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             Logger.default.log("cannot access SpriteKit node.", level: .warning)
             return
         }
-        
-        
-        let nodeDescription = selectedNode.tiledDescription ?? String(describing: type(of: selectedNode))
+
+
+        let nodeDescription = selectedNode.tiledHelpDescription ?? String(describing: type(of: selectedNode))
         updateCommandString("dumping selected node '\(nodeDescription)'", duration: 3.0)
         dump(selectedNode)
     }
@@ -1089,18 +1092,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         )
 
         updateCommandString("dumping selected node properties", duration: 3.0)
-    }
-
-    /// Called when the user has cleared the demo scene selected nodes. Called when the `Notification.Name.Demo.MouseRightClicked` event fires.
-    ///
-    /// - Parameter notification: event notification.
-    @objc func mouseRightClickAction(_ notification: Notification) {
-        // notification.dump(#fileID, function: #function)
-        selectedNodesMenuItem.submenu?.removeAllItems()
-        selectedNodesMenuItem.isEnabled = false
-        selectedNodesMenuItem.title = "Selected Nodes"
-        dumpSelectedMenuItem.isEnabled = false
-        attributeEditorMenuItem.isEnabled = false
     }
 
     // MARK: - Callbacks & Helpers
@@ -1225,6 +1216,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 }
 
 
+// MARK: - Extensions
+
+extension AppDelegate: TiledSceneCameraDelegate {
+    
+    /// Called when the scene is right-clicked **(macOS only)**.
+    ///
+    /// - Parameter event: mouse click event.
+    @objc func sceneRightClicked(event: NSEvent) {
+        selectedNodesMenuItem.submenu?.removeAllItems()
+        selectedNodesMenuItem.isEnabled = false
+        selectedNodesMenuItem.title = "Selected Nodes"
+        dumpSelectedMenuItem.isEnabled = false
+        attributeEditorMenuItem.isEnabled = false
+    }
+}
+
+
+
+
 // MARK: Submenu Initialization
 
 
@@ -1241,12 +1251,12 @@ extension AppDelegate {
         }
         return nil
     }
-    
+
     /// Reference to the current view.
     var view: SKView? {
         return viewController?.view as? SKView
     }
-    
+
     /// Reference to the current scene.
     var scene: SKTiledDemoScene? {
         guard let gameController = viewController,
@@ -1284,7 +1294,6 @@ extension AppDelegate {
         }
         return viewScene.tilemap
     }
-
 
     // MARK: - File Menu
 
@@ -1579,7 +1588,6 @@ extension AppDelegate {
         layerIsolationMenu.isEnabled = true
 
         isolationModeMenuItem.isEnabled = true
-        isolateTilesMenuItem.isEnabled = true
 
         // development menu items
         tilemapStatisticsMenuItem.isEnabled = true
@@ -1804,42 +1812,6 @@ extension AppDelegate {
             }
         }
     }
-
-    /// Creates the tile data storage tile isolation mode menu (`Map -> Isolate Tiles`)
-    @objc func initializeIsolateTilesMenu() {
-
-        // create the mouse filter menu
-        if let isolateTilesSubMenu = isolateTilesMenuItem.submenu {
-            isolateTilesSubMenu.removeAllItems()
-
-            // add an off toggle and divider
-            let isolateOffMenuItem = NSMenuItem(title: "Isolation off", action: #selector(isloateCachedTilesAction), keyEquivalent: "")
-            isolateOffMenuItem.setAccessibilityIdentifier("\(0)")
-            let divider = NSMenuItem.separator()
-            isolateTilesSubMenu.addItem(isolateOffMenuItem)
-            isolateTilesSubMenu.addItem(divider)
-
-
-            let allIsolationModes = CacheIsolationMode.all
-            var currentIsolationMode = CacheIsolationMode.none
-
-            if let tilemap = tilemap {
-                if let dataStorage = tilemap.dataStorage {
-                    currentIsolationMode = dataStorage.isolationMode
-                }
-            }
-
-            for (_, mode) in allIsolationModes.enumerated() {
-
-                let isolateMenuItem = NSMenuItem(title: "\(mode)", action: #selector(isloateCachedTilesAction), keyEquivalent: "")
-                isolateMenuItem.setAccessibilityIdentifier("\(mode.rawValue)")
-
-                isolateMenuItem.state = (mode == currentIsolationMode) ? NSControl.StateValue.on : NSControl.StateValue.off
-                isolateTilesSubMenu.addItem(isolateMenuItem)
-            }
-        }
-    }
-
 
     // MARK: - Help Menu
 

@@ -99,7 +99,7 @@ extension SKWorld: TiledCustomReflectableType {
     }
     
     /// A description of the node.
-    @objc public var tiledDescription: String {
+    @objc public var tiledHelpDescription: String {
         return "World container node."
     }
 }

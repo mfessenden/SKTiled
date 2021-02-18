@@ -56,7 +56,7 @@ import SpriteKit
     @objc optional var tiledMenuDescription: String { get }
 
     /// Description of the node type.
-    @objc optional var tiledDescription: String { get }
+    @objc optional var tiledHelpDescription: String { get }
 
     /// Dump the current object's properties to the console.
     @objc optional func dumpStatistics()
@@ -113,7 +113,7 @@ extension SKLabelNode: TiledCustomReflectableType {
     }
 
     /// A description of the node.
-    @objc public var tiledDescription: String {
+    @objc public var tiledHelpDescription: String {
         return "SpriteKit label node."
     }
 }
@@ -145,7 +145,7 @@ extension SKSpriteNode: TiledCustomReflectableType {
     }
 
     /// A description of the node.
-    @objc public var tiledDescription: String {
+    @objc public var tiledHelpDescription: String {
         return "SpriteKit sprite node."
     }
 }
@@ -177,7 +177,7 @@ extension SKCropNode: TiledCustomReflectableType {
     }
 
     /// A description of the node.
-    @objc public var tiledDescription: String {
+    @objc public var tiledHelpDescription: String {
         return "SpriteKit crop node."
     }
 }
@@ -208,7 +208,7 @@ extension SKEffectNode: TiledCustomReflectableType {
     }
 
     /// A description of the node.
-    @objc public var tiledDescription: String {
+    @objc public var tiledHelpDescription: String {
         return "SpriteKit effect node. Used to contain content that may be rendered to a private buffer."
     }
 }
@@ -241,7 +241,7 @@ extension SKShapeNode: TiledCustomReflectableType {
     }
 
     /// A description of the node.
-    @objc public var tiledDescription: String {
+    @objc public var tiledHelpDescription: String {
         return "SpriteKit shape node."
     }
 }

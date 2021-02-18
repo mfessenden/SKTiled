@@ -375,8 +375,6 @@ extension Notification.Name {
         public static let FlushScene                    = Notification.Name(rawValue: "org.sktiled.notification.name.demo.flushScene")
 
         // macOS
-        public static let MouseRightClicked             = Notification.Name(rawValue: "org.sktiled.notification.name.demo.mouseRightClicked")    // called when the mouse right-click action begins - clears out 'selected nodes'
-
 
         public static let TileUnderCursor               = Notification.Name(rawValue: "org.sktiled.notification.name.demo.tileUnderCursor")
         public static let TileClicked                   = Notification.Name(rawValue: "org.sktiled.notification.name.demo.tileClicked")
@@ -691,7 +689,9 @@ public func += (left: inout CGPoint, right: CGPoint) {
 
 extension SKTiledDemoScene {
 
-    /// Setup game controllers.
+    /// Setup game controllers when a controller is connected. Called when the `Notification.Name.GCControllerDidConnect` notification is sent.
+    ///
+    /// - Parameter notification: event notification.
     @objc public func connectControllers(notification: Notification) {
         self.isPaused = false
         for controller in GCController.controllers() where controller.microGamepad != nil {
@@ -703,7 +703,9 @@ extension SKTiledDemoScene {
         }
     }
 
-    /// Remove game controllers.
+    /// Remove game controllers. Called when the `Notification.Name.GCControllerDidDisconnect` notification is sent.
+    ///
+    /// - Parameter notification: event notification.
     @objc public func disconnectControllers(notification: Notification) {
         self.isPaused = true
     }

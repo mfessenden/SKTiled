@@ -35,7 +35,7 @@ enum EventMouseButton: UInt8 {
 }
 
 
-/// The `TiledEventHandler` protocol defines methods that provide *optional* handlers for mouse (macOS) and touch (iOS) events.
+/// The `TiledEventHandler` protocol delegates *optional* handlers for mouse (macOS) and touch (iOS) events.
 ///
 /// ### Instance Methods
 ///
@@ -46,7 +46,51 @@ enum EventMouseButton: UInt8 {
 /// - `tileTouchedHandler`: Custom tile touch event handler.            iOS
 /// - `objectTouchedHandler`: Custom object touch event handler.          iOS
 ///
-/// :nodoc:
+/// ## Usage
+///
+/// ### Mouse & Touch Handlers
+///
+/// The optional delegate method [`mouseOverTileHandler`][mouseover-handler-url] allows mouse and touch event handlers to be added to tiles and vector objects:
+///
+///
+/// ```swift
+/// @objc public func mouseOverTileHandler(globalID: UInt32, ofType: String?) -> ((SKTile) -> ())? {
+///     guard let tileType = ofType else {
+///         return nil
+///     }
+///
+///     switch tileType {
+///         case "floors":
+///             return { (tile) in tile.tileData.setValue(for: "color", "#308CC6") }
+///
+///         case "walls":
+///             return { (tile) in tile.tileData.setValue(for: "color", "#8E6214") }
+///
+///         default:
+///             return nil
+///     }
+/// }
+/// ```
+///
+///
+/// The [`tileClickedHandler`][tileclicked-handler-url] allows you to set a custom click handler for tiles & objects:
+///
+/// ```swift
+/// @objc func tileClickedHandler(globalID: UInt32, ofType: String?, button: UInt8) -> ((SKTile) -> ())? {
+///     switch globalID {
+///         case 24, 25:
+///             return { (tile) in
+///                 tile.tileData.setValue(for: "wasVisited", "true")
+///         }
+///         default:
+///             return nil
+///     }
+/// }
+/// ```
+///
+///
+/// [mouseover-handler-url]:TiledEventHandler.html#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)mouseOverTileHandlerWithGlobalID:ofType:
+/// [tileclicked-handler-url]:TiledEventHandler.html#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)tileClickedHandlerWithGlobalID:ofType:button:
 @objc public protocol TiledEventHandler: class {
 
     /// Custom mouse over handler for tiles matching the given properties **(macOS only)**.

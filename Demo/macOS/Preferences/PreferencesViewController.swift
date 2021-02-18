@@ -32,6 +32,6 @@ class PreferencesViewController: NSTabViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //view.setFrameSize(NSSize(width: 600, height: 300))
+        view.setFrameSize(NSSize(width: 700, height: 600))
     }
 }

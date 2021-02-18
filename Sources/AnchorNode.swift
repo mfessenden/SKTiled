@@ -148,7 +148,7 @@ extension AnchorNode: TiledCustomReflectableType {
         return "anchor-icon"
     }
 
-    @objc var tiledDescription: String {
+    @objc var tiledHelpDescription: String {
         return "A node representing the anchor point of an object."
     }
 }

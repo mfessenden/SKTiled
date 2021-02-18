@@ -4,7 +4,8 @@ module_version: 1.30b1
 author: Michael Fessenden
 author_url: https://github.com/mfessenden
 github_url: https://github.com/mfessenden/SKTiled
-dash_url: https://mfessenden.github.io/SKTiled/docsets/SKTiled.xml
+# dash_url: https://mfessenden.github.io/SKTiled/docsets/SKTiled.xml
+dash_url: https://github.com/mfessenden/SKTiled/tree/gh-pages/1.3/docsets/SKTiled.docset
 github_file_prefix: https://github.com/mfessenden/SKTiled/tree/1.3
 clean: true
 skip_undocumented: true
@@ -81,7 +82,7 @@ custom_categories:
         - TiledGeometryType
         - TiledMappableGeometryType
         - TiledObjectType
-        - TiledOverlayType
+        - TiledEventHandler
         - TiledSceneCameraDelegate
         - TiledSceneDelegate
         - TilemapDelegate

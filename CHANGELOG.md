@@ -13,23 +13,9 @@ Change Log
 - tile flip flags are now stored on the individual tiles, not tile data containers
 - better managing of object/template attributes
 - better handling of image types
-- add `SKTileObject.rotation` property
-- add `SKTilemap.getTilesWithPropery(named:recursive:)` method
-- add `SKTileLayer.getTilesWithPropery(named:)` method
-- add `SKTile.spriteCopy` method
-- add `SKTile.replaceWithSpriteCopy` property
-- add `SKTiledSceneCamera.allowNegativeZoom`
-- add `TiledObjectType.tiledDescription` property
-- add `SKTiledSceneCamera.sceneRotated` property
-- add `SKTiledSceneCamera.allowRotation` property
-- add `SKTiledSceneCamera.centerOn(node:)` method
-- add `TiledLayerObject.tintColor` property
-- add `TiledLayerObject.load` method (EXPERIMENTAL)
-	- add `TiledLayerObject.mapDelegate` property
-- add `SKTilemap.allTiles(globalID:)` method
-- add `SKTiledSceneCamera.rotationDamping` property
+- `SKTiledSceneCamera` works properly with any `SKScene` instance conforming to `TiledSceneCameraDelegate` protocol
 
-- bug fixes:
+- Bug Fixes:
     - fix a memory leak where tilemap is retained after parent scene change
     - fix tile object texture sizing bug when animating with SpriteKit actions
     - fix a bug where animated tiles added via `SKTileLayer.addTileAt` are not the correct size
@@ -39,28 +25,24 @@ Change Log
     - fix a bug where updating the flip flags of a tile object updated the tile anchor point incorrectly
 	- fix a bug where mouse scroll wheel events could override the `SKTiledSceneCamera.allowZoom` flag
 
-- API changes:
+- API Changes:
 	- rename protocol `SKTiledObject` -> `TiledObjectType`
-	- rename `SKTiledSceneDelegate` -> `TiledSceneDelegate`
-	    - `TiledSceneDelegate.tilemap` property is now optional
-	    - `TiledSceneDelegate.cameraNode` property is now optional
-	- rename `SKTiledSceneCameraDelegate` -> `TiledSceneCameraDelegate`
-	- rename `SKTilemapDelegate` -> `TilemapDelegate`
+	- rename protocol `SKTiledSceneDelegate` -> `TiledSceneDelegate`
+	- rename protocol `SKTiledSceneCameraDelegate` -> `TiledSceneCameraDelegate`
+	- rename protocol `SKTilemapDelegate` -> `TilemapDelegate`
 		- `TilemapDelegate` protocol is now an `@objc` protocol
 		- `TilemapDelegate` properties & methods are now optional
-	- add `TilemapDelegate.mouseOverTileHandler` method.
-	- add `TilemapDelegate.mouseOverObjectHandler` method.
-	- add `TilemapDelegate.mouseClickHandler` method.
-	- `LoggingLevel` enum type is now `UInt8`
 
-    - `SKTiledSceneCamera` works properly with any `SKScene` instance conforming to `TiledSceneCameraDelegate` protocol
-    - `SKTileObject.tile` property is now public
-    - add `SKTile.globalId` property
-    - remove the `layerName` requirement for `TiledLayerObject` required init
     - `TiledLayerObject.tilemap` property is now `unowned`
     - `TiledLayerObject.graph` property is now optional
     - `SKTiledSceneCamera.world` property is now optional
-    - add `TiledGlobals.zDeltaForLayers` property
+	- `TiledSceneDelegate.tilemap` property is now optional
+    - `TiledSceneDelegate.cameraNode` property is now optional
+	- `SKTileObject.tile` property is now public
+	- `LoggingLevel` enum type is now `UInt8`
+    - `SKTilemap.showObjects(forLayers:)` is deprecated
+    - `SKTileObject.getVertices()` now returns an empty set if there are no points
+
 	- rename `SKTilemap.getTileset(forTile:)` -> `SKTilemap.getTilesetFor(globalID:)`
 	- rename `SKTilemap.coordinateAtMouseEvent(event:)` -> `SKTilemap.coordinateAtMouse(event:)`
 	- rename `TiledLayerObject.coordinateAtMouseEvent(event:)` -> `TiledLayerObject.coordinateAtMouse(event:)`
@@ -72,50 +54,84 @@ Change Log
 	- rename `SKTileset.addTilesetTile(_:source:)` -> `SKTileset.addTilesetTile(tileID:source:)`
     - rename `SKTileObject.setObjectAttributes` -> `SKTileObject.overrideObjectAttributes`
 	- rename `TiledGlobals.debug` -> `TiledGlobals.debugDisplayOptions`
-	- add `TiledObjectType.getValue(for:defaultValue:)` protocol method
-    - add `TiledObjectType.setProperties(_:overwrite:)` protocol method
-	- add `TiledObjectType.colorForKey(_:)` method
-    - add `TiledGlobals.trackProcessorUsage` property
-	- add `TiledGlobals.enableCameraContainedNodesCallbacks` property
-    - add `SKTileLayerChunk` class
-    - add `TileContainerType` protocol
-    - add `TiledLayerObject.addChunk(_:at:)` method
-    - add `SKTileLayer.isInfinite` property
-    - add `SKTileLayer.chunkAt(coord:)` method
-    - add `SKTileLayer.chunkAt(_:_:)` method
-    - add `SKTilemap.absoluteSize` property
-	- add `SKTilemap.backgroundOpacity` property
-	- add `SKTilemap.backgroundOffset` property
-    - add `SKTilemap.chunksAt(coord:)` method
-    - add `SKTilemap.chunksAt(_:_:)` method
-	- add `SKTilemap.contains(globalID:)` method
-	- add `SKTilesetData.clone()` method
-	- add `SKTile.withTileDataClone()` method
-	- add `SKTile.tileset` property
-	- add `SKTile.tilemap` property
-	- add `SKTile.newTile(globalID:in:)` class function
-	- add `SKTile.newTile(localID:in:)` class function
-    - add `SKTileset.load(tsxFile:)` class function
-	- add `SKTileset.newTile(globalID:)` method
-	- add `SKTileset.newTile(localID:)` method
-    - add `SKTile.mouseOverHandler` handler
-    - `SKTilemap.showObjects(forLayers:)` is deprecated
-    - `SKTileObject.getVertices()` now returns an empty set if there are no points
+	- rename `TiledLayerObject.path` -> `TiledLayerObject.xPath` property
+
+	- remove the `layerName` requirement for `TiledLayerObject` required init
     - remove tile flip flags from `SKTilesetData` objects
 	- remove `TiledGlobals.DebugDisplayOptions.MouseFilters.tilesUnderCursor`
 	- remove `TiledGlobals.DebugDisplayOptions.MouseFilters.objectsUnderCursor`
 	- remove `SKTileLayer.setLayerData(data:debug)`
 	- rename `SKTilemap.isShowingGraphs` -> `SKTilemap.isShowingGridGraph`
 	- remove `TiledLayerObject.points` property
-	- rename `TiledLayerObject.path` -> `TiledLayerObject.xPath` property
+
+    - add `SKTileLayerChunk` class
+    - add `TileContainerType` protocol
+
+	- add `TiledObjectType.tiledDescription` property
+	- add `TiledObjectType.getValue(for:defaultValue:)` protocol method
+    - add `TiledObjectType.setProperties(_:overwrite:)` protocol method
+	- add `TiledObjectType.colorForKey(_:)` method
+
+	- add `TilemapDelegate.mouseOverTileHandler` method.
+	- add `TilemapDelegate.mouseOverObjectHandler` method.
+	- add `TilemapDelegate.mouseClickHandler` method.
+
+	- add `TiledGlobals.zDeltaForLayers` property
+	- add `TiledGlobals.trackProcessorUsage` property
+	- add `TiledGlobals.enableCameraContainedNodesCallbacks` property
+
+	- add `SKTilemap.getTilesWithPropery(named:recursive:)` method
+	- add `SKTileLayer.getTilesWithPropery(named:)` method
+
+	- add `SKTile.globalId` property
+	- add `SKTile.spriteCopy` method
+	- add `SKTile.replaceWithSpriteCopy()` method
+	- add `SKTile.withTileDataClone()` method
+	- add `SKTile.tileset` property
+	- add `SKTile.tilemap` property
+	- add `SKTile.newTile(globalID:in:)` class function
+	- add `SKTile.newTile(localID:in:)` class function
+	- add `SKTile.mouseOverHandler` handler
+
+	- add `SKTileObject.rotation` property
+
+	- add `SKTiledSceneCamera.allowNegativeZoom`
+	- add `SKTiledSceneCamera.sceneRotated` property
+	- add `SKTiledSceneCamera.allowRotation` property
+	- add `SKTiledSceneCamera.rotationDamping` property
+	- add `SKTiledSceneCamera.centerOn(node:)` method
+
+	- add `TiledLayerObject.tintColor` property
+	- add `TiledLayerObject.load` method (EXPERIMENTAL)
+	- add `TiledLayerObject.mapDelegate` property
+	- add `TiledLayerObject.addChunk(_:at:)` method
+
+    - add `SKTileLayer.isInfinite` property
+    - add `SKTileLayer.chunkAt(coord:)` method
+    - add `SKTileLayer.chunkAt(_:_:)` method
+
+    - add `SKTilemap.absoluteSize` property
+	- add `SKTilemap.backgroundOpacity` property
+	- add `SKTilemap.backgroundOffset` property
+    - add `SKTilemap.chunksAt(coord:)` method
+    - add `SKTilemap.chunksAt(_:_:)` method
+	- add `SKTilemap.contains(globalID:)` method
+	- add `SKTilemap.allTiles(globalID:)` method
+
+    - add `SKTileset.load(tsxFile:)` class function
+	- add `SKTileset.newTile(globalID:)` method
+	- add `SKTileset.newTile(localID:)` method
+
+	- add `SKTilesetData.clone()` method
+
 
 
 #### Breaking
 
-- the `SKTiledSceneDelegate.tilemap` property will need to be checked for nil values
-- the `SKTiledSceneDelegate.cameraNode` property will need to be checked for nil values
-- the `SKTiledSceneCamera.world` property will need to be checked for nil values
-- the `SKTileObject.getVertices()` method can no longer return nil
+- the `TiledSceneDelegate.tilemap` property will need to be checked for nil values
+- the `TiledSceneDelegate.cameraNode` property will need to be checked for nil values
+- the `TiledSceneCamera.world` property will need to be checked for nil values
+- the `TileObject.getVertices()` method can no longer return nil
 - tile & object id values will need to be converted to `UInt32`
 - calls to `LoggingLevel.init(rawValue:)` will need to pass a `UInt8`
 

@@ -32,7 +32,9 @@ class AttributeEditorViewController: NSViewController {
 
     let demoController = TiledDemoController.default
     let demoDelegate = TiledDemoDelegate.default
-
+    var receiveCameraUpdates: Bool = true
+    
+    
     @IBOutlet var editorView: NSView!
     @IBOutlet weak var attributesGrid: NSGridView!
     
@@ -57,11 +59,13 @@ class AttributeEditorViewController: NSViewController {
         if (demoDelegate.currentNodes.isEmpty == false) {
             populateInterface()
         }
+        
+        
+        demoController.camera?.addDelegate(self)
     }
 
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.MouseRightClicked, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.Updated, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.SceneWillUnload, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.SceneLoaded, object: nil)
@@ -71,10 +75,9 @@ class AttributeEditorViewController: NSViewController {
 
     func setupNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionChangedAction), name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(mouseRightClickAction), name: Notification.Name.Demo.MouseRightClicked, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tilemapWasUpdated), name: Notification.Name.Map.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sceneWillUnloadAction), name: Notification.Name.Demo.SceneWillUnload, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(newSceneWasLoaded), name: Notification.Name.Demo.SceneLoaded, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(demoSceneLoaded), name: Notification.Name.Demo.SceneLoaded, object: nil)
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(tileClickedAction), name: Notification.Name.Demo.TileClicked, object: nil)
@@ -404,15 +407,6 @@ class AttributeEditorViewController: NSViewController {
         handleNodeSelection()
     }
 
-    /// Called when the `Notification.Name.Demo.MouseRightClicked` event fires. Nodes are accessible via the `TiledDemoDelegate.currentNodes` property.
-    ///
-    /// - Parameter notification: event notification.
-    @objc func mouseRightClickAction(notification: Notification) {
-        //notification.dump(#fileID, function: #function)
-        //populateInterface()
-        resetInterface()
-    }
-
     /// Called when the `Notification.Name.Map.Updated` event fires.
     ///
     /// - Parameter notification: event notification.
@@ -442,9 +436,10 @@ class AttributeEditorViewController: NSViewController {
     ///   userInfo: ["nodes": `[SKNode]`]
     ///
     /// - Parameter notification: event notification.
-    @objc func newSceneWasLoaded(notification: Notification) {
+    @objc func demoSceneLoaded(notification: Notification) {
         //notification.dump(#fileID, function: #function)
-        guard let userInfo = notification.userInfo as? [String: Any],
+        guard let demoScene = notification.object as? SKTiledScene,
+              let userInfo = notification.userInfo as? [String: Any],
               let mapName = userInfo["tilemapName"],
               let relativePath = userInfo["relativePath"] else {
             return
@@ -453,6 +448,8 @@ class AttributeEditorViewController: NSViewController {
         let wintitle = "Attribute Editor: '\(mapName)'"
         view.window?.title = wintitle
         resetInterface(enabled: false)
+        
+        demoScene.cameraNode?.addDelegate(self)
     }
 
     /// Handler for button/checkbox events.
@@ -493,6 +490,19 @@ class AttributeEditorViewController: NSViewController {
 
 
 // MARK: - Extensions
+
+/// :nodoc:
+extension AttributeEditorViewController: TiledSceneCameraDelegate {
+    
+    
+    /// Called when the scene is right-clicked.
+    ///
+    /// - Parameter event: mouse click event.
+    @objc func sceneRightClicked(event: NSEvent) {
+        print("[AttibutEditorViewController]: \(event.description)")
+        resetInterface()
+    }
+}
 
 
 extension AttributeEditorViewController: NSTextFieldDelegate {

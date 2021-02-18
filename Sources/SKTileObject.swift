@@ -1128,7 +1128,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
         attributes.append(("tiled element name", tiledElementName))
         attributes.append(("tiled node nice name", tiledNodeNiceName))
         attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
-        attributes.append(("tiled description", tiledDescription))
+        attributes.append(("tiled help description", tiledHelpDescription))
 
 
         return Mirror(self, children: attributes, ancestorRepresentation: .suppressed)
@@ -1218,7 +1218,7 @@ extension SKTileObject {
     }
 
     /// A description of the node.
-    @objc public override var tiledDescription: String {
+    @objc public override var tiledHelpDescription: String {
         return (globalID == nil) ? "Tiled vector object type." : "Tiled tile vector object type."
     }
 }

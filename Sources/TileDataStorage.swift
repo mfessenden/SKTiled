@@ -139,7 +139,6 @@ internal class TileDataStorage: Loggable {
 
     /// Setup notifications.
     private func setupNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(objectProxyVisibilityChanged), name: Notification.Name.DataStorage.ProxyVisibilityChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(globalsUpdatedAction), name: Notification.Name.Globals.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(objectAddedToLayer), name: Notification.Name.Layer.ObjectAdded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(objectWasRemovedFromLayer), name: Notification.Name.Layer.ObjectRemoved, object: nil)
@@ -159,7 +158,6 @@ internal class TileDataStorage: Loggable {
         blockNotifications = true
         
         // remove notifications
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.DataStorage.ProxyVisibilityChanged, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Globals.Updated, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Layer.ObjectAdded, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Layer.ObjectRemoved, object: nil)
@@ -245,22 +243,6 @@ internal class TileDataStorage: Loggable {
         objectsList?.append(object)
     }
 
-    ///  Called when a map or layer node `showObjects` attribute is changed.
-    ///
-    /// - Parameter notification: event notification.
-    @objc func objectProxyVisibilityChanged(notification: Notification) {
-        guard let proxies = notification.object as? [TileObjectProxy],
-            let userInfo = notification.userInfo as? [String: Bool] else { return }
-
-        let proxiesVisible: Bool = userInfo["visibility"] ?? false
-
-        var proxiesUpdated = 0
-        for proxy in proxies {
-            proxy.showObjects = proxiesVisible
-            proxy.draw()
-            proxiesUpdated += 1
-        }
-    }
 
     /// Called when a tile id changes.
     ///
@@ -761,11 +743,6 @@ internal class TileDataStorage: Loggable {
 
             tile.isHidden = doHideTile
         }
-
-        NotificationCenter.default.post(
-            name: Notification.Name.DataStorage.IsolationModeChanged,
-            object: nil
-        )
     }
 }
 

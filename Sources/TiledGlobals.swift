@@ -287,7 +287,7 @@ public class TiledGlobals {
     public var allowUserMaps: Bool = true
 
     /// Enable mouse events (macOS).
-    public var enableMouseEvents: Bool = false
+    public var enableMouseEvents: Bool = true
 
     /// Image types readable by `Tiled`.
     public var validImageTypes: [String] = ["bmp", "cur", "gif", "heic", "heif", "icns", "ico", "jp2", "jpeg", "jpg", "pbm", "pgm", "png", "ppm", "tga", "tif", "tiff", "wbmp", "webp", "xbm", "xpm"]

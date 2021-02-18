@@ -28,15 +28,15 @@ import SpriteKit
 
 
 /// The `TiledAttributedType` protocol defines a basic node type with a data structure for mapping custom **Tiled**
-/// properties to SpriteKit objects. Objects conforming to this protocol will
-/// automatically receive properties from the source Tiled scene, unless supressed
-/// by setting the object's `TiledAttributedType.ignoreProperties` property.
+/// properties to **SpriteKit** nodes. The `TiledAttributedType.parseProperties` method translates Tiled node custom properties to SpriteKit/SKTiled properties.
+///
+/// Objects conforming to this protocol will automatically receive properties from the source **Tiled** scene, unless supressed by setting the nodes's `TiledAttributedType.ignoreProperties` property.
 ///
 /// ### Properties
 ///
 /// - `properties`:       object of custom Tiled properties.
 /// - `ignoreProperties`: ignore Tiled properties.
-/// - `parseProperties`:  parse function (with optional completion block).
+/// - `parseProperties`:  parse Tiled attributes (with optional completion handler).
 ///
 
 /// ### Usage
@@ -62,9 +62,9 @@ import SpriteKit
 /// let isDynamic = tiledObject.boolForKey("isDynamic") == true
 /// ```
 ///
-/// For more information, see the **[TiledAttributedType][tileattributedype-url]** page in the **[official documentation][sktiled-docroot-url]**. Also see the **[Custom Properties][tiled-custom-properties-url]** page in the **[Tiled Documentation][tiled-docroot-url]**.
+/// For more information, see the **[TiledAttributedType][sktiled-custom-properties-url]** page in the **[official documentation][sktiled-docroot-url]**. Also see the **[Tiled Properties][tiled-custom-properties-url]** page in the **[Tiled Documentation][tiled-docroot-url]**.
 ///
-/// [tileattributedype-url]:Protocols/TiledAttributedType.html
+/// [sktiled-custom-properties-url]:tiled-properties.html
 /// [sktiled-docroot-url]:https://mfessenden.github.io/SKTiled/1.3/index.html
 /// [tiled-custom-properties-url]:https://doc.mapeditor.org/en/stable/manual/custom-properties/
 /// [tiled-docroot-url]:https://doc.mapeditor.org/en/stable

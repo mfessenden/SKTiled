@@ -130,7 +130,7 @@ extension TiledBackgroundLayer {
     }
     
     /// A description of the node.
-    @objc public override var tiledDescription: String {
+    @objc public override var tiledHelpDescription: String {
         return "Layer type for map background color."
     }
 }

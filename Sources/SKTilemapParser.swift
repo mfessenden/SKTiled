@@ -316,7 +316,6 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
         return load(data: data, documentRoot: documentRoot, delegate: delegate, tilesetDataSource: tilesetDataSource, updateMode: updateMode, withTilesets: withTilesets, ignoreProperties: ignoreProperties, loggingLevel: loggingLevel, renderQueue: renderQueue)
     }
 
-
     /// Load a tilemap from xml string data.
     ///
     /// - Parameters:
@@ -401,7 +400,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
             self.tilemapDelegate?.didReadMap?(currentMap)
         }
 
-        
+
         parsingQueue.sync {
             /// render, then notify the delegates of completion
             self.didBeginRendering(currentMap, queue: renderQueue)
@@ -410,7 +409,6 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
         currentMap.dataStorage?.sync()
         return currentMap
     }
-
 
     // MARK: - Original Loading Methods
 
@@ -783,7 +781,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
 
                         case .infinite:
                             for chunk in tileLayer.chunks {
-                                
+
                                 // get stashed tile data for this chunk
                                 if let chunkTileData = self.layerTileData[chunk.uuid] {
                                     // add the layer data

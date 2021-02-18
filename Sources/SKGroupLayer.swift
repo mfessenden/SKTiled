@@ -260,7 +260,7 @@ extension SKGroupLayer {
     }
     
     /// A description of the node.
-    @objc public override var tiledDescription: String {
+    @objc public override var tiledHelpDescription: String {
         return "Container node for Tiled layer types."
     }
 }

@@ -83,7 +83,9 @@ internal enum CameraMovementMode: UInt8 {
 
 /// The `SKTiledSceneCamera` is a custom scene camera that responds to finger gestures and mouse events.
 ///
-/// The `SKTiledSceneCamera` is a custom camera meant to be used with a scene conforming to the `TiledSceneDelegate` protocol.
+/// ![Camera Hierarchy][tiledata-diagram-url]
+///
+/// This node is a custom camera meant to be used with a scene conforming to the `TiledSceneDelegate` protocol.
 /// The camera defines a position in the scene to render the scene from, with a reference to the `TiledSceneDelegate.worldNode`
 /// to interact with tile maps.
 ///
@@ -105,7 +107,7 @@ internal enum CameraMovementMode: UInt8 {
 public class SKTiledSceneCamera: SKCameraNode {
 
     /// World container node.
-    weak internal var world: SKNode?
+    weak public var world: SKNode?
 
     /// Camera bounds.
     internal var bounds: CGRect = CGRect.zero
@@ -183,7 +185,7 @@ public class SKTiledSceneCamera: SKCameraNode {
     }
 
     /// Indicates the camera is currently moving.
-    internal var isMoving: Bool = false
+    public private(set) var isMoving: Bool = false
 
     /// Update delegates on visible node changes.
     public var notifyDelegatesOnContainedNodesChange: Bool = TiledGlobals.default.enableCameraContainedNodesCallbacks {
@@ -207,6 +209,7 @@ public class SKTiledSceneCamera: SKCameraNode {
     /// Camera control mode (tvOS).
     public var controlMode: CameraControlMode = CameraControlMode.none {
         didSet {
+            
             NotificationCenter.default.post(
                 name: Notification.Name.Camera.Updated,
                 object: self,
@@ -220,7 +223,8 @@ public class SKTiledSceneCamera: SKCameraNode {
     public var zoomClamping: CameraZoomClamping = CameraZoomClamping.none {
         didSet {
             setCameraZoom(self.zoom)
-
+            
+            // TODO: demo only?
             NotificationCenter.default.post(
                 name: Notification.Name.Camera.Updated,
                 object: self
@@ -325,7 +329,10 @@ public class SKTiledSceneCamera: SKCameraNode {
         }
         #endif
     }
-
+    
+    /// Instantiate the map with a decoder instance.
+    ///
+    /// - Parameter aDecoder: decoder.
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -866,7 +873,7 @@ extension SKTiledSceneCamera: TiledCustomReflectableType {
     }
 
     /// A description of the node used for list views.
-    @objc public var tiledDescription: String {
+    @objc public var tiledHelpDescription: String {
         return "Tiled scene camera."
     }
 }
@@ -968,7 +975,7 @@ extension SKTiledSceneCamera {
     /// - Parameter event: mouse event.
     public override func mouseDown(with event: NSEvent) {
         lastLocation = event.location(in: self)
-
+        isMoving = true
         if (event.modifierFlags.contains(.option) && allowRotation == true) {
             cameraMovementMode = .rotation
         } else {
@@ -1026,13 +1033,14 @@ extension SKTiledSceneCamera {
     ///
     /// - Parameter event: mouse event.
     public override func mouseMoved(with event: NSEvent) {
+        guard (TiledGlobals.default.enableMouseEvents == true) else {
+            return
+        }
         super.mouseMoved(with: event)
-       // print("⭑ camera mouse event at \(event.location(in: self).shortDescription)")
-
+        
         if (event.type == .mouseMoved) {
             lastLocation = event.location(in: self)
 
-            //guard (TiledGlobals.default.enableMouseEvents == true) else { return }
             for delegate in self.delegates {
                 guard (delegate.receiveCameraUpdates == true) else {
                     continue
@@ -1046,6 +1054,9 @@ extension SKTiledSceneCamera {
     ///
     /// - Parameter event: mouse event
     public override func mouseDragged(with event: NSEvent) {
+        guard (TiledGlobals.default.enableMouseEvents == true) else {
+            return
+        }
         super.mouseDragged(with: event)
         if (event.modifierFlags.contains(.option) && allowRotation == true) {
             sceneRotationChanged(with: event)
@@ -1058,11 +1069,13 @@ extension SKTiledSceneCamera {
     ///
     /// - Parameter event: mouse wheel event.
     public override func scrollWheel(with event: NSEvent) {
-        guard let scene = self.scene, (allowZoom == true) else {
+        guard (TiledGlobals.default.enableMouseEvents == true),
+              let scene = self.scene, (allowZoom == true) else {
             return
         }
-
-
+        
+        super.scrollWheel(with: event)
+        
         if (allowZoom == true) {
 
             // get mouse position in window
@@ -1094,40 +1107,32 @@ extension SKTiledSceneCamera {
     ///
     /// - Parameter event: mouse event.
     public override func rightMouseDown(with event: NSEvent) {
-
-        #if SKTILED_DEMO
-
-        // clear the currently selected node
-        NotificationCenter.default.post(
-            name: Notification.Name.Demo.MouseRightClicked,
-            object: nil
-        )
-        #endif
-
-        if let tiledScene = scene as? SKTiledScene {
-            let nodesUnderMouse = tiledScene.nodes(at: event.location(in: tiledScene)).filter( { $0 as? TiledGeometryType != nil })
-
-            if (nodesUnderMouse.isEmpty == true) {
-                return
-            }
+        guard (TiledGlobals.default.enableMouseEvents == true) else {
+            return
         }
+        
+        for delegate in self.delegates {
+            guard (delegate.receiveCameraUpdates == true) else {
+                continue
+            }
+            delegate.sceneRightClicked?(event: event)
+        }
+        super.rightMouseDown(with: event)
     }
 
     /// Handler for mouse right-click events.
     ///
     /// - Parameter event: mouse event.
     public override func rightMouseUp(with event: NSEvent) {
-
+        guard (TiledGlobals.default.enableMouseEvents == true) else {
+            return
+        }
+                
         #if SKTILED_DEMO
 
         if let tiledScene = scene as? SKTiledScene {
             let locationInScene = event.location(in: tiledScene)
             let nodesUnderMouse = tiledScene.nodes(at: locationInScene).filter( { $0 as? TiledGeometryType != nil })
-
-            if (nodesUnderMouse.isEmpty == true) {
-                log("no nodes at event location '\(event.location(in: self).shortDescription)'", level: .warning)
-                return
-            }
 
             // REFERENCE: these nodes are correct!
             NotificationCenter.default.post(
@@ -1163,9 +1168,7 @@ extension SKTiledSceneCamera {
             isMoving = true
 
             let difference = CGPoint(x: location.x - lastLocation.x, y: location.y - lastLocation.y)
-
             position = CGPoint(x: Int(position.x - difference.x), y: Int(position.y - difference.y))
-
             lastLocation = location
 
             /// notify delegates

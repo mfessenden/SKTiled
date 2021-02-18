@@ -122,14 +122,14 @@ public struct TileIsolationMode: OptionSet {
 ///
 /// ### Properties
 ///
-/// | mapSize     | Size of the map (in tiles).                   |
-/// | tileSize    | Map tile size (in pixels).                    |
-/// | renderSize  | Size of the map in pixels.                    |
-/// | orientation | Map orientation (orthogonal, isometric, etc.) |
-/// | bounds      | Map bounding rect.                            |
-/// | tilesets    | Array of stored tileset instances.            |
-/// | allowZoom   | Allow camera zooming.                         |
-/// | layers      | Array of child layers.                        |
+/// - `mapSize`: Size of the map (in tiles).
+/// - `tileSize`: Map tile size (in pixels).
+/// - `renderSize`: Size of the map in pixels.
+/// - `orientation`: Map orientation (orthogonal, isometric, etc.)
+/// - `bounds`: Map bounding rect.
+/// - `tilesets`: Array of stored tileset instances.
+/// - `allowZoom`: Allow camera zooming.
+/// - `layers`: Array of child layers.                        
 ///
 ///
 /// For more information, see the [**Working with Maps**][tilemap-doc-url] page in the [**official documentation**][sktiled-docroot-url].
@@ -637,15 +637,17 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     @objc public var debugDrawOptions: DebugDrawOptions = TiledGlobals.default.debugDrawOptions {
         didSet {
             debugNode?.draw()
-
-            let proxiesVisible = self.isShowingObjectBounds
-            let proxies = self.getObjectProxies()
-
-            NotificationCenter.default.post(
-                name: Notification.Name.DataStorage.ProxyVisibilityChanged,
-                object: proxies,
-                userInfo: ["visibility": proxiesVisible]
-            )
+            
+            
+            renderQueue.async {
+                let proxiesVisible = self.isShowingObjectBounds
+                let proxies = self.getObjectProxies()
+                
+                for proxy in proxies {
+                    proxy.showObjects = proxiesVisible
+                    proxy.draw()
+                }
+            }
         }
     }
 
@@ -2589,7 +2591,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         attributes.append(("tiled element name", tiledElementName))
         attributes.append(("tiled node nice name", tiledNodeNiceName))
         attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
-        attributes.append(("tiled description", tiledDescription))
+        attributes.append(("tiled help description", tiledHelpDescription))
 
         return Mirror(self, children: attributes)
     }
@@ -3216,9 +3218,8 @@ extension SKTilemap: TiledSceneCameraDelegate {
             return
         }
 
-        // CHECKME: should this be walled off?
+        // TODO: should this be walled off from framework?
         self.nodesInView = nodes
-
     }
 
     /// Called when the camera bounds updated.
@@ -3351,7 +3352,7 @@ extension SKTilemap {
     }
 
     /// A description of the node.
-    @objc public var tiledDescription: String {
+    @objc public var tiledHelpDescription: String {
         return "Tile map node."
     }
 }

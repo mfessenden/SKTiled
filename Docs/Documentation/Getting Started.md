@@ -12,7 +12,6 @@
 - [tvOS Support](#tvos-support)
     - [A Note About 4K](#a-note-about-4k)
 - [Using Tiled Assets with Xcode](#using-tiled-assets-with-xcode)
-    - [Referenced Assets](#referenced-assets)
 
 
 **SKTiled** was designed to be flexible and easy to use. To get started, simply build the framework and add your assets to your Xcode project. If you have any problems or requests, please open an issue at the [**Github page**](https://github.com/mfessenden/SKTiled/issues).
@@ -176,22 +175,6 @@ if let tilemap = SKTilemap.load(tmxFile: "MyTilemap.tmx") {
 ```
 
 On your hard drive, a map's dependencies (images, tilesets) *should* be in the same directory as the map to avoid read errors.
-
-### Referenced Assets
-
-
-![Referenced Assets][xcode-assets-ref-img]
-
-If you add assets as *folder references*, you can supply a directory name with the `inDirectory` argument of `SKTilemap.load(tmxFile:)` method:
-
-
-```swift
-if let tilemap = SKTilemap.load(tmxFile: "MyTilemap.tmx", inDirectory: "Tiled") {
-    scene.addChild(tilemap)
-}
-```
-
-This will allow you more flexibility organizing your project, but be careful that your maps don't reference files above the referenced folder. For more information, see the [**Working with Maps**][working-with-maps-url] section.
 
 
 

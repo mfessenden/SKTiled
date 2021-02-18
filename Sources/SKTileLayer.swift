@@ -1018,7 +1018,7 @@ public class SKTileLayer: TiledLayerObject {
         attributes.append(("tiled element name", tiledElementName))
         attributes.append(("tiled node nice name", tiledNodeNiceName))
         attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
-        attributes.append(("tiled description", tiledDescription))
+        attributes.append(("tiled help description", tiledHelpDescription))
 
         if (isInfinite == true) {
             attributes.append(("chunks", chunks))
@@ -1102,7 +1102,7 @@ extension SKTileLayer {
     }
 
     /// A string description of the node's function.
-    @objc public override var tiledDescription: String {
+    @objc public override var tiledHelpDescription: String {
         return "Layer container for tiles."
     }
 }

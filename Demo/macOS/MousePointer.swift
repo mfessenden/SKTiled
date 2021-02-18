@@ -510,9 +510,12 @@ extension MousePointer: TiledSceneCameraDelegate {
     /// Called when the mouse moves in the scene.
     ///
     /// - Parameter event: mouse event.
-    func mousePositionChanged(event: NSEvent) {
+    @objc func mousePositionChanged(event: NSEvent) {
         draw(event: event)
     }
+    
+    
+    
 }
 
 
@@ -532,13 +535,13 @@ extension MousePointer: TiledCustomReflectableType {
         return "mousepointer-icon"
     }
 
-    /// A description of the node used for list views.
+    /// A description of the node used for list (menu) views.
     @objc public var tiledListDescription: String {
         return "MousePointer"
     }
 
     /// A description of the node.
-    @objc public var tiledDescription: String {
+    @objc public var tiledHelpDescription: String {
         return "A node that tracks mouse movement."
     }
 }

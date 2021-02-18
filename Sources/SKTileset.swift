@@ -29,7 +29,7 @@ import SpriteKit
 
 /// The `SKTileset` class manages a set of `SKTilesetData` objects, which store tile data including global id, texture and animation.
 ///
-/// ![Tileset Setup](https://mfessenden.github.io/SKTiled/1.3/images/tiledata-setup.svg)
+/// ![Tileset Setup][tiledata-diagram-url]
 ///
 /// Tile data is accessed via a local id, and tiles can be instantiated with the resulting `SKTilesetData` instance:
 ///
@@ -52,10 +52,14 @@ import SpriteKit
 /// - `lastGID`: last tile global id.
 /// - `tileData`: set of tile data structures.
 ///
+/// ### Class Functions
+///
+/// - `load(tsxFile:delegate:)`: Load a tileset from a file.
+/// - `load(tsxFiles:delegate:)`: Load multiple tilesets.
 ///
 /// ### Instance Methods
 ///
-/// - `addTextures()`: Generate textures from a spritesheet image.     
+/// - `addTextures()`: Generate textures from a spritesheet image.
 /// - `addTilesetTile()`: Add & return new tile data object.
 ///
 /// For more information, see the **[Working with Tilesets][tilesets-doc-url]** page in the **[official documentation][sktiled-docroot-url]**.
@@ -481,7 +485,7 @@ public class SKTileset: NSObject, CustomReflectable, TiledAttributedType {
             log("invalid tile id '\(tileID)'", level: .error)
             return nil
         }
-        
+
         // flag the tileset as being a collections tileset
         isImageCollection = true
 
@@ -802,7 +806,7 @@ public class SKTileset: NSObject, CustomReflectable, TiledAttributedType {
         attributes.append(("tiled element name", tiledElementName))
         //attributes.append(("tiled node nice name", tiledNodeNiceName))
         //attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
-        attributes.append(("tiled description", tiledDescription))
+        attributes.append(("tiled help description", tiledHelpDescription))
 
 
         return Mirror(self, children: attributes, displayStyle: .class)
@@ -912,7 +916,7 @@ extension SKTileset {
     }
 
     /// A description of the node.
-    @objc public var tiledDescription: String {
+    @objc public var tiledHelpDescription: String {
         return "\(tiledElementName.titleCased()): "
     }
 }
