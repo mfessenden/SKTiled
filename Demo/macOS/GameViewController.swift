@@ -136,7 +136,7 @@ class GameViewController: NSViewController, Loggable {
 
     // MARK: - Demo Start
 
-    /// Called when the demo controller has loaded the current assets. Called when the `Notification.Name.DemoController.AssetsFinishedScanning` notification is sent.
+    /// Called when the demo controller has loaded the current assets. Called when the `Notification.Name.DemoController.AssetsFinishedScanning` notification is received.
     ///
     ///  userInfo: ["tilemapAssets": `[TiledDemoAsset]`]
     ///
@@ -388,7 +388,7 @@ class GameViewController: NSViewController, Loggable {
 
     // MARK: - Command Strings
 
-    /// Update the the command string label. Called when the `Notification.Name.Debug.DebuggingMessageSent` notification is sent.
+    /// Update the the command string label. Called when the `Notification.Name.Debug.DebuggingMessageSent` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func debuggingMessageReceived(notification: Notification) {
@@ -516,7 +516,7 @@ class GameViewController: NSViewController, Loggable {
     }
     
     
-    /// Update the interface when a map has been parsed & loaded. Called when the `Notification.Name.Map.Updated` notification is sent.
+    /// Update the interface when a map has been parsed & loaded. Called when the `Notification.Name.Map.Updated` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func mapUpdatedAction(notification: Notification) {
@@ -581,7 +581,7 @@ class GameViewController: NSViewController, Loggable {
         }
     }
 
-    /// Show/hide the current SpriteKit render stats. Called when the `Notification.Name.RenderStats.VisibilityChanged` notification is sent.
+    /// Show/hide the current SpriteKit render stats. Called when the `Notification.Name.RenderStats.VisibilityChanged` notification is received.
     ///
     ///  - expects a userInfo of `["isHidden": Bool]`
     ///
@@ -603,7 +603,7 @@ class GameViewController: NSViewController, Loggable {
         }
     }
 
-    /// Update the debugging labels with various scene information. Called when node values are changed via the demo inspector. Called when the `Notification.Name.Demo.UpdateDebugging` notification is sent.
+    /// Update the debugging labels with various scene information. Called when node values are changed via the demo inspector. Called when the `Notification.Name.Demo.UpdateDebugging` notification is received.
     ///
     /// - Parameter notification: notification event.
     @objc func debuggingInfoReceived(notification: Notification) {
@@ -634,7 +634,7 @@ class GameViewController: NSViewController, Loggable {
         }
     }
 
-    /// Called when node values are changed via the demo inspector. Called when the `Notification.Name.Demo.NodeAttributesChanged` notification is sent.
+    /// Called when node values are changed via the demo inspector. Called when the `Notification.Name.Demo.NodeAttributesChanged` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func nodeAttributesChanged(notification: Notification) {
@@ -791,7 +791,7 @@ class GameViewController: NSViewController, Loggable {
     // MARK: - Mouse Event Handlers
 
 
-    /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.ObjectUnderCursor` notification is sent.
+    /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.ObjectUnderCursor` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func objectUnderMouseChanged(notification: Notification) {
@@ -809,7 +809,7 @@ class GameViewController: NSViewController, Loggable {
 
     }
 
-    /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.ObjectClicked` notification is sent.
+    /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.ObjectClicked` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func objectUnderMouseClicked(notification: Notification) {
@@ -826,7 +826,7 @@ class GameViewController: NSViewController, Loggable {
         }
     }
 
-    /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.TileUnderCursor` notification is sent.
+    /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.TileUnderCursor` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func tileUnderMouseChanged(notification: Notification) {
@@ -844,7 +844,7 @@ class GameViewController: NSViewController, Loggable {
         clickedTile.highlightNode(with: clickedTile.highlightColor, duration: 1)
     }
 
-    /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.TileClicked` notification is sent.
+    /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.TileClicked` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func tileUnderMouseClicked(notification: Notification) {
@@ -886,7 +886,7 @@ class GameViewController: NSViewController, Loggable {
 
     // MARK: - Reset
 
-    /// Called when the inspector tree selection changes. Called when the `Notification.Name.DemoController.ResetDemoInterface` notification is sent.
+    /// Called when the inspector tree selection changes. Called when the `Notification.Name.DemoController.ResetDemoInterface` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func resetMainInterfaceAction(notification: Notification) {
@@ -896,7 +896,7 @@ class GameViewController: NSViewController, Loggable {
     }
 
 
-    /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.NodeSelectionChanged` notification is sent.
+    /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.NodeSelectionChanged` notification is received.
     ///
     ///  - expects a userInfo of `["nodes": [SKNode], "focusLocation": CGPoint]`
     ///
@@ -982,7 +982,7 @@ class GameViewController: NSViewController, Loggable {
         }
     }
 
-    /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.NodeSelectionCleared` notification is sent.
+    /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.NodeSelectionCleared` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func nodeSelectionCleared(notification: Notification) {
@@ -992,7 +992,7 @@ class GameViewController: NSViewController, Loggable {
     }
 
 
-    /// Update the tile property label. Called when the `Notification.Name.Tile.RenderModeChanged` notification is sent.
+    /// Update the tile property label. Called when the `Notification.Name.Tile.RenderModeChanged` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func tileRenderModeChanged(notification: Notification) {
@@ -1011,7 +1011,7 @@ class GameViewController: NSViewController, Loggable {
         self.statsRenderModeLabel.stringValue = "Mode: \(tilemap.updateMode.name)"
     }
 
-    /// Update the camera debug information. Called when the `Notification.Name.Debug.Camera.Updated` notification is sent.
+    /// Update the camera debug information. Called when the `Notification.Name.Debug.Camera.Updated` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func sceneCameraUpdated(notification: Notification) {
@@ -1024,7 +1024,7 @@ class GameViewController: NSViewController, Loggable {
     }
 
 
-    /// Enables/disable button controls based on the current map attributes. Called when the `Notification.Name.Map.Updated` notification is sent.
+    /// Enables/disable button controls based on the current map attributes. Called when the `Notification.Name.Map.Updated` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func tilemapWasUpdated(notification: Notification) {
@@ -1086,7 +1086,7 @@ class GameViewController: NSViewController, Loggable {
         statsObjectsLabel.isHidden = false
     }
 
-    /// Called when the current scene is about to unload. Called when the `Notification.Name.Demo.SceneWillUnload` notification is sent.
+    /// Called when the current scene is about to unload. Called when the `Notification.Name.Demo.SceneWillUnload` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func sceneWillUnloadAction(_ notification: Notification) {
@@ -1133,14 +1133,14 @@ class GameViewController: NSViewController, Loggable {
         progressIndicator.isHidden = false
     }
 
-    /// Called when the demo controller has loaded the current assets. Called when the `Notification.Name.DemoController.AssetsFinishedScanning` notification is sent.
+    /// Called when the demo controller has loaded the current assets. Called when the `Notification.Name.DemoController.AssetsFinishedScanning` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func demoControllerResetAction(_ notification: Notification) {
         demoController.reset()
     }
 
-    /// Called when any of the demo helpers updates. Called when the `Notification.Name.DemoController.DemoStatusUpdated` notification is sent.
+    /// Called when any of the demo helpers updates. Called when the `Notification.Name.DemoController.DemoStatusUpdated` notification is received.
     ///
     ///  - looks for userInfo of `["status": String, "isHidden": Bool, "color": SKColor]`
     ///
@@ -1166,7 +1166,7 @@ class GameViewController: NSViewController, Loggable {
 
     // MARK: - Debugging
 
-    /// Updates the render stats debugging info. Called when the `Notification.Name.Map.RenderStatsUpdated` notification is sent.
+    /// Updates the render stats debugging info. Called when the `Notification.Name.Map.RenderStatsUpdated` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func renderStatsUpdated(notification: Notification) {

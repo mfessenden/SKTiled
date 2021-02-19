@@ -117,6 +117,7 @@ Change Log
     - add `SKTilemap.chunksAt(_:_:)` method
 	- add `SKTilemap.contains(globalID:)` method
 	- add `SKTilemap.allTiles(globalID:)` method
+	- add `SKTilemap.newTile(globalID:type:)` method
 
     - add `SKTileset.load(tsxFile:)` class function
 	- add `SKTileset.newTile(globalID:)` method

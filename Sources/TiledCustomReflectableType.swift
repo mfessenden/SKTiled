@@ -64,6 +64,21 @@ import SpriteKit
 
 
 
+/*
+
+ ## SKTile
+
+ `SKTile: id: 0`: description
+ `<SKTile: id: 0>`: debugDescription
+ `Tile: gid 0`: tiledMenuDescription
+ `Tile: gid 0`: tiledListDescription
+
+ ## SKTilemap
+
+*/
+
+
+
 
 // MARK: - Extensions
 

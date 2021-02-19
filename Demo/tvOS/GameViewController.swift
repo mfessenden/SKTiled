@@ -268,7 +268,7 @@ class GameViewController: GCEventViewController, Loggable {
 
     // MARK: - Event Callbacks
 
-    /// Update the debugging labels with scene information. Called when the `Notification.Name.Demo.UpdateDebugging` notification is sent.
+    /// Update the debugging labels with scene information. Called when the `Notification.Name.Demo.UpdateDebugging` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func debuggingInfoReceived(notification: Notification) {

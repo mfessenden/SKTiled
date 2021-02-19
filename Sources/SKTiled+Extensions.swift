@@ -2017,6 +2017,7 @@ extension Notification.Name {
     }
 
     public struct Tile {
+        public static let TileCreated               = Notification.Name(rawValue: "org.sktiled.notification.name.tile.tileCreated")
         public static let TileIDChanged             = Notification.Name(rawValue: "org.sktiled.notification.name.tile.tileTileIdChanged")
         public static let TileDataChanged           = Notification.Name(rawValue: "org.sktiled.notification.name.tile.tileTileDataChanged")
         // Called when the tile render mode is updated.

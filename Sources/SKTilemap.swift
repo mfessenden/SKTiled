@@ -1899,6 +1899,27 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     public func animatedTiles(recursive: Bool = true) -> [SKTile] {
         return tileLayers(recursive: recursive).flatMap { $0.animatedTiles() }
     }
+    
+    /// Creates and returns a new tile instance with the given global id.
+    ///
+    /// - Parameters:
+    ///   - localID: tile gobal id.
+    ///   - tileType: tile object type.
+    /// - Returns: tile instance, if tile data exists.
+    public func newTile(globalID: UInt32, type tileType: SKTile.Type = SKTile.self) -> SKTile? {
+        guard let tiledata = getTileData(globalID: globalID),
+              let tile = tileType.init(data: tiledata) else {
+            return nil
+        }
+        
+        // add to tile cache
+        NotificationCenter.default.post(
+            name: Notification.Name.Tile.TileCreated,
+            object: tile
+        )
+        
+        return tile
+    }
 
     // MARK: - Tile Data
 

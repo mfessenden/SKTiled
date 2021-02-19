@@ -689,7 +689,7 @@ public func += (left: inout CGPoint, right: CGPoint) {
 
 extension SKTiledDemoScene {
 
-    /// Setup game controllers when a controller is connected. Called when the `Notification.Name.GCControllerDidConnect` notification is sent.
+    /// Setup game controllers when a controller is connected. Called when the `Notification.Name.GCControllerDidConnect` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc public func connectControllers(notification: Notification) {
@@ -703,7 +703,7 @@ extension SKTiledDemoScene {
         }
     }
 
-    /// Remove game controllers. Called when the `Notification.Name.GCControllerDidDisconnect` notification is sent.
+    /// Remove game controllers. Called when the `Notification.Name.GCControllerDidDisconnect` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc public func disconnectControllers(notification: Notification) {

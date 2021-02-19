@@ -184,7 +184,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         reloadMapMenuitem.isEnabled = false
     }
 
-    /// Reset the interace. Called when the `Notification.Name.DemoController.ResetDemoInterface` notification is sent.
+    /// Reset the interace. Called when the `Notification.Name.DemoController.ResetDemoInterface` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func resetMainInterfaceAction(_ notification: Notification) {
@@ -1192,7 +1192,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - Globals
 
-    /// Called when the Tiled globals are updated. Called when the `Notification.Name.Globals.Updated` notification is sent.
+    /// Called when the Tiled globals are updated. Called when the `Notification.Name.Globals.Updated` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func globalsUpdatedAction(notification: Notification) {
@@ -1572,7 +1572,7 @@ extension AppDelegate {
 
     // MARK: - Tilemap Menus
 
-    /// Initialize tilemap menus. This is called when the `Notification.Name.Map.FinishedRendering` notification is sent.
+    /// Initialize tilemap menus. This is called when the `Notification.Name.Map.FinishedRendering` notification is received.
     ///
     /// - Parameter tilemap: tile map object.
     @objc func initializeTilemapMenus(tilemap: SKTilemap) {

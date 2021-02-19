@@ -1046,7 +1046,7 @@ extension TiledDemoController {
         }
     }
 
-    /// Show/hide the grid & map bounds. This is meant to be used with the interface buttons/keys to quickly turn grid & bounds drawing on. Called when the `Notification.Name.Demo.MapDebugDrawingChanged` notification is sent.
+    /// Show/hide the grid & map bounds. This is meant to be used with the interface buttons/keys to quickly turn grid & bounds drawing on. Called when the `Notification.Name.Demo.MapDebugDrawingChanged` notification is received.
     @objc public func toggleMapDemoDrawGridAndBounds() {
         print("\(#function), \(#fileID)")
         guard let view = self.view,
@@ -1109,7 +1109,7 @@ extension TiledDemoController {
     }
 
 
-    /// Show/hide current scene vector object debug visualization. Called when the `Notification.Name.Demo.MapObjectVisibilityChanged` notification is sent.
+    /// Show/hide current scene vector object debug visualization. Called when the `Notification.Name.Demo.MapObjectVisibilityChanged` notification is received.
     @objc public func toggleMapObjectDrawing() {
         print("\(#function), \(#fileID)")
         guard let view = self.view,
@@ -1135,7 +1135,7 @@ extension TiledDemoController {
         }
     }
 
-    /// Toggles the tilemap's effects rendering flag. Called when the `Notification.Name.Debug.MapEffectsRenderingChanged` notification is sent.
+    /// Toggles the tilemap's effects rendering flag. Called when the `Notification.Name.Debug.MapEffectsRenderingChanged` notification is received.
     @objc public func toggleTilemapEffectsRendering() {
         print("\(#function), \(#fileID)")
         guard let view = self.view,

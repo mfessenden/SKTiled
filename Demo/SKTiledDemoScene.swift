@@ -167,7 +167,7 @@ public class SKTiledDemoScene: SKTiledScene {
     // MARK: - Event Handlers
 
 
-    /// Called when the `Notification.Name.Demo.NodeSelectionChanged` notification is sent.
+    /// Called when the `Notification.Name.Demo.NodeSelectionChanged` notification is received.
     ///
     ///  - expects a userInfo of `["nodes": [`SKNode`]]`
     ///

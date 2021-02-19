@@ -219,7 +219,7 @@ internal class MousePointer: SKNode {
 
     // MARK: - Notification Handlers
 
-    /// Called when the tilemap focus coordinate is updated. Called when the `Notification.Name.Map.FocusCoordinateChanged` notification is sent.
+    /// Called when the tilemap focus coordinate is updated. Called when the `Notification.Name.Map.FocusCoordinateChanged` notification is received.
     ///
     ///  object: `simd_int2`, userInfo: `["oldValue": simd_int2, "isValid": Bool]`
     ///
@@ -237,7 +237,7 @@ internal class MousePointer: SKNode {
         //redraw()
     }
 
-    /// Set the current tile value. Called when the `Notification.Name.Demo.TileUnderCursor` notification is sent.
+    /// Set the current tile value. Called when the `Notification.Name.Demo.TileUnderCursor` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func tileUnderCursor(notification: Notification) {
@@ -249,7 +249,7 @@ internal class MousePointer: SKNode {
         redraw()
     }
 
-    /// Set the current tile value. Called when the `Notification.Name.Demo.TileClicked` notification is sent.
+    /// Set the current tile value. Called when the `Notification.Name.Demo.TileClicked` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func tileClicked(notification: Notification) {

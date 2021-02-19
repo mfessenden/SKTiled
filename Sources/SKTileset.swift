@@ -875,15 +875,23 @@ extension SKTileset {
     /// Creates and returns a new tile instance with the given global id.
     ///
     /// - Parameters:
-    ///   - localID: tile local id.
+    ///   - localID: tile global id.
     ///   - tileType: tile object type.
     /// - Returns: tile instance, if tile data exists.
     public func newTile(globalID: UInt32, type tileType: SKTile.Type = SKTile.self) -> SKTile? {
         guard let tiledata = getTileData(globalID: globalID),
-              let newtile = tileType.init(data: tiledata) else {
+              let tile = tileType.init(data: tiledata) else {
             return nil
         }
-        return newtile
+        
+        // add to tile cache
+        NotificationCenter.default.post(
+            name: Notification.Name.Tile.TileCreated,
+            object: tile
+        )
+        
+        
+        return tile
     }
 
     /// Creates and returns a new tile instance with the given local id.
@@ -894,10 +902,17 @@ extension SKTileset {
     /// - Returns: tile instance, if tile data exists.
     public func newTile(localID: UInt32, type tileType: SKTile.Type = SKTile.self) -> SKTile? {
         guard let tiledata = getTileData(localID: localID),
-              let newtile = tileType.init(data: tiledata) else {
+              let tile = tileType.init(data: tiledata) else {
             return nil
         }
-        return newtile
+        
+        // add to tile cache
+        NotificationCenter.default.post(
+            name: Notification.Name.Tile.TileCreated,
+            object: tile
+        )
+        
+        return tile
     }
 }
 

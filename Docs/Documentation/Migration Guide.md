@@ -4,8 +4,6 @@
     - [Symbols](#symbols)
     - [Properties & Methods](#properties-&-Methods)
 - [Type Changes](#type-changes)
-- [Tile Coordinates](#tile-coordinates)
-- [Tile Global IDs](#tile-global-ids)
 - [Tile Flip Flags](#tile-iflip-flags)
 
 Moving from the **v1.2** API should be fairly straightforward. Here are the highlights of what's changed:
@@ -48,17 +46,26 @@ Moving from the **v1.2** API should be fairly straightforward. Here are the high
 | Map Coordinates |  `int2`  | `simd_int2` |
 
 
-## Tile Coordinates
-
-**Coming Soon**
-
-## Tile Global IDs
-
-**Coming Soon**
-
 ## Tile Flip Flags
 
-Tile flip flags used to be stored in the `SKTilesetData` structure
+Prior to v1.3, tile flip flags were stored in the `SKTilesetData` structure which actually served no purpose because a masked tile global id would have its orientation parsed when the tile is initially created.
+
+
+```swift
+// A raw value of 2147483659 translates to 11, flipped horizontally.
+let gid: UInt32 = 2147483659
+var tileId = TileID(wrappedValue: 2147483659)
+print(tileId)
+// Tile ID: 11, flags: [ hFlip ]
+
+// Alternately, we can set the flags directly:
+tileId.flags = [.all]
+print(tileId)
+// Tile ID: 11, flags: [ hFlip, vFlip, dFlip ]
+```
+
+
+
 
 Next: [Scene Setup](scene-setup.html) - [Index](Documentation.html)
 

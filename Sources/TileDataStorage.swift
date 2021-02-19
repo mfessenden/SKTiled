@@ -147,6 +147,7 @@ internal class TileDataStorage: Loggable {
         NotificationCenter.default.addObserver(self, selector: #selector(tileTileIDChanged), name: Notification.Name.Tile.TileIDChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileTileDataChanged), name: Notification.Name.Tile.TileDataChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileRenderModeChanged), name: Notification.Name.Tile.RenderModeChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(tileCreatedAction), name: Notification.Name.Tile.TileCreated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileDataActionAdded), name: Notification.Name.TileData.ActionAdded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileDataFrameAdded), name: Notification.Name.TileData.FrameAdded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileDataTextureChanged), name: Notification.Name.TileData.TextureChanged, object: nil)
@@ -196,7 +197,7 @@ internal class TileDataStorage: Loggable {
     // MARK: - Notifications
 
 
-    /// Add a tile to storage. Called when the `Notification.Name.Layer.TileAdded` notification is sent.
+    /// Add a tile to storage. Called when the `Notification.Name.Layer.TileAdded` notification is received.
     ///
     ///  userInfo: ["layer": `SKTileLayer`, "object": `SKTileObject`, "coord": `simd_int2`]
     ///  userInfo: ["chunk``": `SKTileLayerChunk`]
@@ -209,7 +210,7 @@ internal class TileDataStorage: Loggable {
         addTileToCache(tile: tile)
     }
 
-    /// Destory a given tile when it is removed from a layer. Called when the `Notification.Name.Layer.TileRemoved` notification is sent.
+    /// Destory a given tile when it is removed from a layer. Called when the `Notification.Name.Layer.TileRemoved` notification is received.
     ///
     /// - Parameter notification: event notificaton.
     @objc func tileRemovedFromLayer(notification: Notification) {
@@ -427,7 +428,15 @@ internal class TileDataStorage: Loggable {
             }
         }
     }
-
+    
+    /// Add a tile to storage. Called when the `Notification.Name.Tile.TileCreated` notification is received.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func tileCreatedAction(notification: Notification) {
+        guard let tile = notification.object as? SKTile else { return }
+        addTileToCache(tile: tile)
+    }
+    
     /// Called when tile data frames are updated.
     ///
     /// - Parameter notification: event notification.

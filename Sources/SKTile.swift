@@ -1079,7 +1079,9 @@ extension TileRenderMode: Equatable {
 
 extension SKTile {
 
-    /// Reference to the tile data's parent tileset.
+    /// A reference to the tile data's containing tileset.
+    ///
+    /// - Returns: tileset instance, if one exists.
     open var tileset: SKTileset? {
         guard let tileset = tileData.tileset else {
             return nil
@@ -1217,10 +1219,18 @@ extension SKTile {
     ///   - tileset: tileset instance.
     /// - Returns: tile object with the given data.
     public class func newTile(globalID: UInt32, in tileset: SKTileset) -> SKTile {
-        guard let newtile = tileset.newTile(globalID: globalID) else {
+        guard let tile = tileset.newTile(globalID: globalID) else {
             return SKTile()
         }
-        return newtile
+        
+        // add to tile cache
+        NotificationCenter.default.post(
+            name: Notification.Name.Tile.TileCreated,
+            object: tile
+        )
+        
+        
+        return tile
     }
 
     /// Creates and returns a new tile instance with the given tileset & local id.
@@ -1230,10 +1240,17 @@ extension SKTile {
     ///   - tileset: tileset instance.
     /// - Returns: tile object with the given data.
     public class func newTile(localID: UInt32, in tileset: SKTileset) -> SKTile {
-        guard let newtile = tileset.newTile(localID: localID) else {
+        guard let tile = tileset.newTile(localID: localID) else {
             return SKTile()
         }
-        return newtile
+        
+        // add to tile cache
+        NotificationCenter.default.post(
+            name: Notification.Name.Tile.TileCreated,
+            object: tile
+        )
+        
+        return tile
     }
 }
 

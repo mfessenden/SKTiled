@@ -44,11 +44,6 @@
     - [Symbols](migration-guide.html#symbols)
     - [Properties & Methods](migration-guide.html#properties-&-Methods)
 - [Type Changes](migration-guide.html#type-changes)
-- [Tile Coordinates](#tile-coordinates)
-- [Tile Global IDs](#tile-global-ids)
-- [Tile Flip Flags](#tile-iflip-flags)
-- [Tile Coordinates](migration-guide.html#tile-coordinates)
-- [Tile Global IDs](migration-guide.html#tile-global-ids)
 - [Tile Flip Flags](migration-guide.html#tile-iflip-flags)
 
 
