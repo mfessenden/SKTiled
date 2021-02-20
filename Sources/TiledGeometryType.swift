@@ -202,7 +202,11 @@ extension SKNode {
         // FIXME: this is a mess
         let removeHighlight: Bool = (color == SKColor.clear)
         let highlightFillColor = (removeHighlight == false) ? color.withAlphaComponent(0.2) : color
-
+        
+        let baseLineWidth: CGFloat = 1
+        let lineWidthForScale = baseLineWidth * TiledGlobals.default.contentScale
+        
+        
         if let sprite = self as? SKSpriteNode {
 
             var spritecolor = color
@@ -223,9 +227,10 @@ extension SKNode {
 
             if let tiledGeo = sprite as? TiledGeometryType {
                 if (removeHighlight == false) {
+                    print("highlighting '\(self.className)' node")
                     tiledGeo.boundsShape?.strokeColor = color
-                    tiledGeo.boundsShape?.lineWidth = 1
-                    tiledGeo.boundsShape?.zPosition = zPosition + 1
+                    tiledGeo.boundsShape?.lineWidth = lineWidthForScale
+                    tiledGeo.boundsShape?.zPosition = zPosition + 1000
                 } else {
                     tiledGeo.boundsShape?.strokeColor = SKColor.clear
                 }
@@ -255,7 +260,7 @@ extension SKNode {
                 tiledObejct.proxy?.highlightNode(with: color, duration: duration)
             } else {
                 shape.strokeColor = color
-                shape.lineWidth = 1
+                shape.lineWidth = lineWidthForScale
                 shape.fillColor = highlightFillColor
                 shape.isAntialiased = false
                 if (duration > 0) {

@@ -2299,7 +2299,42 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
     /// Called when the isolation mode changes.
     internal func updateIsolationMode() {
-        // TODO: stub
+        var doShowTiles = isolationMode.contains(.tiles) || isolationMode.contains(.none)
+        var doShowObjects = isolationMode.contains(.objects) || isolationMode.contains(.none)
+        
+        let doShowTextObjects = isolationMode.contains(.textObjects)
+        let doShowTileObjects = isolationMode.contains(.tileObjects)
+        let doShowPointObjects = isolationMode.contains(.pointObjects)
+        
+
+        getTiles().forEach { tile in
+            tile.isHidden = !doShowTiles
+        }
+        
+        getObjects().forEach { obj in
+            
+            let objIsText = obj.text != nil
+            let objIsTile = obj.tile != nil
+            let objIsPoint = obj.objectType == .point
+            
+            
+            var hideThisObject = !doShowObjects
+            
+            if (objIsText == true && doShowTextObjects == true) {
+                hideThisObject = false
+            }
+            
+            if (objIsTile == true && doShowTileObjects == true) {
+                hideThisObject = false
+            }
+            
+            if (objIsPoint == true && doShowPointObjects == true) {
+                hideThisObject = false
+            }
+            
+            obj.isHidden = hideThisObject
+            
+        }
     }
 
     /// Update the map as each frame is rendered.
@@ -2991,7 +3026,7 @@ extension SKTilemap {
     @objc public override func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
         let removeHighlight: Bool = (color == SKColor.clear)
         let highlightFillColor = (removeHighlight == false) ? color.withAlphaComponent(0.2) : color
-
+        
         boundsShape?.strokeColor = color
         boundsShape?.fillColor = highlightFillColor
         boundsShape?.isHidden = false
@@ -3262,7 +3297,7 @@ extension SKTilemap: TiledSceneCameraDelegate {
         let tilesAtMapCoordinate = tilesAt(coord: mapCoordinate)
         
         
-        var output = "⭑ map clicked at \(mapCoordinate.coordDescription)"
+        var output = "▹ map clicked at \(mapCoordinate.coordDescription)"
         
         
         // set the current coordinate
@@ -3270,16 +3305,15 @@ extension SKTilemap: TiledSceneCameraDelegate {
         let location = event.location(in: objectsOverlay)
 
         // filter any overlay nodes and get the object referenced
-        let clickedObjects = objectsOverlay.nodes(at: location).filter { $0 as? TileObjectProxy != nil} as! [TileObjectProxy]
+        var clickedObjects = objectsOverlay.nodes(at: location).filter { $0 as? TileObjectProxy != nil} as! [TileObjectProxy]
+        //clickedObjects = clickedObjects.filter { $0.contains(event.location(in: $0))}
+        
         if let firstObjectClicked = clickedObjects.first {
-            
-            
-            output += ", object: '\(firstObjectClicked.description)'"
-            
-            
+        
             // get the proxy parent object...
             if let referringObject = firstObjectClicked.reference {
                 
+                output += ", object: '\(referringObject.description)'"
                 print(output)
                 
                 /// calls `Notification.Name.Demo.ObjectClicked` event

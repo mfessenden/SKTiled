@@ -164,10 +164,21 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
     }()
 
     /// Object keys.
-    internal var tileObjectKey: String = "TILE_OBJECT"
-    internal var textObjectKey: String = "TEXT_OBJECT"
-    internal var boundsKey: String = "BOUNDS"
-    internal var anchorKey: String = "ANCHOR"
+    internal lazy var tileObjectKey: String = {
+        return "TILE_OBJECT_ID_\(id)"
+    }()
+    
+    internal lazy var textObjectKey: String = {
+        return "TEXT_OBJECT_ID_\(id)"
+    }()
+    
+    internal lazy var boundsKey: String = {
+        return "OBJECT_ID_\(id)_BOUNDS"
+    }()
+    
+    internal lazy var anchorKey: String = {
+        return "OBJECT_ID_\(id)_ANCHOR"
+    }()
 
     internal var _enableAnimation: Bool = true
 

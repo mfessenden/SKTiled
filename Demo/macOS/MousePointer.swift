@@ -131,7 +131,7 @@ internal class MousePointer: SKNode {
         if (mouseFilters.isShowingTileCoordinates) {
             result += 1
         }
-        if (mouseFilters.isShowingSceneCoordinates) {
+        if (mouseFilters.isShowingScenePosition) {
             result += 1
         }
 
@@ -179,6 +179,7 @@ internal class MousePointer: SKNode {
 
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.TileUnderCursor, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.TileClicked, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.ObjectClicked, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Globals.Updated, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.FocusCoordinateChanged, object: nil)
 
@@ -216,6 +217,7 @@ internal class MousePointer: SKNode {
     func setupNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(tileUnderCursor), name: Notification.Name.Demo.TileUnderCursor, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileClicked), name: Notification.Name.Demo.TileClicked, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(objectClicked), name: Notification.Name.Demo.ObjectClicked, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(globalsUpdatedAction), name: Notification.Name.Globals.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(focusCoordinateChanged), name: Notification.Name.Map.FocusCoordinateChanged, object: nil)
     }
@@ -264,7 +266,19 @@ internal class MousePointer: SKNode {
         currentTile = tile
         redraw()
     }
-
+    
+    /// Set the current tile value. Called when the `Notification.Name.Demo.TileClicked` notification is received.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func objectClicked(notification: Notification) {
+        notification.dump(#fileID, function: #function)
+        guard let object = notification.object as? SKTileObject else {
+            return
+        }
+        currentObject = object
+        redraw()
+    }
+    
     /// Called when the globals are updated.
     ///
     /// - Parameter notification: event notification.
@@ -296,7 +310,9 @@ internal class MousePointer: SKNode {
         let windowLocation = event.locationInWindow
         let scenePosition = event.location(in: tiledScene)
 
-
+        let shadow = NSShadow()
+        shadow.shadowColor = SKColor.black
+        shadow.shadowOffset = NSSize(width: 1.5, height: 1.5)
 
         self.position = scenePosition
         let coordinate = tilemap.coordinateAtMouse(event: event)
@@ -309,13 +325,15 @@ internal class MousePointer: SKNode {
         let defaultLabelAttributes = [
             .font: NSFont(name: fontName, size: fontSize)!,
             .foregroundColor: color,
-            .paragraphStyle: labelStyle
+            .paragraphStyle: labelStyle,
+            .shadow: shadow
         ] as [NSAttributedString.Key: Any]
 
         let coordAttributes = [
             .font: NSFont(name: fontName, size: fontSize)!,
             .foregroundColor: coordColor,
-            .paragraphStyle: labelStyle
+            .paragraphStyle: labelStyle,
+            .shadow: shadow
         ] as [NSAttributedString.Key: Any]
 
 
@@ -333,7 +351,7 @@ internal class MousePointer: SKNode {
         
         var labelIndex = 1
         
-        if (mouseFilters.isShowingSceneCoordinates == true) {
+        if (mouseFilters.isShowingScenePosition == true) {
             sceneLabel?.isHidden = false
             let outputString = NSMutableAttributedString()
 
@@ -411,7 +429,8 @@ internal class MousePointer: SKNode {
                 let globalIDLabelAttributes = [
                     .font: NSFont(name: fontName, size: fontSize)!,
                     .foregroundColor: idColor,
-                    .paragraphStyle: labelStyle
+                    .paragraphStyle: labelStyle,
+                    .shadow: shadow
                 ] as [NSAttributedString.Key: Any]
 
 

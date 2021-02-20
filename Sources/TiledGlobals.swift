@@ -443,11 +443,12 @@ public class TiledGlobals {
 
             public static let tileCoordinates      = MouseFilters(rawValue: 1 << 0)
             public static let tileLocalID          = MouseFilters(rawValue: 1 << 1)
-            public static let sceneCoordinates     = MouseFilters(rawValue: 1 << 2)
+            public static let scenePosition        = MouseFilters(rawValue: 1 << 2)
             public static let tileDataUnderCursor  = MouseFilters(rawValue: 1 << 3)
-            public static let mapCoordinates       = MouseFilters(rawValue: 1 << 4)
+            public static let mapPosition          = MouseFilters(rawValue: 1 << 4)
+            public static let windowPosition       = MouseFilters(rawValue: 1 << 5)
 
-            public static let all: MouseFilters = [.tileCoordinates, .tileLocalID, .sceneCoordinates, .tileDataUnderCursor, .mapCoordinates]
+            public static let all: MouseFilters = [.tileCoordinates, .tileLocalID, .scenePosition, .tileDataUnderCursor, .mapPosition, .windowPosition]
 
             public init(rawValue: UInt8 = 0) {
                 self.rawValue = rawValue
@@ -614,8 +615,8 @@ extension TiledGlobals: TiledCustomReflectableType {
         #if os(macOS)
         print("  ▾ Debug Mouse Filters:")
         print("     ▸ tile coordinates:     \(self.debugDisplayOptions.mouseFilters.contains(.tileCoordinates))")
-        print("     ▸ scene coordinates:    \(self.debugDisplayOptions.mouseFilters.contains(.sceneCoordinates))")
-        print("     ▸ map coordinates:      \(self.debugDisplayOptions.mouseFilters.contains(.mapCoordinates))")
+        print("     ▸ scene coordinates:    \(self.debugDisplayOptions.mouseFilters.contains(.scenePosition))")
+        print("     ▸ map coordinates:      \(self.debugDisplayOptions.mouseFilters.contains(.mapPosition))")
         print("     ▸ tile data:            \(self.debugDisplayOptions.mouseFilters.contains(.tileDataUnderCursor))")
         print("     ▸ mouse pointer:        \(self.debugDisplayOptions.mouseFilters.enableMousePointer)")
         #endif
@@ -743,8 +744,8 @@ extension TiledGlobals.DebugDisplayOptions.MouseFilters {
     }
     
     /// Indicates scene coordinate data should be displayed.
-    public var isShowingSceneCoordinates: Bool {
-        return contains(.sceneCoordinates)
+    public var isShowingScenePosition: Bool {
+        return contains(.scenePosition)
     }
 
     /// Indicates tile data attributes should be displayed.
@@ -752,9 +753,14 @@ extension TiledGlobals.DebugDisplayOptions.MouseFilters {
         return contains(.tileDataUnderCursor)
     }
     
-    /// Indicates map coordinate data should be displayed.
-    public var isShowingMapCoordinates: Bool {
-        return contains(.mapCoordinates)
+    /// Indicates map position data should be displayed.
+    public var isShowingMapPosition: Bool {
+        return contains(.mapPosition)
+    }
+    
+    /// Indicates window position data should be displayed.
+    public var isShowingWindowPosition: Bool {
+        return contains(.windowPosition)
     }
 
     public var strings: [String] {
@@ -767,16 +773,20 @@ extension TiledGlobals.DebugDisplayOptions.MouseFilters {
             result.append("Tile Local ID")
         }
 
-        if self.contains(.sceneCoordinates) {
-            result.append("Scene Coordinates")
+        if self.contains(.scenePosition) {
+            result.append("Scene Position")
         }
 
         if self.contains(.tileDataUnderCursor) {
             result.append("Tile Data")
         }
 
-        if self.contains(.mapCoordinates) {
-            result.append("Map Coordinates")
+        if self.contains(.mapPosition) {
+            result.append("Map Position")
+        }
+        
+        if self.contains(.windowPosition) {
+            result.append("Window Position")
         }
 
         return result
@@ -785,7 +795,7 @@ extension TiledGlobals.DebugDisplayOptions.MouseFilters {
     /// Indicates the current scene should enable a `MousePointer` inspection node.
     public var enableMousePointer: Bool {
         #if os(macOS)
-        return self.contains(.tileCoordinates) || self.contains(.sceneCoordinates) || self.contains(.tileDataUnderCursor)
+        return self.contains(.tileCoordinates) || self.contains(.scenePosition) || self.contains(.tileDataUnderCursor)
         #else
         return false
         #endif
