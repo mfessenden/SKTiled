@@ -542,7 +542,6 @@ class GameViewController: NSViewController, Loggable {
         // get the background color for the view
         let skView = view as! SKView
         if let mapBackgroundColor = tilemap.backgroundColor {
-            print("setting view background color '\(mapBackgroundColor.hexString())'")
             skView.layer?.backgroundColor = mapBackgroundColor.cgColor
             skView.wantsLayer = true
         }
@@ -555,7 +554,6 @@ class GameViewController: NSViewController, Loggable {
         self.mapDescriptionLabel.isHidden = !showMapDescriptionLabel
         self.mapDescriptionLabel.stringValue = mapDescriptionString
         self.mapDescriptionLabel.textColor = NSColor(hexString: "#CCCCCC")
-
 
 
         /// update the selected node label
@@ -605,13 +603,14 @@ class GameViewController: NSViewController, Loggable {
 
     /// Update the debugging labels with various scene information. Called when node values are changed via the demo inspector. Called when the `Notification.Name.Demo.UpdateDebugging` notification is received.
     ///
+    ///  userInfo: `["mapInfo": String, "mapInfo": String, "focusedObjectData": String, "cameraInfo": String, "screenInfo": String, "isolatedInfo": String]`
+    ///
     /// - Parameter notification: notification event.
     @objc func debuggingInfoReceived(notification: Notification) {
-        //notification.dump(#fileID, function: #function)
+        notification.dump(#fileID, function: #function)
 
         tileInfoLabel.stringValue = ""
         propertiesInfoLabel.stringValue = ""
-
 
         if let mapInfo = notification.userInfo!["mapInfo"] {
             mapInfoLabel.stringValue = mapInfo as! String
@@ -709,12 +708,20 @@ class GameViewController: NSViewController, Loggable {
             positionInWindow = pointInCamera
         }
 
-
         // build the menu
         buildNodesRightClickMenu(nodes: filteredNodes, highlightableIndex: index, at: positionInWindow)
     }
 
-    func buildNodesRightClickMenu(nodes: [SKNode], highlightableIndex: Int, at positionInWindow: NSPoint = NSPoint.zero) {
+    /// Builds a popup menu with a list of included nodes.
+    ///
+    /// - Parameters:
+    ///   - nodes: selectable nodes.
+    ///   - highlightableIndex: renderable objects index.
+    ///   - positionInWindow: the point in the main window where the menu will be drawn.
+    func buildNodesRightClickMenu(nodes: [SKNode],
+                                  highlightableIndex: Int,
+                                  at positionInWindow: NSPoint = NSPoint.zero) {
+        
         guard let skView = self.view as? SKView else {
             log("cannot access SpriteKit view.", level: .warning)
             return
@@ -756,11 +763,11 @@ class GameViewController: NSViewController, Loggable {
             var nodeNameString = node.className
             if let tiledNode = node as? TiledCustomReflectableType {
 
-                nodeNameString = tiledNode.tiledListDescription ?? "tiled node"
+                nodeNameString = tiledNode.tiledMenuItemDescription ?? "tiled node"
                 nodeImageName = tiledNode.tiledIconName ?? "node-icon"
 
                 if let mappableNode = tiledNode as? TiledMappableGeometryType {
-                    nodeNameString = mappableNode.tiledMenuDescription ?? "tiled node"
+                    nodeNameString = mappableNode.tiledMenuItemDescription ?? "tiled node"
 
                     // add indentation for layers
                     if let layerNode = tiledNode as? TiledLayerObject {
@@ -785,7 +792,6 @@ class GameViewController: NSViewController, Loggable {
         // build the menu
         skView.menu = nodesMenu
         nodesMenu.popUp(positioning: nil, at: positionInWindow, in: skView)
-
     }
 
     // MARK: - Mouse Event Handlers

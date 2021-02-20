@@ -42,7 +42,7 @@ import SpriteKit
 ///
 /// ### Instance Methods
 ///
-///  - `containedNodesChanged`:  nodes in the camera view change.
+///  - `containedNodesChanged`:  nodes visible in camera haved changed.
 ///  - `cameraPositionChanged`:  camera position change.
 ///  - `cameraZoomChanged`:  camera zoom change.
 ///  - `cameraBoundsChanged`:  camera bounds updated.
@@ -99,16 +99,21 @@ import SpriteKit
     ///
     /// - Parameter event: mouse click event.
     @objc optional func sceneClicked(event: NSEvent)
-
-    /// Called when the scene is right-clicked **(macOS only)**.
-    ///
-    /// - Parameter event: mouse click event.
-    @objc optional func sceneRightClicked(event: NSEvent)
-
+    
     /// Called when the scene is double-clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
     @objc optional func sceneDoubleClicked(event: NSEvent)
+    
+    /// Called when the scene is right-clicked **(macOS only)**.
+    ///
+    /// - Parameter event: mouse click event.
+    @objc optional func sceneRightClicked(event: NSEvent)
+    
+    /// Called when the right mouse button is released **(macOS only)**.
+    ///
+    /// - Parameter event: mouse click event.
+    @objc optional func sceneRightClickReleased(event: NSEvent)
 
     /// Called when the mouse moves in the scene **(macOS only)**.
     ///

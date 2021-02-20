@@ -124,6 +124,9 @@ public class TiledGlobals {
     public static var `default`: TiledGlobals {
         return defaultGlobalsInstance
     }
+    
+    
+    // MARK: - Framework Globals
 
     /// Current SpriteKit renderer.
     public let renderer: Renderer
@@ -210,6 +213,13 @@ public class TiledGlobals {
     /// Returns the current device screen resolution.
     public var screenSize: CGSize {
         return getScreenSize()
+    }
+    
+    /// Returns a `CGRect` representing the screen (window) size.
+    public var screenRect: CGRect {
+        let ss = screenSize
+        let center = CGPoint(x: ss.halfWidth, y: ss.halfHeight)
+        return CGRect(center: center, size: ss)
     }
 
     /// Returns the current device backing scale.
@@ -316,18 +326,15 @@ public class TiledGlobals {
         #endif
     }
 
-
     /// The `Version` structure represents the framework version (semantic version).
     ///
     /// ### Properties
     ///
-    /// | Property              | Description                  |
-    /// |:----------------------|:-----------------------------|
-    /// | `major`               | Framework major version.     |
-    /// | `minor`               | Framework minor version.     |
-    /// | `patch`               | Framework patch version.     |
-    /// | `build`               | Framework build versions.    |
-    /// | `suffix`              | Version suffix.              |
+    /// - `major`: Framework major version.
+    /// - `minor`: Framework minor version.
+    /// - `patch`: Framework patch version.
+    /// - `build`: Framework build versions.
+    /// - `suffix`: Version suffix.
     ///
     public struct Version {
         var major: Int = 0
@@ -357,12 +364,10 @@ public class TiledGlobals {
     ///
     /// #### Properties
     ///
-    /// | Property              | Description                              |
-    /// |:----------------------|:-----------------------------------------|
-    /// | default               | Global render quality.                   |
-    /// | object                | Object render quality.                   |
-    /// | text                  | Text object render quality               |
-    /// | override              | Override value.                          |
+    /// - `default`: global render quality.
+    /// - `object`: object render quality.
+    /// - `text`: text object render quality
+    /// - `override`: override value.
     ///
     public struct RenderQuality {
 
@@ -473,7 +478,7 @@ public class TiledGlobals {
     ///
     /// ### Properties
     ///
-    /// - `opengl`: indicates the current SpriteKit renderer is OpenGL. 
+    /// - `opengl`: indicates the current SpriteKit renderer is OpenGL.
     /// - `metal`: indicates the current SpriteKit renderer is Metal.
     ///
     public enum Renderer {
@@ -581,6 +586,7 @@ extension TiledGlobals: TiledCustomReflectableType {
         print("  ▸ speed:                   \(self.speed.stringRoundedTo(1))")
         print("  ▸ renderer:                \(self.renderer.name)")
         print("  ▸ screen size:             \(self.screenSize.shortDescription)")
+        print("  ▸ screen rect:             \(self.screenRect.shortDescription)")
         print("  ▸ retina scale factor:     \(self.contentScale)")
         print("  ▸ logging level:           \(self.loggingLevel)")
         print("  ▸ update mode:             \(self.updateMode.name)")
@@ -725,23 +731,28 @@ extension TiledGlobals.Renderer {
 
 /// :nodoc:
 extension TiledGlobals.DebugDisplayOptions.MouseFilters {
-
+    
+    /// Indicates tile coordinate data should be displayed.
     public var isShowingTileCoordinates: Bool {
         return contains(.tileCoordinates)
     }
-
+    
+    /// Indicates tile local id data should be displayed.
     public var isShowingTileLocalId: Bool {
         return contains(.tileLocalID)
     }
-
+    
+    /// Indicates scene coordinate data should be displayed.
     public var isShowingSceneCoordinates: Bool {
         return contains(.sceneCoordinates)
     }
 
+    /// Indicates tile data attributes should be displayed.
     public var isShowingTileData: Bool {
         return contains(.tileDataUnderCursor)
     }
-
+    
+    /// Indicates map coordinate data should be displayed.
     public var isShowingMapCoordinates: Bool {
         return contains(.mapCoordinates)
     }

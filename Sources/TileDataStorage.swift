@@ -245,7 +245,9 @@ internal class TileDataStorage: Loggable {
     }
 
 
-    /// Called when a tile id changes.
+    /// Called when a tile id changes. Called when the `Notification.Name.Tile.TileIDChanged` notification is received.
+    ///
+    /// - userInfo: `["old": UInt32]`
     ///
     /// - Parameter notification: event notification.
     @objc func tileTileIDChanged(notification: Notification) {

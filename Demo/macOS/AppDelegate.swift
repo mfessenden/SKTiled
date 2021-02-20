@@ -659,12 +659,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         updateCommandString("enable camera visible node tracking: \(nextState == true ? "on" : "off")")
     }
 
+    /// Dump the current camera's attributes to the console.
+    ///
+    /// - Parameter sender: invoking UI element.
     @IBAction func cameraStatistics(_ sender: NSMenuItem) {
         guard let gameController = viewController,
             let view = gameController.view as? SKView,
             let scene = view.scene as? SKTiledScene else { return }
 
         scene.cameraNode?.dumpStatistics()
+    }
+    
+    /// Dump the current scene's mouse pointer attributes to the console.
+    ///
+    /// - Parameter sender: invoking UI element.
+    @IBAction func mousePointerStatistics(_ sender: NSMenuItem) {
+        guard let gameController = viewController,
+              let view = gameController.view as? SKView,
+              let scene = view.scene as? SKTiledDemoScene else { return }
+        
+        scene.mousePointer?.dumpStatistics()
     }
 
     // MARK: - Demo Menu
@@ -1652,7 +1666,7 @@ extension AppDelegate {
 
 
             for layer in tilemap.getLayers() {
-                let layerMenuItem = NSMenuItem(title: layer.tiledMenuDescription, action: #selector(toggleLayerVisibility), keyEquivalent: "")
+                let layerMenuItem = NSMenuItem(title: layer.tiledMenuItemDescription, action: #selector(toggleLayerVisibility), keyEquivalent: "")
                 layerMenuItem.setAccessibilityTitle(layer.uuid)
                 layerMenuItem.state = (layer.visible == true) ? NSControl.StateValue.on : NSControl.StateValue.off
                 visibilitySubmenu.addItem(layerMenuItem)
@@ -1666,7 +1680,7 @@ extension AppDelegate {
             isolationSubMenu.addItem(NSMenuItem.separator())
 
             for layer in tilemap.getLayers() {
-                let layerMenuItem = NSMenuItem(title: layer.tiledMenuDescription, action: #selector(isolateLayer), keyEquivalent: "")
+                let layerMenuItem = NSMenuItem(title: layer.tiledMenuItemDescription, action: #selector(isolateLayer), keyEquivalent: "")
                 layerMenuItem.setAccessibilityTitle(layer.uuid)
                 layerMenuItem.state = (layer.isolated == true) ? NSControl.StateValue.on : NSControl.StateValue.off
                 isolationSubMenu.addItem(layerMenuItem)

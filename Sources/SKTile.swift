@@ -839,9 +839,11 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     ///
     /// - Parameter event: mouse event.
     open override func mouseDown(with event: NSEvent) {
+        
         // guard (TiledGlobals.default.enableMouseEvents == true) else { return }
         if contains(touch: event.location(in: self)) {
             // for demo, this calls `Notification.Name.Demo.TileClicked`
+            print("⭑ tile clicked ")
             onMouseClick?(self)
         }
     }
@@ -1157,18 +1159,6 @@ extension SKTile {
         }
     }
 
-    /// Tile textual description.
-    open override var description: String {
-        let layerDescription = (layer != nil) ? ", Layer: '\(layer.layerName)'" : ""
-        let spacer = (renderMode == TileRenderMode.default) ? "" : " "
-        return "\(self.className): id: \(tileData.id)\(layerDescription)\(spacer)\(renderMode.debugDescription)"
-    }
-
-    /// Tile debug textual description.
-    open override var debugDescription: String {
-        return "<\(description)>"
-    }
-
     /// Returns a shortened textual representation for debugging.
     open var shortDescription: String {
         var result = "Tile id: \(self.tileData.id)"
@@ -1228,7 +1218,6 @@ extension SKTile {
             name: Notification.Name.Tile.TileCreated,
             object: tile
         )
-        
         
         return tile
     }
@@ -1355,6 +1344,27 @@ extension SKTile {
 }
 
 
+// MARK: - Debug Descriptions
+
+/// :nodoc:
+extension SKTile {
+    
+    /// String representation of the map.
+    open override var description: String {
+        let layerDescription = (layer != nil) ? ", Layer: '\(layer.layerName)'" : ""
+        let spacer = (renderMode == TileRenderMode.default) ? "" : " "
+        return #"\#(tiledNodeNiceName): id: \#(tileData.id)\#(layerDescription)\#(spacer)\#(renderMode.debugDescription)"#
+    }
+    
+    /// Debug string representation of the tile.
+    open override var debugDescription: String {
+        let layerDescription = (layer != nil) ? ", Layer: '\(layer.layerName)'" : ""
+        let spacer = (renderMode == TileRenderMode.default) ? "" : " "
+        return #"<\#(className): id: \#(tileData.id)\#(layerDescription)\#(spacer)\#(renderMode.debugDescription)>"#
+    }
+}
+
+
 /// :nodoc: Tiled inspector attributes.
 extension SKTile {
 
@@ -1365,7 +1375,7 @@ extension SKTile {
 
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public override var tiledNodeNiceName: String {
-        return "Tile"
+        return tiledElementName.titleCased()
     }
 
     /// Returns the internal **Tiled** node type icon.
@@ -1375,16 +1385,15 @@ extension SKTile {
 
     /// A description of the node.
     @objc public override var tiledListDescription: String {
-        //let tiledataString = "gid \(tileData.globalID), tileset '\(tileData.tileset.name)'"
         let tiledataString = "gid \(tileData.globalID)"
         return "Tile: \(tiledataString)"
     }
 
-    /// A description of the node.
-    @objc public override var tiledMenuDescription: String {
-        //let tiledataString = "gid \(tileData.globalID), tileset '\(tileData.tileset.name)'"
+    /// A description of the node used for menu items.
+    @objc public override var tiledMenuItemDescription: String {
         let tiledataString = "gid \(tileData.globalID)"
-        return "Tile: \(tiledataString)"
+        let layerDescription = (layer != nil) ? ", Layer: '\(layer.layerName)'" : ""
+        return "Tile: \(tiledataString)\(layerDescription)"
     }
 
     /// A description of the node.

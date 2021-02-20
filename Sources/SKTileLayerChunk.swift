@@ -287,9 +287,9 @@ public class SKTileLayerChunk: TiledLayerObject {
     ///   - x: x-coordinate.
     ///   - y: y-coordinate.
     /// - Returns: tile object, if it exists.
-    public func tileAt(_ x: Int, _ y: Int) -> SKTile? {
-        let xValue = Int32(x) - offset.xCoord
-        let yValue = Int32(y) - offset.yCoord
+    public func tileAt(_ x: Int32, _ y: Int32) -> SKTile? {
+        let xValue = x - offset.xCoord
+        let yValue = y - offset.yCoord
 
         if (isValid(coord: simd_int2(xValue, yValue)) == false) {
             return nil
@@ -361,5 +361,21 @@ extension SKTileLayerChunk {
     @objc public override var tiledHelpDescription: String {
         return "Tile layer chunk."
     }
+}
+
+
+// MARK: - Deprecations
+
+extension SKTileLayerChunk {
     
+    /// Returns a tile at the given **map** coordinate, if one exists.
+    ///
+    /// - Parameters:
+    ///   - x: x-coordinate.
+    ///   - y: y-coordinate.
+    /// - Returns: tile object, if it exists.
+    @available(*, deprecated, renamed: "tileAt")
+    public func tileAt(_ x: Int, _ y: Int) -> SKTile? {
+        return tileAt(Int32(x), Int32(y))
+    }
 }

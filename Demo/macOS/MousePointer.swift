@@ -70,12 +70,16 @@ internal class MousePointer: SKNode {
 
     /// Computed font size.
     var fontSize: CGFloat {
-        return _baseFontSize * _fontSizeMultiplier
+        #if SKTILED_HIRES
+        return (_baseFontSize * _fontSizeMultiplier) * TiledGlobals.default.contentScale
+        #else
+        return (_baseFontSize * _fontSizeMultiplier)
+        #endif
     }
 
     /// Computed font size.
     var rootOffset: CGPoint {
-        return CGPoint(x: 0, y: fontSize * 2)
+        return CGPoint(x: 0, y: fontSize)
     }
 
     /// Label base color.
@@ -98,7 +102,10 @@ internal class MousePointer: SKNode {
 
     /// Root position node.
     var rootNode = SKNode()
-
+    
+    /// Label for window position.
+    var winLabel:  SKLabelNode?
+    
     /// Label for scene position.
     var sceneLabel: SKLabelNode?
 
@@ -107,9 +114,6 @@ internal class MousePointer: SKNode {
 
     /// Label for tile data display.
     var tileLabel:  SKLabelNode?
-
-    /// Label for window position.
-    var winLabel:  SKLabelNode?
 
     /// Current mouse filters.
     var mouseFilters: TiledGlobals.DebugDisplayOptions.MouseFilters {
@@ -185,6 +189,12 @@ internal class MousePointer: SKNode {
     // MARK: - Setup
 
     func setupLabels() {
+        if (winLabel == nil) {
+            let label = SKLabelNode(fontNamed: fontName)
+            rootNode.addChild(label)
+            winLabel = label
+        }
+        
         if (sceneLabel == nil) {
             let label = SKLabelNode(fontNamed: fontName)
             rootNode.addChild(label)
@@ -200,12 +210,6 @@ internal class MousePointer: SKNode {
             let label = SKLabelNode(fontNamed: fontName)
             rootNode.addChild(label)
             tileLabel = label
-        }
-
-        if (winLabel == nil) {
-            let label = SKLabelNode(fontNamed: fontName)
-            rootNode.addChild(label)
-            winLabel = label
         }
     }
 
@@ -241,7 +245,7 @@ internal class MousePointer: SKNode {
     ///
     /// - Parameter notification: event notification.
     @objc func tileUnderCursor(notification: Notification) {
-        //notification.dump(#fileID, function: #function)
+        notification.dump(#fileID, function: #function)
         guard let tile = notification.object as? SKTile else {
             return
         }
@@ -253,6 +257,7 @@ internal class MousePointer: SKNode {
     ///
     /// - Parameter notification: event notification.
     @objc func tileClicked(notification: Notification) {
+        notification.dump(#fileID, function: #function)
         guard let tile = notification.object as? SKTile else {
             return
         }
@@ -285,9 +290,8 @@ internal class MousePointer: SKNode {
             return
         }
 
-
         rootNode.position = rootOffset
-
+        
         let sceneSize = tiledScene.size   // 640x480
         let windowLocation = event.locationInWindow
         let scenePosition = event.location(in: tiledScene)
@@ -315,7 +319,7 @@ internal class MousePointer: SKNode {
         ] as [NSAttributedString.Key: Any]
 
 
-        var labelIndex = 0
+        
 
         let winLabelText = "window: \(windowLocation.shortDescription)"
         let winLabelString = NSMutableAttributedString(string: winLabelText, attributes: defaultLabelAttributes)
@@ -324,7 +328,11 @@ internal class MousePointer: SKNode {
         } else {
             winLabel?.text = winLabelString.string
         }
-
+        
+        //winLabel?.position.y = CGFloat(lineCount / 1.5) * self.fontSize + self.fontSize
+        
+        var labelIndex = 1
+        
         if (mouseFilters.isShowingSceneCoordinates == true) {
             sceneLabel?.isHidden = false
             let outputString = NSMutableAttributedString()
@@ -340,7 +348,7 @@ internal class MousePointer: SKNode {
             } else {
                 sceneLabel?.text = outputString.string
             }
-            sceneLabel?.position.y = CGFloat(labelIndex - lineCount / 1.5) * self.fontSize + self.fontSize
+            //sceneLabel?.position.y = CGFloat(labelIndex - lineCount / 1.5) * self.fontSize + self.fontSize
             labelIndex += 1
         } else {
             sceneLabel?.isHidden = true
@@ -348,6 +356,7 @@ internal class MousePointer: SKNode {
 
 
         if (mouseFilters.isShowingTileCoordinates == true) {
+            
             coordLabel?.isHidden = false
 
             let outputString = NSMutableAttributedString()
@@ -364,7 +373,7 @@ internal class MousePointer: SKNode {
             } else {
                 coordLabel?.text = outputString.string
             }
-            coordLabel?.position.y = CGFloat(labelIndex - lineCount / 1.5) * self.fontSize + self.fontSize
+            //coordLabel?.position.y = CGFloat(labelIndex - lineCount / 1.5) * self.fontSize + self.fontSize
             labelIndex += 1
         } else {
             coordLabel?.isHidden = true
@@ -373,7 +382,7 @@ internal class MousePointer: SKNode {
         tileLabel?.isHidden = true
 
         if (mouseFilters.isShowingTileData == true) {
-
+            
             // tile id: 0, gid: 27
             let outputString = NSMutableAttributedString()
 
@@ -436,23 +445,30 @@ internal class MousePointer: SKNode {
                 labelIndex += 1
             }
         }
+        
+        postitionLabels()
     }
 
     func postitionLabels() {
         var labelindex = 0
-        for label in [sceneLabel, coordLabel, tileLabel, winLabel] {
+        // this places items in reverse order
+        for label in [tileLabel, coordLabel, sceneLabel, winLabel] {
             guard let thisLabel = label else {
                 continue
             }
-
+            
             if thisLabel.isHidden == false {
-                thisLabel.position.y = CGFloat(labelindex - lineCount / 1.5) * self.fontSize + self.fontSize
+                
+                let ypos = CGFloat(labelindex - lineCount / 1.5) * self.fontSize + self.fontSize
+                thisLabel.position.y = ypos
                 labelindex += 1
             }
         }
     }
 
-    func redraw() {}
+    func redraw() {
+        postitionLabels()
+    }
 }
 
 
@@ -513,16 +529,65 @@ extension MousePointer: TiledSceneCameraDelegate {
     @objc func mousePositionChanged(event: NSEvent) {
         draw(event: event)
     }
-    
-    
-    
 }
 
 
 extension MousePointer: TiledCustomReflectableType {
 
     public func dumpStatistics() {
-        dump(self)
+        let headerString = "--------------- Mouse Pointer ---------------"
+
+        print("\n\(headerString)")
+        print("  ▸ camera callbacks:           \(receiveCameraUpdates)")
+        print("  ▸ mouse filters:              \(mouseFilters.strings)")
+        print("  ▸ position:                   \(position.shortDescription)")
+        print("  ▸ root offset:                \(rootOffset.coordDescription)")
+        
+        var coordstr = "nil"
+        if let currentCoordinate = _currentCoordinate {
+            coordstr = currentCoordinate.coordDescription
+        }
+        print("  ▸ current coordinate:         \(coordstr)")
+        
+        var tilestr = "nil"
+        if let currenttile = currentTile {
+            tilestr = currenttile.debugDescription
+        }
+        print("  ▸ current tile:               \(tilestr)")
+        
+        
+        var objstr = "nil"
+        if let curobject = currentObject {
+            objstr = curobject.debugDescription
+        }
+        
+        print("  ▸ current object:             \(objstr)\n")
+        
+        print("  ▾ Label Properties:")
+        
+        if let winText = winLabel?.attributedText {
+            print("     ▸ window label:            '\(winText.string)'")
+        }
+        
+        if let sceneText = sceneLabel?.attributedText {
+            print("     ▸ scene label:             '\(sceneText.string)'")
+        }
+        
+        if let coordText = coordLabel?.attributedText {
+            print("     ▸ coordinate label:        '\(coordText.string)'")
+        }
+        
+        if let tileText = tileLabel?.attributedText {
+            print("     ▸ tile label:              '\(tileText.string)'")
+        }
+        
+        print("\n")
+        
+        print("  ▾ Font Properties:")
+        print("     ▸ base font size:          \(_baseFontSize.stringRoundedTo(1))")
+        print("     ▸ font size multiplier:    \(_fontSizeMultiplier.stringRoundedTo(1))")
+        print("     ▸ retina scale factor:     \(TiledGlobals.default.contentScale.stringRoundedTo(1))")
+        print("     ▸ actual font size:        \(fontSize.stringRoundedTo(1))")
     }
 
     /// Returns a "nicer" node name, for usage in the inspector.

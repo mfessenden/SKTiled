@@ -163,17 +163,13 @@ internal class TileObjectProxy: SKShapeNode {
             return
         }
         
-        
         // reset scale
         self.setScale(1)
         
+        // FIXME: crash here
         let convertedPoints = vertices.map {
             self.convert($0, from: object)
         }
-        
-        //let scaleFactor = CGPoint(x: 1 / object.xScale, y: 1 / object.yScale)
-        //xScale = scaleFactor.x
-        //yScale = scaleFactor.y
         
         let renderQuality = TiledGlobals.default.renderQuality.object
         let objectRenderQuality = renderQuality / 2
@@ -192,6 +188,7 @@ internal class TileObjectProxy: SKShapeNode {
                     objPath = polygonPath(scaledVertices, closed: true)
             }
             
+            // FIXME: crash here
             self.path = objPath
             self.setScale(1 / renderQuality)
             
@@ -203,6 +200,7 @@ internal class TileObjectProxy: SKShapeNode {
             self.fillColor = currentFillColor
             self.lineWidth = baseLineWidth * objectRenderQuality
             self.isAntialiased = false
+            
         }
     }
 }

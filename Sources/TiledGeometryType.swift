@@ -1,5 +1,5 @@
 //
-//  SKTiledGeometry.swift
+//  TiledGeometryType.swift
 //  SKTiled
 //
 //  Copyright ©2016-2021 Michael Fessenden. all rights reserved.

@@ -922,8 +922,6 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 }
 
 
-
-
 // MARK: - Extensions
 
 
@@ -1064,18 +1062,36 @@ extension TiledLayerObject {
         let dy = (pos.y - center.y)
         return CGVector(dx: dx, dy: dy)
     }
+}
 
+
+// MARK: - Debug Descriptions
+
+
+/// :nodoc:
+extension TiledLayerObject {
+    
+    /// String representation of the layer.
     public override var description: String {
         let isTopLevel = self.parents.count == 1
         let indexString = (isTopLevel == true) ? ", index: \(index)" : ""
         return #"\#(tiledNodeNiceName) '\#(path)'\#(indexString) zpos: \#(Int(zPosition))"#
     }
-
+    
+    /// Debug string representation of the layer.
     public override var debugDescription: String {
-        return #"<\#(description)>"#
+        let isTopLevel = self.parents.count == 1
+        let indexString = (isTopLevel == true) ? ", index: \(index)" : ""
+        return #"<\#(className) '\#(path)'\#(indexString) zpos: \#(Int(zPosition))>"#
     }
+}
 
-    /// Returns a string representation for use with a dropdown menu.
+
+/// :nodoc:
+extension TiledLayerObject {
+    
+    
+    /// Returns a string representation for use with an outline.
     @objc public override var tiledListDescription: String {
         let parentCount = parents.count
         let isGrouped: Bool = (parentCount > 1)
@@ -1085,14 +1101,13 @@ extension TiledLayerObject {
         if (isGroupNode == true) {
             layerSymbol = (hasChildren == true) ? "▿" : "▹"
         }
-
+        
         let filler = (isGrouped == true) ? String(repeating: "   ", count: parentCount - 1) : ""
         return "\(filler)\(layerSymbol) \(layerName)"
     }
-
-
+    
     /// Returns a string representation for use with a dropdown menu.
-    @objc public override var tiledMenuDescription: String {
+    @objc public override var tiledMenuItemDescription: String {
         return description
     }
 }
@@ -1106,9 +1121,7 @@ extension TiledLayerObject {
         return self.name ?? "null"
     }
 
-
-
-    /// Recursively enumerate child layers.
+    /// Recursively enumerate child layers into a flat array.
     ///
     /// - Returns: child layer elements.
     internal func enumerate() -> [SKNode] {
@@ -1121,12 +1134,12 @@ extension TiledLayerObject {
         return result
     }
 
-    /// Returns an array of child layers.
+    /// Returns a flattened array of child layers.
     public var childLayers: [SKNode] {
         return self.enumerate()
     }
 
-    /// Returns an array of tiles/objects that conform to the `SKTiledGeometry` protocol.
+    /// Returns an array of tiles/objects that conform to the `TiledGeometryType` protocol.
     ///
     /// - Returns: array of child objects.
     public func renderableObjects() -> [SKNode] {

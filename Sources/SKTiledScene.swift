@@ -352,6 +352,7 @@ extension SKTiledScene {
     ///
     /// - Parameter event: mouse event.
     open override func mouseDown(with event: NSEvent) {
+        print("⭑ tile scene clicked")
         cameraNode?.mouseDown(with: event)
     }
 
@@ -380,7 +381,6 @@ extension SKTiledScene {
     ///
     /// - Parameter event: mouse event.
     open override func mouseMoved(with event: NSEvent) {
-        //guard (TiledGlobals.default.enableMouseEvents == true) else { return }
         cameraNode?.mouseMoved(with: event)
     }
 
@@ -388,7 +388,6 @@ extension SKTiledScene {
     ///
     /// - Parameter event: mouse event.
     open override func scrollWheel(with event: NSEvent) {
-        // guard (TiledGlobals.default.enableMouseEvents == true) else { return }
         cameraNode?.scrollWheel(with: event)
     }
 
@@ -396,7 +395,6 @@ extension SKTiledScene {
     ///
     /// - Parameter event: mouse event.
     open override func mouseDragged(with event: NSEvent) {
-        // guard (TiledGlobals.default.enableMouseEvents == true) else { return }
         cameraNode?.mouseDragged(with: event)
     }
 
@@ -405,7 +403,6 @@ extension SKTiledScene {
     /// - Parameter event: mouse event.
     open override func mouseEntered(with event: NSEvent) {
         hasMouseFocus = true
-        //tilemap?.mouseEntered(with: event)
     }
 
     /// Mouse exit event handler.
@@ -413,7 +410,6 @@ extension SKTiledScene {
     /// - Parameter event: mouse event.
     open override func mouseExited(with event: NSEvent) {
         hasMouseFocus = false
-        //tilemap?.mouseExited(with: event)
     }
 }
 
@@ -454,12 +450,26 @@ extension SKTiledScene: TiledSceneCameraDelegate {
 
     #if os(macOS)
 
+    /// Called when the scene is clicked **(macOS only)**.
+    ///
+    /// - Parameter event: mouse click event.
+    @objc open func sceneClicked(event: NSEvent) {}
+    
     /// Called when the scene is double-clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
     @objc open func sceneDoubleClicked(event: NSEvent) {}
-
-
+    
+    /// Called when the scene is right-clicked **(macOS only)**.
+    ///
+    /// - Parameter event: mouse click event.
+    @objc open func sceneRightClicked(event: NSEvent) {}
+    
+    /// Called when the right mouse button is released **(macOS only)**.
+    ///
+    /// - Parameter event: mouse click event.
+    @objc open func sceneRightClickReleased(event: NSEvent) {}
+    
     /// Called when the mouse moves in the scene **(macOS only)**.
     ///
     /// - Parameter event: mouse move event.

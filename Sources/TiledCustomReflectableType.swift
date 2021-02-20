@@ -52,8 +52,8 @@ import SpriteKit
     /// A description of the node used in list views.
     @objc optional var tiledListDescription: String { get }
 
-    /// A description of the node used in combo menus views.
-    @objc optional var tiledMenuDescription: String { get }
+    /// A description of the node used in popup menus.
+    @objc optional var tiledMenuItemDescription: String { get }
 
     /// Description of the node type.
     @objc optional var tiledHelpDescription: String { get }
@@ -61,22 +61,6 @@ import SpriteKit
     /// Dump the current object's properties to the console.
     @objc optional func dumpStatistics()
 }
-
-
-
-/*
-
- ## SKTile
-
- `SKTile: id: 0`: description
- `<SKTile: id: 0>`: debugDescription
- `Tile: gid 0`: tiledMenuDescription
- `Tile: gid 0`: tiledListDescription
-
- ## SKTilemap
-
-*/
-
 
 
 
@@ -134,6 +118,8 @@ extension SKLabelNode: TiledCustomReflectableType {
 }
 
 
+
+
 /// :nodoc:
 extension SKSpriteNode: TiledCustomReflectableType {
 
@@ -154,7 +140,7 @@ extension SKSpriteNode: TiledCustomReflectableType {
     }
 
     /// A description of the node.
-    @objc public var tiledMenuDescription: String {
+    @objc public var tiledMenuItemDescription: String {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
         return "Sprite\(nameString)"
     }
@@ -186,7 +172,7 @@ extension SKCropNode: TiledCustomReflectableType {
     }
 
     /// A description of the node.
-    @objc public var tiledMenuDescription: String {
+    @objc public var tiledMenuItemDescription: String {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
         return "Crop\(nameString)"
     }
@@ -196,6 +182,7 @@ extension SKCropNode: TiledCustomReflectableType {
         return "SpriteKit crop node."
     }
 }
+
 
 /// :nodoc:
 extension SKEffectNode: TiledCustomReflectableType {
@@ -217,7 +204,7 @@ extension SKEffectNode: TiledCustomReflectableType {
     }
 
     /// A description of the node.
-    @objc public var tiledMenuDescription: String {
+    @objc public var tiledMenuItemDescription: String {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
         return "Effect\(nameString)"
     }
@@ -250,7 +237,7 @@ extension SKShapeNode: TiledCustomReflectableType {
     }
 
     /// A description of the node.
-    @objc public var tiledMenuDescription: String {
+    @objc public var tiledMenuItemDescription: String {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
         return "Shape\(nameString)"
     }
@@ -258,5 +245,89 @@ extension SKShapeNode: TiledCustomReflectableType {
     /// A description of the node.
     @objc public var tiledHelpDescription: String {
         return "SpriteKit shape node."
+    }
+}
+
+
+
+// MARK: - Deprecations
+
+
+extension SKTilemap {
+
+    /// A description of the node used in popup menus.
+    @available(*, deprecated, renamed: "tiledMenuItemDescription")
+    @objc public var tiledMenuDescription: String {
+        return tiledMenuItemDescription
+    }
+}
+
+
+extension TiledLayerObject {
+
+    /// A description of the node used in popup menus.
+    @available(*, deprecated, renamed: "tiledMenuItemDescription")
+    @objc public override var tiledMenuDescription: String {
+        return tiledMenuItemDescription
+    }
+}
+
+
+extension SKTile {
+
+    /// A description of the node used in popup menus.
+    @available(*, deprecated, renamed: "tiledMenuItemDescription")
+    @objc public override var tiledMenuDescription: String {
+        return tiledMenuItemDescription
+    }
+}
+
+
+extension SKTileObject {
+
+    /// A description of the node used in popup menus.
+    @available(*, deprecated, renamed: "tiledMenuItemDescription")
+    @objc public override var tiledMenuDescription: String {
+        return tiledMenuItemDescription
+    }
+}
+
+
+extension SKSpriteNode {
+
+    /// A description of the node used in popup menus.
+    @available(*, deprecated, renamed: "tiledMenuItemDescription")
+    @objc public var tiledMenuDescription: String {
+        return tiledMenuItemDescription
+    }
+}
+
+
+extension SKCropNode {
+
+    /// A description of the node used in popup menus.
+    @available(*, deprecated, renamed: "tiledMenuItemDescription")
+    @objc public var tiledMenuDescription: String {
+        return tiledMenuItemDescription
+    }
+}
+
+
+extension SKEffectNode {
+
+    /// A description of the node used in popup menus.
+    @available(*, deprecated, renamed: "tiledMenuItemDescription")
+    @objc public var tiledMenuDescription: String {
+        return tiledMenuItemDescription
+    }
+}
+
+
+extension SKShapeNode {
+
+    /// A description of the node used in popup menus.
+    @available(*, deprecated, renamed: "tiledMenuItemDescription")
+    @objc public var tiledMenuDescription: String {
+        return tiledMenuItemDescription
     }
 }

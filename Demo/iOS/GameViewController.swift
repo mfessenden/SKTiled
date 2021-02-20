@@ -364,7 +364,7 @@ class GameViewController: UIViewController, Loggable {
     }
 
 
-    /// Update the debugging labels with scene information.
+    /// Update the debugging labels with scene information. 
     ///
     /// - Parameter notification: event notification.
     @objc func debuggingInfoReceived(notification: Notification) {

@@ -296,7 +296,10 @@ public class SKTiledDemoScene: SKTiledScene {
     ///
     /// - Parameter map: tile map.
     public func updateHud(_ map: SKTilemap?) {
-        guard let map = map else { return }
+        guard let map = map else {
+            updateMapInfo(msg: "---")
+            return
+        }
         updateMapInfo(msg: map.description)
     }
 
@@ -530,14 +533,14 @@ extension SKTiledDemoScene {
     /// Called when the camera position changes.
     ///
     /// - Parameter newPosition: updated camera position.
-    public override func cameraPositionChanged(newPosition: CGPoint) {
+    @objc public override func cameraPositionChanged(newPosition: CGPoint) {
         updateCameraInfo(cameraNode)
     }
 
     /// Called when the camera zoom changes.
     ///
     /// - Parameter newZoom: camera zoom amount.
-    public override func cameraZoomChanged(newZoom: CGFloat) {
+    @objc public override func cameraZoomChanged(newZoom: CGFloat) {
         updateCameraInfo(cameraNode)
     }
 
@@ -546,7 +549,7 @@ extension SKTiledDemoScene {
     ///   - bounds: camera view bounds.
     ///   - position: camera position.
     ///   - zoom: camera zoom amount.
-    public override func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {
+    @objc public override func cameraBoundsChanged(bounds: CGRect, position: CGPoint, zoom: CGFloat) {
         updateCameraInfo(cameraNode)
     }
 
@@ -555,7 +558,7 @@ extension SKTiledDemoScene {
     /// Called when the scene receives a double-tap event **(iOS only)**.
     ///
     /// - Parameter location: touch event location.
-    public override func sceneDoubleTapped(location: CGPoint) {
+    @objc public override func sceneDoubleTapped(location: CGPoint) {
         log("scene was double tapped.", level: .debug)
     }
     #endif
@@ -565,7 +568,7 @@ extension SKTiledDemoScene {
     /// Called when the scene is clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
-    public func sceneClicked(event: NSEvent) {
+    @objc public override func sceneClicked(event: NSEvent) {
         let location = event.location(in: self)
         var logMessage = "mouse clicked at: \(location.coordDescription)"
 
@@ -578,20 +581,12 @@ extension SKTiledDemoScene {
         //log(logMessage, level: .debug)
     }
 
-
     /// Called when the scene is double-clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
-    public override func sceneDoubleClicked(event: NSEvent) {
+    @objc public override func sceneDoubleClicked(event: NSEvent) {
         let location = event.location(in: self)
         log("mouse double-clicked at: \(location.shortDescription)", level: .debug)
-    }
-
-    /// Mouse right-click event handler.
-    ///
-    /// - Parameter event: mouse event.
-    open override func rightMouseDown(with event: NSEvent) {
-        cameraNode?.rightMouseDown(with: event)
     }
 
 
@@ -608,8 +603,14 @@ extension SKTiledDemoScene {
 
         let eventKey = event.keyCode
         var eventChars = event.characters ?? "⋯"
-        print("key pressed '\(eventChars)'")
-
+        
+        
+        if eventKey == 0x47 {
+            eventChars = "clr"
+        }
+        
+        
+        
         // '→' advances to the next scene
         if eventKey == 0x7c {
             self.loadNextScene()
@@ -642,7 +643,6 @@ extension SKTiledDemoScene {
             demoController?.toggleRenderStatistics()
         }
 
-
         // 'k' clears the scene
         if eventKey == 0x28 {
 
@@ -662,7 +662,13 @@ extension SKTiledDemoScene {
         if eventKey == 0xf {
             self.reloadScene()
         }
-
+        
+        eventChars = event.modifierString + eventChars
+        log("key pressed '\(eventChars)'", level: .debug)
+        
+        // MARK: - Camera Commands
+        
+        
         guard let cameraNode = cameraNode else {
             return
         }
@@ -719,6 +725,7 @@ extension SKTiledDemoScene {
             updateCommandString("camera zoom clamping: \(newClampValue)", duration: 1.0)
         }
 
+        // MARK: - Tilemap Commands
 
         guard let tilemap = tilemap,
               (worldNode != nil) else {
@@ -768,15 +775,38 @@ extension SKTiledDemoScene {
             
             updateCommandString("isolating selected objects...", duration: 3.0)
         }
+        
+        // 'j' key dumps custom reflectable strings
+        if eventKey == 0x26 {
+
+            print("▾ SKTilemap:\n------------------\n")
+            print("  -  '\(tilemap.description)'")
+            print("  -  '\(tilemap.debugDescription)'")
+            print("  -  '\(tilemap.tiledMenuItemDescription)' (menu)")
+            print("  -  '\(tilemap.tiledListDescription)' (list)")
+            
+            
+            for layer in tilemap.getLayers() {
+                print("\n   ▸ \(layer.className):\n------------------")
+                print("     -  '\(layer.description)'")
+                print("     -  '\(layer.debugDescription)'")
+                print("     -  '\(layer.tiledMenuItemDescription)' (menu)")
+                print("     -  '\(layer.tiledListDescription)' (list)")
+            }
+
+            updateCommandString("dumping debug descriptions...", duration: 3.0)
+        }
 
 
         /// 'l' tests the `DebugDrawableType.drawFrame` method.
         if eventKey == 0x25 {
+            
+            let objframeColor = SKColor(hexString: "#a1b6f7")
             tilemap.getObjects().forEach { object in
-                object.drawNodeBounds(with: object.frameColor, lineWidth: 1, fillOpacity: 0, duration: 2)
+                object.drawNodeBounds(with: objframeColor, lineWidth: 1, fillOpacity: 0, duration: 2)
             }
-
-            tilemap.drawNodeBounds(with: tilemap.frameColor, lineWidth: 1, fillOpacity: 0, duration: 2)
+            let mapframeColor = SKColor(hexString: "#ff6b6a")
+            tilemap.drawNodeBounds(with: mapframeColor, lineWidth: 1, fillOpacity: 0, duration: 2)
             updateCommandString("drawing object bounds...", duration: 3.0)
         }
 
@@ -844,53 +874,34 @@ extension SKTiledDemoScene {
             //updateCommandString("No command set for '\(eventChars)'.", duration: 3.0)
             updateCommandString("dumping selected node properties", duration: 3.0)
         }
-        
-        
-        
-        
-        // 'w' clears the cache
+
+        // 'w' runs a debugging command
         if eventKey == 0xd {
+            tilemap.removeAllActions()
+            tilemap.removeFromParent()
+            self.tilemap = nil
+            updateCommandString("Removing tilemap...", duration: 3.0)
             
-            
-            
-            tilemap.dataStorage = nil
-            updateCommandString("Clearing tilemap cache...", duration: 3.0)
-            tilemap.dataStorage = TileDataStorage(map: tilemap)
+            NotificationCenter.default.post(
+                name: Notification.Name.Demo.UpdateDebugging,
+                object: nil,
+                userInfo: ["mapInfo": "---"]
+            )
         }
         
         // 'x' runs a debugging command
         if eventKey == 0x7 {
-            tilemap.enumerateChildNodes(withName: ".//*") { node, _ in
-                if (node as? TiledGeometryType != nil) {
-                    let currentValue = node.isUserInteractionEnabled
-                    node.isUserInteractionEnabled = !currentValue
-                    print(" - node '\(node.className)' user interaction: \(node.isUserInteractionEnabled.valueAsOnOff)")
-                }
-
-                //stop.pointee = true
-            }
-            let currentMapValue = tilemap.isUserInteractionEnabled
-            tilemap.isUserInteractionEnabled = !currentMapValue
-            
-            
-            updateCommandString("Setting user iteraction \(tilemap.isUserInteractionEnabled.valueAsOnOff)", duration: 3.0)
-            
+            mousePointer?.dumpStatistics()
+            mousePointer?.redraw()
+            updateCommandString("Dumping mouse pointer node...", duration: 3.0)
         }
         
         // 'y' runs a debugging command
         if eventKey == 0x10 {
-            /*
-            NotificationCenter.default.post(
-                name: Notification.Name.DemoController.ResetDemoInterface,
-                object: nil
-            )
-            
-            updateCommandString("Forcing interface reset", duration: 3.0)
-            */
-            
+
             var tilecount = 0
-            let tileId: UInt32 = 25
-            for tile in tilemap.getTiles(globalID: tileId) {
+
+            for tile in tilemap.getTiles() {
                 tilecount += 1
                 let sprite = tile.replaceWithSpriteCopy()
                 sprite.alpha = 0.25

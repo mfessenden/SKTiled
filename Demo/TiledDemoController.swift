@@ -362,9 +362,15 @@ public class TiledDemoController: NSObject, Loggable {
             object: nil
         )
 
-
         // create an empty scene
-        let nextScene = SKTiledDemoScene(size: view.bounds.size)
+        #if SKTILED_HIRES
+        let viewSize = view.bounds.size * TiledGlobals.default.contentScale
+        #else
+        let viewSize = view.bounds.size
+        #endif
+        
+        let nextScene = SKTiledDemoScene(size: viewSize)
+        
         nextScene.scaleMode = .aspectFill
         nextScene.demoController = self
 
@@ -540,7 +546,13 @@ public class TiledDemoController: NSObject, Loggable {
         // load the next scene on the main queue
         DispatchQueue.main.async { [unowned self] in
             
-            let nextScene = SKTiledDemoScene(size: view.bounds.size * TiledGlobals.default.contentScale)
+            #if SKTILED_HIRES
+            let viewSize = view.bounds.size * TiledGlobals.default.contentScale
+            #else
+            let viewSize = view.bounds.size
+            #endif
+            
+            let nextScene = SKTiledDemoScene(size: viewSize)
             
             nextScene.scaleMode = .aspectFill
             nextScene.demoController = self
@@ -769,7 +781,9 @@ public class TiledDemoController: NSObject, Loggable {
 
     // MARK: - Event Handlers
 
-    /// Resets the main interface to its original state.
+    /// Resets the main interface to its original state. Called when the `Notification.Name.DemoController.ResetDemoInterface` event fires.
+    ///
+    /// - Parameter notification: event notification.
     @objc func resetMainInterface(_ notification: Notification) {
         // notification.dump(#fileID, function: #function)
         reset()

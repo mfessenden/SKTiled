@@ -154,8 +154,13 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
 
     /// Shape describing this object.
     @objc public lazy var objectPath: CGPath = {
-        let vertices = getVertices().map( { $0.invertedY })
-        return polygonPath(vertices)
+        if (globalID == nil) {
+            let vertices = getVertices().map( { $0.invertedY })
+            return polygonPath(vertices)
+        } else {
+            let vertices = translatedVertices()
+            return polygonPath(vertices)
+        }
     }()
 
     /// Object keys.
@@ -888,9 +893,6 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
             return [CGPoint]()
         }
 
-
-
-
         return points.map { point in
             var offset = layer.pixelToScreenCoords(point: point)
 
@@ -960,7 +962,12 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
 
     open override func mouseDown(with event: NSEvent) {
         // guard (TiledGlobals.default.enableMouseEvents == true) else { return }
+        
+        // FIXME: this is failing with tile objects
         if contains(touch: event.location(in: self)) {
+            print("⭑ object clicked")
+            
+            // calls
             onMouseClick?(self)
         }
     }
@@ -1188,6 +1195,59 @@ extension SKTileObject.TiledObjectShape {
 
 /// :nodoc:
 extension SKTileObject {
+    
+    /// Returns an integer that can be used as a table address in a hash table structure.
+    open override var hash: Int {
+        return id.hashValue
+    }
+    
+    /// String representation of tile object.
+    open override var description: String {
+        let comma = propertiesString.isEmpty == false ? " " : ""
+        var objectName = ""
+        if let name = name {
+            objectName = " '\(name)'"
+        }
+        let typeString = (type != nil) ? " type: '\(type!)'" : ""
+        let templateDescription = (template != nil) ? " Template: '\(template!)'" : ""
+        let miscDesc = (objectType == .text) ? " text quality: \(renderQuality)" : (objectType == .tile) ? " tile id: \(globalID ?? 0)" : (objectType == .point) ? "point:" : ""
+        let layerDescription = (layer != nil) ? " Layer: '\(layer.layerName)'" : ""
+        
+        
+        var pointsString = ""
+        if (isPolyType == true) {
+            pointsString = (points.isEmpty == true) ? " 0 points" : " \(points.count) points"
+        }
+        
+        return #"\#(tiledNodeNiceName) id: \#(id)\#(objectName)\#(typeString)\#(templateDescription)\#(miscDesc)\#(comma)\#(propertiesString)\#(layerDescription)\#(pointsString)"#
+    }
+    
+    /// Returns a string representation for debugging.
+    open override var debugDescription: String {
+        let comma = propertiesString.isEmpty == false ? " " : ""
+        var objectName = ""
+        if let name = name {
+            objectName = " '\(name)'"
+        }
+        let typeString = (type != nil) ? " type: '\(type!)'" : ""
+        let templateDescription = (template != nil) ? " Template: '\(template!)'" : ""
+        let miscDesc = (objectType == .text) ? " text quality: \(renderQuality)" : (objectType == .tile) ? " tile id: \(globalID ?? 0)" : (objectType == .point) ? "point:" : ""
+        let layerDescription = (layer != nil) ? " Layer: '\(layer.layerName)'" : ""
+        
+        
+        var pointsString = ""
+        if (isPolyType == true) {
+            pointsString = (points.isEmpty == true) ? " 0 points" : " \(points.count) points"
+        }
+        
+        return #"<\#(className) id: \#(id)\#(objectName)\#(typeString)\#(templateDescription)\#(miscDesc)\#(comma)\#(propertiesString)\#(layerDescription)\#(pointsString)>"#
+    }
+}
+
+
+
+/// :nodoc:
+extension SKTileObject {
 
     /// Returns the internal **Tiled** node type.
     @objc public var tiledElementName: String {
@@ -1212,7 +1272,7 @@ extension SKTileObject {
     }
 
     /// A description of the node.
-    @objc public override var tiledMenuDescription: String {
+    @objc public override var tiledMenuItemDescription: String {
         let objName = (name != nil) ? " '\(name!)'" : ""
         return "\(tiledNodeNiceName)\(objName) id: \(id)"
     }
@@ -1223,47 +1283,6 @@ extension SKTileObject {
     }
 }
 
-
-
-extension SKTileObject {
-
-    open override var hash: Int {
-        return id.hashValue
-    }
-
-    /// String representation of tile object.
-    open override var description: String {
-        let comma = propertiesString.isEmpty == false ? " " : ""
-        var objectName = ""
-        if let name = name {
-            objectName = " '\(name)'"
-        }
-        let typeString = (type != nil) ? " type: '\(type!)'" : ""
-        let templateDescription = (template != nil) ? " Template: '\(template!)'" : ""
-        let miscDesc = (objectType == .text) ? " text quality: \(renderQuality)" : (objectType == .tile) ? " tile id: \(globalID ?? 0)" : (objectType == .point) ? "point:" : ""
-        let layerDescription = (layer != nil) ? " Layer: '\(layer.layerName)'" : ""
-
-
-        var pointsString = ""
-        if (isPolyType == true) {
-            pointsString = (points.isEmpty == true) ? " 0 points" : " \(points.count) points"
-        }
-
-        return "\(tiledNodeNiceName) id: \(id)\(objectName)\(typeString)\(templateDescription)\(miscDesc)\(comma)\(propertiesString)\(layerDescription)\(pointsString)"
-    }
-
-    /// Returns a string representation for debugging.
-    open override var debugDescription: String {
-        return "<\(description)>"
-    }
-
-    /// Returns a shortened textual representation for debugging.
-    open var shortDescription: String {
-        var result = "\(objectType.name) id: \(self.id)"
-        result += (self.type != nil) ? ", type: '\(self.type!)'" : ""
-        return result
-    }
-}
 
 
 extension SKTileObject {
@@ -1381,5 +1400,14 @@ extension SKTileObject {
     @available(*, deprecated, renamed: "draw()")
     open func draw(debug: Bool = false) {
         self.draw()
+    }
+    
+    
+    /// Returns a shortened textual representation for debugging.
+    @available(*, deprecated, renamed: "tiledListDescription")
+    open var shortDescription: String {
+        var result = "\(objectType.name) id: \(self.id)"
+        result += (self.type != nil) ? ", type: '\(self.type!)'" : ""
+        return result
     }
 }

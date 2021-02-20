@@ -27,7 +27,7 @@
 import SpriteKit
 
 
-/// The `TileFlags` option set represents the various transformation flags that can be set for a given tile.
+/// The `TileFlags` option set represents the various orientation flags that can be set for a given tile.
 ///
 /// ### Properties
 ///

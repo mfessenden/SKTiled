@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="22" height="21" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#211e26" nextlayerid="24" nextobjectid="159">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="22" height="21" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#211e26" nextlayerid="24" nextobjectid="161">
  <properties>
   <property name="description" value="A simple orthographic map"/>
   <property name="displayName" value="dungeon-16x16"/>
@@ -102,12 +102,18 @@
    </properties>
    <object id="141" name="brazier1" type="light" gid="558" x="208" y="172" width="16" height="32"/>
    <object id="142" name="brazier2" type="light" gid="558" x="235" y="172" width="16" height="32"/>
+   <object id="159" x="7" y="311" width="89.5469" height="18.8438">
+    <text wrap="1" color="#4c5e6e">Level 1</text>
+   </object>
   </objectgroup>
   <objectgroup id="14" name="Characters-Upper">
    <properties>
     <property name="zPosition" type="float" value="25"/>
    </properties>
    <object id="119" name="dwarf1" gid="557" x="144" y="170" width="32" height="32"/>
+   <object id="160" x="21" y="14" width="55" height="53">
+    <ellipse/>
+   </object>
   </objectgroup>
  </group>
 </map>

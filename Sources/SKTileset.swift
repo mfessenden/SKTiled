@@ -149,7 +149,9 @@ public class SKTileset: NSObject, CustomReflectable, TiledAttributedType {
     public var isImageCollection: Bool = false
 
     /// The tileset is stored in an external file.
-    public var isExternalTileset: Bool { return filename != nil }
+    public var isExternalTileset: Bool {
+        return filename != nil
+    }
 
     /// Source image transparency color.
     public var transparentColor: SKColor?
@@ -162,7 +164,7 @@ public class SKTileset: NSObject, CustomReflectable, TiledAttributedType {
         guard let tilemap = tilemap else {
             return .zero
         }
-        // CHECKME: is this causing hex offset errors?
+        // TODO: is this causing hex offset errors?
         return CGPoint(x: tileSize.width - tilemap.tileSize.width, y: tileSize.height - tilemap.tileSize.height)
     }
 

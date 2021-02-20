@@ -301,15 +301,14 @@ public class SKTileLayer: TiledLayerObject {
 
     // MARK: - Tiles
 
+    
     /// Returns a tile at the given coordinate, if one exists.
     ///
     /// - Parameters:
     ///   - x: x-coordinate.
     ///   - y: y-coordinate.
     /// - Returns: tile object, if it exists.
-    public func tileAt(_ x: Int, _ y: Int) -> SKTile? {
-        let cx = Int32(x)
-        let cy = Int32(y)
+    public func tileAt(_ x: Int32, _ y: Int32) -> SKTile? {
         if (isInfinite == true) {
             for chunk in chunks {
                 if let foundTile = chunk.tileAt(x, y) {
@@ -318,7 +317,7 @@ public class SKTileLayer: TiledLayerObject {
             }
             return nil
         } else {
-            if (isValid(cx,cy) == false) {
+            if (isValid(x,y) == false) {
                 return nil
             }
             return tiles[x,y]
@@ -1096,6 +1095,8 @@ extension SKTileLayer {
     }
 
     /// A description of the node used for menu items.
+    ///
+    ///  'Tile Layer 'Level2' (46 tiles)'
     @objc public override var tiledListDescription: String {
         let nameString = "'\(layerName)'"
         return "\(tiledNodeNiceName) \(nameString) (\(tileCount) tiles)"
@@ -1135,6 +1136,17 @@ extension SKTileLayer {
     @available(*, deprecated, message: "use `getTiles()` instead")
     public func validTiles() -> [SKTile] {
         return self.getTiles()
+    }
+    
+    /// Returns a tile at the given coordinate, if one exists.
+    ///
+    /// - Parameters:
+    ///   - x: x-coordinate.
+    ///   - y: y-coordinate.
+    /// - Returns: tile object, if it exists.
+    @available(*, deprecated, renamed: "tileAt(_:_:)")
+    public func tileAt(_ x: Int, _ y: Int) -> SKTile? {
+        return tileAt(Int32(x), Int32(y))
     }
 
     /// Returns a tile at the given coordinate, if one exists.

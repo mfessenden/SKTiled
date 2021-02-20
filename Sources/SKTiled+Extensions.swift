@@ -539,6 +539,11 @@ extension NSEvent {
     var controlKeyPressed: Bool {
         return modifierFlags.contains(NSEvent.ModifierFlags.control)
     }
+    
+    /// Indicates the `shift` key is currently pressed.
+    var shiftKeyPressed: Bool {
+        return modifierFlags.contains(NSEvent.ModifierFlags.shift)
+    }
 
     /// Indicates the `command` key is currently pressed.
     var commandKeyPressed: Bool {
@@ -563,6 +568,28 @@ extension NSEvent {
     func isPressModifierFlags(only flag: NSEvent.ModifierFlags) -> Bool {
         return modifierFlags.intersection(.deviceIndependentFlagsMask) == flag
     }
+    
+    var modifierString: String {
+        var result = ""
+        if optionKeyPressed == true {
+            result += "⌥"
+        }
+        
+        if controlKeyPressed == true {
+            result += "⌃"
+        }
+        
+        if shiftKeyPressed == true {
+            result += "⌃"
+        }
+        
+        if commandKeyPressed == true {
+            result += "⌘"
+        }
+        return result
+    }
+    
+    
 }
 
 #endif
@@ -854,7 +881,7 @@ extension CGPoint {
 
     /// Returns a shortened textual representation for debugging. ('[x: 10, y: 2]')
     public var coordDescription: String {
-        return " [x: \(String(format: "%.0f", x)), y: \(String(format: "%.0f", y))]"
+        return "[x: \(String(format: "%.0f", x)), y: \(String(format: "%.0f", y))]"
     }
 
     /// Returns a shortened textual representation for debugging. ('[10, 2]')
@@ -1029,12 +1056,12 @@ extension CGRect {
 
         let wval = size.width.stringRoundedTo(decimals)
         let hval = size.height.stringRoundedTo(decimals)
-        return "origin: \(xval), \(yval), size: \(wval) x \(hval)"
+        return "[origin: \(xval), \(yval), size: \(wval) x \(hval)]"
     }
 
     /// Returns a shortened textual representation for debugging.
     public var shortDescription: String {
-        return "x: \(Int(minX)), y: \(Int(minY)), w: \(width.stringRoundedTo()), h: \(height.stringRoundedTo())"
+        return "[x: \(Int(minX)), y: \(Int(minY)), w: \(width.stringRoundedTo()), h: \(height.stringRoundedTo())]"
     }
 }
 
@@ -2066,6 +2093,8 @@ extension OptionSet where RawValue: FixedWidthInteger {
 
 // MARK: - Operators
 
+// MARK: CGFloat
+
 public func + (lhs: Int, rhs: CGFloat) -> CGFloat {
     return CGFloat(lhs) + rhs
 }
@@ -2118,12 +2147,9 @@ public func / (lhs: Int32, rhs: CGFloat) -> CGFloat {
     return CGFloat(lhs) / rhs
 }
 
-
-
 public func lerp(start: CGFloat, end: CGFloat, t: CGFloat) -> CGFloat {
     return start + (t * (end - start))
 }
-
 
 public func ilerp(start: CGFloat, end: CGFloat, t: CGFloat) -> CGFloat {
     return (t - start) / (end - start)
@@ -2427,7 +2453,7 @@ extension simd_int2 {
     ///
     ///    `[x: 12, y: 10]`
     public var coordDescription: String {
-        return " [x: \(String(format: "%d", x)), y: \(String(format: "%d", y))]"
+        return "[x: \(String(format: "%d", x)), y: \(String(format: "%d", y))]"
     }
 }
 

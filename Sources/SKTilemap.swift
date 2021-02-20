@@ -637,17 +637,15 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     @objc public var debugDrawOptions: DebugDrawOptions = TiledGlobals.default.debugDrawOptions {
         didSet {
             debugNode?.draw()
+ 
+            let proxiesVisible = self.isShowingObjectBounds
+            let proxies = self.getObjectProxies()
             
-            
-            renderQueue.async {
-                let proxiesVisible = self.isShowingObjectBounds
-                let proxies = self.getObjectProxies()
-                
-                for proxy in proxies {
-                    proxy.showObjects = proxiesVisible
-                    proxy.draw()
-                }
+            for proxy in proxies {
+                proxy.showObjects = proxiesVisible
+                proxy.draw()
             }
+            
         }
     }
 
@@ -2929,30 +2927,6 @@ extension SKTilemap {
         return tileLayers().compactMap { $0.graph }
     }
 
-    /// String representation of the map.
-    public override var description: String {
-        var attrsString = className
-
-        attrsString += " '\(mapName)' "
-        attrsString += " orientation: '\(orientation.description)' "
-
-
-        let mapsizeString = (isInfinite == false) ? "map size: \(sizeInPoints)" : "map size: infinite"
-        attrsString += "\(mapsizeString) size: \(mapSize) tile size: \(tileSize) "
-        //attrsString += " url: '\(url.relativePath)'"
-
-        if (orientation == .staggered) {
-            attrsString += "axis: '\(staggeraxis)' index: '\(staggerindex)'"
-        }
-
-        return attrsString
-    }
-
-    /// Debug string representation of the map.
-    public override var debugDescription: String {
-        return #"<\#(description)>"#
-    }
-
     /// Returns an array of renderable tiles/objects.
     ///
     /// - Returns: array of child objects.
@@ -3283,23 +3257,44 @@ extension SKTilemap: TiledSceneCameraDelegate {
     ///
     /// - Parameter event: mouse click event.
     @objc public func sceneClicked(event: NSEvent) {
+        
         let mapCoordinate = coordinateAtMouse(event: event)
         let tilesAtMapCoordinate = tilesAt(coord: mapCoordinate)
-
+        
+        
+        var output = "⭑ map clicked at \(mapCoordinate.coordDescription)"
+        
+        
         // set the current coordinate
         currentCoordinate = mapCoordinate
         let location = event.location(in: objectsOverlay)
 
         // filter any overlay nodes and get the object referenced
         let clickedObjects = objectsOverlay.nodes(at: location).filter { $0 as? TileObjectProxy != nil} as! [TileObjectProxy]
-        if let firstClicked = clickedObjects.first {
-            if let referringObject = firstClicked.reference {
-                /// calls `Notification.Name.Demo.TileClicked` event
+        if let firstObjectClicked = clickedObjects.first {
+            
+            
+            output += ", object: '\(firstObjectClicked.description)'"
+            
+            
+            // get the proxy parent object...
+            if let referringObject = firstObjectClicked.reference {
+                
+                print(output)
+                
+                /// calls `Notification.Name.Demo.ObjectClicked` event
                 referringObject.mouseDown(with: event)
                 return
             }
         }
-
+        
+        if let firstTileClicked = tilesAtMapCoordinate.first {
+            output += ", tile: '\(firstTileClicked.description)'"
+        }
+        
+        
+        print(output)
+        
         // activate the first tile...
         tilesAtMapCoordinate.first?.mouseDown(with: event)
     }
@@ -3343,6 +3338,56 @@ extension SKTilemap {
 }
 
 
+// MARK: - Debug Descriptions
+
+/// :nodoc:
+extension SKTilemap {
+    
+    /// String representation of the map.
+    public override var description: String {
+        var result = tiledNodeNiceName.titleCased()
+        
+        result += " '\(mapName)' "
+        result += " orientation: '\(orientation.description)' "
+        
+        let mapsizeString = (isInfinite == false) ? "map size: \(sizeInPoints)" : "map size: 'infinite'"
+        result += "\(mapsizeString) size: \(mapSize) tile size: \(tileSize) "
+        
+        if (orientation == .staggered) {
+            result += "axis: '\(staggeraxis)' index: '\(staggerindex)'"
+        }
+        
+        if (url != nil) {
+            result += " url: '\(url.relativePath)'"
+        }
+        
+        return result
+    }
+    
+    /// Debug string representation of the map.
+    public override var debugDescription: String {
+        var result = className
+        
+        result += " '\(mapName)' "
+        result += " orientation: '\(orientation.description)' "
+        
+        
+        let mapsizeString = (isInfinite == false) ? "map size: \(sizeInPoints)" : "map size: 'infinite'"
+        result += "\(mapsizeString) size: \(mapSize) tile size: \(tileSize) "
+        
+        if (orientation == .staggered) {
+            result += "axis: '\(staggeraxis)' index: '\(staggerindex)'"
+        }
+        
+        if (url != nil) {
+            result += " url: '\(url.relativePath)'"
+        }
+        
+        return #"<\#(result)>"#
+    }
+}
+
+
 /// :nodoc:
 extension SKTilemap {
 
@@ -3367,14 +3412,14 @@ extension SKTilemap {
         return "\(tiledNodeNiceName.titleCased()): '\(mapName)'"
     }
 
-    /// A description of the node.
-    @objc public var tiledMenuDescription: String {
+    /// A description of the node used in popup menus.
+    @objc public var tiledMenuItemDescription: String {
         return "\(tiledNodeNiceName.titleCased()): '\(mapName)'"
     }
 
-    /// A description of the node.
+    /// Description of the node type.
     @objc public var tiledHelpDescription: String {
-        return "Tile map node."
+        return "Tilemap container node."
     }
 }
 

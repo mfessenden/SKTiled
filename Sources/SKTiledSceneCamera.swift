@@ -201,6 +201,7 @@ public class SKTiledSceneCamera: SKCameraNode {
 
     /// Returns all **SKTiled** nodes contained within the camera view.
     public var containedNodes: [SKNode] {
+        // FIXME: crash here
         return containedNodeSet().filter { node in
             return (node as? TiledGeometryType != nil)
         }
@@ -449,8 +450,6 @@ public class SKTiledSceneCamera: SKCameraNode {
                               interval: TimeInterval = 0,
                               update: Bool = true) {
 
-
-
         // clamp scaling between min/max zoom
         var zoomClamped = (ignoreZoomConstraints == true) ? scale.clamped(minZoom, maxZoom) : scale
 
@@ -487,6 +486,7 @@ public class SKTiledSceneCamera: SKCameraNode {
                 delegate.cameraZoomChanged?(newZoom: zoomClamped)
             }
         }
+        
 
         if (update == true) {
             self.updateContainedNodes()
@@ -974,6 +974,7 @@ extension SKTiledSceneCamera {
     ///
     /// - Parameter event: mouse event.
     public override func mouseDown(with event: NSEvent) {
+        print("⭑ camera clicked")
         lastLocation = event.location(in: self)
         isMoving = true
         if (event.modifierFlags.contains(.option) && allowRotation == true) {
@@ -982,17 +983,7 @@ extension SKTiledSceneCamera {
             cameraMovementMode = .movement
         }
 
-        #if SKTILED_DEMO
-
-        // clear the currently selected node
-        NotificationCenter.default.post(
-            name: Notification.Name.Camera.Updated,
-            object: nil
-        )
-
-        #endif
-
-
+        // single-click event
         if (event.clickCount == 1) {
             for delegate in self.delegates {
                 guard (delegate.receiveCameraUpdates == true) else { continue }
@@ -1001,7 +992,7 @@ extension SKTiledSceneCamera {
             return
         }
 
-
+        // double-click event
         if (event.clickCount > 1) {
             for delegate in self.delegates {
                 guard (delegate.receiveCameraUpdates == true) else { continue }
@@ -1009,6 +1000,8 @@ extension SKTiledSceneCamera {
             }
             return
         }
+        
+        super.mouseDown(with: event)
     }
 
     /// Handle mouseup events.
@@ -1027,6 +1020,8 @@ extension SKTiledSceneCamera {
         lastLocation = location
         focusLocation = location
         isMoving = false
+        
+        super.mouseUp(with: event)
     }
 
     /// Track mouse movement in the scene. Location is in local space, so coordinate origin will be the center of the current window.
@@ -1036,7 +1031,6 @@ extension SKTiledSceneCamera {
         guard (TiledGlobals.default.enableMouseEvents == true) else {
             return
         }
-        super.mouseMoved(with: event)
         
         if (event.type == .mouseMoved) {
             lastLocation = event.location(in: self)
@@ -1048,6 +1042,7 @@ extension SKTiledSceneCamera {
                 delegate.mousePositionChanged?(event: event)
             }
         }
+        super.mouseMoved(with: event)
     }
 
     /// Tracks mouse drag events.
@@ -1103,9 +1098,13 @@ extension SKTiledSceneCamera {
         }
     }
 
-    /// Handler for mouse right-click events.
+    /// Handler for mouse right-click events. The mouse event is forwarded to any delegates implementing the `TiledSceneCameraDelegate.sceneRightClicked(event:)` method.
     ///
-    /// - Parameter event: mouse event.
+    ///
+    /// - Important:
+    ///   delegates need to have the `TiledSceneCameraDelegate.receiveCameraUpdates` property set to `true` in order for these events to be forwarded.
+    ///
+    /// - Parameter event: mouse right-click event.
     public override func rightMouseDown(with event: NSEvent) {
         guard (TiledGlobals.default.enableMouseEvents == true) else {
             return
@@ -1120,20 +1119,34 @@ extension SKTiledSceneCamera {
         super.rightMouseDown(with: event)
     }
 
-    /// Handler for mouse right-click events.
+    /// Handler for mouse right-click events. The mouse event is forwarded to any delegates implementing the `TiledSceneCameraDelegate.sceneRightClicked(event:)` method.
     ///
-    /// - Parameter event: mouse event.
+    ///
+    /// - Important:
+    ///   delegates need to have the `TiledSceneCameraDelegate.receiveCameraUpdates` property set to `true` in order for these events to be forwarded.
+    ///
+    /// - Parameter event: mouse right-click event.
     public override func rightMouseUp(with event: NSEvent) {
         guard (TiledGlobals.default.enableMouseEvents == true) else {
             return
         }
-                
+        
+        for delegate in self.delegates {
+            guard (delegate.receiveCameraUpdates == true) else {
+                continue
+            }
+            delegate.sceneRightClickReleased?(event: event)
+        }
+        
+        super.rightMouseUp(with: event)
+        
         #if SKTILED_DEMO
-
         if let tiledScene = scene as? SKTiledScene {
             let locationInScene = event.location(in: tiledScene)
-            let nodesUnderMouse = tiledScene.nodes(at: locationInScene).filter( { $0 as? TiledGeometryType != nil })
-
+            let nodesUnderMouse = tiledScene.nodes(at: locationInScene).filter( {
+                $0 as? TiledGeometryType != nil }
+            )
+            
             // REFERENCE: these nodes are correct!
             NotificationCenter.default.post(
                 name: Notification.Name.Demo.NodesRightClicked,
@@ -1142,7 +1155,6 @@ extension SKTiledSceneCamera {
                            "positionInWindow": event.locationInWindow]
             )
         }
-
         #endif
     }
 

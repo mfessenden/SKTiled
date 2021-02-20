@@ -540,6 +540,8 @@ extension SKObjectGroupDrawOrder: CustomStringConvertible, CustomDebugStringConv
 }
 
 
+// MARK: - Debug Descriptions
+
 
 // :nodoc:
 extension SKObjectGroup {
@@ -559,14 +561,14 @@ extension SKObjectGroup {
         return "objectgroup-icon"
     }
 
-    /// A description of the node.
+    /// Returns a string representation for use with an outline.
     @objc public override var tiledListDescription: String {
         let nameString = "'\(layerName)'"
         let ccstring = (children.count == 0) ? ": (no children)" : ": (\(children.count) children)"
         return "\(tiledNodeNiceName) \(nameString)\(ccstring)"
     }
 
-    /// A description of the node.
+    /// Returns a string representation for use with a dropdown menu.
     @objc public override var tiledHelpDescription: String {
         return "Layer container for vector objects."
     }

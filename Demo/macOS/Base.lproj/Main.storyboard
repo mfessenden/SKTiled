@@ -214,9 +214,9 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="SaJ-4g-Zre"/>
-                                        <menuItem title="Zoom clamping:" enabled="NO" id="NmO-k3-pZV" userLabel="Zoom clamping:">
+                                        <menuItem title="Zoom Clamping:" enabled="NO" id="NmO-k3-pZV" userLabel="Zoom clamping:">
                                             <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" id="PjI-dV-OUe"/>
+                                            <menu key="submenu" title="Zoom Clamping:" id="PjI-dV-OUe"/>
                                         </menuItem>
                                     </items>
                                 </menu>
@@ -310,6 +310,12 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="cameraStatistics:" target="Voe-Tx-rLC" id="T4f-nD-Xpc"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Mouse Pointer..." id="aVF-kb-Lcm">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="mousePointerStatistics:" target="Voe-Tx-rLC" id="c8B-bN-f3X"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Render Statistics" id="8DF-Mo-t1x">
