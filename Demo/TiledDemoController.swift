@@ -89,7 +89,6 @@ public class TiledDemoController: NSObject, Loggable {
         }
     }
 
-
     /// The current view.
     public weak var view: SKView?
 
@@ -221,6 +220,7 @@ public class TiledDemoController: NSObject, Loggable {
 
     // MARK: - Scanning
 
+    /// Scans all asset search paths for assets. This is called when an asset path is added or removed.
     public func scanForResources() {
 
         // call back to the AppDelegate/GameViewController and clear the UIs.
@@ -881,7 +881,7 @@ public class TiledDemoController: NSObject, Loggable {
 
         // stub here, we're not using..
         let searchPaths = userInfo["assetSearchPaths"]
-
+        
         if (globals.allowUserMaps == true) || (globals.allowDemoMaps == true) {
             if (searchPaths != nil) {
                 scanForResources()
@@ -1295,6 +1295,8 @@ extension TiledDemoController {
         printLayerIsolatedInfo()
     }
 
+    // TODO: move this to demo delegate
+    
     /// Disable all layer isolation.
     public func turnIsolationOff() {
         guard let view = self.view,

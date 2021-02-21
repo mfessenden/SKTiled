@@ -29,7 +29,7 @@
     - [Framework Installation](getting-started.html#framework-installation)
     - [Swift Package Manager](getting-started.html#swift-package-manager)
     - [Carthage Installation](getting-started.html#carthage-installation)
-            - [Binary Frameworks](getting-started.html#binary-frameworks)
+        - [Binary Frameworks](getting-started.html#binary-frameworks)
     - [CocoaPods Installation](getting-started.html#cocoapods-installation)
     - [Building the Demo Projects](getting-started.html#building-the-demo-projects)
     - [Building the Documentation](getting-started.html#building-the-documentation)

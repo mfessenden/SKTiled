@@ -974,7 +974,6 @@ extension SKTiledSceneCamera {
     ///
     /// - Parameter event: mouse event.
     public override func mouseDown(with event: NSEvent) {
-        print("⭑ camera clicked")
         lastLocation = event.location(in: self)
         isMoving = true
         if (event.modifierFlags.contains(.option) && allowRotation == true) {

@@ -843,7 +843,6 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         // guard (TiledGlobals.default.enableMouseEvents == true) else { return }
         if contains(touch: event.location(in: self)) {
             // for demo, this calls `Notification.Name.Demo.TileClicked`
-            print("⭑ tile clicked ")
             onMouseClick?(self)
         }
     }
@@ -1109,7 +1108,7 @@ extension SKTile {
         }
     }
 
-    /// Tile visibility.
+    /// Toggle for tile visibility.
     open var isVsible: Bool {
         get {
             return !self.isHidden
@@ -1157,13 +1156,6 @@ extension SKTile {
             _globalId.isFlippedDiagonally = newValue
             orientTile()
         }
-    }
-
-    /// Returns a shortened textual representation for debugging.
-    open var shortDescription: String {
-        var result = "Tile id: \(self.tileData.id)"
-        result += (self.tileData.type != nil) ? ", type: '\(self.tileData.type!)'" : ""
-        return result
     }
 
     /// The offset position of the tile.
@@ -1408,7 +1400,7 @@ extension SKTile {
 
 extension SKTile {
     
-    /// Tile visibility.
+    /// Toggle for tile visibility.
     @available(*, deprecated, renamed: "isVisible")
     open var visible: Bool {
         get {
@@ -1419,7 +1411,7 @@ extension SKTile {
         }
     }
     
-    /// Tiled global id.
+    /// Returns the tile global id unmasked.
     @available(*, deprecated, renamed: "maskedTileId")
     public var realTileId: UInt32 {
         return maskedTileId
@@ -1433,6 +1425,12 @@ extension SKTile {
         } set {
             self.isPaused = newValue
         }
+    }
+    
+    /// Returns a shortened textual representation for debugging.
+    @available(*, deprecated, renamed: "description")
+    open var shortDescription: String {
+        return description
     }
 
     /// Draw the tile. Forces the tile to update its textures.

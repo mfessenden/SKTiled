@@ -865,7 +865,8 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
                 ]
             )
             boundsShape?.run(groupAction, completion: {
-                self.boundsShape?.isHidden = true
+                self.boundsShape?.strokeColor = SKColor.clear
+                self.boundsShape?.fillColor = SKColor.clear
                 self.removeAnchor()
             })
         }

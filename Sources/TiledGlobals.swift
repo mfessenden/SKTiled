@@ -429,6 +429,9 @@ public class TiledGlobals {
 
         /// Debug camera bounds color.
         public var cameraBoundsColor: SKColor = TiledObjectColors.metal
+        
+        /// Default anchor display radius.
+        public var anchorRadius: CGFloat = 1
 
         /// Global debug display mouse filter options (macOS).
         ///
@@ -607,6 +610,7 @@ extension TiledGlobals: TiledCustomReflectableType {
         print("     ▸ object fill opacity:  \(self.debugDisplayOptions.objectFillOpacity)")
         print("     ▸ object line width:    \(self.debugDisplayOptions.lineWidth)")
         print("     ▸ grid color:           \(self.debugDisplayOptions.gridColor.hexString())\n")
+        print("     ▸ anchor radius:        \(self.debugDisplayOptions.anchorRadius)\n")
         print("  ▾ Render Quality: ")
         print("     ▸ default:              \(self.renderQuality.default)")
         print("     ▸ object:               \(self.renderQuality.object)")

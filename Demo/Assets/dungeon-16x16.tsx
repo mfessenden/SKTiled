@@ -50,13 +50,13 @@
  </tile>
  <tile id="24" type="blank-floor" probability="0.5">
   <properties>
-   <property name="highlightColor" type="color" value="#ffd6f300"/>
+   <property name="highlightColor" type="color" value="#ffa1b6f7"/>
    <property name="weight" type="float" value="0.5"/>
   </properties>
  </tile>
  <tile id="25" type="blank-floor" probability="0.5">
   <properties>
-   <property name="highlightColor" type="color" value="#ffebff33"/>
+   <property name="highlightColor" type="color" value="#ffa1b6f7"/>
    <property name="weight" type="float" value="0.5"/>
   </properties>
  </tile>
@@ -80,7 +80,7 @@
  <tile id="38" terrain=",0,,0"/>
  <tile id="39" terrain="0,0,0,0">
   <properties>
-   <property name="color" type="color" value="#ff27cdc5"/>
+   <property name="color" type="color" value="#ffa1b6f7"/>
   </properties>
  </tile>
  <tile id="40" terrain="0,,0,"/>
@@ -91,19 +91,19 @@
  </tile>
  <tile id="47" type="blank-floor" probability="0.5">
   <properties>
-   <property name="highlightColor" type="color" value="#ff68ffea"/>
+   <property name="highlightColor" type="color" value="#ffff68"/>
    <property name="weight" type="float" value="0.5"/>
   </properties>
  </tile>
  <tile id="48" type="blank-floor" terrain="1,1,1,1" probability="0.5">
   <properties>
-   <property name="highlightColor" type="color" value="#ffff57ee"/>
+   <property name="highlightColor" type="color" value="#ffff57"/>
    <property name="weight" type="float" value="0.5"/>
   </properties>
  </tile>
  <tile id="49" type="blank-floor" probability="0.5">
   <properties>
-   <property name="highlightColor" type="color" value="#ffff57ee"/>
+   <property name="highlightColor" type="color" value="#ffff57"/>
    <property name="weight" type="float" value="0.5"/>
   </properties>
  </tile>
@@ -131,19 +131,19 @@
  </tile>
  <tile id="70" type="blank-floor" probability="0.5">
   <properties>
-   <property name="highlightColor" type="color" value="#ffff57ee"/>
+   <property name="highlightColor" type="color" value="#ffff57"/>
    <property name="weight" type="float" value="0.5"/>
   </properties>
  </tile>
  <tile id="71" type="blank-floor" probability="0.5">
   <properties>
-   <property name="highlightColor" type="color" value="#ffce6522"/>
+   <property name="highlightColor" type="color" value="#ffce65"/>
    <property name="weight" type="float" value="0.5"/>
   </properties>
  </tile>
  <tile id="72" type="blank-floor" probability="0.5">
   <properties>
-   <property name="highlightColor" type="color" value="#ffff57ee"/>
+   <property name="highlightColor" type="color" value="#ffff57"/>
    <property name="weight" type="float" value="0.5"/>
   </properties>
  </tile>
@@ -281,12 +281,12 @@
  </tile>
  <tile id="466">
   <properties>
-   <property name="highlightcolor" type="color" value="#ffe93b06"/>
+   <property name="highlightcolor" type="color" value="#ffe93b"/>
   </properties>
  </tile>
  <tile id="551">
   <properties>
-   <property name="color" type="color" value="#ffc80045"/>
+   <property name="color" type="color" value="#ffc800"/>
   </properties>
  </tile>
 </tileset>

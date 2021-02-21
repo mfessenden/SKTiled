@@ -87,12 +87,16 @@ internal class TileObjectOverlay: SKNode {
         return objects.compactMap { $0.reference }
     }
     
-
-    
+    /// Called when the `Notification.Name.Map.Updated` event fires.
+    ///
+    /// - Parameter notification: event notification.
     @objc func mapUpdatedAction(notification: Notification) {
         draw()
     }
     
+    /// Called when the `Notification.Name.Globals.Updated` event fires.
+    ///
+    /// - Parameter notification: event notification.
     @objc func globalsUpdatedAction(notification: Notification) {
         lineWidth = TiledGlobals.default.debugDisplayOptions.lineWidth
         draw()
@@ -102,7 +106,7 @@ internal class TileObjectOverlay: SKNode {
         objects.forEach { object in
             object.zoomLevel = cameraZoom
             object.baseLineWidth = lineWidth
-            object.reference?.tintColor
+            // object.reference?.tintColor
             object.draw()
         }
     }
@@ -136,6 +140,19 @@ extension TileObjectOverlay: TiledSceneCameraDelegate {
             }
         }
     }
+    
+    @objc func sceneClicked(event: NSEvent) {
+        let clickedProxies = nodes(at: event.location(in: self)).filter { $0 as? TileObjectProxy != nil} as! [TileObjectProxy]
+        
+        // TODO: dispatch here?
+        for proxy in clickedProxies {
+            
+            /// calls `Notification.Name.Demo.ObjectClicked` event. Handled by `GameViewController.objectUnderMouseClicked`.
+            if let referringObject = proxy.reference {
+                referringObject.mouseDown(with: event)
+            }
+        }
+    }
 }
 
 
@@ -166,7 +183,6 @@ extension TileObjectOverlay: TiledCustomReflectableType {
 
 extension TileObjectOverlay {
 
-    
     /// Returns an array of contained object proxies.
     internal var objects: [TileObjectProxy] {
         let proxies = children.filter { $0 as? TileObjectProxy != nil }

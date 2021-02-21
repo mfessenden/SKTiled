@@ -180,6 +180,7 @@ internal class MousePointer: SKNode {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.TileUnderCursor, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.TileClicked, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.ObjectClicked, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Globals.Updated, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.FocusCoordinateChanged, object: nil)
 
@@ -218,6 +219,7 @@ internal class MousePointer: SKNode {
         NotificationCenter.default.addObserver(self, selector: #selector(tileUnderCursor), name: Notification.Name.Demo.TileUnderCursor, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileClicked), name: Notification.Name.Demo.TileClicked, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(objectClicked), name: Notification.Name.Demo.ObjectClicked, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionCleared), name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(globalsUpdatedAction), name: Notification.Name.Globals.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(focusCoordinateChanged), name: Notification.Name.Map.FocusCoordinateChanged, object: nil)
     }
@@ -242,12 +244,22 @@ internal class MousePointer: SKNode {
         _currentCoordinate = mapFocusedCoordinate
         //redraw()
     }
+    
+    /// Set the current tile value. Called when the `Notification.Name.Demo.NodeSelectionCleared` notification is received.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func nodeSelectionCleared(notification: Notification) {
+        //notification.dump(#fileID, function: #function)
+        currentTile = nil
+        currentObject = nil
+        redraw()
+    }
 
     /// Set the current tile value. Called when the `Notification.Name.Demo.TileUnderCursor` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func tileUnderCursor(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let tile = notification.object as? SKTile else {
             return
         }
@@ -259,7 +271,7 @@ internal class MousePointer: SKNode {
     ///
     /// - Parameter notification: event notification.
     @objc func tileClicked(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let tile = notification.object as? SKTile else {
             return
         }
@@ -271,7 +283,7 @@ internal class MousePointer: SKNode {
     ///
     /// - Parameter notification: event notification.
     @objc func objectClicked(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let object = notification.object as? SKTileObject else {
             return
         }
@@ -336,20 +348,24 @@ internal class MousePointer: SKNode {
             .shadow: shadow
         ] as [NSAttributedString.Key: Any]
 
-
+        var labelIndex = 0
         
-
-        let winLabelText = "window: \(windowLocation.shortDescription)"
-        let winLabelString = NSMutableAttributedString(string: winLabelText, attributes: defaultLabelAttributes)
-        if #available(OSX 10.13, *) {
-            winLabel?.attributedText = winLabelString
+        if (mouseFilters.isShowingWindowPosition == true) {
+            let winLabelText = "window: \(windowLocation.shortDescription)"
+            let winLabelString = NSMutableAttributedString(string: winLabelText, attributes: defaultLabelAttributes)
+            if #available(OSX 10.13, *) {
+                winLabel?.attributedText = winLabelString
+            } else {
+                winLabel?.text = winLabelString.string
+            }
+            labelIndex += 1
         } else {
-            winLabel?.text = winLabelString.string
+            winLabel?.isHidden = true
         }
         
         //winLabel?.position.y = CGFloat(lineCount / 1.5) * self.fontSize + self.fontSize
         
-        var labelIndex = 1
+        
         
         if (mouseFilters.isShowingScenePosition == true) {
             sceneLabel?.isHidden = false

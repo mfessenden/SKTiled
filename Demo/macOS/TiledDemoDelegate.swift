@@ -154,7 +154,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func nodeSelectionCleared(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        notification.dump(#fileID, function: #function)
         defer { currentNodes.removeAll() }
         
         for node in currentNodes {
@@ -184,9 +184,9 @@ public class TiledDemoDelegate: NSObject, Loggable {
         )
     }
     
-    /// Handles the `Notification.Name.Demo.TileClicked` event.
+    /// Handles the `Notification.Name.Demo.ObjectClicked` event.
     ///
-    ///  object: `SKTile`
+    ///  object: `SKTileObject`
     ///
     /// - Parameter notification: event notification.
     @objc func objectClickedAction(notification: Notification) {

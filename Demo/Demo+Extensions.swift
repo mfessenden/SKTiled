@@ -385,6 +385,9 @@ extension Notification.Name {
         public static let NodesRightClicked             = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodesRightClicked")        // nodes right-clicked in demo app
         public static let NodeAttributesChanged         = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodeAttributesChanged")    // node changes via inspector
         public static let DumpSelectedNodes             = Notification.Name(rawValue: "org.sktiled.notification.name.demo.dumpSelectedNodes")
+        
+
+        public static let ClearSelectedNodes            = Notification.Name(rawValue: "org.sktiled.notification.name.demo.clearSelectedNodes")  // calls back to GVC to clear selection (macOS)
 
 
         // iOS
@@ -394,7 +397,7 @@ extension Notification.Name {
 
         // node selected in right-click menu
         public static let NodeSelectionChanged           = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodeSelectionChanged")   // sent from demo delegate to indicate that the current node selection has changed
-        public static let NodeSelectionCleared           = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodeSelectionCleared")
+        public static let NodeSelectionCleared           = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodeSelectionCleared") // handles 'clear' key pressed (macOS)
 
         // selected node isolation
         public static let IsolateSelectedEnabled         = Notification.Name(rawValue: "org.sktiled.notification.name.demo.isolateSelectedEnabled")
@@ -426,6 +429,7 @@ extension SKNode {
         return children.count
     }
 }
+
 
 // MARK: SpriteKit Inspector
 
@@ -596,8 +600,6 @@ extension SKNode {
 
 
 
-
-
 // MARK: SKTUtils Actions
 
 extension SKAction {
@@ -618,7 +620,15 @@ extension SKAction {
             effect.update(t)
         }
     }
-
+    
+    /// Creates a shake animation action.
+    ///
+    /// - Parameters:
+    ///   - node: target node.
+    ///   - amount: shake amount.
+    ///   - oscillations: number of oscillations.
+    ///   - duration: length of effect.
+    /// - Returns: SpritKit shake action.
     public class func shakeNode(_ node: SKNode, amount: CGPoint, oscillations: Int, duration: TimeInterval) -> SKAction {
         let oldPosition = node.position
         let newPosition = oldPosition + amount
@@ -628,7 +638,7 @@ extension SKAction {
     }
 }
 
-
+/// :nodoc:
 public class SKTEffect {
     unowned var node: SKNode
     var duration: TimeInterval

@@ -124,7 +124,7 @@ if __name__ == '__main__':
         browser = VALID_BROWSERS[userBrowser]
         BROWSER_COMMAND = '%s "%s" %s' % (BROWSER_COMMAND, browser, indexPage)
 
-
+    # fail if we can't create the images directory
     if not os.path.exists(imageDestDir):
         if not mkdirpath(imageDestDir):
             print "# [%s]: Error: cannot create directory at ''%s'" % (PROJECT_NAME, imageDestDir)
@@ -137,8 +137,13 @@ if __name__ == '__main__':
         run_command(RSYNC_COMMAND)
         sys.exit(0)
 
+    cmdMessage = "\n\n# [%s]: Building project documentation..." % PROJECT_NAME
 
     if doDryRun == True:
+        cmdMessage = "\n\n# [%s]: Building project documentation (dry-run)" % PROJECT_NAME
+
+        print cmdMessage
+
         print '\n\nOUTPUT:\n-------'
         print '  ➞ %s' % JAZZY_COMMAND
         print '  ➞ %s' % RSYNC_COMMAND
@@ -147,6 +152,9 @@ if __name__ == '__main__':
         sys.exit(0)
 
     else:
+
+        print cmdMessage
+
         run_command(JAZZY_COMMAND)
         run_command(RSYNC_COMMAND)
         run_command(BROWSER_COMMAND)

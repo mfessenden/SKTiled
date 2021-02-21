@@ -44,7 +44,9 @@ import SpriteKit
 ///  - `draw()`: draw the object's contents.
 ///
 @objc public protocol TiledGeometryType: TiledSelectableType, TiledRasterizableType, TiledObjectType, DebugDrawableType {
-
+    
+    // TODO: implement this
+    
     /// The object's parent container.
     @objc optional var container: TiledMappableGeometryType? { get }
 
@@ -129,16 +131,24 @@ extension SKNode {
         return touchedNode === self || touchedNode.inParentHierarchy(self)
     }
 
-    /// Returns **Tiled** nodes at the given **scene** location.
+    /// Returns an array of all visible **Tiled** nodes that intersect a given point.
     ///
-    /// - Parameter location: event location.
+    /// - Parameter location: A point in the node’s coordinate system.
     /// - Returns: array of **Tiled** nodes at the given location.
     public func tiledNodes(at location: CGPoint) -> [TiledGeometryType] {
-        return nodes(at: location).filter({ $0 as? TiledGeometryType != nil && $0.isHighlightable == true }) as! [TiledGeometryType]
+        return nodes(at: location).filter({ $0 as? TiledGeometryType != nil && $0.isHighlightable == true && $0.isHidden == false }) as! [TiledGeometryType]
     }
 
     #if os(macOS)
-
+    
+    /// Returns an array of all visible **Tiled** nodes that intersect the given mouse event.
+    ///
+    /// - Parameter event: mouse event.
+    /// - Returns: array of **Tiled** nodes at the event location.
+    public func tiledNodes(with event: NSEvent) -> [TiledGeometryType] {
+        return tiledNodes(at: event.location(in: self))
+    }
+    
     // FIXME: this is overiding derivative classes
 
     /// Returns the object class name.
@@ -206,6 +216,7 @@ extension SKNode {
         let baseLineWidth: CGFloat = 1
         let lineWidthForScale = baseLineWidth * TiledGlobals.default.contentScale
         
+        // MARK: SPRITES
         
         if let sprite = self as? SKSpriteNode {
 
@@ -225,14 +236,17 @@ extension SKNode {
             sprite.color = spritecolor
             sprite.colorBlendFactor = colorblendfactor
 
+            // tiles...
             if let tiledGeo = sprite as? TiledGeometryType {
                 if (removeHighlight == false) {
-                    print("highlighting '\(self.className)' node")
+                    tiledGeo.boundsShape?.isHidden = false
                     tiledGeo.boundsShape?.strokeColor = color
                     tiledGeo.boundsShape?.lineWidth = lineWidthForScale
                     tiledGeo.boundsShape?.zPosition = zPosition + 1000
                 } else {
                     tiledGeo.boundsShape?.strokeColor = SKColor.clear
+                    tiledGeo.boundsShape?.fillColor = SKColor.clear
+                    sprite.removeAnchor()
                 }
             }
 
@@ -248,16 +262,37 @@ extension SKNode {
 
                 sprite.run(groupAction, completion: {
                     if let tiledSprite = sprite as? TiledGeometryType {
-                        tiledSprite.boundsShape?.isHidden = true
+                        tiledSprite.boundsShape?.strokeColor = SKColor.clear
+                        sprite.removeAnchor()
                     }
                 })
             }
             return
         }
+        
+        // MARK: SHAPES
 
         if let shape = self as? SKShapeNode {
-            if let tiledObejct = shape as? SKTileObject {
-                tiledObejct.proxy?.highlightNode(with: color, duration: duration)
+            if let tiledObj = shape as? SKTileObject {
+                tiledObj.proxy?.highlightNode(with: color, duration: duration)
+                if (duration > 0) {
+                    
+                    let boundsRemoveAction = SKAction.run {
+                        tiledObj.boundsShape?.strokeColor = SKColor.clear
+                        tiledObj.boundsShape?.fillColor = SKColor.clear
+                        tiledObj.removeAnchor()
+                    }
+                    
+                    let groupAction = SKAction.group(
+                        [
+                            SKAction.wait(forDuration: duration),
+                            boundsRemoveAction
+                        ]
+                    )
+                    
+                    tiledObj.run(groupAction)
+                    
+                }
             } else {
                 shape.strokeColor = color
                 shape.lineWidth = lineWidthForScale
@@ -265,6 +300,7 @@ extension SKNode {
                 shape.isAntialiased = false
                 if (duration > 0) {
                     shape.run(SKAction.colorFadeAction(after: duration))
+                    shape.removeAnchor()
                 }
                 return
             }
@@ -274,6 +310,7 @@ extension SKNode {
     /// Remove the current object's highlight color.
     public func removeHighlight() {
         highlightNode(with: SKColor.clear)
+        removeAnchor()
     }
 
     /// Remove the current node's anchor point.

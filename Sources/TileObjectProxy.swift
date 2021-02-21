@@ -158,7 +158,7 @@ internal class TileObjectProxy: SKShapeNode {
         // FIXME: crash here
         
         let vertices = object.translatedVertices()
-        guard (vertices.count > 0) else {
+        guard (vertices.count > 2) else {
             self.path = nil
             return
         }
@@ -186,6 +186,11 @@ internal class TileObjectProxy: SKShapeNode {
                     
                 default:
                     objPath = polygonPath(scaledVertices, closed: true)
+            }
+            
+            
+            if objPath.isEmpty == true {
+                return
             }
             
             // FIXME: crash here

@@ -101,7 +101,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         if let scenecamera = camera {
             scenecamera.addDelegate(self)
-            print("adding delegate...")
         }
     }
 
@@ -1176,6 +1175,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let demoController = gameController.demoController
         demoController.turnIsolationOff()
     }
+    
+    @IBAction func isolateSelectedLayer(_ sender: NSMenuItem) {
+        guard let gameController = viewController else { return }
+        let demoDelegate = gameController.demoDelegate
+
+        let selectedLayers = demoDelegate.currentNodes.filter { node in
+            if let layer = node as? TiledLayerObject {
+                return true
+            }
+            return false
+        }
+        
+        gameController.demoController.currentTilemap?.getLayers().forEach { layer in
+            let hideThisLayer = selectedLayers.contains(layer)
+            layer.isHidden = !hideThisLayer
+        }
+    }
 
     // MARK: - Debugging
 
@@ -1677,6 +1693,10 @@ extension AppDelegate {
             isolationSubMenu.removeAllItems()
 
             isolationSubMenu.addItem(NSMenuItem(title: "Isolate: Off", action: #selector(turnIsolationOff), keyEquivalent: ""))
+            let isolateSelected = NSMenuItem(title: "Isolate Selected", action: #selector(isolateSelectedLayer), keyEquivalent: "")
+            isolateSelected.isEnabled = false
+            isolationSubMenu.addItem(isolateSelected)
+            
             isolationSubMenu.addItem(NSMenuItem.separator())
 
             for layer in tilemap.getLayers() {

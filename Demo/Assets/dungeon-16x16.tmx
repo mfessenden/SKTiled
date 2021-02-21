@@ -112,6 +112,11 @@
    </properties>
    <object id="119" name="dwarf1" gid="557" x="144" y="170" width="32" height="32"/>
    <object id="160" x="21" y="14" width="55" height="53">
+    <properties>
+     <property name="altColor" type="color" value="#ff8df360"/>
+     <property name="class" value="circular"/>
+     <property name="radius" type="float" value="2.2"/>
+    </properties>
     <ellipse/>
    </object>
   </objectgroup>

@@ -507,14 +507,6 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
             #if SKTILED_DEMO
 
-            /*
-            // TODO: not yet implemented
-            NotificationCenter.default.post(
-                name: Notification.Name.Demo.UpdateDebugging,
-                object: nil,
-                userInfo: ["focusedObjectData": ""]
-            )*/
-
             NotificationCenter.default.post(
                 name: Notification.Name.Map.FocusCoordinateChanged,
                 object: currentCoordinate,
@@ -2333,7 +2325,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
             }
             
             obj.isHidden = hideThisObject
-            
+            obj.proxy?.isHidden = hideThisObject
         }
     }
 
@@ -3043,7 +3035,8 @@ extension SKTilemap {
             )
 
             boundsShape?.run(groupAction, completion: {
-                self.boundsShape?.isHidden = true
+                self.boundsShape?.strokeColor = SKColor.clear
+                self.boundsShape?.fillColor = SKColor.clear
                 self.removeAnchor()
             })
         }
@@ -3239,6 +3232,7 @@ extension SKTilemap.RenderStatistics {
 
 /// :nodoc: Clamp position of the map & parents when camera changes happen.
 extension SKTilemap: TiledSceneCameraDelegate {
+    
 
     /// Called when the nodes in the camera view changes.
     ///
@@ -3286,49 +3280,32 @@ extension SKTilemap: TiledSceneCameraDelegate {
     public func sceneDoubleTapped(location: CGPoint) {
         // TODO: implement this
     }
+    
     #else
+    
+    internal func handleMouseEvent(event: NSEvent){
+        //let mapCoordinate = coordinateAtMouse(event: event)
+        let tiledNodesAtLocation = tiledNodes(at: event.location(in: self))
+        for node in tiledNodesAtLocation {
+            if let skNode = node as? SKNode {
+                print("  - node: '\(skNode.className) -> \(skNode.debugDescription)'")
+            }
+        }
+    }
 
     /// Handler for when the scene is clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
     @objc public func sceneClicked(event: NSEvent) {
-        
+        handleMouseEvent(event: event)
         let mapCoordinate = coordinateAtMouse(event: event)
-        let tilesAtMapCoordinate = tilesAt(coord: mapCoordinate)
         
-        
-        var output = "▹ map clicked at \(mapCoordinate.coordDescription)"
-        
-        
+        // TODO: test this method
+        let tilesAtMapCoordinate = tilesAt(coord: mapCoordinate).filter { $0.isHidden == false }
+
         // set the current coordinate
         currentCoordinate = mapCoordinate
-        let location = event.location(in: objectsOverlay)
 
-        // filter any overlay nodes and get the object referenced
-        var clickedObjects = objectsOverlay.nodes(at: location).filter { $0 as? TileObjectProxy != nil} as! [TileObjectProxy]
-        //clickedObjects = clickedObjects.filter { $0.contains(event.location(in: $0))}
-        
-        if let firstObjectClicked = clickedObjects.first {
-        
-            // get the proxy parent object...
-            if let referringObject = firstObjectClicked.reference {
-                
-                output += ", object: '\(referringObject.description)'"
-                print(output)
-                
-                /// calls `Notification.Name.Demo.ObjectClicked` event
-                referringObject.mouseDown(with: event)
-                return
-            }
-        }
-        
-        if let firstTileClicked = tilesAtMapCoordinate.first {
-            output += ", tile: '\(firstTileClicked.description)'"
-        }
-        
-        
-        print(output)
-        
         // activate the first tile...
         tilesAtMapCoordinate.first?.mouseDown(with: event)
     }

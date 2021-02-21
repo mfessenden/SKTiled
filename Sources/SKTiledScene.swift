@@ -352,7 +352,6 @@ extension SKTiledScene {
     ///
     /// - Parameter event: mouse event.
     open override func mouseDown(with event: NSEvent) {
-        print("⭑ tile scene clicked")
         cameraNode?.mouseDown(with: event)
     }
 

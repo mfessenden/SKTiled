@@ -976,8 +976,6 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
         
         // FIXME: this is failing with tile objects
         if contains(touch: event.location(in: self)) {
-            print("⭑ object clicked")
-            
             // calls
             onMouseClick?(self)
         }
@@ -1003,7 +1001,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
         }
         set {
             childNode(withName: boundsKey)?.removeFromParent()
-
+            childNode(withName: anchorKey)?.removeFromParent()
             if (newValue == true) {
                 isHidden = false
 
@@ -1221,7 +1219,7 @@ extension SKTileObject {
         }
         let typeString = (type != nil) ? " type: '\(type!)'" : ""
         let templateDescription = (template != nil) ? " Template: '\(template!)'" : ""
-        let miscDesc = (objectType == .text) ? " text quality: \(renderQuality)" : (objectType == .tile) ? " tile id: \(globalID ?? 0)" : (objectType == .point) ? "point:" : ""
+        let miscDesc = (objectType == .text) ? " text quality: \(renderQuality)" : (objectType == .tile) ? " tile gid: \(globalID ?? 0)" : (objectType == .point) ? "point:" : ""
         let layerDescription = (layer != nil) ? " Layer: '\(layer.layerName)'" : ""
         
         
@@ -1242,7 +1240,7 @@ extension SKTileObject {
         }
         let typeString = (type != nil) ? " type: '\(type!)'" : ""
         let templateDescription = (template != nil) ? " Template: '\(template!)'" : ""
-        let miscDesc = (objectType == .text) ? " text quality: \(renderQuality)" : (objectType == .tile) ? " tile id: \(globalID ?? 0)" : (objectType == .point) ? "point:" : ""
+        let miscDesc = (objectType == .text) ? " text quality: \(renderQuality)" : (objectType == .tile) ? " tile gid: \(globalID ?? 0)" : (objectType == .point) ? "point:" : ""
         let layerDescription = (layer != nil) ? " Layer: '\(layer.layerName)'" : ""
         
         

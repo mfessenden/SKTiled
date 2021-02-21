@@ -329,7 +329,7 @@ public class SKTileLayer: TiledLayerObject {
     /// - Parameter coord: tile coordinate.
     /// - Returns: tile object, if it exists.
     public func tileAt(coord: simd_int2) -> SKTile? {
-        return tileAt(Int(coord.x), Int(coord.y))
+        return tileAt(Int32(coord.x), Int32(coord.y))
     }
 
     /// Returns a tile at the given screen position, if one exists.

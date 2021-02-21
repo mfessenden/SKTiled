@@ -475,12 +475,18 @@ extension SKTiledDemoScene {
         let location = event.location(in: self)
         mousePointer?.position = location
     }
-
+    
+    /// Show the mouse pointer when the cursor re-enters the scene bounds.
+    ///
+    /// - Parameter event: mouse move event.
     open override func mouseEntered(with event: NSEvent) {
         super.mouseEntered(with: event)
         mousePointer?.isHidden = !TiledGlobals.default.debugDisplayOptions.mouseFilters.enableMousePointer
     }
-
+    
+    /// Hide the mouse pointer when the cursor re-enters the scene bounds.
+    ///
+    /// - Parameter event: mouse move event.
     open override func mouseExited(with event: NSEvent) {
         super.mouseExited(with: event)
         mousePointer?.isHidden = true
@@ -569,6 +575,13 @@ extension SKTiledDemoScene {
     ///
     /// - Parameter event: mouse click event.
     @objc public override func sceneClicked(event: NSEvent) {
+        
+        NotificationCenter.default.post(
+            name: Notification.Name.Demo.NodeSelectionCleared,
+            object: nil
+        )
+
+        
         let location = event.location(in: self)
         var logMessage = "mouse clicked at: \(location.coordDescription)"
 
@@ -646,11 +659,12 @@ extension SKTiledDemoScene {
         // 'k' clears the scene
         if eventKey == 0x28 {
 
-            updateCommandString("clearing scene...", duration: 3.0)
             NotificationCenter.default.post(
                 name: Notification.Name.Demo.FlushScene,
                 object: nil
             )
+            
+            updateCommandString("clearing scene...", duration: 3.0)
         }
 
         // 'p' pauses the scene

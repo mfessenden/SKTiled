@@ -125,6 +125,7 @@ class GameViewController: NSViewController, Loggable {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeAttributesChanged, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodesRightClicked, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.SceneLoaded, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
 
         NotificationCenter.default.removeObserver(self, name: Notification.Name.DemoController.ResetDemoInterface, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.DemoController.WillBeginScanForAssets, object: nil)
@@ -231,7 +232,7 @@ class GameViewController: NSViewController, Loggable {
 
     /// Set up the debugging labels. (Mimics the text style in iOS controller).
     @objc func setupMainInterface() {
-        mapInfoLabel.stringValue = ""
+        mapInfoLabel.reset()
         tileInfoLabel.stringValue = ""
         propertiesInfoLabel.stringValue = ""
         cameraInfoLabel.stringValue = ""
@@ -353,6 +354,7 @@ class GameViewController: NSViewController, Loggable {
         NotificationCenter.default.addObserver(self, selector: #selector(sceneFlushedAction), name: Notification.Name.Demo.FlushScene, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sceneWillUnloadAction), name: Notification.Name.Demo.SceneWillUnload, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(demoControllerAboutToScanForAssets), name: Notification.Name.DemoController.WillBeginScanForAssets, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionCleared), name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
 
         // mouse events
         NotificationCenter.default.addObserver(self, selector: #selector(tileUnderMouseChanged), name: Notification.Name.Demo.TileUnderCursor, object: nil)
@@ -609,9 +611,10 @@ class GameViewController: NSViewController, Loggable {
     @objc func debuggingInfoReceived(notification: Notification) {
         notification.dump(#fileID, function: #function)
 
-        tileInfoLabel.stringValue = ""
-        propertiesInfoLabel.stringValue = ""
-
+        tileInfoLabel.reset()
+        propertiesInfoLabel.reset()
+        tileInfoLabel.reset()
+        
         if let mapInfo = notification.userInfo!["mapInfo"] {
             mapInfoLabel.stringValue = mapInfo as! String
         }
@@ -795,8 +798,14 @@ class GameViewController: NSViewController, Loggable {
     }
 
     // MARK: - Mouse Event Handlers
-
-
+    
+    /// Called when the tilemap is first clicked. Called when the `Notification.Name.Demo.NodeSelectionCleared` notification is received.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func nodeSelectionClearedAction(notification: Notification) {
+        propertiesInfoLabel.reset()
+        selectedInfoLabel.reset()
+    }
     /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.ObjectUnderCursor` notification is received.
     ///
     /// - Parameter notification: event notification.
@@ -819,16 +828,17 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func objectUnderMouseClicked(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        notification.dump(#fileID, function: #function)
         if let object = notification.object as? SKTileObject {
 
             object.drawNodeBounds(with: object.frameColor, lineWidth: 0.25, fillOpacity: 0, duration: 5)
+            tileInfoLabel.isHidden = false
             tileInfoLabel.stringValue = object.description
-
+            
             propertiesInfoLabel.isHidden = false
             propertiesInfoLabel.attributedStringValue = object.propertiesAttributedString(delineator: nil)
 
-            //perform(#selector(clearCurrentObject), with: nil, afterDelay: 5)
+            // perform(#selector(clearCurrentObject), with: nil, afterDelay: 5)
         }
     }
 
@@ -842,6 +852,8 @@ class GameViewController: NSViewController, Loggable {
         }
 
         clickedTile.drawNodeBounds(with: clickedTile.frameColor, lineWidth: 0.25, fillOpacity: 0.2, duration: TiledGlobals.default.debugDisplayOptions.highlightDuration)
+        
+        tileInfoLabel.isHidden = false
         tileInfoLabel.stringValue = clickedTile.description
 
         propertiesInfoLabel.isHidden = false
@@ -854,7 +866,7 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func tileUnderMouseClicked(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        notification.dump(#fileID, function: #function)
         if let focusedTile = notification.object as? SKTile {
             propertiesInfoLabel.isHidden = false
             propertiesInfoLabel.stringValue = focusedTile.description
@@ -870,6 +882,8 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter sender: menu item.
     @objc private func handleSceneRightClickAction(_ sender: AnyObject) {
+        propertiesInfoLabel.reset()
+        selectedInfoLabel.reset()
         guard let menuItem = sender as? NSMenuItem,
               let node = menuItem.representedObject as? SKNode else {
             return
@@ -898,9 +912,7 @@ class GameViewController: NSViewController, Loggable {
     @objc func resetMainInterfaceAction(notification: Notification) {
         // notification.dump(#fileID, function: #function)
         resetMainInterface()
-        //demoController.flushScene()
     }
-
 
     /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.NodeSelectionChanged` notification is received.
     ///
@@ -923,6 +935,7 @@ class GameViewController: NSViewController, Loggable {
         }
 
         selectedInfoLabel.isHidden = true
+        propertiesInfoLabel.isHidden = true
 
         let selectedCount = selectedNodes.count
 
@@ -935,18 +948,25 @@ class GameViewController: NSViewController, Loggable {
 
             // show only th first node....
             if let selected = selectedNodes.first {
-
-                if let tiledNode = selected as? TiledGeometryType {
-
+                
+                var anchorColor = TiledGlobals.default.debugDisplayOptions.tileHighlightColor
+                var anchorRadius: CGFloat = TiledGlobals.default.debugDisplayOptions.anchorRadius
+                
+                if let tilemap = demoController.currentTilemap {
+                    anchorRadius = tilemap.tileSize.width / 6
                 }
 
+                
+                if let tiledSprite = selected as? SKTile {
+                    anchorColor = tiledSprite.highlightColor
+                }
 
                 var zoomScale: CGFloat = 0.25
                 if let scene = selected.scene as? SKTiledScene {
                     zoomScale = scene.cameraNode?.zoom ?? 0.25
                 }
 
-                drawAnchor(selected, radius: 1, anchorColor: TiledObjectColors.random, zoomScale: zoomScale)
+                drawAnchor(selected, radius: anchorRadius, anchorColor: anchorColor, zoomScale: zoomScale)
                 if let tiledNode = selected as? TiledCustomReflectableType {
 
                     selectedInfoLabel.isHidden = false
@@ -992,9 +1012,13 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func nodeSelectionCleared(notification: Notification) {
-        //notification.dump(#fileID, function: #function)
-        selectedInfoLabel.stringValue = ""
+        selectedInfoLabel.reset()
+        tileInfoLabel.reset()
+        propertiesInfoLabel.reset()
+        
         selectedInfoLabel.isHidden = true
+        tileInfoLabel.isHidden = true
+        propertiesInfoLabel.isHidden = true
     }
 
 
