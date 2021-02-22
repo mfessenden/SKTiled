@@ -86,7 +86,7 @@ if let tilemap = SKTilemap.load(tmxFile: "sample-map") {
 ```
 Once loaded, the rendered [`SKTilemap`][sktilemap-url] node reflects the various properties defined in the originating scene:
 
-- `SKTilemap.size`: size of the map in tiles.
+- `SKTilemap.mapSize`: size of the map in tiles.
 - `SKTilemap.tileSize`: size of individual tiles.
 - `SKTilemap.orientation`: map orientation (ie orthogonal, isometric, etc).
 
@@ -100,13 +100,14 @@ Layers represent containers that hold various types of data:
 - tile layers hold an array of tile sprites and associated tileset data
 - object groups contain vector shape objects
 - image layers display a single image
+- group layers encapsulate other layers
 
 All **SKTiled** layer types are subclasses of the base [`SKTiledLayerObject`][sktiledlayerobject-url] object and provide access to coordinate transformation and positioning information. Additionally, every layer type can have individual offset transforms and rendering flags.  
 
 Layers can be accessed by type, name or index:
 
 ```swift
-// query layers by type
+// access layers by type
 let tileLayers   = tilemap.tileLayers
 let objectGroups = tilemap.objectGroups
 let imageLayers  = tilemap.imageLayers
@@ -179,15 +180,17 @@ let entrances = objectsLayer.getObjects(ofType: "Entrance")
 The [`SKTilemap`][sktilemap-url] node stores an array of individual tilesets parsed from the original **Tiled** document. Individual tile data is accessible from either the [`SKTileset`][sktileset-url] object:
 
 ```swift
-let tileSet = tilemap.getTileset("spritesheet-16x16")
+// access a named tileset
+let tileset = tilemap.getTileset("spritesheet-16x16")!
+
 // get data for a specific id
-let tileData = tileSet.getTileData(globalID: 177)
+let tiledata = tileset.getTileData(globalID: 177)
 ```
 
 and the parent [`SKTilemap`][sktilemap-url]:
 
 ```swift
-let tileData = tilemap.getTileData(globalID: 177)
+let tiledata = tilemap.getTileData(globalID: 177)
 ```
 
 
@@ -196,8 +199,8 @@ let tileData = tilemap.getTileData(globalID: 177)
 Tile data includes texture data, and [`SKTile`][sktile-url] objects are [`SKSpriteNode`][skspritenode-url] subclasses that can be initialized with tileset data:
 
 ```swift
-let newTile = SKTile(data: tileData)
-scene.addChild(newTile)
+let newtile = SKTile(data: tileData)
+scene.addChild(newtile)
 ```
 
 Coordinate information is available from each layer via the [`SKTiledLayerObject.pointForCoordinate`][sktiledlayerobject-pointforcoordinate-url] method:
