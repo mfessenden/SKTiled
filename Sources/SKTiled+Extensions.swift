@@ -1043,7 +1043,7 @@ extension CGRect {
 
     /// The bounding box size based from from the frame's rect.
     public var boundingRect: CGRect {
-        return CGRect(origin: .zero, size: size)
+        return CGRect(origin: CGPoint.zero, size: size)
     }
 
     /// Returns a display string rounded to a given number of decimals.

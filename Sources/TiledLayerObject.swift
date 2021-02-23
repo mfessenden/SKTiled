@@ -393,8 +393,11 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     @objc public override var boundingRect: CGRect {
         
         // TODO: implement this; see Tiled renderer implementations
-        
         let boundsOffset = CGPoint.zero
+        
+        
+        
+        
         return CGRect(x: boundsOffset.x, y: boundsOffset.y, width: sizeInPoints.width, height: -sizeInPoints.height)
     }
 

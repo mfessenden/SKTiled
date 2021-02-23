@@ -677,9 +677,79 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return CGRect(center: CGPoint(x: px, y: py), size: frameSize)
     }
 
-    /// Map bounds.
+    /// Returns a bounding rect for the entire map. Adapted from Tiled `Renderer.mapBoundingRect`.
     public override var boundingRect: CGRect {
-        return CGRect(center: CGPoint(x: 0, y: 0), size: self.sizeInPoints)
+        
+        switch orientation {
+            case .orthogonal:
+                if (isInfinite == true) {
+                    var mapBounds = CGRect.zero
+                    for tileLayer in tileLayers() {
+                        mapBounds = tileLayer.boundingRect.union(mapBounds)
+                    }
+                    
+                    if (mapBounds == CGRect.zero) {
+                        mapBounds.origin.x = 1
+                        mapBounds.origin.y = 1
+                    }
+                    
+                    return CGRect(x: mapBounds.origin.x * tileWidth, y: mapBounds.origin.y * tileHeight, width: mapSize.width * tileWidth, height: mapSize.height * tileHeight)
+                    
+                } else {
+                    return CGRect(x: 0, y: 0, width: width * tileWidth, height: height * tileHeight)
+                }
+
+            case .isometric:
+                
+                if (isInfinite == true) {
+                    var mapBounds = CGRect.zero
+                    for tileLayer in tileLayers() {
+                        mapBounds = tileLayer.boundingRect.union(mapBounds)
+                    }
+                    
+                    if (mapBounds == CGRect.zero) {
+                        mapBounds.origin.x = 1
+                        mapBounds.origin.y = 1
+                    }
+                    
+                    let origin = mapBounds.origin.x * mapBounds.origin.y
+                    let side = height * width
+                    
+                    return CGRect(x: origin * tileWidth / 2, y: origin * tileHeight / 2, width: side * tileWidth / 2, height: side * tileHeight / 2)
+                    
+                } else {
+                    return CGRect(x: 0, y: 0, width: width * tileWidth, height: height * tileHeight)
+                }
+                
+            case .hexagonal, .staggered:
+                
+                var mapBounds = CGRect.zero
+                
+                if (isInfinite == true) {
+                    for tileLayer in tileLayers() {
+                        mapBounds = tileLayer.boundingRect.union(mapBounds)
+                    }
+                } else {
+                    mapBounds = CGRect(x: 0, y: 0, width: width, height: height)
+                }
+                
+                
+                if (staggerX == true) {
+                    let morigin = CGPoint(x: mapBounds.origin.x * columnWidth, y: mapBounds.origin.y * (tileHeight + sideLengthY))
+                    let msize = CGSize(width: width * columnWidth + sideOffsetX, height: height * (tileHeight + sideLengthY))
+                    return CGRect(origin: morigin, size: msize)
+                    
+                    
+                } else {
+                    let morigin = CGPoint(x: mapBounds.origin.x * (tileWidth + sideLengthX), y: mapBounds.origin.y * rowHeight)
+                    var msize = CGSize(width: width * (tileWidth + sideOffsetX), height: height * rowHeight + sideLengthY)
+                    
+                    if (mapBounds.height > 1) {
+                        msize.width += columnWidth
+                    }
+                    return CGRect(origin: morigin, size: msize)
+                }
+        }
     }
 
     /// The accumulated map size.
