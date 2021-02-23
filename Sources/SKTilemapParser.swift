@@ -200,6 +200,9 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
     /// Stashed object properties.
     fileprivate var properties: [String: String] = [:]
 
+    /// Private **Tiled** properties.
+    internal var _tiled_properties: [String: String] = [:]
+    
     /// Ignore custom properties.
     fileprivate var ignoreProperties: Bool = false
 
@@ -402,6 +405,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
 
 
         parsingQueue.sync {
+            
             /// render, then notify the delegates of completion
             self.didBeginRendering(currentMap, queue: renderQueue)
         }

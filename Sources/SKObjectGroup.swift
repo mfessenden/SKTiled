@@ -504,6 +504,7 @@ public class SKObjectGroup: TiledLayerObject {
             (label: "xPath", value: xPath),
             (label: "layerType", value: layerType),
             (label: "size", value: mapSize),
+            (label: "position", value: position),
             (label: "offset", value: offset),
             (label: "properties", value: mirrorChildren()),
             (label: "objects", value: objects)

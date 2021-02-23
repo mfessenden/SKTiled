@@ -309,7 +309,7 @@ class GameViewController: NSViewController, Loggable {
         let viewIsHidden = !visible
 
         /// if render callbacks are disabled, we shouldn't see the render stats view.
-        let canReceiveRenderStats = TiledGlobals.default.enableRenderCallbacks == true
+        let canReceiveRenderStats = TiledGlobals.default.enableRenderPerformanceCallbacks == true
 
         // hide all of the labels to allow the debug message label to stay visible
         mapInfoLabel.isHidden = viewIsHidden
@@ -680,14 +680,15 @@ class GameViewController: NSViewController, Loggable {
 
         var layerNodes: [SKNode] = []
         var filteredNodes: [SKNode] = []
+        var mapNode: SKTilemap?
 
         if let nodesUnderMouse = userInfo["nodes"] as? [SKNode] {
 
             for node in nodesUnderMouse {
-                if node as? SKTilemap != nil {
+                if let map = node as? SKTilemap {
                     layerNodes.insert(node, at: 0)
+                    mapNode = map
                 }
-
 
                 if node.isHighlightable == true {
                     filteredNodes.append(node)
@@ -699,9 +700,11 @@ class GameViewController: NSViewController, Loggable {
                     continue
                 }
             }
+        
         } else {
             log("no nodes were sent!", level: .error)
         }
+        
 
         let index = filteredNodes.count
         filteredNodes.append(contentsOf: layerNodes)
@@ -830,8 +833,8 @@ class GameViewController: NSViewController, Loggable {
     @objc func objectUnderMouseClicked(notification: Notification) {
         notification.dump(#fileID, function: #function)
         if let object = notification.object as? SKTileObject {
-
-            object.drawNodeBounds(with: object.frameColor, lineWidth: 0.25, fillOpacity: 0, duration: 5)
+            let highlightDuration = TiledGlobals.default.debugDisplayOptions.highlightDuration
+            object.drawNodeBounds(with: object.frameColor, lineWidth: 0.25, fillOpacity: 0, duration: highlightDuration)
             tileInfoLabel.isHidden = false
             tileInfoLabel.stringValue = object.description
             
@@ -850,8 +853,9 @@ class GameViewController: NSViewController, Loggable {
         guard let clickedTile = notification.object as? SKTile else {
             return
         }
-
-        clickedTile.drawNodeBounds(with: clickedTile.frameColor, lineWidth: 0.25, fillOpacity: 0.2, duration: TiledGlobals.default.debugDisplayOptions.highlightDuration)
+        
+        let highlightDuration = TiledGlobals.default.debugDisplayOptions.highlightDuration
+        clickedTile.drawNodeBounds(with: clickedTile.frameColor, lineWidth: 0.25, fillOpacity: 0.2, duration: highlightDuration)
         
         tileInfoLabel.isHidden = false
         tileInfoLabel.stringValue = clickedTile.description
@@ -934,8 +938,8 @@ class GameViewController: NSViewController, Loggable {
             focusLocation = nodePosition
         }
 
-        selectedInfoLabel.isHidden = true
-        propertiesInfoLabel.isHidden = true
+        selectedInfoLabel.reset()
+        propertiesInfoLabel.reset()
 
         let selectedCount = selectedNodes.count
 
@@ -967,6 +971,7 @@ class GameViewController: NSViewController, Loggable {
                 }
 
                 drawAnchor(selected, radius: anchorRadius, anchorColor: anchorColor, zoomScale: zoomScale)
+                
                 if let tiledNode = selected as? TiledCustomReflectableType {
 
                     selectedInfoLabel.isHidden = false
@@ -1016,9 +1021,9 @@ class GameViewController: NSViewController, Loggable {
         tileInfoLabel.reset()
         propertiesInfoLabel.reset()
         
-        selectedInfoLabel.isHidden = true
-        tileInfoLabel.isHidden = true
-        propertiesInfoLabel.isHidden = true
+        selectedInfoLabel.reset()
+        tileInfoLabel.reset()
+        propertiesInfoLabel.reset()
     }
 
 

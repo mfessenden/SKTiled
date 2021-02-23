@@ -50,6 +50,9 @@ internal class TileCollisionShape: TiledAttributedType {
 
     /// Custom properties.
     var properties: [String: String] = [:]
+    
+    /// Private **Tiled** properties.
+    var _tiled_properties: [String: String] = [:]
 
     /// Ignore custom properties.
     var ignoreProperties: Bool = false

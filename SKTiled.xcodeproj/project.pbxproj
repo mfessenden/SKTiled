@@ -1085,11 +1085,11 @@
 		4C263A14246079D400568681 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				4CBB6AA21D8CC2C100DB56F1 /* TiledObjectType.swift */,
+				4CC09EF32519431700363145 /* TiledAttributedType.swift */,
 				4CDECC232540D6A800E4E5E7 /* Debugging */,
 				4C2049E6251E418B00D2012C /* Geometry */,
 				4C2049E5251E417A00D2012C /* Delegates */,
-				4CBB6AA21D8CC2C100DB56F1 /* TiledObjectType.swift */,
-				4CC09EF32519431700363145 /* TiledAttributedType.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -2214,7 +2214,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$SRCROOT/scripts/clean-demo-assets.sh\nenv\n";
+			shellScript = "$SRCROOT/scripts/clean-demo-assets.sh\n";
 		};
 		4C4FAC9D2162BCDF00EEF512 /* Clean Demo Assets */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2232,7 +2232,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$SRCROOT/scripts/clean-demo-assets.sh\nenv\n";
+			shellScript = "$SRCROOT/scripts/clean-demo-assets.sh\n";
 		};
 		4C64EC0925D448BC0090F4F3 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2281,7 +2281,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "$SRCROOT/scripts/clean-demo-assets.sh\nenv\n";
+			shellScript = "$SRCROOT/scripts/clean-demo-assets.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

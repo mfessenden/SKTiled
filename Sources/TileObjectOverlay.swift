@@ -142,20 +142,25 @@ extension TileObjectOverlay: TiledSceneCameraDelegate {
     }
     
     #if os(macOS)
+    
     /// Called when a mouse click event is passed to the overlay.
     ///
     /// - Parameter event: mouse event
     @objc func sceneClicked(event: NSEvent) {
+        /*
         let clickedProxies = nodes(at: event.location(in: self)).filter { $0 as? TileObjectProxy != nil} as! [TileObjectProxy]
         
         // TODO: dispatch here?
         for proxy in clickedProxies {
             
             /// calls `Notification.Name.Demo.ObjectClicked` event. Handled by `GameViewController.objectUnderMouseClicked`.
+            
+            /// muting this now as it's in the `SKTilemap.handleMouseEvent`
             if let referringObject = proxy.reference {
                 referringObject.mouseDown(with: event)
             }
         }
+        */
     }
     #endif
 }
@@ -172,6 +177,7 @@ extension TileObjectOverlay: TiledCustomReflectableType {
     @objc var tiledIconName: String {
         return "overlay-icon"
     }
+    
     
     @objc var tiledListDescription: String {
         let objCount = objects.count

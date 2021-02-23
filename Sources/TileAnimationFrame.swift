@@ -31,11 +31,9 @@ import SpriteKit
 ///
 /// ### Properties
 ///
-/// | Property | Description             |
-/// |:--------:|-------------------------|
-/// | id       | unique tile (local) id. |
-/// | duration | frame duration.         |
-/// | texture  | optional tile texture.  |
+/// - `id`: unique tile (local) id.
+/// - `duration`: frame duration.
+/// - `texture`: optional tile texture.
 ///
 public class TileAnimationFrame: NSObject {
 
@@ -93,7 +91,7 @@ extension TileAnimationFrame: CustomReflectable {
             (label: "tile id", value: self.id),
             (label: "duration", value: self.duration)
         ]
-        
+
         return Mirror(self, children: attributes, displayStyle: .struct, ancestorRepresentation: .suppressed)
     }
 }

@@ -46,7 +46,7 @@ After building the framework(s), you'll need to add them to your project. Select
 
 ### Swift Package Manager
 
-Coming soon!
+To add the SKTiled framework dependency to your Xcode project, select **File > Swift Packages > Add Package Dependency** and enter the repository URL. Once the dependency is resolved, you can add it to your targets by clicking the **`+`** button in the **Frameworks, Libraries and Embedded Content** area of the target's **General** tab.
 
 ### Carthage Installation
 
@@ -198,3 +198,5 @@ Next: [Migration Guide](migration-guide.html) - [Index](Documentation.html)
 [jazzy-url]:https://github.com/realm/jazzy
 [apple-code-signing-url]:https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html
 [carthage-issue-url]:https://github.com/Carthage/Carthage/issues/3097
+
+[adding-spm-url]:https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app

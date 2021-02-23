@@ -159,6 +159,17 @@ extension SKNode {
         }
         return objtype
     }
+    
+    #elseif os(iOS) || os(tvOS)
+    
+    /// Returns an array of all visible **Tiled** nodes that intersect the given mouse event.
+    ///
+    /// - Parameter event: mouse event.
+    /// - Returns: array of **Tiled** nodes at the event location.
+    public func tiledNodes(touch: UITouch) -> [TiledGeometryType] {
+        return tiledNodes(at: touch.location(in: self))
+    }
+    
     #endif
 
     /// Returns true if the object is a tile or object.
@@ -170,7 +181,6 @@ extension SKNode {
     public var isLayerType: Bool {
         return (self as? TiledLayerObject != nil)
     }
-
 
     /// Returns the frame rectangle of the layer (used to draw bounds).
     @objc public var boundingRect: CGRect {
@@ -337,6 +347,7 @@ extension SKNode {
 
             shape.isHidden = false
             shape.strokeColor = color
+            
             if fillOpacity > 0 {
                 shape.fillColor = color.withAlphaComponent(fillOpacity)
             }

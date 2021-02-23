@@ -141,7 +141,7 @@ class GameViewController: UIViewController, Loggable {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         (self.view as? SKView)?.scene?.size = size
-        self.statsStackView.isHidden = !(self.isLandScape && TiledGlobals.default.enableRenderCallbacks)
+        self.statsStackView.isHidden = !(self.isLandScape && TiledGlobals.default.enableRenderPerformanceCallbacks)
         self.renderStatsButton.isHidden = !self.isLandScape
     }
 
@@ -235,7 +235,7 @@ class GameViewController: UIViewController, Loggable {
 
 
         let deviceIsInLandscapeMode = self.isLandScape
-        let renderStatsAreVisible = (self.isLandScape && TiledGlobals.default.enableRenderCallbacks)
+        let renderStatsAreVisible = (self.isLandScape && TiledGlobals.default.enableRenderPerformanceCallbacks)
 
         rotateDeviceIcon.isHidden = (deviceIsInLandscapeMode == true)
         statsStackView.isHidden = !renderStatsAreVisible

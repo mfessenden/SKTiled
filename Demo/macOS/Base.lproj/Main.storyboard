@@ -201,7 +201,7 @@
                                                 <action selector="cameraResetAction:" target="Voe-Tx-rLC" id="Wyu-wN-YEU"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Use zoom constraints" enabled="NO" id="1eq-9H-4kc">
+                                        <menuItem title="Enable Zoom Constraints" enabled="NO" id="1eq-9H-4kc">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="cameraIgnoreZoomConstraintsAction:" target="Voe-Tx-rLC" id="WAn-L6-EDI"/>
@@ -521,7 +521,7 @@
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P0U-y9-0fU" userLabel="Map Info Label">
                                         <rect key="frame" x="24" y="66" width="38" height="14"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Map:" id="exA-0S-gy3">
+                                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Map:" id="exA-0S-gy3">
                                             <font key="font" size="12" name="SFMono-Regular"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>

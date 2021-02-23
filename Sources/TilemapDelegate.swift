@@ -245,10 +245,6 @@ import GameplayKit
     ///   - named: optional node name.
     /// - Returns: custom attributes dictionary.
     @objc optional func attributesForNodes(ofType: String?, named: String?, globalIDs: [UInt32]) -> [String : String]?
-    
-    /// <#Description#>
-    /// - Parameter tile: <#tile description#>
-    @objc optional func didChangeTiledGID(for tile: SKTile)
 }
 
 

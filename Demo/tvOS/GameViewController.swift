@@ -377,6 +377,7 @@ class GameViewController: GCEventViewController, Loggable {
         statsVisibleLabel.text = "Visible: \(tilemap.nodesInView.count)"
         statsEffectsLabel.text = "\(effectsMessage)"
         statsEffectsLabel.isHidden = (effectsEnabled == false)
+        
         let graphsCount = tilemap.graphs.count
         let hasGraphs: Bool = graphsCount > 0
 

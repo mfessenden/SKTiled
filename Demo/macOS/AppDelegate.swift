@@ -176,7 +176,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// This is a once-only function that runs when the app launches.
     @objc func setupMainInterface() {
-        renderStatisticsMenuItem.state = (TiledGlobals.default.enableRenderCallbacks == true) ? .on : .off
+        renderStatisticsMenuItem.state = (TiledGlobals.default.enableRenderPerformanceCallbacks == true) ? .on : .off
         cameraCallbacksMenuItem.toolTip = "toggles the `TiledGlobals.enableCameraCallbacks` property"
         cameraTrackVisibleNodesItem.toolTip = "toggles the `SKTiledSceneCamera.notifyDelegatesOnContainedNodesChange` property"
         mouseEventsMenuItem.state = (TiledGlobals.default.enableMouseEvents == true) ? .on : .off
@@ -257,7 +257,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         renderEffectsMenuItem.state = (tilemap.shouldEnableEffects == true) ? .on : .off
 
         // debug menu
-        renderStatisticsMenuItem.state = (TiledGlobals.default.enableRenderCallbacks == true) ? .on : .off
+        renderStatisticsMenuItem.state = (TiledGlobals.default.enableRenderPerformanceCallbacks == true) ? .on : .off
 
         // create the logging level menu
         self.initializeLoggingLevelMenu()
@@ -767,13 +767,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let demoController = controller.demoController
         let demoURLs = demoController.tiledDemoUrls
+        
         // FIXME: crash here
         let selectedURL = demoURLs[identifierIntValue]
         controller.demoController.loadScene(url: selectedURL, usePreviousCamera: false)
         controller.demoController.currentTilemapUrl = selectedURL
         Logger.default.log("loading file '\(selectedURL.relativePath)'...", level: .debug, symbol: "AppDelegate")
     }
-
 
     @IBAction func loggingLevelUpdated(_ sender: NSMenuItem) {
         guard let identifier = sender.accessibilityTitle(),

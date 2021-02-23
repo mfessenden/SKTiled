@@ -427,6 +427,8 @@ public class TiledDemoController: NSObject, Loggable {
         }
         
         
+        
+        view.isPaused = false
         currentTilemap = nil
         
         
@@ -1401,12 +1403,12 @@ extension TiledDemoController {
     }
 
     @objc public func toggleRenderStatistics() {
-        let statsCurrentState = TiledGlobals.default.enableRenderCallbacks
+        let statsCurrentState = TiledGlobals.default.enableRenderPerformanceCallbacks
         let statsNextState = !statsCurrentState
 
         #if DEBUG
         updateCommandString("render statistics are \(statsNextState.valueAsOnOff)", duration: 2.0)
-        TiledGlobals.default.enableRenderCallbacks = statsNextState
+        TiledGlobals.default.enableRenderPerformanceCallbacks = statsNextState
 
 
         NotificationCenter.default.post(

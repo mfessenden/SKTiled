@@ -54,6 +54,7 @@ Change Log
 	- rename `SKTileset.addTilesetTile(_:source:)` -> `SKTileset.addTilesetTile(tileID:source:)`
     - rename `SKTileObject.setObjectAttributes` -> `SKTileObject.overrideObjectAttributes`
 	- rename `TiledGlobals.debug` -> `TiledGlobals.debugDisplayOptions`
+	- rename `TiledGlobals.enableRenderCallbacks` -> `TiledGlobals.enableRenderPerformanceCallbacks`
 	- rename `TiledLayerObject.path` -> `TiledLayerObject.xPath` property
 
 	- remove the `layerName` requirement for `TiledLayerObject` required init

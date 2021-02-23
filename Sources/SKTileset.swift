@@ -87,6 +87,9 @@ public class SKTileset: NSObject, CustomReflectable, TiledAttributedType {
     /// Custom tileset properties.
     public var properties: [String: String] = [:]
 
+    /// Private **Tiled** properties.
+    internal var _tiled_properties: [String: String] = [:]
+    
     /// Ignore custom properties.
     public var ignoreProperties: Bool = false
 

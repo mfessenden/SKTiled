@@ -2029,6 +2029,7 @@ extension Notification.Name {
     }
 
     public struct Map {
+        public static let FinishedParsing           = Notification.Name(rawValue: "org.sktiled.notification.name.map.finishedParsing")
         public static let FinishedRendering         = Notification.Name(rawValue: "org.sktiled.notification.name.map.finishedRendering")
         public static let Updated                   = Notification.Name(rawValue: "org.sktiled.notification.name.map.updated")
         public static let RenderStatsUpdated        = Notification.Name(rawValue: "org.sktiled.notification.name.map.renderStatsUpdated")

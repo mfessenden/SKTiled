@@ -168,19 +168,20 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     /// Custom layer properties.
     public var properties: [String: String] = [:]
 
+    /// Private **Tiled** properties.
+    internal var _tiled_properties: [String: String] = [:]
+
     /// Ignore custom node properties.
     public var ignoreProperties: Bool = false
 
-    /// The `TiledLayerType` enumeration denotes the type of layer this is.
+    /// The `TiledLayerType` enumeration denotes the type of container the layer is.
     ///
     /// ### Constants
     ///
-    /// | Property    | Description                               |
-    /// |:------------|:------------------------------------------|
-    /// | tile        | Layer contains tile sprite data.          |
-    /// | object      | Layer contains vector objects, text, etc. |
-    /// | image       | Layer contains a static image.            |
-    /// | group       | Layer container.                          |
+    /// - `tile`: layer contains tile sprite data.
+    /// - `object`: layer contains vector objects, text, etc.
+    /// - `image`: layer contains a static image.
+    /// - `group`: layer container.
     ///
     enum TiledLayerType: Int {
         case none     = -1
@@ -389,8 +390,10 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     // MARK: - Geometry
 
     /// Returns the frame rectangle of the layer (used to draw bounds).
-    public override var boundingRect: CGRect {
+    @objc public override var boundingRect: CGRect {
+        
         // TODO: implement this; see Tiled renderer implementations
+        
         let boundsOffset = CGPoint.zero
         return CGRect(x: boundsOffset.x, y: boundsOffset.y, width: sizeInPoints.width, height: -sizeInPoints.height)
     }
@@ -617,7 +620,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     ///
     /// - Parameter touch: touch location
     /// - Returns: converted point in layer coordinate system.
-    public func touchLocation(_ touch: UITouch) -> CGPoint {
+    public func touchLocation(touch: UITouch) -> CGPoint {
         return convertPoint(touch.location(in: self))
     }
 
@@ -626,7 +629,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     /// - Parameter touch: touch location.
     /// - Returns: coordinate in layer coordinate system.
     public func coordinateAtTouchLocation(touch: UITouch) -> simd_int2 {
-        return screenToTileCoords(point: touchLocation(touch))
+        return screenToTileCoords(point: touchLocation(touch: touch))
     }
     #endif
 
@@ -864,6 +867,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
                     fadeInAction.reversed()
                 ]
             )
+            
             boundsShape?.run(groupAction, completion: {
                 self.boundsShape?.strokeColor = SKColor.clear
                 self.boundsShape?.fillColor = SKColor.clear
@@ -914,6 +918,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
             (label: "layerType", value: layerType),
             (label: "size", value: mapSize),
             (label: "tile size", value: tileSize),
+            (label: "position", value: position),
             (label: "offset", value: offset),
             (label: "properties", value: mirrorChildren())
         ]
@@ -1071,14 +1076,14 @@ extension TiledLayerObject {
 
 /// :nodoc:
 extension TiledLayerObject {
-    
+
     /// String representation of the layer.
     public override var description: String {
         let isTopLevel = self.parents.count == 1
         let indexString = (isTopLevel == true) ? ", index: \(index)" : ""
         return #"\#(tiledNodeNiceName) '\#(path)'\#(indexString) zpos: \#(Int(zPosition))"#
     }
-    
+
     /// Debug string representation of the layer.
     public override var debugDescription: String {
         let isTopLevel = self.parents.count == 1
@@ -1090,8 +1095,8 @@ extension TiledLayerObject {
 
 /// :nodoc:
 extension TiledLayerObject {
-    
-    
+
+
     /// Returns a string representation for use with an outline.
     @objc public override var tiledListDescription: String {
         let parentCount = parents.count
@@ -1102,11 +1107,11 @@ extension TiledLayerObject {
         if (isGroupNode == true) {
             layerSymbol = (hasChildren == true) ? "▿" : "▹"
         }
-        
+
         let filler = (isGrouped == true) ? String(repeating: "   ", count: parentCount - 1) : ""
         return "\(filler)\(layerSymbol) \(layerName)"
     }
-    
+
     /// Returns a string representation for use with a dropdown menu.
     @objc public override var tiledMenuItemDescription: String {
         return description
@@ -1403,6 +1408,16 @@ extension TiledLayerObject {
 
     #else
 
+    /// Returns a converted touch location.
+    ///
+    /// - Parameter touch: touch location
+    /// - Returns: converted point in layer coordinate system.
+    @available(*, deprecated, renamed: "touchLocation(touch:)")
+    public func touchLocation(_ touch: UITouch) -> CGPoint {
+        return touchLocation(touch: touch)
+    }
+    
+    
     /// Returns the tile coordinate at a touch location.
     ///
     /// - Parameter touch: touch location.

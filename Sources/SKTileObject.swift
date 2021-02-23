@@ -268,6 +268,9 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
     /// Custom object properties.
     open var properties: [String: String] = [:]
 
+    /// Private **Tiled** properties.
+    internal var _tiled_properties: [String: String] = [:]
+    
     /// Object will ignore custom properties.
     open var ignoreProperties: Bool = false
 

@@ -129,7 +129,7 @@ public struct TileIsolationMode: OptionSet {
 /// - `bounds`: Map bounding rect.
 /// - `tilesets`: Array of stored tileset instances.
 /// - `allowZoom`: Allow camera zooming.
-/// - `layers`: Array of child layers.                        
+/// - `layers`: Array of child layers.
 ///
 ///
 /// For more information, see the [**Working with Maps**][tilemap-doc-url] page in the [**official documentation**][sktiled-docroot-url].
@@ -162,6 +162,9 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
     /// Custom **Tiled** properties.
     public var properties: [String: String] = [:]
+
+    /// Private **Tiled** properties.
+    internal var _tiled_properties: [String: String] = [:]
 
     /// If enabled, custom **Tiled** properties are ignored.
     public var ignoreProperties: Bool = false
@@ -289,11 +292,9 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     ///
     /// ### Constants
     ///
-    /// | Property | Description                                                |
-    /// |:---------|:-----------------------------------------------------------|
-    /// | dynamic  | Dynamically update tiles as needed.                        |
-    /// | full     | All tiles are updated each frame.                          |
-    /// | actions  | Tiles are not updated, SpriteKit actions are used instead. |
+    /// - `dynamic`: dynamically update tiles as needed.
+    /// - `full`: all tiles are updated each frame.
+    /// - `actions`: tiles are not updated, SpriteKit actions are used instead.
     ///
     public var updateMode: TileUpdateMode = TiledGlobals.default.updateMode {
         didSet {
@@ -334,6 +335,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
             return contentRoot.shouldEnableEffects
         } set {
             if (newValue == true) && (pixelCount > SKTILED_MAX_TILEMAP_PIXEL_SIZE) {
+                
                 // TODO: this should be a system log event
                 self.log("map size of \(sizeInPoints.shortDescription) exceeds max texture framebuffer size.", level: .warning)
             }
@@ -390,10 +392,8 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     ///
     /// ### Constants
     ///
-    /// | Property | Description                |
-    /// |:---------|:---------------------------|
-    /// | min      | Minimum camera zoom level. |
-    /// | max      | Maximum camera zoom level. |
+    /// - `min`: minimum camera zoom level.
+    /// - `max`: maximum camera zoom level.
     ///
     public struct CameraZoomConstraints {
         public var min: CGFloat = 0.2
@@ -406,7 +406,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     /// This flag indicates that the map should auto-resize upon view changes.
     public internal(set) var autoResize: Bool = false
 
-    /// Receive notifications from camera.
+    /// Enables the map node to receive notifications from camera.
     @objc public var receiveCameraUpdates: Bool = true
 
     /// Display bounds that the tilemap is viewable in.
@@ -420,7 +420,6 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
     /// Initial world scale.
     public var worldScale: CGFloat = 1.0
-
 
     // MARK: - Camera
 
@@ -629,15 +628,15 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     @objc public var debugDrawOptions: DebugDrawOptions = TiledGlobals.default.debugDrawOptions {
         didSet {
             debugNode?.draw()
- 
+
             let proxiesVisible = self.isShowingObjectBounds
             let proxies = self.getObjectProxies()
-            
+
             for proxy in proxies {
                 proxy.showObjects = proxiesVisible
                 proxy.draw()
             }
-            
+
         }
     }
 
@@ -721,8 +720,8 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return Int(sizeInPoints.width * sizeInPoints.height)
     }
 
-    // used to align the layers within the tile map
-    internal var layerAlignment: LayerPosition = .center {
+    // The property used to align child layers within the tilemap.
+    internal var layerAlignment: LayerPosition = LayerPosition.center {
         didSet {
             layers.forEach { self.positionLayer($0) }
         }
@@ -1088,6 +1087,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
             let renderTimeStamp = String(format: "%.\(String(3))f", tilemap.renderTime)
             let parseTimeStamp  = String(format: "%.\(String(3))f", tilemap.parseTime)
 
+            
             // FIXME: check for errors here
             Logger.default.log("tilemap '\(tilemap.mapName)' rendered in: \(renderTimeStamp)s ( parse: \(parseTimeStamp)s )", level: .success)
 
@@ -1889,7 +1889,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     public func animatedTiles(recursive: Bool = true) -> [SKTile] {
         return tileLayers(recursive: recursive).flatMap { $0.animatedTiles() }
     }
-    
+
     /// Creates and returns a new tile instance with the given global id.
     ///
     /// - Parameters:
@@ -1901,13 +1901,13 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
               let tile = tileType.init(data: tiledata) else {
             return nil
         }
-        
+
         // add to tile cache
         NotificationCenter.default.post(
             name: Notification.Name.Tile.TileCreated,
             object: tile
         )
-        
+
         return tile
     }
 
@@ -2161,11 +2161,15 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     ///   - tasks: number of tasks to complete.
     public func didFinishParsing(timeStarted: Date, tasks: Int = 0) {
 
+        #if SKTILED_DEMO
+        
+        // call back to the Demo App Delegate
         NotificationCenter.default.post(
-            name: Notification.Name(rawValue: "tilemapFinishedParsing"),
-            object: nil,
+            name: Notification.Name.Map.FinishedParsing,
+            object: self,
             userInfo: ["parseTime": timeStarted]
         )
+        #endif
     }
 
     /// Called when parser has finished rendering the map.
@@ -2188,11 +2192,15 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         defer {
             self.delegate?.didRenderMap?(self)
 
+            #if SKTILED_DEMO
+            
+            // call back to the Demo App Delegate to build the tilemap UI
             NotificationCenter.default.post(
                 name: Notification.Name.Map.FinishedRendering,
                 object: self,
                 userInfo: ["renderTime": timeStarted]
             )
+            #endif
         }
 
         // clamp the position of the map & parent nodes
@@ -2293,37 +2301,37 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     internal func updateIsolationMode() {
         var doShowTiles = isolationMode.contains(.tiles) || isolationMode.contains(.none)
         var doShowObjects = isolationMode.contains(.objects) || isolationMode.contains(.none)
-        
+
         let doShowTextObjects = isolationMode.contains(.textObjects)
         let doShowTileObjects = isolationMode.contains(.tileObjects)
         let doShowPointObjects = isolationMode.contains(.pointObjects)
-        
+
 
         getTiles().forEach { tile in
             tile.isHidden = !doShowTiles
         }
-        
+
         getObjects().forEach { obj in
-            
+
             let objIsText = obj.text != nil
             let objIsTile = obj.tile != nil
             let objIsPoint = obj.objectType == .point
-            
-            
+
+
             var hideThisObject = !doShowObjects
-            
+
             if (objIsText == true && doShowTextObjects == true) {
                 hideThisObject = false
             }
-            
+
             if (objIsTile == true && doShowTileObjects == true) {
                 hideThisObject = false
             }
-            
+
             if (objIsPoint == true && doShowPointObjects == true) {
                 hideThisObject = false
             }
-            
+
             obj.isHidden = hideThisObject
             obj.proxy?.isHidden = hideThisObject
         }
@@ -2396,16 +2404,20 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
                 break
         }
 
-        if (TiledGlobals.default.enableRenderCallbacks == true) {
+        if (TiledGlobals.default.enableRenderPerformanceCallbacks == true) {
+
             // track CPU usage
             if (currentFrameIndex >= renderStatisticsSampleFrequency) {
+
                 // update render statistics
                 renderStatistics.updateMode = updateMode
                 renderStatistics.objectCount = dataStorage.objectsList?.count ?? 0
                 renderStatistics.objectsVisible = (isShowingObjectBounds == true)
+
                 #if SKTILED_DEMO
                 renderStatistics.visibleCount = nodesInView.count
                 #endif
+
                 renderStatistics.effectsEnabled = shouldEnableEffects
                 renderStatistics.actionsCount = UInt32(dataStorage.actionsCache.count)
 
@@ -2473,7 +2485,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
                 }
             }
 
-            if (TiledGlobals.default.enableRenderCallbacks == true) {
+            if (TiledGlobals.default.enableRenderPerformanceCallbacks == true) {
                 DispatchQueue.main.async {
                     completion?(staticTilesUpdated)
                 }
@@ -2581,7 +2593,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
                 }
             }
 
-            if (TiledGlobals.default.enableRenderCallbacks == true) {
+            if (TiledGlobals.default.enableRenderPerformanceCallbacks == true) {
                 DispatchQueue.main.async {
                     completion?(animatedTilesUpdated)
                 }
@@ -2628,6 +2640,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
             (label: "isInfinite", value: isInfinite),
             (label: "map size", value: mapSize),
             (label: "tile size", value: tileSize),
+            (label: "layer alignment", value: layerAlignment),
             (label: "layers", value: layers),
             (label: "properties", value: mirrorChildren())
         ]
@@ -2655,7 +2668,7 @@ extension TileIsolationMode {
             result.append("None")
         }
         if self.contains(.tiles ) {
-            result.append("Tiles ")
+            result.append("Tiles")
         }
         if self.contains(.objects) {
             result.append("Objects")
@@ -2774,11 +2787,8 @@ extension StaggerAxis: Hashable {
 
 /// :nodoc:
 extension LayerPosition: CustomStringConvertible {
-
-    internal var description: String {
-        return "\(name): (\(self.anchorPoint.x), \(self.anchorPoint.y))"
-    }
-
+    
+    /// Returns the layer position name.
     internal var name: String {
         switch self {
             case .bottomLeft: return "Bottom Left"
@@ -2786,8 +2796,8 @@ extension LayerPosition: CustomStringConvertible {
             case .topRight: return "Top Right"
         }
     }
-
-
+    
+    /// Returns the anchor point for aligning the map's child layers.
     internal var anchorPoint: CGPoint {
         switch self {
             case .bottomLeft: return CGPoint(x: 0, y: 0)
@@ -2795,8 +2805,11 @@ extension LayerPosition: CustomStringConvertible {
             case .topRight: return CGPoint(x: 1, y: 1)
         }
     }
+    
+    internal var description: String {
+        return "\(name): (\(self.anchorPoint.x), \(self.anchorPoint.y))"
+    }
 }
-
 
 
 
@@ -3018,7 +3031,7 @@ extension SKTilemap {
     @objc public override func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
         let removeHighlight: Bool = (color == SKColor.clear)
         let highlightFillColor = (removeHighlight == false) ? color.withAlphaComponent(0.2) : color
-        
+
         boundsShape?.strokeColor = color
         boundsShape?.fillColor = highlightFillColor
         boundsShape?.isHidden = false
@@ -3232,7 +3245,7 @@ extension SKTilemap.RenderStatistics {
 
 /// :nodoc: Clamp position of the map & parents when camera changes happen.
 extension SKTilemap: TiledSceneCameraDelegate {
-    
+
 
     /// Called when the nodes in the camera view changes.
     ///
@@ -3280,15 +3293,29 @@ extension SKTilemap: TiledSceneCameraDelegate {
     public func sceneDoubleTapped(location: CGPoint) {
         // TODO: implement this
     }
-    
+
     #else
-    
+
     internal func handleMouseEvent(event: NSEvent){
         //let mapCoordinate = coordinateAtMouse(event: event)
-        let tiledNodesAtLocation = tiledNodes(at: event.location(in: self))
-        for node in tiledNodesAtLocation {
-            if let skNode = node as? SKNode {
-                print("  - node: '\(skNode.className) -> \(skNode.debugDescription)'")
+        let clickedProxies = objectsOverlay.nodes(at: event.location(in: objectsOverlay)).filter { $0 as? TileObjectProxy != nil} as! [TileObjectProxy]
+
+        if (clickedProxies.isEmpty == true) {
+
+
+            let tiledNodesAtLocation = tiledNodes(at: event.location(in: self))
+
+
+            for node in tiledNodesAtLocation {
+                if let skNode = node as? SKNode {
+                    print("  - node: '\(skNode.className) -> \(skNode.debugDescription)'")
+                }
+            }
+        } else {
+            let firstProxy = clickedProxies.first!
+
+            if let tileObj = firstProxy.reference {
+                tileObj.highlightNode(with: SKColor.yellow)
             }
         }
     }
@@ -3297,14 +3324,25 @@ extension SKTilemap: TiledSceneCameraDelegate {
     ///
     /// - Parameter event: mouse click event.
     @objc public func sceneClicked(event: NSEvent) {
-        handleMouseEvent(event: event)
+
+        let clickedProxies = objectsOverlay.nodes(at: event.location(in: objectsOverlay)).filter { $0 as? TileObjectProxy != nil} as! [TileObjectProxy]
+
+        //handleMouseEvent(event: event)
         let mapCoordinate = coordinateAtMouse(event: event)
         
+        // set the current coordinate property
+        currentCoordinate = mapCoordinate
+        
+        // activate the first object and return
+        if let firstProxy = clickedProxies.first {
+            if let reference = firstProxy.reference {
+                reference.mouseDown(with: event)
+                return
+            }
+        }
+
         // TODO: test this method
         let tilesAtMapCoordinate = tilesAt(coord: mapCoordinate).filter { $0.isHidden == false }
-
-        // set the current coordinate
-        currentCoordinate = mapCoordinate
 
         // activate the first tile...
         tilesAtMapCoordinate.first?.mouseDown(with: event)
@@ -3353,47 +3391,47 @@ extension SKTilemap {
 
 /// :nodoc:
 extension SKTilemap {
-    
+
     /// String representation of the map.
     public override var description: String {
         var result = tiledNodeNiceName.titleCased()
-        
+
         result += " '\(mapName)' "
         result += " orientation: '\(orientation.description)' "
-        
+
         let mapsizeString = (isInfinite == false) ? "map size: \(sizeInPoints)" : "map size: 'infinite'"
         result += "\(mapsizeString) size: \(mapSize) tile size: \(tileSize) "
-        
+
         if (orientation == .staggered) {
             result += "axis: '\(staggeraxis)' index: '\(staggerindex)'"
         }
-        
+
         if (url != nil) {
             result += " url: '\(url.relativePath)'"
         }
-        
+
         return result
     }
-    
+
     /// Debug string representation of the map.
     public override var debugDescription: String {
         var result = className
-        
+
         result += " '\(mapName)' "
         result += " orientation: '\(orientation.description)' "
-        
-        
+
+
         let mapsizeString = (isInfinite == false) ? "map size: \(sizeInPoints)" : "map size: 'infinite'"
         result += "\(mapsizeString) size: \(mapSize) tile size: \(tileSize) "
-        
+
         if (orientation == .staggered) {
             result += "axis: '\(staggeraxis)' index: '\(staggerindex)'"
         }
-        
+
         if (url != nil) {
             result += " url: '\(url.relativePath)'"
         }
-        
+
         return #"<\#(result)>"#
     }
 }

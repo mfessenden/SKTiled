@@ -100,6 +100,11 @@ import SpriteKit
     /// - Parameter event: mouse click event.
     @objc optional func sceneClicked(event: NSEvent)
     
+    /// Called when the left mouse button is released **(macOS only)**.
+    ///
+    /// - Parameter event: mouse click event.
+    @objc optional func sceneClickedReleased(event: NSEvent)
+    
     /// Called when the scene is double-clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.

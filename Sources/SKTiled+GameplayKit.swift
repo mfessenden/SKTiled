@@ -92,8 +92,8 @@ extension SKTileLayer {
 
         var nodesToRemove: [GKGridGraphNode] = []
 
-        for col in 0 ..< Int(mapSize.width) {
-            for row in (0 ..< Int(mapSize.height)) {
+        for col: Int32 in 0 ..< Int32(mapSize.width) {
+            for row: Int32 in (0 ..< Int32(mapSize.height)) {
                 let coord = simd_int2(arrayLiteral: Int32(col), Int32(row))
 
                 if let node = graph.node(atGridPosition: coord) {
@@ -224,6 +224,9 @@ public class SKTiledGraphNode: GKGridGraphNode, TiledAttributedType {
 
     /// Node attributes.
     public var properties: [String : String] = [:]
+    
+    /// Private **Tiled** properties.
+    var _tiled_properties: [String: String] = [:]
 
     /// Ignore custom node properties.
     public var ignoreProperties: Bool = false

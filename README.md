@@ -199,7 +199,7 @@ let tiledata = tilemap.getTileData(globalID: 177)
 Tile data includes texture data, and [`SKTile`][sktile-url] objects are [`SKSpriteNode`][skspritenode-url] subclasses that can be initialized with tileset data:
 
 ```swift
-let newtile = SKTile(data: tileData)
+let newtile = SKTile(data: tiledata)
 scene.addChild(newtile)
 ```
 
@@ -220,8 +220,11 @@ groundLayer.addChild(roadRoot, 4, 5, zpos: 100.0)
 **SKTiled** also provides methods for getting coordinate data from [`UITouch`][uitouch-url] and [`NSEvent`][nsevent-url] mouse events:
 
 ```swift
-// get the coordinate at the location of a touch event
-let touchLocation: CGPoint = objectsLayer.coordinateAtTouchLocation(touch)
+// get the coordinate at the location of a `UITouch` touch event
+let touchLocation: simd_int2 = objectsLayer.coordinateAtTouchLocation(touch: touch)
+
+// get the coordinate at the location of an `NSEvent` mouse event
+let mouseLocation: simd_int2 = objectsLayer.coordinateAtMouse(event: event)
 ```
 
 ## Animated Tiles
@@ -230,7 +233,7 @@ Tiles with animation will animate automatically when the tilemap node is added t
 
 
 ```swift
-// get all animated tiles, including nested layers
+// query all animated tiles, including nested layers
 let allAnimated = tilemap.animatedTiles(recursive: true)
 
 // pause/unpause tile animation
@@ -243,7 +246,7 @@ for tile in allAnimated {
     tile.speed = -1.0
 }
 
-// get animated tiles from individual layers
+// query animated tiles from individual layers
 let layerAnimated = groundLayer.animatedTiles()
 ```
 

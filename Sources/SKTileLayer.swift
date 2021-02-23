@@ -1009,6 +1009,7 @@ public class SKTileLayer: TiledLayerObject {
             (label: "layerType", value: layerType),
             (label: "size", value: mapSize),
             (label: "tile size", value: tileSize),
+            (label: "position", value: position),
             (label: "offset", value: offset),
             (label: "properties", value: mirrorChildren())
         ]

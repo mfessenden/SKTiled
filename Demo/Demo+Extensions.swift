@@ -47,7 +47,7 @@ extension TiledGlobals {
             globals.renderQuality.object = CGFloat(demoPreferences.objectRenderQuality)
             globals.renderQuality.text = CGFloat(demoPreferences.textRenderQuality)
 
-            globals.enableRenderCallbacks = demoPreferences.renderCallbacks
+            globals.enableRenderPerformanceCallbacks = demoPreferences.renderCallbacks
             globals.enableCameraCallbacks = demoPreferences.cameraCallbacks
             globals.enableCameraContainedNodesCallbacks = demoPreferences.cameraTrackContainedNodes
 
@@ -122,7 +122,7 @@ extension TiledGlobals {
         // MARK: Camera
 
         if (defaults.value(forKey: "tiled-gbl-render-callbacks") != nil) {
-            self.enableRenderCallbacks = defaults.bool(forKey: "tiled-gbl-render-callbacks")
+            self.enableRenderPerformanceCallbacks = defaults.bool(forKey: "tiled-gbl-render-callbacks")
         }
 
         if (defaults.value(forKey: "tiled-gbl-camera-callbacks") != nil) {
@@ -136,53 +136,53 @@ extension TiledGlobals {
         // MARK: Debug Display Options
 
         if (defaults.value(forKey: "tiled-gbl-dd-contained-hlduration") != nil) {
-            self.debug.highlightDuration = defaults.double(forKey: "tiled-gbl-dd-contained-hlduration")
+            self.debugDisplayOptions.highlightDuration = defaults.double(forKey: "tiled-gbl-dd-contained-hlduration")
         }
 
         if (defaults.value(forKey: "tiled-gbl-dd-gridopacity") != nil) {
-            self.debug.gridOpactity = CGFloat(defaults.double(forKey: "tiled-gbl-dd-gridopacity"))
+            self.debugDisplayOptions.gridOpactity = CGFloat(defaults.double(forKey: "tiled-gbl-dd-gridopacity"))
         }
 
         if (defaults.value(forKey: "tiled-gbl-dd-gridcolor") != nil) {
-            self.debug.gridColor = SKColor(hexString: defaults.string(forKey: "tiled-gbl-dd-gridcolor")!)
+            self.debugDisplayOptions.gridColor = SKColor(hexString: defaults.string(forKey: "tiled-gbl-dd-gridcolor")!)
         }
 
         if (defaults.value(forKey: "tiled-gbl-dd-framecolor") != nil) {
-            self.debug.frameColor = SKColor(hexString: defaults.string(forKey: "tiled-gbl-dd-framecolor")!)
+            self.debugDisplayOptions.frameColor = SKColor(hexString: defaults.string(forKey: "tiled-gbl-dd-framecolor")!)
         }
 
         if (defaults.value(forKey: "tiled-gbl-dd-linewidth") != nil) {
-            self.debug.lineWidth = CGFloat(defaults.double(forKey: "tiled-gbl-dd-linewidth"))
+            self.debugDisplayOptions.lineWidth = CGFloat(defaults.double(forKey: "tiled-gbl-dd-linewidth"))
         }
 
         if (defaults.value(forKey: "tiled-gbl-dd-tilehlcolor") != nil) {
-            self.debug.tileHighlightColor = SKColor(hexString: defaults.string(forKey: "tiled-gbl-dd-tilehlcolor")!)
+            self.debugDisplayOptions.tileHighlightColor = SKColor(hexString: defaults.string(forKey: "tiled-gbl-dd-tilehlcolor")!)
         }
 
         if (defaults.value(forKey: "tiled-gbl-dd-objopacity") != nil) {
-            self.debug.objectFillOpacity = CGFloat(defaults.double(forKey: "tiled-gbl-dd-objopacity"))
+            self.debugDisplayOptions.objectFillOpacity = CGFloat(defaults.double(forKey: "tiled-gbl-dd-objopacity"))
         }
 
         if (defaults.value(forKey: "tiled-gbl-dd-objhlcolor") != nil) {
-            self.debug.objectHighlightColor = SKColor(hexString: defaults.string(forKey: "tiled-gbl-dd-objhlcolor")!)
+            self.debugDisplayOptions.objectHighlightColor = SKColor(hexString: defaults.string(forKey: "tiled-gbl-dd-objhlcolor")!)
         }
 
         if (defaults.value(forKey: "tiled-gbl-dd-navcolor") != nil) {
-            self.debug.navigationColor = SKColor(hexString: defaults.string(forKey: "tiled-gbl-dd-navcolor")!)
+            self.debugDisplayOptions.navigationColor = SKColor(hexString: defaults.string(forKey: "tiled-gbl-dd-navcolor")!)
         }
 
         if (defaults.value(forKey: "tiled-gbl-dd-camboundscolor") != nil) {
-            self.debug.cameraBoundsColor = SKColor(hexString: defaults.string(forKey: "tiled-gbl-dd-camboundscolor")!)
+            self.debugDisplayOptions.cameraBoundsColor = SKColor(hexString: defaults.string(forKey: "tiled-gbl-dd-camboundscolor")!)
         }
 
         if (defaults.value(forKey: "tiled-gbl-dd-mousefilters") != nil) {
             let mouseFiltersRaw = defaults.double(forKey: "tiled-gbl-dd-mousefilters")
-            self.debug.mouseFilters = TiledGlobals.DebugDisplayOptions.MouseFilters(rawValue: UInt8(mouseFiltersRaw))
+            self.debugDisplayOptions.mouseFilters = TiledGlobals.DebugDisplayOptions.MouseFilters(rawValue: UInt8(mouseFiltersRaw))
         }
 
         if (defaults.value(forKey: "tiled-gbl-dd-mousepointersize") != nil) {
             let mouseFiltersRaw = defaults.double(forKey: "tiled-gbl-dd-mousepointersize")
-            self.debug.mousePointerSize = CGFloat(defaults.double(forKey: "tiled-gbl-dd-mousepointersize"))
+            self.debugDisplayOptions.mousePointerSize = CGFloat(defaults.double(forKey: "tiled-gbl-dd-mousepointersize"))
         }
 
         // MARK: Demo Content
@@ -222,7 +222,7 @@ extension TiledGlobals {
         defaults.set(self.renderQuality.override, forKey: "tiled-gbl-rndqual-override")
 
         // camera
-        defaults.set(self.enableRenderCallbacks, forKey: "tiled-gbl-render-callbacks")
+        defaults.set(self.enableRenderPerformanceCallbacks, forKey: "tiled-gbl-render-callbacks")
         defaults.set(self.enableCameraCallbacks, forKey: "tiled-gbl-camera-callbacks")
         defaults.set(self.enableCameraContainedNodesCallbacks, forKey: "tiled-gbl-camera-contained-callbacks")
 

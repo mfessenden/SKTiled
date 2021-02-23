@@ -111,7 +111,7 @@ class PreferencesGloabalsViewController: NSViewController {
         textFields["glb-mousepointerfontsize-field"]?.stringValue = String(format: "%.2f", TiledGlobals.default.debugDisplayOptions.mousePointerSize)
         
 
-        checkBoxes["gbl-rendercb-check"]?.state = (TiledGlobals.default.enableRenderCallbacks == true) ? .on : .off
+        checkBoxes["gbl-rendercb-check"]?.state = (TiledGlobals.default.enableRenderPerformanceCallbacks == true) ? .on : .off
         checkBoxes["gbl-cameracb-check"]?.state = (TiledGlobals.default.enableCameraCallbacks == true) ? .on : .off
         
         // user/demo maps
@@ -224,7 +224,7 @@ class PreferencesGloabalsViewController: NSViewController {
             }
             
             if (textIdentifier == "gbl-rendercb-check") {
-                TiledGlobals.default.enableRenderCallbacks = buttonVal
+                TiledGlobals.default.enableRenderPerformanceCallbacks = buttonVal
                 
                 // update controllers
                 NotificationCenter.default.post(

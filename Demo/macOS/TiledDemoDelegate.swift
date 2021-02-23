@@ -71,13 +71,13 @@ public class TiledDemoDelegate: NSObject, Loggable {
     
     /// Reset the delegate.
     func reset() {
+        print("⭑ [TiledDemoDelegate]: resetting nodes...")
         // reset focused nodes
         defer {
             currentNodes.removeAll()
         }
         currentNodes.forEach { node in
-            node.highlightNode(with: .clear)
-            
+            node.removeHighlight()
         }
     }
     
@@ -307,7 +307,7 @@ extension TiledDemoDelegate: TiledSceneCameraDelegate {
     }
     
     @objc public func sceneRightClicked(event: NSEvent) {
-
+        print("⭑ [TiledDemoDelegate]: scene right clicked...")
     }
 }
 

@@ -190,7 +190,7 @@ public class TiledGlobals {
     public var lowerBoundForDebugging: CGFloat = 2500
 
     /// Enable callbacks for render performance statistics.
-    public var enableRenderCallbacks: Bool = false
+    public var enableRenderPerformanceCallbacks: Bool = false
 
     /// Enable callbacks from camera to camera delegates.
     public var enableCameraCallbacks: Bool = false
@@ -312,7 +312,7 @@ public class TiledGlobals {
         self.renderer = (device != nil) ? Renderer.metal : Renderer.opengl
 
         #if RENDER_STATS
-        enableRenderCallbacks = true
+        enableRenderPerformanceCallbacks = true
         #endif
 
 
@@ -595,7 +595,7 @@ extension TiledGlobals: TiledCustomReflectableType {
         print("  ▸ logging level:           \(self.loggingLevel)")
         print("  ▸ update mode:             \(self.updateMode.name)")
         print("  ▸ debug draw options:      \(self.debugDrawOptions.debugDescription)")
-        print("  ▸ render callbacks:        \(self.enableRenderCallbacks)")
+        print("  ▸ render callbacks:        \(self.enableRenderPerformanceCallbacks)")
         print("  ▸ camera callbacks:        \(self.enableCameraCallbacks)")
         print("  ▸ visble nodes callbacks:  \(self.enableCameraContainedNodesCallbacks)")
         #if os(macOS)
@@ -841,6 +841,16 @@ extension TiledGlobals {
             return debugDisplayOptions
         } set {
             debugDisplayOptions = newValue
+        }
+    }
+    
+    /// Enable callbacks for render performance statistics.
+    @available(*, deprecated, renamed: "enableRenderPerformanceCallbacks")
+    public var enableRenderCallbacks: Bool {
+        get {
+            return enableRenderPerformanceCallbacks
+        } set {
+            enableRenderPerformanceCallbacks = newValue
         }
     }
 }

@@ -313,6 +313,7 @@ public class SKTileLayerChunk: TiledLayerObject {
             (label: "tile size", value: tileSize),
             (label: "chunkSize", value: chunkSize),
             (label: "chunkOffset", value: chunkOffset),
+            (label: "position", value: position),
             (label: "offset", value: offset),
             (label: "data", value: tiles),
             (label: "properties", value: mirrorChildren())

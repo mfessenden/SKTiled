@@ -57,10 +57,8 @@ public struct TextObjectAttributes {
     ///
     /// ### Properties
     ///
-    /// | Property      | Description                         |
-    /// |---------------|-------------------------------------|
-    /// | horizontal    | Horizontal text alignment.          |
-    /// | vertical      | Vertical text alignment.            |
+    /// - `horizontal`: Horizontal text alignment.
+    /// - `vertical`: Vertical text alignment.
     ///
     public struct TextAlignment {
 

@@ -68,11 +68,14 @@ import SpriteKit
 /// [sktiled-docroot-url]:https://mfessenden.github.io/SKTiled/1.3/index.html
 /// [tiled-custom-properties-url]:https://doc.mapeditor.org/en/stable/manual/custom-properties/
 /// [tiled-docroot-url]:https://doc.mapeditor.org/en/stable
-@objc public protocol TiledAttributedType: TiledObjectType {
+@objc protocol TiledAttributedType: TiledObjectType {
 
     /// Storage for custom Tiled properties.
     @objc var properties: [String: String] { get set }
 
+    /// :nodoc: Storage for custom Tiled properties.
+    @objc var _tiled_properties: [String: String] { get set }
+    
     /// :nodoc: Storage for properties from a template or tile data.
     @objc optional var secondaryProperties: [String: String] { get set }
 
@@ -82,8 +85,6 @@ import SpriteKit
     /// Parse function (with optional completion block).
     func parseProperties(completion: (() -> Void)?)
 }
-
-
 
 
 // MARK: - Extensions
@@ -402,21 +403,7 @@ extension TiledAttributedType {
 }
 
 
-extension TiledAttributedType where Self: SKNode {
 
-    /// Returns a Tiled SpriteKit node with a matching unique ID.
-    ///
-    /// - Parameter uuid: ID to match.
-    /// - Returns: child `TiledObjectType` node with the given unique id.
-    public func getChild(uuid: String) -> SKNode? {
-        return children.filter({
-            if let tiled = $0 as? TiledObjectType {
-                return tiled.uuid == uuid
-            }
-            return false
-        }).first
-    }
-}
 
 
 

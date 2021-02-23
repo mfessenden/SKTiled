@@ -25,7 +25,7 @@
 //	THE SOFTWARE.
 //
 //  Description:
-//     - SKTiled objective-c bridging header.
+//     - SKTiled Objective-C umbrella header.
 
 #import <Foundation/Foundation.h>
 

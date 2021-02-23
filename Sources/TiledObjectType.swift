@@ -38,12 +38,12 @@ import SpriteKit
 @objc public protocol TiledObjectType: TiledCustomReflectableType {
 
     /// Unique object id (layer & object names may not be unique).
-    var uuid: String { get }
+    @objc var uuid: String { get }
 
     /// ## Overview
     ///
     /// Object type property as parsed from **Tiled**.
-    var type: String! { get set }
+    @objc var type: String! { get set }
 }
 
 
@@ -63,6 +63,23 @@ extension TiledObjectType {
     /// - Parameter hasher: hasher instance.
     public func hash(into hasher: inout Hasher) {
         hasher.combine(uuid)
+    }
+}
+
+
+extension TiledObjectType where Self: SKNode {
+    
+    /// Returns a Tiled SpriteKit node with a matching unique ID.
+    ///
+    /// - Parameter uuid: unique Tiled node id to match.
+    /// - Returns: child `TiledObjectType` node with the given unique id.
+    public func getChild(uuid: String) -> SKNode? {
+        return children.filter({
+            if let tiled = $0 as? TiledObjectType {
+                return tiled.uuid == uuid
+            }
+            return false
+        }).first
     }
 }
 
