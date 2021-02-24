@@ -50,6 +50,7 @@ internal class TileObjectProxy: SKShapeNode {
                 return
             }
             
+            
             // FIXME: crash here
             self.draw()
         }
@@ -99,6 +100,7 @@ internal class TileObjectProxy: SKShapeNode {
                 let fadeAction = SKAction.colorFadeAction(after: 0.5)
                 self.run(fadeAction, withKey: animationKey)
             } else {
+                print("⭑ [TileObjectProxy]: is focused: \(isFocused)")
                 self.draw()
             }
         }
@@ -136,6 +138,7 @@ internal class TileObjectProxy: SKShapeNode {
     /// Draw the objects in the overlay.
     public func draw() {
         
+        // FIXME: this is causing selected object frame to disappear (but leave anchor)
         let proxyIsVisible = (showObjects == true) || (isFocused == true)
         
         self.removeAction(forKey: self.animationKey)
@@ -148,7 +151,7 @@ internal class TileObjectProxy: SKShapeNode {
         
         // don't draw text objects in iso, hex, staggered (for now)
         if object.layer.orientation != .orthogonal {
-            if object.objectType == .text {
+            if (object.objectType == .text) {
                 self.path = nil
                 return
             }

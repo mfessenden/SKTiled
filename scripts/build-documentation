@@ -133,14 +133,17 @@ if __name__ == '__main__':
 
     # only sync images
     if doImageSyncOnly:
-        print "\n\n# [%s]: Syncing images '%s' -> '%s'" % (PROJECT_NAME, imageSourceDir, imageDestDir)
+        print "\n# [%s]: Syncing images '%s' -> '%s'\n" % (PROJECT_NAME, imageSourceDir, imageDestDir)
         run_command(RSYNC_COMMAND)
         sys.exit(0)
 
-    cmdMessage = "\n\n# [%s]: Building project documentation..." % PROJECT_NAME
+    cmdMessage = "\n# [%s]: Building project documentation...\n" % PROJECT_NAME
+
+    if userBrowser != DEFAULT_BROWSER:
+        cmdMessage += "\nDisplaying in browser '%s'" % userBrowser
 
     if doDryRun == True:
-        cmdMessage = "\n\n# [%s]: Building project documentation (dry-run)" % PROJECT_NAME
+        cmdMessage = "\n# [%s]: Building project documentation (dry-run)\n" % PROJECT_NAME
 
         print cmdMessage
 

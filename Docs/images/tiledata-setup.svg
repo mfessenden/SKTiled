@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1177px" height="261px" viewBox="0 0 1177 261" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>tiledata-setup</title>
+    <g id="tiledata-setup" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(7.000000, 8.000000)">
+            <g id="Group_2" transform="translate(668.000000, 75.000000)">
+                <g id="Graphic_5">
+                    <path d="M2,0.75 L191.5,0.75 C192.6046,0.75 193.5,1.6454 193.5,2.75 L193.5,85.25 C193.5,86.3546 192.6046,87.25 191.5,87.25 L2,87.25 C0.8954,87.25 0,86.3546 0,85.25 L0,2.75 C0,1.6454 0.8954,0.75 2,0.75 Z" id="Path" fill="#F6F8F7" fill-rule="nonzero"></path>
+                    <path d="M2,0.75 L191.5,0.75 C192.6046,0.75 193.5,1.6454 193.5,2.75 L193.5,85.25 C193.5,86.3546 192.6046,87.25 191.5,87.25 L2,87.25 C0.8954,87.25 0,86.3546 0,85.25 L0,2.75 C0,1.6454 0.8954,0.75 2,0.75 Z" id="Path" stroke="#494949" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+                <g id="Graphic_4" transform="translate(0.000000, 24.000000)">
+                    <path d="M2,0 L191.5,0 C192.6046,0 193.5,0.8954 193.5,2 L193.5,61.25 C193.5,62.3546 192.6046,63.25 191.5,63.25 L2,63.25 C0.8954,63.25 0,62.3546 0,61.25 L0,2 C0,0.8954 0.8954,0 2,0 Z" id="Path" stroke="#494949" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <g id="Group" transform="translate(6.000000, 6.000000)" fill="#515556" fill-rule="nonzero" font-family="PTSans-Regular, PT Sans" font-size="13" font-weight="normal">
+                        <text id="tileData:-SKTilesetData">
+                            <tspan x="0" y="12">tileData: SKTilesetData</tspan>
+                        </text>
+                    </g>
+                </g>
+                <g id="Graphic_3">
+                    <path d="M2,0.75 L191.5,0.75 C192.6046,0.75 193.5,1.6454 193.5,2.75 L193.5,22 C193.5,23.1046 192.6046,24 191.5,24 L2,24 C0.8954,24 0,23.1046 0,22 L0,2.75 C0,1.6454 0.8954,0.75 2,0.75 Z" id="Path" stroke="#494949" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <g id="Group" transform="translate(78.000000, 3.601500)" fill="#494949" fill-rule="nonzero" font-family="PTSans-Bold, PT Sans" font-size="13" font-weight="bold">
+                        <text id="SKTile">
+                            <tspan x="0.927" y="12">SKTile</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+            <g id="Group_6" transform="translate(362.000000, 41.000000)">
+                <g id="Graphic_9">
+                    <path d="M2.5,0 L192,0 C193.1046,0 194,0.8954 194,2 L194,154 C194,155.1046 193.1046,156 192,156 L2.5,156 C1.3954,156 0.5,155.1046 0.5,154 L0.5,2 C0.5,0.8954 1.3954,0 2.5,0 Z" id="Path" fill="#F6F8F7" fill-rule="nonzero"></path>
+                    <path d="M2.5,0 L192,0 C193.1046,0 194,0.8954 194,2 L194,154 C194,155.1046 193.1046,156 192,156 L2.5,156 C1.3954,156 0.5,155.1046 0.5,154 L0.5,2 C0.5,0.8954 1.3954,0 2.5,0 Z" id="Path" stroke="#494949" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+                <g id="Graphic_8" transform="translate(0.000000, 23.000000)">
+                    <path d="M2.5,0.25 L192,0.25 C193.1046,0.25 194,1.1454 194,2.25 L194,131 C194,132.1046 193.1046,133 192,133 L2.5,133 C1.3954,133 0.5,132.1046 0.5,131 L0.5,2.25 C0.5,1.1454 1.3954,0.25 2.5,0.25 Z" id="Path" stroke="#494949" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <g id="Group" transform="translate(6.500000, 6.250000)" fill="#515556" fill-rule="nonzero" font-family="PTSans-Regular, PT Sans" font-size="13" font-weight="normal">
+                        <text id="id:-UInt32">
+                            <tspan x="0" y="12">id: UInt32</tspan>
+                        </text>
+                        <text id="tileset:-SKTileset">
+                            <tspan x="0" y="32">tileset: SKTileset</tspan>
+                        </text>
+                        <text id="texture:-SKTexture!">
+                            <tspan x="0" y="52">texture: SKTexture!</tspan>
+                        </text>
+                        <text id="tileSize:-CGSize">
+                            <tspan x="0" y="72">tileSize: CGSize</tspan>
+                        </text>
+                        <text id="frames:-[TileAnimationFrame]">
+                            <tspan x="0" y="92">frames: [TileAnimationFrame]</tspan>
+                        </text>
+                        <text id="animationAction:-SKAction?">
+                            <tspan x="0" y="112">animationAction: SKAction?</tspan>
+                        </text>
+                    </g>
+                </g>
+                <g id="Graphic_7">
+                    <path d="M2.5,0 L192,0 C193.1046,0 194,0.8954 194,2 L194,21.25 C194,22.3546 193.1046,23.25 192,23.25 L2.5,23.25 C1.3954,23.25 0.5,22.3546 0.5,21.25 L0.5,2 C0.5,0.8954 1.3954,0 2.5,0 Z" id="Path" stroke="#494949" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <g id="Group" transform="translate(57.500000, 2.851500)" fill="#494949" fill-rule="nonzero" font-family="PTSans-Bold, PT Sans" font-size="13" font-weight="bold">
+                        <text id="SKTilesetData">
+                            <tspan x="0.6915" y="12">SKTilesetData</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+            <g id="Group_10">
+                <g id="Graphic_13">
+                    <path d="M2.6,0.4 L192.1,0.4 C193.2046,0.4 194.1,1.2954 194.1,2.4 L194.1,84.9 C194.1,86.0046 193.2046,86.9 192.1,86.9 L2.6,86.9 C1.4954,86.9 0.6,86.0046 0.6,84.9 L0.6,2.4 C0.6,1.2954 1.4954,0.4 2.6,0.4 Z" id="Path" fill="#F6F8F7" fill-rule="nonzero"></path>
+                    <path d="M2.6,0.4 L192.1,0.4 C193.2046,0.4 194.1,1.2954 194.1,2.4 L194.1,84.9 C194.1,86.0046 193.2046,86.9 192.1,86.9 L2.6,86.9 C1.4954,86.9 0.6,86.0046 0.6,84.9 L0.6,2.4 C0.6,1.2954 1.4954,0.4 2.6,0.4 Z" id="Path" stroke="#494949" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+                <g id="Graphic_12" transform="translate(0.000000, 23.000000)">
+                    <path d="M2.6,0.65 L192.1,0.65 C193.2046,0.65 194.1,1.5454 194.1,2.65 L194.1,61.9 C194.1,63.0046 193.2046,63.9 192.1,63.9 L2.6,63.9 C1.4954,63.9 0.6,63.0046 0.6,61.9 L0.6,2.65 C0.6,1.5454 1.4954,0.65 2.6,0.65 Z" id="Path" stroke="#494949" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <g id="Group" transform="translate(6.600000, 6.650000)" fill="#515556" fill-rule="nonzero" font-family="PTSans-Regular, PT Sans" font-size="13" font-weight="normal">
+                        <text id="firstGID:-UInt32">
+                            <tspan x="0" y="12">firstGID: UInt32</tspan>
+                        </text>
+                        <text id="tileData:-Set&lt;SKTilesetData&gt;">
+                            <tspan x="0" y="32">tileData: Set&lt;SKTilesetData&gt;</tspan>
+                        </text>
+                    </g>
+                </g>
+                <g id="Graphic_11">
+                    <path d="M2.6,0.4 L192.1,0.4 C193.2046,0.4 194.1,1.2954 194.1,2.4 L194.1,21.65 C194.1,22.7546 193.2046,23.65 192.1,23.65 L2.6,23.65 C1.4954,23.65 0.6,22.7546 0.6,21.65 L0.6,2.4 C0.6,1.2954 1.4954,0.4 2.6,0.4 Z" id="Path" stroke="#494949" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <g id="Group" transform="translate(70.600000, 3.251500)" fill="#494949" fill-rule="nonzero" font-family="PTSans-Bold, PT Sans" font-size="13" font-weight="bold">
+                        <text id="SKTileset">
+                            <tspan x="0.6135" y="12">SKTileset</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+            <g id="Line_14" transform="translate(556.000000, 118.000000)" fill="#666A6B" fill-rule="nonzero">
+                <path id="Aggregate0" d="M98,-6 L112,1 L98,8 L98,2 L95,2 L95,0 L98,0 L98,-6 Z M9,0 L9,2 L-1,2 L-1,0 L9,0 Z M25,0 L25,2 L15,2 L15,0 L25,0 Z M41,0 L41,2 L31,2 L31,0 L41,0 Z M57,0 L57,2 L47,2 L47,0 L57,0 Z M73,0 L73,2 L63,2 L63,0 L73,0 Z M89,0 L89,2 L79,2 L79,0 L89,0 Z"></path>
+            </g>
+            <g id="Line_16" transform="translate(204.000000, 43.000000)" fill="#666A6B" fill-rule="nonzero">
+                <path id="Aggregate1" d="M144.8584,47.6899 L158.8584,54.6899 L144.8584,61.6899 L144.858,55.689 L137.7001,55.6899 L137.7001,53.6899 L144.858,53.689 L144.8584,47.6899 Z M83.7001,53.6899 L83.7001,55.6899 L73.7001,55.6899 L73.7001,53.6899 L83.7001,53.6899 Z M99.7001,53.6899 L99.7001,55.6899 L89.7001,55.6899 L89.7001,53.6899 L99.7001,53.6899 Z M115.7001,53.6899 L115.7001,55.6899 L105.7001,55.6899 L105.7001,53.6899 L115.7001,53.6899 Z M131.7001,53.6899 L131.7001,55.6899 L121.7001,55.6899 L121.7001,53.6899 L131.7001,53.6899 Z M75.4792,37.9108 L75.4792,47.9108 L73.4792,47.9108 L73.4792,37.9108 L75.4792,37.9108 Z M75.4792,21.9108 L75.4792,31.9108 L73.4792,31.9108 L73.4792,21.9108 L75.4792,21.9108 Z M75.4792,5.9108 L75.4792,15.9108 L73.4792,15.9108 L73.4792,5.9108 L75.4792,5.9108 Z M9.74,-0.35 L9.74,1.65 L-0.26,1.65 L-0.26,-0.35 L9.74,-0.35 Z M25.74,-0.35 L25.74,1.65 L15.74,1.65 L15.74,-0.35 L25.74,-0.35 Z M41.74,-0.35 L41.74,1.65 L31.74,1.65 L31.74,-0.35 L41.74,-0.35 Z M57.74,-0.35 L57.74,1.65 L47.74,1.65 L47.74,-0.35 L57.74,-0.35 Z M73.74,-0.35 L73.74,1.65 L63.74,1.65 L63.74,-0.35 L73.74,-0.35 Z"></path>
+            </g>
+            <g id="Group_17" transform="translate(0.000000, 152.000000)">
+                <g id="Graphic_20">
+                    <path d="M2.6,0.2 L192.1,0.2 C193.2046,0.2 194.1,1.0954 194.1,2.2 L194.1,92.2 C194.1,93.3046 193.2046,94.2 192.1,94.2 L2.6,94.2 C1.4954,94.2 0.6,93.3046 0.6,92.2 L0.6,2.2 C0.6,1.0954 1.4954,0.2 2.6,0.2 Z" id="Path" fill="#F6F8F7" fill-rule="nonzero"></path>
+                    <path d="M2.6,0.2 L192.1,0.2 C193.2046,0.2 194.1,1.0954 194.1,2.2 L194.1,92.2 C194.1,93.3046 193.2046,94.2 192.1,94.2 L2.6,94.2 C1.4954,94.2 0.6,93.3046 0.6,92.2 L0.6,2.2 C0.6,1.0954 1.4954,0.2 2.6,0.2 Z" id="Path" stroke="#494949" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+                <g id="Graphic_19" transform="translate(0.000000, 25.000000)">
+                    <path d="M2.6,0.4659 L192.1,0.4659 C193.2046,0.4659 194.1,1.3613 194.1,2.4659 L194.1,67.2 C194.1,68.3046 193.2046,69.2 192.1,69.2 L2.6,69.2 C1.4954,69.2 0.6,68.3046 0.6,67.2 L0.6,2.4659 C0.6,1.3613 1.4954,0.4659 2.6,0.4659 Z" id="Path" stroke="#494949" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <g id="Group" transform="translate(6.600000, 6.465900)" fill="#515556" fill-rule="nonzero" font-family="PTSans-Regular, PT Sans" font-size="13" font-weight="normal">
+                        <text id="id:-UInt32">
+                            <tspan x="0" y="12">id: UInt32</tspan>
+                        </text>
+                        <text id="duration:-Int">
+                            <tspan x="0" y="32">duration: Int</tspan>
+                        </text>
+                        <text id="texture:-SKTexture?">
+                            <tspan x="0" y="52">texture: SKTexture?</tspan>
+                        </text>
+                    </g>
+                </g>
+                <g id="Graphic_18">
+                    <path d="M2.6,0.2 L192.1,0.2 C193.2046,0.2 194.1,1.0954 194.1,2.2 L194.1,23.4659 C194.1,24.5705 193.2046,25.4659 192.1,25.4659 L2.6,25.4659 C1.4954,25.4659 0.6,24.5705 0.6,23.4659 L0.6,2.2 C0.6,1.0954 1.4954,0.2 2.6,0.2 Z" id="Path" stroke="#494949" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <g id="Group" transform="translate(40.600000, 4.059400)" fill="#494949" fill-rule="nonzero" font-family="PTSans-Bold, PT Sans" font-size="13" font-weight="bold">
+                        <text id="TileAnimationFrame">
+                            <tspan x="0.0245" y="12">TileAnimationFrame</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+            <g id="Graphic_27" transform="translate(224.000000, 28.000000)" fill="#494949" fill-rule="nonzero" font-family="PTMono-Regular, PT Mono" font-size="12" font-weight="normal">
+                <g id="Group" transform="translate(0.431800, 0.730000)">
+                    <text id="0..*">
+                        <tspan x="0" y="11">0..*</tspan>
+                    </text>
+                </g>
+            </g>
+            <g id="Line_28" transform="translate(194.000000, 157.000000)" fill="#666A6B" fill-rule="nonzero">
+                <path id="Aggregate2" d="M14.1,35.2 L14.1,49.2 L0.1,42.2 L14.1,35.2 Z M85.1336,37.5813 L85.1336,42.2 L84.1336,43.2 L78.7523,43.2 L78.7523,41.2 L83.133,41.2 L83.1336,37.5813 L85.1336,37.5813 Z M72.7523,41.2 L72.7523,43.2 L62.7523,43.2 L62.7523,41.2 L72.7523,41.2 Z M56.7523,41.2 L56.7523,43.2 L46.7523,43.2 L46.7523,41.2 L56.7523,41.2 Z M40.7523,41.2 L40.7523,43.2 L30.7523,43.2 L30.7523,41.2 L40.7523,41.2 Z M24.7523,41.2 L24.7523,43.2 L14.7523,43.2 L14.7523,41.2 L24.7523,41.2 Z M85.1336,21.5813 L85.1336,31.5813 L83.1336,31.5813 L83.1336,21.5813 L85.1336,21.5813 Z M85.1336,5.5813 L85.1336,15.5813 L83.1336,15.5813 L83.1336,5.5813 L85.1336,5.5813 Z M158.86,-0.6923 L158.86,1.3077 L148.86,1.3077 L148.86,-0.6923 L158.86,-0.6923 Z M142.86,-0.6923 L142.86,1.3077 L132.86,1.3077 L132.86,-0.6923 L142.86,-0.6923 Z M126.86,-0.6923 L126.86,1.3077 L116.86,1.3077 L116.86,-0.6923 L126.86,-0.6923 Z M110.86,-0.6923 L110.86,1.3077 L100.86,1.3077 L100.86,-0.6923 L110.86,-0.6923 Z M94.86,-0.6923 L94.86,1.3077 L84.86,1.3077 L84.86,-0.6923 L94.86,-0.6923 Z"></path>
+            </g>
+            <g id="Graphic_29" transform="translate(331.000000, 142.000000)" fill="#494949" fill-rule="nonzero" font-family="PTMono-Regular, PT Mono" font-size="12" font-weight="normal">
+                <g id="Group" transform="translate(0.500000, 0.387700)">
+                    <text id="0..*">
+                        <tspan x="0" y="11">0..*</tspan>
+                    </text>
+                </g>
+            </g>
+            <g id="Group_35" transform="translate(968.000000, 75.000000)">
+                <g id="Graphic_38">
+                    <path d="M2.4,0.75 L191.9,0.75 C193.0046,0.75 193.9,1.6454 193.9,2.75 L193.9,85.25 C193.9,86.3546 193.0046,87.25 191.9,87.25 L2.4,87.25 C1.2955,87.25 0.4,86.3546 0.4,85.25 L0.4,2.75 C0.4,1.6454 1.2955,0.75 2.4,0.75 Z" id="Path" fill="#F6F8F7" fill-rule="nonzero"></path>
+                    <path d="M2.4,0.75 L191.9,0.75 C193.0046,0.75 193.9,1.6454 193.9,2.75 L193.9,85.25 C193.9,86.3546 193.0046,87.25 191.9,87.25 L2.4,87.25 C1.2955,87.25 0.4,86.3546 0.4,85.25 L0.4,2.75 C0.4,1.6454 1.2955,0.75 2.4,0.75 Z" id="Path" stroke="#494949" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+                <g id="Graphic_37" transform="translate(0.000000, 24.000000)">
+                    <path d="M2.4,0 L191.9,0 C193.0046,0 193.9,0.8954 193.9,2 L193.9,61.25 C193.9,62.3546 193.0046,63.25 191.9,63.25 L2.4,63.25 C1.2955,63.25 0.4,62.3546 0.4,61.25 L0.4,2 C0.4,0.8954 1.2955,0 2.4,0 Z" id="Path" stroke="#494949" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <g id="Group" transform="translate(6.400000, 6.000000)" fill="#515556" fill-rule="nonzero" font-family="PTSans-Regular, PT Sans" font-size="13" font-weight="normal">
+                        <text id="tiles:-Array2D&lt;SKTile&gt;">
+                            <tspan x="0" y="12">tiles: Array2D&lt;SKTile&gt;</tspan>
+                        </text>
+                    </g>
+                </g>
+                <g id="Graphic_36">
+                    <path d="M2.4,0.75 L191.9,0.75 C193.0046,0.75 193.9,1.6454 193.9,2.75 L193.9,22 C193.9,23.1046 193.0046,24 191.9,24 L2.4,24 C1.2955,24 0.4,23.1046 0.4,22 L0.4,2.75 C0.4,1.6454 1.2955,0.75 2.4,0.75 Z" id="Path" stroke="#494949" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <g id="Group" transform="translate(63.400000, 3.601500)" fill="#494949" fill-rule="nonzero" font-family="PTSans-Bold, PT Sans" font-size="13" font-weight="bold">
+                        <text id="SKTileLayer">
+                            <tspan x="0.717" y="12">SKTileLayer</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+            <g id="Line_39" transform="translate(861.000000, 118.000000)" fill="#666A6B" fill-rule="nonzero">
+                <path id="Aggregate3" d="M94,-6 L108,1 L94,8 L94,-6 Z M9.5,0 L9.5,2 L-0.5,2 L-0.5,0 L9.5,0 Z M25.5,0 L25.5,2 L15.5,2 L15.5,0 L25.5,0 Z M41.5,0 L41.5,2 L31.5,2 L31.5,0 L41.5,0 Z M57.5,0 L57.5,2 L47.5,2 L47.5,0 L57.5,0 Z M73.5,0 L73.5,2 L63.5,2 L63.5,0 L73.5,0 Z M89.5,0 L89.5,2 L79.5,2 L79.5,0 L89.5,0 Z"></path>
+            </g>
+        </g>
+    </g>
+</svg>

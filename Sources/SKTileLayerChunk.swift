@@ -324,7 +324,13 @@ public class SKTileLayerChunk: TiledLayerObject {
         attributes.append(("tiled element name", tiledElementName))
         attributes.append(("tiled node nice name", tiledNodeNiceName))
         attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
+        attributes.append(("tiled menu item description", #"\#(tiledMenuItemDescription)"#))
+        attributes.append(("tiled display description", #"\#(tiledDisplayItemDescription)"#))
+        attributes.append(("tiled display description", #"\#(tiledDisplayItemDescription)"#))
         attributes.append(("tiled help description", tiledHelpDescription))
+        
+        attributes.append(("tiled description", description))
+        attributes.append(("tiled debug description", debugDescription))
         
         return Mirror(self, children: attributes, ancestorRepresentation: .suppressed)
     }

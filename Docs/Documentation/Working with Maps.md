@@ -65,17 +65,17 @@ Infinite maps work exactly as other maps do - the only difference is that intern
 The `TiledGlobals` class stores default properties that you may tweak for your own projects.
 
 
-| Property                           | Description                             |
-|:---------------------------------- |:--------------------------------------- |
-| TiledGlobals.renderer              | SpriteKit renderer (get only).          |
-| TiledGlobals.loggingLevel          | Logging verbosity.                      |
-| TiledGlobals.updateMode            | Default tile update mode.               |
-| TiledGlobals.zDeltaForLayers       | Default layer SpriteKit offset.         |
-| TiledGlobals.enableRenderCallbacks | Allow render statistics.                |
-| TiledGlobals.enableCameraCallbacks | Allow camera updates.                   |
-| TiledGlobals.renderQuality         | Global render quality values.           |
-| TiledGlobals.contentScale          | Retina display scale factor (get only). |
-| TiledGlobals.version               | Framework version (get only).           |
+| Property                             | Description                             |
+|:------------------------------------ |:--------------------------------------- |
+| `TiledGlobals.renderer`              | SpriteKit renderer (get only).          |
+| `TiledGlobals.loggingLevel`          | Logging verbosity.                      |
+| `TiledGlobals.updateMode`            | Default tile update mode.               |
+| `TiledGlobals.zDeltaForLayers`       | Default layer SpriteKit offset.         |
+| `TiledGlobals.enableRenderCallbacks` | Allow render statistics.                |
+| `TiledGlobals.enableCameraCallbacks` | Allow camera updates.                   |
+| `TiledGlobals.renderQuality`         | Global render quality values.           |
+| `TiledGlobals.contentScale`          | Retina display scale factor (get only). |
+| `TiledGlobals.version`               | Framework version (get only).           |
 
 
 
@@ -85,11 +85,11 @@ The `TiledGlobals` class stores default properties that you may tweak for your o
 By default, **SKTiled** updates each tile on a concurrent background queue. This includes tile animations, ensuring that frames are synced each frame. For performance, tile data is cached and updated with each frame. How the cache is updated is determined by the `TileUpdateMode` flag. There are three settings for rendering maps, choose the option that is best suited to your content:
 
 
-|  Mode   | Description                                                           |
-|:-------:|:--------------------------------------------------------------------- |
-|  full   | All tiles are updated each frame.                                     |
-| dynamic | Only animated tiles are updated.                                      |
-| actions | No tiles are updated, animations are rendered with SpriteKit actions. |
+|   Mode    | Description                                                           |
+|:---------:|:--------------------------------------------------------------------- |
+|  `full`   | All tiles are updated each frame.                                     |
+| `dynamic` | Only animated tiles are updated.                                      |
+| `actions` | No tiles are updated, animations are rendered with SpriteKit actions. |
 
 
 The default tile update method is `dynamic` which provides a good mix of performance and accuracy. For best performance, use `actions` and for greatest accuracy consider `full`.

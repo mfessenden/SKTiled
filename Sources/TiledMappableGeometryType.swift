@@ -49,8 +49,8 @@ import GameplayKit
 ///
 /// ### Constants
 ///
-/// - `orthogonal`: orthogonal(square tiles) tile map.
-/// - `isometric`:  isometric tile map.
+/// - `orthogonal`: orthogonal (square-shaped tiles) map.
+/// - `isometric`:  isometric (diamond-shaped tiles) map.
 /// - `hexagonal`:  hexagonal tile map.
 /// - `staggered`:  staggered isometric tile map.
 ///
@@ -89,7 +89,7 @@ import GameplayKit
     /// Pathfinding graph.
     @objc optional weak var graph: GKGridGraph<GKGridGraphNode>? { get set }
 
-    /// Child node offset. Used when a map container aligns all of the layers.
+    /// Child node offset. Used by a map container to align child layers.
     @objc optional var childOffset: CGPoint { get }
 
     /// Tile size (in pixels).
@@ -169,43 +169,53 @@ extension TiledMappableGeometryType {
         switch orientation {
             case .orthogonal:
                 return CGSize(width: mapSize.width * tileSize.width, height: mapSize.height * tileSize.height)
-
+                
             case .isometric:
                 let side = width + height
                 return CGSize(width: side * tileWidthHalf,  height: side * tileHeightHalf)
-
+                
             case .hexagonal, .staggered:
                 var result = CGSize.zero
-
-
+                
                 if (staggerX == true) {
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     result = CGSize(width: width * columnWidth + sideOffsetX,
                                     height: height * (tileHeight + sideLengthY))
-
-                    if (width > 1) {
-                        result.height += rowHeight
-                    }
-
-
-                // FIXME: this is where the problem is happening, h: 35
+                    
+                    
+                    if (orientation == .hexagonal) {
+                        if (width > 1) {
+                            result.height += rowHeight
+                        }}
+                    
+                    
+                // TODO: test this; returned incorrect height with `staggered-64x33`
                 } else {
+                    
                     result = CGSize(width: width * (tileWidth + sideLengthX),
                                     height: height * rowHeight + sideOffsetY)
-
-                    if (height > 1) {
-                        result.width += columnWidth
-                    }
+                                    //height: height * rowHeight)
+                    
+                    
+                    if (orientation == .hexagonal) {
+                        if (height > 1) {
+                            result.width += columnWidth
+                        }}
                 }
-
-                return result
+                
+                return result.floor()
         }
-
-
     }
 
     // MARK: - Geometry
 
-    /// Returns the position of layer origin point (used to place tiles).
+    /// :nodoc: Returns the position of layer origin point. Used only in `SKTileObject.getVertices(offset:)`.
     public var origin: CGPoint {
 
         switch orientation {
@@ -249,7 +259,8 @@ extension TiledMappableGeometryType {
     public var sideLengthY: CGFloat {
         return (staggeraxis == .y) ? CGFloat(hexsidelength) : 0
     }
-
+    
+    /// Returns the side offset in x.
     public var sideOffsetX: CGFloat {
         return (tileSize.width - sideLengthX) / 2
     }
@@ -257,7 +268,6 @@ extension TiledMappableGeometryType {
     public var sideOffsetY: CGFloat {
         return (tileSize.height - sideLengthY) / 2
     }
-
 
     public var columnWidth: CGFloat {
         return sideOffsetX + sideLengthX
@@ -750,5 +760,69 @@ extension TiledMappableGeometryType where Self: SKNode {
             current = current.parent!
         }
         return result
+    }
+    
+    /// Add an `SKNode` child node at the given coordinates. By default, the zPositon will be higher than all of the other nodes in the layer.
+    ///
+    /// - Parameters:
+    ///   - node: SpriteKit node.
+    ///   - coord: map coordinate.
+    ///   - offset: offset amount.
+    ///   - zpos: optional z-position.
+    public func addChild(_ node: SKNode,
+                         coord: simd_int2,
+                         offset: CGPoint = CGPoint.zero,
+                         zpos: CGFloat? = nil) {
+        addChild(node)
+        
+        // FIXME: this isn't correct with maps
+        node.position = pointForCoordinate(coord: coord, offsetX: offset.y, offsetY: offset.y)
+        node.position.x += offset.x
+        node.position.y += offset.y
+        
+        var zOffset: CGFloat = 0
+        if let tilemapDelegate = self as? TilemapDelegate {
+            zOffset = tilemapDelegate.zDeltaForLayers ?? 0
+        }
+        node.zPosition = (zpos != nil) ? zpos! : zPosition + zOffset
+    }
+    
+    /// Add an `SKNode` child node at the given x/y coordinates. By default, the zPositon will be higher than all of the other nodes in the layer.
+    ///
+    /// - Parameters:
+    ///   - node: object.
+    ///   - x: map x-coordinate.
+    ///   - y: map y-coordinate.
+    ///   - offset: offset amount.
+    ///   - zpos: optional z-position.
+    public func addChild(_ node: SKNode,
+                         x: Int = 0,
+                         y: Int = 0,
+                         offset: CGPoint = CGPoint.zero,
+                         zpos: CGFloat? = nil) {
+        
+        let coord = simd_int2(x: Int32(x), y: Int32(y))
+        addChild(node, coord: coord, offset: offset, zpos: zpos)
+    }
+    
+    /// Add a node at the given coordinates. By default, the zPositon will be higher than all of the other nodes in the layer.
+    ///
+    /// - Parameters:
+    ///   - node: SpriteKit node.
+    ///   - x: map x-coordinate.
+    ///   - y: map y-coordinate.
+    ///   - dx: offset x-amount.
+    ///   - dy: offset y-amount.
+    ///   - zpos: z-position (optional).
+    public func addChild(_ node: SKNode,
+                         _ x: Int,
+                         _ y: Int,
+                         dx: CGFloat = 0,
+                         dy: CGFloat = 0,
+                         zpos: CGFloat? = nil) {
+        
+        let coord = simd_int2(x: Int32(x), y: Int32(y))
+        let offset = CGPoint(x: dx, y: dy)
+        addChild(node, coord: coord, offset: offset, zpos: zpos)
     }
 }

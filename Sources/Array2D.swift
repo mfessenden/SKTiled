@@ -39,19 +39,15 @@ struct Array2D<T> {
     /// Internal array of values.
     fileprivate var items: [T?]
     
+    /// Instantiate with row & column values.
+    ///
+    /// - Parameters:
+    ///   - columns: column count.
+    ///   - rows: row count.
     init(columns: Int, rows: Int) {
         self.columns = columns
         self.rows = rows
         items = Array(repeating: nil, count: rows*columns)
-    }
-    
-    subscript(column: Int, row: Int) -> T? {
-        get {
-            return items[row*columns + column]
-        }
-        set {
-            items[row*columns + column] = newValue
-        }
     }
     
     /// Returns the size of the array.
@@ -59,13 +55,23 @@ struct Array2D<T> {
         return self.items.count
     }
     
+    /// Returns true if the array is empty.
     var isEmpty: Bool {
         return items.isEmpty
     }
     
+    /// Returns true if the array contains the given object.
+    ///
+    /// - Parameter obj: node.
+    /// - Returns: array contains the given node.
     func contains<T : Equatable>(_ obj: T) -> Bool {
         let filtered = self.items.filter {$0 as? T == obj}
         return filtered.isEmpty == false
+    }
+    
+    /// Empty the array.
+    mutating func removeAll() {
+        items.removeAll()
     }
 }
 
@@ -73,10 +79,18 @@ struct Array2D<T> {
 
 // MARK: - Extensions
 
+extension Array2D {
+    
+
+}
+
 
 
 extension Array2D: Sequence {
     
+    /// Enumerate the array.
+    ///
+    /// - Returns: array iterator.
     internal func makeIterator() -> AnyIterator<T?> {
         var arrayIndex = 0
         return AnyIterator {
@@ -91,6 +105,17 @@ extension Array2D: Sequence {
         }
     }
     
+    /// Subscript the array with row & column.
+    subscript(column: Int, row: Int) -> T? {
+        get {
+            return items[row*columns + column]
+        }
+        set {
+            items[row*columns + column] = newValue
+        }
+    }
+    
+    /// Subscript the array with row & column.
     subscript(column: Int32, row: Int32) -> T? {
         get {
             return items[Int(row)*columns + Int(column)]

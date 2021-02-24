@@ -58,6 +58,7 @@ class GameViewController: GCEventViewController, Loggable {
     @IBOutlet weak var statsCPULabel: UILabel!
     @IBOutlet weak var statsVisibleLabel: UILabel!
     @IBOutlet weak var statsObjectsLabel: UILabel!
+    @IBOutlet weak var statsTrackingViewsLabel: UILabel!
     @IBOutlet weak var statsActionsLabel: UILabel!
     @IBOutlet weak var statsEffectsLabel: UILabel!
     @IBOutlet weak var statsUpdatedLabel: UILabel!
@@ -421,7 +422,9 @@ class GameViewController: GCEventViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func renderStatsUpdated(notification: Notification) {
-        guard let renderStats = notification.object as? SKTilemap.RenderStatistics else { return }
+        guard let renderStats = notification.object as? SKTilemap.RenderStatistics else {
+            return
+        }
 
         self.statsRenderModeLabel.text = "Mode: \(renderStats.updateMode.name)"
         self.statsCPULabel.attributedText = renderStats.processorAttributedString
@@ -429,6 +432,8 @@ class GameViewController: GCEventViewController, Loggable {
         //self.statsVisibleLabel.isHidden = (TiledGlobals.default.enableCameraCallbacks == false)
         self.statsObjectsLabel.isHidden = (renderStats.objectsVisible == false)
         self.statsObjectsLabel.text = "Objects: \(renderStats.objectCount)"
+        self.statsTrackingViewsLabel.isHidden = (renderStats.trackingViews == 0)
+        self.statsTrackingViewsLabel.text = "Tracking Views: \(renderStats.trackingViews)"
         let renderString = (TiledGlobals.default.timeDisplayMode == .seconds) ? String(format: "%.\(String(6))f", renderStats.renderTime) : String(format: "%.\(String(2))f", renderStats.renderTime.milleseconds)
         let timeFormatString = (TiledGlobals.default.timeDisplayMode == .seconds) ? "s" : "ms"
         self.statsRenderLabel.text = "Render time: \(renderString)\(timeFormatString)"

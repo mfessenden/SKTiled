@@ -46,6 +46,7 @@ internal enum CacheIsolationMode: UInt8 {
     case animated
 }
 
+
 /// :nodoc:
 internal struct MemorySize {
     
@@ -74,16 +75,16 @@ internal class TileDataStorage: Loggable {
     
     var globalIdCache: GlobalIDCache = [:]
     
-    /// Cache for static tiles.
+    /// Cache for static tile data.
     var staticTileCache: DataCache = [:]
     
-    /// Cache for animated tiles.
+    /// Cache for animated tile data.
     var animatedTileCache: DataCache = [:]
     
     /// Cache for Spritekit actions.
     var actionsCache: ActionsCache = [:]
     
-    /// List of objects.
+    /// List of objects in the current tilemap.
     var objectsList: ObjectsList?
     
     /// Indicates the cache should ignore notifications.
@@ -96,7 +97,12 @@ internal class TileDataStorage: Loggable {
     
     /// Returns the size of the cache (in bytes).
     var bytes: Int {
-        return MemoryLayout.size(ofValue: self)
+        var result = MemoryLayout.size(ofValue: self.globalIdCache)
+        result += MemoryLayout.size(ofValue: self.staticTileCache)
+        result += MemoryLayout.size(ofValue: self.animatedTileCache)
+        result += MemoryLayout.size(ofValue: self.actionsCache)
+        result += MemoryLayout.size(ofValue: self.objectsList)
+        return result
     }
     
     /// Returns the size of the cache (in kilobytes).
@@ -143,11 +149,16 @@ internal class TileDataStorage: Loggable {
         NotificationCenter.default.addObserver(self, selector: #selector(objectAddedToLayer), name: Notification.Name.Layer.ObjectAdded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(objectWasRemovedFromLayer), name: Notification.Name.Layer.ObjectRemoved, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileAddedToLayer), name: Notification.Name.Layer.TileAdded, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(tileRemovedFromLayer), name: Notification.Name.Layer.TileRemoved, object: nil)
+
         NotificationCenter.default.addObserver(self, selector: #selector(tileTileIDChanged), name: Notification.Name.Tile.TileIDChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileTileDataChanged), name: Notification.Name.Tile.TileDataChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileRenderModeChanged), name: Notification.Name.Tile.RenderModeChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileCreatedAction), name: Notification.Name.Tile.TileCreated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(tileDestroyedAction), name: Notification.Name.Tile.TileDestroyed, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(objectCreatedAction), name: Notification.Name.Object.ObjectCreated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(objectDestroyedAction), name: Notification.Name.Object.ObjectDestroyed, object: nil)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(tileDataActionAdded), name: Notification.Name.TileData.ActionAdded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileDataFrameAdded), name: Notification.Name.TileData.FrameAdded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileDataTextureChanged), name: Notification.Name.TileData.TextureChanged, object: nil)
@@ -163,9 +174,11 @@ internal class TileDataStorage: Loggable {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Layer.ObjectAdded, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Layer.ObjectRemoved, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Layer.TileAdded, object: nil)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.Layer.TileRemoved, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Tile.TileDataChanged, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Tile.RenderModeChanged, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Object.ObjectCreated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Object.ObjectDestroyed, object: nil)
+        
         NotificationCenter.default.removeObserver(self, name: Notification.Name.TileData.ActionAdded, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.TileData.FrameAdded, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.TileData.TextureChanged, object: nil)
@@ -196,7 +209,40 @@ internal class TileDataStorage: Loggable {
 
     // MARK: - Notifications
 
-
+    // MARK: Tiles
+    
+    /// Add a tile to storage. Called when the `Notification.Name.Tile.TileCreated` notification is received.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func tileCreatedAction(notification: Notification) {
+        guard let tile = notification.object as? SKTile else {
+            log("no tile sent", level: .warning)
+            return
+        }
+        addTileToCache(tile: tile)
+    }
+    
+    /// Add a tile to storage. Called when the `Notification.Name.Tile.TileDestroyed` notification is received.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func tileDestroyedAction(notification: Notification) {
+        guard let tile = notification.object as? SKTile else {
+            log("no tile sent", level: .warning)
+            return
+        }
+        
+        let listToRemoveFrom: TileList = (tile.tileData.isAnimated == true) ? animatedCacheForTileData(tile.tileData) : cacheForTileData(tile.tileData)
+        listToRemoveFrom.remove(where: {$0 == tile})
+        
+        #if SKTILED_DEMO
+        NotificationCenter.default.post(
+            name: Notification.Name.Demo.NodeSelectionCleared,
+            object: nil
+        )
+        #endif
+        
+    }
+    
     /// Add a tile to storage. Called when the `Notification.Name.Layer.TileAdded` notification is received.
     ///
     ///  userInfo: ["layer": `SKTileLayer`, "object": `SKTileObject`, "coord": `simd_int2`]
@@ -209,41 +255,6 @@ internal class TileDataStorage: Loggable {
         }
         addTileToCache(tile: tile)
     }
-
-    /// Destory a given tile when it is removed from a layer. Called when the `Notification.Name.Layer.TileRemoved` notification is received.
-    ///
-    /// - Parameter notification: event notificaton.
-    @objc func tileRemovedFromLayer(notification: Notification) {
-        guard let tile = notification.object as? SKTile else {
-            return
-        }
-
-        // kill any animation actions
-        tile.removeAnimationActions()
-
-        let listToRemoveFrom: TileList = (tile.tileData.isAnimated == true) ? animatedCacheForTileData(tile.tileData) : cacheForTileData(tile.tileData)
-        listToRemoveFrom.remove(where: {$0 == tile})
-        
-        tile.removeAllActions()
-        tile.removeAllChildren()
-        tile.removeFromParent()
-    }
-
-    /// Called when an object is added to the storage.
-    ///
-    /// - Parameter notification: event notification.
-    @objc func objectAddedToLayer(notification: Notification) {
-        guard let object = notification.object as? SKTileObject else {
-            return
-        }
-
-        guard (objectsList?.filter { $0 == object }.isEmpty == true) else {
-            return
-        }
-
-        objectsList?.append(object)
-    }
-
 
     /// Called when a tile id changes. Called when the `Notification.Name.Tile.TileIDChanged` notification is received.
     ///
@@ -431,13 +442,7 @@ internal class TileDataStorage: Loggable {
         }
     }
     
-    /// Add a tile to storage. Called when the `Notification.Name.Tile.TileCreated` notification is received.
-    ///
-    /// - Parameter notification: event notification.
-    @objc func tileCreatedAction(notification: Notification) {
-        guard let tile = notification.object as? SKTile else { return }
-        addTileToCache(tile: tile)
-    }
+
     
     /// Called when tile data frames are updated.
     ///
@@ -494,6 +499,67 @@ internal class TileDataStorage: Loggable {
             }
         }
     }
+    
+    // MARK: Objects
+    
+    
+    /// Called when a new object is created (outside of parsing). Called when the `Notification.Name.Object.ObjectCreated` event fires.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func objectCreatedAction(notification: Notification) {
+        guard let object = notification.object as? SKTileObject else {
+            log("no object sent", level: .warning)
+            return
+        }
+        
+        guard (objectsList?.filter { $0 == object }.isEmpty == true) else {
+            return
+        }
+        
+        objectsList?.append(object)
+    }
+    
+    /// Called when a vector object type is destroyed. Called when the `Notification.Name.Object.ObjectDestroyed` event fires.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func objectDestroyedAction(notification: Notification) {
+        guard let object = notification.object as? SKTileObject else {
+            log("no object sent", level: .warning)
+            return
+        }
+        
+        objectsList?.remove(where: { $0 == object}) { obj in
+            self.log("object removed '\(obj.debugDescription)'", level: .debug)
+            self.tilemap?.objectsOverlay.initialized = false
+            obj.destroy()
+            
+            
+            
+            #if SKTILED_DEMO
+            NotificationCenter.default.post(
+                name: Notification.Name.Demo.NodeSelectionCleared,
+                object: nil
+            )
+            #endif
+        }
+    }
+    
+    
+    /// Called when an object is added to the storage.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func objectAddedToLayer(notification: Notification) {
+        guard let object = notification.object as? SKTileObject else {
+            return
+        }
+        
+        guard (objectsList?.filter { $0 == object }.isEmpty == true) else {
+            return
+        }
+        
+        objectsList?.append(object)
+    }
+    
 
     /// Called when a vector object type is removed from its parent layer.
     ///
@@ -503,8 +569,9 @@ internal class TileDataStorage: Loggable {
             let objectsList = objectsList else { return }
 
         objectsList.remove(where: { $0 == object}) { obj in
-            self.log("object removed: \(obj)", level: .debug)
+            self.log("object removed '\(obj.debugDescription)'", level: .debug)
             self.tilemap?.objectsOverlay.initialized = false
+            obj.destroy()
         }
     }
 
@@ -657,11 +724,10 @@ internal class TileDataStorage: Loggable {
         return existingCache
     }
 
-
     /// Move tile from one data list to another.
     ///
     /// - Parameters:
-    ///   - tile: tile.
+    ///   - tile: tile instance.
     ///   - globalID: tile global id.
     private func moveTileFrom(tile: SKTile, globalID: UInt32) {
         guard let tilemap = tilemap else {
@@ -729,7 +795,7 @@ internal class TileDataStorage: Loggable {
         updateQueue.sync {}
     }
 
-    /// Isolation mode updated.
+    /// Tilemap isolation mode updated.
     func isolateTilesAction() {
 
         for tile in allTiles {
@@ -766,6 +832,7 @@ extension CacheIsolationMode {
 }
 
 
+/// :nodoc:
 extension MemorySize {
     
     /// Instantiate with a bytes value.
@@ -792,8 +859,11 @@ extension MemorySize {
 }
 
 
+/// :nodoc:
 extension MemorySize: CustomStringConvertible {
     
+    
+    /// Provides a string representation of the memory size.
     var description: String {
         switch bytes {
             case 0..<1_024:

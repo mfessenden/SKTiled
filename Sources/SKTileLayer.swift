@@ -80,7 +80,7 @@ public class SKTileLayer: TiledLayerObject {
         return self.getTiles().count
     }
 
-    /// Tuple of layer render statistics.
+    /// Returns a tuple of layer render performance statistics.
     override internal var renderInfo: RenderInfo {
         var current = super.renderInfo
         current.tc = tileCount
@@ -112,6 +112,8 @@ public class SKTileLayer: TiledLayerObject {
         didSet {
             guard oldValue != debugDrawOptions else { return }
             debugNode.draw()
+            
+            // TODO: do we need this?
             let doShowTileBounds = debugDrawOptions.contains(.drawObjectFrames)
             getTiles().forEach { tile in
                 if (doShowTileBounds == true) {
@@ -205,10 +207,13 @@ public class SKTileLayer: TiledLayerObject {
         removeAllActions()
         removeAllChildren()
         removeFromParent()
+        
         // clean up graph nodes
         if let graphNodes = graph?.nodes {
             graph?.remove(graphNodes)
         }
+        
+        tiles.removeAll()
         graph = nil
         gidErrors = [:]
         chunks = []
@@ -500,7 +505,8 @@ public class SKTileLayer: TiledLayerObject {
         let thisTileId: UInt32? = (globalID != nil) ? tilemap.delegate?.willAddTile?(globalID: globalID!, coord: coord, in: layerName) : tilemap.delegate?.willAddTile?(globalID: globalID!, in: layerName)
 
         let tileData: SKTilesetData? = (thisTileId != nil) ? getTileData(globalID: thisTileId!) : nil
-
+        
+        // get the tlie type from the tilemap delegate
         let Tile = (tilemap.delegate != nil) ? tilemap.delegate!.objectForTileType?(named: tileType) ?? SKTile.self : SKTile.self
 
         let tile = Tile.init()
@@ -648,7 +654,7 @@ public class SKTileLayer: TiledLayerObject {
 
 
         // remove existing tile, if one exists
-        let existingTile = removeTileAt(coord: coord)
+        let existingTile = removeTile(at: coord)
 
         // resolve the gid and create a new tile
         let thisTileId: UInt32? = (globalID != nil) ? tilemap.delegate?.willAddTile?(globalID: globalID!, coord: coord, in: layerName) : tilemap.delegate?.willAddTile?(globalID: globalID!, in: layerName)
@@ -671,24 +677,34 @@ public class SKTileLayer: TiledLayerObject {
         return (existingTile, tile)
     }
 
-
     /// Clear all tiles.
     public func clearTiles() {
         getTiles().forEach { tile in
-            tile.removeAnimation()
+            
+            // TODO: use `SKTile.destroy` here?
+            tile.removeAnimationActions()
+            tile.removeAllActions()
+            tile.removeAllChildren()
             tile.removeFromParent()
         }
         self.tiles = Array2D<SKTile>(columns: Int(tilemap.mapSize.width), rows: Int(tilemap.mapSize.height))
     }
-
+    
     /// Remove the tile at a given coordinate.
     ///
-    /// - Parameter coord: tile coordinate.
+    /// - Parameter coord: map coordinate.
     /// - Returns: removed tile, if one exists.
-    public func removeTileAt(coord: simd_int2) -> SKTile? {
+    @discardableResult
+    public func removeTile(at coord: simd_int2) -> SKTile? {
         let current = tileAt(coord: coord)
         if let current = current {
+            
+            // TODO: use `SKTile.destroy` here?
+            current.removeAnimationActions()
+            current.removeAllActions()
+            current.removeAllChildren()
             current.removeFromParent()
+            
             self.tiles[Int(coord.x), Int(coord.y)] = nil
         }
         return current
@@ -700,9 +716,10 @@ public class SKTileLayer: TiledLayerObject {
     ///   - x: x-coordinate.
     ///   - y: y-coordinate.
     /// - Returns: removed tile, if one exists.
-    public func removeTileAt(_ x: Int, _ y: Int) -> SKTile? {
+    @discardableResult
+    public func removeTile(_ x: Int, _ y: Int) -> SKTile? {
         let coord = simd_int2(x: Int32(x), y: Int32(y))
-        return removeTileAt(coord: coord)
+        return removeTile(at: coord)
     }
 
     /// Build a tile at the given coordinate with the given id. Returns nil if the id cannot be resolved.
@@ -1018,8 +1035,13 @@ public class SKTileLayer: TiledLayerObject {
         attributes.append(("tiled element name", tiledElementName))
         attributes.append(("tiled node nice name", tiledNodeNiceName))
         attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
+        attributes.append(("tiled menu item description", #"\#(tiledMenuItemDescription)"#))
+        attributes.append(("tiled display description", #"\#(tiledDisplayItemDescription)"#))
         attributes.append(("tiled help description", tiledHelpDescription))
-
+        
+        attributes.append(("tiled description", description))
+        attributes.append(("tiled debug description", debugDescription))
+        
         if (isInfinite == true) {
             attributes.append(("chunks", chunks))
         } else {
@@ -1041,7 +1063,7 @@ extension SKTileLayer {
     /// Dump the contents of the tile data array to the console.
     ///
     /// - Parameter spacing: spacing length.
-    public func dumpLayerData(spacing: Int = 3) {
+    public func dumpTileLayerData(spacing: Int = 3) {
         var rowdata: [String] = []
         var tcount = 0
         for r in 0..<tiles.rows {
@@ -1065,8 +1087,8 @@ extension SKTileLayer {
             rowdata.append(rowResult)
         }
 
-
-        var layerHeaderString = "Tile Layer: '\(layerName)', \(tcount) tiles:"
+        
+        var layerHeaderString = "\(layerType.symbol) Tile Layer: '\(layerName)', \(tcount) tiles:"
         layerHeaderString += "\n" + String(repeating: "-", count: layerHeaderString.count)
         print("\n" + layerHeaderString)
 
@@ -1095,18 +1117,44 @@ extension SKTileLayer {
         return "tilelayer-icon"
     }
 
-    /// A description of the node used for menu items.
+    /// A description of the node used in list or outline views.
     ///
     ///  'Tile Layer 'Level2' (46 tiles)'
     @objc public override var tiledListDescription: String {
         let nameString = "'\(layerName)'"
         return "\(tiledNodeNiceName) \(nameString) (\(tileCount) tiles)"
     }
+    
+    /// A description of the node used in dropdown & popu menus.
+    ///
+    ///  'Tile Layer 'Level2' (46 tiles)'
+    @objc public override var tiledMenuItemDescription: String {
+        let parentCount = parents.count
+        let isGrouped: Bool = (parentCount > 1)
+        var layerSymbol: String = layerType.symbol
+        let isGroupNode = (layerType == TiledLayerType.group)
+        let hasChildren: Bool = (childLayers.isEmpty == false)
+        if (isGroupNode == true) {
+            layerSymbol = (hasChildren == true) ? "▿" : "▹"
+        }
+        
+        let filler = (isGrouped == true) ? String(repeating: "  ", count: parentCount - 1) : ""
+        return "\(filler)\(layerSymbol) \(layerName)"
+    }
+    
+    /// A description of the node used for debug output text.
+    @objc public override var tiledDisplayItemDescription: String {
+        let nameString = (name != nil) ? " '\(name!)'" : ""
+        return #"<\#(className)\#(nameString)>"#
+    }
 
     /// A string description of the node's function.
     @objc public override var tiledHelpDescription: String {
         return "Layer container for tiles."
     }
+    
+    
+
 }
 
 
@@ -1208,11 +1256,31 @@ extension SKTileLayer {
 
     /// Remove the tile at a given coordinate.
     ///
-    /// - Parameter coord: tile coordinate.
+    /// - Parameter coord: map coordinate.
     /// - Returns: removed tile, if one exists.
-    @available(*, deprecated, renamed: "removeTileAt(coord:)")
+    @available(*, deprecated, renamed: "removeTile(at:)")
     public func removeTileAt(coord: CGPoint) -> SKTile? {
         return removeTileAt(coord: coord.toVec2)
+    }
+    
+    /// Remove the tile at a given coordinate.
+    ///
+    /// - Parameter coord: map coordinate.
+    /// - Returns: removed tile, if one exists.
+    @available(*, deprecated, renamed: "removeTile(at:)")
+    public func removeTileAt(coord: simd_int2) -> SKTile? {
+        return removeTile(at: coord)
+    }
+    
+    /// Remove the tile at the given x/y coordinates.
+    ///
+    /// - Parameters:
+    ///   - x: x-coordinate.
+    ///   - y: y-coordinate.
+    /// - Returns: removed tile, if one exists.
+    @available(*, deprecated, renamed: "removeTile(_:)")
+    public func removeTileAt(_ x: Int, _ y: Int) -> SKTile? {
+        return removeTile(x,y)
     }
 
     /// Set a tile at the given coordinate.
@@ -1236,5 +1304,13 @@ extension SKTileLayer {
     @available(*, deprecated, renamed: "setLayerData(_:)")
     @discardableResult public func setLayerData(_ data: [UInt32], debug: Bool = false) -> Bool {
         self.setLayerData(data)
+    }
+    
+    /// Dump the contents of the tile data array to the console.
+    ///
+    /// - Parameter spacing: spacing length.
+    @available(*, deprecated, renamed: "dumpTileLayerData(spacing:)")
+    public func dumpLayerData(spacing: Int = 3) {
+        self.dumpTileLayerData(spacing: spacing)
     }
 }

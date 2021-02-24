@@ -178,9 +178,6 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
     /// Current tile probability.
     fileprivate var currentProbability: CGFloat?
 
-    /// Current layer index (flattened).
-    fileprivate var layerIndex: UInt32 = 0
-
     // MARK: Tile Data
 
     /// Data store for tile layers to render in a second pass. Data is stored as [layer.uuid: [UInt32] ).
@@ -1193,14 +1190,10 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
             let parentElement = elementPath.last!
             if let group = parentElement as? SKGroupLayer {
                 group.addLayer(layer)
-                layer.rawIndex = layerIndex
-                layerIndex += 1
             }
 
             if let tilemap = parentElement as? SKTilemap {
                 tilemap.addLayer(layer)
-                layer.rawIndex = layerIndex
-                layerIndex += 1
             }
 
 
@@ -1269,14 +1262,10 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
 
                 if let group = parentElement as? SKGroupLayer {
                     group.addLayer(objectsGroup)
-                    objectsGroup.rawIndex = layerIndex
-                    layerIndex += 1
                 }
 
                 if let tilemap = parentElement as? SKTilemap {
                     tilemap.addLayer(objectsGroup)
-                    objectsGroup.rawIndex = layerIndex
-                    layerIndex += 1
                 }
 
                 lastElement = objectsGroup
@@ -1296,14 +1285,10 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
             let parentElement = elementPath.last!
             if let group = parentElement as? SKGroupLayer {
                 group.addLayer(imageLayer)
-                imageLayer.rawIndex = layerIndex
-                layerIndex += 1
             }
 
             if let tilemap = parentElement as? SKTilemap {
                 tilemap.addLayer(imageLayer)
-                imageLayer.rawIndex = layerIndex
-                layerIndex += 1
             }
 
 
@@ -1322,14 +1307,10 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
             let parentElement = elementPath.last!
             if let group = parentElement as? SKGroupLayer {
                 group.addLayer(groupLayer)
-                groupLayer.rawIndex = layerIndex
-                layerIndex += 1
             }
 
             if let tilemap = parentElement as? SKTilemap {
                 tilemap.addLayer(groupLayer)
-                groupLayer.rawIndex = layerIndex
-                layerIndex += 1
             }
 
             // delegate callback

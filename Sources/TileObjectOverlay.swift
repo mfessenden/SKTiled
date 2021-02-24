@@ -81,7 +81,7 @@ internal class TileObjectOverlay: SKNode {
         NotificationCenter.default.addObserver(self, selector: #selector(mapUpdatedAction), name: Notification.Name.Map.Updated, object: nil)
     }
 
-    /// Returns objects at the given point.
+    /// Returns objects at the given point in the overlay.
     ///
     /// - Parameter point: point (in this node's coordinate space).
     /// - Returns: array of vector objects.
@@ -105,12 +105,14 @@ internal class TileObjectOverlay: SKNode {
         draw()
     }
     
+    /// Redraw the overlay.
     @objc func draw() {
-        objects.forEach { object in
-            object.zoomLevel = cameraZoom
-            object.baseLineWidth = lineWidth
+        print("⭑ [TileObjectOverlay]: drawing...")
+        objects.forEach { proxy in
+            proxy.zoomLevel = cameraZoom
+            proxy.baseLineWidth = lineWidth
             // object.reference?.tintColor
-            object.draw()
+            proxy.draw()
         }
     }
 }
@@ -125,18 +127,31 @@ extension TileObjectOverlay: TiledSceneCameraDelegate {
     ///
     /// - Parameter newZoom: new camera zoom.
     @objc func cameraZoomChanged(newZoom: CGFloat) {
-        //let oldZoom = cameraZoom
+        let oldZoom = cameraZoom
         cameraZoom = newZoom
-        //let delta = cameraZoom - oldZoom
+        
+        // only redraw if zoom has changed more than 0.15
+        let delta = cameraZoom - oldZoom
+        guard delta > 0.15 else {
+            return
+        }
+        
         //let newLineWidth = (newZoom != 0) ? lineWidth / newZoom : minimumLineWidth
-        lineWidth = TiledGlobals.default.debugDisplayOptions.lineWidth
+        
+        let isZoomedIn = newZoom > 1
+        
+        // at less than 1, number is higher (0.7 zoom = 1.3 padding, 5.0 zoom = 0.2 padding)
+        let zoomLineWidthPadding: CGFloat = (isZoomedIn == true) ? 1.0 / newZoom : 2.0 / newZoom
+        var newZoomedLineWidth = TiledGlobals.default.debugDisplayOptions.lineWidth + zoomLineWidthPadding
+        print("⭑ new zoom: \(newZoom.stringRoundedTo()), old zoom: \(oldZoom.stringRoundedTo()) ( delta: \(delta.stringRoundedTo())), line width: \(newZoomedLineWidth.stringRoundedTo())")
+        lineWidth = newZoomedLineWidth
         let isAntialiased = newZoom < 1
         weak var weakSelf = self
         renderQueue.async {
-            for object in weakSelf!.objects {
-                object.zoomLevel = newZoom
-                object.baseLineWidth = self.lineWidth
-                object.isAntialiased = isAntialiased
+            for proxy in weakSelf!.objects {
+                proxy.zoomLevel = newZoom
+                proxy.baseLineWidth = self.lineWidth
+                proxy.isAntialiased = isAntialiased
             }
         }
     }

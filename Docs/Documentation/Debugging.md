@@ -3,8 +3,8 @@
 - [Debug Draw Options](#debug-draw-options)
 - [Visualizing Objects](#visualizing-objects)
 - [Highlighting Tiles](#highlighting-tiles)
-- [Map Statistics](#map-statistics)
-
+- [Layer Statistics](#layer-statistics)
+- [Tile Layer Statistics](#tile-layer-statistics)
 
 ![Debug Options](images/debugDrawOptions.gif)
 
@@ -77,11 +77,11 @@ tile.highlightColor = SKColor.red
 tileLayer.highlightColor = SKColor.blue
 ```
 
-## Map Statistics
+## Layer Statistics
 
-To see a quick overview of the current tilemap's layers, use the `SKTilemap.mapStatistics(default:)` method:
+To see a quick overview of the current tilemap's layers, use the `SKTilemap.dumpStatistics()` method:
 
-![Map Statistics](images/map-statistics.svg)
+![Layer Statistics](images/map-statistics.png)
 
 The output represents a visualization of the scene hierarchy; nested layers are indented under their parent. Layer index and position are shown for top-level layers only.
 
@@ -95,6 +95,14 @@ The output represents a visualization of the scene hierarchy; nested layers are 
     8.  Layer z-position
     9.  Layer opacity
     10. Navigation graph node count
+
+
+## Tile Layer Statistics
+
+
+
+![Tile Layer Data](images/tilelayer-data-dump.png)
+
 
 
 Next: [Troubleshooting](troubleshooting.html) - [Index](Documentation.html)

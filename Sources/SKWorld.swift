@@ -93,16 +93,23 @@ extension SKWorld: TiledCustomReflectableType {
         return "world-icon"
     }
     
-    /// A description of the node.
+    /// A description of the node used in list or outline views
     @objc public var tiledListDescription: String {
         return "\(tiledNodeNiceName): pos: \(self.position.coordDescription)"
     }
     
-    /// A description of the node.
+    /// A description of the node used for debug output text.
+    @objc public var tiledDisplayItemDescription: String {
+        let nameString = (name != nil) ? " '\(name!)'" : ""
+        return #"<\#(className)\#(nameString) zoom: \#(zoom)>"#
+    }
+    
+    /// Description of the node type.
     @objc public var tiledHelpDescription: String {
         return "World container node."
     }
 }
+
 
 /// :nodoc:
 extension SKWorld: CustomReflectable {

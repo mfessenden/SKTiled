@@ -1300,7 +1300,7 @@ extension TiledDemoController {
     // TODO: move this to demo delegate
     
     /// Disable all layer isolation.
-    public func turnIsolationOff() {
+    public func turnLayerIsolationOff() {
         guard let view = self.view,
               let scene = view.scene as? SKTiledScene else { return }
 
@@ -1391,9 +1391,9 @@ extension TiledDemoController {
         }
     }
     
-    // this is received as a command from AppDelegate (main menu action)
+    /// This is received as a command from AppDelegate (main menu action).
     public func toggleRenderStatistics(value nextState: Bool) {
-        updateCommandString("render statistics are \(nextState.valueAsOnOff)", duration: 2.0)
+        updateCommandString("render statistics are \(nextState.valueAsOnOff)", duration: 3.0)
         
         NotificationCenter.default.post(
             name: Notification.Name.RenderStats.VisibilityChanged,
@@ -1407,7 +1407,7 @@ extension TiledDemoController {
         let statsNextState = !statsCurrentState
 
         #if DEBUG
-        updateCommandString("render statistics are \(statsNextState.valueAsOnOff)", duration: 2.0)
+        updateCommandString("setting render statistics \(statsNextState.valueAsOnOff)", duration: 3.0)
         TiledGlobals.default.enableRenderPerformanceCallbacks = statsNextState
 
 
@@ -1425,7 +1425,7 @@ extension TiledDemoController {
               let tilemap = scene.tilemap else { return }
 
         tilemap.tileLayers().forEach { layer in
-            layer.dumpLayerData()
+            layer.dumpTileLayerData()
         }
     }
 }

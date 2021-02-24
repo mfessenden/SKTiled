@@ -33,11 +33,11 @@ class AttributeEditorViewController: NSViewController {
     let demoController = TiledDemoController.default
     let demoDelegate = TiledDemoDelegate.default
     var receiveCameraUpdates: Bool = true
-    
-    
+
+
     @IBOutlet var editorView: NSView!
     @IBOutlet weak var attributesGrid: NSGridView!
-    
+
     var textFields:  [String: NSTextField] = [:]
     var checkBoxes:  [String: NSButton] = [:]
     var popupMenus:  [String: NSPopUpButton] = [:]
@@ -51,16 +51,17 @@ class AttributeEditorViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.setFrameSize(NSSize(width: 480, height: 580))
-
+        
+        let nodeIsCurrentlySelected = demoDelegate.currentNodes.isEmpty == false
+        
         setupNotifications()
         setupInterface()
-        resetInterface()
-        
-        if (demoDelegate.currentNodes.isEmpty == false) {
+        resetInterface(enabled: nodeIsCurrentlySelected)
+
+        if (nodeIsCurrentlySelected == true) {
             populateInterface()
         }
-        
-        
+
         demoController.camera?.addDelegate(self)
     }
 
@@ -78,8 +79,8 @@ class AttributeEditorViewController: NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(tilemapWasUpdated), name: Notification.Name.Map.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sceneWillUnloadAction), name: Notification.Name.Demo.SceneWillUnload, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(demoSceneLoaded), name: Notification.Name.Demo.SceneLoaded, object: nil)
-        
-        
+
+
         NotificationCenter.default.addObserver(self, selector: #selector(tileClickedAction), name: Notification.Name.Demo.TileClicked, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileClickedAction), name: Notification.Name.Demo.ObjectClicked, object: nil)
 
@@ -107,20 +108,20 @@ class AttributeEditorViewController: NSViewController {
         for (_, menu) in popupMenus.enumerated() {
             menu.value.isEnabled = enabled
         }
-        
+
         if let tilemap = demoController.currentTilemap {
             var mapNameString = tilemap.mapName
             if let mapurl = tilemap.url {
                 mapNameString = mapurl.relativePath
             }
-            
-            
-            
+
+
+
             if let window = view.window {
                 window.title = "Attribute Editor: '\(mapNameString)'"
             }
         }
-        
+
         let viewTitleLabel = textFields["selected-nodes-title-field"]
         let titleString = (enabled == false) ? "Nodes: 0" : "Nodes: \(currentNodes.count)"
         viewTitleLabel?.stringValue = titleString
@@ -169,7 +170,6 @@ class AttributeEditorViewController: NSViewController {
 
     func populateInterface() {
 
-        
         // window title
         let viewTitleLabel = textFields["selected-nodes-title-field"]
 
@@ -184,7 +184,7 @@ class AttributeEditorViewController: NSViewController {
         let nodeOffsetYField = textFields["node-yoffset-field"]
 
 
-        // chek boxes
+        // check boxes
         let nodeHiddenCheck = checkBoxes["node-hidden-check"]
         let nodePausedCheck = checkBoxes["node-paused-check"]
 
@@ -230,7 +230,7 @@ class AttributeEditorViewController: NSViewController {
         for node in currentNodes {
 
             nodeTypeValues.insert(node.className)
-            
+
             if let nodeName = node.name {
                 nodeNameValues.insert(nodeName)
             }
@@ -250,16 +250,16 @@ class AttributeEditorViewController: NSViewController {
                 nodeOffsetYValues.insert("\(layer.offset.y)")
             }
         }
-        
-        
+
+
         // set the title
         var nodeDesc = (selectedCount > 1) ? "Nodes" : "Node"
         nodeDesc += ": \(selectedCount)"
         if (selectedCount == 1) {
             if let firstNode = currentNodes.first {
                 if let tiledNode = firstNode as? TiledCustomReflectableType {
-                    nodeDesc = "Node: \(tiledNode.tiledListDescription ?? "nil")"
-                    
+                    nodeDesc = "Node: \(tiledNode.tiledDisplayItemDescription ?? "nil")"
+
                 } else {
                     if (nodeTypeValues.count == 1) {
                         nodeDesc = "Node: \(nodeTypeValues.first!)"
@@ -269,7 +269,7 @@ class AttributeEditorViewController: NSViewController {
                 }
             }
         }
-        
+
         viewTitleLabel?.stringValue = nodeDesc
 
         // set the values from the node types
@@ -382,7 +382,7 @@ class AttributeEditorViewController: NSViewController {
 
         handleNodeSelection()
     }
-    
+
     /// Called when the `Notification.Name.Demo.TileClicked` event fires.
     ///
     /// - Parameter notification: event notification.
@@ -391,10 +391,10 @@ class AttributeEditorViewController: NSViewController {
         guard let tile = notification.object as? SKTile else {
             return
         }
-        
+
         handleNodeSelection()
     }
-    
+
     /// Called when the `Notification.Name.Demo.ObjectClicked` event fires.
     ///
     /// - Parameter notification: event notification.
@@ -403,7 +403,7 @@ class AttributeEditorViewController: NSViewController {
         guard let object = notification.object as? SKTileObject else {
             return
         }
-        
+
         handleNodeSelection()
     }
 
@@ -414,8 +414,8 @@ class AttributeEditorViewController: NSViewController {
         //notification.dump(#fileID, function: #function)
         populateInterface()
     }
-    
-    
+
+
     /// Called when the `Notification.Name.Demo.SceneWillUnload` event fires.
     ///
     /// - Parameter notification: event notification.
@@ -425,12 +425,12 @@ class AttributeEditorViewController: NSViewController {
               let nextUrl = userInfo["url"] as? URL else {
             return
         }
-        
+
         let wintitle = "Attribute Editor: nil"
         view.window?.title = wintitle
         resetInterface(enabled: false)
     }
-    
+
     /// Called when the `Notification.Name.Demo.SceneLoaded` event fires.
     ///
     ///   userInfo: ["nodes": `[SKNode]`]
@@ -444,11 +444,11 @@ class AttributeEditorViewController: NSViewController {
               let relativePath = userInfo["relativePath"] else {
             return
         }
-        
+
         let wintitle = "Attribute Editor: '\(mapName)'"
         view.window?.title = wintitle
         resetInterface(enabled: false)
-        
+
         demoScene.cameraNode?.addDelegate(self)
     }
 
@@ -459,11 +459,11 @@ class AttributeEditorViewController: NSViewController {
         if let buttonId = sender.identifier {
             let textIdentifier = buttonId.rawValue
             let buttonVal = sender.state == .on
-            
+
             #if DEBUG
             print("⭑ [AttributeEditor]: button changed: '\(textIdentifier)', value: \(buttonVal)")
             #endif
-            
+
             if (textIdentifier == "node-paused-check") {
                 for node in currentNodes {
                     node.isPaused = buttonVal
@@ -493,8 +493,8 @@ class AttributeEditorViewController: NSViewController {
 
 /// :nodoc:
 extension AttributeEditorViewController: TiledSceneCameraDelegate {
-    
-    
+
+
     /// Called when the scene is right-clicked.
     ///
     /// - Parameter event: mouse click event.
@@ -506,43 +506,43 @@ extension AttributeEditorViewController: TiledSceneCameraDelegate {
 
 
 extension AttributeEditorViewController: NSTextFieldDelegate {
-    
-    
+
+
     //func textView(textView: NSTextView, shouldChangeTextInRange affectedCharRange: NSRange, replacementString: String) -> Bool
-    
+
     func textField(_ textField: NSTextField, textView: NSTextView, shouldSelectCandidateAt index: Int) -> Bool {
         print("text field \(textField.identifierString ?? "nil"), select index \(index)")
         return true
     }
-    
-    
-    
+
+
+
     func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
         guard let textField = control as? NSTextField else {
             return false
         }
-        
+
         let isExpectingNumericValue = textField.isNumericTextField
         var floatValue = textField.floatValue
-        
+
         guard (isExpectingNumericValue == true) else {
             return false
         }
-        
-        
+
+
         if (commandSelector == #selector(moveUp(_:))) {
             floatValue += 0.5
             textField.stringValue = "\(floatValue)"
             return true
-            
+
         } else if (commandSelector == #selector(moveDown(_:))) {
             floatValue -= 0.5
             return true
-            
+
         } else if (commandSelector == #selector(insertNewline(_:))) {
             textField.stringValue = "\(floatValue)"
             return false
-            
+
         } else if (commandSelector == #selector(insertTab(_:))) {
             textField.stringValue = "\(floatValue)"
             return false
@@ -550,14 +550,14 @@ extension AttributeEditorViewController: NSTextFieldDelegate {
             textField.stringValue = "\(floatValue)"
             return false
         }
-        
-        
+
+
         textField.selectText(textField.stringValue)
-        
+
         return true
     }
-    
-    
+
+
     /// Called when the text field edititing is finished.
     ///
     /// - Parameter obj: event notification.
@@ -566,57 +566,57 @@ extension AttributeEditorViewController: NSTextFieldDelegate {
               let textid = textField.identifier else {
             return
         }
-        
+
         let textIdentifier = textid.rawValue
         let textFieldValue = textField.stringValue
         let formatter = textField.formatter as? NumberFormatter
         let hasFormatter = formatter != nil
-        
+
         let floatValue: CGFloat = CGFloat(textField.floatValue)
         let textFieldDescription = (hasFormatter == true) ? "number field" : "text field"
-        
+
         #if DEBUG
         print("⭑ [AttributeEditorViewController]: \(textFieldDescription) '\(textIdentifier)', value: '\(textFieldValue)'")
         #endif
-        
+
         switch textIdentifier {
             case "node-name-field":
                 for node in currentNodes {
                     node.name = textFieldValue
                 }
-                
+
             case "node-xpos-field":
                 for node in currentNodes {
                     node.position.x = floatValue
                 }
-                
+
             case "node-ypos-field":
                 for node in currentNodes {
                     node.position.y = floatValue
                 }
-                
+
             case "node-zpos-field":
                 for node in currentNodes {
                     node.zPosition = floatValue
                 }
-                
+
             case "node-zrot-field":
                 for node in currentNodes {
                     node.zRotation = floatValue
                 }
-                
+
             case "node-alpha-field":
                 for node in currentNodes {
                     node.alpha = floatValue
                 }
-                
+
             case "node-xoffset-field":
                 for node in currentNodes {
                     if let layer = node as? TiledLayerObject {
                         layer.offset.x = floatValue
                     }
                 }
-                
+
             case "node-yoffset-field":
                 for node in currentNodes {
                     if let layer = node as? TiledLayerObject {
@@ -624,9 +624,9 @@ extension AttributeEditorViewController: NSTextFieldDelegate {
                     }
                 }
             default:
-                return   
+                return
         }
-        
+
         if let tilemap = demoController.currentTilemap {
             //tilemap.layers.forEach { tilemap.positionLayer($0) }
 

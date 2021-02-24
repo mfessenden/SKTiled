@@ -123,7 +123,7 @@ extension TiledAttributedType {
         return defaultValue
     }
 
-    /// Sets a named SKTiled property. Returns the value, or nil if it does not exist.
+    /// Sets a named `SKTiled` property.
     ///
     /// - Parameters:
     ///   - key: property key.
@@ -185,7 +185,7 @@ extension TiledAttributedType {
 
             let labelStyle = NSMutableParagraphStyle()
             labelStyle.alignment = .left
-            labelStyle.lineHeightMultiple = 2.0
+            labelStyle.lineHeightMultiple = 1.0
 
             let value = property.value
 
@@ -293,11 +293,10 @@ extension TiledAttributedType {
         return nil
     }
 
-
     /// Remove a named SKTiled property, returns the value as a string (if property exists).
     ///
     /// - Parameter key: property key.
-    public func removeProperty(for key: String) -> String? {
+    public func removeValue(for key: String) -> String? {
         if let existingPair = keyValuePair(key: key) {
             return properties.removeValue(forKey: existingPair.key)!
         }
@@ -424,8 +423,8 @@ extension TiledAttributedType {
     /// Remove a named `SKTiled` property, returns the value as a string (if property exists).
     ///
     /// - Parameter key: property key.
-    @available(*, deprecated, renamed: "removeProperty(for:)")
+    @available(*, deprecated, renamed: "removeValue(for:)")
     public func removeProperty(forKey key: String) -> String? {
-        return removeProperty(for: key)
+        return removeValue(for: key)
     }
 }

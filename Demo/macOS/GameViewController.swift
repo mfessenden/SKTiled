@@ -78,6 +78,7 @@ class GameViewController: NSViewController, Loggable {
     @IBOutlet weak var statsCPULabel: NSTextField!
     @IBOutlet weak var statsCacheSizeLabel: NSTextField!
     @IBOutlet weak var statsVisibleLabel: NSTextField!
+    @IBOutlet weak var statsTrackingViewsLabel: NSTextField!
     @IBOutlet weak var statsObjectsLabel: NSTextField!
     @IBOutlet weak var statsActionsLabel: NSTextField!
     @IBOutlet weak var statsEffectsLabel: NSTextField!
@@ -131,7 +132,8 @@ class GameViewController: NSViewController, Loggable {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.DemoController.WillBeginScanForAssets, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.DemoController.AssetsFinishedScanning, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.DemoController.DemoStatusUpdated, object: nil)
-
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Globals.Updated, object: nil)
+        
         NotificationCenter.default.removeObserver(self, name: NSWindow.didChangeBackingPropertiesNotification, object: nil)
     }
 
@@ -203,11 +205,32 @@ class GameViewController: NSViewController, Loggable {
     override func viewDidAppear() {
         super.viewDidAppear()
         setupButtonAttributes()
+        //presentFullScreen()
     }
 
     override func viewWillTransition(to newSize: NSSize) {
         super.viewWillTransition(to: newSize)
         (self.view as? SKView)?.scene?.size = newSize
+    }
+    
+    /// Enter full-screen mode.
+    func presentFullScreen() {
+        guard let mainScreen = NSScreen.main else {
+            return
+        }
+        
+        var presentingOptions = NSApplication.PresentationOptions()
+        presentingOptions.insert(.hideDock)
+        presentingOptions.insert(.hideMenuBar)
+        //presentingOptions.insert(.disableAppleMenu)
+        presentingOptions.insert(.disableProcessSwitching)
+        presentingOptions.insert(.disableSessionTermination)
+        presentingOptions.insert(.disableHideApplication)
+        presentingOptions.insert(.autoHideToolbar)
+        
+        let optionsDictionary = [NSView.FullScreenModeOptionKey.fullScreenModeApplicationPresentationOptions: presentingOptions.rawValue]
+        
+        self.view.enterFullScreenMode(mainScreen, withOptions: optionsDictionary)
     }
 
     /// Update the window when resolution/dpi changes.
@@ -233,11 +256,12 @@ class GameViewController: NSViewController, Loggable {
     /// Set up the debugging labels. (Mimics the text style in iOS controller).
     @objc func setupMainInterface() {
         mapInfoLabel.reset()
-        tileInfoLabel.stringValue = ""
-        propertiesInfoLabel.stringValue = ""
-        cameraInfoLabel.stringValue = ""
-        debuggingMessageLabel.stringValue = ""
-        isolatedInfoLabel.stringValue = ""
+        tileInfoLabel.reset()
+        propertiesInfoLabel.reset()
+        cameraInfoLabel.reset()
+        debuggingMessageLabel.reset()
+        isolatedInfoLabel.reset()
+        
         demoStatusInfoLabel.textColor = uiColor
         demoStatusInfoLabel.stringValue = "please select a file to load"
 
@@ -261,6 +285,7 @@ class GameViewController: NSViewController, Loggable {
         statsCacheSizeLabel.shadow = shadow
         statsVisibleLabel.shadow = shadow
         statsObjectsLabel.shadow = shadow
+        statsTrackingViewsLabel.shadow = shadow
         statsActionsLabel.shadow = shadow
         statsEffectsLabel.shadow = shadow
         statsUpdatedLabel.shadow = shadow
@@ -312,9 +337,9 @@ class GameViewController: NSViewController, Loggable {
         let canReceiveRenderStats = TiledGlobals.default.enableRenderPerformanceCallbacks == true
 
         // hide all of the labels to allow the debug message label to stay visible
-        mapInfoLabel.isHidden = viewIsHidden
-        tileInfoLabel.isHidden = viewIsHidden
-        propertiesInfoLabel.isHidden = viewIsHidden
+        //mapInfoLabel.isHidden = viewIsHidden
+        //tileInfoLabel.isHidden = viewIsHidden
+        //propertiesInfoLabel.isHidden = viewIsHidden
 
 
         // toggle stack visiblity
@@ -386,6 +411,8 @@ class GameViewController: NSViewController, Loggable {
         NotificationCenter.default.addObserver(self, selector: #selector(demoControllerResetAction), name: Notification.Name.DemoController.WillBeginScanForAssets, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(demoStatusWasUpdated), name: Notification.Name.DemoController.DemoStatusUpdated, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(globalsUpdatedAction), name: Notification.Name.Globals.Updated, object: nil)
     }
 
     // MARK: - Command Strings
@@ -518,6 +545,24 @@ class GameViewController: NSViewController, Loggable {
     }
     
     
+    /// Indicates the `TiledGlobals` have been updated. Called when the `Notification.Name.Globals.Updated` notification is received.
+    ///
+    /// - Parameter notification: notification event.
+    @objc func globalsUpdatedAction(notification: Notification) {
+        notification.dump(#fileID, function: #function)
+
+        let hideRenderStatsUI = TiledGlobals.default.enableRenderPerformanceCallbacks == false
+        statsStackView.isHidden = hideRenderStatsUI
+        
+        guard let view = self.view as? SKView else { return }
+        view.showsFPS = !hideRenderStatsUI
+        view.showsQuadCount = !hideRenderStatsUI
+        view.showsNodeCount = !hideRenderStatsUI
+        view.showsDrawCount = !hideRenderStatsUI
+        view.showsPhysics = !hideRenderStatsUI
+        view.showsFields = !hideRenderStatsUI
+    }
+    
     /// Update the interface when a map has been parsed & loaded. Called when the `Notification.Name.Map.Updated` notification is received.
     ///
     /// - Parameter notification: event notification.
@@ -591,14 +636,15 @@ class GameViewController: NSViewController, Loggable {
         guard let view = self.view as? SKView else { return }
 
         if let showRenderStats = notification.userInfo!["isHidden"] as? Bool {
-            view.showsFPS = showRenderStats
-            view.showsQuadCount = showRenderStats
-            view.showsNodeCount = showRenderStats
-            view.showsDrawCount = showRenderStats
-            view.showsPhysics = showRenderStats
-            view.showsFields = showRenderStats
+            
+            view.showsFPS = !showRenderStats
+            view.showsQuadCount = !showRenderStats
+            view.showsNodeCount = !showRenderStats
+            view.showsDrawCount = !showRenderStats
+            view.showsPhysics = !showRenderStats
+            view.showsFields = !showRenderStats
 
-            statsStackView.isHidden = !showRenderStats
+            statsStackView.isHidden = showRenderStats
 
         }
     }
@@ -662,7 +708,7 @@ class GameViewController: NSViewController, Loggable {
 
     /// Builds a right-click menu to select nodes at the click event location. Called when the `Notification.Name.Demo.NodesRightClicked` notification is sent (via the `SKTiledSceneCamera` node).
     ///
-    ///  - expects a user dictionary value of ["nodes": [`SKNode`], "locationInWindow": `CGPoint`]
+    ///  - expects a user dictionary value of `["nodes": [SKNode], "locationInWindow": CGPoint]`
     ///
     /// - Parameter notification: event notification.
     @objc func nodesRightClickedAction(notification: Notification) {
@@ -678,25 +724,28 @@ class GameViewController: NSViewController, Loggable {
         }
 
 
-        var layerNodes: [SKNode] = []
+        var layerNodes: [TiledLayerObject] = []
         var filteredNodes: [SKNode] = []
         var mapNode: SKTilemap?
-
+        
         if let nodesUnderMouse = userInfo["nodes"] as? [SKNode] {
 
             for node in nodesUnderMouse {
                 if let map = node as? SKTilemap {
-                    layerNodes.insert(node, at: 0)
                     mapNode = map
+                    continue
                 }
 
                 if node.isHighlightable == true {
                     filteredNodes.append(node)
                     continue
                 }
-
-                if node.isLayerType == true {
-                    layerNodes.append(node)
+                
+                if let layer = node as? TiledLayerObject {
+                    guard layer as? TiledBackgroundLayer == nil else {
+                        continue
+                    }
+                    layerNodes.append(layer)
                     continue
                 }
             }
@@ -705,9 +754,16 @@ class GameViewController: NSViewController, Loggable {
             log("no nodes were sent!", level: .error)
         }
         
+        
+        var resultLayers: [SKNode] = layerNodes.sorted(by: { $0.realIndex < $1.realIndex }) as [SKNode]
+        
+        if let map = mapNode {
+            resultLayers.insert(map, at: 0)
+        }
+
 
         let index = filteredNodes.count
-        filteredNodes.append(contentsOf: layerNodes)
+        filteredNodes.append(contentsOf: resultLayers)
 
         var positionInWindow = NSPoint.zero
         if let pointInCamera = userInfo["positionInWindow"] as? NSPoint {
@@ -783,10 +839,6 @@ class GameViewController: NSViewController, Loggable {
                 }
             }
 
-            if let nodeName = node.name {
-                nodeNameString += ": '\(nodeName)'"
-            }
-
             let thisNodeMenuItem = NSMenuItem(title: nodeNameString, action: #selector(handleSceneRightClickAction(_:)), keyEquivalent: "")
             thisNodeMenuItem.image = NSImage(named: nodeImageName)
             thisNodeMenuItem.representedObject = node
@@ -801,14 +853,7 @@ class GameViewController: NSViewController, Loggable {
     }
 
     // MARK: - Mouse Event Handlers
-    
-    /// Called when the tilemap is first clicked. Called when the `Notification.Name.Demo.NodeSelectionCleared` notification is received.
-    ///
-    /// - Parameter notification: event notification.
-    @objc func nodeSelectionClearedAction(notification: Notification) {
-        propertiesInfoLabel.reset()
-        selectedInfoLabel.reset()
-    }
+
     /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.ObjectUnderCursor` notification is received.
     ///
     /// - Parameter notification: event notification.
@@ -832,6 +877,7 @@ class GameViewController: NSViewController, Loggable {
     /// - Parameter notification: event notification.
     @objc func objectUnderMouseClicked(notification: Notification) {
         notification.dump(#fileID, function: #function)
+        
         if let object = notification.object as? SKTileObject {
             let highlightDuration = TiledGlobals.default.debugDisplayOptions.highlightDuration
             object.drawNodeBounds(with: object.frameColor, lineWidth: 0.25, fillOpacity: 0, duration: highlightDuration)
@@ -840,7 +886,7 @@ class GameViewController: NSViewController, Loggable {
             
             propertiesInfoLabel.isHidden = false
             propertiesInfoLabel.attributedStringValue = object.propertiesAttributedString(delineator: nil)
-
+            
             // perform(#selector(clearCurrentObject), with: nil, afterDelay: 5)
         }
     }
@@ -855,14 +901,19 @@ class GameViewController: NSViewController, Loggable {
         }
         
         let highlightDuration = TiledGlobals.default.debugDisplayOptions.highlightDuration
-        clickedTile.drawNodeBounds(with: clickedTile.frameColor, lineWidth: 0.25, fillOpacity: 0.2, duration: highlightDuration)
+        
+        
+        //clickedTile.drawNodeBounds(with: clickedTile.frameColor, lineWidth: 0.25, fillOpacity: 0.2, duration: highlightDuration)
+        clickedTile.highlightNode(with: clickedTile.frameColor, duration: 0)
+        
+        
+        
         
         tileInfoLabel.isHidden = false
         tileInfoLabel.stringValue = clickedTile.description
 
         propertiesInfoLabel.isHidden = false
         propertiesInfoLabel.attributedStringValue = clickedTile.tileData.propertiesAttributedString(delineator: nil)
-
         clickedTile.highlightNode(with: clickedTile.highlightColor, duration: 1)
     }
 
@@ -875,6 +926,7 @@ class GameViewController: NSViewController, Loggable {
             propertiesInfoLabel.isHidden = false
             propertiesInfoLabel.stringValue = focusedTile.description
             focusedTile.highlightNode(with: focusedTile.highlightColor, duration: 2)
+            
             // TODO: properties string should include tile data (id, etc).
             propertiesInfoLabel.attributedStringValue = focusedTile.tileData.propertiesAttributedString(delineator: nil)
         }
@@ -938,6 +990,9 @@ class GameViewController: NSViewController, Loggable {
             focusLocation = nodePosition
         }
 
+        
+        
+        tileInfoLabel.reset()
         selectedInfoLabel.reset()
         propertiesInfoLabel.reset()
 
@@ -1020,12 +1075,7 @@ class GameViewController: NSViewController, Loggable {
         selectedInfoLabel.reset()
         tileInfoLabel.reset()
         propertiesInfoLabel.reset()
-        
-        selectedInfoLabel.reset()
-        tileInfoLabel.reset()
-        propertiesInfoLabel.reset()
     }
-
 
     /// Update the tile property label. Called when the `Notification.Name.Tile.RenderModeChanged` notification is received.
     ///
@@ -1035,7 +1085,6 @@ class GameViewController: NSViewController, Loggable {
         guard let tile = notification.object as? SKTile else { return }
         propertiesInfoLabel.stringValue = tile.description
     }
-
 
     /// Callback when cache is updated.
     ///
@@ -1216,6 +1265,8 @@ class GameViewController: NSViewController, Loggable {
         //self.statsVisibleLabel.isHidden = (TiledGlobals.default.enableCameraCallbacks == false)
         self.statsObjectsLabel.isHidden = (renderStats.objectsVisible == false)
         self.statsObjectsLabel.stringValue = "Objects: \(renderStats.objectCount)"
+        self.statsTrackingViewsLabel.isHidden = (renderStats.trackingViews == 0)
+        self.statsTrackingViewsLabel.stringValue = "Tracking Views: \(renderStats.trackingViews)"
         self.statsCPULabel.attributedStringValue  = renderStats.processorAttributedString
         self.statsCacheSizeLabel.stringValue = "Cache Size: \(renderStats.cacheSize.description)"
 

@@ -104,6 +104,30 @@ extension TiledGeometryType {
 }
 
 
+#if os(macOS)
+
+/// :nodoc:
+extension TiledGeometryType where Self: SKNode {
+    
+    /// Addm this node's frame to the SpriteKit view's tracking views.
+    public func addTrackingView() {
+        guard let scene = scene,
+              let view = scene.view else {
+            return
+        }
+        
+        let options: NSTrackingArea.Options = [.mouseEnteredAndExited, .mouseMoved, .activeAlways, .cursorUpdate]
+        let userInfo: [String: Any] = ["className": className]
+        let trackingArea = NSTrackingArea(rect: boundingRect, options: options, owner: self, userInfo: userInfo)
+        view.addTrackingArea(trackingArea)
+    }
+}
+
+#endif
+
+
+
+
 /// :nodoc:
 extension SKNode {
 
@@ -131,7 +155,7 @@ extension SKNode {
         return touchedNode === self || touchedNode.inParentHierarchy(self)
     }
 
-    /// Returns an array of all visible **Tiled** nodes that intersect a given point.
+    /// Returns an array of all visible **Tiled** geometry nodes (tiles, objects) that intersect a given point.
     ///
     /// - Parameter location: A point in the node’s coordinate system.
     /// - Returns: array of **Tiled** nodes at the given location.
@@ -141,16 +165,8 @@ extension SKNode {
 
     #if os(macOS)
     
-    /// Returns an array of all visible **Tiled** nodes that intersect the given mouse event.
-    ///
-    /// - Parameter event: mouse event.
-    /// - Returns: array of **Tiled** nodes at the event location.
-    public func tiledNodes(with event: NSEvent) -> [TiledGeometryType] {
-        return tiledNodes(at: event.location(in: self))
-    }
-    
     // FIXME: this is overiding derivative classes
-
+    
     /// Returns the object class name.
     public override var className: String {
         let objtype = String(describing: type(of: self))
@@ -160,7 +176,24 @@ extension SKNode {
         return objtype
     }
     
+    /// Returns an array of all visible **Tiled** nodes that intersect the given mouse event.
+    ///
+    /// - Parameter event: mouse event.
+    /// - Returns: array of **Tiled** nodes at the event location.
+    public func tiledNodes(with event: NSEvent) -> [TiledGeometryType] {
+        return tiledNodes(at: event.location(in: self))
+    }
+    
     #elseif os(iOS) || os(tvOS)
+    
+    /// Returns the object class name.
+    public var className: String {
+        let objtype = String(describing: type(of: self))
+        if let suffix = objtype.components(separatedBy: ".").last {
+            return suffix
+        }
+        return objtype
+    }
     
     /// Returns an array of all visible **Tiled** nodes that intersect the given mouse event.
     ///
@@ -175,11 +208,6 @@ extension SKNode {
     /// Returns true if the object is a tile or object.
     public var isHighlightable: Bool {
         return (self as? SKTileObject != nil) || (self as? SKTile != nil)
-    }
-
-    /// Returns true if the object is a tiled layer object.
-    public var isLayerType: Bool {
-        return (self as? TiledLayerObject != nil)
     }
 
     /// Returns the frame rectangle of the layer (used to draw bounds).
@@ -217,105 +245,7 @@ extension SKNode {
     /// - Parameters:
     ///   - color: highlight color.
     ///   - duration: duration of highlight effect.
-    @objc public func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
-
-        // FIXME: this is a mess
-        let removeHighlight: Bool = (color == SKColor.clear)
-        let highlightFillColor = (removeHighlight == false) ? color.withAlphaComponent(0.2) : color
-        
-        let baseLineWidth: CGFloat = 1
-        let lineWidthForScale = baseLineWidth * TiledGlobals.default.contentScale
-        
-        // MARK: SPRITES
-        
-        if let sprite = self as? SKSpriteNode {
-
-            var spritecolor = color
-            var colorblendfactor: CGFloat = (removeHighlight == false) ? 1 : 0
-            if let tiledSprite = sprite as? SKTile {
-
-                if tiledSprite.tintColor != nil {
-                    colorblendfactor = 1
-
-                    if removeHighlight == true {
-                        spritecolor = tiledSprite.tintColor!
-                    }
-                }
-            }
-
-            sprite.color = spritecolor
-            sprite.colorBlendFactor = colorblendfactor
-
-            // tiles...
-            if let tiledGeo = sprite as? TiledGeometryType {
-                if (removeHighlight == false) {
-                    tiledGeo.boundsShape?.isHidden = false
-                    tiledGeo.boundsShape?.strokeColor = color
-                    tiledGeo.boundsShape?.lineWidth = lineWidthForScale
-                    tiledGeo.boundsShape?.zPosition = zPosition + 1000
-                } else {
-                    tiledGeo.boundsShape?.strokeColor = SKColor.clear
-                    tiledGeo.boundsShape?.fillColor = SKColor.clear
-                    sprite.removeAnchor()
-                }
-            }
-
-            if (duration > 0) {
-                let fadeInAction = SKAction.colorize(withColorBlendFactor: 1, duration: duration)
-                let groupAction = SKAction.group(
-                    [
-                        fadeInAction,
-                        SKAction.wait(forDuration: duration),
-                        fadeInAction.reversed()
-                    ]
-                )
-
-                sprite.run(groupAction, completion: {
-                    if let tiledSprite = sprite as? TiledGeometryType {
-                        tiledSprite.boundsShape?.strokeColor = SKColor.clear
-                        sprite.removeAnchor()
-                    }
-                })
-            }
-            return
-        }
-        
-        // MARK: SHAPES
-
-        if let shape = self as? SKShapeNode {
-            if let tiledObj = shape as? SKTileObject {
-                tiledObj.proxy?.highlightNode(with: color, duration: duration)
-                if (duration > 0) {
-                    
-                    let boundsRemoveAction = SKAction.run {
-                        tiledObj.boundsShape?.strokeColor = SKColor.clear
-                        tiledObj.boundsShape?.fillColor = SKColor.clear
-                        tiledObj.removeAnchor()
-                    }
-                    
-                    let groupAction = SKAction.group(
-                        [
-                            SKAction.wait(forDuration: duration),
-                            boundsRemoveAction
-                        ]
-                    )
-                    
-                    tiledObj.run(groupAction)
-                    
-                }
-            } else {
-                shape.strokeColor = color
-                shape.lineWidth = lineWidthForScale
-                shape.fillColor = highlightFillColor
-                shape.isAntialiased = false
-                if (duration > 0) {
-                    shape.run(SKAction.colorFadeAction(after: duration))
-                    shape.removeAnchor()
-                }
-                return
-            }
-        }
-    }
+    @objc public func highlightNode(with color: SKColor, duration: TimeInterval = 0) {}
 
     /// Remove the current object's highlight color.
     public func removeHighlight() {
@@ -354,7 +284,7 @@ extension SKNode {
 
             if (duration > 0) {
                 shape.run(SKAction.run {
-                    shape.isHidden = true
+                    shape.strokeColor = SKColor.clear
                 })
             }
         }
@@ -366,6 +296,17 @@ extension SKNode {
             let fColor = TiledGlobals.default.debugDisplayOptions.frameColor
             let duration = TiledGlobals.default.debugDisplayOptions.highlightDuration
             drawNodeBounds(with: fColor, lineWidth: 1, fillOpacity: 0, duration: duration)
+        }
+    }
+    
+    public func removeNodeBounds() {
+        if let tiledNode = self as? TiledGeometryType {
+            guard let shape = tiledNode.boundsShape else {
+                return
+            }
+            
+            shape.isHidden = true
+            shape.strokeColor = SKColor.clear
         }
     }
 }

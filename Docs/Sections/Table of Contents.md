@@ -106,6 +106,7 @@
 - [Find Tiles with Property](working-with-tiles.html#find-tiles-with-property)
 - [Adding and Removing Tiles](working-with-tiles.html#adding-and-removing-tiles)
 - [Refreshing Tile Content](working-with-tiles.html#refreshing-tile-content)
+- [Creating New Tiles](working-with-tiles.html#creating-new-tiles)
 - [Copying Tiles](working-with-tiles.html#copying-tiles)
 - [Tile Shapes](working-with-tiles.html#tile-shapes)
 - [Tile Colors](working-with-tiles.html#tile-colors)
@@ -162,7 +163,8 @@
 - [Debug Draw Options](debugging.html#debug-draw-options)
 - [Visualizing Objects](debugging.html#visualizing-objects)
 - [Highlighting Tiles](debugging.html#highlighting-tiles)
-- [Map Statistics](debugging.html#map-statistics)
+- [Layer Statistics](debugging.html#layer-statistics)
+- [Tile Layer Statistics](debugging.html#tile-layer-statistics)
 
 ## [Troubleshooting](troubleshooting.html)
 

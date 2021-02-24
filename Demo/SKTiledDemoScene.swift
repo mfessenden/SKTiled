@@ -40,14 +40,11 @@ public class SKTiledDemoScene: SKTiledScene {
     /// Reference to demo scene manager.
     internal weak var demoController: TiledDemoController?
 
+    /// Reference to demo delegate.
+    internal weak var demoDelegate: TiledDemoDelegate? = TiledDemoDelegate.default
+    
     /// global information label font size.
     private let labelFontSize: CGFloat = 11
-
-    /// Currently focused layer.
-    internal weak var currentLayer: TiledLayerObject?
-
-    /// Currently focused proxy object.
-    internal weak var currentProxyObject: TileObjectProxy?
 
     /// Array of selected layers.
     internal var selected: [TiledLayerObject] = []
@@ -797,7 +794,6 @@ extension SKTiledDemoScene {
             print("  -  '\(tilemap.description)'")
             print("  -  '\(tilemap.debugDescription)'")
             print("  -  '\(tilemap.tiledMenuItemDescription)' (menu)")
-            print("  -  '\(tilemap.tiledListDescription)' (list)")
             
             
             for layer in tilemap.getLayers() {
@@ -805,7 +801,6 @@ extension SKTiledDemoScene {
                 print("     -  '\(layer.description)'")
                 print("     -  '\(layer.debugDescription)'")
                 print("     -  '\(layer.tiledMenuItemDescription)' (menu)")
-                print("     -  '\(layer.tiledListDescription)' (list)")
             }
 
             updateCommandString("dumping debug descriptions...", duration: 3.0)
@@ -889,51 +884,53 @@ extension SKTiledDemoScene {
             updateCommandString("dumping selected node properties", duration: 3.0)
         }
 
+        
         // 'w' runs a debugging command
         if eventKey == 0xd {
-            tilemap.removeAllActions()
-            tilemap.removeFromParent()
-            self.tilemap = nil
-            updateCommandString("Removing tilemap...", duration: 3.0)
             
-            NotificationCenter.default.post(
-                name: Notification.Name.Demo.UpdateDebugging,
-                object: nil,
-                userInfo: ["mapInfo": "---"]
-            )
+            let coord = simd_int2(16, 1)
+            let tile = tilemap.tileLayers(named: "Level3").first?.tileAt(coord: coord)
+            tile?.destroy()
+            updateCommandString("Removing tile at \(coord.shortDescription)", duration: 3.0)
         }
         
-        // 'x' runs a debugging command
+        
+        // 'x' tweaks tile flip flags for the upper door in the dungeon map
         if eventKey == 0x7 {
-            mousePointer?.dumpStatistics()
-            mousePointer?.redraw()
-            updateCommandString("Dumping mouse pointer node...", duration: 3.0)
+            
+            let coord = simd_int2(16, 1)
+            if let tile = tilemap.tileLayers(named: "Level3").first?.tileAt(coord: coord) {
+                
+                tile.globalId = 2684354845
+                //tile.flipFlags = [.flipDiagonal, .flipHorizontal]
+                
+                //print("tile global id:         \(tile.globalId)")
+                //print("tile flip flags:        \(tile.flipFlags)")
+                //print("tile masked global id:  \(tile.maskedTileId)")
+                
+                print(tile.globalId, tile.flipFlags)
+                
+            }
+            updateCommandString("checking for tile at \(coord.shortDescription)", duration: 3.0)
         }
         
-        // 'y' runs a debugging command
+        // 'y' deletes selected nodes
         if eventKey == 0x10 {
-
-            var tilecount = 0
-
-            for tile in tilemap.getTiles() {
-                tilecount += 1
-                let sprite = tile.replaceWithSpriteCopy()
-                sprite.alpha = 0.25
+            var deleteCount = 0
+            if let currentNodes = demoDelegate?.currentNodes {
+                for node in currentNodes {
+                    node.destroy()
+                    deleteCount += 1
+                }
             }
-            
-            updateCommandString("replaced \(tilecount) tiles.", duration: 3.0)
-            
+
+            updateCommandString("deleted \(deleteCount) nodes.", duration: 3.0)
         }
         
         // 'z' runs a debugging command
         if eventKey == 0x6 {
-            for layer in tilemap.getLayers() {
-                let parentCount = layer.parents.count
-                let buffer = String(repeating: " ", count: parentCount)
-                print("\(buffer) - '\(layer.tiledListDescription)'")
-            }
             
-            updateCommandString("dumping tilemap layers", duration: 3.0)
+            updateCommandString("dumping layers via index", duration: 3.0)
         }
         
         // 'clear' clears the current selection
@@ -944,7 +941,7 @@ extension SKTiledDemoScene {
                 object: nil
             )
             
-            updateCommandString("clearing selection...", duration: 3.0)
+            updateCommandString("clearing selected nodes...", duration: 3.0)
         }
     }
 

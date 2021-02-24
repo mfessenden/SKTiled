@@ -41,6 +41,7 @@ import SpriteKit
 }
 
 
+
 // TODO: implement this
 public struct DebugDrawProperties {
     
@@ -144,7 +145,6 @@ extension DebugDrawableType {
 
 
 extension DebugDrawOptions {
-
 
     /// Descriptor values for each option.
     public var strings: [String] {

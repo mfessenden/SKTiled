@@ -283,6 +283,7 @@ public class SKObjectGroup: TiledLayerObject {
 
     /// Render all of the objects in the group.
     public func draw() {
+        print("⭑ [SKObjectGroup]: drawing...")
         objects.forEach { $0.draw() }
     }
 
@@ -515,8 +516,13 @@ public class SKObjectGroup: TiledLayerObject {
         attributes.append(("tiled element name", tiledElementName))
         attributes.append(("tiled node nice name", tiledNodeNiceName))
         attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
+        attributes.append(("tiled menu item description", #"\#(tiledMenuItemDescription)"#))
+        attributes.append(("tiled display description", #"\#(tiledDisplayItemDescription)"#))
         attributes.append(("tiled help description", tiledHelpDescription))
-
+        
+        attributes.append(("tiled description", description))
+        attributes.append(("tiled debug description", debugDescription))
+        
         return Mirror(self, children: attributes, ancestorRepresentation: .suppressed)
     }
 }
@@ -562,7 +568,7 @@ extension SKObjectGroup {
         return "objectgroup-icon"
     }
 
-    /// Returns a string representation for use with an outline.
+    /// A description of the node used in list or outline views.
     @objc public override var tiledListDescription: String {
         let nameString = "'\(layerName)'"
         let ccstring = (children.count == 0) ? ": (no children)" : ": (\(children.count) children)"

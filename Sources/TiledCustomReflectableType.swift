@@ -49,12 +49,15 @@ import SpriteKit
     /// Returns the internal **Tiled** node type icon.
     @objc optional var tiledIconName: String { get }
 
-    /// A description of the node used in list views.
+    /// A description of the node used in list or outline views.
     @objc optional var tiledListDescription: String { get }
 
-    /// A description of the node used in popup menus.
+    /// A description of the node used in dropdown & popu menus.
     @objc optional var tiledMenuItemDescription: String { get }
 
+    /// A description of the node used for debug output text.
+    @objc optional var tiledDisplayItemDescription: String { get }
+    
     /// Description of the node type.
     @objc optional var tiledHelpDescription: String { get }
 
@@ -110,7 +113,14 @@ extension SKLabelNode: TiledCustomReflectableType {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
         return "Label\(nameString)"
     }
-
+    
+    /// A description of the node used for debug output text.
+    @objc public var tiledDisplayItemDescription: String {
+        let nameString = (name != nil) ? ": '\(name!)'" : ""
+        let textString = (text != nil) ? ": '\(text!)'" : ""
+        return #"<\#(className)\#(nameString)\#(textString)>"#
+    }
+    
     /// A description of the node.
     @objc public var tiledHelpDescription: String {
         return "SpriteKit label node."
@@ -145,6 +155,12 @@ extension SKSpriteNode: TiledCustomReflectableType {
         return "Sprite\(nameString)"
     }
 
+    /// A description of the node used for debug output text.
+    @objc public var tiledDisplayItemDescription: String {
+        let nameString = (name != nil) ? ": '\(name!)'" : ""
+        return #"<\#(className)\#(nameString)>"#
+    }
+    
     /// A description of the node.
     @objc public var tiledHelpDescription: String {
         return "SpriteKit sprite node."
@@ -177,6 +193,12 @@ extension SKCropNode: TiledCustomReflectableType {
         return "Crop\(nameString)"
     }
 
+    /// A description of the node used for debug output text.
+    @objc public var tiledDisplayItemDescription: String {
+        let nameString = (name != nil) ? ": '\(name!)'" : ""
+        return #"<\#(className)\#(nameString)>"#
+    }
+    
     /// A description of the node.
     @objc public var tiledHelpDescription: String {
         return "SpriteKit crop node."
@@ -209,6 +231,12 @@ extension SKEffectNode: TiledCustomReflectableType {
         return "Effect\(nameString)"
     }
 
+    /// A description of the node used for debug output text.
+    @objc public var tiledDisplayItemDescription: String {
+        let nameString = (name != nil) ? ": '\(name!)'" : ""
+        return #"<\#(className)\#(nameString)>"#
+    }
+    
     /// A description of the node.
     @objc public var tiledHelpDescription: String {
         return "SpriteKit effect node. Used to contain content that may be rendered to a private buffer."
@@ -230,16 +258,22 @@ extension SKShapeNode: TiledCustomReflectableType {
         return "shape-icon"
     }
 
-    /// A description of the node.
+    /// A description of the node used in list or outline views.
     @objc public var tiledListDescription: String {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
         return "Shape\(nameString)"
     }
 
-    /// A description of the node.
+    /// A description of the node used in dropdown & popu menus.
     @objc public var tiledMenuItemDescription: String {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
         return "Shape\(nameString)"
+    }
+    
+    /// A description of the node used for debug output text.
+    @objc public var tiledDisplayItemDescription: String {
+        let nameString = (name != nil) ? ": '\(name!)'" : ""
+        return #"<\#(className)\#(nameString)>"#
     }
 
     /// A description of the node.
@@ -253,9 +287,10 @@ extension SKShapeNode: TiledCustomReflectableType {
 // MARK: - Deprecations
 
 
+/// :nodoc:
 extension SKTilemap {
 
-    /// A description of the node used in popup menus.
+    /// A description of the node used in dropdown & popu menus.
     @available(*, deprecated, renamed: "tiledMenuItemDescription")
     @objc public var tiledMenuDescription: String {
         return tiledMenuItemDescription
@@ -263,9 +298,10 @@ extension SKTilemap {
 }
 
 
+/// :nodoc:
 extension TiledLayerObject {
 
-    /// A description of the node used in popup menus.
+    /// A description of the node used in dropdown & popu menus.
     @available(*, deprecated, renamed: "tiledMenuItemDescription")
     @objc public override var tiledMenuDescription: String {
         return tiledMenuItemDescription
@@ -273,9 +309,10 @@ extension TiledLayerObject {
 }
 
 
+/// :nodoc:
 extension SKTile {
 
-    /// A description of the node used in popup menus.
+    /// A description of the node used in dropdown & popu menus.
     @available(*, deprecated, renamed: "tiledMenuItemDescription")
     @objc public override var tiledMenuDescription: String {
         return tiledMenuItemDescription
@@ -283,9 +320,10 @@ extension SKTile {
 }
 
 
+/// :nodoc:
 extension SKTileObject {
 
-    /// A description of the node used in popup menus.
+    /// A description of the node used in dropdown & popu menus.
     @available(*, deprecated, renamed: "tiledMenuItemDescription")
     @objc public override var tiledMenuDescription: String {
         return tiledMenuItemDescription
@@ -293,9 +331,10 @@ extension SKTileObject {
 }
 
 
+/// :nodoc:
 extension SKSpriteNode {
 
-    /// A description of the node used in popup menus.
+    /// A description of the node used in dropdown & popu menus.
     @available(*, deprecated, renamed: "tiledMenuItemDescription")
     @objc public var tiledMenuDescription: String {
         return tiledMenuItemDescription
@@ -303,9 +342,10 @@ extension SKSpriteNode {
 }
 
 
+/// :nodoc:
 extension SKCropNode {
 
-    /// A description of the node used in popup menus.
+    /// A description of the node used in dropdown & popu menus.
     @available(*, deprecated, renamed: "tiledMenuItemDescription")
     @objc public var tiledMenuDescription: String {
         return tiledMenuItemDescription
@@ -313,9 +353,10 @@ extension SKCropNode {
 }
 
 
+/// :nodoc:
 extension SKEffectNode {
 
-    /// A description of the node used in popup menus.
+    /// A description of the node used in dropdown & popu menus.
     @available(*, deprecated, renamed: "tiledMenuItemDescription")
     @objc public var tiledMenuDescription: String {
         return tiledMenuItemDescription
@@ -323,9 +364,10 @@ extension SKEffectNode {
 }
 
 
+/// :nodoc:
 extension SKShapeNode {
 
-    /// A description of the node used in popup menus.
+    /// A description of the node used in dropdown & popu menus.
     @available(*, deprecated, renamed: "tiledMenuItemDescription")
     @objc public var tiledMenuDescription: String {
         return tiledMenuItemDescription

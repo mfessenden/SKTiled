@@ -346,8 +346,8 @@
                                     </gridCell>
                                     <gridCell row="oXV-po-Xmr" column="u5L-GX-ZzS" id="ZdK-Cv-MCZ">
                                         <button key="contentView" identifier="gbl-rendercb-check" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cot-0t-yMB">
-                                            <rect key="frame" x="305" y="129" width="132" height="18"/>
-                                            <buttonCell key="cell" type="check" title="Render Callbacks" bezelStyle="regularSquare" imagePosition="left" enabled="NO" inset="2" id="n0N-e3-hmH">
+                                            <rect key="frame" x="305" y="129" width="213" height="18"/>
+                                            <buttonCell key="cell" type="check" title="Render Perofrmance Callbacks" bezelStyle="regularSquare" imagePosition="left" inset="2" id="n0N-e3-hmH">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>

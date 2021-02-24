@@ -27,7 +27,7 @@
 import SpriteKit
 
 
-/// The `MouseEventOptions` option set defines global debug display mouse filter options (macOS).
+/// The `MouseEventOptions` optionset defines global debug display mouse filter options (macOS).
 ///
 /// #### Properties
 ///
@@ -120,11 +120,6 @@ internal class MousePointer: SKNode {
         return TiledGlobals.default.debugDisplayOptions.mouseFilters
     }
 
-    /// Draw the tile local id.
-    var drawLocalID: Bool {
-        return mouseFilters.contains(.tileLocalID)
-    }
-
     /// Calculates the line count.
     var lineCount: Int {
         var result = 1   // 0 if not using winLabel
@@ -179,6 +174,7 @@ internal class MousePointer: SKNode {
 
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.TileUnderCursor, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.TileClicked, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.ObjectUnderCursor, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.ObjectClicked, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Globals.Updated, object: nil)
@@ -216,8 +212,10 @@ internal class MousePointer: SKNode {
     }
 
     func setupNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(tileUnderCursor), name: Notification.Name.Demo.TileUnderCursor, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(tileUnderMouseChanged), name: Notification.Name.Demo.TileUnderCursor, object: nil)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(tileClicked), name: Notification.Name.Demo.TileClicked, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(objectUnderMouseChanged), name: Notification.Name.Demo.ObjectUnderCursor, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(objectClicked), name: Notification.Name.Demo.ObjectClicked, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionCleared), name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(globalsUpdatedAction), name: Notification.Name.Globals.Updated, object: nil)
@@ -242,7 +240,8 @@ internal class MousePointer: SKNode {
 
         isValidCoordinate = isValidCoord
         _currentCoordinate = mapFocusedCoordinate
-        //redraw()
+        //currentTile = nil
+        redraw()
     }
     
     /// Set the current tile value. Called when the `Notification.Name.Demo.NodeSelectionCleared` notification is received.
@@ -258,12 +257,14 @@ internal class MousePointer: SKNode {
     /// Set the current tile value. Called when the `Notification.Name.Demo.TileUnderCursor` notification is received.
     ///
     /// - Parameter notification: event notification.
-    @objc func tileUnderCursor(notification: Notification) {
+    @objc func tileUnderMouseChanged(notification: Notification) {
         //notification.dump(#fileID, function: #function)
         guard let tile = notification.object as? SKTile else {
             return
         }
+        
         currentTile = tile
+        currentObject = nil
         redraw()
     }
 
@@ -279,6 +280,19 @@ internal class MousePointer: SKNode {
         redraw()
     }
     
+    /// Set the current object value. Called when the `Notification.Name.Demo.ObjectUnderCursor` notification is received.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func objectUnderMouseChanged(notification: Notification) {
+        //notification.dump(#fileID, function: #function)
+        guard let object = notification.object as? SKTileObject else {
+            return
+        }
+        
+        currentTile = nil
+        currentObject = object
+        redraw()
+    }
     /// Set the current tile value. Called when the `Notification.Name.Demo.TileClicked` notification is received.
     ///
     /// - Parameter notification: event notification.
@@ -287,6 +301,7 @@ internal class MousePointer: SKNode {
         guard let object = notification.object as? SKTileObject else {
             return
         }
+        currentTile = nil
         currentObject = object
         redraw()
     }
@@ -296,8 +311,6 @@ internal class MousePointer: SKNode {
     /// - Parameter notification: event notification.
     @objc func globalsUpdatedAction(notification: Notification) {
         //notification.dump(#fileID, function: #function)
-        let mousePointerEnabled = TiledGlobals.default.debugDisplayOptions.mouseFilters.enableMousePointer
-        isHidden = !mousePointerEnabled
         redraw()
     }
 
@@ -315,7 +328,8 @@ internal class MousePointer: SKNode {
             isHidden = true
             return
         }
-
+        
+        isHidden = false
         rootNode.position = rootOffset
         
         let sceneSize = tiledScene.size   // 640x480
@@ -362,10 +376,6 @@ internal class MousePointer: SKNode {
         } else {
             winLabel?.isHidden = true
         }
-        
-        //winLabel?.position.y = CGFloat(lineCount / 1.5) * self.fontSize + self.fontSize
-        
-        
         
         if (mouseFilters.isShowingScenePosition == true) {
             sceneLabel?.isHidden = false
@@ -423,8 +433,7 @@ internal class MousePointer: SKNode {
             if let currentTile = currentTile {
 
                 let td = currentTile.tileData
-                let idsIdentical = (td.id == td.globalID)
-
+            
                 var globalIDString = "\(td.globalID)"
                 var originalIDString: String? = nil
                 var idColor = color
@@ -451,7 +460,7 @@ internal class MousePointer: SKNode {
 
 
                 // contruct the first part of the label
-                let tileDataString = (idsIdentical == true) ? "tile gid: " : (drawLocalID == true) ? "tile id: \(td.id), gid: " : "tile gid: "
+                let tileDataString = "tile gid: "
                 let labelStringFirst = NSMutableAttributedString(string: tileDataString, attributes: defaultLabelAttributes)
                 outputString.append(labelStringFirst)
 
@@ -478,6 +487,8 @@ internal class MousePointer: SKNode {
                     tileLabel?.text = outputString.string
                 }
                 labelIndex += 1
+            } else {
+                tileLabel?.text = "~"
             }
         }
         
@@ -502,6 +513,11 @@ internal class MousePointer: SKNode {
     }
 
     func redraw() {
+        guard (TiledGlobals.default.debugDisplayOptions.mouseFilters.enableMousePointer == true) else {
+            isHidden = true
+            return
+        }
+        isHidden = false
         postitionLabels()
     }
 }

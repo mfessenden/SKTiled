@@ -136,9 +136,6 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     /// Layer index. Matches the **id value** of the layer in the source TMX file.
     public var index: UInt32 = 0
 
-    /// Position in the render tree.
-    public var rawIndex: UInt32 = 0
-
     /// Flattened layer index (internal use only).
     internal var realIndex: UInt32 {
         guard let firstIndex = tilemap.layers.firstIndex(where: { $0 === self }) else {
@@ -389,20 +386,45 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 
     // MARK: - Geometry
 
-    /// Returns the frame rectangle of the layer (used to draw bounds).
+    /// Returns the layer bounding rectangle (used to draw bounds).
     @objc public override var boundingRect: CGRect {
         
-        // TODO: implement this; see Tiled renderer implementations
-        let boundsOffset = CGPoint.zero
+        /*
+        switch orientation {
+            case .orthogonal:
+                return CGRect(x: 0, y: 0, width: width * tileWidth, height: height * tileHeight)
+                
+            case .isometric:
+                
+                /*
+             const int tileWidth = map()->tileWidth();
+             const int tileHeight = map()->tileHeight();
+             
+             const int originX = map()->height() * tileWidth / 2;
+             const QPoint pos((rect.x() - (rect.y() + rect.height()))
+             * tileWidth / 2 + originX,
+             (rect.x() + rect.y()) * tileHeight / 2);
+             
+             const int side = rect.height() + rect.width();
+             const QSize size(side * tileWidth / 2,
+             side * tileHeight / 2);
+             
+             return QRect(pos, size);
+                */
+                
+                let originX: CGFloat = mapSize.height * tileWidth / 2
+                let layerorigin = CGPoint(x: originX, y: 0)
+                let side =
+                
+            case .hexagonal, .staggered:
+        }*/
         
-        
-        
-        
-        return CGRect(x: boundsOffset.x, y: boundsOffset.y, width: sizeInPoints.width, height: -sizeInPoints.height)
+        return CGRect(x: 0, y: 0, width: sizeInPoints.width, height: -sizeInPoints.height)
     }
 
-    /// Returns a rectangle in this node's parent's coordinate system.
+    /// Returns a rectangle in this node's parent's coordinate system. Currently only used in the `SKTilemap.absoluteSize` attribute.
     public override var frame: CGRect {
+        print("⭑ calculating layer frame...")
         let px = parent?.position.x ?? position.x
         let py = parent?.position.y ?? position.y
         return CGRect(center: CGPoint(x: px, y: py), size: sizeInPoints)
@@ -435,8 +457,23 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     public var updateMode: TileUpdateMode {
         return tilemap.updateMode
     }
-
-
+    
+    /// Indicates the current node has received focus or selected.
+    public var isFocused: Bool = false {
+        didSet {
+            guard isFocused != oldValue else {
+                return
+            }
+            
+            if (isFocused == true) {
+                
+            } else {
+                
+            }
+            
+        }
+    }
+    
     // MARK: - Initialization
 
     ///  Initialize via the tilemap parser.
@@ -608,11 +645,16 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         self.color = SKColor(hexString: hexString)
     }
 
-    // MARK: - Children
+    // MARK: - Parents/Children
 
     /// Returns an array of child layers.
     public var layers: [TiledLayerObject] {
         return [self]
+    }
+    
+    /// Returns an array of parent layers.
+    public var parentLayers: [TiledLayerObject] {
+        return parents.filter { $0 as? TiledLayerObject != nil} as! [TiledLayerObject]
     }
 
     #if os(iOS) || os(tvOS)
@@ -696,7 +738,10 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     ///   - coord: tile coordinate.
     ///   - offset: offset amount.
     ///   - zpos: optional z-position.
-    public func addChild(_ node: SKNode, coord: simd_int2, offset: CGPoint = CGPoint.zero, zpos: CGFloat? = nil) {
+    public func addChild(_ node: SKNode,
+                         coord: simd_int2,
+                         offset: CGPoint = CGPoint.zero,
+                         zpos: CGFloat? = nil) {
         addChild(node)
         node.position = pointForCoordinate(coord: coord, offsetX: offset.y, offsetY: offset.y)
         node.position.x += offset.x
@@ -712,7 +757,12 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     ///   - y: y-coordinate.
     ///   - offset: offset amount.
     ///   - zpos: optional z-position.
-    public func addChild(_ node: SKNode, x: Int = 0, y: Int = 0, offset: CGPoint = CGPoint.zero, zpos: CGFloat? = nil) {
+    public func addChild(_ node: SKNode,
+                         x: Int = 0,
+                         y: Int = 0,
+                         offset: CGPoint = CGPoint.zero,
+                         zpos: CGFloat? = nil) {
+        
         let coord = simd_int2(x: Int32(x), y: Int32(y))
         addChild(node, coord: coord, offset: offset, zpos: zpos)
     }
@@ -802,24 +852,29 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
                            tileSize: tileSize
         )
     }
-
-
     /// Toggle layer isolation on/off.
     ///
     /// - Parameter duration: effect duration.
     public func isolateLayer(duration: TimeInterval = 0) {
-        let hideLayers = (self.isolated == false)
+        
+        /// if `isolated` attribute is not set currently, we're going to hide everything else
+        let hideLayers = self.isolated == false
 
         let layersToIgnore = self.parents
         let layersToProtect = self.childLayers
-
+        
+        // show/hide actions
+        let fadeOutAction = SKAction.fadeOut(withDuration: duration)
+        let fadeInAction  = SKAction.fadeIn(withDuration: duration)
+        
+        
         tilemap.layers.filter { (layersToIgnore.contains($0) == false) && (layersToProtect.contains($0) == false)}.forEach { layer in
 
             if (duration == 0) {
                 layer.isHidden = hideLayers
                 layer.isolated = (hideLayers == true)
             } else {
-                let fadeAction = (hideLayers == true) ? SKAction.fadeOut(withDuration: duration) : SKAction.fadeIn(withDuration: duration)
+                let fadeAction = (hideLayers == true) ? fadeOutAction : fadeInAction
                 layer.run(fadeAction, completion: {
                     layer.isHidden = hideLayers
                     layer.alpha = 1
@@ -828,7 +883,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
             }
         }
 
-        self.isolated = !self.isolated
+        self.isolated.toggle()
     }
 
     /// Render the layer to a texture.
@@ -914,7 +969,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 
     /// Returns a custom mirror for this layer.
     public var customMirror: Mirror {
-        let attributes: [(label: String?, value: Any)] = [
+        var attributes: [(label: String?, value: Any)] = [
             (label: "path", value: path),
             (label: "uuid", uuid),
             (label: "xPath", value: xPath),
@@ -926,6 +981,18 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
             (label: "properties", value: mirrorChildren())
         ]
 
+        
+        
+        /// internal debugging attrs
+        attributes.append(("tiled node nice name", tiledNodeNiceName))
+        attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
+        attributes.append(("tiled menu item description", #"\#(tiledMenuItemDescription)"#))
+        attributes.append(("tiled display description", #"\#(tiledDisplayItemDescription)"#))
+        attributes.append(("tiled help description", tiledHelpDescription))
+        
+        attributes.append(("tiled description", description))
+        attributes.append(("tiled debug description", debugDescription))
+        
         return Mirror(self, children: attributes, ancestorRepresentation: .suppressed)
     }
 }
@@ -987,7 +1054,13 @@ extension TiledLayerObject {
     ///   - dx: offset x-amount.
     ///   - dy: offset y-amount.
     ///   - zpos: z-position (optional).
-    public func addChild(_ node: SKNode, _ x: Int, _ y: Int, dx: CGFloat = 0, dy: CGFloat = 0, zpos: CGFloat? = nil) {
+    public func addChild(_ node: SKNode,
+                         _ x: Int,
+                         _ y: Int,
+                         dx: CGFloat = 0,
+                         dy: CGFloat = 0,
+                         zpos: CGFloat? = nil) {
+        
         let coord = simd_int2(x: Int32(x), y: Int32(y))
         let offset = CGPoint(x: dx, y: dy)
         addChild(node, coord: coord, offset: offset, zpos: zpos)
@@ -1001,12 +1074,16 @@ extension TiledLayerObject {
     ///   - offsetX: x-offset value.
     ///   - offsetY: y-offset value.
     /// - Returns: position in layer.
-    public func pointForCoordinate(_ x: Int, _ y: Int, offsetX: CGFloat = 0, offsetY: CGFloat = 0) -> CGPoint {
+    public func pointForCoordinate(_ x: Int,
+                                   _ y: Int,
+                                   offsetX: CGFloat = 0,
+                                   offsetY: CGFloat = 0) -> CGPoint {
+        
         let coord = simd_int2(x: Int32(x), y: Int32(y))
         return self.pointForCoordinate(coord: coord, offsetX: offsetX, offsetY: offsetY)
     }
 
-    /// Returns a point for a given coordinate in the layer, with optional offset.
+    /// Returns a point for a given coordinate in the layer, with optional offset value.
     ///
     /// - Parameters:
     ///   - coord: tile coordinate.
@@ -1020,7 +1097,7 @@ extension TiledLayerObject {
     ///
     /// - Parameters:
     ///   - coord: tile coordinate.
-    ///   - tileOffset: tile offset hint
+    ///   - tileOffset: tile offset hint.
     /// - Returns: point in layer.
     public func pointForCoordinate(coord: simd_int2, tileOffset: TiledLayerObject.TileOffset = .center) -> CGPoint {
         var offset = CGPoint(x: 0, y: 0)
@@ -1099,8 +1176,9 @@ extension TiledLayerObject {
 /// :nodoc:
 extension TiledLayerObject {
 
-
-    /// Returns a string representation for use with an outline.
+    /// A description of the node used in list or outline views.
+    ///
+    ///  'Tile Layer 'Level2' (46 tiles)'
     @objc public override var tiledListDescription: String {
         let parentCount = parents.count
         let isGrouped: Bool = (parentCount > 1)
@@ -1114,10 +1192,28 @@ extension TiledLayerObject {
         let filler = (isGrouped == true) ? String(repeating: "   ", count: parentCount - 1) : ""
         return "\(filler)\(layerSymbol) \(layerName)"
     }
-
-    /// Returns a string representation for use with a dropdown menu.
+    
+    /// A description of the node used in dropdown & popu menus
+    ///
+    ///  'Tile Layer 'Level2' (46 tiles)'
     @objc public override var tiledMenuItemDescription: String {
-        return description
+        let parentCount = parents.count
+        let isGrouped: Bool = (parentCount > 1)
+        var layerSymbol: String = layerType.symbol
+        let isGroupNode = (layerType == TiledLayerType.group)
+        let hasChildren: Bool = (childLayers.isEmpty == false)
+        if (isGroupNode == true) {
+            layerSymbol = (hasChildren == true) ? "▿" : "▹"
+        }
+        
+        let filler = (isGrouped == true) ? String(repeating: "  ", count: parentCount - 1) : ""
+        return "\(filler)\(layerSymbol) \(layerName)"
+    }
+    
+    /// A description of the node used for debug output text.
+    @objc public override var tiledDisplayItemDescription: String {
+        let nameString = (name != nil) ? " '\(name!)'" : ""
+        return #"<\#(className)\#(nameString)>"#
     }
 }
 
@@ -1173,11 +1269,14 @@ extension TiledLayerObject {
         })
     }
 
-    /// Returns a string array representing the current layer name & index.
-    public var layerStatsDescription: [String] {
+    /// Returns a string array containing the current layer statistics.
+    ///
+    /// - Returns: array of statistics.
+    public var layerOneLineDescrption: [String] {
         let digitCount: Int = self.tilemap.lastIndex.digitCount + 1
 
-        let parentNodes = self.parents
+        // get the number of parent nodes above this one
+        let parentNodes = self.parents.filter { $0 != self }
         let isGrouped: Bool = (parentNodes.count > 1)
         let isGroupNode: Bool = (self as? SKGroupLayer != nil)
 
@@ -1435,7 +1534,14 @@ extension TiledLayerObject {
 
 
 extension TiledLayerObject {
-
+    
+    
+    /// Layer position in the render tree.
+    @available(*, deprecated, message: "This was never fully implemented. The `TiledLayerObject.realIndex` attribute might be more useful.")
+    public var rawIndex: UInt32 {
+        return 0
+    }
+    
     /// Container size (in tiles).
     @available(*, deprecated, renamed: "mapSize")
     public internal(set) var size: CGSize {
@@ -1444,5 +1550,13 @@ extension TiledLayerObject {
         } set {
             mapSize = newValue
         }
+    }
+    
+    /// Returns a string array containing the current layer statistics.
+    ///
+    /// - Returns: array of statistics.
+    @available(*, deprecated, renamed: "layerOneLineDescrption")
+    public var layerStatsDescription: [String] {
+        return layerOneLineDescrption
     }
 }

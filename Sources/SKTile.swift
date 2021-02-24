@@ -121,11 +121,16 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         }
     }
 
-    /// ## Overview
+    /// Returns the tile data "real value" (global id with flags mask). If tile flip flags have been set in **Tiled**, this value will match the value set in the parent layer's tile data array.
     ///
-    /// Returns the tile data "real value" (global id with flags mask).
+    ///  For example, a value of **2684354571** translates to a global id of **11**, flipped horizontally & diagonally.
     ///
-    ///  For example, a value of 2684354571 indicates a global id of 11, flipped horizontally & diagonally.
+    /// ```swift
+    /// tile.globalId = 11
+    /// tile.flipFlags = [.flipHorizontal, .flipDiagonal]
+    /// print(tile.maskedTileId)
+    /// // 2684354571
+    /// ```
     public var maskedTileId: UInt32 {
         return _globalId.realValue
     }
@@ -175,9 +180,20 @@ open class SKTile: SKSpriteNode, CustomReflectable {
 
     // MARK: - Tile Handlers
 
+    /// Indicates the current node has received focus or selected.
+    public var isFocused: Bool = false {
+        didSet {
+            guard isFocused != oldValue else {
+                return
+            }
 
-    /// If this node has been interacted with, this will show it.
-    internal var hasFocus: Bool = false
+            if (isFocused == true) {
+
+            } else {
+
+            }
+        }
+    }
 
 
     #if os(macOS)
@@ -294,7 +310,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         }
     }
 
-    // MARK: - Bounds
+    // MARK: - Geometry
 
     /// Tile object offset.
     internal var boundsOffset: CGPoint = CGPoint.zero
@@ -352,13 +368,16 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     /// - Parameter offset: point offset value.
     /// - Returns: array of bounding shape points.
     @objc open override func getVertices(offset: CGPoint = CGPoint.zero) -> [CGPoint] {
-        var vertices: [CGPoint] = []
-        guard let tileLayer = layer else {
-            return vertices
+        guard let tileLayer = layer,
+              let parent = parent else {
+            return boundingRect.points
         }
 
-        let tileSizeHalved = CGSize(width: tileLayer.tileSize.halfWidth, height: tileLayer.tileSize.halfHeight)
 
+        //return boundingRect.points.map( { parent?.convert($0, from: parent)} )
+
+        var vertices: [CGPoint] = []
+        let tileSizeHalved = CGSize(width: tileLayer.tileSize.halfWidth, height: tileLayer.tileSize.halfHeight)
 
         /// if this is a tile object, the object anchor lies at the first point (typically bottom-left)
         if let parentObj = object {
@@ -374,13 +393,11 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         switch tileLayer.orientation {
 
             case .orthogonal:
-
                 var origin = CGPoint(x: -tileSizeHalved.width, y: tileSizeHalved.height)
 
                 // adjust for tileset.tileOffset here
                 origin.x += tileData.tileOffset.x
                 vertices = rectPointArray(tileSize, origin: origin)
-                //vertices = vertices.map { $0.invertedY }
 
             case .isometric, .staggered:
                 vertices = [
@@ -433,46 +450,21 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         return offsetVertices
     }
 
-    /// Describes the tile's physics shape.
-    ///
-    /// ### Properties
-    ///
-    /// - `none`: No physics shape.
-    /// - `rectangle`: Rectangular object shape.
-    /// - `ellipse`: Circular object shape.
-    /// - `texture`: Texture-based shape.
-    /// - `path`: Open path.
-    ///
-    public enum PhysicsShape {
-        case none
-        case rectangle
-        case ellipse
-        case texture
-        case path
-    }
-
-    /// Physics body shape.
-    open var physicsShape: PhysicsShape = PhysicsShape.none
-
     /// Tile positioning hint.
     internal var alignment: TileAlignmentHint = TileAlignmentHint.bottomLeft
 
     /// Returns the bounding box of the shape.
     open override var boundingRect: CGRect {
-        return CGRect(x: 0, y: 0, width: tileSize.width, height: -tileSize.height)
+        return CGRect(x: anchorPoint.x, y: anchorPoint.y, width: tileSize.width, height: -tileSize.height)
     }
 
     /// Tile object size.
     internal var objectSize: CGSize?
 
-    // TODO: this isn't used anywhere ⬇︎
-
-    /// Tile animation.
-    internal var objectAnimation: SKAction?
 
     // MARK: - Initialization
 
-    /// Initialize the tile object with `SKTilesetData` data.
+    /// Instantiate the tile with `SKTilesetData` data instance.
     ///
     /// - Parameter data: tile data structure.
     required public init?(data: SKTilesetData) {
@@ -499,9 +491,15 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         tileSize = CGSize.zero
         super.init(coder: aDecoder)
         isUserInteractionEnabled = true
+
+        // TODO: check for crash here
+        NotificationCenter.default.post(
+            name: Notification.Name.Tile.TileCreated,
+            object: self
+        )
     }
 
-    /// Initialize an empty tile.
+    /// Instantiate an empty tile.
     required public init() {
         // create empty tileset data
         tileData = SKTilesetData()
@@ -509,6 +507,12 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         super.init(texture: SKTexture(), color: SKColor.clear, size: tileSize)
         colorBlendFactor = 0
         isUserInteractionEnabled = true
+
+        // TODO: check for crash here
+        NotificationCenter.default.post(
+            name: Notification.Name.Tile.TileCreated,
+            object: self
+        )
     }
 
     /// Initialize the tile with a tile size.
@@ -521,6 +525,12 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         super.init(texture: SKTexture(), color: SKColor.clear, size: tileSize)
         colorBlendFactor = 0
         isUserInteractionEnabled = true
+
+        // TODO: check for crash here
+        NotificationCenter.default.post(
+            name: Notification.Name.Tile.TileCreated,
+            object: self
+        )
     }
 
     /// Initialize the tile with a tile texture.
@@ -533,6 +543,12 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         super.init(texture: texture, color: SKColor.clear, size: tileSize)
         colorBlendFactor = 0
         isUserInteractionEnabled = true
+
+        // TODO: check for crash here
+        NotificationCenter.default.post(
+            name: Notification.Name.Tile.TileCreated,
+            object: self
+        )
     }
 
     deinit {
@@ -540,6 +556,68 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         object = nil
         removeAllActions()
         removeAllChildren()
+    }
+
+    /// Removes this node from the scene graph. Signals the tile cache to remove.
+    open override func destroy() {
+
+        // remove from cache
+        NotificationCenter.default.post(
+            name: Notification.Name.Tile.TileDestroyed,
+            object: self
+        )
+
+        // remove from the parent layer
+        if let tileLayer = layer as? SKTileLayer {
+            if let thisTile = tileLayer.tileAt(coord: currentCoordinate) {
+                if (thisTile == self) {
+                    tileLayer.removeTile(at: currentCoordinate)
+                }
+            }
+        }
+
+        removeAnimationActions()
+        super.destroy()
+    }
+
+    /// Creates and returns a new tile instance with the given tileset & global id.
+    ///
+    /// - Parameters:
+    ///   - globalID: tile global id.
+    ///   - tileset: tileset instance.
+    /// - Returns: tile object with the given data.
+    public class func newTile(globalID: UInt32, in tileset: SKTileset) -> SKTile {
+        guard let tile = tileset.newTile(globalID: globalID) else {
+            return SKTile()
+        }
+
+        // add to tile cache
+        NotificationCenter.default.post(
+            name: Notification.Name.Tile.TileCreated,
+            object: tile
+        )
+
+        return tile
+    }
+
+    /// Creates and returns a new tile instance with the given tileset & local id.
+    ///
+    /// - Parameters:
+    ///   - localID: tileset local id.
+    ///   - tileset: tileset instance.
+    /// - Returns: tile object with the given data.
+    public class func newTile(localID: UInt32, in tileset: SKTileset) -> SKTile {
+        guard let tile = tileset.newTile(localID: localID) else {
+            return SKTile()
+        }
+
+        // add to tile cache
+        NotificationCenter.default.post(
+            name: Notification.Name.Tile.TileCreated,
+            object: tile
+        )
+
+        return tile
     }
 
     // MARK: - Drawing
@@ -554,6 +632,27 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     }
 
     // MARK: - Physics
+
+    /// Describes the tile's physics shape.
+    ///
+    /// ### Properties
+    ///
+    /// - `none`: No physics shape.
+    /// - `rectangle`: Rectangular object shape.
+    /// - `ellipse`: Circular object shape.
+    /// - `texture`: Texture-based shape.
+    /// - `path`: Open path.
+    ///
+    public enum PhysicsShape {
+        case none
+        case rectangle
+        case ellipse
+        case texture
+        case path
+    }
+
+    /// Physics body shape.
+    open var physicsShape: PhysicsShape = PhysicsShape.none
 
     /// Set up the tile's dynamics body.
     ///
@@ -839,7 +938,6 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     ///
     /// - Parameter event: mouse event.
     open override func mouseDown(with event: NSEvent) {
-        
         // guard (TiledGlobals.default.enableMouseEvents == true) else { return }
         if contains(touch: event.location(in: self)) {
             // for demo, this calls `Notification.Name.Demo.TileClicked`
@@ -847,8 +945,22 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         }
     }
 
+    open override func mouseEntered(with event: NSEvent) {
+        print("tile entered!")
+    }
+
+    open override func mouseExited(with event: NSEvent) {
+        print("tile exited!")
+    }
+
+
     #elseif os(iOS)
 
+    /// Tells this object that one or more new touches occurred in a view or window.
+    ///
+    /// - Parameters:
+    ///   - touches: a set of touch instances.
+    ///   - event: the touch event the touches belong to.
     open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             if contains(touch: touch.location(in: self)) {
@@ -944,7 +1056,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     public var customMirror: Mirror {
 
         var attributes: [(label: String?, value: Any)] = [
-            (label: "type", value: type as Any),
+            //(label: "type", value: type as Any),
             (label: "global id", value: _globalId),
             (label: "tile size", value: tileSize),
             (label: "renderMode", value: renderMode),
@@ -974,14 +1086,24 @@ open class SKTile: SKSpriteNode, CustomReflectable {
             attributes.append(("layer", layer.layerDataStruct()))
         }
 
-
+        
+        if let tiletype = type {
+            attributes.insert(("type", tiletype), at: 0)
+        }
+        
+        
         /// DEBUGGING
 
         /// internal debugging attrs
         attributes.append(("tiled element name", tiledElementName))
         attributes.append(("tiled node nice name", tiledNodeNiceName))
         attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
+        attributes.append(("tiled menu item description", #"\#(tiledMenuItemDescription)"#))
+        attributes.append(("tiled display description", #"\#(tiledDisplayItemDescription)"#))
         attributes.append(("tiled help description", tiledHelpDescription))
+
+        attributes.append(("tiled description", description))
+        attributes.append(("tiled debug description", debugDescription))
 
         return Mirror(self, children: attributes)
     }
@@ -1007,7 +1129,7 @@ extension TileRenderMode: RawRepresentable {
             default: self = .animated(gid: rawValue)
         }
     }
-    
+
     /// Returns the internal raw value.
     public var rawValue: RawValue {
         switch self {
@@ -1078,6 +1200,8 @@ extension TileRenderMode: Equatable {
 }
 
 
+// MARK: - Convenience Properties
+
 extension SKTile {
 
     /// A reference to the tile data's containing tileset.
@@ -1109,7 +1233,7 @@ extension SKTile {
     }
 
     /// Toggle for tile visibility.
-    open var isVsible: Bool {
+    open var isVisble: Bool {
         get {
             return !self.isHidden
         }
@@ -1192,49 +1316,6 @@ extension SKTile {
 }
 
 
-extension SKTile {
-
-    /// Creates and returns a new tile instance with the given tileset & global id.
-    ///
-    /// - Parameters:
-    ///   - globalID: tile global id.
-    ///   - tileset: tileset instance.
-    /// - Returns: tile object with the given data.
-    public class func newTile(globalID: UInt32, in tileset: SKTileset) -> SKTile {
-        guard let tile = tileset.newTile(globalID: globalID) else {
-            return SKTile()
-        }
-        
-        // add to tile cache
-        NotificationCenter.default.post(
-            name: Notification.Name.Tile.TileCreated,
-            object: tile
-        )
-        
-        return tile
-    }
-
-    /// Creates and returns a new tile instance with the given tileset & local id.
-    ///
-    /// - Parameters:
-    ///   - localID: tileset local id.
-    ///   - tileset: tileset instance.
-    /// - Returns: tile object with the given data.
-    public class func newTile(localID: UInt32, in tileset: SKTileset) -> SKTile {
-        guard let tile = tileset.newTile(localID: localID) else {
-            return SKTile()
-        }
-        
-        // add to tile cache
-        NotificationCenter.default.post(
-            name: Notification.Name.Tile.TileCreated,
-            object: tile
-        )
-        
-        return tile
-    }
-}
-
 
 
 /// :nodoc:
@@ -1314,17 +1395,11 @@ extension SKTile {
     @discardableResult
     public func replaceWithSpriteCopy() -> SKSpriteNode {
         defer {
-            self.removeFromParent()
+            self.destroy()
         }
 
         let sprite = self.spriteCopy()
         self.parent?.addChild(sprite)
-
-        NotificationCenter.default.post(
-            name: Notification.Name.Layer.TileRemoved,
-            object: self
-        )
-
         return sprite
     }
 
@@ -1333,6 +1408,38 @@ extension SKTile {
         let clonedData = tileData.copy()
         self.tileData = clonedData as! SKTilesetData
     }
+
+    /// Highlight the tile with a given color & duration.
+    ///
+    /// - Parameters:
+    ///   - color: highlight color.
+    ///   - duration: duration of highlight effect.
+    @objc public override func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
+        let removeHighlight: Bool = (color == SKColor.clear)
+        let highlightFillColor = (removeHighlight == false) ? color.withAlphaComponent(0.2) : color
+
+        boundsShape?.strokeColor = color
+        boundsShape?.fillColor = highlightFillColor
+        boundsShape?.isHidden = false
+
+        if (duration > 0) {
+            let fadeInAction = SKAction.colorize(withColorBlendFactor: 1, duration: duration)
+            let groupAction = SKAction.group(
+                [
+                    fadeInAction,
+                    SKAction.wait(forDuration: duration),
+                    fadeInAction.reversed()
+                ]
+            )
+
+
+            boundsShape?.run(groupAction, completion: {
+                self.boundsShape?.strokeColor = SKColor.clear
+                self.boundsShape?.fillColor = SKColor.clear
+                self.removeAnchor()
+            })
+        }
+    }
 }
 
 
@@ -1340,19 +1447,23 @@ extension SKTile {
 
 /// :nodoc:
 extension SKTile {
-    
+
     /// String representation of the map.
+    ///
+    /// - "Tile: gid: 32, layer: 'Level2'"
     open override var description: String {
-        let layerDescription = (layer != nil) ? ", Layer: '\(layer.layerName)'" : ""
+        let layerDescription = (layer != nil) ? ", layer: '\(layer.layerName)'" : ""
         let spacer = (renderMode == TileRenderMode.default) ? "" : " "
-        return #"\#(tiledNodeNiceName): id: \#(tileData.id)\#(layerDescription)\#(spacer)\#(renderMode.debugDescription)"#
+        return #"\#(tiledNodeNiceName): gid: \#(tileData.globalID)\#(layerDescription)\#(spacer)\#(renderMode.debugDescription)"#
     }
-    
+
     /// Debug string representation of the tile.
+    ///
+    /// - "<SKTile: gid: 32, layer: 'Level2'>"
     open override var debugDescription: String {
-        let layerDescription = (layer != nil) ? ", Layer: '\(layer.layerName)'" : ""
+        let layerDescription = (layer != nil) ? ", layer: '\(layer.layerName)'" : ""
         let spacer = (renderMode == TileRenderMode.default) ? "" : " "
-        return #"<\#(className): id: \#(tileData.id)\#(layerDescription)\#(spacer)\#(renderMode.debugDescription)>"#
+        return #"<\#(className): gid: \#(tileData.globalID)\#(layerDescription)\#(spacer)\#(renderMode.debugDescription)>"#
     }
 }
 
@@ -1383,9 +1494,16 @@ extension SKTile {
 
     /// A description of the node used for menu items.
     @objc public override var tiledMenuItemDescription: String {
-        let tiledataString = "gid \(tileData.globalID)"
-        let layerDescription = (layer != nil) ? ", Layer: '\(layer.layerName)'" : ""
-        return "Tile: \(tiledataString)\(layerDescription)"
+        let tileGIDString = "gid \(tileData.globalID)"
+        let layerNameString = (layer != nil) ? " layer: '\(layer.layerName)'" : ""
+        return "Tile: \(tileGIDString)\(layerNameString)"
+    }
+
+    /// A description of the node used for debug output text.
+    @objc public override var tiledDisplayItemDescription: String {
+        let tileGIDString = " gid \(tileData.globalID)"
+        let layerNameString = (layer != nil) ? " layer: '\(layer.layerName)'" : ""
+        return #"<\#(className)\#(tileGIDString)\#(layerNameString)>"#
     }
 
     /// A description of the node.
@@ -1399,7 +1517,7 @@ extension SKTile {
 
 
 extension SKTile {
-    
+
     /// Toggle for tile visibility.
     @available(*, deprecated, renamed: "isVisible")
     open var visible: Bool {
@@ -1410,13 +1528,13 @@ extension SKTile {
             self.isHidden = !newValue
         }
     }
-    
+
     /// Returns the tile global id unmasked.
     @available(*, deprecated, renamed: "maskedTileId")
     public var realTileId: UInt32 {
         return maskedTileId
     }
-    
+
     /// Pauses tile animation
     @available(*, deprecated, message: "Use the default `SKNode.isPaused` to pause animation.")
     open var pauseAnimation: Bool {
@@ -1426,7 +1544,7 @@ extension SKTile {
             self.isPaused = newValue
         }
     }
-    
+
     /// Returns a shortened textual representation for debugging.
     @available(*, deprecated, renamed: "description")
     open var shortDescription: String {

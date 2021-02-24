@@ -133,7 +133,16 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
     internal var onTouch: ((SKTileObject) -> ())?
 
     #endif
-
+    
+    /// Indicates the current node has received focus or selected.
+    public var isFocused: Bool = false {
+        didSet {
+            guard isFocused != oldValue else {
+                return
+            }
+        }
+    }
+    
     /// Debug visualization options.
     public var debugDrawOptions: DebugDrawOptions = []
 
@@ -203,8 +212,11 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
     internal var initialProperties: [String: String] = [:]
 
     /// Signifies that the object has been fully initialized.
-    internal var isInitialized: Bool = true
+    open internal(set) var isInitialized: Bool = true
 
+    /// Number of times this object has been redrawn (debug).
+    open var drawCount: UInt32 = 0
+    
     /// Proxy object.
     weak internal var proxy: TileObjectProxy?
 
@@ -405,6 +417,16 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
     deinit {
         onDestroy?(self)
     }
+    
+    /// Removes this node from the scene graph.
+    open override func destroy() {
+        // remove from cache
+        NotificationCenter.default.post(
+            name: Notification.Name.Object.ObjectDestroyed,
+            object: self
+        )
+        super.destroy()
+    }
 
     /// Override initial object attributes. In the case of a templated object, these attributes are from the parent instance and these attributes should **override** the templated definition.
     ///
@@ -550,14 +572,8 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
 
     // MARK: - Rendering
 
-
     /// Render the object.
     @objc open func draw() {
-
-        #if DEVELOPMENT_MODE
-
-        #endif
-
         let uiScale: CGFloat = TiledGlobals.default.contentScale
         self.strokeColor = SKColor.clear
         self.fillColor = SKColor.clear
@@ -569,7 +585,9 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
               points.count > 1 else {
             return
         }
-
+        
+        // DEBUGGING: increment the draw count
+        drawCount += 1
 
         // draw the point object
         if (objectType == .point) {
@@ -629,8 +647,9 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
 
         // draw the first point of poly objects
         if (isPolyType == true) {
-
-            childNode(withName: "FIRST_POINT")?.removeFromParent()
+            
+            let firstPointShapeName = "\(id)_FIRST_POINT"
+            childNode(withName: firstPointShapeName)?.removeFromParent()
 
             // MARK: - Tile object drawing
 
@@ -639,7 +658,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
                 // the first-point radius should be larger for thinner (>1.0) line widths
                 let anchorRadius = self.lineWidth * 1.2
                 let anchor = SKShapeNode(circleOfRadius: anchorRadius)
-                anchor.name = "FIRST_POINT"
+                anchor.name = firstPointShapeName
                 addChild(anchor)
                 // CONVERTED
                 anchor.position = vertices[0].invertedY
@@ -909,7 +928,6 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
 
         return points.map { point in
             var offset = layer.pixelToScreenCoords(point: point)
-
             // offset the point from the origin (isometric only)
             offset.x -= layer.origin.x
             return offset
@@ -984,6 +1002,16 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
         }
     }
 
+    
+    open override func mouseEntered(with event: NSEvent) {
+        print("object entered!")
+    }
+    
+    open override func mouseExited(with event: NSEvent) {
+        print("object exited!")
+    }
+    
+    
     #elseif os(iOS)
 
     open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -1147,9 +1175,13 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
         attributes.append(("tiled element name", tiledElementName))
         attributes.append(("tiled node nice name", tiledNodeNiceName))
         attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
+        attributes.append(("tiled menu item description", #"\#(tiledMenuItemDescription)"#))
+        attributes.append(("tiled display description", #"\#(tiledDisplayItemDescription)"#))
         attributes.append(("tiled help description", tiledHelpDescription))
 
-
+        attributes.append(("tiled description", description))
+        attributes.append(("tiled debug description", debugDescription))
+        
         return Mirror(self, children: attributes, ancestorRepresentation: .suppressed)
 
     }
@@ -1205,6 +1237,7 @@ extension SKTileObject.TiledObjectShape {
     }
 }
 
+
 /// :nodoc:
 extension SKTileObject {
     
@@ -1222,8 +1255,8 @@ extension SKTileObject {
         }
         let typeString = (type != nil) ? " type: '\(type!)'" : ""
         let templateDescription = (template != nil) ? " Template: '\(template!)'" : ""
-        let miscDesc = (objectType == .text) ? " text quality: \(renderQuality)" : (objectType == .tile) ? " tile gid: \(globalID ?? 0)" : (objectType == .point) ? "point:" : ""
-        let layerDescription = (layer != nil) ? " Layer: '\(layer.layerName)'" : ""
+        let miscDesc = (objectType == .text) ? " text quality: \(renderQuality)" : (objectType == .tile) ? " gid: \(globalID ?? 0)" : (objectType == .point) ? "point:" : ""
+        let layerDescription = (layer != nil) ? " layer: '\(layer.layerName)'" : ""
         
         
         var pointsString = ""
@@ -1243,8 +1276,8 @@ extension SKTileObject {
         }
         let typeString = (type != nil) ? " type: '\(type!)'" : ""
         let templateDescription = (template != nil) ? " Template: '\(template!)'" : ""
-        let miscDesc = (objectType == .text) ? " text quality: \(renderQuality)" : (objectType == .tile) ? " tile gid: \(globalID ?? 0)" : (objectType == .point) ? "point:" : ""
-        let layerDescription = (layer != nil) ? " Layer: '\(layer.layerName)'" : ""
+        let miscDesc = (objectType == .text) ? " text quality: \(renderQuality)" : (objectType == .tile) ? " gid: \(globalID ?? 0)" : (objectType == .point) ? "point:" : ""
+        let layerDescription = (layer != nil) ? " layer: '\(layer.layerName)'" : ""
         
         
         var pointsString = ""
@@ -1277,19 +1310,27 @@ extension SKTileObject {
         return objectType.iconName
     }
 
-    /// A description of the node.
+    /// A description of the node used in list or outline views (ie: "Tile Object 'dwarf1' id: 119").
     @objc public override var tiledListDescription: String {
         let objName = (name != nil) ? " '\(name!)'" : ""
         return "\(tiledNodeNiceName)\(objName) id: \(id)"
     }
 
-    /// A description of the node.
+    /// A description of the node used in dropdown & popu menus (ie: "Tile Object 'dwarf1' id: 119").
     @objc public override var tiledMenuItemDescription: String {
         let objName = (name != nil) ? " '\(name!)'" : ""
         return "\(tiledNodeNiceName)\(objName) id: \(id)"
     }
 
-    /// A description of the node.
+    /// A description of the node used for debug output text.
+    @objc public override var tiledDisplayItemDescription: String {
+        let nameString = (name != nil) ? " '\(name!)'" : ""
+        let idString = " id: \(id)"
+        let layerNameString = (layer != nil) ? " layer: '\(layer.layerName)'" : ""
+        return #"<\#(className)\#(nameString)\#(idString)\#(layerNameString)>"#
+    }
+    
+    /// Description of the node type.
     @objc public override var tiledHelpDescription: String {
         return (globalID == nil) ? "Tiled vector object type." : "Tiled tile vector object type."
     }
@@ -1335,6 +1376,39 @@ extension SKTileObject {
     /// Signifies that the object is a tile object.
     open var isTileObject: Bool {
         return (globalID != nil)
+    }
+    
+    /// Highlight the tile with a given color & duration.
+    ///
+    /// - Parameters:
+    ///   - color: highlight color.
+    ///   - duration: duration of highlight effect.
+    @objc public override func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
+        let removeHighlight: Bool = (color == SKColor.clear)
+        let highlightFillColor = (removeHighlight == false) ? color.withAlphaComponent(0.2) : color
+        
+        boundsShape?.strokeColor = color
+        boundsShape?.fillColor = highlightFillColor
+        boundsShape?.isHidden = false
+        
+        if (duration > 0) {
+            let fadeInAction = SKAction.colorize(withColorBlendFactor: 1, duration: duration)
+            
+            let groupAction = SKAction.group(
+                [
+                    fadeInAction,
+                    SKAction.wait(forDuration: duration),
+                    fadeInAction.reversed()
+                ]
+            )
+            
+            
+            boundsShape?.run(groupAction, completion: {
+                self.boundsShape?.strokeColor = SKColor.clear
+                self.boundsShape?.fillColor = SKColor.clear
+                self.removeAnchor()
+            })
+        }
     }
 }
 

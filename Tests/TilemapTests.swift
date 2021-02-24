@@ -129,27 +129,7 @@ class TilemapTests: XCTestCase {
         XCTAssert(objects.count == expectedObjectCOunt, "⭑ layer '\(testLayer.layerName)' object count is incorrect \(objects.count), expected \(expectedObjectCOunt)")
 
     }
-    
-    /// Test the `SKTilemap.renderableObjectsAt(point:)` method.
-    ///
-    ///
-    func testRenderableObjectsQuery() {
-        guard let tilemap = testTilemap else {
-            XCTFail("⭑ failed to load tilemap '\(testTilemapName)'")
-            return
-        }
-        
-        // TODO: this doesn't work!!
-        
-        let testCoordinate = simd_int2(22, 10)
-        let location = tilemap.pointForCoordinate(coord: testCoordinate)
 
-        let expectedObjectCount = 13
-        let renderableObjects = tilemap.renderableObjectsAt(point: location)
-        let renderableObjectCount = renderableObjects.count
-        //XCTAssert(expectedObjectCount == renderableObjectCount, "⭑ incorrect number of renerables at \(testCoordinate.coordDescription)... got: \(renderableObjectCount), expected: \(expectedObjectCount)")
-        
-    }
     
     /// Test the `SKTileLayer.chunksAt` method.
     func testLayerGetChunks() {

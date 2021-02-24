@@ -46,30 +46,67 @@ Moving from the **v1.2** API should be fairly straightforward. Here are the high
 | Map Coordinates |  `int2`  | `simd_int2` |
 
 
+
+
 ## Tile Flip Flags
 
-Prior to v1.3, tile flip flags were stored in the `SKTilesetData` structure which actually served no purpose because a masked tile global id would have its orientation parsed when the tile is initially created.
+Prior to **v1.3**, tile flip flags were stored in the `SKTilesetData` structure which actually served no purpose because a masked tile global id would have its orientation parsed when the tile is initially created.
+
+Now, all `SKTile` nodes have a [`globalId`][tileid-url] property that handles id translation. The `TileID` struct wraps the global id & orientation functions and translates values accordingly:
 
 
 ```swift
-// A raw value of 2147483659 translates to 11, flipped horizontally.
-let gid: UInt32 = 2147483659
-var tileId = TileID(wrappedValue: 2147483659)
-print(tileId)
-// Tile ID: 11, flags: [ hFlip ]
+// This tile has a global id value of '285'
+print(tile.globalId, tile.flipFlags)
+// 285 [  ]
 
-// Alternately, we can set the flags directly:
-tileId.flags = [.all]
-print(tileId)
-// Tile ID: 11, flags: [ hFlip, vFlip, dFlip ]
+// A masked(raw) value of 2684354845 translates to 285, flipped horizontally & diagonally
+tile.globalId = 2684354845
+
+// The unmasked, "real" global id is unchanged, only the orientation flags have changed:
+print(tile.globalId, tile.flipFlags)
+// 285 [ hFlip, dFlip ]
+
+// get the masked value:
+print(tile.maskedTileId)
+// 2684354845
 ```
 
+Alternately, you can orient the tile manually by setting the `SKTile.isFlippedHorizontally`, `SKTile.isFlippedVertically` and `SKTile.isFlippedDiagonally` attributes:
+
+```swift
+// Reset the flip flags by assigning an empty value
+tile.flipFlags = []
+print(tile.flipFlags)
+// []
+
+// Set the tile flip flags manually
+tile.isFlippedHorizontally = true
+tile.isFlippedDiagonally = true
+print(tile.globalId, tile.flipFlags)
+// 285 [ hFlip, dFlip ]
+```
+
+The **v1.3** API  now includes the following attributes for dealing with tile orientation & global id.
+
+| Property                       | Description                       | Notes    |
+| ------------------------------ | --------------------------------- | -------- |
+| `SKTile.globalId`              | the tile global id value          |          |
+| `SKTile.maskedTileId`          | masked tile global id value       | get-only |
+| `SKTile.flipFlags`             | current tile transformation flags |          |
+| `SKTile.isFlippedHorizontally` | tile is flipped horizontally      |          |
+| `SKTile.isFlippedVertically`   | tile is flipped vertically        |          |
+| `SKTile.isFlippedDiagonally`   | tile is flipped diagonally        |          |
 
 
+
+See the [**Tile Flipping**][tiled-flip-flags-url] section of the [**Tiled documentation**][tiled-docs-url] for more details.
 
 Next: [Scene Setup](scene-setup.html) - [Index](Documentation.html)
 
+<!--- SKTiled --->
+[tileid-url]:Structs/TileID.html
 
 <!--- Tiled --->
-
+[tiled-docs-url]:https://doc.mapeditor.org
 [tiled-flip-flags-url]:https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#tile-flipping

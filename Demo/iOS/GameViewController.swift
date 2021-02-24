@@ -72,6 +72,7 @@ class GameViewController: UIViewController, Loggable {
     @IBOutlet weak var statsCPULabel: UILabel!
     @IBOutlet weak var statsVisibleLabel: UILabel!
     @IBOutlet weak var statsObjectsLabel: UILabel!
+    @IBOutlet weak var statsTrackingViewsLabel: UILabel!
     @IBOutlet weak var statsActionsLabel: UILabel!
     @IBOutlet weak var statsEffectsLabel: UILabel!
     @IBOutlet weak var statsUpdatedLabel: UILabel!
@@ -506,6 +507,8 @@ class GameViewController: UIViewController, Loggable {
         self.statsVisibleLabel.isHidden = (TiledGlobals.default.enableCameraCallbacks == false)
         self.statsObjectsLabel.isHidden = (renderStats.objectsVisible == false)
         self.statsObjectsLabel.text = "Objects: \(renderStats.objectCount)"
+        self.statsTrackingViewsLabel.isHidden = (renderStats.trackingViews == 0)
+        self.statsTrackingViewsLabel.text = "Tracking Views: \(renderStats.trackingViews)"
         let renderString = (TiledGlobals.default.timeDisplayMode == .seconds) ? String(format: "%.\(String(6))f", renderStats.renderTime) : String(format: "%.\(String(2))f", renderStats.renderTime.milleseconds)
         let timeFormatString = (TiledGlobals.default.timeDisplayMode == .seconds) ? "s" : "ms"
         self.statsRenderLabel.text = "Render time: \(renderString)\(timeFormatString)"

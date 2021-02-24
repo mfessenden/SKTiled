@@ -809,10 +809,9 @@ public class SKTileset: NSObject, CustomReflectable, TiledAttributedType {
 
         /// internal debugging attrs
         attributes.append(("tiled element name", tiledElementName))
-        //attributes.append(("tiled node nice name", tiledNodeNiceName))
-        //attributes.append(("tiled list description", #"\#(tiledListDescription)"#))
         attributes.append(("tiled help description", tiledHelpDescription))
-
+        attributes.append(("tiled description", description))
+        attributes.append(("tiled debug description", debugDescription))
 
         return Mirror(self, children: attributes, displayStyle: .class)
     }

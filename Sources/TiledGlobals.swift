@@ -93,7 +93,7 @@ public let TileSize32x32 = CGSize(value: 32)
 /// ### Properties
 ///
 ///  - `renderer`:               returns the current SpriteKit renderer (get-only).
-///  - `loggingLevel`:           logging verbosity.
+///  - `loggingLevel`:           global logging verbosity.
 ///  - `updateMode`:             default tile update mode.
 ///  - `enableRenderCallbacks`:  enable callbacks from the tilemap on rendering statistics.
 ///  - `enableCameraCallbacks`:  enable callbacks from camera to camera delegates.
@@ -103,7 +103,7 @@ public let TileSize32x32 = CGSize(value: 32)
 ///
 /// ### Usage
 ///
-/// **SKTiled** object default values are set in the `TiledGlobals` object.
+/// **SKTiled** framework default values are set in the `TiledGlobals` object.
 ///
 /// ```swift
 /// // access the default singleton instance
@@ -120,12 +120,11 @@ public let TileSize32x32 = CGSize(value: 32)
 /// ```
 public class TiledGlobals {
 
-    /// Default singleton instance.
+    /// Default `TiledGlobals` singleton.
     public static var `default`: TiledGlobals {
         return defaultGlobalsInstance
     }
-    
-    
+
     // MARK: - Framework Globals
 
     /// Current SpriteKit renderer.
@@ -214,7 +213,7 @@ public class TiledGlobals {
     public var screenSize: CGSize {
         return getScreenSize()
     }
-    
+
     /// Returns a `CGRect` representing the screen (window) size.
     public var screenRect: CGRect {
         let ss = screenSize
@@ -401,10 +400,10 @@ public class TiledGlobals {
         public var mousePointerSize: CGFloat = 10
 
         /// Debug display properties.
-        public var highlightDuration: TimeInterval = 0.3
+        public var highlightDuration: TimeInterval = 1
 
         /// Debug grid drawing opacity.
-        public var gridOpactity: CGFloat = 0.4
+        public var gridOpactity: CGFloat = 0.6
 
         /// Debug grid drawing color.
         public var gridColor: SKColor = TiledObjectColors.grass
@@ -413,23 +412,23 @@ public class TiledGlobals {
         public var frameColor: SKColor = TiledObjectColors.grass
 
         /// Debug frame line width.
-        public var lineWidth: CGFloat = 1.2
+        public var lineWidth: CGFloat = 4
 
         /// Debug tile highlight color.
-        public var tileHighlightColor: SKColor = TiledObjectColors.lime
+        public var tileHighlightColor: SKColor = TiledObjectColors.coral
 
         /// Debug object fill opacity.
-        public var objectFillOpacity: CGFloat = 0.25
+        public var objectFillOpacity: CGFloat = 0.5
 
         /// Debug object highlight color.
-        public var objectHighlightColor: SKColor = TiledObjectColors.coral
+        public var objectHighlightColor: SKColor = TiledObjectColors.lime
 
         /// Debug graph highlight color.
         public var navigationColor: SKColor = TiledObjectColors.azure
 
         /// Debug camera bounds color.
         public var cameraBoundsColor: SKColor = TiledObjectColors.metal
-        
+
         /// Default anchor display radius.
         public var anchorRadius: CGFloat = 1
 
@@ -445,13 +444,12 @@ public class TiledGlobals {
             public let rawValue: UInt8
 
             public static let tileCoordinates      = MouseFilters(rawValue: 1 << 0)
-            public static let tileLocalID          = MouseFilters(rawValue: 1 << 1)
-            public static let scenePosition        = MouseFilters(rawValue: 1 << 2)
-            public static let tileDataUnderCursor  = MouseFilters(rawValue: 1 << 3)
-            public static let mapPosition          = MouseFilters(rawValue: 1 << 4)
-            public static let windowPosition       = MouseFilters(rawValue: 1 << 5)
+            public static let scenePosition        = MouseFilters(rawValue: 1 << 1)
+            public static let tileDataUnderCursor  = MouseFilters(rawValue: 1 << 2)
+            public static let mapPosition          = MouseFilters(rawValue: 1 << 3)
+            public static let windowPosition       = MouseFilters(rawValue: 1 << 4)
 
-            public static let all: MouseFilters = [.tileCoordinates, .tileLocalID, .scenePosition, .tileDataUnderCursor, .mapPosition, .windowPosition]
+            public static let all: MouseFilters = [.tileCoordinates, .scenePosition, .tileDataUnderCursor, .mapPosition, .windowPosition]
 
             public init(rawValue: UInt8 = 0) {
                 self.rawValue = rawValue
@@ -609,7 +607,7 @@ extension TiledGlobals: TiledCustomReflectableType {
         print("     ▸ grid opacity:         \(self.debugDisplayOptions.gridOpactity)")
         print("     ▸ object fill opacity:  \(self.debugDisplayOptions.objectFillOpacity)")
         print("     ▸ object line width:    \(self.debugDisplayOptions.lineWidth)")
-        print("     ▸ grid color:           \(self.debugDisplayOptions.gridColor.hexString())\n")
+        print("     ▸ grid color:           \(self.debugDisplayOptions.gridColor.hexString())")
         print("     ▸ anchor radius:        \(self.debugDisplayOptions.anchorRadius)\n")
         print("  ▾ Render Quality: ")
         print("     ▸ default:              \(self.renderQuality.default)")
@@ -736,17 +734,12 @@ extension TiledGlobals.Renderer {
 
 /// :nodoc:
 extension TiledGlobals.DebugDisplayOptions.MouseFilters {
-    
+
     /// Indicates tile coordinate data should be displayed.
     public var isShowingTileCoordinates: Bool {
         return contains(.tileCoordinates)
     }
-    
-    /// Indicates tile local id data should be displayed.
-    public var isShowingTileLocalId: Bool {
-        return contains(.tileLocalID)
-    }
-    
+
     /// Indicates scene coordinate data should be displayed.
     public var isShowingScenePosition: Bool {
         return contains(.scenePosition)
@@ -756,12 +749,12 @@ extension TiledGlobals.DebugDisplayOptions.MouseFilters {
     public var isShowingTileData: Bool {
         return contains(.tileDataUnderCursor)
     }
-    
+
     /// Indicates map position data should be displayed.
     public var isShowingMapPosition: Bool {
         return contains(.mapPosition)
     }
-    
+
     /// Indicates window position data should be displayed.
     public var isShowingWindowPosition: Bool {
         return contains(.windowPosition)
@@ -771,10 +764,6 @@ extension TiledGlobals.DebugDisplayOptions.MouseFilters {
         var result: [String] = []
         if self.contains(.tileCoordinates) {
             result.append("Tile Coordinates")
-        }
-
-        if self.contains(.tileLocalID) {
-            result.append("Tile Local ID")
         }
 
         if self.contains(.scenePosition) {
@@ -788,7 +777,7 @@ extension TiledGlobals.DebugDisplayOptions.MouseFilters {
         if self.contains(.mapPosition) {
             result.append("Map Position")
         }
-        
+
         if self.contains(.windowPosition) {
             result.append("Window Position")
         }
@@ -843,7 +832,7 @@ extension TiledGlobals {
             debugDisplayOptions = newValue
         }
     }
-    
+
     /// Enable callbacks for render performance statistics.
     @available(*, deprecated, renamed: "enableRenderPerformanceCallbacks")
     public var enableRenderCallbacks: Bool {

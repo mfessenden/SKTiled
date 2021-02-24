@@ -285,13 +285,14 @@ extension TiledDemoDelegate: TiledCustomReflectableType {
         outputString += "     ▸ Camera Zoom:                 \(currentCameraZoom.stringRoundedTo(2))\n\n"
         
         if (currentNodes.isEmpty == false) {
+            
             outputString += "  ▾ Selected Nodes:\n"
             
             for node in currentNodes {
-                outputString += "     ▸  \(node.description) \n"
+                outputString += "     ▸  \(node.debugDescription) \n"
             }
         } else {
-            outputString += "  ▸ Selected Nodes: 0\n"
+            outputString += "  ▸ Selected Nodes:         : none\n"
         }
         
         print("\(outputString)\n\n")

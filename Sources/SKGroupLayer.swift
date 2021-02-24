@@ -252,11 +252,18 @@ extension SKGroupLayer {
         return "grouplayer-icon"
     }
     
-    /// A description of the node.
+    /// A description of the node used in list or outline views.
     @objc public override var tiledListDescription: String {
-        let childCount = (children.count == 0) ? ": (no children)" : ": (\(children.count) children)"
+        let childCountString = (children.count == 0) ? ": (no children)" : ": (\(children.count) children)"
         let layerNameString = (name != nil) ? " '\(name!)'" : ""
-        return "\(tiledNodeNiceName)\(layerNameString)\(childCount)"
+        return "\(tiledNodeNiceName)\(layerNameString)\(childCountString)"
+    }
+    
+    /// A description of the node used for debug output text.
+    @objc public override var tiledDisplayItemDescription: String {
+        let childCountString = (children.count == 0) ? ": (no children)" : ": (\(children.count) children)"
+        let layerNameString = (name != nil) ? " '\(name!)'" : ""
+        return #"<\#(className)\#(layerNameString)\#(childCountString)>"#
     }
     
     /// A description of the node.

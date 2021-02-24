@@ -398,7 +398,10 @@ func measure<A>(name: String = "", _ block: () -> A) -> A {
 // MARK: - Extensions
 
 extension Bool {
-
+    
+    /// Initialize with a binary integer type.
+    ///
+    /// - Parameter integer: integer value.
     init<T : BinaryInteger>(_ integer: T) {
         self.init(integer != 0)
     }
@@ -500,6 +503,20 @@ extension Array where Element: SKNode {
         return self.sorted(by: { $0.zPosition > $1.zPosition }).first
     }
 }
+
+/// :nodoc:
+extension Array where Element == CGPoint {
+    
+    /// Returns a string describing an array of points.
+    public var pointsString: String {
+        var result: [String] = []
+        for p in self {
+            result.append(p.coordDescription)
+        }
+        return "(\(result.joined(separator: ", ")))"
+    }
+}
+
 
 
 extension Mirror {
@@ -900,31 +917,27 @@ extension CGPoint: Hashable {
 }
 
 
-extension CGSize {
-
-    public var area: CGFloat {
-        return width * height
-    }
-
-    public var isSquare: Bool {
-        width.abs == height.abs
-    }
-
-    public var isVertical: Bool {
-        width.abs < height.abs
-    }
-
-    public var isHorizontal: Bool {
-        width.abs > height.abs
-    }
-}
-
 // MARK: - CGSize
 
 
 /// :nodoc:
 extension CGSize {
-
+    
+    public var area: CGFloat {
+        return width * height
+    }
+    
+    public var isSquare: Bool {
+        width.abs == height.abs
+    }
+    
+    public var isVertical: Bool {
+        width.abs < height.abs
+    }
+    
+    public var isHorizontal: Bool {
+        width.abs > height.abs
+    }
     /// Initialize with a single integer value representing both weidth & height.
     ///
     /// - Parameter value: width & height value.
@@ -976,6 +989,24 @@ extension CGSize {
     /// Returns a shortened textual representation for debugging.
     public var shortDescription: String {
         return "\(self.width.stringRoundedTo(0)) x \(self.height.stringRoundedTo(0))"
+    }
+    
+    /// Returns current size values rounded up to the next largest integer.
+    ///
+    /// - Returns: size rounded up.
+    mutating public func ceil() -> CGSize  {
+        width = CGFloat(Darwin.ceil(Double(width)))
+        height = CGFloat(Darwin.ceil(Double(height)))
+        return self
+    }
+
+    /// Returns current size values rounded down to the next largest integer.
+    ///
+    /// - Returns: size rounded down.
+    mutating public func floor() -> CGSize  {
+        width = CGFloat(Darwin.floor(Double(width)))
+        height = CGFloat(Darwin.floor(Double(height)))
+        return self
     }
 }
 
@@ -1168,11 +1199,6 @@ extension SKNode {
     public func distance(to point: CGPoint) -> CGFloat {
         return CGFloat(position.distance(point))
     }
-}
-
-
-
-extension SKNode {
 
     /// Run an action with key & optional completion function.
     ///
@@ -1224,6 +1250,14 @@ extension SKNode {
             current = current.parent!
         }
         return result
+    }
+    
+    /// Removes this node from the scene graph.
+    @objc public func destroy() {
+        // TODO: add this to demo extensions?
+        removeAllActions()
+        removeAllChildren()
+        removeFromParent()
     }
 }
 
@@ -2022,7 +2056,7 @@ extension Notification.Name {
 
     public struct Layer {
         public static let TileAdded                 = Notification.Name(rawValue: "org.sktiled.notification.name.layer.tileAdded")
-        public static let TileRemoved               = Notification.Name(rawValue: "org.sktiled.notification.name.layer.tileRemoved")
+        //public static let TileRemoved               = Notification.Name(rawValue: "org.sktiled.notification.name.layer.tileRemoved")
         public static let AnimatedTileAdded         = Notification.Name(rawValue: "org.sktiled.notification.name.layer.animatedTileAdded")
         public static let ObjectAdded               = Notification.Name(rawValue: "org.sktiled.notification.name.layer.objectAdded")
         public static let ObjectRemoved             = Notification.Name(rawValue: "org.sktiled.notification.name.layer.objectRemoved")
@@ -2036,6 +2070,8 @@ extension Notification.Name {
         public static let UpdateModeChanged         = Notification.Name(rawValue: "org.sktiled.notification.name.map.updateModeChanged")
         public static let TileIsolationModeChanged  = Notification.Name(rawValue: "org.sktiled.notification.name.map.tileIsolationModeChanged")
         public static let FocusCoordinateChanged    = Notification.Name(rawValue: "org.sktiled.notification.name.map.focusCoordinateChanged")
+        
+        public static let LayerIsolationChanged     = Notification.Name(rawValue: "org.sktiled.notification.name.map.layerIsolationChanged")
     }
 
     public struct RenderStats {
@@ -2046,10 +2082,16 @@ extension Notification.Name {
 
     public struct Tile {
         public static let TileCreated               = Notification.Name(rawValue: "org.sktiled.notification.name.tile.tileCreated")
+        public static let TileDestroyed             = Notification.Name(rawValue: "org.sktiled.notification.name.tile.tileDestroyed")
         public static let TileIDChanged             = Notification.Name(rawValue: "org.sktiled.notification.name.tile.tileTileIdChanged")
         public static let TileDataChanged           = Notification.Name(rawValue: "org.sktiled.notification.name.tile.tileTileDataChanged")
         // Called when the tile render mode is updated.
         public static let RenderModeChanged         = Notification.Name(rawValue: "org.sktiled.notification.name.tile.renderModeChanged")
+    }
+    
+    public struct Object {
+        public static let ObjectCreated             = Notification.Name(rawValue: "org.sktiled.notification.name.object.objectCreated")
+        public static let ObjectDestroyed           = Notification.Name(rawValue: "org.sktiled.notification.name.object.objectDestroyed")
     }
 
     public struct TileData {

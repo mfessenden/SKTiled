@@ -12,6 +12,7 @@
 - [Find Tiles with Property](#find-tiles-with-property)
 - [Adding and Removing Tiles](#adding-and-removing-tiles)
 - [Refreshing Tile Content](#refreshing-tile-content)
+- [Creating New Tiles](#creating-new-tiles)
 - [Copying Tiles](#copying-tiles)
 - [Tile Shapes](#tile-shapes)
 - [Tile Colors](#tile-colors)
@@ -27,7 +28,7 @@
 
 ## Tile IDs
 
-The `SKTile.globalId` property determines how each tile is rendered. 
+The `SKTile.globalId` property determines how each tile is rendered.
 
 ```swift
 tiles.globalId = 13
@@ -73,11 +74,11 @@ As you can see, the tile data is correctly returned. The local ID is the sum of 
 
 Once your tilemap is loaded, you may tweak the way tiles are rendered individually via the `SKTile.renderMode` property:
 
-| Mode       | Description                                    |
-|:---------- |:---------------------------------------------- |
+|    Mode    | Description                                    |
+|:----------:|:---------------------------------------------- |
 | `default`  | Tile renders at default settings.              |
-| `static`   | Tile ignores any animation data.               |
-| `ignore`   | Tile does not take into account its tile data. |
+|  `static`  | Tile ignores any animation data.               |
+|  `ignore`  | Tile does not take into account its tile data. |
 | `animated` | Animate with a global id value.                |
 
 
@@ -96,17 +97,14 @@ The `SKTile.renderMode` flag allows you to quickly manipulate the appearance of 
 Accessing tiles is simple: simply query a tile layer or the tile map node for tiles at a given coordinate:
 
 ```swift
-// return tile(s) at a given location
 let coord = simd_int2(10, 8)
 
-// query tiles from a layer at the given coordinate
+// return a tile from a layer at the given coordinate
 let tilesForCoord = tileLayer.tileAt(coord: coord)
 
-// query tiles from tilemap at the given coordinate
+// query all tiles from a tilemap at the given coordinate
 let allTilesForCoord = tilemap.tilesAt(coord: coord)
 ```
-
-
 
 ## Tile Flags
 
@@ -116,6 +114,8 @@ Each tile instance has a `tileID` property which accepts a `UInt32` value and ap
 ```swift
 // a global id of 2147483659 translates to 11, with horizontal & diagonal flip flags
 let tile = tilemap.getTiles(globalID: 11).first!
+
+// get the `TileID` object
 let globalId = tile.tileID
 
 tile.isFlippedHorizontally = true
@@ -124,7 +124,7 @@ tile.isFlippedHorizontally = true
 
 ## Tile Alignment
 
-{put gif here showing alignment/anchorpoint changing}
+{ gif here showing alignment/anchorpoint changing }
 
 
 ## Find Tiles of Type
@@ -152,10 +152,10 @@ let waterTiles = tilemap.getTilesWithProperty("isWater", true)
 
 ## Adding and Removing Tiles
 
-To add a new tile using a GID, use the [`SKTileLayer.addTileAt`][sktilelayer-addtileat-url] method to add it to the current layer:
+To add a new tile using a GID, use the [`SKTileLayer.addTile(at:)`][sktilelayer-addtileat-url] method to add it to the current layer:
 
 ```swift
-if let tile = tileLayer.addTileAt(coord: simd_int2(5, 8), globalID: 32) {
+if let tile = tileLayer.addTile(at: simd_int2(5, 8), globalID: 32) {
     tile.setupPhysics(withSize: 8)
 }
 ```
@@ -163,11 +163,21 @@ if let tile = tileLayer.addTileAt(coord: simd_int2(5, 8), globalID: 32) {
 You may also specify a *tile type* with this method, for use with the [`TilemapDelegate.objectForTileType`][tilemapdelegate-objectfortiletype-url] protocol method:
 
 ```swift
-if let wallTile = tileLayer.addTileAt(coord: simd_int2(2, 17), globalID: 145, tileType: "Wall") {
+if let wallTile = tileLayer.addTile(at: simd_int2(2, 17), globalID: 145, tileType: "Wall") {
     // set the custom tile property
     wallTile.hitMaxCount = 3
 }
 ```
+
+
+To remove a tile, simply call one of the [`SKTileLayer.removeTile`][sktilelayer-removetileat-url] methods:
+
+```swift
+if let removedTile = tileLayer.removeTile(10, 8) {
+    // do something with tile
+}
+```
+
 
 
 You are not limited to using tile objects; any [`SKNode`][sknode-url] type can be added to a layer and positioned. All `SKTiledLayerObject` objects have expanded `addChild` convenience methods for positioning nodes:
@@ -180,18 +190,36 @@ tileLayer.addChild(tile, 5, 8, offset: CGPoint(x: 4.0, y: 8.0), zpos: 50)
 tileLayer.addChild(tile, 5, 8, dx: 4)
 ```
 
+It's important to note that adding an object (or another tile) at a coordinate **does not add the object to a tile layer's array of tiles** - the node is simply positioned at the location of the coordinate in the given layer.
 
-To remove a tile, simply call one of the [`SKTileLayer.removeTileAt`][sktilelayer-removetileat-url] methods:
 
-```swift
-if let removedTile = tileLayer.removeTileAt(10, 8) {
-    // do something with tile
-}
-```
 
 ## Refreshing Tile Content
 
 At any time, if you need to update a tile, use the `SKTile.draw()` method.
+
+## Creating New Tiles
+
+Creating a new tile is very simple. You can create one with a tile data instance:
+
+```swift
+let tiledata = tileset.getTileData(globalID: 11)!
+let tile = SKTile(data: tiledata)!
+```
+
+You can also create tiles from with a `SKTileset` or `SKTilemap` instance with a global id or local id:
+
+```swift
+// create tiles from a tileset instance, with an option to specify tile type
+let tile = tileset.newTile(localID: 1)
+let tile = tileset.newTile(globalID: 50, type: MyTileType.self)
+
+
+// create tiles from a tilemap instance, with an option to specify tile type
+let tile = tilemap.newTile(localID: 1)
+let tile = tilemap.newTile(globalID: 50, type: MyTileType.self)
+```
+
 
 ## Copying Tiles
 
@@ -361,6 +389,6 @@ Next: [Coordinates](coordinates.html) - [Index](Documentation.html)
 
 
 [sktile-spritecopy-url]:troubleshooting.html#tile-cracking
-[sktilelayer-addtileat-url]:Classes/SKTileLayer.html#/s:7SKTiled11SKTileLayerC9addTileAt5coord8globalID8tileTypeAA0B0CSgs5SIMD2Vys5Int32VG_s6UInt32VSgSSSgtF
-[sktilelayer-removetileat-url]:Classes/SKTileLayer.html#/s:7SKTiled11SKTileLayerC12removeTileAt5coordAA0B0CSgs5SIMD2Vys5Int32VG_tF
+[sktilelayer-addtileat-url]:Classes/SKTileLayer.html#addTile(at:)
+[sktilelayer-removetileat-url]:Classes/SKTileLayer.html#removeTile
 [tilemapdelegate-objectfortiletype-url]:Protocols/TilemapDelegate.html#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)objectForTileTypeWithNamed:

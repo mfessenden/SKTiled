@@ -1,5 +1,5 @@
 //
-//  AttributeEditorWindowController.swift
+//  TileEditorWindowController.swift
 //  SKTiled Demo - macOS
 //
 //  Copyright ©2016-2021 Michael Fessenden. all rights reserved.
@@ -27,7 +27,7 @@
 import Cocoa
 
 
-class AttributeEditorWindowController: NSWindowController, NSWindowDelegate {
+class TileEditorWindowController: NSWindowController, NSWindowDelegate {
 
     override func windowDidLoad() {
         super.windowDidLoad()
@@ -36,10 +36,10 @@ class AttributeEditorWindowController: NSWindowController, NSWindowDelegate {
         window?.level = .floating
 
         // set the window title
-        window?.title = "Attribute Editor"
+        window?.title = "Tile Editor"
 
         // set the correct size
-        window?.setContentSize(NSSize(width: 480, height: 580))
+        window?.setContentSize(NSSize(width: 350, height: 250))
     }
 
     func windowShouldClose(_ sender: NSWindow) -> Bool {
@@ -53,15 +53,15 @@ class AttributeEditorWindowController: NSWindowController, NSWindowDelegate {
 // MARK: - Extensions
 
 
-extension AttributeEditorWindowController {
+extension TileEditorWindowController {
 
     // MARK: Storyboard instantiation
     
-    static func newAttributeEditorWindow() -> AttributeEditorWindowController {
-        let storyboard = NSStoryboard(name: NSStoryboard.Name("AttributeEditor"), bundle: nil)
-        let identifier = NSStoryboard.SceneIdentifier("AttributeEditorWindowController")
-        guard let windowController = storyboard.instantiateController(withIdentifier: identifier) as? AttributeEditorWindowController else {
-            fatalError("cannot access `AttributeEditorWindowController` in storyboard.")
+    static func newTileEditorWindow() -> TileEditorWindowController {
+        let storyboard = NSStoryboard(name: NSStoryboard.Name("Main"), bundle: nil)
+        let identifier = NSStoryboard.SceneIdentifier("TileEditorWindowController")
+        guard let windowController = storyboard.instantiateController(withIdentifier: identifier) as? TileEditorWindowController else {
+            fatalError("cannot access 'TileEditorWindowController' in 'Main' storyboard.")
         }
         return windowController
     }

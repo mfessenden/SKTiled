@@ -9,7 +9,7 @@
 	<key>textRenderQuality</key>
 	<integer>4</integer>
 	<key>lineWidth</key>
-	<real>1.2</real>
+	<integer>4</integer>
 	<key>showObjects</key>
 	<false/>
 	<key>drawGrid</key>

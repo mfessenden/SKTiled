@@ -19,11 +19,11 @@
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>CFBundleVersionSuffix</key>
-	<string>b1</string>
+	<string>b2</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.developer-tools</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2020 Michael Fessenden. All rights reserved.</string>
+	<string>Copyright © 2021 Michael Fessenden. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
 	<string></string>
 </dict>

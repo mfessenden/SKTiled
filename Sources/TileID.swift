@@ -27,7 +27,7 @@
 import SpriteKit
 
 
-/// The `TileFlags` option set represents the various orientation flags that can be set for a given tile.
+/// The `TileFlags` optionset represents the various transformation flags that can be set for a given tile.
 ///
 /// ### Properties
 ///
@@ -87,7 +87,11 @@ public struct TileID {
     private var rawValue: UInt32
 
     /// Associated tile flip flags.
-    public var flags: TileFlags = TileFlags.none
+    public var flags: TileFlags = TileFlags.none {
+        didSet {
+            updateRawValue()
+        }
+    }
 
     /// Instantiate with a global ID value. The `wrappedValue` argument can be either a global id, or a masked global id.
     ///
@@ -114,10 +118,11 @@ public struct TileID {
 
             rawValue = newValue
             flags = flagsFrom(newValue)
+            updateRawValue()
         }
     }
 
-    /// Returns the global id (including flip flags) value.
+    /// Returns the masedk tile id (including flip flags) value.
     public var realValue: UInt32 {
         return rawValue
     }

@@ -6,7 +6,7 @@ set -e
 # check jazzy is installed
 if ! command -v jazzy &> /dev/null
 then
-    echo "Error: 'jazzy' is not installed. Please see https://github.com/realm/jazzy"
+    echo "# [SKTiled]: Error: 'jazzy' is not installed. Please see https://github.com/realm/jazzy"
     exit 126
 fi
 
@@ -29,7 +29,7 @@ INDEX_PAGE=$HTML_DIR/index.html
 
 
 function imageSync() {
-    echo "# syncing images: $IMG_SRC_DIR -> $IMG_DEST_DIR"
+    echo "# [SKTiled]: syncing images: $IMG_SRC_DIR -> $IMG_DEST_DIR"
 	rsync --exclude "src" \
         --exclude "hires" \
         --exclude "psd" \
@@ -38,6 +38,8 @@ function imageSync() {
         --exclude "*.ase" \
 		-auvh --no-perms $IMG_SRC_DIR $IMG_DEST_DIR;
 }
+
+echo "\n# [SKTiled]: Building project documentation...\n"
 
 # run the jazzy command
 jazzy --config "$CFG_FILE" ;

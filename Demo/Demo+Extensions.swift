@@ -400,7 +400,7 @@ extension Notification.Name {
         public static let NodeSelectionCleared           = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodeSelectionCleared") // handles 'clear' key pressed (macOS)
 
         // selected node isolation
-        public static let IsolateSelectedEnabled         = Notification.Name(rawValue: "org.sktiled.notification.name.demo.isolateSelectedEnabled")
+        public static let IsolateSelectedEnabled         = Notification.Name(rawValue: "org.sktiled.notification.name.demo.isolateSelectedEnabled")  // nothing is using this currently
         public static let IsolateSelectedDisabled        = Notification.Name(rawValue: "org.sktiled.notification.name.demo.isolateSelectedDisabled")
 
     }
@@ -573,7 +573,6 @@ extension SKNode {
         userData.removeObject(forKey: "__sktiled_attributes")
     }
 }
-
 
 
 extension SKNode {
@@ -1044,6 +1043,7 @@ extension NSTextField {
 
     /// Reset the text field.
     func reset() {
+        attributedStringValue = NSMutableAttributedString()
         stringValue = ""
         placeholderString = ""
     }
