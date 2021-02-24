@@ -46,8 +46,8 @@ Change Log
 	- rename `SKTilemap.getTileset(forTile:)` -> `SKTilemap.getTilesetFor(globalID:)`
 	- rename `SKTilemap.coordinateAtMouseEvent(event:)` -> `SKTilemap.coordinateAtMouse(event:)`
 	- rename `TiledLayerObject.coordinateAtMouseEvent(event:)` -> `TiledLayerObject.coordinateAtMouse(event:)`
-    - rename `TiledObjectType.setValue(forKey:)` -> `TiledAttributedType.setValue(for:)`
-    - rename `TiledObjectType.removeProperty(forKey:)` -> `TiledAttributedType.removeValue(for:)`
+    - rename `TiledObjectType.setValue(forKey:)` -> `TiledObjectType.setValue(for:)`
+    - rename `TiledObjectType.removeProperty(forKey:)` -> `TiledObjectType.removeValue(for:)`
 	- rename `SKTileset.setDataTexture(_:imageNamed:)` -> `SKTileset.setDataTexture(tileID:imageNamed:)`
 	- rename `SKTileset.setDataTexture(_:texture:)` -> `SKTileset.setDataTexture(tileID:texture:)`
 	- rename `SKTileset.addTilesetTile(_:texture:)` -> `SKTileset.addTilesetTile(tileID:texture:)`

@@ -214,7 +214,7 @@ extension SKTileLayer {
 /// ```
 ///
 /// [gkgridgraphnode-url]:https://developer.apple.com/documentation/gameplaykit/gkgridgraphnode
-public class SKTiledGraphNode: GKGridGraphNode, TiledAttributedType {
+public class SKTiledGraphNode: GKGridGraphNode, TiledObjectType {
 
     /// Unique id.
     public var uuid: String = UUID().uuidString
@@ -226,7 +226,7 @@ public class SKTiledGraphNode: GKGridGraphNode, TiledAttributedType {
     public var properties: [String : String] = [:]
     
     /// Private **Tiled** properties.
-    var _tiled_properties: [String: String] = [:]
+    public var _tiled_properties: [String: String] = [:]
 
     /// Ignore custom node properties.
     public var ignoreProperties: Bool = false

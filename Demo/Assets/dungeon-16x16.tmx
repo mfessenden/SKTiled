@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="22" height="21" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#211e26" nextlayerid="24" nextobjectid="161">
  <properties>
-  <property name="description" value="A simple orthographic map"/>
+  <property name="description" value="Buch -&gt;  http://opengameart.org/content/dungeon-tileset"/>
   <property name="displayName" value="dungeon-16x16"/>
   <property name="frameColor" type="color" value="#ff63a4b2"/>
   <property name="gridColor" type="color" value="#ff80d1e2"/>

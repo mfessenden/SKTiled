@@ -34,7 +34,7 @@ import SpriteKit
 /// - `id`:  object id.
 /// - `points`: frame points.           
 ///
-internal class TileCollisionShape: TiledAttributedType {
+internal class TileCollisionShape: TiledObjectType {
 
     /// Object id.
     public var id: Int = 0

@@ -93,7 +93,7 @@ typealias LayerRenderStatistics = (tiles: Int, objects: Int)
 /// // return the tile coordinate at a mouse event (macOS)
 /// coord = groupLayer.coordinateAtMouse(event: mouseClicked)
 /// ```
-public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeometryType, TiledAttributedType {
+public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeometryType, TiledObjectType {
 
     /// Reference to the parent tilemap.
     unowned let tilemap: SKTilemap
@@ -166,7 +166,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     public var properties: [String: String] = [:]
 
     /// Private **Tiled** properties.
-    internal var _tiled_properties: [String: String] = [:]
+    public var _tiled_properties: [String: String] = [:]
 
     /// Ignore custom node properties.
     public var ignoreProperties: Bool = false

@@ -67,7 +67,7 @@ import SpriteKit
 /// [tilesets-doc-url]:https://mfessenden.github.io/SKTiled/1.3/Classes/SKTileset.html
 /// [sktiled-docroot-url]:https://mfessenden.github.io/SKTiled/1.3/index.html
 /// [tiledata-diagram-url]:https://mfessenden.github.io/SKTiled/1.3/images/tiledata-setup.svg
-public class SKTileset: NSObject, CustomReflectable, TiledAttributedType {
+public class SKTileset: NSObject, CustomReflectable, TiledObjectType {
 
     /// Tileset url (external tileset).
     public var url: URL!
@@ -88,7 +88,7 @@ public class SKTileset: NSObject, CustomReflectable, TiledAttributedType {
     public var properties: [String: String] = [:]
 
     /// Private **Tiled** properties.
-    internal var _tiled_properties: [String: String] = [:]
+    public var _tiled_properties: [String: String] = [:]
     
     /// Ignore custom properties.
     public var ignoreProperties: Bool = false

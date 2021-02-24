@@ -177,7 +177,23 @@ open class SKTile: SKSpriteNode, CustomReflectable {
 
     /// Debug visualization options.
     @objc public var debugDrawOptions: DebugDrawOptions = []
-
+    
+    // MARK: - Properties
+    
+    /// Ignore custom node properties.
+    @objc public var ignoreProperties: Bool = false
+    
+    /// Private **Tiled** properties.
+    @objc public var _tiled_properties: [String: String] = [:]
+    
+    @objc public var properties: [String: String] {
+        get {
+            return tileData.properties
+        } set {
+            _tiled_properties = newValue
+        }
+    }
+    
     // MARK: - Tile Handlers
 
     /// Indicates the current node has received focus or selected.

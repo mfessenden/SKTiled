@@ -141,7 +141,7 @@ public struct TiledGeometryIsolationMode: OptionSet {
 /// [tilemap-doc-url]:https://mfessenden.github.io/SKTiled/1.3/working-with-maps.html
 /// [sktiled-docroot-url]:https://mfessenden.github.io/SKTiled/1.3/index.html
 /// [tileset-url]:SKTileset.html
-public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, TiledAttributedType {
+public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, TiledObjectType {
 
     /// Tilemap source file path.
     public var url: URL!
@@ -171,7 +171,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     public var properties: [String: String] = [:]
 
     /// Private **Tiled** properties.
-    internal var _tiled_properties: [String: String] = [:]
+    public var _tiled_properties: [String: String] = [:]
 
     /// If enabled, custom **Tiled** properties are ignored.
     public var ignoreProperties: Bool = false

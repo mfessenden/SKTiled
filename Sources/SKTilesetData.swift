@@ -38,7 +38,7 @@ import SpriteKit
 /// - `texture`: Tile texture.
 /// - `tileOffset`: Tile offset.
 ///
-public class SKTilesetData: CustomReflectable, TiledAttributedType {
+public class SKTilesetData: CustomReflectable, TiledObjectType {
 
     /// Reference to parent tileset.
     public weak var tileset: SKTileset!
@@ -73,7 +73,7 @@ public class SKTilesetData: CustomReflectable, TiledAttributedType {
     public var properties: [String: String] = [:]
 
     /// Private **Tiled** properties.
-    internal var _tiled_properties: [String: String] = [:]
+    public var _tiled_properties: [String: String] = [:]
     
     /// Ignore custom properties.
     public var ignoreProperties: Bool = false

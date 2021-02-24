@@ -198,7 +198,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
     fileprivate var properties: [String: String] = [:]
 
     /// Private **Tiled** properties.
-    internal var _tiled_properties: [String: String] = [:]
+    public var _tiled_properties: [String: String] = [:]
     
     /// Ignore custom properties.
     fileprivate var ignoreProperties: Bool = false
@@ -1740,7 +1740,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
                 }
             }
 
-            // TODO: this can be reduced if we simply query the object as `TiledAttributedType`
+            // TODO: this can be reduced if we simply query the object as `TiledObjectType`
 
 
             // tilemap properties

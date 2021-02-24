@@ -42,7 +42,7 @@ import SpriteKit
 ///
 /// [objects-doc-url]:http://docs.mapeditor.org/en/stable/manual/objects/#insert-tile
 /// [tile-objects-url]:https://mfessenden.github.io/SKTiled/1.3/working-with-objects.html
-open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
+open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
     /// The `TiledObjectType` enumeration describes a vector object type (tile object, text object, etc).
     ///
@@ -281,7 +281,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledAttributedType {
     open var properties: [String: String] = [:]
 
     /// Private **Tiled** properties.
-    internal var _tiled_properties: [String: String] = [:]
+    public var _tiled_properties: [String: String] = [:]
     
     /// Object will ignore custom properties.
     open var ignoreProperties: Bool = false
