@@ -2517,11 +2517,13 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
                 #if SKTILED_DEMO
                 renderStatistics.visibleCount = nodesInView.count
                 
+                #if os(macOS)
                 if let scene = self.scene {
                     if let view = scene.view {
                         renderStatistics.trackingViews = UInt32(view.trackingAreas.count)
                     }
                 }
+                #endif
                 
                 // get the cpu usage of the app currently
                 renderStatistics.cpuPercentage = Int(cpuUsage())

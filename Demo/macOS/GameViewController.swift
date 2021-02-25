@@ -859,7 +859,7 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func objectUnderMouseChanged(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let focusedObject = notification.object as? SKTileObject else {
             return
         }
@@ -904,7 +904,7 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func tileUnderMouseChanged(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let focusedTile = notification.object as? SKTile else {
             return
         }

@@ -39,10 +39,11 @@ public class SKTiledDemoScene: SKTiledScene {
 
     /// Reference to demo scene manager.
     internal weak var demoController: TiledDemoController?
-
+    
+    #if os(macOS)
     /// Reference to demo delegate.
     internal weak var demoDelegate: TiledDemoDelegate? = TiledDemoDelegate.default
-    
+    #endif
     /// global information label font size.
     private let labelFontSize: CGFloat = 11
 
@@ -130,7 +131,7 @@ public class SKTiledDemoScene: SKTiledScene {
             mousePointer = pointer
             addChild(pointer)
             cameraNode?.addDelegate(pointer)
-            cameraNode?.addDelegate(TiledDemoDelegate.default)
+            cameraNode?.addDelegate(demoDelegate)
         }
         #endif
     }

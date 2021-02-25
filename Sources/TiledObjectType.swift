@@ -243,7 +243,7 @@ extension TiledObjectType {
                     let valueColor = UIColor(hexString: value)
                     let colorAttributes = [
                         .foregroundColor: valueColor,
-                        .paragraphStyle: labelStyle
+                        .paragraphStyle: paragraphStyle
                     ] as [NSAttributedString.Key: Any]
                     #endif
                     
