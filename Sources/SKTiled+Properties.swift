@@ -260,7 +260,8 @@ extension TiledLayerObject {
                 tintColor = SKColor(hexString: value)
             }
 
-            if (lattr == "hidden") {
+            
+            if ["hidden", "ishidden"].contains(lattr) {
                 isHidden = boolForKey(attr)
             }
 
@@ -391,17 +392,21 @@ extension SKTileObject {
                 //frameColor = SKColor(hexString: value)
                 strokeColor = SKColor(hexString: value)
             }
+            
+            if ["hidden", "ishidden"].contains(lattr) {
+                isHidden = boolForKey(attr)
+            }
 
             if (lattr == "linewidth") {
                 lineWidth = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : lineWidth
             }
 
-            if (lattr == "zposition") {
-                zPosition = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : zPosition
-            }
-
             if ["proxycolor", "objectcolor"].contains(lattr) {
                 proxyColor = SKColor(hexString: value)
+            }
+            
+            if (lattr == "zposition") {
+                zPosition = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : zPosition
             }
         }
 

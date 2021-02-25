@@ -2501,15 +2501,44 @@ extension simd_int2 {
     }
 }
 
-
-
 // MARK: - Helper Functions
 
+
+/// Scale a value between between two ranges.
+///
+/// ### Usage
+///
+///  ```swift
+///  let hour = 12.0
+///  let timeOfDay = scaleBetween(unscaled: hour, min: 0, max: 24, outputMin: 0, outputMax: 1)
+///  // 0.5
+///  ```
+///
+/// - Parameters:
+///   - unscaled: value to scale.
+///   - min: input range minimum.
+///   - max: input range maximum.
+///   - outputMin: result range minimum.
+///   - outputMax: result range maximum.
+/// - Returns: scaled value.
+public func scaleBetween(_ unscaled: CGFloat, min: CGFloat, max: CGFloat, outputMin: CGFloat = 0, outputMax: CGFloat = 1) -> CGFloat {
+    return (outputMax - outputMin) * (unscaled - min) / (max - min) + outputMin
+}
+
+
+/// Returns the floor of each element in the point.
+///
+/// - Parameter point: point structure.
+/// - Returns: modified point.
 public func floor(point: CGPoint) -> CGPoint {
     return CGPoint(x: floor(Double(point.x)), y: floor(Double(point.y)))
 }
 
 
+/// Returns the ceiling of each element in the point.
+///
+/// - Parameter point: point structure.
+/// - Returns: modified point.
 public func ceil(point: CGPoint) -> CGPoint {
     return CGPoint(x: ceil(Double(point.x)), y: ceil(Double(point.y)))
 }

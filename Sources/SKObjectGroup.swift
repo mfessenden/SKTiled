@@ -186,6 +186,24 @@ public class SKObjectGroup: TiledLayerObject {
             }
         }
     }
+    
+    /// Initial layer position for infinite maps. Used to reposition layers & chunks in infinite maps. This is used by the tilemap to position the layers as they are added.
+    internal override var layerInfiniteOffset: CGPoint {
+        //if (isInfinite == false) || (layerType != .tile) {
+        if (isInfinite == false) {
+            return CGPoint.zero
+        }
+        
+        var offsetPos = CGPoint.zero
+        switch orientation {
+            case .orthogonal:
+                offsetPos.x -= tileWidthHalf
+                offsetPos.y -= tileHeightHalf
+            default: break
+                
+        }
+        return offsetPos
+    }
 
     // MARK: - Initialization
 
@@ -410,11 +428,11 @@ public class SKObjectGroup: TiledLayerObject {
     /// - Parameter data: tile data.
     /// - Returns: created tile object.
     public func newTileObject(data: SKTilesetData) -> SKTileObject {
-        var objectSize = tilemap.tileSize
+        var objsize = tilemap.tileSize
         if let texture = data.texture {
-            objectSize = texture.size()
+            objsize = texture.size()
         }
-        let object = SKTileObject(width: objectSize.width, height: objectSize.height)
+        let object = SKTileObject(width: objsize.width, height: objsize.height)
         object.globalID = data.globalID
         _ = addObject(object)
         object.draw()

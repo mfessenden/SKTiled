@@ -54,7 +54,7 @@ import SpriteKit
 ///  - `sceneRotated`:  scene is rotated via gesture. **(iOS only)**
 ///
 ///
-/// [tiled-scene-camera-delegate-image]:../images/camera-delegate.svg
+/// [tiled-scene-camera-delegate-image]:https://mfessenden.github.io/SKTiled/1.3/images/camera-delegate.svg
 @objc public protocol TiledSceneCameraDelegate: class {
 
     /// Allow delegate to receive updates from camera.

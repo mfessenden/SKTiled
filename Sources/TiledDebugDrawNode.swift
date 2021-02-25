@@ -42,6 +42,9 @@ internal class TiledDebugDrawNode: SKNode {
     
     private var gridTexture: SKTexture?                      // grid texture
     private var graphTexture: SKTexture?                     // GKGridGraph texture
+   
+    
+    /// Unique identifier used to access anchor shape nodes.
     private var anchorKey: String = "ANCHOR"
     
     init(tileLayer: TiledLayerObject, isDefault def: Bool = false) {

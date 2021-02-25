@@ -215,7 +215,7 @@ extension TiledMappableGeometryType {
 
     // MARK: - Geometry
 
-    /// :nodoc: Returns the position of layer origin point. Used only in `SKTileObject.getVertices(offset:)`.
+    /// Returns the position of layer origin point. Used only in `SKTileObject.getVertices(offset:)`.
     public var origin: CGPoint {
 
         switch orientation {

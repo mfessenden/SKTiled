@@ -138,7 +138,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     /// The tile's current coordinate.
     open var currentCoordinate: simd_int2 = simd_int2(0, 0)
 
-    /// Weak reference to the parent layer.
+    /// Reference to the parent layer.
     open weak var layer: TiledLayerObject!
 
     /// Parent tile onbject.
@@ -210,7 +210,12 @@ open class SKTile: SKSpriteNode, CustomReflectable {
             }
         }
     }
-
+    
+    /// Handler for when the tile is created.
+    internal var onCreate: ((SKTile) -> ())?
+    
+    /// Handler for when the tile is destroyed.
+    internal var onDestroy: ((SKTile) -> ())?
 
     #if os(macOS)
 
@@ -344,20 +349,12 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         // offset for tile objects
         shape.position.x -= boundsOffset.x
         shape.position.y -= boundsOffset.y
-
+        shape.name = boundsKey
         return shape
     }()
 
     /// Tile highlight duration.
     open var highlightDuration: TimeInterval = TiledGlobals.default.debugDisplayOptions.highlightDuration
-
-    /// Key used to access bounding box shapes.
-    internal var boundsKey: String {
-        return "TILE_\(globalId)_BOUNDS"
-    }
-
-    /// Key used to access tile animation actions.
-    internal var animationKey: String = "TILE-ANIMATION"
 
     /// Enable tile animation.
     open var enableAnimation: Bool = true {
@@ -369,6 +366,11 @@ open class SKTile: SKSpriteNode, CustomReflectable {
             }
         }
     }
+    
+    /// Returns the size of parent object container (if one exists). If this tile is used as a [**tile object**][tile-objects-url], the vector object container might have a completely different
+    ///
+    /// [tile-objects-url]:working-with-objects.html#tile-objects
+    internal var objectSize: CGSize?
 
     /// Shape describing this object.
     @objc public lazy var objectPath: CGPath = {
@@ -384,6 +386,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     /// - Parameter offset: point offset value.
     /// - Returns: array of bounding shape points.
     @objc open override func getVertices(offset: CGPoint = CGPoint.zero) -> [CGPoint] {
+        
         // FIXME: this is incorrect for tiles added to a layer after a map is rendered
         guard let tileLayer = layer,
               let parent = parent else {
@@ -471,11 +474,10 @@ open class SKTile: SKSpriteNode, CustomReflectable {
 
     /// Returns the bounding box of the shape.
     open override var boundingRect: CGRect {
-        return CGRect(x: anchorPoint.x, y: anchorPoint.y, width: tileSize.width, height: -tileSize.height)
+        //return CGRect(x: -tileSize.halfWidth, y: tileSize.halfHeight, width: tileSize.width, height: -tileSize.height)
+        return CGRect(x: 0, y: 0, width: tileSize.width, height: -tileSize.height)
     }
 
-    /// Tile object size.
-    internal var objectSize: CGSize?
 
 
     // MARK: - Initialization
@@ -486,7 +488,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     required public init?(data: SKTilesetData) {
         guard let tileset = data.tileset else { return nil }
         self.tileData = data
-        self.animationKey += "-\(data.globalID)"
+        //self.animationKey += "-\(data.globalID)"
         self.tileSize = tileset.tileSize
         super.init(texture: data.texture, color: SKColor.clear, size: fabs(tileset.tileSize))
         isUserInteractionEnabled = true
@@ -572,6 +574,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         object = nil
         removeAllActions()
         removeAllChildren()
+        onDestroy?(self)
     }
 
     /// Removes this node from the scene graph. Signals the tile cache to remove the tile.

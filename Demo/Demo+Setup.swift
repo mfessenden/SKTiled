@@ -65,6 +65,12 @@ extension SKTiledDemoScene {
                 
                 
                 tilemap.getLayers(named: "Characters-Upper").first?.addChild(tile, coord: simd_int2(9,13), offset: CGPoint(x: -4, y: -4))
+                
+                if let dwarf = tilemap.getObjects(named: "dwarf1").first {
+                    dwarf.setScale(2)
+                }
+                
+                
 
             case "roguelike-16x16.tmx":
                 if let graphLayer = tilemap.tileLayers(named: "Graph").first {

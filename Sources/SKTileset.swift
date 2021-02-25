@@ -1000,7 +1000,7 @@ extension SKTileset {
     ///
     /// - Parameter gid: global tile id.
     /// - Returns: tile data object.
-    @available(*, deprecated, message: "tile ids should be `UInt32`.")
+    @available(*, deprecated, message: "tile ids should be `UInt32` type.")
     public func getTileData(globalID gid: Int) -> SKTilesetData? {
         return getTileData(globalID: UInt32(gid))
     }
@@ -1009,7 +1009,7 @@ extension SKTileset {
     ///
     /// - Parameter id: local id.
     /// - Returns: global tile ID.
-    @available(*, deprecated, message: "tile ids should be `UInt32`.")
+    @available(*, deprecated, message: "tile ids should be `UInt32` type.")
     public func getGlobalID(forLocalID id: Int) -> Int {
         if (id > firstGID) {
             return Int(id)
@@ -1032,7 +1032,7 @@ extension SKTileset {
     ///
     /// - Parameter id: local tile id.
     /// - Returns: tile data.
-    @available(*, deprecated, message: "tile ids should be `UInt32`.")
+    @available(*, deprecated, message: "tile ids should be `UInt32` type.")
     public func getTileData(localID id: Int) -> SKTilesetData? {
         let localID = realTileId(globalID: UInt32(id))
         if let index = tileData.firstIndex(where: { $0.id == localID }) {

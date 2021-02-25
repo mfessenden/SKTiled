@@ -131,7 +131,7 @@ public class SKTiledDemoScene: SKTiledScene {
             mousePointer = pointer
             addChild(pointer)
             cameraNode?.addDelegate(pointer)
-            cameraNode?.addDelegate(demoDelegate)
+            cameraNode?.addDelegate(TiledDemoDelegate.default)
         }
         #endif
     }
@@ -896,23 +896,23 @@ extension SKTiledDemoScene {
         }
         
         
-        // 'x' tweaks tile flip flags for the upper door in the dungeon map
+        // 'x' forces map to un pause
         if eventKey == 0x7 {
             
-            let coord = simd_int2(16, 1)
-            if let tile = tilemap.tileLayers(named: "Level3").first?.tileAt(coord: coord) {
-                
-                tile.globalId = 2684354845
-                //tile.flipFlags = [.flipDiagonal, .flipHorizontal]
-                
-                //print("tile global id:         \(tile.globalId)")
-                //print("tile flip flags:        \(tile.flipFlags)")
-                //print("tile masked global id:  \(tile.maskedTileId)")
-                
-                print(tile.globalId, tile.flipFlags)
-                
+            var nodes: [SKNode] = [tilemap]
+            for layer in tilemap.getLayers() {
+                nodes.append(layer)
             }
-            updateCommandString("checking for tile at \(coord.shortDescription)", duration: 3.0)
+            
+            
+            for node in nodes {
+                if (node.isPaused == true) {
+                    print(" - un-pausing node '\(node.className)'")
+                }
+                node.isPaused = false
+            }
+            
+            updateCommandString("forcing map to un-pause", duration: 3.0)
         }
         
         // 'y' deletes selected nodes

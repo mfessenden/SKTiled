@@ -42,6 +42,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // file menu
     @IBOutlet weak var openMapMenuitem: NSMenuItem!
     @IBOutlet weak var reloadMapMenuitem: NSMenuItem!
+    @IBOutlet weak var openMapInTiledMenuitem: NSMenuItem!
     @IBOutlet weak var demoFilesMenu: NSMenuItem!
     @IBOutlet weak var demoFilesSubmenu: NSMenu!
 
@@ -139,6 +140,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.LaunchPreferences, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.SceneLoaded, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.FlushScene, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Globals.Updated, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.Updated, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.UpdateModeChanged, object: nil)
@@ -147,8 +151,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.RenderStats.VisibilityChanged, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Camera.Updated, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.DemoController.ResetDemoInterface, object: nil)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
+
     }
 
     // MARK: - Interface & Setup
@@ -156,9 +159,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func setupNotifications() {
         // demo notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(demoControllerAssetScanFinished), name: Notification.Name.DemoController.AssetsFinishedScanning, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(launchApplicationPreferences), name: Notification.Name.Demo.LaunchPreferences, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(demoSceneLoaded), name: Notification.Name.Demo.SceneLoaded, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionChanged), name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionCleared), name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(sceneFlushedAction), name: Notification.Name.Demo.FlushScene, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(demoControllerAssetScanFinished), name: Notification.Name.DemoController.AssetsFinishedScanning, object: nil)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(demoControllerAboutToScanForAssets), name: Notification.Name.DemoController.WillBeginScanForAssets, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resetMainInterfaceAction), name: Notification.Name.DemoController.ResetDemoInterface, object: nil)
 
@@ -171,8 +179,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(renderStatisticsVisibilityChanged), name: Notification.Name.RenderStats.VisibilityChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sceneCameraUpdated), name: Notification.Name.Camera.Updated, object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionChanged), name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionCleared), name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
+  
     }
 
 
@@ -198,7 +205,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         mapMenuItem.isEnabled = false
         cameraMainMenu.isEnabled = false
         debugMainMenu.isEnabled = false
+        
+        reloadMapMenuitem.isEnabled = false
+        openMapInTiledMenuitem.isEnabled = false
 
+        reloadMapMenuitem.isHidden = true
+        openMapInTiledMenuitem.isHidden = true
+        
+        
         // camera menu items that are dependant on the current tilemap
         cameraAllowZoomItem.isEnabled = false
         cameraAllowMovementItem.isEnabled = false
@@ -239,9 +253,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 
         // if the scan is done, build the current demo file menu
-        if let demoController = demoController {
-
-        }
+        // if let demoController = demoController {}
     }
 
     /// Update the current demo interface when the tilemap has finished rendering.
@@ -358,6 +370,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         developmentMainMenu.isHidden = !enableDevelopmentMenu
 
         demoScene.cameraNode?.addDelegate(self)
+    }
+    
+    @objc func sceneFlushedAction(notification: Notification) {
+        resetMainInterface()
     }
 
 
@@ -506,6 +522,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard let gameController = viewController else { return }
         let demoController = gameController.demoController
         demoController.reloadScene()
+    }
+    
+    /// Action to open the current map in **Tiled**.
+    ///
+    /// - Parameter sender: invoking ui element.
+    @IBAction func openCurrentMapInTiledAction(_ sender: NSMenuItem) {
+        guard let demoController = demoController,
+              let currentMap = demoController.currentTilemap,
+              let currentMapUrl = currentMap.fileUrl else {
+            Logger.default.log("no current map loaded.", level: .warning, symbol: "AppDelegate")
+            return
+        }
+        NSWorkspace.shared.openFile(currentMapUrl.path)
     }
 
     @IBAction func timeDisplayUpdated(_ sender: NSMenuItem) {
@@ -1115,12 +1144,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 let nodeSubMenu = NSMenuItem(title: "\(tiledDescription)", action: nil, keyEquivalent: "")
                 nodeSubMenu.submenu = NSMenu(title: "\(tiledDescription)")
 
+                
+                let dumpMenuItem = NSMenuItem(title: "Dump...", action: #selector(dumpSelectedNodes), keyEquivalent: "")
+                dumpMenuItem.representedObject = tiledNode
+                nodeSubMenu.submenu?.addItem(dumpMenuItem)
+                
+                
+                
+                
+                
+                
+                
                 if let tile = tiledNode as? SKTile {
-
-                    let deleteMenuItem = NSMenuItem(title: "Delete", action: #selector(deleteNodeAction), keyEquivalent: "")
-                    deleteMenuItem.representedObject = tiledNode
-                    nodeSubMenu.submenu?.addItem(deleteMenuItem)
-
 
                     nodeSubMenu.image = NSImage(named: tiledNode.tiledIconName ?? "node-icon")
                     selectedNodesMenuItem.submenu?.addItem(nodeSubMenu)
@@ -1129,15 +1164,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     let flipFlagsMenuItem = NSMenuItem(title: "Tile Editor...", action: #selector(launchTileEditor), keyEquivalent: "")
                     flipFlagsMenuItem.representedObject = tile
                     nodeSubMenu.submenu?.addItem(flipFlagsMenuItem)
+                    
+                    
+                    let isolateLayerMenuItem = NSMenuItem(title: "Isolate Layer...", action: #selector(isolateNodeLayerAction), keyEquivalent: "")
+                    isolateLayerMenuItem.representedObject = tile
+                    nodeSubMenu.submenu?.addItem(isolateLayerMenuItem)
                 }
 
                 if let object = tiledNode as? SKTileObject {
 
-                    let deleteMenuItem = NSMenuItem(title: "Delete", action: #selector(deleteNodeAction), keyEquivalent: "")
-                    deleteMenuItem.representedObject = tiledNode
-                    nodeSubMenu.submenu?.addItem(deleteMenuItem)
-
-
+                    let isolateLayerMenuItem = NSMenuItem(title: "Isolate Layer...", action: #selector(isolateNodeLayerAction), keyEquivalent: "")
+                    isolateLayerMenuItem.representedObject = object
+                    nodeSubMenu.submenu?.addItem(isolateLayerMenuItem)
+                    
                     nodeSubMenu.image = NSImage(named: tiledNode.tiledIconName ?? "node-icon")
                     selectedNodesMenuItem.submenu?.addItem(nodeSubMenu)
                 }
@@ -1167,9 +1206,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
 
 
-                let dumpMenuItem = NSMenuItem(title: "Dump...", action: #selector(dumpSelectedNodes), keyEquivalent: "")
-                dumpMenuItem.representedObject = tiledNode
-                nodeSubMenu.submenu?.addItem(dumpMenuItem)
+                let deleteMenuItem = NSMenuItem(title: "Delete", action: #selector(deleteNodeAction), keyEquivalent: "")
+                deleteMenuItem.representedObject = tiledNode
+                nodeSubMenu.submenu?.addItem(deleteMenuItem)
 
             }
         }
@@ -1265,8 +1304,30 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let nodeDescription = selectedNode.tiledHelpDescription ?? String(describing: type(of: selectedNode))
         //updateCommandString("deleting node '\(nodeDescription)'", duration: 4)
     }
+    
+    /// Called when a selected node calls the `Selected Node -> Isolate Layer` menuitem.
+    ///
+    /// - Parameter sender: invoking ui element.
+    @IBAction func isolateNodeLayerAction(_ sender: NSMenuItem) {
+        guard let selectedNode = sender.representedObject as? TiledCustomReflectableType else {
+            Logger.default.log("cannot access SpriteKit node.", level: .warning)
+            return
+        }
+        
+        var selectedNodeLayer: TiledLayerObject?
+        
+        if let tile = selectedNode as? SKTile {
+            selectedNodeLayer = tile.layer
+        }
+        
+        if let object = selectedNode as? SKTileObject {
+            selectedNodeLayer = object.layer
+        }
+        
+        
+        //selectedNodeLayer?.isolated = true
+    }
 
-    // TODO: add this functionality to the selected nodes submenu
 
     @IBAction func dumpSelectedNodes(_ sender: NSMenuItem) {
         NotificationCenter.default.post(
@@ -1800,6 +1861,7 @@ extension AppDelegate {
         updateModeMenuItem.isEnabled = true
         renderEffectsMenuItem.isEnabled = true
         mapDebugDrawMenu.isEnabled = true
+        openMapMenuitem.isEnabled = true
 
         mapGridColorMenu.isEnabled = true
         layerVisibilityMenu.isEnabled = true

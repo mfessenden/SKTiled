@@ -325,6 +325,8 @@ class GameViewController: NSViewController, Loggable {
 
         view.layer?.backgroundColor = SKColor(hexString: "#3D5761").cgColor  // 😈
         view.wantsLayer = true
+        
+        progressIndicator.isHidden = true
     }
 
     /// Global toggle for debug view visibility.
@@ -824,18 +826,24 @@ class GameViewController: NSViewController, Loggable {
 
             var nodeImageName = "node-icon"
             var nodeNameString = node.className
+            var nodeToolTipString: String?
+            
             if let tiledNode = node as? TiledCustomReflectableType {
 
                 nodeNameString = tiledNode.tiledMenuItemDescription ?? "tiled node"
                 nodeImageName = tiledNode.tiledIconName ?? "node-icon"
 
                 if let mappableNode = tiledNode as? TiledMappableGeometryType {
+                    
+                    
                     nodeNameString = mappableNode.tiledMenuItemDescription ?? "tiled node"
-
+                    nodeToolTipString = mappableNode.tiledTooltipDescription ?? "this is a generic tooltip string"
+                    
                     // add indentation for layers
                     if let layerNode = tiledNode as? TiledLayerObject {
                         let parentCount = layerNode.parents.count
                         currentIndenationLevel = (parentCount > 0) ? parentCount - 1 : 0
+                        nodeToolTipString = layerNode.xPath
                     }
                 }
             }
@@ -844,6 +852,12 @@ class GameViewController: NSViewController, Loggable {
             thisNodeMenuItem.image = NSImage(named: nodeImageName)
             thisNodeMenuItem.representedObject = node
             thisNodeMenuItem.indentationLevel = currentIndenationLevel
+            
+            if let thisNodeToolTip = nodeToolTipString {
+                thisNodeMenuItem.toolTip = thisNodeToolTip
+            }
+            
+            
             nodesMenu.addItem(thisNodeMenuItem)
             previousIndentationLevel = currentIndenationLevel
         }

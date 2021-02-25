@@ -96,11 +96,24 @@ extension TiledGeometryType {
         }
         return objtype
     }
+    
+    // MARK: - Indentifiers
 
-    /// Key used to access bounding box shapes.
+    /// Unique identifier used to access bounding box shape nodes.
     internal var boundsKey: String {
         return "\(uuid)_BOUNDS"
     }
+    
+    /// Unique identifier used to access animation actions.
+    internal var animationKey: String {
+        return "\(uuid)_ANIMATION"
+    }
+    
+    /// Unique identifier used to access anchor point shape nodes.
+    internal var anchorKey: String {
+        return "\(uuid)_ANIMATION"
+    }
+    
 }
 
 

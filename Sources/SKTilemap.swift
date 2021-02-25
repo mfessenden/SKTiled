@@ -142,13 +142,22 @@ public struct TiledGeometryIsolationMode: OptionSet {
 /// [sktiled-docroot-url]:https://mfessenden.github.io/SKTiled/1.3/index.html
 /// [tileset-url]:SKTileset.html
 public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, TiledObjectType {
-
+    
+    // MARK: - File Properties
+    
     /// Tilemap source file path.
     public var url: URL!
 
     /// Tilemap source file path, relative to the bundle.
     public var fileUrl: URL!
 
+    // MARK: - Tilesets
+    
+    /// Array of tilesets associated with this map.
+    public var tilesets: Set<SKTileset> = []
+    
+    // MARK: - Basic Properties
+    
     /// Unique SpriteKit node id.
     public var uuid: String = UUID().uuidString
 
@@ -200,9 +209,26 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     /// Chunk size (infinite maps).
     public internal(set) var chunkSize: CGSize?
 
+
+    // MARK: Hexagonal/Staggered Properties
+    
+    /// Hexagonal side length.
+    public var hexsidelength: Int = 0
+    
+    /// Hexagonal stagger axis.
+    public var staggeraxis: StaggerAxis = StaggerAxis.y
+    
+    /// Hexagonal stagger index.
+    public var staggerindex: StaggerIndex = StaggerIndex.odd
+    
+    
+    // MARK: Positioning
+    
     /// Mappable child node offset. Used when a map container aligns all of the layers.
     public var childOffset: CGPoint {
         var offsetOutput = CGPoint.zero
+        
+        // default alignment is `center`
         let layerAnchorPoint = layerAlignment.anchorPoint
 
         switch orientation {
@@ -379,16 +405,6 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         }
     }
 
-    // MARK: Hexagonal/Staggered Properties
-
-    /// Hexagonal side length.
-    public var hexsidelength: Int = 0
-
-    /// Hexagonal stagger axis.
-    public var staggeraxis: StaggerAxis = StaggerAxis.y
-
-    /// Hexagonal stagger index.
-    public var staggerindex: StaggerIndex = StaggerIndex.odd
 
     // MARK: - Camera
     
@@ -451,18 +467,10 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     /// Overlay layer used to display object bounds (debug).
     internal var objectsOverlay: TileObjectOverlay = TileObjectOverlay()
 
-    // MARK: - Tilesets
-
-    /// Array of tilesets associated with this map.
-    public var tilesets: Set<SKTileset> = []
-
     /// Object count.
     public var objectCount: Int {
         return self.getObjects(recursive: true).count
     }
-
-    /// Default z-position range between layers.
-    public var zDeltaForLayers: CGFloat = TiledGlobals.default.zDeltaForLayers
 
 
     // MARK: - Caching
@@ -542,6 +550,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         shape.setScale(1 / renderQuality)
         addChild(shape)
         shape.zPosition = zPosition + 1
+        shape.name = boundsKey
         return shape
     }()
 
@@ -1464,13 +1473,100 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     }
 
     // MARK: - Layer Management
-
+    
+    /// Default z-position range between layers.
+    public var zDeltaForLayers: CGFloat = TiledGlobals.default.zDeltaForLayers
+    
     /// Returns an array of child layers, sorted by index (first is lowest, last is highest).
     ///
     /// - Parameter recursive: include nested layers.
     /// - Returns: array of layers.
     public func getLayers(recursive: Bool = true) -> [TiledLayerObject] {
         return (recursive == true) ? self.layers : Array(self._layers)
+    }
+    
+    /// Return layers matching the given name.
+    ///
+    /// - Parameters:
+    ///   - layerName: tile layer name.
+    ///   - recursive: include nested layers.
+    /// - Returns: layer objects.
+    public func getLayers(named layerName: String, recursive: Bool = true) -> [TiledLayerObject] {
+        var result: [TiledLayerObject] = []
+        let layersToCheck = self.getLayers(recursive: recursive)
+        if let index = layersToCheck.firstIndex(where: { $0.name == layerName }) {
+            result.append(layersToCheck[index])
+        }
+        return result
+    }
+    
+    /// Return layers with names matching the given prefix.
+    ///
+    /// - Parameters:
+    ///   - withPrefix: prefix to match.
+    ///   - recursive: include nested layers.
+    /// - Returns: layer objects.
+    public func getLayers(withPrefix: String, recursive: Bool = true) -> [TiledLayerObject] {
+        var result: [TiledLayerObject] = []
+        let layersToCheck = self.getLayers(recursive: recursive)
+        if let index = layersToCheck.firstIndex(where: { $0.layerName.hasPrefix(withPrefix) }) {
+            result.append(layersToCheck[index])
+        }
+        return result
+    }
+    
+    /// Return layers with matching the given path. Tiled allows for duplicate layer names, so we're returning an array.
+    ///
+    /// - Parameters:
+    ///   - withPrefix: layer path to search for.
+    /// - Returns: layer objects.
+    public func getLayers(atPath: String) -> [TiledLayerObject] {
+        return getLayers(recursive: true).filter( { $0.path == atPath })
+    }
+    
+    /// Returns a layer given an `xPath` value.
+    ///
+    /// - Parameter xPath: layer xPath.
+    /// - Returns: layer objects.
+    public func getLayer(xPath: String) -> TiledLayerObject? {
+        if let xindex = layers.firstIndex(where: { $0.xPath == xPath }) {
+            return layers[xindex]
+        }
+        return nil
+    }
+    
+    /// Returns a layer matching the given UUID.
+    ///
+    /// - Parameter uuid: tile layer UUID.
+    /// - Returns: layer object.
+    public func getLayer(withID uuid: String) -> TiledLayerObject? {
+        if let index = layers.firstIndex(where: { $0.uuid == uuid }) {
+            let layer = layers[index]
+            return layer
+        }
+        return nil
+    }
+    
+    /// Returns a layer given the index (0 being the lowest).
+    ///
+    /// - Parameter index: layer index.
+    /// - Returns: layer object.
+    public func getLayer(atIndex index: UInt32) -> TiledLayerObject? {
+        if let index = _layers.firstIndex(where: { $0.index == index }) {
+            let layer = _layers[index]
+            return layer
+        }
+        return nil
+    }
+    
+    /// Return layers assigned a custom `type` property.
+    ///
+    /// - Parameters:
+    ///   - ofType: layer type.
+    ///   - recursive: include nested layers.
+    /// - Returns: array of layers.
+    public func getLayers(ofType: String, recursive: Bool = true) -> [TiledLayerObject] {
+        return getLayers(recursive: recursive).filter { $0.type != nil }.filter { $0.type! == ofType }
     }
 
     /// Returns all content layers (ie. not groups). Sorted by zPosition in scene.
@@ -1594,90 +1690,6 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     public func newGroupLayer(named: String, group: SKGroupLayer? = nil) -> SKGroupLayer {
         let groupLayer = SKGroupLayer(layerName: named, tilemap: self)
         return addLayer(groupLayer, group: group).layer as! SKGroupLayer
-    }
-
-    /// Return layers matching the given name.
-    ///
-    /// - Parameters:
-    ///   - layerName: tile layer name.
-    ///   - recursive: include nested layers.
-    /// - Returns: layer objects.
-    public func getLayers(named layerName: String, recursive: Bool = true) -> [TiledLayerObject] {
-        var result: [TiledLayerObject] = []
-        let layersToCheck = self.getLayers(recursive: recursive)
-        if let index = layersToCheck.firstIndex(where: { $0.name == layerName }) {
-            result.append(layersToCheck[index])
-        }
-        return result
-    }
-
-    /// Return layers with names matching the given prefix.
-    ///
-    /// - Parameters:
-    ///   - withPrefix: prefix to match.
-    ///   - recursive: include nested layers.
-    /// - Returns: layer objects.
-    public func getLayers(withPrefix: String, recursive: Bool = true) -> [TiledLayerObject] {
-        var result: [TiledLayerObject] = []
-        let layersToCheck = self.getLayers(recursive: recursive)
-        if let index = layersToCheck.firstIndex(where: { $0.layerName.hasPrefix(withPrefix) }) {
-            result.append(layersToCheck[index])
-        }
-        return result
-    }
-
-    /// Return layers with matching the given path. Tiled allows for duplicate layer names, so we're returning an array.
-    ///
-    /// - Parameters:
-    ///   - withPrefix: layer path to search for.
-    /// - Returns: layer objects.
-    public func getLayers(atPath: String) -> [TiledLayerObject] {
-        return getLayers(recursive: true).filter( { $0.path == atPath })
-    }
-
-    /// Returns a layer given an `xPath` value.
-    ///
-    /// - Parameter xPath: layer xPath.
-    /// - Returns: layer objects.
-    public func getLayer(xPath: String) -> TiledLayerObject? {
-        if let xindex = layers.firstIndex(where: { $0.xPath == xPath }) {
-            return layers[xindex]
-        }
-        return nil
-    }
-
-    /// Returns a layer matching the given UUID.
-    ///
-    /// - Parameter uuid: tile layer UUID.
-    /// - Returns: layer object.
-    public func getLayer(withID uuid: String) -> TiledLayerObject? {
-        if let index = layers.firstIndex(where: { $0.uuid == uuid }) {
-            let layer = layers[index]
-            return layer
-        }
-        return nil
-    }
-
-    /// Returns a layer given the index (0 being the lowest).
-    ///
-    /// - Parameter index: layer index.
-    /// - Returns: layer object.
-    public func getLayer(atIndex index: UInt32) -> TiledLayerObject? {
-        if let index = _layers.firstIndex(where: { $0.index == index }) {
-            let layer = _layers[index]
-            return layer
-        }
-        return nil
-    }
-
-    /// Return layers assigned a custom `type` property.
-    ///
-    /// - Parameters:
-    ///   - ofType: layer type.
-    ///   - recursive: include nested layers.
-    /// - Returns: array of layers.
-    public func getLayers(ofType: String, recursive: Bool = true) -> [TiledLayerObject] {
-        return getLayers(recursive: recursive).filter { $0.type != nil }.filter { $0.type! == ofType }
     }
 
     /// Return tile layers matching the given name. If recursive is false, only returns top-level layers.
@@ -1813,9 +1825,10 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     ///   - layer: layer instance.
     ///   - clamped: clamp the result.
     internal func positionLayer(_ layer: TiledLayerObject, clamped: Bool = false) {
-
+        
+        // start with the child offset
         var result = self.childOffset
-
+        
         // layer offset
         result.x += layer.offset.x
         result.y -= layer.offset.y
@@ -3572,9 +3585,7 @@ extension SKTilemap {
         if (orientation == .staggered) {
             result += "axis: '\(staggeraxis)' index: '\(staggerindex)'"
         }
-
-        // if (url != nil) { result += " url: '\(url.relativePath)'" }
-
+        
         return result
     }
 
@@ -3641,19 +3652,23 @@ extension SKTilemap {
     @objc public var tiledHelpDescription: String {
         return "Map container node."
     }
+    
+    /// Returns a string suitable for a UI widget to display as a tooltip.
+    @objc public var tiledTooltipDescription: String {
+        return "/map"
+    }
 }
 
 
 
 extension SKTilemap {
 
-
     /// Calculate the xPath values of the layers.
     internal func calculateXPaths() {
-        var rootPath = #"/\#(tiledElementName)"#
+        let rootPath = #"/\#(tiledElementName)"#
+        
         for (i, layer) in layers.enumerated() {
-
-            let tiledlayer = layer as! TiledCustomReflectableType
+            let tiledlayer = layer as TiledCustomReflectableType
             if let nodeType = tiledlayer.tiledElementName {
 
                 let layerPathName = "\(nodeType)[\(i)]"
@@ -3663,10 +3678,10 @@ extension SKTilemap {
                 if let tilelayer = layer as? SKTileLayer {
                     /// currentPath: ''
                     for (x, chunk) in tilelayer.chunks.enumerated() {
-                        let chunnkPathName = "\(chunk.tiledElementName)[\(x)]"
-                        let thisNodePath = thisLayerPath + #"/\#(chunnkPathName)"#
+                        let chunkPathName = "\(chunk.tiledElementName)[\(x)]"
+                        let thisNodePath = thisLayerPath + #"/\#(chunkPathName)"#
                         chunk.xPath = thisNodePath
-                        chunk.name = chunnkPathName
+                        chunk.name = chunkPathName
                     }
                 }
             }

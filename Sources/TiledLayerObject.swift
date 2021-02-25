@@ -274,6 +274,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         shape.setScale(1 / renderQuality)
         addChild(shape)
         shape.zPosition = zPosition + 1
+        shape.name = boundsKey
         return shape
     }()
 
@@ -294,8 +295,8 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 
     // MARK: Sizing & Positioning
 
-    /// Layer offset value (in pixels).
-    public var offset: CGPoint = CGPoint.zero
+    /// Offset value (in pixels) for this layer. This value is parsed directly from the layer offset values in the source **Tiled** scene and is used by the tilemap to position the layer.
+    public internal(set) var offset: CGPoint = CGPoint.zero
 
     /// Container size (in tiles).
     public internal(set) var mapSize: CGSize
@@ -1193,9 +1194,10 @@ extension TiledLayerObject {
         return "\(filler)\(layerSymbol) \(layerName)"
     }
     
-    /// A description of the node used in dropdown & popu menus
+    /// A description of the node used in dropdown & popu menus:
     ///
-    ///  'Tile Layer 'Level2' (46 tiles)'
+    ///   (ex: '⊞ Tile Layer 1')
+    ///
     @objc public override var tiledMenuItemDescription: String {
         let parentCount = parents.count
         let isGrouped: Bool = (parentCount > 1)
@@ -1211,6 +1213,9 @@ extension TiledLayerObject {
     }
     
     /// A description of the node used for debug output text.
+    ///
+    ///   (ex: `<SKTileLayer 'Level3'>`)
+    ///
     @objc public override var tiledDisplayItemDescription: String {
         let nameString = (name != nil) ? " '\(name!)'" : ""
         return #"<\#(className)\#(nameString)>"#
@@ -1225,7 +1230,9 @@ extension TiledLayerObject {
     public var layerName: String {
         return self.name ?? "null"
     }
-
+    
+    // TODO: move this to `TiledMappableGeometryType`
+    
     /// Recursively enumerate child layers into a flat array.
     ///
     /// - Returns: child layer elements.

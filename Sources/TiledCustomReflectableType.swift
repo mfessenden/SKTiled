@@ -27,23 +27,25 @@
 import SpriteKit
 
 
-/// The `TiledCustomReflectableType` protocol outlines internal debugging elements that can be used to query objects for state changes.
+/// The `TiledCustomReflectableType` protocol outlines internal debugging elements that can be used to describe objects in debugging interfaces.
 ///
 /// ### Properties
 ///
 /// - `tiledElementName`: Tiled element type.
 /// - `tiledNodeNiceName`: proper node name.
 /// - `tiledIconName`: node icon representation.
-/// - `tiledListDescription`: description of the node used for list views.
-/// - `tiledDescription`: description of the node type.
+/// - `tiledListDescription`: description of the node used for list or outline views.
+/// - `tiledMenuItemDescription`: description of the node used in dropdown & popu menus.
+/// - `tiledDisplayItemDescription`: shortened debug description used for debug output text.
+/// - `tiledHelpDescription`: description of the node type used for help features.
+/// - `tiledTooltipDescription`: description suitable for a UI widget to display as a tooltip.
 ///
-/// :nodoc:
 @objc public protocol TiledCustomReflectableType: class {
 
     /// Returns the internal **Tiled** node type, for XML nodes, or our custom types.
     @objc optional var tiledElementName: String { get }
 
-    /// Returns a "nicer" node name, for usage in the inspector and menu items.
+    /// Returns a "nice" node name for usage in UI elements.
     @objc optional var tiledNodeNiceName: String { get }
 
     /// Returns the internal **Tiled** node type icon.
@@ -55,11 +57,14 @@ import SpriteKit
     /// A description of the node used in dropdown & popu menus.
     @objc optional var tiledMenuItemDescription: String { get }
 
-    /// A description of the node used for debug output text.
+    /// A shortened debug description of the node used for debug output text; (ie: `<SKObjectGroup 'Characters-Upper'>`)
     @objc optional var tiledDisplayItemDescription: String { get }
     
-    /// Description of the node type.
+    /// A description of the node type used for help features; (ie: `"Container node for Tiled layer types."`)
     @objc optional var tiledHelpDescription: String { get }
+    
+    /// Returns a string suitable for a UI widget to display as a tooltip. Ideally this represents a path for objects referenced in dropdown menus.
+    @objc optional var tiledTooltipDescription: String { get }
 
     /// Dump the current object's properties to the console.
     @objc optional func dumpStatistics()

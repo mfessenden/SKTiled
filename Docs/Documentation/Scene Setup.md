@@ -130,8 +130,8 @@ For instance, if you wanted to create a cache for certain types of tiles, you co
 class GameScene: SKScene {
 
     func didAddTile(_ tile: SKTile, coord: simd_int2, in: String?) {
-        if (tile.tileId == 12) {
-
+        if (tile.globalId == 12) {
+            tile
         }
     }
 

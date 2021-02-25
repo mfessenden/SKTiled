@@ -1061,7 +1061,6 @@
 				4CC0658924DDD53A00113389 /* TileContainerType.swift */,
 				4C263A15246079F100568681 /* TiledGeometryType.swift */,
 				4CEE24AA249968BB0029D6CC /* TiledMappableGeometryType.swift */,
-				4C2BFABE24D886B100C71CA9 /* TiledEventHandler.swift */,
 				4CA89E12252E6E5D00C23E4C /* TiledRasterizableType.swift */,
 				4C77D2C4255C978400C8C18C /* TiledSelectableType.swift */,
 			);
@@ -1083,9 +1082,10 @@
 			isa = PBXGroup;
 			children = (
 				4CBB6AA21D8CC2C100DB56F1 /* TiledObjectType.swift */,
-				4CDECC232540D6A800E4E5E7 /* Debugging */,
-				4C2049E6251E418B00D2012C /* Geometry */,
+				4C2BFABE24D886B100C71CA9 /* TiledEventHandler.swift */,
 				4C2049E5251E417A00D2012C /* Delegates */,
+				4C2049E6251E418B00D2012C /* Geometry */,
+				4CDECC232540D6A800E4E5E7 /* Debugging */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";

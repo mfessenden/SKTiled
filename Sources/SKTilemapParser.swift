@@ -101,6 +101,15 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
     /// Root path of the current file (defaults to `Bundle.main.bundleURL`).
     internal var documentRoot: URL = Bundle.main.bundleURL
     
+    /// Returns true if the asset being parsed is part of the project's bundle.
+    internal var isBundledDocument: Bool {
+        if let resourceUrl = Bundle.main.resourceURL {
+            return documentRoot.path == resourceUrl.path
+        }
+        //return documentRoot.path == Bundle.main.bundleURL.path
+        return false
+    }
+    
     /// Asset search path.
     internal var assetSearchPath: String?
 
@@ -442,7 +451,12 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
                        ignoreProperties noparse: Bool = false,
                        loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel,
                        renderQueue: DispatchQueue) -> SKTilemap? {
-
+        
+        
+        print("✻ [SKTilemapParser]: loading tmx file: '\(tmxFile)'")
+        
+        
+        
         // update the logging level
         Logger.default.loggingLevel = loggingLevel
 
@@ -469,9 +483,11 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
             tmxFilename = tmxFilename.appending(".tmx")
         }
 
+        
         // set the document root & file name
         resolveDocumentRoot(tmxFile: tmxFile, assetPath: inDirectory)
-
+        
+        print("✻ [SKTilemapParser]: current asset is bundled: \(isBundledDocument) -> '\(documentRoot.path)' -> '\(Bundle.main.resourceURL?.path)'")
 
         // create a url relative to the current root
         currentFileUrl = URL(fileURLWithPath: tmxFilename, relativeTo: documentRoot).standardized
@@ -502,6 +518,8 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
 
                 // current file name (minus doc root)  (ie 'User/Templates/dragon-green.tx')
                 currentFilename = firstFileToParse.relativePath
+                
+                print("✻ current filename: '\(firstFileToParse.relativePath)'")
 
                 // current file name only (ie 'dragon-green.tx')
                 let currentFile = firstFileToParse.lastPathComponent
@@ -910,6 +928,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
         let fileComponents = fileNamed.components(separatedBy: "/")
         
         if (fileComponents.count == 1) {
+            print("✻ relative to document root: '\(fileNamed)'")
             return URL(fileURLWithPath: fileNamed, isDirectory: false, relativeTo: documentRoot).standardized
         }
         
@@ -917,7 +936,9 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
         if let bundledPath = Bundle.main.path(forResource: fileName, ofType: nil) {
             return URL(fileURLWithPath: bundledPath)
         }
-
+        
+        
+        // FIXME: need to make sure the docroot is being set properly, or the path is set
         let flattenedUrl = URL(fileURLWithPath: fileName, isDirectory: false, relativeTo: documentRoot).standardized
         return flattenedUrl
     }
@@ -1361,12 +1382,22 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
             
             
             // image resources might be store in the xcassets catalog.
-            //let imageURL =
-            let imageURL = resolveExternalFile(fileNamed: sourceImage)
+            let imageURL = URL(fileURLWithPath: sourceImage, isDirectory: false, relativeTo: documentRoot).standardized
+            
+            // FIXME: if this is a bundled asset, we need to strip off the file's parents
+            
+            
+            //let imageURL = resolveExternalFile(fileNamed: sourceImage)
 
             // get the absolute path to the image
             var sourceImagePath = imageURL.path
 
+            
+            if (isDevelopment == true) {
+                print("✻ looking for image '\(sourceImagePath)' -> '\(sourceImage)'")
+            }
+            
+            
             // update an image layer
             if let imageLayer = lastElement as? SKImageLayer {
                 // set the image property

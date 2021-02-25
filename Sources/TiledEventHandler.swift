@@ -93,14 +93,19 @@ enum EventMouseButton: UInt8 {
 /// [tileclicked-handler-url]:TiledEventHandler.html#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)tileClickedHandlerWithGlobalID:ofType:button:
 @objc public protocol TiledEventHandler: class {
 
-    /// Custom mouse over handler for tiles matching the given properties **(macOS only)**.
+    /// Custom handler for tiles at creation time.
     ///
     /// - Parameters:
     ///   - globalID: tile global id.
     ///   - ofType: optional tile type.
     @objc optional func onCreate(globalID: UInt32, ofType: String?) -> ((SKTile) -> ())?
 
-
+    /// Custom mouse over handler for objects matching the given type **(macOS only)**.
+    ///
+    /// - Parameters:
+    ///   - ofType: optional object type.
+    @objc optional func onCreate(ofType: String?) -> ((SKTileObject) -> ())?
+    
     #if os(macOS)
 
     /// Custom mouse over handler for tiles matching the given properties **(macOS only)**.

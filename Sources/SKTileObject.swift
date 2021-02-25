@@ -112,7 +112,6 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
     // MARK: - Object Handlers
 
-
     /// Handler for when the object is created.
     internal var onCreate: ((SKTileObject) -> ())?
 
@@ -172,23 +171,6 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
         }
     }()
 
-    /// Object keys.
-    internal lazy var tileObjectKey: String = {
-        return "TILE_OBJECT_ID_\(id)"
-    }()
-    
-    internal lazy var textObjectKey: String = {
-        return "TEXT_OBJECT_ID_\(id)"
-    }()
-    
-    internal lazy var boundsKey: String = {
-        return "OBJECT_ID_\(id)_BOUNDS"
-    }()
-    
-    internal lazy var anchorKey: String = {
-        return "OBJECT_ID_\(id)_ANCHOR"
-    }()
-
     internal var _enableAnimation: Bool = true
 
     /// Enable tile animation.
@@ -201,6 +183,10 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
             tile?.enableAnimation = newValue
         }
     }
+    
+    internal lazy var textObjectKey: String = {
+        return "TEXT_OBJECT_ID_\(id)"
+    }()
 
     /// Object tile (for tile objects).
     public internal(set) var tile: SKTile?
@@ -283,6 +269,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
         shape.setScale(1 / renderQuality)
         addChild(shape)
         shape.zPosition = zPosition + 1
+        shape.name = boundsKey
         return shape
     }()
 
@@ -715,7 +702,6 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
             if (tileData.texture != nil) {
 
-                childNode(withName: tileObjectKey)?.removeFromParent()
 
                 // get tile object from delegate
                 let Tile = (layer.tilemap.delegate != nil) ? layer.tilemap.delegate!.objectForTileType?(named: tileData.type) ?? SKTile.self : SKTile.self
@@ -783,9 +769,6 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
                     // set the sprite object size attribute
                     tileSprite.objectSize = objectSize
-
-                    // set the tile name
-                    tileSprite.name = tileObjectKey
                     scaler!.addChild(tileSprite)
 
                     // position the tile just behind the object
