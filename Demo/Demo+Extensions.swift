@@ -124,6 +124,10 @@ extension TiledGlobals {
         if (defaults.value(forKey: "tiled-gbl-render-callbacks") != nil) {
             self.enableRenderPerformanceCallbacks = defaults.bool(forKey: "tiled-gbl-render-callbacks")
         }
+        
+        if (defaults.value(forKey: "tiled-gbl-map-notifications") != nil) {
+            self.enableTilemapNotifications = defaults.bool(forKey: "tiled-gbl-map-notifications")
+        }
 
         if (defaults.value(forKey: "tiled-gbl-camera-callbacks") != nil) {
             self.enableCameraCallbacks = defaults.bool(forKey: "tiled-gbl-camera-callbacks")
@@ -204,7 +208,7 @@ extension TiledGlobals {
         #endif
     }
 
-    /// Save globals to `UserDefaults`.
+    /// Save global preferences to `UserDefaults`.
     internal func saveToUserDefaults() {
         let defaults = UserDefaults.shared
 
@@ -223,6 +227,7 @@ extension TiledGlobals {
 
         // camera
         defaults.set(self.enableRenderPerformanceCallbacks, forKey: "tiled-gbl-render-callbacks")
+        defaults.set(self.enableTilemapNotifications, forKey: "tiled-gbl-map-notifications")
         defaults.set(self.enableCameraCallbacks, forKey: "tiled-gbl-camera-callbacks")
         defaults.set(self.enableCameraContainedNodesCallbacks, forKey: "tiled-gbl-camera-contained-callbacks")
 
@@ -271,6 +276,21 @@ extension TiledGlobals {
 
 
 // MARK: - Notifications
+
+/*
+extension SKTilemap {
+    
+    #if os(macOS)
+    /// Called when the mouse moves in the scene **(macOS only)**. This triggers the `Notification.Name.Map.FocusCoordinateChanged` event.
+    ///
+    /// - Parameter event: mouse click event.
+    @objc public override func mousePositionChanged(event: NSEvent) {
+        super.mousePositionChanged(event: event)
+    }
+    
+    #endif
+}
+*/
 
 
 extension Notification {
@@ -388,7 +408,7 @@ extension Notification.Name {
         
 
         public static let ClearSelectedNodes            = Notification.Name(rawValue: "org.sktiled.notification.name.demo.clearSelectedNodes")  // calls back to GVC to clear selection (macOS)
-
+        public static let NothingUnderCursor            = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nothingUnderCursor")  // handles mouse movements that don't yield an object to highlight
 
         // iOS
         public static let TileTouched                   = Notification.Name(rawValue: "org.sktiled.notification.name.demo.tileTouched")

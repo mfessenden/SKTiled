@@ -51,7 +51,7 @@ class TileEditorViewController: NSViewController {
     
     /// Reference to the demo delegate current nodes.
     var currentNodes: [SKNode] {
-        return Array(demoDelegate.currentNodes)
+        return Array(demoDelegate.focusedNodes)
     }
     
     override func viewDidLoad() {
@@ -62,7 +62,7 @@ class TileEditorViewController: NSViewController {
         setupInterface()
         resetInterface()
         
-        if (demoDelegate.currentNodes.isEmpty == false) {
+        if (demoDelegate.focusedNodes.isEmpty == false) {
             resetInterface(enabled: true)
             populateInterface()
         }

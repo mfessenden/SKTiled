@@ -283,7 +283,6 @@ public class SKObjectGroup: TiledLayerObject {
 
     /// Render all of the objects in the group.
     public func draw() {
-        print("⭑ [SKObjectGroup]: drawing...")
         objects.forEach { $0.draw() }
     }
 

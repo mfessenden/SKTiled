@@ -177,6 +177,7 @@ internal class MousePointer: SKNode {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.ObjectUnderCursor, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.ObjectClicked, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NothingUnderCursor, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Globals.Updated, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.FocusCoordinateChanged, object: nil)
 
@@ -217,6 +218,7 @@ internal class MousePointer: SKNode {
         NotificationCenter.default.addObserver(self, selector: #selector(tileClicked), name: Notification.Name.Demo.TileClicked, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(objectUnderMouseChanged), name: Notification.Name.Demo.ObjectUnderCursor, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(objectClicked), name: Notification.Name.Demo.ObjectClicked, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(nothingUnderCursor), name: Notification.Name.Demo.NothingUnderCursor, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionCleared), name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(globalsUpdatedAction), name: Notification.Name.Globals.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(focusCoordinateChanged), name: Notification.Name.Map.FocusCoordinateChanged, object: nil)
@@ -258,7 +260,7 @@ internal class MousePointer: SKNode {
     ///
     /// - Parameter notification: event notification.
     @objc func tileUnderMouseChanged(notification: Notification) {
-        //notification.dump(#fileID, function: #function)
+        notification.dump(#fileID, function: #function)
         guard let tile = notification.object as? SKTile else {
             return
         }
@@ -303,6 +305,16 @@ internal class MousePointer: SKNode {
         }
         currentTile = nil
         currentObject = object
+        redraw()
+    }
+    
+    /// Called when the mouse is hovering over nothing. Called when the `Notification.Name.Demo.NothingUnderCursor` notification is received.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func nothingUnderCursor(notification: Notification) {
+        //notification.dump(#fileID, function: #function)
+        currentTile = nil
+        currentObject = nil
         redraw()
     }
     

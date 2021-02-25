@@ -332,7 +332,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     internal var boundsOffset: CGPoint = CGPoint.zero
 
     /// Layer bounding shape.
-    public lazy var boundsShape: SKShapeNode? = {
+    @objc public lazy var boundsShape: SKShapeNode? = {
         let scaledverts = getVertices().map { $0 * renderQuality }
         let objpath = polygonPath(scaledverts)
         let shape = SKShapeNode(path: objpath)
@@ -384,11 +384,11 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     /// - Parameter offset: point offset value.
     /// - Returns: array of bounding shape points.
     @objc open override func getVertices(offset: CGPoint = CGPoint.zero) -> [CGPoint] {
+        // FIXME: this is incorrect for tiles added to a layer after a map is rendered
         guard let tileLayer = layer,
               let parent = parent else {
             return boundingRect.points
         }
-
 
         //return boundingRect.points.map( { parent?.convert($0, from: parent)} )
 
@@ -574,7 +574,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         removeAllChildren()
     }
 
-    /// Removes this node from the scene graph. Signals the tile cache to remove.
+    /// Removes this node from the scene graph. Signals the tile cache to remove the tile.
     open override func destroy() {
 
         // remove from cache

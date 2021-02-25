@@ -1147,14 +1147,14 @@
 		4C440BA11DAE913000DEC9A4 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
-				4CB8536825AE19B100CC2154 /* Preferences */,
-				4C68993E25CAF89800EE7006 /* AttributeEditor */,
-				4C45788925F94ADB00541B63 /* TileEditor */,
 				4C440BA21DAE913000DEC9A4 /* AppDelegate.swift */,
 				4C440BA31DAE913000DEC9A4 /* Main.storyboard */,
 				4C440BA51DAE913000DEC9A4 /* GameViewController.swift */,
 				4C5479FD1DC15AF6008B3473 /* GameWindowController.swift */,
 				4C440BA61DAE913000DEC9A4 /* Info.plist */,
+				4CB8536825AE19B100CC2154 /* Preferences */,
+				4C68993E25CAF89800EE7006 /* AttributeEditor */,
+				4C45788925F94ADB00541B63 /* TileEditor */,
 				4C32CC3125A92135000A6D66 /* Supporting Files */,
 			);
 			path = macOS;
@@ -1215,11 +1215,11 @@
 		4C71829225893A0100E6046A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				4CB6BD192139BD2200B1275A /* Defaults.plist */,
-				4C6C56BB25D6BABF00CBEB9A /* DemoNotificationDelegate.swift */,
 				4CE6415E206C1AEA004BA9E4 /* Demo+Extensions.swift */,
 				4C4FAC99215E9D8C00EEF512 /* Demo+Setup.swift */,
+				4C6C56BB25D6BABF00CBEB9A /* DemoNotificationDelegate.swift */,
 				4CF1FB12258A79C200D57843 /* TiledDemoAsset.swift */,
+				4CB6BD192139BD2200B1275A /* Defaults.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -2220,7 +2220,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$SRCROOT/scripts/clean-demo-assets.sh\n";
+			shellScript = "$SRCROOT/scripts/clean-demo-assets.sh\nenv\n";
 		};
 		4C4FAC9D2162BCDF00EEF512 /* Clean Demo Assets */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2238,7 +2238,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$SRCROOT/scripts/clean-demo-assets.sh\n";
+			shellScript = "$SRCROOT/scripts/clean-demo-assets.sh\nenv\n";
 		};
 		4C64EC0925D448BC0090F4F3 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2287,7 +2287,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "$SRCROOT/scripts/clean-demo-assets.sh\n";
+			shellScript = "$SRCROOT/scripts/clean-demo-assets.sh\nenv\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2790,6 +2790,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[arch=*]" = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = $SRCROOT/Sources/SKTiled.h;
 			};
 			name = Debug;

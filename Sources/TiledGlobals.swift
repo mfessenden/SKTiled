@@ -185,18 +185,23 @@ public class TiledGlobals {
     /// Default layer z-position offset.
     public var zDeltaForLayers: CGFloat = 50
 
+    // TODO: this is unused
+    
     /// Default debugging objects lower range.
     public var lowerBoundForDebugging: CGFloat = 2500
 
     /// Enable callbacks for render performance statistics.
     public var enableRenderPerformanceCallbacks: Bool = false
 
+    /// Enable callbacks from the tilemap to subscribers.
+    public var enableTilemapNotifications: Bool = false
+    
     /// Enable callbacks from camera to camera delegates.
     public var enableCameraCallbacks: Bool = false
 
-    /// Enable callbacks from camera to camera delegates about visible nodes.
+    /// Allows the camera to update delegate when the contained nodes array changes. Disable this to improve render performance.
     public var enableCameraContainedNodesCallbacks: Bool = false
-
+    
     /// Default tile/object render quality attributes.
     public var renderQuality: RenderQuality = RenderQuality()
 
@@ -594,6 +599,7 @@ extension TiledGlobals: TiledCustomReflectableType {
         print("  ▸ update mode:             \(self.updateMode.name)")
         print("  ▸ debug draw options:      \(self.debugDrawOptions.debugDescription)")
         print("  ▸ render callbacks:        \(self.enableRenderPerformanceCallbacks)")
+        print("  ▸ tilemap notifications:   \(self.enableTilemapNotifications)")
         print("  ▸ camera callbacks:        \(self.enableCameraCallbacks)")
         print("  ▸ visble nodes callbacks:  \(self.enableCameraContainedNodesCallbacks)")
         #if os(macOS)

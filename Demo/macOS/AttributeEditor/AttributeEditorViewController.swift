@@ -45,14 +45,14 @@ class AttributeEditorViewController: NSViewController {
 
     /// Reference to the demo delegate current nodes.
     var currentNodes: [SKNode] {
-        return Array(demoDelegate.currentNodes)
+        return Array(demoDelegate.focusedNodes)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.setFrameSize(NSSize(width: 480, height: 580))
         
-        let nodeIsCurrentlySelected = demoDelegate.currentNodes.isEmpty == false
+        let nodeIsCurrentlySelected = demoDelegate.focusedNodes.isEmpty == false
         
         setupNotifications()
         setupInterface()

@@ -250,11 +250,34 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
         }
     }
 
-    /// Layer bounding shape.
-    public lazy var boundsShape: SKShapeNode? = {
-        let scaledverts = getVertices().map { $0 * renderQuality }
-        let objpath = polygonPath(scaledverts)
-        let shape = SKShapeNode(path: objpath)
+    /// Object bounding shape.
+    @objc public lazy var boundsShape: SKShapeNode? = {
+        let vertices = translatedVertices()
+        let scaledVertices = vertices.map { $0 * renderQuality }
+        
+        let objPath: CGPath
+        let controlPath: CGPath?
+        
+        switch shapeType {
+            
+            case .ellipse:
+                objPath = bezierPath(scaledVertices, closed: true, alpha: shapeType.curvature).path
+                controlPath = polygonPath(scaledVertices, closed: true)
+                
+            default:
+                objPath = polygonPath(scaledVertices, closed: true)
+                controlPath = nil
+        }
+        
+        // create the shape node
+        let shape = SKShapeNode(path: objPath)
+        
+        // control shape (bezier shapes only)
+        if let cpath = controlPath {
+            let controlShape = SKShapeNode(path: cpath)
+            shape.addChild(controlShape)
+            controlShape.isHidden = true
+        }
 
         shape.lineWidth = TiledGlobals.default.renderQuality.object
         shape.setScale(1 / renderQuality)
@@ -572,7 +595,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
     // MARK: - Rendering
 
-    /// Render the object.
+    /// Render the object. 
     @objc open func draw() {
         let uiScale: CGFloat = TiledGlobals.default.contentScale
         self.strokeColor = SKColor.clear
@@ -597,7 +620,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
             self.lineCap = .round
             self.lineWidth = pointSize / 8
             self.strokeColor = frameColor
-            self.fillColor = frameColor.withAlphaComponent(0.4)
+            self.fillColor = frameColor.withAlphaComponent(TiledGlobals.default.debugDisplayOptions.objectFillOpacity)
             return
         }
 
@@ -628,7 +651,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
                 //let controlPoints = bezierData.points
 
-                // draw a cage around the curve
+                // draw a control cage around the curve
                 if (layer.orientation == .isometric) {
                     let controlPath = polygonPath(translated)
                     let controlShape = SKShapeNode(path: controlPath, centered: false)
@@ -641,8 +664,8 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
                 }
 
             default:
-                let closedPath: Bool = (self.shapeType == .polyline) ? false : true
-                self.path = polygonPath(translated, closed: closedPath)
+                let pathIsClosed: Bool = (self.shapeType == .polyline) ? false : true
+                self.path = polygonPath(translated, closed: pathIsClosed)
         }
 
         // draw the first point of poly objects
@@ -1264,7 +1287,7 @@ extension SKTileObject {
             pointsString = (points.isEmpty == true) ? " 0 points" : " \(points.count) points"
         }
         
-        return #"\#(tiledNodeNiceName) id: \#(id)\#(objectName)\#(typeString)\#(templateDescription)\#(miscDesc)\#(comma)\#(propertiesString)\#(layerDescription)\#(pointsString)"#
+        return #"\#(tiledNodeNiceName) id: \#(id)\#(objectName)\#(typeString)\#(templateDescription)\#(miscDesc)\#(comma)\#(layerDescription)\#(pointsString)"#
     }
     
     /// Returns a string representation for debugging.

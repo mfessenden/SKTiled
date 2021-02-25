@@ -204,7 +204,7 @@ extension SKNode {
     }
     
     #endif
-
+    
     /// Returns true if the object is a tile or object.
     public var isHighlightable: Bool {
         return (self as? SKTileObject != nil) || (self as? SKTile != nil)
@@ -245,7 +245,19 @@ extension SKNode {
     /// - Parameters:
     ///   - color: highlight color.
     ///   - duration: duration of highlight effect.
-    @objc public func highlightNode(with color: SKColor, duration: TimeInterval = 0) {}
+    @objc public func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
+        /// highlight sprite types by setting colorblendfactor
+        
+        
+        /// highlight shape types by adding a shape overlay
+        
+        let boundingBox = SKShapeNode(rectOf: calculateAccumulatedFrame().size)
+        boundingBox.lineWidth = 1
+        boundingBox.strokeColor = .black
+        boundingBox.fillColor = .clear
+        boundingBox.path = boundingBox.path?.copy(dashingWithPhase: 0, lengths: [10,10])
+        addChild(boundingBox)
+    }
 
     /// Remove the current object's highlight color.
     public func removeHighlight() {

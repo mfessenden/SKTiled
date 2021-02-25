@@ -522,15 +522,14 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     public var currentCoordinate = simd_int2(0, 0) {
         didSet {
             guard (oldValue != currentCoordinate) else { return }
-
-            #if SKTILED_DEMO
-
-            NotificationCenter.default.post(
-                name: Notification.Name.Map.FocusCoordinateChanged,
-                object: currentCoordinate,
-                userInfo: ["old": oldValue, "isValid": isValid(coord: currentCoordinate)]
-            )
-            #endif
+            
+            if (TiledGlobals.default.enableTilemapNotifications == true) {
+                NotificationCenter.default.post(
+                    name: Notification.Name.Map.FocusCoordinateChanged,
+                    object: currentCoordinate,
+                    userInfo: ["old": oldValue, "isValid": isValid(coord: currentCoordinate)]
+                )
+            }
         }
     }
 
@@ -927,7 +926,9 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     ///   - tmxFile: Tiled file name.
     ///   - completion: optional completion block.
     /// - Returns: tilemap object (if file read succeeds).
-    public class func load(tmxFile: String, _ completion: ((_ tilemap: SKTilemap) -> Void)? = nil) -> SKTilemap? {
+    public class func load(tmxFile: String,
+                           _ completion: ((_ tilemap: SKTilemap) -> Void)? = nil) -> SKTilemap? {
+        
         return SKTilemap.load(tmxFile: tmxFile, inDirectory: nil,
                               delegate: nil, tilesetDataSource: nil,
                               updateMode: TiledGlobals.default.updateMode,
@@ -941,7 +942,9 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     ///   - tmxFile: Tiled file name.
     ///   - loggingLevel: logging verbosity level.
     /// - Returns: tilemap object (if file read succeeds).
-    public class func load(tmxFile: String, loggingLevel: LoggingLevel) -> SKTilemap? {
+    public class func load(tmxFile: String,
+                           loggingLevel: LoggingLevel) -> SKTilemap? {
+        
         return SKTilemap.load(tmxFile: tmxFile, inDirectory: nil,
                               delegate: nil, tilesetDataSource: nil,
                               updateMode: TiledGlobals.default.updateMode, withTilesets: nil,
@@ -954,7 +957,9 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     ///   - tmxFile: Tiled file name.
     ///   - delegate: tilemap [delegate](Protocols/TilemapDelegate.html) instance.
     /// - Returns: tilemap object (if file read succeeds).
-    public class func load(tmxFile: String, delegate: TilemapDelegate) -> SKTilemap? {
+    public class func load(tmxFile: String,
+                           delegate: TilemapDelegate) -> SKTilemap? {
+        
         return SKTilemap.load(tmxFile: tmxFile, inDirectory: nil,
                               delegate: delegate, tilesetDataSource: nil,
                               updateMode: TiledGlobals.default.updateMode, withTilesets: nil,
@@ -1033,7 +1038,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
                               ignoreProperties: false, loggingLevel: TiledGlobals.default.loggingLevel, nil)
     }
 
-    /// Load a **Tiled** tmx file and return a new `SKTilemap` object. Returns nil if there is a parsing error. This is the primary loading method for tilemaps.
+    /// Load a **Tiled** tmx file and return a new `SKTilemap` object. Returns nil if there is a parsing error. This is the primary loading method for tilemaps. Currently used by the demo app.
     ///
     /// - Parameters:
     ///   - tmxFile: Tiled file name.
@@ -1092,7 +1097,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     ///
     /// - Parameters:
     ///   - string: xml string data.
-    ///   - documentPath: document root.
+    ///   - documentRoot: document root.
     ///   - delegate: optional [`TilemapDelegate`](Protocols/TilemapDelegate.html) instance.
     ///   - tilesetDataSource: optional [`TilesetDataSource`](Protocols/TilesetDataSource.html) instance.
     ///   - updateMode: tile update mode.
@@ -1144,7 +1149,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     ///
     /// - Parameters:
     ///   - data: xml string data.
-    ///   - documentPath: document root.
+    ///   - documentRoot: document root.
     ///   - delegate: optional [`TilemapDelegate`](Protocols/TilemapDelegate.html) instance.
     ///   - tilesetDataSource: optional [`TilesetDataSource`](Protocols/TilesetDataSource.html) instance.
     ///   - updateMode: tile update mode.
@@ -3380,8 +3385,7 @@ extension SKTilemap.RenderStatistics {
 /// :nodoc: Clamp position of the map & parents when camera changes happen.
 extension SKTilemap: TiledSceneCameraDelegate {
 
-
-    /// Called when the nodes in the camera view changes.
+    /// Called when the visible node set in the camera view changes.
     ///
     /// - Parameter nodes: nodes in the current camera view.
     public func containedNodesChanged(_ nodes: Set<SKNode>) {
@@ -3430,26 +3434,7 @@ extension SKTilemap: TiledSceneCameraDelegate {
 
     #else
 
-    /// Filters objects at the given mouse event.
-    ///
-    /// - Parameter event: mouse event.
-    /// - Returns: array of nodes at the event.
-    internal func handleMouseEvent(event: NSEvent) -> [SKNode] {
-        currentCoordinate = coordinateAtMouse(event: event)
-        
-        // TODO: test this method
-        //let tilesAtMapCoordinate = tilesAt(coord: currentCoordinate).filter { $0.isHidden == false }
-    
-        var result = tiledNodes(at: event.location(in: self)) as! [SKNode]
-        let clickedProxies = objectsOverlay.nodes(at: event.location(in: objectsOverlay)).filter { $0 as? TileObjectProxy != nil} as! [TileObjectProxy]
-        
-        if let firstProxy = clickedProxies.first {
-            if let object = firstProxy.reference {
-                result.insert(object, at: 0)
-            }
-        }
-        return result
-    }
+
 
     /// Handler for when the scene is clicked **(macOS only)**.
     ///
@@ -3470,12 +3455,24 @@ extension SKTilemap: TiledSceneCameraDelegate {
     ///
     /// - Parameter event: mouse click event.
     @objc public func mousePositionChanged(event: NSEvent) {
-        currentCoordinate = coordinateAtMouse(event: event)
+        //currentCoordinate = coordinateAtMouse(event: event)
         
         #if SKTILED_DEMO
         
         // TODO: add filtering options here
         let nodesAtClickLocation = handleMouseEvent(event: event)
+        
+        // if nothing is at this location, clear properties in GVC
+        guard nodesAtClickLocation.isEmpty == false else {
+            
+            /// calls back to `MousePointer` & `GameViewController`
+            NotificationCenter.default.post(
+                name: Notification.Name.Demo.NothingUnderCursor,
+                object: nil
+            )
+            
+            return
+        }
         
         for node in nodesAtClickLocation {
             
@@ -3506,6 +3503,29 @@ extension SKTilemap: TiledSceneCameraDelegate {
         }
         #endif
     }
+    
+    /// Filters objects at the given mouse event.
+    ///
+    /// - Parameter event: mouse event.
+    /// - Returns: array of nodes at the event.
+    internal func handleMouseEvent(event: NSEvent) -> [SKNode] {
+        currentCoordinate = coordinateAtMouse(event: event)
+        
+        // TODO: test this method
+        //let tilesAtMapCoordinate = tilesAt(coord: currentCoordinate).filter { $0.isHidden == false }
+        
+        var result = tiledNodes(at: event.location(in: self)).filter { $0.isFocused == false } as! [SKNode]
+        let clickedProxies = objectsOverlay.nodes(at: event.location(in: objectsOverlay)).filter { $0 as? TileObjectProxy != nil} as! [TileObjectProxy]
+        
+        if let firstProxy = clickedProxies.first {
+            if let object = firstProxy.reference {
+                result.insert(object, at: 0)
+            }
+        }
+        return result
+    }
+    
+    
     #endif
 }
 

@@ -22,20 +22,20 @@ Moving from the **v1.2** API should be fairly straightforward. Here are the high
 
 ### Properties & Methods
 
-| Old                                               | New                                            |
-|:------------------------------------------------- |:---------------------------------------------- |
-| `SKTilemap.size`                                  | `SKTilemap.mapSize`                            |
-| `SKTilemap.getTileset(forTile:)`                  | `SKTilemap.getTilesetFor(globalID:)`           |
-| `SKTilemap.coordinateAtMouseEvent(event:)`        | `SKTilemap.coordinateAtMouse(event:)`          |
-| `TiledLayerObject.coordinateAtMouseEvent(event:)` | `TiledLayerObject.coordinateAtMouse(event:)`   |
-| `SKTiledObject.setValue(forKey:)`                 | `TiledObjectType.setValue(for:)`               |
-| `SKTiledObject.removeProperty(forKey:)`           | `TiledObjectType.removeProperty(for:)`         |
-| `SKTileset.setDataTexture(_:imageNamed:)`         | `SKTileset.setDataTexture(tileID:imageNamed:)` |
-| `SKTileset.setDataTexture(_:texture:)`            | `SKTileset.setDataTexture(tileID:texture:)`    |
-| `SKTileset.addTilesetTile(_:texture:)`            | `SKTileset.addTilesetTile(tileID:texture:)`    |
-| `SKTileset.addTilesetTile(_:source:)`             | `SKTileset.addTilesetTile(tileID:source:)`     |
-| `SKTileObject.setObjectAttributes`                | `SKTileObject.overrideObjectAttributes`        |
-| `TiledGlobals.debug`                              | `TiledGlobals.debugDisplayOptions`             |
+| Old                                               | New                                                  |
+|:------------------------------------------------- |:---------------------------------------------------- |
+| `SKTilemap.size`                                  | `SKTilemap.mapSize`                                  |
+| `SKTilemap.getTileset(forTile:)`                  | `SKTilemap.getTilesetFor(globalID:)`                 |
+| `SKTilemap.coordinateAtMouseEvent(event:)`        | `SKTilemap.coordinateAtMouse(event:)`                |
+| `TiledLayerObject.coordinateAtMouseEvent(event:)` | `TiledLayerObject.coordinateAtMouse(event:)`         |
+| `SKTiledObject.setValue(forKey:)`                 | `TiledObjectType.setValue(for:)`                     |
+| `SKTiledObject.removeProperty(forKey:)`           | `TiledObjectType.removeProperty(for:)`               |
+| `SKTileset.setDataTexture(_:imageNamed:)`         | `SKTileset.setDataTexture(tileID:imageNamed:)`       |
+| `SKTileset.setDataTexture(_:texture:)`            | `SKTileset.setDataTexture(tileID:texture:)`          |
+| `SKTileset.addTilesetTile(_:texture:)`            | `SKTileset.addTilesetTile(tileID:texture:)`          |
+| `SKTileset.addTilesetTile(_:source:)`             | `SKTileset.addTilesetTile(tileID:source:)`           |
+| `SKTileObject.setObjectAttributes`                | `SKTileObject.overrideObjectAttributes(attributes:)` |
+| `TiledGlobals.debug`                              | `TiledGlobals.debugDisplayOptions`                   |
 
 
 ## Type Changes
@@ -56,7 +56,7 @@ Now, all `SKTile` nodes have a [`globalId`][tileid-url] property that handles id
 
 
 ```swift
-// This tile has a global id value of '285'
+// This tile has a global id value of '285' and no flip flags
 print(tile.globalId, tile.flipFlags)
 // 285 [  ]
 
@@ -72,7 +72,7 @@ print(tile.maskedTileId)
 // 2684354845
 ```
 
-Alternately, you can orient the tile manually by setting the `SKTile.isFlippedHorizontally`, `SKTile.isFlippedVertically` and `SKTile.isFlippedDiagonally` attributes:
+Alternately, you can orient the tile by setting the `SKTile.isFlippedHorizontally`, `SKTile.isFlippedVertically` and `SKTile.isFlippedDiagonally` attributes:
 
 ```swift
 // Reset the flip flags by assigning an empty value
@@ -85,6 +85,10 @@ tile.isFlippedHorizontally = true
 tile.isFlippedDiagonally = true
 print(tile.globalId, tile.flipFlags)
 // 285 [ hFlip, dFlip ]
+
+// get the masked value:
+print(tile.maskedTileId)
+// 2684354845
 ```
 
 The **v1.3** API  now includes the following attributes for dealing with tile orientation & global id.

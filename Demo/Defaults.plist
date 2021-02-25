@@ -24,6 +24,8 @@
 	<integer>2</integer>
 	<key>renderCallbacks</key>
 	<true/>
+	<key>tilemapNotifications</key>
+	<false/>
 	<key>cameraCallbacks</key>
 	<true/>
 	<key>cameraTrackContainedNodes</key>

@@ -115,7 +115,7 @@ extension TiledObjectType {
         hasher.combine(uuid)
     }
     
-    /// A descriptive string parsed from the original **Tiled** node.
+    /// A descriptive string parsed from the original **Tiled** scene.
     public var tiledNodeDescription: String? {
         get {
             return stringForKey("description")
@@ -218,12 +218,13 @@ extension TiledObjectType {
             let keyString = "\(property.key): "
             thisPropertyString.append(NSAttributedString(string: keyString))
             
-            let labelStyle = NSMutableParagraphStyle()
-            labelStyle.alignment = .left
-            labelStyle.lineHeightMultiple = 1.0
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = .left
+            paragraphStyle.lineHeightMultiple = 1.0
             
             let value = property.value
             
+            // check for hex color strings...
             if value.hasPrefix("#") {
                 if (value.count >= 7) {
                     
@@ -233,7 +234,7 @@ extension TiledObjectType {
                     let valueColor = NSColor(hexString: value)
                     let colorAttributes = [
                         .foregroundColor: valueColor,
-                        .paragraphStyle: labelStyle,
+                        .paragraphStyle: paragraphStyle,
                         .font: NSFont.systemFont(ofSize: 12)
                     ] as [NSAttributedString.Key: Any]
                     

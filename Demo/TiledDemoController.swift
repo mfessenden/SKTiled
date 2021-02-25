@@ -425,9 +425,7 @@ public class TiledDemoController: NSObject, Loggable {
         guard let view = self.view else {
             return
         }
-        
-        
-        
+
         view.isPaused = false
         currentTilemap = nil
         
@@ -533,7 +531,7 @@ public class TiledDemoController: NSObject, Loggable {
             currentSpeed = currentScene.speed
             currentScene.demoController = nil
             
-            // remove scene from memory
+            // deallocate scene
             currentScene.removeAllActions()
             currentScene.removeAllChildren()
             currentScene.removeFromParent()

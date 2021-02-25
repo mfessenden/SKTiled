@@ -49,10 +49,10 @@ internal enum CacheIsolationMode: UInt8 {
 
 /// :nodoc:
 internal struct MemorySize {
-    
+
     /// Raw size (in bytes).
     let bytes: Int64
-    
+
     /// Instantiate with a bytes value.
     ///
     /// - Parameter bytes: size in bytes.
@@ -65,36 +65,36 @@ internal struct MemorySize {
 
 /// Data structure for storing and recalling tile data efficiently.
 internal class TileDataStorage: Loggable {
-    
+
     /// Queues
     fileprivate let updateQueue = DispatchQueue(label: "org.sktiled.tileDataStorage.updateQueue", qos: .userInitiated)
     fileprivate let storageQueue = DispatchQueue(label: "org.sktiled.tileDataStorage.storageQueue", qos: .userInitiated, attributes: .concurrent)
-    
+
     /// The parent tilemap.
     weak var tilemap: SKTilemap?
-    
+
     var globalIdCache: GlobalIDCache = [:]
-    
+
     /// Cache for static tile data.
     var staticTileCache: DataCache = [:]
-    
+
     /// Cache for animated tile data.
     var animatedTileCache: DataCache = [:]
-    
+
     /// Cache for Spritekit actions.
     var actionsCache: ActionsCache = [:]
-    
+
     /// List of objects in the current tilemap.
     var objectsList: ObjectsList?
-    
+
     /// Indicates the cache should ignore notifications.
     var blockNotifications: Bool = true
-    
+
     var sizeString: String {
         let memsize = MemorySize(bytes: self.bytes)
         return memsize.description
     }
-    
+
     /// Returns the size of the cache (in bytes).
     var bytes: Int {
         var result = MemoryLayout.size(ofValue: self.globalIdCache)
@@ -104,12 +104,12 @@ internal class TileDataStorage: Loggable {
         result += MemoryLayout.size(ofValue: self.objectsList)
         return result
     }
-    
+
     /// Returns the size of the cache (in kilobytes).
     var kilobytes: Float {
         return Float(bytes) * 0.001
     }
-    
+
     /// Returns the size of the cache (in megabytes).
     var megabytes: Float {
         return kilobytes * 0.001
@@ -130,10 +130,10 @@ internal class TileDataStorage: Loggable {
         }
         return tilemap.updateMode
     }
-    
+
     // MARK: - Initialization
-    
-    
+
+
     /// Initialize with a tilemap instance.
     ///
     /// - Parameter map: tilemap node.
@@ -155,10 +155,10 @@ internal class TileDataStorage: Loggable {
         NotificationCenter.default.addObserver(self, selector: #selector(tileRenderModeChanged), name: Notification.Name.Tile.RenderModeChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileCreatedAction), name: Notification.Name.Tile.TileCreated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileDestroyedAction), name: Notification.Name.Tile.TileDestroyed, object: nil)
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(objectCreatedAction), name: Notification.Name.Object.ObjectCreated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(objectDestroyedAction), name: Notification.Name.Object.ObjectDestroyed, object: nil)
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(tileDataActionAdded), name: Notification.Name.TileData.ActionAdded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileDataFrameAdded), name: Notification.Name.TileData.FrameAdded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileDataTextureChanged), name: Notification.Name.TileData.TextureChanged, object: nil)
@@ -168,7 +168,7 @@ internal class TileDataStorage: Loggable {
     deinit {
         // turn off notifications
         blockNotifications = true
-        
+
         // remove notifications
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Globals.Updated, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Layer.ObjectAdded, object: nil)
@@ -178,7 +178,7 @@ internal class TileDataStorage: Loggable {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Tile.RenderModeChanged, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Object.ObjectCreated, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Object.ObjectDestroyed, object: nil)
-        
+
         NotificationCenter.default.removeObserver(self, name: Notification.Name.TileData.ActionAdded, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.TileData.FrameAdded, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.TileData.TextureChanged, object: nil)
@@ -191,6 +191,7 @@ internal class TileDataStorage: Loggable {
         animatedTileCache  = [:]
         actionsCache       = [:]
         objectsList        = nil
+
     }
 
     /// Returns an array of all stored tiles.
@@ -210,7 +211,7 @@ internal class TileDataStorage: Loggable {
     // MARK: - Notifications
 
     // MARK: Tiles
-    
+
     /// Add a tile to storage. Called when the `Notification.Name.Tile.TileCreated` notification is received.
     ///
     /// - Parameter notification: event notification.
@@ -221,7 +222,7 @@ internal class TileDataStorage: Loggable {
         }
         addTileToCache(tile: tile)
     }
-    
+
     /// Add a tile to storage. Called when the `Notification.Name.Tile.TileDestroyed` notification is received.
     ///
     /// - Parameter notification: event notification.
@@ -230,19 +231,19 @@ internal class TileDataStorage: Loggable {
             log("no tile sent", level: .warning)
             return
         }
-        
+
         let listToRemoveFrom: TileList = (tile.tileData.isAnimated == true) ? animatedCacheForTileData(tile.tileData) : cacheForTileData(tile.tileData)
         listToRemoveFrom.remove(where: {$0 == tile})
-        
+
         #if SKTILED_DEMO
         NotificationCenter.default.post(
             name: Notification.Name.Demo.NodeSelectionCleared,
             object: nil
         )
         #endif
-        
+
     }
-    
+
     /// Add a tile to storage. Called when the `Notification.Name.Layer.TileAdded` notification is received.
     ///
     ///  userInfo: ["layer": `SKTileLayer`, "object": `SKTileObject`, "coord": `simd_int2`]
@@ -441,9 +442,9 @@ internal class TileDataStorage: Loggable {
             }
         }
     }
-    
 
-    
+
+
     /// Called when tile data frames are updated.
     ///
     /// - Parameter notification: event notification.
@@ -499,10 +500,10 @@ internal class TileDataStorage: Loggable {
             }
         }
     }
-    
+
     // MARK: Objects
-    
-    
+
+
     /// Called when a new object is created (outside of parsing). Called when the `Notification.Name.Object.ObjectCreated` event fires.
     ///
     /// - Parameter notification: event notification.
@@ -511,14 +512,14 @@ internal class TileDataStorage: Loggable {
             log("no object sent", level: .warning)
             return
         }
-        
+
         guard (objectsList?.filter { $0 == object }.isEmpty == true) else {
             return
         }
-        
+
         objectsList?.append(object)
     }
-    
+
     /// Called when a vector object type is destroyed. Called when the `Notification.Name.Object.ObjectDestroyed` event fires.
     ///
     /// - Parameter notification: event notification.
@@ -527,14 +528,14 @@ internal class TileDataStorage: Loggable {
             log("no object sent", level: .warning)
             return
         }
-        
+
         objectsList?.remove(where: { $0 == object}) { obj in
             self.log("object removed '\(obj.debugDescription)'", level: .debug)
             self.tilemap?.objectsOverlay.initialized = false
             obj.destroy()
-            
-            
-            
+
+
+
             #if SKTILED_DEMO
             NotificationCenter.default.post(
                 name: Notification.Name.Demo.NodeSelectionCleared,
@@ -543,8 +544,8 @@ internal class TileDataStorage: Loggable {
             #endif
         }
     }
-    
-    
+
+
     /// Called when an object is added to the storage.
     ///
     /// - Parameter notification: event notification.
@@ -552,14 +553,14 @@ internal class TileDataStorage: Loggable {
         guard let object = notification.object as? SKTileObject else {
             return
         }
-        
+
         guard (objectsList?.filter { $0 == object }.isEmpty == true) else {
             return
         }
-        
+
         objectsList?.append(object)
     }
-    
+
 
     /// Called when a vector object type is removed from its parent layer.
     ///
@@ -605,8 +606,8 @@ internal class TileDataStorage: Loggable {
     func addTileToCache(tile: SKTile, data: SKTilesetData? = nil, cache: TileList? = nil) {
         let tileData = data ?? tile.tileData
         let currentCache: TileList = (cache != nil) ? cache! : (tileData.isAnimated == true) ? animatedCacheForTileData(tileData) : cacheForTileData(tileData)
-        
-        
+
+
         let globalId = tileData.globalID
         currentCache.append(tile)
         globalIdCache[globalId]?.append(tile)
@@ -640,9 +641,9 @@ internal class TileDataStorage: Loggable {
         }
         return savedAction
     }
-    
+
     // MARK: - Queries
-    
+
     /// Returns the tile data corresponding to the given global id.
     ///
     /// - Parameter globalID: tile global id.
@@ -653,7 +654,7 @@ internal class TileDataStorage: Loggable {
                 return item.key
             }
         }
-        
+
         for item in animatedTileCache {
             if item.key.globalID == globalID {
                 return item.key
@@ -661,7 +662,7 @@ internal class TileDataStorage: Loggable {
         }
         return nil
     }
-    
+
     /// Returns tiles matching the given global id.
     ///
     /// - Parameter globalID: tile global id.
@@ -673,16 +674,16 @@ internal class TileDataStorage: Loggable {
                 result.append(contentsOf: item.value)
             }
         }
-        
+
         for item in animatedTileCache {
             if item.key.globalID == globalID {
                 result.append(contentsOf: item.value)
             }
         }
-        
+
         return (result.isEmpty == false) ? result : nil
     }
-    
+
     /// Returns a tile animation action for the given data.
     ///
     /// - Parameter globalID: tile global id.
@@ -834,24 +835,24 @@ extension CacheIsolationMode {
 
 /// :nodoc:
 extension MemorySize {
-    
+
     /// Instantiate with a bytes value.
     ///
     /// - Parameter bytes: size in bytes.
     init(bytes bytesInt: Int) {
         self.bytes = Int64(bytesInt)
     }
-    
+
     /// Size in kb.
     var kilobytes: Double {
         return Double(bytes) / 1_024
     }
-    
+
     /// Size in kb.
     var megabytes: Double {
         return kilobytes / 1_024
     }
-    
+
     /// Size in gb.
     var gigabytes: Double {
         return megabytes / 1_024
@@ -861,8 +862,8 @@ extension MemorySize {
 
 /// :nodoc:
 extension MemorySize: CustomStringConvertible {
-    
-    
+
+
     /// Provides a string representation of the memory size.
     var description: String {
         switch bytes {
@@ -890,11 +891,11 @@ extension TileDataStorage: CustomReflectable, TiledCustomReflectableType {
         var animatedDataCount = 0
         var staticTileCount = 0
         var animatedTileCount = 0
-        
+
         //var staticTileData:   [String: String] = [:]
         //var animatedTileData: [String: String] = [:]
         //var actionsTileData:  [String: String] = [:]
-        
+
         for (_, sitem) in staticTileCache.enumerated() {
             let data = sitem.key
             staticTileCount += sitem.value.count
@@ -910,7 +911,7 @@ extension TileDataStorage: CustomReflectable, TiledCustomReflectableType {
         let animatedData: [String: Any] = ["data": animatedDataCount, "tiles": animatedTileCount]
         let actionData:   [String: Any] = ["data": animatedDataCount, "tiles": animatedTileCount]
         let objectData:   [String: Any] = ["id": "0"]
-        
+
         return Mirror(self, children:
                         ["static": staticData,
                          "animated": animatedData,
@@ -923,21 +924,21 @@ extension TileDataStorage: CustomReflectable, TiledCustomReflectableType {
     public func dumpStatistics() {
         let headerString = " Tile Data Storage ".padEven(toLength: 40, withPad: "-")
         var output = "\n\(headerString)\n"
-        
+
         output += "\n ▸ Size: \(sizeString) \n"
-        
-        
+
+
         /// Static tiles
         output += "\n ▾ Static Tiles:\n"
         for item in staticTileCache.enumerated() {
             let tileData = item.element.key
             let tileList = item.element.value.array
             let gidString = "\(tileData.globalID)".padRight(toLength: 4, withPad: " ")
-            
+
             let tileDataHeader = "\n   ▸ gid: \(gidString) → (\(tileList.count) tiles)"
             output += tileDataHeader
         }
-        
+
         /// Animated tiles
         output += "\n\n ▾ Animated Tiles:\n"
         for item in animatedTileCache.enumerated() {

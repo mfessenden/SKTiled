@@ -61,6 +61,7 @@ class GameViewController: NSViewController, Loggable {
     @IBOutlet weak var propertiesInfoLabel: NSTextField!
     @IBOutlet weak var debuggingMessageLabel: NSTextField!
 
+    
     // demo buttons
     @IBOutlet weak var controlButtonView: NSStackView!
     @IBOutlet weak var fitButton: NSButton!
@@ -68,8 +69,6 @@ class GameViewController: NSViewController, Loggable {
     @IBOutlet weak var graphButton: NSButton!
     @IBOutlet weak var objectsButton: NSButton!
     @IBOutlet weak var nextButton: NSButton!
-
-    @IBOutlet var demoFileAttributes: NSArrayController!
 
 
     // render stats
@@ -85,7 +84,8 @@ class GameViewController: NSViewController, Loggable {
     @IBOutlet weak var statsUpdatedLabel: NSTextField!
     @IBOutlet weak var statsRenderLabel: NSTextField!
 
-
+    @IBOutlet var demoFileAttributes: NSArrayController!
+    
     var timer = Timer()
     var loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel
 
@@ -391,6 +391,7 @@ class GameViewController: NSViewController, Loggable {
         NotificationCenter.default.addObserver(self, selector: #selector(nodesRightClickedAction), name: Notification.Name.Demo.NodesRightClicked, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionChanged), name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionCleared), name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(nothingUnderCursor), name: Notification.Name.Demo.NothingUnderCursor, object: nil)
 
 
         // tilemap callbacks
@@ -594,17 +595,17 @@ class GameViewController: NSViewController, Loggable {
         }
 
         // set the map description label
-        let mapDescription = tilemap.tiledNodeDescription
-        let mapDescriptionString = (mapDescription != nil) ? "description: \(mapDescription!)" : "description: none"
-        let showMapDescriptionLabel = (mapDescription != nil) && (TiledGlobals.default.isDemo == true)
+        var showMapDescriptionLabel = false
+        if let mapDescriptionString = tilemap.tiledNodeDescription {
+            showMapDescriptionLabel = true
+            self.mapDescriptionLabel.stringValue = mapDescriptionString
+        }
 
         self.mapDescriptionLabel.isHidden = !showMapDescriptionLabel
-        self.mapDescriptionLabel.stringValue = mapDescriptionString
         self.mapDescriptionLabel.textColor = NSColor(hexString: "#CCCCCC")
 
-
         /// update the selected node label
-        if let selected = Array(demoDelegate.currentNodes).first {
+        if let selected = Array(demoDelegate.focusedNodes).first {
             selectedInfoLabel.isHidden = false
 
             let attributedString = NSMutableAttributedString()
@@ -671,7 +672,7 @@ class GameViewController: NSViewController, Loggable {
 
         if let propertiesInfo = notification.userInfo!["focusedObjectData"] {
             if let propertiesString = propertiesInfo as? String {
-                if propertiesString != "" {
+                if (propertiesString != "") {
                     propertiesInfoLabel.stringValue = propertiesString
                 }
             }
@@ -718,7 +719,7 @@ class GameViewController: NSViewController, Loggable {
         }
 
         /// clear the demo delegate's selected nodes...
-        if (demoDelegate.currentNodes.isEmpty == false) {
+        if (demoDelegate.focusedNodes.isEmpty == false) {
             demoDelegate.reset()
             return
         }
@@ -858,18 +859,22 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func objectUnderMouseChanged(notification: Notification) {
-        //notification.dump(#fileID, function: #function)
-        guard let object = notification.object as? SKTileObject else {
+        notification.dump(#fileID, function: #function)
+        guard let focusedObject = notification.object as? SKTileObject else {
             return
         }
-
-        // check for
-        object.highlightNode(with: TiledGlobals.default.debugDisplayOptions.objectHighlightColor, duration: TiledGlobals.default.debugDisplayOptions.highlightDuration)
-        tileInfoLabel.stringValue = object.description
-
+        
+        // set debug attribute labels
+        tileInfoLabel.isHidden = false
+        tileInfoLabel.stringValue = focusedObject.description
+        
         propertiesInfoLabel.isHidden = false
-        propertiesInfoLabel.attributedStringValue = object.propertiesAttributedString(delineator: nil)
-
+        propertiesInfoLabel.attributedStringValue = focusedObject.propertiesAttributedString(delineator: nil)
+        
+        // highlight the object
+        let highlightDuration = TiledGlobals.default.debugDisplayOptions.highlightDuration
+        focusedObject.drawNodeBounds(with: focusedObject.frameColor, lineWidth: 0.25, fillOpacity: 0, duration: highlightDuration)
+        focusedObject.isFocused = true
     }
 
     /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.ObjectClicked` notification is received.
@@ -877,59 +882,74 @@ class GameViewController: NSViewController, Loggable {
     /// - Parameter notification: event notification.
     @objc func objectUnderMouseClicked(notification: Notification) {
         notification.dump(#fileID, function: #function)
-        
-        if let object = notification.object as? SKTileObject {
-            let highlightDuration = TiledGlobals.default.debugDisplayOptions.highlightDuration
-            object.drawNodeBounds(with: object.frameColor, lineWidth: 0.25, fillOpacity: 0, duration: highlightDuration)
-            tileInfoLabel.isHidden = false
-            tileInfoLabel.stringValue = object.description
-            
-            propertiesInfoLabel.isHidden = false
-            propertiesInfoLabel.attributedStringValue = object.propertiesAttributedString(delineator: nil)
-            
-            // perform(#selector(clearCurrentObject), with: nil, afterDelay: 5)
+        guard let focusedObject = notification.object as? SKTileObject else {
+            return
         }
+        
+        // set debug attribute labels
+        tileInfoLabel.isHidden = false
+        tileInfoLabel.stringValue = focusedObject.description
+        
+        propertiesInfoLabel.isHidden = false
+        propertiesInfoLabel.attributedStringValue = focusedObject.propertiesAttributedString(delineator: nil)
+        
+        // highlight the object
+        focusedObject.drawNodeBounds(with: focusedObject.frameColor, lineWidth: 0.25, fillOpacity: 0, duration: 0)
+        focusedObject.isFocused = true
+        // perform(#selector(clearCurrentObject), with: nil, afterDelay: 5)
     }
+    
 
     /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.TileUnderCursor` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func tileUnderMouseChanged(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
-        guard let clickedTile = notification.object as? SKTile else {
+        notification.dump(#fileID, function: #function)
+        guard let focusedTile = notification.object as? SKTile else {
             return
         }
         
-        let highlightDuration = TiledGlobals.default.debugDisplayOptions.highlightDuration
-        
-        
-        //clickedTile.drawNodeBounds(with: clickedTile.frameColor, lineWidth: 0.25, fillOpacity: 0.2, duration: highlightDuration)
-        clickedTile.highlightNode(with: clickedTile.frameColor, duration: 0)
-        
-        
-        
-        
+        // set debug attribute labels
         tileInfoLabel.isHidden = false
-        tileInfoLabel.stringValue = clickedTile.description
+        tileInfoLabel.stringValue = focusedTile.description
 
         propertiesInfoLabel.isHidden = false
-        propertiesInfoLabel.attributedStringValue = clickedTile.tileData.propertiesAttributedString(delineator: nil)
-        clickedTile.highlightNode(with: clickedTile.highlightColor, duration: 1)
+        propertiesInfoLabel.attributedStringValue = focusedTile.tileData.propertiesAttributedString(delineator: nil)
+        
+        // highlight the tile
+        let highlightDuration = TiledGlobals.default.debugDisplayOptions.highlightDuration
+        focusedTile.highlightNode(with: focusedTile.highlightColor, duration: highlightDuration)
+        focusedTile.isFocused = true
     }
 
     /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.TileClicked` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func tileUnderMouseClicked(notification: Notification) {
-        notification.dump(#fileID, function: #function)
-        if let focusedTile = notification.object as? SKTile {
-            propertiesInfoLabel.isHidden = false
-            propertiesInfoLabel.stringValue = focusedTile.description
-            focusedTile.highlightNode(with: focusedTile.highlightColor, duration: 2)
-            
-            // TODO: properties string should include tile data (id, etc).
-            propertiesInfoLabel.attributedStringValue = focusedTile.tileData.propertiesAttributedString(delineator: nil)
+        // notification.dump(#fileID, function: #function)
+        guard let focusedTile = notification.object as? SKTile else {
+            return
         }
+        
+        // set debug attribute labels
+        tileInfoLabel.isHidden = false
+        tileInfoLabel.stringValue = focusedTile.description
+        
+        propertiesInfoLabel.isHidden = false
+        propertiesInfoLabel.attributedStringValue = focusedTile.tileData.propertiesAttributedString(delineator: nil)
+        
+        // highlight the tile
+        focusedTile.highlightNode(with: focusedTile.highlightColor, duration: 0)
+        focusedTile.isFocused = true
+    }
+    
+    /// Called when the mouse is hovering over nothing. Called when the `Notification.Name.Demo.NothingUnderCursor` notification is received.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func nothingUnderCursor(notification: Notification) {
+        // notification.dump(#fileID, function: #function)
+        tileInfoLabel.reset()
+        propertiesInfoLabel.reset()
     }
 
     // MARK: - Right-Click Handlers

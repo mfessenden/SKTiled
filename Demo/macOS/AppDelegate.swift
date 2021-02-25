@@ -37,6 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var tileEditorWindowController: TileEditorWindowController?
 
     var receiveCameraUpdates: Bool = true
+    var isDevelopment: Bool = TiledGlobals.default.isDevelopment
 
     // file menu
     @IBOutlet weak var openMapMenuitem: NSMenuItem!
@@ -204,8 +205,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         cameraAllowRotationItem.isEnabled = false
 
 
-        // items in the 'Development' menu
-        //developmentMainMenu.isEnabled = false
+        // enable/disable the 'Development' menu
+        let enableDevelopmentMenu = TiledGlobals.default.isDevelopment
+        developmentMainMenu.isEnabled = enableDevelopmentMenu
+        developmentMainMenu.isHidden = !enableDevelopmentMenu
+        
+    
         renderStatisticsMenuItem.isEnabled = false
         tilemapStatisticsMenuItem.isEnabled = false
         tilemapCachesStatisticsMenuItem.isEnabled = false
@@ -346,7 +351,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         mapMenuItem.isEnabled = true
         cameraMainMenu.isEnabled = true
         debugMainMenu.isEnabled = true
-        developmentMainMenu.isEnabled = true
+        
+        // enable/disable the 'Development' menu
+        let enableDevelopmentMenu = TiledGlobals.default.isDevelopment
+        developmentMainMenu.isEnabled = enableDevelopmentMenu
+        developmentMainMenu.isHidden = !enableDevelopmentMenu
 
         demoScene.cameraNode?.addDelegate(self)
     }
@@ -711,7 +720,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     // MARK: - Demo Menu
-
+    
     @IBAction func showCurrentMapsAction(_ sender: Any) {
         guard let gameController = viewController else { return }
         let demoController = gameController.demoController
@@ -1346,7 +1355,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard let gameController = viewController else { return }
         let demoDelegate = gameController.demoDelegate
 
-        let selectedLayers = demoDelegate.currentNodes.filter { node in
+        let selectedLayers = demoDelegate.focusedNodes.filter { node in
             if let layer = node as? TiledLayerObject {
                 return true
             }

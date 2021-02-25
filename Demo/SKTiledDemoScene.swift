@@ -917,7 +917,7 @@ extension SKTiledDemoScene {
         // 'y' deletes selected nodes
         if eventKey == 0x10 {
             var deleteCount = 0
-            if let currentNodes = demoDelegate?.currentNodes {
+            if let currentNodes = demoDelegate?.focusedNodes {
                 for node in currentNodes {
                     node.destroy()
                     deleteCount += 1

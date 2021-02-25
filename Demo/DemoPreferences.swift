@@ -43,6 +43,7 @@ class DemoPreferences: Codable {
     var updateMode: UInt8 = 0
 
     var renderCallbacks: Bool = true
+    var tilemapNotifications: Bool = false
     var cameraCallbacks: Bool = true
     var cameraTrackContainedNodes: Bool = true
 
@@ -67,6 +68,7 @@ class DemoPreferences: Codable {
         case enableEffects
         case updateMode
         case renderCallbacks
+        case tilemapNotifications
         case cameraCallbacks
         case cameraTrackContainedNodes
         case mouseFilters
@@ -77,7 +79,8 @@ class DemoPreferences: Codable {
         case allowDemoMaps
         case enableMouseEvents
     }
-
+    
+    /// Default initializer.
     init() {}
 
     /// Default initializer.
@@ -99,8 +102,8 @@ class DemoPreferences: Codable {
         drawAnchor = try values.decode(Bool.self, forKey: .drawAnchor)
         enableEffects = try values.decode(Bool.self, forKey: .enableEffects)
         updateMode = try values.decode(UInt8.self, forKey: .updateMode)
-
         renderCallbacks = try values.decode(Bool.self, forKey: .renderCallbacks)
+        tilemapNotifications = try values.decode(Bool.self, forKey: .tilemapNotifications)
         cameraCallbacks = try values.decode(Bool.self, forKey: .cameraCallbacks)
         cameraTrackContainedNodes = try values.decode(Bool.self, forKey: .cameraTrackContainedNodes)
         mouseFilters = try values.decode(UInt8.self, forKey: .mouseFilters)
@@ -112,6 +115,11 @@ class DemoPreferences: Codable {
         enableMouseEvents = try values.decode(Bool.self, forKey: .enableMouseEvents)
     }
 
+    
+    /// Encode the preference values.
+    ///
+    /// - Parameter encoder: encoder instance.
+    /// - Throws: encoding error.
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: ConfigKeys.self)
         try container.encode(renderQuality, forKey: .renderQuality)
@@ -124,8 +132,8 @@ class DemoPreferences: Codable {
         try container.encode(drawAnchor, forKey: .drawAnchor)
         try container.encode(enableEffects, forKey: .enableEffects)
         try container.encode(updateMode, forKey: .updateMode)
-
         try container.encode(renderCallbacks, forKey: .renderCallbacks)
+        try container.encode(tilemapNotifications, forKey: .tilemapNotifications)
         try container.encode(cameraCallbacks, forKey: .cameraCallbacks)
         try container.encode(cameraTrackContainedNodes, forKey: .cameraTrackContainedNodes)
         try container.encode(mouseFilters, forKey: .mouseFilters)
@@ -168,7 +176,9 @@ extension DemoPreferences: TiledCustomReflectableType {
         headerString += " - update mode:                 \(updateMode)\n"
         headerString += " - animation mode:              \(animModeString)\n"
         headerString += " - allow user maps:             \(allowUserMaps)\n"
+        
         headerString += " - render callbacks:            \(renderCallbacks)\n"
+        headerString += " - tilemap notificatins:        \(tilemapNotifications)\n"
         headerString += " - camera callbacks:            \(cameraCallbacks)\n"
         headerString += " - visible nodes callbacks:     \(cameraTrackContainedNodes)\n"
         headerString += " - ignore camera contstraints:  \(ignoreZoomConstraints)\n"

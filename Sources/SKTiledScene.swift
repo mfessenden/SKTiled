@@ -180,7 +180,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, 
                     ignoreProperties: Bool = false,
                     loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel,
                     _ completion: ((_ tilemap: SKTilemap) -> Void)? = nil) {
-
+        
         let dirname = url.deletingLastPathComponent()
         let filename = url.lastPathComponent
         let relativeURL = URL(fileURLWithPath: filename, relativeTo: dirname)
@@ -208,7 +208,9 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, 
                     ignoreProperties: Bool = false,
                     loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel,
                     _ completion: ((_ tilemap: SKTilemap) -> Void)? = nil) {
+        
 
+        
         guard let worldNode = worldNode else {
             self.log("error accessing world node, check that your scene has been presented in the current view.", level: .error)
             return

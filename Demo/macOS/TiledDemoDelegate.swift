@@ -35,7 +35,10 @@ typealias NodeList = ThreadSafeArray<SKNode>
 public class TiledDemoDelegate: NSObject, Loggable {
         
     /// Currently focused nodes.
-    var currentNodes = NodeList()
+    var focusedNodes = NodeList()
+    
+    /// The currently selected node.
+    public weak var selectedNode: SKNode?
     
     /// Receive camera updates from camera.
     @objc public var receiveCameraUpdates: Bool = true
@@ -67,16 +70,18 @@ public class TiledDemoDelegate: NSObject, Loggable {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.DumpSelectedNodes, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.TileClicked, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.ObjectClicked, object: nil)
+        reset()
     }
     
     /// Reset the delegate.
     func reset() {
-        print("⭑ [TiledDemoDelegate]: resetting nodes...")
         // reset focused nodes
         defer {
-            currentNodes.removeAll()
+            focusedNodes.removeAll()
+            selectedNode = nil
         }
-        currentNodes.forEach { node in
+        
+        focusedNodes.forEach { node in
             node.removeHighlight()
         }
     }
@@ -135,11 +140,11 @@ public class TiledDemoDelegate: NSObject, Loggable {
             return
         }
         
-        currentNodes.removeAll()
+        focusedNodes.removeAll()
         
         for node in selectedNodes {
             var highlightColor = TiledGlobals.default.debugDisplayOptions.objectHighlightColor
-            currentNodes.append(node)
+            focusedNodes.append(node)
             if let tiledNode = node as? TiledGeometryType {
                 if let tile = tiledNode as? SKTile {
                     highlightColor = tile.highlightColor
@@ -155,9 +160,9 @@ public class TiledDemoDelegate: NSObject, Loggable {
     /// - Parameter notification: event notification.
     @objc func nodeSelectionCleared(notification: Notification) {
         notification.dump(#fileID, function: #function)
-        defer { currentNodes.removeAll() }
+        defer { focusedNodes.removeAll() }
         
-        for node in currentNodes {
+        for node in focusedNodes {
             node.removeHighlight()
             node.removeAnchor()
         }
@@ -173,8 +178,9 @@ public class TiledDemoDelegate: NSObject, Loggable {
         guard let tile = notification.object as? SKTile else {
             return
         }
-        currentNodes.removeAll()
-        currentNodes.append(tile)
+        
+        focusedNodes.removeAll()
+        focusedNodes.append(tile)
         
         /// event: `Notification.Name.Demo.NodeSelectionChanged`
         NotificationCenter.default.post(
@@ -195,8 +201,8 @@ public class TiledDemoDelegate: NSObject, Loggable {
             return
         }
         
-        currentNodes.removeAll()
-        currentNodes.append(object)
+        focusedNodes.removeAll()
+        focusedNodes.append(object)
         
         
         /// event: `Notification.Name.Demo.NodeSelectionChanged`
@@ -219,20 +225,18 @@ public class TiledDemoDelegate: NSObject, Loggable {
         }
         
         if let objectColor = userInfo["objectColor"] as? SKColor {
-            currentNodes.forEach { node in
+            focusedNodes.forEach { node in
                 node.highlightNode(with: objectColor)
             }
         }
         
         
-        
         if let tileColor = userInfo["tileColor"] as? SKColor {
-            currentNodes.forEach { node in
+            focusedNodes.forEach { node in
                 node.highlightNode(with: tileColor)
             }
         }
     }
-    
     
     // MARK: - Debugging
     
@@ -242,12 +246,12 @@ public class TiledDemoDelegate: NSObject, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func dumpSelectedNodes(notification: Notification) {
-        guard (currentNodes.isEmpty == false) else {
+        guard (focusedNodes.isEmpty == false) else {
             updateCommandString("Error: nothing is selected.")
             return
         }
         
-        let nodecount = currentNodes.count
+        let nodecount = focusedNodes.count
         let countdesc = (nodecount == 1) ? "node" : "nodes"
         let logmsg = "dumping \(nodecount) \(countdesc):"
 
@@ -255,7 +259,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
         let asciiLine = String(repeating: "-", count: logevent.rawString?.count ?? 40)
         
         
-        for node in currentNodes {
+        for node in focusedNodes {
             print("\(asciiLine)\n")
             dump(node)
         }
@@ -284,11 +288,11 @@ extension TiledDemoDelegate: TiledCustomReflectableType {
         outputString += "     ▸ Receive Camera Updates:      \(receiveCameraUpdates)\n"
         outputString += "     ▸ Camera Zoom:                 \(currentCameraZoom.stringRoundedTo(2))\n\n"
         
-        if (currentNodes.isEmpty == false) {
+        if (focusedNodes.isEmpty == false) {
             
             outputString += "  ▾ Selected Nodes:\n"
             
-            for node in currentNodes {
+            for node in focusedNodes {
                 outputString += "     ▸  \(node.debugDescription) \n"
             }
         } else {
@@ -308,7 +312,7 @@ extension TiledDemoDelegate: TiledSceneCameraDelegate {
     }
     
     @objc public func sceneRightClicked(event: NSEvent) {
-        print("⭑ [TiledDemoDelegate]: scene right clicked...")
+        print("⭑ [TiledDemoDelegate]: scene right-clicked...")
     }
 }
 

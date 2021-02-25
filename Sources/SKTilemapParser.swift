@@ -96,10 +96,13 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
         let kind: ErrorType
     }
 
-    // MARK: File Attributes
+    // MARK: - File Attributes
 
     /// Root path of the current file (defaults to `Bundle.main.bundleURL`).
     internal var documentRoot: URL = Bundle.main.bundleURL
+    
+    /// Asset search path.
+    internal var assetSearchPath: String?
 
     /// The filename of the file being currently parsed (ie: `dungeon-16x16.tmx`) relative to the document root.
     internal var currentFilename: String!
@@ -113,7 +116,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
     /// Tile data file encoding type.
     fileprivate var encoding: TilemapEncoding = .xml
 
-    // MARK: Map Attributes
+    // MARK: - Map Attributes
 
     /// Tilemap canvas type (normal, infinite).
     internal var canvasType: TilemapCanvasType = TilemapCanvasType.default
@@ -125,7 +128,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
     internal var tileUpdateMode: TileUpdateMode = TileUpdateMode.actions
 
 
-    // MARK: Delegates
+    // MARK: - Delegates
 
     /// Tilemap data delegate.
     internal weak var tilemapDelegate: TilemapDelegate?
@@ -139,8 +142,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
     /// Logging message verbosity.
     fileprivate var loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel
 
-
-    // MARK: Stored Elements
+    // MARK: - Stored Elements
 
     /// Currently parsed map.
     internal weak var tilemap: SKTilemap?
@@ -178,7 +180,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
     /// Current tile probability.
     fileprivate var currentProbability: CGFloat?
 
-    // MARK: Tile Data
+    // MARK: - Tile Data
 
     /// Data store for tile layers to render in a second pass. Data is stored as [layer.uuid: [UInt32] ).
     fileprivate var layerTileData: [String: [UInt32]] = [:]
@@ -192,7 +194,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
     /// TMX file compression type.
     fileprivate var compression: TilemapCompression = TilemapCompression.uncompressed
 
-    // MARK: Custom Properties
+    // MARK: - Custom Properties
 
     /// Stashed object properties.
     fileprivate var properties: [String: String] = [:]
@@ -203,12 +205,12 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
     /// Ignore custom properties.
     fileprivate var ignoreProperties: Bool = false
 
-    // MARK: Timing
+    // MARK: - Timing
 
     /// Time started.
     fileprivate var timer: Date = Date()
 
-    // MARK: Dispatch Attributes
+    // MARK: - Dispatch Attributes
 
     /// Dispatch queue for parsing tasks.
     internal let parsingQueue = DispatchQueue.global(qos: .userInteractive)
@@ -217,7 +219,12 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
     internal let renderGroup = DispatchGroup()
 
     // MARK: - Debugging/Reflection
-
+    
+    /// Enables extra logging for development.
+    internal var isDevelopment: Bool {
+        return TiledGlobals.default.isDevelopment
+    }
+    
     /// Stash for parsing errors..
     internal var parsingErrors: [String: Any] = [:]
 
@@ -413,7 +420,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
 
     // MARK: - Original Loading Methods
 
-    /// Load a TMX file and parse it.
+    /// Load a TMX file and parse it. Currently used by the demo app.
     ///
     /// - Parameters:
     ///   - tmxFile: Tiled file name (does not need TMX extension).
@@ -453,7 +460,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
         self.ignoreProperties = noparse
         self.loggingLevel = loggingLevel
 
-
+        self.assetSearchPath = inDirectory
         // append extension if not already there.
         var tmxFilename = tmxFile.components(separatedBy: "/").last!
 
@@ -839,13 +846,14 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
     }
 
     // MARK: - Helpers
-
+    
     /// Ascertain the document root for the given file. Generally, the bundle url. Sets the `documentRoot` property.
     ///
     /// - Parameters:
     ///   - tmxFile: tiled file name.
     ///   - assetPath: optional asset (root) path.
     internal func resolveDocumentRoot(tmxFile: String, assetPath: String?) {
+
         // if the tmxFile string represents a full path, use that & return
         let absTmxUrl = URL(fileURLWithPath: tmxFile).standardized
 
@@ -881,7 +889,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
                 }
             }
         }
-
+        
         // now that the document root is taken care of, let's look at the fmx file name...
         var tmxUrlExists : ObjCBool = false
         let relTmxUrl = documentRoot.appendingPathComponent(tmxFile).standardized
@@ -892,6 +900,26 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
             /// set the tilemap url
             tilemapUrl = relTmxUrl
         }
+    }
+    
+    /// Attempt to locate an external file url.
+    ///
+    /// - Parameter fileNamed: external file name.
+    /// - Returns: resolve asset path.
+    internal func resolveExternalFile(fileNamed: String) -> URL {
+        let fileComponents = fileNamed.components(separatedBy: "/")
+        
+        if (fileComponents.count == 1) {
+            return URL(fileURLWithPath: fileNamed, isDirectory: false, relativeTo: documentRoot).standardized
+        }
+        
+        let fileName = fileComponents.last!
+        if let bundledPath = Bundle.main.path(forResource: fileName, ofType: nil) {
+            return URL(fileURLWithPath: bundledPath)
+        }
+
+        let flattenedUrl = URL(fileURLWithPath: fileName, isDirectory: false, relativeTo: documentRoot).standardized
+        return flattenedUrl
     }
 
     /// Returns true if the file exists on disk.
@@ -1327,12 +1355,14 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
 
             guard attributeDict["width"] != nil,
                   attributeDict["height"] != nil,
-                  let sourceImageName = attributeDict["source"] else {
+                  let sourceImage = attributeDict["source"] else {
                 fatalError("source image error: \(attributeDict)")
             }
-
+            
+            
             // image resources might be store in the xcassets catalog.
-            let imageURL = URL(fileURLWithPath: sourceImageName, isDirectory: false, relativeTo: documentRoot).standardized
+            //let imageURL =
+            let imageURL = resolveExternalFile(fileNamed: sourceImage)
 
             // get the absolute path to the image
             var sourceImagePath = imageURL.path

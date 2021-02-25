@@ -39,8 +39,10 @@ internal class TileObjectProxy: SKShapeNode {
     /// Node is visible to the camera.
     var visibleToCamera: Bool = false
     
+    /// Indicates this node is renderable.
     var isRenderable: Bool = false
     
+    /// Proxy animation key.
     var animationKey: String = "proxy"
     
     // Current camera zoom.
@@ -69,12 +71,14 @@ internal class TileObjectProxy: SKShapeNode {
         }
     }
     
+    /// Toggle proxy drawing.
     var showObjects: Bool = false {
         didSet {
             self.draw()
         }
     }
     
+    /// Governs the color of each proxy object.
     var objectColor: SKColor = TiledGlobals.default.debugDisplayOptions.objectHighlightColor {
         didSet {
             guard objectColor != oldValue else {
@@ -85,6 +89,7 @@ internal class TileObjectProxy: SKShapeNode {
         }
     }
     
+    /// Governs the fill color opacity of each proxy object.
     var fillOpacity: CGFloat = TiledGlobals.default.debugDisplayOptions.objectFillOpacity {
         didSet {
             self.draw()
@@ -96,6 +101,7 @@ internal class TileObjectProxy: SKShapeNode {
         didSet {
             guard (oldValue != isFocused) else { return }
             removeAction(forKey: animationKey)
+            
             if (isFocused == false) && (showObjects == false) {
                 let fadeAction = SKAction.colorFadeAction(after: 0.5)
                 self.run(fadeAction, withKey: animationKey)

@@ -115,5 +115,6 @@ extension TiledSceneDelegate where Self: SKScene {
 }
 
 
+
 /// :nodoc: Typealias for v1.2 compatibility.
 public typealias SKTiledSceneDelegate = TiledSceneDelegate

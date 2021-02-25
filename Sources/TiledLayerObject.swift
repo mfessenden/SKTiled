@@ -266,7 +266,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     }()
 
     /// Layer bounding shape.
-    public lazy var boundsShape: SKShapeNode? = {
+    @objc public lazy var boundsShape: SKShapeNode? = {
         let scaledverts = getVertices().map { $0 * renderQuality }
         let objpath = polygonPath(scaledverts)
         let shape = SKShapeNode(path: objpath)
