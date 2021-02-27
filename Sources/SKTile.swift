@@ -341,8 +341,13 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         let scaledverts = getVertices().map { $0 * renderQuality }
         let objpath = polygonPath(scaledverts)
         let shape = SKShapeNode(path: objpath)
+        
+        
+        let boundsLineWidth = TiledGlobals.default.renderQuality.object
+        shape.lineWidth = boundsLineWidth
+        shape.lineJoin = .miter
+        shape.miterLimit = 0.25
         shape.setScale(1 / renderQuality)
-        shape.lineWidth = TiledGlobals.default.renderQuality.object
         addChild(shape)
         shape.zPosition = zPosition + 1
 
@@ -350,6 +355,18 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         shape.position.x -= boundsOffset.x
         shape.position.y -= boundsOffset.y
         shape.name = boundsKey
+        return shape
+    }()
+    
+    /// Object anchor node visualization node.
+    @objc public lazy var anchorShape: SKShapeNode = {
+        let anchorRadius: CGFloat = 1.5
+        let shape = SKShapeNode(circleOfRadius: anchorRadius)
+        shape.strokeColor = SKColor.clear
+        shape.fillColor = frameColor
+        addChild(shape)
+        shape.zPosition = zPosition + 1
+        shape.name = anchorKey
         return shape
     }()
 
@@ -367,7 +384,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         }
     }
     
-    /// Returns the size of parent object container (if one exists). If this tile is used as a [**tile object**][tile-objects-url], the vector object container might have a completely different
+    /// Returns the size of parent object container (if one exists). If this tile is used as a [**tile object**][tile-objects-url], the vector object container might have a completely different size.
     ///
     /// [tile-objects-url]:working-with-objects.html#tile-objects
     internal var objectSize: CGSize?
@@ -1434,15 +1451,18 @@ extension SKTile {
     ///   - color: highlight color.
     ///   - duration: duration of highlight effect.
     @objc public override func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
-        let removeHighlight: Bool = (color == SKColor.clear)
-        let highlightFillColor = (removeHighlight == false) ? color.withAlphaComponent(0.2) : color
-
+        let highlightFillColor = color.withAlphaComponent(0.2)
+        
         boundsShape?.strokeColor = color
         boundsShape?.fillColor = highlightFillColor
         boundsShape?.isHidden = false
-
+        
+        anchorShape.fillColor = color
+        anchorShape.isHidden = false
+        
         if (duration > 0) {
             let fadeInAction = SKAction.colorize(withColorBlendFactor: 1, duration: duration)
+            
             let groupAction = SKAction.group(
                 [
                     fadeInAction,
@@ -1450,14 +1470,19 @@ extension SKTile {
                     fadeInAction.reversed()
                 ]
             )
-
-
+            
             boundsShape?.run(groupAction, completion: {
-                self.boundsShape?.strokeColor = SKColor.clear
-                self.boundsShape?.fillColor = SKColor.clear
-                self.removeAnchor()
+                self.boundsShape?.isHidden = true
+                self.anchorShape.isHidden = true
+                self.isFocused = false
             })
         }
+    }
+    
+    /// Remove the current object's highlight color.
+    @objc public override func removeHighlight() {
+        boundsShape?.isHidden = true
+        anchorShape.isHidden = true
     }
 }
 

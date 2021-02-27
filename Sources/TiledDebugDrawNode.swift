@@ -175,7 +175,7 @@ internal class TiledDebugDrawNode: SKNode {
             }
             
             if debugDrawOptions.contains(.drawAnchor) {
-                self.drawLayerAnchor()
+                // self.drawLayerAnchor()
             } else {
                 self.childNode(withName: self.anchorKey)?.removeFromParent()
             }
@@ -379,13 +379,6 @@ internal class TiledDebugDrawNode: SKNode {
             }
         }
         graphSprite.isHidden = false
-    }
-    
-    /// Visualize the layer's anchor point.
-    func drawLayerAnchor() {
-        let anchor = drawAnchor(self, withKey: anchorKey)
-        anchor.name = anchorKey
-        anchor.position = anchorPoint
     }
     
     // MARK: - Memory

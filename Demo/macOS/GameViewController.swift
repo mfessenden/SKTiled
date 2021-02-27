@@ -878,17 +878,19 @@ class GameViewController: NSViewController, Loggable {
             return
         }
         
-        // set debug attribute labels
-        tileInfoLabel.isHidden = false
-        tileInfoLabel.stringValue = focusedObject.description
-        
-        propertiesInfoLabel.isHidden = false
-        propertiesInfoLabel.attributedStringValue = focusedObject.propertiesAttributedString(delineator: nil)
-        
-        // highlight the object
-        let highlightDuration = TiledGlobals.default.debugDisplayOptions.highlightDuration
-        focusedObject.drawNodeBounds(with: focusedObject.frameColor, lineWidth: 0.25, fillOpacity: 0, duration: highlightDuration)
-        focusedObject.isFocused = true
+        if (focusedObject.isFocused == false) {
+            // set debug attribute labels
+            tileInfoLabel.isHidden = false
+            tileInfoLabel.stringValue = focusedObject.description
+            
+            propertiesInfoLabel.isHidden = false
+            propertiesInfoLabel.attributedStringValue = focusedObject.propertiesAttributedString(delineator: nil)
+            
+            // highlight the object
+            let highlightDuration = TiledGlobals.default.debugDisplayOptions.highlightDuration
+            focusedObject.highlightNode(with: focusedObject.highlightColor, duration: highlightDuration)
+            focusedObject.isFocused = true
+        }
     }
 
     /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.ObjectClicked` notification is received.
@@ -908,7 +910,7 @@ class GameViewController: NSViewController, Loggable {
         propertiesInfoLabel.attributedStringValue = focusedObject.propertiesAttributedString(delineator: nil)
         
         // highlight the object
-        focusedObject.drawNodeBounds(with: focusedObject.frameColor, lineWidth: 0.25, fillOpacity: 0, duration: 0)
+        focusedObject.highlightNode(with: focusedObject.highlightColor, duration: 0)
         focusedObject.isFocused = true
         // perform(#selector(clearCurrentObject), with: nil, afterDelay: 5)
     }
@@ -923,17 +925,22 @@ class GameViewController: NSViewController, Loggable {
             return
         }
         
-        // set debug attribute labels
-        tileInfoLabel.isHidden = false
-        tileInfoLabel.stringValue = focusedTile.description
-
-        propertiesInfoLabel.isHidden = false
-        propertiesInfoLabel.attributedStringValue = focusedTile.tileData.propertiesAttributedString(delineator: nil)
-        
-        // highlight the tile
-        let highlightDuration = TiledGlobals.default.debugDisplayOptions.highlightDuration
-        focusedTile.highlightNode(with: focusedTile.highlightColor, duration: highlightDuration)
-        focusedTile.isFocused = true
+        if (focusedTile.isFocused == false) {
+            
+            // set debug attribute labels
+            tileInfoLabel.isHidden = false
+            tileInfoLabel.stringValue = focusedTile.description
+            
+            propertiesInfoLabel.isHidden = false
+            propertiesInfoLabel.attributedStringValue = focusedTile.tileData.propertiesAttributedString(delineator: nil)
+            
+            // highlight the tile
+            
+            let highlightDuration = TiledGlobals.default.debugDisplayOptions.highlightDuration
+            focusedTile.highlightNode(with: focusedTile.highlightColor, duration: highlightDuration)
+            
+            focusedTile.isFocused = true
+        }
     }
 
     /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.TileClicked` notification is received.
@@ -1058,8 +1065,9 @@ class GameViewController: NSViewController, Loggable {
                 if let scene = selected.scene as? SKTiledScene {
                     zoomScale = scene.cameraNode?.zoom ?? 0.25
                 }
-
-                drawAnchor(selected, radius: anchorRadius, anchorColor: anchorColor, zoomScale: zoomScale)
+                
+                
+                // TODO: 'drawAnchor' call was here
                 
                 if let tiledNode = selected as? TiledCustomReflectableType {
 
@@ -1160,9 +1168,21 @@ class GameViewController: NSViewController, Loggable {
         statsRenderModeLabel.stringValue = "Mode: \(tilemap.updateMode.name)"
         statsEffectsLabel.stringValue = "\(effectsMessage)"
         statsEffectsLabel.isHidden = (effectsEnabled == false)
-        statsVisibleLabel.stringValue = "Visible: \(tilemap.nodesInView.count)"
-        //statsVisibleLabel.isHidden = (TiledGlobals.default.enableCameraCallbacks == false)
-
+        
+        
+        
+        var visibleLabelHidden = true
+        var nodesInCameraViewCount = 0
+        if let cameraNode = tilemap.cameraNode {
+            nodesInCameraViewCount = cameraNode.containedNodeSet().count
+            visibleLabelHidden = false
+        }
+        
+        
+        statsVisibleLabel.stringValue = "Visible: \(nodesInCameraViewCount)"
+        statsVisibleLabel.isHidden = visibleLabelHidden
+        
+        
         let graphsCount = tilemap.graphs.count
         let hasGraphs = (graphsCount > 0)
 
@@ -1294,9 +1314,13 @@ class GameViewController: NSViewController, Loggable {
             return
         }
 
-        self.statsRenderModeLabel.stringValue = "Mode: \(renderStats.updateMode.name)"
+        let visibleNodeCount = renderStats.visibleCount
+        let visibleLabelHidden = (visibleNodeCount == -1) || (TiledGlobals.default.enableCameraCallbacks == false)
         self.statsVisibleLabel.stringValue = "Visible: \(renderStats.visibleCount)"
-        //self.statsVisibleLabel.isHidden = (TiledGlobals.default.enableCameraCallbacks == false)
+        self.statsVisibleLabel.isHidden = visibleLabelHidden
+        
+        
+        self.statsRenderModeLabel.stringValue = "Mode: \(renderStats.updateMode.name)"
         self.statsObjectsLabel.isHidden = (renderStats.objectsVisible == false)
         self.statsObjectsLabel.stringValue = "Objects: \(renderStats.objectCount)"
         self.statsTrackingViewsLabel.isHidden = (renderStats.trackingViews == 0)

@@ -425,7 +425,7 @@ public class TiledGlobals {
         /// Debug object fill opacity.
         public var objectFillOpacity: CGFloat = 0.5
 
-        /// Debug object highlight color.
+        /// Debug object highlight color. Also used with layer & map types.
         public var objectHighlightColor: SKColor = TiledObjectColors.lime
 
         /// Debug graph highlight color.

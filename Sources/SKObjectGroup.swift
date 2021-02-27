@@ -143,15 +143,6 @@ public class SKObjectGroup: TiledLayerObject {
         }
     }
 
-    /// Debug visualization options.
-    @objc public override var debugDrawOptions: DebugDrawOptions {
-        didSet {
-            guard oldValue != debugDrawOptions else { return }
-            let doShowObjects = debugDrawOptions.contains(.drawObjectFrames)
-            objects.forEach { $0.showBounds = doShowObjects }
-        }
-    }
-
     /// Speed modifier applied to all actions executed by the layer and its descendants.
     public override var speed: CGFloat {
         didSet {

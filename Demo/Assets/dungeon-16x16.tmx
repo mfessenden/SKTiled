@@ -82,13 +82,14 @@
  <group id="23" name="Upper">
   <layer id="10" name="Level2" width="22" height="21">
    <properties>
+    <property name="drawbounds" type="bool" value="false"/>
     <property name="isStatic" type="bool" value="false"/>
    </properties>
    <data encoding="base64" compression="zlib">
    eJxjYBhZQGHUXKqau5MRwY4Hsq8C8UQqmHsFSoOMv8zI8OAckLGCCubCgBsQGwPxU6C5qmSasZMB7DaGfRC6YReQtgZiGQrd9gpo5hVGBLsIiKWB7EQKze1kRMT7FSjfBkgvZcSthxiwgBE1Pe1hRKXJAaLQcN1PgbuwAR2guaeA9DUqmzsKRhYAAItVGVU=
   </data>
   </layer>
-  <layer id="11" name="Level3" width="22" height="21" offsetx="-16" offsety="0">
+  <layer id="11" name="Level3" width="22" height="21">
    <properties>
     <property name="isStatic" type="bool" value="false"/>
    </properties>

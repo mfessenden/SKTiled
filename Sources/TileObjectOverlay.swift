@@ -74,6 +74,7 @@ internal class TileObjectOverlay: SKNode {
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Globals.Updated, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.Updated, object: nil)
+        self.destroy()
     }
     
     func setupNotifications() {

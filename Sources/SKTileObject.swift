@@ -133,6 +133,8 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
     #endif
     
+    // MARK: - Move Up
+    
     /// Indicates the current node has received focus or selected.
     public var isFocused: Bool = false {
         didSet {
@@ -157,10 +159,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
     /// Points describing the object's shape.
     internal var points: [CGPoint] = []
 
-    /// Shape describing this object.
-    @objc var shape: SKShapeNode?
-
-    /// Shape describing this object.
+    /// Object path.
     @objc public lazy var objectPath: CGPath = {
         if (globalID == nil) {
             let vertices = getVertices().map( { $0.invertedY })
@@ -170,7 +169,9 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
             return polygonPath(vertices)
         }
     }()
-
+    
+    
+    /// Private animation toggle.
     internal var _enableAnimation: Bool = true
 
     /// Enable tile animation.
@@ -213,10 +214,15 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
     open var tileData: SKTilesetData? {
         return tile?.tileData
     }
+    
+    // MARK: - Color Attributes
 
     /// Object bounds color.
     open var frameColor: SKColor = TiledGlobals.default.debugDisplayOptions.objectHighlightColor
-
+    
+    /// Object highlight color.
+    open var highlightColor: SKColor = TiledGlobals.default.debugDisplayOptions.objectHighlightColor
+    
     /// Optional proxy color.
     open var proxyColor: SKColor?
 
@@ -235,7 +241,9 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
             frameColor = newColor
         }
     }
-
+    
+    // MARK: - Shape Attributes
+    
     /// Object bounding shape.
     @objc public lazy var boundsShape: SKShapeNode? = {
         let vertices = translatedVertices()
@@ -265,11 +273,27 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
             controlShape.isHidden = true
         }
 
-        shape.lineWidth = TiledGlobals.default.renderQuality.object
+        let boundsLineWidth = TiledGlobals.default.renderQuality.object
+        print("⭑ [\(className)]: bounds width: \(boundsLineWidth)")
+        shape.lineWidth = boundsLineWidth
+        shape.lineJoin = .miter
+        shape.miterLimit = 6
         shape.setScale(1 / renderQuality)
         addChild(shape)
         shape.zPosition = zPosition + 1
         shape.name = boundsKey
+        return shape
+    }()
+    
+    /// Object anchor node visualization node.
+    @objc public lazy var anchorShape: SKShapeNode = {
+        let anchorRadius: CGFloat = 1.5
+        let shape = SKShapeNode(circleOfRadius: anchorRadius)
+        shape.strokeColor = SKColor.clear
+        shape.fillColor = frameColor
+        addChild(shape)
+        shape.zPosition = zPosition + 1
+        shape.name = anchorKey
         return shape
     }()
 
@@ -287,6 +311,8 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
         case collision
     }
 
+    // MARK: - Properties
+    
     /// Custom object properties.
     open var properties: [String: String] = [:]
 
@@ -425,6 +451,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
 
     deinit {
+        proxy = nil
         onDestroy?(self)
     }
     
@@ -1031,34 +1058,6 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
     #endif
 
-    /// Show/hide the object's boundary shape.
-    open var showBounds: Bool {
-        get {
-            return (childNode(withName: boundsKey) != nil) ? childNode(withName: boundsKey)!.isHidden == false : false
-        }
-        set {
-            childNode(withName: boundsKey)?.removeFromParent()
-            childNode(withName: anchorKey)?.removeFromParent()
-            if (newValue == true) {
-                isHidden = false
-
-                // draw the tile boundary shape
-                drawNodeBounds(with: frameColor)
-
-                guard let frameShape = childNode(withName: boundsKey) else { return }
-
-                let highlightDuration: TimeInterval = (layer != nil) ? layer!.highlightDuration : 0
-
-                if (highlightDuration > 0) {
-                    let fadeAction = SKAction.fadeOut(withDuration: highlightDuration)
-                    frameShape.run(fadeAction, completion: {
-                        frameShape.removeFromParent()
-                    })
-                }
-            }
-        }
-    }
-
     // MARK: - Callbacks
 
     /// Object has begun rendering.
@@ -1390,12 +1389,14 @@ extension SKTileObject {
     ///   - color: highlight color.
     ///   - duration: duration of highlight effect.
     @objc public override func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
-        let removeHighlight: Bool = (color == SKColor.clear)
-        let highlightFillColor = (removeHighlight == false) ? color.withAlphaComponent(0.2) : color
+        let highlightFillColor = color.withAlphaComponent(0.2)
         
         boundsShape?.strokeColor = color
         boundsShape?.fillColor = highlightFillColor
         boundsShape?.isHidden = false
+        
+        anchorShape.fillColor = color
+        anchorShape.isHidden = false
         
         if (duration > 0) {
             let fadeInAction = SKAction.colorize(withColorBlendFactor: 1, duration: duration)
@@ -1408,13 +1409,18 @@ extension SKTileObject {
                 ]
             )
             
-            
             boundsShape?.run(groupAction, completion: {
-                self.boundsShape?.strokeColor = SKColor.clear
-                self.boundsShape?.fillColor = SKColor.clear
-                self.removeAnchor()
+                self.boundsShape?.isHidden = true
+                self.anchorShape.isHidden = true
+                self.isFocused = false
             })
         }
+    }
+    
+    /// Remove the current object's highlight color.
+    @objc public override func removeHighlight() {
+        boundsShape?.isHidden = true
+        anchorShape.isHidden = true
     }
 }
 

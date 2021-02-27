@@ -82,6 +82,19 @@ extension DebugDrawableType {
             }
         }
     }
+    
+    /// Property to show/hide the node's anchor point shape.
+    public var isShowingAnchor: Bool {
+        get {
+            return debugDrawOptions.contains(.drawAnchor)
+        } set {
+            if (newValue == true) {
+                debugDrawOptions.insert(.drawAnchor)
+            } else {
+                debugDrawOptions = debugDrawOptions.subtracting(.drawAnchor)
+            }
+        }
+    }
 
     /// Property to show/hide container bounds.
     public var isShowingBounds: Bool {
@@ -201,4 +214,3 @@ extension DebugDrawOptions: CustomStringConvertible, CustomDebugStringConvertibl
         return Mirror(reflecting: DebugDrawOptions.self)
     }
 }
-

@@ -49,35 +49,38 @@ import SpriteKit
     
     /// The object's parent container.
     @objc optional var container: TiledMappableGeometryType? { get }
-
+    
     /// A path defining the shape of geometry. Used to draw the bounding shape.
     @objc var objectPath: CGPath { get }
-
+    
     /// Object bounding box shape.
     @objc var boundsShape: SKShapeNode? { get set }
-
+    
     /// Object bounding rectangle, in local space.
     @objc var boundingRect: CGRect { get }
-
+    
+    /// Object anchor node visualization node.
+    @objc var anchorShape: SKShapeNode { get set }
+    
     /// Render scaling property.
     @objc var renderQuality: CGFloat { get set }
-
+    
     /// The object is visible to scene cameras.
     @objc var visibleToCamera: Bool { get set }
-
+    
     /// Indicates the node has been touched, either by mouse or touch event.
     ///
     /// - Parameter touch: point in **this** node.
     /// - Returns: node was touched.
     @objc func contains(touch: CGPoint) -> Bool
-
+    
     /// Returns the points representing the object's bounding shape - translated with the current map orientation.
     ///
     /// - Parameter offset: offset to be applied to each point.
     /// - Returns: array of points.
     @objc func getVertices(offset: CGPoint) -> [CGPoint]
-
-    /// Refresh the object's content.
+    
+    /// Refresh the node's content.
     @objc optional func draw()
 }
 
@@ -87,7 +90,30 @@ import SpriteKit
 
 /// :nodoc:
 extension TiledGeometryType {
-
+    
+    
+    /// Generic highlight method.
+    ///
+    /// - Parameters:
+    ///   - color: highlight color.
+    ///   - duration: highlight duration.
+    public func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
+        print("⭑ [TiledGeometryType]: highlighing node...")
+        boundsShape?.isHidden = false
+        boundsShape?.fillColor = color
+        
+        anchorShape.isHidden = false
+        anchorShape.fillColor = color
+    }
+    
+    /// Generic highlight removal.
+    public func removeHighlight() {
+        // TODO: hide these nodes?
+        boundsShape?.isHidden = true
+        anchorShape.isHidden = true
+    }
+    
+    
     /// Returns the `SKTiled` geometry object class name.
     public var className: String {
         let objtype = String(describing: Swift.type(of: self))
@@ -98,7 +124,7 @@ extension TiledGeometryType {
     }
     
     // MARK: - Indentifiers
-
+    
     /// Unique identifier used to access bounding box shape nodes.
     internal var boundsKey: String {
         return "\(uuid)_BOUNDS"
@@ -113,14 +139,16 @@ extension TiledGeometryType {
     internal var anchorKey: String {
         return "\(uuid)_ANIMATION"
     }
-    
 }
 
 
 #if os(macOS)
 
 /// :nodoc:
+///
 extension TiledGeometryType where Self: SKNode {
+    
+    // TODO: add `anchorShape` here?
     
     /// Addm this node's frame to the SpriteKit view's tracking views.
     public func addTrackingView() {
@@ -143,17 +171,7 @@ extension TiledGeometryType where Self: SKNode {
 
 /// :nodoc:
 extension SKNode {
-
-    /// Node he rotation value (in degrees).
-    @objc public var rotation: CGFloat {
-        get {
-            return zRotation.degrees()
-        }
-        set {
-            zRotation = -newValue.radians()
-        }
-    }
-
+    
     /// Returns true if an event (mouse or touch) contacts this node.
     ///
     /// - Parameter touch: event point in this node's coordinate space.
@@ -167,7 +185,7 @@ extension SKNode {
         let touchedNode = scene.atPoint(touchPoint)
         return touchedNode === self || touchedNode.inParentHierarchy(self)
     }
-
+    
     /// Returns an array of all visible **Tiled** geometry nodes (tiles, objects) that intersect a given point.
     ///
     /// - Parameter location: A point in the node’s coordinate system.
@@ -175,7 +193,7 @@ extension SKNode {
     public func tiledNodes(at location: CGPoint) -> [TiledGeometryType] {
         return nodes(at: location).filter({ $0 as? TiledGeometryType != nil && $0.isHighlightable == true && $0.isHidden == false }) as! [TiledGeometryType]
     }
-
+    
     #if os(macOS)
     
     // FIXME: this is overiding derivative classes
@@ -222,18 +240,18 @@ extension SKNode {
     public var isHighlightable: Bool {
         return (self as? SKTileObject != nil) || (self as? SKTile != nil)
     }
-
+    
     /// Returns the frame rectangle of the layer (used to draw bounds).
     @objc public var boundingRect: CGRect {
         guard let tilednode = self as? TiledMappableGeometryType else {
             return CGRect.zero
         }
-
+        
         // FIXME: offset is off with infinite maps
         let nodesize = tilednode.sizeInPoints
         return CGRect(x: 0, y: 0, width: nodesize.width, height: -nodesize.height)
     }
-
+    
     /// Object bounding vertices in **Tiled space**.
     ///
     /// - Parameter offset: point offset.
@@ -242,23 +260,25 @@ extension SKNode {
         guard let tiledGeo = self as? TiledGeometryType else {
             return [CGPoint]()
         }
-
+        
         // FIXME: offset is off with infinite maps
         var offset = CGPoint.zero
         if let tiledLayer = self as? TiledLayerObject {
             offset = tiledLayer.layerInfiniteOffset
         }
-
+        
         let vertices = tiledGeo.boundingRect.points
         return vertices.map { $0 - offset }
     }
-
+    
     /// Generic highlight method that works for all `SpriteKit` types.
     ///
     /// - Parameters:
     ///   - color: highlight color.
     ///   - duration: duration of highlight effect.
     @objc public func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
+        print("⭑ [SKNode]: highlighing node...")
+        
         /// highlight sprite types by setting colorblendfactor
         
         
@@ -268,21 +288,19 @@ extension SKNode {
         boundingBox.lineWidth = 1
         boundingBox.strokeColor = .black
         boundingBox.fillColor = .clear
+        boundingBox.zPosition = zPosition + 1
         boundingBox.path = boundingBox.path?.copy(dashingWithPhase: 0, lengths: [10,10])
         addChild(boundingBox)
     }
-
+    
     /// Remove the current object's highlight color.
-    public func removeHighlight() {
-        highlightNode(with: SKColor.clear)
-        removeAnchor()
-    }
+    @objc public func removeHighlight() {}
+}
 
-    /// Remove the current node's anchor point.
-    public func removeAnchor() {
-        childNode(withName: "ANCHOR")?.removeFromParent()
-    }
 
+/*
+/// :nodoc:
+extension SKNode {
     /// Draw the bounds of the object type.
     ///
     /// - Parameters:
@@ -293,20 +311,20 @@ extension SKNode {
                                lineWidth: CGFloat = 1,
                                fillOpacity: CGFloat = 0,
                                duration: TimeInterval = 0) {
-
-
+        
+        
         if let tiledNode = self as? TiledGeometryType {
             guard let shape = tiledNode.boundsShape else {
                 return
             }
-
+            
             shape.isHidden = false
             shape.strokeColor = color
             
             if fillOpacity > 0 {
                 shape.fillColor = color.withAlphaComponent(fillOpacity)
             }
-
+            
             if (duration > 0) {
                 shape.run(SKAction.run {
                     shape.strokeColor = SKColor.clear
@@ -314,7 +332,7 @@ extension SKNode {
             }
         }
     }
-
+    
     /// Draw the bounds of the object type.
     public func drawNodeBounds() {
         if let _ = self as? TiledGeometryType {
@@ -335,6 +353,7 @@ extension SKNode {
         }
     }
 }
+*/
 
 
 extension SKTilemap: TiledGeometryType {}

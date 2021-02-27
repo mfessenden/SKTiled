@@ -221,7 +221,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     /// The type of objects contained in this layer.
     internal var layerType: TiledLayerType = TiledLayerType.none
 
-    // MARK: - Colors
+    // MARK: - Color Attributes
 
     /// Layer color.
     public var color: SKColor = TiledObjectColors.gun
@@ -232,7 +232,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     /// Bounding box color.
     public var frameColor: SKColor = TiledGlobals.default.debugDisplayOptions.frameColor
 
-    /// Layer highlight color (for highlighting tiles)
+    /// Layer highlight color (for highlighting tiles).
     public var highlightColor: SKColor = SKColor.white
 
     /// Layer proxy object color.
@@ -255,7 +255,11 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
             self.colorBlendFactor = 1
         }
     }
-
+    
+    // MARK: - Shapes
+    
+    // TODO: finish tinting.
+    
     /// Sprite to allow for color tinting.
     lazy internal var tintSprite: SKSpriteNode? = {
         let sprite = SKSpriteNode(color: SKColor.clear, size: sizeInPoints)
@@ -270,11 +274,27 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         let scaledverts = getVertices().map { $0 * renderQuality }
         let objpath = polygonPath(scaledverts)
         let shape = SKShapeNode(path: objpath)
-        shape.lineWidth = TiledGlobals.default.renderQuality.object * 1.5
+        
+        let boundsLineWidth = TiledGlobals.default.renderQuality.object / 1.5
+        shape.lineWidth = boundsLineWidth
+        shape.lineJoin = .miter
+        shape.miterLimit = 0.25
         shape.setScale(1 / renderQuality)
         addChild(shape)
         shape.zPosition = zPosition + 1
         shape.name = boundsKey
+        return shape
+    }()
+    
+    /// Object anchor node visualization node.
+    @objc public lazy var anchorShape: SKShapeNode = {
+        let anchorRadius: CGFloat = 4
+        let shape = SKShapeNode(circleOfRadius: anchorRadius)
+        shape.strokeColor = SKColor.clear
+        shape.fillColor = frameColor
+        addChild(shape)
+        shape.zPosition = zPosition + 1000
+        shape.name = anchorKey
         return shape
     }()
 
@@ -630,7 +650,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         gidErrors = [:]
     }
 
-    // MARK: - Color
+    // MARK: - Colors
 
     /// Set the layer color with an `SKColor`.
     ///
@@ -909,13 +929,16 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     ///   - color: highlight color.
     ///   - duration: duration of highlight effect.
     @objc public override func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
-        let removeHighlight: Bool = (color == SKColor.clear)
-        let highlightFillColor = (removeHighlight == false) ? color.withAlphaComponent(0.2) : color
+        
+        let highlightFillColor = color.withAlphaComponent(0.2)
 
         boundsShape?.strokeColor = color
         boundsShape?.fillColor = highlightFillColor
         boundsShape?.isHidden = false
-
+        
+        anchorShape.fillColor = color
+        anchorShape.isHidden = false
+        
         if (duration > 0) {
             let fadeInAction = SKAction.colorize(withColorBlendFactor: 1, duration: duration)
 
@@ -928,11 +951,17 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
             )
             
             boundsShape?.run(groupAction, completion: {
-                self.boundsShape?.strokeColor = SKColor.clear
-                self.boundsShape?.fillColor = SKColor.clear
-                self.removeAnchor()
+                self.boundsShape?.isHidden = true
+                self.anchorShape.isHidden = true
+                self.isFocused = false
             })
         }
+    }
+    
+    /// Remove the current object's highlight color.
+    @objc public override func removeHighlight() {
+        boundsShape?.isHidden = true
+        anchorShape.isHidden = true
     }
 
     // MARK: - Updating

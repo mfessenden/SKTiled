@@ -164,7 +164,6 @@ public class TiledDemoDelegate: NSObject, Loggable {
         
         for node in focusedNodes {
             node.removeHighlight()
-            node.removeAnchor()
         }
     }
     

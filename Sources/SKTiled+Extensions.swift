@@ -1184,7 +1184,17 @@ extension SKTexture {
 
 
 extension SKNode {
-
+    
+    /// Node he rotation value (in degrees).
+    @objc public var rotation: CGFloat {
+        get {
+            return zRotation.degrees()
+        }
+        set {
+            zRotation = -newValue.radians()
+        }
+    }
+    
     /// Returns the distance from this node to another.
     ///
     /// - Parameter other: other node.
@@ -2959,66 +2969,6 @@ internal func writeToFile(_ image: CGImage, url: URL) -> Data {
     return data
 }
 #endif
-
-// TODO: cleanup for master
-
-/// Draw a shape visualizing the node's anchor point.
-///
-/// - Parameters
-///     - node: parent node.
-///     - key: anchor name.
-///     - withLabel: string label (optional).
-///     - labelSize: label font size.
-///     - labelOffsetX: label x-offset.
-///     - labelOffsetY: label y-offset.
-///     - radius: anchor radius.
-///     - anchorColor: anchor color.
-///     - zoomScale: scene camera zoom.
-/// - Returns: anchor node.
-@discardableResult
-internal func drawAnchor(_ node: SKNode,
-                         withKey key: String = "ANCHOR",
-                         withLabel: String? = nil,
-                         labelSize: CGFloat = 10,
-                         labelOffsetX: CGFloat = 0,
-                         labelOffsetY: CGFloat = 0,
-                         radius: CGFloat = 1,
-                         anchorColor: SKColor = SKColor.red,
-                         zoomScale: CGFloat = 0) -> AnchorNode {
-
-
-    node.childNode(withName: key)?.removeFromParent()
-    let anchor = AnchorNode(radius: radius, color: anchorColor, label: withLabel, offsetX: labelOffsetX, offsetY: labelOffsetY, zoom: zoomScale)
-    anchor.labelSize = labelSize
-    node.addChild(anchor)
-
-    // add as a delegate
-    if let tileScene = node.scene as? SKTiledScene {
-        tileScene.cameraNode?.addDelegate(anchor)
-    }
-
-    // let x = "⎚"
-    anchor.position = CGPoint(x: 0, y: 0)
-    anchor.zPosition = (node.zPosition + 50) * 100
-    return anchor
-}
-
-/// Draw a shape visualizing the node's anchor point.
-///
-/// - Parameters
-///   - node: parent node.
-///   - radius: anchor radius.
-///   - anchorColor: anchor color.
-///   - zoomScale: scene camera zoom.
-/// - Returns: anchor node.
-@discardableResult
-internal func drawAnchor(_ node: SKNode,
-                         radius: CGFloat = 1,
-                         anchorColor: SKColor = SKColor.red,
-                         zoomScale: CGFloat = 0) -> AnchorNode {
-
-    return drawAnchor(node, withKey: "ANCHOR", withLabel: nil, labelSize: 10, labelOffsetX: 0, labelOffsetY: 0, radius: radius, anchorColor: anchorColor, zoomScale: zoomScale)
-}
 
 // MARK: - Polygon Drawing
 

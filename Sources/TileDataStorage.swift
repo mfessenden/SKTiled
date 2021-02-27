@@ -667,7 +667,7 @@ internal class TileDataStorage: Loggable {
     ///
     /// - Parameter globalID: tile global id.
     /// - Returns: tiles with the given global id.
-    func tilesWith(globalID: UInt32) -> [SKTile]? {
+    func allTiles(globalID: UInt32) -> [SKTile]? {
         var result: [SKTile] = []
         for item in staticTileCache {
             if item.key.globalID == globalID {
@@ -681,6 +681,27 @@ internal class TileDataStorage: Loggable {
             }
         }
 
+        return (result.isEmpty == false) ? result : nil
+    }
+    
+    /// Returns an array of tiles matching the given type.
+    ///
+    /// - Parameter ofType: tile type.
+    /// - Returns: array of tiles with the given type.
+    func allTiles(ofType: String) -> [SKTile]? {
+        var result: [SKTile] = []
+        for item in staticTileCache {
+            if item.key.type == ofType {
+                result.append(contentsOf: item.value)
+            }
+        }
+        
+        for item in animatedTileCache {
+            if item.key.type == ofType {
+                result.append(contentsOf: item.value)
+            }
+        }
+        
         return (result.isEmpty == false) ? result : nil
     }
 

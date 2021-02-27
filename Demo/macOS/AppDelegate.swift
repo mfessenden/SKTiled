@@ -583,7 +583,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         self.initializeDebugColorMenus()
     }
-
+    
     @IBAction func objectColorsUpdatedAction(_ sender: NSMenuItem) {
         guard let colorString = sender.accessibilityTitle() else { return }
 

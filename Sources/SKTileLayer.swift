@@ -112,14 +112,6 @@ public class SKTileLayer: TiledLayerObject {
         didSet {
             guard oldValue != debugDrawOptions else { return }
             debugNode.draw()
-            
-            // TODO: do we need this?
-            let doShowTileBounds = debugDrawOptions.contains(.drawObjectFrames)
-            getTiles().forEach { tile in
-                if (doShowTileBounds == true) {
-                    tile.drawNodeBounds(with: tile.frameColor)
-                }
-            }
         }
     }
 

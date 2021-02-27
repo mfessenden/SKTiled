@@ -55,22 +55,6 @@ extension SKTiledDemoScene {
                 if let lowerGraphLayer = tilemap.tileLayers(named: "Graph-Lower").first {
                     _ = lowerGraphLayer.initializeGraph(walkable: walkableTiles)
                 }
-                
-                guard let tileset = tilemap.getTileset(named: "dungeon-32x32"),
-                      let tiledata = tileset.getTileData(localID: 0),
-                      let tile = SKTile(data: tiledata) else {
-                    self.log("can't create a new tile", level: .error)
-                    return
-                }
-                
-                
-                tilemap.getLayers(named: "Characters-Upper").first?.addChild(tile, coord: simd_int2(9,13), offset: CGPoint(x: -4, y: -4))
-                
-                if let dwarf = tilemap.getObjects(named: "dwarf1").first {
-                    dwarf.setScale(2)
-                }
-                
-                
 
             case "roguelike-16x16.tmx":
                 if let graphLayer = tilemap.tileLayers(named: "Graph").first {

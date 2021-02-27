@@ -408,6 +408,15 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
     // MARK: - Camera
     
+    /// Reference to the Tiled scene camera.
+    public var cameraNode: SKTiledSceneCamera? {
+        guard let tiledScene = scene as? SKTiledScene,
+              let tiledCamera = tiledScene.cameraNode else {
+            return nil
+        }
+        return tiledCamera
+    }
+    
     /// Indicates the current node has received focus or selected.
     public var isFocused: Bool = false {
         didSet {
@@ -443,9 +452,6 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
     /// Display bounds that the tilemap is viewable in.
     public internal(set) var cameraBounds: CGRect?
-
-    /// An array of nodes that are currently visible.
-    public internal(set) var nodesInView: Set<SKNode> = []
     
     /// Current map zoom level.
     public internal(set) var currentZoom: CGFloat = 1.0
@@ -471,7 +477,6 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     public var objectCount: Int {
         return self.getObjects(recursive: true).count
     }
-
 
     // MARK: - Caching
 
@@ -546,11 +551,28 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         let scaledverts = getVertices(offset: CGPoint.zero).map { $0 * renderQuality }
         let objpath = polygonPath(scaledverts)
         let shape = SKShapeNode(path: objpath)
-        shape.lineWidth = TiledGlobals.default.renderQuality.object * 2
+        
+        let boundsLineWidth = TiledGlobals.default.renderQuality.object / 1.5
+        print("⭑ [\(className)]: bounds width: \(boundsLineWidth)")
+        shape.lineWidth = boundsLineWidth
+        shape.lineJoin = .miter
+        shape.miterLimit = 6
         shape.setScale(1 / renderQuality)
         addChild(shape)
-        shape.zPosition = zPosition + 1
+        shape.zPosition = zPosition + 5000
         shape.name = boundsKey
+        return shape
+    }()
+    
+    /// Object anchor node visualization node.
+    @objc public lazy var anchorShape: SKShapeNode = {
+        let anchorRadius: CGFloat = 4
+        let shape = SKShapeNode(circleOfRadius: anchorRadius)
+        shape.strokeColor = SKColor.clear
+        shape.fillColor = frameColor
+        addChild(shape)
+        shape.zPosition = zPosition + 5000
+        shape.name = anchorKey
         return shape
     }()
 
@@ -655,7 +677,9 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     @objc public var debugDrawOptions: DebugDrawOptions = TiledGlobals.default.debugDrawOptions {
         didSet {
             debugNode?.draw()
-
+            
+            // TODO: do we need this anymore?
+            
             let proxiesVisible = self.isShowingObjectBounds
             let proxies = self.getObjectProxies()
 
@@ -663,12 +687,10 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
                 proxy.showObjects = proxiesVisible
                 proxy.draw()
             }
-
         }
     }
 
-    // MARK: - Color Properties
-
+    // MARK: - Color Attributes
 
     /// Color used to display object frames.
     public var objectColor: SKColor = SKColor.gray
@@ -824,7 +846,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return Int(sizeInPoints.width * sizeInPoints.height)
     }
 
-    // The property used to align child layers within the tilemap.
+    /// The property used to align child layers within the tilemap.
     internal var layerAlignment: LayerPosition = LayerPosition.center {
         didSet {
             layers.forEach { self.positionLayer($0) }
@@ -2528,7 +2550,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
                 renderStatistics.objectsVisible = (isShowingObjectBounds == true)
 
                 #if SKTILED_DEMO
-                renderStatistics.visibleCount = nodesInView.count
+                renderStatistics.visibleCount = cameraNode?.containedNodeSet().count ?? -1
                 
                 #if os(macOS)
                 if let scene = self.scene {
@@ -3171,16 +3193,19 @@ extension SKTilemap {
     ///   - color: highlight color.
     ///   - duration: duration of highlight effect.
     @objc public override func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
-        let removeHighlight: Bool = (color == SKColor.clear)
-        let highlightFillColor = (removeHighlight == false) ? color.withAlphaComponent(0.2) : color
-
+        
+        let highlightFillColor = color.withAlphaComponent(0.2)
+        
         boundsShape?.strokeColor = color
         boundsShape?.fillColor = highlightFillColor
         boundsShape?.isHidden = false
-
+        
+        anchorShape.fillColor = color
+        anchorShape.isHidden = false
+        
         if (duration > 0) {
             let fadeInAction = SKAction.colorize(withColorBlendFactor: 1, duration: duration)
-
+            
             let groupAction = SKAction.group(
                 [
                     fadeInAction,
@@ -3188,14 +3213,19 @@ extension SKTilemap {
                     fadeInAction.reversed()
                 ]
             )
-
             
             boundsShape?.run(groupAction, completion: {
-                self.boundsShape?.strokeColor = SKColor.clear
-                self.boundsShape?.fillColor = SKColor.clear
-                self.removeAnchor()
+                self.boundsShape?.isHidden = true
+                self.anchorShape.isHidden = true
+                self.isFocused = false
             })
         }
+    }
+    
+    /// Remove the current object's highlight color.
+    @objc public override func removeHighlight() {
+        boundsShape?.isHidden = true
+        anchorShape.isHidden = true
     }
 }
 
@@ -3400,18 +3430,6 @@ extension SKTilemap.RenderStatistics {
 /// :nodoc: Clamp position of the map & parents when camera changes happen.
 extension SKTilemap: TiledSceneCameraDelegate {
 
-    /// Called when the visible node set in the camera view changes.
-    ///
-    /// - Parameter nodes: nodes in the current camera view.
-    public func containedNodesChanged(_ nodes: Set<SKNode>) {
-        guard (receiveCameraUpdates == true) else {
-            return
-        }
-
-        // TODO: should this be walled off from framework?
-        self.nodesInView = nodes
-    }
-
     /// Called when the camera bounds updated.
     ///
     /// - Parameters:
@@ -3478,7 +3496,7 @@ extension SKTilemap: TiledSceneCameraDelegate {
         let nodesAtClickLocation = handleMouseEvent(event: event)
         
         // if nothing is at this location, clear properties in GVC
-        guard nodesAtClickLocation.isEmpty == false else {
+        guard (nodesAtClickLocation.isEmpty == false) else {
             
             /// calls back to `MousePointer` & `GameViewController`
             NotificationCenter.default.post(
@@ -3542,11 +3560,39 @@ extension SKTilemap: TiledSceneCameraDelegate {
     
     
     #endif
+    
+    /// Calculate the xPath values of the layers.
+    internal func calculateXPaths() {
+        let rootPath = #"/\#(tiledElementName)"#
+        
+        for (i, layer) in layers.enumerated() {
+            
+            let tiledlayer = layer as TiledCustomReflectableType
+            
+            if let nodeType = tiledlayer.tiledElementName {
+                let layerPathName = "\(nodeType)[\(i)]"
+                let thisLayerPath = rootPath + #"/\#(layerPathName)"#
+                layer.xPath = thisLayerPath
+                
+                if let tilelayer = layer as? SKTileLayer {
+                    /// currentPath: ''
+                    for (x, chunk) in tilelayer.chunks.enumerated() {
+                        let chunkPathName = "\(chunk.tiledElementName)[\(x)]"
+                        let thisNodePath = thisLayerPath + #"/\#(chunkPathName)"#
+                        chunk.xPath = thisNodePath
+                        chunk.name = chunkPathName
+                    }
+                }
+            }
+        }
+    }
 }
+
 
 
 // MARK: Tile Data Cache
 
+/// :nodoc: These are similar to existing methods, but added to test whether it is faster to access the tile data storage.
 extension SKTilemap {
 
     /// Returns a SpriteKit action for the given global id (if one exists).
@@ -3560,9 +3606,17 @@ extension SKTilemap {
     /// Returns an array of tiles matching the given global id.
     ///
     /// - Parameter globalID: tile global id.
-    /// - Returns: SpriteKit action for the given id.
+    /// - Returns: array of tiles with the given global id.
     public func allTiles(globalID: UInt32) -> [SKTile]? {
-        return dataStorage?.tilesWith(globalID: globalID)
+        return dataStorage?.allTiles(globalID: globalID)
+    }
+    
+    /// Returns an array of tiles matching the given type.
+    ///
+    /// - Parameter ofType: tile type.
+    /// - Returns: array of tiles with the given type.
+    public func allTiles(ofType: String) -> [SKTile]? {
+        return dataStorage?.allTiles(ofType: ofType)
     }
 }
 
@@ -3656,36 +3710,6 @@ extension SKTilemap {
     /// Returns a string suitable for a UI widget to display as a tooltip.
     @objc public var tiledTooltipDescription: String {
         return "/map"
-    }
-}
-
-
-
-extension SKTilemap {
-
-    /// Calculate the xPath values of the layers.
-    internal func calculateXPaths() {
-        let rootPath = #"/\#(tiledElementName)"#
-        
-        for (i, layer) in layers.enumerated() {
-            let tiledlayer = layer as TiledCustomReflectableType
-            if let nodeType = tiledlayer.tiledElementName {
-
-                let layerPathName = "\(nodeType)[\(i)]"
-                let thisLayerPath = rootPath + #"/\#(layerPathName)"#
-                layer.xPath = thisLayerPath
-
-                if let tilelayer = layer as? SKTileLayer {
-                    /// currentPath: ''
-                    for (x, chunk) in tilelayer.chunks.enumerated() {
-                        let chunkPathName = "\(chunk.tiledElementName)[\(x)]"
-                        let thisNodePath = thisLayerPath + #"/\#(chunkPathName)"#
-                        chunk.xPath = thisNodePath
-                        chunk.name = chunkPathName
-                    }
-                }
-            }
-        }
     }
 }
 

@@ -1125,7 +1125,6 @@ extension TiledDemoController {
 
     /// Show/hide current scene vector object debug visualization. Called when the `Notification.Name.Demo.MapObjectVisibilityChanged` notification is received.
     @objc public func toggleMapObjectDrawing() {
-        print("\(#function), \(#fileID)")
         guard let view = self.view,
               let scene = view.scene as? SKTiledScene else {
             return
@@ -1138,7 +1137,10 @@ extension TiledDemoController {
             // toggle the existing value
             let doShowObjects = !tilemap.isShowingObjectBounds
             tilemap.isShowingObjectBounds = doShowObjects
-
+            //tilemap.objectsOverlay
+            
+            
+            
             NotificationCenter.default.post(
                 name: Notification.Name.Map.Updated,
                 object: tilemap,
@@ -1151,7 +1153,6 @@ extension TiledDemoController {
 
     /// Toggles the tilemap's effects rendering flag. Called when the `Notification.Name.Debug.MapEffectsRenderingChanged` notification is received.
     @objc public func toggleTilemapEffectsRendering() {
-        print("\(#function), \(#fileID)")
         guard let view = self.view,
               let scene = view.scene as? SKTiledScene else {
             return
@@ -1175,7 +1176,6 @@ extension TiledDemoController {
     }
 
     @objc public func cycleTilemapUpdateMode() {
-        print("\(#function), \(#fileID)")
         guard let view = self.view,
               let scene = view.scene as? SKTiledScene,
               let tilemap = scene.tilemap else { return }

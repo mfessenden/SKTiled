@@ -788,35 +788,13 @@ extension SKTiledDemoScene {
             updateCommandString("isolating selected objects...", duration: 3.0)
         }
         
-        // 'j' key dumps custom reflectable strings
+        // 'j' runs a debugging command
         if eventKey == 0x26 {
-
-            print("▾ SKTilemap:\n------------------\n")
-            print("  -  '\(tilemap.description)'")
-            print("  -  '\(tilemap.debugDescription)'")
-            print("  -  '\(tilemap.tiledMenuItemDescription)' (menu)")
-            
-            
-            for layer in tilemap.getLayers() {
-                print("\n   ▸ \(layer.className):\n------------------")
-                print("     -  '\(layer.description)'")
-                print("     -  '\(layer.debugDescription)'")
-                print("     -  '\(layer.tiledMenuItemDescription)' (menu)")
-            }
-
             updateCommandString("dumping debug descriptions...", duration: 3.0)
         }
 
-
-        /// 'l' tests the `DebugDrawableType.drawFrame` method.
+        /// 'l' runs a debugging command
         if eventKey == 0x25 {
-            
-            let objframeColor = SKColor(hexString: "#a1b6f7")
-            tilemap.getObjects().forEach { object in
-                object.drawNodeBounds(with: objframeColor, lineWidth: 1, fillOpacity: 0, duration: 2)
-            }
-            let mapframeColor = SKColor(hexString: "#ff6b6a")
-            tilemap.drawNodeBounds(with: mapframeColor, lineWidth: 1, fillOpacity: 0, duration: 2)
             updateCommandString("drawing object bounds...", duration: 3.0)
         }
 

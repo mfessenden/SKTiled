@@ -275,7 +275,7 @@ extension TiledLayerObject {
 
             if (lattr == "drawbounds") {
                 if boolForKey(attr) == true {
-                    drawNodeBounds()
+                    boundsShape?.isHidden = false
                 }
             }
 

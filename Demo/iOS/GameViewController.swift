@@ -503,8 +503,12 @@ class GameViewController: UIViewController, Loggable {
 
         self.statsRenderModeLabel.text = "Mode: \(renderStats.updateMode.name)"
         self.statsCPULabel.attributedText = renderStats.processorAttributedString
+        
+        let visibleNodeCount = renderStats.visibleCount
+        let visibleLabelHidden = (visibleNodeCount == -1) || (TiledGlobals.default.enableCameraCallbacks == false)
         self.statsVisibleLabel.text = "Visible: \(renderStats.visibleCount)"
-        self.statsVisibleLabel.isHidden = (TiledGlobals.default.enableCameraCallbacks == false)
+        self.statsVisibleLabel.isHidden = visibleLabelHidden
+        
         self.statsObjectsLabel.isHidden = (renderStats.objectsVisible == false)
         self.statsObjectsLabel.text = "Objects: \(renderStats.objectCount)"
         self.statsTrackingViewsLabel.isHidden = (renderStats.trackingViews == 0)

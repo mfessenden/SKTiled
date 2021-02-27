@@ -64,6 +64,8 @@ Change Log
 	- remove `SKTileLayer.setLayerData(data:debug)`
 	- rename `SKTilemap.isShowingGraphs` -> `SKTilemap.isShowingGridGraph`
 	- remove `TiledLayerObject.points` property
+	- remove `SKTileObject.showBounds` property
+	- remove `SKTilemap.nodesInView` property
 
     - add `SKTileLayerChunk` class
     - add `TileContainerType` protocol

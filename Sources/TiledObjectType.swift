@@ -75,12 +75,10 @@ import SpriteKit
     /// Unique object id (layer & object names may not be unique).
     @objc var uuid: String { get }
 
-    /// ## Overview
-    ///
-    /// Object type property as parsed from **Tiled**.
+    /// Object type property as parsed from the **Tiled** scene.
     @objc var type: String! { get set }
     
-    /// Storage for custom Tiled properties.
+    /// Storage for custom **Tiled** properties. These properties are set in the **Tiled** scene
     @objc var properties: [String: String] { get set }
     
     /// :nodoc: Storage for custom Tiled properties.
@@ -113,6 +111,11 @@ extension TiledObjectType {
     /// - Parameter hasher: hasher instance.
     public func hash(into hasher: inout Hasher) {
         hasher.combine(uuid)
+    }
+    
+    /// Returns a hashable integer value.
+    public var hashValue: Int {
+        return uuid.hashValue
     }
     
     /// A descriptive string parsed from the original **Tiled** scene.

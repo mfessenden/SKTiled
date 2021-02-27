@@ -68,11 +68,9 @@ public protocol TiledSceneDelegate: class {
 /// Enables all `SKScene` types conforming to `TiledSceneDelegate` to load tilemaps.
 extension TiledSceneDelegate where Self: SKScene {
 
-    /// ## Overview
-    ///
     /// This method loads a named tilemap **tmx** file, with optional tilesets. Camera properties are added from the tilemap automatically.
     ///
-    ///   `extension TiledSceneDelegate where Self: SKScene {}`
+    ///  Defined in:  `extension TiledSceneDelegate where Self: SKScene {}`
     ///
     /// - Parameters:
     ///   - tmxFile: tilemap file name.
