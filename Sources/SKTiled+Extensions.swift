@@ -1117,6 +1117,16 @@ extension CGVector {
     public var toVec2: simd_int2 {
         return simd_int2(Int32(dx), Int32(dy))
     }
+    
+    /// Returns the squared length of the vector described by the vector.
+    ///
+    /// - Returns: vector length.
+    public func magnitude() -> CGFloat {
+        if (abs(dx) > abs(dy)) {
+            return dx
+        }
+        return dy
+    }
 }
 
 
@@ -2474,6 +2484,16 @@ extension simd_int2 {
         let dx = Float(x - v.x)
         let dy = Float(y - v.y)
         return CGVector(dx: Int(dx), dy: Int(dy))
+    }
+    
+    /// Returns the squared length of the vector described by the vector.
+    ///
+    /// - Returns: vector length.
+    public func magnitude() -> Int32 {
+        if (abs(x) > abs(y)) {
+            return x
+        }
+        return y
     }
 
     /// Returns true if the coordinate vector is contiguous to another vector.

@@ -405,7 +405,7 @@ extension Notification.Name {
         public static let NodesRightClicked             = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodesRightClicked")        // nodes right-clicked in demo app
         public static let NodeAttributesChanged         = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodeAttributesChanged")    // node changes via inspector
         public static let DumpSelectedNodes             = Notification.Name(rawValue: "org.sktiled.notification.name.demo.dumpSelectedNodes")
-        
+        public static let HighlightSelectedNodes        = Notification.Name(rawValue: "org.sktiled.notification.name.demo.highlightSelectedNodes")
 
         public static let ClearSelectedNodes            = Notification.Name(rawValue: "org.sktiled.notification.name.demo.clearSelectedNodes")  // calls back to GVC to clear selection (macOS)
         public static let NothingUnderCursor            = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nothingUnderCursor")  // handles mouse movements that don't yield an object to highlight

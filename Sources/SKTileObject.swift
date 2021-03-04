@@ -274,7 +274,6 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
         }
 
         let boundsLineWidth = TiledGlobals.default.renderQuality.object
-        print("⭑ [\(className)]: bounds width: \(boundsLineWidth)")
         shape.lineWidth = boundsLineWidth
         shape.lineJoin = .miter
         shape.miterLimit = 6

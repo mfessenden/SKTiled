@@ -1150,9 +1150,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 nodeSubMenu.submenu?.addItem(dumpMenuItem)
                 
                 
-                
-                
-                
+                let highlightMenuItem = NSMenuItem(title: "Highlight...", action: #selector(hightlightSelectedNodes), keyEquivalent: "")
+                highlightMenuItem.representedObject = tiledNode
+                nodeSubMenu.submenu?.addItem(highlightMenuItem)
                 
                 
                 if let tile = tiledNode as? SKTile {
@@ -1337,7 +1337,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         updateCommandString("dumping selected node properties", duration: 3.0)
     }
-
+    
+    @IBAction func hightlightSelectedNodes(_ sender: NSMenuItem) {
+        NotificationCenter.default.post(
+            name: Notification.Name.Demo.HighlightSelectedNodes,
+            object: nil
+        )
+        
+        updateCommandString("highlighting selected nodes", duration: 3.0)
+    }
 
 
     // MARK: - Callbacks & Helpers

@@ -238,7 +238,7 @@ class AttributeEditorViewController: NSViewController {
             nodePosXValues.insert("\(node.position.x)")
             nodePosYValues.insert("\(node.position.y)")
             nodePosZValues.insert("\(node.zPosition)")
-            nodeRotZValues.insert("\(node.zRotation)")
+            nodeRotZValues.insert("\(node.rotation)")
             nodePausedValues.insert(node.isPaused)
             nodeHiddenValues.insert(node.isHidden)
             nodeAlphaValues.insert("\(node.alpha)")
@@ -602,7 +602,7 @@ extension AttributeEditorViewController: NSTextFieldDelegate {
 
             case "node-zrot-field":
                 for node in currentNodes {
-                    node.zRotation = floatValue
+                    node.rotation = floatValue
                 }
 
             case "node-alpha-field":

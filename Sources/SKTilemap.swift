@@ -531,7 +531,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     /// The current frame index.
     internal var currentFrameIndex: Int = 0
 
-    /// Current coordinate.
+    /// Current focus coordinate.
     public var currentCoordinate = simd_int2(0, 0) {
         didSet {
             guard (oldValue != currentCoordinate) else { return }
@@ -3490,21 +3490,22 @@ extension SKTilemap: TiledSceneCameraDelegate {
     @objc public func mousePositionChanged(event: NSEvent) {
         //currentCoordinate = coordinateAtMouse(event: event)
         
+        
+        
         #if SKTILED_DEMO
+        let lastCoordinate = currentCoordinate
         
         // TODO: add filtering options here
         let nodesAtClickLocation = handleMouseEvent(event: event)
+        let coordDelta = currentCoordinate.delta(to: lastCoordinate)
         
-        // if nothing is at this location, clear properties in GVC
-        guard (nodesAtClickLocation.isEmpty == false) else {
-            
+        // TODO: if something is currently selected, don't send this notification
+        if coordDelta.magnitude() >= 1 {
             /// calls back to `MousePointer` & `GameViewController`
             NotificationCenter.default.post(
                 name: Notification.Name.Demo.NothingUnderCursor,
                 object: nil
             )
-            
-            return
         }
         
         for node in nodesAtClickLocation {

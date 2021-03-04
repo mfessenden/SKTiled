@@ -27,7 +27,7 @@
 import SpriteKit
 
 
-/// Methods for interacting with the custom `SKTiledSceneCamera` object. Classes conforming to this
+/// The `TiledSceneCameraDelegate` protocol defines methods for interacting with the custom `SKTiledSceneCamera` object. Classes conforming to this
 /// protocol are notified of camera position & zoom changes unless the `TiledSceneCameraDelegate.receiveCameraUpdates`
 /// flag is disabled.
 ///
@@ -46,18 +46,18 @@ import SpriteKit
 ///  - `cameraPositionChanged`:  camera position change.
 ///  - `cameraZoomChanged`:  camera zoom change.
 ///  - `cameraBoundsChanged`:  camera bounds updated.
-///  - `sceneClicked`:  scene is clicked. **(macOS only)**
-///  - `sceneRightClicked`:  scene is right-clicked. **(macOS only)**
-///  - `sceneDoubleClicked`:  scene is double-clicked. **(macOS only)**
-///  - `mousePositionChanged`:  mouse moves in the scene. **(macOS only)**
-///  - `sceneDoubleTapped`:  scene is double-tapped. **(iOS only)**
-///  - `sceneRotated`:  scene is rotated via gesture. **(iOS only)**
+///  - `sceneClicked`:  scene is clicked. **(macOS only)**.
+///  - `sceneRightClicked`:  scene is right-clicked. **(macOS only)**.
+///  - `sceneDoubleClicked`:  scene is double-clicked. **(macOS only)**.
+///  - `mousePositionChanged`:  mouse moves in the scene. **(macOS only)**.
+///  - `sceneDoubleTapped`:  scene is double-tapped. **(iOS only)**.
+///  - `sceneRotated`:  scene is rotated via gesture. **(iOS only)**.
 ///
 ///
-/// [tiled-scene-camera-delegate-image]:https://mfessenden.github.io/SKTiled/1.3/images/camera-delegate.svg
+/// [tiled-scene-camera-delegate-image]:../images/camera-delegate.svg
 @objc public protocol TiledSceneCameraDelegate: class {
 
-    /// Allow delegate to receive updates from camera.
+    /// Allows the delegate to receive camera updates.
     @objc var receiveCameraUpdates: Bool { get set }
 
     /// Current focus coordinate.
@@ -65,7 +65,7 @@ import SpriteKit
 
     /// Allow delegates to receive updates when nodes in view change.
     ///
-    /// - Parameter nodes: nodes in camera view.
+    /// - Parameter nodes: nodes visible in the current camera viewport.
     @objc optional func containedNodesChanged(_ nodes: Set<SKNode>)
 
     /// Called when the camera position changes.

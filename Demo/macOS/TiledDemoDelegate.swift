@@ -68,6 +68,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.FlushScene, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.DumpSelectedNodes, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.HighlightSelectedNodes, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.TileClicked, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.ObjectClicked, object: nil)
         reset()
@@ -95,6 +96,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionChanged), name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionCleared), name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(dumpSelectedNodes), name: Notification.Name.Demo.DumpSelectedNodes, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(highlightSelectedNodes), name: Notification.Name.Demo.HighlightSelectedNodes, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileClickedAction), name: Notification.Name.Demo.TileClicked, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(objectClickedAction), name: Notification.Name.Demo.ObjectClicked, object: nil)
     }
@@ -239,9 +241,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
     
     // MARK: - Debugging
     
-    /// Handles the `Notification.Name.Globals.Updated` callback. Changes selected nodes' highlight color.
-    ///
-    ///   userInfo: ["tileColor": `SKColor`, "objectColor": `SKColor`]
+    /// Handles the `Notification.Name.Demo.DumpSelectedNodes` callback. Changes selected nodes' highlight color.
     ///
     /// - Parameter notification: event notification.
     @objc func dumpSelectedNodes(notification: Notification) {
@@ -262,6 +262,24 @@ public class TiledDemoDelegate: NSObject, Loggable {
             print("\(asciiLine)\n")
             dump(node)
         }
+    }
+
+    
+    /// Handles the `Notification.Name.Demo.HighlightSelectedNodes` callback. Changes selected nodes' highlight color.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func highlightSelectedNodes(notification: Notification) {
+        guard (focusedNodes.isEmpty == false) else {
+            updateCommandString("Error: nothing is selected.")
+            return
+        }
+
+        for node in focusedNodes {
+            if let tiledNode = node as? TiledGeometryType {
+                tiledNode.highlightNode(with: SKColor.blue)
+            }
+        }
+        updateCommandString("Highlighting selected nodes...", duration: 3.0)
     }
 }
 

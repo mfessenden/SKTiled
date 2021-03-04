@@ -92,7 +92,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, 
     internal var hasMouseFocus: Bool = false 
 
     /// Current focus coordinate.
-    open var currentCoordinate = simd_int2(arrayLiteral: 0, 0)
+    open var currentCoordinate = simd_int2(0, 0)
 
     /// Z-position difference between layers.
     open var zDeltaForLayers: CGFloat = TiledGlobals.default.zDeltaForLayers

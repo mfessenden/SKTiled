@@ -100,7 +100,8 @@ extension TiledGeometryType {
     public func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
         print("⭑ [TiledGeometryType]: highlighing node...")
         boundsShape?.isHidden = false
-        boundsShape?.fillColor = color
+        boundsShape?.strokeColor = color
+        boundsShape?.fillColor = color.withAlphaComponent(0.2)
         
         anchorShape.isHidden = false
         anchorShape.fillColor = color

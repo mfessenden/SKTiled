@@ -332,8 +332,8 @@
                                     </gridCell>
                                     <gridCell row="sDR-hP-POm" column="kKd-gy-u1R" id="ZKf-wl-NDl">
                                         <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kIp-gM-OhB">
-                                            <rect key="frame" x="21" y="72" width="67" height="16"/>
-                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="z-rotation:" id="Ins-FW-9lF">
+                                            <rect key="frame" x="33" y="72" width="55" height="16"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="rotation:" id="Ins-FW-9lF">
                                                 <font key="font" usesAppearanceFont="YES"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

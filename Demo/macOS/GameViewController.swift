@@ -869,6 +869,54 @@ class GameViewController: NSViewController, Loggable {
 
     // MARK: - Mouse Event Handlers
 
+    /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.TileUnderCursor` notification is received.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func tileUnderMouseChanged(notification: Notification) {
+        //notification.dump(#fileID, function: #function)
+        guard let focusedTile = notification.object as? SKTile else {
+            return
+        }
+        
+        if (focusedTile.isFocused == false) {
+            
+            // set debug attribute labels
+            tileInfoLabel.isHidden = false
+            tileInfoLabel.stringValue = focusedTile.description
+            propertiesInfoLabel.isHidden = false
+            propertiesInfoLabel.attributedStringValue = focusedTile.tileData.propertiesAttributedString(delineator: nil)
+            
+            // highlight the tile
+            
+            let highlightDuration = TiledGlobals.default.debugDisplayOptions.highlightDuration
+            focusedTile.highlightNode(with: focusedTile.highlightColor, duration: highlightDuration)
+            
+            focusedTile.isFocused = true
+        }
+    }
+    
+    /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.TileClicked` notification is received.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func tileUnderMouseClicked(notification: Notification) {
+        // notification.dump(#fileID, function: #function)
+        guard let focusedTile = notification.object as? SKTile else {
+            return
+        }
+        
+        // set debug attribute labels
+        tileInfoLabel.isHidden = false
+        tileInfoLabel.stringValue = focusedTile.description
+        
+        propertiesInfoLabel.isHidden = false
+        propertiesInfoLabel.attributedStringValue = focusedTile.tileData.propertiesAttributedString(delineator: nil)
+        
+        // highlight the tile
+        focusedTile.highlightNode(with: focusedTile.highlightColor, duration: 0)
+        focusedTile.isFocused = true
+    }
+    
+    
     /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.ObjectUnderCursor` notification is received.
     ///
     /// - Parameter notification: event notification.
@@ -914,55 +962,7 @@ class GameViewController: NSViewController, Loggable {
         focusedObject.isFocused = true
         // perform(#selector(clearCurrentObject), with: nil, afterDelay: 5)
     }
-    
 
-    /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.TileUnderCursor` notification is received.
-    ///
-    /// - Parameter notification: event notification.
-    @objc func tileUnderMouseChanged(notification: Notification) {
-        //notification.dump(#fileID, function: #function)
-        guard let focusedTile = notification.object as? SKTile else {
-            return
-        }
-        
-        if (focusedTile.isFocused == false) {
-            
-            // set debug attribute labels
-            tileInfoLabel.isHidden = false
-            tileInfoLabel.stringValue = focusedTile.description
-            
-            propertiesInfoLabel.isHidden = false
-            propertiesInfoLabel.attributedStringValue = focusedTile.tileData.propertiesAttributedString(delineator: nil)
-            
-            // highlight the tile
-            
-            let highlightDuration = TiledGlobals.default.debugDisplayOptions.highlightDuration
-            focusedTile.highlightNode(with: focusedTile.highlightColor, duration: highlightDuration)
-            
-            focusedTile.isFocused = true
-        }
-    }
-
-    /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.TileClicked` notification is received.
-    ///
-    /// - Parameter notification: event notification.
-    @objc func tileUnderMouseClicked(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
-        guard let focusedTile = notification.object as? SKTile else {
-            return
-        }
-        
-        // set debug attribute labels
-        tileInfoLabel.isHidden = false
-        tileInfoLabel.stringValue = focusedTile.description
-        
-        propertiesInfoLabel.isHidden = false
-        propertiesInfoLabel.attributedStringValue = focusedTile.tileData.propertiesAttributedString(delineator: nil)
-        
-        // highlight the tile
-        focusedTile.highlightNode(with: focusedTile.highlightColor, duration: 0)
-        focusedTile.isFocused = true
-    }
     
     /// Called when the mouse is hovering over nothing. Called when the `Notification.Name.Demo.NothingUnderCursor` notification is received.
     ///
@@ -1070,7 +1070,11 @@ class GameViewController: NSViewController, Loggable {
                 // TODO: 'drawAnchor' call was here
                 
                 if let tiledNode = selected as? TiledCustomReflectableType {
-
+                    
+                    if let tiledGeoNode = tiledNode as? TiledGeometryType {
+                        tiledGeoNode.isFocused = true
+                    }
+                    
                     selectedInfoLabel.isHidden = false
 
                     let attributedString = NSMutableAttributedString()

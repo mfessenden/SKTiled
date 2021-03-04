@@ -1010,7 +1010,6 @@ extension TiledDemoController {
 
     /// Show/hide the map bounds.
     public func toggleMapDemoDrawBounds() {
-        print("\(#function), \(#fileID)")
         guard let view = self.view,
               let scene = view.scene as? SKTiledScene else {
             
@@ -1039,7 +1038,6 @@ extension TiledDemoController {
 
     /// Show/hide the map grid.
     public func toggleMapDemoDrawGrid() {
-        print("\(#function), \(#fileID)")
         guard let view = self.view,
               let scene = view.scene as? SKTiledScene else { return }
 
@@ -1062,7 +1060,6 @@ extension TiledDemoController {
 
     /// Show/hide the grid & map bounds. This is meant to be used with the interface buttons/keys to quickly turn grid & bounds drawing on. Called when the `Notification.Name.Demo.MapDebugDrawingChanged` notification is received.
     @objc public func toggleMapDemoDrawGridAndBounds() {
-        print("\(#function), \(#fileID)")
         guard let view = self.view,
               let scene = view.scene as? SKTiledScene else { return }
 
@@ -1083,7 +1080,6 @@ extension TiledDemoController {
 
     /// Show/hide navigation graph visualizations.
     public func toggleMapGraphVisualization() {
-        print("\(#function), \(#fileID)")
         guard let view = self.view,
               let scene = view.scene as? SKTiledScene else {
             return

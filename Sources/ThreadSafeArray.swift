@@ -59,6 +59,15 @@ internal class ThreadSafeArray<Element>: Equatable {
         queue.sync { result = self.array.isEmpty }
         return result
     }
+    
+    /// Returns the first element in the set.
+    var first: Element? {
+        var result: Element?
+        queue.sync {
+            result = self.array.first
+        }
+        return result
+    }
 
     /// Returns a boolean indicating the array contains the given element.
     ///

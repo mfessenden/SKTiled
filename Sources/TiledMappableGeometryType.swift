@@ -54,8 +54,7 @@ import GameplayKit
 /// - `hexagonal`:  hexagonal tile map.
 /// - `staggered`:  staggered isometric tile map.
 ///
-/// [sktile-tileid-url]:../Classes/SKTile.html#/s:7SKTiled6SKTileC6tileIds6UInt32Vvp
-/// [working-with-tiles-url]:../working-with-tiles.html
+/// [tilemap-orientation-image]:../images/camera-delegate.svg
 @objc public enum TilemapOrientation: UInt8 {
     case orthogonal, isometric, hexagonal, staggered
 }

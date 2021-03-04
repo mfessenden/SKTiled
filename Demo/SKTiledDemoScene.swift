@@ -867,30 +867,24 @@ extension SKTiledDemoScene {
         // 'w' runs a debugging command
         if eventKey == 0xd {
             
-            let coord = simd_int2(16, 1)
-            let tile = tilemap.tileLayers(named: "Level3").first?.tileAt(coord: coord)
-            tile?.destroy()
-            updateCommandString("Removing tile at \(coord.shortDescription)", duration: 3.0)
+            if let selectedNode = demoDelegate?.focusedNodes.first as? TiledGeometryType {
+                print("⭑ node is focused: \(selectedNode.isFocused)")
+            }
+            
+            NotificationCenter.default.post(
+                name: Notification.Name.Demo.HighlightSelectedNodes,
+                object: nil
+            )
+            
+            
+            updateCommandString("highlighting selected nodes.", duration: 3.0)
         }
         
         
-        // 'x' forces map to un pause
+        // 'x' runs a debugging command
         if eventKey == 0x7 {
-            
-            var nodes: [SKNode] = [tilemap]
-            for layer in tilemap.getLayers() {
-                nodes.append(layer)
-            }
-            
-            
-            for node in nodes {
-                if (node.isPaused == true) {
-                    print(" - un-pausing node '\(node.className)'")
-                }
-                node.isPaused = false
-            }
-            
-            updateCommandString("forcing map to un-pause", duration: 3.0)
+
+            updateCommandString("No command defined for '\(eventChars)'", duration: 3.0)
         }
         
         // 'y' deletes selected nodes
@@ -909,7 +903,7 @@ extension SKTiledDemoScene {
         // 'z' runs a debugging command
         if eventKey == 0x6 {
             
-            updateCommandString("dumping layers via index", duration: 3.0)
+            updateCommandString("No command defined for '\(eventChars)'", duration: 3.0)
         }
         
         // 'clear' clears the current selection
