@@ -229,19 +229,19 @@ internal class MousePointer: SKNode {
     
     /// Called when the tilemap focus coordinate is updated. Called when the `Notification.Name.Map.FocusCoordinateChanged` notification is received.
     ///
-    ///  object: `simd_int2`, userInfo: `["oldValue": simd_int2, "isValid": Bool]`
+    ///  userInfo: `["old": simd_int2, "new": simd_int2, "isValid": Bool]`
     ///
     /// - Parameter notification: event notification.
     @objc func focusCoordinateChanged(notification: Notification) {
-        guard let mapFocusedCoordinate = notification.object as? simd_int2,
-              let userInfo = notification.userInfo as? [String: Any],
+        guard let userInfo = notification.userInfo as? [String: Any],
               let oldCoordinate = userInfo["old"] as? simd_int2,
+              let newCoordinate = userInfo["new"] as? simd_int2,
               let isValidCoord = userInfo["isValid"] as? Bool else {
             return
         }
         
         isValidCoordinate = isValidCoord
-        _currentCoordinate = mapFocusedCoordinate
+        _currentCoordinate = newCoordinate
         //currentTile = nil
         redraw()
     }

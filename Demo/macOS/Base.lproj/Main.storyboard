@@ -260,6 +260,10 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Object Color:" id="prY-eX-DfI"/>
                                         </menuItem>
+                                        <menuItem title="Layer Color:" enabled="NO" id="wAI-eD-Xy6">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Layer Color:" id="3xk-8d-Qxm"/>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="J1W-Md-ZLQ"/>
                                         <menuItem title="Attribute Editor..." enabled="NO" keyEquivalent="i" id="tra-Fh-z0y">
                                             <connections>
@@ -333,7 +337,7 @@
                                         <menuItem title="Tilemap Layer Stats..." enabled="NO" id="OXT-yC-4Eg">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="mapStatisticsPressed:" target="Voe-Tx-rLC" id="Jpq-Ut-F27"/>
+                                                <action selector="mapLayerStatisticsPressed:" target="Voe-Tx-rLC" id="HAx-oP-wyi"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Tilemap Cache..." enabled="NO" id="Rcr-r2-Ts4">
@@ -341,6 +345,9 @@
                                             <connections>
                                                 <action selector="mapCacheStatisticsPressed:" target="Voe-Tx-rLC" id="V1e-da-Lnt"/>
                                             </connections>
+                                        </menuItem>
+                                        <menuItem title="Tilemap Offsets..." enabled="NO" id="Qpm-op-6DI">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="B5e-Bv-NGi"/>
                                         <menuItem title="Dump Layer Data..." enabled="NO" id="VaW-im-1oo">
@@ -415,6 +422,7 @@
                         <outlet property="dumpSelectedMenuItem" destination="djR-ZZ-q6d" id="wJm-ct-MO9"/>
                         <outlet property="externalAssetsMenuItem" destination="Ywb-f1-YfU" id="ZVi-fl-4Xl"/>
                         <outlet property="isolationModeMenuItem" destination="NIF-SX-zDE" id="bcJ-9R-oe3"/>
+                        <outlet property="layerColorsMenuItem" destination="wAI-eD-Xy6" id="tKA-l3-Wwd"/>
                         <outlet property="layerIsolationMenu" destination="cCe-8N-Uhp" id="RIH-hV-AvD"/>
                         <outlet property="layerStatisticsMenuItem" destination="VaW-im-1oo" id="hKu-cG-Lc9"/>
                         <outlet property="layerVisibilityMenu" destination="ofi-Kh-OpM" id="EXP-Xd-vY6"/>
@@ -435,6 +443,7 @@
                         <outlet property="showDemoAssetsMenuItem" destination="eC9-wi-nCP" id="mxl-a2-f9d"/>
                         <outlet property="tileColorsMenuItem" destination="hnS-2z-nKA" id="Seb-hg-B27"/>
                         <outlet property="tilemapCachesStatisticsMenuItem" destination="Rcr-r2-Ts4" id="hyf-Tn-WBO"/>
+                        <outlet property="tilemapOffsetStatisticsMenuItem" destination="Qpm-op-6DI" id="3O0-A6-Zba"/>
                         <outlet property="tilemapStatisticsMenuItem" destination="OXT-yC-4Eg" id="J5H-GF-0Kg"/>
                         <outlet property="timeDisplayMenuItem" destination="EBE-ZU-Vi0" id="U0H-Rq-jsO"/>
                         <outlet property="updateModeMenuItem" destination="01r-QV-0xf" id="NJ6-M8-3Di"/>

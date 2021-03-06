@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="22" height="21" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#211e26" nextlayerid="25" nextobjectid="162">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="22" height="21" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#211e26" nextlayerid="27" nextobjectid="162">
  <properties>
   <property name="description" value="Artwork by @Buch -&gt;  http://opengameart.org/content/dungeon-tileset"/>
   <property name="displayName" value="dungeon-16x16"/>
@@ -114,7 +114,7 @@
    <object id="119" name="dwarf1" gid="557" x="144" y="170" width="32" height="32"/>
   </objectgroup>
  </group>
- <objectgroup id="24" name="Debugging">
+ <objectgroup id="24" name="Debugging" visible="0">
   <object id="161" x="16" y="16" width="64" height="80">
    <properties>
     <property name="altColor" type="color" value="#ff8df360"/>

@@ -424,6 +424,7 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func debuggingMessageReceived(notification: Notification) {
+        notification.dump(#fileID, function: #function)
         guard (debuggingMessageLabel.isHidden == false) else {
             return
         }
@@ -1201,13 +1202,12 @@ class GameViewController: NSViewController, Loggable {
         let hasObjects: Bool = (tilemap.getObjects().isEmpty == false)
 
         /// ISOLATED LAYERS
-        let isolatedLayers = tilemap.getLayers().filter({ $0.isolated == true})
+        let isolatedLayers: [TiledLayerObject] = (tilemap.isolatedLayers != nil) ? tilemap.isolatedLayers! : []
         var isolatedInfoString = ""
 
         if (isolatedLayers.isEmpty == false) {
             isolatedInfoString = "Isolated: "
-            let isolatedLayerNames: [String] = isolatedLayers.map { "'\($0.layerName)'" }
-            isolatedInfoString += isolatedLayerNames.joined(separator: ", ")
+            isolatedInfoString += isolatedLayers.layerPathsString
         }
 
         isolatedInfoLabel.stringValue = isolatedInfoString

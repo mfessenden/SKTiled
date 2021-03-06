@@ -91,19 +91,19 @@
  </tile>
  <tile id="47" type="blank-floor" probability="0.5">
   <properties>
-   <property name="highlightColor" type="color" value="#ffff68"/>
+   <property name="highlightColor" type="color" value="#ffffff68"/>
    <property name="weight" type="float" value="0.5"/>
   </properties>
  </tile>
  <tile id="48" type="blank-floor" terrain="1,1,1,1" probability="0.5">
   <properties>
-   <property name="highlightColor" type="color" value="#ffff57"/>
+   <property name="highlightColor" type="color" value="#ffffff57"/>
    <property name="weight" type="float" value="0.5"/>
   </properties>
  </tile>
  <tile id="49" type="blank-floor" probability="0.5">
   <properties>
-   <property name="highlightColor" type="color" value="#ffff57"/>
+   <property name="highlightColor" type="color" value="#ffffff57"/>
    <property name="weight" type="float" value="0.5"/>
   </properties>
  </tile>
@@ -131,19 +131,19 @@
  </tile>
  <tile id="70" type="blank-floor" probability="0.5">
   <properties>
-   <property name="highlightColor" type="color" value="#ffff57"/>
+   <property name="highlightColor" type="color" value="#ffffff57"/>
    <property name="weight" type="float" value="0.5"/>
   </properties>
  </tile>
  <tile id="71" type="blank-floor" probability="0.5">
   <properties>
-   <property name="highlightColor" type="color" value="#ffce65"/>
+   <property name="highlightColor" type="color" value="#ffffce65"/>
    <property name="weight" type="float" value="0.5"/>
   </properties>
  </tile>
  <tile id="72" type="blank-floor" probability="0.5">
   <properties>
-   <property name="highlightColor" type="color" value="#ffff57"/>
+   <property name="highlightColor" type="color" value="#ffffff57"/>
    <property name="weight" type="float" value="0.5"/>
   </properties>
  </tile>
@@ -271,6 +271,26 @@
    <property name="weight" type="float" value="-1000"/>
   </properties>
  </tile>
+ <tile id="386" type="marker">
+   <properties>
+    <property name="name" type="string" value="top-left"/>
+   </properties>
+</tile>
+ <tile id="387" type="marker">
+    <properties>
+     <property name="name" type="string" value="top-right"/>
+    </properties>
+ </tile>
+ <tile id="388" type="marker">
+    <properties>
+     <property name="name" type="string" value="bottom-left"/>
+    </properties>
+ </tile>
+ <tile id="389" type="marker">
+    <properties>
+     <property name="name" type="string" value="bottom-right"/>
+    </properties>
+ </tile>
  <tile id="452">
   <animation>
    <frame tileid="452" duration="150"/>
@@ -281,12 +301,12 @@
  </tile>
  <tile id="466">
   <properties>
-   <property name="highlightcolor" type="color" value="#ffe93b"/>
+   <property name="highlightcolor" type="color" value="#ffffe93b"/>
   </properties>
  </tile>
  <tile id="551">
   <properties>
-   <property name="color" type="color" value="#ffc800"/>
+   <property name="color" type="color" value="#ffffc800"/>
   </properties>
  </tile>
 </tileset>

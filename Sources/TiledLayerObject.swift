@@ -301,9 +301,9 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     /// Layer highlight duration.
     public var highlightDuration: TimeInterval = TiledGlobals.default.debugDisplayOptions.highlightDuration
 
-    /// Layer is isolated.
-    public private(set) var isolated: Bool = false
-
+    /// Indicates this layer is isolated in the map.
+    public internal(set) var isIsolated: Bool = false
+    
     /// Layer is static (not moving).
     public internal(set) var isStatic: Bool = false
 
@@ -409,6 +409,9 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 
     /// Returns the layer bounding rectangle (used to draw bounds).
     @objc public override var boundingRect: CGRect {
+        
+        
+        // TODO: figure this out
         
         /*
         switch orientation {
@@ -668,7 +671,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 
     // MARK: - Parents/Children
 
-    /// Returns an array of child layers.
+    /// Returns a flattened array of contained child layers.
     public var layers: [TiledLayerObject] {
         return [self]
     }
@@ -678,6 +681,11 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         return parents.filter { $0 as? TiledLayerObject != nil} as! [TiledLayerObject]
     }
 
+    /// Returns a flattened array of child layers.
+    public var childLayers: [TiledLayerObject] {
+        return enumerate().filter { $0 as? TiledLayerObject != nil} as! [TiledLayerObject]
+    }
+    
     #if os(iOS) || os(tvOS)
 
     // MARK: - Touch Events
@@ -872,39 +880,6 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
                            mapSize: mapSize,
                            tileSize: tileSize
         )
-    }
-    /// Toggle layer isolation on/off.
-    ///
-    /// - Parameter duration: effect duration.
-    public func isolateLayer(duration: TimeInterval = 0) {
-        
-        /// if `isolated` attribute is not set currently, we're going to hide everything else
-        let hideLayers = self.isolated == false
-
-        let layersToIgnore = self.parents
-        let layersToProtect = self.childLayers
-        
-        // show/hide actions
-        let fadeOutAction = SKAction.fadeOut(withDuration: duration)
-        let fadeInAction  = SKAction.fadeIn(withDuration: duration)
-        
-        
-        tilemap.layers.filter { (layersToIgnore.contains($0) == false) && (layersToProtect.contains($0) == false)}.forEach { layer in
-
-            if (duration == 0) {
-                layer.isHidden = hideLayers
-                layer.isolated = (hideLayers == true)
-            } else {
-                let fadeAction = (hideLayers == true) ? fadeOutAction : fadeInAction
-                layer.run(fadeAction, completion: {
-                    layer.isHidden = hideLayers
-                    layer.alpha = 1
-                    layer.isolated = (hideLayers == true)
-                })
-            }
-        }
-
-        self.isolated.toggle()
     }
 
     /// Render the layer to a texture.
@@ -1275,11 +1250,6 @@ extension TiledLayerObject {
         return result
     }
 
-    /// Returns a flattened array of child layers.
-    public var childLayers: [SKNode] {
-        return self.enumerate()
-    }
-
     /// Returns an array of tiles/objects that conform to the `TiledGeometryType` protocol.
     ///
     /// - Returns: array of child objects.
@@ -1328,7 +1298,7 @@ extension TiledLayerObject {
         let filler = (isGrouped == true) ? String(repeating: "  ", count: parentNodes.count - 1) : ""
 
         let layerPathString = "\(filler)\(layerSymbol) '\(layerName)'"
-        let layerVisibilityString: String = (self.isolated == true) ? "(i)" : self.visible.valueAsCheckbox
+        let layerVisibilityString: String = (self.isIsolated == true) ? "(i)" : self.visible.valueAsCheckbox
 
         // layer position string, filters out child layers with no offset
         var positionString = self.position.shortDescription
@@ -1594,5 +1564,15 @@ extension TiledLayerObject {
     @available(*, deprecated, renamed: "layerOneLineDescrption")
     public var layerStatsDescription: [String] {
         return layerOneLineDescrption
+    }
+    
+    /// Indicates this layer is isolated in the map.
+    @available(*, deprecated, renamed: "isIsolated")
+    public private(set) var isolated: Bool {
+        get {
+            return isIsolated
+        } set {
+            isIsolated = newValue
+        }
     }
 }

@@ -25,6 +25,7 @@
 //  THE SOFTWARE.
 
 import Foundation
+import simd
 
 
 enum EventMouseButton: UInt8 {
@@ -163,4 +164,12 @@ enum EventMouseButton: UInt8 {
     @objc optional func objectTouchedHandler(withID: UInt32, ofType: String?, userData: [String: Any]?) -> ((SKTileObject) -> ())?
 
     #endif
+    
+    /// Custom handler for when the `SKTilemap.currentCoordinate` value changes. The resulting closure contains a tuple of values:
+    ///
+    ///   - old: old coordinate.
+    ///   - new: new coordinate.
+    ///   - isValid: coordinate is a valid map coordinate.
+    /// - Returns: coordinate change handler.
+    @objc optional var coordinateChangeHandler: ((simd_int2, simd_int2, Bool) -> ())? { get set }
 }

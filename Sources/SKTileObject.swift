@@ -132,9 +132,9 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
     internal var onTouch: ((SKTileObject) -> ())?
 
     #endif
-    
+
     // MARK: - Move Up
-    
+
     /// Indicates the current node has received focus or selected.
     public var isFocused: Bool = false {
         didSet {
@@ -143,7 +143,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
             }
         }
     }
-    
+
     /// Debug visualization options.
     public var debugDrawOptions: DebugDrawOptions = []
 
@@ -169,8 +169,8 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
             return polygonPath(vertices)
         }
     }()
-    
-    
+
+
     /// Private animation toggle.
     internal var _enableAnimation: Bool = true
 
@@ -184,7 +184,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
             tile?.enableAnimation = newValue
         }
     }
-    
+
     internal lazy var textObjectKey: String = {
         return "TEXT_OBJECT_ID_\(id)"
     }()
@@ -203,7 +203,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
     /// Number of times this object has been redrawn (debug).
     open var drawCount: UInt32 = 0
-    
+
     /// Proxy object.
     weak internal var proxy: TileObjectProxy?
 
@@ -214,15 +214,15 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
     open var tileData: SKTilesetData? {
         return tile?.tileData
     }
-    
+
     // MARK: - Color Attributes
 
     /// Object bounds color.
     open var frameColor: SKColor = TiledGlobals.default.debugDisplayOptions.objectHighlightColor
-    
+
     /// Object highlight color.
     open var highlightColor: SKColor = TiledGlobals.default.debugDisplayOptions.objectHighlightColor
-    
+
     /// Optional proxy color.
     open var proxyColor: SKColor?
 
@@ -241,31 +241,31 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
             frameColor = newColor
         }
     }
-    
+
     // MARK: - Shape Attributes
-    
+
     /// Object bounding shape.
     @objc public lazy var boundsShape: SKShapeNode? = {
         let vertices = translatedVertices()
         let scaledVertices = vertices.map { $0 * renderQuality }
-        
+
         let objPath: CGPath
         let controlPath: CGPath?
-        
+
         switch shapeType {
-            
+
             case .ellipse:
                 objPath = bezierPath(scaledVertices, closed: true, alpha: shapeType.curvature).path
                 controlPath = polygonPath(scaledVertices, closed: true)
-                
+
             default:
                 objPath = polygonPath(scaledVertices, closed: true)
                 controlPath = nil
         }
-        
+
         // create the shape node
         let shape = SKShapeNode(path: objPath)
-        
+
         // control shape (bezier shapes only)
         if let cpath = controlPath {
             let controlShape = SKShapeNode(path: cpath)
@@ -283,7 +283,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
         shape.name = boundsKey
         return shape
     }()
-    
+
     /// Object anchor node visualization node.
     @objc public lazy var anchorShape: SKShapeNode = {
         let anchorRadius: CGFloat = 1.5
@@ -311,13 +311,13 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
     }
 
     // MARK: - Properties
-    
+
     /// Custom object properties.
     open var properties: [String: String] = [:]
 
     /// Private **Tiled** properties.
     public var _tiled_properties: [String: String] = [:]
-    
+
     /// Object will ignore custom properties.
     open var ignoreProperties: Bool = false
 
@@ -453,7 +453,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
         proxy = nil
         onDestroy?(self)
     }
-    
+
     /// Removes this node from the scene graph.
     open override func destroy() {
         // remove from cache
@@ -608,7 +608,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
     // MARK: - Rendering
 
-    /// Render the object. 
+    /// Render the object.
     @objc open func draw() {
         let uiScale: CGFloat = TiledGlobals.default.contentScale
         self.strokeColor = SKColor.clear
@@ -621,7 +621,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
               points.count > 1 else {
             return
         }
-        
+
         // DEBUGGING: increment the draw count
         drawCount += 1
 
@@ -683,7 +683,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
         // draw the first point of poly objects
         if (isPolyType == true) {
-            
+
             let firstPointShapeName = "\(id)_FIRST_POINT"
             childNode(withName: firstPointShapeName)?.removeFromParent()
 
@@ -1026,7 +1026,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
     open override func mouseDown(with event: NSEvent) {
         // guard (TiledGlobals.default.enableMouseEvents == true) else { return }
-        
+
         // FIXME: this is failing with tile objects
         if contains(touch: event.location(in: self)) {
             // calls
@@ -1034,16 +1034,16 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
         }
     }
 
-    
+
     open override func mouseEntered(with event: NSEvent) {
         print("object entered!")
     }
-    
+
     open override func mouseExited(with event: NSEvent) {
         print("object exited!")
     }
-    
-    
+
+
     #elseif os(iOS)
 
     open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -1185,7 +1185,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
         attributes.append(("tiled description", description))
         attributes.append(("tiled debug description", debugDescription))
-        
+
         return Mirror(self, children: attributes, ancestorRepresentation: .suppressed)
 
     }
@@ -1244,12 +1244,12 @@ extension SKTileObject.TiledObjectShape {
 
 /// :nodoc:
 extension SKTileObject {
-    
+
     /// Returns an integer that can be used as a table address in a hash table structure.
     open override var hash: Int {
         return id.hashValue
     }
-    
+
     /// String representation of tile object.
     open override var description: String {
         let comma = propertiesString.isEmpty == false ? " " : ""
@@ -1261,16 +1261,16 @@ extension SKTileObject {
         let templateDescription = (template != nil) ? " Template: '\(template!)'" : ""
         let miscDesc = (objectType == .text) ? " text quality: \(renderQuality)" : (objectType == .tile) ? " gid: \(globalID ?? 0)" : (objectType == .point) ? "point:" : ""
         let layerDescription = (layer != nil) ? " layer: '\(layer.layerName)'" : ""
-        
-        
+
+
         var pointsString = ""
         if (isPolyType == true) {
             pointsString = (points.isEmpty == true) ? " 0 points" : " \(points.count) points"
         }
-        
+
         return #"\#(tiledNodeNiceName) id: \#(id)\#(objectName)\#(typeString)\#(templateDescription)\#(miscDesc)\#(comma)\#(layerDescription)\#(pointsString)"#
     }
-    
+
     /// Returns a string representation for debugging.
     open override var debugDescription: String {
         let comma = propertiesString.isEmpty == false ? " " : ""
@@ -1282,13 +1282,13 @@ extension SKTileObject {
         let templateDescription = (template != nil) ? " Template: '\(template!)'" : ""
         let miscDesc = (objectType == .text) ? " text quality: \(renderQuality)" : (objectType == .tile) ? " gid: \(globalID ?? 0)" : (objectType == .point) ? "point:" : ""
         let layerDescription = (layer != nil) ? " layer: '\(layer.layerName)'" : ""
-        
-        
+
+
         var pointsString = ""
         if (isPolyType == true) {
             pointsString = (points.isEmpty == true) ? " 0 points" : " \(points.count) points"
         }
-        
+
         return #"<\#(className) id: \#(id)\#(objectName)\#(typeString)\#(templateDescription)\#(miscDesc)\#(comma)\#(propertiesString)\#(layerDescription)\#(pointsString)>"#
     }
 }
@@ -1333,7 +1333,7 @@ extension SKTileObject {
         let layerNameString = (layer != nil) ? " layer: '\(layer.layerName)'" : ""
         return #"<\#(className)\#(nameString)\#(idString)\#(layerNameString)>"#
     }
-    
+
     /// Description of the node type.
     @objc public override var tiledHelpDescription: String {
         return (globalID == nil) ? "Tiled vector object type." : "Tiled tile vector object type."
@@ -1343,6 +1343,14 @@ extension SKTileObject {
 
 
 extension SKTileObject {
+
+    /// Reference to the objects's parent tilemap.
+    open var tilemap: SKTilemap? {
+        guard let layer = layer else {
+            return nil
+        }
+        return layer.tilemap
+    }
 
     /// Object opacity.
     open var opacity: CGFloat {
@@ -1381,7 +1389,7 @@ extension SKTileObject {
     open var isTileObject: Bool {
         return (globalID != nil)
     }
-    
+
     /// Highlight the tile with a given color & duration.
     ///
     /// - Parameters:
@@ -1389,17 +1397,17 @@ extension SKTileObject {
     ///   - duration: duration of highlight effect.
     @objc public override func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
         let highlightFillColor = color.withAlphaComponent(0.2)
-        
+
         boundsShape?.strokeColor = color
         boundsShape?.fillColor = highlightFillColor
         boundsShape?.isHidden = false
-        
+
         anchorShape.fillColor = color
         anchorShape.isHidden = false
-        
+
         if (duration > 0) {
             let fadeInAction = SKAction.colorize(withColorBlendFactor: 1, duration: duration)
-            
+
             let groupAction = SKAction.group(
                 [
                     fadeInAction,
@@ -1407,7 +1415,7 @@ extension SKTileObject {
                     fadeInAction.reversed()
                 ]
             )
-            
+
             boundsShape?.run(groupAction, completion: {
                 self.boundsShape?.isHidden = true
                 self.anchorShape.isHidden = true
@@ -1415,7 +1423,7 @@ extension SKTileObject {
             })
         }
     }
-    
+
     /// Remove the current object's highlight color.
     @objc public override func removeHighlight() {
         boundsShape?.isHidden = true
@@ -1498,8 +1506,8 @@ extension SKTileObject {
     open func draw(debug: Bool = false) {
         self.draw()
     }
-    
-    
+
+
     /// Returns a shortened textual representation for debugging.
     @available(*, deprecated, renamed: "tiledListDescription")
     open var shortDescription: String {

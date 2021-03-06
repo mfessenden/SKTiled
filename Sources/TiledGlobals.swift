@@ -176,7 +176,16 @@ public class TiledGlobals {
     /// Default logging verbosity.
     public var loggingLevel:  LoggingLevel = SKTILED_DEFAULT_LOGGING_LEVEL
 
-    /// Default debug draw options..
+    /// Default debug draw options for all node types.
+    ///
+    /// ### Usage
+    ///
+    /// - `drawGrid`: visualize the nodes's tile grid.
+    /// - `drawFrame`: visualize the nodes's bounding rect.
+    /// - `drawGraph`: visualize the nodes's pathfinding graph.
+    /// - `drawObjectFrames`: draw object's bounding shapes.
+    /// - `drawAnchor`: draw the layer's anchor point.
+    ///
     public var debugDrawOptions: DebugDrawOptions = DEFAULT_MAP_DEBUG_DRAW_OPTIONS
 
     /// Default tile update mode.
@@ -205,7 +214,9 @@ public class TiledGlobals {
     /// Default tile/object render quality attributes.
     public var renderQuality: RenderQuality = RenderQuality()
 
-    /// Debugging display options.
+    /// Debugging visualzation options.
+    ///
+    /// The `DebugDisplayOptions` structure has attributes for attributes such as node highlight color, highlight duration as well as what kind of objects respond to mouse actions **(macOS only)**.
     public var debugDisplayOptions: DebugDisplayOptions = DebugDisplayOptions()
 
     /// Render statistics display.
@@ -404,16 +415,16 @@ public class TiledGlobals {
         /// Mouse pointer size (demo).
         public var mousePointerSize: CGFloat = 10
 
-        /// Debug display properties.
-        public var highlightDuration: TimeInterval = 1
+        /// Default highlight duration for nodes.
+        public var highlightDuration: TimeInterval = 1.5
 
-        /// Debug grid drawing opacity.
+        /// Debug grid visualization opacity.
         public var gridOpactity: CGFloat = 0.6
 
-        /// Debug grid drawing color.
+        /// Debug grid visualization color.
         public var gridColor: SKColor = TiledObjectColors.grass
 
-        /// Debug frame drawing color.
+        /// Debug frame visualization color.
         public var frameColor: SKColor = TiledObjectColors.grass
 
         /// Debug frame line width.
@@ -421,19 +432,22 @@ public class TiledGlobals {
 
         /// Debug tile highlight color.
         public var tileHighlightColor: SKColor = TiledObjectColors.coral
-
-        /// Debug object fill opacity.
-        public var objectFillOpacity: CGFloat = 0.5
-
-        /// Debug object highlight color. Also used with layer & map types.
+        
+        /// Debug vector object highlight color.
         public var objectHighlightColor: SKColor = TiledObjectColors.lime
 
+        /// Debug highlight color for mappable types.
+        public var layerHighlightColor: SKColor = TiledObjectColors.turquoise
+        
         /// Debug graph highlight color.
         public var navigationColor: SKColor = TiledObjectColors.azure
 
         /// Debug camera bounds color.
         public var cameraBoundsColor: SKColor = TiledObjectColors.metal
 
+        /// Debug object fill opacity.
+        public var objectFillOpacity: CGFloat = 0.5
+        
         /// Default anchor display radius.
         public var anchorRadius: CGFloat = 1
 

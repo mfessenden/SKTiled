@@ -326,13 +326,21 @@ extension LoggingLevel: CustomStringConvertible {
 
 // MARK: - Extensions
 
+/// :nodoc:
 extension SKTilemap: Loggable {}
+/// :nodoc:
 extension TiledLayerObject: Loggable {}
+/// :nodoc:
 extension SKTileset: Loggable {}
+/// :nodoc:
 extension SKTilemapParser: Loggable {}
+/// :nodoc:
 extension TiledDebugDrawNode: Loggable {}
+/// :nodoc:
 extension SKTileObject: Loggable {}
 /// :nodoc:
 extension SKTile: Loggable {}
+/// :nodoc:
 extension SKTiledScene: Loggable {}
+/// :nodoc:
 extension SKTiledSceneCamera: Loggable {}

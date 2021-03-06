@@ -56,6 +56,7 @@ Change Log
 	- rename `TiledGlobals.debug` -> `TiledGlobals.debugDisplayOptions`
 	- rename `TiledGlobals.enableRenderCallbacks` -> `TiledGlobals.enableRenderPerformanceCallbacks`
 	- rename `TiledLayerObject.path` -> `TiledLayerObject.xPath` property
+	- rename `TiledLayerObject.isolated` -> `TiledLayerObject.isIsolated` property
 
 	- remove the `layerName` requirement for `TiledLayerObject` required init
     - remove tile flip flags from `SKTilesetData` objects

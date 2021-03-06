@@ -162,6 +162,13 @@ if let waterTiles = waterLayer.getTiles(globalID: 17) {
 }
 ```
 
+Changing an existing tile's tile data is easy; simply assign it a valid global ID value:
+
+```swift
+tile.globalId = 135
+```
+
+
 ### Working with Objects
 
 `SKTileObject` objects can be queried from both the [`SKTilemap`][sktilemap-url] and [`SKObjectGroup`][skobjectgroup-url] nodes:

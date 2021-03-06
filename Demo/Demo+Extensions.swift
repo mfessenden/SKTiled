@@ -178,6 +178,10 @@ extension TiledGlobals {
         if (defaults.value(forKey: "tiled-gbl-dd-camboundscolor") != nil) {
             self.debugDisplayOptions.cameraBoundsColor = SKColor(hexString: defaults.string(forKey: "tiled-gbl-dd-camboundscolor")!)
         }
+        
+        if (defaults.value(forKey: "tiled-gbl-dd-layerhlcolor") != nil) {
+            self.debugDisplayOptions.layerHighlightColor = SKColor(hexString: defaults.string(forKey: "tiled-gbl-dd-layerhlcolor")!)
+        }
 
         if (defaults.value(forKey: "tiled-gbl-dd-mousefilters") != nil) {
             let mouseFiltersRaw = defaults.double(forKey: "tiled-gbl-dd-mousefilters")
@@ -242,7 +246,7 @@ extension TiledGlobals {
         defaults.set(self.debugDisplayOptions.objectHighlightColor.hexString(), forKey: "tiled-gbl-dd-objhlcolor")
         defaults.set(self.debugDisplayOptions.navigationColor.hexString(), forKey: "tiled-gbl-dd-navcolor")
         defaults.set(self.debugDisplayOptions.cameraBoundsColor.hexString(), forKey: "tiled-gbl-dd-camboundscolor")
-
+        defaults.set(self.debugDisplayOptions.layerHighlightColor.hexString(), forKey: "tiled-gbl-dd-layerhlcolor")
 
         // mouse filters
         defaults.set(self.debugDisplayOptions.mouseFilters.rawValue, forKey: "tiled-gbl-dd-mousefilters")
@@ -276,21 +280,6 @@ extension TiledGlobals {
 
 
 // MARK: - Notifications
-
-/*
-extension SKTilemap {
-    
-    #if os(macOS)
-    /// Called when the mouse moves in the scene **(macOS only)**. This triggers the `Notification.Name.Map.FocusCoordinateChanged` event.
-    ///
-    /// - Parameter event: mouse click event.
-    @objc public override func mousePositionChanged(event: NSEvent) {
-        super.mousePositionChanged(event: event)
-    }
-    
-    #endif
-}
-*/
 
 
 extension Notification {

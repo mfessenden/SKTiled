@@ -32,6 +32,7 @@ import GameplayKit
 ///
 /// - `x`: axis is along the x-coordinate.
 /// - `y`: axis is along the y-coordinate.
+/// :nodoc:
 @objc public enum StaggerAxis: UInt8 {
     case x, y
 }
@@ -41,12 +42,15 @@ import GameplayKit
 ///
 /// - `even`: stagger evens.
 /// - `odd`:  stagger odds.
+/// :nodoc:
 @objc public enum StaggerIndex: UInt8 {
     case odd, even
 }
 
 /// The `TilemapOrientation` property describes the map projection type.
 ///
+/// ![Tilemap Orientations][tilemap-orientation-image]
+/// 
 /// ### Constants
 ///
 /// - `orthogonal`: orthogonal (square-shaped tiles) map.
@@ -54,7 +58,7 @@ import GameplayKit
 /// - `hexagonal`:  hexagonal tile map.
 /// - `staggered`:  staggered isometric tile map.
 ///
-/// [tilemap-orientation-image]:../images/camera-delegate.svg
+/// [tilemap-orientation-image]:../images/tilemap-orientations.svg
 @objc public enum TilemapOrientation: UInt8 {
     case orthogonal, isometric, hexagonal, staggered
 }

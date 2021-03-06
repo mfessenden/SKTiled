@@ -148,6 +148,13 @@ internal class ThreadSafeArray<Element>: Equatable {
             }
         }
     }
+    
+    /// Returns the item array only.
+    ///
+    /// - Returns: array value.
+    func toArray() -> [Element] {
+        return array
+    }
 
     /// Accesses the element at the specified position if it exists.
     subscript(index: Int) -> Element? {

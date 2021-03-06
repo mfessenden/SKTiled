@@ -785,12 +785,14 @@ extension SKTiledDemoScene {
                 object: nil
             )
             
-            updateCommandString("isolating selected objects...", duration: 3.0)
+            // this is done in the demo delegate
+            //updateCommandString("isolating selected objects...", duration: 3.0)
         }
         
         // 'j' runs a debugging command
         if eventKey == 0x26 {
-            updateCommandString("dumping debug descriptions...", duration: 3.0)
+            demoController?.dumpLayerIsolationStatistics()
+            updateCommandString("dumping layer isolation stats...", duration: 3.0)
         }
 
         /// 'l' runs a debugging command
@@ -883,8 +885,7 @@ extension SKTiledDemoScene {
         
         // 'x' runs a debugging command
         if eventKey == 0x7 {
-
-            updateCommandString("No command defined for '\(eventChars)'", duration: 3.0)
+            demoController?.toggleTilemapHighlightChunks()
         }
         
         // 'y' deletes selected nodes

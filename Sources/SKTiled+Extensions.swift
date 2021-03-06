@@ -504,6 +504,7 @@ extension Array where Element: SKNode {
     }
 }
 
+
 /// :nodoc:
 extension Array where Element == CGPoint {
     
@@ -516,6 +517,22 @@ extension Array where Element == CGPoint {
         return "(\(result.joined(separator: ", ")))"
     }
 }
+
+
+/// :nodoc:
+extension Array where Element == TiledLayerObject {
+    
+    /// Returns a string describing an array of Tiled layer paths.
+    public var layerPathsString: String {
+        var result: [String] = []
+        for layer in self {
+            result.append("'\(layer.path)'")
+        }
+        return "[ \(result.joined(separator: ", ")) ]"
+    }
+}
+
+
 
 
 
@@ -1630,6 +1647,59 @@ extension SKAction {
         return SKAction()
     }
 }
+
+
+
+/// :nodoc:
+extension SKUniform {
+
+    /// Convenience initializer to create a shader uniform attribute from an `SKColor` value.
+    ///
+    /// - Parameters:
+    ///   - name: shader uniform name.
+    ///   - color: uniform color.
+    public convenience init(name: String, color: SKColor) {
+        #if os(macOS)
+        guard let converted = color.usingColorSpace(.deviceRGB) else {
+            fatalError("Attempted to use a color that is not expressible in RGB.")
+        }
+        
+        let colors = vector_float4([Float(converted.redComponent), Float(converted.greenComponent), Float(converted.blueComponent), Float(converted.alphaComponent)])
+        #else
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+        
+        color.getRed(&r, green: &g, blue: &b, alpha: &a)
+        let colors = vector_float4([Float(r), Float(g), Float(b), Float(a)])
+        #endif
+        
+        self.init(name: name, vectorFloat4: colors)
+    }
+    
+    /// Convenience initializer to create a shader uniform attribute from a size value.
+    ///
+    /// - Parameters:
+    ///   - name: shader uniform name.
+    ///   - size: size value.
+    public convenience init(name: String, size: CGSize) {
+        let size = vector_float2(Float(size.width), Float(size.height))
+        self.init(name: name, vectorFloat2: size)
+    }
+    
+    /// Convenience initializer to create a shader uniform attribute from a point value.
+    ///
+    /// - Parameters:
+    ///   - name: shader uniform name.
+    ///   - size: size value.
+    public convenience init(name: String, point: CGPoint) {
+        let point = vector_float2(Float(point.x), Float(point.y))
+        self.init(name: name, vectorFloat2: point)
+    }
+}
+
+
 
 /// Initialize a color with RGB Integer values (0-255).
 ///

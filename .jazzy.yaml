@@ -87,8 +87,6 @@ custom_categories:
         - TiledSceneDelegate
         - TilemapDelegate
         - TilesetDataSource
-    exclude:
-    - TiledEventHandler
 
   - name: Class Hierarchy
     children:
@@ -109,9 +107,6 @@ custom_categories:
     - TileAnimationFrame
     - TileFlags
     - TileID
-    exclude:
-    - TiledNode
-    - TiledMappableNode
 
   - name: Globals
     children:

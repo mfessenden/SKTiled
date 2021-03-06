@@ -37,6 +37,9 @@ public class TiledDemoDelegate: NSObject, Loggable {
     /// Currently focused nodes.
     var focusedNodes = NodeList()
     
+    /// The current tilemap.
+    weak var currentTilemap: SKTilemap?
+    
     /// The currently selected node.
     public weak var selectedNode: SKNode?
     
@@ -71,6 +74,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.HighlightSelectedNodes, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.TileClicked, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.ObjectClicked, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.IsolateSelectedEnabled, object: nil)
         reset()
     }
     
@@ -99,25 +103,26 @@ public class TiledDemoDelegate: NSObject, Loggable {
         NotificationCenter.default.addObserver(self, selector: #selector(highlightSelectedNodes), name: Notification.Name.Demo.HighlightSelectedNodes, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileClickedAction), name: Notification.Name.Demo.TileClicked, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(objectClickedAction), name: Notification.Name.Demo.ObjectClicked, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(isolatedSelectedAction), name: Notification.Name.Demo.IsolateSelectedEnabled, object: nil)
     }
        
     // MARK: - Handlers
         
     /// Handles the `Notification.Name.Map.FocusCoordinateChanged` callback.
     ///
-    ///   - expects a user dictionary value of ["old": simd_int2]
+    ///   userInfo: `["old": simd_int2, "new": simd_int2, "isValid": Bool]`
     ///
     /// - Parameter notification: event notification.
     @objc func focusedCoordinateChanged(notification: Notification) {
-        guard let mapFocusedCoordinate = notification.object as? simd_int2,
-              let userInfo = notification.userInfo as? [String: Any],
+        guard let userInfo = notification.userInfo as? [String: Any],
               let oldCoordinate = userInfo["old"] as? simd_int2,
-              let isValidCoord = userInfo["valid"] as? Bool else {
+              let newCoordinate = userInfo["new"] as? simd_int2,
+              let isValidCoord = userInfo["isValid"] as? Bool else {
             return
         }
         
-        let delta = oldCoordinate.delta(to: mapFocusedCoordinate)
-        self.log("map focus coordinate changed, \(mapFocusedCoordinate.coordDescription) -> \(oldCoordinate.coordDescription) ( \(delta))", level: .debug)
+        let delta = oldCoordinate.delta(to: newCoordinate)
+        //self.log("map focus coordinate changed, \(newCoordinate.coordDescription) -> \(oldCoordinate.coordDescription) ( \(delta))", level: .debug)
     }
     
     /// Handles the `Notification.Name.Demo.AboutToLoadScene` callback.
@@ -214,9 +219,61 @@ public class TiledDemoDelegate: NSObject, Loggable {
         )
     }
     
-    /// Handles the `Notification.Name.Globals.Updated` event. Changes selected nodes' highlight color.
+    
+    /// Called when the scene sends a key event for 'i'. Called when the `Notification.Name.Demo.IsolateSelectedEnabled` event fires.
     ///
-    ///   userInfo: ["tileColor": `SKColor`, "objectColor": `SKColor`]
+    /// - Parameter notification: event notification.
+    @objc func isolatedSelectedAction(notification: Notification) {
+        guard (focusedNodes.isEmpty == false) else {
+            updateCommandString("turning isolation off...", duration: 5)
+            currentTilemap?.isolatedLayers = nil
+            return
+        }
+
+        
+        var selectedLayers: [TiledLayerObject]? = nil
+        for node in focusedNodes {
+            
+            if let layer = node as? TiledLayerObject {
+                if (selectedLayers == nil) {
+                    selectedLayers = []
+                }
+                
+                selectedLayers?.append(layer)
+            }
+            
+            if let tile = node as? SKTile {
+                selectedLayers?.append(tile.layer)
+            }
+            
+            if let object = node as? SKTileObject {
+               selectedLayers?.append(object.layer)
+            }
+        }
+        
+        
+        guard let currentMap = currentTilemap else {
+            log("tilemap not found.", level: .error)
+            return
+        }
+        
+        
+        // toggle isolation
+        if (currentMap.isolatedLayers != nil) {
+            currentMap.isolatedLayers = nil
+        } else {
+            currentMap.isolatedLayers = selectedLayers
+        }
+        
+        
+        let currentlyIsolated = currentMap.isolatedLayers
+        let logString = (currentlyIsolated == nil) ? "turning isolation off." : "isolating \(currentlyIsolated!.count) layers"
+        updateCommandString(logString, duration: 5)
+    }
+    
+    /// Called when the `Notification.Name.Globals.Updated` event fires. Changes selected nodes' highlight color.
+    ///
+    ///   userInfo: `["tileColor": SKColor, "objectColor": SKColor, "layerColor": SKColor]`
     ///
     /// - Parameter notification: event notification.
     @objc func globalsUpdatedAction(notification: Notification) {
@@ -235,6 +292,12 @@ public class TiledDemoDelegate: NSObject, Loggable {
         if let tileColor = userInfo["tileColor"] as? SKColor {
             focusedNodes.forEach { node in
                 node.highlightNode(with: tileColor)
+            }
+        }
+        
+        if let layerColor = userInfo["layerColor"] as? SKColor {
+            focusedNodes.forEach { node in
+                node.highlightNode(with: layerColor)
             }
         }
     }

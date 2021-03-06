@@ -55,6 +55,24 @@ extension SKTiledDemoScene {
                 if let lowerGraphLayer = tilemap.tileLayers(named: "Graph-Lower").first {
                     _ = lowerGraphLayer.initializeGraph(walkable: walkableTiles)
                 }
+                
+                // TEST ISOLATION
+                var isolatedLayers: [TiledLayerObject]?
+                if let firstLayer = tilemap.tileLayers(named: "Level1").first {
+                    if (isolatedLayers == nil) {
+                        isolatedLayers = []
+                    }
+                    isolatedLayers?.append(firstLayer)
+                }
+                if let secondLayer = tilemap.tileLayers(named: "Level2").first {
+                    if (isolatedLayers == nil) {
+                        isolatedLayers = []
+                    }
+                    isolatedLayers?.append(secondLayer)
+                }
+                
+                tilemap.isolatedLayers = isolatedLayers
+                
 
             case "roguelike-16x16.tmx":
                 if let graphLayer = tilemap.tileLayers(named: "Graph").first {
@@ -73,10 +91,28 @@ extension SKTiledDemoScene {
 }
 
 
-// MARK: - Demo Event Methods
+
+// MARK: - Demo Event Handlers
 
 extension SKTiledDemoScene {
+    
+    /// Custom handler for when the `SKTilemap.currentCoordinate` value changes. The resulting closure contains a tuple of values:
+    ///
+    ///   - old: old coordinate.
+    ///   - new: new coordinate.
+    ///   - isValid: coordinate is a valid map coordinate.
+    /// - Returns: coordinate change handler.
+    @objc var coordinateChangeHandler: ((simd_int2, simd_int2, Bool) -> ())? {
+        return { (old, new, isValid) in
+            NotificationCenter.default.post(
+                name: Notification.Name.Map.FocusCoordinateChanged,
+                object: nil,
+                userInfo: ["old": old, "new": new, "isValid": isValid]
+            )
 
+        }
+    }
+    
     #if os(macOS)
 
     /// Mouse over handler for the demo project.

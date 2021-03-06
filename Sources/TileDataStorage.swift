@@ -142,6 +142,8 @@ internal class TileDataStorage: Loggable {
         objectsList = ObjectsList(queue: self.storageQueue)
         setupNotifications()
     }
+    
+    // MARK: - Notifications
 
     /// Setup notifications.
     private func setupNotifications() {
@@ -194,6 +196,9 @@ internal class TileDataStorage: Loggable {
 
     }
 
+    // MARK: - Tiles
+    
+    
     /// Returns an array of all stored tiles.
     var allTiles: [SKTile] {
         var result: [SKTile] = []
@@ -207,10 +212,13 @@ internal class TileDataStorage: Loggable {
 
         return result
     }
-
-    // MARK: - Notifications
-
-    // MARK: Tiles
+    
+    /// Returns an array of tiles matching a given global id.
+    ///
+    /// - Returns: array of tiles.
+    subscript(gid: UInt32) -> [SKTile]? {
+        return globalIdCache[gid]?.toArray()
+    }
 
     /// Add a tile to storage. Called when the `Notification.Name.Tile.TileCreated` notification is received.
     ///
@@ -442,8 +450,6 @@ internal class TileDataStorage: Loggable {
             }
         }
     }
-
-
 
     /// Called when tile data frames are updated.
     ///

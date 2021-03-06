@@ -70,7 +70,7 @@ public class SKGroupLayer: TiledLayerObject {
         return layers.isEmpty == false ? layers.map {$0.zPosition}.max()! : 0
     }
 
-    /// Returns a flattened array of child layers.
+    /// Returns a flattened array of contained child layers.
     public override var layers: [TiledLayerObject] {
         var result: [TiledLayerObject] = [self]
         for layer in _layers.sorted(by: { $0.index > $1.index }) {

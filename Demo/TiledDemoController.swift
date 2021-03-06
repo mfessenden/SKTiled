@@ -442,6 +442,9 @@ public class TiledDemoController: NSObject, Loggable {
         )
         
         
+        TiledDemoDelegate.default.currentTilemap = nil
+        
+        
         // loaded from preferences
         var showObjects = defaultPreferences.showObjects
         var enableEffects = defaultPreferences.enableEffects
@@ -586,6 +589,7 @@ public class TiledDemoController: NSObject, Loggable {
                 }
                 
                 self.currentTilemap = tilemap
+                TiledDemoDelegate.default.currentTilemap = tilemap
                 
                 // if tilemap has a property override to show objects, use it...else use demo prefs
                 tilemap.isShowingObjectBounds = (tilemap.boolForKey("showObjects") == true) ? true : showObjects
@@ -867,7 +871,7 @@ public class TiledDemoController: NSObject, Loggable {
 
     /// Called when the `TiledGlobals` are updated. Called when the `Notification.Name.Globals.Updated` event fires.
     ///
-    ///   userInfo: `["tileColor": SKColor, "objectColor": SKColor]`
+    ///   userInfo: `["tileColor": SKColor, "objectColor": SKColor, "layerColor": SKColor]`
     ///
     /// - Parameter notification: event notification.
     @objc public func globalsUpdatedAction(_ notification: Notification) {
@@ -1134,14 +1138,14 @@ extension TiledDemoController {
             let doShowObjects = !tilemap.isShowingObjectBounds
             tilemap.isShowingObjectBounds = doShowObjects
             //tilemap.objectsOverlay
-            
-            
+
             
             NotificationCenter.default.post(
                 name: Notification.Name.Map.Updated,
                 object: tilemap,
                 userInfo: nil
             )
+            
         } else {
             updateCommandString("error: cannot access tilemap.", duration: 1)
         }
@@ -1197,6 +1201,45 @@ extension TiledDemoController {
             self.updateCommandString("tile update mode: \(nextValue.name)", duration: 3.0)
         }
     }
+    
+    /// Toggle the visibility of infinite layer chunks.
+    @objc public func toggleTilemapHighlightChunks() {
+        guard let view = self.view,
+              let scene = view.scene as? SKTiledScene else {
+            return
+        }
+        
+        
+        if let tilemap = scene.tilemap {
+            guard tilemap.isInfinite == true else {
+                log("tilemap is not infinite.", level: .warning)
+                return
+            }
+            
+            
+            var chunksHighlightedCount = 0
+            var highlightColor = TiledGlobals.default.debugDisplayOptions.layerHighlightColor
+            tilemap.tileLayers().forEach( { layer in
+                
+                for chunk in layer.chunks {
+                    if (chunk.isFocused == false) {
+                        chunk.highlightNode(with: highlightColor)
+                        chunksHighlightedCount += 1
+                        chunk.isFocused = true
+                    } else {
+                        chunk.removeHighlight()
+                        chunk.isFocused = false
+                        chunksHighlightedCount -= 1
+                    }
+                }
+                
+                highlightColor = TiledObjectColors.random
+            })
+            
+            let loggingMessage = (chunksHighlightedCount > 0) ? "highlighting \(chunksHighlightedCount) chunks..." : "de-highlighting \(abs(chunksHighlightedCount)) chunks..."
+            updateCommandString(loggingMessage, duration: 4.0)
+        }
+    }
 
     public func cycleTilemapUpdateMode(mode: String) {
         guard let view = self.view,
@@ -1243,7 +1286,6 @@ extension TiledDemoController {
         }
     }
 
-
     /// Toggle layer visibility.
     ///
     /// - Parameter isVisible: isolated on/off.
@@ -1267,66 +1309,50 @@ extension TiledDemoController {
         }
     }
 
-    /// Toggle layer isolation.
+    /// Toggle layer isolation for a layer with the given uuid. Called via the `AppDelegate.isolateSelectedLayerAction` method.
     ///
     /// - Parameters:
     ///   - layerID: layer uuid.
     ///   - isIsolated: isolated on/off.
     public func toggleLayerIsolated(layerID: String, isolated isIsolated: Bool) {
-        guard let view = self.view,
-              let scene = view.scene as? SKTiledScene else { return }
-
-        if let tilemap = scene.tilemap {
+        if let tilemap = currentTilemap {
             if let selectedLayer = tilemap.getLayer(withID: layerID) {
-                selectedLayer.isolateLayer(duration: 0.25)
+                tilemap.isolatedLayers = [selectedLayer]
                 updateCommandString("isolating layer: '\(selectedLayer.layerName)'...", duration: 3)
             }
-
-            NotificationCenter.default.post(
-                name: Notification.Name.Map.Updated,
-                object: tilemap,
-                userInfo: nil
-            )
         }
-        printLayerIsolatedInfo()
+        dumpLayerIsolationStatistics()
     }
 
     // TODO: move this to demo delegate
     
     /// Disable all layer isolation.
     public func turnLayerIsolationOff() {
-        guard let view = self.view,
-              let scene = view.scene as? SKTiledScene else { return }
-
-        if let tilemap = scene.tilemap {
+        if let tilemap = currentTilemap {
             updateCommandString("disabling layer isolation...", duration: 3)
-            tilemap.getLayers().forEach { layer in
-                if (layer.isolated == true) {
-                    layer.isolateLayer(duration: 0.25)
-                }
-            }
+            tilemap.isolatedLayers = nil
 
             NotificationCenter.default.post(
                 name: Notification.Name.Map.Updated,
-                object: tilemap,
-                userInfo: nil
+                object: tilemap
             )
         }
-        printLayerIsolatedInfo()
+        dumpLayerIsolationStatistics()
     }
 
     /// Dump isloation info to the console.
-    public func printLayerIsolatedInfo() {
-        guard let view = self.view,
-              let scene = view.scene as? SKTiledScene else { return }
-
-        if let tilemap = scene.tilemap {
+    public func dumpLayerIsolationStatistics() {
+        if let tilemap = currentTilemap {
             updateCommandString("show isolated layers...", duration: 3)
 
             var headerString = "# Tilemap '\(tilemap.url.filename)', isolated:"
             let headerUnderline = String(repeating: "-", count: headerString.count )
             headerString = "\n\(headerString)\n\(headerUnderline)\n"
 
+            
+            let isolated = tilemap.getLayers().filter( { $0.isIsolated == true })
+            let tilemapHasIsolatedLayers = isolated.isEmpty == false
+            
             tilemap.getLayers().forEach { layer in
 
                 let isGroupNode: Bool = (layer as? SKGroupLayer != nil)
@@ -1336,11 +1362,18 @@ extension TiledDemoController {
 
                 let parentCount = layer.parents.count - 1
                 let padding = String(repeating: "  ", count: parentCount)
-                let isolatedSymbol = layer.isolated.valueAsCheckbox
+                //let isolatedSymbol = layer.isIsolated.valueAsCheckbox
+
+                let isolatedSymbol = (layer.isHidden == false) ? (layer.isIsolated == true) ? "[x]" : (tilemapHasIsolatedLayers == true) ? "[-]" : "[x]" : "[ ]"
                 headerString += "\n \(isolatedSymbol) \(padding) \(layerSymbol) '\(layer.layerName)'"
             }
 
             print("\(headerString)\n\n")
+            
+            if let isolatedLayers = tilemap.isolatedLayers {
+                print("Isolated layers: \(isolatedLayers.layerPathsString)")
+            }
+
         }
     }
 
@@ -1358,12 +1391,8 @@ extension TiledDemoController {
 
     /// Dump the current tilemap's statistics to the console.
     public func dumpMapStatistics() {
-        guard let view = self.view,
-              let scene = view.scene as? SKTiledScene else {
-            return
-        }
-        
-        if let tilemap = scene.tilemap {
+
+        if let tilemap = currentTilemap {
             updateCommandString("showing tilemap statistics...", duration: 3)
             tilemap.dumpStatistics()
         }
@@ -1371,17 +1400,20 @@ extension TiledDemoController {
     
     /// Dump the tilemap cache statistics to the console.
     public func dumpMapCacheStatistics() {
-        guard let view = self.view,
-              let scene = view.scene as? SKTiledScene else {
-            return
-        }
-        
-        if let tilemap = scene.tilemap {
+        if let tilemap = currentTilemap {
             if let cache = tilemap.dataStorage {
                 updateCommandString("showing tilemap cache statistics...", duration: 3)
                 //cache.dumpStatistics()
                 dump(cache)
             }
+        }
+    }
+    
+    /// Dump the tilemap offset statistics to the console.
+    public func dumpMapOffsetsStatistics() {
+        if let tilemap = currentTilemap {
+            
+            updateCommandString("showing tilemap offset statistics...", duration: 3)
         }
     }
     

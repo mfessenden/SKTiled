@@ -143,6 +143,20 @@ extension TiledGeometryType {
 }
 
 
+extension TiledGeometryType {
+
+    /// Returns an array of shader unforms based on the current attributes.
+    public var shaderUniforms: [SKUniform] {
+        let uniforms: [SKUniform] = [
+            SKUniform(name: "u_tint_color", color: SKColor.clear),
+            SKUniform(name: "u_tint_strength", float: 1)
+        ]
+        return uniforms
+    }
+}
+
+
+
 #if os(macOS)
 
 /// :nodoc:
@@ -299,6 +313,9 @@ extension SKNode {
 }
 
 
+
+
+// TODO: remove this if no longer used
 /*
 /// :nodoc:
 extension SKNode {
@@ -357,6 +374,7 @@ extension SKNode {
 */
 
 
+/// :nodoc:
 extension SKTilemap: TiledGeometryType {}
 extension TiledLayerObject: TiledGeometryType {}
 extension SKTileObject: TiledGeometryType {}

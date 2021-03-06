@@ -76,6 +76,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var selectedNodesMenuItem: NSMenuItem!
     @IBOutlet weak var tileColorsMenuItem: NSMenuItem!
     @IBOutlet weak var objectColorsMenuItem: NSMenuItem!
+    @IBOutlet weak var layerColorsMenuItem: NSMenuItem!
     @IBOutlet weak var attributeEditorMenuItem: NSMenuItem!
 
     // development menu
@@ -83,6 +84,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var renderStatisticsMenuItem: NSMenuItem!
     @IBOutlet weak var tilemapStatisticsMenuItem: NSMenuItem!
     @IBOutlet weak var tilemapCachesStatisticsMenuItem: NSMenuItem!
+    @IBOutlet weak var tilemapOffsetStatisticsMenuItem: NSMenuItem!
+    
     @IBOutlet weak var layerStatisticsMenuItem: NSMenuItem!
 
     @IBOutlet weak var showDemoAssetsMenuItem: NSMenuItem!
@@ -228,6 +231,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         renderStatisticsMenuItem.isEnabled = false
         tilemapStatisticsMenuItem.isEnabled = false
         tilemapCachesStatisticsMenuItem.isEnabled = false
+        tilemapOffsetStatisticsMenuItem.isEnabled = false
         layerStatisticsMenuItem.isEnabled = false
         dumpSelectedMenuItem.isEnabled = false
         currentMapsMenuItem.isEnabled = false
@@ -567,6 +571,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    /// Handler for menu item updating a global color. Called when a `Debug > Tile Color: #Color` menu item is selected.
+    ///
+    /// - Parameter sender: menu item.
     @IBAction func tileColorsUpdatedAction(_ sender: NSMenuItem) {
         guard let colorString = sender.accessibilityTitle() else { return }
 
@@ -584,6 +591,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.initializeDebugColorMenus()
     }
     
+    /// Handler for menu item updating a global color. Called when a `Debug > Object Color: #Color` menu item is selected.
+    ///
+    /// - Parameter sender: menu item.
     @IBAction func objectColorsUpdatedAction(_ sender: NSMenuItem) {
         guard let colorString = sender.accessibilityTitle() else { return }
 
@@ -600,6 +610,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         self.initializeDebugColorMenus()
     }
+    
+    /// Handler for menu item updating a global color. Called when a `Debug > Layer Color: #Color` menu item is selected.
+    ///
+    /// - Parameter sender: menu item.
+    @IBAction func layerColorsUpdatedAction(_ sender: NSMenuItem) {
+        guard let colorString = sender.accessibilityTitle() else { return }
+        
+        let newColor = SKColor(hexString: colorString)
+        TiledGlobals.default.debugDisplayOptions.layerHighlightColor = newColor
+        Logger.default.log("setting new layer highlight color: \(colorString)", level: .info, symbol: "AppDelegate")
+        
+        // NYI: This is for the Inspector
+        NotificationCenter.default.post(
+            name: Notification.Name.Globals.Updated,
+            object: nil,
+            userInfo: ["layerColor": newColor]
+        )
+        
+        self.initializeDebugColorMenus()
+    }
+    
 
     @IBAction func tilemapGridColorUpdatedAction(_ sender: NSMenuItem) {
         guard let colorString = sender.accessibilityTitle(),
@@ -866,8 +897,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     // MARK: - Map Menu
-
-    @IBAction func mapStatisticsPressed(_ sender: Any) {
+    
+    /// Called when the AppDelegate `Development -> Tilemap Layer Stats...` menuitem is selected.
+    @IBAction func mapLayerStatisticsPressed(_ sender: Any) {
         guard let gameController = viewController else {
             return
         }
@@ -875,7 +907,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         demoController.dumpMapStatistics()
     }
 
-
+    /// Called when the AppDelegate `Development -> Tilemap Cache...` menuitem is selected.
     @IBAction func mapCacheStatisticsPressed(_ sender: Any) {
         guard let gameController = viewController else {
             return
@@ -883,6 +915,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let demoController = gameController.demoController
         demoController.dumpMapCacheStatistics()
+    }
+    
+    /// Called when the AppDelegate `Development -> Tilemap Offsets...` menuitem is selected.
+    @IBAction func mapOffsetsStatisticsPressed(_ sender: Any) {
+        guard let gameController = viewController else {
+            return
+        }
+        
+        let demoController = gameController.demoController
+        demoController.dumpMapOffsetsStatistics()
     }
 
     @IBAction func mapRenderQualityPressed(_ sender: Any) {
@@ -1402,6 +1444,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
 
+    /// Handler for isolating a selected layer. Called when the `Map -> Isolate Layers -> #Layer` menu item is selected.
+    ///
+    /// - Parameter sender: invoking ui element.
     @IBAction func isolateSelectedLayerAction(_ sender: NSMenuItem) {
         guard let layerID = sender.accessibilityTitle() else { return }
         guard let gameController = viewController else { return }
@@ -1412,35 +1457,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @IBAction func turnLayerIsolationOff(_ sender: NSMenuItem) {
-        guard let gameController = viewController else { return }
-        let demoController = gameController.demoController
-        demoController.turnLayerIsolationOff()
+        tilemap?.isolatedLayers = nil
     }
 
-    /// Called when the `Map -> Isolate Layers -> Isolate Selected` is selected.
+    /// Called when the `Map -> Isolate Layers -> Isolate Selected` menu item is selected.
     ///
     /// - Parameter sender: invoking ui element.
     @IBAction func isolateSelectedLayer(_ sender: NSMenuItem) {
         guard let gameController = viewController else { return }
         let demoDelegate = gameController.demoDelegate
 
-        let selectedLayers = demoDelegate.focusedNodes.filter { node in
-            if let layer = node as? TiledLayerObject {
+        let selectedLayers = demoDelegate.focusedNodes.filter({ node in
+            if let _ = node as? TiledLayerObject {
                 return true
             }
 
             return false
-        }
+        }) as? [TiledLayerObject]
 
-        if selectedLayers.isEmpty {
-            return
-        }
-
-
-        gameController.demoController.currentTilemap?.getLayers().forEach { layer in
-            let hideThisLayer = selectedLayers.contains(layer)
-            layer.isHidden = !hideThisLayer
-        }
+        demoController?.currentTilemap?.isolatedLayers = selectedLayers
+        demoController?.dumpLayerIsolationStatistics()
     }
 
     // MARK: - Debugging
@@ -1686,20 +1722,24 @@ extension AppDelegate {
         }
     }
 
-    /// Create the color selection menus at `Debug -> Tile Color:` and `Debug -> Object Color:`.
+    /// Create the color selection menus at `Debug -> Tile Color:`, `Debug -> Object Color:` and `Debug -> Layer Color:`.
     @objc func initializeDebugColorMenus() {
+        
         objectColorsMenuItem.isEnabled = true
         tileColorsMenuItem.isEnabled = true
+        layerColorsMenuItem.isEnabled = true
 
         let allColors = TiledObjectColors.all
         let colorNames = TiledObjectColors.names
 
         let currentTileColor = TiledGlobals.default.debugDisplayOptions.tileHighlightColor
         let currentObjectColor = TiledGlobals.default.debugDisplayOptions.objectHighlightColor
-
+        let currentLayerColor = TiledGlobals.default.debugDisplayOptions.layerHighlightColor
+        
         let currentTileColorHexValue = currentTileColor.hexString()
         let currentObjectColorHexValue = currentObjectColor.hexString()
-
+        let currentLayerColorHexValue = currentLayerColor.hexString()
+        
         // create the tile colors menu
         if let tileColorsSubMenu = tileColorsMenuItem.submenu {
             tileColorsSubMenu.removeAllItems()
@@ -1761,6 +1801,40 @@ extension AppDelegate {
 
                 objectColorMenuItem.state = (colorHexValue == currentObjectColorHexValue) ? NSControl.StateValue.on : NSControl.StateValue.off
                 objectColorsSubMenu.addItem(objectColorMenuItem)
+            }
+        }
+        
+        
+        // create the layer/map colors menu
+        if let layerColorsSubMenu = layerColorsMenuItem.submenu {
+            layerColorsSubMenu.removeAllItems()
+            
+            for (idx, color) in allColors.enumerated() {
+                
+                let colorName = colorNames[idx]
+                let colorHexValue = color.hexString()
+                
+                // create the menu item
+                let tileColorMenuItem = NSMenuItem(title: "\(colorName.uppercaseFirst)", action: #selector(layerColorsUpdatedAction), keyEquivalent: "")
+                let tileColorSwatch = NSImage(size: NSSize(width: 16, height: 16), flipped: false, drawingHandler: { rect in
+                    let insetRect = NSInsetRect(rect, 0.5, 0.5)
+                    let path = NSBezierPath(ovalIn: insetRect)
+                    let fillColor = NSColor(hexString: color.hexString())
+                    let strokeColor = fillColor.shadow(withLevel: 0.5)
+                    fillColor.setFill()
+                    path.fill()
+                    
+                    strokeColor?.setStroke()
+                    path.stroke()
+                    return true
+                })
+                
+                tileColorMenuItem.image = tileColorSwatch
+                
+                tileColorMenuItem.setAccessibilityTitle("\(color.hexString())")
+                
+                tileColorMenuItem.state = (colorHexValue == currentLayerColorHexValue) ? NSControl.StateValue.on : NSControl.StateValue.off
+                layerColorsSubMenu.addItem(tileColorMenuItem)
             }
         }
     }
@@ -1881,6 +1955,7 @@ extension AppDelegate {
         // development menu items
         tilemapStatisticsMenuItem.isEnabled = true
         tilemapCachesStatisticsMenuItem.isEnabled = true
+        tilemapOffsetStatisticsMenuItem.isEnabled = true
         layerStatisticsMenuItem.isEnabled = true
         currentMapsMenuItem.isEnabled = true
         allAssetsMapsMenuItem.isEnabled = true
@@ -1949,7 +2024,7 @@ extension AppDelegate {
         }
 
         
-        /// TILEMAP ISOLATION
+        /// TILEMAP LAYERS ISOLATION
         if let isolationSubMenu = layerIsolationMenu.submenu {
             isolationSubMenu.removeAllItems()
 
@@ -1963,7 +2038,7 @@ extension AppDelegate {
             for layer in tilemap.getLayers() {
                 let layerMenuItem = NSMenuItem(title: layer.tiledMenuItemDescription, action: #selector(isolateSelectedLayerAction), keyEquivalent: "")
                 layerMenuItem.setAccessibilityTitle(layer.uuid)
-                layerMenuItem.state = (layer.isolated == true) ? NSControl.StateValue.on : NSControl.StateValue.off
+                layerMenuItem.state = (layer.isIsolated == true) ? NSControl.StateValue.on : NSControl.StateValue.off
                 isolationSubMenu.addItem(layerMenuItem)
             }
         }
@@ -2048,7 +2123,7 @@ extension AppDelegate {
             isolationSubMenu.items.forEach { menuItem in
                 if let layerID = menuItem.accessibilityTitle() {
                     if let layer = tilemap.getLayer(withID: layerID) {
-                        menuItem.state = (layer.isolated == true) ? .on : .off
+                        menuItem.state = (layer.isIsolated == true) ? .on : .off
                     }
                 }
             }

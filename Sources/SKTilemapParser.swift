@@ -991,6 +991,11 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
             tilemap.setupNotifications()
             tilemap.ignoreProperties = self.ignoreProperties
             tilemap.delegate = self.tilemapDelegate
+            
+            // coordinate change handler
+            if let coordinateChangeHandler = self.tilemapDelegate?.coordinateChangeHandler {
+                tilemap.onCoordinateChange = coordinateChangeHandler
+            }
 
             // set the tilemap url property
             if (currentFilename != nil) {
@@ -1190,7 +1195,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
         }
 
         // draw offset for tilesets
-        if elementName == "tileoffset" {
+        if (elementName == "tileoffset") {
             guard let offsetx = attributeDict["x"] else {
                 log("tile offset element requires an 'x' value", level: .error)
                 parser.abortParsing()
@@ -1209,7 +1214,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
             }
         }
 
-        if elementName == "property" {
+        if (elementName == "property") {
             guard let name = attributeDict["name"] else {
                 log("property element requires a name", level: .error)
                 parser.abortParsing()
@@ -1449,7 +1454,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
         }
 
         // `tile` is used to flag properties in a tileset, as well as store tile layer data in an XML-formatted map.
-        if elementName == "tile" {
+        if (elementName == "tile") {
 
             /*
               XML layer data is stored with a `tile` tag and `gid` atribute. No other attributes will be present:
@@ -1789,7 +1794,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
 
 
         // look for last element to add properties to
-        if elementName == "properties" {
+        if (elementName == "properties") {
 
             /// The expected node type.
             let nodeType = properties["type"]

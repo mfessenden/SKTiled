@@ -48,10 +48,14 @@ internal enum LayerPosition {
 }
 
 
-/// The `TileUpdateMode` enumeration dictates how the tilemap updates its tiles in your scene. Changing this property will affect your CPU usage, so use it carefully.
+/// The `TileUpdateMode` enumeration dictates how the tilemap updates its tiles in your scene. Changing this property can drastically affect your CPU usage, so use it carefully.
 ///
-/// The default mode is `TileUpdateMode.dynamic`, which updates tiles as needed each frame. For best performance, use `TileUpdateMode.actions`, which will
-/// run SpriteKit actions on animated tiles.
+/// The default mode is `TileUpdateMode.actions`, which should be used for the best performance. In this mode, animated tiles are animated with [**SpriteKit actions**][skaction-url].
+///
+/// If `full` mode is used, each tile (animated or otherwise) is updated **every frame**. This ensures accuracy
+///
+/// - Important:
+///  If `dynamic` or `full` mode is selected, the `SKTilemap` node **must** be included in your scene's main update loop.
 ///
 /// ### Usage
 ///
@@ -66,16 +70,17 @@ internal enum LayerPosition {
 /// ### Properties
 ///
 /// - `dynamic`: dynamically update tiles as needed.
-/// - `full`: all tiles are updated each frame.
+/// - `full`: **all** tiles are updated each frame.
 /// - `actions`: tiles are not updated, SpriteKit actions are used instead.
 ///
+/// [skaction-url]:https://developer.apple.com/documentation/spritekit/getting_started_with_actions
 public enum TileUpdateMode: UInt8 {
     case dynamic                    // dynamically update tiles as needed
     case full                       // all tiles updated
     case actions                    // use SpriteKit actions (no update)
 }
 
-/// :nodoc:
+
 /// The `TiledGeometryIsolationMode` optionset controls what renderable content will be shown at any given time.
 ///
 /// ### Properties
@@ -89,6 +94,7 @@ public enum TileUpdateMode: UInt8 {
 /// - `pointObjects`: only point objects are shown.
 ///
 /// [tile-objects-url]:../working-with-objects.html#tile-objects
+/// :nodoc:
 public struct TiledGeometryIsolationMode: OptionSet {
 
     public let rawValue: UInt8
@@ -161,6 +167,8 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     /// Unique SpriteKit node id.
     public var uuid: String = UUID().uuidString
 
+    
+    
     /// Indicates the Tiled application version this map was created with.
     public internal(set) var tiledversion: String!
 
@@ -306,6 +314,8 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
             guard (isolationMode != oldValue) else { return }
 
             updateIsolationMode()
+            
+            // TODO: document this notification
             NotificationCenter.default.post(
                 name: Notification.Name.Map.TileIsolationModeChanged,
                 object: self
@@ -480,7 +490,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
     // MARK: - Caching
 
-    /// Storage for tile updates.
+    /// Storage for tile data.
     internal var dataStorage: TileDataStorage?
 
     // MARK: Debugging
@@ -531,17 +541,20 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     /// The current frame index.
     internal var currentFrameIndex: Int = 0
 
+    /// Coordinate change handler.
+    internal var onCoordinateChange: ((simd_int2, simd_int2, Bool) -> ())?
+    
     /// Current focus coordinate.
     public var currentCoordinate = simd_int2(0, 0) {
         didSet {
-            guard (oldValue != currentCoordinate) else { return }
+            guard (oldValue != currentCoordinate) else {
+                return
+            }
             
             if (TiledGlobals.default.enableTilemapNotifications == true) {
-                NotificationCenter.default.post(
-                    name: Notification.Name.Map.FocusCoordinateChanged,
-                    object: currentCoordinate,
-                    userInfo: ["old": oldValue, "isValid": isValid(coord: currentCoordinate)]
-                )
+                
+                let isValidCoord = isValid(coord: currentCoordinate)
+                onCoordinateChange?(oldValue, currentCoordinate, isValidCoord)
             }
         }
     }
@@ -553,7 +566,6 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         let shape = SKShapeNode(path: objpath)
         
         let boundsLineWidth = TiledGlobals.default.renderQuality.object / 1.5
-        print("⭑ [\(className)]: bounds width: \(boundsLineWidth)")
         shape.lineWidth = boundsLineWidth
         shape.lineJoin = .miter
         shape.miterLimit = 6
@@ -577,16 +589,85 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     }()
 
     // MARK: - Layers
+    
+    /// Isolated layers.
+    public var isolatedLayers: [TiledLayerObject]?  {
+        didSet {
+            guard let isolated = isolatedLayers else {
+                layers.forEach({ layer in
+                    layer.isIsolated = false
+                    // TODO: need to stash previous `isHidden` value
+                    layer.isHidden = false
+                })
+                
+                NotificationCenter.default.post(
+                    name: Notification.Name.Map.Updated,
+                    object: self
+                )
+                
+                return
+            }
 
-    // Array of layers in this map.
+            
+            
+            var alreadyIsolated: [TiledLayerObject] = []
+            
+            
+            for layer in layers {
+                
+                // if this layer is part of the isolated array...
+                let isolateThisLayer = isolated.contains(layer)
+                
+                if (isolateThisLayer == false) {
+                    if (alreadyIsolated.contains(layer) == true) {
+                        continue
+                    }
+                }
+
+                alreadyIsolated.append(layer)
+                
+                
+                // if this is a group layer, we need to show child layers
+                let isGroupLayer = (layer as? SKGroupLayer != nil)
+                let hideThisLayer = isolateThisLayer == false
+
+                // we need to set these visible so the current layer can be seen...
+                var layersToProtect = Set(layer.parentLayers)
+                
+                // if this is a group layer, we need to also see all of the current child layers
+                if (isGroupLayer == true) {
+                    
+                    for child in layer.childLayers {
+                        layersToProtect.insert(child)
+                    }
+                }
+
+                // isolate the layer...
+                layer.isIsolated = isolateThisLayer
+                layer.isHidden = hideThisLayer
+                
+                for relative in layersToProtect.filter({ $0 != layer }) {
+                    relative.isHidden = hideThisLayer
+                    alreadyIsolated.append(relative)
+                }
+            }
+            
+            NotificationCenter.default.post(
+                name: Notification.Name.Map.Updated,
+                object: self
+            )
+        }
+    }
+
+    /// Array of layers contained in this map. This includes private layers (such as `SKTilemap.defaultLayer`)
     private var _layers: Set<TiledLayerObject> = []
 
-    /// Layer count.
+    /// Returns the number of layers contained in this map.
     public var layerCount: Int {
         return self.layers.count
     }
 
-    /// Returns a flattened array of child layers.
+    /// Returns a flattened array of contained child layers.
     public var layers: [TiledLayerObject] {
         var result: [TiledLayerObject] = []
         for layer in _layers.sorted(by: { $0.index > $1.index }) where layer as? TiledBackgroundLayer == nil {
@@ -601,23 +682,23 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         _ = self.addLayer(layer)
         layer.didFinishRendering()
         return layer
-        }()
+    }()
 
     /// Pause overlay.
     public lazy var overlay: SKSpriteNode = { [unowned self] in
         let pauseOverlayColor = SKColor.clear
         let overlayNode = SKSpriteNode(color: pauseOverlayColor, size: self.sizeInPoints)
         overlayNode.name = "MAP_OVERLAY"
-
+        
         #if SKTILED_DEMO
         overlayNode.setAttr(key: "tiled-node-name", value: "overlay")
         #endif
-
+        
         self.addChild(overlayNode)
         overlayNode.zPosition = self.lastZPosition * self.zDeltaForLayers
         overlayNode.isHidden = (self.isPaused == false)
         return overlayNode
-        }()
+    }()
 
 
     /// Overlay color.
@@ -1380,9 +1461,8 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     }
 
     deinit {
-        
+        isolatedLayers = nil
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.LayerIsolationChanged, object: nil)
-        
         objectsOverlay.removeAllChildren()
         objectsOverlay.removeFromParent()
         _layers = []
@@ -3230,7 +3310,7 @@ extension SKTilemap {
 }
 
 
-
+/// :nodoc:
 extension SKTilemap: TiledCustomReflectableType {
 
     /// Dump a summary of the current tilemap's layer statistics to the console.
@@ -3484,14 +3564,11 @@ extension SKTilemap: TiledSceneCameraDelegate {
         // TODO: implement this
     }
 
-    /// Called when the mouse moves in the scene **(macOS only)**. This triggers the `Notification.Name.Map.FocusCoordinateChanged` event.
+    /// Called when the mouse moves in the scene **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
     @objc public func mousePositionChanged(event: NSEvent) {
         //currentCoordinate = coordinateAtMouse(event: event)
-        
-        
-        
         #if SKTILED_DEMO
         let lastCoordinate = currentCoordinate
         

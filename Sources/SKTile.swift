@@ -194,6 +194,25 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         }
     }
     
+    /// Return a string value for the given key, if it exists.
+    ///
+    /// ### Usage
+    ///
+    ///  ```swift
+    ///  if let characterName = tile["characterName"] {
+    ///     print("character name is '\(characterName)'.")
+    ///  }
+    ///  ```
+    ///
+    /// - parameter key: `String` key to query.
+    public subscript(key: String) -> String? {
+        get {
+            return (ignoreProperties == false) ? properties[key] : nil
+        } set(newValue) {
+            properties[key] = newValue
+        }
+    }
+    
     // MARK: - Tile Handlers
 
     /// Indicates the current node has received focus or selected.

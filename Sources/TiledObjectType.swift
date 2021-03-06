@@ -28,7 +28,7 @@ import SpriteKit
 
 
 /// The `TiledObjectType` protocol defines a basic node type with a data structure for mapping custom **Tiled**
-/// properties to **SpriteKit** nodes. The `TiledObjectType.parseProperties` method translates Tiled node custom properties to SpriteKit/SKTiled properties.
+/// properties to **SpriteKit** nodes. The `TiledObjectType.parseProperties` method maps Tiled node custom properties to SpriteKit/SKTiled properties.
 ///
 /// Objects conforming to this protocol will automatically receive properties from the source **Tiled** scene, unless supressed by setting the nodes's `TiledObjectType.ignoreProperties` property.
 ///
@@ -47,26 +47,29 @@ import SpriteKit
 ///
 /// ```swift
 /// tiledObject.hasKey("floorColor")
-///
-/// // or use a subscript to query a property...
-/// let floorColor = tiledObject["floorColor"]
 /// ```
 ///
-/// ```swift
-/// // query a Tiled string property
-/// if let nodeType = tiledObject.stringForKey("nodeType") {
-///     tiledObject.type = nodeType
-/// }
-/// ```
+/// If a property value is convertible to other types (such as boolean, integer or double), you can use one of several convenience methods to query the value:
 ///
 /// ```swift
-/// // query a boolean property
+/// // query a Tiled integer property
+/// let score = tiledObject.intForKey("scoreValue") ?? 0
+///
+/// // query a TIled boolean property
 /// let isDynamic = tiledObject.boolForKey("isDynamic") == true
 /// ```
 ///
-/// For more information, see the **[TiledObjectType][sktiled-custom-properties-url]** page in the **[official documentation][sktiled-docroot-url]**. Also see the **[Tiled Properties][tiled-custom-properties-url]** page in the **[Tiled Documentation][tiled-docroot-url]**.
+/// Finally, you can subscript the properties dictionary with any object conforming to the `TiledObjectType` protocol:
 ///
-/// [sktiled-custom-properties-url]:tiled-properties.html
+/// ```swift
+/// // use a subscript to query a property or add a new one
+/// let floorColor = tiledObject["floorColor"]
+/// tiledObject["orientation"] = "bottom-left"
+/// ```
+///
+/// For more information, see the [Tiled Properties][sktiled-custom-properties-url] page in the **[official documentation][sktiled-docroot-url]**. Also see the **[Tiled Properties][tiled-custom-properties-url]** page in the **[Tiled Documentation][tiled-docroot-url]**.
+///
+/// [sktiled-custom-properties-url]:../tiled-properties.html
 /// [sktiled-docroot-url]:https://mfessenden.github.io/SKTiled/1.3/index.html
 /// [tiled-custom-properties-url]:https://doc.mapeditor.org/en/stable/manual/custom-properties/
 /// [tiled-docroot-url]:https://doc.mapeditor.org/en/stable
@@ -135,6 +138,9 @@ extension TiledObjectType {
 /// :nodoc
 extension TiledObjectType {
     
+    /// Returns a mirror representation of the properties attribute.
+    ///
+    /// - Returns: array of mirror child values.
     public func mirrorChildren() -> [(label: String, value: Any)] {
         var attributes: [(label: String, value: Any)] = []
         for (key, value) in properties {
