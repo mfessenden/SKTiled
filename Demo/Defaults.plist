@@ -37,9 +37,9 @@
 	<key>usePreviousCamera</key>
 	<false/>
 	<key>allowUserMaps</key>
-	<false/>
+	<true/>
 	<key>allowDemoMaps</key>
-	<false/>
+	<true/>
 	<key>enableMouseEvents</key>
 	<false/>
 	<key>demoFiles</key>

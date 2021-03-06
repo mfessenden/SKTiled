@@ -261,10 +261,6 @@ class PreferencesGloabalsViewController: NSViewController {
             }
 
 
-
-
-
-
             guard let camera = demoController.camera else {
                 return
             }
