@@ -375,7 +375,15 @@ class GameViewController: GCEventViewController, Loggable {
         let effectsMessage = (effectsEnabled == true) ? (tilemap.shouldRasterize == true) ? "Effects: on (raster)" : "Effects: on" : "Effects: off"
 
         statsRenderModeLabel.text = "Mode: \(tilemap.updateMode.name)"
-        statsVisibleLabel.text = "Visible: \(tilemap.nodesInView.count)"
+
+        var visibleLabelHidden = true
+        var nodesInCameraViewCount = 0
+        if let cameraNode = tilemap.cameraNode {
+            nodesInCameraViewCount = cameraNode.containedNodeSet().count
+            visibleLabelHidden = false
+        }
+
+        statsVisibleLabel.text = "Visible: \(nodesInCameraViewCount)"
         statsEffectsLabel.text = "\(effectsMessage)"
         statsEffectsLabel.isHidden = (effectsEnabled == false)
         

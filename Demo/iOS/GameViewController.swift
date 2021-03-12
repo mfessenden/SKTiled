@@ -458,7 +458,15 @@ class GameViewController: UIViewController, Loggable {
         statsRenderModeLabel.text = "Mode: \(tilemap.updateMode.name)"
         statsEffectsLabel.text = "\(effectsMessage)"
         statsEffectsLabel.isHidden = (effectsEnabled == false)
-        statsVisibleLabel.text = "Visible: \(tilemap.nodesInView.count)"
+        
+        var visibleLabelHidden = true
+        var nodesInCameraViewCount = 0
+        if let cameraNode = tilemap.cameraNode {
+            nodesInCameraViewCount = cameraNode.containedNodeSet().count
+            visibleLabelHidden = false
+        }
+        
+        statsVisibleLabel.text = "Visible: \(nodesInCameraViewCount)"
         statsVisibleLabel.isHidden = (TiledGlobals.default.enableCameraCallbacks == false)
 
 

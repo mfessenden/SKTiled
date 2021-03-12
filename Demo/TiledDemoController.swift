@@ -441,9 +441,9 @@ public class TiledDemoController: NSObject, Loggable {
             userInfo: ["url": url]
         )
         
-        
+        #if os(macOS)
         TiledDemoDelegate.default.currentTilemap = nil
-        
+        #endif
         
         // loaded from preferences
         var showObjects = defaultPreferences.showObjects
@@ -589,7 +589,11 @@ public class TiledDemoController: NSObject, Loggable {
                 }
                 
                 self.currentTilemap = tilemap
+                
+                #if os(macOS)
                 TiledDemoDelegate.default.currentTilemap = tilemap
+                #endif
+                
                 
                 // if tilemap has a property override to show objects, use it...else use demo prefs
                 tilemap.isShowingObjectBounds = (tilemap.boolForKey("showObjects") == true) ? true : showObjects
