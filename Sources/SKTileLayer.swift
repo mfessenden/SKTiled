@@ -223,8 +223,9 @@ public class SKTileLayer: TiledLayerObject {
         var offsetPos = CGPoint.zero
         switch orientation {
             case .orthogonal:
-                offsetPos.x += tileWidthHalf
-                offsetPos.y += tileHeightHalf
+                //offsetPos.x += tileWidthHalf
+                //offsetPos.y += tileHeight
+                return offsetPos
 
             case .isometric:
                 let offsetXValue = (height * tileWidthHalf) + tileWidthHalf
@@ -234,6 +235,9 @@ public class SKTileLayer: TiledLayerObject {
             case .hexagonal, .staggered:
                 offsetPos.x += tileWidthHalf
                 offsetPos.y += tileHeightHalf
+            
+            default:
+                break
         }
 
         return offsetPos

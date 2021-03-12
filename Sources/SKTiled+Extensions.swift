@@ -2089,9 +2089,39 @@ extension URL {
 
 extension TimeInterval {
 
-    /// Returns the current value in milleseconds.
-    var milleseconds: Double {
+    /// The current time expressed as milleseconds.
+    public var milleseconds: Double {
         return Double(self * 1000)
+    }
+    
+    /// Returns the time expressed as a time code string.
+    ///
+    /// ## Usage
+    ///
+    /// ```swift
+    /// let seconds: TimeInterval = 3
+    /// print(seconds.toTimeCode)
+    /// // "00:00:03.00"
+    /// ```
+    ///
+    /// - Returns: time code.
+    public func toTimeCode() -> String {
+        let time = NSInteger(self)
+        
+        let ms = Int((self.truncatingRemainder(dividingBy: 1)) * 1000)
+        let seconds = time % 60
+        let minutes = (time / 60) % 60
+        let hours = (time / 3600)
+        
+        return String(format: "%0.2d:%0.2d:%0.2d.%0.3d",hours,minutes,seconds,ms)
+    }
+    
+    /// Returns a string representation of the value rounded to the current decimals.
+    ///
+    /// - Parameter decimals: number of decimals to round to.
+    /// - Returns: rounded display string.
+    func stringRoundedTo(_ decimals: Int = 2) -> String {
+        return String(format: "%.\(String(decimals))f", self)
     }
 }
 
@@ -2125,7 +2155,6 @@ extension FloatingPoint {
         return lhs.precised(accuracy) == rhs.precised(accuracy)
     }
 }
-
 
 
 

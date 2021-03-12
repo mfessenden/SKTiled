@@ -286,7 +286,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
     /// Object anchor node visualization node.
     @objc public lazy var anchorShape: SKShapeNode = {
-        let anchorRadius: CGFloat = 1.5
+        let anchorRadius: CGFloat = (layer.tileSize.width / 8) * 0.75
         let shape = SKShapeNode(circleOfRadius: anchorRadius)
         shape.strokeColor = SKColor.clear
         shape.fillColor = frameColor

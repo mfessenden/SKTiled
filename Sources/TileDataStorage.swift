@@ -116,9 +116,9 @@ internal class TileDataStorage: Loggable {
     }
 
     /// Returns the current tile isolation mode.
-    var isolationMode: CacheIsolationMode = CacheIsolationMode.none {
+    var cacheIsolationMode: CacheIsolationMode = CacheIsolationMode.none {
         didSet {
-            guard oldValue != isolationMode else { return }
+            guard oldValue != cacheIsolationMode else { return }
             self.isolateTilesAction()
         }
     }
@@ -133,7 +133,6 @@ internal class TileDataStorage: Loggable {
 
     // MARK: - Initialization
 
-
     /// Initialize with a tilemap instance.
     ///
     /// - Parameter map: tilemap node.
@@ -142,7 +141,7 @@ internal class TileDataStorage: Loggable {
         objectsList = ObjectsList(queue: self.storageQueue)
         setupNotifications()
     }
-    
+
     // MARK: - Notifications
 
     /// Setup notifications.
@@ -197,8 +196,8 @@ internal class TileDataStorage: Loggable {
     }
 
     // MARK: - Tiles
-    
-    
+
+
     /// Returns an array of all stored tiles.
     var allTiles: [SKTile] {
         var result: [SKTile] = []
@@ -212,7 +211,7 @@ internal class TileDataStorage: Loggable {
 
         return result
     }
-    
+
     /// Returns an array of tiles matching a given global id.
     ///
     /// - Returns: array of tiles.
@@ -689,7 +688,7 @@ internal class TileDataStorage: Loggable {
 
         return (result.isEmpty == false) ? result : nil
     }
-    
+
     /// Returns an array of tiles matching the given type.
     ///
     /// - Parameter ofType: tile type.
@@ -701,13 +700,13 @@ internal class TileDataStorage: Loggable {
                 result.append(contentsOf: item.value)
             }
         }
-        
+
         for item in animatedTileCache {
             if item.key.type == ofType {
                 result.append(contentsOf: item.value)
             }
         }
-        
+
         return (result.isEmpty == false) ? result : nil
     }
 
@@ -829,21 +828,21 @@ internal class TileDataStorage: Loggable {
         for tile in allTiles {
 
             // true if mode is anything but 'none'
-            var doHideTile = (isolationMode != .none)
+            var doHideTile = (cacheIsolationMode != .none)
 
             switch tile.renderMode {
 
                 case .animated(gid: _):
-                    doHideTile = (doHideTile == true) && (isolationMode != .animated)
+                    doHideTile = (doHideTile == true) && (cacheIsolationMode != .animated)
 
                 case .ignore:
-                    doHideTile = (doHideTile == true) && (isolationMode != .ignored)
+                    doHideTile = (doHideTile == true) && (cacheIsolationMode != .ignored)
 
                 case .static:
-                    doHideTile = (doHideTile == true) && (isolationMode != .static)
+                    doHideTile = (doHideTile == true) && (cacheIsolationMode != .static)
 
                 default:
-                    doHideTile = (doHideTile == true) && (isolationMode != .default)
+                    doHideTile = (doHideTile == true) && (cacheIsolationMode != .default)
             }
 
             tile.isHidden = doHideTile

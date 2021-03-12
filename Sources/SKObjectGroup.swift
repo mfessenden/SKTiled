@@ -178,6 +178,7 @@ public class SKObjectGroup: TiledLayerObject {
         }
     }
     
+    /*
     /// Initial layer position for infinite maps. Used to reposition layers & chunks in infinite maps. This is used by the tilemap to position the layers as they are added.
     internal override var layerInfiniteOffset: CGPoint {
         //if (isInfinite == false) || (layerType != .tile) {
@@ -195,6 +196,7 @@ public class SKObjectGroup: TiledLayerObject {
         }
         return offsetPos
     }
+     */
 
     // MARK: - Initialization
 

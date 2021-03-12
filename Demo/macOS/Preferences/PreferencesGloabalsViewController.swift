@@ -110,11 +110,14 @@ class PreferencesGloabalsViewController: NSViewController {
         textFields["glb-renderqualityoverride-field"]?.stringValue = String(format: "%.2f", TiledGlobals.default.renderQuality.override)
         textFields["glb-linewidth-field"]?.stringValue = String(format: "%.2f", TiledGlobals.default.debugDisplayOptions.lineWidth)
         textFields["glb-mousepointerfontsize-field"]?.stringValue = String(format: "%.2f", TiledGlobals.default.debugDisplayOptions.mousePointerSize)
-
+        
+        print("⭑ mouse event delta: \(TiledGlobals.default.mouseEventDelta.stringRoundedTo(4))")
+        textFields["glb-mouseeventdelta-field"]?.stringValue = String(format: "%.4f", TiledGlobals.default.mouseEventDelta)
 
         checkBoxes["gbl-rendercb-check"]?.state = (TiledGlobals.default.enableRenderPerformanceCallbacks == true) ? .on : .off
         checkBoxes["gbl-cameracb-check"]?.state = (TiledGlobals.default.enableCameraCallbacks == true) ? .on : .off
-
+        checkBoxes["gbl-infiniteoffsets-check"]?.state = (TiledGlobals.default.enableTilemapInfiniteOffsets == true) ? .on : .off
+        
         // user/demo maps
         checkBoxes["gbl-allowdemomaps-check"]?.state = (TiledGlobals.default.allowDemoMaps == true) ? .on : .off
         checkBoxes["gbl-allowusermaps-check"]?.state = (TiledGlobals.default.allowUserMaps == true) ? .on : .off
@@ -209,7 +212,18 @@ class PreferencesGloabalsViewController: NSViewController {
 
                 demoController.toggleMapGraphVisualization()
             }
-
+            
+            if (textIdentifier == "gbl-infiniteoffsets-check") {
+                TiledGlobals.default.enableTilemapInfiniteOffsets = buttonVal
+                
+                guard let tilemap = demoController.currentTilemap else {
+                    return
+                }
+                
+                tilemap.repositionLayers()
+            }
+            
+            
             if (textIdentifier == "gbl-effects-check") {
                 guard let tilemap = demoController.currentTilemap else {
                     return
@@ -507,6 +521,18 @@ extension PreferencesGloabalsViewController: NSTextFieldDelegate {
                 )
             }
         }
-
+        
+        if (textIdentifier == "glb-mouseeventdelta-field") {
+            print("⭑ mouse event delta: \(textFieldValue)")
+            if let doubleValue = TimeInterval(textFieldValue) {
+                TiledGlobals.default.mouseEventDelta = doubleValue
+                
+                // update controllers ->
+                NotificationCenter.default.post(
+                    name: Notification.Name.Globals.Updated,
+                    object: nil
+                )
+            }
+        }
     }
 }

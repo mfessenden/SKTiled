@@ -110,13 +110,32 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    // NSApplicationWillResignActiveNotification
     func applicationWillResignActive(_ notification: Notification) {
-        view?.isPaused = true
+        guard let windowController = windowController,
+              let view = view,
+              let scene = view.scene else {
+            Logger.default.log("cannot access window controller.", level: .warning, symbol: "AppDelegate")
+            return
+        }
+        
+        windowController.isManuallyPaused = scene.isPaused
+        scene.isPaused = true
         viewController?.demoStatusInfoLabel.isHidden = false
     }
-
+    
+    // NSApplicationDidBecomeActiveNotification
     func applicationDidBecomeActive(_ notification: Notification) {
-        view?.isPaused = false
+        guard let windowController = windowController,
+              let view = view,
+              let scene = view.scene else {
+            Logger.default.log("cannot access window controller.", level: .warning, symbol: "AppDelegate")
+            return
+        }
+        
+        // if the user paused the scene before moving it to the background, use that state
+        let sceneWasPaused = windowController.isManuallyPaused
+        scene.isPaused = sceneWasPaused
         viewController?.demoStatusInfoLabel.isHidden = false
     }
 
@@ -1111,7 +1130,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         demoController.dumpTileLayersDataAction()
     }
 
-    /// Called when the map isolation mode is changed.
+    /// Called when the map isolation mode is changed via the `Map -> Isolation Mode -> #MODE` menu.
     ///
     /// - Parameter sender: invoking ui element.
     @IBAction func islolationModeChangedAction(_ sender: NSMenuItem) {
@@ -1121,7 +1140,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         guard let tilemap = self.tilemap else { return }
-
+        
+        
+        // identifier:
+        // 10 = all tile types
+        // 60 = all object types
         let newIsolationMode = TiledGeometryIsolationMode(rawValue: identifier)
         Logger.default.log("new isolation mode: '\(newIsolationMode.strings)'", level: .info)
         tilemap.isolationMode = newIsolationMode
@@ -1149,7 +1172,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
 
-        dataStorage.isolationMode = (removeIsolation == true) ? .none : newIsolationMode
+        dataStorage.cacheIsolationMode = (removeIsolation == true) ? .none : newIsolationMode
     }
 
     /// Handles node selection changes. Called when the `Notification.Name.Demo.NodeSelectionChanged` event fires. Nodes are accessible via the `TiledDemoDelegate.currentNodes` property.
@@ -1212,7 +1235,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     isolateLayerMenuItem.representedObject = tile
                     nodeSubMenu.submenu?.addItem(isolateLayerMenuItem)
                 }
-
+	
                 if let object = tiledNode as? SKTileObject {
 
                     let isolateLayerMenuItem = NSMenuItem(title: "Isolate Layer...", action: #selector(isolateNodeLayerAction), keyEquivalent: "")
@@ -1448,7 +1471,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ///
     /// - Parameter sender: invoking ui element.
     @IBAction func isolateSelectedLayerAction(_ sender: NSMenuItem) {
-        guard let layerID = sender.accessibilityTitle() else { return }
+        guard let layerID = sender.accessibilityTitle() else {
+            return
+        }
         guard let gameController = viewController else { return }
         let demoController = gameController.demoController
 
@@ -1551,13 +1576,33 @@ extension AppDelegate: TiledSceneCameraDelegate {
 
 
 
-// MARK: Submenu Initialization
+// MARK: Convenience Properties
 
 
 extension AppDelegate {
 
     // MARK: - Demo Properties
 
+    /// Reference to the current demo controller.
+    var demoController: TiledDemoController? {
+        return viewController?.demoController
+    }
+    
+    /// Reference to the current demo delegate.
+    var demoDelegate: TiledDemoDelegate? {
+        return viewController?.demoDelegate
+    }
+    
+    /// Reference to the main window controller.
+    var windowController: GameWindowController? {
+        for window in NSApplication.shared.windows {
+            if let controller = window.windowController as? GameWindowController {
+                return controller
+            }
+        }
+        return nil
+    }
+    
     /// Reference to the current view controller.
     var viewController: GameViewController? {
         for window in NSApplication.shared.windows {
@@ -1583,15 +1628,7 @@ extension AppDelegate {
         return scene
     }
 
-    /// Reference to the current demo controller.
-    var demoController: TiledDemoController? {
-        return viewController?.demoController
-    }
 
-    /// Reference to the current demo delegate.
-    var demoDelegate: TiledDemoDelegate? {
-        return viewController?.demoDelegate
-    }
 
     /// Reference to the current scene camera.
     var camera: SKTiledSceneCamera? {
@@ -2029,9 +2066,6 @@ extension AppDelegate {
             isolationSubMenu.removeAllItems()
 
             isolationSubMenu.addItem(NSMenuItem(title: "Isolate: Off", action: #selector(turnLayerIsolationOff), keyEquivalent: ""))
-            let isolateSelected = NSMenuItem(title: "Isolate Selected", action: #selector(isolateSelectedLayer), keyEquivalent: "")
-            isolateSelected.isEnabled = false
-            isolationSubMenu.addItem(isolateSelected)
 
             isolationSubMenu.addItem(NSMenuItem.separator())
 

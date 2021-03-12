@@ -288,7 +288,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     
     /// Object anchor node visualization node.
     @objc public lazy var anchorShape: SKShapeNode = {
-        let anchorRadius: CGFloat = 4
+        let anchorRadius: CGFloat = (tileSize.height / 8) * 0.85
         let shape = SKShapeNode(circleOfRadius: anchorRadius)
         shape.strokeColor = SKColor.clear
         shape.fillColor = frameColor

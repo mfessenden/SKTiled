@@ -79,6 +79,9 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, 
     /// Reference to navigation graphs.
     open var graphs: [String : GKGridGraph<GKGridGraphNode>] = [:]
 
+    /// The level current time.
+    internal var levelCurrentTime: TimeInterval = 0
+
     /// Time scene was last updated.
     private var lastUpdateTime: TimeInterval = 0
 
@@ -89,7 +92,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, 
     @objc open var receiveCameraUpdates: Bool = true
 
     /// Indicates the mouse is within scene bounds.
-    internal var hasMouseFocus: Bool = false 
+    internal var hasMouseFocus: Bool = false
 
     /// Current focus coordinate.
     open var currentCoordinate = simd_int2(0, 0)
@@ -180,7 +183,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, 
                     ignoreProperties: Bool = false,
                     loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel,
                     _ completion: ((_ tilemap: SKTilemap) -> Void)? = nil) {
-        
+
         let dirname = url.deletingLastPathComponent()
         let filename = url.lastPathComponent
         let relativeURL = URL(fileURLWithPath: filename, relativeTo: dirname)
@@ -208,9 +211,9 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, 
                     ignoreProperties: Bool = false,
                     loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel,
                     _ completion: ((_ tilemap: SKTilemap) -> Void)? = nil) {
-        
 
-        
+
+
         guard let worldNode = worldNode else {
             self.log("error accessing world node, check that your scene has been presented in the current view.", level: .error)
             return
@@ -328,10 +331,13 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, 
         var dt = currentTime - self.lastUpdateTime
         dt = dt > maximumUpdateDelta ? maximumUpdateDelta : dt
 
+        self.levelCurrentTime += dt
         self.lastUpdateTime = currentTime
 
         // update tilemap
         self.tilemap?.update(currentTime)
+
+        // TODO: put a limiter here for mouse tracking
     }
 
     /// Update the camera bounds.
@@ -455,22 +461,22 @@ extension SKTiledScene: TiledSceneCameraDelegate {
     ///
     /// - Parameter event: mouse click event.
     @objc open func sceneClicked(event: NSEvent) {}
-    
+
     /// Called when the scene is double-clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
     @objc open func sceneDoubleClicked(event: NSEvent) {}
-    
+
     /// Called when the scene is right-clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
     @objc open func sceneRightClicked(event: NSEvent) {}
-    
+
     /// Called when the right mouse button is released **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
     @objc open func sceneRightClickReleased(event: NSEvent) {}
-    
+
     /// Called when the mouse moves in the scene **(macOS only)**.
     ///
     /// - Parameter event: mouse move event.

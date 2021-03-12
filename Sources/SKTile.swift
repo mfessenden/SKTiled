@@ -379,7 +379,10 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     
     /// Object anchor node visualization node.
     @objc public lazy var anchorShape: SKShapeNode = {
-        let anchorRadius: CGFloat = 1.5
+        let tileheight = tilemap?.tileSize.height ?? tileSize.height
+    
+        // tile height = 16 -> 1.5
+        let anchorRadius: CGFloat = (tileheight / 8) * 0.75
         let shape = SKShapeNode(circleOfRadius: anchorRadius)
         shape.strokeColor = SKColor.clear
         shape.fillColor = frameColor
@@ -1479,14 +1482,20 @@ extension SKTile {
         anchorShape.fillColor = color
         anchorShape.isHidden = false
         
+        
+        
+        let fadeDuration: TimeInterval = 0.2
+        
+        self.color = color
+        
         if (duration > 0) {
-            let fadeInAction = SKAction.colorize(withColorBlendFactor: 1, duration: duration)
-            
+            let fadeInAction = SKAction.colorize(withColorBlendFactor: 0.5, duration: fadeDuration)
+            let fadeOutAction = SKAction.colorize(withColorBlendFactor: 0, duration: fadeDuration)
             let groupAction = SKAction.group(
                 [
                     fadeInAction,
                     SKAction.wait(forDuration: duration),
-                    fadeInAction.reversed()
+                    fadeOutAction
                 ]
             )
             

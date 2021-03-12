@@ -39,7 +39,7 @@ public class SKTiledDemoScene: SKTiledScene {
 
     /// Reference to demo scene manager.
     internal weak var demoController: TiledDemoController?
-    
+
     #if os(macOS)
     /// Reference to demo delegate.
     internal weak var demoDelegate: TiledDemoDelegate? = TiledDemoDelegate.default
@@ -69,6 +69,21 @@ public class SKTiledDemoScene: SKTiledScene {
     internal weak var mousePointer: MousePointer?
     #endif
 
+    // MARK: - Mouse Event Timing
+    
+    /// Mouse events are enabled.
+    internal var canReceiveMouseEvents: Bool = true
+    
+    /// Last mouse event time limiter.
+    internal var lastMouseEventUpdateTime: TimeInterval = 0
+
+    /// Amount of time to wait before sending a new mouse update.
+    internal var mouseUpdateDelta: TimeInterval {
+        return TiledGlobals.default.mouseEventDelta
+    }
+
+    // MARK: - Dispatch
+
     private let demoQueue = DispatchQueue(label: "org.sktiled.sktiledDemoScene.demoQueue", qos: .utility)
 
     
@@ -76,7 +91,7 @@ public class SKTiledDemoScene: SKTiledScene {
         willSet {
             let pauseMessage = (newValue == true) ? "Paused" : ""
             let hideStatus = (newValue == true) ? false : true
-            
+
             NotificationCenter.default.post(
                 name: Notification.Name.DemoController.DemoStatusUpdated,
                 object: nil,
@@ -95,13 +110,14 @@ public class SKTiledDemoScene: SKTiledScene {
         // superclass
         graphs = [:]
         camera?.removeFromParent()
+        cameraNode = nil
         camera = nil
         tilemap = nil
 
         // remove notification observers
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
     }
-    
+
     /// Called when the scene is displayed in the parent `SKView`.
     ///
     /// - Parameter view: parent view.
@@ -124,7 +140,7 @@ public class SKTiledDemoScene: SKTiledScene {
 
         // allow gestures on iOS
         cameraNode?.allowGestures = true
-        
+
         #if os(macOS)
         if (mousePointer == nil) {
             let pointer = MousePointer()
@@ -373,15 +389,21 @@ public class SKTiledDemoScene: SKTiledScene {
     /// - Parameter currentTime: update interval.
     open override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
-
-
-        var coordinateMessage = ""
-        if let graphStartCoordinate = graphStartCoordinate {
-            coordinateMessage += "Start: \(graphStartCoordinate.shortDescription)"
-            if (currentPath.isEmpty == false) {
-                coordinateMessage += ", \(currentPath.count) nodes"
+        
+        /*
+        /// Limit mouse event frequency
+        if (lastMouseEventUpdateTime > 0) {
+            let timeSinceLastMouseUpdate = levelCurrentTime - lastMouseEventUpdateTime
+            if (timeSinceLastMouseUpdate >= mouseUpdateDelta) {
+                lastMouseEventUpdateTime = levelCurrentTime
+                canReceiveMouseEvents = true
+            } else {
+                canReceiveMouseEvents = false
             }
+        } else {
+            lastMouseEventUpdateTime = levelCurrentTime
         }
+        */
     }
 
     // MARK: - Delegate Callbacks
@@ -468,12 +490,16 @@ extension SKTiledDemoScene {
     ///
     /// - Parameter event: mouse move event.
     open override func mouseMoved(with event: NSEvent) {
+        guard (canReceiveMouseEvents == true) else {
+            return
+        }
+        
         super.mouseMoved(with: event)
         // update the mouse pointer
         let location = event.location(in: self)
         mousePointer?.position = location
     }
-    
+
     /// Show the mouse pointer when the cursor re-enters the scene bounds.
     ///
     /// - Parameter event: mouse move event.
@@ -481,7 +507,7 @@ extension SKTiledDemoScene {
         super.mouseEntered(with: event)
         mousePointer?.isHidden = !TiledGlobals.default.debugDisplayOptions.mouseFilters.enableMousePointer
     }
-    
+
     /// Hide the mouse pointer when the cursor re-enters the scene bounds.
     ///
     /// - Parameter event: mouse move event.
@@ -531,7 +557,7 @@ extension SKTiledDemoScene {
 
 
 extension SKTiledDemoScene {
-    
+
     // MARK: - Delegate Methods
 
     /// Called when the camera position changes.
@@ -573,13 +599,13 @@ extension SKTiledDemoScene {
     ///
     /// - Parameter event: mouse click event.
     @objc public override func sceneClicked(event: NSEvent) {
-        
+
         NotificationCenter.default.post(
             name: Notification.Name.Demo.NodeSelectionCleared,
             object: nil
         )
 
-        
+
         let location = event.location(in: self)
         var logMessage = "mouse clicked at: \(location.coordDescription)"
 
@@ -614,14 +640,14 @@ extension SKTiledDemoScene {
 
         let eventKey = event.keyCode
         var eventChars = event.characters ?? "⋯"
-        
-        
+
+
         if eventKey == 0x47 {
             eventChars = "clr"
         }
-        
-        
-        
+
+
+
         // '→' advances to the next scene
         if eventKey == 0x7c {
             self.loadNextScene()
@@ -661,7 +687,7 @@ extension SKTiledDemoScene {
                 name: Notification.Name.Demo.FlushScene,
                 object: nil
             )
-            
+
             updateCommandString("clearing scene...", duration: 3.0)
         }
 
@@ -674,13 +700,13 @@ extension SKTiledDemoScene {
         if eventKey == 0xf {
             self.reloadScene()
         }
-        
+
         eventChars = event.modifierString + eventChars
         log("key pressed '\(eventChars)'", level: .debug)
-        
+
         // MARK: - Camera Commands
-        
-        
+
+
         guard let cameraNode = cameraNode else {
             return
         }
@@ -743,7 +769,7 @@ extension SKTiledDemoScene {
               (worldNode != nil) else {
             return
         }
-        
+
         // 'd' dumps the selected node(s)
         if eventKey == 0x02 {
             NotificationCenter.default.post(
@@ -752,7 +778,7 @@ extension SKTiledDemoScene {
             )
             updateCommandString("dumping selected nodes...", duration: 3.0)
         }
-        
+
 
 
         // 'e' toggles effects rendering
@@ -776,19 +802,19 @@ extension SKTiledDemoScene {
                 object: nil
             )
         }
-        
+
         // 'i' isolates the selected object(s).
         if eventKey == 0x22 {
-            
+
             NotificationCenter.default.post(
                 name: Notification.Name.Demo.IsolateSelectedEnabled,
                 object: nil
             )
-            
+
             // this is done in the demo delegate
             //updateCommandString("isolating selected objects...", duration: 3.0)
         }
-        
+
         // 'j' runs a debugging command
         if eventKey == 0x26 {
             demoController?.dumpLayerIsolationStatistics()
@@ -808,7 +834,7 @@ extension SKTiledDemoScene {
                 object: nil
             )
         }
-        
+
         // 's' clears the cache
         if eventKey == 0x01 {
             let layerName = "Floor"
@@ -852,42 +878,42 @@ extension SKTiledDemoScene {
                 object: nil
             )
         }
-        
+
         // 'q' dumps the selected objects
         if eventKey == 0x0C {
-            
+
             NotificationCenter.default.post(
                 name: Notification.Name.Demo.DumpSelectedNodes,
                 object: nil
             )
-            
+
             //updateCommandString("No command set for '\(eventChars)'.", duration: 3.0)
             updateCommandString("dumping selected node properties", duration: 3.0)
         }
 
-        
+
         // 'w' runs a debugging command
         if eventKey == 0xd {
-            
+
             if let selectedNode = demoDelegate?.focusedNodes.first as? TiledGeometryType {
                 print("⭑ node is focused: \(selectedNode.isFocused)")
             }
-            
+
             NotificationCenter.default.post(
                 name: Notification.Name.Demo.HighlightSelectedNodes,
                 object: nil
             )
-            
-            
+
+
             updateCommandString("highlighting selected nodes.", duration: 3.0)
         }
-        
-        
+
+
         // 'x' runs a debugging command
         if eventKey == 0x7 {
             demoController?.toggleTilemapHighlightChunks()
         }
-        
+
         // 'y' deletes selected nodes
         if eventKey == 0x10 {
             var deleteCount = 0
@@ -900,25 +926,24 @@ extension SKTiledDemoScene {
 
             updateCommandString("deleted \(deleteCount) nodes.", duration: 3.0)
         }
-        
+
         // 'z' runs a debugging command
         if eventKey == 0x6 {
-            
+
             updateCommandString("No command defined for '\(eventChars)'", duration: 3.0)
         }
-        
+
         // 'clear' clears the current selection
         if eventKey == 0x47 {
-            
+
             NotificationCenter.default.post(
                 name: Notification.Name.Demo.NodeSelectionCleared,
                 object: nil
             )
-            
+
             updateCommandString("clearing selected nodes...", duration: 3.0)
         }
     }
 
     #endif
 }
-

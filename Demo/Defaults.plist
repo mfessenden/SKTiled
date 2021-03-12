@@ -24,8 +24,12 @@
 	<integer>2</integer>
 	<key>renderCallbacks</key>
 	<true/>
+	<key>mouseEventDelta</key>
+	<real>0.01</real>
 	<key>tilemapNotifications</key>
 	<false/>
+	<key>tilemapInfiniteOffsets</key>
+	<true/>
 	<key>cameraCallbacks</key>
 	<true/>
 	<key>cameraTrackContainedNodes</key>

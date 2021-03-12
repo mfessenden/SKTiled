@@ -30,9 +30,10 @@ import SpriteKit
 
 class GameWindowController: NSWindowController, NSWindowDelegate {
 
-    // tilemap pause state before any window size change
+    /// View pause state before any window size change.
     var isManuallyPaused: Bool = false
 
+    /// The current view.
     var view: SKView {
         let gameViewController = window!.contentViewController as! GameViewController
         return gameViewController.view as! SKView
@@ -54,6 +55,7 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
         // Pause the scene while the window resizes if the game is active.
 
         if let scene = view.scene {
+            
             // record the scene pause state
             isManuallyPaused = scene.isPaused
 
@@ -118,7 +120,6 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
         window?.title = "\(wintitle)"
     }
 
-    // OS X games that use a single window for the entire game should quit when that window is closed.
     func applicationShouldTerminateAfterLastWindowClosed(sender: NSApplication) -> Bool {
         return true
     }

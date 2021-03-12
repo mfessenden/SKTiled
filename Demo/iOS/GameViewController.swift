@@ -35,12 +35,13 @@ class GameViewController: UIViewController, Loggable {
     var uiColor: UIColor = UIColor(hexString: "#757B8D")
     var hideDeviceRotationIcon: Bool = false
 
+    // status ("paused") label, center screen
+    @IBOutlet weak var demoStatusInfoLabel: UILabel!
+    
     // debugging labels (top)
     @IBOutlet weak var rotateDeviceIcon: UIImageView!
     @IBOutlet weak var cameraInfoLabel: UILabel!
-    @IBOutlet weak var demoStatusInfoLabel: UILabel!
-
-
+    
 
     // debugging labels (bottom)
     @IBOutlet weak var mapInfoLabel: UILabel!

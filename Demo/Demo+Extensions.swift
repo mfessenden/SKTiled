@@ -50,7 +50,8 @@ extension TiledGlobals {
             globals.enableRenderPerformanceCallbacks = demoPreferences.renderCallbacks
             globals.enableCameraCallbacks = demoPreferences.cameraCallbacks
             globals.enableCameraContainedNodesCallbacks = demoPreferences.cameraTrackContainedNodes
-
+            globals.enableTilemapNotifications = demoPreferences.tilemapNotifications
+            globals.enableTilemapInfiniteOffsets = demoPreferences.tilemapInfiniteOffsets
 
             globals.debugDisplayOptions.mouseFilters = TiledGlobals.DebugDisplayOptions.MouseFilters(rawValue: demoPreferences.mouseFilters)
             globals.debugDisplayOptions.lineWidth = CGFloat(demoPreferences.lineWidth)
@@ -125,8 +126,17 @@ extension TiledGlobals {
             self.enableRenderPerformanceCallbacks = defaults.bool(forKey: "tiled-gbl-render-callbacks")
         }
         
+        
+        if (defaults.value(forKey: "tiled-gbl-mouseevent-delta") != nil) {
+            self.mouseEventDelta = defaults.double(forKey: "tiled-gbl-mouseevent-delta")
+        }
+        
         if (defaults.value(forKey: "tiled-gbl-map-notifications") != nil) {
             self.enableTilemapNotifications = defaults.bool(forKey: "tiled-gbl-map-notifications")
+        }
+        
+        if (defaults.value(forKey: "tiled-gbl-map-infiniteoffsets") != nil) {
+            self.enableTilemapInfiniteOffsets = defaults.bool(forKey: "tiled-gbl-map-infiniteoffsets")
         }
 
         if (defaults.value(forKey: "tiled-gbl-camera-callbacks") != nil) {
@@ -231,7 +241,11 @@ extension TiledGlobals {
 
         // camera
         defaults.set(self.enableRenderPerformanceCallbacks, forKey: "tiled-gbl-render-callbacks")
+        defaults.set(self.mouseEventDelta, forKey: "tiled-gbl-mouseevent-delta")
+        
+        
         defaults.set(self.enableTilemapNotifications, forKey: "tiled-gbl-map-notifications")
+        defaults.set(self.enableTilemapInfiniteOffsets, forKey: "tiled-gbl-map-infiniteoffsets")
         defaults.set(self.enableCameraCallbacks, forKey: "tiled-gbl-camera-callbacks")
         defaults.set(self.enableCameraContainedNodesCallbacks, forKey: "tiled-gbl-camera-contained-callbacks")
 
@@ -701,6 +715,18 @@ public func += (left: inout CGPoint, right: CGPoint) {
     left = left + right
 }
 
+
+
+// MARK: - Tilemap
+
+extension SKTilemap {
+    
+    
+    /// Reposition all of the child layers.
+    public func repositionLayers() {
+        layers.forEach { self.positionLayer($0) }
+    }
+}
 
 
 // MARK: - Controllers

@@ -29,11 +29,7 @@ import SpriteKit
 import AppKit
 
 
-/*
- fonts:
- SF Mono-12pt
 
- */
 class GameViewController: NSViewController, Loggable {
 
 
@@ -43,6 +39,8 @@ class GameViewController: NSViewController, Loggable {
     var receiveCameraUpdates: Bool = true
 
     var uiColor: NSColor = NSColor(hexString: "#dddddd")
+    
+    // progress widget & "Paused" label
     @IBOutlet weak var progressIndicator: NSProgressIndicator!
     @IBOutlet weak var demoStatusInfoLabel: NSTextField!
 
@@ -103,7 +101,7 @@ class GameViewController: NSViewController, Loggable {
     }
 
     deinit {
-
+        // remove notification subscriptions
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Debug.DebuggingMessageSent, object: nil)
 
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.Updated, object: nil)
@@ -166,7 +164,7 @@ class GameViewController: NSViewController, Loggable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Configure the view.
         let skView = self.view as! SKView
 
@@ -264,7 +262,13 @@ class GameViewController: NSViewController, Loggable {
         
         demoStatusInfoLabel.textColor = uiColor
         demoStatusInfoLabel.stringValue = "please select a file to load"
-
+        
+        
+        
+        let statusLabelFont = NSFont.boldSystemFont(ofSize: 36)
+        demoStatusInfoLabel.font? = statusLabelFont
+        
+    
         // text shadow
         let shadow = NSShadow()
         shadow.shadowOffset = NSSize(width: 1, height: 2)

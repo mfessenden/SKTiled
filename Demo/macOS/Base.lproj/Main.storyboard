@@ -927,9 +927,9 @@
                                 <rect key="frame" x="624" y="150" width="32" height="32"/>
                             </progressIndicator>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9x3-wF-4hL">
-                                <rect key="frame" x="600" y="345" width="80" height="31"/>
+                                <rect key="frame" x="581" y="339" width="118" height="43"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Status" id="L19-lG-gUj">
-                                    <font key="font" textStyle="largeTitle" name=".SFNS-Regular"/>
+                                    <font key="font" size="36" textStyle="headline" name=".SFNS-Bold"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>

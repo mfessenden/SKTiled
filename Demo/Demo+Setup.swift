@@ -55,24 +55,6 @@ extension SKTiledDemoScene {
                 if let lowerGraphLayer = tilemap.tileLayers(named: "Graph-Lower").first {
                     _ = lowerGraphLayer.initializeGraph(walkable: walkableTiles)
                 }
-                
-                // TEST ISOLATION
-                var isolatedLayers: [TiledLayerObject]?
-                if let firstLayer = tilemap.tileLayers(named: "Level1").first {
-                    if (isolatedLayers == nil) {
-                        isolatedLayers = []
-                    }
-                    isolatedLayers?.append(firstLayer)
-                }
-                if let secondLayer = tilemap.tileLayers(named: "Level2").first {
-                    if (isolatedLayers == nil) {
-                        isolatedLayers = []
-                    }
-                    isolatedLayers?.append(secondLayer)
-                }
-                
-                tilemap.isolatedLayers = isolatedLayers
-                
 
             case "roguelike-16x16.tmx":
                 if let graphLayer = tilemap.tileLayers(named: "Graph").first {

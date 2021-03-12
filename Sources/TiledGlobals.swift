@@ -205,6 +205,9 @@ public class TiledGlobals {
     /// Enable callbacks from the tilemap to subscribers.
     public var enableTilemapNotifications: Bool = false
     
+    /// Enable infinite offset use.
+    public var enableTilemapInfiniteOffsets: Bool = false
+    
     /// Enable callbacks from camera to camera delegates.
     public var enableCameraCallbacks: Bool = false
 
@@ -221,6 +224,9 @@ public class TiledGlobals {
 
     /// Render statistics display.
     public var timeDisplayMode: TimeDisplayMode = TimeDisplayMode.milliseconds
+    
+    /// Mouse event limiter.
+    public var mouseEventDelta: TimeInterval = 0.01
 
     /// Layer tinting options.
     public var layerTintAttributes: LayerTintOptions = LayerTintOptions()
@@ -613,7 +619,9 @@ extension TiledGlobals: TiledCustomReflectableType {
         print("  ▸ update mode:             \(self.updateMode.name)")
         print("  ▸ debug draw options:      \(self.debugDrawOptions.debugDescription)")
         print("  ▸ render callbacks:        \(self.enableRenderPerformanceCallbacks)")
+        print("  ▸ mouse event frequency:   \(self.mouseEventDelta.stringRoundedTo(4))")
         print("  ▸ tilemap notifications:   \(self.enableTilemapNotifications)")
+        print("  ▸ infinite offsets:        \(self.enableTilemapInfiniteOffsets)")
         print("  ▸ camera callbacks:        \(self.enableCameraCallbacks)")
         print("  ▸ visble nodes callbacks:  \(self.enableCameraContainedNodesCallbacks)")
         #if os(macOS)

@@ -161,6 +161,8 @@ extension TileObjectOverlay: TiledSceneCameraDelegate {
     ///
     /// - Parameter event: mouse event
     @objc func sceneClicked(event: NSEvent) {
+        
+        // TODO: implement or delete this.
         /*
         let clickedProxies = nodes(at: event.location(in: self)).filter { $0 as? TileObjectProxy != nil} as! [TileObjectProxy]
         

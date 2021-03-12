@@ -780,7 +780,6 @@ public class TiledDemoController: NSObject, Loggable {
             object: nil,
             userInfo: ["status": "please select a file to load", "isHidden": false]
         )
-        
     }
 
     // MARK: - Event Handlers
