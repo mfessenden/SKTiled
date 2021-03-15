@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -346,11 +346,20 @@
                                                 <action selector="mapCacheStatisticsPressed:" target="Voe-Tx-rLC" id="V1e-da-Lnt"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Tilemap Offsets..." enabled="NO" id="Qpm-op-6DI">
+                                        <menuItem title="Tilemap Layer Offsets..." enabled="NO" id="Qpm-op-6DI">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="mapOffsetsStatisticsPressed:" target="Voe-Tx-rLC" id="Xac-R6-eUw"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Adjust Tilemap Offsets..." enabled="NO" id="46H-du-mBH">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="launchOffsetEditor:" target="Voe-Tx-rLC" id="5Hl-4W-2hu"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="B5e-Bv-NGi"/>
-                                        <menuItem title="Dump Layer Data..." enabled="NO" id="VaW-im-1oo">
+                                        <menuItem title="Tile Layer Data..." enabled="NO" id="VaW-im-1oo">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="dumpTileLayersDataAction:" target="Voe-Tx-rLC" id="yyB-NN-Z6a"/>
@@ -443,6 +452,7 @@
                         <outlet property="showDemoAssetsMenuItem" destination="eC9-wi-nCP" id="mxl-a2-f9d"/>
                         <outlet property="tileColorsMenuItem" destination="hnS-2z-nKA" id="Seb-hg-B27"/>
                         <outlet property="tilemapCachesStatisticsMenuItem" destination="Rcr-r2-Ts4" id="hyf-Tn-WBO"/>
+                        <outlet property="tilemapOffsetEditorMenuItem" destination="46H-du-mBH" id="ZJq-no-m3b"/>
                         <outlet property="tilemapOffsetStatisticsMenuItem" destination="Qpm-op-6DI" id="3O0-A6-Zba"/>
                         <outlet property="tilemapStatisticsMenuItem" destination="OXT-yC-4Eg" id="J5H-GF-0Kg"/>
                         <outlet property="timeDisplayMenuItem" destination="EBE-ZU-Vi0" id="U0H-Rq-jsO"/>
@@ -498,7 +508,172 @@
                 </windowController>
                 <customObject id="pkn-N7-khv" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138" y="-123"/>
+            <point key="canvasLocation" x="122" y="-96"/>
+        </scene>
+        <!--Window Controller-->
+        <scene sceneID="yr4-pn-dAJ">
+            <objects>
+                <windowController storyboardIdentifier="OffsetEditorWindowController" id="yuG-Dj-d38" customClass="OffsetEditorWindowController" customModule="SKTiled_Demo" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" id="qTU-ux-Gc0" customClass="NSPanel">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" utility="YES" HUD="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="516" y="566" width="350" height="250"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="3008" height="1667"/>
+                        <view key="contentView" id="Tmr-XN-Goe">
+                            <rect key="frame" x="0.0" y="0.0" width="350" height="250"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </view>
+                        <connections>
+                            <outlet property="delegate" destination="yuG-Dj-d38" id="KRG-ix-Moo"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="B0q-cB-VHX" kind="relationship" relationship="window.shadowedContentViewController" id="OxK-sc-F2N"/>
+                    </connections>
+                </windowController>
+                <customObject id="QXk-ai-lTl" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="577" y="-96"/>
+        </scene>
+        <!--Offset Editor View Controller-->
+        <scene sceneID="IKu-iJ-5Ar">
+            <objects>
+                <viewController id="B0q-cB-VHX" customClass="OffsetEditorViewController" customModule="SKTiled_Demo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="3xs-GU-XEu">
+                        <rect key="frame" x="0.0" y="0.0" width="368" height="250"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <gridView xPlacement="fill" yPlacement="fill" rowAlignment="firstBaseline" rowSpacing="10" columnSpacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="RHd-Kv-1ho">
+                                <rect key="frame" x="20" y="78" width="246" height="152"/>
+                                <rows>
+                                    <gridRow id="3Jx-rY-6oq"/>
+                                    <gridRow id="dFF-lY-Mbo"/>
+                                    <gridRow id="bnP-VZ-G5U"/>
+                                    <gridRow rowAlignment="firstBaseline" id="ion-Ds-hqP"/>
+                                    <gridRow id="twR-UK-RT5"/>
+                                    <gridRow id="fys-Mc-n4D"/>
+                                </rows>
+                                <columns>
+                                    <gridColumn id="Fdb-KB-8LJ"/>
+                                    <gridColumn width="157" id="v1f-yA-XSy"/>
+                                </columns>
+                                <gridCells>
+                                    <gridCell row="3Jx-rY-6oq" column="Fdb-KB-8LJ" headOfMergedCell="4JO-J1-g6b" id="4JO-J1-g6b">
+                                        <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="BRL-fR-r8T">
+                                            <rect key="frame" x="-2" y="133" width="250" height="19"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Adjust Layer Offsets" id="YnQ-E4-r2f">
+                                                <font key="font" textStyle="title3" name=".SFNS-Regular"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </gridCell>
+                                    <gridCell row="3Jx-rY-6oq" column="v1f-yA-XSy" headOfMergedCell="4JO-J1-g6b" id="WrR-0T-YvN"/>
+                                    <gridCell row="dFF-lY-Mbo" column="Fdb-KB-8LJ" headOfMergedCell="5Nu-lk-XFi" id="5Nu-lk-XFi">
+                                        <box key="contentView" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Ao9-dD-Oig">
+                                            <rect key="frame" x="0.0" y="120" width="246" height="5"/>
+                                        </box>
+                                    </gridCell>
+                                    <gridCell row="dFF-lY-Mbo" column="v1f-yA-XSy" headOfMergedCell="5Nu-lk-XFi" id="Te6-dK-lKh"/>
+                                    <gridCell row="bnP-VZ-G5U" column="Fdb-KB-8LJ" id="Rpk-9n-bCz">
+                                        <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="HJL-yy-Mc8">
+                                            <rect key="frame" x="-2" y="95" width="85" height="16"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Layer Types" id="66u-Nb-4Tt">
+                                                <font key="font" usesAppearanceFont="YES"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </gridCell>
+                                    <gridCell row="bnP-VZ-G5U" column="v1f-yA-XSy" id="h3f-D3-76f">
+                                        <popUpButton key="contentView" identifier="offset-layertype-menu" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yyz-mw-rLg">
+                                            <rect key="frame" x="86" y="88" width="164" height="25"/>
+                                            <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="SxW-1L-PNN">
+                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                                <menu key="menu" id="k47-Z0-8el"/>
+                                            </popUpButtonCell>
+                                        </popUpButton>
+                                    </gridCell>
+                                    <gridCell row="ion-Ds-hqP" column="Fdb-KB-8LJ" xPlacement="trailing" id="BMj-t7-mdv">
+                                        <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="6JB-Uq-noM">
+                                            <rect key="frame" x="23" y="64" width="60" height="16"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Offset-X:" id="Jaa-bp-o5K">
+                                                <font key="font" usesAppearanceFont="YES"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </gridCell>
+                                    <gridCell row="ion-Ds-hqP" column="v1f-yA-XSy" xPlacement="leading" id="TJB-6V-cQ3">
+                                        <textField key="contentView" identifier="layer-offsetx-field" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HwI-3t-LHf">
+                                            <rect key="frame" x="89" y="61" width="60" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="60" id="y0p-1l-7fU"/>
+                                            </constraints>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="123" drawsBackground="YES" id="IOR-Pf-ARf">
+                                                <numberFormatter key="formatter" formatterBehavior="custom10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="1" maximumFractionDigits="3" id="sky-2J-iFG"/>
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </gridCell>
+                                    <gridCell row="twR-UK-RT5" column="Fdb-KB-8LJ" xPlacement="trailing" id="m0w-iM-6ah">
+                                        <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="oqi-hd-BEh">
+                                            <rect key="frame" x="25" y="33" width="58" height="16"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Offset-Y:" id="xGm-dv-Zja">
+                                                <font key="font" usesAppearanceFont="YES"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </gridCell>
+                                    <gridCell row="twR-UK-RT5" column="v1f-yA-XSy" xPlacement="leading" id="icd-Ga-JVS">
+                                        <textField key="contentView" identifier="layer-offsety-field" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tgN-hs-lGa">
+                                            <rect key="frame" x="89" y="30" width="60" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="60" id="BsL-Sd-hf7"/>
+                                            </constraints>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="123" drawsBackground="YES" id="v7b-hb-oAG">
+                                                <numberFormatter key="formatter" formatterBehavior="custom10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="1" maximumFractionDigits="3" id="ODb-rQ-Ba0"/>
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </gridCell>
+                                    <gridCell row="fys-Mc-n4D" column="Fdb-KB-8LJ" id="0ZK-H4-GzS"/>
+                                    <gridCell row="fys-Mc-n4D" column="v1f-yA-XSy" id="EPD-bC-c95">
+                                        <button key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dcU-zi-ib6">
+                                            <rect key="frame" x="82" y="-7" width="171" height="32"/>
+                                            <buttonCell key="cell" type="push" title="Apply Offsets" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LFB-tp-zbB">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="applyOffsetsButtonPressedAction:" target="B0q-cB-VHX" id="ENQ-pC-SOU"/>
+                                            </connections>
+                                        </button>
+                                    </gridCell>
+                                </gridCells>
+                            </gridView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="RHd-Kv-1ho" firstAttribute="leading" secondItem="3xs-GU-XEu" secondAttribute="leading" constant="20" symbolic="YES" id="79b-S8-uFj"/>
+                            <constraint firstAttribute="trailing" secondItem="RHd-Kv-1ho" secondAttribute="trailing" constant="102" id="izM-tG-amP"/>
+                            <constraint firstItem="RHd-Kv-1ho" firstAttribute="top" secondItem="3xs-GU-XEu" secondAttribute="top" constant="20" symbolic="YES" id="w9s-c2-4mt"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="confirmButton" destination="dcU-zi-ib6" id="7L9-sj-yIH"/>
+                        <outlet property="editorView" destination="3xs-GU-XEu" id="tLi-gx-C5a"/>
+                        <outlet property="layerTypeMenu" destination="yyz-mw-rLg" id="Sbb-22-GTw"/>
+                    </connections>
+                </viewController>
+                <customObject id="fQq-mo-b3r" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="577" y="302"/>
         </scene>
         <!--Tile Editor View Controller-->
         <scene sceneID="8XE-IG-ayE">
@@ -628,7 +803,7 @@
                 </viewController>
                 <customObject id="5KD-YQ-2Mi" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="144" y="275"/>
+            <point key="canvasLocation" x="128" y="302"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="hIz-AP-VOD">
@@ -927,9 +1102,9 @@
                                 <rect key="frame" x="624" y="150" width="32" height="32"/>
                             </progressIndicator>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9x3-wF-4hL">
-                                <rect key="frame" x="581" y="339" width="118" height="43"/>
+                                <rect key="frame" x="615" y="352" width="51" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Status" id="L19-lG-gUj">
-                                    <font key="font" size="36" textStyle="headline" name=".SFNS-Bold"/>
+                                    <font key="font" textStyle="headline" name=".SFNS-Bold"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>

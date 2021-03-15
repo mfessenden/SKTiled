@@ -125,9 +125,9 @@ public class TiledDemoDelegate: NSObject, Loggable {
         //self.log("map focus coordinate changed, \(newCoordinate.coordDescription) -> \(oldCoordinate.coordDescription) ( \(delta))", level: .debug)
     }
     
-    /// Handles the `Notification.Name.Demo.AboutToLoadScene` callback.
+    /// Handles the `Notification.Name.Demo.SceneWillUnload` callback.
     ///
-    ///   - expects a user dictionary value of ["url": `URL`]
+    ///  userInfo: `["url": URL]`
     ///
     /// - Parameter notification: event notification.
     @objc func sceneWillUnloadAction(notification: Notification) {

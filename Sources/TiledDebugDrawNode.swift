@@ -268,14 +268,16 @@ internal class TiledDebugDrawNode: SKNode {
     
     /// Display the current tile grid.
     func drawGrid() {
-        guard let layer = layer else { return }
+        guard let layer = layer else {
+            Logger.default.log("invalid layer.", level: .error, symbol: "SKTiledDebugDrawNode")
+            return
+        }
         
         let fillColor = layer.tilemap.gridColor
         
         if (gridTexture == nil) {
             gridSprite.isHidden = true
             
-    
             // get the last z-position
             zPosition = layer.tilemap.lastZPosition + (layer.tilemap.zDeltaForLayers + 10)
             isHidden = false

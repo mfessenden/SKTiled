@@ -92,8 +92,8 @@ let tilemap = SKTilemap.load(tmxFile: "myTiledFile", ignoreProperties: true)
 | xGravity            | Float  | gravity in x.                                    | dynamics |
 | yGravity            | Float  | gravity in y.                                    | dynamics |
 | cropAtBoundary      |  Bool  | crop the map at boundaries.                      |          |
-| shouldEnableEffects |  Bool  | toggle effects rendering on the map.             |          |
-
+| shouldEnableEffects |  Bool  | toggle effects rendering for the map.            |          |
+| layerAlignment      | String | controls how the map aligns child layers.        |          |
 
 #### SKTiledLayerObject
 

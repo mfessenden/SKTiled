@@ -159,7 +159,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
     /// Points describing the object's shape.
     internal var points: [CGPoint] = []
 
-    /// Object path.
+    /// This object's `CGPath` defining the shape of geometry. Used to draw the bounding shape.
     @objc public lazy var objectPath: CGPath = {
         if (globalID == nil) {
             let vertices = getVertices().map( { $0.invertedY })
@@ -315,7 +315,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
     /// Custom object properties.
     open var properties: [String: String] = [:]
 
-    /// Private **Tiled** properties.
+    /// :nodoc: Private **Tiled** properties.
     public var _tiled_properties: [String: String] = [:]
 
     /// Object will ignore custom properties.
@@ -456,6 +456,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
     /// Removes this node from the scene graph.
     open override func destroy() {
+        
         // remove from cache
         NotificationCenter.default.post(
             name: Notification.Name.Object.ObjectDestroyed,

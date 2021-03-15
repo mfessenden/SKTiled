@@ -95,8 +95,6 @@ extension TiledCustomReflectableType {
         let underlinedString = String(repeating: "-", count: formattedString.count)
         return "\n\(formattedString)\n\(underlinedString)\n"
     }
-
-
 }
 
 

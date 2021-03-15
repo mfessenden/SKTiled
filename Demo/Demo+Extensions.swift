@@ -34,7 +34,7 @@ import GameController
 /// Saving & Loading.
 extension TiledGlobals {
 
-    /// Load prefs from the defaults plist.
+    /// Load prefs from the `Defaults.plist` file.
     internal func loadFromDemoDefaults() {
         if let defaultsPath = Bundle.main.path(forResource: "Defaults", ofType: "plist"),
            let xml = FileManager.default.contents(atPath: defaultsPath),
@@ -71,8 +71,6 @@ extension TiledGlobals {
                 name: Notification.Name.Globals.DefaultsRead,
                 object: demoPreferences
             )
-
-
 
         } else {
             fatalError("cannot read preferences from bundle.")
@@ -224,8 +222,9 @@ extension TiledGlobals {
 
     /// Save global preferences to `UserDefaults`.
     internal func saveToUserDefaults() {
+        
+        // preferences group for SKTiled apps
         let defaults = UserDefaults.shared
-
 
         // globals
         defaults.set(self.debugDrawOptions.rawValue, forKey: "tiled-gbl-ddoptions")
@@ -710,12 +709,6 @@ public class SKTMoveEffect: SKTEffect {
 }
 
 
-/// Increments a CGPoint with the value of another.
-public func += (left: inout CGPoint, right: CGPoint) {
-    left = left + right
-}
-
-
 
 // MARK: - Tilemap
 
@@ -724,7 +717,10 @@ extension SKTilemap {
     
     /// Reposition all of the child layers.
     public func repositionLayers() {
-        layers.forEach { self.positionLayer($0) }
+        layers.forEach {
+            self.positionLayer($0)
+
+        }
     }
 }
 
@@ -854,7 +850,6 @@ extension UserDefaults {
         return UserDefaults(suiteName: "org.sktiled")!
     }
 }
-
 
 
 

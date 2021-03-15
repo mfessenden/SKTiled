@@ -17,7 +17,7 @@
   </properties>
   <layer id="2" name="Level1" width="22" height="21">
    <properties>
-    <property name="isStatic" type="bool" value="false"/>
+    <property name="isStatic" type="bool" value="true"/>
    </properties>
    <data encoding="base64" compression="zlib">
    eJztk79KA0EQxmc9xVYtRI2EQwQthPgHEowgB2KnPoD451JY2p0m2IqVRd7BIvgKkkIfwELfQtAXsPMbboYb1zs9Ebt88GOT3dlvZ2b3iAYaqLz2HdHIP/hOgSYYAgE4cH/zGwV1MO0xA4ZBJWfPHej/4BuCXXAIjkEMlgX2XzWxXALXswHWPB9e4zq1l6GMO+LfBi/ip6iewDN4cxS3zHwXvMJ43pwX0lfNmfXA9PlczuU9HRPfA2dSs55X5Dv7zbo/15MxMecV+aLWB77PhsxxrXWh4cVzngF97m+NKOL/fB+XlL6DdcmX+70ncbeU9oHV9nwT8bb95XfL974EruR3xeSr3Ev8SU591lv7u4B7OcW4BbbBOJgw+VpY1QJf1oWg+a6ATTAJFsEjZfd2DWKX0S35HdbEV72RcxQZ3xtK35C+sU6OR564J0eUfWvvMraKt5RS4uUz5n6X1wdgVjQZ
@@ -25,7 +25,7 @@
   </layer>
   <layer id="3" name="Objects" width="22" height="21">
    <properties>
-    <property name="isStatic" type="bool" value="false"/>
+    <property name="isStatic" type="bool" value="true"/>
    </properties>
    <data encoding="base64" compression="zlib">
    eJxjYBgFo2AUDEYQRCNzM2lk7igYBSMFAACGMgC8
@@ -33,7 +33,7 @@
   </layer>
   <layer id="4" name="Bridges" width="22" height="21">
    <properties>
-    <property name="isStatic" type="bool" value="false"/>
+    <property name="isStatic" type="bool" value="true"/>
    </properties>
    <data encoding="base64" compression="zlib">
    eJxjYBgFo2AUDDcwBYinAvE0Kpq5hopmIYPDFOjF56ZbFJhLyE3khi8lbqIloEV6Gc4AAFG6CdA=
@@ -41,7 +41,7 @@
   </layer>
   <objectgroup id="6" name="Lower Objects">
    <properties>
-    <property name="isStatic" type="bool" value="false"/>
+    <property name="isStatic" type="bool" value="true"/>
     <property name="zPosition" type="float" value="5"/>
    </properties>
    <object id="79" name="crate9" gid="151" x="310" y="146" width="16" height="16"/>
@@ -83,7 +83,7 @@
   <layer id="10" name="Level2" width="22" height="21">
    <properties>
     <property name="drawbounds" type="bool" value="false"/>
-    <property name="isStatic" type="bool" value="false"/>
+    <property name="isStatic" type="bool" value="true"/>
    </properties>
    <data encoding="base64" compression="zlib">
    eJxjYBhZQGHUXKqau5MRwY4Hsq8C8UQqmHsFSoOMv8zI8OAckLGCCubCgBsQGwPxU6C5qmSasZMB7DaGfRC6YReQtgZiGQrd9gpo5hVGBLsIiKWB7EQKze1kRMT7FSjfBkgvZcSthxiwgBE1Pe1hRKXJAaLQcN1PgbuwAR2guaeA9DUqmzsKRhYAAItVGVU=
@@ -91,7 +91,7 @@
   </layer>
   <layer id="11" name="Level3" width="22" height="21">
    <properties>
-    <property name="isStatic" type="bool" value="false"/>
+    <property name="isStatic" type="bool" value="true"/>
    </properties>
    <data encoding="base64" compression="zlib">
    eJxjYCAfXADii0B8iQIzsIGzjAwMskB8jpG65j6BmveUyuaOglEwCkbBKBg5AADUzAX6

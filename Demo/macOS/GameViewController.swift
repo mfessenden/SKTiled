@@ -540,7 +540,7 @@ class GameViewController: NSViewController, Loggable {
 
     /// Called when a new scene has been loaded. Called when the `Notification.Name.Demo.SceneLoaded` event fires.
     ///
-    ///  object is `SKTiledScene`, userInfo: ["tilemapName": `String`, "relativePath": `String`, "currentMapIndex": `Int`]
+    ///  object is `SKTiledScene`, userInfo: `["tilemapName": String, "relativePath": String, "currentMapIndex": Int]`
     ///
     /// - Parameter notification: event notification.
     @objc func demoSceneLoaded(notification: Notification) {
@@ -716,7 +716,7 @@ class GameViewController: NSViewController, Loggable {
 
     /// Builds a right-click menu to select nodes at the click event location. Called when the `Notification.Name.Demo.NodesRightClicked` notification is sent (via the `SKTiledSceneCamera` node).
     ///
-    ///  - expects a user dictionary value of `["nodes": [SKNode], "locationInWindow": CGPoint]`
+    ///  - sends a user dictionary value of `["nodes": [SKNode], "windowPosition": CGPoint, "scenePosition": CGPoint]`
     ///
     /// - Parameter notification: event notification.
     @objc func nodesRightClickedAction(notification: Notification) {
@@ -774,12 +774,21 @@ class GameViewController: NSViewController, Loggable {
         filteredNodes.append(contentsOf: resultLayers)
 
         var positionInWindow = NSPoint.zero
-        if let pointInCamera = userInfo["positionInWindow"] as? NSPoint {
+        if let pointInCamera = userInfo["windowPosition"] as? NSPoint {
             positionInWindow = pointInCamera
+        }
+        
+        
+        var positionInScene = NSPoint.zero
+        if let pointInScene = userInfo["scenePosition"] as? NSPoint {
+            positionInScene = pointInScene
         }
 
         // build the menu
-        buildNodesRightClickMenu(nodes: filteredNodes, highlightableIndex: index, at: positionInWindow)
+        buildNodesRightClickMenu(nodes: filteredNodes,
+                                 highlightableIndex: index,
+                                 scene: positionInScene,
+                                 at: positionInWindow)
     }
 
     /// Builds a popup menu with a list of included nodes.
@@ -790,9 +799,12 @@ class GameViewController: NSViewController, Loggable {
     ///   - positionInWindow: the point in the main window where the menu will be drawn.
     func buildNodesRightClickMenu(nodes: [SKNode],
                                   highlightableIndex: Int,
+                                  scene positionInScene: NSPoint,
                                   at positionInWindow: NSPoint = NSPoint.zero) {
         
-        guard let skView = self.view as? SKView else {
+        guard let skView = self.view as? SKView,
+              let scene = skView.scene as? SKTiledScene,
+              let tilemap = scene.tilemap else {
             log("cannot access SpriteKit view.", level: .warning)
             return
         }
@@ -808,6 +820,19 @@ class GameViewController: NSViewController, Loggable {
         titleMenuItem.image = NSImage(named: "selection-icon")
         titleMenuItem.isEnabled = false
         nodesMenu.addItem(titleMenuItem)
+        
+        
+        let scenePositionMenuItem = NSMenuItem(title: "scene position: \(positionInScene.shortDescription)", action: nil, keyEquivalent: "")
+        scenePositionMenuItem.isEnabled = false
+        nodesMenu.addItem(scenePositionMenuItem)
+        
+        
+        let mapPosition = tilemap.convert(positionInScene, from: scene)
+        let mapPositionMenuItem = NSMenuItem(title: "map position: \(mapPosition.shortDescription)", action: nil, keyEquivalent: "")
+        mapPositionMenuItem.isEnabled = false
+        nodesMenu.addItem(mapPositionMenuItem)
+        
+        
         nodesMenu.addItem(NSMenuItem.separator())
 
 
@@ -1233,6 +1258,8 @@ class GameViewController: NSViewController, Loggable {
     }
 
     /// Called when the current scene is about to unload. Called when the `Notification.Name.Demo.SceneWillUnload` notification is received.
+    ///
+    ///  userinfo: `["url": URL]`
     ///
     /// - Parameter notification: event notification.
     @objc func sceneWillUnloadAction(_ notification: Notification) {

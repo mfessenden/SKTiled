@@ -27,14 +27,36 @@
 import SpriteKit
 
 
+
 /// Vector object proxy.
 internal class TileObjectProxy: SKShapeNode {
     
+    enum LabelAlignment {
+        case above
+        case center
+        case below
+    }
+
     /// Parent container.
     weak var container: TileObjectOverlay?
     
     /// Referenced vector object.
     weak var reference: SKTileObject?
+    
+    // MARK: - Proxy Label
+    
+    /// Show the object's label.
+    var showLabel: Bool = true
+    
+    /// Object label.
+    lazy var label: SKLabelNode = {
+        var objname = reference?.name ?? "null"
+        let labelNode = SKLabelNode(text: objname)
+        labelNode.fontName = ".SFNS-Medium"
+        labelNode.fontSize = 10
+        addChild(labelNode)
+        return labelNode
+    }()
     
     /// Node is visible to the camera.
     var visibleToCamera: Bool = false
@@ -51,8 +73,7 @@ internal class TileObjectProxy: SKShapeNode {
             guard (oldValue != zoomLevel) else {
                 return
             }
-            
-            
+
             // FIXME: crash here
             self.draw()
         }
@@ -71,8 +92,8 @@ internal class TileObjectProxy: SKShapeNode {
         }
     }
     
-    /// Toggle proxy drawing.
-    var showObjects: Bool = false {
+    /// Toggle proxy display.
+    var displayReference: Bool = false {
         didSet {
             self.draw()
         }
@@ -102,7 +123,7 @@ internal class TileObjectProxy: SKShapeNode {
             guard (oldValue != isFocused) else { return }
             removeAction(forKey: animationKey)
             
-            if (isFocused == false) && (showObjects == false) {
+            if (isFocused == false) && (displayReference == false) {
                 let fadeAction = SKAction.colorFadeAction(after: 0.5)
                 self.run(fadeAction, withKey: animationKey)
             } else {
@@ -127,7 +148,7 @@ internal class TileObjectProxy: SKShapeNode {
         self.animationKey = "highlight-proxy-\(object.id)"
         self.name = "proxy-\(object.id)"
         object.proxy = self
-        showObjects = visible
+        displayReference = visible
         isRenderable = renderable
         
         // grab proxy color overrides
@@ -137,15 +158,24 @@ internal class TileObjectProxy: SKShapeNode {
         }
     }
     
+    /// Instantiate the node with a decoder instance.
+    ///
+    /// - Parameter aDecoder: decoder.
     required init?(coder aDecoder: NSCoder) {
         super.init()
     }
     
     /// Draw the objects in the overlay.
     public func draw() {
+        /*
+        let anchor = SKShapeNode(circleOfRadius: 2)
+        anchor.fillColor = TiledObjectColors.azure
+        anchor.zPosition = zPosition + 10
+        addChild(anchor)
+        */
         
         // FIXME: this is causing selected object frame to disappear (but leave anchor)
-        let proxyIsVisible = (showObjects == true) || (isFocused == true)
+        let proxyIsVisible = (displayReference == true) || (isFocused == true)
         
         self.removeAction(forKey: self.animationKey)
         
@@ -163,6 +193,7 @@ internal class TileObjectProxy: SKShapeNode {
             }
         }
         
+        // label.text = object.name ?? "null"
         
         // FIXME: crash here
         
@@ -249,6 +280,7 @@ extension TileObjectProxy {
 }
 
 
+/// :nodoc:
 extension TileObjectProxy {
     
     public override var description: String {

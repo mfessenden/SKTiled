@@ -80,8 +80,10 @@ import GameplayKit
 ///
 @objc public protocol TiledMappableGeometryType: TiledGeometryType {
 
-    /// Map orientation type.
-    @objc var orientation: TilemapOrientation { get set }
+    /// The map projection type.
+    ///
+    /// [tilemap-orientation-image]:../images/tilemap-orientations.svg
+    @objc var orientation: TilemapOrientation { get }
 
     /// Indicates the container represents an infinite map.
     @objc var isInfinite: Bool { get }
@@ -135,6 +137,7 @@ extension TiledMappableGeometryType {
     public var tileWidth: CGFloat {
         switch orientation {
             case .staggered:
+                // TODO: check this
                 return CGFloat(Int(tileSize.width) & ~1)
 
             default:
@@ -146,6 +149,7 @@ extension TiledMappableGeometryType {
     public var tileHeight: CGFloat {
         switch orientation {
             case .staggered:
+                // TODO: check this
                 return CGFloat(Int(tileSize.height) & ~1)
             default:
                 return tileSize.height
@@ -181,13 +185,7 @@ extension TiledMappableGeometryType {
                 var result = CGSize.zero
                 
                 if (staggerX == true) {
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+
                     result = CGSize(width: width * columnWidth + sideOffsetX,
                                     height: height * (tileHeight + sideLengthY))
                     
@@ -214,6 +212,11 @@ extension TiledMappableGeometryType {
                 
                 return result.floor()
         }
+    }
+    
+    /// The size of the container, in pixels.
+    public var sizeInPixels: CGSize {
+        return sizeInPoints * TiledGlobals.default.contentScale
     }
 
     // MARK: - Geometry
@@ -669,12 +672,14 @@ extension TiledMappableGeometryType {
         }
     }
 
-    /// Converts a screen (isometric) coordinate to a coordinate in map space. Note that this function returns a point that needs to be converted to SpriteKit space.
+    /// Converts a screen (isometric) coordinate to a coordinate in map (pixel) space. Note that this function returns a point that needs to be converted to SpriteKit space.
     ///
-    /// - Parameter point: point in screen space.
+    /// - Parameter point: point in screen (isometric) space.
     /// - Returns: point in map space.
     internal func screenToPixelCoords(point: CGPoint) -> CGPoint {
+        
         switch orientation {
+            
             case .isometric:
                 var x = point.x
                 let y = point.y
@@ -689,12 +694,14 @@ extension TiledMappableGeometryType {
         }
     }
 
-    /// Converts a coordinate in map space to screen space. See: [Stack Overflow](http://stackoverflow.com/questions/24747420/tiled-map-editor-size-of-isometric-tile-side) link.
+    /// Converts a coordinate in map (pixel) space to screen (isometric) space. See: [Stack Overflow](http://stackoverflow.com/questions/24747420/tiled-map-editor-size-of-isometric-tile-side) link.
     ///
-    /// - Parameter point:  point in map space.
+    /// - Parameter point:  point in map (pixel) space.
     /// - Returns: point in screen space.
     internal func pixelToScreenCoords(point: CGPoint) -> CGPoint {
+        
         switch orientation {
+            
             case .isometric:
                 let originX = height * tileWidth / 2
                 let tileY = point.y / tileHeight

@@ -690,13 +690,16 @@ public class SKTiledSceneCamera: SKCameraNode {
     public func fitToView(newSize: CGSize, transition: TimeInterval = 0) {
         guard let scene = scene,
               let tiledScene = scene as? TiledSceneDelegate,
-              let tilemap = tiledScene.tilemap else { return }
+              let tilemap = tiledScene.tilemap else {
+            return
+        }
         
-        let mapsize = tilemap.sizeInPoints // (tilemap.sizeInPoints / TiledGlobals.default.contentScale)
+        // get the tilemap anchor position
+        let mapsize = tilemap.sizeInPoints
+        // FIXME: this only works for `center` layer alignment
         let tilemapCenter = scene.convert(tilemap.position, from: tilemap)
         
         let isPortrait: Bool = newSize.height > newSize.width
-        
         let widthFactor: CGFloat = (tilemap.isPortrait == true) ? 0.85 : 0.75
         let heightFactor: CGFloat = (tilemap.isPortrait == true) ? 0.75 : 0.85
         
@@ -1150,7 +1153,7 @@ extension SKTiledSceneCamera {
                 }
                 
                 if let tiledNode = node as? TiledGeometryType {
-                    if let bgLayer = tiledNode as? TiledBackgroundLayer {
+                    if let _ = tiledNode as? TiledBackgroundLayer {
                         return false
                     }
                     
@@ -1172,7 +1175,8 @@ extension SKTiledSceneCamera {
                 name: Notification.Name.Demo.NodesRightClicked,
                 object: nil,
                 userInfo: ["nodes": nodesUnderMouse,
-                           "positionInWindow": event.locationInWindow]
+                           "windowPosition": event.locationInWindow,
+                           "scenePosition": locationInScene]
             )
         }
         #endif

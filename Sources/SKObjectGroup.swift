@@ -86,7 +86,7 @@ public class SKObjectGroup: TiledLayerObject {
     /// Array of child objects.
     fileprivate var objects: Set<SKTileObject> = []
 
-    /// Returns the number of objects in this layer.
+    /// Returns the number of child objects contained in this layer.
     public var count: Int { return objects.count }
 
     /// Controls antialiasing for each object
@@ -178,7 +178,6 @@ public class SKObjectGroup: TiledLayerObject {
         }
     }
     
-    /*
     /// Initial layer position for infinite maps. Used to reposition layers & chunks in infinite maps. This is used by the tilemap to position the layers as they are added.
     internal override var layerInfiniteOffset: CGPoint {
         //if (isInfinite == false) || (layerType != .tile) {
@@ -189,14 +188,14 @@ public class SKObjectGroup: TiledLayerObject {
         var offsetPos = CGPoint.zero
         switch orientation {
             case .orthogonal:
-                offsetPos.x -= tileWidthHalf
-                offsetPos.y -= tileHeightHalf
+                //offsetPos.x += tileWidth
+                offsetPos.y += tileHeightHalf
             default: break
                 
         }
+        
         return offsetPos
     }
-     */
 
     // MARK: - Initialization
 

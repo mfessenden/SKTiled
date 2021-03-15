@@ -51,7 +51,7 @@ internal class TileCollisionShape: TiledObjectType {
     /// Custom properties.
     var properties: [String: String] = [:]
     
-    /// Private **Tiled** properties.
+    /// :nodoc: Private **Tiled** properties.
     var _tiled_properties: [String: String] = [:]
 
     /// Ignore custom properties.

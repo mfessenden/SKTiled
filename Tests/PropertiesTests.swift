@@ -25,12 +25,13 @@
 //  THE SOFTWARE.
 
 import XCTest
+import SpriteKit
 @testable import SKTiled
 
 
 // Tile map instance used for this test.
-fileprivate var propertiesTestTilemap: SKTilemap?
-fileprivate let propertiesTestTilemapName = "test-tilemap"
+fileprivate var testTilemap: SKTilemap?
+fileprivate let testTilemapName = "test-tilemap"
 
 
 
@@ -39,9 +40,9 @@ class PropertiesTests: XCTestCase {
 
     override class func setUp() {
         super.setUp()
-        if (propertiesTestTilemap == nil) {
-            if let tilemapUrl = TestController.default.getResource(named: propertiesTestTilemapName, withExtension: "tmx") {
-                propertiesTestTilemap = SKTilemap.load(tmxFile: tilemapUrl.path, loggingLevel: .none)
+        if (testTilemap == nil) {
+            if let tilemapUrl = TestController.default.getResource(named: testTilemapName, withExtension: "tmx") {
+                testTilemap = SKTilemap.load(tmxFile: tilemapUrl.path, loggingLevel: .none)
             }
         }
     }
@@ -51,8 +52,8 @@ class PropertiesTests: XCTestCase {
     /// The actual property string is: `tom,dick , harry`, so we're also
     /// testing the parser's ability to strip out whitespaces correctly.
     func testStringArrayProperties() {
-        guard let tilemap = propertiesTestTilemap else {
-            XCTFail("⭑ failed to load tilemap '\(propertiesTestTilemapName)'")
+        guard let tilemap = testTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testTilemapName)'")
             return
         }
         
@@ -68,7 +69,7 @@ class PropertiesTests: XCTestCase {
     ///
     func testIntArrayProperties() {
         var intArrayProperties: [Int] = []
-        if let tilemap = propertiesTestTilemap {
+        if let tilemap = testTilemap {
             intArrayProperties = tilemap.integerArrayForKey("integers")
         }
 
@@ -78,7 +79,7 @@ class PropertiesTests: XCTestCase {
     /// Test the `TiledObjectType.doubleArrayForKey` function.
     func testDoubleArrayProperties() {
         var doubleArrayProperties: [Double] = []
-        if let tilemap = propertiesTestTilemap {
+        if let tilemap = testTilemap {
             doubleArrayProperties = tilemap.doubleArrayForKey("doubles")
         }
         XCTAssertEqual(doubleArrayProperties, [1.2, 5.4, 12, 18.25], "⭑could not parse double array properties from map.")
@@ -95,13 +96,13 @@ class PropertiesTests: XCTestCase {
     ///  the `SKTilemap.allowZoom` should remain true.
     func testPropertiesAreIgnored() {
         let testBundle = Bundle.init(for: PropertiesTests.self)
-        guard let mapurl = testBundle.url(forResource: propertiesTestTilemapName, withExtension: "tmx") else {
-            XCTFail("⭑ could not find tilemap file '\(propertiesTestTilemapName)'")
+        guard let mapurl = testBundle.url(forResource: testTilemapName, withExtension: "tmx") else {
+            XCTFail("⭑ could not find tilemap file '\(testTilemapName)'")
             return
         }
         
         guard let ignoredMap = SKTilemap.load(tmxFile: mapurl.path, ignoreProperties: true, loggingLevel: .none) else {
-            XCTFail("⭑ failed to load tilemap '\(propertiesTestTilemapName)'")
+            XCTFail("⭑ failed to load tilemap '\(testTilemapName)'")
             return
         }
         XCTAssertFalse(ignoredMap.allowZoom == false, "⭑tilemap `allowZoom` property should still be the default `true` value")
@@ -109,14 +110,14 @@ class PropertiesTests: XCTestCase {
     
     /// Test the `TiledObjectType.getValue(for:defaultValue:)` method.
     func testQueryWithDefaultValue() {
-        guard let tilemap = propertiesTestTilemap else {
-            XCTFail("⭑ failed to load tilemap '\(propertiesTestTilemapName)'")
+        guard let tilemap = testTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testTilemapName)'")
             return
         }
         
         
         guard let wallsLayer = tilemap.tileLayers(named: "Walls").first else {
-            XCTFail("⭑ no layer named 'Walls' found in map '\(propertiesTestTilemapName)'")
+            XCTFail("⭑ no layer named 'Walls' found in map '\(testTilemapName)'")
             return
         }
         
@@ -129,8 +130,8 @@ class PropertiesTests: XCTestCase {
     }
     
     func testQueryPropertyWithSubscript() {
-        guard let tilemap = propertiesTestTilemap else {
-            XCTFail("⭑ failed to load tilemap '\(propertiesTestTilemapName)'")
+        guard let tilemap = testTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testTilemapName)'")
             return
         }
         
@@ -138,8 +139,8 @@ class PropertiesTests: XCTestCase {
     }
     
     func testAddPropertyValueWithSubscript() {
-        guard let tilemap = propertiesTestTilemap else {
-            XCTFail("⭑ failed to load tilemap '\(propertiesTestTilemapName)'")
+        guard let tilemap = testTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testTilemapName)'")
             return
         }
         
@@ -151,8 +152,8 @@ class PropertiesTests: XCTestCase {
     ///
     /// tileset has several tiles with a property named `object`. Here we're looking for a value of `hole`.
     func testGetTilesWithProperty() {
-        guard let tilemap = propertiesTestTilemap else {
-            XCTFail("⭑ failed to load tilemap '\(propertiesTestTilemapName)'")
+        guard let tilemap = testTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testTilemapName)'")
             return
         }
 
@@ -172,5 +173,29 @@ class PropertiesTests: XCTestCase {
         
         XCTAssertEqual(doors.count, expectedDoorsCount, "⭑ expected \(expectedDoorsCount) tiles with the value '\(doorKey): \(doorVal)', got \(doors.count)")
         
+    }
+    
+    
+    /// Tests the `_tiled_properties` attributes.
+    func testTileDataPropertiesImmutability() {
+        guard let tilemap = testTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testTilemapName)'")
+            return
+        }
+        
+        let testLayerName = "Objects"
+        let testCoordinate = simd_int2(22,10)
+        let propertyName = "pointValue"
+        let initialValue: Int = 2100
+        
+        guard let tileLayer = tilemap.tileLayers(named: testLayerName).first else {
+            XCTFail("⭑ invalid tile layer '\(testLayerName)'")
+            return
+        }
+        
+        guard let tile = tileLayer.tileAt(coord: testCoordinate) else {
+            XCTFail("⭑ invalid tile coordinate '\(testCoordinate.coordDescription)'")
+            return
+        }
     }
 }

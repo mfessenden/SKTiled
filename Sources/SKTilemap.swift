@@ -38,9 +38,9 @@ internal enum RenderOrder: String {
 
 /// Alignment hint used to position the layers within the `SKTilemap` node.
 ///
-///  - `bottomLeft`:   node bottom left rests at parent zeropoint (0)
-///  - `center`:       node center rests at parent zeropoint (0.5)
-///  - `topRight`:     node top right rests at parent zeropoint. (1)
+///  - `bottomLeft`:   node bottom left rests at map zero point (0).
+///  - `center`:       node center rests at parent zero point (0.5).
+///  - `topRight`:     node top right rests at parent zero point. (1).
 internal enum LayerPosition {
     case bottomLeft
     case center
@@ -52,16 +52,18 @@ internal enum LayerPosition {
 ///
 /// The default mode is `TileUpdateMode.actions`, which should be used for the best performance. In this mode, animated tiles are animated with [**SpriteKit actions**][skaction-url].
 ///
-/// If `full` mode is used, each tile (animated or otherwise) is updated **every frame**. This ensures accuracy
+/// If `full` mode is used, each tile (animated or otherwise) is updated **every frame**. This ensures accuracy in syncronizing frames.
 ///
 /// - Important:
-///  If `dynamic` or `full` mode is selected, the `SKTilemap` node **must** be included in your scene's main update loop.
+///  If `dynamic` or `full` mode is selected, the `SKTilemap` node **must** be included in your scene's main update loop to render properly.
 ///
 /// ### Usage
 ///
 /// ```swift
 /// // passing the tile update mode to the load function
-/// let tilemap = SKTilemap.load(tmxFile: String, updateMode: TileUpdateMode.dynamic)!
+/// if let tilemap = SKTilemap.load(tmxFile: "MyFile.tmx", updateMode: TileUpdateMode.dynamic) {
+///     scene.addChild(tilemap)
+/// }
 ///
 /// // updating the attribute on the tilemp node
 /// tilemap.updateMode = TileUpdateMode.actions
@@ -110,13 +112,16 @@ public struct TiledGeometryIsolationMode: OptionSet {
     public static let allTiles: TiledGeometryIsolationMode = [.tiles, .tileObjects]
     public static let allObjects: TiledGeometryIsolationMode = [.objects, .tileObjects, .textObjects, pointObjects]
 
+    /// Initialize with a raw integer value.
+    ///
+    /// - Parameter rawValue: unsigned integer value.
     public init(rawValue: UInt8 = 0) {
         self.rawValue = rawValue
     }
 }
 
 
-/// The `SKTilemap` class is a container for managing layers of tiles (sprites),
+/// The `SKTilemap` class is a mappable container for managing layers of tiles (sprites),
 /// vector objects & images. Tile data is stored in [`SKTileset`][tileset-url] tile sets.
 ///
 /// ### Usage
@@ -124,7 +129,7 @@ public struct TiledGeometryIsolationMode: OptionSet {
 /// Maps can be loaded with the class function `SKTilemap.load(tmxFile:)`:
 ///
 /// ```swift
-/// if let tilemap = SKTilemap.load(tmxFile: "myfile.tmx") {
+/// if let tilemap = SKTilemap.load(tmxFile: "MyFile.tmx") {
 ///     scene.addChild(tilemap)
 /// }
 /// ```
@@ -166,8 +171,6 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     /// Unique SpriteKit node id.
     public var uuid: String = UUID().uuidString
 
-
-
     /// Indicates the Tiled application version this map was created with.
     public internal(set) var tiledversion: String!
 
@@ -186,7 +189,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     /// Custom **Tiled** properties.
     public var properties: [String: String] = [:]
 
-    /// Private **Tiled** properties.
+    /// :nodoc: Private **Tiled** properties.
     public var _tiled_properties: [String: String] = [:]
 
     /// If enabled, custom **Tiled** properties are ignored.
@@ -231,11 +234,13 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
     // MARK: Positioning
 
-    /// Mappable child node offset. Used when a map container aligns all of the layers.
+    /// Mappable child node offset. By default, the `SKTilemap` node aligns child layers to its' center point.
+    ///
+    /// Used when a map container aligns all of the layers.
     public var childOffset: CGPoint {
         var offsetOutput = CGPoint.zero
 
-        // default alignment is `center`
+        // default alignment is `center` (0.5,0.5)
         let layerAnchorPoint = layerAlignment.anchorPoint
 
         switch orientation {
@@ -254,8 +259,15 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return offsetOutput
     }
 
-    /// Map orientation type.
-    public var orientation: TilemapOrientation
+    /// Defines this map's position within a [Tiled world][tiled-world-url]. This value cannot be changed directly, but matches the value set in the world JSON description.
+    ///
+    /// [tiled-world-url]:https://doc.mapeditor.org/en/stable/manual/worlds/
+    public internal(set) var worldOffset: CGPoint = CGPoint.zero
+
+    /// The map projection type.
+    ///
+    /// [tilemap-orientation-image]:../images/tilemap-orientations.svg
+    public internal(set) var orientation: TilemapOrientation
 
     /// Tile render order.
     internal var renderOrder: RenderOrder = RenderOrder.rightDown
@@ -263,29 +275,32 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     /// Map display name. Defaults to the current map source file name (minus the tmx extension).
     public var displayName: String?
 
-    /// Root for all Tiled content.
+    /// Root for all Tiled renderable content.
     internal let contentRoot = SKEffectNode()
 
-    /// Root node for all debugging items.
+    /// Root node for all debugging content.
     internal let debugRoot = SKNode()
 
     /// Crop node to crop the map at boundaries.
     internal let cropNode = SKCropNode()
 
-    /// Crop the map at its boundaries.
+    /// Setting this property masks the map at its boundaries.
     public var isCropped: Bool {
+        
+        // FIXME: this will not work with infinite maps
+        
         get {
             return cropNode.maskNode != nil
         } set {
             cropNode.maskNode = nil
-            if newValue == true {
+            if (newValue == true) {
                 let mask = SKSpriteNode(color: SKColor.black, size: self.sizeInPoints)
                 cropNode.maskNode = mask
             }
         }
     }
 
-    /// Shape describing this object.
+    /// This object's `CGPath` defining the shape of geometry. Used to draw the bounding shape.
     @objc public lazy var objectPath: CGPath = {
         let vertices = getVertices(offset: CGPoint.zero)
         return polygonPath(vertices)
@@ -627,7 +642,12 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
 
             for layer in layers {
-
+                
+                if let chunk = layer as? SKTileLayerChunk {
+                    print("chunk: '\(chunk.xPath)'")
+                }
+                
+                
                 // if this layer is part of the isolated array...
                 let isolateThisLayer = isolated.contains(layer)
 
@@ -659,7 +679,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
                 layer.isIsolated = isolateThisLayer
                 layer.isHidden = hideThisLayer
 
-                for relative in layersToProtect.filter({ $0 != layer }) {
+                for relative in layersToProtect.filter({ $0 != layer && $0 as? SKTileLayerChunk == nil }) {
                     relative.isHidden = hideThisLayer
                     alreadyIsolated.append(relative)
                 }
@@ -778,7 +798,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
             let proxies = self.getObjectProxies()
 
             for proxy in proxies {
-                proxy.showObjects = proxiesVisible
+                proxy.displayReference = proxiesVisible
                 proxy.draw()
             }
         }
@@ -943,7 +963,9 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     /// The property used to align child layers within the tilemap.
     internal var layerAlignment: LayerPosition = LayerPosition.center {
         didSet {
-            layers.forEach { self.positionLayer($0) }
+            layers.forEach {
+                self.positionLayer($0)
+            }
         }
     }
 
@@ -1956,12 +1978,12 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
 
         if (TiledGlobals.default.enableTilemapInfiniteOffsets == true) {
-
             // apply offset for infinite maps (tile layers only)
-            result.x -= layer.layerInfiniteOffset.x
-            result.y += layer.layerInfiniteOffset.y
+            result += layer.layerInfiniteOffset
         }
-
+        
+        result += layer.debugOffset
+        
         // set the layer final position
         layer.position = result
     }
@@ -2530,10 +2552,10 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
     /// Called when the map isolation mode changes.
     internal func updateGeometryIsolationMode() {
-        
+
         print("⭑ geometry isolation mode updated '\(isolationMode)'")
-        
-        
+
+
         var doShowTiles = isolationMode.contains(.tiles) || isolationMode.contains(.none)
         var doShowObjects = isolationMode.contains(.objects) || isolationMode.contains(.none)
 
@@ -2885,6 +2907,8 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
             (label: "tile size", value: tileSize),
             (label: "layer alignment", value: layerAlignment),
             (label: "layers", value: layers),
+            (label: "parse time", value: "\(parseTime.milleseconds.stringRoundedTo(2))ms"),
+            (label: "render time", value: "\(renderTime.milleseconds.stringRoundedTo(2))ms"),
             (label: "properties", value: mirrorChildren())
         ]
 
@@ -2981,26 +3005,26 @@ extension TiledGeometryIsolationMode {
 
 /// :nodoc:
 extension TileUpdateMode: CustomStringConvertible, CustomDebugStringConvertible {
-    
+
     /// Returns the name of the given mode.
     public var name: String {
         switch self {
             case .dynamic:
                 return "dynamic"
-                
+
             case .full:
                 return "full"
-                
+
             case .actions:
                 return "actions"
         }
     }
-    
+
     /// String representation of the mode.
     public var description: String {
         return self.name
     }
-    
+
     /// Debug string representation of the mode.
     public var debugDescription: String {
         return self.name
@@ -3085,7 +3109,25 @@ extension StaggerAxis: Hashable {
 
 /// :nodoc:
 extension LayerPosition: CustomStringConvertible {
+    
+    /// Initialize with a string value.
+    ///
+    /// - Parameter value: string description.
+    init?(string value: String) {
+        switch value.lowercased() {
+            case "bottomleft", "bottom-left":
+                self = .bottomLeft
+                
+            case "center":
+                self = .center
 
+            case "topright", "top-right":
+                self = .topRight
+                
+            default: return nil
+        }
+    }
+    
     /// Returns the layer position name.
     internal var name: String {
         switch self {
@@ -3444,6 +3486,12 @@ extension SKTilemap: TiledCustomReflectableType {
             }
             outputString += "\n\(layerOutputString)"
         }
+        
+        
+        
+        
+        
+        
 
         print("\n\n" + outputString + "\n\n")
     }
@@ -3653,9 +3701,9 @@ extension SKTilemap: TiledSceneCameraDelegate {
 
         // TODO: test this method
         //let tilesAtMapCoordinate = tilesAt(coord: currentCoordinate).filter { $0.isHidden == false }
-        
-        
-        
+
+
+
         // TODO: check tiles for coordinate match? this is very inaccurate in isometric & staggered maps
         var result = tiledNodes(at: event.location(in: self)).filter { $0.isFocused == false } as! [SKNode]
         let clickedProxies = objectsOverlay.nodes(at: event.location(in: objectsOverlay)).filter { $0 as? TileObjectProxy != nil} as! [TileObjectProxy]

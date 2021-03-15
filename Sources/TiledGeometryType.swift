@@ -50,7 +50,7 @@ import SpriteKit
     /// The object's parent container.
     @objc optional var container: TiledMappableGeometryType? { get }
     
-    /// A path defining the shape of geometry. Used to draw the bounding shape.
+    /// This object's `CGPath` defining the shape of geometry. Used to draw the bounding shape.
     @objc var objectPath: CGPath { get }
     
     /// Object bounding box shape.
@@ -376,6 +376,9 @@ extension SKNode {
 
 /// :nodoc:
 extension SKTilemap: TiledGeometryType {}
+/// :nodoc:
 extension TiledLayerObject: TiledGeometryType {}
+/// :nodoc:
 extension SKTileObject: TiledGeometryType {}
+/// :nodoc:
 extension SKTile: TiledGeometryType {}

@@ -208,7 +208,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
     /// Stashed object properties.
     fileprivate var properties: [String: String] = [:]
 
-    /// Private **Tiled** properties.
+    /// :nodoc: Private **Tiled** properties.
     public var _tiled_properties: [String: String] = [:]
     
     /// Ignore custom properties.
@@ -413,6 +413,8 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
         // pre-processing callback
         renderQueue.sync {
             currentMap.parseTime = Date().timeIntervalSince(self.timer)
+            
+            // call back to the tilemap delegate for overrides
             self.tilemapDelegate?.didReadMap?(currentMap)
         }
 
@@ -518,6 +520,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
 
                 // current file name (minus doc root)  (ie 'User/Templates/dragon-green.tx')
                 currentFilename = firstFileToParse.relativePath
+                
                 
                 print("✻ current filename: '\(firstFileToParse.relativePath)'")
 
@@ -2357,6 +2360,8 @@ extension SKTilemapParser {
         // pre-processing callback
         renderQueue.async {
             currentMap.parseTime = Date().timeIntervalSince(self.timer)
+            
+            // call back to the tilemap delegate for overrides
             self.tilemapDelegate?.didReadMap?(currentMap)
         }
 

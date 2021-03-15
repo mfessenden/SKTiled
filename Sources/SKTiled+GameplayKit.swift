@@ -225,7 +225,7 @@ public class SKTiledGraphNode: GKGridGraphNode, TiledObjectType {
     /// Node attributes.
     public var properties: [String : String] = [:]
     
-    /// Private **Tiled** properties.
+    /// :nodoc: Private **Tiled** properties.
     public var _tiled_properties: [String: String] = [:]
 
     /// Ignore custom node properties.

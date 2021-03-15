@@ -288,6 +288,8 @@ class TileEditorViewController: NSViewController {
     
     /// Called when the `Notification.Name.Demo.SceneWillUnload` event fires.
     ///
+    ///  userInfo: `["url": URL]`
+    ///
     /// - Parameter notification: event notification.
     @objc func sceneWillUnloadAction(notification: Notification) {
         //notification.dump(#fileID, function: #function)
@@ -296,7 +298,7 @@ class TileEditorViewController: NSViewController {
     
     /// Called when the `Notification.Name.Demo.SceneLoaded` event fires.
     ///
-    ///   userInfo: ["nodes": `[SKNode]`]
+    ///  object is `SKTiledScene`, userInfo: `["tilemapName": String, "relativePath": String, "currentMapIndex": Int]`
     ///
     /// - Parameter notification: event notification.
     @objc func demoSceneLoaded(notification: Notification) {

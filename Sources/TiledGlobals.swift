@@ -308,6 +308,33 @@ public class TiledGlobals {
     public var build: String? {
         return getSKTiledBuildVersion()
     }
+    
+    // MARK: - Framework Directories
+    
+    /// Returns a prefernces path directory in the current user's home directory (macOS only).
+    ///
+    /// - Returns: url of created directory.
+    public var exportDirectory: URL? {
+        #if os(macOS)
+        let userHome = FileManager.default.homeDirectoryForCurrentUser
+        let sktiledExportDirectory = userHome.appendingPathComponent(".config/sktiled")
+        Logger.default.log("creating directory at '\(sktiledExportDirectory.path)'", level: .info, symbol: "TiledGlobals")
+        if !FileManager.default.fileExists(atPath: sktiledExportDirectory.path) {
+            do {
+                try FileManager.default.createDirectory(atPath: sktiledExportDirectory.path, withIntermediateDirectories: true, attributes: nil)
+                Logger.default.log("creating directory at '\(sktiledExportDirectory.path)'", level: .info, symbol: "TiledGlobals")
+                return sktiledExportDirectory
+            } catch {
+                Logger.default.log(error.localizedDescription, level: .error, symbol: "TiledGlobals")
+                return nil
+            }
+        } else {
+            return sktiledExportDirectory
+        }
+        #else
+        return nil
+        #endif
+    }
 
     // MARK: - Demo Properties
 

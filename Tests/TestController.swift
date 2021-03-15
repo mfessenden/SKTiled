@@ -131,7 +131,7 @@ let sharedTestController = TestController()
 
 
 extension FileManager {
-
+    
     /// Returns an array of files in the given directory matching the given file extensions.
     ///
     /// - Parameters:
@@ -142,10 +142,10 @@ extension FileManager {
         var urls: [URL] = []
         enumerator(atPath: path)?.forEach({ (e) in
             guard let s = e as? String else { return }
-
+            
             let url = URL(fileURLWithPath: s, relativeTo: baseurl)
             let pathExtension = url.pathExtension.lowercased()
-
+            
             if withExtensions.contains(pathExtension) || (withExtensions.isEmpty) {
                 urls.append(url)
             }
@@ -156,34 +156,34 @@ extension FileManager {
 
 
 extension String {
-
+    
     /// Returns a url for the string.
     var url: URL {
         return URL(fileURLWithPath: self.expanded)
     }
-
+    
     /// Expand the users home path.
     var expanded: String {
         return NSString(string: self).expandingTildeInPath
     }
-
+    
     /// Returns the url parent directory.
     var parentURL: URL {
         var path = URL(fileURLWithPath: self.expanded)
         path.deleteLastPathComponent()
         return path
     }
-
+    
     /// Returns the filename if string is a url.
     var filename: String {
         return FileManager.default.displayName(atPath: self.url.path)
     }
-
+    
     /// Returns the file basename.
     var basename: String {
         return self.url.deletingPathExtension().lastPathComponent
     }
-
+    
     /// Returns the file extension.
     var fileExtension: String {
         return self.url.pathExtension

@@ -183,13 +183,15 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     /// Ignore custom node properties.
     @objc public var ignoreProperties: Bool = false
     
-    /// Private **Tiled** properties.
+    /// :nodoc: Private **Tiled** properties.
     @objc public var _tiled_properties: [String: String] = [:]
     
+    /// Storage for custom **Tiled** properties. These properties are set in the **Tiled** scene.
     @objc public var properties: [String: String] {
         get {
             return tileData.properties
         } set {
+            // add new values to the private dictionary
             _tiled_properties = newValue
         }
     }
@@ -411,7 +413,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     /// [tile-objects-url]:working-with-objects.html#tile-objects
     internal var objectSize: CGSize?
 
-    /// Shape describing this object.
+    /// This object's `CGPath` defining the shape of geometry. Used to draw the bounding shape.
     @objc public lazy var objectPath: CGPath = {
         let vertices = getVertices(offset: CGPoint.zero)
         return polygonPath(vertices)

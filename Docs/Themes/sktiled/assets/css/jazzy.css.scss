@@ -62,6 +62,7 @@ $aside_color: #aaa;
 $aside_border: 4px solid lighten($aside_color, 20%);
 $aside_warning_color: #ff0000;
 $aside_warning_border: 4px solid lighten($aside_warning_color, 20%);
+$aside_important_background_color: #f2f4f7;
 
 // ----- Footer
 
@@ -81,7 +82,7 @@ $footer_link_color: #d95151;
 $declaration_border: 4px solid $declaration_border_color;
 
 $token_left_margin: -3px;
-$token_font_size: 1.6rem;
+$token_font_size: 1.2rem;   // tokens on class pages
 $task_header_top_margin: 1rem;
 $token_header_text_shadow_color: #999999ab;
 $token_link_color: #505050;
@@ -91,6 +92,20 @@ $h4_bullet: ""; //
 $heading3_section_name_border_color: #b9b9b9;
 $heading3_section_name_font_size: 1.8rem;
 $heading2_overview_size: 1.15rem;
+
+// important callouts
+$aside-important-border-left-color: #8eb0e4;
+
+// ===========================================================================
+//
+//  Notes
+//
+// ===========================================================================
+
+/*
+.item .token ->
+
+*/
 
 // ===========================================================================
 //
@@ -447,6 +462,7 @@ pre code {
       display: block;
     }
   }
+
   /* Variable/Method Listing */
   .token {
     padding-left: 3px;
@@ -519,10 +535,15 @@ pre code {
 }
 
 .language {
-  border-left: $declaration_language_border;
+  // border-left: $declaration_language_border;
+   border-left: $aside_important_background_color;
   .aside-title {
     color: $declaration_title_language_color;
   }
+}
+
+.aside-important {
+  background-color: $aside_important_background_color;
 }
 
 .aside-warning,

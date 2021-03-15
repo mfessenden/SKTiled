@@ -929,7 +929,9 @@ extension SKTiledDemoScene {
 
         // 'z' runs a debugging command
         if eventKey == 0x6 {
-
+            
+            
+            
             updateCommandString("No command defined for '\(eventChars)'", duration: 3.0)
         }
 

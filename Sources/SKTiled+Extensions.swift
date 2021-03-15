@@ -420,6 +420,10 @@ extension Bool {
     var valueAsOnOff: String {
         return (self == true) ? "on" : "off"
     }
+    
+    var valueAsHidden: String {
+        return (self == true) ? "☑︎" : "☐"
+    }
 }
 
 
@@ -1290,9 +1294,10 @@ extension SKNode {
         return result
     }
     
+    // TODO: add this to demo extensions?
+    
     /// Removes this node from the scene graph.
     @objc public func destroy() {
-        // TODO: add this to demo extensions?
         removeAllActions()
         removeAllChildren()
         removeFromParent()
@@ -1304,12 +1309,18 @@ extension Sequence where Element: SKNode {
 
     /// Remove each node from their parent.
     public func removeFromParent() {
-        forEach{ $0.removeFromParent() }
+        forEach{
+            $0.removeFromParent()
+        }
+    }
+    
+    /// Deallocate all of the nodes.
+    public func destroy() {
+        forEach{
+            $0.destroy()
+        }
     }
 }
-
-
-// TODO: MOVE INTO DEMO FOLDER
 
 
 
@@ -1898,12 +1909,8 @@ extension String {
     var fileExtension: String {
         return self.url.pathExtension
     }
-
-    /// Indicates a path string.
-    var upOneDirectory: Bool {
-        return hasPrefix("../")
-    }
 }
+
 
 
 extension String {
@@ -1933,6 +1940,7 @@ extension String {
         return (self.isValidHexColor == true) ? SKColor(hexString: self) : SKColor.clear
     }
 }
+
 
 
 extension String {
@@ -2256,7 +2264,7 @@ extension OptionSet where RawValue: FixedWidthInteger {
 
 // MARK: - Operators
 
-// MARK: CGFloat
+// MARK: - CGFloat
 
 public func + (lhs: Int, rhs: CGFloat) -> CGFloat {
     return CGFloat(lhs) + rhs
@@ -2341,7 +2349,7 @@ public func atan2f(_ lhs: CGFloat, _ rhs: CGFloat) -> CGFloat {
 }
 
 
-// MARK: CGPoint
+// MARK: - CGPoint
 
 public func + (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
     return CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
@@ -2359,7 +2367,15 @@ public func / (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
     return CGPoint(x: lhs.x / rhs.x, y: lhs.y / rhs.y)
 }
 
+public func += (lhs: inout CGPoint, rhs: CGPoint) {
+    lhs.x += rhs.x
+    lhs.y += rhs.y
+}
 
+public func -= (lhs: inout CGPoint, rhs: CGPoint) {
+    lhs.x -= rhs.x
+    lhs.y -= rhs.y
+}
 
 public func + (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
     return CGPoint(x: lhs.x + rhs, y: lhs.y + rhs)
@@ -2438,7 +2454,9 @@ public func fabs(_ size: CGSize) -> CGSize {
 }
 
 
-// MARK: CGVector
+// MARK: - CGVector
+
+
 public func + (lhs: CGVector, rhs: CGVector) -> CGVector {
     return CGVector(dx: lhs.dx + rhs.dx, dy: lhs.dy + rhs.dy)
 }
@@ -2480,7 +2498,7 @@ public func lerp(start: CGVector, end: CGVector, t: CGFloat) -> CGVector {
 }
 
 
-// MARK: CGRect
+// MARK: - CGRect
 
 public func + (lhs: CGRect, rhs: CGFloat) -> CGRect {
     return CGRect(x: lhs.minX, y: lhs.minY, width: lhs.width + rhs, height: lhs.height + rhs)

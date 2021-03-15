@@ -35,6 +35,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var preferencesController: PreferencesWindowController?
     var attributeEditorWindowController: AttributeEditorWindowController?
     var tileEditorWindowController: TileEditorWindowController?
+    var offsetEditorWindowController: OffsetEditorWindowController?
 
     var receiveCameraUpdates: Bool = true
     var isDevelopment: Bool = TiledGlobals.default.isDevelopment
@@ -83,10 +84,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var developmentMainMenu: NSMenuItem!
     @IBOutlet weak var renderStatisticsMenuItem: NSMenuItem!
     @IBOutlet weak var tilemapStatisticsMenuItem: NSMenuItem!
+    @IBOutlet weak var layerStatisticsMenuItem: NSMenuItem!
     @IBOutlet weak var tilemapCachesStatisticsMenuItem: NSMenuItem!
     @IBOutlet weak var tilemapOffsetStatisticsMenuItem: NSMenuItem!
+    @IBOutlet weak var tilemapOffsetEditorMenuItem: NSMenuItem!
     
-    @IBOutlet weak var layerStatisticsMenuItem: NSMenuItem!
 
     @IBOutlet weak var showDemoAssetsMenuItem: NSMenuItem!
     @IBOutlet weak var rescanForAssetsMenuItem: NSMenuItem!
@@ -251,6 +253,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         tilemapStatisticsMenuItem.isEnabled = false
         tilemapCachesStatisticsMenuItem.isEnabled = false
         tilemapOffsetStatisticsMenuItem.isEnabled = false
+        tilemapOffsetEditorMenuItem.isEnabled = false
         layerStatisticsMenuItem.isEnabled = false
         dumpSelectedMenuItem.isEnabled = false
         currentMapsMenuItem.isEnabled = false
@@ -362,6 +365,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// Called when the current scene has been cleared. Called when the `Notification.Name.Demo.SceneWillUnload` event fires.
     ///
     ///  userInfo: ["tilemapName", "relativePath", "currentMapIndex"]
+    ///  also: `["url": URL]`
     ///
     /// - Parameter notification: event notification.
     @objc func demoSceneCleared(notification: Notification) {
@@ -371,7 +375,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Called when a new scene has been loaded. Called when the `Notification.Name.Demo.SceneLoaded` event fires.
     ///
-    ///  object is `SKTiledScene`, userInfo: ["tilemapName": `String`, "relativePath": `String`, "currentMapIndex": `Int`]
+    ///  object is `SKTiledScene`, userInfo: `["tilemapName": String, "relativePath": String, "currentMapIndex": Int]`
     ///
     /// - Parameter notification: event notification.
     @objc func demoSceneLoaded(notification: Notification) {
@@ -441,7 +445,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    /// Open the tile editor intrface.
+    /// Open the tile editor interface.
     ///
     /// - Parameter sender: Menu item.
     @IBAction func launchTileEditor(_ sender: Any) {
@@ -460,6 +464,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             tileEditorWindowController?.window?.title = "Tile Editor"
         }
     }
+    
+    
 
     @IBAction func tileFlipFlagsAction(_ sender: NSMenuItem) {
         guard let tile = sender.representedObject as? SKTile else {
@@ -927,6 +933,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     /// Called when the AppDelegate `Development -> Tilemap Cache...` menuitem is selected.
+    ///
+    /// - Parameter sender: invoking ui element.
     @IBAction func mapCacheStatisticsPressed(_ sender: Any) {
         guard let gameController = viewController else {
             return
@@ -935,8 +943,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let demoController = gameController.demoController
         demoController.dumpMapCacheStatistics()
     }
-    
-    /// Called when the AppDelegate `Development -> Tilemap Offsets...` menuitem is selected.
+
+    /// Called from the `Development -> Tilemap Offsets...` menuitem.
+    ///
+    /// - Parameter sender: invoking ui element.
     @IBAction func mapOffsetsStatisticsPressed(_ sender: Any) {
         guard let gameController = viewController else {
             return
@@ -945,7 +955,24 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let demoController = gameController.demoController
         demoController.dumpMapOffsetsStatistics()
     }
-
+    
+    /// Called from the `Development -> Edit Tilemap Offsets...` menuitem.
+    ///
+    /// - Parameter sender: invoking ui element.
+    @IBAction func launchOffsetEditor(_ sender: Any) {
+        
+        if (offsetEditorWindowController == nil) {
+            let storyboard = NSStoryboard(name: NSStoryboard.Name("Main"), bundle: nil)
+            let identifier = NSStoryboard.SceneIdentifier("OffsetEditorWindowController")
+            offsetEditorWindowController = storyboard.instantiateController(withIdentifier: identifier) as? OffsetEditorWindowController
+        }
+        
+        if (offsetEditorWindowController != nil) {
+            offsetEditorWindowController!.showWindow(sender)
+            offsetEditorWindowController?.window?.title = "Layer Offset Editor"
+        }
+    }
+    
     @IBAction func mapRenderQualityPressed(_ sender: Any) {
         guard let tilemap = self.tilemap else { return }
 
@@ -1123,7 +1150,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let doShowStatistics = (sender.state == .off)
         demoController.toggleRenderStatistics(value: doShowStatistics)
     }
-
+    
+    /// Dumps tile gid layer data in readable form. Called from the `Development -> Tile Layer Data...` menu.
+    ///
+    /// - Parameter sender: invoking ui element.
     @IBAction func dumpTileLayersDataAction(_ sender: NSMenuItem) {
         guard let gameController = viewController else { return }
         let demoController = gameController.demoController
@@ -1993,6 +2023,7 @@ extension AppDelegate {
         tilemapStatisticsMenuItem.isEnabled = true
         tilemapCachesStatisticsMenuItem.isEnabled = true
         tilemapOffsetStatisticsMenuItem.isEnabled = true
+        tilemapOffsetEditorMenuItem.isEnabled = true
         layerStatisticsMenuItem.isEnabled = true
         currentMapsMenuItem.isEnabled = true
         allAssetsMapsMenuItem.isEnabled = true

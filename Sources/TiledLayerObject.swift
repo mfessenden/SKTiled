@@ -33,7 +33,9 @@ import Cocoa
 #endif
 
 
-// Tuple representing the current render stats for a given frame.
+/// Tuple representing the current render stats for a given frame.
+///
+///
 typealias RenderInfo = (idx: UInt32, path: String, zpos: Double,
     sw: Int, sh: Int, tsw: Int, tsh: Int,
     offx: Int, offy: Int, ancx: Int, ancy: Int,
@@ -110,8 +112,10 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     /// Layer type.
     public var type: String!
 
-    /// Map orientation.
-    public var orientation: TilemapOrientation
+    /// The map projection type.
+    ///
+    /// [tilemap-orientation-image]:../images/tilemap-orientations.svg
+    public internal(set) var orientation: TilemapOrientation
 
     /// Layer has no boundaries.
     @objc public internal(set) var isInfinite: Bool = false
@@ -133,7 +137,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 
     // MARK: - Layer Index
 
-    /// Layer index. Matches the **id value** of the layer in the source TMX file.
+    /// An integer representing the layer index value. Matches the **id value** of the layer in the source TMX file.
     public var index: UInt32 = 0
 
     /// Flattened layer index (internal use only).
@@ -144,7 +148,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         return UInt32(firstIndex)
     }
 
-    /// The layer XPath.
+    /// The `xPath` attributes is used to signify the path to this layer in the XML document structure. This can be useful for returning a specific layer in a tilemap (see the `SKTilemap.getLayer(xPath:)` method).
     public var xPath: String = #"/"#
 
     /// Translate the parent hierarchy to an layer path string.
@@ -165,7 +169,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     /// Custom layer properties.
     public var properties: [String: String] = [:]
 
-    /// Private **Tiled** properties.
+    /// :nodoc: Private **Tiled** properties.
     public var _tiled_properties: [String: String] = [:]
 
     /// Ignore custom node properties.
@@ -307,10 +311,10 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     /// Layer is static (not moving).
     public internal(set) var isStatic: Bool = false
 
-    /// Static sprite texture.
+    /// Rendered texture of this layer's contents.
     internal var staticTexture: SKTexture?
 
-    /// Static sprite.
+    /// Sprite containing a rendered representation of this layer's contents.
     internal var staticSprite: SKSpriteNode?
 
     // MARK: Sizing & Positioning
@@ -458,8 +462,10 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     internal var layerInfiniteOffset: CGPoint {
         return CGPoint.zero
     }
+    
+    internal var debugOffset: CGPoint = CGPoint.zero
 
-    /// Shape describing this object.
+    /// This object's `CGPath` defining the shape of geometry. Used to draw the bounding shape.
     @objc public lazy var objectPath: CGPath = {
         let vertices = getVertices(offset: CGPoint.zero)
         return polygonPath(vertices)
@@ -678,12 +684,12 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     
     /// Returns an array of parent layers.
     public var parentLayers: [TiledLayerObject] {
-        return parents.filter { $0 as? TiledLayerObject != nil} as! [TiledLayerObject]
+        return parents.filter { $0 as? TiledLayerObject != nil } as! [TiledLayerObject]
     }
 
     /// Returns a flattened array of child layers.
     public var childLayers: [TiledLayerObject] {
-        return enumerate().filter { $0 as? TiledLayerObject != nil} as! [TiledLayerObject]
+        return enumerate().filter { $0 as? TiledLayerObject != nil } as! [TiledLayerObject]
     }
     
     #if os(iOS) || os(tvOS)
@@ -1244,6 +1250,11 @@ extension TiledLayerObject {
         var result: [SKNode] = [self]
         for child in children {
             if let node = child as? TiledLayerObject {
+                // TODO: this was added to fix chunk layers being hidden when isolating layers
+                if let _ = node as? SKTileLayerChunk {
+                    continue
+                }
+                
                 result += node.enumerate()
             }
         }

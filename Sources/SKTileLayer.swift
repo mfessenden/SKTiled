@@ -223,8 +223,8 @@ public class SKTileLayer: TiledLayerObject {
         var offsetPos = CGPoint.zero
         switch orientation {
             case .orthogonal:
-                //offsetPos.x += tileWidthHalf
-                //offsetPos.y += tileHeight
+                offsetPos.x -= tileWidthHalf
+                offsetPos.y += tileHeight
                 return offsetPos
 
             case .isometric:
@@ -239,7 +239,7 @@ public class SKTileLayer: TiledLayerObject {
             default:
                 break
         }
-
+        
         return offsetPos
     }
 
@@ -883,7 +883,7 @@ public class SKTileLayer: TiledLayerObject {
 
         if (isStatic == true) {
             shouldRasterize = true
-            //rasterizeStaticLayer()
+            rasterizeStaticLayer()
         } else {
             shouldRasterize = false
         }
@@ -892,6 +892,7 @@ public class SKTileLayer: TiledLayerObject {
     // MARK: - Shaders
 
     /// Set a shader for tiles in this layer.
+    ///
     /// - Parameters:
     ///   - sktiles: tiles to apply shader to.
     ///   - named: shader file name.
@@ -915,7 +916,7 @@ public class SKTileLayer: TiledLayerObject {
         var staticRect = CGRect(origin: staticRectOrigin, size: staticRectSize)
 
 
-        let staticImage = NSImage(size: sizeInPoints)
+        var staticImage = NSImage(size: sizeInPoints)
         staticImage.lockFocus()
         let nsContext = NSGraphicsContext.current!
         nsContext.imageInterpolation = .medium
@@ -933,14 +934,16 @@ public class SKTileLayer: TiledLayerObject {
                 }
 
                 let x: Int = index % Int(self.mapSize.width)
-                let y: Int = index / Int(self.mapSize.width)
+                let y: Int = index / Int(self.mapSize.width) * -1
 
                 //let coordinate = simd_int2(Int32(x), Int32(y))
 
 
                 if let tileTexture = tile.texture {
+                    // let positionInLayer = pointForCoordinate(x, y)
                     let positionInLayer = pointForCoordinate(x, y).invertedY
-
+                    
+                    
                     let rectToDrawIn = CGRect(x: positionInLayer.x, y: positionInLayer.y, width: self.tileSize.width, height: -self.tileSize.height)
                     let tileimage = tileTexture.cgImage()
 
@@ -962,16 +965,34 @@ public class SKTileLayer: TiledLayerObject {
 
             let staticImageTexture = SKTexture(cgImage: staticImageRef)
             staticTexture = staticImageTexture
-
+            
             // save the image
             let exportedFileName = "\(layerName)-exported"
-            let exportPath = "/Users/michael/exported/\(exportedFileName).png"
+            
+            guard let userExportDirectory = TiledGlobals.default.exportDirectory else {
+                log("cannot create output directory.", level: .fatal)
+                return
+            }
+            
+            let exportUrl = userExportDirectory.appendingPathComponent("exported")
+            do {
+                try FileManager.default.createDirectory(atPath: exportUrl.path, withIntermediateDirectories: true, attributes: nil)
+            } catch {
+                log(error.localizedDescription, level: .error)
+                return
+            }
+            
+            
+            
+            
+            let exportPath = "\(exportUrl.path)/\(exportedFileName).png"
             let wasWritten = writeCGImage(staticImageRef, to: exportPath.url)
             if (wasWritten == true) {
                 Logger.default.log("writing image to: '\(exportPath)'", level: .info, symbol: className)
             } else {
                 Logger.default.log("failed to write image", level: .error, symbol: className)
             }
+
         }
 
         #endif

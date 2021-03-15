@@ -81,14 +81,11 @@ import SpriteKit
     /// Object type property as parsed from the **Tiled** scene.
     @objc var type: String! { get set }
     
-    /// Storage for custom **Tiled** properties. These properties are set in the **Tiled** scene
+    /// Storage for custom **Tiled** properties. These properties are set in the **Tiled** scene.
     @objc var properties: [String: String] { get set }
     
     /// :nodoc: Storage for custom Tiled properties.
-    @objc optional var _tiled_properties: [String: String] { get set }
-    
-    /// :nodoc: Storage for properties from a template or tile data.
-    @objc optional var secondaryProperties: [String: String] { get set }
+    @objc var _tiled_properties: [String: String] { get set }
     
     /// Ignore custom node properties.
     @objc var ignoreProperties: Bool { get set }

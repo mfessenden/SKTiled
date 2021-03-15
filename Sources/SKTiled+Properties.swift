@@ -188,6 +188,12 @@ extension SKTilemap {
                     self.debugDrawOptions = DebugDrawOptions(rawValue: integerValue)
                 }
             }
+            
+            if ["layerposition", "layeralignment"].contains(lattr) {
+                if let newLayerAlignment = LayerPosition(string: value) {
+                    self.layerAlignment = newLayerAlignment
+                }
+            }
         }
 
         completion?()
