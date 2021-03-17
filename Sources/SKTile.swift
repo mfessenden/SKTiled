@@ -428,7 +428,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     /// - Returns: array of bounding shape points.
     @objc open override func getVertices(offset: CGPoint = CGPoint.zero) -> [CGPoint] {
         
-        // FIXME: this is incorrect for tiles added to a layer after a map is rendered
+        // FIXME: this is incorrect for tiles added to a layer after a map is rendered with no layer
         guard let tileLayer = layer,
               let parent = parent else {
             return boundingRect.points
@@ -1172,7 +1172,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
 
 // MARK: - Extensions
 
-// :nodoc:
+/// :nodoc:
 extension TileRenderMode: RawRepresentable {
 
     public typealias RawValue = Int

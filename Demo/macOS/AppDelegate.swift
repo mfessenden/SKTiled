@@ -559,7 +559,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func openCurrentMapInTiledAction(_ sender: NSMenuItem) {
         guard let demoController = demoController,
               let currentMap = demoController.currentTilemap,
-              let currentMapUrl = currentMap.fileUrl else {
+              let currentMapUrl = currentMap.relativeUrl else {
             Logger.default.log("no current map loaded.", level: .warning, symbol: "AppDelegate")
             return
         }

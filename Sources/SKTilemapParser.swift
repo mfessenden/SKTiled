@@ -1003,7 +1003,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
             // set the tilemap url property
             if (currentFilename != nil) {
                 tilemap.url = URL(fileURLWithPath: currentFilename).standardized
-                tilemap.fileUrl = currentFileUrl
+                tilemap.relativeUrl = currentFileUrl
             }
 
             if let tiledVersion = tilemap.tiledversion {

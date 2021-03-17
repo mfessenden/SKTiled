@@ -91,7 +91,9 @@ import GameplayKit
     /// Container size (in tiles).
     @objc var mapSize: CGSize { get }
 
-    /// Pathfinding graph.
+    /// Optional pathfinding [`GKGridGraph`][gkggridgraph-url] graph.
+    ///
+    /// [gkggridgraph-url]:https://developer.apple.com/documentation/gameplaykit/gkgridgraph
     @objc optional weak var graph: GKGridGraph<GKGridGraphNode>? { get set }
 
     /// Child node offset. Used by a map container to align child layers.
@@ -161,18 +163,23 @@ extension TiledMappableGeometryType {
         return CGSize(width: tileWidthHalf, height: tileHeightHalf)
     }
 
-    /// Returns the tile size width, halved.
+    /// Returns the tile size width (in pixels), halved.
+    ///
+    /// - Returns: tile size half-width.
     public var tileWidthHalf: CGFloat {
         return tileWidth / 2
     }
 
-    /// Returns the tile size hight, halved.
+    /// Returns the tile size height (in pixels), halved.
+    ///
+    /// - Returns: tile size half-height.
     public var tileHeightHalf: CGFloat {
         return tileHeight / 2
     }
 
-    /// The size of the container, in points.
+    /// Returns the size of the container, in points.
     public var sizeInPoints: CGSize {
+        
         switch orientation {
             case .orthogonal:
                 return CGSize(width: mapSize.width * tileSize.width, height: mapSize.height * tileSize.height)
@@ -699,13 +706,16 @@ extension TiledMappableGeometryType {
     /// - Parameter point:  point in map (pixel) space.
     /// - Returns: point in screen space.
     internal func pixelToScreenCoords(point: CGPoint) -> CGPoint {
-        
+
         switch orientation {
             
             case .isometric:
                 let originX = height * tileWidth / 2
+                
+                
                 let tileY = point.y / tileHeight
                 let tileX = point.x / tileHeight
+
 
                 return CGPoint(x: (tileX - tileY) * tileWidth / 2 + originX,
                                y: (tileX + tileY) * tileHeight / 2)

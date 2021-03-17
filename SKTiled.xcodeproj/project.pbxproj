@@ -800,12 +800,12 @@
 		4C5B6D9A2455C9D500F81755 /* SKImageLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKImageLayer.swift; sourceTree = "<group>"; };
 		4C5B6DA52455CA4500F81755 /* SKGroupLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKGroupLayer.swift; sourceTree = "<group>"; };
 		4C5B6DB02455CAE800F81755 /* TiledLayerObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TiledLayerObject.swift; sourceTree = "<group>"; };
+		4C5C90E0260A3BBE006A6C75 /* SKTiled Demo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SKTiled Demo.entitlements"; sourceTree = "<group>"; };
 		4C64EC3C25D463740090F4F3 /* SKWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKWorld.swift; sourceTree = "<group>"; };
 		4C68993F25CAF89800EE7006 /* AttributeEditor.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AttributeEditor.storyboard; sourceTree = "<group>"; };
 		4C68995525CAF96F00EE7006 /* AttributeEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributeEditorViewController.swift; sourceTree = "<group>"; };
 		4C68995625CAF96F00EE7006 /* AttributeEditorWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributeEditorWindowController.swift; sourceTree = "<group>"; };
 		4C6C56BB25D6BABF00CBEB9A /* DemoNotificationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoNotificationDelegate.swift; sourceTree = "<group>"; };
-		4C6CA1082609471200513A82 /* SKTiled Demo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SKTiled Demo.entitlements"; sourceTree = "<group>"; };
 		4C73454121BAC11F00EFC0AB /* CoordinateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinateTests.swift; sourceTree = "<group>"; };
 		4C77D2C4255C978400C8C18C /* TiledSelectableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TiledSelectableType.swift; sourceTree = "<group>"; };
 		4C7DD6211F50E16000C3FE2D /* roguelike-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "roguelike-16x16.tsx"; sourceTree = "<group>"; };
@@ -1129,6 +1129,7 @@
 		4C440B971DAE911000DEC9A4 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				4C5C90E0260A3BBE006A6C75 /* SKTiled Demo.entitlements */,
 				4C440B9A1DAE911000DEC9A4 /* SKTiledDemoScene.swift */,
 				4CDEEA78258BFBD3003F1758 /* TiledDemoController.swift */,
 				4CE077FE254366D100187F4E /* DemoPreferences.swift */,
@@ -1429,7 +1430,6 @@
 		4CBA615C1D8A048200B31FC1 = {
 			isa = PBXGroup;
 			children = (
-				4C6CA1082609471200513A82 /* SKTiled Demo.entitlements */,
 				4CBA617E1D8A0A3900B31FC1 /* README.md */,
 				4C0E59501DC046E700921F75 /* CHANGELOG.md */,
 				4CED95792459C534000A1BB8 /* LICENSE.md */,

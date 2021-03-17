@@ -138,9 +138,9 @@ public struct TiledGeometryIsolationMode: OptionSet {
 ///
 /// - `mapSize`: Size of the map (in tiles).
 /// - `tileSize`: Map tile size (in pixels).
-/// - `renderSize`: Size of the map in pixels.
-/// - `orientation`: Map orientation (orthogonal, isometric, etc.)
-/// - `bounds`: Map bounding rect.
+/// - `sizeInPoints`: Size of the map in pixels.
+/// - `orientation`: Map orientation (orthogonal, isometric, etc).
+/// - `boundingRect`: Map bounding rect.
 /// - `tilesets`: Array of stored tileset instances.
 /// - `allowZoom`: Allow camera zooming.
 /// - `layers`: Array of child layers.
@@ -156,10 +156,10 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     // MARK: - File Properties
 
     /// Tilemap source file path.
-    public var url: URL!
+    public internal(set) var url: URL!
 
     /// Tilemap source file path, relative to the bundle.
-    public var fileUrl: URL!
+    public internal(set) var relativeUrl: URL!
 
     // MARK: - Tilesets
 
@@ -169,7 +169,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     // MARK: - Basic Properties
 
     /// Unique SpriteKit node id.
-    public var uuid: String = UUID().uuidString
+    public internal(set) var uuid: String = UUID().uuidString
 
     /// Indicates the Tiled application version this map was created with.
     public internal(set) var tiledversion: String!
@@ -272,7 +272,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     /// Tile render order.
     internal var renderOrder: RenderOrder = RenderOrder.rightDown
 
-    /// Map display name. Defaults to the current map source file name (minus the tmx extension).
+    /// Map container display name. Defaults to the current map source file name (minus the tmx extension).
     public var displayName: String?
 
     /// Root for all Tiled renderable content.
@@ -587,7 +587,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         }
     }
 
-    /// Tilemap bounding shape.
+    /// Map bounding shape.
     @objc public lazy var boundsShape: SKShapeNode? = {
         let scaledverts = getVertices(offset: CGPoint.zero).map { $0 * renderQuality }
         let objpath = polygonPath(scaledverts)
@@ -845,6 +845,8 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         switch orientation {
 
             case .orthogonal:
+                
+                /// infinite map
                 if (isInfinite == true) {
                     var mapBounds = CGRect.zero
                     for tileLayer in tileLayers() {
@@ -858,16 +860,18 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
                     return CGRect(x: mapBounds.origin.x * tileWidth, y: mapBounds.origin.y * tileHeight, width: mapSize.width * tileWidth, height: -(mapSize.height * tileHeight))
 
+                /// standard map
                 } else {
-                    // FIXME: needs to take into account the anchor point.
-                    //return CGRect(x: 0, y: 0, width: width * tileWidth, height: height * tileHeight)
+                    
+                    
+                    /// `childOffset` represents the map center point
                     return CGRect(origin: childOffset, size: CGSize(width: width * tileWidth, height: -(height * tileHeight)))
                 }
 
             case .isometric:
-
+                
+                /// infinite map
                 if (isInfinite == true) {
-
 
                     var mapBounds = CGRect.zero
                     for tileLayer in tileLayers() {
@@ -883,10 +887,9 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
                     let side = height * width
 
                     return CGRect(x: origin * tileWidth / 2, y: origin * tileHeight / 2, width: side * tileWidth / 2, height: side * tileHeight / 2)
-
+                
+                /// standard map
                 } else {
-                    // FIXME: needs to take into account the anchor point.
-                    //return CGRect(x: 0, y: 0, width: width * tileWidth, height: height * tileHeight)
                     return CGRect(origin: childOffset, size: CGSize(width: width * tileWidth, height: -(height * tileHeight)))
                 }
 
@@ -994,7 +997,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         }
     }
 
-    /// Return all tile layers. If recursive is false, only returns top-level layers.
+    /// Return all tile layers. If `recursive` is false, only returns top-level layers.
     ///
     /// - Parameter recursive: include nested layers.
     /// - Returns: array of tile layers.
@@ -1002,7 +1005,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return getLayers(recursive: recursive).sorted(by: { $0.index < $1.index }).filter { $0 as? SKTileLayer != nil } as! [SKTileLayer]
     }
 
-    /// Return all object groups. If recursive is false, only returns top-level layers.
+    /// Return all object groups. If `recursive` is false, only returns top-level layers.
     ///
     /// - Parameter recursive: include nested layers.
     /// - Returns: array of object groups.
@@ -1010,7 +1013,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return getLayers(recursive: recursive).sorted(by: { $0.index < $1.index }).filter { $0 as? SKObjectGroup != nil } as! [SKObjectGroup]
     }
 
-    /// Return all image layers. If recursive is false, only returns top-level layers.
+    /// Return all image layers. If `recursive` is false, only returns top-level layers.
     ///
     /// - Parameter recursive: include nested layers.
     /// - Returns: array of image layers.
@@ -1018,14 +1021,13 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return getLayers(recursive: recursive).sorted(by: { $0.index < $1.index }).filter { $0 as? SKImageLayer != nil } as! [SKImageLayer]
     }
 
-    /// Return all group layers. If recursive is false, only returns top-level layers.
+    /// Return all group layers. If `recursive` is false, only returns top-level layers.
     ///
     /// - Parameter recursive: include nested layers.
     /// - Returns: array of image layers.
     public func groupLayers(recursive: Bool = true) -> [SKGroupLayer] {
         return getLayers(recursive: recursive).sorted(by: { $0.index < $1.index }).filter { $0 as? SKGroupLayer != nil } as! [SKGroupLayer]
     }
-
 
     /// Convenience property to return all group layers.
     public var groupLayers: [SKGroupLayer] {
@@ -1829,7 +1831,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return addLayer(groupLayer, group: group).layer as! SKGroupLayer
     }
 
-    /// Return tile layers matching the given name. If recursive is false, only returns top-level layers.
+    /// Return tile layers matching the given name. If `recursive` is false, only returns top-level layers.
     ///
     /// - Parameters:
     ///   - layerName: tile layer name.
@@ -1839,7 +1841,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return getLayers(recursive: recursive).filter { $0 as? SKTileLayer != nil }.filter { $0.name == layerName } as! [SKTileLayer]
     }
 
-    /// Return tile layers with names matching the given prefix. If recursive is false, only returns top-level layers.
+    /// Return tile layers with names matching the given prefix. If `recursive` is false, only returns top-level layers.
     ///
     /// - Parameters:
     ///   - withPrefix: prefix to match.
@@ -1861,7 +1863,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return nil
     }
 
-    /// Return object groups matching the given name. If recursive is false, only returns top-level layers.
+    /// Return object groups matching the given name. If `recursive` is false, only returns top-level layers.
     ///
     /// - Parameters:
     ///   - layerName: tile layer name.
@@ -1871,7 +1873,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return getLayers(recursive: recursive).filter { $0 as? SKObjectGroup != nil }.filter { $0.name == layerName } as! [SKObjectGroup]
     }
 
-    /// Return object groups with names matching the given prefix. If recursive is false, only returns top-level layers.
+    /// Return object groups with names matching the given prefix. If `recursive` is false, only returns top-level layers.
     /// - Parameters:
     ///   - withPrefix: prefix to match.
     ///   - recursive: include nested layers.
@@ -1892,7 +1894,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return nil
     }
 
-    /// Return image layers matching the given name. If recursive is false, only returns top-level layers.
+    /// Return image layers matching the given name. If `recursive` is false, only returns top-level layers.
     ///
     /// - Parameters:
     ///   - layerName: tile layer name.
@@ -1902,7 +1904,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return getLayers(recursive: recursive).filter { $0 as? SKImageLayer != nil }.filter { $0.name == layerName } as! [SKImageLayer]
     }
 
-    /// Return image layers with names matching the given prefix. If recursive is false, only returns top-level layers.
+    /// Return image layers with names matching the given prefix. If `recursive` is false, only returns top-level layers.
     ///
     /// - Parameters:
     ///   - withPrefix: prefix to match.
@@ -1924,7 +1926,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return nil
     }
 
-    /// Return group layers matching the given name. If recursive is false, only returns top-level layers.
+    /// Return group layers matching the given name. If `recursive` is false, only returns top-level layers.
     ///
     /// - Parameters:
     ///   - layerName: tile layer name.
@@ -1934,7 +1936,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return getLayers(recursive: recursive).filter { $0 as? SKGroupLayer != nil }.filter { $0.name == layerName } as! [SKGroupLayer]
     }
 
-    /// Return group layers with names matching the given prefix. If recursive is false, only returns top-level layers.
+    /// Return group layers with names matching the given prefix. If `recursive` is false, only returns top-level layers.
     ///
     /// - Parameters:
     ///   - withPrefix: prefix to match.
@@ -2080,7 +2082,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return nil
     }
 
-    /// Returns all tiles in the map. If recursive is false, only returns tiles from top-level layers.
+    /// Returns all tiles in the map. If `recursive` is false, only returns tiles from top-level layers.
     ///
     /// - Parameter recursive: include nested layers.
     /// - Returns: array of tiles.
@@ -2088,7 +2090,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return tileLayers(recursive: recursive).flatMap { $0.getTiles() }
     }
 
-    /// Returns an array of tiles with a property of the given type. If recursive is false, only returns tiles from top-level layers.
+    /// Returns an array of tiles with a property of the given type. If `recursive` is false, only returns tiles from top-level layers.
     ///
     /// - Parameters:
     ///   - ofType: tile type.
@@ -2098,7 +2100,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return tileLayers(recursive: recursive).flatMap { $0.getTiles(ofType: ofType) }
     }
 
-    /// Returns an array of tiles matching the given global id. If recursive is false, only returns tiles from top-level layers.
+    /// Returns an array of tiles matching the given global id. If `recursive` is false, only returns tiles from top-level layers.
     ///
     /// - Parameters:
     ///   - globalID: tile global id.
@@ -2123,7 +2125,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return result
     }
 
-    /// Returns tiles with a property of the given type & value. If recursive is false, only returns tiles from top-level layers.
+    /// Returns tiles with a property of the given type & value. If `recursive` is false, only returns tiles from top-level layers.
     ///
     /// - Parameters:
     ///   - named: property name.
@@ -2243,7 +2245,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return objectsOverlay.objectsAt(point: pointInOverlay)
     }
 
-    /// Return all of the current tile objects. If recursive is false, only returns objects from top-level layers.
+    /// Return all of the current tile objects. If `recursive` is false, only returns objects from top-level layers.
     ///
     /// - Parameter recursive: include nested layers.
     /// - Returns: array of objects.
@@ -2251,7 +2253,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return objectGroups(recursive: recursive).flatMap { $0.getObjects() }
     }
 
-    /// Return objects matching a given type. If recursive is false, only returns objects from top-level layers.
+    /// Return objects matching a given type. If `recursive` is false, only returns objects from top-level layers.
     ///
     /// - Parameters:
     ///   - ofType: object type to query.
@@ -2261,7 +2263,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return objectGroups(recursive: recursive).flatMap { $0.getObjects(ofType: ofType) }
     }
 
-    /// Return objects matching a given name. If recursive is false, only returns objects from top-level layers.
+    /// Return objects matching a given name. If `recursive` is false, only returns objects from top-level layers.
     /// - Parameters:
     ///   - named: object name to query.
     ///   - recursive: include nested layers.
@@ -2270,7 +2272,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return objectGroups(recursive: recursive).flatMap { $0.getObjects(named: named) }
     }
 
-    /// Return objects with the given text value. If recursive is false, only returns objects from top-level layers.
+    /// Return objects with the given text value. If `recursive` is false, only returns objects from top-level layers.
     ///
     /// - Parameters:
     ///   - text: text value.
@@ -2295,7 +2297,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return objectGroups().flatMap { $0.getObjectProxies() }
     }
 
-    /// Return objects with a tile id. If recursive is false, only returns objects from top-level layers.
+    /// Return objects with a tile id. If `recursive` is false, only returns objects from top-level layers.
     ///
     /// - Parameter recursive: include nested layers.
     /// - Returns: objects with a tile gid.
@@ -2303,7 +2305,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return objectGroups(recursive: recursive).flatMap { $0.tileObjects() }
     }
 
-    /// Return objects with a tile id. If recursive is false, only returns objects from top-level layers.
+    /// Return objects with a tile id. If `recursive` is false, only returns objects from top-level layers.
     ///
     /// - Parameters:
     ///   - globalID: global tile id.
@@ -2313,7 +2315,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return objectGroups(recursive: recursive).flatMap { $0.tileObjects(globalID: globalID) }
     }
 
-    /// Return text objects. If recursive is false, only returns objects from top-level layers.
+    /// Return text objects. If `recursive` is false, only returns objects from top-level layers.
     ///
     /// - Parameter recursive: include nested layers.
     /// - Returns: text objects.
@@ -3156,7 +3158,9 @@ extension LayerPosition: CustomStringConvertible {
 /// Convenience properties & methods.
 extension SKTilemap {
 
-    /// String representing the map name. Defaults to the current map source file name (minus the tmx extension).
+    /// String representing the map name (ie: `dungeon-16x16`).
+    ///
+    /// Defaults to the current map source file name (minus the tmx extension).
     public var mapName: String {
         if let dname = self.displayName {
             return dname
@@ -3189,7 +3193,9 @@ extension SKTilemap {
         }
     }
 
-    /// Returns the tile height (in pixels) value.
+    /// Returns the tile size height (in pixels).
+    ///
+    /// - Returns: tile size height.
     public var tileHeight: CGFloat {
         switch orientation {
             case .staggered:
@@ -3198,11 +3204,34 @@ extension SKTilemap {
                 return tileSize.height
         }
     }
-
-    public var tileWidthHalf: CGFloat { return tileWidth / 2 }
-    public var tileHeightHalf: CGFloat { return tileHeight / 2 }
-    public var sizeHalved: CGSize { return CGSize(width: mapSize.width / 2, height: mapSize.height / 2)}
-    public var tileSizeHalved: CGSize { return CGSize(width: tileWidthHalf, height: tileHeightHalf)}
+    
+    /// Returns the tile size width (in pixels), halved.
+    ///
+    /// - Returns: tile size half-width.
+    public var tileWidthHalf: CGFloat {
+        return tileWidth / 2
+    }
+    
+    /// Returns the tile size height (in pixels), halved.
+    ///
+    /// - Returns: tile size half-height.
+    public var tileHeightHalf: CGFloat {
+        return tileHeight / 2
+    }
+    
+    /// Returns the container size (in tiles), halved.
+    ///
+    /// - Returns: container size in tiles, halved.
+    public var sizeHalved: CGSize {
+        return CGSize(width: mapSize.width / 2, height: mapSize.height / 2)
+    }
+    
+    /// Returns the container tile size (in pixels), halved.
+    ///
+    /// - Returns: container tile size in tiles, halved.
+    public var tileSizeHalved: CGSize {
+        return CGSize(width: tileWidthHalf, height: tileHeightHalf)
+    }
 
     // hexagonal/staggered
     public var staggerX: Bool { return (staggeraxis == .x) }
@@ -4023,7 +4052,7 @@ extension SKTilemap {
         return objectGroups(recursive: true).compactMap { $0.getObject(withID: id) }.first
     }
 
-    /// Return objects with a tile id. If recursive is false, only returns objects from top-level layers.
+    /// Return objects with a tile id. If `recursive` is false, only returns objects from top-level layers.
     ///
     /// - Parameters:
     ///   - globalID: global tile id.
@@ -4034,7 +4063,7 @@ extension SKTilemap {
         return tileObjects(globalID: UInt32(globalID), recursive: recursive)
     }
 
-    /// Returns tiles with the given global id. If recursive is false, only returns tiles from top-level layers.
+    /// Returns tiles with the given global id. If `recursive` is false, only returns tiles from top-level layers.
     ///
     /// - Parameters:
     ///   - globalID: tile global id.

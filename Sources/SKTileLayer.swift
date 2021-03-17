@@ -213,36 +213,6 @@ public class SKTileLayer: TiledLayerObject {
 
     // MARK: - Infinite Map/Chunks
     
-    /// Initial layer position for infinite maps. Used to reposition tile layers & chunks in infinite maps. This is used by the tilemap to position the layers as they are added.
-    internal override var layerInfiniteOffset: CGPoint {
-        //if (isInfinite == false) || (layerType != .tile) {
-        if (isInfinite == false) {
-            return CGPoint.zero
-        }
-
-        var offsetPos = CGPoint.zero
-        switch orientation {
-            case .orthogonal:
-                offsetPos.x -= tileWidthHalf
-                offsetPos.y += tileHeight
-                return offsetPos
-
-            case .isometric:
-                let offsetXValue = (height * tileWidthHalf) + tileWidthHalf
-                offsetPos.x += offsetXValue + (tileWidth + tileWidthHalf)
-                offsetPos.y += tileHeightHalf
-
-            case .hexagonal, .staggered:
-                offsetPos.x += tileWidthHalf
-                offsetPos.y += tileHeightHalf
-            
-            default:
-                break
-        }
-        
-        return offsetPos
-    }
-
     /// Returns the number of chunks contained in this layer.
     public var chunkCount: Int {
         return chunks.count
@@ -911,6 +881,8 @@ public class SKTileLayer: TiledLayerObject {
     public override func rasterizeStaticLayer() {
 
         #if os(macOS)
+        
+        // this is the correct size, but gets output multiplied by retina scaling
         let staticRectSize = CGSize(width: sizeInPoints.width, height: sizeInPoints.height)
         let staticRectOrigin = CGPoint(x: 0, y: -sizeInPoints.height)
         var staticRect = CGRect(origin: staticRectOrigin, size: staticRectSize)
@@ -918,10 +890,9 @@ public class SKTileLayer: TiledLayerObject {
 
         var staticImage = NSImage(size: sizeInPoints)
         staticImage.lockFocus()
+        
         let nsContext = NSGraphicsContext.current!
         nsContext.imageInterpolation = .medium
-
-        print("⭑ rasterizing static layer '\(layerName)' -> \(sizeInPoints.shortDescription)")
         #endif
 
 
@@ -934,7 +905,7 @@ public class SKTileLayer: TiledLayerObject {
                 }
 
                 let x: Int = index % Int(self.mapSize.width)
-                let y: Int = index / Int(self.mapSize.width) * -1
+                let y: Int = index / Int(self.mapSize.width)
 
                 //let coordinate = simd_int2(Int32(x), Int32(y))
 
@@ -974,7 +945,7 @@ public class SKTileLayer: TiledLayerObject {
                 return
             }
             
-            let exportUrl = userExportDirectory.appendingPathComponent("exported")
+            let exportUrl = userExportDirectory.appendingPathComponent("exported/\(tilemap.mapName)")
             do {
                 try FileManager.default.createDirectory(atPath: exportUrl.path, withIntermediateDirectories: true, attributes: nil)
             } catch {

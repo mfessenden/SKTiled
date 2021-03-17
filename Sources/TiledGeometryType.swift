@@ -140,6 +140,11 @@ extension TiledGeometryType {
     internal var anchorKey: String {
         return "\(uuid)_ANIMATION"
     }
+    
+    /// Unique identifier used to access anchor point shape nodes.
+    internal var firstPointKey: String {
+        return "\(uuid)_FIRST_POINT"
+    }
 }
 
 

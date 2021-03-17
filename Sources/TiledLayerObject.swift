@@ -334,7 +334,9 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     /// Storage for gid errors that occur in parsing.
     internal var gidErrors: [simd_int2: UInt32] = [:]
 
-    /// Pathfinding graph.
+    /// Pathfinding [`GKGridGraph`][gkggridgraph-url] graph.
+    ///
+    /// [gkggridgraph-url]:https://developer.apple.com/documentation/gameplaykit/gkgridgraph
     @objc public weak var graph: GKGridGraph<GKGridGraphNode>?
 
     // Debug visualizations.
@@ -458,9 +460,30 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         return CGRect(center: CGPoint(x: px, y: py), size: sizeInPoints)
     }
 
+    
     /// Initial layer position for infinite maps. Used to reposition tile layers & chunks in infinite map space. This is used by the tilemap to position the layers as they are added.
     internal var layerInfiniteOffset: CGPoint {
-        return CGPoint.zero
+        if (isInfinite == false) || (layerType != .tile) {
+            return CGPoint.zero
+        }
+        
+        var offsetPos = CGPoint.zero
+        
+        switch orientation {
+            case .orthogonal:
+                offsetPos.x -= tileWidthHalf
+                offsetPos.y += tileHeightHalf
+                
+            case .isometric:
+                offsetPos.x -= sizeInPoints.halfWidth
+                offsetPos.y += tileHeightHalf
+                
+            case .hexagonal, .staggered:
+                offsetPos.x -= tileWidthHalf
+                offsetPos.y += tileHeightHalf
+        }
+        
+        return offsetPos
     }
     
     internal var debugOffset: CGPoint = CGPoint.zero
@@ -1279,7 +1302,7 @@ extension TiledLayerObject {
         return self.parents.count <= 1
     }
 
-    /// Returns the actual zPosition as rendered by the scene.
+    /// Returns the **actual** zPosition as rendered by the scene.
     internal var actualZPosition: CGFloat {
         return (isTopLevel == true) ? zPosition : parents.reduce(zPosition, { result, parent in
             return result + parent.zPosition

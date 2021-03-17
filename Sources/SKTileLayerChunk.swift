@@ -77,7 +77,6 @@ public class SKTileLayerChunk: TiledLayerObject {
         assert(Int(height) != nil, "cannot parse chunk height: '\(height)'")
         
         
-        
         /// chunk size becomes 16x16
         self.chunkSize = CGSize(width: CGFloat(Int(width)!), height: CGFloat(Int(height)!))
         self.chunkOffset = CGPoint(x: CGFloat(Int(xpos)!), y: CGFloat(Int(ypos)!))

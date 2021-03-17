@@ -639,7 +639,8 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
         }
 
         self.isAntialiased = layer.antialiased
-
+        
+        
         // scale linewidth for smaller objects
         let lwidth = (doubleForKey("lineWidth") != nil) ? CGFloat(doubleForKey("lineWidth")!) : layer.lineWidth
         self.lineWidth = (lwidth / layer.tileHeight < 0.075) ? lwidth : 0.5
@@ -685,8 +686,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
         // draw the first point of poly objects
         if (isPolyType == true) {
 
-            let firstPointShapeName = "\(id)_FIRST_POINT"
-            childNode(withName: firstPointShapeName)?.removeFromParent()
+            childNode(withName: firstPointKey)?.removeFromParent()
 
             // MARK: - Tile object drawing
 
@@ -695,8 +695,9 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
                 // the first-point radius should be larger for thinner (>1.0) line widths
                 let anchorRadius = self.lineWidth * 1.2
                 let anchor = SKShapeNode(circleOfRadius: anchorRadius)
-                anchor.name = firstPointShapeName
+                anchor.name = firstPointKey
                 addChild(anchor)
+                
                 // CONVERTED
                 anchor.position = vertices[0].invertedY
                 anchor.strokeColor = SKColor.clear

@@ -23,7 +23,7 @@
    eJztk79KA0EQxmc9xVYtRI2EQwQthPgHEowgB2KnPoD451JY2p0m2IqVRd7BIvgKkkIfwELfQtAXsPMbboYb1zs9Ebt88GOT3dlvZ2b3iAYaqLz2HdHIP/hOgSYYAgE4cH/zGwV1MO0xA4ZBJWfPHej/4BuCXXAIjkEMlgX2XzWxXALXswHWPB9e4zq1l6GMO+LfBi/ip6iewDN4cxS3zHwXvMJ43pwX0lfNmfXA9PlczuU9HRPfA2dSs55X5Dv7zbo/15MxMecV+aLWB77PhsxxrXWh4cVzngF97m+NKOL/fB+XlL6DdcmX+70ncbeU9oHV9nwT8bb95XfL974EruR3xeSr3Ev8SU591lv7u4B7OcW4BbbBOJgw+VpY1QJf1oWg+a6ATTAJFsEjZfd2DWKX0S35HdbEV72RcxQZ3xtK35C+sU6OR564J0eUfWvvMraKt5RS4uUz5n6X1wdgVjQZ
   </data>
   </layer>
-  <layer id="3" name="Objects" width="22" height="21">
+  <layer id="3" name="Objects" width="22" height="21" visible="0">
    <properties>
     <property name="isStatic" type="bool" value="true"/>
    </properties>
@@ -31,7 +31,7 @@
    eJxjYBgFo2AUDEYQRCNzM2lk7igYBSMFAACGMgC8
   </data>
   </layer>
-  <layer id="4" name="Bridges" width="22" height="21">
+  <layer id="4" name="Bridges" width="22" height="21" visible="0">
    <properties>
     <property name="isStatic" type="bool" value="true"/>
    </properties>
@@ -39,7 +39,7 @@
    eJxjYBgFo2AUDDcwBYinAvE0Kpq5hopmIYPDFOjF56ZbFJhLyE3khi8lbqIloEV6Gc4AAFG6CdA=
   </data>
   </layer>
-  <objectgroup id="6" name="Lower Objects">
+  <objectgroup id="6" name="Lower Objects" visible="0">
    <properties>
     <property name="isStatic" type="bool" value="true"/>
     <property name="zPosition" type="float" value="5"/>
@@ -63,7 +63,7 @@
    <object id="106" name="barrel5" type="barrel" gid="152" x="111" y="314" width="16" height="16"/>
    <object id="107" name="barrel5" type="barrel" gid="152" x="106" y="304" width="16" height="16"/>
   </objectgroup>
-  <objectgroup id="7" name="Top Objects">
+  <objectgroup id="7" name="Top Objects" visible="0">
    <properties>
     <property name="zPosition" type="float" value="10"/>
    </properties>
@@ -71,7 +71,7 @@
    <object id="128" name="crate-error" gid="151" x="313" y="141" width="16" height="16"/>
    <object id="130" name="crate2" gid="151" x="52" y="260" width="16" height="16"/>
   </objectgroup>
-  <objectgroup id="8" name="Characters-Lower">
+  <objectgroup id="8" name="Characters-Lower" visible="0">
    <properties>
     <property name="zPosition" type="float" value="15"/>
    </properties>
@@ -79,7 +79,7 @@
    <object id="131" name="wizard1" gid="2147484202" x="46" y="204" width="32" height="32"/>
   </objectgroup>
  </group>
- <group id="23" name="Upper">
+ <group id="23" name="Upper" visible="0">
   <layer id="10" name="Level2" width="22" height="21">
    <properties>
     <property name="drawbounds" type="bool" value="false"/>

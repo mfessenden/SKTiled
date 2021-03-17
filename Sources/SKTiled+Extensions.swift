@@ -658,8 +658,8 @@ extension UIImage {
     /// Instantiate an image with an file url.
     ///
     /// - Parameter fileUrl: image file url.
-    public convenience init?(contentsOf fileUrl: URL) {
-        self.init(contentsOfFile: fileUrl.path.expanded)
+    public convenience init?(contentsOf relativeUrl: URL) {
+        self.init(contentsOfFile: relativeUrl.path.expanded)
     }
 }
 
@@ -1034,7 +1034,7 @@ extension CGSize {
 
 extension CGRect {
 
-    /// Initialize with a center point and size.
+    /// Creates a rectangle with the specified center point and size.
     ///
     /// - Parameters:
     ///   - center: rectangle center point.

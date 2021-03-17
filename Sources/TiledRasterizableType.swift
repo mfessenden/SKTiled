@@ -71,7 +71,7 @@ extension SKNode: TiledRasterizableType {
 
         // write image to disk
         if (writeCGImage(cgImage, to: to) == true) {
-
+            
         }
         return cgImage
     }
