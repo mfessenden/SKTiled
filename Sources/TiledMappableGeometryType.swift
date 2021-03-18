@@ -240,6 +240,9 @@ extension TiledMappableGeometryType {
                 return CGPoint(x: height * tileWidthHalf, y: tileHeightHalf)
 
             case .hexagonal:
+                
+                // FIXME: this might be causing object alignment errors
+                
                 let startPoint = CGPoint.zero
                 //startPoint.x -= tileWidthHalf
                 //startPoint.y -= tileHeightHalf
@@ -846,3 +849,6 @@ extension TiledMappableGeometryType where Self: SKNode {
         addChild(node, coord: coord, offset: offset, zpos: zpos)
     }
 }
+
+
+

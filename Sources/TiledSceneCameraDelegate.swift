@@ -55,7 +55,7 @@ import SpriteKit
 ///
 ///
 /// [tiled-scene-camera-delegate-image]:../images/camera-delegate.svg
-@objc public protocol TiledSceneCameraDelegate: class {
+@objc public protocol TiledSceneCameraDelegate: AnyObject {
 
     /// Allows the delegate to receive camera updates.
     @objc var receiveCameraUpdates: Bool { get set }

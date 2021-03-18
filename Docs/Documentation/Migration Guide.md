@@ -25,6 +25,7 @@ Moving from the **v1.2** API should be fairly straightforward. Here are the high
 | Old                                               | New                                                  |
 |:------------------------------------------------- |:---------------------------------------------------- |
 | `SKTilemap.size`                                  | `SKTilemap.mapSize`                                  |
+| `TiledLayerObject.size`                           | `TiledLayerObject.mapSize`                           |
 | `SKTilemap.getTileset(forTile:)`                  | `SKTilemap.getTilesetFor(globalID:)`                 |
 | `SKTilemap.coordinateAtMouseEvent(event:)`        | `SKTilemap.coordinateAtMouse(event:)`                |
 | `TiledLayerObject.coordinateAtMouseEvent(event:)` | `TiledLayerObject.coordinateAtMouse(event:)`         |

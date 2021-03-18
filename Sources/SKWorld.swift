@@ -64,7 +64,9 @@ public class SKWorld: SKNode, TiledSceneCameraDelegate {
     /// Called when the camera position changes.
     ///
     /// - Parameter newPosition: updated camera position.
-    public func cameraPositionChanged(newPosition: CGPoint) {}
+    public func cameraPositionChanged(newPosition: CGPoint) {
+        
+    }
     
     /// Called when the camera zoom changes.
     ///

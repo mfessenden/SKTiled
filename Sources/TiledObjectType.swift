@@ -385,7 +385,7 @@ extension TiledObjectType {
         return false
     }
     
-    /// Returns a string array for the given key.
+    /// Returns a string array for the given key. Expects a property value string of comma-separated string values.
     ///
     /// - Parameters:
     ///   - key: property key.
@@ -399,7 +399,13 @@ extension TiledObjectType {
         return [String]()
     }
     
-    /// Returns a integer array for the given key.
+    /// Returns a integer array for the given key. Expects a property value string of comma-separated integer values.
+    ///
+    /// - Example:
+    ///
+    /// ```swift
+    /// let walkableTiles = layer.integerArrayForKey("walkable")
+    /// ```
     ///
     /// - Parameters:
     ///   - key: property key.
@@ -414,7 +420,7 @@ extension TiledObjectType {
         return [Int]()
     }
     
-    /// Returns a double array for the given key.
+    /// Returns a double array for the given key. Expects a property value string of comma-separated double values.
     ///
     /// - Parameters:
     ///   - key: property key.

@@ -558,6 +558,131 @@ extension Mirror {
 // MARK: - Cocoa
 
 #if os(macOS)
+
+
+extension NSImage {
+    
+    /// Returns the height of the current image.
+    public var height: CGFloat {
+        return self.size.height
+    }
+    
+    /// Returns the width of the current image.
+    public var width: CGFloat {
+        return self.size.width
+    }
+    
+    /// Returns a `CGImage` copy.
+    public var cgImage: CGImage? {
+        return self.cgImage(forProposedRect: nil, context: nil, hints: nil)
+    }
+    
+    /// Returns a png representation of the current image.
+    public var PNGRepresentation: Data? {
+        if let tiff = self.tiffRepresentation, let tiffData = NSBitmapImageRep(data: tiff) {
+            return tiffData.representation(using: .png, properties: [:])
+        }
+        
+        return nil
+    }
+    
+    ///  Copies the current image and resizes it to the given size.
+    ///
+    ///  - parameter size: The size of the new image.
+    ///
+    ///  - returns: The resized copy of the given image.
+    public func copy(size: NSSize) -> NSImage? {
+        // Create a new rect with given width and height
+        let frame = NSMakeRect(0, 0, size.width, size.height)
+        
+        // Get the best representation for the given size.
+        guard let rep = self.bestRepresentation(for: frame, context: nil, hints: nil) else {
+            return nil
+        }
+        
+        // Create an empty image with the given size.
+        let img = NSImage(size: size)
+        
+        // Set the drawing context and make sure to remove the focus before returning.
+        img.lockFocus()
+        defer { img.unlockFocus() }
+        
+        // Draw the new image
+        if rep.draw(in: frame) {
+            return img
+        }
+        
+        // Return nil in case something went wrong.
+        return nil
+    }
+    
+    /// Resize the image.
+    ///
+    /// - Parameter newSize: output size.
+    /// - Returns: scaled image.
+    public func resized(to newSize: NSSize) -> NSImage? {
+        if let bitmapRep = NSBitmapImageRep(
+            bitmapDataPlanes: nil, pixelsWide: Int(newSize.width), pixelsHigh: Int(newSize.height),
+            bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
+            colorSpaceName: .calibratedRGB, bytesPerRow: 0, bitsPerPixel: 0
+        ) {
+            bitmapRep.size = newSize
+            NSGraphicsContext.saveGraphicsState()
+            NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: bitmapRep)
+            draw(in: NSRect(x: 0, y: 0, width: newSize.width, height: newSize.height), from: .zero, operation: .copy, fraction: 1.0)
+            NSGraphicsContext.restoreGraphicsState()
+            
+            let resizedImage = NSImage(size: newSize)
+            resizedImage.addRepresentation(bitmapRep)
+            return resizedImage
+        }
+        
+        return nil
+    }
+    
+    /// Write the image to file.
+    ///
+    /// - Parameter url: image output path.
+    /// - Returns: image was written successfully.
+    @discardableResult
+    public func writeToFile(url: URL) -> Bool {
+        guard let tiffData = self.tiffRepresentation else {
+            Logger.default.log("failed to get tiffRepresentation. url: \(url)", level: .error)
+            return false
+        }
+        let imageRep = NSBitmapImageRep(data: tiffData)
+        guard let imageData = imageRep?.representation(using: .png, properties: [:]) else {
+            Logger.default.log("failed to get PNG representation. url: \(url)", level: .error)
+            return false
+        }
+        do {
+            try imageData.write(to: url)
+            return true
+        } catch {
+            Logger.default.log("failed to write to disk. url: \(url)", level: .error)
+            return false
+        }
+    }
+    
+    /// Returns a new image with a tint added.
+    ///
+    /// - Parameter color: tint color.
+    /// - Returns: tinted image.
+    public func tinting(with color: NSColor) -> NSImage {
+        let result = self.copy() as! NSImage
+        result.lockFocus()
+        color.set()
+        CGRect(origin: .zero, size: self.size).fill(using: .sourceAtop)
+        result.unlockFocus()
+        return result
+    }
+}
+
+
+
+
+
+
 extension NSEvent {
 
     /// Returns the local position in a view. Converts a global position to a local position.
@@ -856,7 +981,17 @@ extension CGPoint {
         return x*x + y*y
     }
 
-    /// Returns the distance to another point.
+    /// Returns difference between this point and another.
+    ///
+    /// - Parameter point: point to compare.
+    /// - Returns: difference to other point.
+    public func delta(to point: CGPoint) -> CGPoint {
+        let dx = x - point.x
+        let dy = y - point.y
+        return CGPoint(x: dx, y: dy)
+    }
+
+    /// Returns the linear distance to another point.
     ///
     /// - Parameter point: point to compare.
     /// - Returns: distance to other point.

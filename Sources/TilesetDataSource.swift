@@ -54,7 +54,7 @@ import SpriteKit
 ///     }
 /// }
 /// ```
-public protocol TilesetDataSource: class {
+public protocol TilesetDataSource: AnyObject {
 
     /// Provide an image name for the tileset *before* textures are generated. Implement this method to allow custom sprite sheet images to be loaded.
     ///

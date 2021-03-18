@@ -719,7 +719,6 @@ extension SKTilemap {
     public func repositionLayers() {
         layers.forEach {
             self.positionLayer($0)
-
         }
     }
 }

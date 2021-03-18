@@ -54,7 +54,7 @@ class TilemapTests: XCTestCase {
         }
 
 
-        let expectedLayerCount = 9
+        let expectedLayerCount = 10
         let expectedObjectCount = 4
         XCTAssert(tilemap.layerCount == expectedLayerCount, "⭑ tilemap layer count incorrect: \(tilemap.layerCount)")
         XCTAssert(tilemap.objectCount == expectedObjectCount, "⭑ tilemap object count incorrect: \(tilemap.objectCount)")
@@ -68,7 +68,7 @@ class TilemapTests: XCTestCase {
             return
         }
 
-        let expectedTileCount = 189
+        let expectedTileCount = 190
         let tiles = tilemap.getTiles(ofType: "wall")
         XCTAssert(tiles.count == expectedTileCount, "⭑ tilemap tile count is incorrect: \(tiles.count)")
     }
@@ -129,7 +129,22 @@ class TilemapTests: XCTestCase {
         XCTAssert(objects.count == expectedObjectCOunt, "⭑ layer '\(testLayer.layerName)' object count is incorrect \(objects.count), expected \(expectedObjectCOunt)")
 
     }
-
+    
+    // MARK: - Query Layers Tests
+    
+    /// Test to ensure that querying a tilemap for a given name will return the correct values.
+    func testGetLayersNamed() {
+        guard let tilemap = testTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testTilemapName)'")
+            return
+        }
+        
+        let layerNameToQuery = "Walls"
+        let expectedLayerCount = 2       /// there are '2' layers named `Walls`
+        
+        let layers = tilemap.getLayers(named: layerNameToQuery)
+        XCTAssert(layers.count == expectedLayerCount, "⭑ layer count for '\(layerNameToQuery)' is \(layers.count), expected \(expectedLayerCount)")
+    }
     
     /// Test the `SKTileLayer.chunksAt` method.
     func testLayerGetChunks() {

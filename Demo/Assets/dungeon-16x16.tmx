@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="22" height="21" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#211e26" nextlayerid="27" nextobjectid="162">
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="22" height="21" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#211e26" nextlayerid="27" nextobjectid="162">
  <properties>
   <property name="description" value="Artwork by @Buch -&gt;  http://opengameart.org/content/dungeon-tileset"/>
   <property name="displayName" value="dungeon-16x16"/>
@@ -17,31 +17,31 @@
   </properties>
   <layer id="2" name="Level1" width="22" height="21">
    <properties>
-    <property name="isStatic" type="bool" value="true"/>
+    <property name="isStatic" type="bool" value="false"/>
    </properties>
    <data encoding="base64" compression="zlib">
    eJztk79KA0EQxmc9xVYtRI2EQwQthPgHEowgB2KnPoD451JY2p0m2IqVRd7BIvgKkkIfwELfQtAXsPMbboYb1zs9Ebt88GOT3dlvZ2b3iAYaqLz2HdHIP/hOgSYYAgE4cH/zGwV1MO0xA4ZBJWfPHej/4BuCXXAIjkEMlgX2XzWxXALXswHWPB9e4zq1l6GMO+LfBi/ip6iewDN4cxS3zHwXvMJ43pwX0lfNmfXA9PlczuU9HRPfA2dSs55X5Dv7zbo/15MxMecV+aLWB77PhsxxrXWh4cVzngF97m+NKOL/fB+XlL6DdcmX+70ncbeU9oHV9nwT8bb95XfL974EruR3xeSr3Ev8SU591lv7u4B7OcW4BbbBOJgw+VpY1QJf1oWg+a6ATTAJFsEjZfd2DWKX0S35HdbEV72RcxQZ3xtK35C+sU6OR564J0eUfWvvMraKt5RS4uUz5n6X1wdgVjQZ
   </data>
   </layer>
-  <layer id="3" name="Objects" width="22" height="21" visible="0">
+  <layer id="3" name="Objects" width="22" height="21">
    <properties>
-    <property name="isStatic" type="bool" value="true"/>
+    <property name="isStatic" type="bool" value="false"/>
    </properties>
    <data encoding="base64" compression="zlib">
    eJxjYBgFo2AUDEYQRCNzM2lk7igYBSMFAACGMgC8
   </data>
   </layer>
-  <layer id="4" name="Bridges" width="22" height="21" visible="0">
+  <layer id="4" name="Bridges" width="22" height="21">
    <properties>
-    <property name="isStatic" type="bool" value="true"/>
+    <property name="isStatic" type="bool" value="false"/>
    </properties>
    <data encoding="base64" compression="zlib">
    eJxjYBgFo2AUDDcwBYinAvE0Kpq5hopmIYPDFOjF56ZbFJhLyE3khi8lbqIloEV6Gc4AAFG6CdA=
   </data>
   </layer>
-  <objectgroup id="6" name="Lower Objects" visible="0">
+  <objectgroup id="6" name="Lower Objects">
    <properties>
-    <property name="isStatic" type="bool" value="true"/>
+    <property name="isStatic" type="bool" value="false"/>
     <property name="zPosition" type="float" value="5"/>
    </properties>
    <object id="79" name="crate9" gid="151" x="310" y="146" width="16" height="16"/>
@@ -63,7 +63,7 @@
    <object id="106" name="barrel5" type="barrel" gid="152" x="111" y="314" width="16" height="16"/>
    <object id="107" name="barrel5" type="barrel" gid="152" x="106" y="304" width="16" height="16"/>
   </objectgroup>
-  <objectgroup id="7" name="Top Objects" visible="0">
+  <objectgroup id="7" name="Top Objects">
    <properties>
     <property name="zPosition" type="float" value="10"/>
    </properties>
@@ -71,7 +71,7 @@
    <object id="128" name="crate-error" gid="151" x="313" y="141" width="16" height="16"/>
    <object id="130" name="crate2" gid="151" x="52" y="260" width="16" height="16"/>
   </objectgroup>
-  <objectgroup id="8" name="Characters-Lower" visible="0">
+  <objectgroup id="8" name="Characters-Lower">
    <properties>
     <property name="zPosition" type="float" value="15"/>
    </properties>
@@ -79,11 +79,11 @@
    <object id="131" name="wizard1" gid="2147484202" x="46" y="204" width="32" height="32"/>
   </objectgroup>
  </group>
- <group id="23" name="Upper" visible="0">
+ <group id="23" name="Upper">
   <layer id="10" name="Level2" width="22" height="21">
    <properties>
     <property name="drawbounds" type="bool" value="false"/>
-    <property name="isStatic" type="bool" value="true"/>
+    <property name="isStatic" type="bool" value="false"/>
    </properties>
    <data encoding="base64" compression="zlib">
    eJxjYBhZQGHUXKqau5MRwY4Hsq8C8UQqmHsFSoOMv8zI8OAckLGCCubCgBsQGwPxU6C5qmSasZMB7DaGfRC6YReQtgZiGQrd9gpo5hVGBLsIiKWB7EQKze1kRMT7FSjfBkgvZcSthxiwgBE1Pe1hRKXJAaLQcN1PgbuwAR2guaeA9DUqmzsKRhYAAItVGVU=
@@ -91,7 +91,7 @@
   </layer>
   <layer id="11" name="Level3" width="22" height="21">
    <properties>
-    <property name="isStatic" type="bool" value="true"/>
+    <property name="isStatic" type="bool" value="false"/>
    </properties>
    <data encoding="base64" compression="zlib">
    eJxjYCAfXADii0B8iQIzsIGzjAwMskB8jpG65j6BmveUyuaOglEwCkbBKBg5AADUzAX6
@@ -114,7 +114,7 @@
    <object id="119" name="dwarf1" gid="557" x="144" y="170" width="32" height="32"/>
   </objectgroup>
  </group>
- <objectgroup id="24" name="Debugging" visible="0">
+ <objectgroup id="24" name="Debugging">
   <object id="161" x="16" y="16" width="64" height="80">
    <properties>
     <property name="altColor" type="color" value="#ff8df360"/>

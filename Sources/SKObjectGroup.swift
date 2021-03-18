@@ -89,7 +89,7 @@ public class SKObjectGroup: TiledLayerObject {
     /// Returns the number of child objects contained in this layer.
     public var count: Int { return objects.count }
 
-    /// Controls antialiasing for each object
+    /// Layer-based control for antialiasing child objects.
     public override var antialiased: Bool {
         didSet {
             objects.forEach { $0.isAntialiased = antialiased }

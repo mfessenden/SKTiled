@@ -930,9 +930,13 @@ extension SKTiledDemoScene {
         // 'z' runs a debugging command
         if eventKey == 0x6 {
             
+            tilemap.getLayers().forEach({ layer in
+                layer.parallax = CGPoint(x: 1, y: 1)
+            })
             
+            tilemap.repositionLayers()
             
-            updateCommandString("No command defined for '\(eventChars)'", duration: 3.0)
+            updateCommandString("Removing parallax...", duration: 3.0)
         }
 
         // 'clear' clears the current selection

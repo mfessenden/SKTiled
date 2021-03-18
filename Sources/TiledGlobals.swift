@@ -317,7 +317,7 @@ public class TiledGlobals {
     public var exportDirectory: URL? {
         #if os(macOS)
         let userHome = FileManager.default.homeDirectoryForCurrentUser
-        let sktiledExportDirectory = userHome.appendingPathComponent(".config/sktiled")
+        let sktiledExportDirectory = userHome.appendingPathComponent(".config/SKTiled")
         Logger.default.log("creating directory at '\(sktiledExportDirectory.path)'", level: .info, symbol: "TiledGlobals")
         if !FileManager.default.fileExists(atPath: sktiledExportDirectory.path) {
             do {

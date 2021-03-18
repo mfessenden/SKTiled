@@ -425,10 +425,9 @@ public class SKTileLayer: TiledLayerObject {
 
                 let coordinate = simd_int2(Int32(x), Int32(y))
 
-
                 // build the tile
                 let tile = self.buildTileAt(coord: coordinate, globalID: globalId)
-
+                
                 if (tile == nil) {
                     errorCount += 1
                 }
@@ -877,22 +876,31 @@ public class SKTileLayer: TiledLayerObject {
 
     // MARK: - Rasterization
 
-    /// Rasterize a static layer into an image.
+    /// Rasterize a static layer into an image. The resulting texture is stored in the `TiledLayerObject.staticTexture` property.
     public override func rasterizeStaticLayer() {
-
-        #if os(macOS)
         
+        let scalingFactor = TiledGlobals.default.contentScale
+
         // this is the correct size, but gets output multiplied by retina scaling
-        let staticRectSize = CGSize(width: sizeInPoints.width, height: sizeInPoints.height)
-        let staticRectOrigin = CGPoint(x: 0, y: -sizeInPoints.height)
+        let staticRectSize = CGSize(width: sizeInPoints.width / scalingFactor,
+                                    height: sizeInPoints.height / scalingFactor)
+        
+        let staticRectOrigin = CGPoint(x: 0, y: -sizeInPoints.height / scalingFactor)
         var staticRect = CGRect(origin: staticRectOrigin, size: staticRectSize)
 
-
+        log("rendering static tile layer '\(layerName)' at \(staticRect.shortDescription)", level: .debug)
+        
+        #if os(macOS)
         var staticImage = NSImage(size: sizeInPoints)
         staticImage.lockFocus()
         
-        let nsContext = NSGraphicsContext.current!
-        nsContext.imageInterpolation = .medium
+        let context = NSGraphicsContext.current!
+        context.imageInterpolation = .medium
+        #else
+        
+        UIGraphicsBeginImageContextWithOptions(sizeInPoints, false, scalingFactor)
+        let context = UIGraphicsGetCurrentContext()!
+        context.interpolationQuality = .medium
         #endif
 
 
@@ -906,15 +914,13 @@ public class SKTileLayer: TiledLayerObject {
 
                 let x: Int = index % Int(self.mapSize.width)
                 let y: Int = index / Int(self.mapSize.width)
-
-                //let coordinate = simd_int2(Int32(x), Int32(y))
-
+                
+                // invert the y-coordinate manually
+                let invY = Int(self.mapSize.height) - y
 
                 if let tileTexture = tile.texture {
-                    // let positionInLayer = pointForCoordinate(x, y)
-                    let positionInLayer = pointForCoordinate(x, y).invertedY
                     
-                    
+                    let positionInLayer = pointForCoordinate(x, invY).invertedY
                     let rectToDrawIn = CGRect(x: positionInLayer.x, y: positionInLayer.y, width: self.tileSize.width, height: -self.tileSize.height)
                     let tileimage = tileTexture.cgImage()
 
@@ -929,17 +935,47 @@ public class SKTileLayer: TiledLayerObject {
         #if os(macOS)
         staticImage.unlockFocus()
         let imageRef = staticImage.cgImage(forProposedRect: &staticRect, context: nil, hints: nil)
-        nsContext.flushGraphics()
+        context.flushGraphics()
 
+        
+        #else
+        let result = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        let imageRef = result.cgImage
+        #endif
+        
+        let l = TiledLayerObject(layerName: "poop", tilemap: tilemap)
 
         if let staticImageRef = imageRef {
 
             let staticImageTexture = SKTexture(cgImage: staticImageRef)
+            staticImageTexture.filteringMode = .nearest
             staticTexture = staticImageTexture
             
-            // save the image
-            let exportedFileName = "\(layerName)-exported"
+            if (staticSprite == nil) {
+                let sprite = SKSpriteNode(texture: staticImageTexture)
+                addChild(sprite)
+                staticSprite = sprite
+                //sprite.position = center
+                sprite.setScale(1 / TiledGlobals.default.contentScale)
+                tiles.removeAll()
+                
+                
+                let anchor = SKShapeNode(circleOfRadius: 2)
+                anchor.fillColor = .red
+                anchor.zPosition = sprite.zPosition + 10
+                sprite.addChild(anchor)
+            }
             
+            
+            
+            #if os(macOS)
+            
+            // save the image
+            
+            let layerFileName = layerName.components(separatedBy: "/").joined(separator: "_")
+            let exportedFileName = "\(layerFileName)-exported"
+            print("⭑ exporting layer '\(exportedFileName)'...")
             guard let userExportDirectory = TiledGlobals.default.exportDirectory else {
                 log("cannot create output directory.", level: .fatal)
                 return
@@ -952,10 +988,7 @@ public class SKTileLayer: TiledLayerObject {
                 log(error.localizedDescription, level: .error)
                 return
             }
-            
-            
-            
-            
+
             let exportPath = "\(exportUrl.path)/\(exportedFileName).png"
             let wasWritten = writeCGImage(staticImageRef, to: exportPath.url)
             if (wasWritten == true) {
@@ -963,11 +996,9 @@ public class SKTileLayer: TiledLayerObject {
             } else {
                 Logger.default.log("failed to write image", level: .error, symbol: className)
             }
-
+            
+            #endif
         }
-
-        #endif
-
     }
 
     // MARK: - Updating

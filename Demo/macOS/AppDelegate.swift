@@ -1122,6 +1122,52 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     // MARK: - Debug Menu
+    
+    /// Grabs a screenshot. Called from the `Debug -> Screenshot...` menu.
+    ///
+    /// - Parameter sender: invoking ui element.
+    @IBAction func saveScreenShotAction(_ sender: Any) {
+        guard let mainWindow = NSApplication.shared.mainWindow,
+              let viewToCapture = mainWindow.contentView else {
+            return
+        }
+        
+        // capture the current view as an image representation
+        let imageRep = viewToCapture.bitmapImageRepForCachingDisplay(in: viewToCapture.bounds)!
+        viewToCapture.cacheDisplay(in: viewToCapture.bounds, to: imageRep)
+        
+        let screenImage = NSImage(size: viewToCapture.bounds.size)
+        screenImage.addRepresentation(imageRep)
+
+        
+        let savePanel = NSSavePanel()
+        savePanel.title = "Save Screenshot"
+        savePanel.message = "Exports the current view as PNG"
+        
+        
+        var tempNameString = "unknown.png"
+        if let tilemap = tilemap {
+            tempNameString = "\(tilemap.mapName).png"
+        }
+        savePanel.nameFieldStringValue = tempNameString
+        savePanel.allowedFileTypes = ["png"]
+        savePanel.runModal()
+        savePanel.cancel(saveModalCancelledAction)
+        
+        if let imageUrl = savePanel.url {
+            let imageFileWasSaved = writeCGImage(screenImage.cgImage!, to: imageUrl)
+            updateCommandString("saving screenshot to '\(imageUrl.path)'", duration: 12)
+        }
+    }
+    
+    
+    @IBAction func saveModalCancelledAction(_ sender: Any) {
+        self.updateCommandString("save cancelled.", duration: 12)
+    }
+    
+    /// Toggles the global mouse event attribute. Called from the `Debug -> Enable Mouse Events` menu.
+    ///
+    /// - Parameter sender: invoking ui element.
     @IBAction func enableMouseEventsAction(_ sender: Any) {
         guard let menuItem = sender as? NSMenuItem else {
             return
@@ -1657,8 +1703,6 @@ extension AppDelegate {
         }
         return scene
     }
-
-
 
     /// Reference to the current scene camera.
     var camera: SKTiledSceneCamera? {

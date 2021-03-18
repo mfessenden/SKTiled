@@ -40,7 +40,7 @@ import SpriteKit
 /// - `tiledHelpDescription`: description of the node type used for help features.
 /// - `tiledTooltipDescription`: description suitable for a UI widget to display as a tooltip.
 ///
-@objc public protocol TiledCustomReflectableType: class {
+@objc public protocol TiledCustomReflectableType: AnyObject {
 
     /// Returns the internal **Tiled** node type, for XML nodes, or our custom types.
     @objc optional var tiledElementName: String { get }

@@ -92,7 +92,7 @@ enum EventMouseButton: UInt8 {
 ///
 /// [mouseover-handler-url]:TiledEventHandler.html#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)mouseOverTileHandlerWithGlobalID:ofType:
 /// [tileclicked-handler-url]:TiledEventHandler.html#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)tileClickedHandlerWithGlobalID:ofType:button:
-@objc public protocol TiledEventHandler: class {
+@objc public protocol TiledEventHandler: AnyObject {
 
     /// Custom handler for tiles at creation time.
     ///

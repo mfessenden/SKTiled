@@ -47,7 +47,7 @@ typealias RenderInfo = (idx: UInt32, path: String, zpos: Double,
 typealias LayerRenderStatistics = (tiles: Int, objects: Int)
 
 
-/// The `TiledLayerObject` is the generic base class for all layer types.
+/// The `TiledLayerObject` is the base class for *all* **SKTiled** layer types.
 ///
 /// This class doesn't specify any object or child types, but provides base behaviors for layered content, including:
 ///
@@ -57,13 +57,12 @@ typealias LayerRenderStatistics = (tiles: Int, objects: Int)
 ///
 /// ### Properties
 ///
-///  - `tilemap`: parent tilemap.
+///  - `tilemap`: the parent tilemap container.
 ///  - `index`: layer index. Matches the index of the layer in the source TMX file.
-///  - `size`: layer size (in tiles).
+///  - `mapSize`: layer size (in tiles).
 ///  - `tileSize`: layer tile size (in pixels).
 ///  - `anchorPoint`: layer anchor point, used to position layers.
-///  - `origin`: layer origin point, used for placing tiles.
-///
+///  - `offset`: offset value for tweaking layer position. Matches the layer offset values set in the source TMX file.
 ///
 /// ### Instance Methods
 ///
@@ -79,7 +78,7 @@ typealias LayerRenderStatistics = (tiles: Int, objects: Int)
 /// All layer types share identical methods for translating screen coordinates to map coordinates (and vice versa):
 ///
 /// ```swift
-/// // return a point in the current projection
+/// // assign a position matching a coordinate in the current projection
 /// node.position = tileLayer.pointForCoordinate(2, 1)
 ///
 /// // translate a point to map a coordinate
@@ -134,7 +133,10 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 
     /// Logging verbosity.
     internal var loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel
-
+    
+    /// Default z-position range between layers.
+    public var zDeltaForLayers: CGFloat = TiledGlobals.default.zDeltaForLayers
+    
     // MARK: - Layer Index
 
     /// An integer representing the layer index value. Matches the **id value** of the layer in the source TMX file.
@@ -217,7 +219,6 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         case left
         case right
     }
-
 
     /// Layer is visible to scene cameras.
     @objc public var visibleToCamera: Bool = true
@@ -308,7 +309,9 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     /// Indicates this layer is isolated in the map.
     public internal(set) var isIsolated: Bool = false
     
-    /// Layer is static (not moving).
+    // MARK: - Static Layers
+    
+    /// Layer is static (no animated objects).
     public internal(set) var isStatic: Bool = false
 
     /// Rendered texture of this layer's contents.
@@ -319,17 +322,21 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 
     // MARK: Sizing & Positioning
 
-    /// Offset value (in pixels) for this layer. This value is parsed directly from the layer offset values in the source **Tiled** scene and is used by the tilemap to position the layer.
-    public internal(set) var offset: CGPoint = CGPoint.zero
-
-    /// Container size (in tiles).
+    /// Represents the container size (in tiles).
     public internal(set) var mapSize: CGSize
-
-    /// Layer anchor point, used to position layers.
+    
+    /// Layer anchor point, used to position this layer within a parent map.
     public var anchorPoint: CGPoint {
+        
         // TODO: add to new protocol?
         return tilemap.layerAlignment.anchorPoint
     }
+    
+    /// Offset value (in pixels) for this layer. This value is parsed directly from the layer offset values in the source **Tiled** scene and is used by the tilemap to position the layer.
+    public var offset: CGPoint = CGPoint.zero
+
+    /// Parallax movement scale for this layer.
+    public var parallax: CGPoint = CGPoint(x: 1, y: 1)
 
     /// Storage for gid errors that occur in parsing.
     internal var gidErrors: [simd_int2: UInt32] = [:]
@@ -356,7 +363,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     /// Indicates the layer has been rendered.
     internal private(set) var isRendered: Bool = false
 
-    /// Antialias lines.
+    /// Layer-based control for antialiasing child objects.
     public var antialiased: Bool = false
 
     /// Blending factor.
@@ -562,6 +569,11 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         var offsetx: CGFloat = 0
         var offsety: CGFloat = 0
 
+        
+        // layer parallax
+        var parallaxx: CGFloat = 0
+        var parallaxy: CGFloat = 0
+        
         // set the size properties
         if let width = attributes["width"] {
             self.mapSize.width = CGFloat(Int(width)!)
@@ -579,8 +591,17 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         if let offsetY = attributes["offsety"] {
             offsety = CGFloat(Double(offsetY)!)
         }
-
+        
+        if let parallaxX = attributes["parallaxx"] {
+            parallaxx = CGFloat(Double(parallaxX)!)
+        }
+        
+        if let parallaxY = attributes["parallaxy"] {
+            parallaxy = CGFloat(Double(parallaxY)!)
+        }
+        
         self.offset = CGPoint(x: offsetx, y: offsety)
+        self.parallax = CGPoint(x: parallaxx, y: parallaxy)
 
         // set the visibility property
         if let visibility = attributes["visible"] {
@@ -599,6 +620,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         }
 
         // set the layer's antialiasing based on tile size
+
         self.antialiased = (self.tilemap.currentZoom < 1)
         addChild(debugNode)
         debugNode.position.y -= sizeInPoints.height
@@ -969,7 +991,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     }
 
     // MARK: - Updating
-
+    
     /// Rasterize a static layer into an image.
     public func rasterizeStaticLayer() {
         // override in subclass
@@ -1582,7 +1604,7 @@ extension TiledLayerObject {
         return 0
     }
     
-    /// Container size (in tiles).
+    /// Represents the container size (in tiles).
     @available(*, deprecated, renamed: "mapSize")
     public internal(set) var size: CGSize {
         get {

@@ -51,7 +51,7 @@ import GameplayKit
 /// [skscene-url]:https://developer.apple.com/reference/spritekit/skscene
 /// [tiledscenedelegate-image-url]:../images/scene-hierarchy.svg
 ///
-public protocol TiledSceneDelegate: class {
+public protocol TiledSceneDelegate: AnyObject {
 
     /// Root container node. Tiled assets are parented to this node.
     var worldNode: SKNode! { get set }

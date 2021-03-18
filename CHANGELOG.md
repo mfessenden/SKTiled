@@ -24,6 +24,7 @@ Change Log
     - fix a bug where `SKTilemap.getTileData(ofType:)` didn't return the correct tile data
     - fix a bug where updating the flip flags of a tile object updated the tile anchor point incorrectly
 	- fix a bug where mouse scroll wheel events could override the `SKTiledSceneCamera.allowZoom` flag
+	- fix a bug where `SKTilemap.getLayers` returned only the first matching value
 
 - API Changes:
 	- rename protocol `SKTiledObject` -> `TiledObjectType`

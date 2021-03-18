@@ -34,7 +34,7 @@ import SpriteKit
 ///
 /// - `debugDrawOptions`: debugging visualization options.
 ///
-@objc public protocol DebugDrawableType: class {
+@objc public protocol DebugDrawableType: AnyObject {
 
     /// Optionset of properties for visualizing node attributes.
     @objc var debugDrawOptions: DebugDrawOptions { get set }

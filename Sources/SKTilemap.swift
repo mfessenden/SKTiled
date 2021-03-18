@@ -161,6 +161,9 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     /// Tilemap source file path, relative to the bundle.
     public internal(set) var relativeUrl: URL!
 
+    /// Map container display name. Defaults to the current map source file name (minus the tmx extension).
+    public var displayName: String?
+    
     // MARK: - Tilesets
 
     /// Array of tilesets associated with this map.
@@ -194,6 +197,9 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
     /// If enabled, custom **Tiled** properties are ignored.
     public var ignoreProperties: Bool = false
+    
+    /// Default z-position range between layers.
+    public var zDeltaForLayers: CGFloat = TiledGlobals.default.zDeltaForLayers
 
     /// Indicates the map type is infinite.
     @objc public internal(set) var isInfinite: Bool = false
@@ -219,8 +225,320 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     /// Chunk size (infinite maps).
     public internal(set) var chunkSize: CGSize?
 
+    /// Storage for tile data.
+    internal var dataStorage: TileDataStorage?
+    
+    /// Current focus coordinate.
+    public var currentCoordinate = simd_int2(0, 0) {
+        didSet {
+            guard (oldValue != currentCoordinate) else {
+                return
+            }
+            
+            if (TiledGlobals.default.enableTilemapNotifications == true) {
+                
+                let isValidCoord = isValid(coord: currentCoordinate)
+                onCoordinateChange?(oldValue, currentCoordinate, isValidCoord)
+            }
+        }
+    }
+    
+    // MARK: - Layers
 
-    // MARK: Hexagonal/Staggered Properties
+    
+    /// Array of layers contained in this map. This includes private layers (such as `SKTilemap.defaultLayer`)
+    private var _layers: Set<TiledLayerObject> = []
+    
+    /// Returns a flattened array of contained child layers.
+    public var layers: [TiledLayerObject] {
+        var result: [TiledLayerObject] = []
+        for layer in _layers.sorted(by: { $0.index > $1.index }) where layer as? TiledBackgroundLayer == nil {
+            result += layer.layers
+        }
+        return result
+    }
+        
+    /// Returns the number of layers contained in this map.
+    public var layerCount: Int {
+        return self.layers.count
+    }
+    
+    /// The tile map default layer, used for displaying the current grid, getting coordinates, etc.
+    internal lazy var defaultLayer: TiledBackgroundLayer = { [unowned self] in
+        let layer = TiledBackgroundLayer(tilemap: self)
+        _ = self.addLayer(layer)
+        layer.didFinishRendering()
+        return layer
+    }()
+    
+    /// Pause overlay.
+    public lazy var overlay: SKSpriteNode = { [unowned self] in
+        let pauseOverlayColor = SKColor.clear
+        let overlayNode = SKSpriteNode(color: pauseOverlayColor, size: self.sizeInPoints)
+        overlayNode.name = "MAP_OVERLAY"
+        
+        #if SKTILED_DEMO
+        overlayNode.setAttr(key: "tiled-node-name", value: "overlay")
+        #endif
+        
+        self.addChild(overlayNode)
+        overlayNode.zPosition = self.lastZPosition * self.zDeltaForLayers
+        overlayNode.isHidden = (self.isPaused == false)
+        return overlayNode
+    }()
+    
+    
+    /// Overlay color.
+    public var overlayColor: SKColor = SKColor(hexString: "#40000000") {
+        didSet {
+            drawOverlay()
+        }
+    }
+    
+    /// Overlay transparency amount.
+    public var overlayOpacity: CGFloat = 0.4 {
+        didSet {
+            drawOverlay()
+        }
+    }
+    
+    /// Redraw the map overlay.
+    internal func drawOverlay() {
+        overlay.color = overlayColor.withAlphaComponent(overlayOpacity)
+    }
+    
+    
+    /// Isolated layers.
+    public var isolatedLayers: [TiledLayerObject]?  {
+        didSet {
+            guard let isolated = isolatedLayers else {
+                layers.forEach({ layer in
+                    layer.isIsolated = false
+                    // TODO: need to stash previous `isHidden` value
+                    layer.isHidden = false
+                })
+                
+                NotificationCenter.default.post(
+                    name: Notification.Name.Map.Updated,
+                    object: self
+                )
+                
+                return
+            }
+
+            var alreadyIsolated: [TiledLayerObject] = []
+            
+            
+            for layer in layers {
+                
+                if let chunk = layer as? SKTileLayerChunk {
+                    print("chunk: '\(chunk.xPath)'")
+                }
+                
+                
+                // if this layer is part of the isolated array...
+                let isolateThisLayer = isolated.contains(layer)
+                
+                if (isolateThisLayer == false) {
+                    if (alreadyIsolated.contains(layer) == true) {
+                        continue
+                    }
+                }
+                
+                alreadyIsolated.append(layer)
+                
+                
+                // if this is a group layer, we need to show child layers
+                let isGroupLayer = (layer as? SKGroupLayer != nil)
+                let hideThisLayer = isolateThisLayer == false
+                
+                // we need to set these visible so the current layer can be seen...
+                var layersToProtect = Set(layer.parentLayers)
+                
+                // if this is a group layer, we need to also see all of the current child layers
+                if (isGroupLayer == true) {
+                    
+                    for child in layer.childLayers {
+                        layersToProtect.insert(child)
+                    }
+                }
+                
+                // isolate the layer...
+                layer.isIsolated = isolateThisLayer
+                layer.isHidden = hideThisLayer
+                
+                for relative in layersToProtect.filter({ $0 != layer && $0 as? SKTileLayerChunk == nil }) {
+                    relative.isHidden = hideThisLayer
+                    alreadyIsolated.append(relative)
+                }
+            }
+            
+            NotificationCenter.default.post(
+                name: Notification.Name.Map.Updated,
+                object: self
+            )
+        }
+    }
+    
+    
+    // MARK: - Background Properties
+    
+    /// Optional background color (parsed from the source tmx file).
+    public var backgroundColor: SKColor? = nil {
+        didSet {
+            self.defaultLayer.color = (backgroundColor != nil) ? backgroundColor! : SKColor.clear
+            self.defaultLayer.colorBlendFactor = (backgroundColor != nil) ? 1.0 : 0
+        }
+    }
+    
+    /// Background opactiy.
+    public var backgroundOpacity: CGFloat = 1 {
+        didSet {
+            self.defaultLayer.opacity = backgroundOpacity
+        }
+    }
+    
+    /// Ignore Tiled background color.
+    public var ignoreBackground: Bool = false {
+        didSet {
+            defaultLayer.colorBlendFactor = (ignoreBackground == false) ? 1.0 : 0
+        }
+    }
+    
+    /// Background offset.
+    public var backgroundOffset: CGSize = CGSize.zero {
+        didSet {
+            self.defaultLayer.frameOffset = backgroundOffset
+        }
+    }
+    
+    
+    // MARK: - Timing
+    
+    // Update time properties.
+    private var lastUpdateTime: TimeInterval = 0
+    
+    private let maximumUpdateDelta: TimeInterval = 1.0 / 60.0
+    
+    
+    // MARK: - Dispatch Queues
+    
+    private let renderQueue  = DispatchQueue(label: "org.sktiled.sktilemap.renderqueue", qos: .userInteractive, attributes: .concurrent)
+    private let animatedTilesQueue = DispatchQueue(label: "org.sktiled.sktilemap.tiles.animated.renderQueue", qos: .userInteractive, attributes: .concurrent)
+    private let staticTilesQueue  = DispatchQueue(label: "org.sktiled.sktilemap.tiles.static.renderQueue", qos: .userInteractive, attributes: .concurrent)
+    
+    /// Logging verbosity.
+    internal var loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel
+
+    
+    // MARK: - Positioning
+    
+    /// Mappable child node offset. By default, the `SKTilemap` node aligns child layers to its' center point.
+    ///
+    /// Used when a map container aligns all of the layers.
+    public var childOffset: CGPoint {
+        var offsetOutput = CGPoint.zero
+        
+        // default alignment is `center` (0.5,0.5)
+        let layerAnchorPoint = layerAlignment.anchorPoint
+        
+        switch orientation {
+            case .orthogonal:
+                offsetOutput.x = -sizeInPoints.width * layerAnchorPoint.x
+                offsetOutput.y = sizeInPoints.height * layerAnchorPoint.y
+                
+            case .isometric:
+                offsetOutput.x = -sizeInPoints.width * layerAnchorPoint.x
+                offsetOutput.y = sizeInPoints.height * layerAnchorPoint.y
+                
+            case .hexagonal, .staggered:
+                offsetOutput.x = -sizeInPoints.width * layerAnchorPoint.x
+                offsetOutput.y = sizeInPoints.height * layerAnchorPoint.y
+        }
+        return offsetOutput
+    }
+    
+    /// Defines this map's position within a [Tiled world][tiled-world-url]. This value cannot be changed directly, but matches the value set in the world JSON description.
+    ///
+    /// [tiled-world-url]:https://doc.mapeditor.org/en/stable/manual/worlds/
+    public internal(set) var worldOffset: CGPoint = CGPoint.zero
+    
+    /// The map projection type.
+    ///
+    /// [tilemap-orientation-image]:../images/tilemap-orientations.svg
+    public internal(set) var orientation: TilemapOrientation
+    
+    /// Tile render order.
+    internal var renderOrder: RenderOrder = RenderOrder.rightDown
+    
+    
+    // MARK: - Camera
+    
+    /// Reference to the Tiled scene camera.
+    public var cameraNode: SKTiledSceneCamera? {
+        guard let tiledScene = scene as? SKTiledScene,
+              let tiledCamera = tiledScene.cameraNode else {
+            return nil
+        }
+        return tiledCamera
+    }
+    
+    /// Indicates the current node has received focus or selected.
+    public var isFocused: Bool = false {
+        didSet {
+            guard isFocused != oldValue else {
+                return
+            }
+        }
+    }
+    
+    /// Node is visible to the camera.
+    public var visibleToCamera: Bool = true
+    
+    /// Constraints on camera min/max zoom levels.
+    ///
+    /// ### Constants
+    ///
+    /// - `min`: minimum camera zoom level.
+    /// - `max`: maximum camera zoom level.
+    ///
+    public struct CameraZoomConstraints {
+        public var min: CGFloat = 0.2
+        public var max: CGFloat = 5.0
+    }
+    
+    /// Camera zoom constraints.
+    public var zoomConstraints: CameraZoomConstraints = CameraZoomConstraints()
+    
+    /// This flag indicates that the map should auto-resize upon view changes.
+    public internal(set) var autoResize: Bool = false
+    
+    /// Enables the map node to receive notifications from camera.
+    @objc public var receiveCameraUpdates: Bool = true
+    
+    /// The camera's current position.
+    public internal(set) var cameraPosition: CGPoint = CGPoint.zero
+    
+    /// Display bounds that the tilemap is viewable in.
+    public internal(set) var cameraBounds: CGRect?
+    
+    /// Current map zoom level.
+    public internal(set) var currentZoom: CGFloat = 1.0
+    
+    /// Allow camera zooming.
+    public var allowZoom: Bool = true
+    
+    /// Allow camera movement.
+    public var allowMovement: Bool = true
+    
+    /// Allow camera rotation.
+    public var allowRotation: Bool = false
+    
+    /// Initial world scale.
+    public var worldScale: CGFloat = 1.0
+    
+    
+    // MARK: - Hexagonal/Staggered Properties
 
     /// Hexagonal side length.
     public var hexsidelength: Int = 0
@@ -232,48 +550,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     public var staggerindex: StaggerIndex = StaggerIndex.odd
 
 
-    // MARK: Positioning
-
-    /// Mappable child node offset. By default, the `SKTilemap` node aligns child layers to its' center point.
-    ///
-    /// Used when a map container aligns all of the layers.
-    public var childOffset: CGPoint {
-        var offsetOutput = CGPoint.zero
-
-        // default alignment is `center` (0.5,0.5)
-        let layerAnchorPoint = layerAlignment.anchorPoint
-
-        switch orientation {
-            case .orthogonal:
-                offsetOutput.x = -sizeInPoints.width * layerAnchorPoint.x
-                offsetOutput.y = sizeInPoints.height * layerAnchorPoint.y
-
-             case .isometric:
-                offsetOutput.x = -sizeInPoints.width * layerAnchorPoint.x
-                offsetOutput.y = sizeInPoints.height * layerAnchorPoint.y
-
-            case .hexagonal, .staggered:
-                offsetOutput.x = -sizeInPoints.width * layerAnchorPoint.x
-                offsetOutput.y = sizeInPoints.height * layerAnchorPoint.y
-        }
-        return offsetOutput
-    }
-
-    /// Defines this map's position within a [Tiled world][tiled-world-url]. This value cannot be changed directly, but matches the value set in the world JSON description.
-    ///
-    /// [tiled-world-url]:https://doc.mapeditor.org/en/stable/manual/worlds/
-    public internal(set) var worldOffset: CGPoint = CGPoint.zero
-
-    /// The map projection type.
-    ///
-    /// [tilemap-orientation-image]:../images/tilemap-orientations.svg
-    public internal(set) var orientation: TilemapOrientation
-
-    /// Tile render order.
-    internal var renderOrder: RenderOrder = RenderOrder.rightDown
-
-    /// Map container display name. Defaults to the current map source file name (minus the tmx extension).
-    public var displayName: String?
+    // MARK: - Content Root Nodes
 
     /// Root for all Tiled renderable content.
     internal let contentRoot = SKEffectNode()
@@ -306,21 +583,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return polygonPath(vertices)
     }()
 
-    // Timing
-
-    // Update time properties.
-    private var lastUpdateTime: TimeInterval = 0
-    private let maximumUpdateDelta: TimeInterval = 1.0 / 60.0
-
-
-    // Dispatch Queues
-
-    private let renderQueue  = DispatchQueue(label: "org.sktiled.sktilemap.renderqueue", qos: .userInteractive, attributes: .concurrent)
-    private let animatedTilesQueue = DispatchQueue(label: "org.sktiled.sktilemap.tiles.animated.renderQueue", qos: .userInteractive, attributes: .concurrent)
-    private let staticTilesQueue  = DispatchQueue(label: "org.sktiled.sktilemap.tiles.static.renderQueue", qos: .userInteractive, attributes: .concurrent)
-
-    /// Logging verbosity.
-    internal var loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel
+    // MARK: - Misc Properties
 
     /// Map isolation mode for geometry..
     ///
@@ -443,69 +706,6 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         }
     }
 
-
-    // MARK: - Camera
-
-    /// Reference to the Tiled scene camera.
-    public var cameraNode: SKTiledSceneCamera? {
-        guard let tiledScene = scene as? SKTiledScene,
-              let tiledCamera = tiledScene.cameraNode else {
-            return nil
-        }
-        return tiledCamera
-    }
-
-    /// Indicates the current node has received focus or selected.
-    public var isFocused: Bool = false {
-        didSet {
-            guard isFocused != oldValue else {
-                return
-            }
-        }
-    }
-
-    /// Node is visible to the camera.
-    public var visibleToCamera: Bool = true
-
-    /// Constraints on camera min/max zoom levels.
-    ///
-    /// ### Constants
-    ///
-    /// - `min`: minimum camera zoom level.
-    /// - `max`: maximum camera zoom level.
-    ///
-    public struct CameraZoomConstraints {
-        public var min: CGFloat = 0.2
-        public var max: CGFloat = 5.0
-    }
-
-    /// Camera zoom constraints.
-    public var zoomConstraints: CameraZoomConstraints = CameraZoomConstraints()
-
-    /// This flag indicates that the map should auto-resize upon view changes.
-    public internal(set) var autoResize: Bool = false
-
-    /// Enables the map node to receive notifications from camera.
-    @objc public var receiveCameraUpdates: Bool = true
-
-    /// Display bounds that the tilemap is viewable in.
-    public internal(set) var cameraBounds: CGRect?
-
-    /// Current map zoom level.
-    public internal(set) var currentZoom: CGFloat = 1.0
-
-    /// Allow camera zooming.
-    public var allowZoom: Bool = true
-
-    /// Allow camera movement.
-    public var allowMovement: Bool = true
-
-    /// Allow camera rotation.
-    public var allowRotation: Bool = false
-
-    /// Initial world scale.
-    public var worldScale: CGFloat = 1.0
-
     // MARK: - Debug Overlay
 
     /// Overlay layer used to display object bounds (debug).
@@ -516,10 +716,6 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return self.getObjects(recursive: true).count
     }
 
-    // MARK: - Caching
-
-    /// Storage for tile data.
-    internal var dataStorage: TileDataStorage?
 
     // MARK: Debugging
 
@@ -572,20 +768,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     /// Coordinate change handler.
     internal var onCoordinateChange: ((simd_int2, simd_int2, Bool) -> ())?
 
-    /// Current focus coordinate.
-    public var currentCoordinate = simd_int2(0, 0) {
-        didSet {
-            guard (oldValue != currentCoordinate) else {
-                return
-            }
 
-            if (TiledGlobals.default.enableTilemapNotifications == true) {
-
-                let isValidCoord = isValid(coord: currentCoordinate)
-                onCoordinateChange?(oldValue, currentCoordinate, isValidCoord)
-            }
-        }
-    }
 
     /// Map bounding shape.
     @objc public lazy var boundsShape: SKShapeNode? = {
@@ -616,173 +799,8 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return shape
     }()
 
-    // MARK: - Layers
+    // MARK: - Debugging
 
-    /// Isolated layers.
-    public var isolatedLayers: [TiledLayerObject]?  {
-        didSet {
-            guard let isolated = isolatedLayers else {
-                layers.forEach({ layer in
-                    layer.isIsolated = false
-                    // TODO: need to stash previous `isHidden` value
-                    layer.isHidden = false
-                })
-
-                NotificationCenter.default.post(
-                    name: Notification.Name.Map.Updated,
-                    object: self
-                )
-
-                return
-            }
-
-
-
-            var alreadyIsolated: [TiledLayerObject] = []
-
-
-            for layer in layers {
-                
-                if let chunk = layer as? SKTileLayerChunk {
-                    print("chunk: '\(chunk.xPath)'")
-                }
-                
-                
-                // if this layer is part of the isolated array...
-                let isolateThisLayer = isolated.contains(layer)
-
-                if (isolateThisLayer == false) {
-                    if (alreadyIsolated.contains(layer) == true) {
-                        continue
-                    }
-                }
-
-                alreadyIsolated.append(layer)
-
-
-                // if this is a group layer, we need to show child layers
-                let isGroupLayer = (layer as? SKGroupLayer != nil)
-                let hideThisLayer = isolateThisLayer == false
-
-                // we need to set these visible so the current layer can be seen...
-                var layersToProtect = Set(layer.parentLayers)
-
-                // if this is a group layer, we need to also see all of the current child layers
-                if (isGroupLayer == true) {
-
-                    for child in layer.childLayers {
-                        layersToProtect.insert(child)
-                    }
-                }
-
-                // isolate the layer...
-                layer.isIsolated = isolateThisLayer
-                layer.isHidden = hideThisLayer
-
-                for relative in layersToProtect.filter({ $0 != layer && $0 as? SKTileLayerChunk == nil }) {
-                    relative.isHidden = hideThisLayer
-                    alreadyIsolated.append(relative)
-                }
-            }
-
-            NotificationCenter.default.post(
-                name: Notification.Name.Map.Updated,
-                object: self
-            )
-        }
-    }
-
-    /// Array of layers contained in this map. This includes private layers (such as `SKTilemap.defaultLayer`)
-    private var _layers: Set<TiledLayerObject> = []
-
-    /// Returns the number of layers contained in this map.
-    public var layerCount: Int {
-        return self.layers.count
-    }
-
-    /// Returns a flattened array of contained child layers.
-    public var layers: [TiledLayerObject] {
-        var result: [TiledLayerObject] = []
-        for layer in _layers.sorted(by: { $0.index > $1.index }) where layer as? TiledBackgroundLayer == nil {
-            result += layer.layers
-        }
-        return result
-    }
-
-    /// The tile map default layer, used for displaying the current grid, getting coordinates, etc.
-    internal lazy var defaultLayer: TiledBackgroundLayer = { [unowned self] in
-        let layer = TiledBackgroundLayer(tilemap: self)
-        _ = self.addLayer(layer)
-        layer.didFinishRendering()
-        return layer
-    }()
-
-    /// Pause overlay.
-    public lazy var overlay: SKSpriteNode = { [unowned self] in
-        let pauseOverlayColor = SKColor.clear
-        let overlayNode = SKSpriteNode(color: pauseOverlayColor, size: self.sizeInPoints)
-        overlayNode.name = "MAP_OVERLAY"
-
-        #if SKTILED_DEMO
-        overlayNode.setAttr(key: "tiled-node-name", value: "overlay")
-        #endif
-
-        self.addChild(overlayNode)
-        overlayNode.zPosition = self.lastZPosition * self.zDeltaForLayers
-        overlayNode.isHidden = (self.isPaused == false)
-        return overlayNode
-    }()
-
-
-    /// Overlay color.
-    public var overlayColor: SKColor = SKColor(hexString: "#40000000") {
-        didSet {
-            drawOverlay()
-        }
-    }
-
-    /// Overlay transparency amount.
-    public var overlayOpacity: CGFloat = 0.4 {
-        didSet {
-            drawOverlay()
-        }
-    }
-
-    /// Redraw the map overlay.
-    internal func drawOverlay() {
-        overlay.color = overlayColor.withAlphaComponent(overlayOpacity)
-    }
-
-    // MARK: - Background Properties
-
-    /// Optional background color (parsed from the source tmx file).
-    public var backgroundColor: SKColor? = nil {
-        didSet {
-            self.defaultLayer.color = (backgroundColor != nil) ? backgroundColor! : SKColor.clear
-            self.defaultLayer.colorBlendFactor = (backgroundColor != nil) ? 1.0 : 0
-        }
-    }
-
-    /// Background opactiy.
-    public var backgroundOpacity: CGFloat = 1 {
-        didSet {
-            self.defaultLayer.opacity = backgroundOpacity
-        }
-    }
-
-    /// Ignore Tiled background color.
-    public var ignoreBackground: Bool = false {
-        didSet {
-            defaultLayer.colorBlendFactor = (ignoreBackground == false) ? 1.0 : 0
-        }
-    }
-
-    /// Background offset.
-    public var backgroundOffset: CGSize = CGSize.zero {
-        didSet {
-            self.defaultLayer.frameOffset = backgroundOffset
-        }
-    }
 
     /// Debug visualization node.
     internal var debugNode: TiledDebugDrawNode!
@@ -1613,9 +1631,6 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
     // MARK: - Layer Management
 
-    /// Default z-position range between layers.
-    public var zDeltaForLayers: CGFloat = TiledGlobals.default.zDeltaForLayers
-
     /// Returns an array of child layers, sorted by index (first is lowest, last is highest).
     ///
     /// - Parameter recursive: include nested layers.
@@ -1624,37 +1639,27 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return (recursive == true) ? self.layers : Array(self._layers)
     }
 
-    /// Return layers matching the given name.
+    /// Return child layers matching the given name.
     ///
     /// - Parameters:
     ///   - layerName: tile layer name.
     ///   - recursive: include nested layers.
     /// - Returns: layer objects.
     public func getLayers(named layerName: String, recursive: Bool = true) -> [TiledLayerObject] {
-        var result: [TiledLayerObject] = []
-        let layersToCheck = self.getLayers(recursive: recursive)
-        if let index = layersToCheck.firstIndex(where: { $0.name == layerName }) {
-            result.append(layersToCheck[index])
-        }
-        return result
+        return getLayers(recursive: recursive).filter { $0.name == layerName }
     }
-
-    /// Return layers with names matching the given prefix.
+    
+    /// Return child layers with names matching the given prefix.
     ///
     /// - Parameters:
     ///   - withPrefix: prefix to match.
     ///   - recursive: include nested layers.
     /// - Returns: layer objects.
     public func getLayers(withPrefix: String, recursive: Bool = true) -> [TiledLayerObject] {
-        var result: [TiledLayerObject] = []
-        let layersToCheck = self.getLayers(recursive: recursive)
-        if let index = layersToCheck.firstIndex(where: { $0.layerName.hasPrefix(withPrefix) }) {
-            result.append(layersToCheck[index])
-        }
-        return result
+        return getLayers(recursive: recursive).filter { $0.layerName.hasPrefix(withPrefix) }
     }
 
-    /// Return layers with matching the given path. Tiled allows for duplicate layer names, so we're returning an array.
+    /// Return child layers with matching the given path. Tiled allows for duplicate layer names, so we're returning an array.
     ///
     /// - Parameters:
     ///   - withPrefix: layer path to search for.
@@ -1663,7 +1668,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return getLayers(recursive: true).filter( { $0.path == atPath })
     }
 
-    /// Returns a layer given an `xPath` value.
+    /// Returns a child layer given an `xPath` value.
     ///
     /// - Parameter xPath: layer xPath.
     /// - Returns: layer objects.
@@ -1674,7 +1679,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return nil
     }
 
-    /// Returns a layer matching the given UUID.
+    /// Returns a child layer matching the given UUID.
     ///
     /// - Parameter uuid: tile layer UUID.
     /// - Returns: layer object.
@@ -1686,7 +1691,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return nil
     }
 
-    /// Returns a layer given the index (0 being the lowest).
+    /// Returns a child layer given the index (0 being the lowest).
     ///
     /// - Parameter index: layer index.
     /// - Returns: layer object.
@@ -1698,7 +1703,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return nil
     }
 
-    /// Return layers assigned a custom `type` property.
+    /// Returns child layers assigned a custom `type` property.
     ///
     /// - Parameters:
     ///   - ofType: layer type.
@@ -1712,7 +1717,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     ///
     /// - Returns: array of layers.
     public func getContentLayers() -> [TiledLayerObject] {
-        return self.layers.filter { $0 as? SKGroupLayer == nil }.sorted(by: { $0.actualZPosition > $1.actualZPosition })
+        return self.layers.filter { $0 as? SKGroupLayer == nil && $0 as? TiledBackgroundLayer == nil }.sorted(by: { $0.actualZPosition > $1.actualZPosition })
     }
 
     /// Returns an array of layer names.
@@ -1957,6 +1962,17 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         }
         return nil
     }
+    
+    
+    
+    
+    internal func replaceLayer(old oldLayer: TiledLayerObject, new newLayer: TiledLayerObject) {
+        guard let oldLayerIndex = _layers.firstIndex(of: oldLayer) else {
+            return
+        }
+        
+        _layers.remove(at: oldLayerIndex)
+    }
 
     /// Position child layers in relation to the map's anchorpoint. Called when a layer is initially added, or the tilemap node's `layerAlignment` is modified.
     ///
@@ -1984,7 +2000,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
             result += layer.layerInfiniteOffset
         }
         
-        result += layer.debugOffset
+        //result += layer.debugOffset
         
         // set the layer final position
         layer.position = result
@@ -3630,7 +3646,25 @@ extension SKTilemap: TiledSceneCameraDelegate {
     ///
     /// - Parameter newPosition: updated camera position.
     public func cameraPositionChanged(newPosition: CGPoint) {
-        // TODO: access `nodesInView`
+        defer {
+            cameraPosition = newPosition
+        }
+        
+        let dampen: CGFloat = 0.5
+        let delta = cameraPosition.delta(to: newPosition)
+        
+        // Move layers according to their parallax values
+        getLayers().forEach { layer in
+            let layerParallax = layer.parallax
+            
+            if (layerParallax.x != 1) {
+                layer.position.x -= (delta.x * layer.parallax.x) * dampen
+            }
+            
+            if (layerParallax.y != 1) {
+                layer.position.y += (delta.y * layer.parallax.y) * dampen
+            }
+        }
     }
 
     /// Called when the camera zoom changes.
