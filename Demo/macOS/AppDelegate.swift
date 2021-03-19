@@ -33,8 +33,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// controllers
     var preferencesController: PreferencesWindowController?
-    var attributeEditorWindowController: AttributeEditorWindowController?
-    var tileEditorWindowController: TileEditorWindowController?
     var offsetEditorWindowController: OffsetEditorWindowController?
 
     var receiveCameraUpdates: Bool = true
@@ -78,7 +76,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var tileColorsMenuItem: NSMenuItem!
     @IBOutlet weak var objectColorsMenuItem: NSMenuItem!
     @IBOutlet weak var layerColorsMenuItem: NSMenuItem!
-    @IBOutlet weak var attributeEditorMenuItem: NSMenuItem!
 
     // development menu
     @IBOutlet weak var developmentMainMenu: NSMenuItem!
@@ -259,7 +256,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         currentMapsMenuItem.isEnabled = false
         allAssetsMapsMenuItem.isEnabled = false
         externalAssetsMenuItem.isEnabled = false
-        attributeEditorMenuItem.isEnabled = false
         reloadMapMenuitem.isEnabled = false
 
         demoFilesMenu.isEnabled = false
@@ -423,54 +419,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if (preferencesController != nil) {
             preferencesController!.showWindow(sender)
             preferencesController?.window?.title = "SKTiled Demo Preferences"
-        }
-    }
-
-    /// Open the demo preferences controller.
-    ///
-    /// - Parameter sender: Menu item.
-    @IBAction func launchAttributeEditorAction(_ sender: Any) {
-        Logger.default.log("launching attribute editor...", level: .info, symbol: "AppDelegate")
-
-
-        if (attributeEditorWindowController  == nil) {
-            let storyboard = NSStoryboard(name: NSStoryboard.Name("AttributeEditor"), bundle: nil)
-            let identifier = NSStoryboard.SceneIdentifier("AttributeEditorWindowController")
-            attributeEditorWindowController = storyboard.instantiateController(withIdentifier: identifier) as? AttributeEditorWindowController
-        }
-
-        if (attributeEditorWindowController != nil) {
-            attributeEditorWindowController!.showWindow(sender)
-            attributeEditorWindowController?.window?.title = "Attribute Editor"
-        }
-    }
-
-    /// Open the tile editor interface.
-    ///
-    /// - Parameter sender: Menu item.
-    @IBAction func launchTileEditor(_ sender: Any) {
-        Logger.default.log("launching tile flip flags editor.", level: .info, symbol: "AppDelegate")
-        //let prefsWindowController = PreferencesWindowController.newPreferencesWindow()
-        //prefsWindowController.showWindow(sender)
-
-        if (tileEditorWindowController == nil) {
-            let storyboard = NSStoryboard(name: NSStoryboard.Name("Main"), bundle: nil)
-            let identifier = NSStoryboard.SceneIdentifier("TileEditorWindowController")
-            tileEditorWindowController = storyboard.instantiateController(withIdentifier: identifier) as? TileEditorWindowController
-        }
-
-        if (tileEditorWindowController != nil) {
-            tileEditorWindowController!.showWindow(sender)
-            tileEditorWindowController?.window?.title = "Tile Editor"
-        }
-    }
-    
-    
-
-    @IBAction func tileFlipFlagsAction(_ sender: NSMenuItem) {
-        guard let tile = sender.representedObject as? SKTile else {
-            Logger.default.log("cannot access tile node.", level: .warning)
-            return
         }
     }
 
@@ -1301,10 +1249,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     nodeSubMenu.image = NSImage(named: tiledNode.tiledIconName ?? "node-icon")
                     selectedNodesMenuItem.submenu?.addItem(nodeSubMenu)
 
-
-                    let flipFlagsMenuItem = NSMenuItem(title: "Tile Editor...", action: #selector(launchTileEditor), keyEquivalent: "")
-                    flipFlagsMenuItem.representedObject = tile
-                    nodeSubMenu.submenu?.addItem(flipFlagsMenuItem)
                     
                     
                     let isolateLayerMenuItem = NSMenuItem(title: "Isolate Layer...", action: #selector(isolateNodeLayerAction), keyEquivalent: "")
@@ -1357,7 +1301,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         dumpSelectedMenuItem.isEnabled = (selectedCount > 0)
         dumpSelectedMenuItem.title = "Dump Selected \(nodeDesc)"
-        attributeEditorMenuItem.isEnabled = true
     }
 
 
@@ -1645,7 +1588,6 @@ extension AppDelegate: TiledSceneCameraDelegate {
         selectedNodesMenuItem.isEnabled = false
         selectedNodesMenuItem.title = "Selected Nodes"
         dumpSelectedMenuItem.isEnabled = false
-        attributeEditorMenuItem.isEnabled = false
     }
 }
 

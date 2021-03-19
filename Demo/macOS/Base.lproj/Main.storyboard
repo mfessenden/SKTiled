@@ -271,12 +271,6 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Layer Color:" id="3xk-8d-Qxm"/>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="J1W-Md-ZLQ"/>
-                                        <menuItem title="Attribute Editor..." enabled="NO" keyEquivalent="i" id="tra-Fh-z0y">
-                                            <connections>
-                                                <action selector="launchAttributeEditorAction:" target="Voe-Tx-rLC" id="8uN-3h-KR5"/>
-                                            </connections>
-                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -420,7 +414,6 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="SKTiled_Demo" customModuleProvider="target">
                     <connections>
                         <outlet property="allAssetsMapsMenuItem" destination="ANV-Se-DZa" id="6z4-SF-dvk"/>
-                        <outlet property="attributeEditorMenuItem" destination="tra-Fh-z0y" id="h1p-CB-E9s"/>
                         <outlet property="cameraAllowMovementItem" destination="o6f-SD-ND0" id="MtT-Zd-0PX"/>
                         <outlet property="cameraAllowRotationItem" destination="lEg-h6-y6d" id="KRZ-Kf-WKw"/>
                         <outlet property="cameraAllowZoomItem" destination="DUG-oI-rxj" id="siF-5K-AZo"/>

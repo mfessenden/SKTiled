@@ -268,8 +268,6 @@
 		4C440BB61DAE913A00DEC9A4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440BB11DAE913A00DEC9A4 /* GameViewController.swift */; };
 		4C4428342605350800C2F495 /* OffsetEditorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4428322605350700C2F495 /* OffsetEditorWindowController.swift */; };
 		4C4428352605350800C2F495 /* OffsetEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4428332605350700C2F495 /* OffsetEditorViewController.swift */; };
-		4C45788B25F94ADB00541B63 /* TileEditorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C45788A25F94ADB00541B63 /* TileEditorWindowController.swift */; };
-		4C4578A125F94BE300541B63 /* TileEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4578A025F94BE300541B63 /* TileEditorViewController.swift */; };
 		4C48245F21839B6400B32614 /* dungeon-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C48245E21839B6200B32614 /* dungeon-16x16.tsx */; };
 		4C48246021839B6400B32614 /* dungeon-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C48245E21839B6200B32614 /* dungeon-16x16.tsx */; };
 		4C48246121839B6400B32614 /* dungeon-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C48245E21839B6200B32614 /* dungeon-16x16.tsx */; };
@@ -334,9 +332,6 @@
 		4C64EC4025D463740090F4F3 /* SKWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C64EC3C25D463740090F4F3 /* SKWorld.swift */; };
 		4C64EC4125D463740090F4F3 /* SKWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C64EC3C25D463740090F4F3 /* SKWorld.swift */; };
 		4C64EC4225D463740090F4F3 /* SKWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C64EC3C25D463740090F4F3 /* SKWorld.swift */; };
-		4C68994025CAF89800EE7006 /* AttributeEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C68993F25CAF89800EE7006 /* AttributeEditor.storyboard */; };
-		4C68995725CAF96F00EE7006 /* AttributeEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C68995525CAF96F00EE7006 /* AttributeEditorViewController.swift */; };
-		4C68995825CAF96F00EE7006 /* AttributeEditorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C68995625CAF96F00EE7006 /* AttributeEditorWindowController.swift */; };
 		4C6C56BC25D6BAC000CBEB9A /* DemoNotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C56BB25D6BABF00CBEB9A /* DemoNotificationDelegate.swift */; };
 		4C6C56BD25D6BAC000CBEB9A /* DemoNotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C56BB25D6BABF00CBEB9A /* DemoNotificationDelegate.swift */; };
 		4C6C56BE25D6BAC000CBEB9A /* DemoNotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C56BB25D6BABF00CBEB9A /* DemoNotificationDelegate.swift */; };
@@ -784,8 +779,6 @@
 		4C440BB21DAE913A00DEC9A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C4428322605350700C2F495 /* OffsetEditorWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffsetEditorWindowController.swift; sourceTree = "<group>"; };
 		4C4428332605350700C2F495 /* OffsetEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffsetEditorViewController.swift; sourceTree = "<group>"; };
-		4C45788A25F94ADB00541B63 /* TileEditorWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileEditorWindowController.swift; sourceTree = "<group>"; };
-		4C4578A025F94BE300541B63 /* TileEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileEditorViewController.swift; sourceTree = "<group>"; };
 		4C48245E21839B6200B32614 /* dungeon-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "dungeon-16x16.tsx"; sourceTree = "<group>"; };
 		4C4ADA632189F3F100DB1A02 /* SKTiledTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SKTiledTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C4ADA672189F3F100DB1A02 /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
@@ -802,9 +795,6 @@
 		4C5B6DB02455CAE800F81755 /* TiledLayerObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TiledLayerObject.swift; sourceTree = "<group>"; };
 		4C5C90E0260A3BBE006A6C75 /* SKTiled Demo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SKTiled Demo.entitlements"; sourceTree = "<group>"; };
 		4C64EC3C25D463740090F4F3 /* SKWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKWorld.swift; sourceTree = "<group>"; };
-		4C68993F25CAF89800EE7006 /* AttributeEditor.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AttributeEditor.storyboard; sourceTree = "<group>"; };
-		4C68995525CAF96F00EE7006 /* AttributeEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributeEditorViewController.swift; sourceTree = "<group>"; };
-		4C68995625CAF96F00EE7006 /* AttributeEditorWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributeEditorWindowController.swift; sourceTree = "<group>"; };
 		4C6C56BB25D6BABF00CBEB9A /* DemoNotificationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoNotificationDelegate.swift; sourceTree = "<group>"; };
 		4C73454121BAC11F00EFC0AB /* CoordinateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinateTests.swift; sourceTree = "<group>"; };
 		4C77D2C4255C978400C8C18C /* TiledSelectableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TiledSelectableType.swift; sourceTree = "<group>"; };
@@ -1152,8 +1142,6 @@
 				4C5479FD1DC15AF6008B3473 /* GameWindowController.swift */,
 				4C440BA61DAE913000DEC9A4 /* Info.plist */,
 				4CB8536825AE19B100CC2154 /* Preferences */,
-				4C68993E25CAF89800EE7006 /* AttributeEditor */,
-				4C45788925F94ADB00541B63 /* TileEditor */,
 				4C4428312605350700C2F495 /* OffsetEditor */,
 				4C32CC3125A92135000A6D66 /* Supporting Files */,
 			);
@@ -1181,15 +1169,6 @@
 			path = OffsetEditor;
 			sourceTree = "<group>";
 		};
-		4C45788925F94ADB00541B63 /* TileEditor */ = {
-			isa = PBXGroup;
-			children = (
-				4C4578A025F94BE300541B63 /* TileEditorViewController.swift */,
-				4C45788A25F94ADB00541B63 /* TileEditorWindowController.swift */,
-			);
-			path = TileEditor;
-			sourceTree = "<group>";
-		};
 		4C5B6DB72455CCE100F81755 /* Layers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1209,16 +1188,6 @@
 			children = (
 			);
 			path = Contrib;
-			sourceTree = "<group>";
-		};
-		4C68993E25CAF89800EE7006 /* AttributeEditor */ = {
-			isa = PBXGroup;
-			children = (
-				4C68993F25CAF89800EE7006 /* AttributeEditor.storyboard */,
-				4C68995525CAF96F00EE7006 /* AttributeEditorViewController.swift */,
-				4C68995625CAF96F00EE7006 /* AttributeEditorWindowController.swift */,
-			);
-			path = AttributeEditor;
 			sourceTree = "<group>";
 		};
 		4C71829225893A0100E6046A /* Supporting Files */ = {
@@ -1838,7 +1807,6 @@
 				4C96C08C1F53A09F00CE1DEB /* keyRedStroked.png in Resources */,
 				4C96C0A01F53A09F00CE1DEB /* platformBlock1.png in Resources */,
 				4C96C0D01F53A09F00CE1DEB /* window2.png in Resources */,
-				4C68994025CAF89800EE7006 /* AttributeEditor.storyboard in Resources */,
 				4C96C0701F53A09F00CE1DEB /* doorGreenStroke.png in Resources */,
 				4C96C0901F53A09F00CE1DEB /* platform1.png in Resources */,
 				4C96C0CE1F53A09F00CE1DEB /* window1.png in Resources */,
@@ -2359,17 +2327,13 @@
 				4C01D3A91F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift in Sources */,
 				4CE077FF254366D100187F4E /* DemoPreferences.swift in Sources */,
 				4C440BA91DAE913000DEC9A4 /* GameViewController.swift in Sources */,
-				4C68995725CAF96F00EE7006 /* AttributeEditorViewController.swift in Sources */,
 				4C204A10251E7C2000D2012C /* TiledBackgroundLayer.swift in Sources */,
 				4C4428352605350800C2F495 /* OffsetEditorViewController.swift in Sources */,
 				4C1774B91D9099A3000C0AFD /* SKTilesetData.swift in Sources */,
-				4C68995825CAF96F00EE7006 /* AttributeEditorWindowController.swift in Sources */,
 				4CB8537025AE19B100CC2154 /* PreferencesViewController.swift in Sources */,
 				4C8DE92D249814A300CCF8EF /* DebugDrawableType.swift in Sources */,
-				4C4578A125F94BE300541B63 /* TileEditorViewController.swift in Sources */,
 				4CC0658A24DDD53A00113389 /* TileContainerType.swift in Sources */,
 				4C1774B51D9099A3000C0AFD /* SKTilemap.swift in Sources */,
-				4C45788B25F94ADB00541B63 /* TileEditorWindowController.swift in Sources */,
 				4C86E0B1251A4AF4003CCE3D /* TiledCustomReflectableType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
