@@ -266,8 +266,6 @@
 		4C440BB31DAE913A00DEC9A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440BAC1DAE913A00DEC9A4 /* AppDelegate.swift */; };
 		4C440BB51DAE913A00DEC9A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C440BAF1DAE913A00DEC9A4 /* Main.storyboard */; };
 		4C440BB61DAE913A00DEC9A4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C440BB11DAE913A00DEC9A4 /* GameViewController.swift */; };
-		4C4428342605350800C2F495 /* OffsetEditorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4428322605350700C2F495 /* OffsetEditorWindowController.swift */; };
-		4C4428352605350800C2F495 /* OffsetEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4428332605350700C2F495 /* OffsetEditorViewController.swift */; };
 		4C48245F21839B6400B32614 /* dungeon-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C48245E21839B6200B32614 /* dungeon-16x16.tsx */; };
 		4C48246021839B6400B32614 /* dungeon-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C48245E21839B6200B32614 /* dungeon-16x16.tsx */; };
 		4C48246121839B6400B32614 /* dungeon-16x16.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 4C48245E21839B6200B32614 /* dungeon-16x16.tsx */; };
@@ -777,8 +775,6 @@
 		4C440BB01DAE913A00DEC9A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4C440BB11DAE913A00DEC9A4 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		4C440BB21DAE913A00DEC9A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4C4428322605350700C2F495 /* OffsetEditorWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffsetEditorWindowController.swift; sourceTree = "<group>"; };
-		4C4428332605350700C2F495 /* OffsetEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffsetEditorViewController.swift; sourceTree = "<group>"; };
 		4C48245E21839B6200B32614 /* dungeon-16x16.tsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "dungeon-16x16.tsx"; sourceTree = "<group>"; };
 		4C4ADA632189F3F100DB1A02 /* SKTiledTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SKTiledTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C4ADA672189F3F100DB1A02 /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
@@ -1142,7 +1138,6 @@
 				4C5479FD1DC15AF6008B3473 /* GameWindowController.swift */,
 				4C440BA61DAE913000DEC9A4 /* Info.plist */,
 				4CB8536825AE19B100CC2154 /* Preferences */,
-				4C4428312605350700C2F495 /* OffsetEditor */,
 				4C32CC3125A92135000A6D66 /* Supporting Files */,
 			);
 			path = macOS;
@@ -1158,15 +1153,6 @@
 				4C440BB21DAE913A00DEC9A4 /* Info.plist */,
 			);
 			path = iOS;
-			sourceTree = "<group>";
-		};
-		4C4428312605350700C2F495 /* OffsetEditor */ = {
-			isa = PBXGroup;
-			children = (
-				4C4428322605350700C2F495 /* OffsetEditorWindowController.swift */,
-				4C4428332605350700C2F495 /* OffsetEditorViewController.swift */,
-			);
-			path = OffsetEditor;
 			sourceTree = "<group>";
 		};
 		4C5B6DB72455CCE100F81755 /* Layers */ = {
@@ -2311,7 +2297,6 @@
 				4C5B6DB12455CAE800F81755 /* TiledLayerObject.swift in Sources */,
 				4CB8537125AE19B100CC2154 /* PreferencesWindowController.swift in Sources */,
 				4CA89E13252E6E5D00C23E4C /* TiledRasterizableType.swift in Sources */,
-				4C4428342605350800C2F495 /* OffsetEditorWindowController.swift in Sources */,
 				4C64EC3D25D463740090F4F3 /* SKWorld.swift in Sources */,
 				4CAA144125B9F5F600F7919C /* TileID.swift in Sources */,
 				4CE6415F206C1AEA004BA9E4 /* Demo+Extensions.swift in Sources */,
@@ -2328,7 +2313,6 @@
 				4CE077FF254366D100187F4E /* DemoPreferences.swift in Sources */,
 				4C440BA91DAE913000DEC9A4 /* GameViewController.swift in Sources */,
 				4C204A10251E7C2000D2012C /* TiledBackgroundLayer.swift in Sources */,
-				4C4428352605350800C2F495 /* OffsetEditorViewController.swift in Sources */,
 				4C1774B91D9099A3000C0AFD /* SKTilesetData.swift in Sources */,
 				4CB8537025AE19B100CC2154 /* PreferencesViewController.swift in Sources */,
 				4C8DE92D249814A300CCF8EF /* DebugDrawableType.swift in Sources */,

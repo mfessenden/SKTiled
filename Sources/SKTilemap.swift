@@ -3785,8 +3785,8 @@ extension SKTilemap: TiledSceneCameraDelegate {
         return result
     }
 
-
     #endif
+    
 
     /// Calculate the xPath values of the layers.
     internal func calculateXPaths() {
@@ -3817,7 +3817,7 @@ extension SKTilemap: TiledSceneCameraDelegate {
 
 
 
-// MARK: Tile Data Cache
+// MARK: Tile Data Cache Optimizations
 
 /// :nodoc: These are similar to existing methods, but added to test whether it is faster to access the tile data storage.
 extension SKTilemap {
