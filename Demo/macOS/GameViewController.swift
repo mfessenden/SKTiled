@@ -242,8 +242,7 @@ class GameViewController: NSViewController, Loggable {
 
                 NotificationCenter.default.post(
                     name: Notification.Name.Map.Updated,
-                    object: tilemap,
-                    userInfo: nil
+                    object: tilemap
                 )
             }
         }
@@ -706,8 +705,7 @@ class GameViewController: NSViewController, Loggable {
 
                     NotificationCenter.default.post(
                         name: Notification.Name.Map.Updated,
-                        object: tilemap,
-                        userInfo: nil
+                        object: tilemap
                     )
                 }
             }
@@ -929,7 +927,7 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func tileUnderMouseClicked(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        notification.dump(#fileID, function: #function)
         guard let focusedTile = notification.object as? SKTile else {
             return
         }

@@ -964,8 +964,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
             NotificationCenter.default.post(
                 name: Notification.Name.Map.Updated,
-                object: tilemap,
-                userInfo: nil
+                object: tilemap
             )
         }
     }

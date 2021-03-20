@@ -76,8 +76,7 @@ public class TiledDemoController: NSObject, Loggable {
             guard let newUrl = currentTilemapUrl else {
                 NotificationCenter.default.post(
                     name: Notification.Name.DemoController.CurrentMapRemoved,
-                    object: nil,
-                    userInfo: nil
+                    object: nil
                 )
                 return
             }
@@ -1039,8 +1038,7 @@ extension TiledDemoController {
 
             NotificationCenter.default.post(
                 name: Notification.Name.Map.Updated,
-                object: tilemap,
-                userInfo: nil
+                object: tilemap
             )
         } else {
             print("error accessing tilemap.")
@@ -1063,8 +1061,7 @@ extension TiledDemoController {
 
             NotificationCenter.default.post(
                 name: Notification.Name.Map.Updated,
-                object: tilemap,
-                userInfo: nil
+                object: tilemap
             )
         }
     }
@@ -1083,8 +1080,7 @@ extension TiledDemoController {
 
             NotificationCenter.default.post(
                 name: Notification.Name.Map.Updated,
-                object: tilemap,
-                userInfo: nil
+                object: tilemap
             )
         }
     }
@@ -1123,8 +1119,7 @@ extension TiledDemoController {
             // call back to the
             NotificationCenter.default.post(
                 name: Notification.Name.Map.Updated,
-                object: tilemap,
-                userInfo: nil
+                object: tilemap
             )
         }
     }
@@ -1149,8 +1144,7 @@ extension TiledDemoController {
 
             NotificationCenter.default.post(
                 name: Notification.Name.Map.Updated,
-                object: tilemap,
-                userInfo: nil
+                object: tilemap
             )
 
         } else {
@@ -1174,8 +1168,7 @@ extension TiledDemoController {
 
             NotificationCenter.default.post(
                 name: Notification.Name.Map.Updated,
-                object: tilemap,
-                userInfo: nil
+                object: tilemap
             )
 
             updateCommandString("effects rendering: \(effectsStatusString)...", duration: 3)
@@ -1287,8 +1280,7 @@ extension TiledDemoController {
 
             NotificationCenter.default.post(
                 name: Notification.Name.Map.Updated,
-                object: tilemap,
-                userInfo: nil
+                object: tilemap
             )
         }
     }
@@ -1310,8 +1302,7 @@ extension TiledDemoController {
 
             NotificationCenter.default.post(
                 name: Notification.Name.Map.Updated,
-                object: tilemap,
-                userInfo: nil
+                object: tilemap
             )
         }
     }
@@ -1389,8 +1380,7 @@ extension TiledDemoController {
 
         NotificationCenter.default.post(
             name: Notification.Name.Map.Updated,
-            object: nil,
-            userInfo: nil
+            object: nil
         )
     }
 

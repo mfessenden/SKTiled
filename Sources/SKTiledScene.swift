@@ -356,7 +356,7 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, 
 #if os(macOS)
 extension SKTiledScene {
 
-    /// Mouse click event handler.
+    /// Handler for mouse down events.
     ///
     /// - Parameter event: mouse event.
     open override func mouseDown(with event: NSEvent) {
@@ -370,7 +370,7 @@ extension SKTiledScene {
         cameraNode?.rightMouseDown(with: event)
     }
 
-    /// Mouse click event handler.
+    /// Handler for mouse up events.
     ///
     /// - Parameter event: mouse event.
     open override func mouseUp(with event: NSEvent) {

@@ -258,8 +258,7 @@ public class SKTilesetData: CustomReflectable, TiledObjectType {
 
         NotificationCenter.default.post(
             name: Notification.Name.TileData.FrameAdded,
-            object: self,
-            userInfo: nil
+            object: self
         )
 
         _frames.append(frame)

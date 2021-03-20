@@ -973,7 +973,7 @@ extension SKTiledSceneCamera {
     
     // MARK: - Mouse Handlers
     
-    /// Handler for mouse click events.
+    /// Handler for mouse down events.
     ///
     /// - Parameter event: mouse event.
     public override func mouseDown(with event: NSEvent) {
@@ -1006,7 +1006,7 @@ extension SKTiledSceneCamera {
         super.mouseDown(with: event)
     }
     
-    /// Handle mouseup events.
+    ///  Handler for mouse up events.
     ///
     /// - Parameter event: mouse event.
     public override func mouseUp(with event: NSEvent) {

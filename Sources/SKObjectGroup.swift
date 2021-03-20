@@ -253,8 +253,7 @@ public class SKObjectGroup: TiledLayerObject {
         // add to object cache
         NotificationCenter.default.post(
             name: Notification.Name.Layer.ObjectAdded,
-            object: object,
-            userInfo: nil
+            object: object
         )
         return object
     }
@@ -266,8 +265,7 @@ public class SKObjectGroup: TiledLayerObject {
     public func removeObject(_ object: SKTileObject) -> SKTileObject? {
         NotificationCenter.default.post(
             name: Notification.Name.Layer.ObjectRemoved,
-            object: object,
-            userInfo: nil
+            object: object
         )
         return objects.remove(object)
     }

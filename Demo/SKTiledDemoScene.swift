@@ -427,8 +427,7 @@ public class SKTiledDemoScene: SKTiledScene {
 
         NotificationCenter.default.post(
             name: Notification.Name.Map.Updated,
-            object: tilemap,
-            userInfo: nil
+            object: tilemap
         )
     }
 

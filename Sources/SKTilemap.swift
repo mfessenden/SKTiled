@@ -3694,7 +3694,13 @@ extension SKTilemap: TiledSceneCameraDelegate {
     /// - Parameter event: mouse click event.
     @objc public func sceneClicked(event: NSEvent) {
         let nodesAtClickLocation = handleMouseEvent(event: event)
-        nodesAtClickLocation.first?.mouseDown(with: event)
+        
+        guard let firstNode = nodesAtClickLocation.first else {
+            print("no nodes clicked.")
+            return
+        }
+        print("⭑ [SKTilemap]: node clicked: \(firstNode.description)")
+        firstNode.mouseDown(with: event)
     }
 
     /// Called when the scene is double-clicked **(macOS only)**.
@@ -3732,8 +3738,7 @@ extension SKTilemap: TiledSceneCameraDelegate {
                 /// calls back to `MousePointer` & `GameViewController`
                 NotificationCenter.default.post(
                     name: Notification.Name.Demo.ObjectUnderCursor,
-                    object: object,
-                    userInfo: nil
+                    object: object
                 )
 
                 return
@@ -3744,8 +3749,7 @@ extension SKTilemap: TiledSceneCameraDelegate {
                 /// calls back to `MousePointer` & `GameViewController`
                 NotificationCenter.default.post(
                     name: Notification.Name.Demo.TileUnderCursor,
-                    object: tile,
-                    userInfo: nil
+                    object: tile
                 )
 
                 return
@@ -3765,10 +3769,12 @@ extension SKTilemap: TiledSceneCameraDelegate {
         // TODO: test this method
         //let tilesAtMapCoordinate = tilesAt(coord: currentCoordinate).filter { $0.isHidden == false }
 
-
-
         // TODO: check tiles for coordinate match? this is very inaccurate in isometric & staggered maps
-        var result = tiledNodes(at: event.location(in: self)).filter { $0.isFocused == false } as! [SKNode]
+        
+        // can't filter by `isFocused` until highlight functions are finished
+        // var result = tiledNodes(at: event.location(in: self)).filter { $0.isFocused == false } as! [SKNode]
+        var result = tiledNodes(at: event.location(in: self)) as! [SKNode]
+        
         let clickedProxies = objectsOverlay.nodes(at: event.location(in: objectsOverlay)).filter { $0 as? TileObjectProxy != nil} as! [TileObjectProxy]
 
         if let firstProxy = clickedProxies.first {

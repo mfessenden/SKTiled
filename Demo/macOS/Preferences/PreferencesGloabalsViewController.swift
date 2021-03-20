@@ -403,8 +403,7 @@ class PreferencesGloabalsViewController: NSViewController {
                 // update controllers
                 NotificationCenter.default.post(
                     name: Notification.Name.Globals.Updated,
-                    object: nil,
-                    userInfo: nil
+                    object: nil
                 )
             }
         }
