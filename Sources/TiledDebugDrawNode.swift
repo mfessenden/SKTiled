@@ -94,7 +94,7 @@ internal class TiledDebugDrawNode: SKNode {
         gridSprite.name = "\(nodePrefix)_GRID_DISPLAY"
         
         #if SKTILED_DEMO
-        gridSprite.setAttrs(values: ["tiled-node-icon": "grid-icon", "tiled-node-nicename": "Grid Sprite", "tiled-node-listdesc": "Layer Grid Visualization", "tiled-node-desc": "Sprite containing layer grid visualization."])
+        gridSprite.setAttrs(values: ["tiled-node-icon": "grid-icon", "tiled-node-nicename": "Grid Sprite", "tiled-node-listdesc": "Layer Grid Visualization", "tiled-help-desc": "Sprite containing layer grid visualization."])
         #endif
         
         addChild(gridSprite!)
@@ -105,7 +105,7 @@ internal class TiledDebugDrawNode: SKNode {
         
         
         #if SKTILED_DEMO
-        graphSprite.setAttrs(values: ["tiled-node-icon": "graph-icon", "tiled-node-nicename": "Graph Sprite", "tiled-node-listdesc": "Layer Graph Visualization", "tiled-node-desc": "Sprite containing layer pathfinding graph visualization."])
+        graphSprite.setAttrs(values: ["tiled-node-icon": "graph-icon", "tiled-node-nicename": "Graph Sprite", "tiled-node-listdesc": "Layer Graph Visualization", "tiled-help-desc": "Sprite containing layer pathfinding graph visualization."])
         #endif
         
         addChild(graphSprite!)
@@ -114,7 +114,7 @@ internal class TiledDebugDrawNode: SKNode {
         frameShapeNode.name = "\(nodePrefix)_FRAME_DISPLAY"
         
         #if SKTILED_DEMO
-        frameShapeNode.setAttrs(values: ["tiled-node-desc": "Debug visualization shape for the map or layer frame."])
+        frameShapeNode.setAttrs(values: ["tiled-help-desc": "Debug visualization shape for the map or layer frame."])
         #endif
         
         addChild(frameShapeNode)

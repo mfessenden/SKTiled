@@ -65,6 +65,8 @@
 		4C1774B81D9099A3000C0AFD /* SKTileset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DA1D8A4EBE00FCCFA3 /* SKTileset.swift */; };
 		4C1774B91D9099A3000C0AFD /* SKTilesetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88E1DC1D8A4EBE00FCCFA3 /* SKTilesetData.swift */; };
 		4C1774BA1D9099A3000C0AFD /* TiledObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA21D8CC2C100DB56F1 /* TiledObjectType.swift */; };
+		4C1AD9E9260CE34000995606 /* AttributeStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1AD9E8260CE33F00995606 /* AttributeStorage.swift */; };
+		4C1AD9EB260CE9C500995606 /* InspectorDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1AD9EA260CE9C500995606 /* InspectorDetailViewController.swift */; };
 		4C1EA77024E5C23700E0E340 /* TileObjectOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EA76F24E5C23700E0E340 /* TileObjectOverlay.swift */; };
 		4C1EA77124E5C23700E0E340 /* TileObjectOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EA76F24E5C23700E0E340 /* TileObjectOverlay.swift */; };
 		4C1EA77224E5C23700E0E340 /* TileObjectOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EA76F24E5C23700E0E340 /* TileObjectOverlay.swift */; };
@@ -619,6 +621,11 @@
 		4CB6BD1A2139BD2200B1275A /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CB6BD192139BD2200B1275A /* Defaults.plist */; };
 		4CB6BD1B2139BD2200B1275A /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CB6BD192139BD2200B1275A /* Defaults.plist */; };
 		4CB6BD1C2139BD2200B1275A /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CB6BD192139BD2200B1275A /* Defaults.plist */; };
+		4CB798CE260BE4CE00377B99 /* Inspector.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CB798CC260BE4CE00377B99 /* Inspector.storyboard */; };
+		4CB798D9260BE67C00377B99 /* InspectorAttributesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB798D3260BE67B00377B99 /* InspectorAttributesViewController.swift */; };
+		4CB798DA260BE67C00377B99 /* InspectorMainSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB798D4260BE67B00377B99 /* InspectorMainSplitViewController.swift */; };
+		4CB798DC260BE67C00377B99 /* InspectorTreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB798D6260BE67B00377B99 /* InspectorTreeViewController.swift */; };
+		4CB798DD260BE67C00377B99 /* InspectorMainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB798D7260BE67B00377B99 /* InspectorMainWindowController.swift */; };
 		4CB8536E25AE19B100CC2154 /* PreferencesSearchPathsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8536925AE19B100CC2154 /* PreferencesSearchPathsController.swift */; };
 		4CB8536F25AE19B100CC2154 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CB8536A25AE19B100CC2154 /* Preferences.storyboard */; };
 		4CB8537025AE19B100CC2154 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8536B25AE19B100CC2154 /* PreferencesViewController.swift */; };
@@ -741,6 +748,8 @@
 		4C173436244F46C20043F85C /* InfiniteMapTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteMapTests.swift; sourceTree = "<group>"; };
 		4C17343E244F5F050043F85C /* test-infinite.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "test-infinite.tmx"; sourceTree = "<group>"; };
 		4C17747F1D909740000C0AFD /* SKTiled Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SKTiled Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C1AD9E8260CE33F00995606 /* AttributeStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributeStorage.swift; sourceTree = "<group>"; };
+		4C1AD9EA260CE9C500995606 /* InspectorDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectorDetailViewController.swift; sourceTree = "<group>"; };
 		4C1EA76F24E5C23700E0E340 /* TileObjectOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileObjectOverlay.swift; sourceTree = "<group>"; };
 		4C20499D251D1DBB00D2012C /* TiledDemoDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledDemoDelegate.swift; sourceTree = "<group>"; };
 		4C204A0F251E7C2000D2012C /* TiledBackgroundLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledBackgroundLayer.swift; sourceTree = "<group>"; };
@@ -912,6 +921,11 @@
 		4CB4A3132559D2AC004B8A2E /* TileAnimationFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileAnimationFrame.swift; sourceTree = "<group>"; };
 		4CB4A3142559D2AC004B8A2E /* TileCollisionShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileCollisionShape.swift; sourceTree = "<group>"; };
 		4CB6BD192139BD2200B1275A /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Defaults.plist; sourceTree = "<group>"; };
+		4CB798CC260BE4CE00377B99 /* Inspector.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Inspector.storyboard; sourceTree = "<group>"; };
+		4CB798D3260BE67B00377B99 /* InspectorAttributesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectorAttributesViewController.swift; sourceTree = "<group>"; };
+		4CB798D4260BE67B00377B99 /* InspectorMainSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectorMainSplitViewController.swift; sourceTree = "<group>"; };
+		4CB798D6260BE67B00377B99 /* InspectorTreeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectorTreeViewController.swift; sourceTree = "<group>"; };
+		4CB798D7260BE67B00377B99 /* InspectorMainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectorMainWindowController.swift; sourceTree = "<group>"; };
 		4CB8536925AE19B100CC2154 /* PreferencesSearchPathsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesSearchPathsController.swift; sourceTree = "<group>"; };
 		4CB8536A25AE19B100CC2154 /* Preferences.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		4CB8536B25AE19B100CC2154 /* PreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
@@ -1137,6 +1151,7 @@
 				4C440BA51DAE913000DEC9A4 /* GameViewController.swift */,
 				4C5479FD1DC15AF6008B3473 /* GameWindowController.swift */,
 				4C440BA61DAE913000DEC9A4 /* Info.plist */,
+				4CB798CA260BE4CE00377B99 /* Inspector */,
 				4CB8536825AE19B100CC2154 /* Preferences */,
 				4C32CC3125A92135000A6D66 /* Supporting Files */,
 			);
@@ -1360,6 +1375,28 @@
 				4CAA144025B9F5F600F7919C /* TileID.swift */,
 			);
 			name = Core;
+			sourceTree = "<group>";
+		};
+		4CB798CA260BE4CE00377B99 /* Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				4CB798CC260BE4CE00377B99 /* Inspector.storyboard */,
+				4CB798D7260BE67B00377B99 /* InspectorMainWindowController.swift */,
+				4CB798D4260BE67B00377B99 /* InspectorMainSplitViewController.swift */,
+				4CB798D6260BE67B00377B99 /* InspectorTreeViewController.swift */,
+				4C1AD9EA260CE9C500995606 /* InspectorDetailViewController.swift */,
+				4CB798D3260BE67B00377B99 /* InspectorAttributesViewController.swift */,
+				4CB798D1260BE51F00377B99 /* Supporting Files */,
+			);
+			path = Inspector;
+			sourceTree = "<group>";
+		};
+		4CB798D1260BE51F00377B99 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4C1AD9E8260CE33F00995606 /* AttributeStorage.swift */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		4CB8536825AE19B100CC2154 /* Preferences */ = {
@@ -1813,6 +1850,7 @@
 				4C96C0761F53A09F00CE1DEB /* earthWall.png in Resources */,
 				4C8227E61F4E0E3F007E4556 /* roguelike-16x16.tmx in Resources */,
 				4C96C09E1F53A09F00CE1DEB /* platformBase4.png in Resources */,
+				4CB798CE260BE4CE00377B99 /* Inspector.storyboard in Resources */,
 				4C3184E91F4DCB4200950BBF /* staggered-64x33.tmx in Resources */,
 				4C96C0801F53A09F00CE1DEB /* gemRedStroked.png in Resources */,
 				4C96C0B41F53A09F00CE1DEB /* pushBlock3.png in Resources */,
@@ -2260,6 +2298,7 @@
 			files = (
 				4C440BA01DAE911000DEC9A4 /* SKTiledDemoScene.swift in Sources */,
 				4C3D114324E19CC000D71B74 /* TiledSceneCameraDelegate.swift in Sources */,
+				4C1AD9E9260CE34000995606 /* AttributeStorage.swift in Sources */,
 				4CEE247E24992E260029D6CC /* Logging.swift in Sources */,
 				4C77D2C5255C978400C8C18C /* TiledSelectableType.swift in Sources */,
 				4CB4A31B2559D2AC004B8A2E /* TileCollisionShape.swift in Sources */,
@@ -2282,6 +2321,7 @@
 				4C4837A325542CBD004C220D /* Stack.swift in Sources */,
 				4C3BC78A2461979100D54290 /* TiledSceneDelegate.swift in Sources */,
 				4C85435C25A7815800FD3FBD /* MousePointer.swift in Sources */,
+				4CB798DC260BE67C00377B99 /* InspectorTreeViewController.swift in Sources */,
 				4C9FEB7621A1BC5400C3EEED /* TiledGlobals.swift in Sources */,
 				4C6C56BC25D6BAC000CBEB9A /* DemoNotificationDelegate.swift in Sources */,
 				4C4FAC9A215E9D8C00EEF512 /* Demo+Setup.swift in Sources */,
@@ -2294,11 +2334,14 @@
 				4C1774B61D9099A3000C0AFD /* SKTilemapParser.swift in Sources */,
 				4C1774B31D9099A3000C0AFD /* SKTiledScene.swift in Sources */,
 				4C1774B01D9099A3000C0AFD /* SKTiled+Properties.swift in Sources */,
+				4CB798DA260BE67C00377B99 /* InspectorMainSplitViewController.swift in Sources */,
 				4C5B6DB12455CAE800F81755 /* TiledLayerObject.swift in Sources */,
 				4CB8537125AE19B100CC2154 /* PreferencesWindowController.swift in Sources */,
 				4CA89E13252E6E5D00C23E4C /* TiledRasterizableType.swift in Sources */,
 				4C64EC3D25D463740090F4F3 /* SKWorld.swift in Sources */,
+				4CB798D9260BE67C00377B99 /* InspectorAttributesViewController.swift in Sources */,
 				4CAA144125B9F5F600F7919C /* TileID.swift in Sources */,
+				4CB798DD260BE67C00377B99 /* InspectorMainWindowController.swift in Sources */,
 				4CE6415F206C1AEA004BA9E4 /* Demo+Extensions.swift in Sources */,
 				4CADFAB92481852E000C2550 /* ThreadSafeArray.swift in Sources */,
 				4CEE24892499459D0029D6CC /* TileObjectProxy.swift in Sources */,
@@ -2313,6 +2356,7 @@
 				4CE077FF254366D100187F4E /* DemoPreferences.swift in Sources */,
 				4C440BA91DAE913000DEC9A4 /* GameViewController.swift in Sources */,
 				4C204A10251E7C2000D2012C /* TiledBackgroundLayer.swift in Sources */,
+				4C1AD9EB260CE9C500995606 /* InspectorDetailViewController.swift in Sources */,
 				4C1774B91D9099A3000C0AFD /* SKTilesetData.swift in Sources */,
 				4CB8537025AE19B100CC2154 /* PreferencesViewController.swift in Sources */,
 				4C8DE92D249814A300CCF8EF /* DebugDrawableType.swift in Sources */,

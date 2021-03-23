@@ -109,11 +109,11 @@ extension TiledGeometryType {
     
     /// Generic highlight removal.
     public func removeHighlight() {
+        
         // TODO: hide these nodes?
         boundsShape?.isHidden = true
         anchorShape.isHidden = true
     }
-    
     
     /// Returns the `SKTiled` geometry object class name.
     public var className: String {
@@ -138,7 +138,7 @@ extension TiledGeometryType {
     
     /// Unique identifier used to access anchor point shape nodes.
     internal var anchorKey: String {
-        return "\(uuid)_ANIMATION"
+        return "\(uuid)_ANCHOR"
     }
     
     /// Unique identifier used to access anchor point shape nodes.
@@ -299,14 +299,20 @@ extension SKNode {
     @objc public func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
         print("⭑ [SKNode]: highlighing node...")
         
+        /// remove the current frame, if it exists
+        let frameName = "\(hash)_HIGHLIGHT"
+        childNode(withName: frameName)?.removeFromParent()
+        
+        
         /// highlight sprite types by setting colorblendfactor
         
         
         /// highlight shape types by adding a shape overlay
         
         let boundingBox = SKShapeNode(rectOf: calculateAccumulatedFrame().size)
+        boundingBox.name = frameName
         boundingBox.lineWidth = 1
-        boundingBox.strokeColor = .black
+        boundingBox.strokeColor = .white
         boundingBox.fillColor = .clear
         boundingBox.zPosition = zPosition + 1
         boundingBox.path = boundingBox.path?.copy(dashingWithPhase: 0, lengths: [10,10])
@@ -314,7 +320,11 @@ extension SKNode {
     }
     
     /// Remove the current object's highlight color.
-    @objc public func removeHighlight() {}
+    @objc public func removeHighlight() {
+        /// remove the current frame, if it exists
+        let frameName = "\(hash)_HIGHLIGHT"
+        childNode(withName: frameName)?.removeFromParent()
+    }
 }
 
 

@@ -278,7 +278,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         overlayNode.name = "MAP_OVERLAY"
         
         #if SKTILED_DEMO
-        overlayNode.setAttr(key: "tiled-node-name", value: "overlay")
+        overlayNode.setAttr(key: "tiled-element-name", value: "overlay")
         #endif
         
         self.addChild(overlayNode)
@@ -488,6 +488,12 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         didSet {
             guard isFocused != oldValue else {
                 return
+            }
+            
+            if (isFocused == true) {
+                highlightNode(with: frameColor, duration: 0)
+            } else {
+                removeHighlight()
             }
         }
     }
@@ -775,7 +781,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         let scaledverts = getVertices(offset: CGPoint.zero).map { $0 * renderQuality }
         let objpath = polygonPath(scaledverts)
         let shape = SKShapeNode(path: objpath)
-
+        shape.setAttrs(values: ["tiled-invisible-node": true])
         let boundsLineWidth = TiledGlobals.default.renderQuality.object / 1.5
         shape.lineWidth = boundsLineWidth
         shape.lineJoin = .miter
@@ -791,6 +797,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     @objc public lazy var anchorShape: SKShapeNode = {
         let anchorRadius: CGFloat = (tileSize.height / 8)
         let shape = SKShapeNode(circleOfRadius: anchorRadius)
+        shape.setAttrs(values: ["tiled-invisible-node": true])
         shape.strokeColor = SKColor.clear
         shape.fillColor = frameColor
         addChild(shape)
@@ -1546,7 +1553,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         contentRoot.name = "MAP_RENDERABLE_CONTENT"
 
         #if SKTILED_DEMO
-        contentRoot.setAttrs(values: ["tiled-node-desc": "Root node for all Tiled image & vector types."])
+        contentRoot.setAttrs(values: ["tiled-help-desc": "Root node for all Tiled image & vector types."])
         #endif
 
         contentRoot.addChild(cropNode)
@@ -1555,7 +1562,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         debugRoot.name = "MAP_DEBUG_ROOT"
 
         #if SKTILED_DEMO
-        debugRoot.setAttrs(values: ["tiled-node-name": "debugroot", "tiled-node-icon": "debug-icon"])
+        debugRoot.setAttrs(values: ["tiled-element-name": "debugroot", "tiled-node-icon": "debug-icon"])
         #endif
 
         addChild(debugRoot)
@@ -3411,8 +3418,6 @@ extension SKTilemap {
             )
 
             boundsShape?.run(groupAction, completion: {
-                self.boundsShape?.isHidden = true
-                self.anchorShape.isHidden = true
                 self.isFocused = false
             })
         }
@@ -3715,6 +3720,7 @@ extension SKTilemap: TiledSceneCameraDelegate {
     /// - Parameter event: mouse click event.
     @objc public func mousePositionChanged(event: NSEvent) {
         //currentCoordinate = coordinateAtMouse(event: event)
+        
         #if SKTILED_DEMO
         let lastCoordinate = currentCoordinate
 

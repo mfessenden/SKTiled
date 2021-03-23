@@ -2307,6 +2307,7 @@ extension Notification.Name {
 
     public struct Camera {
         public static let Updated                   = Notification.Name(rawValue: "org.sktiled.notification.name.camera.updated")
+        public static let MouseRightClicked         = Notification.Name(rawValue: "org.sktiled.notification.name.camera.mouseRightClicked")
     }
 
     public struct Globals {

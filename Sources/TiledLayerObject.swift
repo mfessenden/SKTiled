@@ -279,7 +279,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         let scaledverts = getVertices().map { $0 * renderQuality }
         let objpath = polygonPath(scaledverts)
         let shape = SKShapeNode(path: objpath)
-        
+        shape.setAttrs(values: ["tiled-invisible-node": true])
         let boundsLineWidth = TiledGlobals.default.renderQuality.object / 1.5
         shape.lineWidth = boundsLineWidth
         shape.lineJoin = .miter
@@ -295,6 +295,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     @objc public lazy var anchorShape: SKShapeNode = {
         let anchorRadius: CGFloat = (tileSize.height / 8) * 0.85
         let shape = SKShapeNode(circleOfRadius: anchorRadius)
+        shape.setAttrs(values: ["tiled-invisible-node": true])
         shape.strokeColor = SKColor.clear
         shape.fillColor = frameColor
         addChild(shape)
@@ -526,9 +527,9 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
             }
             
             if (isFocused == true) {
-                
+                highlightNode(with: TiledGlobals.default.debugDisplayOptions.layerHighlightColor, duration: 0)
             } else {
-                
+                removeHighlight()
             }
             
         }
@@ -977,8 +978,6 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
             )
             
             boundsShape?.run(groupAction, completion: {
-                self.boundsShape?.isHidden = true
-                self.anchorShape.isHidden = true
                 self.isFocused = false
             })
         }

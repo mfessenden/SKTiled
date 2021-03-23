@@ -33,11 +33,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// controllers
     var preferencesController: PreferencesWindowController?
-    var offsetEditorWindowController: OffsetEditorWindowController?
-
+    var inspectorController: NSWindowController?
+    
     var receiveCameraUpdates: Bool = true
     var isDevelopment: Bool = TiledGlobals.default.isDevelopment
-
+    
+    // application menu
+    @IBOutlet weak var showInspectorMenuItem: NSMenuItem!
+    
+    
     // file menu
     @IBOutlet weak var openMapMenuitem: NSMenuItem!
     @IBOutlet weak var reloadMapMenuitem: NSMenuItem!
@@ -84,7 +88,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var layerStatisticsMenuItem: NSMenuItem!
     @IBOutlet weak var tilemapCachesStatisticsMenuItem: NSMenuItem!
     @IBOutlet weak var tilemapOffsetStatisticsMenuItem: NSMenuItem!
-    @IBOutlet weak var tilemapOffsetEditorMenuItem: NSMenuItem!
     
 
     @IBOutlet weak var showDemoAssetsMenuItem: NSMenuItem!
@@ -203,8 +206,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   
     }
 
-
-
     /// This is a once-only function that runs when the app launches.
     @objc func setupMainInterface() {
         renderStatisticsMenuItem.state = (TiledGlobals.default.enableRenderPerformanceCallbacks == true) ? .on : .off
@@ -212,6 +213,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         cameraTrackVisibleNodesItem.toolTip = "toggles the `SKTiledSceneCamera.notifyDelegatesOnContainedNodesChange` property"
         mouseEventsMenuItem.state = (TiledGlobals.default.enableMouseEvents == true) ? .on : .off
         reloadMapMenuitem.isEnabled = false
+        
+        // disable the inspector UI
+        var inspectorEnabled = false
+        #if DEVELOPMENT_MODE
+        inspectorEnabled = true
+        #endif
+        showInspectorMenuItem.isEnabled = inspectorEnabled
+        showInspectorMenuItem.isHidden = !inspectorEnabled
     }
 
     /// Reset the interace. Called when the `Notification.Name.DemoController.ResetDemoInterface` notification is received.
@@ -250,7 +259,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         tilemapStatisticsMenuItem.isEnabled = false
         tilemapCachesStatisticsMenuItem.isEnabled = false
         tilemapOffsetStatisticsMenuItem.isEnabled = false
-        tilemapOffsetEditorMenuItem.isEnabled = false
         layerStatisticsMenuItem.isEnabled = false
         dumpSelectedMenuItem.isEnabled = false
         currentMapsMenuItem.isEnabled = false
@@ -419,6 +427,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if (preferencesController != nil) {
             preferencesController!.showWindow(sender)
             preferencesController?.window?.title = "SKTiled Demo Preferences"
+        }
+    }
+    
+    /// Called when the Inspector command is issues.
+    ///
+    /// - Parameter sender: invoking ui.
+    @IBAction func launchInspectorAction(_ sender: Any) {
+        if (inspectorController == nil) {
+            let storyboard = NSStoryboard(name: NSStoryboard.Name(stringLiteral: "Inspector"), bundle: nil)
+            inspectorController = storyboard.instantiateInitialController() as? NSWindowController
+        }
+        
+        if (inspectorController != nil) {
+            inspectorController!.showWindow(sender)
         }
     }
 
@@ -904,25 +926,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         demoController.dumpMapOffsetsStatistics()
     }
     
-    /// Called from the `Development -> Edit Tilemap Offsets...` menuitem.
+    /// Called when the AppDelegate `Map -> Render Quality...` menuitem is selected.
     ///
     /// - Parameter sender: invoking ui element.
-    @IBAction func launchOffsetEditor(_ sender: Any) {
-        
-        if (offsetEditorWindowController == nil) {
-            let storyboard = NSStoryboard(name: NSStoryboard.Name("Main"), bundle: nil)
-            let identifier = NSStoryboard.SceneIdentifier("OffsetEditorWindowController")
-            offsetEditorWindowController = storyboard.instantiateController(withIdentifier: identifier) as? OffsetEditorWindowController
-        }
-        
-        if (offsetEditorWindowController != nil) {
-            offsetEditorWindowController!.showWindow(sender)
-            offsetEditorWindowController?.window?.title = "Layer Offset Editor"
-        }
-    }
-    
     @IBAction func mapRenderQualityPressed(_ sender: Any) {
-        guard let tilemap = self.tilemap else { return }
+        guard let tilemap = self.tilemap else {
+            return
+        }
 
         var headerString = "# Tilemap '\(tilemap.url.filename)', render quality: \(tilemap.renderQuality) ( max: \(tilemap.maxRenderQuality) ):"
         let headerUnderline = String(repeating: "-", count: headerString.count )
@@ -953,6 +963,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         print("\(headerString)\n\n")
     }
 
+    /// Called when the AppDelegate `Map -> Render Effects...` menuitem is selected.
+    ///
+    /// - Parameter sender: invoking ui element.
     @IBAction func toggleRenderTilemapEffects(_ sender: NSMenuItem) {
         if let tilemap = self.tilemap {
             let currentState = tilemap.shouldEnableEffects
@@ -1206,7 +1219,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ///
     /// - Parameter notification: event notification.
     @objc func nodeSelectionChanged(_ notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        // notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: Any],
               let selectedNodes = userInfo["nodes"] as? [SKNode] else {
             return
@@ -2008,7 +2021,6 @@ extension AppDelegate {
         tilemapStatisticsMenuItem.isEnabled = true
         tilemapCachesStatisticsMenuItem.isEnabled = true
         tilemapOffsetStatisticsMenuItem.isEnabled = true
-        tilemapOffsetEditorMenuItem.isEnabled = true
         layerStatisticsMenuItem.isEnabled = true
         currentMapsMenuItem.isEnabled = true
         allAssetsMapsMenuItem.isEnabled = true

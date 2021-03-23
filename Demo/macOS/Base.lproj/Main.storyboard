@@ -33,6 +33,12 @@
                                             <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="qu8-Tk-8zd"/>
+                                        <menuItem title="Inspector..." enabled="NO" keyEquivalent="i" id="IO9-S3-A1l" userLabel="Launch Inspector">
+                                            <connections>
+                                                <action selector="launchInspectorAction:" target="Voe-Tx-rLC" id="Bt4-0P-VUl"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="ePN-qx-YZ0"/>
                                         <menuItem title="Hide SKTiled Demo" keyEquivalent="h" id="iOx-A8-wQp">
                                             <connections>
                                                 <action selector="hide:" target="Ady-hI-5gd" id="v48-mh-GME"/>
@@ -231,6 +237,7 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Debug" id="5q1-w7-WWB">
                                     <items>
+                                        <menuItem isSeparatorItem="YES" id="JsB-WA-Q6J"/>
                                         <menuItem title="Screenshot..." enabled="NO" id="cOT-xe-5ki" userLabel="Screenshot...">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
@@ -353,12 +360,6 @@
                                                 <action selector="mapOffsetsStatisticsPressed:" target="Voe-Tx-rLC" id="Xac-R6-eUw"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Adjust Tilemap Offsets..." enabled="NO" id="46H-du-mBH">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="launchOffsetEditor:" target="Voe-Tx-rLC" id="5Hl-4W-2hu"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="B5e-Bv-NGi"/>
                                         <menuItem title="Tile Layer Data..." enabled="NO" id="VaW-im-1oo">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -388,6 +389,31 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="getExternallyLoadedAssetsAction:" target="Voe-Tx-rLC" id="F2c-PT-vSQ"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Window" id="4eB-u5-bhP">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Window" systemMenu="window" id="20W-f8-VYg">
+                                    <items>
+                                        <menuItem title="Minimize" keyEquivalent="m" id="bQ6-s9-hin">
+                                            <connections>
+                                                <action selector="performMiniaturize:" target="Ady-hI-5gd" id="Yfg-Kt-PJc"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Zoom" id="qBK-P5-vU0">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="performZoom:" target="Ady-hI-5gd" id="G4k-fC-mUf"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="aFG-Io-gY4"/>
+                                        <menuItem title="Bring All to Front" id="tYV-ec-ApN">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="arrangeInFront:" target="Ady-hI-5gd" id="5Bc-bc-6Ta"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -450,9 +476,9 @@
                         <outlet property="rescanForAssetsMenuItem" destination="bP1-lr-ORw" id="4KP-oE-BHq"/>
                         <outlet property="selectedNodesMenuItem" destination="lsc-wR-o4q" id="RWW-sO-uJL"/>
                         <outlet property="showDemoAssetsMenuItem" destination="eC9-wi-nCP" id="mxl-a2-f9d"/>
+                        <outlet property="showInspectorMenuItem" destination="IO9-S3-A1l" id="CD8-jM-ohB"/>
                         <outlet property="tileColorsMenuItem" destination="hnS-2z-nKA" id="Seb-hg-B27"/>
                         <outlet property="tilemapCachesStatisticsMenuItem" destination="Rcr-r2-Ts4" id="hyf-Tn-WBO"/>
-                        <outlet property="tilemapOffsetEditorMenuItem" destination="46H-du-mBH" id="ZJq-no-m3b"/>
                         <outlet property="tilemapOffsetStatisticsMenuItem" destination="Qpm-op-6DI" id="3O0-A6-Zba"/>
                         <outlet property="tilemapStatisticsMenuItem" destination="OXT-yC-4Eg" id="J5H-GF-0Kg"/>
                         <outlet property="timeDisplayMenuItem" destination="EBE-ZU-Vi0" id="U0H-Rq-jsO"/>
@@ -462,7 +488,7 @@
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <userDefaultsController representsSharedInstance="YES" id="aIM-ST-Kfn"/>
             </objects>
-            <point key="canvasLocation" x="-1207" y="-339"/>
+            <point key="canvasLocation" x="-1205" y="-361"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">

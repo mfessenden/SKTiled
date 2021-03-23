@@ -375,7 +375,13 @@ extension Notification.Name {
         // asset search paths (macOS)
         public static let AssetSearchPathsAdded         = Notification.Name(rawValue: "org.sktiled.notification.name.demoController.AssetSearchPathsAdded")
         public static let AssetSearchPathsRemoved       = Notification.Name(rawValue: "org.sktiled.notification.name.demoController.assetSearchPathsRemoved")
+        
         public static let LoadFileManually              = Notification.Name(rawValue: "org.sktiled.notification.name.demoController.loadFileManually")
+        
+        
+        public static let LoadNextScene                 = Notification.Name(rawValue: "org.sktiled.notification.name.demoController.loadNextScene")
+        
+        public static let LoadPreviousScene             = Notification.Name(rawValue: "org.sktiled.notification.name.demoController.loadPreviousScene")
     }
 
 
@@ -424,20 +430,32 @@ extension Notification.Name {
         // selected node isolation
         public static let IsolateSelectedEnabled         = Notification.Name(rawValue: "org.sktiled.notification.name.demo.isolateSelectedEnabled")  // nothing is using this currently
         public static let IsolateSelectedDisabled        = Notification.Name(rawValue: "org.sktiled.notification.name.demo.isolateSelectedDisabled")
-
+        
+        
+        // Inspector
+        public static let NodesAboutToBeSelected         = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodesAboutToBeSelected")
+        public static let MousePositionChanged           = Notification.Name(rawValue: "org.sktiled.notification.name.demo.mousePositionChanged")
+        public static let RefreshInspectorInterface      = Notification.Name(rawValue: "org.sktiled.notification.name.demo.refreshInspectorInterface")
     }
 
 
-    // TODO: cleanup these
+    // TODO: clean these up
     public struct Debug {
         public static let UpdateDebugging               = Notification.Name(rawValue: "org.sktiled.notification.name.debug.updateDebugging")
         public static let DebuggingMessageSent          = Notification.Name(rawValue: "org.sktiled.notification.name.debug.debuggingMessageSent")  // sends a debugging command & duration to GVC (displays on bottom)
         public static let MapDebugDrawingChanged        = Notification.Name(rawValue: "org.sktiled.notification.name.debug.mapDebuggingChanged")   // sent when the `g` key is pressed (shows grid & bounds)
         public static let MapEffectsRenderingChanged    = Notification.Name(rawValue: "org.sktiled.notification.name.debug.mapEffectsRenderingChanged")
         public static let MapObjectVisibilityChanged    = Notification.Name(rawValue: "org.sktiled.notification.name.debug.mapObjectVisibilityChanged")
+        
+        
+        
+        // Inspector
+        public static let DumpAttributeEditor           = Notification.Name(rawValue: "org.sktiled.notification.name.debug.dumpAttributeEditor")
+        public static let DumpAttributeStorage          = Notification.Name(rawValue: "org.sktiled.notification.name.debug.dumpAttributeStorage")
 
     }
 }
+
 
 // MARK: SKNode/NSTreeController
 
@@ -849,6 +867,17 @@ extension UserDefaults {
         return UserDefaults(suiteName: "org.sktiled")!
     }
 }
+
+
+extension NSObject {
+    
+    /// Returns the name of the class minus the module.
+    public var classNiceName: String {
+        return className.components(separatedBy: ".").last!
+    }
+}
+
+
 
 
 

@@ -36,3 +36,31 @@ import SpriteKit
     /// Indicates the current node has received focus or selected.
     @objc var isFocused: Bool { get set }
 }
+
+
+
+// MARK: - Extensions
+
+
+extension Sequence where Element: SKNode {
+    
+    /// Set all nodes focused.
+    public func focusAll() {
+        for node in self {
+            if let tiledSelectable = node as? TiledSelectableType {
+                tiledSelectable.isFocused = true
+            }
+        }
+    }
+    
+    
+    /// Set all nodes unfocused.
+    public func unfocusAll() {
+        for node in self {
+            if let tiledSelectable = node as? TiledSelectableType {
+                tiledSelectable.isFocused = false
+            }
+        }
+    }
+}
+

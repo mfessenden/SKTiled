@@ -57,6 +57,9 @@ public struct MouseEventOptions: OptionSet {
 /// Debugging HUD display that follows the macOS cursor
 internal class MousePointer: SKNode {
     
+    /// Root position node.
+    var rootNode = SKNode()
+    
     /// The current font name used for the labels.
     var fontName: String = "Menlo"
     
@@ -99,10 +102,7 @@ internal class MousePointer: SKNode {
     
     /// Indicates the coordinate is a valid map coordinate.
     var isValidCoordinate: Bool = false
-    
-    /// Root position node.
-    var rootNode = SKNode()
-    
+       
     /// Label for window position.
     var winLabel:  SKLabelNode?
     
@@ -144,6 +144,7 @@ internal class MousePointer: SKNode {
         zPosition = 10000
         setupLabels()
         setupNotifications()
+        setupRoot()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -152,6 +153,7 @@ internal class MousePointer: SKNode {
         zPosition = 10000
         setupLabels()
         setupNotifications()
+        setupRoot()
     }
     
     deinit {
@@ -187,26 +189,35 @@ internal class MousePointer: SKNode {
     
     // MARK: - Setup
     
+    func setupRoot() {
+        rootNode.setAttrs(values: ["tiled-node-icon": "root-icon", "tiled-node-listdesc": "Mouse Pointer Root", "tiled-help-desc": "Sprite Root node for mouse pointer node."])
+    }
+    
     func setupLabels() {
         if (winLabel == nil) {
             let label = SKLabelNode(fontNamed: fontName)
+            label.setAttrs(values: ["tiled-node-nicename": "Window Position Label",  "tiled-node-listdesc": "Window Position", "tiled-help-desc": "Indicates the current cursor position in the main window."])
+            
             rootNode.addChild(label)
             winLabel = label
         }
         
         if (sceneLabel == nil) {
             let label = SKLabelNode(fontNamed: fontName)
+            label.setAttrs(values: ["tiled-node-nicename": "Scene Position Label", "tiled-node-listdesc": "Scene Position", "tiled-help-desc": "Indicates the current cursor position in the SpriteKit scene."])
             rootNode.addChild(label)
             sceneLabel = label
         }
         if (coordLabel == nil) {
             let label = SKLabelNode(fontNamed: fontName)
+            label.setAttrs(values: ["tiled-node-nicename": "Current Coordinate Label", "tiled-node-listdesc": "Current Coordinate", "tiled-help-desc": "Indicates the map coordinate at the current cursor position."])
             rootNode.addChild(label)
             coordLabel = label
         }
         
         if (tileLabel == nil) {
             let label = SKLabelNode(fontNamed: fontName)
+            label.setAttrs(values: ["tiled-node-nicename": "Tile ID Label", "tiled-node-listdesc": "Tile ID", "tiled-help-desc": "Indicates the tile global ID under the cursor."])
             rootNode.addChild(label)
             tileLabel = label
         }

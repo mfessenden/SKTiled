@@ -1218,22 +1218,17 @@ extension TiledDemoController {
 
 
             var chunksHighlightedCount = 0
-            var highlightColor = TiledGlobals.default.debugDisplayOptions.layerHighlightColor
             tilemap.tileLayers().forEach( { layer in
 
                 for chunk in layer.chunks {
                     if (chunk.isFocused == false) {
-                        chunk.highlightNode(with: highlightColor)
                         chunksHighlightedCount += 1
                         chunk.isFocused = true
                     } else {
-                        chunk.removeHighlight()
                         chunk.isFocused = false
                         chunksHighlightedCount -= 1
                     }
                 }
-
-                highlightColor = TiledObjectColors.random
             })
 
             let loggingMessage = (chunksHighlightedCount > 0) ? "highlighting \(chunksHighlightedCount) chunks..." : "de-highlighting \(abs(chunksHighlightedCount)) chunks..."

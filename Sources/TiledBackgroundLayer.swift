@@ -76,7 +76,7 @@ internal class TiledBackgroundLayer: TiledLayerObject {
         let spriteNode = SKSpriteNode(texture: nil, color: tilemap.backgroundColor ?? SKColor.clear, size: tilemap.sizeInPoints)
         
         #if SKTILED_DEMO
-        spriteNode.setAttr(key: "tiled-node-name", value: "overlay")
+        spriteNode.setAttr(key: "tiled-element-name", value: "overlay")
         #endif
         spriteNode.name = "MAP_BACKGROUND_SPRITE"
         addChild(spriteNode)

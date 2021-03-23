@@ -82,10 +82,12 @@ public class TiledDemoDelegate: NSObject, Loggable {
     func reset() {
         // reset focused nodes
         defer {
+            focusedNodes.unfocusAll()
             focusedNodes.removeAll()
             selectedNode = nil
         }
         
+        // TODO: this should be redundant
         focusedNodes.forEach { node in
             node.removeHighlight()
         }
@@ -147,6 +149,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
             return
         }
         
+        focusedNodes.unfocusAll()
         focusedNodes.removeAll()
         
         for node in selectedNodes {
@@ -167,7 +170,10 @@ public class TiledDemoDelegate: NSObject, Loggable {
     /// - Parameter notification: event notification.
     @objc func nodeSelectionCleared(notification: Notification) {
         notification.dump(#fileID, function: #function)
-        defer { focusedNodes.removeAll() }
+        defer {
+            focusedNodes.unfocusAll()
+            focusedNodes.removeAll()
+        }
         
         for node in focusedNodes {
             node.removeHighlight()
@@ -185,6 +191,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
             return
         }
         
+        focusedNodes.unfocusAll()
         focusedNodes.removeAll()
         focusedNodes.append(tile)
         
@@ -207,6 +214,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
             return
         }
         
+        focusedNodes.unfocusAll()
         focusedNodes.removeAll()
         focusedNodes.append(object)
         

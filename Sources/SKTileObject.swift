@@ -141,6 +141,12 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
             guard isFocused != oldValue else {
                 return
             }
+            
+            if (isFocused == true) {
+                highlightNode(with: highlightColor, duration: 0)
+            } else {
+                removeHighlight()
+            }
         }
     }
 
@@ -265,7 +271,8 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
         // create the shape node
         let shape = SKShapeNode(path: objPath)
-
+        shape.setAttrs(values: ["tiled-invisible-node": true])
+        
         // control shape (bezier shapes only)
         if let cpath = controlPath {
             let controlShape = SKShapeNode(path: cpath)
@@ -288,6 +295,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
     @objc public lazy var anchorShape: SKShapeNode = {
         let anchorRadius: CGFloat = (layer.tileSize.width / 8) * 0.75
         let shape = SKShapeNode(circleOfRadius: anchorRadius)
+        shape.setAttrs(values: ["tiled-invisible-node": true])
         shape.strokeColor = SKColor.clear
         shape.fillColor = frameColor
         addChild(shape)
@@ -750,8 +758,8 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
                         #if SKTILED_DEMO
                         scalerNode.setAttr(key: "tiled-node-icon", value: "scaler-icon")
                         scalerNode.setAttr(key: "tiled-node-listdesc", value: "Tile Object Scaler")
-                        scalerNode.setAttr(key: "tiled-node-name", value: "Tile Object Scaler")
-                        scalerNode.setAttr(key: "tiled-node-desc", value: "Scaler vector objects with tile attributes.")
+                        scalerNode.setAttr(key: "tiled-element-name", value: "Tile Object Scaler")
+                        scalerNode.setAttr(key: "tiled-help-desc", value: "Scaler vector objects with tile attributes.")
                         #endif
 
                         addChild(scalerNode)
@@ -1419,8 +1427,6 @@ extension SKTileObject {
             )
 
             boundsShape?.run(groupAction, completion: {
-                self.boundsShape?.isHidden = true
-                self.anchorShape.isHidden = true
                 self.isFocused = false
             })
         }

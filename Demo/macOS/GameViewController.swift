@@ -523,6 +523,14 @@ class GameViewController: NSViewController, Loggable {
         return true
     }
     
+    override func keyDown(with event: NSEvent) {
+        guard let keysPressed = event.characters else {
+            print("⭑ [\(classNiceName)]: ERROR: unknown key pressed.")
+            return
+        }
+        print("⭑ [\(classNiceName)]: key pressed '\(keysPressed)'")
+    }
+    
     /// Mouse scroll wheel event handler.
     ///
     /// - Parameter event: mouse event.
@@ -940,7 +948,6 @@ class GameViewController: NSViewController, Loggable {
         propertiesInfoLabel.attributedStringValue = focusedTile.tileData.propertiesAttributedString(delineator: nil)
         
         // highlight the tile
-        focusedTile.highlightNode(with: focusedTile.highlightColor, duration: 0)
         focusedTile.isFocused = true
     }
     
@@ -986,7 +993,6 @@ class GameViewController: NSViewController, Loggable {
         propertiesInfoLabel.attributedStringValue = focusedObject.propertiesAttributedString(delineator: nil)
         
         // highlight the object
-        focusedObject.highlightNode(with: focusedObject.highlightColor, duration: 0)
         focusedObject.isFocused = true
         // perform(#selector(clearCurrentObject), with: nil, afterDelay: 5)
     }

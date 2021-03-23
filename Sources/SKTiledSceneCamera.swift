@@ -313,7 +313,7 @@ public class SKTiledSceneCamera: SKCameraNode {
         overlay.isHidden = true
         
         #if SKTILED_DEMO
-        overlay.setAttrs(values: ["tiled-node-name": "overlay", "tiled-node-icon": "overlay-icon", "tiled-node-desc": "Camera overlay node.", "tiled-node-listdesc": "Camera Overlay", "tiled-node-nicename": "Camera Overlay"])
+        overlay.setAttrs(values: ["tiled-element-name": "overlay", "tiled-node-icon": "overlay-icon", "tiled-help-desc": "Camera overlay node.", "tiled-node-listdesc": "Camera Overlay", "tiled-node-nicename": "Camera Overlay"])
         #endif
         
         #if os(iOS)
@@ -1118,6 +1118,13 @@ extension SKTiledSceneCamera {
             }
             delegate.sceneRightClicked?(event: event)
         }
+        
+        NotificationCenter.default.post(
+            name: Notification.Name.Camera.MouseRightClicked,
+            object: nil
+        )
+        
+        
         super.rightMouseDown(with: event)
     }
     

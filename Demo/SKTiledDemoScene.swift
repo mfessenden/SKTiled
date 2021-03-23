@@ -493,10 +493,41 @@ extension SKTiledDemoScene {
             return
         }
         
+        // notify the camera
         super.mouseMoved(with: event)
+        
         // update the mouse pointer
         let location = event.location(in: self)
         mousePointer?.position = location
+        
+        
+        guard let skView = view else {
+            return
+        }
+        
+        
+        // dictionary of event locations
+        var locationData: [String: Any] = [:]
+        let sceneLocation = event.location(in: self)
+        
+        locationData["viewPosition"] = skView.convert(sceneLocation, from: self)
+        locationData["screenPosition"] = sceneLocation
+        
+        if let tilemap = tilemap {
+            
+            let mapPosition = tilemap.mouseLocation(event: event)
+            let coord = tilemap.coordinateAtMouse(event: event)
+            
+            locationData["mapPosition"]  = mapPosition
+            locationData["coordinate"]  = coord
+            locationData["coordIsValid"] = tilemap.isValid(coord: coord)
+        }
+        
+        NotificationCenter.default.post(
+            name: Notification.Name.Demo.MousePositionChanged,
+            object: nil,
+            userInfo: locationData
+        )
     }
 
     /// Show the mouse pointer when the cursor re-enters the scene bounds.
@@ -928,14 +959,12 @@ extension SKTiledDemoScene {
 
         // 'z' runs a debugging command
         if eventKey == 0x6 {
+            NotificationCenter.default.post(
+                name: Notification.Name.Demo.RefreshInspectorInterface,
+                object: nil
+            )
             
-            tilemap.getLayers().forEach({ layer in
-                layer.parallax = CGPoint(x: 1, y: 1)
-            })
-            
-            tilemap.repositionLayers()
-            
-            updateCommandString("Removing parallax...", duration: 3.0)
+            updateCommandString("Refreshing Inspector...", duration: 3.0)
         }
 
         // 'clear' clears the current selection

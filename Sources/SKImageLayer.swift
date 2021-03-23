@@ -166,7 +166,7 @@ public class SKImageLayer: TiledLayerObject {
     @objc public var tiledElementName: String {
         return "imagelayer"
     }
-
+    
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public override var tiledNodeNiceName: String {
         return "Image Layer"

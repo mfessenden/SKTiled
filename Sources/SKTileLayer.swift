@@ -852,7 +852,7 @@ public class SKTileLayer: TiledLayerObject {
 
         if (isStatic == true) {
             shouldRasterize = true
-            rasterizeStaticLayer()
+            //rasterizeStaticLayer()
         } else {
             shouldRasterize = false
         }
@@ -943,8 +943,6 @@ public class SKTileLayer: TiledLayerObject {
         UIGraphicsEndImageContext()
         let imageRef = result.cgImage
         #endif
-        
-        let l = TiledLayerObject(layerName: "poop", tilemap: tilemap)
 
         if let staticImageRef = imageRef {
 
@@ -974,8 +972,8 @@ public class SKTileLayer: TiledLayerObject {
             // save the image
             
             let layerFileName = layerName.components(separatedBy: "/").joined(separator: "_")
-            let exportedFileName = "\(layerFileName)-exported"
-            print("⭑ exporting layer '\(exportedFileName)'...")
+            let exportedFileName = "\(index).\(layerFileName)-exported"
+
             guard let userExportDirectory = TiledGlobals.default.exportDirectory else {
                 log("cannot create output directory.", level: .fatal)
                 return

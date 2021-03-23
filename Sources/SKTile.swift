@@ -225,9 +225,9 @@ open class SKTile: SKSpriteNode, CustomReflectable {
             }
 
             if (isFocused == true) {
-
+                highlightNode(with: highlightColor, duration: 0)
             } else {
-
+                removeHighlight()
             }
         }
     }
@@ -362,7 +362,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         let scaledverts = getVertices().map { $0 * renderQuality }
         let objpath = polygonPath(scaledverts)
         let shape = SKShapeNode(path: objpath)
-        
+        shape.setAttrs(values: ["tiled-invisible-node": true])
         
         let boundsLineWidth = TiledGlobals.default.renderQuality.object
         shape.lineWidth = boundsLineWidth
@@ -529,7 +529,6 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     required public init?(data: SKTilesetData) {
         guard let tileset = data.tileset else { return nil }
         self.tileData = data
-        //self.animationKey += "-\(data.globalID)"
         self.tileSize = tileset.tileSize
         super.init(texture: data.texture, color: SKColor.clear, size: fabs(tileset.tileSize))
         isUserInteractionEnabled = true
@@ -1502,8 +1501,6 @@ extension SKTile {
             )
             
             boundsShape?.run(groupAction, completion: {
-                self.boundsShape?.isHidden = true
-                self.anchorShape.isHidden = true
                 self.isFocused = false
             })
         }
