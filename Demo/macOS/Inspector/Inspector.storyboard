@@ -157,6 +157,9 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <connections>
+                                            <action selector="refreshNodeTreeButtonPressed:" target="dwB-dM-qvj" id="CQZ-4W-PzL"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -473,7 +476,7 @@
                                                                                     <gridCell row="MgM-cd-Ex8" column="dmg-Zy-rds" headOfMergedCell="qCB-yV-6h2" id="v49-Ic-Zh5"/>
                                                                                     <gridCell row="DPQ-4V-wco" column="OIW-bN-1bD" headOfMergedCell="OBG-gq-sl4" xPlacement="leading" id="OBG-gq-sl4">
                                                                                         <textField key="contentView" identifier="node-desc-field" horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uQd-OY-0ZP">
-                                                                                            <rect key="frame" x="-2" y="240" width="106" height="14"/>
+                                                                                            <rect key="frame" x="-2" y="238" width="106" height="14"/>
                                                                                             <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" placeholderString="this is just a node..." id="Ovx-sU-KqF">
                                                                                                 <font key="font" metaFont="smallSystem"/>
                                                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -484,14 +487,14 @@
                                                                                     <gridCell row="DPQ-4V-wco" column="dmg-Zy-rds" headOfMergedCell="OBG-gq-sl4" id="kNL-Ul-4s7"/>
                                                                                     <gridCell row="UaO-ex-f1B" column="OIW-bN-1bD" headOfMergedCell="63G-OH-JOK" xPlacement="fill" id="63G-OH-JOK">
                                                                                         <box key="contentView" horizontalHuggingPriority="249" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" ambiguous="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Goe-m6-OF7">
-                                                                                            <rect key="frame" x="0.0" y="231" width="543" height="5"/>
+                                                                                            <rect key="frame" x="0.0" y="226" width="543" height="5"/>
                                                                                         </box>
                                                                                     </gridCell>
                                                                                     <gridCell row="UaO-ex-f1B" column="dmg-Zy-rds" headOfMergedCell="63G-OH-JOK" id="Bd7-8z-3bv"/>
                                                                                     <gridCell row="cXw-gd-khc" column="OIW-bN-1bD" id="LeF-E1-3yP"/>
                                                                                     <gridCell row="cXw-gd-khc" column="dmg-Zy-rds" id="pI5-VU-ahe">
                                                                                         <button key="contentView" identifier="node-hidden-check" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7CT-Tp-f7p" userLabel="Hidden Checkbox">
-                                                                                            <rect key="frame" x="99" y="208" width="68" height="18"/>
+                                                                                            <rect key="frame" x="99" y="205" width="68" height="18"/>
                                                                                             <buttonCell key="cell" type="check" title="hidden" bezelStyle="regularSquare" imagePosition="left" inset="2" id="P8F-Lq-gTK">
                                                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                                                 <font key="font" metaFont="system"/>
@@ -813,12 +816,6 @@
                                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                                             </textFieldCell>
-                                                                                            <userDefinedRuntimeAttributes>
-                                                                                                <userDefinedRuntimeAttribute type="number" keyPath="incrementValue">
-                                                                                                    <real key="value" value="0.10000000000000001"/>
-                                                                                                </userDefinedRuntimeAttribute>
-                                                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="userEditable" value="YES"/>
-                                                                                            </userDefinedRuntimeAttributes>
                                                                                         </textField>
                                                                                     </gridCell>
                                                                                     <gridCell row="oBc-QS-mn7" column="OIW-bN-1bD" id="z33-GL-mLA"/>
@@ -1101,9 +1098,6 @@
                                                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                                                     </textFieldCell>
-                                                                                                    <userDefinedRuntimeAttributes>
-                                                                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="userEditable" value="NO"/>
-                                                                                                    </userDefinedRuntimeAttributes>
                                                                                                 </textField>
                                                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VgN-KJ-XJG">
                                                                                                     <rect key="frame" x="206" y="5" width="55" height="16"/>
@@ -1124,9 +1118,6 @@
                                                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                                                     </textFieldCell>
-                                                                                                    <userDefinedRuntimeAttributes>
-                                                                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="userEditable" value="NO"/>
-                                                                                                    </userDefinedRuntimeAttributes>
                                                                                                 </textField>
                                                                                             </subviews>
                                                                                             <visibilityPriorities>
@@ -1193,7 +1184,7 @@
                                                                                     <gridCell row="i2a-1C-ois" column="84B-b5-L7d" id="dLy-BJ-d3U"/>
                                                                                     <gridCell row="v6h-z3-jED" column="jXO-LE-x7G" headOfMergedCell="41O-El-YKR" xPlacement="leading" id="41O-El-YKR">
                                                                                         <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hLc-qS-k9k" userLabel="Node Label">
-                                                                                            <rect key="frame" x="-2" y="156" width="83" height="16"/>
+                                                                                            <rect key="frame" x="-2" y="171" width="83" height="16"/>
                                                                                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Tile Preview" id="eRS-fU-Qj8">
                                                                                                 <font key="font" textStyle="headline" name=".SFNS-Bold"/>
                                                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1205,7 +1196,7 @@
                                                                                     <gridCell row="v6h-z3-jED" column="84B-b5-L7d" id="Hfd-um-6NI"/>
                                                                                     <gridCell row="VXL-sk-8Vj" column="jXO-LE-x7G" headOfMergedCell="Imb-hO-H3v" id="Imb-hO-H3v">
                                                                                         <box key="contentView" horizontalHuggingPriority="249" verticalHuggingPriority="750" ambiguous="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="D8J-8V-MSJ">
-                                                                                            <rect key="frame" x="0.0" y="132" width="598" height="5"/>
+                                                                                            <rect key="frame" x="0.0" y="147" width="598" height="5"/>
                                                                                         </box>
                                                                                     </gridCell>
                                                                                     <gridCell row="VXL-sk-8Vj" column="dqi-Kd-kal" headOfMergedCell="Imb-hO-H3v" id="MzA-AI-1Zn"/>
@@ -1264,7 +1255,7 @@
                                                                                 <gridCells>
                                                                                     <gridCell row="Dng-Qa-5Ef" column="TJb-0P-is8" headOfMergedCell="fPU-Lx-1Wh" xPlacement="leading" id="fPU-Lx-1Wh">
                                                                                         <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="riJ-Iy-w77" userLabel="Node Label">
-                                                                                            <rect key="frame" x="-2" y="154" width="116" height="16"/>
+                                                                                            <rect key="frame" x="-2" y="152" width="116" height="16"/>
                                                                                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Object Attributes" id="Ml8-Fi-xiF">
                                                                                                 <font key="font" textStyle="headline" name=".SFNS-Bold"/>
                                                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1276,7 +1267,7 @@
                                                                                     <gridCell row="Dng-Qa-5Ef" column="5RG-dS-uuO" id="wgJ-7B-K66"/>
                                                                                     <gridCell row="svy-In-NlC" column="TJb-0P-is8" headOfMergedCell="aEX-kZ-USH" id="aEX-kZ-USH">
                                                                                         <box key="contentView" horizontalHuggingPriority="249" verticalHuggingPriority="750" ambiguous="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="LRa-iM-S7h">
-                                                                                            <rect key="frame" x="0.0" y="143" width="566" height="5"/>
+                                                                                            <rect key="frame" x="0.0" y="140" width="566" height="5"/>
                                                                                         </box>
                                                                                     </gridCell>
                                                                                     <gridCell row="svy-In-NlC" column="51g-t3-l5c" headOfMergedCell="aEX-kZ-USH" id="gsm-PX-6Gr"/>
@@ -1300,9 +1291,6 @@
                                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                                             </textFieldCell>
-                                                                                            <userDefinedRuntimeAttributes>
-                                                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="userEditable" value="NO"/>
-                                                                                            </userDefinedRuntimeAttributes>
                                                                                         </textField>
                                                                                     </gridCell>
                                                                                     <gridCell row="eE7-N1-Sse" column="5RG-dS-uuO" id="wbg-jU-dMV"/>
@@ -1429,9 +1417,6 @@
                                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                                             </textFieldCell>
-                                                                                            <userDefinedRuntimeAttributes>
-                                                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="userEditable" value="NO"/>
-                                                                                            </userDefinedRuntimeAttributes>
                                                                                         </textField>
                                                                                     </gridCell>
                                                                                     <gridCell row="7sT-Py-TFz" column="5RG-dS-uuO" id="9YK-2L-WJi"/>
@@ -1457,9 +1442,6 @@
                                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                                             </textFieldCell>
-                                                                                            <userDefinedRuntimeAttributes>
-                                                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="userEditable" value="NO"/>
-                                                                                            </userDefinedRuntimeAttributes>
                                                                                         </textField>
                                                                                     </gridCell>
                                                                                     <gridCell row="XbE-fP-PAW" column="5RG-dS-uuO" id="rre-e1-Vba"/>
@@ -1547,12 +1529,6 @@
                                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                                             </textFieldCell>
-                                                                                            <userDefinedRuntimeAttributes>
-                                                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="userEditable" value="NO"/>
-                                                                                                <userDefinedRuntimeAttribute type="number" keyPath="incrementValue">
-                                                                                                    <real key="value" value="0.25"/>
-                                                                                                </userDefinedRuntimeAttribute>
-                                                                                            </userDefinedRuntimeAttributes>
                                                                                         </textField>
                                                                                     </gridCell>
                                                                                     <gridCell row="TgW-Rq-PrC" column="XB0-cc-I4a" id="0Vc-OI-6ZO">
@@ -1629,7 +1605,7 @@
                                                                                 <gridCells>
                                                                                     <gridCell row="oiI-Jk-tAf" column="nF8-JW-UG2" headOfMergedCell="l7z-DF-ePG" xPlacement="leading" id="l7z-DF-ePG">
                                                                                         <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rCz-nm-wuv" userLabel="Node Label">
-                                                                                            <rect key="frame" x="-2" y="364" width="113" height="16"/>
+                                                                                            <rect key="frame" x="-2" y="285" width="113" height="16"/>
                                                                                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Sprite Attributes" id="0ED-NN-MCH">
                                                                                                 <font key="font" textStyle="headline" name=".SFNS-Bold"/>
                                                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1641,7 +1617,7 @@
                                                                                     <gridCell row="oiI-Jk-tAf" column="6CR-wu-kuk" id="qMw-ke-Qg7"/>
                                                                                     <gridCell row="Hzh-U9-GgZ" column="nF8-JW-UG2" headOfMergedCell="e4Q-sA-jjs" id="e4Q-sA-jjs">
                                                                                         <box key="contentView" horizontalHuggingPriority="249" verticalHuggingPriority="750" ambiguous="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="wIQ-1e-k5w">
-                                                                                            <rect key="frame" x="0.0" y="276" width="550" height="5"/>
+                                                                                            <rect key="frame" x="0.0" y="197" width="550" height="5"/>
                                                                                         </box>
                                                                                     </gridCell>
                                                                                     <gridCell row="Hzh-U9-GgZ" column="QRB-QE-l7w" headOfMergedCell="e4Q-sA-jjs" id="6Mz-NS-Ic3"/>
@@ -1679,12 +1655,6 @@
                                                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                                                             </textFieldCell>
-                                                                                                            <userDefinedRuntimeAttributes>
-                                                                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="userEditable" value="NO"/>
-                                                                                                                <userDefinedRuntimeAttribute type="number" keyPath="incrementValue">
-                                                                                                                    <real key="value" value="0.5"/>
-                                                                                                                </userDefinedRuntimeAttribute>
-                                                                                                            </userDefinedRuntimeAttributes>
                                                                                                         </textField>
                                                                                                     </subviews>
                                                                                                     <constraints>
@@ -1718,9 +1688,6 @@
                                                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                                                             </textFieldCell>
-                                                                                                            <userDefinedRuntimeAttributes>
-                                                                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="userEditable" value="NO"/>
-                                                                                                            </userDefinedRuntimeAttributes>
                                                                                                         </textField>
                                                                                                     </subviews>
                                                                                                     <constraints>
@@ -2046,9 +2013,6 @@
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="boolean" keyPath="userEditable" value="NO"/>
-                                            </userDefinedRuntimeAttributes>
                                         </textField>
                                     </gridCell>
                                     <gridCell row="ob7-SS-drA" column="FqM-IZ-myv" id="bXg-rA-k1F"/>

@@ -495,8 +495,10 @@ public class SKObjectGroup: TiledLayerObject {
             (label: "size", value: mapSize),
             (label: "position", value: position),
             (label: "offset", value: offset),
-            (label: "properties", value: mirrorChildren()),
-            (label: "objects", value: objects)
+            (label: "objects", value: objects),
+            (label: "isFocused", value: isFocused),
+            (label: "properties", value: mirrorChildren())
+
         ]
 
 

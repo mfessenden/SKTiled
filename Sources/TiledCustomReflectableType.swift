@@ -61,7 +61,9 @@ import SpriteKit
     /// A description of the node used in dropdown & popu menus.
     @objc optional var tiledMenuItemDescription: String { get }
 
-    /// A shortened debug description of the node used for debug output text; (ie: `<SKObjectGroup 'Characters-Upper'>`)
+    /// A shortened debug description of the node used for debug output text, such as the demo HUD.
+    ///
+    ///  (ie: `<SKGroupLayer 'Upper': (7 children)>`)
     @objc optional var tiledDisplayItemDescription: String { get }
     
     /// A description of the node type used for help features; (ie: `"Container node for Tiled layer types."`)
@@ -74,7 +76,7 @@ import SpriteKit
     @objc optional func dumpStatistics()
 }
 
-
+    
 
 // MARK: - Extensions
 
@@ -251,7 +253,7 @@ extension SKLabelNode: TiledCustomReflectableType {
         return #"<\#(className)\#(nameString)\#(textString)>"#
     }
     
-    /// A description of the node.
+    /// A description of the node type used for help features.
     @objc public var tiledHelpDescription: String {
         return "SpriteKit label node."
     }
@@ -278,13 +280,13 @@ extension SKSpriteNode: TiledCustomReflectableType {
         return "sprite-icon"
     }
 
-    /// A description of the node.
+    /// A description of the node used in list or outline views.
     @objc public var tiledListDescription: String {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
         return "Sprite\(nameString)"
     }
 
-    /// A description of the node.
+    /// A description of the node used in dropdown & popu menus.
     @objc public var tiledMenuItemDescription: String {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
         return "Sprite\(nameString)"
@@ -296,7 +298,7 @@ extension SKSpriteNode: TiledCustomReflectableType {
         return #"<\#(className)\#(nameString)>"#
     }
     
-    /// A description of the node.
+    /// A description of the node type used for help features.
     @objc public var tiledHelpDescription: String {
         return "SpriteKit sprite node."
     }
@@ -321,13 +323,13 @@ extension SKCropNode: TiledCustomReflectableType {
         return "crop-icon"
     }
 
-    /// A description of the node.
+    /// A description of the node used in list or outline views.
     @objc public var tiledListDescription: String {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
         return "Crop\(nameString)"
     }
 
-    /// A description of the node.
+/// A description of the node used in dropdown & popu menus.
     @objc public var tiledMenuItemDescription: String {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
         return "Crop\(nameString)"
@@ -339,7 +341,7 @@ extension SKCropNode: TiledCustomReflectableType {
         return #"<\#(className)\#(nameString)>"#
     }
     
-    /// A description of the node.
+    /// A description of the node type used for help features.
     @objc public var tiledHelpDescription: String {
         return "SpriteKit crop node."
     }
@@ -364,13 +366,13 @@ extension SKEffectNode: TiledCustomReflectableType {
         return "effect-icon"
     }
 
-    /// A description of the node.
+    /// A description of the node used in list or outline views.
     @objc public var tiledListDescription: String {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
         return "Effect\(nameString)"
     }
 
-    /// A description of the node.
+/// A description of the node used in dropdown & popu menus.
     @objc public var tiledMenuItemDescription: String {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
         return "Effect\(nameString)"
@@ -382,7 +384,7 @@ extension SKEffectNode: TiledCustomReflectableType {
         return #"<\#(className)\#(nameString)>"#
     }
     
-    /// A description of the node.
+    /// A description of the node type used for help features.
     @objc public var tiledHelpDescription: String {
         return "SpriteKit effect node. Used to contain content that may be rendered to a private buffer."
     }
@@ -426,7 +428,7 @@ extension SKShapeNode: TiledCustomReflectableType {
         return #"<\#(className)\#(nameString)>"#
     }
 
-    /// A description of the node.
+    /// A description of the node type used for help features.
     @objc public var tiledHelpDescription: String {
         return "SpriteKit shape node."
     }

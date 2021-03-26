@@ -453,12 +453,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
                        ignoreProperties noparse: Bool = false,
                        loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel,
                        renderQueue: DispatchQueue) -> SKTilemap? {
-        
-        
-        print("✻ [SKTilemapParser]: loading tmx file: '\(tmxFile)'")
-        
-        
-        
+       
         // update the logging level
         Logger.default.loggingLevel = loggingLevel
 
@@ -488,8 +483,6 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
         
         // set the document root & file name
         resolveDocumentRoot(tmxFile: tmxFile, assetPath: inDirectory)
-        
-        print("✻ [SKTilemapParser]: current asset is bundled: \(isBundledDocument) -> '\(documentRoot.path)' -> '\(Bundle.main.resourceURL?.path)'")
 
         // create a url relative to the current root
         currentFileUrl = URL(fileURLWithPath: tmxFilename, relativeTo: documentRoot).standardized
@@ -521,8 +514,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
                 // current file name (minus doc root)  (ie 'User/Templates/dragon-green.tx')
                 currentFilename = firstFileToParse.relativePath
                 
-                
-                print("✻ current filename: '\(firstFileToParse.relativePath)'")
+                // print("✻ current filename: '\(firstFileToParse.relativePath)'")
 
                 // current file name only (ie 'dragon-green.tx')
                 let currentFile = firstFileToParse.lastPathComponent
@@ -931,7 +923,6 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
         let fileComponents = fileNamed.components(separatedBy: "/")
         
         if (fileComponents.count == 1) {
-            print("✻ relative to document root: '\(fileNamed)'")
             return URL(fileURLWithPath: fileNamed, isDirectory: false, relativeTo: documentRoot).standardized
         }
         
@@ -1400,12 +1391,6 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
             // get the absolute path to the image
             var sourceImagePath = imageURL.path
 
-            
-            if (isDevelopment == true) {
-                print("✻ looking for image '\(sourceImagePath)' -> '\(sourceImage)'")
-            }
-            
-            
             // update an image layer
             if let imageLayer = lastElement as? SKImageLayer {
                 // set the image property
@@ -2443,9 +2428,6 @@ protocol TiledParsableType {
 
 
 extension TiledParsableType {
-
-
-    // CHECKME: is this conflicting with other className extensions?
 
     /// Returns the object class name (`TiledParsableType`).
     var objectType: String {

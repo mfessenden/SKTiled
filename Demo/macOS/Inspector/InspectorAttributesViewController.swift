@@ -151,8 +151,6 @@ class InspectorAttributesViewController: NSViewController {
         for subview in NSView.getAllSubviews(from: attributesBox) {
             let viewId: String? = (subview.identifier != nil) ? subview.identifier!.rawValue : nil
 
-            let viewIdentifier = subview.identifier?.rawValue ?? "unknown"
-
             /// is this a node type we want to save?
             var isAttributeType = false
 
@@ -176,7 +174,6 @@ class InspectorAttributesViewController: NSViewController {
                 if let textField = subview as? NSTextField {
                     textField.delegate = self
                     textFields[itemIdentifier] = textField
-                    let textFieldIsEditable = textField.userEditable
                     textField.isEnabled = textField.userEditable
                 }
 
@@ -218,13 +215,10 @@ class InspectorAttributesViewController: NSViewController {
         var actions = ""
         let stackNames = nodetypes.map { "\($0)-stack-root" }
 
-        print("⭑ [AttributeEditor]: selected node types: \(nodetypes)")
+        // print("⭑ [AttributeEditor]: selected node types: \(nodetypes)")
 
         for (idx, (name, stack)) in rootUIViews.enumerated() {
             let stackIdHidden = !stackNames.contains(name)
-            if (stackIdHidden == false) {
-                print("  ‣ showing '\(name)'")
-            }
             stack.isHidden = stackIdHidden
 
             if !(stackIdHidden) {
@@ -263,7 +257,6 @@ class InspectorAttributesViewController: NSViewController {
         // draw the attribute editor
         populateAttributeEditor()
     }
-
 
     /// Populate the attributes editor with the current selection.
     func populateAttributeEditor() {
@@ -402,7 +395,7 @@ class InspectorAttributesViewController: NSViewController {
 
 
 
-        nodeTypeLabel?.setStringValue(keys: ["sk-node-type", "tiled-element-name", "tiled-node-nicename"], attribute: nodeAttributeStorage, fallback: "Node")
+        nodeTypeLabel?.setStringValue(keys: ["sk-node-type", "tiled-element-name", "tiled-node-nicename", "tiled-node-role"], attribute: nodeAttributeStorage, fallback: "Node")
 
         let nodeNameAttributes: [NSAttributedString.Key : Any] = [
             NSAttributedString.Key.foregroundColor: NSColor(named: NSColor.Name("AttributeName"))
@@ -585,13 +578,10 @@ class InspectorAttributesViewController: NSViewController {
     
     @objc func dumpAttributeStorage(notification: Notification) {
         guard let attributes = attributeStorage else {
-            print("⭑ [AttributeEditor]: no attributes currently stored.")
             return
         }
-        
         attributes.dump()
     }
-    
 
     /// Handler for button/checkbox events.
     ///
@@ -600,7 +590,7 @@ class InspectorAttributesViewController: NSViewController {
         if let bid = sender.identifier {
             let textIdentifier = bid.rawValue
             let isChecked = sender.state == .on
-            print("⭑ [AttributeEditor]: button changed: '\(textIdentifier)', value: \(isChecked)")
+            print("⭑ [\(classNiceName)]: button changed: '\(textIdentifier)', value: \(isChecked)")
 
 
             if (textIdentifier == "node-hidden-check") {
@@ -672,6 +662,7 @@ class InspectorAttributesViewController: NSViewController {
 
 // MARK: - Extensions
 
+// TODO: need to implement this
 extension InspectorAttributesViewController: NSStackViewDelegate {
     
     func stackView(_ stackView: NSStackView, willDetach views: [NSView]) {
@@ -685,9 +676,11 @@ extension InspectorAttributesViewController: NSStackViewDelegate {
 
 
 
+// MARK: Text Field Methods
+
+
 extension InspectorAttributesViewController: NSTextFieldDelegate {
 
-    
     /// Invoked when users press keys with predefined bindings in a cell of the specified control.
     ///
     /// - Parameters:
@@ -696,14 +689,14 @@ extension InspectorAttributesViewController: NSTextFieldDelegate {
     ///   - commandSelector: The selector that was associated with the binding.
     /// - Returns: true if the delegate object handles the key binding; otherwise, false.
     func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
-        guard let textField = control as? NSTextField,
-              (textField.isNumericTextField == true) else {
+        guard let textField = control as? NSTextField else {
             return false
         }
-
-        let doubleValue = textField.doubleValue
         
-        // FIXME: the increment value causes crash
+        
+        print("selector: \(commandSelector.description)")
+        
+        let doubleValue = textField.doubleValue
         let incrementValue: Double = 0.5
 
         if commandSelector == #selector(moveUp(_:)) {
@@ -715,107 +708,18 @@ extension InspectorAttributesViewController: NSTextFieldDelegate {
             let newValue = doubleValue - incrementValue
             textField.doubleValue = newValue
             return false
-
+        
+        // if the user presses tab or return, handle the
         } else if commandSelector == #selector(insertNewline(_:)) {
+            return true
+            
+        } else if commandSelector == #selector(insertTab(_:)) {
             return true
         }
 
         return false
     }
-
-    func controlTextDidChange(_ obj: Notification) {
-        guard let textField = obj.object as? NSTextField,
-              let textIdentifier = textField.identifierString else {
-            return
-        }
-
-
-        let textFieldValue = textField.stringValue
-
-        var floatValue: CGFloat?
-        if let doubleValue = Double(textFieldValue) {
-            floatValue = CGFloat(doubleValue)
-        }
-
-
-        let textFieldDescription = (textField.isNumericTextField == true) ? "number field" : "text field"
-        if (demoDelegate.focusedNodes.isEmpty) {
-            return
-        }
-        
-        
-        let numericValueString = (textField.isNumericTextField == true) ? ", float value: '\(floatValue)'" : ""
-
-        print("⭑ [AttributeEditor]: \(textFieldDescription) '\(textIdentifier)', value: '\(textFieldValue)'\(numericValueString)")
-
-
-
-        if (textIdentifier == "node-name-field") {
-            for node in focusedNodes {
-                node.name = textFieldValue
-            }
-        }
-
-        if let floatValue = floatValue {
-            if (textIdentifier == "node-xpos-field") {
-                for node in focusedNodes {
-                    node.position.x = floatValue
-                    node.updateAttributes()
-                }
-                handleNodeSelection()
-            }
-
-            if (textIdentifier == "node-ypos-field") {
-                for node in focusedNodes {
-                    node.position.y = floatValue
-                    node.updateAttributes()
-                }
-                handleNodeSelection()
-            }
-
-            if (textIdentifier == "node-zpos-field") {
-                for node in focusedNodes {
-                    node.zPosition = floatValue
-                    node.updateAttributes()
-                }
-                handleNodeSelection()
-            }
-
-            if (textIdentifier == "node-xscale-field") {
-                for node in focusedNodes {
-                    node.xScale = floatValue
-                    node.updateAttributes()
-                }
-                handleNodeSelection()
-            }
-
-            if (textIdentifier == "node-yscale-field") {
-                for node in focusedNodes {
-                    node.yScale = floatValue
-                    node.updateAttributes()
-                }
-                handleNodeSelection()
-            }
-
-
-            if (textIdentifier == "node-zrot-field") {
-                for node in focusedNodes {
-                    node.zRotation = floatValue.radians()
-                    node.updateAttributes()
-                }
-                handleNodeSelection()
-            }
-
-
-            if (textIdentifier == "node-alpha-field") {
-                for node in focusedNodes {
-                    node.alpha = floatValue
-                    node.updateAttributes()
-                }
-                handleNodeSelection()
-            }
-        }
-    }
+    
     
     /// Called when the text field edititing is finished.
     ///
@@ -826,22 +730,21 @@ extension InspectorAttributesViewController: NSTextFieldDelegate {
             return
         }
         
-        
         let textFieldValue = textField.stringValue
         
         var floatValue: CGFloat?
         if let doubleValue = Double(textFieldValue) {
             floatValue = CGFloat(doubleValue)
         }
-        
-        
-        let textFieldDescription = (textField.isNumericTextField == true) ? "number field" : "text field"
+
         if (demoDelegate.focusedNodes.isEmpty) {
             return
         }
         
+        /*
+        let textFieldDescription = (textField.isNumericTextField == true) ? "number field" : "text field"
         print("⭑ [AttributeEditor]: \(textFieldDescription) '\(textIdentifier)', value: '\(textFieldValue)'")
-        
+        */
         
         
         if (textIdentifier == "node-name-field") {
@@ -849,8 +752,6 @@ extension InspectorAttributesViewController: NSTextFieldDelegate {
                 node.name = textFieldValue
             }
         }
-        
-        
         
         if let floatValue = floatValue {
             if (textIdentifier == "node-xpos-field") {
@@ -921,6 +822,12 @@ extension InspectorAttributesViewController: NSTextFieldDelegate {
             node.updateAttributes()
         })
         
+        NotificationCenter.default.post(
+            name: Notification.Name.Demo.RefreshInspectorInterface,
+            object: nil
+        )
+        
+        // repopulate the UI
         handleNodeSelection()
     }
 }

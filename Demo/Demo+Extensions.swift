@@ -426,6 +426,11 @@ extension Notification.Name {
         // node selected in right-click menu
         public static let NodeSelectionChanged           = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodeSelectionChanged")   // sent from demo delegate to indicate that the current node selection has changed
         public static let NodeSelectionCleared           = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodeSelectionCleared") // handles 'clear' key pressed (macOS)
+        
+        public static let NodeHighlightingCleared        = Notification.Name(rawValue: "org.sktiled.notification.name.demo.nodeHighlightingCleared")
+        
+        
+        
 
         // selected node isolation
         public static let IsolateSelectedEnabled         = Notification.Name(rawValue: "org.sktiled.notification.name.demo.isolateSelectedEnabled")  // nothing is using this currently
@@ -471,7 +476,7 @@ extension SKNode {
 }
 
 
-// MARK: SpriteKit Inspector
+// MARK: Inspector
 
 /// Store & retrieve custom `SKTiled` attributes.
 extension SKNode {
@@ -489,7 +494,7 @@ extension SKNode {
         tiledAttrs[key] = value
     }
 
-    /// Add an array of named `SKTiled` attributes.
+    /// Set an array of named `SKTiled` attributes.
     ///
     /// - Parameter values: key/value pairs.
     public func setAttrs(values: [String: Any]) {
@@ -522,7 +527,7 @@ extension SKNode {
         return currentValue
     }
 
-    /// Returns all of the values from the Tiled attributes.
+    /// Returns all of the values from the `SKTiled` attributes.
     ///
     /// - Returns: dictionary of Tiled attributes.
     public func getAttrs() -> [String: Any] {
@@ -578,6 +583,10 @@ extension SKNode {
 
         for (key, val) in tiledAttrs {
             nodeAttributes[key] = val
+        }
+        
+        if let nodeName = name {
+            nodeAttributes["sk-node-name"] = nodeName
         }
 
         nodeAttributes["sk-node-hidden"] = isHidden
@@ -1014,7 +1023,12 @@ extension NSOutlineView {
             item = parentItem
         }
     }
-
+    
+    /// Select the given item in the outline view.
+    ///
+    /// - Parameters:
+    ///   - item: item in the current view.
+    ///   - byExtendingSelection: true if the selection should be extended, false if the current selection should be changed.
     func selectItem(item: Any?, byExtendingSelection: Bool = true) {
         var index = row(forItem: item)
         if index < 0 {

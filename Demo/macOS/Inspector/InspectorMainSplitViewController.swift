@@ -70,17 +70,31 @@ extension InspectorMainSplitViewController {
     /// - Parameter event: key press event.
     override func keyDown(with event: NSEvent) {
         guard let keysPressed = event.characters else {
-            print("⭑ [\(classNiceName)]: ERROR: unknown key pressed.")
             return
         }
-        print("⭑ [\(classNiceName)]: key pressed '\(keysPressed)'")
         
         if (keysPressed == "r") {
             
             // refresh the inspector ui
             NotificationCenter.default.post(
                 name: Notification.Name.Demo.RefreshInspectorInterface,
-                object: nil)
+                object: nil
+            )
+            
+            updateCommandString("refreshing Inspector...", duration: 4)
         }
+        
+        if (keysPressed == "d") {
+            
+            // dump stored attributes
+            NotificationCenter.default.post(
+                name: Notification.Name.Debug.DumpAttributeStorage,
+                object: nil
+            )
+            
+            
+            updateCommandString("dumping attribute storage...", duration: 4)
+        }
+
     }
 }

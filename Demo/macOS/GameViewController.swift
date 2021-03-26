@@ -522,15 +522,7 @@ class GameViewController: NSViewController, Loggable {
     override var acceptsFirstResponder: Bool {
         return true
     }
-    
-    override func keyDown(with event: NSEvent) {
-        guard let keysPressed = event.characters else {
-            print("⭑ [\(classNiceName)]: ERROR: unknown key pressed.")
-            return
-        }
-        print("⭑ [\(classNiceName)]: key pressed '\(keysPressed)'")
-    }
-    
+
     /// Mouse scroll wheel event handler.
     ///
     /// - Parameter event: mouse event.
@@ -578,7 +570,7 @@ class GameViewController: NSViewController, Loggable {
         view.showsFields = !hideRenderStatsUI
     }
     
-    /// Update the interface when a map has been parsed & loaded. Called when the `Notification.Name.Map.Updated` notification is received.
+    /// Update the interface when a map has been parsed & loaded (or updated). Called when the `Notification.Name.Map.Updated` notification is received.
     ///
     /// - Parameter notification: event notification.
     @objc func mapUpdatedAction(notification: Notification) {
@@ -670,7 +662,7 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: notification event.
     @objc func debuggingInfoReceived(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        // notification.dump(#fileID, function: #function)
 
         tileInfoLabel.reset()
         propertiesInfoLabel.reset()
@@ -923,11 +915,7 @@ class GameViewController: NSViewController, Loggable {
             propertiesInfoLabel.attributedStringValue = focusedTile.tileData.propertiesAttributedString(delineator: nil)
             
             // highlight the tile
-            
-            let highlightDuration = TiledGlobals.default.debugDisplayOptions.highlightDuration
-            focusedTile.highlightNode(with: focusedTile.highlightColor, duration: highlightDuration)
-            
-            focusedTile.isFocused = true
+            focusedTile.setFocused(for: 1)
         }
     }
     
@@ -970,9 +958,7 @@ class GameViewController: NSViewController, Loggable {
             propertiesInfoLabel.attributedStringValue = focusedObject.propertiesAttributedString(delineator: nil)
             
             // highlight the object
-            let highlightDuration = TiledGlobals.default.debugDisplayOptions.highlightDuration
-            focusedObject.highlightNode(with: focusedObject.highlightColor, duration: highlightDuration)
-            focusedObject.isFocused = true
+            focusedObject.setFocused(for: 1)
         }
     }
 
@@ -1047,11 +1033,10 @@ class GameViewController: NSViewController, Loggable {
 
     /// Called when the focus objects in the demo scene have changed. Called when the `Notification.Name.Demo.NodeSelectionChanged` notification is received.
     ///
-    ///  - expects a userInfo of `["nodes": [SKNode], "focusLocation": CGPoint]`
+    ///  payload:  `userInfo: ["nodes": [SKNode], "focusLocation": CGPoint]`
     ///
     /// - Parameter notification: event notification.
     @objc func nodeSelectionChanged(notification: Notification) {
-        notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: Any],
               let selectedNodes = userInfo["nodes"] as? [SKNode] else {
             return
@@ -1059,13 +1044,10 @@ class GameViewController: NSViewController, Loggable {
 
         // represents the position in the current scene to move to
         var focusLocation: CGPoint?
-
-
         if let nodePosition = userInfo["focusLocation"] as? CGPoint {
             focusLocation = nodePosition
         }
 
-        
         
         tileInfoLabel.reset()
         selectedInfoLabel.reset()
@@ -1082,6 +1064,9 @@ class GameViewController: NSViewController, Loggable {
 
             // show only th first node....
             if let selected = selectedNodes.first {
+                
+                // TODO: putting this here for inspector usage
+                selected.isHidden = false
                 
                 var anchorColor = TiledGlobals.default.debugDisplayOptions.tileHighlightColor
                 var anchorRadius: CGFloat = TiledGlobals.default.debugDisplayOptions.anchorRadius
@@ -1124,8 +1109,14 @@ class GameViewController: NSViewController, Loggable {
 
                     let selectedLabelString = NSMutableAttributedString(string: "Selected: ", attributes: selectedAttributes)
                     attributedString.append(selectedLabelString)
-                    attributedString.append(NSAttributedString(string: selected.description))
-
+                    
+                    /// displayed string is the `TiledCustomReflectableType.tiledDisplayItemDescription` if available
+                    var selectedNodeDescription = selected.description
+                    if let tiledDisplayItemDescription = tiledNode.tiledDisplayItemDescription {
+                        selectedNodeDescription = tiledDisplayItemDescription
+                    }
+                    
+                    attributedString.append(NSAttributedString(string: selectedNodeDescription))
                     selectedInfoLabel.attributedStringValue = attributedString
                 }
             }

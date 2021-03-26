@@ -27,10 +27,8 @@
 import Cocoa
 
 
-/// Manages attribute storage for displaying in a generic attribute editor interface.
+/// Manages attribute storage for display in a generic attribute editor interface.
 public struct AttributeStorage {
-    
-    //typealias RawValue = Int
     
     fileprivate var items: [String: Set<AnyHashable>] = [:]
     
@@ -63,6 +61,10 @@ public struct AttributeStorage {
         }
     }
     
+    /// Returns the number of attributes stored with the given key.
+    ///
+    /// - Parameter key: attribute key.
+    /// - Returns: number of items matching the given key.
     public func valueCount(for key: String) -> Int {
         return items[key]?.count ?? 0
     }

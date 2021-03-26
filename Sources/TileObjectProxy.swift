@@ -43,7 +43,44 @@ internal class TileObjectProxy: SKShapeNode {
     /// Referenced vector object.
     weak var reference: SKTileObject?
     
-    // MARK: - Proxy Label
+    // MARK: - Initialization
+    
+    
+    /// Initialize with an object reference.
+    ///
+    /// - Parameters:
+    ///   - object: reference object.
+    ///   - visible: obejct is initially visible.
+    ///   - renderable: object is renderable.
+    required init(object: SKTileObject,
+                  visible: Bool = false,
+                  renderable: Bool = false) {
+        
+        self.reference = object
+        super.init()
+        // TODO: standardize key naming
+        self.animationKey = "highlight-proxy-\(object.id)"
+        self.name = "proxy-\(object.id)"
+        object.proxy = self
+        displayReference = visible
+        isRenderable = renderable
+        
+        // TODO: test this
+        position = object.position
+        
+        // grab proxy color overrides
+        let parentProxyColor = object.layer.proxyColor ?? object.proxyColor
+        if let proxyColor = parentProxyColor {
+            objectColor = proxyColor
+        }
+    }
+    
+    /// Instantiate the node with a decoder instance.
+    ///
+    /// - Parameter aDecoder: decoder.
+    required init?(coder aDecoder: NSCoder) {
+        super.init()
+    }
     
     /// Show the object's label.
     var showLabel: Bool = true
@@ -127,53 +164,16 @@ internal class TileObjectProxy: SKShapeNode {
                 let fadeAction = SKAction.colorFadeAction(after: 0.5)
                 self.run(fadeAction, withKey: animationKey)
             } else {
-                print("⭑ [TileObjectProxy]: is focused: \(isFocused)")
+                print("⭑ [\(classNiceName)]: is focused: \(isFocused)")
                 self.draw()
             }
         }
     }
     
-    /// Initialize with an object reference.
-    ///
-    /// - Parameters:
-    ///   - object: reference object.
-    ///   - visible: obejct is initially visible.
-    ///   - renderable: object is renderable.
-    required init(object: SKTileObject,
-                  visible: Bool = false,
-                  renderable: Bool = false) {
-        
-        self.reference = object
-        super.init()
-        self.animationKey = "highlight-proxy-\(object.id)"
-        self.name = "proxy-\(object.id)"
-        object.proxy = self
-        displayReference = visible
-        isRenderable = renderable
-        
-        // grab proxy color overrides
-        let parentProxyColor = object.layer.proxyColor ?? object.proxyColor
-        if let proxyColor = parentProxyColor {
-            objectColor = proxyColor
-        }
-    }
-    
-    /// Instantiate the node with a decoder instance.
-    ///
-    /// - Parameter aDecoder: decoder.
-    required init?(coder aDecoder: NSCoder) {
-        super.init()
-    }
+    // MARK: - Drawing
     
     /// Draw the objects in the overlay.
     public func draw() {
-        /*
-        let anchor = SKShapeNode(circleOfRadius: 2)
-        anchor.fillColor = TiledObjectColors.azure
-        anchor.zPosition = zPosition + 10
-        addChild(anchor)
-        */
-        
         // FIXME: this is causing selected object frame to disappear (but leave anchor)
         let proxyIsVisible = (displayReference == true) || (isFocused == true)
         
@@ -184,6 +184,8 @@ internal class TileObjectProxy: SKShapeNode {
             self.path = nil
             return
         }
+        
+        
         
         // don't draw text objects in iso, hex, staggered (for now)
         if object.layer.orientation != .orthogonal {
@@ -211,42 +213,67 @@ internal class TileObjectProxy: SKShapeNode {
             self.convert($0, from: object)
         }
         
+        guard convertedPoints.isEmpty == false else {
+            object.log("invalid points array.", level: .error)
+            return
+        }
+        
+        
+        let isPolyType = object.isPolyType
+        let pathIsClosed: Bool = (object.shapeType == .polyline) ? false : true
+        
         let renderQuality = TiledGlobals.default.renderQuality.object
         let objectRenderQuality = renderQuality / 2
         
-        if (convertedPoints.isEmpty == false) {
+        
+        
+        let scaledVertices = convertedPoints.map { $0 * renderQuality }
+        
+        let objPath: CGPath
+        switch object.shapeType {
             
-            let scaledVertices = convertedPoints.map { $0 * renderQuality }
-            
-            let objPath: CGPath
-            switch object.shapeType {
+            case .ellipse:
+                objPath = bezierPath(scaledVertices, closed: true, alpha: object.shapeType.curvature).path
                 
-                case .ellipse:
-                    objPath = bezierPath(scaledVertices, closed: true, alpha: object.shapeType.curvature).path
-                    
-                default:
-                    objPath = polygonPath(scaledVertices, closed: true)
-            }
-            
-            
-            if objPath.isEmpty == true {
-                return
-            }
-            
-            // FIXME: crash here
-            self.path = objPath
-            self.setScale(1 / renderQuality)
-            
-            
-            let currentStrokeColor = (proxyIsVisible == true) ? self.objectColor : SKColor.clear
-            let currentFillColor = (proxyIsVisible == true) ? (isRenderable == false) ? currentStrokeColor.withAlphaComponent(fillOpacity) : SKColor.clear : SKColor.clear
-            
-            self.strokeColor = currentStrokeColor
-            self.fillColor = currentFillColor
-            self.lineWidth = baseLineWidth * objectRenderQuality
-            self.isAntialiased = false
-            
+            default:
+                objPath = polygonPath(scaledVertices, closed: pathIsClosed)
         }
+        
+        
+        if objPath.isEmpty == true {
+            return
+        }
+        
+        // FIXME: crash here
+        self.path = objPath
+        self.setScale(1 / renderQuality)
+        
+        
+        let currentStrokeColor = (proxyIsVisible == true) ? self.objectColor : SKColor.clear
+        let currentFillColor = (proxyIsVisible == true) ? (isRenderable == false) ? currentStrokeColor.withAlphaComponent(fillOpacity) : SKColor.clear : SKColor.clear
+        
+        self.strokeColor = currentStrokeColor
+        self.fillColor = currentFillColor
+        self.lineWidth = baseLineWidth * objectRenderQuality
+        self.isAntialiased = false
+        
+        
+        // if (isPolyType == true) {
+        childNode(withName: object.firstPointKey)?.removeFromParent()
+        
+        // the first-point radius should be larger for thinner (>1.0) line widths
+        let pointRadius = object.lineWidth * 0.75
+        let firstPointShape = SKShapeNode(circleOfRadius: pointRadius)
+        firstPointShape.setAttrs(values: ["tiled-node-role": "first-point"])
+        firstPointShape.name = object.firstPointKey
+        addChild(firstPointShape)
+        
+        // CONVERTED
+        firstPointShape.zPosition = zPosition + 10
+        firstPointShape.position = vertices[0]
+        firstPointShape.strokeColor = SKColor.clear
+        firstPointShape.fillColor = self.strokeColor
+        firstPointShape.isAntialiased = isAntialiased
     }
 }
 

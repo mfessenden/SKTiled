@@ -1045,6 +1045,7 @@ public class SKTileLayer: TiledLayerObject {
             (label: "tile size", value: tileSize),
             (label: "position", value: position),
             (label: "offset", value: offset),
+            (label: "isFocused", value: isFocused),
             (label: "properties", value: mirrorChildren())
         ]
 

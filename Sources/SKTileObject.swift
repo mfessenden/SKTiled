@@ -254,7 +254,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
     @objc public lazy var boundsShape: SKShapeNode? = {
         let vertices = translatedVertices()
         let scaledVertices = vertices.map { $0 * renderQuality }
-
+        
         let objPath: CGPath
         let controlPath: CGPath?
 
@@ -265,13 +265,14 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
                 controlPath = polygonPath(scaledVertices, closed: true)
 
             default:
-                objPath = polygonPath(scaledVertices, closed: true)
+                let pathIsClosed: Bool = (shapeType == .polyline) ? false : true
+                objPath = polygonPath(scaledVertices, closed: pathIsClosed)
                 controlPath = nil
         }
 
         // create the shape node
         let shape = SKShapeNode(path: objPath)
-        shape.setAttrs(values: ["tiled-invisible-node": true])
+        shape.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Represents the object's bounding shape.", "tiled-node-nicename": "Bounds Shape"])
         
         // control shape (bezier shapes only)
         if let cpath = controlPath {
@@ -295,7 +296,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
     @objc public lazy var anchorShape: SKShapeNode = {
         let anchorRadius: CGFloat = (layer.tileSize.width / 8) * 0.75
         let shape = SKShapeNode(circleOfRadius: anchorRadius)
-        shape.setAttrs(values: ["tiled-invisible-node": true])
+        shape.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Represents the object's anchor point.", "tiled-node-nicename": "Anchor Shape"])
         shape.strokeColor = SKColor.clear
         shape.fillColor = frameColor
         addChild(shape)
@@ -678,6 +679,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
                 if (layer.orientation == .isometric) {
                     let controlPath = polygonPath(translated)
                     let controlShape = SKShapeNode(path: controlPath, centered: false)
+                    controlShape.setAttrs(values: ["tiled-invisible-node": true, "tiled-node-role": "control-shape", "tiled-node-listdesc": "Ellipse Control Cage"])
                     addChild(controlShape)
                     controlShape.fillColor = SKColor.clear
                     // controlShape.strokeColor = self.strokeColor.withAlphaComponent(0.2)
@@ -696,24 +698,24 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
             childNode(withName: firstPointKey)?.removeFromParent()
 
-            // MARK: - Tile object drawing
+            
 
             if (self.globalID == nil) {
 
                 // the first-point radius should be larger for thinner (>1.0) line widths
-                let anchorRadius = self.lineWidth * 1.2
-                let anchor = SKShapeNode(circleOfRadius: anchorRadius)
-                anchor.name = firstPointKey
-                addChild(anchor)
+                let pointRadius = self.lineWidth * 0.75
+                let firstPointShape = SKShapeNode(circleOfRadius: pointRadius)
+                firstPointShape.setAttrs(values: ["tiled-node-role": "first-point"])
+                firstPointShape.name = firstPointKey
+                addChild(firstPointShape)
                 
-                // CONVERTED
-                anchor.position = vertices[0].invertedY
-                anchor.strokeColor = SKColor.clear
-                anchor.fillColor = self.strokeColor
-                anchor.isAntialiased = isAntialiased
+                firstPointShape.position = vertices[0]
+                firstPointShape.strokeColor = SKColor.clear
+                firstPointShape.fillColor = self.strokeColor
+                firstPointShape.isAntialiased = isAntialiased
             }
         }
-
+        
 
         // if the object has a gid property, render it as a tile
         if let globalId = globalID {
@@ -1162,7 +1164,8 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
             (label: "properties", value: mirrorChildren()),
             (label: "bounds", value: boundingRect),
             (label: "visibleToCamera", value: visibleToCamera),
-            (label: "isUserInteractionEnabled", value: isUserInteractionEnabled)
+            (label: "isUserInteractionEnabled", value: isUserInteractionEnabled),
+            (label: "isFocused", value: isFocused)
         ]
 
         if let gid = globalID {
@@ -1406,8 +1409,12 @@ extension SKTileObject {
     ///   - color: highlight color.
     ///   - duration: duration of highlight effect.
     @objc public override func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
-        let highlightFillColor = color.withAlphaComponent(0.2)
-
+        let highlightFillColor = color.withAlphaComponent(0.4)
+        
+        
+        let durationString = (duration > 0) ? " for \(duration) seconds..." : "..."
+        //print("⭑ [\(classNiceName)]: highlighting node\(durationString)")
+        
         boundsShape?.strokeColor = color
         boundsShape?.fillColor = highlightFillColor
         boundsShape?.isHidden = false
@@ -1417,7 +1424,6 @@ extension SKTileObject {
 
         if (duration > 0) {
             let fadeInAction = SKAction.colorize(withColorBlendFactor: 1, duration: duration)
-
             let groupAction = SKAction.group(
                 [
                     fadeInAction,

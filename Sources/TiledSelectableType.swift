@@ -41,6 +41,21 @@ import SpriteKit
 
 // MARK: - Extensions
 
+extension TiledSelectableType where Self: SKNode {
+    
+    /// Flag the node as focused for a specified duration.
+    ///
+    /// - Parameter duration: focus time
+    public func setFocused(for duration: TimeInterval) {
+        isFocused = true
+        let unfocusAction = SKAction.afterDelay(duration, runBlock: {
+            self.isFocused = false
+        })
+        run(unfocusAction)
+    }
+}
+
+
 
 extension Sequence where Element: SKNode {
     
@@ -59,6 +74,8 @@ extension Sequence where Element: SKNode {
         for node in self {
             if let tiledSelectable = node as? TiledSelectableType {
                 tiledSelectable.isFocused = false
+            } else {
+                node.removeHighlight()
             }
         }
     }

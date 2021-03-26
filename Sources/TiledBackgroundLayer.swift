@@ -124,12 +124,12 @@ extension TiledBackgroundLayer {
         return "background-icon"
     }
     
-    /// A description of the node.
+    /// A description of the node used in list or outline views.
     @objc public override var tiledListDescription: String {
         return "\(tiledNodeNiceName): color \(color.hexString())"
     }
     
-    /// A description of the node.
+    /// A description of the node type used for help features.
     @objc public override var tiledHelpDescription: String {
         return "Layer type for map background color."
     }

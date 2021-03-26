@@ -279,7 +279,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         let scaledverts = getVertices().map { $0 * renderQuality }
         let objpath = polygonPath(scaledverts)
         let shape = SKShapeNode(path: objpath)
-        shape.setAttrs(values: ["tiled-invisible-node": true])
+        shape.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Represents the layer's bounding shape.", "tiled-node-nicename": "Bounds Shape"])
         let boundsLineWidth = TiledGlobals.default.renderQuality.object / 1.5
         shape.lineWidth = boundsLineWidth
         shape.lineJoin = .miter
@@ -295,7 +295,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     @objc public lazy var anchorShape: SKShapeNode = {
         let anchorRadius: CGFloat = (tileSize.height / 8) * 0.85
         let shape = SKShapeNode(circleOfRadius: anchorRadius)
-        shape.setAttrs(values: ["tiled-invisible-node": true])
+        shape.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Represents the layer's anchor point.", "tiled-node-nicename": "Anchor Shape"])
         shape.strokeColor = SKColor.clear
         shape.fillColor = frameColor
         addChild(shape)
@@ -462,7 +462,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 
     /// Returns a rectangle in this node's parent's coordinate system. Currently only used in the `SKTilemap.absoluteSize` attribute.
     public override var frame: CGRect {
-        print("⭑ calculating layer frame...")
+        print("⭑ [\(classNiceName)]: calculating layer frame...")
         let px = parent?.position.x ?? position.x
         let py = parent?.position.y ?? position.y
         return CGRect(center: CGPoint(x: px, y: py), size: sizeInPoints)
@@ -956,9 +956,11 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     ///   - color: highlight color.
     ///   - duration: duration of highlight effect.
     @objc public override func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
-        
         let highlightFillColor = color.withAlphaComponent(0.2)
 
+        let durationString = (duration > 0) ? " for \(duration) seconds..." : "..."
+        //print("⭑ [\(classNiceName)]: highlighting node\(durationString)")
+        
         boundsShape?.strokeColor = color
         boundsShape?.fillColor = highlightFillColor
         boundsShape?.isHidden = false
@@ -1033,7 +1035,8 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
             (label: "tile size", value: tileSize),
             (label: "position", value: position),
             (label: "offset", value: offset),
-            (label: "properties", value: mirrorChildren())
+            (label: "properties", value: mirrorChildren()),
+            (label: "isFocused", value: isFocused)
         ]
 
         

@@ -266,7 +266,7 @@ extension SKGroupLayer {
         return #"<\#(className)\#(layerNameString)\#(childCountString)>"#
     }
     
-    /// A description of the node.
+    /// A description of the node type used for help features.
     @objc public override var tiledHelpDescription: String {
         return "Container node for Tiled layer types."
     }

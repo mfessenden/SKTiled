@@ -86,11 +86,6 @@ public class TiledDemoDelegate: NSObject, Loggable {
             focusedNodes.removeAll()
             selectedNode = nil
         }
-        
-        // TODO: this should be redundant
-        focusedNodes.forEach { node in
-            node.removeHighlight()
-        }
     }
     
     func setupNotifications() {
@@ -101,6 +96,11 @@ public class TiledDemoDelegate: NSObject, Loggable {
         NotificationCenter.default.addObserver(self, selector: #selector(sceneWillUnloadAction), name: Notification.Name.Demo.FlushScene, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionChanged), name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionCleared), name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(nodeHighlightingCleared), name: Notification.Name.Demo.NodeHighlightingCleared, object: nil)
+        
+        
         NotificationCenter.default.addObserver(self, selector: #selector(dumpSelectedNodes), name: Notification.Name.Demo.DumpSelectedNodes, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(highlightSelectedNodes), name: Notification.Name.Demo.HighlightSelectedNodes, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tileClickedAction), name: Notification.Name.Demo.TileClicked, object: nil)
@@ -153,14 +153,10 @@ public class TiledDemoDelegate: NSObject, Loggable {
         focusedNodes.removeAll()
         
         for node in selectedNodes {
-            var highlightColor = TiledGlobals.default.debugDisplayOptions.objectHighlightColor
             focusedNodes.append(node)
             if let tiledNode = node as? TiledGeometryType {
-                if let tile = tiledNode as? SKTile {
-                    highlightColor = tile.highlightColor
-                }
-                
-                node.highlightNode(with: highlightColor)
+                tiledNode.isFocused = true
+                //node.highlightNode(with: highlightColor)
             }
         }
     }
@@ -170,14 +166,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
     /// - Parameter notification: event notification.
     @objc func nodeSelectionCleared(notification: Notification) {
         notification.dump(#fileID, function: #function)
-        defer {
-            focusedNodes.unfocusAll()
-            focusedNodes.removeAll()
-        }
-        
-        for node in focusedNodes {
-            node.removeHighlight()
-        }
+        self.reset()
     }
     
     /// Handles the `Notification.Name.Demo.TileClicked` event.
@@ -195,6 +184,9 @@ public class TiledDemoDelegate: NSObject, Loggable {
         focusedNodes.removeAll()
         focusedNodes.append(tile)
         
+        
+        print("⭑ tile is focused: \(tile.isFocused)")
+        
         /// event: `Notification.Name.Demo.NodeSelectionChanged`
         NotificationCenter.default.post(
             name: Notification.Name.Demo.NodeSelectionChanged,
@@ -203,6 +195,17 @@ public class TiledDemoDelegate: NSObject, Loggable {
         )
     }
     
+    /// Handles the `Notification.Name.Demo.NodeHighlightingCleared` callback.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func nodeHighlightingCleared(notification: Notification) {
+        currentTilemap?.enumerateChildNodes(withName: ".//*") { node, _ in
+            if let tiledGeo = node as? TiledGeometryType {
+                tiledGeo.isFocused = false
+            }
+        }
+    }
+
     /// Handles the `Notification.Name.Demo.ObjectClicked` event.
     ///
     ///  object: `SKTileObject`
@@ -218,6 +221,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
         focusedNodes.removeAll()
         focusedNodes.append(object)
         
+        print("⭑ object is focused: \(object.isFocused)")
         
         /// event: `Notification.Name.Demo.NodeSelectionChanged`
         NotificationCenter.default.post(
@@ -399,8 +403,6 @@ extension TiledDemoDelegate: TiledSceneCameraDelegate {
         currentCameraZoom = newZoom
     }
     
-    @objc public func sceneRightClicked(event: NSEvent) {
-        print("⭑ [TiledDemoDelegate]: scene right-clicked...")
-    }
+    @objc public func sceneRightClicked(event: NSEvent) {}
 }
 

@@ -314,6 +314,7 @@ public class SKTileLayerChunk: TiledLayerObject {
             (label: "chunkOffset", value: chunkOffset),
             (label: "position", value: position),
             (label: "offset", value: offset),
+            (label: "isFocused", value: isFocused),
             (label: "data", value: tiles),
             (label: "properties", value: mirrorChildren())
         ]
@@ -363,7 +364,7 @@ extension SKTileLayerChunk {
         return "\(tiledNodeNiceName): "
     }
     
-    /// A description of the node.
+    /// A description of the node type used for help features.
     @objc public override var tiledHelpDescription: String {
         return "Tile layer chunk."
     }

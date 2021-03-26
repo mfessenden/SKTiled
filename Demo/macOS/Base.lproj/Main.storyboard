@@ -69,6 +69,12 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="File" id="bib-Uj-vzu">
                                     <items>
+                                        <menuItem title="Open in Tiled..." enabled="NO" id="iCb-c2-noq">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openCurrentMapInTiledAction:" target="Voe-Tx-rLC" id="RXc-fe-RUm"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Load tile map..." keyEquivalent="o" id="IAo-SY-fd9">
                                             <connections>
                                                 <action selector="openAndLoadExternalTilemapAction:" target="Voe-Tx-rLC" id="Bm9-MU-z0p"/>
@@ -99,12 +105,6 @@
                                         <menuItem title="Reload tilemap" enabled="NO" keyEquivalent="r" id="f06-eB-0wr">
                                             <connections>
                                                 <action selector="reloadTilemapAction:" target="Voe-Tx-rLC" id="Uxe-wl-Cmz"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Open in Tiled..." enabled="NO" id="iCb-c2-noq">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="openCurrentMapInTiledAction:" target="Voe-Tx-rLC" id="RXc-fe-RUm"/>
                                             </connections>
                                         </menuItem>
                                     </items>

@@ -781,7 +781,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         let scaledverts = getVertices(offset: CGPoint.zero).map { $0 * renderQuality }
         let objpath = polygonPath(scaledverts)
         let shape = SKShapeNode(path: objpath)
-        shape.setAttrs(values: ["tiled-invisible-node": true])
+        shape.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Represents the map's bounding shape.", "tiled-node-nicename": "Bounds Shape", "tiled-node-listdesc": "Butt Sex"])
         let boundsLineWidth = TiledGlobals.default.renderQuality.object / 1.5
         shape.lineWidth = boundsLineWidth
         shape.lineJoin = .miter
@@ -797,7 +797,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     @objc public lazy var anchorShape: SKShapeNode = {
         let anchorRadius: CGFloat = (tileSize.height / 8)
         let shape = SKShapeNode(circleOfRadius: anchorRadius)
-        shape.setAttrs(values: ["tiled-invisible-node": true])
+        shape.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Represents the map's anchor point.", "tiled-node-nicename": "Anchor Shape", "tiled-node-listdesc": "Butt Sex"])
         shape.strokeColor = SKColor.clear
         shape.fillColor = frameColor
         addChild(shape)
@@ -855,7 +855,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
     /// Map frame in parent coordinate space.
     public override var frame: CGRect {
-        print("⭑ [SKTilemap]: calculating map frame...")
+        print("⭑ [\(classNiceName)]: calculating map frame...")
         let px = parent?.position.x ?? position.x
         let py = parent?.position.y ?? position.y
 
@@ -1551,18 +1551,15 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         addChild(objectsOverlay)
 
         contentRoot.name = "MAP_RENDERABLE_CONTENT"
-
-        #if SKTILED_DEMO
-        contentRoot.setAttrs(values: ["tiled-help-desc": "Root node for all Tiled image & vector types."])
-        #endif
-
         contentRoot.addChild(cropNode)
         addChild(contentRoot)
 
         debugRoot.name = "MAP_DEBUG_ROOT"
 
         #if SKTILED_DEMO
-        debugRoot.setAttrs(values: ["tiled-element-name": "debugroot", "tiled-node-icon": "debug-icon"])
+        cropNode.setAttrs(values: ["tiled-help-desc": "Allows for the Tilemap's renderable content to be cropped."])
+        contentRoot.setAttrs(values: ["tiled-help-desc": "Root node for all Tiled image & vector types."])
+        debugRoot.setAttrs(values: ["tiled-node-nicename": "Debug Root", "tiled-node-role": "debugroot", "tiled-node-icon": "debug-icon", "tiled-node-listdesc": "Map Debug Root","tiled-help-desc": "Root node for Tilemap debug visualization nodes."])
         #endif
 
         addChild(debugRoot)
@@ -2932,6 +2929,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
             (label: "tile size", value: tileSize),
             (label: "layer alignment", value: layerAlignment),
             (label: "layers", value: layers),
+            (label: "isFocused", value: isFocused),
             (label: "parse time", value: "\(parseTime.milleseconds.stringRoundedTo(2))ms"),
             (label: "render time", value: "\(renderTime.milleseconds.stringRoundedTo(2))ms"),
             (label: "properties", value: mirrorChildren())
@@ -3396,9 +3394,11 @@ extension SKTilemap {
     ///   - color: highlight color.
     ///   - duration: duration of highlight effect.
     @objc public override func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
-
         let highlightFillColor = color.withAlphaComponent(0.2)
 
+        let durationString = (duration > 0) ? " for \(duration) seconds..." : "..."
+        //print("⭑ [\(classNiceName)]: highlighting node\(durationString)")
+        
         boundsShape?.strokeColor = color
         boundsShape?.fillColor = highlightFillColor
         boundsShape?.isHidden = false
@@ -3692,16 +3692,12 @@ extension SKTilemap: TiledSceneCameraDelegate {
 
     #else
 
-
-
     /// Handler for when the scene is clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
     @objc public func sceneClicked(event: NSEvent) {
         let nodesAtClickLocation = handleMouseEvent(event: event)
-        
         guard let firstNode = nodesAtClickLocation.first else {
-            print("no nodes clicked.")
             return
         }
         print("⭑ [SKTilemap]: node clicked: \(firstNode.description)")
@@ -3719,10 +3715,11 @@ extension SKTilemap: TiledSceneCameraDelegate {
     ///
     /// - Parameter event: mouse click event.
     @objc public func mousePositionChanged(event: NSEvent) {
-        //currentCoordinate = coordinateAtMouse(event: event)
+        
+        let lastCoordinate = currentCoordinate
+        currentCoordinate = coordinateAtMouse(event: event)
         
         #if SKTILED_DEMO
-        let lastCoordinate = currentCoordinate
 
         // TODO: add filtering options here
         let nodesAtClickLocation = handleMouseEvent(event: event)
@@ -3738,7 +3735,21 @@ extension SKTilemap: TiledSceneCameraDelegate {
         }
 
         for node in nodesAtClickLocation {
-
+            
+            
+            if let tile = node as? SKTile {
+                
+                /// calls back to `MousePointer` & `GameViewController`
+                NotificationCenter.default.post(
+                    name: Notification.Name.Demo.TileUnderCursor,
+                    object: tile
+                )
+                
+                return
+                
+            }
+            
+            
             if let object = node as? SKTileObject {
 
                 /// calls back to `MousePointer` & `GameViewController`
@@ -3750,45 +3761,31 @@ extension SKTilemap: TiledSceneCameraDelegate {
                 return
             }
 
-            if let tile = node as? SKTile {
 
-                /// calls back to `MousePointer` & `GameViewController`
-                NotificationCenter.default.post(
-                    name: Notification.Name.Demo.TileUnderCursor,
-                    object: tile
-                )
-
-                return
-
-            }
         }
         #endif
     }
 
-    /// Filters objects at the given mouse event.
+    /// Filters objects at the given mouse event. Returns an array of nodes.
     ///
     /// - Parameter event: mouse event.
     /// - Returns: array of nodes at the event.
     internal func handleMouseEvent(event: NSEvent) -> [SKNode] {
-        currentCoordinate = coordinateAtMouse(event: event)
 
-        // TODO: test this method
-        //let tilesAtMapCoordinate = tilesAt(coord: currentCoordinate).filter { $0.isHidden == false }
-
-        // TODO: check tiles for coordinate match? this is very inaccurate in isometric & staggered maps
+        // query tiles at the focused coordinate
+        var nodesAtLocation = tilesAt(coord: currentCoordinate).filter { $0.isHidden == false && $0.isFocused == false } as [SKNode]
         
-        // can't filter by `isFocused` until highlight functions are finished
-        // var result = tiledNodes(at: event.location(in: self)).filter { $0.isFocused == false } as! [SKNode]
-        var result = tiledNodes(at: event.location(in: self)) as! [SKNode]
-        
-        let clickedProxies = objectsOverlay.nodes(at: event.location(in: objectsOverlay)).filter { $0 as? TileObjectProxy != nil} as! [TileObjectProxy]
+        // add object proxies
+        let positionInOverlay = event.location(in: objectsOverlay)
+        let clickedProxies = objectsOverlay.nodes(at: positionInOverlay).filter { $0 as? TileObjectProxy != nil && $0.contains(positionInOverlay)} as! [TileObjectProxy]
 
         if let firstProxy = clickedProxies.first {
             if let object = firstProxy.reference {
-                result.insert(object, at: 0)
+                nodesAtLocation.insert(object, at: 0)
             }
         }
-        return result
+        
+        return nodesAtLocation
     }
 
     #endif
@@ -3919,7 +3916,7 @@ extension SKTilemap {
         return "map-icon"
     }
 
-    /// A description of the node.
+    /// A description of the node used in list or outline views.
     @objc public var tiledListDescription: String {
         return "\(tiledNodeNiceName.titleCased()): '\(mapName)'"
     }

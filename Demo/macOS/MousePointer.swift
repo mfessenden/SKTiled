@@ -718,7 +718,7 @@ extension MousePointer: TiledCustomReflectableType {
         return "MousePointer"
     }
     
-    /// A description of the node.
+    /// A description of the node type used for help features.
     @objc public var tiledHelpDescription: String {
         return "A node that tracks mouse movement."
     }

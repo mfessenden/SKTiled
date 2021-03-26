@@ -362,7 +362,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         let scaledverts = getVertices().map { $0 * renderQuality }
         let objpath = polygonPath(scaledverts)
         let shape = SKShapeNode(path: objpath)
-        shape.setAttrs(values: ["tiled-invisible-node": true])
+        shape.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Represents the tile's bounding shape.", "tiled-node-nicename": "Bounds Shape"])
         
         let boundsLineWidth = TiledGlobals.default.renderQuality.object
         shape.lineWidth = boundsLineWidth
@@ -386,6 +386,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         // tile height = 16 -> 1.5
         let anchorRadius: CGFloat = (tileheight / 8) * 0.75
         let shape = SKShapeNode(circleOfRadius: anchorRadius)
+        shape.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Represents the tile's anchor point.", "tiled-node-nicename": "Anchor Shape"])
         shape.strokeColor = SKColor.clear
         shape.fillColor = frameColor
         addChild(shape)
@@ -1118,13 +1119,15 @@ open class SKTile: SKSpriteNode, CustomReflectable {
             //(label: "type", value: type as Any),
             (label: "global id", value: _globalId),
             (label: "tile size", value: tileSize),
+            (label: "coordinate", value: currentCoordinate),
             (label: "renderMode", value: renderMode),
             (label: "alignment", value: alignment),
             (label: "bounds", value: boundingRect),
             (label: "visibleToCamera", value: visibleToCamera),
             (label: "blockNotifications", value: blockNotifications),
             (label: "isUserInteractionEnabled", value: isUserInteractionEnabled),
-            (label: "data", value: tileData)
+            (label: "data", value: tileData),
+            (label: "isFocused", value: isFocused)
         ]
 
         /// COLORS
@@ -1476,6 +1479,12 @@ extension SKTile {
     @objc public override func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
         let highlightFillColor = color.withAlphaComponent(0.2)
         
+        
+        let durationString = (duration > 0) ? " for \(duration) seconds..." : "..."
+        //print("⭑ [\(classNiceName)]: highlighting node\(durationString)")
+        
+        
+        
         boundsShape?.strokeColor = color
         boundsShape?.fillColor = highlightFillColor
         boundsShape?.isHidden = false
@@ -1557,7 +1566,7 @@ extension SKTile {
         return "tile-icon"
     }
 
-    /// A description of the node.
+    /// A description of the node used in list or outline views.
     @objc public override var tiledListDescription: String {
         let tiledataString = "gid \(tileData.globalID)"
         return "Tile: \(tiledataString)"
@@ -1567,7 +1576,8 @@ extension SKTile {
     @objc public override var tiledMenuItemDescription: String {
         let tileGIDString = "gid \(tileData.globalID)"
         let layerNameString = (layer != nil) ? " layer: '\(layer.layerName)'" : ""
-        return "Tile: \(tileGIDString)\(layerNameString)"
+        let tileNameString = (name != nil) ? " '\(name)'" : ""
+        return "Tile: \(tileGIDString)\(layerNameString)\(tileNameString)"
     }
 
     /// A description of the node used for debug output text.
@@ -1577,8 +1587,13 @@ extension SKTile {
         return #"<\#(className)\#(tileGIDString)\#(layerNameString)>"#
     }
 
-    /// A description of the node.
+    /// A description of the node type used for help features.
     @objc public override var tiledHelpDescription: String {
+        return "Represents a single map tile."
+    }
+    
+    /// Returns a string suitable for a UI widget to display as a tooltip.
+    @objc public var tiledTooltipDescription: String {
         return "Represents a single map tile."
     }
 }

@@ -934,7 +934,7 @@ extension SKTileset {
         return "tileset-icon"
     }
 
-    /// A description of the node.
+    /// A description of the node type used for help features.
     @objc public var tiledHelpDescription: String {
         return "\(tiledElementName.titleCased()): "
     }

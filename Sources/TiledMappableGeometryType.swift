@@ -216,8 +216,9 @@ extension TiledMappableGeometryType {
                             result.width += columnWidth
                         }}
                 }
-                
-                return result.floor()
+
+                //return result.floor()
+                return result
         }
     }
     

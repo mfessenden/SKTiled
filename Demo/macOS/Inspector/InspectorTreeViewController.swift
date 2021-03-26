@@ -71,8 +71,6 @@ class InspectorTreeViewController: NSViewController {
         searchField.delegate = self
         
         scrollView.verticalScroller?.layer?.backgroundColor = CGColor.clear
-        //preferredContentSize = NSSize(width: 225, height: 700)
-        //view.setFrameSize(NSSize(width: 225, height: 700))
     }
     
     // MARK: - Setup
@@ -84,21 +82,28 @@ class InspectorTreeViewController: NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(sceneWillUnloadAction), name: Notification.Name.Demo.SceneWillUnload, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(mouseRightClickAction), name: Notification.Name.Camera.MouseRightClicked, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionChanged), name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionCleared), name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshinterface), name: Notification.Name.Demo.RefreshInspectorInterface, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshinterface), name: Notification.Name.Demo.NodeAttributesChanged, object: nil)
     }
     
     deinit {
+        outlineView.dataSource = nil
+        outlineView.delegate = nil
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.SceneLoaded, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.SceneWillUnload, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Camera.MouseRightClicked, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.RefreshInspectorInterface, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeAttributesChanged, object: nil)
     }
     
     /// Reset the interface.
     func resetInterface() {
         rootNode = nil
-        demoDelegate.reset()
+        
+        // reset
+        //demoDelegate.reset()
         
         // set the current root node
         if let currentView = demoController.view  {
@@ -114,7 +119,10 @@ class InspectorTreeViewController: NSViewController {
     
     /// Handle the currently selected nodes.
     func handleNodeSelection() {
-        
+        NotificationCenter.default.post(
+            name: Notification.Name.Demo.RefreshInspectorInterface,
+            object: nil
+        )
     }
     
     // MARK:- Notification Handlers
@@ -124,13 +132,16 @@ class InspectorTreeViewController: NSViewController {
     ///
     /// - Parameter notification: event notification.
     @objc func refreshinterface(notification: Notification) {
-        print("⭑ [\(classNiceName)]: refreshing Inspector UI...")
-        outlineView.reloadData()
+        //outlineView.reloadData()
+        let selectedItems = outlineView.allSelectedItems
+        for item in selectedItems {
+            outlineView.reloadItem(item, reloadChildren: true)
+        }
     }
     
-    /// Called when the `Notification.Name.Demo.NodeSelectionChanged` notification is sent.
+    /// Called when the `Notification.Name.Demo.NodeSelectionChanged` notification is sent. This happens when a node is selected in the current view via clicking (or right-clicking). Also called when something is selected in the Inspector outline view.
     ///
-    ///  - expects a userInfo of `["nodes": [SKNode]]`
+    ///  payload:  `userInfo: ["nodes": [SKNode], "focusLocation": CGPoint]`
     ///
     /// - Parameter notification: event notification.
     @objc func nodeSelectionChanged(notification: Notification) {
@@ -144,7 +155,9 @@ class InspectorTreeViewController: NSViewController {
         
         //outlineView.deselectAll(nil)
         for node in selectedNodes {
+            
             if let tiledNode = node as? TiledGeometryType {
+                
                 // expand parent items
                 let nodeParents: [SKNode] = Array(node.allParents().reversed())
                 for parent in nodeParents {
@@ -159,7 +172,8 @@ class InspectorTreeViewController: NSViewController {
                     }
                 }
                 
-                outlineView.selectItem(item: node)
+                // changed `byExtendingSelection` to `false` to stop auto-expansion
+                outlineView.selectItem(item: node, byExtendingSelection: false)
                 if (firstRow == nil) {
                     firstRow = outlineView.row(forItem: node)
                 }
@@ -171,8 +185,16 @@ class InspectorTreeViewController: NSViewController {
         }
     }
     
+    /// Called when the `Notification.Name.Demo.NodeSelectionCleared` notification is sent. This is called when the view is clicked in an empty area.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func nodeSelectionCleared(notification: Notification) {
+        notification.dump(#fileID, function: #function)
+        outlineView.deselectAll(nil)
+    }
+
     
-    /// Called when the `Refresh` button is pressed in the list interface.
+    /// Called when the `Refresh` button is pressed in the outline view.
     ///
     /// - Parameter sender: invoking UI element.
     @IBAction func refreshNodeTreeButtonPressed(_ sender: Any) {
@@ -182,8 +204,9 @@ class InspectorTreeViewController: NSViewController {
         
         let selectedRows = outlineView.selectedRowIndexes
         let selectedColumns = outlineView.selectedColumnIndexes
-        //outlineView.reloadData(forRowIndexes: selectedRows, columnIndexes: selectedColumns)
-        outlineView.reloadData()
+        
+        outlineView.reloadData(forRowIndexes: selectedRows, columnIndexes: selectedColumns)
+        //outlineView.reloadData()
     }
     
     /// Called when the scene is flushed via the demo controller.
@@ -245,14 +268,12 @@ extension InspectorTreeViewController: NSOutlineViewDelegate {
             
             let isHiddenNode = node.isHidden
             let nodeTextColorName = (isHiddenNode == true) ? "outlineViewHidden" : "outlineViewDefault"
-            let nodeTextColor = NSColor(named: NSColor.Name(nodeTextColorName))
+            let nodeTextColor = NSColor(named: NSColor.Name(nodeTextColorName)) ?? NSColor.white
             
             let outlineViewAttributes: [NSAttributedString.Key : Any] = [
                 //NSAttributedString.Key.font: textAttributes.font,
                 NSAttributedString.Key.foregroundColor: nodeTextColor
-                
             ]
-            
             
             // [NSAttributedString.Key : Any]?
             let attributedString = NSMutableAttributedString(string: textValue, attributes: outlineViewAttributes)
@@ -263,14 +284,13 @@ extension InspectorTreeViewController: NSOutlineViewDelegate {
         return cell
     }
     
+    /// Called when the `NSOutlineViewSelectionDidChangeNotification` notification is sent.
+    ///
+    ///  payload: `object: NSOutlineView`
+    ///
+    /// - Parameter notification: event notificaation.
     func outlineViewSelectionDidChange(_ notification: Notification) {
-        /*
-         for node in demoDelegate.focusedNodes {
-            node.highlightNode(with: SKColor.clear)
-        }
-        */
-        
-        
+
         demoDelegate.focusedNodes.unfocusAll()
         demoDelegate.focusedNodes.removeAll()
         
@@ -292,21 +312,14 @@ extension InspectorTreeViewController: NSOutlineViewDelegate {
             
             if let skNode = outlineView.item(atRow: row) as? SKNode {
                 demoDelegate.focusedNodes.insert(skNode, at: 0)
-                //print(skNode.getAttrs())
+
                 if let tiledNode = skNode as? TiledCustomReflectableType {
                     if let tiledElementName = tiledNode.tiledElementName {
                         nodeTypes.insert(tiledElementName)
                     }
-                    
-                    //tiledNode.outputProtocols()
                 }
             }
         }
-        
-        if (nodeTypes.isEmpty == false) {
-            //print("⭑ [InspectorTreeViewController]: selected types: \(nodeTypes.map{ "\"\($0)\"" }.joined(separator: ","))")
-        }
-        
         
         let isSingleSelection = demoDelegate.focusedNodes.count == 1
         let currentNodesArray = Array(demoDelegate.focusedNodes)
@@ -386,25 +399,12 @@ extension InspectorTreeViewController: NSSearchFieldDelegate {
         return false
     }
     
-    
-    func controlTextDidChange(_ obj: Notification) {
+    func controlTextDidEndEditing(_ obj: Notification) {
         guard let textField = obj.object as? NSTextField,
               let textIdentifier = textField.identifier else {
             return
         }
-        
-        let stringIdentifier = textIdentifier.rawValue
-    }
-    
-    
-    func controlTextDidEndEditing(_ obj: Notification) {
-        guard let textField = obj.object as? NSTextField,
-              let textIdentifier = textField.identifier else {
-            fatalError("uh oh, bad textfield")
-        }
-        
-        
-        
+
         let stringIdentifier = textIdentifier.rawValue
         
         let textFieldValue = textField.stringValue
@@ -413,15 +413,13 @@ extension InspectorTreeViewController: NSSearchFieldDelegate {
         let textFieldDescription = (hasFormatter == true) ? "numeric text field" : "text field"
         
         if (demoDelegate.focusedNodes.isEmpty) {
-            print("⭑ WARNING: nothing selected!")
             return
         }
         
-        print("⭑ \(textFieldDescription) '\(stringIdentifier)', value: '\(textFieldValue)', formatter: \(hasFormatter)")
+        // print("⭑ \(textFieldDescription) '\(stringIdentifier)', value: '\(textFieldValue)', formatter: \(hasFormatter)")
         
         if (stringIdentifier == "NodeNameField") {
             let newNodeName = textFieldValue
-            print("⭑ setting name: \(newNodeName)")
             for node in demoDelegate.focusedNodes {
                 node.name = newNodeName
             }
@@ -435,7 +433,6 @@ extension InspectorTreeViewController: NSSearchFieldDelegate {
         
         if (stringIdentifier == "XPosition") {
             if let positionValue = Float(textFieldValue) {
-                print("⭑ setting x-position: \(positionValue)")
                 for node in demoDelegate.focusedNodes {
                     node.position.x = CGFloat(positionValue)
                 }
@@ -444,7 +441,6 @@ extension InspectorTreeViewController: NSSearchFieldDelegate {
         
         if (stringIdentifier == "YPosition") {
             if let positionValue = Float(textFieldValue) {
-                print("⭑ setting y-position: \(positionValue)")
                 for node in demoDelegate.focusedNodes {
                     node.position.y = CGFloat(positionValue)
                 }
@@ -454,12 +450,9 @@ extension InspectorTreeViewController: NSSearchFieldDelegate {
         
         if (stringIdentifier == "ZPosition") {
             if let positionValue = Float(textFieldValue) {
-                print("⭑ setting z-position: \(positionValue)")
                 for node in demoDelegate.focusedNodes {
                     node.zPosition = CGFloat(positionValue)
                 }
-            } else {
-                print("⭑ ERROR: invalid zPosition '\(textFieldValue)'")
             }
         }
         

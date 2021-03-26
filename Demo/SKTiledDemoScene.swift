@@ -183,7 +183,7 @@ public class SKTiledDemoScene: SKTiledScene {
 
     /// Called when the `Notification.Name.Demo.NodeSelectionChanged` notification is received.
     ///
-    ///  - expects a userInfo of `["nodes": [`SKNode`]]`
+    ///  payload:  `userInfo: ["nodes": [SKNode], "focusLocation": CGPoint]`
     ///
     /// - Parameter notification: event notification.
     @objc func nodeSelectionChanged(notification: Notification) {
@@ -732,7 +732,9 @@ extension SKTiledDemoScene {
         }
 
         eventChars = event.modifierString + eventChars
-        log("key pressed '\(eventChars)'", level: .debug)
+        let eventKeyCode = event.modifierFlags.rawValue + UInt(event.keyCode)
+        
+        log("key pressed '\(eventChars)' -> '\(eventKeyCode)'", level: .debug)
 
         // MARK: - Camera Commands
 
@@ -972,6 +974,12 @@ extension SKTiledDemoScene {
 
             NotificationCenter.default.post(
                 name: Notification.Name.Demo.NodeSelectionCleared,
+                object: nil
+            )
+            
+            
+            NotificationCenter.default.post(
+                name: Notification.Name.Demo.NodeHighlightingCleared,
                 object: nil
             )
 

@@ -79,7 +79,6 @@ class InspectorDetailViewController: NSViewController {
     ///
     /// - Parameter notification: event notification.
     @objc func applicationWillResignActive(notification: Notification) {
-        print("⭑ resetting interface...")
         resetInterface()
     }
     

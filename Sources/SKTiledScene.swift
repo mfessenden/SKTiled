@@ -505,3 +505,47 @@ extension SKTiledScene {
         return description
     }
 }
+
+
+
+/// :nodoc: TiledCustomReflectableType
+extension SKTiledScene {
+    
+    /// Returns the internal node type for use with the Inspector.
+    @objc public override var tiledNodeType: String {
+        return "scene"
+    }
+    
+    /// Returns a "nicer" node name, for usage in the inspector.
+    @objc public override var tiledNodeNiceName: String {
+        return "Tiled Scene"
+    }
+    
+    /// Returns the internal **Tiled** node type icon.
+    @objc public override var tiledIconName: String {
+        return "scene-icon"
+    }
+    
+    /// A description of the node used in list or outline views.
+    @objc public override var tiledListDescription: String {
+        let nameString = (name != nil) ? ": '\(name!)'" : ""
+        return "\(tiledNodeNiceName)\(nameString)"
+    }
+    
+    /// A description of the node used in dropdown & popu menus.
+    @objc public override var tiledMenuItemDescription: String {
+        let nameString = (name != nil) ? ": '\(name!)'" : ""
+        return "\(tiledNodeNiceName)\(nameString)"
+    }
+    
+    /// A description of the node used for debug output text.
+    @objc public override var tiledDisplayItemDescription: String {
+        let nameString = (name != nil) ? ": '\(name!)'" : ""
+        return #"<\#(className)\#(nameString)>"#
+    }
+    
+    /// A description of the node type used for help features.
+    @objc public override var tiledHelpDescription: String {
+        return "Custom Tiled SpriteKit scene node."
+    }
+}

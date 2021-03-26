@@ -91,14 +91,16 @@ import SpriteKit
 /// :nodoc:
 extension TiledGeometryType {
     
-    
     /// Generic highlight method.
     ///
     /// - Parameters:
     ///   - color: highlight color.
     ///   - duration: highlight duration.
     public func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
-        print("⭑ [TiledGeometryType]: highlighing node...")
+
+        let durationString = (duration > 0) ? " for \(duration) seconds..." : "..."
+        //print("⭑ [TiledGeometryType]: highlighting node\(durationString)")
+        
         boundsShape?.isHidden = false
         boundsShape?.strokeColor = color
         boundsShape?.fillColor = color.withAlphaComponent(0.2)
@@ -106,6 +108,7 @@ extension TiledGeometryType {
         anchorShape.isHidden = false
         anchorShape.fillColor = color
     }
+
     
     /// Generic highlight removal.
     public func removeHighlight() {
@@ -128,22 +131,22 @@ extension TiledGeometryType {
     
     /// Unique identifier used to access bounding box shape nodes.
     internal var boundsKey: String {
-        return "\(uuid)_BOUNDS"
+        return "\(hashValue)_BOUNDS"
     }
     
     /// Unique identifier used to access animation actions.
     internal var animationKey: String {
-        return "\(uuid)_ANIMATION"
+        return "\(hashValue)_ANIMATION"
     }
     
     /// Unique identifier used to access anchor point shape nodes.
     internal var anchorKey: String {
-        return "\(uuid)_ANCHOR"
+        return "\(hashValue)_ANCHOR"
     }
     
     /// Unique identifier used to access anchor point shape nodes.
     internal var firstPointKey: String {
-        return "\(uuid)_FIRST_POINT"
+        return "\(hashValue)_FIRST_POINT"
     }
 }
 
@@ -192,7 +195,7 @@ extension TiledGeometryType where Self: SKNode {
 /// :nodoc:
 extension SKNode {
     
-    /// Returns true if an event (mouse or touch) contacts this node.
+    /// Returns true if an event (mouse or touch) intersects this node.
     ///
     /// - Parameter touch: event point in this node's coordinate space.
     /// - Returns: node shape was intersected.
@@ -297,12 +300,12 @@ extension SKNode {
     ///   - color: highlight color.
     ///   - duration: duration of highlight effect.
     @objc public func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
-        print("⭑ [SKNode]: highlighing node...")
+        let durationString = (duration > 0) ? " for \(duration) seconds..." : "..."
+        print("⭑ [SKNode]: highlighting node\(durationString)")
         
         /// remove the current frame, if it exists
         let frameName = "\(hash)_HIGHLIGHT"
         childNode(withName: frameName)?.removeFromParent()
-        
         
         /// highlight sprite types by setting colorblendfactor
         
@@ -318,6 +321,7 @@ extension SKNode {
         boundingBox.path = boundingBox.path?.copy(dashingWithPhase: 0, lengths: [10,10])
         addChild(boundingBox)
     }
+
     
     /// Remove the current object's highlight color.
     @objc public func removeHighlight() {

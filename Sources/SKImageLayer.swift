@@ -177,7 +177,7 @@ public class SKImageLayer: TiledLayerObject {
         return "imagelayer-icon"
     }
 
-    /// A description of the node.
+    /// A description of the node type used for help features.
     @objc public override var tiledHelpDescription: String {
         return "Tiled image layer type."
     }

@@ -35,12 +35,7 @@ class InspectorMainWindowController: NSWindowController, NSWindowDelegate {
         setupNotifications()
         resetInterface()
         
-        /// set the preferred size
-        if let window = window {
-            let windowSize = window.frame.size
-            //window.setFra
-            window.setFrame(NSRect(x: windowSize.halfWidth, y: windowSize.halfWidth, width: 770, height: 720), display: true, animate: true)
-        }
+        self.window?.level = NSWindow.Level.normal // (rawValue: NSWindow.Level.normal.rawValue - 1)
     }
     
     override var acceptsFirstResponder: Bool {
@@ -107,7 +102,6 @@ extension InspectorMainWindowController {
         let eventKey = event.keyCode
         
         guard let keysPressed = event.characters else {
-            print("⭑ [\(classNiceName)]: ERROR: unknown key pressed.")
             return
         }
         
@@ -149,17 +143,12 @@ extension InspectorMainWindowController {
             )
             return
         }
-        
-        
-        print("key code \(eventKey)")
-        
     }
 }
 
 
 
 extension InspectorMainWindowController {
-    
     
     /// Select an index from the scene graph view.
     ///

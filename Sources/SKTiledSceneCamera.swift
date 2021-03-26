@@ -868,7 +868,7 @@ extension SKTiledSceneCamera: TiledCustomReflectableType {
         return "camera-icon"
     }
     
-    /// A description of the node.
+    /// A description of the node used in list or outline views.
     @objc public var tiledListDescription: String {
         let nameString = (name != nil) ? ": '\(name!)'" : ""
         let delegateString = "( \(delegates.count) delegates )"

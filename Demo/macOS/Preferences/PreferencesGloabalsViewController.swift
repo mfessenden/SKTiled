@@ -110,8 +110,7 @@ class PreferencesGloabalsViewController: NSViewController {
         textFields["glb-renderqualityoverride-field"]?.stringValue = String(format: "%.2f", TiledGlobals.default.renderQuality.override)
         textFields["glb-linewidth-field"]?.stringValue = String(format: "%.2f", TiledGlobals.default.debugDisplayOptions.lineWidth)
         textFields["glb-mousepointerfontsize-field"]?.stringValue = String(format: "%.2f", TiledGlobals.default.debugDisplayOptions.mousePointerSize)
-        
-        print("⭑ mouse event delta: \(TiledGlobals.default.mouseEventDelta.stringRoundedTo(4))")
+
         textFields["glb-mouseeventdelta-field"]?.stringValue = String(format: "%.4f", TiledGlobals.default.mouseEventDelta)
 
         checkBoxes["gbl-rendercb-check"]?.state = (TiledGlobals.default.enableRenderPerformanceCallbacks == true) ? .on : .off
@@ -174,10 +173,6 @@ class PreferencesGloabalsViewController: NSViewController {
         if let buttonId = sender.identifier {
             let textIdentifier = buttonId.rawValue
             let buttonVal = sender.state == .on
-
-            #if DEBUG
-            print("⭑ [Preferences]: button changed: '\(textIdentifier)', value: \(buttonVal)")
-            #endif
 
             if (textIdentifier == "gbl-showobjects-check") {
                 if (buttonVal == true) {
@@ -446,7 +441,7 @@ extension PreferencesGloabalsViewController: NSTextFieldDelegate {
         let textFieldDescription = (hasFormatter == true) ? "number field" : "text field"
 
         #if DEBUG
-        print("⭑ [PreferencesGloabalsViewController]: \(textFieldDescription) '\(textIdentifier)', value: '\(textFieldValue)'")
+        // print("⭑ [\(classNiceName)]: \(textFieldDescription) '\(textIdentifier)', value: '\(textFieldValue)'")
         #endif
 
         if (textIdentifier == "glb-renderquality-field") {
@@ -522,7 +517,6 @@ extension PreferencesGloabalsViewController: NSTextFieldDelegate {
         }
         
         if (textIdentifier == "glb-mouseeventdelta-field") {
-            print("⭑ mouse event delta: \(textFieldValue)")
             if let doubleValue = TimeInterval(textFieldValue) {
                 TiledGlobals.default.mouseEventDelta = doubleValue
                 
