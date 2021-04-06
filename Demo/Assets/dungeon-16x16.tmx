@@ -2,7 +2,6 @@
 <map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="22" height="21" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#211e26" nextlayerid="27" nextobjectid="162">
  <properties>
   <property name="description" value="Artwork by @Buch -&gt;  http://opengameart.org/content/dungeon-tileset"/>
-  <property name="displayName" value="dungeon-16x16"/>
   <property name="frameColor" type="color" value="#ff63a4b2"/>
   <property name="gridColor" type="color" value="#ff80d1e2"/>
   <property name="stackColor" type="color" value="#663a3a3a"/>
@@ -117,9 +116,8 @@
  <objectgroup id="24" name="Debugging">
   <object id="161" x="16" y="16" width="64" height="80">
    <properties>
-    <property name="altColor" type="color" value="#ff8df360"/>
     <property name="class" value="circular"/>
-    <property name="radius" type="float" value="2.2"/>
+    <property name="color" type="color" value="#ff8df360"/>
    </properties>
    <ellipse/>
   </object>

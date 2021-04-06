@@ -85,10 +85,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var developmentMainMenu: NSMenuItem!
     @IBOutlet weak var renderStatisticsMenuItem: NSMenuItem!
     @IBOutlet weak var tilemapStatisticsMenuItem: NSMenuItem!
+    @IBOutlet weak var infiniteOffsetMenuItem: NSMenuItem!
     @IBOutlet weak var layerStatisticsMenuItem: NSMenuItem!
     @IBOutlet weak var tilemapCachesStatisticsMenuItem: NSMenuItem!
     @IBOutlet weak var tilemapOffsetStatisticsMenuItem: NSMenuItem!
     
+    @IBOutlet weak var sendNotificationMenuItem: NSMenuItem!
+    @IBOutlet weak var sendNotificationSubmenu: NSMenu!
 
     @IBOutlet weak var showDemoAssetsMenuItem: NSMenuItem!
     @IBOutlet weak var rescanForAssetsMenuItem: NSMenuItem!
@@ -117,7 +120,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard let windowController = windowController,
               let view = view,
               let scene = view.scene else {
-            Logger.default.log("cannot access window controller.", level: .warning, symbol: "AppDelegate")
+            Logger.default.log("cannot access window controller.", level: .warning, symbol: classNiceName)
             return
         }
         
@@ -131,10 +134,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard let windowController = windowController,
               let view = view,
               let scene = view.scene else {
-            Logger.default.log("cannot access window controller.", level: .warning, symbol: "AppDelegate")
+            Logger.default.log("cannot access window controller.", level: .warning, symbol: classNiceName)
             return
         }
         
+
         // if the user paused the scene before moving it to the background, use that state
         let sceneWasPaused = windowController.isManuallyPaused
         scene.isPaused = sceneWasPaused
@@ -155,7 +159,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return false
         }
 
-        Logger.default.log("opening file: '\(filename)'", level: .info, symbol: "AppDelegate")
+        Logger.default.log("opening file: '\(filename)'", level: .info, symbol: classNiceName)
         let demoController = controller.demoController
         demoController.loadScene(url: URL(fileURLWithPath: filename), usePreviousCamera: false)
         return true
@@ -180,7 +184,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - Interface & Setup
 
-
+    
+    /// Setup application notification handlers.
     func setupNotifications() {
         // demo notifications
         NotificationCenter.default.addObserver(self, selector: #selector(launchApplicationPreferences), name: Notification.Name.Demo.LaunchPreferences, object: nil)
@@ -202,8 +207,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(initializeInterfaceForTilemap), name: Notification.Name.Map.TileIsolationModeChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(renderStatisticsVisibilityChanged), name: Notification.Name.RenderStats.VisibilityChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sceneCameraUpdated), name: Notification.Name.Camera.Updated, object: nil)
-
-  
     }
 
     /// This is a once-only function that runs when the app launches.
@@ -219,8 +222,254 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         #if DEVELOPMENT_MODE
         inspectorEnabled = true
         #endif
+        
         showInspectorMenuItem.isEnabled = inspectorEnabled
         showInspectorMenuItem.isHidden = !inspectorEnabled
+        setupNotificationsMenu()
+    }
+    
+    
+    /// Initialize the `Development -> Send Notification...` menu.
+    func setupNotificationsMenu() {
+        sendNotificationSubmenu.removeAllItems()
+        /*
+        DemoController.AssetSearchPathsAdded       - needs userInfo with 'urls'
+        DemoController.AssetSearchPathsRemoved     - needs userInfo with 'urls'
+        Demo.NodeAttributesChanged                 - needs userInfo of [String: [SKNode]]
+        Demo.NodeSelectionChanged                  - needs userInfo of ["nodes": [SKNode]]
+        Map.FocusCoordinateChanged                 - needs userInfo of ["old": simd_int2, "new": simd_int2, "isValid": Bool]
+        DemoController.CurrentMapSet               - needs userInfo of ["url": URL]
+        DemoController.DemoStatusUpdated           - needs userInfo of ["status": String, "isHidden": Bool]
+        Debug.DebuggingMessageSent                 - needs userInfo of ["message": String]
+        Demo.SceneWillUnload                       - needs userInfo of ["url": URL]
+        
+        
+        */
+        
+        
+        
+        let notifications = ["Debug.DumpAttributeEditor", "Debug.DumpAttributeStorage", "Debug.MapDebugDrawingChanged", "Debug.MapEffectsRenderingChanged", "Debug.MapObjectVisibilityChanged", "Debug.RepositionLayers", "Demo.DumpSelectedNodes", "Demo.FlushScene", "Demo.HighlightSelectedNodes", "Demo.NodeAttributesChanged", "Demo.NodeHighlightingCleared", "Demo.NodeSelectionChanged", "Demo.NodeSelectionCleared", "Demo.NodesAboutToBeSelected", "Demo.NothingUnderCursor", "Demo.RefreshInspectorInterface", "Demo.SceneWillUnload", "Demo.UpdateDebugging", "DemoController.AssetSearchPathsAdded", "DemoController.AssetSearchPathsRemoved", "DemoController.CurrentMapRemoved", "DemoController.CurrentMapSet", "DemoController.DemoStatusUpdated", "DemoController.LoadNextScene", "DemoController.LoadPreviousScene", "Globals.SavedToUserDefaults", "Globals.Updated", "Map.Updated"]
+        
+        
+        
+        for item in notifications {
+            let menuItem = NSMenuItem(title: item, action: #selector(handleNotificationRequest), keyEquivalent: "")
+            menuItem.setAccessibilityIdentifier("\(item)")
+            sendNotificationSubmenu.addItem(menuItem)
+        }
+    }
+    
+    /// Fire the appropriate notification.
+    ///
+    /// - Parameter sender: Menu item.
+    @IBAction func handleNotificationRequest(_ sender: NSMenuItem) {
+        let identifier = sender.accessibilityIdentifier()
+        
+        
+        switch identifier {
+            case "Debug.DumpAttributeEditor":
+                NotificationCenter.default.post(
+                    name: Notification.Name.Debug.DumpAttributeEditor,
+                    object: nil
+                )
+                
+                
+            case "Debug.DumpAttributeStorage":
+                if inspectorController == nil {
+                    Logger.default.log("cannot access attribute storage.", level: .warning, symbol: classNiceName)
+                    return
+                }
+                
+                NotificationCenter.default.post(
+                    name: Notification.Name.Debug.DumpAttributeStorage,
+                    object: nil
+                )
+                
+                
+            case "Debug.MapDebugDrawingChanged":
+                NotificationCenter.default.post(
+                    name: Notification.Name.Debug.MapDebugDrawingChanged,
+                    object: nil
+                )
+                
+                
+            case "Debug.MapEffectsRenderingChanged":
+                NotificationCenter.default.post(
+                    name: Notification.Name.Debug.MapEffectsRenderingChanged,
+                    object: nil
+                )
+                
+                
+            case "Debug.MapObjectVisibilityChanged":
+                NotificationCenter.default.post(
+                    name: Notification.Name.Debug.MapObjectVisibilityChanged,
+                    object: nil
+                )
+                
+                
+            case "Debug.RepositionLayers":
+                NotificationCenter.default.post(
+                    name: Notification.Name.Debug.RepositionLayers,
+                    object: nil
+                )
+                
+                
+            case "Demo.DumpSelectedNodes":
+                NotificationCenter.default.post(
+                    name: Notification.Name.Demo.DumpSelectedNodes,
+                    object: nil
+                )
+                
+                
+            case "Demo.FlushScene":
+                NotificationCenter.default.post(
+                    name: Notification.Name.Demo.FlushScene,
+                    object: nil
+                )
+                
+                
+            case "Demo.HighlightSelectedNodes":
+                NotificationCenter.default.post(
+                    name: Notification.Name.Demo.HighlightSelectedNodes,
+                    object: nil
+                )
+                
+                
+            case "Demo.NodeAttributesChanged":
+                NotificationCenter.default.post(
+                    name: Notification.Name.Demo.NodeAttributesChanged,
+                    object: nil
+                )
+                
+                
+            case "Demo.NodeHighlightingCleared":
+                NotificationCenter.default.post(
+                    name: Notification.Name.Demo.NodeHighlightingCleared,
+                    object: nil
+                )
+                
+                
+            case "Demo.NodeSelectionChanged":
+                NotificationCenter.default.post(
+                    name: Notification.Name.Demo.NodeSelectionChanged,
+                    object: nil
+                )
+                
+                
+            case "Demo.NodeSelectionCleared":
+                NotificationCenter.default.post(
+                    name: Notification.Name.Demo.NodeSelectionCleared,
+                    object: nil
+                )
+                
+                
+            case "Demo.NodesAboutToBeSelected":
+                NotificationCenter.default.post(
+                    name: Notification.Name.Demo.NodesAboutToBeSelected,
+                    object: nil
+                )
+                
+                
+            case "Demo.NothingUnderCursor":
+                NotificationCenter.default.post(
+                    name: Notification.Name.Demo.NothingUnderCursor,
+                    object: nil
+                )
+                
+                
+            case "Demo.RefreshInspectorInterface":
+                NotificationCenter.default.post(
+                    name: Notification.Name.Demo.RefreshInspectorInterface,
+                    object: nil
+                )
+                
+                
+            case "Demo.SceneWillUnload":
+                NotificationCenter.default.post(
+                    name: Notification.Name.Demo.SceneWillUnload,
+                    object: nil
+                )
+                
+                
+            case "Demo.UpdateDebugging":
+                NotificationCenter.default.post(
+                    name: Notification.Name.Demo.UpdateDebugging,
+                    object: nil
+                )
+                
+                
+            case "DemoController.AssetSearchPathsAdded":
+                NotificationCenter.default.post(
+                    name: Notification.Name.DemoController.AssetSearchPathsAdded,
+                    object: nil
+                )
+                
+                
+            case "DemoController.AssetSearchPathsRemoved":
+                NotificationCenter.default.post(
+                    name: Notification.Name.DemoController.AssetSearchPathsRemoved,
+                    object: nil
+                )
+                
+                
+            case "DemoController.CurrentMapRemoved":
+                NotificationCenter.default.post(
+                    name: Notification.Name.DemoController.CurrentMapRemoved,
+                    object: nil
+                )
+                
+                
+            case "DemoController.CurrentMapSet":
+                NotificationCenter.default.post(
+                    name: Notification.Name.DemoController.CurrentMapSet,
+                    object: nil
+                )
+                
+                
+            case "DemoController.DemoStatusUpdated":
+                NotificationCenter.default.post(
+                    name: Notification.Name.DemoController.DemoStatusUpdated,
+                    object: nil
+                )
+                
+                
+            case "DemoController.LoadNextScene":
+                NotificationCenter.default.post(
+                    name: Notification.Name.DemoController.LoadNextScene,
+                    object: nil
+                )
+                
+                
+            case "DemoController.LoadPreviousScene":
+                NotificationCenter.default.post(
+                    name: Notification.Name.DemoController.LoadPreviousScene,
+                    object: nil
+                )
+                
+                
+            case "Globals.SavedToUserDefaults":
+                NotificationCenter.default.post(
+                    name: Notification.Name.Globals.SavedToUserDefaults,
+                    object: nil
+                )
+                
+                
+            case "Globals.Updated":
+                NotificationCenter.default.post(
+                    name: Notification.Name.Globals.Updated,
+                    object: nil
+                )
+                
+                
+            case "Map.Updated":
+                NotificationCenter.default.post(
+                    name: Notification.Name.Map.Updated,
+                    object: nil
+                )
+                
+            default:
+                Logger.default.log("invalid identifier '\(identifier)'", level: .error, symbol: classNiceName)
+        }
     }
 
     /// Reset the interace. Called when the `Notification.Name.DemoController.ResetDemoInterface` notification is received.
@@ -292,10 +541,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc func initializeInterfaceForTilemap(notification: Notification) {
         //notification.dump(#fileID, function: #function)
         guard let tilemap = notification.object as? SKTilemap else {
-            Logger.default.log("tilemap not accessible.", level: .error, symbol: "AppDelegate")
+            Logger.default.log("tilemap not accessible.", level: .error, symbol: classNiceName)
             return
         }
-
+        
+        
+        // indicates the map loaded is infinite in variety
+        let tilemapIsInfinite = tilemap.isInfinite
+        infiniteOffsetMenuItem.isEnabled = tilemapIsInfinite
+        
+        
         debugMainMenu.isEnabled = true
         reloadMapMenuitem.isEnabled = true
 
@@ -330,7 +585,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let wintitle = TiledGlobals.default.windowTitle
         window.title = "\(wintitle): \(tilemap.url.filename)"
-        Logger.default.log("tilemap rendered: \(tilemap.description)", level: .debug, symbol: "AppDelegate")
+        Logger.default.log("tilemap rendered: \(tilemap.description)", level: .debug, symbol: classNiceName)
     }
 
     // MARK: - Notification Callbacks
@@ -363,7 +618,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard let tilemap = notification.object as? SKTilemap else {
             return
         }
-        Logger.default.log("tilemap update mode changed: \(tilemap.updateMode.description)", level: .info, symbol: "AppDelegate")
+        Logger.default.log("tilemap update mode changed: \(tilemap.updateMode.description)", level: .info, symbol: classNiceName)
     }
 
     /// Called when the current scene has been cleared. Called when the `Notification.Name.Demo.SceneWillUnload` event fires.
@@ -414,10 +669,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ///
     /// - Parameter sender: Menu item.
     @IBAction func launchApplicationPreferences(_ sender: Any) {
-        Logger.default.log("launching application preferences...", level: .info, symbol: "AppDelegate")
-        //let prefsWindowController = PreferencesWindowController.newPreferencesWindow()
-        //prefsWindowController.showWindow(sender)
-
+        Logger.default.log("launching application preferences...", level: .info, symbol: classNiceName)
         if (preferencesController == nil) {
             let storyboard = NSStoryboard(name: NSStoryboard.Name("Preferences"), bundle: nil)
             let identifier = NSStoryboard.SceneIdentifier("PreferencesWindowController")
@@ -530,7 +782,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard let demoController = demoController,
               let currentMap = demoController.currentTilemap,
               let currentMapUrl = currentMap.relativeUrl else {
-            Logger.default.log("no current map loaded.", level: .warning, symbol: "AppDelegate")
+            Logger.default.log("no current map loaded.", level: .warning, symbol: classNiceName)
             return
         }
         NSWorkspace.shared.openFile(currentMapUrl.path)
@@ -574,7 +826,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let newColor = SKColor(hexString: colorString)
         TiledGlobals.default.debugDisplayOptions.tileHighlightColor = newColor
-        Logger.default.log("setting new tile highlight color: \(colorString)", level: .info, symbol: "AppDelegate")
+        Logger.default.log("setting new tile highlight color: \(colorString)", level: .info, symbol: classNiceName)
 
         // TODO: SpriteKit Inspector
         NotificationCenter.default.post(
@@ -594,7 +846,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let newColor = SKColor(hexString: colorString)
         TiledGlobals.default.debugDisplayOptions.objectHighlightColor = newColor
-        Logger.default.log("setting new object highlight color: \(colorString)", level: .info, symbol: "AppDelegate")
+        Logger.default.log("setting new object highlight color: \(colorString)", level: .info, symbol: classNiceName)
 
         // NYI: This is for the Inspector
         NotificationCenter.default.post(
@@ -614,7 +866,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let newColor = SKColor(hexString: colorString)
         TiledGlobals.default.debugDisplayOptions.layerHighlightColor = newColor
-        Logger.default.log("setting new layer highlight color: \(colorString)", level: .info, symbol: "AppDelegate")
+        Logger.default.log("setting new layer highlight color: \(colorString)", level: .info, symbol: classNiceName)
         
         // NYI: This is for the Inspector
         NotificationCenter.default.post(
@@ -655,7 +907,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 return
             }
 
-            Logger.default.log("zoom clamping: \(newZoomClampingMode)", level: .info, symbol: "AppDelegate")
+            Logger.default.log("zoom clamping: \(newZoomClampingMode)", level: .info, symbol: classNiceName)
             scene.cameraNode?.zoomClamping = newZoomClampingMode
         }
     }
@@ -692,7 +944,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         cameraNode.ignoreZoomConstraints = !useCameraZoomConstraints
         let zoomOutputString = (cameraNode.ignoreZoomConstraints == true) ? "unlocking camera zoom" : "locking camera zoom"
 
-        Logger.default.log(zoomOutputString, level: .info, symbol: "AppDelegate")
+        Logger.default.log(zoomOutputString, level: .info, symbol: classNiceName)
         self.initializeSceneCameraMenu(camera: cameraNode)
 
         // update the demo controller global
@@ -706,7 +958,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let preferences = gameController.demoController.defaultPreferences
         preferences.usePreviousCamera = (currentState == .off) ? true : false
-        Logger.default.log("setting use previous camera: \(preferences.usePreviousCamera)", level: .info, symbol: "AppDelegate")
+        Logger.default.log("setting use previous camera: \(preferences.usePreviousCamera)", level: .info, symbol: classNiceName)
         gameController.demoController.updateCommandString("setting use previous camera: \(preferences.usePreviousCamera)")
         sender.state = (currentState == .off) ? .on : .off
 
@@ -850,7 +1102,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard let identifier = sender.accessibilityTitle(),
               let filePath = sender.accessibilityValue() as? String,
               let identifierIntValue = Int(identifier) else {
-            Logger.default.log("invalid identifier: \(sender.accessibilityIdentifier())", level: .error, symbol: "AppDelegate")
+            Logger.default.log("invalid identifier: \(sender.accessibilityIdentifier())", level: .error, symbol: classNiceName)
             return
         }
 
@@ -866,26 +1118,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let selectedURL = demoURLs[identifierIntValue]
         controller.demoController.loadScene(url: selectedURL, usePreviousCamera: false)
         controller.demoController.currentTilemapUrl = selectedURL
-        Logger.default.log("loading file '\(selectedURL.relativePath)'...", level: .debug, symbol: "AppDelegate")
+        Logger.default.log("loading file '\(selectedURL.relativePath)'...", level: .debug, symbol: classNiceName)
     }
 
     @IBAction func loggingLevelUpdated(_ sender: NSMenuItem) {
         guard let identifier = sender.accessibilityTitle(),
             let identifierIntValue = UInt8(identifier) else {
-                Logger.default.log("invalid logging identifier: \(sender.accessibilityIdentifier())", level: .error, symbol: "AppDelegate")
+                Logger.default.log("invalid logging identifier: \(sender.accessibilityIdentifier())", level: .error, symbol: classNiceName)
                 return
         }
 
         if let newLoggingLevel = LoggingLevel.init(rawValue: identifierIntValue) {
             if (TiledGlobals.default.loggingLevel != newLoggingLevel) {
                 TiledGlobals.default.loggingLevel = newLoggingLevel
-                Logger.default.log("global logging level changed: \(newLoggingLevel)", level: .info, symbol: "AppDelegate")
+                Logger.default.log("global logging level changed: \(newLoggingLevel)", level: .info, symbol: classNiceName)
 
                 // update controllers
                 NotificationCenter.default.post(
                     name: Notification.Name.Globals.Updated,
-                    object: nil,
-                    userInfo: nil
+                    object: nil
                 )
             }
         }
@@ -1442,7 +1693,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         updateCommandString("highlighting selected nodes", duration: 3.0)
     }
-
+    
+    
+    // MARK: - Development Menu
+    
+    
+    
+    @IBAction func infiniteOffsetAction(_ sender: NSMenuItem) {
+        guard let gameController = viewController else {
+            return
+        }
+        
+        gameController.infiniteOffsetChanged()
+    }
 
     // MARK: - Callbacks & Helpers
 
@@ -1595,7 +1858,7 @@ extension AppDelegate: TiledSceneCameraDelegate {
     /// Called when the scene is right-clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
-    @objc func sceneRightClicked(event: NSEvent) {
+    @objc func rightMouseDown(event: NSEvent) {
         selectedNodesMenuItem.submenu?.removeAllItems()
         selectedNodesMenuItem.isEnabled = false
         selectedNodesMenuItem.title = "Selected Nodes"
@@ -1681,7 +1944,7 @@ extension AppDelegate {
     /// Dynamically build the `File > Current maps` submenu.
     @objc func initializeDemoFilesMenu() {
         guard let demoController = demoController else {
-            Logger.default.log("cannot access demo controller.", level: .warning, symbol: "AppDelegate")
+            Logger.default.log("cannot access demo controller.", level: .warning, symbol: classNiceName)
             return
         }
 
@@ -2003,7 +2266,10 @@ extension AppDelegate {
     ///
     /// - Parameter tilemap: tile map object.
     @objc func initializeTilemapMenus(tilemap: SKTilemap) {
-
+        
+        print("⭑ initializing tilemap menus...")
+        
+        
         mapMenuItem.isEnabled = true
         updateModeMenuItem.isEnabled = true
         renderEffectsMenuItem.isEnabled = true

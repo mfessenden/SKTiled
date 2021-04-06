@@ -359,7 +359,8 @@ internal class MousePointer: SKNode {
         
         let sceneSize = tiledScene.size   // 640x480
         let windowLocation = event.locationInWindow
-        let scenePosition = event.location(in: tiledScene)
+        var scenePosition = event.location(in: tiledScene)
+
         
         let shadow = NSShadow()
         shadow.shadowColor = SKColor.black

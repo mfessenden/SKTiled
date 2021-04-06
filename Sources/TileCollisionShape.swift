@@ -99,4 +99,5 @@ extension TileCollisionShape {
 
 
 /// :nodoc: typealias for v1.2 compatibility.
+@available(*, deprecated, renamed: "TileCollisionShape")
 typealias SKTileCollisionShape = TileCollisionShape

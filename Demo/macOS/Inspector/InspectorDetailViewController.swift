@@ -123,6 +123,7 @@ class InspectorDetailViewController: NSViewController {
     ///
     /// - Parameter notification: event notification.
     @objc func demoSceneLoaded(notification: Notification) {
+        notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: Any] else {
             fatalError("no user info!")
         }

@@ -483,4 +483,5 @@ extension TiledObjectType {
 
 
 /// :nodoc: Typealias for v1.2 compatibility.
+@available(*, deprecated, renamed: "TiledObjectType")
 public typealias SKTiledObject = TiledObjectType

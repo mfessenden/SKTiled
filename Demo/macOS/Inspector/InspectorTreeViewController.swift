@@ -35,6 +35,9 @@ class InspectorTreeViewController: NSViewController {
     let demoController = TiledDemoController.default
     let demoDelegate = TiledDemoDelegate.default
     
+    /// Handle camera callbacks.
+    var receiveCameraUpdates: Bool = true
+    
     /// The scroll view.
     @IBOutlet weak var scrollView: NSScrollView!
     
@@ -71,6 +74,8 @@ class InspectorTreeViewController: NSViewController {
         searchField.delegate = self
         
         scrollView.verticalScroller?.layer?.backgroundColor = CGColor.clear
+        
+        demoController.currentCamera?.addDelegate(self)
     }
     
     // MARK: - Setup
@@ -80,7 +85,6 @@ class InspectorTreeViewController: NSViewController {
         /// Loading/Scene
         NotificationCenter.default.addObserver(self, selector: #selector(currentSceneChanged), name: Notification.Name.Demo.SceneLoaded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sceneWillUnloadAction), name: Notification.Name.Demo.SceneWillUnload, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(mouseRightClickAction), name: Notification.Name.Camera.MouseRightClicked, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionChanged), name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionCleared), name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshinterface), name: Notification.Name.Demo.RefreshInspectorInterface, object: nil)
@@ -92,7 +96,6 @@ class InspectorTreeViewController: NSViewController {
         outlineView.delegate = nil
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.SceneLoaded, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.SceneWillUnload, object: nil)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.Camera.MouseRightClicked, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.RefreshInspectorInterface, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeAttributesChanged, object: nil)
@@ -115,15 +118,21 @@ class InspectorTreeViewController: NSViewController {
         outlineView.reloadData()
     }
     
-    // MARK: - Node Selection
+    // MARK: - Outline View
     
-    /// Handle the currently selected nodes.
+    /// Handle the currently selected nodes. Called when the node selection has changed in the outline view.
     func handleNodeSelection() {
-        NotificationCenter.default.post(
-            name: Notification.Name.Demo.RefreshInspectorInterface,
-            object: nil
-        )
+        reloadSelectedItems()
     }
+    
+    func reloadSelectedItems() {
+        //outlineView.reloadData()
+        let selectedItems = outlineView.allSelectedItems
+        for item in selectedItems {
+            outlineView.reloadItem(item, reloadChildren: true)
+        }
+    }
+    
     
     // MARK:- Notification Handlers
     
@@ -132,11 +141,7 @@ class InspectorTreeViewController: NSViewController {
     ///
     /// - Parameter notification: event notification.
     @objc func refreshinterface(notification: Notification) {
-        //outlineView.reloadData()
-        let selectedItems = outlineView.allSelectedItems
-        for item in selectedItems {
-            outlineView.reloadItem(item, reloadChildren: true)
-        }
+        reloadSelectedItems()
     }
     
     /// Called when the `Notification.Name.Demo.NodeSelectionChanged` notification is sent. This happens when a node is selected in the current view via clicking (or right-clicking). Also called when something is selected in the Inspector outline view.
@@ -233,17 +238,26 @@ class InspectorTreeViewController: NSViewController {
         
         outlineView.reloadData()
     }
-    
-    /// Called when the user right-clicks the mouse.
-    ///
-    /// - Parameter notification: event notification.
-    @objc func mouseRightClickAction(notification: Notification) {
-        outlineView.deselectAll(nil)
-    }
 }
 
 
 // MARK: - Extensions
+
+extension InspectorTreeViewController: TiledSceneCameraDelegate {
+    
+    #if os(macOS)
+    
+    /// Called when the scene is right-clicked **(macOS only)**.
+    ///
+    /// - Parameter event: mouse click event.
+    @objc func rightMouseDown(event: NSEvent) {
+        outlineView.deselectAll(nil)
+    }
+    
+    #endif
+}
+
+
 
 
 extension InspectorTreeViewController: NSOutlineViewDelegate {

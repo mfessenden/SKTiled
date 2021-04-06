@@ -160,7 +160,7 @@ extension TileObjectOverlay: TiledSceneCameraDelegate {
     /// Called when a mouse click event is passed to the overlay.
     ///
     /// - Parameter event: mouse event
-    @objc func sceneClicked(event: NSEvent) {
+    @objc func leftMouseDown(event: NSEvent) {
         let clickedProxies = nodes(at: event.location(in: self)).filter { $0 as? TileObjectProxy != nil} as! [TileObjectProxy]
         
         // TODO: dispatch here?

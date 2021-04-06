@@ -42,16 +42,18 @@ import SpriteKit
 ///
 /// ### Instance Methods
 ///
-///  - `containedNodesChanged`:  nodes visible in camera haved changed.
-///  - `cameraPositionChanged`:  camera position change.
-///  - `cameraZoomChanged`:  camera zoom change.
-///  - `cameraBoundsChanged`:  camera bounds updated.
-///  - `sceneClicked`:  scene is clicked. **(macOS only)**.
-///  - `sceneRightClicked`:  scene is right-clicked. **(macOS only)**.
-///  - `sceneDoubleClicked`:  scene is double-clicked. **(macOS only)**.
-///  - `mousePositionChanged`:  mouse moves in the scene. **(macOS only)**.
-///  - `sceneDoubleTapped`:  scene is double-tapped. **(iOS only)**.
-///  - `sceneRotated`:  scene is rotated via gesture. **(iOS only)**.
+///  - `containedNodesChanged`: nodes visible in camera haved changed.
+///  - `cameraPositionChanged`: camera position change.
+///  - `cameraZoomChanged`: camera zoom change.
+///  - `cameraBoundsChanged`: camera bounds updated.
+///  - `leftMouseDown`: scene is clicked **(macOS only)**.
+///  - `rightMouseDown`: scene is right-clicked **(macOS only)**.
+///  - `leftMouseUp`: left mouse button is released **(macOS only)**.
+///  - `rightMouseUp`: right mouse button is released **(macOS only)**.
+///  - `leftMouseDoubleClicked`: scene is double-clicked **(macOS only)**.
+///  - `mousePositionChanged`: mouse moves in the scene **(macOS only)**.
+///  - `sceneDoubleTapped`: scene is double-tapped **(iOS only)**.
+///  - `sceneRotated`: scene is rotated via gesture **(iOS only)**.
 ///
 ///
 /// [tiled-scene-camera-delegate-image]:../images/camera-delegate.svg
@@ -98,22 +100,27 @@ import SpriteKit
     /// Called when the scene is clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
-    @objc optional func sceneClicked(event: NSEvent)
+    @objc optional func leftMouseDown(event: NSEvent)
     
     /// Called when the left mouse button is released **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
-    @objc optional func sceneClickedReleased(event: NSEvent)
-    
-    /// Called when the scene is double-clicked **(macOS only)**.
-    ///
-    /// - Parameter event: mouse click event.
-    @objc optional func sceneDoubleClicked(event: NSEvent)
+    @objc optional func leftMouseUp(event: NSEvent)
     
     /// Called when the scene is right-clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
-    @objc optional func sceneRightClicked(event: NSEvent)
+    @objc optional func rightMouseDown(event: NSEvent)
+    
+    /// Called when the right mouse button is released **(macOS only)**.
+    ///
+    /// - Parameter event: mouse click event.
+    @objc optional func rightMouseUp(event: NSEvent)
+    
+    /// Called when the scene is double-clicked **(macOS only)**.
+    ///
+    /// - Parameter event: mouse click event.
+    @objc optional func leftMouseDoubleClicked(event: NSEvent)
     
     /// Called when the right mouse button is released **(macOS only)**.
     ///
@@ -146,4 +153,11 @@ import SpriteKit
 
 
 /// :nodoc: Typealias for v1.2 compatibility.
+@available(*, deprecated, renamed: "TiledSceneCameraDelegate")
 public typealias SKTiledSceneCameraDelegate = TiledSceneCameraDelegate
+
+
+
+// MARK: - Renamed/Deprecated
+
+

@@ -199,7 +199,9 @@ internal class TileObjectProxy: SKShapeNode {
         
         // FIXME: crash here
         
+        // FIXME: `translatedVertices` returns interpolated vertices if the object is an ellipse
         let vertices = object.translatedVertices()
+        
         guard (vertices.count > 2) else {
             self.path = nil
             return
@@ -221,13 +223,13 @@ internal class TileObjectProxy: SKShapeNode {
         
         let isPolyType = object.isPolyType
         let pathIsClosed: Bool = (object.shapeType == .polyline) ? false : true
-        
+
         let renderQuality = TiledGlobals.default.renderQuality.object
         let objectRenderQuality = renderQuality / 2
         
-        
-        
-        let scaledVertices = convertedPoints.map { $0 * renderQuality }
+        let scaledVertices = convertedPoints.map {
+            $0 * renderQuality
+        }
         
         let objPath: CGPath
         switch object.shapeType {
@@ -250,19 +252,26 @@ internal class TileObjectProxy: SKShapeNode {
         
         
         let currentStrokeColor = (proxyIsVisible == true) ? self.objectColor : SKColor.clear
-        let currentFillColor = (proxyIsVisible == true) ? (isRenderable == false) ? currentStrokeColor.withAlphaComponent(fillOpacity) : SKColor.clear : SKColor.clear
+        var currentFillColor = (proxyIsVisible == true) ? (isRenderable == false) ? currentStrokeColor.withAlphaComponent(fillOpacity) : SKColor.clear : SKColor.clear
+        currentFillColor = (pathIsClosed == true) ? currentFillColor : SKColor.clear
         
         self.strokeColor = currentStrokeColor
         self.fillColor = currentFillColor
         self.lineWidth = baseLineWidth * objectRenderQuality
         self.isAntialiased = false
         
-        
-        // if (isPolyType == true) {
+        // remove current nodes
         childNode(withName: object.firstPointKey)?.removeFromParent()
+        childNode(withName: object.lastPointKey)?.removeFromParent()
         
         // the first-point radius should be larger for thinner (>1.0) line widths
-        let pointRadius = object.lineWidth * 0.75
+        var pointRadius = object.lineWidth * 0.75
+        let multiplier: CGFloat = 6
+        pointRadius = (pointRadius < 1) ? 1 : pointRadius
+        pointRadius = pointRadius * multiplier
+
+        
+        // draw the object's first point
         let firstPointShape = SKShapeNode(circleOfRadius: pointRadius)
         firstPointShape.setAttrs(values: ["tiled-node-role": "first-point"])
         firstPointShape.name = object.firstPointKey
@@ -270,10 +279,27 @@ internal class TileObjectProxy: SKShapeNode {
         
         // CONVERTED
         firstPointShape.zPosition = zPosition + 10
-        firstPointShape.position = vertices[0]
+        firstPointShape.position = scaledVertices[0]
         firstPointShape.strokeColor = SKColor.clear
         firstPointShape.fillColor = self.strokeColor
         firstPointShape.isAntialiased = isAntialiased
+        
+        // draw the last point (unfilled) for open polylines
+        if (isPolyType == true && pathIsClosed == false) {
+
+            // draw the polyline's last point
+            let lastPointShape = SKShapeNode(circleOfRadius: pointRadius)
+            lastPointShape.setAttrs(values: ["tiled-node-role": "last-point"])
+            lastPointShape.name = object.lastPointKey
+            addChild(lastPointShape)
+            
+            // CONVERTED
+            lastPointShape.zPosition = zPosition + 10
+            lastPointShape.position = scaledVertices.last!
+            lastPointShape.lineWidth = self.lineWidth
+            lastPointShape.strokeColor = self.strokeColor
+            lastPointShape.isAntialiased = isAntialiased
+        }
     }
 }
 

@@ -168,7 +168,9 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
     /// This object's `CGPath` defining the shape of geometry. Used to draw the bounding shape.
     @objc public lazy var objectPath: CGPath = {
         if (globalID == nil) {
-            let vertices = getVertices().map( { $0.invertedY })
+            let vertices = getVertices().map( {
+                $0.invertedY
+            })
             return polygonPath(vertices)
         } else {
             let vertices = translatedVertices()
@@ -758,6 +760,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
                         scalerNode.name = "TILE_OBJECT_\(id)_SCALER"
 
                         #if SKTILED_DEMO
+                        scalerNode.setAttr(key: "tiled-invisible-node", value: true)
                         scalerNode.setAttr(key: "tiled-node-icon", value: "scaler-icon")
                         scalerNode.setAttr(key: "tiled-node-listdesc", value: "Tile Object Scaler")
                         scalerNode.setAttr(key: "tiled-element-name", value: "Tile Object Scaler")
@@ -1409,11 +1412,9 @@ extension SKTileObject {
     ///   - color: highlight color.
     ///   - duration: duration of highlight effect.
     @objc public override func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
-        let highlightFillColor = color.withAlphaComponent(0.4)
-        
-        
-        let durationString = (duration > 0) ? " for \(duration) seconds..." : "..."
-        //print("⭑ [\(classNiceName)]: highlighting node\(durationString)")
+
+        let isOpenPath = (shapeType == TiledObjectShape.polyline)
+        let highlightFillColor = (isOpenPath == false) ? color.withAlphaComponent(0.4) : SKColor.clear
         
         boundsShape?.strokeColor = color
         boundsShape?.fillColor = highlightFillColor

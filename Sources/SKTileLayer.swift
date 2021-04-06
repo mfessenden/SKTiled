@@ -90,23 +90,6 @@ public class SKTileLayer: TiledLayerObject {
         return current
     }
 
-    override var layerRenderStatistics: LayerRenderStatistics {
-        var current = super.layerRenderStatistics
-
-        var tc: Int
-        switch updateMode {
-            case .full:
-                tc = self.tileCount
-            case .dynamic:
-                tc = 0
-            default:
-                tc = 0
-        }
-
-        current.tiles = tc
-        return current
-    }
-
     /// Debug visualization options.
     @objc public override var debugDrawOptions: DebugDrawOptions {
         didSet {
@@ -404,7 +387,7 @@ public class SKTileLayer: TiledLayerObject {
     @discardableResult
     public func setLayerData(_ data: [UInt32]) -> Bool {
         if !(data.count == mapSize.pointCount) {
-            log("invalid data size for layer '\(self.layerName)': \(data.count), expected: \(mapSize.pointCount)", level: .error)
+            log("❗️invalid data size for layer '\(self.layerName)': \(data.count), expected: \(mapSize.pointCount)", level: .error)
             return false
         }
 
@@ -466,7 +449,7 @@ public class SKTileLayer: TiledLayerObject {
         }
 
         // remove the current tile
-        let existingTile = removeTileAt(coord: coord)
+        let existingTile = removeTile(at: coord)
         let thisTileId: UInt32? = (globalID != nil) ? tilemap.delegate?.willAddTile?(globalID: globalID!, coord: coord, in: layerName) : tilemap.delegate?.willAddTile?(globalID: globalID!, in: layerName)
 
         let tileData: SKTilesetData? = (thisTileId != nil) ? getTileData(globalID: thisTileId!) : nil
@@ -1170,11 +1153,8 @@ extension SKTileLayer {
     @objc public override var tiledHelpDescription: String {
         return "Layer container for tiles."
     }
-    
-    
 
 }
-
 
 
 // MARK: - Deprecations

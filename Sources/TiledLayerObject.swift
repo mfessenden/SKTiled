@@ -33,7 +33,7 @@ import Cocoa
 #endif
 
 
-/// Tuple representing the current render stats for a given frame.
+/// Tuple representing the current render stats for a given interval of time.
 ///
 ///
 typealias RenderInfo = (idx: UInt32, path: String, zpos: Double,
@@ -41,10 +41,6 @@ typealias RenderInfo = (idx: UInt32, path: String, zpos: Double,
     offx: Int, offy: Int, ancx: Int, ancy: Int,
     tc: Int, obj: Int, vis: Int, gn: Int?)
 
-
-
-/// Layer render statistics.
-typealias LayerRenderStatistics = (tiles: Int, objects: Int)
 
 
 /// The `TiledLayerObject` is the base class for *all* **SKTiled** layer types.
@@ -423,8 +419,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 
     /// Returns the layer bounding rectangle (used to draw bounds).
     @objc public override var boundingRect: CGRect {
-        
-        
+
         // TODO: figure this out
         
         /*
@@ -483,7 +478,8 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
                 offsetPos.y += tileHeightHalf
                 
             case .isometric:
-                offsetPos.x -= sizeInPoints.halfWidth
+                //offsetPos.x -= sizeInPoints.halfWidth
+                offsetPos.x -= sizeInPoints.halfWidth + (tileWidth * 3)
                 offsetPos.y += tileHeightHalf
                 
             case .hexagonal, .staggered:
@@ -509,12 +505,8 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
                 Int(tileSize.height),  Int(offset.x), Int(offset.y),
                 Int(anchorPoint.x), Int(anchorPoint.y), 0, 0, (isHidden == true) ? 0 : 1, nil)
     }
-
-    internal var layerRenderStatistics: LayerRenderStatistics {
-        return (tiles: 0, objects: 0)
-    }
-
-    /// Update mode.
+    
+    /// Returns the current tilemap tile update mode.
     public var updateMode: TileUpdateMode {
         return tilemap.updateMode
     }
@@ -625,6 +617,10 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         self.antialiased = (self.tilemap.currentZoom < 1)
         addChild(debugNode)
         debugNode.position.y -= sizeInPoints.height
+        
+        
+        
+        
     }
 
     /// Create a new layer within the parent tilemap node.

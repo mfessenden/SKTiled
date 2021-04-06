@@ -250,4 +250,5 @@ import GameplayKit
 
 
 /// :nodoc: Typealias for v1.2 compatibility.
+@available(*, deprecated, renamed: "TilemapDelegate")
 public typealias SKTilemapDelegate = TilemapDelegate

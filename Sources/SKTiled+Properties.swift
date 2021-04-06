@@ -72,6 +72,7 @@ extension SKTilemap {
                 defaultLayer.frameColor = frameColor
             }
 
+
             if (lattr == "highlightcolor") {
                 highlightColor = SKColor(hexString: value)
                 getLayers().forEach {$0.highlightColor = highlightColor}
@@ -79,6 +80,10 @@ extension SKTilemap {
                 // set base layer colors
                 TiledGlobals.default.debugDisplayOptions.tileHighlightColor = highlightColor
                 defaultLayer.highlightColor = highlightColor
+            }
+            
+            if (lattr == "uicolor") {
+                TiledGlobals.default.uiColor = SKColor(hexString: value)
             }
 
             // aspect ratio.

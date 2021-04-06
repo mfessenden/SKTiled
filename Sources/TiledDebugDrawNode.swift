@@ -1,5 +1,5 @@
 //
-//  SKTiledDebugDrawNode.swift
+//  TiledDebugDrawNode.swift
 //  SKTiled
 //
 //  Copyright ©2016-2021 Michael Fessenden. all rights reserved.
@@ -47,6 +47,11 @@ internal class TiledDebugDrawNode: SKNode {
     /// Unique identifier used to access anchor shape nodes.
     private var anchorKey: String = "ANCHOR"
     
+    /// Initialize with the parent layer.
+    ///
+    /// - Parameters:
+    ///   - tileLayer: parent tile layer.
+    ///   - def: indicates the layer is the map's default layer.
     init(tileLayer: TiledLayerObject, isDefault def: Bool = false) {
         layer = tileLayer
         isDefault = def
@@ -54,6 +59,7 @@ internal class TiledDebugDrawNode: SKNode {
         anchorKey = "ANCHOR_\(tileLayer.shortId)"
         super.init()
         setup()
+        setAttrs(values: ["tiled-invisible-node": true])
     }
     
     /// Instantiate the node with a decoder instance.
@@ -269,7 +275,7 @@ internal class TiledDebugDrawNode: SKNode {
     /// Display the current tile grid.
     func drawGrid() {
         guard let layer = layer else {
-            Logger.default.log("invalid layer.", level: .error, symbol: "SKTiledDebugDrawNode")
+            Logger.default.log("invalid layer.", level: .error, symbol: classNiceName)
             return
         }
         
@@ -306,7 +312,7 @@ internal class TiledDebugDrawNode: SKNode {
                 let spriteScaleFactor: CGFloat = (1 / imageScale)
                 gridSize = (gridTexture != nil) ? gridTexture!.size() / uiScale : .zero
                 gridSprite.setScale(spriteScaleFactor)
-                Logger.default.log("grid texture size: \(gridSize.shortDescription), bpc: \(gridImage.bitsPerComponent), line scale: \(lineScale), scale: \(imageScale), content scale: \(uiScale)", level: .debug, symbol: "SKTiledDebugDrawNode")
+                Logger.default.log("grid texture size: \(gridSize.shortDescription), bpc: \(gridImage.bitsPerComponent), line scale: \(lineScale), scale: \(imageScale), content scale: \(uiScale)", level: .debug, symbol: classNiceName)
                 
                 gridSprite.texture = gridTexture
                 gridSprite.alpha = layer.gridOpacity

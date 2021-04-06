@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="17701" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="499-42-d0g">
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="18122" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="499-42-d0g">
     <device id="appleTV" appearance="light"/>
     <dependencies>
         <deployment identifier="tvOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18092"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -33,13 +33,28 @@
                                 </subviews>
                             </stackView>
                             <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="s2B-9I-4Ap">
-                                <rect key="frame" x="926" y="117" width="68" height="32"/>
+                                <rect key="frame" x="908" y="117" width="104" height="32"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dolly" translatesAutoresizingMaskIntoConstraints="NO" id="dg0-Wl-Qnn">
                                         <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="32" id="0e5-5L-sK5"/>
+                                            <constraint firstAttribute="height" constant="32" id="mWy-eH-uUJ"/>
+                                        </constraints>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="zoom" translatesAutoresizingMaskIntoConstraints="NO" id="DcY-cR-nIi">
                                         <rect key="frame" x="36" y="0.0" width="32" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="32" id="VEp-s1-oss"/>
+                                            <constraint firstAttribute="height" constant="32" id="lG9-0k-T5h"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rotate" translatesAutoresizingMaskIntoConstraints="NO" id="ebh-MP-4aD" userLabel="Rotate Icon">
+                                        <rect key="frame" x="72" y="0.0" width="32" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="32" id="F4z-gC-0Pm"/>
+                                            <constraint firstAttribute="height" constant="32" id="Mie-5h-Rjb"/>
+                                        </constraints>
                                     </imageView>
                                 </subviews>
                             </stackView>
@@ -241,6 +256,7 @@
                         <outlet property="nextButton" destination="Ada-GI-7xO" id="shN-sO-XHW"/>
                         <outlet property="objectsButton" destination="MnW-ZK-gPs" id="hGb-uK-FHO"/>
                         <outlet property="outputBottomView" destination="wkK-nJ-MjR" id="Q9C-ef-ZWK"/>
+                        <outlet property="rotateIcon" destination="ebh-MP-4aD" id="zaI-xM-yMO"/>
                         <outlet property="statsActionsLabel" destination="5Z5-zR-xGA" id="3FP-Hm-QFw"/>
                         <outlet property="statsCPULabel" destination="ZFp-dT-cwY" id="yMQ-SU-FPB"/>
                         <outlet property="statsEffectsLabel" destination="lFe-mo-XbD" id="aIg-PR-S8y"/>
@@ -262,6 +278,7 @@
     </scenes>
     <resources>
         <image name="dolly" width="32" height="32"/>
+        <image name="rotate" width="32" height="32"/>
         <image name="zoom" width="32" height="32"/>
         <systemColor name="lightTextColor">
             <color white="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

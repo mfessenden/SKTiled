@@ -69,7 +69,7 @@ class PreferencesSearchPathsController: NSViewController {
             
             
             guard let newSearchPath = result else {
-                Logger.default.log("asset search path is invalid.", level: .warning, symbol: "PreferencesSearchPathsController")
+                Logger.default.log("asset search path is invalid.", level: .warning, symbol: classNiceName)
                 return
             }
             
@@ -77,7 +77,7 @@ class PreferencesSearchPathsController: NSViewController {
             let assetPath = newSearchPath.path
             
             // path contains the file path e.g
-            Logger.default.log("adding search path '\(assetPath)'", level: .info, symbol: "PreferencesSearchPathsController")
+            Logger.default.log("adding search path '\(assetPath)'", level: .info, symbol: classNiceName)
             
             if (userSearchPaths == nil) {
                 userSearchPaths = []
@@ -93,7 +93,7 @@ class PreferencesSearchPathsController: NSViewController {
                 // create the array, if need be
                 let assetSearchPaths = defaults.array(forKey: "TiledAssetSearchPaths") as? [String] ?? Array<String>()
                 
-                Logger.default.log("adding search path '\(assetPath)'", level: .info, symbol: "PreferencesSearchPathsController")
+                Logger.default.log("adding search path '\(assetPath)'", level: .info, symbol: classNiceName)
                 var mutableAssetSearchPaths = assetSearchPaths
                 
                 // if the value doesn't exist already, add it

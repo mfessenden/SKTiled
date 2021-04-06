@@ -64,7 +64,9 @@ extension TiledGlobals {
             guard let _ = TileUpdateMode.init(rawValue: demoPreferences.updateMode) else {
                 return
             }
-
+            
+            
+            Logger.default.log("loading default preferences...", level: .debug, symbol: "TiledGlobals")
 
             // call back to the DemoController & Prefs UI
             NotificationCenter.default.post(
@@ -446,13 +448,15 @@ extension Notification.Name {
 
     // TODO: clean these up
     public struct Debug {
+        
         public static let UpdateDebugging               = Notification.Name(rawValue: "org.sktiled.notification.name.debug.updateDebugging")
         public static let DebuggingMessageSent          = Notification.Name(rawValue: "org.sktiled.notification.name.debug.debuggingMessageSent")  // sends a debugging command & duration to GVC (displays on bottom)
         public static let MapDebugDrawingChanged        = Notification.Name(rawValue: "org.sktiled.notification.name.debug.mapDebuggingChanged")   // sent when the `g` key is pressed (shows grid & bounds)
         public static let MapEffectsRenderingChanged    = Notification.Name(rawValue: "org.sktiled.notification.name.debug.mapEffectsRenderingChanged")
         public static let MapObjectVisibilityChanged    = Notification.Name(rawValue: "org.sktiled.notification.name.debug.mapObjectVisibilityChanged")
         
-        
+        // Infinite
+        public static let RepositionLayers              = Notification.Name(rawValue: "org.sktiled.notification.name.debug.repositionLayers")
         
         // Inspector
         public static let DumpAttributeEditor           = Notification.Name(rawValue: "org.sktiled.notification.name.debug.dumpAttributeEditor")
@@ -462,7 +466,7 @@ extension Notification.Name {
 }
 
 
-// MARK: SKNode/NSTreeController
+// MARK: - SKNode/NSTreeController
 
 extension SKNode {
 
@@ -476,7 +480,7 @@ extension SKNode {
 }
 
 
-// MARK: Inspector
+// MARK: - Inspector
 
 /// Store & retrieve custom `SKTiled` attributes.
 extension SKNode {
@@ -503,6 +507,7 @@ extension SKNode {
             return
         }
         for (_, property) in values.enumerated() {
+            // FIXME: crash with object proxy here
             tiledAttrs[property.key] = property.value
         }
     }
@@ -544,7 +549,10 @@ extension SKNode {
         if (userData == nil) {
             let tiledData = NSMutableDictionary()
             let nodeAttributes = NSMutableDictionary()
-
+            
+            
+            // FIXME: crash here
+            
             nodeAttributes["sk-node-hidden"] = isHidden
             nodeAttributes["sk-node-paused"] = isPaused
             nodeAttributes["sk-node-posx"] = position.x
@@ -744,124 +752,20 @@ extension SKTilemap {
     
     /// Reposition all of the child layers.
     public func repositionLayers() {
-        layers.forEach {
-            self.positionLayer($0)
+        for layer in contentLayers() {
+            self.positionLayer(layer)
+            print(" - repositioning layer '\(layer.className)'")
         }
-    }
-}
-
-
-// MARK: - Controllers
-
-extension SKTiledDemoScene {
-
-    /// Setup game controllers when a controller is connected. Called when the `Notification.Name.GCControllerDidConnect` notification is received.
-    ///
-    /// - Parameter notification: event notification.
-    @objc public func connectControllers(notification: Notification) {
-        self.isPaused = false
-        for controller in GCController.controllers() where controller.microGamepad != nil {
-            controller.microGamepad?.valueChangedHandler = nil
-            #if os(tvOS)
-            log("setting up tvOS remote...", level: .info)
-            #endif
-            setupMicroController(controller: controller)
-        }
-    }
-
-    /// Remove game controllers. Called when the `Notification.Name.GCControllerDidDisconnect` notification is received.
-    ///
-    /// - Parameter notification: event notification.
-    @objc public func disconnectControllers(notification: Notification) {
-        self.isPaused = true
-    }
-
-    /// Setup a tvOS remote control.
-    ///
-    /// - Parameter controller: controller instance.
-    public func setupMicroController(controller: GCController) {
-        guard let skView = self.view,
-            let cameraNode = self.cameraNode else {
-                return
-        }
-
-        // closure for handling controller actions
-        controller.microGamepad?.valueChangedHandler = {
-
-            (gamepad: GCMicroGamepad, element: GCControllerElement) in
-
-            gamepad.reportsAbsoluteDpadValues = true
-            gamepad.allowsRotation = true
-
-            // buttonX = play/pause
-            if ( gamepad.buttonX == element) {
-                if (gamepad.buttonX.isPressed) {
-                    let nextMode: CameraControlMode = CameraControlMode(rawValue: cameraNode.controlMode.rawValue + 1) ?? .none
-                    cameraNode.controlMode = nextMode
-                }
-
-            } else if (gamepad.dpad == element) {
-
-                let viewSize = skView.bounds.size
-                let viewWidth = viewSize.width
-                let viewHeight = viewSize.width
-
-                let xValue = CGFloat(gamepad.dpad.xAxis.value)
-                let yValue = CGFloat(gamepad.dpad.yAxis.value)
-
-                let isReleased = (abs(xValue) == 0) || (abs(yValue) == 0)
-
-
-                if (cameraNode.controlMode == .zoom) {
-                    if (isReleased == true) {
-                        return
-                    }
-
-                    //let currentZoom = cameraNode.zoom
-                    cameraNode.setCameraZoom(cameraNode.zoom + yValue)
-                }
-
-                // if we're in movement mode, update the camera's position
-                if (cameraNode.controlMode == .dolly) {
-                    if (isReleased == true) {
-                        return
-                    }
-
-                    cameraNode.centerOn(scenePoint: CGPoint(x: viewWidth * xValue, y: viewHeight * yValue))
-                }
+        
+        
+        /*
+        for layer in layers {
+            guard (layer as? SKGroupLayer == nil) else {
+                continue
             }
-        }
-    }
-
-    /// Setup controller notification observers.
-    public func setupControllerObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(connectControllers), name: Notification.Name.GCControllerDidConnect, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(disconnectControllers), name: Notification.Name.GCControllerDidDisconnect, object: nil)
-    }
-}
-
-
-/// :nodoc:
-extension GCController {
-
-    /// Returns the controller name.
-    var controllerName: String {
-        return (isRemote == true) ? "Siri Remote" : "Gamepad"
-    }
-
-    /// Returns true if the controller is a tvOS Siri remote.
-    var isRemote: Bool {
-        return (extendedGamepad == nil)
-    }
-
-    /// Returns true if the controller is an extended game controller.
-    var isGamepad: Bool {
-        return (extendedGamepad != nil)
-    }
-
-    /// Returns the UI image name for this controller.
-    var imageName: String {
-        return (isRemote == true) ? "remote" : "pamepad"
+            self.positionLayer(layer)
+            print(" - repositioning layer '\(layer.className)'")
+        }*/
     }
 }
 
@@ -877,20 +781,8 @@ extension UserDefaults {
     }
 }
 
-
-extension NSObject {
-    
-    /// Returns the name of the class minus the module.
-    public var classNiceName: String {
-        return className.components(separatedBy: ".").last!
-    }
-}
-
-
-
-
-
 #if os(macOS)
+
 
 extension NSColor {
 
@@ -1192,7 +1084,6 @@ extension NSClipView {
 }
 
 
-
 extension NSImageView {
 
     /// Reset the image view with the default image.
@@ -1203,22 +1094,45 @@ extension NSImageView {
 }
 
 
-/*
-extension NSMenuItem {
+/// Create & open a system alert dialog. Returns true if the user clicks the `OK` button.
+///
+/// - Parameters:
+///   - title: dialog title.
+///   - message: dialog informative description.
+/// - Returns: user clicked `OK`
+internal func createAlert(title: String, message: String) -> Bool {
+    
+    let alertDialog = NSAlert()
+    alertDialog.addButton(withTitle: "OK")      // 1st button
+    alertDialog.addButton(withTitle: "Cancel")  // 2nd button
+    alertDialog.messageText = title
+    alertDialog.informativeText = message
 
-    convenience init() {}
+    // alertDialog.accessoryView = stackView
+    
+    // run modal
+    let response: NSApplication.ModalResponse = alertDialog.runModal()
+    
+    // if the user clicks `OK`...
+    if (response == NSApplication.ModalResponse.alertFirstButtonReturn) {
+        return true
+        
+    } else {
+        return false
+    }
 }
-*/
+
+
 
 
 #endif
 
 
-
-// MARK: UIKit
+// MARK: - UIKit
 
 
 #if os(iOS) || os(tvOS)
+
 
 extension UILabel {
 

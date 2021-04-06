@@ -25,8 +25,8 @@
 //  THE SOFTWARE.
 
 import SpriteKit
-import Foundation
 import GameplayKit
+import GameController
 #if os(iOS) || os(tvOS)
 import UIKit
 #else
@@ -81,6 +81,20 @@ public class SKTiledDemoScene: SKTiledScene {
     internal var mouseUpdateDelta: TimeInterval {
         return TiledGlobals.default.mouseEventDelta
     }
+    
+    
+    // MARK: - Controllers
+    
+    
+    /// Currently pressed controller buttons.
+    internal var pressedButtons: [GCControllerButtonInput] = []
+    
+    /// Minimum time delta to govern button presses.
+    internal var controllerButtonUpdateDelta: TimeInterval = 0.25
+    
+    /// Last controller button update.
+    internal var controllerButtonLastUpdate: TimeInterval = 0
+    
 
     // MARK: - Dispatch
 
@@ -146,6 +160,7 @@ public class SKTiledDemoScene: SKTiledScene {
             let pointer = MousePointer()
             mousePointer = pointer
             addChild(pointer)
+            // cameraNode?.addToOverlay(pointer, zpos: 2500)
             cameraNode?.addDelegate(pointer)
             cameraNode?.addDelegate(TiledDemoDelegate.default)
         }
@@ -628,7 +643,7 @@ extension SKTiledDemoScene {
     /// Called when the scene is clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
-    @objc public override func sceneClicked(event: NSEvent) {
+    @objc public override func leftMouseDown(event: NSEvent) {
 
         NotificationCenter.default.post(
             name: Notification.Name.Demo.NodeSelectionCleared,
@@ -651,7 +666,7 @@ extension SKTiledDemoScene {
     /// Called when the scene is double-clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
-    @objc public override func sceneDoubleClicked(event: NSEvent) {
+    @objc public override func leftMouseDoubleClicked(event: NSEvent) {
         let location = event.location(in: self)
         log("mouse double-clicked at: \(location.shortDescription)", level: .debug)
     }
@@ -941,9 +956,13 @@ extension SKTiledDemoScene {
         }
 
 
-        // 'x' runs a debugging command
+        // 'x' highlights layer chunks
         if eventKey == 0x7 {
             demoController?.toggleTilemapHighlightChunks()
+            
+            
+            updateCommandString("highlighting tile layer chunks.", duration: 3.0)
+            
         }
 
         // 'y' deletes selected nodes
@@ -959,14 +978,14 @@ extension SKTiledDemoScene {
             updateCommandString("deleted \(deleteCount) nodes.", duration: 3.0)
         }
 
-        // 'z' runs a debugging command
+        // 'z' refreshes the inspector
         if eventKey == 0x6 {
             NotificationCenter.default.post(
                 name: Notification.Name.Demo.RefreshInspectorInterface,
                 object: nil
             )
             
-            updateCommandString("Refreshing Inspector...", duration: 3.0)
+            updateCommandString("Refreshing Inspector outline view...", duration: 3.0)
         }
 
         // 'clear' clears the current selection

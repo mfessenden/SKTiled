@@ -37,9 +37,8 @@ class GameViewController: NSViewController, Loggable {
     let demoDelegate = TiledDemoDelegate.default
 
     var receiveCameraUpdates: Bool = true
+    var uiColor: NSColor = TiledGlobals.default.uiColor    // was '#dddddd'
 
-    var uiColor: NSColor = NSColor(hexString: "#dddddd")
-    
     // progress widget & "Paused" label
     @IBOutlet weak var progressIndicator: NSProgressIndicator!
     @IBOutlet weak var demoStatusInfoLabel: NSTextField!
@@ -103,14 +102,16 @@ class GameViewController: NSViewController, Loggable {
     deinit {
         // remove notification subscriptions
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Debug.DebuggingMessageSent, object: nil)
-
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Debug.RepositionLayers, object: nil)
+        
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.Updated, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.RenderStatsUpdated, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Map.UpdateModeChanged, object: nil)
+        
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Camera.Updated, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.RenderStats.VisibilityChanged, object: nil)
-
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Tile.RenderModeChanged, object: nil)
+        
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.UpdateDebugging, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.FlushScene, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.SceneWillUnload, object: nil)
@@ -125,13 +126,13 @@ class GameViewController: NSViewController, Loggable {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodesRightClicked, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.SceneLoaded, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
-
+        
         NotificationCenter.default.removeObserver(self, name: Notification.Name.DemoController.ResetDemoInterface, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.DemoController.WillBeginScanForAssets, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.DemoController.AssetsFinishedScanning, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.DemoController.DemoStatusUpdated, object: nil)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.Globals.Updated, object: nil)
         
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Globals.Updated, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSWindow.didChangeBackingPropertiesNotification, object: nil)
     }
 
@@ -198,12 +199,14 @@ class GameViewController: NSViewController, Loggable {
         // intialize the demo interface
         setupMainInterface()
         setupButtonAttributes()
+        
+
+        
     }
 
     override func viewDidAppear() {
         super.viewDidAppear()
         setupButtonAttributes()
-        //presentFullScreen()
     }
 
     override func viewWillTransition(to newSize: NSSize) {
@@ -417,8 +420,10 @@ class GameViewController: NSViewController, Loggable {
         NotificationCenter.default.addObserver(self, selector: #selector(demoControllerResetAction), name: Notification.Name.DemoController.WillBeginScanForAssets, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(demoStatusWasUpdated), name: Notification.Name.DemoController.DemoStatusUpdated, object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(globalsUpdatedAction), name: Notification.Name.Globals.Updated, object: nil)
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(globalLayerInfiniteOffsetChanged), name: Notification.Name.Debug.RepositionLayers, object: nil)
     }
 
     // MARK: - Command Strings
@@ -662,21 +667,23 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: notification event.
     @objc func debuggingInfoReceived(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        guard let userInfo = notification.userInfo as? [String: Any] else {
+            return
+        }
 
         tileInfoLabel.reset()
         propertiesInfoLabel.reset()
         tileInfoLabel.reset()
         
-        if let mapInfo = notification.userInfo!["mapInfo"] {
+        if let mapInfo = userInfo["mapInfo"] {
             mapInfoLabel.stringValue = mapInfo as! String
         }
 
-        if let tileInfo = notification.userInfo!["tileInfo"] {
+        if let tileInfo = userInfo["tileInfo"] {
             tileInfoLabel.stringValue = tileInfo as! String
         }
 
-        if let propertiesInfo = notification.userInfo!["focusedObjectData"] {
+        if let propertiesInfo = userInfo["focusedObjectData"] {
             if let propertiesString = propertiesInfo as? String {
                 if (propertiesString != "") {
                     propertiesInfoLabel.stringValue = propertiesString
@@ -684,7 +691,7 @@ class GameViewController: NSViewController, Loggable {
             }
         }
 
-        if let isolatedInfo = notification.userInfo!["isolatedInfo"] {
+        if let isolatedInfo = userInfo["isolatedInfo"] {
             isolatedInfoLabel.stringValue = isolatedInfo as! String
         }
     }
@@ -710,6 +717,19 @@ class GameViewController: NSViewController, Loggable {
                 }
             }
         }
+    }
+    
+    /// Indicates the global infinite offset value has changed. Called when the `Notification.Name.Debug.RepositionLayers` notification is sent.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func globalLayerInfiniteOffsetChanged(notification: Notification) {
+        notification.dump(#fileID, function: #function)
+        guard let tilemap = demoController.currentTilemap else {
+            log("cannot access tilemap.", level: .error)
+            return
+        }
+        
+        tilemap.repositionLayers()
     }
 
     /// Builds a right-click menu to select nodes at the click event location. Called when the `Notification.Name.Demo.NodesRightClicked` notification is sent (via the `SKTiledSceneCamera` node).
@@ -1196,7 +1216,7 @@ class GameViewController: NSViewController, Loggable {
         let effectsMessage = (effectsEnabled == true) ? (tilemap.shouldRasterize == true) ? "Effects: on (raster)" : "Effects: on" : "Effects: off"
         statsRenderModeLabel.stringValue = "Mode: \(tilemap.updateMode.name)"
         statsEffectsLabel.stringValue = "\(effectsMessage)"
-        statsEffectsLabel.isHidden = (effectsEnabled == false)
+        //statsEffectsLabel.isHidden = (effectsEnabled == false)
         
         
         
@@ -1370,6 +1390,53 @@ class GameViewController: NSViewController, Loggable {
         self.statsActionsLabel.stringValue = "Actions: \(actionCountString)"
 
     }
+    
+    /// Updates tilemap inifinite positioning via an alert dialog.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func infiniteOffsetChanged() {
+        
+        let alertDialog = NSAlert()
+        alertDialog.addButton(withTitle: "OK")      // 1st button
+        alertDialog.addButton(withTitle: "Cancel")  // 2nd button
+        alertDialog.messageText = "Adjust Infinite Offset"
+        alertDialog.informativeText = "Add a value to adjust infinite map positioning."
+        
+        // layout inputs
+        let xLabelField = NSTextField(frame: NSRect(x: 0, y: 0, width: 20, height: 24))
+        let yLabelField = NSTextField(frame: NSRect(x: 100, y: 0, width: 20, height: 24))
+        xLabelField.stringValue = "x:"
+        yLabelField.stringValue = "y:"
+        xLabelField.isEditable = false
+        yLabelField.isEditable = false
+
+        let xValueField = NSTextField(frame: NSRect(x: 24, y: 0, width: 80, height: 24))
+        let yValueField = NSTextField(frame: NSRect(x: 124, y: 0, width: 80, height: 24))
+        xValueField.stringValue = "\(TiledGlobals.default.infiniteOffset.x)"
+        yValueField.stringValue = "\(TiledGlobals.default.infiniteOffset.y)"
+        
+        let stackView = NSStackView(frame: NSRect(x: 0, y: 0, width: 200, height: 60))
+    
+        stackView.addSubview(xLabelField)
+        stackView.addSubview(xValueField)
+        stackView.addSubview(yLabelField)
+        stackView.addSubview(yValueField)
+        
+        alertDialog.accessoryView = stackView
+
+        // run modal
+        let response: NSApplication.ModalResponse = alertDialog.runModal()
+        
+        // if the user clicks `OK`...
+        if (response == NSApplication.ModalResponse.alertFirstButtonReturn) {
+            
+            let xValue = CGFloat(xValueField.floatValue)
+            let yValue = CGFloat(yValueField.floatValue)
+            
+            TiledGlobals.default.infiniteOffset = CGPoint(x: xValue, y: yValue)
+
+        }
+    }
 }
 
 
@@ -1381,7 +1448,7 @@ extension GameViewController: TiledSceneCameraDelegate {
     /// Called when the scene is right-clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
-    @objc func sceneRightClicked(event: NSEvent) {
+    @objc func rightMouseDown(event: NSEvent) {
         selectedInfoLabel.isHidden = true
         selectedInfoLabel.stringValue = "Nothing Selected"
     }

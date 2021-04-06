@@ -512,6 +512,18 @@ extension Array where Element: SKNode {
 /// :nodoc:
 extension Array where Element == CGPoint {
     
+    /// Returns the last two points of the array.
+    ///
+    /// - Returns: the last two points of this array.
+    public func lastTwo() -> [CGPoint]? {
+        guard count > 1 else {
+            return nil
+        }
+        
+        let mutableArray = self
+        return mutableArray.reversed()[0...1].reversed()
+    }
+    
     /// Returns a string describing an array of points.
     public var pointsString: String {
         var result: [String] = []
@@ -558,6 +570,15 @@ extension Mirror {
 // MARK: - Cocoa
 
 #if os(macOS)
+
+
+extension NSObject {
+    
+    /// Returns the name of the class minus the module.
+    public var classNiceName: String {
+        return className.components(separatedBy: ".").last!
+    }
+}
 
 
 extension NSImage {
@@ -762,6 +783,22 @@ extension NSEvent {
 
 
 #if os(iOS) || os(tvOS)
+
+
+
+extension UIResponder {
+    
+    /// A string containing the name of the class.
+    public var className: String {
+        return String(describing: Swift.type(of: self))
+    }
+    
+    /// Returns the name of the class, minus the module.
+    public var classNiceName: String {
+        return className.components(separatedBy: ".").last!
+    }
+}
+
 
 extension UIImage {
 
@@ -1048,6 +1085,7 @@ extension CGPoint {
     }
 }
 
+
 // MARK: - CGPoint
 
 extension CGPoint {
@@ -1101,7 +1139,7 @@ extension CGSize {
         self.init(width: value, height: value)
     }
 
-    /// Returns the count (in points) of this size.
+    /// Returns the size count in points (width x length).
     public var pointCount: Int {
         return Int(width) * Int(height)
     }
@@ -2030,17 +2068,17 @@ extension String {
         return path
     }
 
-    /// Returns the filename if string is a url.
+    /// Returns the URL's filename (ie: 'dungeon-16x16.tmx') if the string represents a url.
     var filename: String {
         return FileManager.default.displayName(atPath: self.url.path)
     }
 
-    /// Returns the file basename.
+    /// Returns the URL's basename (ie: 'dungeon-16x16') if the string represents a url.
     var basename: String {
         return self.url.deletingPathExtension().lastPathComponent
     }
 
-    /// Returns the file extension.
+    /// Returns the URL's file extension (ie: 'tmx') if the string represents a url.
     var fileExtension: String {
         return self.url.pathExtension
     }
@@ -2307,7 +2345,6 @@ extension Notification.Name {
 
     public struct Camera {
         public static let Updated                   = Notification.Name(rawValue: "org.sktiled.notification.name.camera.updated")
-        public static let MouseRightClicked         = Notification.Name(rawValue: "org.sktiled.notification.name.camera.mouseRightClicked")
     }
 
     public struct Globals {
@@ -3363,7 +3400,10 @@ public func bezierPath(_ points: [CGPoint],
                        closed: Bool = true,
                        alpha: CGFloat = 1) -> (path: CGPath, points: [CGPoint]) {
 
-    guard points.count > 1 else { return (CGMutablePath(), [CGPoint]()) }
+    guard points.count > 1 else {
+        return (CGMutablePath(), [CGPoint]())
+    }
+    
     assert(alpha >= 0 && alpha <= 1.0, "Alpha must be between 0 and 1")
 
     let numberOfCurves = closed ? points.count : points.count - 1
@@ -3458,6 +3498,8 @@ public func polygonPath(_ points: [CGPoint], threshold: CGFloat) -> CGPath {
 ///   - headWidth: arrow head width.
 ///   - headLength: arrow head length.
 /// - Returns: path from the given points.
+///
+/// [arrow-parts-url]:https://mfessenden.github.io/SKTiled/1.3/images/arrow-parts.svg
 public func arrowFromPoints(startPoint: CGPoint,
                             endPoint: CGPoint,
                             tailWidth: CGFloat,

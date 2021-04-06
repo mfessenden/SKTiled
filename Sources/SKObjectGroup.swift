@@ -116,23 +116,6 @@ public class SKObjectGroup: TiledLayerObject {
         return current
     }
 
-    override var layerRenderStatistics: LayerRenderStatistics {
-        var current = super.layerRenderStatistics
-        var oc: Int
-
-        switch updateMode {
-            case .full:
-                oc = self.getObjects().count
-            case .dynamic:
-                oc = 0
-            default:
-                oc = 0
-        }
-
-        current.objects = oc
-        return current
-    }
-
     /// Render scaling property.
     public override var renderQuality: CGFloat {
         didSet {

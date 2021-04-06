@@ -326,7 +326,7 @@ public class SKTileset: NSObject, CustomReflectable, TiledObjectType {
     /// Create tile texture data from a spritesheet image.
     ///
     /// - Parameters:
-    ///   - source: image named referenced in the tileset.
+    ///   - source: image path referenced in the tileset.
     ///   - replace: replace the current texture.
     ///   - transparent: optional transparent color hex value.
     public func addTextures(fromSpriteSheet source: String,
@@ -361,16 +361,19 @@ public class SKTileset: NSObject, CustomReflectable, TiledObjectType {
 
             sourceTexture.filteringMode = .nearest
 
-            let textureWidth = Int(sourceTexture.size().width)
-            let textureHeight = Int(sourceTexture.size().height)
-
+            let sourceImageWidth = Int(sourceTexture.size().width)
+            let sourceImageHeight = Int(sourceTexture.size().height)
+            
+            self.log("reading source image '\(inputUrl.lastPathComponent)' @ \(sourceImageWidth)x\(sourceImageHeight)", level: .debug)
+            
+            
             // calculate the number of tiles in the texture
             let marginReal = margin * 2
-            let rowTileCount = (textureHeight - marginReal + spacing) / (Int(tileSize.height) + spacing)  // number of tiles (height)
-            let colTileCount = (textureWidth - marginReal + spacing) / (Int(tileSize.width) + spacing)    // number of tiles (width)
+            let rowTileCount = (sourceImageHeight - marginReal + spacing) / (Int(tileSize.height) + spacing)  // number of tiles (height)
+            let colTileCount = (sourceImageWidth - marginReal + spacing) / (Int(tileSize.width) + spacing)    // number of tiles (width)
 
             // set columns property
-            if columns == 0 {
+            if (columns == 0) {
                 columns = colTileCount
             }
 
@@ -386,7 +389,7 @@ public class SKTileset: NSObject, CustomReflectable, TiledObjectType {
 
             let usableHeight = margin + rowHeight + rowSpacing
             let tileSizeHeight = Int(tileSize.height)
-            let heightDifference = textureHeight - usableHeight
+            let heightDifference = sourceImageHeight - usableHeight
 
             // invert the y-coord
             // TODO: need to flip this?
@@ -398,12 +401,14 @@ public class SKTileset: NSObject, CustomReflectable, TiledObjectType {
             for index in 0..<totalTileCount {
 
                 let tileId = UInt32(index)
-
-                let rectStartX = CGFloat(x) / CGFloat(textureWidth)
-                let rectStartY = CGFloat(y) / CGFloat(textureHeight)
-
-                let rectWidth = self.tileSize.width / CGFloat(textureWidth)
-                let rectHeight = self.tileSize.height / CGFloat(textureHeight)
+                
+                // determine the start position of the texture rect we're capturing
+                let rectStartX = CGFloat(x) / CGFloat(sourceImageWidth)
+                let rectStartY = CGFloat(y) / CGFloat(sourceImageHeight)
+                
+                // texture rect size
+                let rectWidth = self.tileSize.width / CGFloat(sourceImageWidth)
+                let rectHeight = self.tileSize.height / CGFloat(sourceImageHeight)
 
                 // create texture rectangle & extract texture
                 let tileRect = CGRect(x: rectStartX, y: rectStartY, width: rectWidth, height: rectHeight)
@@ -417,10 +422,12 @@ public class SKTileset: NSObject, CustomReflectable, TiledObjectType {
                     _ = self.setDataTexture(tileID: tileId, texture: tileTexture)
                 }
 
-                x += Int(self.tileSize.width) + self.spacing
-                if x >= textureWidth {
+                // x += Int(self.tileSize.width) + self.spacing
+                x += Int(self.tileSize.width + self.spacing)
+                if x >= sourceImageWidth {
                     x = self.margin
-                    y -= Int(self.tileSize.height) + self.spacing
+                    // y -= Int(self.tileSize.height) + self.spacing
+                    y -= Int(self.tileSize.height + self.spacing)
                 }
 
                 tilesAdded += 1
@@ -438,7 +445,7 @@ public class SKTileset: NSObject, CustomReflectable, TiledObjectType {
 
                 let animatedData: [SKTilesetData] = self.tileData.filter { $0.isAnimated == true }
 
-                // update animated data
+                // add animated data to tile data storage
                 NotificationCenter.default.post(
                     name: Notification.Name.Tileset.SpriteSheetUpdated,
                     object: self,

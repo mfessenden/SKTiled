@@ -37,9 +37,7 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         
         // set the window title
         window?.title = "\(TiledGlobals.default.executableName) Preferences"
-        
-        // set the proper size
-//        window?.setFrame(NSRect(x: 0, y: 0, width: 700, height: 600), display: true)
+        window?.level = NSWindow.Level.normal
     }
 
     func windowShouldClose(_ sender: NSWindow) -> Bool {

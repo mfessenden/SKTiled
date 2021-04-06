@@ -403,6 +403,6 @@ extension TiledDemoDelegate: TiledSceneCameraDelegate {
         currentCameraZoom = newZoom
     }
     
-    @objc public func sceneRightClicked(event: NSEvent) {}
+    @objc public func rightMouseDown(event: NSEvent) {}
 }
 

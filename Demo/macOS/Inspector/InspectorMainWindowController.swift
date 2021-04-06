@@ -35,7 +35,7 @@ class InspectorMainWindowController: NSWindowController, NSWindowDelegate {
         setupNotifications()
         resetInterface()
         
-        self.window?.level = NSWindow.Level.normal // (rawValue: NSWindow.Level.normal.rawValue - 1)
+        window?.level = NSWindow.Level.normal // (rawValue: NSWindow.Level.normal.rawValue - 1)
     }
     
     override var acceptsFirstResponder: Bool {
@@ -47,6 +47,7 @@ class InspectorMainWindowController: NSWindowController, NSWindowDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(demoSceneLoaded), name: Notification.Name.Demo.SceneLoaded, object: nil)
     }
     
+    /// Reset the main interface.
     func resetInterface() {
         var wintitle = " (no scene)"
         if let currentUrl = TiledDemoController.default.currentTilemapUrl {

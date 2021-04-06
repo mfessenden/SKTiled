@@ -118,7 +118,7 @@ extension TiledGeometryType {
         anchorShape.isHidden = true
     }
     
-    /// Returns the `SKTiled` geometry object class name.
+    /// A string containing the name of the `SKTiled` geometry object.
     public var className: String {
         let objtype = String(describing: Swift.type(of: self))
         if let suffix = objtype.components(separatedBy: ".").last {
@@ -144,9 +144,14 @@ extension TiledGeometryType {
         return "\(hashValue)_ANCHOR"
     }
     
-    /// Unique identifier used to access anchor point shape nodes.
+    /// Unique identifier used to access object's first point shapes.
     internal var firstPointKey: String {
         return "\(hashValue)_FIRST_POINT"
+    }
+    
+    /// Unique identifier used to access polyline last point shapes.
+    internal var lastPointKey: String {
+        return "\(hashValue)_LAST_POINT"
     }
 }
 
@@ -218,10 +223,8 @@ extension SKNode {
     }
     
     #if os(macOS)
-    
-    // FIXME: this is overiding derivative classes
-    
-    /// Returns the object class name.
+
+    /// A string containing the name of the class.
     public override var className: String {
         let objtype = String(describing: type(of: self))
         if let suffix = objtype.components(separatedBy: ".").last {
@@ -239,15 +242,6 @@ extension SKNode {
     }
     
     #elseif os(iOS) || os(tvOS)
-    
-    /// Returns the object class name.
-    public var className: String {
-        let objtype = String(describing: type(of: self))
-        if let suffix = objtype.components(separatedBy: ".").last {
-            return suffix
-        }
-        return objtype
-    }
     
     /// Returns an array of all visible **Tiled** nodes that intersect the given mouse event.
     ///

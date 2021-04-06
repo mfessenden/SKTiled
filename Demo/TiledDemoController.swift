@@ -97,6 +97,11 @@ public class TiledDemoController: NSObject, Loggable {
 
     /// The current tilemap.
     public weak var currentTilemap: SKTilemap?
+    
+    /// The current demo camera.
+    public weak var currentCamera: SKTiledSceneCamera? {
+        return currentTilemap?.cameraNode
+    }
 
     /// The currently loaded index.
     public internal(set) var currentTilemapIndex = -1
@@ -399,7 +404,7 @@ public class TiledDemoController: NSObject, Loggable {
         )
 
 
-        // disasble the camera
+        // disable the camera
         nextScene.cameraNode?.allowMovement = false
         nextScene.cameraNode?.allowZoom = false
         nextScene.cameraNode?.allowRotation = false
@@ -455,7 +460,8 @@ public class TiledDemoController: NSObject, Loggable {
         var tileUpdateMode: TileUpdateMode?
 
         var allowCameraZoom = false
-
+        var allowCameraMovement = false
+        var allowCameraRotation = false
 
         if (tileUpdateMode == nil) {
             if let prefsUpdateMode = TileUpdateMode(rawValue: defaultPreferences.updateMode) {
@@ -536,9 +542,12 @@ public class TiledDemoController: NSObject, Loggable {
             currentScene.tilemap = nil
             currentSpeed = currentScene.speed
             currentScene.demoController = nil
+            currentScene.demoDelegate = nil
 
             // deallocate scene
             currentScene.removeAllActions()
+            
+            // FIXME: this is crashing 
             currentScene.removeAllChildren()
             currentScene.removeFromParent()
             view.presentScene(nil)
@@ -620,8 +629,8 @@ public class TiledDemoController: NSObject, Loggable {
                 tilemap.shouldRasterize = shouldRasterize
                 tilemap.updateMode = tileUpdateMode ?? TiledGlobals.default.updateMode
 
-
-                self.demoQueue.async { [unowned self] in
+                // FIXME: crash here (changed from `async` to `sync`)
+                self.demoQueue.sync { [unowned self] in
                     for option in self.debugDrawOptions.elements() {
                         tilemap.debugDrawOptions.insert(option)
                     }

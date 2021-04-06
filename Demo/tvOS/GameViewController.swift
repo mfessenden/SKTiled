@@ -32,7 +32,7 @@ import GameController
 class GameViewController: GCEventViewController, Loggable {
 
     let demoController = TiledDemoController.default
-    var uiColor: UIColor = UIColor(hexString: "#757B8D")
+    var uiColor: UIColor = TiledGlobals.default.uiColor
 
     // debugging labels (top)
     @IBOutlet weak var cameraInfoLabel: UILabel!
@@ -67,12 +67,11 @@ class GameViewController: GCEventViewController, Loggable {
     // container for the buttons
     @IBOutlet weak var mainControlsView: UIStackView!
 
-    // camera mode icons
+    // camera control
     @IBOutlet weak var controlIconView: UIStackView!
-
-    // icon controls
     @IBOutlet weak var dollyIcon: UIImageView!
     @IBOutlet weak var zoomIcon: UIImageView!
+    @IBOutlet weak var rotateIcon: UIImageView!
 
     @IBOutlet var demoFileAttributes: NSObject!
 
@@ -162,6 +161,7 @@ class GameViewController: GCEventViewController, Loggable {
 
     /// Setup the main interface.
     func setupMainInterface() {
+        
         outputBottomView.layer.cornerRadius = 8
         mapInfoLabel.text = "Map: "
         debuggingMessageLabel.text = "Command: "
@@ -292,37 +292,45 @@ class GameViewController: GCEventViewController, Loggable {
             return
         }
 
-        //controlIconView.isHidden = true
-        //dollyIcon.isHidden = true
-        //zoomIcon.isHidden = true
-
         var stackViewHidden = true
         var dollyHidden = true
         var zoomHidden = true
-
+        var rotateHidden = true
+        
         switch camera.controlMode {
 
             case .dolly:
                 stackViewHidden = false
                 dollyHidden = false
                 zoomHidden = true
+                rotateHidden = true
 
             case .zoom:
                 stackViewHidden = false
                 dollyHidden = true
                 zoomHidden = false
-
+                rotateHidden = true
+                
+            case .rotate:
+                stackViewHidden = false
+                dollyHidden = true
+                zoomHidden = true
+                rotateHidden = false
+                
             case .none:
                 stackViewHidden = true
                 dollyHidden = false
                 zoomHidden = false
+                rotateHidden = false
         }
 
         controlIconView.isHidden = stackViewHidden
 
         dollyIcon.isHidden = dollyHidden
         zoomIcon.isHidden = zoomHidden
-
+        rotateIcon.isHidden = rotateHidden
+        
+        
         fitButton?.isEnabled = stackViewHidden
         gridButton?.isEnabled = stackViewHidden
         graphButton?.isEnabled = stackViewHidden

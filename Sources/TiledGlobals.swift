@@ -194,6 +194,9 @@ public class TiledGlobals {
     /// Default layer z-position offset.
     public var zDeltaForLayers: CGFloat = 50
 
+    /// User interface color.
+    public var uiColor: SKColor = SKColor(hexString: "#757b8d")
+    
     // TODO: this is unused
     
     /// Default debugging objects lower range.
@@ -206,7 +209,28 @@ public class TiledGlobals {
     public var enableTilemapNotifications: Bool = false
     
     /// Enable infinite offset use.
-    public var enableTilemapInfiniteOffsets: Bool = false
+    public var enableTilemapInfiniteOffsets: Bool = false {
+        didSet {
+            #if DEVELOPMENT_MODE
+            NotificationCenter.default.post(
+                name: Notification.Name.Debug.RepositionLayers,
+                object: nil
+            )
+            #endif
+        }
+    }
+    
+    /// Infinite map offset value.
+    internal var infiniteOffset: CGPoint = CGPoint.zero {
+        didSet {
+            #if DEVELOPMENT_MODE
+            NotificationCenter.default.post(
+                name: Notification.Name.Debug.RepositionLayers,
+                object: nil
+            )
+            #endif
+        }
+    }
     
     /// Enable callbacks from camera to camera delegates.
     public var enableCameraCallbacks: Bool = false
@@ -363,7 +387,6 @@ public class TiledGlobals {
         enableRenderPerformanceCallbacks = true
         #endif
 
-
         #if SKTILED_DEMO
         enableCameraContainedNodesCallbacks = true
 
@@ -453,6 +476,9 @@ public class TiledGlobals {
 
         /// Debug grid visualization opacity.
         public var gridOpactity: CGFloat = 0.6
+        
+        /// Tile color blend opacity.
+        public var tileHighlighBlendFactor: CGFloat = 0.6
 
         /// Debug grid visualization color.
         public var gridColor: SKColor = TiledObjectColors.grass
@@ -508,7 +534,6 @@ public class TiledGlobals {
             }
         }
     }
-
 
     public struct LayerTintOptions {
 
@@ -638,12 +663,19 @@ extension TiledGlobals: TiledCustomReflectableType {
         print("  ▸ beta:                    \(isBeta)")
         print("  ▸ playground:              \(isPlayground)")
         print("  ▸ speed:                   \(self.speed.stringRoundedTo(1))")
-        print("  ▸ renderer:                \(self.renderer.name)")
-        print("  ▸ screen size:             \(self.screenSize.shortDescription)")
-        print("  ▸ screen rect:             \(self.screenRect.shortDescription)")
-        print("  ▸ retina scale factor:     \(self.contentScale)")
+        print("  ▸ renderer:                \(self.renderer.name)\n")
+        
+        
+        print("  ▾ Screen:")
+        print("     ▸ screen size:             \(self.screenSize.shortDescription)")
+        print("     ▸ retina scale factor:     \(self.contentScale)")
+        print("     ▸ screen rect:             \(self.screenRect.shortDescription)\n")
+
+
         print("  ▸ logging level:           \(self.loggingLevel)")
         print("  ▸ update mode:             \(self.updateMode.name)")
+        print("  ▸ layer z-delta:           \(self.zDeltaForLayers.stringRoundedTo())")
+        print("  ▸ ui color:                \(self.uiColor.hexString())")
         print("  ▸ debug draw options:      \(self.debugDrawOptions.debugDescription)")
         print("  ▸ render callbacks:        \(self.enableRenderPerformanceCallbacks)")
         print("  ▸ mouse event frequency:   \(self.mouseEventDelta.stringRoundedTo(4))")
@@ -657,25 +689,29 @@ extension TiledGlobals: TiledCustomReflectableType {
         print("  ▾ Demo Assets:")
         print("     ▸ allow demo assets:    \(self.allowDemoMaps)")
         print("     ▸ allow user assets:    \(self.allowUserMaps)\n")
+        
         print("  ▾ Debug Display: ")
         print("     ▸ highlight duration:   \(self.debugDisplayOptions.highlightDuration)")
         print("     ▸ grid opacity:         \(self.debugDisplayOptions.gridOpactity)")
+        print("     ▸ tile color blend:     \(self.debugDisplayOptions.tileHighlighBlendFactor.stringRoundedTo())")
         print("     ▸ object fill opacity:  \(self.debugDisplayOptions.objectFillOpacity)")
         print("     ▸ object line width:    \(self.debugDisplayOptions.lineWidth)")
         print("     ▸ grid color:           \(self.debugDisplayOptions.gridColor.hexString())")
         print("     ▸ anchor radius:        \(self.debugDisplayOptions.anchorRadius)\n")
+        
         print("  ▾ Render Quality: ")
         print("     ▸ default:              \(self.renderQuality.default)")
         print("     ▸ object:               \(self.renderQuality.object)")
         print("     ▸ text:                 \(self.renderQuality.text)")
         print(self.renderQuality.override > 0 ? "     ⁃ override:             \(self.renderQuality.override)\n" : "")
+        
         #if os(macOS)
         print("  ▾ Debug Mouse Filters:")
         print("     ▸ tile coordinates:     \(self.debugDisplayOptions.mouseFilters.contains(.tileCoordinates))")
         print("     ▸ scene coordinates:    \(self.debugDisplayOptions.mouseFilters.contains(.scenePosition))")
         print("     ▸ map coordinates:      \(self.debugDisplayOptions.mouseFilters.contains(.mapPosition))")
         print("     ▸ tile data:            \(self.debugDisplayOptions.mouseFilters.contains(.tileDataUnderCursor))")
-        print("     ▸ mouse pointer:        \(self.debugDisplayOptions.mouseFilters.enableMousePointer)")
+        print("     ▸ mouse pointer:        \(self.debugDisplayOptions.mouseFilters.enableMousePointer)\n")
         #endif
         print("\n---------------------------------------\n")
     }

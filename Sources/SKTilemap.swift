@@ -243,8 +243,8 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         }
     }
     
+    
     // MARK: - Layers
-
     
     /// Array of layers contained in this map. This includes private layers (such as `SKTilemap.defaultLayer`)
     private var _layers: Set<TiledLayerObject> = []
@@ -669,7 +669,9 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         }
     }
 
-    /// Enable effects rendering of this node.
+    /// A Boolean value that determines whether the tilemap node applies the filter to its child layers as they are drawn.
+    ///
+    /// If the value of this property is true, the effect node applies the filter and blends the results. If the value is false, the effect node is ignored and its children are rendered normally. The default value is false.
     public var shouldEnableEffects: Bool {
         get {
             return contentRoot.shouldEnableEffects
@@ -1557,9 +1559,9 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         debugRoot.name = "MAP_DEBUG_ROOT"
 
         #if SKTILED_DEMO
-        cropNode.setAttrs(values: ["tiled-help-desc": "Allows for the Tilemap's renderable content to be cropped."])
-        contentRoot.setAttrs(values: ["tiled-help-desc": "Root node for all Tiled image & vector types."])
-        debugRoot.setAttrs(values: ["tiled-node-nicename": "Debug Root", "tiled-node-role": "debugroot", "tiled-node-icon": "debug-icon", "tiled-node-listdesc": "Map Debug Root","tiled-help-desc": "Root node for Tilemap debug visualization nodes."])
+        cropNode.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Allows for the Tilemap's renderable content to be cropped."])
+        contentRoot.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Root node for all Tiled image & vector types."])
+        debugRoot.setAttrs(values: ["tiled-invisible-node": true, "tiled-node-nicename": "Debug Root", "tiled-node-role": "debugroot", "tiled-node-icon": "debug-icon", "tiled-node-listdesc": "Map Debug Root","tiled-help-desc": "Root node for Tilemap debug visualization nodes."])
         #endif
 
         addChild(debugRoot)
@@ -1792,7 +1794,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return _layers.remove(layer)
     }
 
-    /// Create and add a new tile layer.
+    /// Create and add a new tile layer. By default, the new layer will be parented to the tilemap instance unless an optional group layer is specified.
     ///
     /// - Parameters:
     ///   - named: layer name.
@@ -1803,8 +1805,25 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         let tileLayer = SKTileLayer(layerName: named, tilemap: self)
         return addLayer(tileLayer, group: group).layer as! SKTileLayer
     }
-
-    /// Create and add a new object group.
+    
+    /// Create and add a new tile layer with optional layer data. By default, the new layer will be parented to the tilemap instance unless an optional group layer is specified.
+    ///
+    /// - Parameters:
+    ///   - named: layer name.
+    ///   - group: optional group layer.
+    ///   - data: array of tile global ids.
+    /// - Returns: new tile layer.
+    @discardableResult
+    public func newTileLayer(named: String,
+                             group: SKGroupLayer? = nil,
+                             data: [UInt32] = []) -> SKTileLayer {
+        
+        let tileLayer = SKTileLayer(layerName: named, tilemap: self)
+        tileLayer.setLayerData(data)
+        return addLayer(tileLayer, group: group).layer as! SKTileLayer
+    }
+    
+    /// Create and add a new object group.  By default, the new layer will be parented to the tilemap instance unless an optional group layer is specified.
     ///
     /// - Parameters:
     ///   - named: layer name.
@@ -1816,7 +1835,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return addLayer(groupLayer, group: group).layer as! SKObjectGroup
     }
 
-    /// Create and add a new image layer.
+    /// Create and add a new image layer.  By default, the new layer will be parented to the tilemap instance unless an optional group layer is specified.
     ///
     /// - Parameters:
     ///   - named: layer name.
@@ -1828,7 +1847,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return addLayer(imageLayer, group: group).layer as! SKImageLayer
     }
 
-    /// Create and add a new group layer.
+    /// Create and add a new group layer. By default, the new layer will be parented to the tilemap instance unless an optional group layer is specified.
     ///
     /// - Parameters:
     ///   - named: layer name.
@@ -1967,15 +1986,32 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         return nil
     }
     
-    
-    
-    
-    internal func replaceLayer(old oldLayer: TiledLayerObject, new newLayer: TiledLayerObject) {
+    /// Replaces one layer with another.
+    ///
+    /// - Parameters:
+    ///   - oldLayer: layer to replace.
+    ///   - newLayer: layer to replace with.
+    internal func replaceLayer(old oldLayer: TiledLayerObject, new newLayer: TiledLayerObject) -> (success: Bool, old: TiledLayerObject, new: TiledLayerObject) {
         guard let oldLayerIndex = _layers.firstIndex(of: oldLayer) else {
-            return
+            return (false, oldLayer, newLayer)
         }
         
-        _layers.remove(at: oldLayerIndex)
+        // TODO: test this
+        
+        var mutableLayers = _layers
+        let removed = mutableLayers.remove(at: oldLayerIndex)
+        
+        /*
+        defer {
+            removed.destroy()
+        }
+        */
+
+        var newLayers = Array(mutableLayers)
+        let intval = _layers.distance(from: _layers.startIndex, to: oldLayerIndex)
+        newLayers.insert(newLayer, at: intval)
+        _layers = Set(newLayers)
+        return (true, removed, newLayer)
     }
 
     /// Position child layers in relation to the map's anchorpoint. Called when a layer is initially added, or the tilemap node's `layerAlignment` is modified.
@@ -2005,6 +2041,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         }
         
         //result += layer.debugOffset
+        result += TiledGlobals.default.infiniteOffset
         
         // set the layer final position
         layer.position = result
@@ -2041,6 +2078,16 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         let startingZ: CGFloat = (from != nil) ? from! : zPosition
         getLayers().forEach { $0.zPosition = startingZ + (zDeltaForLayers * CGFloat($0.index)) }
     }
+    
+    /// Returns an array of tile & object layers.
+    ///
+    /// - Returns: tile & vector object layers.
+    public func contentLayers() -> [TiledLayerObject] {
+        var tilelayers = tileLayers() as [TiledLayerObject]
+        tilelayers.append(contentsOf: objectGroups() as [TiledLayerObject])
+        return tilelayers
+    }
+    
 
     // MARK: - Tiles
 
@@ -3655,21 +3702,26 @@ extension SKTilemap: TiledSceneCameraDelegate {
             cameraPosition = newPosition
         }
         
+        #if DEVELOPMENT_MODE
+        // dampen the movement speed
         let dampen: CGFloat = 0.5
-        let delta = cameraPosition.delta(to: newPosition)
         
+        // -x == map is scrolling leftwards, -y == map is scrolling downwards
+        let delta = cameraPosition.delta(to: newPosition)
+
         // Move layers according to their parallax values
         getLayers().forEach { layer in
             let layerParallax = layer.parallax
             
             if (layerParallax.x != 1) {
-                layer.position.x -= (delta.x * layer.parallax.x) * dampen
+                layer.position.x -= (delta.x * dampen) * layer.parallax.x
             }
             
             if (layerParallax.y != 1) {
-                layer.position.y += (delta.y * layer.parallax.y) * dampen
+                layer.position.y += (delta.y * dampen) * layer.parallax.y
             }
         }
+        #endif
     }
 
     /// Called when the camera zoom changes.
@@ -3695,7 +3747,7 @@ extension SKTilemap: TiledSceneCameraDelegate {
     /// Handler for when the scene is clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
-    @objc public func sceneClicked(event: NSEvent) {
+    @objc public func leftMouseDown(event: NSEvent) {
         let nodesAtClickLocation = handleMouseEvent(event: event)
         guard let firstNode = nodesAtClickLocation.first else {
             return
@@ -3707,7 +3759,7 @@ extension SKTilemap: TiledSceneCameraDelegate {
     /// Called when the scene is double-clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
-    @objc public func sceneDoubleClicked(event: NSEvent) {
+    @objc public func leftMouseDoubleClicked(event: NSEvent) {
         // TODO: implement this
     }
 

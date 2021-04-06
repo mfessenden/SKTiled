@@ -184,7 +184,7 @@ extension TiledCustomReflectableType {
                 result["tile-node-tilesizeh"] = tileNode.tileSize.height
                 
                 result["tile-node-gid"] = tileNode.tileData.globalID
-                result["tile-node-realgid"] = tileNode.realTileId
+                result["tile-node-realgid"] = tileNode.maskedTileId
                 result["tile-node-localid"] = tileNode.tileData.id
                 result["tile-node-tileset"] = tileNode.tileData.tileset.name
                 result["tile-node-tileset-first"] = tileNode.tileData.tileset.firstGID

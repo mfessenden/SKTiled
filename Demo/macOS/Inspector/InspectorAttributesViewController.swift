@@ -33,6 +33,9 @@ class InspectorAttributesViewController: NSViewController {
 
     let demoController = TiledDemoController.default
     let demoDelegate = TiledDemoDelegate.default
+    
+    /// Handle camera callbacks.
+    var receiveCameraUpdates: Bool = true
 
     @IBOutlet weak var attributesBox: NSBox!             // the top-level box group
     @IBOutlet weak var attributesEditorView: NSView!     // the parent view of all attribute widgets (Note: this has a scrollView just below it)
@@ -104,6 +107,8 @@ class InspectorAttributesViewController: NSViewController {
         initializeAttributesEditor()
         setAttributesEditorStatus(enabled: false)
         //iconViewController = storyboard!.instantiateController(withIdentifier: "IconViewController") as? IconViewController
+        
+        demoController.currentCamera?.addDelegate(self)
     }
 
     func resetInterface() {
@@ -118,9 +123,7 @@ class InspectorAttributesViewController: NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(resetInterfaceAction), name: Notification.Name.Demo.NodesAboutToBeSelected, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sceneWillUnloadAction), name: Notification.Name.Demo.SceneWillUnload, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionChanged), name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(mouseRightClickAction), name: Notification.Name.Camera.MouseRightClicked, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(dumpAttributeEditorWidgets), name: Notification.Name.Debug.DumpAttributeEditor, object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(dumpAttributeStorage), name: Notification.Name.Debug.DumpAttributeStorage, object: nil)
     }
 
@@ -130,7 +133,6 @@ class InspectorAttributesViewController: NSViewController {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodesAboutToBeSelected, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.SceneWillUnload, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.Camera.MouseRightClicked, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Debug.DumpAttributeEditor, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Debug.DumpAttributeStorage, object: nil)
     }
@@ -246,7 +248,7 @@ class InspectorAttributesViewController: NSViewController {
         }
     }
 
-    /// Called when the node selection has changed.
+    /// Handle the currently selected nodes. Called when the node selection has changed.
     func handleNodeSelection() {
         let currentNodeCount = focusedNodes.count
         setAttributesEditorStatus(enabled: currentNodeCount > 0)
@@ -461,20 +463,24 @@ class InspectorAttributesViewController: NSViewController {
         if let spriteTexture = nodeAttributeStorage.firstValue(for: "sk-sprite-texture") as? SKTexture {
             spriteTexture.filteringMode = .nearest
             spritePreview?.layer?.backgroundColor = NSColor(hexString: "#222222").cgColor
+            spritePreview?.layer?.shouldRasterize = false
             spritePreview?.wantsLayer = true
-            spritePreview?.layer?.magnificationFilter = .nearest
+            
             let textureNsImage = NSImage(cgImage: spriteTexture.cgImage(), size: spriteTexture.size())
             spritePreview?.image = textureNsImage
+            spritePreview?.layer?.magnificationFilter = .nearest
         }
         
         
         if let tileTexture = nodeAttributeStorage.firstValue(for: "tile-node-texture") as? SKTexture {
             tileTexture.filteringMode = .nearest
             tilePreview?.layer?.backgroundColor = NSColor(hexString: "#222222").cgColor
+            spritePreview?.layer?.shouldRasterize = false
             tilePreview?.wantsLayer = true
-            tilePreview?.layer?.magnificationFilter = .nearest
+            
             let textureNsImage = NSImage(cgImage: tileTexture.cgImage(), size: tileTexture.size())
             tilePreview?.image = textureNsImage
+            tilePreview?.layer?.magnificationFilter = .nearest
         }
 
         objectIDField?.setStringValue(for: "obj-node-id", attribute: nodeAttributeStorage)
@@ -499,14 +505,6 @@ class InspectorAttributesViewController: NSViewController {
     /// Called when the current scene has been cleared.
     @objc func sceneWillUnloadAction(notification: Notification) {
         resetInterface()
-    }
-
-
-    /// Called when the user right-clicks the mouse.
-    ///
-    /// - Parameter notification: event notification.
-    @objc func mouseRightClickAction(notification: Notification) {
-        setupAttributeEditor()
     }
 
     /// Called when the current scene has been cleared.
@@ -644,6 +642,7 @@ class InspectorAttributesViewController: NSViewController {
             }
         }
 
+        
         let updatedNodeData: [String: [SKNode]] = ["updated": Array(demoDelegate.focusedNodes)]
         
         
@@ -661,6 +660,25 @@ class InspectorAttributesViewController: NSViewController {
 
 
 // MARK: - Extensions
+
+
+
+extension InspectorAttributesViewController: TiledSceneCameraDelegate {
+    
+    #if os(macOS)
+    
+    /// Called when the scene is right-clicked **(macOS only)**.
+    ///
+    /// - Parameter event: mouse click event.
+    @objc func rightMouseDown(event: NSEvent) {
+        setupAttributeEditor()
+    }
+    
+    #endif
+}
+
+
+
 
 // TODO: need to implement this
 extension InspectorAttributesViewController: NSStackViewDelegate {
@@ -822,6 +840,7 @@ extension InspectorAttributesViewController: NSTextFieldDelegate {
             node.updateAttributes()
         })
         
+        // call back to reload the Inspector tree view
         NotificationCenter.default.post(
             name: Notification.Name.Demo.RefreshInspectorInterface,
             object: nil

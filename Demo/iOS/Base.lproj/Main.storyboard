@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
     <device id="retina6_1" orientation="landscape" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18092"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -40,6 +40,80 @@
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Command" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wwJ-ex-eLJ" userLabel="Debug Info Label">
                                         <rect key="frame" x="0.0" y="26" width="50" height="13"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <color key="textColor" red="0.99019607843137258" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="shadowColor" red="0.51032221499999997" green="0.51032221499999997" blue="0.51032221499999997" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="28" translatesAutoresizingMaskIntoConstraints="NO" id="fcL-31-5Qi" userLabel="Top Buttons">
+                                <rect key="frame" x="384" y="55" width="128" height="24"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1hZ-94-Txr" userLabel="Effects Button">
+                                        <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="24" id="D7b-CP-MEC"/>
+                                            <constraint firstAttribute="height" constant="24" id="FzH-3A-vEH"/>
+                                        </constraints>
+                                        <state key="normal" image="effects-default"/>
+                                        <connections>
+                                            <action selector="effectsButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="2tt-5H-LTh"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0bg-cc-WPZ" userLabel="Update Mode Button">
+                                        <rect key="frame" x="52" y="0.0" width="24" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="PZg-aW-9Pd"/>
+                                            <constraint firstAttribute="width" constant="24" id="jTw-pt-fbD"/>
+                                        </constraints>
+                                        <state key="normal" image="update-mode"/>
+                                        <connections>
+                                            <action selector="tilemapUpdateModeAction:" destination="BV1-FR-VrT" eventType="touchUpInside" id="23v-8C-qqf"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5eI-Ql-V94" userLabel="Clamping Button">
+                                        <rect key="frame" x="104" y="0.0" width="24" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="24" id="B8d-kG-MyO"/>
+                                            <constraint firstAttribute="height" constant="24" id="FTX-OS-SXf"/>
+                                        </constraints>
+                                        <state key="normal" image="clamping"/>
+                                        <connections>
+                                            <action selector="clampButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="nQC-kf-waG"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rotate-device-alt" translatesAutoresizingMaskIntoConstraints="NO" id="s2E-CQ-Gyp">
+                                <rect key="frame" x="424" y="89" width="48" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="48" id="NWZ-r7-0FK"/>
+                                    <constraint firstAttribute="height" constant="48" id="ZMY-sh-0kb"/>
+                                </constraints>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="v8l-N1-lID" userLabel="Output-Bottom">
+                                <rect key="frame" x="422.5" y="319" width="51.5" height="39"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tr1-Rb-3Hz" userLabel="Map Info Label">
+                                        <rect key="frame" x="0.0" y="0.0" width="51.5" height="13"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
+                                        <color key="textColor" red="0.99019607843137258" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="shadowColor" red="0.5103222150259068" green="0.5103222150259068" blue="0.5103222150259068" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tile" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ezb-0z-1AU" userLabel="Tile Info Label">
+                                        <rect key="frame" x="0.0" y="13" width="51.5" height="13"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <color key="textColor" red="0.99019607843137258" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="shadowColor" red="0.51032221499999997" green="0.51032221499999997" blue="0.51032221499999997" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Properties" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmn-aw-alp" userLabel="Properties Info Label">
+                                        <rect key="frame" x="0.0" y="26" width="51.5" height="13"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                         <color key="textColor" red="0.99019607843137258" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -143,80 +217,6 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="v8l-N1-lID" userLabel="Output-Bottom">
-                                <rect key="frame" x="422.5" y="319" width="51.5" height="39"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tr1-Rb-3Hz" userLabel="Map Info Label">
-                                        <rect key="frame" x="0.0" y="0.0" width="51.5" height="13"/>
-                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
-                                        <color key="textColor" red="0.99019607843137258" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="shadowColor" red="0.5103222150259068" green="0.5103222150259068" blue="0.5103222150259068" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <size key="shadowOffset" width="1" height="1"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tile" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ezb-0z-1AU" userLabel="Tile Info Label">
-                                        <rect key="frame" x="0.0" y="13" width="51.5" height="13"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                        <color key="textColor" red="0.99019607843137258" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="shadowColor" red="0.51032221499999997" green="0.51032221499999997" blue="0.51032221499999997" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <size key="shadowOffset" width="1" height="1"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Properties" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmn-aw-alp" userLabel="Properties Info Label">
-                                        <rect key="frame" x="0.0" y="26" width="51.5" height="13"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                        <color key="textColor" red="0.99019607843137258" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="shadowColor" red="0.51032221499999997" green="0.51032221499999997" blue="0.51032221499999997" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <size key="shadowOffset" width="1" height="1"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="28" translatesAutoresizingMaskIntoConstraints="NO" id="fcL-31-5Qi" userLabel="Top Buttons">
-                                <rect key="frame" x="384" y="55" width="128" height="24"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1hZ-94-Txr" userLabel="Effects Button">
-                                        <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="24" id="D7b-CP-MEC"/>
-                                            <constraint firstAttribute="height" constant="24" id="FzH-3A-vEH"/>
-                                        </constraints>
-                                        <state key="normal" image="effects-default"/>
-                                        <connections>
-                                            <action selector="effectsButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="2tt-5H-LTh"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0bg-cc-WPZ" userLabel="Update Mode Button">
-                                        <rect key="frame" x="52" y="0.0" width="24" height="24"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="24" id="PZg-aW-9Pd"/>
-                                            <constraint firstAttribute="width" constant="24" id="jTw-pt-fbD"/>
-                                        </constraints>
-                                        <state key="normal" image="update-mode"/>
-                                        <connections>
-                                            <action selector="tilemapUpdateModeAction:" destination="BV1-FR-VrT" eventType="touchUpInside" id="23v-8C-qqf"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5eI-Ql-V94" userLabel="Clamping Button">
-                                        <rect key="frame" x="104" y="0.0" width="24" height="24"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="24" id="B8d-kG-MyO"/>
-                                            <constraint firstAttribute="height" constant="24" id="FTX-OS-SXf"/>
-                                        </constraints>
-                                        <state key="normal" image="clamping"/>
-                                        <connections>
-                                            <action selector="clampButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="nQC-kf-waG"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rotate-device-alt" translatesAutoresizingMaskIntoConstraints="NO" id="s2E-CQ-Gyp">
-                                <rect key="frame" x="424" y="89" width="48" height="48"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="48" id="NWZ-r7-0FK"/>
-                                    <constraint firstAttribute="height" constant="48" id="ZMY-sh-0kb"/>
-                                </constraints>
-                            </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="WD6-vv-RLS">
                                 <rect key="frame" x="62" y="309" width="76" height="82"/>
                                 <subviews>

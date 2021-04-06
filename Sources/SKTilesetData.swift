@@ -372,8 +372,8 @@ public class SKTilesetData: CustomReflectable, TiledObjectType {
     public var customMirror: Mirror {
 
         let attributes: [(label: String?, value: Any)] = [
-            (label: "id", value: id),
-            (label: "gid", value: globalID),
+            (label: "local id", value: id),
+            (label: "global id", value: globalID),
             (label: "type", value: type as Any),
             (label: "frames", value: frames),
             (label: "source", value: source as Any),

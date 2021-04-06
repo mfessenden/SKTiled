@@ -631,6 +631,9 @@
 		4CB8537025AE19B100CC2154 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8536B25AE19B100CC2154 /* PreferencesViewController.swift */; };
 		4CB8537125AE19B100CC2154 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8536C25AE19B100CC2154 /* PreferencesWindowController.swift */; };
 		4CB8537225AE19B100CC2154 /* PreferencesGloabalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB8536D25AE19B100CC2154 /* PreferencesGloabalsViewController.swift */; };
+		4CB95DAD261B7FE100110C21 /* Demo+Controllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB95DAC261B7FE100110C21 /* Demo+Controllers.swift */; };
+		4CB95DAE261B7FE100110C21 /* Demo+Controllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB95DAC261B7FE100110C21 /* Demo+Controllers.swift */; };
+		4CB95DAF261B7FE100110C21 /* Demo+Controllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB95DAC261B7FE100110C21 /* Demo+Controllers.swift */; };
 		4CBA61831D8A0A4600B31FC1 /* roguelike-16x16-anim.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */; };
 		4CBB6A9F1D8CBA8A00DB56F1 /* SKTiled+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6A9E1D8CBA8A00DB56F1 /* SKTiled+Properties.swift */; };
 		4CBB6AA11D8CBB5B00DB56F1 /* SKTiledScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB6AA01D8CBB5B00DB56F1 /* SKTiledScene.swift */; };
@@ -780,7 +783,6 @@
 		4C440BA51DAE913000DEC9A4 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		4C440BA61DAE913000DEC9A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C440BAC1DAE913A00DEC9A4 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4C440BAE1DAE913A00DEC9A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4C440BB01DAE913A00DEC9A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4C440BB11DAE913A00DEC9A4 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		4C440BB21DAE913A00DEC9A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -931,6 +933,7 @@
 		4CB8536B25AE19B100CC2154 /* PreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		4CB8536C25AE19B100CC2154 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		4CB8536D25AE19B100CC2154 /* PreferencesGloabalsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesGloabalsViewController.swift; sourceTree = "<group>"; };
+		4CB95DAC261B7FE100110C21 /* Demo+Controllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Demo+Controllers.swift"; sourceTree = "<group>"; };
 		4CBA61651D8A048200B31FC1 /* SKTiled Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SKTiled Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CBA617E1D8A0A3900B31FC1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4CBA61801D8A0A4600B31FC1 /* roguelike-16x16-anim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "roguelike-16x16-anim.png"; sourceTree = "<group>"; };
@@ -1068,8 +1071,8 @@
 		4C24B17F20694D2D0027EBD5 /* tvOS */ = {
 			isa = PBXGroup;
 			children = (
-				4C24B18620694D2D0027EBD5 /* AppDelegate.swift */,
 				4C24B18420694D2D0027EBD5 /* Main.storyboard */,
+				4C24B18620694D2D0027EBD5 /* AppDelegate.swift */,
 				4C24B18320694D2D0027EBD5 /* GameViewController.swift */,
 				4C24B18720694D2D0027EBD5 /* Info.plist */,
 			);
@@ -1135,8 +1138,8 @@
 				4C440B981DAE911000DEC9A4 /* Assets.xcassets */,
 				4C5C90E0260A3BBE006A6C75 /* SKTiled Demo.entitlements */,
 				4CBA617F1D8A0A4600B31FC1 /* Assets */,
-				4C440BAB1DAE913A00DEC9A4 /* iOS */,
 				4C440BA11DAE913000DEC9A4 /* macOS */,
+				4C440BAB1DAE913A00DEC9A4 /* iOS */,
 				4C24B17F20694D2D0027EBD5 /* tvOS */,
 				4C71829225893A0100E6046A /* Supporting Files */,
 			);
@@ -1161,9 +1164,8 @@
 		4C440BAB1DAE913A00DEC9A4 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				4C440BAC1DAE913A00DEC9A4 /* AppDelegate.swift */,
-				4C440BAD1DAE913A00DEC9A4 /* LaunchScreen.storyboard */,
 				4C440BAF1DAE913A00DEC9A4 /* Main.storyboard */,
+				4C440BAC1DAE913A00DEC9A4 /* AppDelegate.swift */,
 				4C440BB11DAE913A00DEC9A4 /* GameViewController.swift */,
 				4C440BB21DAE913A00DEC9A4 /* Info.plist */,
 			);
@@ -1194,6 +1196,7 @@
 		4C71829225893A0100E6046A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4CB95DAC261B7FE100110C21 /* Demo+Controllers.swift */,
 				4CE6415E206C1AEA004BA9E4 /* Demo+Extensions.swift */,
 				4C4FAC99215E9D8C00EEF512 /* Demo+Setup.swift */,
 				4C6C56BB25D6BABF00CBEB9A /* DemoNotificationDelegate.swift */,
@@ -2296,6 +2299,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CB95DAD261B7FE100110C21 /* Demo+Controllers.swift in Sources */,
 				4C440BA01DAE911000DEC9A4 /* SKTiledDemoScene.swift in Sources */,
 				4C3D114324E19CC000D71B74 /* TiledSceneCameraDelegate.swift in Sources */,
 				4C1AD9E9260CE34000995606 /* AttributeStorage.swift in Sources */,
@@ -2468,6 +2472,7 @@
 				4C24B1E020694FA80027EBD5 /* SKTile.swift in Sources */,
 				4CADFABB2481852E000C2550 /* ThreadSafeArray.swift in Sources */,
 				4C9BE4EF216FE02B006DC74E /* TileDataStorage.swift in Sources */,
+				4CB95DAF261B7FE100110C21 /* Demo+Controllers.swift in Sources */,
 				4C3D114524E19CC000D71B74 /* TiledSceneCameraDelegate.swift in Sources */,
 				4C24B1E220694FA80027EBD5 /* SKTiledScene.swift in Sources */,
 				4C4FAC9C215E9D8C00EEF512 /* Demo+Setup.swift in Sources */,
@@ -2699,6 +2704,7 @@
 				4C9BE4EE216FE02B006DC74E /* TileDataStorage.swift in Sources */,
 				4C3D114424E19CC000D71B74 /* TiledSceneCameraDelegate.swift in Sources */,
 				4C88E1E51D8A4EBE00FCCFA3 /* SKTiled+Extensions.swift in Sources */,
+				4CB95DAE261B7FE100110C21 /* Demo+Controllers.swift in Sources */,
 				4C4FAC9B215E9D8C00EEF512 /* Demo+Setup.swift in Sources */,
 				4CCDEA7C24E31067009926E3 /* TilesetDataSource.swift in Sources */,
 				4CEE24AC249968BB0029D6CC /* TiledMappableGeometryType.swift in Sources */,
@@ -2745,14 +2751,6 @@
 				4C440BA41DAE913000DEC9A4 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		4C440BAD1DAE913A00DEC9A4 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4C440BAE1DAE913A00DEC9A4 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 		4C440BAF1DAE913A00DEC9A4 /* Main.storyboard */ = {

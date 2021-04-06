@@ -317,6 +317,12 @@
                                                 </items>
                                             </menu>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="bs7-R1-mSC"/>
+                                        <menuItem title="Send Notification..." id="CSS-6F-FNe">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Send Notification..." id="grN-K3-b38"/>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="Qr5-mf-gn4"/>
                                         <menuItem title="Demo Delegate..." id="WG3-rh-SP4">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
@@ -340,6 +346,12 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="renderStatisticsVisibilityAction:" target="Voe-Tx-rLC" id="Mzc-xl-pjC"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Adjust Infinite Offsets..." enabled="NO" keyEquivalent="" id="bWa-a5-GwP">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="infiniteOffsetAction:" target="Voe-Tx-rLC" id="t1L-KN-Die"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Tilemap Layer Stats..." enabled="NO" id="OXT-yC-4Eg">
@@ -456,6 +468,7 @@
                         <outlet property="developmentMainMenu" destination="FNa-3o-AiI" id="gXj-Mg-ZID"/>
                         <outlet property="dumpSelectedMenuItem" destination="djR-ZZ-q6d" id="wJm-ct-MO9"/>
                         <outlet property="externalAssetsMenuItem" destination="Ywb-f1-YfU" id="ZVi-fl-4Xl"/>
+                        <outlet property="infiniteOffsetMenuItem" destination="bWa-a5-GwP" id="39u-8n-Wbr"/>
                         <outlet property="isolationModeMenuItem" destination="NIF-SX-zDE" id="bcJ-9R-oe3"/>
                         <outlet property="layerColorsMenuItem" destination="wAI-eD-Xy6" id="tKA-l3-Wwd"/>
                         <outlet property="layerIsolationMenu" destination="cCe-8N-Uhp" id="RIH-hV-AvD"/>
@@ -475,6 +488,8 @@
                         <outlet property="renderStatisticsMenuItem" destination="8DF-Mo-t1x" id="pAi-xd-fpR"/>
                         <outlet property="rescanForAssetsMenuItem" destination="bP1-lr-ORw" id="4KP-oE-BHq"/>
                         <outlet property="selectedNodesMenuItem" destination="lsc-wR-o4q" id="RWW-sO-uJL"/>
+                        <outlet property="sendNotificationMenuItem" destination="CSS-6F-FNe" id="eTQ-2L-T3E"/>
+                        <outlet property="sendNotificationSubmenu" destination="grN-K3-b38" id="S5b-3z-PXl"/>
                         <outlet property="showDemoAssetsMenuItem" destination="eC9-wi-nCP" id="mxl-a2-f9d"/>
                         <outlet property="showInspectorMenuItem" destination="IO9-S3-A1l" id="CD8-jM-ohB"/>
                         <outlet property="tileColorsMenuItem" destination="hnS-2z-nKA" id="Seb-hg-B27"/>
@@ -494,7 +509,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" customClass="GameWindowController" customModule="SKTiled_Demo" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="SKTiled" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" animationBehavior="default" titlebarAppearsTransparent="YES" id="IQv-IB-iLA">
+                    <window key="window" title="SKTiled" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" titlebarAppearsTransparent="YES" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="400" y="500" width="1280" height="720"/>

@@ -27,6 +27,7 @@
 import SpriteKit
 
 
+/// :nodoc:
 extension SKTiledDemoScene {
 
     /// Special setup functions for various included demo content.
@@ -36,6 +37,7 @@ extension SKTiledDemoScene {
     ///   - verbose: logging verbosity.
     func setupDemoLevel(fileNamed: String, verbose: Bool = false) {
         guard let tilemap = tilemap else {
+            log("cannot access tilemap.", level: .error)
             return
         }
 

@@ -58,11 +58,13 @@ public enum CameraZoomClamping: CGFloat {
 /// - `none`: Controller does not affect camera.
 /// - `dolly`: Controller pans the camera.
 /// - `zoom`: Controller changes the camera zoom.
+/// - `rotate`: Controller changes the camera rotation.
 /// :nodoc:
-public enum CameraControlMode: UInt8 {
+public enum CameraControlMode: UInt8, CaseIterable {
     case none
     case dolly
     case zoom
+    case rotate
 }
 
 
@@ -225,11 +227,14 @@ public class SKTiledSceneCamera: SKCameraNode {
         didSet {
             setCameraZoom(self.zoom)
             
-            // TODO: demo only?
+            // TODO: restrict this to demo only?
+            
+            #if SKTILED_DEMO
             NotificationCenter.default.post(
                 name: Notification.Name.Camera.Updated,
                 object: self
             )
+            #endif
         }
     }
     
@@ -269,6 +274,7 @@ public class SKTiledSceneCamera: SKCameraNode {
     
     /// Gesture recognizer to handle touch rotation actions.
     public var cameraRotated: UIRotationGestureRecognizer!
+    
     #endif
     
     // MARK: - Locations
@@ -339,6 +345,9 @@ public class SKTiledSceneCamera: SKCameraNode {
     }
     
     deinit {
+        
+        // FIXME: crash here when deallocating via `TiledDemoController.loadScene`
+        
         // remove delegates
         delegates.removeAll()
     }
@@ -433,9 +442,13 @@ public class SKTiledSceneCamera: SKCameraNode {
     /// Add a node to the overlay node.
     ///
     /// - Parameter node: node.
-    public func addToOverlay(_ node: SKNode) {
+    public func addToOverlay(_ node: SKNode, zpos: CGFloat = 0) {
         overlay.addChild(node)
-        node.zPosition = zPosition + 10
+        var nodeZPosition: CGFloat = zPosition + 10
+        if zpos != 0 {
+            nodeZPosition = zpos
+        }
+        node.zPosition = nodeZPosition
     }
     
     // MARK: - Zooming
@@ -553,6 +566,7 @@ public class SKTiledSceneCamera: SKCameraNode {
         cameraBoundsShape.strokeColor = boundsColor.withAlphaComponent(0.6)
         cameraBoundsShape.position = CGPoint(x: -bounds.size.width / 2, y: -bounds.size.height / 2)
     }
+
     
     // MARK: - Movement
     
@@ -649,6 +663,10 @@ public class SKTiledSceneCamera: SKCameraNode {
             run(moveAction)
         }
     }
+    
+    // MARK: - Rotation
+    
+    
     
     // MARK: - Camera Reset
     
@@ -989,7 +1007,7 @@ extension SKTiledSceneCamera {
         if (event.clickCount == 1) {
             for delegate in self.delegates {
                 guard (delegate.receiveCameraUpdates == true) else { continue }
-                delegate.sceneClicked?(event: event)
+                delegate.leftMouseDown?(event: event)
             }
             return
         }
@@ -998,7 +1016,7 @@ extension SKTiledSceneCamera {
         if (event.clickCount > 1) {
             for delegate in self.delegates {
                 guard (delegate.receiveCameraUpdates == true) else { continue }
-                delegate.sceneDoubleClicked?(event: event)
+                delegate.leftMouseDoubleClicked?(event: event)
             }
             return
         }
@@ -1055,6 +1073,8 @@ extension SKTiledSceneCamera {
             return
         }
         super.mouseDragged(with: event)
+        
+        // TODO: what is the option?
         if (event.modifierFlags.contains(.option) && allowRotation == true) {
             sceneRotationChanged(with: event)
         } else {
@@ -1100,7 +1120,7 @@ extension SKTiledSceneCamera {
         }
     }
     
-    /// Handler for mouse right-click events. The mouse event is forwarded to any delegates implementing the `TiledSceneCameraDelegate.sceneRightClicked(event:)` method.
+    /// Handler for mouse right-click events. The mouse event is forwarded to any delegates implementing the `TiledSceneCameraDelegate.rightMouseDown(event:)` method.
     ///
     ///
     /// - Important:
@@ -1116,15 +1136,9 @@ extension SKTiledSceneCamera {
             guard (delegate.receiveCameraUpdates == true) else {
                 continue
             }
-            delegate.sceneRightClicked?(event: event)
+            delegate.rightMouseDown?(event: event)
         }
-        
-        NotificationCenter.default.post(
-            name: Notification.Name.Camera.MouseRightClicked,
-            object: nil
-        )
-        
-        
+
         super.rightMouseDown(with: event)
     }
     
@@ -1216,8 +1230,7 @@ extension SKTiledSceneCamera {
             
             /// notify delegates
             for delegate in delegates {
-                
-                // TODO: async operation
+                // TODO: async operation?
                 delegate.cameraPositionChanged?(newPosition: position)
             }
         }
@@ -1238,6 +1251,15 @@ extension SKTiledSceneCamera {
         }
     }
     #endif
+    
+    
+    
+    #if os(tvOS)
+    
+    
+    
+    #endif
+    
 }
 
 

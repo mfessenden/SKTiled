@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="500px" height="270px" viewBox="0 0 500 270" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>arrow-parts</title>
+    <g id="arrow-parts" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Rotator" transform="translate(245.129061, 161.417085) rotate(-12.000000) translate(-245.129061, -161.417085) translate(10.629061, 54.417085)">
+            <path d="M266,3.29347136 L411.663194,79 L266,154.706529 L266,115 L118,115 L118,43 L266,43 L266,3.29347136 Z" id="Arrow" stroke="#7B7B7B" stroke-width="4"></path>
+            <g id="Start-Point-Group" transform="translate(110.000000, 67.000000)">
+                <circle id="Start-Point" fill="#000000" cx="8" cy="12" r="8"></circle>
+                <text id="start-point" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"' font-size="17" font-weight="400" fill="#2C2C2C">
+                    <tspan x="25" y="16">start point</tspan>
+                </text>
+            </g>
+            <g id="End-Point-Group" transform="translate(314.000000, 67.000000)">
+                <circle id="End-Point" fill="#000000" cx="97" cy="12" r="8"></circle>
+                <text id="end-point" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"' font-size="17" font-weight="400" fill="#2C2C2C">
+                    <tspan x="0.686523438" y="16">end point</tspan>
+                </text>
+            </g>
+            <g id="Head-Length-Group" transform="translate(265.500000, 173.000000)">
+                <text id="head-length" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"' font-size="17" font-weight="400" fill="#2C2C2C">
+                    <tspan x="24.9819336" y="37">head length</tspan>
+                </text>
+                <line x1="-17.9798278" y1="18.4798278" x2="18.9798278" y2="18.4798278" id="Path-Copy-2" stroke="#000000" transform="translate(0.500000, 18.479828) rotate(90.000000) translate(-0.500000, -18.479828) "></line>
+                <line x1="132.020172" y1="18.4798278" x2="168.979828" y2="18.4798278" id="Path-Copy-3" stroke="#000000" transform="translate(150.500000, 18.479828) rotate(90.000000) translate(-150.500000, -18.479828) "></line>
+                <line x1="1.02017216" y1="18.4798278" x2="150" y2="18.5" id="Path-Copy-4" stroke="#000000" stroke-dasharray="4,3" transform="translate(75.520172, 18.979828) rotate(-0.000000) translate(-75.520172, -18.979828) "></line>
+            </g>
+            <g id="Head-Width-Group" transform="translate(285.000000, 3.500000)">
+                <text id="head-width" transform="translate(174.000000, 75.500000) rotate(90.000000) translate(-174.000000, -75.500000) " font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"' font-size="17" font-weight="400" fill="#2C2C2C">
+                    <tspan x="128.723389" y="81.5">head width</tspan>
+                </text>
+                <line x1="0" y1="0.5" x2="168" y2="0.5" id="Path" stroke="#000000"></line>
+                <line x1="75" y1="76.5" x2="225.5" y2="76" id="Path-Copy" stroke="#000000" stroke-dasharray="4,3" transform="translate(150.500000, 76.000000) rotate(90.000000) translate(-150.500000, -76.000000) "></line>
+                <line x1="168" y1="150.5" x2="0" y2="150.5" id="Path" stroke="#000000"></line>
+            </g>
+            <g id="Tail-Width-Group" transform="translate(-0.000000, 39.979828)">
+                <text id="tail-width" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"' font-size="17" font-weight="400" fill="#2C2C2C">
+                    <tspan x="0.397460938" y="45.0201722">tail width</tspan>
+                </text>
+                <line x1="41.5" y1="38.5201722" x2="117" y2="38.0201722" id="Path-Copy-5" stroke="#000000" stroke-dasharray="4,3" transform="translate(79.500000, 38.020172) rotate(90.000000) translate(-79.500000, -38.020172) "></line>
+                <line x1="60.5201722" y1="0.5" x2="97.4798278" y2="0.5" id="Path-Copy-6" stroke="#000000" transform="translate(79.000000, 0.500000) rotate(-0.000000) translate(-79.000000, -0.500000) "></line>
+                <line x1="59.520172" y1="75.5" x2="97.4798278" y2="75.5" id="Path-Copy-7" stroke="#000000" transform="translate(78.500000, 75.500000) rotate(-0.000000) translate(-78.500000, -75.500000) "></line>
+            </g>
+        </g>
+    </g>
+</svg>

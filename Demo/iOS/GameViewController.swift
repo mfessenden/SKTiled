@@ -32,7 +32,7 @@ class GameViewController: UIViewController, Loggable {
 
 
     let demoController = TiledDemoController.default
-    var uiColor: UIColor = UIColor(hexString: "#757B8D")
+    var uiColor: UIColor = TiledGlobals.default.uiColor
     var hideDeviceRotationIcon: Bool = false
 
     // status ("paused") label, center screen

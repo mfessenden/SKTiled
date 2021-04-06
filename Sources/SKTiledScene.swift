@@ -460,17 +460,17 @@ extension SKTiledScene: TiledSceneCameraDelegate {
     /// Called when the scene is clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
-    @objc open func sceneClicked(event: NSEvent) {}
+    @objc open func leftMouseDown(event: NSEvent) {}
 
     /// Called when the scene is double-clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
-    @objc open func sceneDoubleClicked(event: NSEvent) {}
+    @objc open func leftMouseDoubleClicked(event: NSEvent) {}
 
     /// Called when the scene is right-clicked **(macOS only)**.
     ///
     /// - Parameter event: mouse click event.
-    @objc open func sceneRightClicked(event: NSEvent) {}
+    @objc open func rightMouseDown(event: NSEvent) {}
 
     /// Called when the right mouse button is released **(macOS only)**.
     ///

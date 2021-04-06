@@ -264,9 +264,13 @@ class PreferencesGloabalsViewController: NSViewController {
             }
 
 
-
+            /// `Reset Globals` button handler
             if (textIdentifier == "gbl-resetglobals-button") {
-                TiledGlobals.default.resetUserDefaults()
+                if createAlert(title: "Reset Globals?", message: "Resets all global values to their defaults.") == true {
+                    TiledGlobals.default.resetUserDefaults()
+                } else {
+                    Logger.default.log("reset globals canceled.", level: .info, symbol: classNiceName)
+                }
             }
 
 
@@ -386,14 +390,14 @@ class PreferencesGloabalsViewController: NSViewController {
     @IBAction func loggingLevelUpdated(_ sender: NSMenuItem) {
         guard let identifier = sender.accessibilityTitle(),
               let identifierIntValue = UInt8(identifier) else {
-            Logger.default.log("invalid logging identifier: \(sender.accessibilityIdentifier())", level: .error, symbol: "Preferences")
+            Logger.default.log("invalid logging identifier: \(sender.accessibilityIdentifier())", level: .error, symbol: classNiceName)
             return
         }
 
         if let newLoggingLevel = LoggingLevel.init(rawValue: identifierIntValue) {
             if (TiledGlobals.default.loggingLevel != newLoggingLevel) {
                 TiledGlobals.default.loggingLevel = newLoggingLevel
-                Logger.default.log("global logging level changed: \(newLoggingLevel)", level: .info, symbol: "Preferences")
+                Logger.default.log("global logging level changed: \(newLoggingLevel)", level: .info, symbol: classNiceName)
 
                 // update controllers
                 NotificationCenter.default.post(

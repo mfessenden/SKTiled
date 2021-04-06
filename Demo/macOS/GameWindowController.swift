@@ -46,6 +46,7 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
 
         // set the default window title
         let wintitle = "\(TiledGlobals.default.windowTitle) : ~"
+        
         window?.title = wintitle
     }
 

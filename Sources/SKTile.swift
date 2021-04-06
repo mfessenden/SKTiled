@@ -1478,13 +1478,7 @@ extension SKTile {
     ///   - duration: duration of highlight effect.
     @objc public override func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
         let highlightFillColor = color.withAlphaComponent(0.2)
-        
-        
-        let durationString = (duration > 0) ? " for \(duration) seconds..." : "..."
-        //print("⭑ [\(classNiceName)]: highlighting node\(durationString)")
-        
-        
-        
+
         boundsShape?.strokeColor = color
         boundsShape?.fillColor = highlightFillColor
         boundsShape?.isHidden = false
@@ -1492,7 +1486,8 @@ extension SKTile {
         anchorShape.fillColor = color
         anchorShape.isHidden = false
         
-        
+        self.color = color
+        self.colorBlendFactor = TiledGlobals.default.debugDisplayOptions.tileHighlighBlendFactor
         
         let fadeDuration: TimeInterval = 0.2
         
@@ -1519,6 +1514,7 @@ extension SKTile {
     @objc public override func removeHighlight() {
         boundsShape?.isHidden = true
         anchorShape.isHidden = true
+        colorBlendFactor = 0
     }
 }
 

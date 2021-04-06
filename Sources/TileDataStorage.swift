@@ -95,7 +95,7 @@ internal class TileDataStorage: Loggable {
         return memsize.description
     }
 
-    /// Returns the size of the cache (in bytes).
+    /// Returns the size (in bytes) of the cache.
     var bytes: Int {
         var result = MemoryLayout.size(ofValue: self.globalIdCache)
         result += MemoryLayout.size(ofValue: self.staticTileCache)
