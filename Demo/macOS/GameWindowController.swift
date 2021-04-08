@@ -108,6 +108,7 @@ class GameWindowController: NSWindowController, NSWindowDelegate {
 
             if let sceneDelegate = scene as? TiledSceneDelegate {
                 scene.isPaused = isManuallyPaused
+
                 // update tracking view?
                 if let tilemap = sceneDelegate.tilemap {
                     if let mapurl = tilemap.url {

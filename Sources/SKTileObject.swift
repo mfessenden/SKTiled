@@ -274,8 +274,9 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
         // create the shape node
         let shape = SKShapeNode(path: objPath)
+        #if SKTILED_DEMO
         shape.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Represents the object's bounding shape.", "tiled-node-nicename": "Bounds Shape"])
-        
+        #endif
         // control shape (bezier shapes only)
         if let cpath = controlPath {
             let controlShape = SKShapeNode(path: cpath)
@@ -298,7 +299,9 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
     @objc public lazy var anchorShape: SKShapeNode = {
         let anchorRadius: CGFloat = (layer.tileSize.width / 8) * 0.75
         let shape = SKShapeNode(circleOfRadius: anchorRadius)
+        #if SKTILED_DEMO
         shape.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Represents the object's anchor point.", "tiled-node-nicename": "Anchor Shape"])
+        #endif
         shape.strokeColor = SKColor.clear
         shape.fillColor = frameColor
         addChild(shape)
@@ -438,9 +441,9 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
         draw()
     }
 
-    /// Initialize the object with a dictionary of object attributes.
+    /// Initialize the object with a dictionary of object attributes from the **Tiled** source XML.
     ///
-    /// - Parameter attributes: object attributes.
+    /// - Parameter attributes: attributes parsed from **Tiled** XML.
     required public init?(attributes: [String: String]) {
 
         // required attributes
@@ -681,7 +684,9 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
                 if (layer.orientation == .isometric) {
                     let controlPath = polygonPath(translated)
                     let controlShape = SKShapeNode(path: controlPath, centered: false)
+                    #if SKTILED_DEMO
                     controlShape.setAttrs(values: ["tiled-invisible-node": true, "tiled-node-role": "control-shape", "tiled-node-listdesc": "Ellipse Control Cage"])
+                    #endif
                     addChild(controlShape)
                     controlShape.fillColor = SKColor.clear
                     // controlShape.strokeColor = self.strokeColor.withAlphaComponent(0.2)
@@ -707,7 +712,9 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
                 // the first-point radius should be larger for thinner (>1.0) line widths
                 let pointRadius = self.lineWidth * 0.75
                 let firstPointShape = SKShapeNode(circleOfRadius: pointRadius)
+                #if SKTILED_DEMO
                 firstPointShape.setAttrs(values: ["tiled-node-role": "first-point"])
+                #endif
                 firstPointShape.name = firstPointKey
                 addChild(firstPointShape)
                 
@@ -760,7 +767,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
                         scalerNode.name = "TILE_OBJECT_\(id)_SCALER"
 
                         #if SKTILED_DEMO
-                        scalerNode.setAttr(key: "tiled-invisible-node", value: true)
+                        scalerNode.setAttr(key: "tiled-helper-node", value: true)
                         scalerNode.setAttr(key: "tiled-node-icon", value: "scaler-icon")
                         scalerNode.setAttr(key: "tiled-node-listdesc", value: "Tile Object Scaler")
                         scalerNode.setAttr(key: "tiled-element-name", value: "Tile Object Scaler")
@@ -1041,7 +1048,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
     open override func mouseDown(with event: NSEvent) {
         // guard (TiledGlobals.default.enableMouseEvents == true) else { return }
-
+        
         // FIXME: this is failing with tile objects
         if contains(touch: event.location(in: self)) {
             // calls
@@ -1201,7 +1208,10 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
         attributes.append(("tiled description", description))
         attributes.append(("tiled debug description", debugDescription))
-
+        
+        #if SKTILED_DEMO
+        attributes.append(contentsOf: attrsMirror())
+        #endif
         return Mirror(self, children: attributes, ancestorRepresentation: .suppressed)
 
     }

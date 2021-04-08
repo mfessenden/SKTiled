@@ -123,6 +123,8 @@ extension SKTiledDemoScene {
     /// - Returns: mouse handler.
     @objc public func tileClickedHandler(globalID: UInt32, ofType: String? = nil, button: UInt8 = 0) -> ((SKTile) -> ())? {
         return { (tile) in
+            
+            // calls back to `GameViewController` to update the tile info debug labels, as well as demo delegate to handle selection
             NotificationCenter.default.post(
                 name: Notification.Name.Demo.TileClicked,
                 object: tile

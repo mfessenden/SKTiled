@@ -650,6 +650,12 @@
 		4CC0658D24DDD53A00113389 /* TileContainerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0658924DDD53A00113389 /* TileContainerType.swift */; };
 		4CC0658E24DDD53A00113389 /* TileContainerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0658924DDD53A00113389 /* TileContainerType.swift */; };
 		4CC0658F24DDD53A00113389 /* TileContainerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0658924DDD53A00113389 /* TileContainerType.swift */; };
+		4CC9602F261E0AE300B2D558 /* AnchorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC9602E261E0AE300B2D558 /* AnchorNode.swift */; };
+		4CC96030261E0AE300B2D558 /* AnchorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC9602E261E0AE300B2D558 /* AnchorNode.swift */; };
+		4CC96031261E0AE300B2D558 /* AnchorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC9602E261E0AE300B2D558 /* AnchorNode.swift */; };
+		4CC96032261E0AE300B2D558 /* AnchorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC9602E261E0AE300B2D558 /* AnchorNode.swift */; };
+		4CC96033261E0AE300B2D558 /* AnchorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC9602E261E0AE300B2D558 /* AnchorNode.swift */; };
+		4CC96034261E0AE300B2D558 /* AnchorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC9602E261E0AE300B2D558 /* AnchorNode.swift */; };
 		4CCDEA7B24E31067009926E3 /* TilesetDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDEA7A24E31066009926E3 /* TilesetDataSource.swift */; };
 		4CCDEA7C24E31067009926E3 /* TilesetDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDEA7A24E31066009926E3 /* TilesetDataSource.swift */; };
 		4CCDEA7D24E31067009926E3 /* TilesetDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDEA7A24E31066009926E3 /* TilesetDataSource.swift */; };
@@ -943,6 +949,7 @@
 		4CBCC1FA249BF9AF00D809A6 /* TestTilesetDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTilesetDelegate.swift; sourceTree = "<group>"; };
 		4CBCC1FF249BFC3600D809A6 /* test-tilemapdelegate.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "test-tilemapdelegate.tmx"; sourceTree = "<group>"; };
 		4CC0658924DDD53A00113389 /* TileContainerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileContainerType.swift; sourceTree = "<group>"; };
+		4CC9602E261E0AE300B2D558 /* AnchorNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnchorNode.swift; sourceTree = "<group>"; };
 		4CCDEA7A24E31066009926E3 /* TilesetDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TilesetDataSource.swift; sourceTree = "<group>"; };
 		4CD5229E1DA624C400D78D81 /* CREDITS */ = {isa = PBXFileReference; lastKnownFileType = text; path = CREDITS; sourceTree = "<group>"; };
 		4CD6D2DA1D8B9EA10083DA7B /* isometric-130x230.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "isometric-130x230.png"; sourceTree = "<group>"; };
@@ -1521,6 +1528,7 @@
 		4CEE246E24992C3C0029D6CC /* Debugging */ = {
 			isa = PBXGroup;
 			children = (
+				4CC9602E261E0AE300B2D558 /* AnchorNode.swift */,
 				4CEE247624992DD10029D6CC /* TiledDebugDrawNode.swift */,
 				4C1EA76F24E5C23700E0E340 /* TileObjectOverlay.swift */,
 				4CEE24882499459D0029D6CC /* TileObjectProxy.swift */,
@@ -2346,6 +2354,7 @@
 				4CB798D9260BE67C00377B99 /* InspectorAttributesViewController.swift in Sources */,
 				4CAA144125B9F5F600F7919C /* TileID.swift in Sources */,
 				4CB798DD260BE67C00377B99 /* InspectorMainWindowController.swift in Sources */,
+				4CC9602F261E0AE300B2D558 /* AnchorNode.swift in Sources */,
 				4CE6415F206C1AEA004BA9E4 /* Demo+Extensions.swift in Sources */,
 				4CADFAB92481852E000C2550 /* ThreadSafeArray.swift in Sources */,
 				4CEE24892499459D0029D6CC /* TileObjectProxy.swift in Sources */,
@@ -2398,6 +2407,7 @@
 				4C5B6DA02455C9D500F81755 /* SKImageLayer.swift in Sources */,
 				4C8DE932249814A300CCF8EF /* DebugDrawableType.swift in Sources */,
 				4C5B6DB62455CAE800F81755 /* TiledLayerObject.swift in Sources */,
+				4CC96034261E0AE300B2D558 /* AnchorNode.swift in Sources */,
 				4CEE24B0249968BB0029D6CC /* TiledMappableGeometryType.swift in Sources */,
 				4C263A1B246079F100568681 /* TiledGeometryType.swift in Sources */,
 				4CEE248E2499459D0029D6CC /* TileObjectProxy.swift in Sources */,
@@ -2478,6 +2488,7 @@
 				4C4FAC9C215E9D8C00EEF512 /* Demo+Setup.swift in Sources */,
 				4CEE24AD249968BB0029D6CC /* TiledMappableGeometryType.swift in Sources */,
 				4C24B1DD20694FA80027EBD5 /* SKTiled+Extensions.swift in Sources */,
+				4CC96031261E0AE300B2D558 /* AnchorNode.swift in Sources */,
 				4C24B1DF20694FA80027EBD5 /* SKTiled+Properties.swift in Sources */,
 				4CAA144325B9F5F600F7919C /* TileID.swift in Sources */,
 				4CA89E15252E6E5D00C23E4C /* TiledRasterizableType.swift in Sources */,
@@ -2512,6 +2523,7 @@
 				4C5B6D9E2455C9D500F81755 /* SKImageLayer.swift in Sources */,
 				4C8DE930249814A300CCF8EF /* DebugDrawableType.swift in Sources */,
 				4C5B6DB42455CAE800F81755 /* TiledLayerObject.swift in Sources */,
+				4CC96032261E0AE300B2D558 /* AnchorNode.swift in Sources */,
 				4CEE24AE249968BB0029D6CC /* TiledMappableGeometryType.swift in Sources */,
 				4C263A19246079F100568681 /* TiledGeometryType.swift in Sources */,
 				4CEE248C2499459D0029D6CC /* TileObjectProxy.swift in Sources */,
@@ -2564,6 +2576,7 @@
 				4C5B6D9F2455C9D500F81755 /* SKImageLayer.swift in Sources */,
 				4C8DE931249814A300CCF8EF /* DebugDrawableType.swift in Sources */,
 				4C5B6DB52455CAE800F81755 /* TiledLayerObject.swift in Sources */,
+				4CC96033261E0AE300B2D558 /* AnchorNode.swift in Sources */,
 				4CEE24AF249968BB0029D6CC /* TiledMappableGeometryType.swift in Sources */,
 				4C263A1A246079F100568681 /* TiledGeometryType.swift in Sources */,
 				4CEE248D2499459D0029D6CC /* TileObjectProxy.swift in Sources */,
@@ -2710,6 +2723,7 @@
 				4CEE24AC249968BB0029D6CC /* TiledMappableGeometryType.swift in Sources */,
 				4C440BB61DAE913A00DEC9A4 /* GameViewController.swift in Sources */,
 				4C88E1E21D8A4EBE00FCCFA3 /* SKTileLayer.swift in Sources */,
+				4CC96030261E0AE300B2D558 /* AnchorNode.swift in Sources */,
 				4C88E1DE1D8A4EBE00FCCFA3 /* SKTile.swift in Sources */,
 				4CAA144225B9F5F600F7919C /* TileID.swift in Sources */,
 				4CA89E14252E6E5D00C23E4C /* TiledRasterizableType.swift in Sources */,

@@ -121,11 +121,13 @@ class InspectorDetailViewController: NSViewController {
     
     /// Called when a new scene has been loaded. Called when the `Notification.Name.Demo.SceneLoaded` event fires.
     ///
+    ///  payload: `SKTiledScene`, userInfo: `["tilemapName": String, "relativePath": String, "currentMapIndex": Int]`
+    ///
     /// - Parameter notification: event notification.
     @objc func demoSceneLoaded(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: Any] else {
-            fatalError("no user info!")
+            return
         }
 
         // `tilemapName`, `relativePath`, `currentMapIndex`

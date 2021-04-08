@@ -150,10 +150,15 @@ class InspectorTreeViewController: NSViewController {
     ///
     /// - Parameter notification: event notification.
     @objc func nodeSelectionChanged(notification: Notification) {
+        //notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: Any],
               let selectedNodes = userInfo["nodes"] as? [SKNode] else {
             return
         }
+        
+        
+        let expandToNode = userInfo["autoExpand"] as? Bool ?? false
+        
         
         var firstRow: Int?
         let isSingleSelection = selectedNodes.count == 1
@@ -161,28 +166,30 @@ class InspectorTreeViewController: NSViewController {
         //outlineView.deselectAll(nil)
         for node in selectedNodes {
             
-            if let tiledNode = node as? TiledGeometryType {
+            //if let tiledNode = node as? TiledGeometryType {}
                 
-                // expand parent items
-                let nodeParents: [SKNode] = Array(node.allParents().reversed())
-                for parent in nodeParents {
-                    /*
-                     if (outlineView.row(forItem: parent) < 0) {
-                     outlineView.expandItem(parent)
-                     }
-                     */
-                    
-                    if (isSingleSelection == true) {
-                        outlineView.expandItem(parent)
-                    }
+            // expand parent items
+            let nodeParents: [SKNode] = Array(node.allParents().reversed())
+            for parent in nodeParents {
+                
+                
+                /// this expands **to** the node
+                if (outlineView.row(forItem: parent) < 0) && (expandToNode == true) {
+                    outlineView.expandItem(parent)
                 }
                 
-                // changed `byExtendingSelection` to `false` to stop auto-expansion
-                outlineView.selectItem(item: node, byExtendingSelection: false)
-                if (firstRow == nil) {
-                    firstRow = outlineView.row(forItem: node)
+                
+                if (isSingleSelection == true) && (expandToNode == true) {
+                    outlineView.expandItem(parent)
                 }
             }
+            
+            // changed `byExtendingSelection` to `false` to stop auto-expansion
+            outlineView.selectItem(item: node, byExtendingSelection: false)
+            if (firstRow == nil) {
+                firstRow = outlineView.row(forItem: node)
+            }
+            
         }
         
         if let rowToSelect = firstRow {
@@ -194,7 +201,7 @@ class InspectorTreeViewController: NSViewController {
     ///
     /// - Parameter notification: event notification.
     @objc func nodeSelectionCleared(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         outlineView.deselectAll(nil)
     }
 
@@ -221,7 +228,9 @@ class InspectorTreeViewController: NSViewController {
         resetInterface()
     }
     
-    /// Called when the tilemap `currentCoordinate` changes.
+    /// Called when a new scene has been loaded. Called when the `Notification.Name.Demo.SceneLoaded` event fires.
+    ///
+    ///  payload: `SKScene`, userInfo: `["tilemapName": String, "relativePath": String, "currentMapIndex": Int]`
     ///
     /// - Parameter notification: event notification.
     @objc func currentSceneChanged(notification: Notification) {
@@ -243,6 +252,11 @@ class InspectorTreeViewController: NSViewController {
 
 // MARK: - Extensions
 
+
+
+// MARK: - Camera Delegate
+
+
 extension InspectorTreeViewController: TiledSceneCameraDelegate {
     
     #if os(macOS)
@@ -258,11 +272,11 @@ extension InspectorTreeViewController: TiledSceneCameraDelegate {
 }
 
 
-
+// MARK: Outline View
 
 extension InspectorTreeViewController: NSOutlineViewDelegate {
     
-    
+    /// Implemented to return the view used to display the specified item and column.
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         let cellIdentifier = NSUserInterfaceItemIdentifier(rawValue: "DataCell")
         guard let cell = outlineView.makeView(withIdentifier: cellIdentifier, owner: nil) as? NSTableCellView else {
@@ -273,7 +287,14 @@ extension InspectorTreeViewController: NSOutlineViewDelegate {
             
             var textValue = node.getAttr(key: "tiled-node-listdesc") as? String ?? "SpriteKit node."
             var imageName = node.getAttr(key: "tiled-node-icon") as? String ?? "nil-icon"
-
+            let isInvisible = node.getAttr(key: "tiled-invisible-node") as? Bool ?? false
+            
+            
+            if isInvisible == true {
+                return nil
+            }
+            
+            
             if let tiledNode = node as? TiledCustomReflectableType {
                 textValue = tiledNode.tiledListDescription ?? textValue
                 imageName = tiledNode.tiledIconName ?? "\(textValue)-icon"
@@ -372,11 +393,19 @@ extension InspectorTreeViewController: NSOutlineViewDelegate {
 
 extension InspectorTreeViewController: NSOutlineViewDataSource {
     
+    /// Returns the number of child items encompassed by a given item.
+    ///
+    /// - Parameters:
+    ///   - outlineView: The outline view that sent the message.
+    ///   - item: An item in the data source.
+    /// - Returns: The number of child items encompassed by item. If item is nil, this method should return the number of children for the top-level item.
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
         guard let sknode = item as? SKNode else {
             return rootNode?.children.count ?? 1
         }
-        return sknode.children.count
+        
+        //return sknode.children.count
+        return sknode.children.filter({ $0.getAttr(key: "tiled-invisible-node", defaultValue: false) as? Bool == false }).count
     }
     
     
@@ -386,14 +415,17 @@ extension InspectorTreeViewController: NSOutlineViewDataSource {
     
     
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-        guard let element = item as? SKNode else {
+        guard let sknode = item as? SKNode else {
             return false
         }
         
-        return element.children.count != 0
+        // return sknode.children.count != 0
+        return sknode.children.filter({ $0.getAttr(key: "tiled-invisible-node", defaultValue: false) as? Bool == false }).count != 0
     }
 }
 
+
+// MARK:  Text/Search Field Delegate
 
 extension InspectorTreeViewController: NSSearchFieldDelegate {
     
@@ -429,9 +461,7 @@ extension InspectorTreeViewController: NSSearchFieldDelegate {
         if (demoDelegate.focusedNodes.isEmpty) {
             return
         }
-        
-        // print("⭑ \(textFieldDescription) '\(stringIdentifier)', value: '\(textFieldValue)', formatter: \(hasFormatter)")
-        
+                
         if (stringIdentifier == "NodeNameField") {
             let newNodeName = textFieldValue
             for node in demoDelegate.focusedNodes {

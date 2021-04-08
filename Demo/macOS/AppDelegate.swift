@@ -126,7 +126,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         windowController.isManuallyPaused = scene.isPaused
         scene.isPaused = true
-        viewController?.demoStatusInfoLabel.isHidden = false
     }
     
     // NSApplicationDidBecomeActiveNotification
@@ -142,7 +141,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // if the user paused the scene before moving it to the background, use that state
         let sceneWasPaused = windowController.isManuallyPaused
         scene.isPaused = sceneWasPaused
-        viewController?.demoStatusInfoLabel.isHidden = false
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -201,7 +199,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // tilemap notifications
         NotificationCenter.default.addObserver(self, selector: #selector(globalsUpdatedAction), name: Notification.Name.Globals.Updated, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(tilemapWasUpdated), name: Notification.Name.Map.Updated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(mapUpdatedAction), name: Notification.Name.Map.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tilemapUpdateModeChanged), name: Notification.Name.Map.UpdateModeChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(initializeInterfaceForTilemap), name: Notification.Name.Map.FinishedRendering, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(initializeInterfaceForTilemap), name: Notification.Name.Map.TileIsolationModeChanged, object: nil)
@@ -236,7 +234,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         DemoController.AssetSearchPathsAdded       - needs userInfo with 'urls'
         DemoController.AssetSearchPathsRemoved     - needs userInfo with 'urls'
         Demo.NodeAttributesChanged                 - needs userInfo of [String: [SKNode]]
-        Demo.NodeSelectionChanged                  - needs userInfo of ["nodes": [SKNode]]
+        Demo.NodeSelectionChanged                  - needs userInfo of ["nodes": [SKNode], "focusLocation": CGPoint]
         Map.FocusCoordinateChanged                 - needs userInfo of ["old": simd_int2, "new": simd_int2, "isValid": Bool]
         DemoController.CurrentMapSet               - needs userInfo of ["url": URL]
         DemoController.DemoStatusUpdated           - needs userInfo of ["status": String, "isHidden": Bool]
@@ -427,9 +425,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 
                 
             case "DemoController.DemoStatusUpdated":
+                
+                // calls back to the GameViewController to display a status message
                 NotificationCenter.default.post(
                     name: Notification.Name.DemoController.DemoStatusUpdated,
-                    object: nil
+                    object: nil,
+                    userInfo: ["status": "This is a message to test the status update notification.", "isHidden": false, "color": SKColor.white, "duration": 3.0]
                 )
                 
                 
@@ -476,20 +477,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ///
     /// - Parameter notification: event notification.
     @objc func resetMainInterfaceAction(_ notification: Notification) {
+        //notification.dump(#fileID, function: #function)
         resetMainInterface()
     }
 
-    /// Resets the interface to its original state.
+    /// Resets the interface to its original state. Once a tilemap has been loaded, or the demo controller re-scans assets, the interface will be updated.
     @objc func resetMainInterface() {
+        
+        /// disable the `Map`, `Camera` & `Debug` top menus
         mapMenuItem.isEnabled = false
         cameraMainMenu.isEnabled = false
         debugMainMenu.isEnabled = false
         
+        /// disable the `File -> Reload tilemap` menu item
         reloadMapMenuitem.isEnabled = false
-        openMapInTiledMenuitem.isEnabled = false
-
         reloadMapMenuitem.isHidden = true
+        openMapInTiledMenuitem.isEnabled = false
         openMapInTiledMenuitem.isHidden = true
+        /// disable the `File -> Current maps` menu
+        demoFilesMenu.isEnabled = false
         
         
         // camera menu items that are dependant on the current tilemap
@@ -503,7 +509,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         developmentMainMenu.isEnabled = enableDevelopmentMenu
         developmentMainMenu.isHidden = !enableDevelopmentMenu
         
-    
+        
+        /// `Development` menu
         renderStatisticsMenuItem.isEnabled = false
         tilemapStatisticsMenuItem.isEnabled = false
         tilemapCachesStatisticsMenuItem.isEnabled = false
@@ -513,11 +520,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         currentMapsMenuItem.isEnabled = false
         allAssetsMapsMenuItem.isEnabled = false
         externalAssetsMenuItem.isEnabled = false
-        reloadMapMenuitem.isEnabled = false
 
-        demoFilesMenu.isEnabled = false
-        debugMainMenu.isEnabled = false
-
+        
         tilemapStatisticsMenuItem.title = "Tilemap Statistics (reset)"
 
         // selected nodes menu
@@ -593,7 +597,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// Callback to update the UI whenever the tilemap is updated in the demo. Called when the `Notification.Name.Map.Updated` event fires.
     ///
     /// - Parameter notification: event notification.
-    @objc func tilemapWasUpdated(notification: Notification) {
+    @objc func mapUpdatedAction(notification: Notification) {
         //notification.dump(#fileID, function: #function)
         guard let tilemap = notification.object as? SKTilemap else {
             return
@@ -614,7 +618,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc func tilemapUpdateModeChanged(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let tilemap = notification.object as? SKTilemap else {
             return
         }
@@ -628,17 +632,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ///
     /// - Parameter notification: event notification.
     @objc func demoSceneCleared(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         resetMainInterface()
     }
 
     /// Called when a new scene has been loaded. Called when the `Notification.Name.Demo.SceneLoaded` event fires.
     ///
-    ///  object is `SKTiledScene`, userInfo: `["tilemapName": String, "relativePath": String, "currentMapIndex": Int]`
+    ///  payload: `SKTiledScene`, userInfo: `["tilemapName": String, "relativePath": String, "currentMapIndex": Int]`
     ///
     /// - Parameter notification: event notification.
     @objc func demoSceneLoaded(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let demoScene = notification.object as? SKTiledScene else {
             fatalError("cannot access scene.")
         }
@@ -709,7 +713,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ///
     /// - Parameter notification: event notification.
     @IBAction func demoControllerAboutToScanForAssets(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         resetMainInterface()
     }
 
@@ -718,7 +722,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ///
     /// - Parameter notification: event notification.
     @objc func demoControllerAssetScanFinished(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         initializeDemoFilesMenu()
     }
 
@@ -1470,7 +1474,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ///
     /// - Parameter notification: event notification.
     @objc func nodeSelectionChanged(_ notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: Any],
               let selectedNodes = userInfo["nodes"] as? [SKNode] else {
             return
@@ -1572,7 +1576,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ///
     /// - Parameter notification: event notification.
     @objc func nodeSelectionCleared(_ notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
 
         dumpSelectedMenuItem.title = "Deump Selected"
         dumpSelectedMenuItem.isEnabled = false
@@ -1818,7 +1822,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: Show/Hide Render Stats
 
     @objc func renderStatisticsVisibilityChanged(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         if let nextState = notification.userInfo!["showRenderStats"] as? Bool {
             renderStatisticsMenuItem.state = (nextState == false) ? .off : .on
         }
@@ -1831,7 +1835,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ///
     /// - Parameter notification: event notification.
     @objc func globalsUpdatedAction(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         self.initializeLoggingLevelMenu()
         self.updateRenderStatsTimeFormatMenu()
 
@@ -2266,9 +2270,6 @@ extension AppDelegate {
     ///
     /// - Parameter tilemap: tile map object.
     @objc func initializeTilemapMenus(tilemap: SKTilemap) {
-        
-        print("⭑ initializing tilemap menus...")
-        
         
         mapMenuItem.isEnabled = true
         updateModeMenuItem.isEnabled = true

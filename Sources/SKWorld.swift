@@ -118,10 +118,14 @@ extension SKWorld: CustomReflectable {
     
     /// Returns a custom mirror for this object.
     public var customMirror: Mirror {
-        let attributes: [(label: String?, value: Any)] = [
+        var attributes: [(label: String?, value: Any)] = [
             (label: "name", value: name as Any),
             (label: "zoom", value: zoom)
         ]
+        
+        #if SKTILED_DEMO
+        attributes.append(contentsOf: attrsMirror())
+        #endif
         
         return Mirror(self, children: attributes, displayStyle: .struct, ancestorRepresentation: .suppressed)
     }

@@ -102,14 +102,11 @@ public class SKTiledDemoScene: SKTiledScene {
 
     
     public override var isPaused: Bool {
-        willSet {
-            let pauseMessage = (newValue == true) ? "Paused" : ""
-            let hideStatus = (newValue == true) ? false : true
-
+        didSet {
+            /// calls back to the GameViewController to update status message
             NotificationCenter.default.post(
-                name: Notification.Name.DemoController.DemoStatusUpdated,
-                object: nil,
-                userInfo: ["status": pauseMessage, "isHidden": hideStatus, "color": tilemap?.highlightColor ?? SKColor.white]
+                name: Notification.Name.Demo.ScenePauseStatusChanged,
+                object: self
             )
         }
     }
@@ -195,14 +192,13 @@ public class SKTiledDemoScene: SKTiledScene {
 
     // MARK: - Event Handlers
 
-
     /// Called when the `Notification.Name.Demo.NodeSelectionChanged` notification is received.
     ///
     ///  payload:  `userInfo: ["nodes": [SKNode], "focusLocation": CGPoint]`
     ///
     /// - Parameter notification: event notification.
     @objc func nodeSelectionChanged(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: Any],
               let _ = userInfo["nodes"] as? [SKNode] else {
             return
@@ -738,7 +734,7 @@ extension SKTiledDemoScene {
 
         // 'p' pauses the scene
         if eventKey == 0x23 {
-            self.isPaused = !self.isPaused
+            isPaused = !isPaused
         }
 
         // 'r' reloads the scene

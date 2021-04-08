@@ -400,7 +400,7 @@ public func == (lhs: SKTilesetData, rhs: SKTilesetData) -> Bool {
 /// :nodoc:
 extension SKTilesetData: NSCopying {
 
-    /// Creates a new copy of the tile data. This data is not stored in the tileset tile data set, though it is still accessible.
+    /// Creates a new copy of the tile data. This data is *not* stored in the tileset tile data set, though it is still accessible.
     ///
     /// - Parameter zone: memory handler.
     /// - Returns: tile data copy.

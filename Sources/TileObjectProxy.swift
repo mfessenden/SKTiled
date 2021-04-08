@@ -273,7 +273,9 @@ internal class TileObjectProxy: SKShapeNode {
         
         // draw the object's first point
         let firstPointShape = SKShapeNode(circleOfRadius: pointRadius)
+        #if SKTILED_DEMO
         firstPointShape.setAttrs(values: ["tiled-node-role": "first-point"])
+        #endif
         firstPointShape.name = object.firstPointKey
         addChild(firstPointShape)
         
@@ -289,7 +291,9 @@ internal class TileObjectProxy: SKShapeNode {
 
             // draw the polyline's last point
             let lastPointShape = SKShapeNode(circleOfRadius: pointRadius)
+            #if SKTILED_DEMO
             lastPointShape.setAttrs(values: ["tiled-node-role": "last-point"])
+            #endif
             lastPointShape.name = object.lastPointKey
             addChild(lastPointShape)
             

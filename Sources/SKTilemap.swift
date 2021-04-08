@@ -278,7 +278,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         overlayNode.name = "MAP_OVERLAY"
         
         #if SKTILED_DEMO
-        overlayNode.setAttr(key: "tiled-element-name", value: "overlay")
+        overlayNode.setAttrs(values: ["tiled-invisible-node": true, "tiled-element-name": "overlay"])
         #endif
         
         self.addChild(overlayNode)
@@ -540,9 +540,10 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     /// Allow camera rotation.
     public var allowRotation: Bool = false
     
-    /// Initial world scale.
+    /// This value denotes the desired initial world scale. This attribute is ignored if the `[autoResize][map-autoresize-url]` attribute is enabled.
+    ///
+    /// [map-autoresize-url]:../images/camera-delegate.svg
     public var worldScale: CGFloat = 1.0
-    
     
     // MARK: - Hexagonal/Staggered Properties
 
@@ -783,7 +784,9 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         let scaledverts = getVertices(offset: CGPoint.zero).map { $0 * renderQuality }
         let objpath = polygonPath(scaledverts)
         let shape = SKShapeNode(path: objpath)
-        shape.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Represents the map's bounding shape.", "tiled-node-nicename": "Bounds Shape", "tiled-node-listdesc": "Butt Sex"])
+        #if SKTILED_DEMO
+        shape.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Represents the map's bounding shape.", "tiled-node-nicename": "Bounds Shape"])
+        #endif
         let boundsLineWidth = TiledGlobals.default.renderQuality.object / 1.5
         shape.lineWidth = boundsLineWidth
         shape.lineJoin = .miter
@@ -799,7 +802,9 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     @objc public lazy var anchorShape: SKShapeNode = {
         let anchorRadius: CGFloat = (tileSize.height / 8)
         let shape = SKShapeNode(circleOfRadius: anchorRadius)
-        shape.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Represents the map's anchor point.", "tiled-node-nicename": "Anchor Shape", "tiled-node-listdesc": "Butt Sex"])
+        #if SKTILED_DEMO
+        shape.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Represents the map's anchor point.", "tiled-node-nicename": "Anchor Shape"])
+        #endif
         shape.strokeColor = SKColor.clear
         shape.fillColor = frameColor
         addChild(shape)
@@ -1075,7 +1080,9 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         }
     }
 
-    /// Pauses the node, and colors all of its children darker.
+    /// A Boolean value that determines whether actions on the node and its descendants are processed.
+    ///
+    /// Pauses the tilemap, and colors all of its children darker via the overlay.
     public override var isPaused: Bool {
         willSet (pauseValue) {
             overlay.isHidden = (pauseValue == false)
@@ -1389,9 +1396,9 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         self.setupNotifications()
     }
 
-    /// Initialize with dictionary attributes from xml parser.
+    /// Initialize with dictionary attributes from **Tiled** source XML.
     ///
-    /// - Parameter attributes: **Tiled** attributes dictionary.
+    /// - Parameter attributes: attributes parsed from **Tiled** XML.
     public init?(attributes: [String: String]) {
         guard let width = attributes["width"] else { return nil }
         guard let height = attributes["height"] else { return nil }
@@ -1479,6 +1486,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         let renderSize = CGSize(width: mapSize.width * tileSize.width, height: mapSize.height * tileSize.height)
         let largestPixelDimension: CGFloat = (renderSize.width > renderSize.height) ? renderSize.width : renderSize.height
 
+        
         // calculate the ideal max render quality (max size is 16384)
         maxRenderQuality = CGFloat(Int(ceil(4000 / (largestPixelDimension * TiledGlobals.default.contentScale))))
 
@@ -1494,7 +1502,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         renderQuality = maxRenderQuality / 2
         #endif
 
-        // cap render quality
+        // cap the render quality
         renderQuality = (renderQuality > maxRenderQuality) ? maxRenderQuality : (renderQuality > 8) ? 8 : renderQuality
 
         setupChildNodes()
@@ -1521,7 +1529,8 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
         // turn off effects rendering by default
         shouldEnableEffects = false
-        self.setupNotifications()
+        setupChildNodes()
+        setupNotifications()
     }
 
     deinit {
@@ -1535,23 +1544,28 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     }
 
     /// Set up the debug & content root nodes.
+    ///
+    /// The `SKTilemap.contentRoot` is the parent of all renderable content (layers)
     internal func setupChildNodes() {
+
         // debug node
-        self.debugNode = TiledDebugDrawNode(tileLayer: self.defaultLayer, isDefault: true)
-        self.debugNode.zPosition = zPosition + zDeltaForLayers
-
-        #if SKTILED_DEMO
-        objectsOverlay.receiveCameraUpdates = true
-        #endif
-
-        objectsOverlay.zPosition = zPosition + (zDeltaForLayers * 2)
-        cropNode.name = "MAP_CROP_ROOT"
-
+        debugNode = TiledDebugDrawNode(tileLayer: self.defaultLayer, isDefault: true)
+        debugNode.zPosition = zPosition + zDeltaForLayers
         debugNode.name = "MAP_DEBUG_CONTENT"
         addChild(debugNode)
         debugNode.position.y -= sizeInPoints.height
+        
+        // crop root (layer root node)
+        cropNode.name = "MAP_CROP_ROOT"
+        
+        // objects overlay
+        #if SKTILED_DEMO
+        objectsOverlay.receiveCameraUpdates = true
+        #endif
+        objectsOverlay.zPosition = zPosition + (zDeltaForLayers * 2)
         addChild(objectsOverlay)
-
+        
+        // content root
         contentRoot.name = "MAP_RENDERABLE_CONTENT"
         contentRoot.addChild(cropNode)
         addChild(contentRoot)
@@ -1559,9 +1573,9 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
         debugRoot.name = "MAP_DEBUG_ROOT"
 
         #if SKTILED_DEMO
-        cropNode.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Allows for the Tilemap's renderable content to be cropped."])
-        contentRoot.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Root node for all Tiled image & vector types."])
-        debugRoot.setAttrs(values: ["tiled-invisible-node": true, "tiled-node-nicename": "Debug Root", "tiled-node-role": "debugroot", "tiled-node-icon": "debug-icon", "tiled-node-listdesc": "Map Debug Root","tiled-help-desc": "Root node for Tilemap debug visualization nodes."])
+        cropNode.setAttrs(values: ["tiled-helper-node": true, "tiled-help-desc": "Allows for the Tilemap's renderable content to be cropped."])
+        contentRoot.setAttrs(values: ["tiled-helper-node": true, "tiled-help-desc": "Root node for all Tiled image & vector types."])
+        debugRoot.setAttrs(values: ["tiled-helper-node": true, "tiled-node-nicename": "Debug Root", "tiled-node-role": "debugroot", "tiled-node-icon": "debug-icon", "tiled-node-listdesc": "Map Debug Root","tiled-help-desc": "Root node for Tilemap debug visualization nodes."])
         #endif
 
         addChild(debugRoot)
@@ -2021,7 +2035,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     ///   - clamped: clamp the result.
     internal func positionLayer(_ layer: TiledLayerObject, clamped: Bool = false) {
 
-        // start with the child offset
+        // start with the child offset, which brings the start point to the map center
         var result = self.childOffset
 
         // layer offset
@@ -2622,9 +2636,6 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     /// Called when the map isolation mode changes.
     internal func updateGeometryIsolationMode() {
 
-        print("⭑ geometry isolation mode updated '\(isolationMode)'")
-
-
         var doShowTiles = isolationMode.contains(.tiles) || isolationMode.contains(.none)
         var doShowObjects = isolationMode.contains(.objects) || isolationMode.contains(.none)
 
@@ -2993,7 +3004,10 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
         attributes.append(("tiled description", description))
         attributes.append(("tiled debug description", debugDescription))
-
+        
+        #if SKTILED_DEMO
+        attributes.append(contentsOf: attrsMirror())
+        #endif
         return Mirror(self, children: attributes)
     }
 
@@ -3014,13 +3028,7 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
 
         let focusedLayerIsIsolated = !focusedLayer.isHidden
         let actionString = (focusedLayerIsIsolated == true) ? "de-isolating" : "isolating"
-
-
-        print("⭑ \(actionString) layer '\(focusedLayer.layerName)'...")
         let focusedParentLayers = focusedLayer.parentLayers
-
-
-
 
         for layer in getLayers() {
             if (focusedParentLayers.contains(layer) == true) {
@@ -3443,9 +3451,6 @@ extension SKTilemap {
     @objc public override func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
         let highlightFillColor = color.withAlphaComponent(0.2)
 
-        let durationString = (duration > 0) ? " for \(duration) seconds..." : "..."
-        //print("⭑ [\(classNiceName)]: highlighting node\(durationString)")
-        
         boundsShape?.strokeColor = color
         boundsShape?.fillColor = highlightFillColor
         boundsShape?.isHidden = false

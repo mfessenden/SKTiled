@@ -183,7 +183,7 @@ extension TileObjectOverlay: TiledCustomReflectableType {
 
     /// Returns a "nicer" node name, for usage in the inspector.
     @objc public var tiledNodeNiceName: String {
-        return "Overlay Node"
+        return "Object Overlay"
     }
     
     @objc var tiledIconName: String {
@@ -194,7 +194,7 @@ extension TileObjectOverlay: TiledCustomReflectableType {
     @objc var tiledListDescription: String {
         let objCount = objects.count
         let objCountString = (objCount > 0) ? (objCount > 1) ? "\(objCount) objects" : "1 object" : "no objects"
-        return "Map Overlay: (\(objCountString))"
+        return "\(tiledNodeNiceName): (\(objCountString))"
     }
     
     @objc var tiledHelpDescription: String {

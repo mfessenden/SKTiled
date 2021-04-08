@@ -27,6 +27,7 @@
 import SpriteKit
 
 
+
 // MARK: - SKTilemap
 
 extension SKTilemap {
@@ -60,7 +61,7 @@ extension SKTilemap {
             }
 
             if (lattr == "gridopacity") {
-                defaultLayer.gridOpacity = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : TiledGlobals.default.debugDisplayOptions.gridOpactity
+                defaultLayer.gridOpacity = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : TiledGlobals.default.debugDisplayOptions.gridOpacity
                 getLayers().forEach {$0.gridOpacity = self.defaultLayer.gridOpacity}
             }
 

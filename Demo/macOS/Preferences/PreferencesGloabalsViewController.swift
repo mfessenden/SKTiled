@@ -54,7 +54,7 @@ class PreferencesGloabalsViewController: NSViewController {
     func setupNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(globalsUpdatedAction), name: Notification.Name.Globals.DefaultsRead, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(globalsUpdatedAction), name: Notification.Name.Globals.Updated, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(tilemapWasUpdated), name: Notification.Name.Map.Updated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(mapUpdatedAction), name: Notification.Name.Map.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(cameraWasUpdated), name: Notification.Name.Camera.Updated, object: nil)
     }
 
@@ -414,7 +414,7 @@ class PreferencesGloabalsViewController: NSViewController {
         populateInterface()
     }
 
-    @objc func tilemapWasUpdated(notification: Notification) {
+    @objc func mapUpdatedAction(notification: Notification) {
         populateInterface()
     }
 
@@ -444,9 +444,6 @@ extension PreferencesGloabalsViewController: NSTextFieldDelegate {
         let hasFormatter = formatter != nil
         let textFieldDescription = (hasFormatter == true) ? "number field" : "text field"
 
-        #if DEBUG
-        // print("⭑ [\(classNiceName)]: \(textFieldDescription) '\(textIdentifier)', value: '\(textFieldValue)'")
-        #endif
 
         if (textIdentifier == "glb-renderquality-field") {
             if let doubleValue = Double(textFieldValue) {

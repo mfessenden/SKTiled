@@ -57,7 +57,8 @@ import Cocoa
 /// groupLayer.removeLayer(playerLayer)
 /// ```
 public class SKGroupLayer: TiledLayerObject {
-
+    
+    /// Private collection of layers.
     private var _layers: Set<TiledLayerObject> = []
 
     /// Returns the last index for all layers.
@@ -254,14 +255,16 @@ extension SKGroupLayer {
     
     /// A description of the node used in list or outline views.
     @objc public override var tiledListDescription: String {
-        let childCountString = (children.count == 0) ? ": (no children)" : ": (\(children.count) children)"
+        let childLayers = children.filter( { $0 as? TiledLayerObject != nil} )
+        let childCountString = (childLayers.count == 0) ? ": (no children)" : ": (\(childLayers.count) children)"
         let layerNameString = (name != nil) ? " '\(name!)'" : ""
         return "\(tiledNodeNiceName)\(layerNameString)\(childCountString)"
     }
     
     /// A description of the node used for debug output text.
     @objc public override var tiledDisplayItemDescription: String {
-        let childCountString = (children.count == 0) ? ": (no children)" : ": (\(children.count) children)"
+        let childLayers = children.filter( { $0 as? TiledLayerObject != nil} )
+        let childCountString = (childLayers.count == 0) ? ": (no children)" : ": (\(childLayers.count) children)"
         let layerNameString = (name != nil) ? " '\(name!)'" : ""
         return #"<\#(className)\#(layerNameString)\#(childCountString)>"#
     }

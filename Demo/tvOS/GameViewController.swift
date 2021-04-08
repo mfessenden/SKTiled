@@ -153,7 +153,7 @@ class GameViewController: GCEventViewController, Loggable {
         NotificationCenter.default.addObserver(self, selector: #selector(debuggingInfoReceived), name: Notification.Name.Demo.UpdateDebugging, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(debuggingMessageReceived), name: Notification.Name.Debug.DebuggingMessageSent, object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(tilemapWasUpdated), name: Notification.Name.Map.Updated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(mapUpdatedAction), name: Notification.Name.Map.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sceneCameraUpdated), name: Notification.Name.Camera.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(renderStatsUpdated), name: Notification.Name.Map.RenderStatsUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tilemapUpdateModeChanged), name: Notification.Name.Map.UpdateModeChanged, object: nil)
@@ -273,7 +273,7 @@ class GameViewController: GCEventViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func debuggingInfoReceived(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         if let mapInfo = notification.userInfo!["mapInfo"] {
             mapInfoLabel.text = mapInfo as? String
         }
@@ -287,7 +287,7 @@ class GameViewController: GCEventViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func sceneCameraUpdated(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let camera = notification.object as? SKTiledSceneCamera else {
             return
         }
@@ -345,7 +345,7 @@ class GameViewController: GCEventViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func debuggingMessageReceived(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         var duration: TimeInterval = 3.0
 
         if let commandDuration = notification.userInfo!["duration"] {
@@ -370,7 +370,7 @@ class GameViewController: GCEventViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func tilemapWasUpdated(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let tilemap = notification.object as? SKTilemap else { return }
 
         if (tilemap.hasKey("uiColor")) {

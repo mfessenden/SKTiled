@@ -185,14 +185,17 @@ extension TiledMappableGeometryType {
                 return CGSize(width: mapSize.width * tileSize.width, height: mapSize.height * tileSize.height)
                 
             case .isometric:
+                // 12 + 12 = 24
                 let side = width + height
+                // 24 * 8 = 192, 24 * 4 = 96
                 return CGSize(width: side * tileWidthHalf,  height: side * tileHeightHalf)
                 
+            // TODO: might need a separate case for staggered
             case .hexagonal, .staggered:
                 var result = CGSize.zero
                 
                 if (staggerX == true) {
-
+                    
                     result = CGSize(width: width * columnWidth + sideOffsetX,
                                     height: height * (tileHeight + sideLengthY))
                     
@@ -200,15 +203,16 @@ extension TiledMappableGeometryType {
                     if (orientation == .hexagonal) {
                         if (width > 1) {
                             result.height += rowHeight
-                        }}
+                        }
+                    }
                     
                     
-                // TODO: test this; returned incorrect height with `staggered-64x33`
+                    // TODO: test this; returned incorrect height with `staggered-64x33`
                 } else {
                     
                     result = CGSize(width: width * (tileWidth + sideLengthX),
                                     height: height * rowHeight + sideOffsetY)
-                                    //height: height * rowHeight)
+                    //height: height * rowHeight)
                     
                     
                     if (orientation == .hexagonal) {
@@ -216,7 +220,7 @@ extension TiledMappableGeometryType {
                             result.width += columnWidth
                         }}
                 }
-
+                
                 //return result.floor()
                 return result
         }

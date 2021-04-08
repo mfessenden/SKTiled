@@ -285,7 +285,7 @@ internal class MousePointer: SKNode {
     ///
     /// - Parameter notification: event notification.
     @objc func tileClicked(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let tile = notification.object as? SKTile else {
             return
         }

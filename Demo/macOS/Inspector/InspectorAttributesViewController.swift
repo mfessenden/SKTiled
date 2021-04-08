@@ -125,6 +125,7 @@ class InspectorAttributesViewController: NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionChanged), name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(dumpAttributeEditorWidgets), name: Notification.Name.Debug.DumpAttributeEditor, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(dumpAttributeStorage), name: Notification.Name.Debug.DumpAttributeStorage, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(nodeAttributesChanged), name: Notification.Name.Demo.NodeAttributesChanged, object: nil)
     }
 
 
@@ -135,6 +136,7 @@ class InspectorAttributesViewController: NSViewController {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Debug.DumpAttributeEditor, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Debug.DumpAttributeStorage, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeAttributesChanged, object: nil)
     }
 
     /// Initialize the attributes editor. This method parses values from the storyboard and allows easy recall of UI widgets.
@@ -217,8 +219,6 @@ class InspectorAttributesViewController: NSViewController {
         var actions = ""
         let stackNames = nodetypes.map { "\($0)-stack-root" }
 
-        // print("⭑ [AttributeEditor]: selected node types: \(nodetypes)")
-
         for (idx, (name, stack)) in rootUIViews.enumerated() {
             let stackIdHidden = !stackNames.contains(name)
             stack.isHidden = stackIdHidden
@@ -265,7 +265,6 @@ class InspectorAttributesViewController: NSViewController {
 
         // get the relevant widgets & reset them
         let nodeNameLabel = textFields["node-name-label"]           // Sprite Node:
-        let nodeTypeLabel = textFields["node-type-label"]          // "GRID_DISPLAY"
         let nodeDescLabel = textFields["node-desc-field"]          // Grid visualization node.
 
         let nodeHiddenCheck = checkBoxes["node-hidden-check"]
@@ -319,7 +318,6 @@ class InspectorAttributesViewController: NSViewController {
 
         // reset current values
         nodeNameLabel?.reset()
-        nodeTypeLabel?.reset()
         nodeDescLabel?.reset()
         nodeNameField?.reset()
         nodePosXField?.reset()
@@ -395,24 +393,25 @@ class InspectorAttributesViewController: NSViewController {
             }
         }
 
-
-
-        nodeTypeLabel?.setStringValue(keys: ["sk-node-type", "tiled-element-name", "tiled-node-nicename", "tiled-node-role"], attribute: nodeAttributeStorage, fallback: "Node")
-
+        
+        let nodeTypeKeys = ["tiled-node-listdesc", "sk-node-type", "tiled-element-name", "tiled-node-nicename", "tiled-node-role"]
+        var nodeTypeString = nodeAttributeStorage.firstValue(for: nodeTypeKeys) as? String ?? "Node"
+        
+        
         let nodeNameAttributes: [NSAttributedString.Key : Any] = [
             NSAttributedString.Key.foregroundColor: NSColor(named: NSColor.Name("AttributeName"))
         ]
 
-        // node name
-        var nodeNameString: String?
+        
+        var nodeNameString = nodeTypeString
         if let nodeName = nodeAttributeStorage.firstValue(key: "sk-node-name") as? String {
-            nodeNameString = "'\(nodeName)'"
+            nodeNameString = "\(nodeTypeString): '\(nodeName)'"
         }
 
-        if let nodeNameString = nodeNameString {
-            let attributedString = NSAttributedString(string: nodeNameString, attributes: nodeNameAttributes)
-            nodeNameLabel?.attributedStringValue = attributedString
-        }
+
+        let attributedString = NSAttributedString(string: nodeNameString, attributes: nodeNameAttributes)
+        nodeNameLabel?.attributedStringValue = attributedString
+        
 
         // node description
         var nodeDescString: String?
@@ -574,11 +573,30 @@ class InspectorAttributesViewController: NSViewController {
         }
     }
     
+    /// Called with the `Notification.Name.Debug.DumpAttributeStorage` notification. User has pressed `d` with the Inspector focused.
+    ///
+    /// - Parameter notification: event notification.
     @objc func dumpAttributeStorage(notification: Notification) {
         guard let attributes = attributeStorage else {
             return
         }
         attributes.dump()
+    }
+    
+    /// Called when node values are changed via the demo inspector. Called when the `Notification.Name.Demo.NodeAttributesChanged` notification is received.
+    ///
+    /// - Parameter notification: event notification.
+    @objc func nodeAttributesChanged(notification: Notification) {
+        //notification.dump(#fileID, function: #function)
+        guard let userInfo = notification.userInfo as? [String: [SKNode]],
+              let updatedNodes = userInfo["updated"]  else {
+            return
+        }
+        
+        for node in updatedNodes {
+            node.updateAttributes()
+        }
+        populateAttributeEditor()
     }
 
     /// Handler for button/checkbox events.
@@ -671,6 +689,7 @@ extension InspectorAttributesViewController: TiledSceneCameraDelegate {
     ///
     /// - Parameter event: mouse click event.
     @objc func rightMouseDown(event: NSEvent) {
+        //
         setupAttributeEditor()
     }
     
@@ -712,7 +731,7 @@ extension InspectorAttributesViewController: NSTextFieldDelegate {
         }
         
         
-        print("selector: \(commandSelector.description)")
+        print("⭑ selector: \(commandSelector.description)")
         
         let doubleValue = textField.doubleValue
         let incrementValue: Double = 0.5
@@ -720,19 +739,19 @@ extension InspectorAttributesViewController: NSTextFieldDelegate {
         if commandSelector == #selector(moveUp(_:)) {
             let newValue = doubleValue + incrementValue
             textField.doubleValue = newValue
-            return false
+            return true
 
         } else if commandSelector == #selector(moveDown(_:)) {
             let newValue = doubleValue - incrementValue
             textField.doubleValue = newValue
-            return false
+            return true
         
         // if the user presses tab or return, handle the
         } else if commandSelector == #selector(insertNewline(_:)) {
-            return true
+            return false
             
         } else if commandSelector == #selector(insertTab(_:)) {
-            return true
+            return false
         }
 
         return false
@@ -758,11 +777,6 @@ extension InspectorAttributesViewController: NSTextFieldDelegate {
         if (demoDelegate.focusedNodes.isEmpty) {
             return
         }
-        
-        /*
-        let textFieldDescription = (textField.isNumericTextField == true) ? "number field" : "text field"
-        print("⭑ [AttributeEditor]: \(textFieldDescription) '\(textIdentifier)', value: '\(textFieldValue)'")
-        */
         
         
         if (textIdentifier == "node-name-field") {

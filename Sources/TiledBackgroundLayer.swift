@@ -74,12 +74,13 @@ internal class TiledBackgroundLayer: TiledLayerObject {
         index = 0
         
         let spriteNode = SKSpriteNode(texture: nil, color: tilemap.backgroundColor ?? SKColor.clear, size: tilemap.sizeInPoints)
-        
-        #if SKTILED_DEMO
-        spriteNode.setAttr(key: "tiled-element-name", value: "overlay")
-        #endif
         spriteNode.name = "MAP_BACKGROUND_SPRITE"
         addChild(spriteNode)
+        
+        #if SKTILED_DEMO
+        spriteNode.setAttrs(values: ["tiled-invisible-node": true, "tiled-element-name": "overlay"])
+        #endif
+
         
         // position sprite
         spriteNode.position.x += tilemap.sizeInPoints.width / 2
@@ -90,6 +91,10 @@ internal class TiledBackgroundLayer: TiledLayerObject {
         spriteNode.size.height += tilemap.backgroundOffset.height
         
         sprite = spriteNode
+        
+        
+        
+        
     }
     
     /// Set the color of the background node.

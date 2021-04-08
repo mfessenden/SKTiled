@@ -67,7 +67,7 @@ class InspectorMainWindowController: NSWindowController, NSWindowDelegate {
     
     /// Called when a new scene has been loaded. Called when the `Notification.Name.Demo.SceneLoaded` event fires.
     ///
-    ///  object: `SKTiledScene`
+    /// payload: `SKTiledScene`, userInfo: `["tilemapName": String, "relativePath": String, "currentMapIndex": Int]`
     ///
     /// - Parameter notification: event notification.
     @objc func demoSceneLoaded(notification: Notification) {

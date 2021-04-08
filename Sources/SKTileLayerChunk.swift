@@ -332,6 +332,9 @@ public class SKTileLayerChunk: TiledLayerObject {
         attributes.append(("tiled description", description))
         attributes.append(("tiled debug description", debugDescription))
         
+        #if SKTILED_DEMO
+        attributes.append(contentsOf: attrsMirror())
+        #endif
         return Mirror(self, children: attributes, ancestorRepresentation: .suppressed)
     }
 }

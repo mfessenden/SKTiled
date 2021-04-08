@@ -176,7 +176,7 @@ class GameViewController: UIViewController, Loggable {
     // MARK: - Interface & Setup
 
     func setupNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(tilemapWasUpdated), name: Notification.Name.Map.Updated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(mapUpdatedAction), name: Notification.Name.Map.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(debuggingInfoReceived), name: Notification.Name.Demo.UpdateDebugging, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(debuggingMessageReceived), name: Notification.Name.Debug.DebuggingMessageSent, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sceneCameraUpdated), name: Notification.Name.Camera.Updated, object: nil)
@@ -444,7 +444,11 @@ class GameViewController: UIViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func tilemapWasUpdated(notification: Notification) {
-        guard let tilemap = notification.object as? SKTilemap else { return }
+        //notification.dump(#fileID, function: #function)
+        guard let tilemap = notification.object as? SKTilemap else {
+            log("cannot access tilemap.", level: .error)
+            return
+        }
 
         if (tilemap.hasKey("uiColor")) {
             if let hexString = tilemap.stringForKey("uiColor") {

@@ -91,15 +91,14 @@ import SpriteKit
 /// :nodoc:
 extension TiledGeometryType {
     
+    // TODO: this might be better as an extension to `TiledGeometryType` nodes that are `SKNode` subclasses
+    
     /// Generic highlight method.
     ///
     /// - Parameters:
     ///   - color: highlight color.
     ///   - duration: highlight duration.
     public func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
-
-        let durationString = (duration > 0) ? " for \(duration) seconds..." : "..."
-        //print("⭑ [TiledGeometryType]: highlighting node\(durationString)")
         
         boundsShape?.isHidden = false
         boundsShape?.strokeColor = color
@@ -298,22 +297,91 @@ extension SKNode {
         print("⭑ [SKNode]: highlighting node\(durationString)")
         
         /// remove the current frame, if it exists
-        let frameName = "\(hash)_HIGHLIGHT"
+        let frameName  = "\(hash)_HIGHLIGHT"
+        let anchorName = "\(hash)_ANCHOR"
+        
+        // remove old nodes
         childNode(withName: frameName)?.removeFromParent()
+        childNode(withName: anchorName)?.removeFromParent()
+        
+        
+        let anchorSize: CGFloat = 1.5
+        
+       
         
         /// highlight sprite types by setting colorblendfactor
         
         
         /// highlight shape types by adding a shape overlay
         
+        let anchor = SKShapeNode(circleOfRadius: anchorSize)
+        #if SKTILED_DEMO
+        anchor.setAttrs(values: ["tiled-invisible-node": true])
+        #endif
+        anchor.name = anchorName
+        anchor.fillColor = .white
+        anchor.strokeColor = SKColor.clear
+        anchor.zPosition = zPosition + 100
+        anchor.isAntialiased = false
+        addChild(anchor)
+        
+        
         let boundingBox = SKShapeNode(rectOf: calculateAccumulatedFrame().size)
+        #if SKTILED_DEMO
+        boundingBox.setAttrs(values: ["tiled-invisible-node": true])
+        #endif
         boundingBox.name = frameName
         boundingBox.lineWidth = 1
         boundingBox.strokeColor = .white
         boundingBox.fillColor = .clear
         boundingBox.zPosition = zPosition + 1
-        boundingBox.path = boundingBox.path?.copy(dashingWithPhase: 0, lengths: [10,10])
+        boundingBox.path = boundingBox.path?.copy(dashingWithPhase: 0, lengths: [4,4])
+        boundingBox.isAntialiased = false
         addChild(boundingBox)
+        
+
+        // highlight the parent node
+        if let nodeParent = parent {
+
+            /// remove the current frame, if it exists
+            let parentFrameName  = "\(nodeParent.hash)_HIGHLIGHT"
+            let parentAnchorName = "\(nodeParent.hash)_ANCHOR"
+            
+            nodeParent.childNode(withName: parentFrameName)?.removeFromParent()
+            nodeParent.childNode(withName: parentAnchorName)?.removeFromParent()
+            
+            let parentColor = TiledObjectColors.pear
+            
+            // create the parent anchor node
+            let parentAnchor = SKShapeNode(circleOfRadius: anchorSize * 1.1)
+            #if SKTILED_DEMO
+            parentAnchor.setAttrs(values: ["tiled-invisible-node": true])
+            #endif
+            parentAnchor.name = parentAnchorName
+            parentAnchor.fillColor = parentColor
+            parentAnchor.strokeColor = SKColor.clear
+            parentAnchor.zPosition = nodeParent.zPosition + 100
+            parentAnchor.isAntialiased = false
+            nodeParent.addChild(parentAnchor)
+            
+            
+            
+            let parentRect = nodeParent.calculateAccumulatedFrame()
+            let parentRectSize = parentRect.size
+            let parentBoundingBox = SKShapeNode(rectOf: parentRectSize)
+            #if SKTILED_DEMO
+            parentBoundingBox.setAttrs(values: ["tiled-invisible-node": true])
+            #endif
+            parentBoundingBox.name = parentFrameName
+            parentBoundingBox.lineWidth = 1
+            parentBoundingBox.strokeColor = parentColor
+            parentBoundingBox.fillColor = parentColor.withAlphaComponent(0.2)
+            parentBoundingBox.zPosition = nodeParent.zPosition + 90
+            parentBoundingBox.path = parentBoundingBox.path?.copy(dashingWithPhase: 0, lengths: [4,4])
+            parentBoundingBox.isAntialiased = false
+            nodeParent.addChild(parentBoundingBox)
+            
+        }
     }
 
     

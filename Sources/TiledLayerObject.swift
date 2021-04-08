@@ -275,7 +275,9 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         let scaledverts = getVertices().map { $0 * renderQuality }
         let objpath = polygonPath(scaledverts)
         let shape = SKShapeNode(path: objpath)
+        #if SKTILED_DEMO
         shape.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Represents the layer's bounding shape.", "tiled-node-nicename": "Bounds Shape"])
+        #endif
         let boundsLineWidth = TiledGlobals.default.renderQuality.object / 1.5
         shape.lineWidth = boundsLineWidth
         shape.lineJoin = .miter
@@ -291,7 +293,9 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     @objc public lazy var anchorShape: SKShapeNode = {
         let anchorRadius: CGFloat = (tileSize.height / 8) * 0.85
         let shape = SKShapeNode(circleOfRadius: anchorRadius)
+        #if SKTILED_DEMO
         shape.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Represents the layer's anchor point.", "tiled-node-nicename": "Anchor Shape"])
+        #endif
         shape.strokeColor = SKColor.clear
         shape.fillColor = frameColor
         addChild(shape)
@@ -344,7 +348,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     @objc public weak var graph: GKGridGraph<GKGridGraphNode>?
 
     // Debug visualizations.
-    public var gridOpacity: CGFloat = TiledGlobals.default.debugDisplayOptions.gridOpactity
+    public var gridOpacity: CGFloat = TiledGlobals.default.debugDisplayOptions.gridOpacity
 
     /// Debug visualization node
     internal var debugNode: TiledDebugDrawNode!
@@ -363,8 +367,8 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     /// Layer-based control for antialiasing child objects.
     public var antialiased: Bool = false
 
-    /// Blending factor.
-    public var colorBlendFactor: CGFloat = 1.0
+    /// Blending factor, used to add a tint to the layer.
+    public var colorBlendFactor: CGFloat = 0
 
     /// Render scaling property.
     public var renderQuality: CGFloat = TiledGlobals.default.renderQuality.default
@@ -478,8 +482,8 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
                 offsetPos.y += tileHeightHalf
                 
             case .isometric:
-                //offsetPos.x -= sizeInPoints.halfWidth
-                offsetPos.x -= sizeInPoints.halfWidth + (tileWidth * 3)
+                offsetPos.x -= sizeInPoints.halfWidth
+                //offsetPos.x -= sizeInPoints.halfWidth + (tileWidth * 3)
                 offsetPos.y += tileHeightHalf
                 
             case .hexagonal, .staggered:
@@ -953,9 +957,6 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     ///   - duration: duration of highlight effect.
     @objc public override func highlightNode(with color: SKColor, duration: TimeInterval = 0) {
         let highlightFillColor = color.withAlphaComponent(0.2)
-
-        let durationString = (duration > 0) ? " for \(duration) seconds..." : "..."
-        //print("⭑ [\(classNiceName)]: highlighting node\(durationString)")
         
         boundsShape?.strokeColor = color
         boundsShape?.fillColor = highlightFillColor
@@ -964,14 +965,16 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         anchorShape.fillColor = color
         anchorShape.isHidden = false
         
+        let fadeDuration: TimeInterval = duration / 2
+        
+        
         if (duration > 0) {
-            let fadeInAction = SKAction.colorize(withColorBlendFactor: 1, duration: duration)
 
             let groupAction = SKAction.group(
                 [
-                    fadeInAction,
+                    SKAction.colorize(withColorBlendFactor: 1, duration: fadeDuration),
                     SKAction.wait(forDuration: duration),
-                    fadeInAction.reversed()
+                    SKAction.colorize(withColorBlendFactor: 0, duration: fadeDuration)
                 ]
             )
             
@@ -985,6 +988,7 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
     @objc public override func removeHighlight() {
         boundsShape?.isHidden = true
         anchorShape.isHidden = true
+        colorBlendFactor = 0
     }
 
     // MARK: - Updating
@@ -1046,7 +1050,9 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
         
         attributes.append(("tiled description", description))
         attributes.append(("tiled debug description", debugDescription))
-        
+        #if SKTILED_DEMO
+        attributes.append(contentsOf: attrsMirror())
+        #endif
         return Mirror(self, children: attributes, ancestorRepresentation: .suppressed)
     }
 }

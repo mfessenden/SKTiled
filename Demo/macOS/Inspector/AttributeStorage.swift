@@ -128,6 +128,25 @@ public struct AttributeStorage {
         return currentValues.first!
     }
     
+    /// Returns the first value for an array of keys.
+    ///
+    /// - Parameters:
+    ///   - keys: attribute keys to search for.
+    ///   - fallback: fallback value (if there are multiple values).
+    /// - Returns: the value for the given key.
+    public func firstValue(for keys: [String], fallback: String = "multiple") -> AnyHashable? {
+        var bestValue: AnyHashable?
+        for key in keys {
+            if (bestValue != nil) {
+                break
+            }
+            if (valueCount(for: key) == 1) {
+                bestValue = firstValue(key: key, fallback: fallback)
+            }
+        }
+        return bestValue
+    }
+    
     /// Removes all of the values in storage.
     public mutating func removeAll() {
         items.removeAll()
@@ -232,9 +251,10 @@ extension AttributeStorage: CustomReflectable {
 }
 
 
+// MARK: Widgets + Attribute Storage
 
 
-// CLEANME: move this to `Demo+Extensions` module?
+/// :nodoc: set textfield values from attribute storage.
 extension NSTextField {
     
     

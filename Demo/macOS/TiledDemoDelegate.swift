@@ -143,7 +143,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func nodeSelectionChanged(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: Any],
               let selectedNodes = userInfo["nodes"] as? [SKNode] else {
             return
@@ -165,7 +165,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func nodeSelectionCleared(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         self.reset()
     }
     
@@ -175,7 +175,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func tileClickedAction(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let tile = notification.object as? SKTile else {
             return
         }
@@ -183,15 +183,13 @@ public class TiledDemoDelegate: NSObject, Loggable {
         focusedNodes.unfocusAll()
         focusedNodes.removeAll()
         focusedNodes.append(tile)
+
         
-        
-        print("⭑ tile is focused: \(tile.isFocused)")
-        
-        /// event: `Notification.Name.Demo.NodeSelectionChanged`
+        /// calls back to TreeView
         NotificationCenter.default.post(
             name: Notification.Name.Demo.NodeSelectionChanged,
             object: nil,
-            userInfo: ["nodes": [tile]]
+            userInfo: ["nodes": [tile], "autoExpand": true]
         )
     }
     
@@ -220,14 +218,12 @@ public class TiledDemoDelegate: NSObject, Loggable {
         focusedNodes.unfocusAll()
         focusedNodes.removeAll()
         focusedNodes.append(object)
-        
-        print("⭑ object is focused: \(object.isFocused)")
-        
+                
         /// event: `Notification.Name.Demo.NodeSelectionChanged`
         NotificationCenter.default.post(
             name: Notification.Name.Demo.NodeSelectionChanged,
             object: nil,
-            userInfo: ["nodes": [object]]
+            userInfo: ["nodes": [object], "autoExpand": true]
         )
     }
     
@@ -351,7 +347,7 @@ public class TiledDemoDelegate: NSObject, Loggable {
 
         for node in focusedNodes {
             if let tiledNode = node as? TiledGeometryType {
-                tiledNode.highlightNode(with: SKColor.blue)
+                tiledNode.highlightNode(with: SKColor.blue, duration: 3)
             }
         }
         updateCommandString("Highlighting selected nodes...", duration: 3.0)

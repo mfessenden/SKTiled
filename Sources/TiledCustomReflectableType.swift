@@ -153,6 +153,7 @@ extension TiledCustomReflectableType {
             result["sk-node-alpha"] = skNode.alpha
             result["sk-node-rotz"] = skNode.zRotation.degrees()
             
+            #if SKTILED_DEMO
             for (attr, value) in skNode.getAttrs() {
                 
                 // TODO: figure out override rules here
@@ -164,6 +165,7 @@ extension TiledCustomReflectableType {
                     }
                 }
             }
+            #endif
             
             if let skNodeName = skNode.name {
                 result["sk-node-name"] = skNodeName

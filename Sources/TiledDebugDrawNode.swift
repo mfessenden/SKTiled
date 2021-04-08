@@ -59,7 +59,6 @@ internal class TiledDebugDrawNode: SKNode {
         anchorKey = "ANCHOR_\(tileLayer.shortId)"
         super.init()
         setup()
-        setAttrs(values: ["tiled-invisible-node": true])
     }
     
     /// Instantiate the node with a decoder instance.
@@ -88,9 +87,12 @@ internal class TiledDebugDrawNode: SKNode {
     
     /// Align with the parent layer.
     func setup() {
-        guard let layer = layer else { return }
-        
-        let nodePrefix = (isDefault == true) ? "MAP" : layer.layerName.uppercased()
+        guard let layer = layer else {
+            return
+        }
+       
+
+        let nodePrefix = (isDefault == true) ? "MAP" : "\(layer.hash)"
         let nodeName = "\(nodePrefix)_DEBUG_DRAW"
         name = nodeName
         
@@ -99,28 +101,22 @@ internal class TiledDebugDrawNode: SKNode {
         gridSprite.anchorPoint = CGPoint.zero
         gridSprite.name = "\(nodePrefix)_GRID_DISPLAY"
         
-        #if SKTILED_DEMO
-        gridSprite.setAttrs(values: ["tiled-node-icon": "grid-icon", "tiled-node-nicename": "Grid Sprite", "tiled-node-listdesc": "Layer Grid Visualization", "tiled-help-desc": "Sprite containing layer grid visualization."])
-        #endif
-        
         addChild(gridSprite!)
         
         graphSprite = SKSpriteNode(texture: nil, color: .clear, size: layer.sizeInPoints)
         graphSprite.anchorPoint = CGPoint.zero
         graphSprite.name = "\(nodePrefix)_GRAPH_DISPLAY"
-        
-        
-        #if SKTILED_DEMO
-        graphSprite.setAttrs(values: ["tiled-node-icon": "graph-icon", "tiled-node-nicename": "Graph Sprite", "tiled-node-listdesc": "Layer Graph Visualization", "tiled-help-desc": "Sprite containing layer pathfinding graph visualization."])
-        #endif
-        
+
         addChild(graphSprite!)
         
         let frameShapeNode = SKShapeNode()
         frameShapeNode.name = "\(nodePrefix)_FRAME_DISPLAY"
         
         #if SKTILED_DEMO
-        frameShapeNode.setAttrs(values: ["tiled-help-desc": "Debug visualization shape for the map or layer frame."])
+        setAttrs(values: ["tiled-helper-node": true])
+        gridSprite.setAttrs(values: ["tiled-invisible-node": true, "tiled-node-icon": "grid-icon", "tiled-node-nicename": "Grid Sprite", "tiled-node-listdesc": "Layer Grid Visualization", "tiled-help-desc": "Sprite containing layer grid visualization."])
+        graphSprite.setAttrs(values: ["tiled-invisible-node": true, "tiled-node-icon": "graph-icon", "tiled-node-nicename": "Graph Sprite", "tiled-node-listdesc": "Layer Graph Visualization", "tiled-help-desc": "Sprite containing layer pathfinding graph visualization."])
+        frameShapeNode.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Debug visualization shape for the map or layer frame."])
         #endif
         
         addChild(frameShapeNode)
@@ -300,12 +296,8 @@ internal class TiledDebugDrawNode: SKNode {
             
             // generate the texture
             if let gridImage = drawLayerGrid(layer, imageScale: imageScale, lineScale: lineScale) {
-                gridTexture = SKTexture(cgImage: gridImage)
-
-                gridTexture?.preload {
-                    
-                }
                 
+                gridTexture = SKTexture(cgImage: gridImage)
                 gridTexture?.filteringMode = .nearest
                 
                 // sprite scaling factor
@@ -333,7 +325,7 @@ internal class TiledDebugDrawNode: SKNode {
         }
         
         gridSprite.color = fillColor
-        gridSprite.colorBlendFactor = 0.5
+        gridSprite.colorBlendFactor = TiledGlobals.default.debugDisplayOptions.gridOpacity
         gridSprite.isHidden = false
     }
     
@@ -416,11 +408,10 @@ extension TiledDebugDrawNode: TiledCustomReflectableType {
     }
     
     @objc var tiledListDescription: String {
-        var objName = ""
-        if let objname = name {
-            objName = ": '\(objname)'"
+        guard let parentLayer = layer else {
+            return "\(tiledNodeNiceName)"
         }
-        return "\(tiledNodeNiceName)\(objName)"
+        return "\(tiledNodeNiceName): '\(parentLayer.path)'"
     }
     
     @objc var tiledHelpDescription: String {

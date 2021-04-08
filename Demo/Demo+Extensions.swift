@@ -154,7 +154,7 @@ extension TiledGlobals {
         }
 
         if (defaults.value(forKey: "tiled-gbl-dd-gridopacity") != nil) {
-            self.debugDisplayOptions.gridOpactity = CGFloat(defaults.double(forKey: "tiled-gbl-dd-gridopacity"))
+            self.debugDisplayOptions.gridOpacity = CGFloat(defaults.double(forKey: "tiled-gbl-dd-gridopacity"))
         }
 
         if (defaults.value(forKey: "tiled-gbl-dd-gridcolor") != nil) {
@@ -252,7 +252,7 @@ extension TiledGlobals {
 
         // debug display
         defaults.set(self.debugDisplayOptions.highlightDuration, forKey: "tiled-gbl-dd-contained-hlduration")
-        defaults.set(self.debugDisplayOptions.gridOpactity, forKey: "tiled-gbl-dd-gridopacity")
+        defaults.set(self.debugDisplayOptions.gridOpacity, forKey: "tiled-gbl-dd-gridopacity")
         defaults.set(self.debugDisplayOptions.gridColor.hexString(), forKey: "tiled-gbl-dd-gridcolor")
         defaults.set(self.debugDisplayOptions.frameColor.hexString(), forKey: "tiled-gbl-dd-framecolor")
         defaults.set(self.debugDisplayOptions.lineWidth, forKey: "tiled-gbl-dd-linewidth")
@@ -399,9 +399,9 @@ extension Notification.Name {
         /// Indicates a new SpriteKit scene has been loaded.
         public static let SceneLoaded                   = Notification.Name(rawValue: "org.sktiled.notification.name.demo.sceneLoaded")
         public static let UpdateDebugging               = Notification.Name(rawValue: "org.sktiled.notification.name.demo.updateDebugging")
+        public static let ScenePauseStatusChanged       = Notification.Name(rawValue: "org.sktiled.notification.name.demo.scenePauseStatusChanged")
 
         // demo controller
-
         public static let FlushScene                    = Notification.Name(rawValue: "org.sktiled.notification.name.demo.flushScene")
 
         // macOS
@@ -579,7 +579,7 @@ extension SKNode {
         }
     }
 
-    /// Update the object's attributes.
+    /// Update the node's basic SpriteKit attributes.
     func updateAttributes() {
         initializeAttributes()
         guard let tiledAttrs = userData!["__sktiled_attributes"] as? NSMutableDictionary else {
@@ -629,7 +629,19 @@ extension SKNode {
 
         userData.removeObject(forKey: "__sktiled_attributes")
     }
+    
+    /// Returns the current attributes dictionary as Mirror attributes.
+    ///
+    /// - Returns: attributes represented as a mirror.
+    func attrsMirror() -> [(label: String?, value: Any)] {
+        var attributes: [(label: String?, value: Any)] = []
+        for attr in getAttrs() {
+            attributes.append((attr.key, attr.value))
+        }
+        return attributes
+    }
 }
+
 
 
 extension SKNode {
@@ -752,20 +764,9 @@ extension SKTilemap {
     
     /// Reposition all of the child layers.
     public func repositionLayers() {
-        for layer in contentLayers() {
+        for layer in tileLayers() {
             self.positionLayer(layer)
-            print(" - repositioning layer '\(layer.className)'")
         }
-        
-        
-        /*
-        for layer in layers {
-            guard (layer as? SKGroupLayer == nil) else {
-                continue
-            }
-            self.positionLayer(layer)
-            print(" - repositioning layer '\(layer.className)'")
-        }*/
     }
 }
 
@@ -1054,7 +1055,7 @@ extension NSTextField {
         }, interval: interval)
     }
 
-    /// Private function to animate a fade effect.
+    /// Private function to animate a fade-in effect.
     ///
     /// - Parameters:
     ///   - change: transformation block.
@@ -1065,12 +1066,14 @@ extension NSTextField {
             context.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
             animator().alphaValue = 0.0
         }, completionHandler: {
-            change()
+            change()   // set the string value here
             NSAnimationContext.runAnimationGroup({ context in
                 context.duration = interval / 2.0
                 context.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
                 self.animator().alphaValue = 1.0
-            }, completionHandler: {})
+            }, completionHandler: {
+                
+            })
         })
     }
 }

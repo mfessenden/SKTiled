@@ -211,6 +211,7 @@ public class TiledGlobals {
     /// Enable infinite offset use.
     public var enableTilemapInfiniteOffsets: Bool = false {
         didSet {
+            
             #if DEVELOPMENT_MODE
             NotificationCenter.default.post(
                 name: Notification.Name.Debug.RepositionLayers,
@@ -475,7 +476,7 @@ public class TiledGlobals {
         public var highlightDuration: TimeInterval = 1.5
 
         /// Debug grid visualization opacity.
-        public var gridOpactity: CGFloat = 0.6
+        public var gridOpacity: CGFloat = 0.3
         
         /// Tile color blend opacity.
         public var tileHighlighBlendFactor: CGFloat = 0.6
@@ -692,7 +693,7 @@ extension TiledGlobals: TiledCustomReflectableType {
         
         print("  ▾ Debug Display: ")
         print("     ▸ highlight duration:   \(self.debugDisplayOptions.highlightDuration)")
-        print("     ▸ grid opacity:         \(self.debugDisplayOptions.gridOpactity)")
+        print("     ▸ grid opacity:         \(self.debugDisplayOptions.gridOpacity)")
         print("     ▸ tile color blend:     \(self.debugDisplayOptions.tileHighlighBlendFactor.stringRoundedTo())")
         print("     ▸ object fill opacity:  \(self.debugDisplayOptions.objectFillOpacity)")
         print("     ▸ object line width:    \(self.debugDisplayOptions.lineWidth)")

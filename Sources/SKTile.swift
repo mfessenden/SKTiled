@@ -362,8 +362,9 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         let scaledverts = getVertices().map { $0 * renderQuality }
         let objpath = polygonPath(scaledverts)
         let shape = SKShapeNode(path: objpath)
+        #if SKTILED_DEMO
         shape.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Represents the tile's bounding shape.", "tiled-node-nicename": "Bounds Shape"])
-        
+        #endif
         let boundsLineWidth = TiledGlobals.default.renderQuality.object
         shape.lineWidth = boundsLineWidth
         shape.lineJoin = .miter
@@ -386,7 +387,9 @@ open class SKTile: SKSpriteNode, CustomReflectable {
         // tile height = 16 -> 1.5
         let anchorRadius: CGFloat = (tileheight / 8) * 0.75
         let shape = SKShapeNode(circleOfRadius: anchorRadius)
+        #if SKTILED_DEMO
         shape.setAttrs(values: ["tiled-invisible-node": true, "tiled-help-desc": "Represents the tile's anchor point.", "tiled-node-nicename": "Anchor Shape"])
+        #endif
         shape.strokeColor = SKColor.clear
         shape.fillColor = frameColor
         addChild(shape)
@@ -1000,7 +1003,7 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     open override func mouseDown(with event: NSEvent) {
         // guard (TiledGlobals.default.enableMouseEvents == true) else { return }
         if contains(touch: event.location(in: self)) {
-            // for demo, this calls `Notification.Name.Demo.TileClicked`
+            /// for demo, this calls `Notification.Name.Demo.TileClicked`
             onMouseClick?(self)
         }
     }
@@ -1166,7 +1169,10 @@ open class SKTile: SKSpriteNode, CustomReflectable {
 
         attributes.append(("tiled description", description))
         attributes.append(("tiled debug description", debugDescription))
-
+        
+        #if SKTILED_DEMO
+        attributes.append(contentsOf: attrsMirror())
+        #endif
         return Mirror(self, children: attributes)
     }
 }
@@ -1489,18 +1495,15 @@ extension SKTile {
         self.color = color
         self.colorBlendFactor = TiledGlobals.default.debugDisplayOptions.tileHighlighBlendFactor
         
-        let fadeDuration: TimeInterval = 0.2
-        
-        self.color = color
+        let fadeDuration: TimeInterval = duration / 2
         
         if (duration > 0) {
-            let fadeInAction = SKAction.colorize(withColorBlendFactor: 0.5, duration: fadeDuration)
-            let fadeOutAction = SKAction.colorize(withColorBlendFactor: 0, duration: fadeDuration)
+
             let groupAction = SKAction.group(
                 [
-                    fadeInAction,
+                    SKAction.colorize(withColorBlendFactor: 0.5, duration: fadeDuration),
                     SKAction.wait(forDuration: duration),
-                    fadeOutAction
+                    SKAction.colorize(withColorBlendFactor: 0, duration: fadeDuration)
                 ]
             )
             

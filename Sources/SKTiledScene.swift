@@ -149,8 +149,8 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, 
         worldNode = SKWorld()
         addChild(worldNode)
 
-        // CHECKME: this is different from 1.2
-        anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        // TODO: this is different from 1.2
+        // anchorPoint = CGPoint(x: 0.5, y: 0.5)
         //worldNode.position = view.bounds.center
 
         // setup the camera

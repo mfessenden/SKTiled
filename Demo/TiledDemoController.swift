@@ -216,7 +216,7 @@ public class TiledDemoController: NSObject, Loggable {
         }
     }
 
-    /// Save to the user defaults..
+    /// Save preferences to user defaults. This saves the current `TiledGlobals` values to disk.
     public func saveToUserDefaults() {
         TiledGlobals.default.saveToUserDefaults()
     }
@@ -396,7 +396,8 @@ public class TiledDemoController: NSObject, Loggable {
                 SKAction.scale(by: 1.2, duration: 0.5)
             ]
         )
-
+        
+        // call back to the GameViewController to display a status message
         NotificationCenter.default.post(
             name: Notification.Name.DemoController.DemoStatusUpdated,
             object: nil,
@@ -675,6 +676,8 @@ public class TiledDemoController: NSObject, Loggable {
                 }
 
                 nextScene.isPaused = isPaused
+                
+                
 
             } // end of completion handler
         }
@@ -794,7 +797,7 @@ public class TiledDemoController: NSObject, Loggable {
         NotificationCenter.default.post(
             name: Notification.Name.DemoController.DemoStatusUpdated,
             object: nil,
-            userInfo: ["status": "please select a file to load", "isHidden": false]
+            userInfo: ["status": "please select a file to load", "isHidden": false, "color": SKColor.white]
         )
     }
 
@@ -804,7 +807,7 @@ public class TiledDemoController: NSObject, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func resetMainInterface(_ notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         reset()
         createEmptyScene()
     }
@@ -837,7 +840,7 @@ public class TiledDemoController: NSObject, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc public func assetSearchPathsAdded(_ notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: [URL]],
               let searchPaths = userInfo["urls"] else { return }
 
@@ -861,7 +864,7 @@ public class TiledDemoController: NSObject, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc public func assetSearchPathsRemoved(_ notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: [URL]],
               let searchPathsToRemove = userInfo["urls"] else { return }
 
@@ -876,7 +879,7 @@ public class TiledDemoController: NSObject, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc public func globalsReadAction(_ notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let demoPreferences = notification.object as? DemoPreferences else {
             fatalError("invalid demo preferences.")
         }

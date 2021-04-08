@@ -122,10 +122,15 @@ class GameViewController: NSViewController, Loggable {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.ObjectClicked, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NothingUnderCursor, object: nil)
+        
+        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.ScenePauseStatusChanged, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeAttributesChanged, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodesRightClicked, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.SceneLoaded, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
+        
         
         NotificationCenter.default.removeObserver(self, name: Notification.Name.DemoController.ResetDemoInterface, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.DemoController.WillBeginScanForAssets, object: nil)
@@ -144,7 +149,7 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func demoControllerFinishedScanningAssets(_ notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: [TiledDemoAsset]],
               let tilemapUrls = userInfo["tilemapAssets"] else {
             return
@@ -305,13 +310,12 @@ class GameViewController: NSViewController, Loggable {
     /// Resets the main interface to its original state.
     @objc func resetMainInterface() {
 
-        let defaultValue = ""
-
-        mapInfoLabel.stringValue = defaultValue
-        tileInfoLabel.stringValue = defaultValue
-        propertiesInfoLabel.stringValue = defaultValue
-        cameraInfoLabel.stringValue = defaultValue
-        isolatedInfoLabel.stringValue = defaultValue
+        mapInfoLabel.reset()
+        tileInfoLabel.reset()
+        propertiesInfoLabel.reset()
+        cameraInfoLabel.reset()
+        debuggingMessageLabel.reset()
+        isolatedInfoLabel.reset()
 
 
         /// debugging
@@ -327,6 +331,7 @@ class GameViewController: NSViewController, Loggable {
         statsStackView.isHidden = true
         controlButtonView.isHidden = true
 
+        // reset (and hide) the debugging areas
         setDebuggingViewsActive(visible: false)
 
         view.layer?.backgroundColor = SKColor(hexString: "#3D5761").cgColor  // 😈
@@ -335,7 +340,7 @@ class GameViewController: NSViewController, Loggable {
         progressIndicator.isHidden = true
     }
 
-    /// Global toggle for debug view visibility.
+    /// Global toggle for debug views visibility.
     ///
     /// - Parameter visible: views are visible.
     func setDebuggingViewsActive(visible: Bool = true) {
@@ -400,10 +405,10 @@ class GameViewController: NSViewController, Loggable {
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionChanged), name: Notification.Name.Demo.NodeSelectionChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(nodeSelectionCleared), name: Notification.Name.Demo.NodeSelectionCleared, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(nothingUnderCursor), name: Notification.Name.Demo.NothingUnderCursor, object: nil)
-
+        NotificationCenter.default.addObserver(self, selector: #selector(demoScenePauseStatusChanged), name: Notification.Name.Demo.ScenePauseStatusChanged, object: nil)
 
         // tilemap callbacks
-        NotificationCenter.default.addObserver(self, selector: #selector(tilemapWasUpdated), name: Notification.Name.Map.Updated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(mapUpdatedAction), name: Notification.Name.Map.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(renderStatsUpdated), name: Notification.Name.Map.RenderStatsUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tilemapUpdateModeChanged), name: Notification.Name.Map.UpdateModeChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sceneCameraUpdated), name: Notification.Name.Camera.Updated, object: nil)
@@ -432,7 +437,7 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func debuggingMessageReceived(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard (debuggingMessageLabel.isHidden == false) else {
             return
         }
@@ -544,11 +549,11 @@ class GameViewController: NSViewController, Loggable {
 
     /// Called when a new scene has been loaded. Called when the `Notification.Name.Demo.SceneLoaded` event fires.
     ///
-    ///  object is `SKTiledScene`, userInfo: `["tilemapName": String, "relativePath": String, "currentMapIndex": Int]`
+    ///  payload: `SKTiledScene`, userInfo: `["tilemapName": String, "relativePath": String, "currentMapIndex": Int]`
     ///
     /// - Parameter notification: event notification.
     @objc func demoSceneLoaded(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let demoScene = notification.object as? SKTiledScene else {
             fatalError("cannot access scene.")
         }
@@ -556,12 +561,35 @@ class GameViewController: NSViewController, Loggable {
         demoScene.cameraNode?.addDelegate(self)
     }
     
+    /// Called when the demo scene pause state **is about to change**. Called when the `Notification.Name.Demo.ScenePauseStatusChanged` event fires.
+    ///
+    ///  payload `SKScene`
+    ///
+    /// - Parameter notification: event notification.
+    @objc func demoScenePauseStatusChanged(notification: Notification) {
+        //notification.dump(#fileID, function: #function)
+        guard let demoScene = notification.object as? SKTiledScene else {
+            return
+        }
+
+        let sceneIsPaused = demoScene.isPaused
+        
+        let pauseMessage = (sceneIsPaused == true) ? "Paused" : ""
+        let hideStatus = (sceneIsPaused == true) ? false : true
+
+        
+        NotificationCenter.default.post(
+            name: Notification.Name.DemoController.DemoStatusUpdated,
+            object: nil,
+            userInfo: ["status": pauseMessage, "isHidden": hideStatus, "color": demoScene.tilemap?.highlightColor ?? SKColor.white]
+        )
+    }
     
     /// Indicates the `TiledGlobals` have been updated. Called when the `Notification.Name.Globals.Updated` notification is received.
     ///
     /// - Parameter notification: notification event.
     @objc func globalsUpdatedAction(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
 
         let hideRenderStatsUI = TiledGlobals.default.enableRenderPerformanceCallbacks == false
         statsStackView.isHidden = hideRenderStatsUI
@@ -579,12 +607,16 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func mapUpdatedAction(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         var wintitle = TiledGlobals.default.windowTitle
         guard let tilemap = notification.object as? SKTilemap else {
-            log("invalid or nil map sent.", level: .error)
+            log("cannot access tilemap.", level: .error)
             return
         }
+        
+        
+        /// hide the status label
+        demoStatusInfoLabel.isHidden = true
 
         /// hide the progress indicator
         progressIndicator.stopAnimation(nil)
@@ -609,11 +641,11 @@ class GameViewController: NSViewController, Loggable {
         var showMapDescriptionLabel = false
         if let mapDescriptionString = tilemap.tiledNodeDescription {
             showMapDescriptionLabel = true
-            self.mapDescriptionLabel.stringValue = mapDescriptionString
+            mapDescriptionLabel.stringValue = mapDescriptionString
         }
 
-        self.mapDescriptionLabel.isHidden = !showMapDescriptionLabel
-        self.mapDescriptionLabel.textColor = NSColor(hexString: "#CCCCCC")
+        mapDescriptionLabel.isHidden = !showMapDescriptionLabel
+        mapDescriptionLabel.textColor = NSColor(hexString: "#CCCCCC")
 
         /// update the selected node label
         if let selected = Array(demoDelegate.focusedNodes).first {
@@ -644,7 +676,7 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: notification event.
     @objc func renderStatisticsVisibilityChanged(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let view = self.view as? SKView else { return }
 
         if let showRenderStats = notification.userInfo!["isHidden"] as? Bool {
@@ -700,7 +732,7 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func nodeAttributesChanged(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: [SKNode]] else {
             return
         }
@@ -709,7 +741,9 @@ class GameViewController: NSViewController, Loggable {
         if let changedNodes = userInfo["updated"] {
             for node in changedNodes {
                 if let tilemap = node as? SKTilemap {
-
+                    
+                    
+                    
                     NotificationCenter.default.post(
                         name: Notification.Name.Map.Updated,
                         object: tilemap
@@ -723,7 +757,7 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func globalLayerInfiniteOffsetChanged(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let tilemap = demoController.currentTilemap else {
             log("cannot access tilemap.", level: .error)
             return
@@ -738,7 +772,7 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func nodesRightClickedAction(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let userInfo = notification.userInfo as? [String: Any] else {
             return
         }
@@ -943,7 +977,7 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func tileUnderMouseClicked(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let focusedTile = notification.object as? SKTile else {
             return
         }
@@ -986,7 +1020,7 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func objectUnderMouseClicked(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let focusedObject = notification.object as? SKTileObject else {
             return
         }
@@ -1008,7 +1042,7 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func nothingUnderCursor(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         tileInfoLabel.reset()
         propertiesInfoLabel.reset()
     }
@@ -1037,7 +1071,7 @@ class GameViewController: NSViewController, Loggable {
         NotificationCenter.default.post(
             name: Notification.Name.Demo.NodeSelectionChanged,
             object: nil,
-            userInfo: ["nodes": [node], "focusLocation": scene.convert(node.position, to: scene)]
+            userInfo: ["nodes": [node], "focusLocation": scene.convert(node.position, to: scene), "autoExpand": true]
         )
     }
 
@@ -1047,7 +1081,7 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func resetMainInterfaceAction(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         resetMainInterface()
     }
 
@@ -1087,27 +1121,7 @@ class GameViewController: NSViewController, Loggable {
                 
                 // TODO: putting this here for inspector usage
                 selected.isHidden = false
-                
-                var anchorColor = TiledGlobals.default.debugDisplayOptions.tileHighlightColor
-                var anchorRadius: CGFloat = TiledGlobals.default.debugDisplayOptions.anchorRadius
-                
-                if let tilemap = demoController.currentTilemap {
-                    anchorRadius = tilemap.tileSize.width / 6
-                }
-
-                
-                if let tiledSprite = selected as? SKTile {
-                    anchorColor = tiledSprite.highlightColor
-                }
-
-                var zoomScale: CGFloat = 0.25
-                if let scene = selected.scene as? SKTiledScene {
-                    zoomScale = scene.cameraNode?.zoom ?? 0.25
-                }
-                
-                
-                // TODO: 'drawAnchor' call was here
-                
+                                
                 if let tiledNode = selected as? TiledCustomReflectableType {
                     
                     if let tiledGeoNode = tiledNode as? TiledGeometryType {
@@ -1138,8 +1152,12 @@ class GameViewController: NSViewController, Loggable {
                     
                     attributedString.append(NSAttributedString(string: selectedNodeDescription))
                     selectedInfoLabel.attributedStringValue = attributedString
+                } else {
+                    
+                    selected.highlightNode(with: TiledObjectColors.azure)
                 }
             }
+            
         } else {
             //selectedNode = nil
             selectedInfoLabel.isHidden = false
@@ -1172,7 +1190,7 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func tileRenderModeChanged(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let tile = notification.object as? SKTile else { return }
         propertiesInfoLabel.stringValue = tile.description
     }
@@ -1181,7 +1199,7 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func tilemapUpdateModeChanged(notification: Notification) {
-        // notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         guard let tilemap = notification.object as? SKTilemap else { return }
         self.statsRenderModeLabel.stringValue = "Mode: \(tilemap.updateMode.name)"
     }
@@ -1278,7 +1296,7 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @objc func sceneWillUnloadAction(_ notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
 
         setupMainInterface()
         let wintitle = TiledGlobals.default.windowTitle
@@ -1314,7 +1332,7 @@ class GameViewController: NSViewController, Loggable {
     ///
     /// - Parameter notification: event notification.
     @IBAction func demoControllerAboutToScanForAssets(notification: Notification) {
-        notification.dump(#fileID, function: #function)
+        //notification.dump(#fileID, function: #function)
         resetMainInterface()
 
         progressIndicator.startAnimation(nil)
@@ -1330,7 +1348,7 @@ class GameViewController: NSViewController, Loggable {
 
     /// Called when any of the demo helpers updates. Called when the `Notification.Name.DemoController.DemoStatusUpdated` notification is received.
     ///
-    ///  - looks for userInfo of `["status": String, "isHidden": Bool, "color": SKColor]`
+    ///  payload:  `userInfo: ["status": String, "isHidden": Bool, "color": SKColor, "duration": TimeInterval]`
     ///
     /// - Parameter notification: event notification.
     @objc func demoStatusWasUpdated(_ notification: Notification) {
@@ -1340,16 +1358,23 @@ class GameViewController: NSViewController, Loggable {
               let statusIsHidden = userInfo["isHidden"] as? Bool else {
             return
         }
-
-        demoStatusInfoLabel.stringValue = statusMessage
-        demoStatusInfoLabel.isHidden = statusIsHidden
+        
+        /// `duration` is optional (defaults to `0`)
+        let duration = userInfo["duration"] as? TimeInterval ?? 0
 
         var statusColor = uiColor
         if let newColor = userInfo["color"] as? SKColor {
             statusColor = newColor
         }
-
+        
+        demoStatusInfoLabel.isHidden = statusIsHidden
         demoStatusInfoLabel.textColor = statusColor
+        
+        if (duration > 0) {
+            demoStatusInfoLabel.setStringValue(statusMessage, animated: true, interval: duration)
+        } else {
+            demoStatusInfoLabel.stringValue = statusMessage
+        }
     }
 
     // MARK: - Debugging

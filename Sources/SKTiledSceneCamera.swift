@@ -501,6 +501,10 @@ public class SKTiledSceneCamera: SKCameraNode {
         }
         
         
+        
+        
+        
+        
         if (update == true) {
             self.updateContainedNodes()
         }
@@ -1117,6 +1121,19 @@ extension SKTiledSceneCamera {
             focusLocation = windowLocation
             lastLocation = position
             setCameraZoom(zoom)
+            
+            
+            #if SKTILED_DEMO
+            guard let worldNode = world else {
+                return
+            }
+            
+            NotificationCenter.default.post(
+                name: Notification.Name.Demo.NodeAttributesChanged,
+                object: nil,
+                userInfo: ["updated": [worldNode]]
+            )
+            #endif
         }
     }
     
