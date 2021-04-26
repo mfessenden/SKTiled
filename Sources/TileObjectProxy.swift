@@ -180,15 +180,27 @@ internal class TileObjectProxy: SKShapeNode {
         self.removeAction(forKey: self.animationKey)
         
         guard let object = reference,
-              let _ = object.layer else {
+              let layer = object.layer else {
             self.path = nil
             return
         }
         
         
+        // draw the point object
+        if (object.objectType == .point) {
+            let pointSize = layer.tileSize.halfHeight
+            self.path = pointObjectPath(size: pointSize)
+            self.lineJoin = .bevel
+            self.lineCap = .round
+            self.lineWidth = pointSize / 8
+            self.strokeColor = object.frameColor
+            self.fillColor = object.frameColor.withAlphaComponent(TiledGlobals.default.debugDisplayOptions.objectFillOpacity)
+            self.position = object.position
+            return
+        }
         
         // don't draw text objects in iso, hex, staggered (for now)
-        if object.layer.orientation != .orthogonal {
+        if layer.orientation != .orthogonal {
             if (object.objectType == .text) {
                 self.path = nil
                 return

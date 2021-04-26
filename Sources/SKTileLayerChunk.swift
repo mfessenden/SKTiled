@@ -244,8 +244,8 @@ public class SKTileLayerChunk: TiledLayerObject {
                     #endif
                 }
 
-
-                tilemap.delegate?.didAddTile?(tile, coord: coord, in: layer.name)
+                // TODO: check for delegate completion handler
+                tilemap.delegate?.didAddTile?(tile, coord: coord, in: layer.name, nil)
                 return tile
 
             } else {

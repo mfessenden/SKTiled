@@ -632,33 +632,27 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
         self.lineJoin = .miter
         let vertices = getVertices()
 
-        guard let layer = layer,
-              points.count > 1 else {
+        guard let layer = layer else {
             return
         }
 
         // DEBUGGING: increment the draw count
         drawCount += 1
 
-        // draw the point object
-        if (objectType == .point) {
-            let pointSize = layer.tileSize.halfHeight
-            self.path = pointObjectPath(size: pointSize)
-            self.lineJoin = .bevel
-            self.lineCap = .round
-            self.lineWidth = pointSize / 8
-            self.strokeColor = frameColor
-            self.fillColor = frameColor.withAlphaComponent(TiledGlobals.default.debugDisplayOptions.objectFillOpacity)
-            return
-        }
-
         self.isAntialiased = layer.antialiased
-        
-        
+
         // scale linewidth for smaller objects
         let lwidth = (doubleForKey("lineWidth") != nil) ? CGFloat(doubleForKey("lineWidth")!) : layer.lineWidth
         self.lineWidth = (lwidth / layer.tileHeight < 0.075) ? lwidth : 0.5
-
+        
+        
+        // draw the point object
+        
+        
+        guard points.count > 1 else {
+            return
+        }
+        
         // flip the vertex values on the y-value for our coordinate transform.
         // for some odd reason Tiled tile objects are flipped in the y-axis already, so ignore the translated
 
@@ -694,6 +688,7 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
                     controlShape.isAntialiased = layer.antialiased
                     controlShape.lineWidth = self.lineWidth / 2
                 }
+                
 
             default:
                 let pathIsClosed: Bool = (self.shapeType == .polyline) ? false : true
@@ -705,7 +700,6 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
 
             childNode(withName: firstPointKey)?.removeFromParent()
 
-            
 
             if (self.globalID == nil) {
 
@@ -835,7 +829,8 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
                     tileSprite.xScale = (tileSprite.isFlippedHorizontally == true) ? -1 : 1
                     tileSprite.yScale = (tileSprite.isFlippedVertically == false) ? -1 : 1     // compensates for tile object y-flip
 
-                    layer.tilemap.delegate?.didAddTile?(tileSprite, in: name)
+                    // TODO: check for delegate completion handler
+                    layer.tilemap.delegate?.didAddTile?(tileSprite, in: name, nil)
 
                     // add to tile cache
                     NotificationCenter.default.post(

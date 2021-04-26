@@ -67,13 +67,39 @@ public protocol TiledSceneDelegate: AnyObject {
 
 /// Enables all `SKScene` types conforming to `TiledSceneDelegate` to load tilemaps.
 extension TiledSceneDelegate where Self: SKScene {
-
+    
+        
+        /// This method loads a named tilemap **tmx** file, with optional tilesets. Camera properties are added from the tilemap automatically.
+        ///
+        ///  Defined in:  `extension TiledSceneDelegate where Self: SKScene {}`
+        ///
+        /// - Parameters:
+        ///   - tmxFile: tilemap file name.
+        ///   - inDirectory: search path for assets.
+        ///   - tilesets: optional pre-loaded tilesets.
+        ///   - ignoreProperties: don't parse custom properties.
+        ///   - loggingLevel: logging verbosity.
+        ///   - completion: optional completion handler.
+        /// - Returns: tilemap instance.
+        public func load(tmxFile: String,
+                         inDirectory: String? = nil,
+                         withTilesets tilesets: [SKTileset] = [],
+                         ignoreProperties: Bool = false,
+                         loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel,
+                         completion: ((SKTilemap) -> ())? = nil) -> SKTilemap? {
+            
+            
+            return self.load(tmxFile: tmxFile, delegate: self as? TilemapDelegate, inDirectory: inDirectory, withTilesets: tilesets, ignoreProperties: ignoreProperties, loggingLevel: loggingLevel, completion: completion)
+        }
+    
+    
     /// This method loads a named tilemap **tmx** file, with optional tilesets. Camera properties are added from the tilemap automatically.
     ///
     ///  Defined in:  `extension TiledSceneDelegate where Self: SKScene {}`
     ///
     /// - Parameters:
     ///   - tmxFile: tilemap file name.
+    ///   - delegate: optional tilemap delegate instance.
     ///   - inDirectory: search path for assets.
     ///   - tilesets: optional pre-loaded tilesets.
     ///   - ignoreProperties: don't parse custom properties.
@@ -81,16 +107,16 @@ extension TiledSceneDelegate where Self: SKScene {
     ///   - completion: optional completion handler.
     /// - Returns: tilemap instance.
     public func load(tmxFile: String,
+                     delegate: TilemapDelegate? = nil,
                      inDirectory: String? = nil,
                      withTilesets tilesets: [SKTileset] = [],
                      ignoreProperties: Bool = false,
                      loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel,
                      completion: ((SKTilemap) -> ())? = nil) -> SKTilemap? {
-
-
+        
         if let tilemap = SKTilemap.load(tmxFile: tmxFile,
                                         inDirectory: inDirectory,
-                                        delegate: self as? TilemapDelegate,
+                                        delegate: delegate,
                                         tilesetDataSource: self as? TilesetDataSource,
                                         withTilesets: tilesets,
                                         ignoreProperties: ignoreProperties,

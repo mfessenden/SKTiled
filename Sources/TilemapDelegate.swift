@@ -154,10 +154,14 @@ import GameplayKit
 /// [mouseover-handler-url]:TiledEventHandler.html#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)mouseOverTileHandlerWithGlobalID:ofType:
 /// [tileclicked-handler-url]:TiledEventHandler.html#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)tileClickedHandlerWithGlobalID:ofType:button:
 @objc public protocol TilemapDelegate: TiledEventHandler {
-
+    
+    // MARK: - Tilemap Properties
+    
     /// Determines the z-position difference between layers.
     @objc optional var zDeltaForLayers: CGFloat { get }
-
+    
+    // MARK: - Creation & Rendering
+    
     /// Called when the tilemap is instantiated.
     ///
     /// - Parameter tilemap: tilemap instance.
@@ -187,7 +191,9 @@ import GameplayKit
     ///
     /// - Parameter graph: `GKGridGraph<GKGridGraphNode>` graph node instance.
     @objc optional func didAddNavigationGraph(_ graph: GKGridGraph<GKGridGraphNode>)
-
+    
+    // MARK: - Custom Object Types
+    
     /// Specify a custom tile object for use in tile layers.
     ///
     /// - Parameter named: optional class name.
@@ -199,19 +205,21 @@ import GameplayKit
     /// - Parameter named: optional class name
     /// - Returns: vector object type.
     @objc optional func objectForVectorType(named: String?) -> SKTileObject.Type
-
+    
     /// Specify a custom graph node object for use in navigation graphs.
     ///
     /// - Parameter named: optional class name.
     /// - Returns: pathfinding graph node type.
     @objc optional func objectForGraphType(named: String?) -> GKGridGraphNode.Type
 
+    // MARK: - User Customization
+    
     /// Called whem a tile is about to be built in a layer at a given coordinate. Allows a global ID value to be substituted before the tile is created.
     ///
     /// - Parameters:
     ///   - globalID: tile global id.
     ///   - coord: tile coordinate (optional).
-    ///   - in: layer name (optional).
+    ///   - in: optional parent layer name.
     /// - Returns: tile global id.
     @objc optional func willAddTile(globalID: UInt32, coord: simd_int2, in: String?) -> UInt32
 
@@ -219,32 +227,43 @@ import GameplayKit
     ///
     /// - Parameters:
     ///   - globalID: tile global id.
-    ///   - in: layer name (optional).
+    ///   - in: optional parent layer name.
     /// - Returns: tile global id.
     @objc optional func willAddTile(globalID: UInt32, in: String?) -> UInt32
-
-    /// Called whem a tile has just been built in a layer.
+    
+    /// Called whem a tile has just been built in a layer. This method allows for the creation of custom object types at a given coordinate.
     ///
     /// - Parameters:
     ///   - tile: tile instance.
     ///   - coord: tile coordinate.
-    ///   - in: layer name.
-    @objc optional func didAddTile(_ tile: SKTile, coord: simd_int2, in: String?)
+    ///   - in: optional parent layer name.
+    ///   - completion: optional completion block.
+    @objc optional func didAddTile(_ tile: SKTile, coord: simd_int2, in: String?, _ completion: ((_ tile: SKTile) -> Void)?)
 
     /// Called whem a tile has just been built in a layer.
     ///
     /// - Parameters:
     ///   - tile: tile instance.
-    ///   - in: layer name.
-    @objc optional func didAddTile(_ tile: SKTile, in: String?)
+    ///   - in: optional parent layer name.
+    ///   - completion: optional completion block.
+    @objc optional func didAddTile(_ tile: SKTile, in: String?, _ completion: ((_ tile: SKTile) -> Void)?)
 
-    /// Provides custom attributes for objects of a certain *Tiled type*.
+    /// Provides custom attributes for objects for given *Tiled types*.
     ///
     /// - Parameters:
     ///   - type: type value.
     ///   - named: optional node name.
     /// - Returns: custom attributes dictionary.
     @objc optional func attributesForNodes(ofType: String?, named: String?, globalIDs: [UInt32]) -> [String : String]?
+
+    /// Provides a mechanism for substitute custom SpriteKit node types in place of **Tiled** point objects.
+    ///
+    /// - Parameters:
+    ///   - ofType: point object type.
+    ///   - attributes: attributes parsed from **Tiled** reference.
+    ///   - inLayer: optional parent layer name.
+    ///   - completion: optional completion block.
+    @objc optional func customObjectForPointObject(ofType: String, attributes: [String: String], inLayer: String?) -> SKNode?
 }
 
 

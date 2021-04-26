@@ -1358,7 +1358,7 @@ extension TiledLayerObject {
         let filler = (isGrouped == true) ? String(repeating: "  ", count: parentNodes.count - 1) : ""
 
         let layerPathString = "\(filler)\(layerSymbol) '\(layerName)'"
-        let layerVisibilityString: String = (self.isIsolated == true) ? "(i)" : self.visible.valueAsCheckbox
+        let layerVisibilityString: String = (self.isIsolated == true) ? "(i)" : self.visible.valueAsGithubCheckbox
 
         // layer position string, filters out child layers with no offset
         var positionString = self.position.shortDescription

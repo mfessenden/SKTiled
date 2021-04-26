@@ -448,7 +448,7 @@ public class SKTileLayer: TiledLayerObject {
             return nil
         }
 
-        // remove the current tile
+        // remove the current tile if it exists
         let existingTile = removeTile(at: coord)
         let thisTileId: UInt32? = (globalID != nil) ? tilemap.delegate?.willAddTile?(globalID: globalID!, coord: coord, in: layerName) : tilemap.delegate?.willAddTile?(globalID: globalID!, in: layerName)
 
@@ -513,8 +513,9 @@ public class SKTileLayer: TiledLayerObject {
             }
         }
         #endif
-
-        tilemap.delegate?.didAddTile?(tile, coord: coord, in: name)
+        
+        // TODO: check for delegate completion handler
+        tilemap.delegate?.didAddTile?(tile, coord: coord, in: name, nil)
         tile.draw()
         return tile
     }
@@ -554,8 +555,9 @@ public class SKTileLayer: TiledLayerObject {
         tile.position = tilePosition
         tile.currentCoordinate = coord
         addChild(tile)
-
-        tilemap.delegate?.didAddTile?(tile, coord: coord, in: name)
+        
+        // TODO: check for delegate completion handler
+        tilemap.delegate?.didAddTile?(tile, coord: coord, in: name, nil)
         tile.draw()
         return tile
     }
@@ -763,8 +765,8 @@ public class SKTileLayer: TiledLayerObject {
                 }
 
 
-
-                tilemap.delegate?.didAddTile?(tile, coord: coord, in: name)
+                // TODO: check for delegate completion handler
+                tilemap.delegate?.didAddTile?(tile, coord: coord, in: name, nil)
                 return tile
 
             } else {

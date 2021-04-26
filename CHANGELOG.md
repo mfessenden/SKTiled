@@ -14,6 +14,7 @@ Change Log
 - better managing of object/template attributes
 - better handling of image types
 - `SKTiledSceneCamera` works properly with any `SKScene` instance conforming to `TiledSceneCameraDelegate` protocol
+- `SKTiledScene` allows for a custom `TilemapDelegate` to be passed to the setup methods
 
 - Bug Fixes:
     - fix a memory leak where tilemap is retained after parent scene change

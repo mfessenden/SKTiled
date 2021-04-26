@@ -4,6 +4,8 @@
 - [Tile Objects](#tile-objects)
 - [Text Objects](#text-objects)
     - [Text Object Attributes](#text-object-attributes)
+- [Point Objects](#point-objects)
+    - [Custom Point Objects](#custom-point-objects)
 - [Dynamics](#dynamics)
 
 By default, vector objects are not shown when rendered in **SKTiled**. To enable them, set the `SKTilemap.showObjects` global attribute. This override has the advantage of allowing you to work in your Tiled scene with objects visible, but not see them in your game view. Note that the `SKTilemap.showObjects` property **does not change the visibility of object groups**, but rather affects the objects themselves. Text and tile objects are exempt from this function.
@@ -41,7 +43,7 @@ The `recursive` argument is optional in both instances, and enabling it will sea
 
 ![Tile Objects](images/tile-objects-selected.gif)
 
-**Tile objects** are special object types that contain an optional globalID value. The corresponding tile texture(s) are rendered within the object's bounding shape. Tile objects are 
+**Tile objects** are special object types that contain an optional globalID value. The corresponding tile texture(s) are rendered within the object's bounding shape. Tile objects are
 
 
 Objects added via the [**Insert Tile**][insert-tile-url] tool in Tiled will render as `SKTileObject` objects. You can also create a tile object manually via the `SKObjectGroup.newTileObject(data:)` method:
@@ -90,6 +92,11 @@ textObject.textAttributes.alignment.horizontal = .center
 *\* text wrap attribute not currently supported.*
 
 
+## Point Objects
+
+Point objects are a special object type that represents a single point in the map.
+
+### Custom Point Objects
 
 ## Dynamics
 

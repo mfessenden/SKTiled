@@ -174,11 +174,13 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, 
     ///
     /// - Parameters:
     ///   - url: Tiled file url.
+    ///   - delegate: optional tilemap delegate instance.
     ///   - withTilesets: pre-loaded tilesets.
     ///   - ignoreProperties: don't parse custom properties.
     ///   - loggingLevel: logging verbosity.
     ///   - completion: optional completion handler.
     open func setup(url: URL,
+                    delegate: TilemapDelegate? = nil,
                     withTilesets: [SKTileset] = [],
                     ignoreProperties: Bool = false,
                     loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel,
@@ -200,12 +202,14 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, 
     ///
     /// - Parameters:
     ///   - tmxFile: TMX file name.
+    ///   - delegate: optional tilemap delegate instance.
     ///   - inDirectory: search path for assets.
     ///   - tilesets: optional pre-loaded tilesets.
     ///   - ignoreProperties: don't parse custom properties.
     ///   - loggingLevel: logging verbosity.
     ///   - completion: optional completion handler.
     open func setup(tmxFile: String,
+                    delegate: TilemapDelegate? = nil,
                     inDirectory: String? = nil,
                     withTilesets tilesets: [SKTileset] = [],
                     ignoreProperties: Bool = false,
@@ -223,8 +227,12 @@ open class SKTiledScene: SKScene, SKPhysicsContactDelegate, TiledSceneDelegate, 
         self.tilemap = nil
 
         weak var weakSelf = self
+        
+        // if the user has passed a custom tilemap delegate, use that instead
+        let tilemapDelegate = delegate ?? weakSelf
 
         if let tilemap = load(tmxFile: tmxFile,
+                              delegate: tilemapDelegate,
                               inDirectory: inDirectory,
                               withTilesets: tilesets,
                               ignoreProperties: ignoreProperties,
@@ -548,4 +556,66 @@ extension SKTiledScene {
     @objc public override var tiledHelpDescription: String {
         return "Custom Tiled SpriteKit scene node."
     }
+}
+
+
+
+// MARK: - Deprecations
+
+extension SKTiledScene {
+
+
+    /// Load and setup a named TMX file, with optional tilesets.
+    ///
+    /// - Parameters:
+    ///   - url: Tiled file url.
+    ///   - withTilesets: pre-loaded tilesets.
+    ///   - ignoreProperties: don't parse custom properties.
+    ///   - loggingLevel: logging verbosity.
+    ///   - completion: optional completion handler.
+    @available(*, deprecated, renamed: "setup(url:delegate:withTilesets:ignoreProperties:loggingLevel:_:)")
+    open func setup(url: URL,
+                    withTilesets: [SKTileset] = [],
+                    ignoreProperties: Bool = false,
+                    loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel,
+                    _ completion: ((_ tilemap: SKTilemap) -> Void)? = nil) {
+        
+        
+        self.setup(url: url,
+                   delegate: nil,
+                   withTilesets: withTilesets,
+                   ignoreProperties: ignoreProperties,
+                   loggingLevel: loggingLevel,
+                   completion
+                   )
+    }
+    
+    /// Load and setup a named TMX file, with optional tilesets. Allows for an optional completion handler.
+    ///
+    /// - Parameters:
+    ///   - tmxFile: TMX file name.
+    ///   - inDirectory: search path for assets.
+    ///   - tilesets: optional pre-loaded tilesets.
+    ///   - ignoreProperties: don't parse custom properties.
+    ///   - loggingLevel: logging verbosity.
+    ///   - completion: optional completion handler.
+    @available(*, deprecated, renamed: "setup(tmxFile:delegate:inDirectory:withTilesets:ignoreProperties:loggingLevel:_:)")
+    open func setup(tmxFile: String,
+                    inDirectory: String? = nil,
+                    withTilesets tilesets: [SKTileset] = [],
+                    ignoreProperties: Bool = false,
+                    loggingLevel: LoggingLevel = TiledGlobals.default.loggingLevel,
+                    _ completion: ((_ tilemap: SKTilemap) -> Void)? = nil) {
+        
+        
+        self.setup(tmxFile: tmxFile,
+                   delegate: nil,
+                   inDirectory: inDirectory,
+                   withTilesets: tilesets,
+                   ignoreProperties: ignoreProperties,
+                   loggingLevel: loggingLevel,
+                   completion
+        )
+    }
+    
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="22" height="21" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#211e26" nextlayerid="27" nextobjectid="162">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="22" height="21" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#211e26" nextlayerid="27" nextobjectid="164">
  <properties>
   <property name="description" value="Artwork by @Buch -&gt;  http://opengameart.org/content/dungeon-tileset"/>
   <property name="frameColor" type="color" value="#ff63a4b2"/>
@@ -120,6 +120,20 @@
     <property name="color" type="color" value="#ff8df360"/>
    </properties>
    <ellipse/>
+  </object>
+  <object id="162" name="light2" type="sklight" x="215" y="152">
+   <properties>
+    <property name="lightColor" type="color" value="#ffedce9a"/>
+    <property name="lightIntensity" type="float" value="2"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="163" name="light1" type="sklight" x="242" y="152">
+   <properties>
+    <property name="lightColor" type="color" value="#ffedce9a"/>
+    <property name="lightIntensity" type="float" value="2"/>
+   </properties>
+   <point/>
   </object>
  </objectgroup>
 </map>

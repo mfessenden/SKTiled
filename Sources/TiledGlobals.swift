@@ -147,6 +147,11 @@ public class TiledGlobals {
         }
         return Bundle.main.resourceURL
     }
+    
+    /// Returns the URL of the current version's documentation online.
+    public var helpUrl: URL {
+        return URL(string: "https://mfessenden.github.io/SKTiled/1.3/index.html")!
+    }    
 
     /// Indicates the current framework is a beta release.
     public var isBeta: Bool {

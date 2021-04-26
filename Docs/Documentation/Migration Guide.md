@@ -37,7 +37,8 @@ Moving from the **v1.2** API should be fairly straightforward. Here are the high
 | `SKTileset.addTilesetTile(_:source:)`             | `SKTileset.addTilesetTile(tileID:source:)`           |
 | `SKTileObject.setObjectAttributes`                | `SKTileObject.overrideObjectAttributes(attributes:)` |
 | `TiledGlobals.debug`                              | `TiledGlobals.debugDisplayOptions`                   |
-
+| `DebugDrawOptions.drawBounds`                     | `DebugDrawOptions.drawFrame`                         |
+  
 
 ## Type Changes
 

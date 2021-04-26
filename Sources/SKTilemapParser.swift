@@ -180,7 +180,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
     /// Current element path.
     fileprivate var elementPath: [AnyObject] = []
 
-    /// Current tile/object id. If this is not nil, we're looking for an object in an objectgroup or
+    /// Current tile/object id. If this is not nil, we're looking for an object in an objectgroup to reference.
     fileprivate var currentID: UInt32?
 
     /// Current tile type.
@@ -856,6 +856,11 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
         queue.sync {
             self.tilemap?.didFinishRendering(timeStarted: self.timer)
         }
+        
+        
+        // Post-Rendering
+
+        
     }
 
     // MARK: - Helpers
@@ -1541,9 +1546,8 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
                 }
 
 
-            // object in a tmx file
+            // We're parsing object data from a tmx file
             } else {
-
 
                 guard let tilemap = tilemap else {
                     log("could not access tilemap.", level: .fatal)
@@ -1608,7 +1612,33 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
                 }
             }
         }
+        
+        // special case - look for last element to be a object
+        // this signifies that the object should be an point
+        if (elementName == "point") {
+            if let objectGroup = lastElement as? SKObjectGroup {
 
+                if (currentID != nil) {
+                    if let currentObject = objectGroup.getObject(withID: currentID!) {
+                        
+                        currentObject.objectType = .point
+
+                        /// If the delegate specifies a custom node type, add that and destroy the current object
+                        if let customNode = tilemapDelegate?.customObjectForPointObject?(ofType: currentObject.type, attributes: properties, inLayer: objectGroup.name) {
+    
+                            customNode.position = currentObject.position
+                            customNode.zPosition = currentObject.zPosition
+
+                            currentObject.destroy()
+                            objectGroup.addChild(customNode)
+
+                        }
+                    }
+                }
+            }
+        }
+        
+        
         if (elementName == "polygon") {
 
             // polygon object
@@ -1651,18 +1681,6 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
                 }
             }
         }
-
-        // point object
-        if (elementName == "point") {
-            if let objectGroup = lastElement as? SKObjectGroup {
-                if (currentID != nil) {
-                    if let currentObject = objectGroup.getObject(withID: currentID!) {
-                        currentObject.objectType = .point
-                    }
-                }
-            }
-        }
-
 
         // animated tiles
         if (elementName == "frame") {
@@ -2011,7 +2029,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
                         for (key, value) in properties {
                             lastObject.properties[key] = value
                         }
-
+                        
                         lastObject.parseProperties(completion: nil)
                         properties = [:]
 

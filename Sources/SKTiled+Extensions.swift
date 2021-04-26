@@ -410,19 +410,20 @@ extension Bool {
     mutating func toggle() {
         self = !self
     }
-
+    
+    /// Return the value as checkbox symbol.
+    var valueAsCheckBox: String {
+        return (self == true) ? "☑︎" : "☐"
+    }
+    
     /// Return the value as a Github markdown check string.
-    var valueAsCheckbox: String {
+    var valueAsGithubCheckbox: String {
         return (self == true) ? "[x]" : "[ ]"
     }
 
     /// Return the value as 'on/off'.
     var valueAsOnOff: String {
         return (self == true) ? "on" : "off"
-    }
-    
-    var valueAsHidden: String {
-        return (self == true) ? "☑︎" : "☐"
     }
 }
 
@@ -1551,10 +1552,9 @@ extension SKColor {
         return SKColor(hue: components.h, saturation: components.s, brightness: components.b * factor, alpha: components.a)
     }
 
-    /// Initialize an [`SKColor`][skcolor-url] with a hexadecimal string.
+    /// Initialize with a hexadecimal string.
     ///
     /// - Parameter hexString: hexadecimal code.
-    /// [skcolor-url]:https://developer.apple.com/reference/spritekit/skcolor
     public convenience init(hexString: String) {
         //let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         let hex = expandShortenedHexString(hexString)
@@ -1574,7 +1574,7 @@ extension SKColor {
         self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
     }
 
-    /// Initialize an [`SKColor`][skcolor-url] with integer values (0-255).
+    /// Initialize an with integer values (0-255).
     ///
     /// - Parameters:
     ///   - red: red value (0-255).
@@ -1582,7 +1582,6 @@ extension SKColor {
     ///   - blue: blue value (0-255).
     ///   - alpha: alpha value (0-255).
     ///
-    /// [skcolor-url]:https://developer.apple.com/reference/spritekit/skcolor
     public convenience init(red: Int, green: Int, blue: Int, alpha: Int = 255) {
         self.init(red: CGFloat(red) / 255, green: CGFloat(green) / 255, blue: CGFloat(blue) / 255, alpha: CGFloat(alpha) / 255)
     }
@@ -3549,7 +3548,7 @@ public func arrowFromPoints(startPoint: CGPoint,
 ///   - size: marker size.
 ///   - scale: scale multiplier.
 /// - Returns: path at the given point/size.
-public func pointObjectPath(size: CGFloat = 32, scale: CGFloat = 1) -> CGPath {
+internal func pointObjectPath(size: CGFloat = 32, scale: CGFloat = 1) -> CGPath {
     let path = CGMutablePath()
     let start: CGPoint = CGPoint(x: 0, y: 0)
 

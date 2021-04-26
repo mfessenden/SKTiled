@@ -2513,11 +2513,12 @@ extension AppDelegate {
     }
 
     // MARK: - Help Menu
-
+    
+    /// Launches the current framework documentation in the default browser.
+    ///
+    /// - Parameter sender: invoking ui.
     @IBAction func openWebDocumentation(_ sender: Any) {
-        if let helpUrl = URL(string: "https://mfessenden.github.io/SKTiled") {
-            NSWorkspace.shared.open(helpUrl)
-        }
+        NSWorkspace.shared.open(TiledGlobals.default.helpUrl)
     }
 }
 

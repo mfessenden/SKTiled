@@ -63,6 +63,7 @@ internal struct MemorySize {
 
 
 
+
 /// Data structure for storing and recalling tile data efficiently.
 internal class TileDataStorage: Loggable {
 
@@ -72,7 +73,8 @@ internal class TileDataStorage: Loggable {
 
     /// The parent tilemap.
     weak var tilemap: SKTilemap?
-
+    
+    /// Cache for fast global ID lookup.
     var globalIdCache: GlobalIDCache = [:]
 
     /// Cache for static tile data.
@@ -97,12 +99,15 @@ internal class TileDataStorage: Loggable {
 
     /// Returns the size (in bytes) of the cache.
     var bytes: Int {
-        var result = MemoryLayout.size(ofValue: self.globalIdCache)
-        result += MemoryLayout.size(ofValue: self.staticTileCache)
-        result += MemoryLayout.size(ofValue: self.animatedTileCache)
-        result += MemoryLayout.size(ofValue: self.actionsCache)
-        result += MemoryLayout.size(ofValue: self.objectsList)
+        /*
+        var result = MemoryLayout.size(ofValue: globalIdCache.self)
+        result += MemoryLayout.size(ofValue: staticTileCache.self)
+        result += MemoryLayout.size(ofValue: animatedTileCache.self)
+        result += MemoryLayout.size(ofValue: actionsCache.self)
+        result += MemoryLayout.size(ofValue: objectsList.self)
         return result
+        */
+        return malloc_size(Unmanaged.passRetained(self).toOpaque())
     }
 
     /// Returns the size of the cache (in kilobytes).
@@ -888,7 +893,6 @@ extension MemorySize {
 
 /// :nodoc:
 extension MemorySize: CustomStringConvertible {
-
 
     /// Provides a string representation of the memory size.
     var description: String {

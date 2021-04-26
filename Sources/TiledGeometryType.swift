@@ -279,6 +279,7 @@ extension SKNode {
         
         // FIXME: offset is off with infinite maps
         var offset = CGPoint.zero
+        
         if let tiledLayer = self as? TiledLayerObject {
             offset = tiledLayer.layerInfiniteOffset
         }

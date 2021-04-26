@@ -543,8 +543,9 @@ public class TiledDemoController: NSObject, Loggable {
             currentScene.tilemap = nil
             currentSpeed = currentScene.speed
             currentScene.demoController = nil
+            #if os(macOS)
             currentScene.demoDelegate = nil
-
+            #endif
             // deallocate scene
             currentScene.removeAllActions()
             
@@ -581,6 +582,7 @@ public class TiledDemoController: NSObject, Loggable {
 
             // setup a new scene with the next tilemap filename
             nextScene.setup(tmxFile: url.relativePath,
+                            delegate: self,
                             inDirectory: (url.baseURL == nil) ? nil : url.baseURL!.path,
                             withTilesets: [],
                             ignoreProperties: false,
@@ -1429,7 +1431,7 @@ extension TiledDemoController {
             outputString += "    - tile size:              \(tilemap.tileSize.shortDescription)\n"
             outputString += "    - position:               \(tilemap.position.shortDescription)\n"
             outputString += "    - child offset:           \(tilemap.childOffset.shortDescription)\n"
-            outputString += "    - hidden:                 \(tilemap.isHidden.valueAsHidden)\n"
+            outputString += "    - hidden:                 \(tilemap.isHidden.valueAsGithubCheckbox)\n"
             
             let layerHeader = "▸ Layers:\n-------------------------------------\n"
             outputString += "\n\(layerHeader)\n"
@@ -1444,10 +1446,10 @@ extension TiledDemoController {
                 }
                 
                 
-                outputString += "  \(prefix) '\(layer.path)' (\(layer.layerType))\n  -----------------------------------\n"
+                outputString += "\n  \(prefix) '\(layer.path)' (\(layer.layerType))\n  -----------------------------------\n"
                 outputString += "    - position:            \(layer.position.shortDescription)\n"
                 outputString += "    - offset:              \(layer.offset.shortDescription)\n"
-                outputString += "    - hidden:              \(layer.isHidden.valueAsHidden)\n"
+                outputString += "    - hidden:              \(layer.isHidden.valueAsGithubCheckbox)\n"
                 
                 if (isInfinite == true) {
                     outputString += "    - infinite offset:     \(layer.layerInfiniteOffset.shortDescription)\n\n"
@@ -1457,7 +1459,7 @@ extension TiledDemoController {
                             outputString += "\n    ▸ '\(chunk.xPath)'\n    ---------------------------------\n"
                             outputString += "      - position:          \(chunk.position.shortDescription)\n"
                             outputString += "      - offset:            \(chunk.offset.shortDescription)\n"
-                            outputString += "      - hidden:            \(chunk.isHidden.valueAsHidden)\n"
+                            outputString += "      - hidden:            \(chunk.isHidden.valueAsGithubCheckbox)\n"
                             outputString += "      - infinite offset:   \(chunk.layerInfiniteOffset.shortDescription)\n\n"
                         }
                     }
@@ -1573,7 +1575,7 @@ extension TiledDemoController {
                 //let isDemoURL = (defaultPreferences.demoFiles.contains(asset.filename) || defaultPreferences.demoFiles.contains(asset.basename))
                 //outputString += "\n - \(isDemoURL.checkedString) '\(asset.filename)'"
                 let isDemoAsset = asset.isUserAsset == false
-                outputString += "\n ∙ \(isDemoAsset.valueAsCheckbox) '\(asset.filename)'"
+                outputString += "\n ∙ \(isDemoAsset.valueAsGithubCheckbox) '\(asset.filename)'"
             }
         }
 
@@ -1597,7 +1599,7 @@ extension TiledDemoController {
             outputString += "\n\(mapHeaderString)\n\(mapTitleUnderline)"
 
             for (_, map) in tilemaps.enumerated() {
-                outputString += "\n ∙ \(map.isBundled.valueAsCheckbox) '\(map.filename)'"
+                outputString += "\n ∙ \(map.isBundled.valueAsGithubCheckbox) '\(map.filename)'"
             }
         }
 
@@ -1607,7 +1609,7 @@ extension TiledDemoController {
             outputString += "\n\(tilesetHeaderString)\n\(tilesetTitleUnderline)"
             for (_, tileset) in tilesets.enumerated() {
                 //outputString += "\n - '\(tileset.filename)'"
-                outputString += "\n ∙ \(tileset.isBundled.valueAsCheckbox) '\(tileset.filename)'"
+                outputString += "\n ∙ \(tileset.isBundled.valueAsGithubCheckbox) '\(tileset.filename)'"
             }
         }
 
@@ -1618,7 +1620,7 @@ extension TiledDemoController {
 
             for (_, template) in templates.enumerated() {
                 //outputString += "\n - '\(template.filename)'"
-                outputString += "\n ∙ \(template.isBundled.valueAsCheckbox) '\(template.filename)'"
+                outputString += "\n ∙ \(template.isBundled.valueAsGithubCheckbox) '\(template.filename)'"
             }
         }
 
@@ -1629,7 +1631,7 @@ extension TiledDemoController {
 
             for (_, image) in images.enumerated() {
                 //outputString += "\n - '\(filename.filename)'"
-                outputString += "\n ∙ \(image.isBundled.valueAsCheckbox) '\(image.filename)'"
+                outputString += "\n ∙ \(image.isBundled.valueAsGithubCheckbox) '\(image.filename)'"
             }
         }
 
@@ -1774,3 +1776,8 @@ extension SKTilemap.RenderStatistics {
         return NSMutableAttributedString(string: labelText, attributes: cpuStatsAttributes)
     }
 }
+
+
+
+// TODO: remove this for release?
+extension TiledDemoController: TilemapDelegate {}

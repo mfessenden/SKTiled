@@ -435,7 +435,7 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Help" systemMenu="help" id="F2S-fz-NVQ">
                                     <items>
-                                        <menuItem title="SKTiled Documentation" keyEquivalent="?" id="FKE-Sm-Kum">
+                                        <menuItem title="SKTiled Help" keyEquivalent="?" id="FKE-Sm-Kum">
                                             <connections>
                                                 <action selector="openWebDocumentation:" target="Voe-Tx-rLC" id="fHJ-pq-yHQ"/>
                                             </connections>

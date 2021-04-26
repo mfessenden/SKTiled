@@ -443,7 +443,7 @@ class GameViewController: UIViewController, Loggable {
     /// Enables/disable button controls based on the current map attributes.
     ///
     /// - Parameter notification: event notification.
-    @objc func tilemapWasUpdated(notification: Notification) {
+    @objc func mapUpdatedAction(notification: Notification) {
         //notification.dump(#fileID, function: #function)
         guard let tilemap = notification.object as? SKTilemap else {
             log("cannot access tilemap.", level: .error)

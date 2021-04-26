@@ -74,7 +74,7 @@ class TestMapDelegate: TilemapDelegate {
     ///   - tile: tile object.
     ///   - globalID: tile global id.
     ///   - coord: tile coordinate.
-    ///   - in: layer name.
+    ///   - in: optional parent layer name.
     func willAddTile(globalID: UInt32, coord: simd_int2, in: String?) -> UInt32 {
         if (globalID == 25) {
             return 20
@@ -87,7 +87,7 @@ class TestMapDelegate: TilemapDelegate {
     /// - Parameters:
     ///   - tile: tile object.
     ///   - globalID: tile global id.
-    ///   - in: layer name.
+    ///   - in: optional parent layer name.
     func willAddTile(globalID: UInt32, in: String?) -> UInt32 {
         if (globalID == 25) {
             return 20
@@ -130,6 +130,17 @@ class TestMapDelegate: TilemapDelegate {
             default:
                 return nil
         }
+    }
+    
+    @objc public func customObjectForPointObject(ofType: String, attributes: [String : String], inLayer: String?) -> SKNode? {
+        if (ofType == "light") {
+            let light = SKLightNode()
+            if let lightColor = attributes["lightColor"] {
+                light.lightColor = SKColor(hexString: lightColor)
+                return light
+            }
+        }
+        return nil
     }
 
 }

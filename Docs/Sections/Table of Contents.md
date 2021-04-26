@@ -130,6 +130,8 @@
 - [Tile Objects](working-with-objects.html#tile-objects)
 - [Text Objects](working-with-objects.html#text-objects)
     - [Text Object Attributes](working-with-objects.html#text-object-attributes)
+- [Point Objects](working-with-objects.html#point-objects)
+    - [Custom Point Objects](working-with-objects.html#custom-point-objects)
 - [Dynamics](working-with-objects.html#dynamics)
 
 ## [SKTiled Properties](sktiled-properties.html)

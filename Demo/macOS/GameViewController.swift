@@ -89,11 +89,19 @@ class GameViewController: NSViewController, Loggable {
     var commandBackgroundColor: NSColor = NSColor(calibratedWhite: 0.2, alpha: 0.25)
 
     // MARK: - Initialization
-
+    
+    /// Initialize with a ui file name & bundle.
+    ///
+    /// - Parameters:
+    ///   - nibName: ui file name.
+    ///   - bundle: resource bundle.
     override init(nibName: NSNib.Name?, bundle: Bundle?) {
         super.init(nibName: nibName, bundle: bundle)
     }
 
+    /// Required initializer.
+    ///
+    /// - Parameter coder: decoder instance.
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupNotifications()
@@ -204,9 +212,6 @@ class GameViewController: NSViewController, Loggable {
         // intialize the demo interface
         setupMainInterface()
         setupButtonAttributes()
-        
-
-        
     }
 
     override func viewDidAppear() {
@@ -386,7 +391,6 @@ class GameViewController: NSViewController, Loggable {
     private func setupNotifications() {
         // demo
         NotificationCenter.default.addObserver(self, selector: #selector(demoSceneLoaded), name: Notification.Name.Demo.SceneLoaded, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(mapUpdatedAction), name: Notification.Name.Map.Updated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(debuggingInfoReceived), name: Notification.Name.Demo.UpdateDebugging, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(debuggingMessageReceived), name: Notification.Name.Debug.DebuggingMessageSent, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sceneFlushedAction), name: Notification.Name.Demo.FlushScene, object: nil)
@@ -1222,7 +1226,9 @@ class GameViewController: NSViewController, Loggable {
     /// - Parameter notification: event notification.
     @objc func tilemapWasUpdated(notification: Notification) {
         //notification.dump(#fileID, function: #function)
-        guard let tilemap = notification.object as? SKTilemap else { return }
+        guard let tilemap = notification.object as? SKTilemap else {
+            return
+        }
 
         if (tilemap.hasKey("uiColor")) {
             if let hexString = tilemap.stringForKey("uiColor") {

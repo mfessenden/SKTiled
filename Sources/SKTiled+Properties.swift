@@ -94,6 +94,7 @@ extension SKTilemap {
 
             // initial world scale.
             if (lattr == "worldscale") {
+                print(lattr, attr)
                 worldScale = (doubleForKey(attr) != nil) ? CGFloat(doubleForKey(attr)!) : worldScale
             }
 

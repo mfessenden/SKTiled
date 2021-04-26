@@ -49,7 +49,6 @@ class TilemapDelegateTests: XCTestCase {
         }
     }
 
-
     /// Test that the tilemap has the correct attributes compared to the source Tiled file.
     ///
     ///    Uses the `TilemapDelegate.attributesForNodes` method.
@@ -91,5 +90,40 @@ class TilemapDelegateTests: XCTestCase {
 
         // replaced tile count should be 165
         XCTAssert(floorTiles.count == 0, "⭑ error overriding global id \(globalIdToTest) in map '\(testDelegateTilemapName)', tile count: \(floorTiles.count)")
+    }
+    
+    /// Test the `TilemapDelegate.customObjectForPointObject` method.
+    ///
+    ///   in the test scene, the point object becomes a light node.
+    func testCustomPointObjects() {
+        guard let tilemap = testDelegateTilemap else {
+            XCTFail("⭑ failed to load tilemap '\(testDelegateTilemapName)'")
+            return
+        }
+        
+        let testLayerName = "Objects"
+        let expectedLightColorHexString = "#ffedce9a"
+        guard let objectLayer = tilemap.objectGroups(named: testLayerName).first else {
+            XCTFail("⭑ invalid layer '\(testLayerName)'")
+            return
+        }
+        
+        var lightNode: SKLightNode?
+        objectLayer.enumerateChildNodes(withName: ".//*") { node, stop in
+            if let light = node as? SKLightNode {
+                lightNode = light
+                stop.initialize(to: true)
+            }
+        }
+        
+        guard let customLight = lightNode else {
+            XCTFail("⭑ failed to create light node.")
+            return
+        }
+        
+        /// test to see if the light color has been properly parsed
+        let customLightColorHexString = customLight.lightColor.hexString()
+        XCTAssert(customLightColorHexString == expectedLightColorHexString, "⭑ invalid light color: \(customLightColorHexString), expected \(expectedLightColorHexString)")
+        
     }
 }
