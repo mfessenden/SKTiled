@@ -15,17 +15,23 @@ let package = Package(
             name: "SKTiled",
             targets: ["SKTiled"]),
     ],
-    dependencies: [],
+  dependencies: [],
     targets: [
         .target(
             name: "SKTiled",
             dependencies: [],
-            path: "Sources"
+            path: "Sources",
+            exclude: ["Info.plist"]
         ),
         .testTarget(
             name: "SKTiledTests",
             dependencies: ["SKTiled"],
             path: "Tests",
+            exclude: [
+              "Info-tvOS.plist",
+              "Info-iOS.plist",
+              "Info-macOS.plist"
+            ],
             resources: [
               .copy("Assets/test-tilemap.tmx"),
               .copy("Assets/characters-8x8.png"),
@@ -40,6 +46,6 @@ let package = Package(
               .copy("Assets/portraits-8x8.png"),
               .copy("Assets/portraits-8x8.tsx")
             ]
-        ),
+        )
     ]
 )
