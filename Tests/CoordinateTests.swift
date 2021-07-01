@@ -46,11 +46,11 @@ class CoordinateTests: XCTestCase {
         
         if (testBundle == nil) {
             TiledGlobals.default.loggingLevel = .none
-            testBundle = Bundle(for: type(of: self))
+            testBundle = Bundle.module
         }
         
         if (tilemap == nil) {
-            let mapurl = testBundle!.url(forResource: tilemapName, withExtension: "tmx")!
+            let mapurl = testBundle.url(forResource: tilemapName, withExtension: "tmx")!
             tilemap = SKTilemap.load(tmxFile: mapurl.path, loggingLevel: .none)
         }
     }

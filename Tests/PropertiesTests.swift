@@ -39,7 +39,7 @@ class PropertiesTests: XCTestCase {
         
         if (testBundle == nil) {
             TiledGlobals.default.loggingLevel = .none
-            testBundle = Bundle(for: type(of: self))
+            testBundle = Bundle.module
         }
         
         if (tilemap == nil) {
