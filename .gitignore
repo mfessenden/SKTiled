@@ -17,3 +17,6 @@ Docs/Private
 Docs/Sketch
 Demo/shaders/*
 *.graffle
+.build
+.swiftpm
+.DS_Store

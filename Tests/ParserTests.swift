@@ -43,7 +43,7 @@ class ParserTests: XCTestCase {
         super.setUp()
         
         if (testBundle == nil) {
-            testBundle = Bundle(for: type(of: self))
+            testBundle = Bundle.module
         }
         
         if (tilemap == nil) {
