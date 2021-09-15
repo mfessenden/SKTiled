@@ -7,7 +7,7 @@
 [![Carthage Compatible][carthage-image]][carthage-url]
 [![Cocoapods Compatible][pod-image]][pod-url]
 
-## SKTiled v1.22 Documentation
+## SKTiled v1.23 Documentation
 
 - [What's New](whats-new.html)
 - [Getting Started](getting-started.html)

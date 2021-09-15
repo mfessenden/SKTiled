@@ -3,7 +3,9 @@
 - [Requirements](#requirements)
 - [Installation](#installation)
     - [Framework Installation](#framework-installation)
+    - [Swift Package Manager](#swift-package-manager)
     - [Carthage Installation](#carthage-installation)
+        - [Binary Frameworks](#binary-frameworks)
     - [CocoaPods Installation](#cocoapods-installation)
     - [Building the Demo Projects](#building-the-demo-projects)
     - [Building the Documentation](#building-the-documentation)
@@ -27,11 +29,10 @@
 
 ## Installation
 
-The **SKTiled** project contains six targets; three are demo applications for iOS/tvOS/macOS. These are included to let you quickly test your own content, or simple play around with the included demo files. The other three are frameworks for use in your own projects.
+The **SKTiled** project contains six targets; three are demo applications for iOS/tvOS/macOS. These are included to let you quickly test your own content, or simple play around with the included demo files. The other three are frameworks for use in your own projects. If the three demo targets do not appear in the active scheme list, choose **Manage Schemes** and press the **Autocreate Schemes Now** button.
 
 ![Project Schemes](images/project-schemes.png)
 
-To use the frameworks, build the appropriate framework target and add to your project. Make sure the **Minimum Deployment Target** is set correctly for your project (iOS11+/macOS 10.12+/tvOS12+).
 
 ### Framework Installation
 
@@ -39,24 +40,25 @@ To use the frameworks, build the appropriate framework target and add to your pr
 
 ![adding framework](images/framework.png)
 
-After building the framework(s), you'll need to add them to your project. Select your target, and add the framework to the **Embedded Binaries** and **Linked Frameworks and Libraries** sections of the **General** tab. You'll also need to make sure it is linked in the **Build Phases > Embed Frameworks** section.
+After building the framework(s), you'll need to link them with your project. Select your target, and add the framework to the **Frameworks, Libraries and Embedded Content** section.
 
 
-![framework embed](images/links.png)
+### Swift Package Manager
 
+To add the SKTiled framework dependency to your Xcode project, select **File > Swift Packages > Add Package Dependency** and enter the repository URL. Once the dependency is resolved, you can add it to your targets by clicking the **`+`** button in the **Frameworks, Libraries and Embedded Content** area of the target's **General** tab.
 
 ### Carthage Installation
 
-To build with [Carthage](https://github.com/Carthage/Carthage), create a Cartfile in your project root and add a reference to **SKTiled** (be sure to check the current version number):
+To build with [Carthage](https://github.com/Carthage/Carthage), create a Cartfile in your project root and add a reference to **SKTiled**:
 
-    github "mfessenden/SKTiled" ~> 1.22
+    github "mfessenden/SKTiled"
 
 
 Close the file and run Carthage from the terminal to build the framework(s):
 
     carthage update
 
-To build for a specific platform, use the `platform` argument in your build command:
+To build for a specific platform, use the `--platform` argument in your build command:
 
     carthage update --platform iOS
 
@@ -65,6 +67,21 @@ Once you've run the build command frameworks are built, you'll find a **Carthage
 ![Carthage Directories](images/carthage_directories.png)
 
 See the [Carthage](https://github.com/Carthage/Carthage) home page for help and additional build instructions.
+
+
+#### Binary Frameworks
+
+It's also possible to build the new binary **xcframework** framework for use with multiple platforms/architectures. Pass the `--use-xcframeworks` argument to the update command:
+
+
+    carthage update --use-xcframeworks
+
+
+The resulting framework file **`SKTiled.xcframework`** can be added to your project via dragging it into the **General > Frameworks, Libraries, and Embedded Content** section of each target. Unlike normal frameworks, this framework can be used with *any* platform. If your project will be build for multiple processor architectures (x86, Apple ARM), this is the preferred method.
+
+![xcframework embed](images/embed-xcframeworks.svg)
+
+You'll need **Carthage v0.37.0** to build binary frameworks. See [**this issue**][carthage-issue-url] for more information.
 
 ### CocoaPods Installation
 
@@ -79,7 +96,7 @@ Add references to **SKTiled** in each of your targets:
       use_frameworks!
 
       # Pods for iOS
-      pod 'SKTiled', '~> 1.22'
+      pod 'SKTiled', '~> 1.23'
 
     end
 
@@ -87,7 +104,7 @@ Add references to **SKTiled** in each of your targets:
       use_frameworks!
 
       # Pods for macOS
-      pod 'SKTiled', '~> 1.22'
+      pod 'SKTiled', '~> 1.23'
 
     end
 
@@ -95,7 +112,7 @@ Add references to **SKTiled** in each of your targets:
       use_frameworks!
 
       # Pods for tvOS
-      pod 'SKTiled', '~> 1.22'
+      pod 'SKTiled', '~> 1.23'
 
     end
 
@@ -121,12 +138,12 @@ SAMPLE_CODE_DISAMBIGUATOR = ${DEVELOPMENT_TEAM}
 
 For more information, see the [**Apple Development Documentation**][apple-code-signing-url] on code signing requirements.
 
-
 ### Building the Documentation
 
 To build the documentation, you'll need to install [**jazzy**][jazzy-url]. To build the html content, simply run the included script in a shell:
 
-	./scripts/build-docs.sh
+	./scripts/build-documentation.sh
+
 
 
 ## tvOS Support
@@ -198,3 +215,6 @@ Next: [Scene Setup](scene-setup.html) - [Index](Table of Contents.html)
 [working-with-maps-url]:working-with-maps.html#loading-a-tilemap
 [jazzy-url]:https://github.com/realm/jazzy
 [apple-code-signing-url]:https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html
+[carthage-issue-url]:https://github.com/Carthage/Carthage/issues/3097
+
+[adding-spm-url]:https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app

@@ -1,6 +1,19 @@
 Change Log
 ==========
 
+1.23
+-----
+
+#### Changes
+
+- add **Swift Package Manager** support
+- add target for building binary framework
+
+#### Breaking
+
+- nothing
+
+
 1.22
 -----
 

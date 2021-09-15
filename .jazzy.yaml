@@ -1,11 +1,11 @@
 # jazzy --help config
 module: SKTiled
-module_version: 1.22
+module_version: 1.23
 author: Michael Fessenden
 author_url: https://github.com/mfessenden
 github_url: https://github.com/mfessenden/SKTiled
 dash_url: https://mfessenden.github.io/SKTiled/docsets/SKTiled.xml
-github_file_prefix: https://github.com/mfessenden/SKTiled/tree/1.22
+github_file_prefix: https://github.com/mfessenden/SKTiled/tree/1.23
 clean: true
 skip_undocumented: true
 output: Docs/html

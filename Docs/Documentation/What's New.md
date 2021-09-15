@@ -19,7 +19,7 @@
 
 ![Swift 5][swift-5-img]
 
-With v1.22, **SKTiled** now supports **Swift 5.3**.
+With v1.23, **SKTiled** now supports **Swift 5.3**.
 
 ## tvOS Support
 

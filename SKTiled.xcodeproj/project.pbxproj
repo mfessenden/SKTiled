@@ -6,6 +6,31 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		4C328F6A26F2358C00EABFAB /* Build Documentation */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 4C328F6D26F2358C00EABFAB /* Build configuration list for PBXAggregateTarget "Build Documentation" */;
+			buildPhases = (
+				4C328F6E26F235AD00EABFAB /* Run Documentation Build */,
+			);
+			dependencies = (
+			);
+			name = "Build Documentation";
+			productName = "Build Docs";
+		};
+		4C328F6F26F2374000EABFAB /* Build XCFramework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 4C328F7126F2374000EABFAB /* Build configuration list for PBXAggregateTarget "Build XCFramework" */;
+			buildPhases = (
+				4C328F7026F2374000EABFAB /* Build XCFramework */,
+			);
+			dependencies = (
+			);
+			name = "Build XCFramework";
+			productName = "Build Docs";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		4C01D3A91F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C01D3A61F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift */; };
 		4C01D3AA1F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C01D3A61F1E07AB00FFAD28 /* SKTiled+GameplayKit.swift */; };
@@ -1434,6 +1459,15 @@
 							};
 						};
 					};
+					4C328F6A26F2358C00EABFAB = {
+						CreatedOnToolsVersion = 13.0;
+						DevelopmentTeam = 747QKN4G7U;
+						ProvisioningStyle = Automatic;
+					};
+					4C328F6F26F2374000EABFAB = {
+						DevelopmentTeam = 747QKN4G7U;
+						ProvisioningStyle = Automatic;
+					};
 					4C41A5DF1F437118001622FF = {
 						CreatedOnToolsVersion = 8.3.3;
 						LastSwiftMigration = 1150;
@@ -1490,6 +1524,8 @@
 				4CA6A7D82184F531002BC924 /* Tests (macOS) */,
 				4C4ADA622189F3F100DB1A02 /* Tests (iOS) */,
 				4C4ADA812189F5FB00DB1A02 /* Tests (tvOS) */,
+				4C328F6A26F2358C00EABFAB /* Build Documentation */,
+				4C328F6F26F2374000EABFAB /* Build XCFramework */,
 			);
 		};
 /* End PBXProject section */
@@ -1852,6 +1888,42 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4C328F6E26F235AD00EABFAB /* Run Documentation Build */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Documentation Build";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n./$(PROJECT_DIR)/scripts/build-documentation.sh\n";
+		};
+		4C328F7026F2374000EABFAB /* Build XCFramework */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build XCFramework";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n./$(PROJECT_DIR)/scripts/build-xcframeworks.sh\n";
+		};
 		4C3496881EA513D9003900C8 /* Clean Assets */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2455,6 +2527,42 @@
 			};
 			name = Release;
 		};
+		4C328F6B26F2358C00EABFAB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 747QKN4G7U;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4C328F6C26F2358C00EABFAB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 747QKN4G7U;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		4C328F7226F2374000EABFAB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 747QKN4G7U;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4C328F7326F2374000EABFAB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 747QKN4G7U;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		4C41A5E51F437118001622FF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2891,6 +2999,24 @@
 			buildConfigurations = (
 				4C24B17D20694C470027EBD5 /* Debug */,
 				4C24B17E20694C470027EBD5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4C328F6D26F2358C00EABFAB /* Build configuration list for PBXAggregateTarget "Build Documentation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C328F6B26F2358C00EABFAB /* Debug */,
+				4C328F6C26F2358C00EABFAB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4C328F7126F2374000EABFAB /* Build configuration list for PBXAggregateTarget "Build XCFramework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C328F7226F2374000EABFAB /* Debug */,
+				4C328F7326F2374000EABFAB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

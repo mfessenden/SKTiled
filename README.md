@@ -16,7 +16,7 @@
 ![Demo Image](Docs/images/demo-iphone.png?raw=true)
 
 
-Check out the [**Official Documentation**][sktiled-12-doc-url]. 
+Check out the [**Official Documentation**][sktiled-12-doc-url].
 
 ## Features
 
@@ -39,6 +39,8 @@ Check out the [**Official Documentation**][sktiled-12-doc-url].
 - [ ] infinite maps
 - [ ] tile collision objects
 - [ ] Zstandard compression support
+- [ ] layer tinting
+- [ ] file properties
 
 
 ## Requirements
@@ -50,16 +52,28 @@ Check out the [**Official Documentation**][sktiled-12-doc-url].
 
 ## Installation
 
-### Carthage & CocoaPods Support
+
+
+### Carthage
 
 For Carthage installation, create a Cartfile in the root of your project:
 
-    github "mfessenden/SKTiled" ~> 1.22
+    github "mfessenden/SKTiled" ~> 1.2
+
+
+To use the new **[binary framework][binary-frameworks-url]** format, pass the **`--use-xcframeworks`** parameter to the build command:
+
+	carthage update --use-xcframeworks
+
+For more information, see the **[Carthage Installation][docs-carthage-url]** documentation.
+
+
+### CocoaPods
 
 
 For CocoaPods, install via a reference in your podfile:
 
-    pod 'SKTiled', '~> 1.22'
+    pod 'SKTiled', '~> 1.2'
 
 
 ## Usage
@@ -87,6 +101,7 @@ Layers represent containers that hold various types of data:
 - tile layers hold an array of tile sprites and associated tileset data
 - object groups contain vector shape objects
 - image layers display a single image
+- group layers encapsulate other layers
 
 All **SKTiled** layer types are subclasses of the base [`SKTiledLayerObject`][sktiledlayerobject-url] object and provide access to coordinate transformation and positioning information. Additionally, every layer type can have individual offset transforms and rendering flags.  
 
@@ -279,7 +294,7 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 [carthage-image]:https://img.shields.io/badge/Carthage-compatible-4BC51D.svg
 [carthage-url]:https://github.com/Carthage/Carthage
 [pod-image]:https://img.shields.io/cocoapods/v/SKTiled.svg
-
+[mailto-url]:(mailto:michael.fessenden@gmail.com?subject=[SKTiled]%20Projects)
 
 [xcode11-image]:https://img.shields.io/badge/Xcode-11.0-orange.svg
 [xcode10-image]:https://img.shields.io/badge/Xcode-10.0-orange.svg
@@ -312,6 +327,7 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 [sktilelayer-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKTileLayer.html
 [sktileobject-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKTileObject.html
 [sktileset-url]:https://mfessenden.github.io/SKTiled/1.2/Classes/SKTileset.html
+[docs-carthage-url]:https://mfessenden.github.io/SKTiled/1.3/getting-started.html#carthage-installation
 
 <!--- Tiled --->
 
@@ -328,3 +344,4 @@ let allWalkable = tilemap.getTilesWithProperty("walkable", true")
 [uitouch-url]:https://developer.apple.com/documentation/uikit/uitouch
 [nsevent-url]:https://developer.apple.com/documentation/appkit/nsevent
 [swift-package-doc-url]:https://developer.apple.com/documentation/swift_packages
+[binary-frameworks-url]:https://developer.apple.com/videos/play/wwdc2019/416/
