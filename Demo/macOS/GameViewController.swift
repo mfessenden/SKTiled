@@ -1226,6 +1226,10 @@ class GameViewController: NSViewController, Loggable {
     /// - Parameter notification: event notification.
     @objc func tilemapWasUpdated(notification: Notification) {
         //notification.dump(#fileID, function: #function)
+        
+        // FIXME: this method is not called
+        
+        
         guard let tilemap = notification.object as? SKTilemap else {
             return
         }

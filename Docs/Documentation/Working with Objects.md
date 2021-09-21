@@ -94,9 +94,28 @@ textObject.textAttributes.alignment.horizontal = .center
 
 ## Point Objects
 
-Point objects are a special object type that represents a single point in the map.
+Point objects are a special object type that represents a single point in the map. As such, it has no shape parameters and is really only useful as a reference point or an anchor for other nodes.
 
 ### Custom Point Objects
+
+The `TilemapDelegate.customNodeForPointObject` protocol method allows you to substitute a custom `SKNode` type for point objects matching a given type:
+
+```swift
+@objc public func customNodeForPointObject(ofType: String,
+                                          attributes: [String : String],
+                                          inLayer: String?) -> SKNode? {
+    if (ofType == "light") {
+        let light = SKLightNode()
+        if let lightColor = attributes["lightColor"] {
+            light.lightColor = SKColor(hexString: lightColor)
+            return light
+        }
+    }
+    return nil
+}
+```
+
+The original point object is destroyed, but any [custom attributes](tiled-properties.html) will be passed to this method, allowing you to map them to your custom objects.
 
 ## Dynamics
 

@@ -262,8 +262,7 @@ import GameplayKit
     ///   - ofType: point object type.
     ///   - attributes: attributes parsed from **Tiled** reference.
     ///   - inLayer: optional parent layer name.
-    ///   - completion: optional completion block.
-    @objc optional func customObjectForPointObject(ofType: String, attributes: [String: String], inLayer: String?) -> SKNode?
+    @objc optional func customNodeForPointObject(ofType: String, attributes: [String: String], inLayer: String?) -> SKNode?
 }
 
 

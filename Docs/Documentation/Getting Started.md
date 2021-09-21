@@ -38,8 +38,7 @@ To use the frameworks, build the appropriate framework target and add to your pr
 
 ![adding framework](images/framework.png)
 
-After building the framework(s), you'll need to add them to your project. Select your target, and add the framework to the **Embedded Binaries** and **Linked Frameworks and Libraries** sections of the **General** tab. You'll also need to make sure it is linked in the **Build Phases > Embed Frameworks** section.
-
+After building the framework(s), you'll need to link them with your project. Select your target, and add the framework to the **Frameworks, Libraries and Embedded Content** section.
 
 ![framework embed](images/links.png)
 
@@ -143,7 +142,7 @@ For more information, see the [**Apple Development Documentation**][apple-code-s
 
 To build the documentation, you'll need to install [**jazzy**][jazzy-url]. To build the html content, simply run the included script in a shell:
 
-	./scripts/build-docs.sh
+	./scripts/build-documentation.sh
 
 
 

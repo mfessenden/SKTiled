@@ -1,6 +1,6 @@
 # jazzy --help config
 module: SKTiled
-module_version: 1.30b1
+module_version: 1.30b2
 author: Michael Fessenden
 author_url: https://github.com/mfessenden
 github_url: https://github.com/mfessenden/SKTiled
@@ -27,7 +27,7 @@ exclude:
 
 copyright: '© 2020 [Michael Fessenden](https://github.com/mfessenden) under [open source license](https://github.com/mfessenden/SKTiled/tree/master/LICENSE).'
 
-swift_version: 5.3.2
+swift_version: 5.4
 theme: Docs/Themes/sktiled
 
 

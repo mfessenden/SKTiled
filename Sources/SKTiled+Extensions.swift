@@ -89,8 +89,12 @@ internal func getSKTiledVersionSuffix() -> String? {
 /// - Returns: swift version, represented as a string.
 internal func getSwiftVersion() -> String {
     var swiftVersion = "5.0"
-    #if swift(>=5.4)
+    #if swift(>=5.5)
+    swiftVersion = "5.5"
+    #elseif swift(>=5.4)
     swiftVersion = "5.4"
+    #elseif swift(>=5.3)
+    swiftVersion = "5.3"
     #elseif swift(>=5.3)
     swiftVersion = "5.3"
     #elseif swift(>=5.2)

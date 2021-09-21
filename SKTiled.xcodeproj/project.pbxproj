@@ -7,15 +7,26 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		4C96274D24E6FFF20009D5B3 /* Build Docs */ = {
+		4C328F7426F237BB00EABFAB /* Build XCFramework */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 4C96275124E6FFF20009D5B3 /* Build configuration list for PBXAggregateTarget "Build Docs" */;
+			buildConfigurationList = 4C328F7626F237BB00EABFAB /* Build configuration list for PBXAggregateTarget "Build XCFramework" */;
+			buildPhases = (
+				4C328F7526F237BB00EABFAB /* Build Binary Framework */,
+			);
+			dependencies = (
+			);
+			name = "Build XCFramework";
+			productName = "Build Docs";
+		};
+		4C96274D24E6FFF20009D5B3 /* Build Documentation */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 4C96275124E6FFF20009D5B3 /* Build configuration list for PBXAggregateTarget "Build Documentation" */;
 			buildPhases = (
 				4C96275224E7000B0009D5B3 /* Run Documentation Build */,
 			);
 			dependencies = (
 			);
-			name = "Build Docs";
+			name = "Build Documentation";
 			productName = "Build Docs";
 		};
 /* End PBXAggregateTarget section */
@@ -1769,6 +1780,9 @@
 							};
 						};
 					};
+					4C328F7426F237BB00EABFAB = {
+						ProvisioningStyle = Automatic;
+					};
 					4C41A5DF1F437118001622FF = {
 						CreatedOnToolsVersion = 8.3.3;
 						ProvisioningStyle = Automatic;
@@ -1824,7 +1838,8 @@
 				4CA6A7D82184F531002BC924 /* Tests (macOS) */,
 				4C4ADA622189F3F100DB1A02 /* Tests (iOS) */,
 				4C4ADA812189F5FB00DB1A02 /* Tests (tvOS) */,
-				4C96274D24E6FFF20009D5B3 /* Build Docs */,
+				4C96274D24E6FFF20009D5B3 /* Build Documentation */,
+				4C328F7426F237BB00EABFAB /* Build XCFramework */,
 			);
 		};
 /* End PBXProject section */
@@ -2219,6 +2234,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4C328F7526F237BB00EABFAB /* Build Binary Framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build Binary Framework";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n./$(PROJECT_DIR)/scripts/build-xcframeworks.sh\n";
+		};
 		4C3496881EA513D9003900C8 /* Clean Demo Assets */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2284,7 +2317,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n./$(PROJECT_DIR)/scripts/build-docs.sh\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n./$(PROJECT_DIR)/scripts/build-documentation.sh\n";
 		};
 		4CABC4D71DAEE1F900ACA1A4 /* Clean Demo Assets */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2953,6 +2986,24 @@
 			};
 			name = Release;
 		};
+		4C328F7726F237BB00EABFAB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4C328F7826F237BB00EABFAB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "$(SAMPLE_CODE_DISAMBIGUATOR)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		4C41A5E51F437118001622FF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3413,6 +3464,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		4C328F7626F237BB00EABFAB /* Build configuration list for PBXAggregateTarget "Build XCFramework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C328F7726F237BB00EABFAB /* Debug */,
+				4C328F7826F237BB00EABFAB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4C41A5E71F437118001622FF /* Build configuration list for PBXNativeTarget "SKTiled-macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -3449,7 +3509,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4C96275124E6FFF20009D5B3 /* Build configuration list for PBXAggregateTarget "Build Docs" */ = {
+		4C96275124E6FFF20009D5B3 /* Build configuration list for PBXAggregateTarget "Build Documentation" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4C96274E24E6FFF20009D5B3 /* Debug */,

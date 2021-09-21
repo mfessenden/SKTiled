@@ -8,4 +8,4 @@ scriptdir=$projdir/scripts;
 cd $projdir;
 
 # run the `build-docs` script
-sh $scriptdir/build-docs.sh;
+sh $scriptdir/build-documentation.sh;

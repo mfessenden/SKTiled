@@ -92,7 +92,7 @@ class TilemapDelegateTests: XCTestCase {
         XCTAssert(floorTiles.count == 0, "⭑ error overriding global id \(globalIdToTest) in map '\(testDelegateTilemapName)', tile count: \(floorTiles.count)")
     }
     
-    /// Test the `TilemapDelegate.customObjectForPointObject` method.
+    /// Test the `TilemapDelegate.customNodeForPointObject` method.
     ///
     ///   in the test scene, the point object becomes a light node.
     func testCustomPointObjects() {

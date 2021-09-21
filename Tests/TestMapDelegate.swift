@@ -132,7 +132,13 @@ class TestMapDelegate: TilemapDelegate {
         }
     }
     
-    @objc public func customObjectForPointObject(ofType: String, attributes: [String : String], inLayer: String?) -> SKNode? {
+    /// Provides a mechanism for substitute custom SpriteKit node types in place of **Tiled** point objects.
+    ///
+    /// - Parameters:
+    ///   - ofType: point object type.
+    ///   - attributes: attributes parsed from **Tiled** reference.
+    ///   - inLayer: optional parent layer name.
+    @objc public func customNodeForPointObject(ofType: String, attributes: [String : String], inLayer: String?) -> SKNode? {
         if (ofType == "light") {
             let light = SKLightNode()
             if let lightColor = attributes["lightColor"] {

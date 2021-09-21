@@ -1624,7 +1624,7 @@ internal class SKTilemapParser: NSObject, XMLParserDelegate {
                         currentObject.objectType = .point
 
                         /// If the delegate specifies a custom node type, add that and destroy the current object
-                        if let customNode = tilemapDelegate?.customObjectForPointObject?(ofType: currentObject.type, attributes: properties, inLayer: objectGroup.name) {
+                        if let customNode = tilemapDelegate?.customNodeForPointObject?(ofType: currentObject.type, attributes: properties, inLayer: objectGroup.name) {
     
                             customNode.position = currentObject.position
                             customNode.zPosition = currentObject.zPosition
