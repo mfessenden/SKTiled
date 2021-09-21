@@ -8,6 +8,7 @@ Change Log
 
 - add **Swift Package Manager** support
 - add target for building binary framework
+- macOS requirement is now 11.0
 
 #### Breaking
 

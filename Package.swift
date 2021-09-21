@@ -44,7 +44,7 @@ let package = Package(
               .copy("Assets/monsters-16x16.png"),
               .copy("Assets/monsters-16x16.tsx"),
               .copy("Assets/portraits-8x8.png"),
-              .copy("Assets/portraits-8x8.tsx")
+              .copy("Assets/portraits-8x8.tsx"),
             ]
         )
     ]

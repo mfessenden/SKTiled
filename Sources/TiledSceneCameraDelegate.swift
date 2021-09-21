@@ -61,7 +61,7 @@ import SpriteKit
  [tiled-scene-camera-delegate-image]:https://mfessenden.github.io/SKTiled/images/camera-delegate.svg
 
  */
-@objc public protocol SKTiledSceneCameraDelegate: class {
+@objc public protocol SKTiledSceneCameraDelegate: AnyObject {
 
     /**
      Allow delegate to receive updates from camera.

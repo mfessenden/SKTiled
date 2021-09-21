@@ -461,28 +461,28 @@ public class SKTileset: NSObject, SKTiledObject {
             log("tile data exists at id: \(tileID)", level: .error)
             return nil
         }
-
+    
         isImageCollection = true
 
-        let inputURL = URL(fileURLWithPath: source)
-        let filename = inputURL.deletingPathExtension().lastPathComponent
-        let fileExtension = inputURL.pathExtension
-
-        guard let urlPath = Bundle.main.url(forResource: filename, withExtension: fileExtension) else {
+        // standardize the url
+        let inputURL = URL(fileURLWithPath: source).standardized
+        
+        // check to see if
+        guard let imageDataProvider = CGDataProvider(url: inputURL as CFURL) else {
+            log("invalid image source '\(inputURL.path)'.", level: .error)
             return nil
         }
-
-        // read image from file
-        let imageDataProvider = CGDataProvider(url: urlPath as CFURL)!
-
+        
         // create a data provider
         let image = CGImage(pngDataProviderSource: imageDataProvider, decode: nil, shouldInterpolate: false, intent: .defaultIntent)!
         let sourceTexture = SKTexture(cgImage: image)
         sourceTexture.filteringMode = .nearest
-
+        
+        // create the tile data and set the source size here (as tileset size won't be accurate)
         let data = SKTilesetData(id: tileID, texture: sourceTexture, tileSet: self)
+        data.sourceSize = sourceTexture.size()
         data.ignoreProperties = ignoreProperties
-
+        
         // add the image name to the source attribute
         data.source = source
         self.tileData.insert(data)

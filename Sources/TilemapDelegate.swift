@@ -69,7 +69,7 @@ import GameplayKit
  }
  ```
  */
-public protocol SKTilemapDelegate: class {
+public protocol SKTilemapDelegate: AnyObject {
     var zDeltaForLayers: CGFloat { get }
     func didBeginParsing(_ tilemap: SKTilemap)
     func didAddTileset(_ tileset: SKTileset)

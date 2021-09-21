@@ -63,7 +63,7 @@ import SpriteKit
  }
  ```
  */
-public protocol SKTilesetDataSource: class {
+public protocol SKTilesetDataSource: AnyObject {
 
     /**
      Provide an image name for the tileset before textures are generated.

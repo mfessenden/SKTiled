@@ -164,12 +164,13 @@ class ColorTests: XCTestCase {
         let firstTextColorHexValue = firstTestColor.hexString()
         
         // second value (4 characters)
-        let secondShortHexString = "#854"
-        let secondExpectedHexValue = "#885544"
+        let secondShortHexString = "#5ba"
+        let secondExpectedHexValue = "#55bbaa"
         let secondTestColor = SKColor(hexString: secondShortHexString)
         let secondTextColorHexValue = secondTestColor.hexString()
         
         XCTAssertEqual(firstTextColorHexValue, firstExpectedHexValue, "❗️ incorrect hex to color conversion, `\(firstShortHexString)` does not equal `\(firstExpectedHexValue)`")
+        XCTAssertEqual(secondTextColorHexValue, secondExpectedHexValue, "❗️ incorrect hex to color conversion, `\(secondShortHexString)` does not equal `\(secondExpectedHexValue)`")
     }
 }
 

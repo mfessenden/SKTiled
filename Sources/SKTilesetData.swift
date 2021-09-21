@@ -70,6 +70,9 @@ public class SKTilesetData: SKTiledObject {
 
     /// Source image name (collections tileset)
     public var source: String! = nil
+    
+    /// Source image size (collections tileset)
+    public var sourceSize: CGSize?
 
     /// Tile occurance probability (parsed from Tiled, not currently used).
 

@@ -43,12 +43,15 @@ class ParserTests: XCTestCase {
         super.setUp()
         
         if (testBundle == nil) {
+            #if SWIFT_PACKAGE
             testBundle = Bundle.module
+            #else
+            testBundle = Bundle(for: type(of: self))
+            #endif
         }
         
         if (tilemap == nil) {
             print("➜ loading test tilemap: \"\(tilemapName)\"...")
-            
             let mapurl = testBundle!.url(forResource: tilemapName, withExtension: "tmx")!
             tilemap = SKTilemap.load(tmxFile: mapurl.path, delegate: tilemapDelegate,
                                      tilesetDataSource: tilesetDelegate, loggingLevel: .none)

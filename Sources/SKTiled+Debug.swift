@@ -206,7 +206,7 @@ extension SKTiledDebugDrawNode: Loggable {}
 
 
 /// :nodoc:
-protocol CustomDebugReflectable: class {
+protocol CustomDebugReflectable: AnyObject {
     func dumpStatistics()
 }
 

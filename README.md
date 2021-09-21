@@ -47,7 +47,7 @@ Check out the [**Official Documentation**][sktiled-12-doc-url].
 
 - iOS 12
 - tvOS 12
-- macOS 10.12
+- macOS 11
 - Xcode 11/Swift 5
 
 ## Installation

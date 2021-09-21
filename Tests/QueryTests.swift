@@ -42,7 +42,11 @@ class QueryTests: XCTestCase {
         
         if (testBundle == nil) {
             TiledGlobals.default.loggingLevel = .none
+            #if SWIFT_PACKAGE
             testBundle = Bundle.module
+            #else
+            testBundle = Bundle(for: type(of: self))
+            #endif
         }
         
         if (tilemap == nil) {

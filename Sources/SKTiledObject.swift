@@ -69,7 +69,7 @@ import SpriteKit
  
  [sktiledobject-url]:Protocols/SKTiledObject.html
  */
-@objc public protocol SKTiledObject: class {
+@objc public protocol SKTiledObject: AnyObject {
     /// Unique object id (layer & object names may not be unique).
     var uuid: String { get set }
     
