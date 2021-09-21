@@ -1,7 +1,7 @@
 <p align="center">
 <img src="Docs/images/doc-banner-centered.svg" alt="SKTiled" title="SKTiled" width="881" height="81"/>
 <p align="center">
-<a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-5.3-brightgreen.svg"></a>
+<a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-5.5-brightgreen.svg"></a>
 <a href="https://developer.apple.com/download/more/"><img src="https://img.shields.io/badge/Xcode-11.0-orange.svg"></a>
 <a href="https://travis-ci.org/mfessenden/SKTiled"><img src="https://travis-ci.org/mfessenden/SKTiled.svg?branch=master"></a>
 <a href="https://github.com/mfessenden/SKTiled/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
