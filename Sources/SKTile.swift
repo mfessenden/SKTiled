@@ -175,8 +175,10 @@ open class SKTile: SKSpriteNode, CustomReflectable {
     /// Returns true if the tile is part of a tile object.
     public internal(set) var isTileObject: Bool = false
 
+    @objc public var _debugLevel: UInt8 = 0
+    
     /// Debug visualization options.
-    @objc public var debugDrawOptions: DebugDrawOptions = []
+    public var debugDrawOptions: DebugDrawOptions = []
     
     // MARK: - Properties
     

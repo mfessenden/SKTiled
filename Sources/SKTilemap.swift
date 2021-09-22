@@ -819,8 +819,10 @@ public class SKTilemap: SKNode, CustomReflectable, TiledMappableGeometryType, Ti
     /// Debug visualization node.
     internal var debugNode: TiledDebugDrawNode!
 
+    @objc public var _debugLevel: UInt8 = 0
+    
     /// Debug visualization options.
-    @objc public var debugDrawOptions: DebugDrawOptions = TiledGlobals.default.debugDrawOptions {
+    public var debugDrawOptions: DebugDrawOptions = TiledGlobals.default.debugDrawOptions {
         didSet {
             debugNode?.draw()
 

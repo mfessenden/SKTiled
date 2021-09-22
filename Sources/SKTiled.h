@@ -33,6 +33,4 @@
 FOUNDATION_EXPORT double SKTiledVersionNumber;
 FOUNDATION_EXPORT const unsigned char SKTiledVersionString[];
 
-
-// imports
-#import "DebugDrawOptions.h"
+// In this header, you should import all the public headers of your framework using statements like #import <CoolExtensions/PublicHeader.h>

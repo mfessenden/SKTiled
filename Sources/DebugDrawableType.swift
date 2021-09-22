@@ -32,12 +32,12 @@ import SpriteKit
 
 /// ### Properties
 ///
-/// - `debugDrawOptions`: debugging visualization options.
+/// - `_debugLevel`: debugging visualization level.
 ///
 @objc public protocol DebugDrawableType: AnyObject {
 
-    /// Optionset of properties for visualizing node attributes.
-    @objc var debugDrawOptions: DebugDrawOptions { get set }
+    /// Value representing a debug visualization level.
+    @objc var _debugLevel: UInt8 { get set }
 }
 
 
@@ -67,6 +67,24 @@ public struct DebugDrawProperties {
 
 
 extension DebugDrawableType {
+    
+    /// Default debug draw options for all node types.
+    ///
+    /// ### Usage
+    ///
+    /// - `drawGrid`: visualize the nodes's tile grid.
+    /// - `drawFrame`: visualize the nodes's bounding rect.
+    /// - `drawGraph`: visualize the nodes's pathfinding graph.
+    /// - `drawObjectFrames`: draw object's bounding shapes.
+    /// - `drawAnchor`: draw the layer's anchor point.
+    ///
+    public var debugDrawOptions: DebugDrawOptions {
+        get {
+            return DebugDrawOptions(rawValue: _debugLevel)
+        } set {
+            _debugLevel = newValue.rawValue
+        }
+    }
 
     // MARK: - Convenience Properties
 
@@ -152,65 +170,5 @@ extension DebugDrawableType {
                 debugDrawOptions = debugDrawOptions.subtracting(.drawGraph)
             }
         }
-    }
-}
-
-
-
-extension DebugDrawOptions {
-
-    /// Descriptor values for each option.
-    public var strings: [String] {
-        
-        var result: [String] = []
-
-        if self.contains(.drawGrid) {
-            result.append("Draw Grid")
-        }
-        
-        if self.contains(.drawFrame) {
-            result.append("Draw Bounds")
-        }
-        
-        if self.contains(.drawGraph) {
-            result.append("Draw Graphs")
-        }
-        
-        if self.contains(.drawObjectFrames) {
-            result.append("Draw Object Bounds")
-        }
-        
-        if self.contains(.drawAnchor) {
-            result.append("Draw Anchor")
-        }
-        
-        return result
-    }
-
-    /// Default options.
-    public static let `default`: DebugDrawOptions = []
-
-    /// All options.
-    public static let all: DebugDrawOptions = [.drawGrid, .drawFrame, .drawGraph, .drawObjectFrames, .drawAnchor]
-}
-
-
-/// :nodoc:
-extension DebugDrawOptions: CustomStringConvertible, CustomDebugStringConvertible, CustomReflectable {
-
-    public var description: String {
-        guard (strings.isEmpty == false) else {
-            return "none"
-        }
-        return "[ \(strings.joined(separator: ", ")) ]"
-    }
-
-    public var debugDescription: String {
-        return description
-    }
-    
-    /// Returns a custom mirror for this object.
-    public var customMirror: Mirror {
-        return Mirror(reflecting: DebugDrawOptions.self)
     }
 }

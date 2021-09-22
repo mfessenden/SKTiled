@@ -91,7 +91,7 @@ public class SKTileLayer: TiledLayerObject {
     }
 
     /// Debug visualization options.
-    @objc public override var debugDrawOptions: DebugDrawOptions {
+    public override var debugDrawOptions: DebugDrawOptions {
         didSet {
             guard oldValue != debugDrawOptions else { return }
             debugNode.draw()

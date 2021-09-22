@@ -313,6 +313,16 @@ extension TiledObjectType {
         return nil
     }
     
+    /// Returns an unsigned integer value for the given key.
+    ///
+    /// - Parameter key: property key.
+    public func unsignedIntForKey(_ key: String) -> UInt? {
+        if let existingPair = keyValuePair(key: key) {
+            return UInt(existingPair.value)
+        }
+        return nil
+    }
+    
     /// Returns a float value for the given key.
     ///
     /// - Parameter key: property key.

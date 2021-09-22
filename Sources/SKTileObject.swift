@@ -150,6 +150,8 @@ open class SKTileObject: SKShapeNode, CustomReflectable, TiledObjectType {
         }
     }
 
+    @objc public var _debugLevel: UInt8 = 0
+    
     /// Debug visualization options.
     public var debugDrawOptions: DebugDrawOptions = []
 

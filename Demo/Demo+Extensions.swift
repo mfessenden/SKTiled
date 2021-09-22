@@ -85,7 +85,7 @@ extension TiledGlobals {
         let defaults = UserDefaults.shared
 
         if (defaults.value(forKey: "tiled-gbl-ddoptions") != nil) {
-            self.debugDrawOptions = DebugDrawOptions(rawValue: defaults.integer(forKey: "tiled-gbl-ddoptions"))
+            self.debugDrawOptions = DebugDrawOptions(rawValue: UInt8(defaults.integer(forKey: "tiled-gbl-ddoptions")))
         }
 
         if (defaults.value(forKey: "tiled-gbl-zdelta") != nil) {

@@ -352,9 +352,11 @@ public class TiledLayerObject: SKEffectNode, CustomReflectable, TiledMappableGeo
 
     /// Debug visualization node
     internal var debugNode: TiledDebugDrawNode!
-
+    
+    @objc public var _debugLevel: UInt8 = 0
+    
     /// Debug visualization options.
-    @objc public var debugDrawOptions: DebugDrawOptions = [] {
+    public var debugDrawOptions: DebugDrawOptions = [] {
         didSet {
             guard oldValue != debugDrawOptions else { return }
             debugNode?.draw()

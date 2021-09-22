@@ -21,7 +21,7 @@
 
 - iOS 12
 - tvOS 12
-- macOS 10.14
+- macOS 11
 - Xcode 11/Swift 5
 
 
@@ -34,7 +34,7 @@ The **SKTiled** project contains six targets; three are demo applications for iO
 
 ### Framework Installation
 
-To use the frameworks, build the appropriate framework target and add to your project. Make sure the **Minimum Deployment Target** is set correctly for your project (iOS11+/macOS 10.12+/tvOS12+).
+To use the frameworks, build the appropriate framework target and add to your project. Make sure the **Minimum Deployment Target** is set correctly for your project (iOS11+/macOS 11+/tvOS12+).
 
 ![adding framework](images/framework.png)
 

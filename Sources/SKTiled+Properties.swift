@@ -192,7 +192,7 @@ extension SKTilemap {
 
             if ["debugdraw", "debugdrawoptions", "debugoptions"].contains(lattr) {
                 if let integerValue = intForKey(attr) {
-                    self.debugDrawOptions = DebugDrawOptions(rawValue: integerValue)
+                    self.debugDrawOptions = DebugDrawOptions(rawValue: UInt8(integerValue))
                 }
             }
             
@@ -306,7 +306,7 @@ extension TiledLayerObject {
 
             if ["debugdraw", "debugdrawoptions", "debugoptions"].contains(lattr) {
                 if let integerValue = intForKey(attr) {
-                    self.debugDrawOptions = DebugDrawOptions(rawValue: integerValue)
+                    self.debugDrawOptions = DebugDrawOptions(rawValue: UInt8(integerValue))
                 }
             }
 
